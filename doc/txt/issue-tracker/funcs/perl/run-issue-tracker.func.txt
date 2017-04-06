@@ -1,0 +1,32 @@
+# doc/txt/issue-tracker/run-issue-tracker/run-issue-tracker.func.txt
+
+	doRunIssueTracker
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to demonstrate how the issue_trackerl.pl entry point should be called
+
+	# Prequisites
+	# ------------------------------------------------------
+	issue_tracker.sh core 
+
+	# Installation
+	# ------------------------------------------------------
+   check the src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
+   for the perl modules you would need to install
+
+	# Interdependancies
+	# ------------------------------------------------------
+
+	# Usage:
+	# ------------------------------------------------------
+
+	# Development
+	# ------------------------------------------------------
+
+	# Caveats:
+	# ------------------------------------------------------
+   none known so far ...
+
+
+# eof file: doc/txt/issue-tracker/run-issue-tracker/run-issue-tracker.func.txt

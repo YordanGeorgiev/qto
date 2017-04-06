@@ -1,0 +1,37 @@
+# doc/txt/issue-tracker/run-issue-tracker/run-issue-tracker.spec.txt
+
+	doSpecRunIssueTracker
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doSpecRunIssueTracker function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doSpecRunIssueTracker function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doSpecRunIssueTracker function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doSpecRunIssueTracker function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doSpecRunIssueTracker used 
+
+	# Development
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doSpecRunIssueTracker functions
+
+
+
+# eof file: doc/txt/issue-tracker/run-issue-tracker/run-issue-tracker.spec.txt

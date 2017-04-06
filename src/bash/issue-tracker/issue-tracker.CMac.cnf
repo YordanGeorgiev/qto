@@ -1,0 +1,18 @@
+# file: src/bash/issue-tracker/issue-tracker.doc-pub-host.cnf
+[MainSection]
+
+#use simple var_name=var_value syntax 
+
+#the name of this application 
+app_name=issue-tracker
+
+# to whom to send e-mails - use space as delimiter
+Emails=yordan.georgiev@gmail.com
+
+# this way each environment will se its respective db 
+db="$env_type"_"$app_name"
+
+# where to place the backups of the 
+network_backup_dir=/var/backups
+
+#eof file: src/bash/issue-tracker/issue-tracker.doc-pub-host.cnf

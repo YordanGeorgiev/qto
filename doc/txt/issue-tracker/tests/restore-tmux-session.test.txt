@@ -1,0 +1,37 @@
+# doc/txt/issue-tracker/restore-tmux-session/restore-tmux-session.test.txt
+
+	doTestRestoreTmuxSession
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doTestRestoreTmuxSession function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doTestRestoreTmuxSession function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doTestRestoreTmuxSession function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doTestRestoreTmuxSession function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doTestRestoreTmuxSession used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doTestRestoreTmuxSession functions
+
+
+
+# eof file: doc/txt/issue-tracker/restore-tmux-session/restore-tmux-session.test.txt

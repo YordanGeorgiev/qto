@@ -1,0 +1,37 @@
+# doc/txt/issue-tracker/run-perl-tests/run-perl-tests.spec.txt
+
+	doSpecRunPerlTests
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doSpecRunPerlTests function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doSpecRunPerlTests function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doSpecRunPerlTests function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doSpecRunPerlTests function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doSpecRunPerlTests used 
+
+	# Development
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doSpecRunPerlTests functions
+
+
+
+# eof file: doc/txt/issue-tracker/run-perl-tests/run-perl-tests.spec.txt

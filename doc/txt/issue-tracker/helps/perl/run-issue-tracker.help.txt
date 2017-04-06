@@ -1,0 +1,36 @@
+# doc/txt/issue-tracker/run-issue-tracker/run-issue-tracker.help.txt
+
+	doHelpRunIssueTracker
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to provide a help description for the run-issue-tracker action
+
+	# Prequisites
+	# ------------------------------------------------------
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doHelpRunIssueTracker function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doHelpRunIssueTracker function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doHelpRunIssueTracker used 
+
+	# Development
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doHelpRunIssueTracker functions
+
+
+
+# eof file: doc/txt/issue-tracker/run-issue-tracker/run-issue-tracker.help.txt

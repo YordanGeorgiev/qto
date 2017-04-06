@@ -1,0 +1,52 @@
+# file: cnf/issue-tracker.doc-pub-host.cnf
+
+# The logging directory 
+LogDir = '%ProductVersionDir%/dat/log'
+
+# the default Log file
+LogFile =            '%LogDir%/%ProductName%.log'
+# the default chars separating the time from the txt
+LogTimeToTextSeparator ='---'
+# whether or not to log to a file
+LogToFile =          1
+# the time format of the logging 
+TimeFormat =         'YYYY.MM.DD - hh:mm:ss'
+# the time format of the logging 
+DbType 	=         'mariadb'
+
+# the log file
+LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
+
+# the host on which the mariadb is running 
+db_host = doc-pub-host
+
+# the mariadb server port 
+db_port = 13306
+
+# the mariadb user name
+db_user = root
+
+# the mariadb user pw 
+db_user_pw = 0024plapla
+
+# Whether or not to print messages to STDOUT and / or STDERR
+PrintConsoleMsgs =               1
+
+# Whether or not to pring INFO messages
+PrintInfoMsgs =                  1                             
+
+# Whether or not to pring WARNING messages
+PrintWarningMsgs =               1                             
+
+# Whether or not to pring ERROR messages
+PrintErrorMsgs =                 1                             
+
+# Whether or not to pring DEBUG messages
+PrintDebugMsgs =                 1
+
+# Whether or not to pring TRACE messages
+PrintTraceMsgs =                 1 
+
+# the environment name of this product instance 
+EnvironmentName =   	'%ProductName%.%ProductVersion%.%ProductType%.%ProductOwner%'
+# eof file: cnf/issue-tracker.doc-pub-host.cnf

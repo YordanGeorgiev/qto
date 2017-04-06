@@ -1,0 +1,3 @@
+# exclude all the zip files
+**/*.zip
+**/*.log

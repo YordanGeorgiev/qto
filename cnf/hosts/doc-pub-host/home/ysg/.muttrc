@@ -1,0 +1,58 @@
+set from="yordan.georgiev@gmail.com"
+set realname="yordan georgiev"
+set imap_user="yordan.georgiev@gmail.com"
+#
+# v1.0.1
+# check the following google help page:
+# http://support.google.com/accounts/bin/answer.py?answer=185833
+# that is set here your google application password
+set imap_pass="secret"
+#nopeset imap_authenticators="gssapi"
+set imap_authenticators="gssapi:cram-md5:login"
+set certificate_file="~/.mutt/certificates"
+#
+# These two lines appear to be needed on some Linux distros, like Arch Linux
+#
+##REMOTE GMAIL FOLDERS
+set folder="imaps://imap.gmail.com:993"
+set record="+[Gmail]/Sent Mail"
+set spoolfile="imaps://imap.gmail.com:993/INBOX"
+set postponed="+[Gmail]/Drafts"
+set trash="+[Google Mail]/Trash"
+#
+###SMTP Settings to sent email
+set smtp_url="smtp://yordan.georgiev@smtp.gmail.com:587"
+#
+# v1.0.1
+# check the following google help page:
+# http://support.google.com/accounts/bin/answer.py?answer=185833
+# that is set here your google application password
+set smtp_pass="secret"
+#
+###LOCAL FOLDERS FOR CACHED HEADERS AND CERTIFICATES
+set header_cache="~/.mutt/cache/headers"
+set message_cachedir="~/.mutt/cache/bodies"
+set certificate_file =~/.mutt/certificates
+#
+###SECURING
+set move=no  #Stop asking to "move read messages to mbox"!
+set imap_keepalive=900
+#
+###Sort by newest conversation first.
+set sort=reverse-threads
+set sort_aux=last-date-received
+#
+###Set editor to create new email
+set editor='vim'
+
+
+set ssl_starttls=yes
+set ssl_force_tls=yes
+
+# mutt sidebar settings
+#
+# VersionHistory
+# 
+# 1.0.2 -- 2016-07-15 19:25:01 -- a generic 
+# 1.0.1 -- 2015-07-22 10:22:54 -- google help help
+# 1.0.0 -- 2015-07-22 10:22:54 -- ysg 

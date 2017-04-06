@@ -1,0 +1,34 @@
+# doc/txt/issue-tracker/run-issue-tracker/run-issue-tracker.test.txt
+
+	doTestRunIssueTracker
+	
+	# Purpose:
+	# ------------------------------------------------------
+	test the actual run of the run-issue-tracker.sh 
+	to read the google spreadsheet
+
+	# Prequisites
+	# ------------------------------------------------------
+	perl , bash , for the perl modules check by:
+	perl src/perl/issue_tracker/issue_tracker_preq_checker.pl
+
+	# Installation
+	# ------------------------------------------------------
+
+	# Usage:
+	# ------------------------------------------------------
+	-- add the action name to test in the 
+	src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
+	file
+
+	# Development
+	# ------------------------------------------------------
+	
+
+	# Caveats:
+	# ------------------------------------------------------
+	none , known , so far ..
+
+
+
+# eof file: doc/txt/issue-tracker/run-issue-tracker/run-issue-tracker.test.txt

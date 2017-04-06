@@ -1,0 +1,37 @@
+# doc/txt/issue-tracker/check-perl-syntax/check-perl-syntax.test.txt
+
+	doTestCheckPerlSyntax
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to test the check-perl-syntax action ...
+
+	# Prequisites
+	# ------------------------------------------------------
+	perl , all the perl modules required for deploying the perl component
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doTestCheckPerlSyntax function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doTestCheckPerlSyntax function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doTestCheckPerlSyntax used 
+
+	# Development
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doTestCheckPerlSyntax functions
+
+
+
+# eof file: doc/txt/issue-tracker/check-perl-syntax/check-perl-syntax.test.txt

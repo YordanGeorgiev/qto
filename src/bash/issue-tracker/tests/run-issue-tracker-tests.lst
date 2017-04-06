@@ -1,0 +1,25 @@
+check-perl-syntax
+# run-perl-tests
+# check-perl-modules-prerequisites
+run-issue-tracker
+#create-full-7z-package
+#create-full-package
+#create-relative-7z-package
+#create-relative-package
+#clone-to-app
+#gmail-package
+#morph-dir
+#change-env-type
+#change-version
+#restore-tmux-session
+#generate-action-files
+#remove-action-files
+#create-ctags
+#remove-package
+#backup-file
+#remove-package-files
+#tmux-common
+#action-to-remove
+#print-help
+#print-usage
+#action-to-remove
