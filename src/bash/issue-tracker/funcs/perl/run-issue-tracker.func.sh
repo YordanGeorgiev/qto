@@ -11,7 +11,9 @@ doRunIssueTracker(){
 	cat doc/txt/issue-tracker/funcs/perl/run-issue-tracker.func.txt
 	test -z "$sleep_interval" || sleep "$sleep_interval"
 	# add your action implementation code here ... 
-   issue_file='/vagrant/ysg/data/scrum/daily/2017-04/2017-04-01.daily-issues.ysg.txt'
+   nice_date=$(date "+%Y-%m-%d")
+   nice_year=$(date "+%Y-%m")
+   issue_file='/vagrant/ysg/data/scrum/daily/'"$nice_year"'/'"$nice_date"'.daily-issues.ysg.txt'
 	
    # Action ... !!!
 	perl src/perl/issue_tracker/script/issue_tracker.pl --issue_file $issue_file

@@ -5,6 +5,10 @@ src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 src/bash/issue-tracker/tests/all-issue-tracker-tests.lst
 src/bash/issue-tracker/tests/rem-issue-tracker-actions.lst
 cnf/issue-tracker.doc-pub-host.cnf
+src/sql/pgsql/dev_issue_tracker
+src/sql/pgsql/dev_issue_tracker
+src/sql/pgsql/dev_issue_tracker/00.create-db.pgsql
+src/sql/pgsql/dev_issue_tracker/01.create-table-issue.sql
 src/perl
 src/perl/issue_tracker
 src/perl/issue_tracker/lib
@@ -13,7 +17,7 @@ src/perl/issue_tracker/lib/IssueTracker/App
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/ETL
 src/perl/issue_tracker/lib/IssueTracker/App/Model/DbHandlerFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Model/MariaDbHandler.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Model/PostgreSqlDbHandler.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/ETL/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO

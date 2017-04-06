@@ -1,18 +1,18 @@
 # file: cnf/issue-tracker.doc-pub-host.cnf
 
 # The logging directory 
-LogDir = '%ProductVersionDir%/dat/log'
+LogDir = %ProductVersionDir%/dat/log
 
 # the default Log file
-LogFile =            '%LogDir%/%ProductName%.log'
+LogFile =         %LogDir%/%ProductName%.log
 # the default chars separating the time from the txt
-LogTimeToTextSeparator ='---'
+LogTimeToTextSeparator = ###
 # whether or not to log to a file
 LogToFile =          1
 # the time format of the logging 
-TimeFormat =         'YYYY.MM.DD - hh:mm:ss'
+TimeFormat =         YYYY.MM.DD - hh:mm:ss
 # the time format of the logging 
-DbType 	=         'mariadb'
+DbType 	=         mariadb
 
 # the log file
 LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
@@ -47,6 +47,4 @@ PrintDebugMsgs =                 1
 # Whether or not to pring TRACE messages
 PrintTraceMsgs =                 1 
 
-# the environment name of this product instance 
-EnvironmentName =   	'%ProductName%.%ProductVersion%.%ProductType%.%ProductOwner%'
 # eof file: cnf/issue-tracker.doc-pub-host.cnf

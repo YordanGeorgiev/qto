@@ -1,7 +1,7 @@
 package IssueTracker::App::Utils::ETL::IssueTracker ; 
 
 	use strict; use warnings;
-
+   use utf8 ; 
 	my $VERSION = '1.1.0';    #doc at the end
 
 	require Exporter;
@@ -22,16 +22,16 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 	use IssueTracker::App::Utils::Logger ;
 	use Data::Printer ; 
 
-   our $module_trace             = 1 ; 	
+   our $module_trace             = 1  ; 
 	our $appConfig						= {} ; 
 	our $RunDir 						= '' ; 
 	our $ProductBaseDir 				= '' ; 
 	our $ProductDir 					= '' ; 
-	our $ProductVersionDir 			= ''; 
+	our $ProductVersionDir 			= '' ; 
 	our $EnvironmentName 			= '' ; 
 	our $ProductName 					= '' ; 
 	our $ProductType 					= '' ; 
-	our $ProductVersion 				= ''; 
+	our $ProductVersion 				= '' ; 
 	our $ProductOwner 				= '' ; 
 	our $HostName 						= '' ; 
 	our $ConfFile 						= '' ; 
@@ -73,7 +73,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       
       my $str_issue_file = q{} ; 
 
-      $objLogger->doLogDebugMsg ( " START doReadIssueFile" ) ; 
+      $objLogger->doLogInfoMsg ( " START doReadIssueFile" ) ; 
 
 
       unless ( -r $issue_file ) {
@@ -82,17 +82,111 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       }
       else {
 
-         $str_issue_file = $objFileHandler->ReadFileReturnString ( $issue_file ) ; 
+         $str_issue_file = $objFileHandler->ReadFileReturnString ( $issue_file , 'utf8' ) ; 
          $ret = 0 ; 
          $msg = "read successfully issue_file : $issue_file" ; 
          $objLogger->doLogDebugMsg ( $str_issue_file ) if ( $module_trace == 1 ) ; 
       }
-   
-      $objLogger->doLogDebugMsg ( " STOP  doReadIssueFile" ) ;
+      
+      $msg =  " STOP  doReadIssueFile with ret: $ret" ; 
+      $objLogger->doLogInfoMsg ( $msg ) ; 
       return ( $ret , $msg , $str_issue_file ) ; 
 	}
 	# eof sub doConvertMdFileToBigSqlHash
-	
+
+
+
+   sub doConvertStrToHashRef {
+
+      my $self       = shift ; 
+      my $str        = shift ; 
+
+      my $ret        = 1 ; 
+      my $msg        = 'unknown error while converting string to hash reference' ; 
+      my $hsr        = {} ; 
+
+      binmode(STDIN,  ':utf8');
+      binmode(STDOUT, ':utf8');
+      binmode(STDERR, ':utf8');
+ 
+      # each item starts with new line may be some space and - 
+      my @arr_category_items  = split '\n(\s*)\n' , $str ; 
+      my $i          = 0 ;  
+      my $current_date = '' ; 
+      my $flag_current = -1 ; 
+
+
+      if ( $str ) {      
+         $msg = 'START ::: parsing issue file string into hash ref of hash refs' ; 
+         $objLogger->doLogInfoMsg ( $msg ) ;  
+
+         foreach my $category_item ( @arr_category_items ) {
+            # START DAILY 2017-04-02 09:30 su
+            if ( $category_item =~ m/^\s*#\s*START DAILY ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) {
+               $current_date = $1 ; 
+            }
+
+            my $debug_msg = "category_item: $category_item " ; 
+            $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
+
+            $flag_current++ if $category_item =~ m/^[#]{1,2} /g ; 
+            $msg = "category_item starts with ##" ; 
+            $objLogger->doLogDebugMsg ( $msg ) if $category_item =~ m/^##/g ;
+            
+            # one or two # are either the file start , stop or the act , plan sections
+            next if $category_item =~ m/^[#]{1,2} /g ; 
+            
+            next if $category_item =~ m/^--/g ; 
+               
+            
+            # the first line of the category_item is the category
+            my $category = ( split /\n/, $category_item )[0] ;  
+            next unless ( $category ) ; 
+            $category      =~ s/([\s\t]{0,5})(\w)([\s\t]{0,5})/$2/g ; 
+            $category_item =~ s/$category//mg ; 
+            my @arr_items  = split '\n(\s*)\-' , $category_item ; 
+
+            foreach my $item ( @arr_items ) {
+               next unless $item ; 
+               $hsr->{ $i } = {} ; 
+               my $debug_msg = "item: $item " ; 
+               $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
+               $item =~ m/^\s(\w)*\s*(\t{1,5})(.*)/ ; 
+               my $status = $1 ; 
+               my $name = $3 ; 
+               next unless $name ; 
+               $hsr->{ $i }->{ 'item' } = $item ; 
+               $hsr->{ $i }->{ 'prio' } = $i ; 
+               $hsr->{ $i }->{ 'category' }     = $category ; 
+               $hsr->{ $i }->{ 'status' }       = $status ; 
+               $hsr->{ $i }->{ 'name' }         = $name ; 
+               $hsr->{ $i }->{ 'daily_date' }   = $current_date ; 
+               # plan vs. actual , closed ?! , past ?!
+               $hsr->{ $i }->{ 'actual' }       = $flag_current ; 
+               
+               if ( $module_trace == 1 ) { 
+                  $debug_msg = " START :::: $i" if 
+                  $objLogger->doLogDebugMsg ( $debug_msg ) ;  
+                  p ( $hsr->{ $i } ) ; 
+                  $debug_msg = " STOP  :::: $i" ; 
+                  $objLogger->doLogDebugMsg ( $debug_msg ) ;  
+               }
+               $i++ ; 
+            }
+            #eof foreach my $item 
+         }
+         #eof foreach my $category_item 
+         $ret = 0 ; 
+         $msg = '' ; 
+      
+      }
+      
+      $msg = 'STOP  ::: parsing issue file string into hash ref of hash refs' ; 
+      $objLogger->doLogInfoMsg ( $msg ) ;  
+
+      return ( $ret , $msg , $hsr ) ; 
+   }	
+   # eof sub StrToHashRef 
 
 
 	#
@@ -136,11 +230,14 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 	}  
 	#eof const
 
+
 =head2
 	# -----------------------------------------------------------------------------
 	# overrided autoloader prints - a run-time error - perldoc AutoLoader
 	# -----------------------------------------------------------------------------
 =cut
+
+
 	sub AUTOLOAD {
 
 		my $self = shift;

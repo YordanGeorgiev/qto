@@ -50,9 +50,9 @@ use IssueTracker::App::Utils::ETL::IssueTracker ;
 use IssueTracker::App::Model::DbHandlerFactory ; 
 use IssueTracker::App::Model::MariaDbHandler ; 
 
-my $module_trace                 = 0 ; 
+my $module_trace                 = 1 ; 
 my $md_file 							= '' ; 
-my $rdbms_type 						= 'mariadb' ; #todo: parametrize to 
+my $rdbms_type 						= 'postgre' ; #todo: parametrize to 
 my $issue_file                   = '' ; 
 my $objInitiator                 = {} ; 
 my $appConfig                    = {} ; 
@@ -74,15 +74,28 @@ sub main {
    GetOptions(	
       'issue_file=s' => \$issue_file
    );
-   $objLogger->doLogInfoMsg ( "issue_file: $issue_file" ) ; 
+   
+   $msg = 'issue_file to parse : ' ; 
+   $objLogger->doLogInfoMsg ( "$msg" ) ; 
+   $msg = $issue_file ; 
+   $objLogger->doLogInfoMsg ( "$msg" ) ; 
 
 	my $objIssueTracker 	   = 'IssueTracker::App::Utils::ETL::IssueTracker'->new ( \$appConfig ) ; 
 	my ( $ret , $msg , $str_issue_file ) 
                      	   = $objIssueTracker->doReadIssueFile ( $issue_file ) ; 
    doExit ( $ret , $msg ) if $ret != 0 ;  
 
-	# my $objDbHandlerFactory = 'IssueTracker::App::Model::DbHandlerFactory'->new( \$appConfig );
-	# my $objDbHandler 			= $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
+   my $hsr = {} ;          # a hash ref of hash refs 	
+   ( $ret , $msg , $hsr ) 
+                     	   = $objIssueTracker->doConvertStrToHashRef ( $str_issue_file ) ; 
+
+   p($hsr) if $module_trace == 1 ; 
+
+   doExit ( $ret , $msg ) if $ret != 0 ;  
+
+
+	my $objDbHandlerFactory = 'IssueTracker::App::Model::DbHandlerFactory'->new( \$appConfig );
+	my $objDbHandler 			= $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
 
 	$objLogger->doLogInfoMsg ( "$msg") ; 
 	$objLogger->doLogInfoMsg ( "STOP  MAIN") ; 
