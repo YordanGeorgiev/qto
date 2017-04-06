@@ -1,4 +1,4 @@
-package IssueTracker::App::Model::MariaDbHandler ; 
+package IssueTracker::App::Model::PostGreDbHandler ; 
 
    use strict ; use warnings ; use utf8 ; 
 
@@ -11,6 +11,7 @@ package IssueTracker::App::Model::MariaDbHandler ;
 	use Data::Printer ; 
 	use Carp ; 
 
+   use IssueTracker::App::Utils::Logger ; 
 
    our $ModuleDebug	                                    = 0 ; 
    our $IsUnitTest                                    	= 0 ; 
@@ -31,10 +32,24 @@ package IssueTracker::App::Model::MariaDbHandler ;
 	sub doInsertSqlHashData {
 
 		my $self 				= shift ; 
-		my $met_hash 			= shift ; 
 		my $sql_hash 			= shift ; 	
-		
-		print "BOOOOOO !!!! doInsertSqlHashData \n " ; 
+      
+      my $ret              = 1 ; 
+      my $msg              = 'unknown error while sql insert ' ; 		
+
+      my $debug_msg        = 'START doInsertSqlHashData' ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+	   
+		foreach my $key ( sort(keys( %{$sql_hash} ) ) ) {
+
+      }
+      #eof foreach $key
+
+
+      $debug_msg        = 'STOP  doInsertSqlHashData' ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+
+      return ( $ret , $msg ) ; 	
 	}
 	#eof sub doInsertSqlHashData
 
@@ -47,13 +62,14 @@ package IssueTracker::App::Model::MariaDbHandler ;
 
       my $self = shift ; 
 
-		#debug print "MariaDbHandler::doInitialize appConfig : " . p($appConfig );
+		#debug print "PostGreDbHandler::doInitialize appConfig : " . p($appConfig );
 		
 		$db_host 			= $appConfig->{'db_host'} 		|| 'localhost' ;
 		$db_port 			= $appConfig->{'db_port'} 		|| '13306' ; 
 		$db_user 			= $appConfig->{'db_user'} 		|| 'doc_pub_app_user' ; 
 		$db_user_pw 		= $appConfig->{'db_user_pw'} 	|| 'no_pass_provided!!!' ; 
-
+      
+	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
    }
    #eof sub doInitialize
 

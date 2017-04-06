@@ -1,0 +1,11 @@
+
+
+2017-04-06 22:29:25	 START test-issue-tracker test run report 
+
+result  start-time  stop-time   action-name
+   ok    22:29:25 22:29:26 check-perl-syntax
+   nok    22:29:27 22:29:27 run-issue-tracker
+
+
+
+2017-04-06 22:29:27	 STOP  test-issue-tracker test run report

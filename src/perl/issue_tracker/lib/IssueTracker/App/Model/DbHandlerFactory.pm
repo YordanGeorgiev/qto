@@ -10,7 +10,9 @@ package IssueTracker::App::Model::DbHandlerFactory ;
 	our $objItem			= {} ; 
 	our $objController 	= {} ; 
 
-	use IssueTracker::App::Model::MariaDbHandler  ; 
+	# use IssueTracker::App::Model::MariaDbHandler  ; 
+   use IssueTracker::App::Model::PostGreDbHandler ; 
+
 
 	#
 	# -----------------------------------------------------------------------------

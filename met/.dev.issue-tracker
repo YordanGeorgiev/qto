@@ -17,7 +17,7 @@ src/perl/issue_tracker/lib/IssueTracker/App
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/ETL
 src/perl/issue_tracker/lib/IssueTracker/App/Model/DbHandlerFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Model/PostgreSqlDbHandler.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Model/PostGreDbHandler.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/ETL/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO

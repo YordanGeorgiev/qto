@@ -48,7 +48,8 @@ use IssueTracker::App::Utils::ETL::IssueTracker ;
 use IssueTracker::App::Utils::IO::FileHandler ; 
 use IssueTracker::App::Utils::ETL::IssueTracker ; 
 use IssueTracker::App::Model::DbHandlerFactory ; 
-use IssueTracker::App::Model::MariaDbHandler ; 
+use IssueTracker::App::Model::PostGreDbHandler ; 
+
 
 my $module_trace                 = 1 ; 
 my $md_file 							= '' ; 
@@ -96,6 +97,8 @@ sub main {
 
 	my $objDbHandlerFactory = 'IssueTracker::App::Model::DbHandlerFactory'->new( \$appConfig );
 	my $objDbHandler 			= $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
+   ( $ret , $msg )         = $objDbHandler->doInsertSqlHashData ( $hsr ) ; 
+   doExit ( $ret , $msg ) if $ret != 0 ;  
 
 	$objLogger->doLogInfoMsg ( "$msg") ; 
 	$objLogger->doLogInfoMsg ( "STOP  MAIN") ; 
