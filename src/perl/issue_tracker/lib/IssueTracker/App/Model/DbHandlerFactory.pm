@@ -41,11 +41,11 @@ package IssueTracker::App::Model::DbHandlerFactory ;
 		}
 
 		my $package_file     	= "IssueTracker/App/Model/$DbHandler.pm";
-		my $obj    	      		= "IssueTracker::App::Model::$DbHandler";
+		my $objDbHandler   		= "IssueTracker::App::Model::$DbHandler";
 
 		require $package_file;
 
-		return $obj->new( \$objController , @args);
+		return $objDbHandler->new( \$appConfig , $objController , @args);
 	}
 	# eof sub doInstantiate
 	
@@ -57,7 +57,8 @@ package IssueTracker::App::Model::DbHandlerFactory ;
 	sub new {
 		
 		my $invocant 			= shift ;    
-		my $appConfig 			= shift ;    
+		$appConfig           = ${ shift @_ } if ( @_ );
+      $objController       = shift ; 
 		
 		# might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 

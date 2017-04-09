@@ -16,7 +16,6 @@ package IssueTracker::App::Model::PostGreDbHandler ;
    our $IsUnitTest                              = 0 ; 
 	our $appConfig 										= q{} ; 
 	our $objLogger 										= q{} ; 
-	our $objController 									= {} ; 
 
 	our $db_name                                 = q{} ; 
 	our $db_host 										   = q{} ; 
@@ -41,6 +40,7 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       my $str_sql_insert   = q{} ; 
       my $str_col_list     = q{} ; 
       my $str_val_list     = q{} ; 
+      my $error_msg        = q{} ; 
 
 
       my $debug_msg        = 'START doInsertSqlHashData' ; 
@@ -65,17 +65,36 @@ package IssueTracker::App::Model::PostGreDbHandler ;
          $str_val_list = '' ; 
       }
       
+      # p ( $str_sql_insert ) if $module_trace == 1 ; 
+
+      # proper authentication implementation src:
+      # http://stackoverflow.com/a/19980156/65706
+      #
+      $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+     
+      # my $dbh = DBI->connect("DBI:Pg:dbname=$db_name;host=$db_host", $db_user, $db_user_pw )
+      my $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
+           'RaiseError' => 1
+         , 'ShowErrorStatement' => 1
+         , 'AutoCommit' => 1
+      } ) or $msg = DBI->errstr;
+      
+      $debug_msg        = 'msg: ' . $msg  ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      
+      $ret  = $dbh->do( $str_sql_insert ) ; 
+      $msg = DBI->errstr || 'INSERT OK' ; 
+
+      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
 
       $debug_msg        = 'STOP  doInsertSqlHashData' ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-
-      p ( $str_sql_insert ) if $module_trace == 1 ; 
-
-
-      my $dbh = DBI->connect("DBI:Pg:dbname=$db_name;host=$db_host", $db_user, $db_user_pw )
-         or die DBI->errstr;
-
-
+      
+      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      
       return ( $ret , $msg ) ; 	
 	}
 	#eof sub doInsertSqlHashData
@@ -86,8 +105,9 @@ package IssueTracker::App::Model::PostGreDbHandler ;
    # doInitialize the object with the minimum dat it will need to operate 
    # -----------------------------------------------------------------------------
    sub doInitialize {
-
-      my $self = shift ; 
+      
+      my $self          = shift ; 
+		my $appConfig     = ${ shift @_ } if ( @_ );
 
 		#debug print "PostGreDbHandler::doInitialize appConfig : " . p($appConfig );
 		
@@ -110,13 +130,13 @@ package IssueTracker::App::Model::PostGreDbHandler ;
    sub new {
 
       my $class            = shift ;    # Class name is in the first parameter
-		$appConfig = ${ shift @_ } if ( @_ );
+		$appConfig           = ${ shift @_ } if ( @_ );
 
       # Anonymous hash reference holds instance attributes
       my $self = { }; 
       bless($self, $class);     # Say: $self is a $class
 
-      $self->doInitialize() ; 
+      $self->doInitialize( \$appConfig ) ; 
       return $self;
    } 
    #eof const 
