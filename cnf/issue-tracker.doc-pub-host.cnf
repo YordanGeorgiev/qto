@@ -5,12 +5,16 @@ LogDir = %ProductInstanceDir%/dat/log
 
 # the default Log file
 LogFile =         %LogDir%/%ProductName%.log
+
 # the default chars separating the time from the txt
 LogTimeToTextSeparator = ###
+
 # whether or not to log to a file
 LogToFile =          1
+
 # the time format of the logging 
 TimeFormat =         YYYY.MM.DD - hh:mm:ss
+
 # the time format of the logging 
 DbType 	=         mariadb
 
@@ -23,8 +27,11 @@ db_host = doc-pub-host
 # the mariadb server port 
 db_port = 13306
 
+# OBS ! dev , tst , prd product instances to own db !
+db_name   = %Product_Type%_issue_tracker
+
 # the mariadb user name
-db_user = root
+db_user = ysg
 
 # the mariadb user pw 
 db_user_pw = 0024plapla

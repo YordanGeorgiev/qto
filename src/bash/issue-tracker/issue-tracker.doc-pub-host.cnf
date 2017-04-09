@@ -6,11 +6,13 @@
 #the name of this application 
 app_name=issue-tracker
 
+db=issue_tracker
+
 # to whom to send e-mails - use space as delimiter
 Emails=yordan.georgiev@gmail.com
 
 # this way each environment will se its respective db 
-db="$env_type"_"$app_name"
+db_name="$env_type"_"$db"
 
 # where to place the backups of the 
 network_backup_dir=/vagrant/csitea/issue-tracker/dat/zip

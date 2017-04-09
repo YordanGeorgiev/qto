@@ -24,7 +24,7 @@ package IssueTracker::App::Utils::Initiator ;
 	our $ProductBaseDir 				= '' ; 
 	our $ProductDir 					= '' ; 
 	our $ProductInstanceDir 			= ''; 
-	our $EnvironmentName 			= '' ; 
+	our $ProductInstanceEnvironment 			= '' ; 
 	our $ProductName 					= '' ; 
 	our $ProductType 					= '' ; 
 	our $ProductVersion 				= ''; 
@@ -174,22 +174,22 @@ package IssueTracker::App::Utils::Initiator ;
 	# the environment name is the dir identifying this product 
 	# instance from other product instances 
 	# ---------------------------------------------------------
-	sub doResolveMyEnvironmentName {
+	sub doResolveMyProductInstanceEnvironment {
 
 		my $self = shift;
 		my $msg  = ();
 
 		my $ProductInstanceDir 	= $self->doResolveMyProductInstanceDir();
-		$EnvironmentName 			= $ProductInstanceDir ; 
-		$EnvironmentName 			=~ s#$ProductBaseDir\/##g ;
-		$EnvironmentName 			=~ s#(.*?)(\/|\\)(.*)#$3#g ;
-		$EnvironmentName 			= $self->untaint ( $EnvironmentName ); 
+		$ProductInstanceEnvironment 			= $ProductInstanceDir ; 
+		$ProductInstanceEnvironment 			=~ s#$ProductBaseDir\/##g ;
+		$ProductInstanceEnvironment 			=~ s#(.*?)(\/|\\)(.*)#$3#g ;
+		$ProductInstanceEnvironment 			= $self->untaint ( $ProductInstanceEnvironment ); 
 
-		$appConfig->{ 'EnvironmentName' } 		= $EnvironmentName ; 
+		$appConfig->{ 'ProductInstanceEnvironment' } 		= $ProductInstanceEnvironment ; 
 		$self->{'appConfig'} 				= $appConfig; 
-		return $EnvironmentName;
+		return $ProductInstanceEnvironment;
 	}
-	#eof sub doResolveMyEnvironmentName
+	#eof sub doResolveMyProductInstanceEnvironment
 
 	#
 	# ---------------------------------------------------------
@@ -201,10 +201,10 @@ package IssueTracker::App::Utils::Initiator ;
 		my $self = shift;
 		my $msg  = ();
 
-		my $EnvironmentName = $self->doResolveMyEnvironmentName();
+		my $ProductInstanceEnvironment = $self->doResolveMyProductInstanceEnvironment();
 
 		#fetch the the product name from the dir struct
-		my @tokens = split /\./ , $EnvironmentName ; 
+		my @tokens = split /\./ , $ProductInstanceEnvironment ; 
 		$ProductName = $tokens[0] ; 
 
 		$appConfig->{ 'ProductName' } 			= $ProductName ; 
@@ -226,10 +226,10 @@ package IssueTracker::App::Utils::Initiator ;
 		
 		my $ProductVersion	= '' ;
 		my $ProductInstanceDir 		= $self->doResolveMyProductInstanceDir();
-		my $EnvironmentName 			= $self->doResolveMyEnvironmentName();
+		my $ProductInstanceEnvironment 			= $self->doResolveMyProductInstanceEnvironment();
 		
 
-		my @tokens 			= split /\./ , $EnvironmentName ; 
+		my @tokens 			= split /\./ , $ProductInstanceEnvironment ; 
 		$tokens [1] = $tokens [1] // '' ; 
 		$tokens [2] = $tokens [2] // '' ; 
 		$tokens [3] = $tokens [3] // '' ; 
@@ -257,9 +257,9 @@ package IssueTracker::App::Utils::Initiator ;
 		my $self = shift;
 		my $msg  = ();
 
-		my $EnvironmentName = $self->doResolveMyEnvironmentName();
+		my $ProductInstanceEnvironment = $self->doResolveMyProductInstanceEnvironment();
 
-		my @tokens = split /\./ , $EnvironmentName ; 
+		my @tokens = split /\./ , $ProductInstanceEnvironment ; 
 		# the type of this environment - dev , test , dev , fb , prod next_line_is_templatized
 		my $ProductType = $tokens[4] ; 
 		#debug print "\n\n ProductType : $ProductType " ; 
@@ -285,9 +285,9 @@ package IssueTracker::App::Utils::Initiator ;
 		my $self = shift;
 		my $msg  = ();
 
-		my $EnvironmentName = $self->doResolveMyEnvironmentName();
+		my $ProductInstanceEnvironment = $self->doResolveMyProductInstanceEnvironment();
 
-		my @tokens = split /\./ , $EnvironmentName ; 
+		my @tokens = split /\./ , $ProductInstanceEnvironment ; 
 		# the Owner of this environment - dev , test , dev , fb , prod next_line_is_templatized
 		# The username of the person developin this environment 
 		$ProductOwner = $tokens[5] ; 
@@ -364,7 +364,7 @@ package IssueTracker::App::Utils::Initiator ;
 
 		$ProductBaseDir 			= $self->doResolveMyProductBaseDir();
 		$ProductInstanceDir 		= $self->doResolveMyProductInstanceDir();
-		$EnvironmentName 			= $self->doResolveMyEnvironmentName();
+		$ProductInstanceEnvironment = $self->doResolveMyProductInstanceEnvironment();
 		$ProductName 				= $self->doResolveMyProductName();
 		$ProductVersion 			= $self->doResolveMyProductVersion();
 		$ProductType 				= $self->doResolveMyProductType();

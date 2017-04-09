@@ -18,12 +18,12 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 	our $objLogger 										= q{} ; 
 	our $objController 									= {} ; 
 
+	our $db_name                                 = q{} ; 
 	our $db_host 										   = q{} ; 
 	our $db_port 										   = q{} ;
 	our $db_user 											= q{} ; 
 	our $db_user_pw	 									= q{} ; 
 	our $web_host 											= q{} ; 
-
 
 
 	#
@@ -45,7 +45,8 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 
       my $debug_msg        = 'START doInsertSqlHashData' ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-	   
+	  
+ 
 		foreach my $key ( sort(keys( %{$sql_hash} ) ) ) {
          my $row_hash = $sql_hash->{ $key } ; 
 
@@ -70,6 +71,11 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 
       p ( $str_sql_insert ) if $module_trace == 1 ; 
 
+
+      my $dbh = DBI->connect("DBI:Pg:dbname=$db_name;host=$db_host", $db_user, $db_user_pw )
+         or die DBI->errstr;
+
+
       return ( $ret , $msg ) ; 	
 	}
 	#eof sub doInsertSqlHashData
@@ -85,9 +91,10 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 
 		#debug print "PostGreDbHandler::doInitialize appConfig : " . p($appConfig );
 		
+		$db_name 			= $appConfig->{'db_name'} 		|| 'prd_pgsql_runner' ; 
 		$db_host 			= $appConfig->{'db_host'} 		|| 'localhost' ;
 		$db_port 			= $appConfig->{'db_port'} 		|| '13306' ; 
-		$db_user 			= $appConfig->{'db_user'} 		|| 'doc_pub_app_user' ; 
+		$db_user 			= $appConfig->{'db_user'} 		|| 'ysg' ; 
 		$db_user_pw 		= $appConfig->{'db_user_pw'} 	|| 'no_pass_provided!!!' ; 
       
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
@@ -114,9 +121,6 @@ package IssueTracker::App::Model::PostGreDbHandler ;
    } 
    #eof const 
    
-   
-   
-
 
 
 1;
