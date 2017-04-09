@@ -1,6 +1,6 @@
 # src/bash/issue-tracker/funcs/run-issue-tracker.func.sh
 
-# v1.0.9
+# v1.1.0
 # ---------------------------------------------------------
 # todo: add doRunIssueTracker comments ...
 # ---------------------------------------------------------
