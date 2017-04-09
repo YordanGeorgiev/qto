@@ -18,7 +18,7 @@ doCreateRelative7zPackage(){
 
 	#define default vars
 	test -z $include_file         && \
-		include_file="$product_instance_dir/met/.$env_type.$wrap_name"
+		include_file="$product_instance_dir/met/.$env_type.$run_unit"
 
 	# relative file path is passed turn it to absolute one 
 	[[ $include_file == /* ]] || include_file=$product_instance_dir/$include_file

@@ -4,7 +4,7 @@
 #use simple var_name=var_value syntax 
 
 #the name of this application 
-wrap_name=issue-tracker
+run_unit=issue-tracker
 
 #the name of this application's db
 db_name=dev_issue-tracker

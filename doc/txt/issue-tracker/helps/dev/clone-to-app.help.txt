@@ -9,7 +9,7 @@ doCloneToApp(){
 	tgt_app="$1"
 	prefix='to-app='
 	tgt_app=${tgt_app#$prefix}
-	tgt_environment_name=$(echo $environment_name | perl -ne "s/$wrap_name/$tgt_app/g;print")
+	tgt_environment_name=$(echo $environment_name | perl -ne "s/$run_unit/$tgt_app/g;print")
 	tgt_environment_name=$(echo $tgt_environment_name | perl -ne "s/$product_version/0.0.0/g;print")
 	tgt_environment_name=$(echo $tgt_environment_name | perl -ne "s/$env_type/dev/g;print")
 	tgt_product_dir=$product_base_dir/$tgt_app
@@ -24,7 +24,7 @@ doCloneToApp(){
 	doCreateRelativePackage
 	unzip -o $zip_file -d $tgt_product_instance_dir
 
-	to_srch=$wrap_name
+	to_srch=$run_unit
 	to_repl=$tgt_app
 
 	#-- search and replace in file names

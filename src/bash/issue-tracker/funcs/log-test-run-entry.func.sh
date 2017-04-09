@@ -16,8 +16,8 @@ doLogTestRunEntry(){
    case "$1" in
      INIT)
          # cat doc/txt/issue-tracker/funcs/log-test-run-entry.func.txt
-         component_name=$wrap_name
-         test -z "$component_name" && component_name="$wrap_name_tester"
+         component_name=$run_unit
+         test -z "$component_name" && component_name="$run_unit_tester"
          test -z "$test_run_report_line" && test_run_report_line='   '
          test -z "$test_run_report_file" \
          && test_run_report_file="$product_instance_dir/dat/tests/$component_name"'.test-run-report.'`date "+%Y%m%d_%H%M%S"`'.txt'
