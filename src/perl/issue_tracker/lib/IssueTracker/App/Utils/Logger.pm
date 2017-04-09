@@ -2,8 +2,9 @@ package IssueTracker::App::Utils::Logger ;
 
 	use strict; use warnings;
 	use v5.10.0;
+   use utf8 ; 
 
-	my $VERSION = '2.1.5';    
+	my $VERSION = '2.1.7';    
 	#doc at the end
 
 	require Exporter;
@@ -23,6 +24,7 @@ package IssueTracker::App::Utils::Logger ;
 	our $HostName ; 
 	our $LogTimeToTextSeparator ; 
 	our $HumanReadableTime ; 
+            
 
 =head1 SYNOPSIS
 
@@ -646,12 +648,15 @@ if you don't export anything, such as for a purely object-oriented module.
 				|| $appConfig->{ 'PrintDebugMsgs' } 	== 1
 				|| $appConfig->{ 'PrintTraceMsgs' } 	== 1 ) {
 
+
+            binmode(STDOUT, ':utf8');
 				print STDOUT $msg unless ( $msgType eq '[ERROR]' ) ; 
 			}
 
 			if ( $appConfig->{ 'PrintErrorMsgs' } 
 					&& $msgType eq '[ERROR]'	) {
 
+            binmode(STDERR, ':utf8');
 				print STDERR $msg;
 			}
 		}
@@ -691,6 +696,7 @@ if you don't export anything, such as for a purely object-oriented module.
 		return unless ( $appConfig->{ 'LogToFile' } == 1 ) ; 
 		return unless ( $file ) ; 
 		return unless ( $str_to_print ) ; 
+   
 
 		$file =~ m/^(.*)([\/|\\])(.*)/g;
 		my $FileDir = $1;
@@ -706,7 +712,8 @@ if you don't export anything, such as for a purely object-oriented module.
 			use autodie ; 
 			my $error_msg = "[FATAL] Logger::doAppendToFile cannot open file: $file" ; 
 			my $FH = () ; 
-			open( $FH, ">>$file" ) || cluck( "$error_msg" ) ; 
+			
+         open( $FH, '>>:utf8' , "$file" ) || cluck( "$error_msg" ) ; 
 			print $FH $str_to_print;
 			close $FH ;
 		};
@@ -842,6 +849,7 @@ yordan.georgiev@gmail.com
 # VersionHistory: 
 # ---------------------------------------------------------
 #
+2.1.7 -- 2017-04-09 18:48:17 -- ysg -- utf8 binmode for utf8 chars logging ..
 2.1.6 -- 2014-08-26 09:37:36 -- ysg -- autodie and better checks in doAppendToFile
 2.1.5 -- 2014-08-25 21:01:58 -- ysg -- added PrintToConsole settings
 2.1.4 -- 2013-03-03 20:00:58 -- ysg -- cleaned up formatting for MSG types
