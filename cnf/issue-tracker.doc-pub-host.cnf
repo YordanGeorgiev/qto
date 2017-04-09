@@ -24,7 +24,7 @@ LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
 # the host on which the mariadb is running 
 db_host = doc-pub-host
 
-# the mariadb server port 
+# the pgsql port
 db_port = 13306
 
 # OBS ! dev , tst , prd product instances to own db !
@@ -32,9 +32,6 @@ db_name   = %ProductType%_issue_tracker
 
 # the mariadb user name
 db_user = ysg
-
-# the mariadb user pw 
-db_user_pw = 0024plapla
 
 # Whether or not to print messages to STDOUT and / or STDERR
 PrintConsoleMsgs =               1
