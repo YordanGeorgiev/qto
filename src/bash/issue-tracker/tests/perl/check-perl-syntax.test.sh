@@ -12,7 +12,11 @@ doTestCheckPerlSyntax(){
 	test -z "$sleep_interval" || sleep "$sleep_interval"
 
 	bash src/bash/issue-tracker/issue-tracker.sh -a check-perl-syntax
-	# add your action implementation code here ... 
+   exit_code=$?
+	doLog " check-perl-syntax-1 exit_code: $exit_code "
+
+   test -z "$sleep_interval" || sleep "$sleep_interval"
+   test $exit_code -ne 0 && return
 
 	doLog "DEBUG STOP  doTestCheckPerlSyntax"
 }
