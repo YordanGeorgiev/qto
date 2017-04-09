@@ -2,9 +2,7 @@ package IssueTracker::App::Controller::FileIOController ;
 
 	use strict; use warnings;
 
-	my $VERSION = '1.0.0';    #doc at the end
-
-	our $module_trace = 1 ; 
+	my $VERSION = '1.0.0';    
 
 	require Exporter;
 	our @ISA = qw(Exporter);
@@ -19,6 +17,7 @@ package IssueTracker::App::Controller::FileIOController ;
    use IssueTracker::App::Model::DbHandlerFactory ; 
 
 	
+	our $module_trace = 0 ; 
 	our $appConfig						   = {} ; 
 	our $RunDir 						   = '' ; 
 	our $ProductBaseDir 				   = '' ; 
@@ -35,8 +34,9 @@ package IssueTracker::App::Controller::FileIOController ;
    our $rdbms_type                  = 'postgre' ; 
 
 =head1 SYNOPSIS
-
-
+      my $objFileIOController = 
+         'IssueTracker::App::Controller::FileIOController'->new ( \$appConfig ) ; 
+      ( $ret , $msg ) = $objFileIOController->doLoadIssuesFileToDb ( $issue_file ) ; 
 =cut 
 
 =head1 EXPORT
