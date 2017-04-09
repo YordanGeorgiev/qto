@@ -28,7 +28,7 @@ db_host = doc-pub-host
 db_port = 13306
 
 # OBS ! dev , tst , prd product instances to own db !
-db_name   = %Product_Type%_issue_tracker
+db_name   = %ProductType%_issue_tracker
 
 # the mariadb user name
 db_user = ysg
