@@ -151,7 +151,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                $hsr->{ $i } = {} ; 
                my $debug_msg = "item: $item " ; 
                $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
-               $item =~ m/^\s(\w)*\s*(\t{1,5})(.*)/ ; 
+               $item =~ m/^\s([a-zA-Z0-9]*)\s*(\t{1,5})(.*)/ ; 
                my $status = $1 ; 
                my $name = $3 ; 
                next unless $name ; 
