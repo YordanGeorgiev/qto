@@ -156,7 +156,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                my $name = $3 ; 
                next unless $name ; 
                $hsr->{ $i }->{ 'issue_id' } = $i ;
-               $hsr->{ $i }->{ 'item' } = $item ; 
+               # $hsr->{ $i }->{ 'item' } = $item ; 
                $hsr->{ $i }->{ 'prio' } = $i ; 
                $hsr->{ $i }->{ 'category' }     = $category ; 
                $hsr->{ $i }->{ 'status' }       = $status ; 

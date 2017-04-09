@@ -74,10 +74,10 @@ package IssueTracker::App::Controller::FileIOController ;
       return ( $ret , $msg ) if $ret != 0 ;  
 
 
-      my $objDbHandlerFactory = 'IssueTracker::App::Model::DbHandlerFactory'->new( \$appConfig );
+      my $objDbHandlerFactory = 'IssueTracker::App::Model::DbHandlerFactory'->new( \$appConfig , $self ) ; 
       my $objDbHandler 			= $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
       ( $ret , $msg )         = $objDbHandler->doInsertSqlHashData ( $hsr ) ; 
-      return ( $ret , $msg ) if $ret != 0 ;  
+      return ( $ret , $msg ) ; 
 
    } 
 
