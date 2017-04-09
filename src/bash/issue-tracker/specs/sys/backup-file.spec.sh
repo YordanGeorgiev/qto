@@ -36,7 +36,7 @@ doSpecBackupFile(){
 
 	# the file to be backup should be included in the full package of the app
 	test -z $include_file         && \
-		include_file="$product_instance_dir/met/.include.$wrap_name"
+		include_file="$product_instance_dir/met/.include.$run_unit"
 
 	
 	# the timestamped file to be backup should be included in the full package of the app

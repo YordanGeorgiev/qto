@@ -256,6 +256,8 @@ src/bash/issue-tracker/tests/generate-action-files.test.sh
 doc/pdf
 doc/pdf/README.pdf
 doc/md
+doc/md/issue-tracker-devops-guide.md
+doc/md/issue-tracker-user-stories.md
 1
 doc/txt/issue-tracker/funcs/generate-sql.func.txt
 doc/txt/issue-tracker/helps/generate-sql.help.txt

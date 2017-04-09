@@ -65,7 +65,7 @@ doPrintHelp(){
 		Installation is as simple as unzip -o <<full_package>> -d <<desired_base_dir>>
 		where <<full_package>> should look like: issue-tracker.0.0.2.prd.20160702_181412.ysg-host-name.zip
 		and <<disired_base_dir>> could be /tmp , /opt/ , /var , /even/longer/path
-		The required binaries for the $wrap_name are:
+		The required binaries for the $run_unit are:
 		- perl
 		If you want to use the vim's jump to tag function you would have to install also:
 		- ctags
@@ -85,7 +85,7 @@ doPrintHelp(){
 		  different binaries 
 		- if two instances of the same product having different versions can operate on 
 		  the same host simultaniously 
-		- in $wrap_name this ability to run multiple versions in multiple environments
+		- in $run_unit this ability to run multiple versions in multiple environments
         under even different *Nix users is in-built
 		- any custom software should be installed and run from a base dir: $base_dir
 
@@ -93,7 +93,7 @@ doPrintHelp(){
       - printing help with cmd switch -h ( verify with doTestHelp in test-sh )
       - prints the set in the script variables set during run-time
       - separation of host specific vars into separate cnfiguration file :
-       <<wrap_bash_dir>>/<<wrap_name>>.<<MyHost>>.cnf
+       <<wrap_bash_dir>>/<<run_unit>>.<<MyHost>>.cnf
        $ini_file
       - thus easier enabling portability between hosts
       - logging on terminal and into cnfigurable log file set now as:
