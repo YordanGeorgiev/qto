@@ -16,6 +16,9 @@ doRunPerlTests(){
 	perl src/perl/issue_tracker/t/TestLogger.pl
 	test -z "$sleep_iterval" || sleep $sleep_iterval
 	
+	doLog "INFO Component testing Logger.pm with TestLogger "
+	perl src/perl/issue_tracker/t/TestFileIOController.pl
+	test -z "$sleep_iterval" || sleep $sleep_iterval
 	doLog "INFO STOP  : doRunPerlTests"
 }
 # eof func doRunPerlTests

@@ -136,7 +136,7 @@ doResolveMyProductName	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiat
 doResolveMyProductOwner	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm	283;"	subroutine	language:Perl
 doResolveMyProductType	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm	255;"	subroutine	language:Perl
 doResolveMyProductVersion	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm	222;"	subroutine	language:Perl
-doResolveMyProductVersionDir	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm	139;"	subroutine	language:Perl
+doResolveMyProductInstanceDir	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm	139;"	subroutine	language:Perl
 doRestoreTmuxSession	src/bash/issue-tracker/funcs/sys/tmux/restore-tmux-session.func.sh	11;"	function	language:Sh
 doRunActions	src/bash/issue-tracker/issue-tracker.sh	71;"	function	language:Sh
 doRunCmdAndLog	src/bash/issue-tracker/issue-tracker.sh	294;"	function	language:Sh

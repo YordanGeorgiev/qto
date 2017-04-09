@@ -23,7 +23,7 @@ package IssueTracker::App::Utils::Initiator ;
 	our $RunDir 						= '' ; 
 	our $ProductBaseDir 				= '' ; 
 	our $ProductDir 					= '' ; 
-	our $ProductVersionDir 			= ''; 
+	our $ProductInstanceDir 			= ''; 
 	our $EnvironmentName 			= '' ; 
 	our $ProductName 					= '' ; 
 	our $ProductType 					= '' ; 
@@ -136,7 +136,7 @@ package IssueTracker::App::Utils::Initiator ;
 	# the product version dir is the dir where this product 
 	# instance is situated
 	# ---------------------------------------------------------
-	sub doResolveMyProductVersionDir {
+	sub doResolveMyProductInstanceDir {
 
 		my $self = shift;
 		my $msg  = ();
@@ -158,16 +158,16 @@ package IssueTracker::App::Utils::Initiator ;
 		}
 		
 		$product_instance_dir 					= join( '/' , @DirParts );
-		$ProductVersionDir 						= $product_instance_dir ; 
+		$ProductInstanceDir 						= $product_instance_dir ; 
 		$product_instance_dir 					= $self->untaint ( $product_instance_dir); 
-		$ProductVersionDir 						= $self->untaint ( $product_instance_dir); 
-		$self->{'ProductVersionDir'} 			= $ProductVersionDir ; 
-		$appConfig->{'ProductVersionDir'} 	= $ProductVersionDir ; 
+		$ProductInstanceDir 						= $self->untaint ( $product_instance_dir); 
+		$self->{'ProductInstanceDir'} 			= $ProductInstanceDir ; 
+		$appConfig->{'ProductInstanceDir'} 	= $ProductInstanceDir ; 
 		$self->{'appConfig'} 				= $appConfig; 
 
-		return $ProductVersionDir;
+		return $ProductInstanceDir;
 	}
-	#eof sub doResolveMyProductVersionDir
+	#eof sub doResolveMyProductInstanceDir
 
 	#
 	# ---------------------------------------------------------
@@ -179,8 +179,8 @@ package IssueTracker::App::Utils::Initiator ;
 		my $self = shift;
 		my $msg  = ();
 
-		my $ProductVersionDir 	= $self->doResolveMyProductVersionDir();
-		$EnvironmentName 			= $ProductVersionDir ; 
+		my $ProductInstanceDir 	= $self->doResolveMyProductInstanceDir();
+		$EnvironmentName 			= $ProductInstanceDir ; 
 		$EnvironmentName 			=~ s#$ProductBaseDir\/##g ;
 		$EnvironmentName 			=~ s#(.*?)(\/|\\)(.*)#$3#g ;
 		$EnvironmentName 			= $self->untaint ( $EnvironmentName ); 
@@ -225,7 +225,7 @@ package IssueTracker::App::Utils::Initiator ;
 		my $msg  = ();
 		
 		my $ProductVersion	= '' ;
-		my $ProductVersionDir 		= $self->doResolveMyProductVersionDir();
+		my $ProductInstanceDir 		= $self->doResolveMyProductInstanceDir();
 		my $EnvironmentName 			= $self->doResolveMyEnvironmentName();
 		
 
@@ -329,11 +329,11 @@ package IssueTracker::App::Utils::Initiator ;
 		my $self 						= shift;
 		my $msg  						= ();
 		
-		my $ProductVersionDir		= $self->doResolveMyProductVersionDir();
+		my $ProductInstanceDir		= $self->doResolveMyProductInstanceDir();
 		my $HostName					= $self->doResolveMyHostName();
 
 		# set the default ConfFile path if no cmd argument is provided
-		$ConfFile = "$ProductVersionDir/cnf/$ProductName.$HostName.cnf" ; 
+		$ConfFile = "$ProductInstanceDir/cnf/$ProductName.$HostName.cnf" ; 
 
 		$self->set('ConfFile' , $ConfFile) ; 
 		$appConfig->{'ConfFile'} 	= $ConfFile ; 
@@ -363,7 +363,7 @@ package IssueTracker::App::Utils::Initiator ;
 		bless( $self, $class );    # Say: $self is a $class
 
 		$ProductBaseDir 			= $self->doResolveMyProductBaseDir();
-		$ProductVersionDir 		= $self->doResolveMyProductVersionDir();
+		$ProductInstanceDir 		= $self->doResolveMyProductInstanceDir();
 		$EnvironmentName 			= $self->doResolveMyEnvironmentName();
 		$ProductName 				= $self->doResolveMyProductName();
 		$ProductVersion 			= $self->doResolveMyProductVersion();

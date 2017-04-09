@@ -34,7 +34,7 @@ package IssueTracker::App::Utils::Configurator ;
 		# Whether or not to pring TRACE messages
 		, PrintTraceMsgs =>                 1 
 		# The logging directory 
-		, LogDir => '%ProductVersionDir%/dat/log'
+		, LogDir => '%ProductInstanceDir%/dat/log'
 		# the environment name of this product instance 
 		, EnvironmentName =>   	'%ProductName%.%ProductVersion%.%ProductType%.%ProductOwner%'
 		# the default Log file

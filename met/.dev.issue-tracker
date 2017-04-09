@@ -54,6 +54,7 @@ src/bash/issue-tracker/helps/perl/run-perl-tests.help.sh
 src/bash/issue-tracker/specs/perl/run-perl-tests.spec.sh
 src/bash/issue-tracker/tests/perl/run-perl-tests.test.sh
 src/perl/issue_tracker/t
+src/perl/issue_tracker/t/TestFileIOController.pl
 src/perl/issue_tracker/t/TestInitiator.pm
 src/perl/issue_tracker/t/TestLogger.pl
 src/bash/issue-tracker/test-issue-tracker.sh

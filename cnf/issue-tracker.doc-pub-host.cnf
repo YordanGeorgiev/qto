@@ -1,7 +1,7 @@
 # file: cnf/issue-tracker.doc-pub-host.cnf
 
 # The logging directory 
-LogDir = %ProductVersionDir%/dat/log
+LogDir = %ProductInstanceDir%/dat/log
 
 # the default Log file
 LogFile =         %LogDir%/%ProductName%.log

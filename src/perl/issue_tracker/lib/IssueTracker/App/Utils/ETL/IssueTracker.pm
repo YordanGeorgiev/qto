@@ -27,7 +27,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 	our $RunDir 						= '' ; 
 	our $ProductBaseDir 				= '' ; 
 	our $ProductDir 					= '' ; 
-	our $ProductVersionDir 			= '' ; 
+	our $ProductInstanceDir 			= '' ; 
 	our $EnvironmentName 			= '' ; 
 	our $ProductName 					= '' ; 
 	our $ProductType 					= '' ; 
