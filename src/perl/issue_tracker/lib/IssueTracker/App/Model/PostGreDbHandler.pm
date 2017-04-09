@@ -81,17 +81,19 @@ package IssueTracker::App::Model::PostGreDbHandler ;
          , 'AutoCommit' => 1
       } ) or $msg = DBI->errstr;
       
-      $debug_msg        = 'msg: ' . $msg  ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
-      $ret  = $dbh->do( $str_sql_insert ) ; 
-      $msg = DBI->errstr || 'INSERT OK' ; 
+      $ret = $dbh->do( $str_sql_insert ) ; 
+      $msg = DBI->errstr ; 
+
+      unless ( defined ( $msg ) ) {
+         $msg = 'INSERT OK' ; 
+         $ret = 0 ; 
+      } else {
+         $objLogger->doLogErrorMsg ( $msg ) ; 
+      }
 
       # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
 
-      $debug_msg        = 'STOP  doInsertSqlHashData' ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-      
       $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
