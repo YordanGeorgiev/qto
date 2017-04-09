@@ -10,7 +10,7 @@ doCreateFullPackage(){
 
 	#define default vars
 	test -z $include_file         && \
-		include_file="$product_instance_dir/met/.$env_type.$wrap_name"
+		include_file="$product_instance_dir/met/.$env_type.$run_unit"
 
 	# relative file path is passed turn it to absolute one 
 	[[ $include_file == /* ]] || include_file=$product_instance_dir/$include_file
@@ -47,7 +47,7 @@ doCreateFullPackage(){
 	# All  input  patterns must match at least one file and all input files found must be readable.
 	set -x ; ret=1
 	cat $include_file | egrep -v "$perl_ignore_file_pattern" | egrep -v '^\s*#' | perl -ne 's|\n|\000|g;print'| \
-	xargs -0 -I "{}" zip -MM $zip_file "$org_name/$wrap_name/$environment_name/{}"
+	xargs -0 -I "{}" zip -MM $zip_file "$org_name/$run_unit/$environment_name/{}"
 	ret=$? 
 	set +x
 	test $ret -gt 0 && (
