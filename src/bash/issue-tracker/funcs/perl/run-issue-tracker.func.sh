@@ -13,11 +13,18 @@ doRunIssueTracker(){
 	# add your action implementation code here ... 
    nice_date=$(date "+%Y-%m-%d")
    nice_year=$(date "+%Y-%m")
-   issue_file='/vagrant/ysg/data/scrum/daily/'"$nice_year"'/'"$nice_date"'.daily-issues.ysg.txt'
+   issue_file="/vagrant/futu/futu-care/futu-care.1.0.1.prd.ysg/docs/txt/daily/""$nice_year""/""$nice_date"".daily-issues.ygeo.txt"
+   # issue_file='/vagrant/ysg/data/scrum/daily/'"$nice_year"'/'"$nice_date"'.daily-issues.ysg.txt'
    # issue_file='/vagrant/futu/telia/doc/txt/'"$nice_year"'/'"$nice_date"'.futu-telia-issues.txt'
 	
    # Action ... !!!
-	perl src/perl/issue_tracker/script/issue_tracker.pl --issue_file $issue_file
+   perl src/perl/issue_tracker/script/issue_tracker.pl --do file-to-db --issue_file $issue_file
+   exit_code=$?
+   doLog "INFO doRunIssueTracker exit_code $exit_code"
+   test $exit_code -ne 0 && doExit $exit_code "failed to run issue_tracker.pl"  
+   
+   # Action ... !!!
+	perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-xls
    exit_code=$?
    doLog "INFO doRunIssueTracker exit_code $exit_code"
    test $exit_code -ne 0 && doExit $exit_code "failed to run issue_tracker.pl"  
