@@ -62,7 +62,7 @@ my $objLogger                    = {} ;
 my $objFileHandler               = {} ; 
 my $msg                          = q{} ; 
 my $objConfigurator              = {} ; 
-
+my $actions                      = q{} ; 
 
 
    #
@@ -78,14 +78,43 @@ my $objConfigurator              = {} ;
 
       GetOptions(	
          'issue_file=s' => \$issue_file
+         , 'do=s'       => \$actions
       );
-      
-      $msg = 'issue_file to parse : ' . "\n" . $issue_file ; 
-      $objLogger->doLogInfoMsg ( "$msg" ) ; 
+     
+      $actions = 'file-to-db' unless ( $actions )  ; 
 
-      my $objFileIOController = 
-         'IssueTracker::App::Controller::FileIOController'->new ( \$appConfig ) ; 
-      ( $ret , $msg ) = $objFileIOController->doLoadIssuesFileToDb ( $issue_file ) ; 
+      my @actions = split /,/ , $actions ; 
+     
+      foreach my $action ( @actions ) { 
+         $msg = "running the $action action " ; 
+         $objLogger->doLogInfoMsg ( $msg ) ; 
+
+         if ( $action eq 'file-to-db' ) {
+
+            $msg = 'issue_file to parse : ' . "\n" . $issue_file ; 
+            $objLogger->doLogInfoMsg ( "$msg" ) ; 
+
+            my $objFileIOController = 
+               'IssueTracker::App::Controller::FileIOController'->new ( \$appConfig ) ; 
+            ( $ret , $msg ) = $objFileIOController->doLoadIssuesFileToDb ( $issue_file ) ; 
+         } elsif ( $action eq 'db-to-file' ) {
+             
+            $msg = 'issue_file to parse : ' . "\n" . $issue_file ; 
+            $objLogger->doLogInfoMsg ( "$msg" ) ; 
+
+            my $objFileIOController = 
+               'IssueTracker::App::Controller::FileIOController'->new ( \$appConfig ) ; 
+            ( $ret , $msg ) = $objFileIOController->doLoadDbIssuesToXls ( $issue_file ) ; 
+         } else {
+            
+            $msg = "unknown $action action !!!" ; 
+            $objLogger->doLogErrorMsg ( $msg ) ; 
+         }
+         
+
+      } 
+      #eof foreach action 
+      #
 
       doExit ( $ret , $msg ) ; 
 
