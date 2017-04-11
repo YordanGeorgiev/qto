@@ -52,7 +52,9 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 
 		   foreach my $key ( sort(keys( %{$row_hash} ) ) ) {
             $str_col_list .= ' , ' . $key ; 
-            $str_val_list .= ' , \'' . $row_hash->{ $key } . '\''; 
+            my $value     = $row_hash->{ $key } ; 
+            $value        =~ s/'/''/g ; 
+            $str_val_list .= ' , \'' . $value . '\''; 
          }
          
          $str_col_list = substr ( $str_col_list , 3 ) ; 
