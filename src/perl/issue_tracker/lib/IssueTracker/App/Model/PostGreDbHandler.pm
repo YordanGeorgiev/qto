@@ -113,9 +113,27 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       my $ret           = 1 ;          # this is the return value from this method 
       my $debug_msg     = q{} ; 
       my $hsr           = {} ;         # this is hash ref of hash refs to populate with
+      my $mhsr           = {} ;         # this is meta hash describing the data hash ^^
       my $sth           = {} ;         # this is the statement handle
       my $dbh           = {} ;         # this is the database handle
       my $str_sql       = q{} ;        # this is the sql string to use for the query
+
+      # Column     |          Type          | Modifiers | Storage  | Stats target | Description
+      # issue_id   | integer                | not null  | plain    |              |
+      # prio       | integer                |           | plain    |              |
+      # name       | character varying(400) | not null  | extended |              |
+      # status     | character varying(50)  | not null  | extended |              |
+      # category   | character varying(100) | not null  | extended |              |
+      # actual     | integer                |           | plain    |              |
+      # daily_date | character varying(50)  | not null  | extended |              |
+      #
+      $mhsr->{'ColumnNames'}-> { 0 } = 'issue_id' ;
+      $mhsr->{'ColumnNames'}-> { 1 } = 'prio' ;
+      $mhsr->{'ColumnNames'}-> { 2 } = 'name' ;
+      $mhsr->{'ColumnNames'}-> { 3 } = 'status' ;
+      $mhsr->{'ColumnNames'}-> { 4 } = 'category' ;
+      $mhsr->{'ColumnNames'}-> { 5 } = 'actual' ;
+      $mhsr->{'ColumnNames'}-> { 6 } = 'daily_date' ;
 
 
       $str_sql       = "SELECT * FROM $table ;" ; 
@@ -147,7 +165,7 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
-      return ( $ret , $msg , $hsr ) ; 	
+      return ( $ret , $msg , $hsr , $mhsr ) ; 	
    }
    # eof sub doSelectTableIntoHashRef
 

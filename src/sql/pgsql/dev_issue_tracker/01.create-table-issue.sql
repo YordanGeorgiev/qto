@@ -5,9 +5,9 @@ SELECT 'create the "issue" table' ;
 CREATE TABLE issue (
    issue_id    integer NOT NULL
  , prio        integer NULL
- , name        varchar(200) NOT NULL
+ , name        varchar(400) NOT NULL
  , status      varchar(50) NOT NULL
- , category    varchar(50) NOT NULL
+ , category    varchar(100) NOT NULL
  , actual      integer NULL
  , daily_date  varchar(50) NOT NULL
 

@@ -17,6 +17,7 @@ src/perl/issue_tracker/lib/IssueTracker/App
 src/perl/issue_tracker/lib/IssueTracker/App/Data/
 src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelBuilder.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Controller/FileIOController.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Controller/DbIOController.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/ETL
 src/perl/issue_tracker/lib/IssueTracker/App/Model/DbHandlerFactory.pm
