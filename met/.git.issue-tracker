@@ -14,7 +14,10 @@ src/perl/issue_tracker
 src/perl/issue_tracker/lib
 src/perl/issue_tracker/lib/IssueTracker
 src/perl/issue_tracker/lib/IssueTracker/App
+src/perl/issue_tracker/lib/IssueTracker/App/Data/
+src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelBuilder.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Controller/FileIOController.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Controller/DbIOController.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/ETL
 src/perl/issue_tracker/lib/IssueTracker/App/Model/DbHandlerFactory.pm
@@ -29,6 +32,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm
 src/perl/issue_tracker/script
 src/perl/issue_tracker/script/issue_tracker.pl
 src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
+1
 doc/txt/issue-tracker/funcs/perl/run-issue-tracker.func.txt
 doc/txt/issue-tracker/helps/perl/run-issue-tracker.help.txt
 doc/txt/issue-tracker/specs/perl/run-issue-tracker.spec.txt
@@ -37,6 +41,7 @@ src/bash/issue-tracker/helps/perl/run-issue-tracker.help.sh
 src/bash/issue-tracker/specs/perl/run-issue-tracker.spec.sh
 src/bash/issue-tracker/funcs/perl/run-issue-tracker.func.sh
 src/bash/issue-tracker/tests/perl/run-issue-tracker.test.sh
+1
 doc/txt/issue-tracker/funcs/perl/check-perl-syntax.func.txt
 doc/txt/issue-tracker/helps/perl/check-perl-syntax.help.txt
 doc/txt/issue-tracker/specs/perl/check-perl-syntax.spec.txt
@@ -256,6 +261,8 @@ src/bash/issue-tracker/tests/generate-action-files.test.sh
 doc/pdf
 doc/pdf/README.pdf
 doc/md
+doc/md/issue-tracker-devops-guide.md
+doc/md/issue-tracker-user-stories.md
 1
 doc/txt/issue-tracker/funcs/generate-sql.func.txt
 doc/txt/issue-tracker/helps/generate-sql.help.txt
