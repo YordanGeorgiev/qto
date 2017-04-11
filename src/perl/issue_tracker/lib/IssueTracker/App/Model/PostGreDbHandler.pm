@@ -101,6 +101,57 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 	}
 	#eof sub doInsertSqlHashData
 
+   #
+   # -----------------------------------------------------------------------------
+   # get ALL the table data into hash ref of hash refs 
+   # -----------------------------------------------------------------------------
+   sub doSelectTableIntoHashRef {
+      my $self             = shift ; 
+      my $table            = shift ;      # the table to get the data from  
+      
+      my $msg           = q{} ;         
+      my $ret           = 1 ;          # this is the return value from this method 
+      my $debug_msg     = q{} ; 
+      my $hsr           = {} ;         # this is hash ref of hash refs to populate with
+      my $sth           = {} ;         # this is the statement handle
+      my $dbh           = {} ;         # this is the database handle
+      my $str_sql       = q{} ;        # this is the sql string to use for the query
+
+
+      $str_sql       = "SELECT * FROM $table ;" ; 
+
+      # authentication src: http://stackoverflow.com/a/19980156/65706
+      $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+     
+      $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
+           'RaiseError' => 1
+         , 'ShowErrorStatement' => 1
+         , 'AutoCommit' => 1
+      } ) or $msg = DBI->errstr;
+      
+      # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
+      $sth = $dbh->prepare($str_sql);  
+      $hsr = $sth->fetchall_hashref( $str_sql ) ; 
+      $msg = DBI->errstr ; 
+
+      unless ( defined ( $msg ) ) {
+         $msg = 'SELECT OK for table: ' . "$table" ; 
+         $ret = 0 ; 
+      } else {
+         $objLogger->doLogErrorMsg ( $msg ) ; 
+      }
+
+      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
+      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      
+      return ( $ret , $msg , $hsr ) ; 	
+   }
+   # eof sub doSelectTableIntoHashRef
+
+
 
    #
    # -----------------------------------------------------------------------------
