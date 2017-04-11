@@ -36,7 +36,7 @@ package IssueTracker::App::Controller::DbIOController ;
 =head1 SYNOPSIS
       my $objDbIOController = 
          'IssueTracker::App::Controller::DbIOController'->new ( \$appConfig ) ; 
-      ( $ret , $msg ) = $objDbIOController->doLoadIssuesFileToDb ( $issue_file ) ; 
+      ( $ret , $msg ) = $objDbIOController->doLoadIssuesFileToDb ( $issues_file ) ; 
 =cut 
 
 =head1 EXPORT
@@ -60,7 +60,7 @@ package IssueTracker::App::Controller::DbIOController ;
    sub doLoadDbIssuesToXls {
 
       my $self                = shift ; 
-      my $issue_file          = shift ; 	
+      my $issues_file          = shift ; 	
 
       my $ret                 = 1 ; 
       my $msg                 = 'unknown error while loading db issues to xls file' ; 

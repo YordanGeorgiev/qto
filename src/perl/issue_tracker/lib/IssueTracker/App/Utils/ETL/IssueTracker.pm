@@ -67,30 +67,30 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 	sub doReadIssueFile {
 
       my $self       = shift ; 
-      my $issue_file = shift ; 
+      my $issues_file = shift ; 
       my $msg  = '' ; 
       my $ret  = 1 ; 
       
-      my $str_issue_file = q{} ; 
+      my $str_issues_file = q{} ; 
 
       $objLogger->doLogInfoMsg ( " START doReadIssueFile" ) ; 
 
 
-      unless ( -r $issue_file ) {
-         $msg = "the issue_file : $issue_file does not exist !!!" ; 
+      unless ( -r $issues_file ) {
+         $msg = "the issues_file : $issues_file does not exist !!!" ; 
          $objLogger->doLogFatalMsg ( $msg ) ; 
       }
       else {
 
-         $str_issue_file = $objFileHandler->ReadFileReturnString ( $issue_file , 'utf8' ) ; 
+         $str_issues_file = $objFileHandler->ReadFileReturnString ( $issues_file , 'utf8' ) ; 
          $ret = 0 ; 
-         $msg = "read successfully issue_file : $issue_file" ; 
-         $objLogger->doLogDebugMsg ( $str_issue_file ) if ( $module_trace == 1 ) ; 
+         $msg = "read successfully issues_file : $issues_file" ; 
+         $objLogger->doLogDebugMsg ( $str_issues_file ) if ( $module_trace == 1 ) ; 
       }
       
       $msg =  " STOP  doReadIssueFile with ret: $ret" ; 
       $objLogger->doLogInfoMsg ( $msg ) ; 
-      return ( $ret , $msg , $str_issue_file ) ; 
+      return ( $ret , $msg , $str_issues_file ) ; 
 	}
 	# eof sub doConvertMdFileToBigSqlHash
 

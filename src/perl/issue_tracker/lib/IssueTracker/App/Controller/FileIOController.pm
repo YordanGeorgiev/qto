@@ -36,7 +36,7 @@ package IssueTracker::App::Controller::FileIOController ;
 =head1 SYNOPSIS
       my $objFileIOController = 
          'IssueTracker::App::Controller::FileIOController'->new ( \$appConfig ) ; 
-      ( $ret , $msg ) = $objFileIOController->doLoadIssuesFileToDb ( $issue_file ) ; 
+      ( $ret , $msg ) = $objFileIOController->doLoadIssuesFileToDb ( $issues_file ) ; 
 =cut 
 
 =head1 EXPORT
@@ -60,15 +60,15 @@ package IssueTracker::App::Controller::FileIOController ;
    sub doLoadIssuesFileToDb {
 
       my $self                = shift ; 
-      my $issue_file          = shift ; 	
+      my $issues_file          = shift ; 	
       my $objIssueTracker 	   = 'IssueTracker::App::Utils::ETL::IssueTracker'->new ( \$appConfig ) ; 
-      my ( $ret , $msg , $str_issue_file ) 
-                              = $objIssueTracker->doReadIssueFile ( $issue_file ) ; 
+      my ( $ret , $msg , $str_issues_file ) 
+                              = $objIssueTracker->doReadIssueFile ( $issues_file ) ; 
       return ( $ret , $msg ) if $ret != 0 ;  
 
       my $hsr = {} ;          # a hash ref of hash refs 	
       ( $ret , $msg , $hsr ) 
-                              = $objIssueTracker->doConvertStrToHashRef ( $str_issue_file ) ; 
+                              = $objIssueTracker->doConvertStrToHashRef ( $str_issues_file ) ; 
       p($hsr) if $module_trace == 1 ; 
 
       return ( $ret , $msg ) if $ret != 0 ;  

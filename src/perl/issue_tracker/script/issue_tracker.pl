@@ -55,7 +55,7 @@ use IssueTracker::App::Controller::DbIOController ;
 my $module_trace                 = 1 ; 
 my $md_file 							= '' ; 
 my $rdbms_type 						= 'postgre' ; #todo: parametrize to 
-my $issue_file                   = '' ; 
+my $issues_file                   = '' ; 
 my $objInitiator                 = {} ; 
 my $appConfig                    = {} ; 
 my $objLogger                    = {} ; 
@@ -77,10 +77,11 @@ my $actions                      = q{} ;
       doInitialize();	
 
       GetOptions(	
-         'issue_file=s' => \$issue_file
+         'issues_file=s' => \$issues_file
          , 'do=s'       => \$actions
       );
-     
+      
+      $appConfig->{ 'issues_file' } = $issues_file ; 
       $actions = 'file-to-db' unless ( $actions )  ; 
 
       my @actions = split /,/ , $actions ; 
@@ -90,20 +91,20 @@ my $actions                      = q{} ;
          $objLogger->doLogInfoMsg ( $msg ) ; 
 
          if ( $action eq 'file-to-db' ) {
-            $msg = 'issue_file to parse : ' . "\n" . $issue_file ; 
+            $msg = 'issues_file to parse : ' . "\n" . $issues_file ; 
             $objLogger->doLogInfoMsg ( "$msg" ) ; 
 
             my $objFileIOController = 
                'IssueTracker::App::Controller::FileIOController'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objFileIOController->doLoadIssuesFileToDb ( $issue_file ) ; 
+            ( $ret , $msg ) = $objFileIOController->doLoadIssuesFileToDb ( $issues_file ) ; 
          } 
          elsif ( $action eq 'db-to-xls' ) {
-            $msg = 'issue_file to parse : ' . "\n" . $issue_file ; 
+            $msg = 'issues_file to parse : ' . "\n" . $issues_file ; 
             $objLogger->doLogInfoMsg ( "$msg" ) ; 
 
             my $objDbIOController = 
                'IssueTracker::App::Controller::DbIOController'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objDbIOController->doLoadDbIssuesToXls ( $issue_file ) ; 
+            ( $ret , $msg ) = $objDbIOController->doLoadDbIssuesToXls ( $issues_file ) ; 
          } 
          else {
             $msg = "unknown $action action !!!" ; 

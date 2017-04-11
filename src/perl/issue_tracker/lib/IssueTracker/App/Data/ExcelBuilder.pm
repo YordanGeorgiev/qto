@@ -32,14 +32,16 @@ package IssueTracker::App::Data::ExcelBuilder ;
       my $self             = shift ; 
       my $hsr_meta         = shift ; 
       my $hsr              = shift ; 
-
       my $msg              = q{} ; 
       #debug ok p($hsr ) if $module_trace == 1 ; 
-    
+      
       my $objTimer = 'IssueTracker::App::Utils::Timer'->new() ; 
 	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
-		#old return "$year\.$mon\.$mday" . "-" . "$hour\:$min\:$sec"; 
-      my $xls_file_name    = 'futu-proj-data_' . "$year" . "$mon" . "$mday" . '_' . "$hour" . "$min" . "$sec" ; 
+
+      my $issues_file      = $appConfig->{ 'issues_file' } ; 
+      my $xls_file_name    = $issues_file ; 
+      $xls_file_name       =~ s/(.*)(\\|\/)(.*)\.([a-zA-Z0-9]*)/$3/g ; 
+      $xls_file_name    = "$xls_file_name" . '.' . "$hour" . "$min" . "$sec" ; 
       my $xls_dir          = "$ProductInstanceDir/dat/xls/run" ; 
       $objFileHandler->MkDir ( "$xls_dir" ) ; 
       my $xls_file         = "$xls_dir/$xls_file_name" . '.xlsx' ; 
