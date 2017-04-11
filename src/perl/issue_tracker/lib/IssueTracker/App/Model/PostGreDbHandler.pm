@@ -101,6 +101,7 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 	}
 	#eof sub doInsertSqlHashData
 
+
    #
    # -----------------------------------------------------------------------------
    # get ALL the table data into hash ref of hash refs 
@@ -135,8 +136,17 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       $mhsr->{'ColumnNames'}-> { 5 } = 'actual' ;
       $mhsr->{'ColumnNames'}-> { 6 } = 'daily_date' ;
 
-
-      $str_sql       = "SELECT * FROM $table ;" ; 
+      $str_sql = 
+         " SELECT 
+              issue_id
+            , prio
+            , name
+            , status
+            , category
+            , actual
+            , daily_date
+         FROM $table ;
+      " ; 
 
       # authentication src: http://stackoverflow.com/a/19980156/65706
       $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
@@ -151,7 +161,13 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
-      $hsr = $sth->fetchall_hashref( $str_sql ) ; 
+
+      $sth->execute()
+            or $objLogger->error ( "$DBI::errstr" ) ;
+
+      $hsr = $sth->fetchall_hashref( 'issue_id' ) ; 
+      p( $hsr ) if $module_trace == 1 ; 
+
       $msg = DBI->errstr ; 
 
       unless ( defined ( $msg ) ) {

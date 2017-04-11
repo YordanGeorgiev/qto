@@ -36,7 +36,7 @@ package IssueTracker::App::Data::ExcelBuilder ;
       my $msg              = q{} ; 
       #debug ok p($hsr ) if $module_trace == 1 ; 
     
-      my $objTimer = 'FutuCareTimeTracker::App::Utils::Timer'->new() ; 
+      my $objTimer = 'IssueTracker::App::Utils::Timer'->new() ; 
 	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
 		#old return "$year\.$mon\.$mday" . "-" . "$hour\:$min\:$sec"; 
       my $xls_file_name    = 'futu-proj-data_' . "$year" . "$mon" . "$mday" . '_' . "$hour" . "$min" . "$sec" ; 
@@ -148,9 +148,9 @@ package IssueTracker::App::Data::ExcelBuilder ;
       my $self = shift ; 
 
       #debug print "ExcelBuilder::doInitialize appConfig : " . p($appConfig );
-	   $objLogger 			   = 'FutuCareTimeTracker::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			   = 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
       $ProductInstanceDir   = $appConfig->{ 'ProductInstanceDir' } ; 
-	   $objFileHandler 	   = 'FutuCareTimeTracker::App::Utils::IO::FileHandler'->new( \$appConfig ) ;
+	   $objFileHandler 	   = 'IssueTracker::App::Utils::IO::FileHandler'->new( \$appConfig ) ;
 
    }
    #eof sub doInitialize

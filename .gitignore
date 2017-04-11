@@ -1,3 +1,5 @@
 # exclude all the zip files
 **/*.zip
 **/*.log
+dat/xls/run/*.xlsx
+dat/tests/t*.txt

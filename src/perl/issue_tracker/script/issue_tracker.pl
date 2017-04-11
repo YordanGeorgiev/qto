@@ -50,7 +50,7 @@ use IssueTracker::App::Utils::IO::FileHandler ;
 use IssueTracker::App::Utils::ETL::IssueTracker ; 
 use IssueTracker::App::Model::DbHandlerFactory ; 
 use IssueTracker::App::Model::PostGreDbHandler ; 
-
+use IssueTracker::App::Controller::DbIOController ; 
 
 my $module_trace                 = 1 ; 
 my $md_file 							= '' ; 
@@ -90,23 +90,22 @@ my $actions                      = q{} ;
          $objLogger->doLogInfoMsg ( $msg ) ; 
 
          if ( $action eq 'file-to-db' ) {
-
             $msg = 'issue_file to parse : ' . "\n" . $issue_file ; 
             $objLogger->doLogInfoMsg ( "$msg" ) ; 
 
             my $objFileIOController = 
                'IssueTracker::App::Controller::FileIOController'->new ( \$appConfig ) ; 
             ( $ret , $msg ) = $objFileIOController->doLoadIssuesFileToDb ( $issue_file ) ; 
-         } elsif ( $action eq 'db-to-file' ) {
-             
+         } 
+         elsif ( $action eq 'db-to-xls' ) {
             $msg = 'issue_file to parse : ' . "\n" . $issue_file ; 
             $objLogger->doLogInfoMsg ( "$msg" ) ; 
 
-            my $objFileIOController = 
-               'IssueTracker::App::Controller::FileIOController'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objFileIOController->doLoadDbIssuesToXls ( $issue_file ) ; 
-         } else {
-            
+            my $objDbIOController = 
+               'IssueTracker::App::Controller::DbIOController'->new ( \$appConfig ) ; 
+            ( $ret , $msg ) = $objDbIOController->doLoadDbIssuesToXls ( $issue_file ) ; 
+         } 
+         else {
             $msg = "unknown $action action !!!" ; 
             $objLogger->doLogErrorMsg ( $msg ) ; 
          }
@@ -114,12 +113,11 @@ my $actions                      = q{} ;
 
       } 
       #eof foreach action 
-      #
 
       doExit ( $ret , $msg ) ; 
 
    }
-
+   #eof sub main
 
 
    sub doInitialize {
