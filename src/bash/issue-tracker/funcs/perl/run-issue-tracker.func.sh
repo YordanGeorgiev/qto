@@ -13,7 +13,8 @@ doRunIssueTracker(){
 	# add your action implementation code here ... 
    nice_date=$(date "+%Y-%m-%d")
    nice_year=$(date "+%Y-%m")
-   issue_file='/vagrant/ysg/data/scrum/daily/'"$nice_year"'/'"$nice_date"'.daily-issues.ysg.txt'
+   # issue_file='/vagrant/ysg/data/scrum/daily/'"$nice_year"'/'"$nice_date"'.daily-issues.ysg.txt'
+   issue_file='/vagrant/futu/telia/doc/txt/'"$nice_year"'/'"$nice_date"'.futu-telia-issues.txt'
 	
    # Action ... !!!
 	perl src/perl/issue_tracker/script/issue_tracker.pl --issue_file $issue_file
