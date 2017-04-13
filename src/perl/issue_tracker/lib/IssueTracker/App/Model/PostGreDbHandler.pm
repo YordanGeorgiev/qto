@@ -121,28 +121,34 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       my $dbh           = {} ;         # this is the database handle
       my $str_sql       = q{} ;        # this is the sql string to use for the query
 
-      # Column     |          Type          | Modifiers | Storage  | Stats target | Description
-      # issue_id   | integer                | not null  | plain    |              |
-      # prio       | integer                |           | plain    |              |
-      # name       | character varying(400) | not null  | extended |              |
-      # status     | character varying(50)  | not null  | extended |              |
-      # category   | character varying(100) | not null  | extended |              |
-      # actual     | integer                |           | plain    |              |
-      # daily_date | character varying(50)  | not null  | extended |              |
-      #
+
+#         Column    |          Type           | Modifiers | Storage  | Stats target | Description
+#      -------------+-------------------------+-----------+----------+--------------+-------------
+#       issue_id    | integer                 | not null  | plain    |              |
+#       prio        | integer                 |           | plain    |              |
+#       name        | character varying(100)  | not null  | extended |              |
+#       description | character varying(1000) |           | extended |              |
+#       status      | character varying(50)   | not null  | extended |              |
+#       category    | character varying(100)  | not null  | extended |              |
+#       actual      | integer                 |           | plain    |              |
+#       daily_date  | character varying(50)   | not null  | extended |              |
+
+
       $mhsr->{'ColumnNames'}-> { 0 } = 'issue_id' ;
       $mhsr->{'ColumnNames'}-> { 1 } = 'prio' ;
       $mhsr->{'ColumnNames'}-> { 2 } = 'name' ;
-      $mhsr->{'ColumnNames'}-> { 3 } = 'status' ;
-      $mhsr->{'ColumnNames'}-> { 4 } = 'category' ;
-      $mhsr->{'ColumnNames'}-> { 5 } = 'actual' ;
-      $mhsr->{'ColumnNames'}-> { 6 } = 'daily_date' ;
+      $mhsr->{'ColumnNames'}-> { 3 } = 'description' ;
+      $mhsr->{'ColumnNames'}-> { 4 } = 'status' ;
+      $mhsr->{'ColumnNames'}-> { 5 } = 'category' ;
+      $mhsr->{'ColumnNames'}-> { 6 } = 'actual' ;
+      $mhsr->{'ColumnNames'}-> { 7 } = 'daily_date' ;
 
       $str_sql = 
          " SELECT 
               issue_id
             , prio
             , name
+            , description
             , status
             , category
             , actual

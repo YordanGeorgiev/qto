@@ -122,9 +122,11 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 
          foreach my $category_item ( @arr_category_items ) {
             # START DAILY 2017-04-02 09:30 su
-            if ( $category_item =~ m/^\s*#\s*START DAILY ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) {
+            if ( $category_item =~ m/^\s*#\s*START\s+[(DAILY)|(MONTHLY)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) {
                $current_date = $1 ; 
             }
+            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(DAILY)|(MONTHLY)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
+
 
             my $debug_msg = "category_item: $category_item " ; 
             $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
@@ -160,7 +162,23 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                $hsr->{ $i }->{ 'prio' } = $i ; 
                $hsr->{ $i }->{ 'category' }     = $category ; 
                $hsr->{ $i }->{ 'status' }       = $status ; 
-               $hsr->{ $i }->{ 'name' }         = $name ; 
+               # the title is the first line of the title description
+               my $title = ( split /\n/, $name )[0] ; 
+               
+               # the description is what is left from the name 
+               my $description = $name ; 
+               $description =~ s/$title//gm ; 
+
+               # but only if something is left 
+               $description = $title unless ( $description ) ;  
+
+               # and the title should not be longer than 90 chars
+               $title = substr($title, 0, 90 ) . ' ...' if length ( $title ) > 90 ; 
+
+               $hsr->{ $i }->{ 'name' }         = $title ; 
+               $hsr->{ $i }->{ 'description' }  = $description ; 
+            
+
                $hsr->{ $i }->{ 'daily_date' }   = $current_date ; 
                # plan vs. actual , closed ?! , past ?!
                $hsr->{ $i }->{ 'actual' }       = $flag_current ; 
