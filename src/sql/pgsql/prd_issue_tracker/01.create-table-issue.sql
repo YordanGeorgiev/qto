@@ -4,6 +4,7 @@
 SELECT 'create the "issue" table' ; 
 CREATE TABLE issue (
    issue_id    integer NOT NULL
+ , level       integer NULL
  , prio        integer NULL
  , name        varchar(100) NOT NULL
  , description varchar(1000) NULL

@@ -109,17 +109,18 @@ package IssueTracker::App::Model::PostGreDbHandler ;
    # get ALL the table data into hash ref of hash refs 
    # -----------------------------------------------------------------------------
    sub doSelectTableIntoHashRef {
+
       my $self             = shift ; 
       my $table            = shift ;      # the table to get the data from  
       
-      my $msg           = q{} ;         
-      my $ret           = 1 ;          # this is the return value from this method 
-      my $debug_msg     = q{} ; 
-      my $hsr           = {} ;         # this is hash ref of hash refs to populate with
-      my $mhsr           = {} ;         # this is meta hash describing the data hash ^^
-      my $sth           = {} ;         # this is the statement handle
-      my $dbh           = {} ;         # this is the database handle
-      my $str_sql       = q{} ;        # this is the sql string to use for the query
+      my $msg              = q{} ;         
+      my $ret              = 1 ;          # this is the return value from this method 
+      my $debug_msg        = q{} ; 
+      my $hsr              = {} ;         # this is hash ref of hash refs to populate with
+      my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
+      my $sth              = {} ;         # this is the statement handle
+      my $dbh              = {} ;         # this is the database handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
 
 
 #         Column    |          Type           | Modifiers | Storage  | Stats target | Description
@@ -135,17 +136,19 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 
 
       $mhsr->{'ColumnNames'}-> { 0 } = 'issue_id' ;
-      $mhsr->{'ColumnNames'}-> { 1 } = 'prio' ;
-      $mhsr->{'ColumnNames'}-> { 2 } = 'name' ;
-      $mhsr->{'ColumnNames'}-> { 3 } = 'description' ;
-      $mhsr->{'ColumnNames'}-> { 4 } = 'status' ;
-      $mhsr->{'ColumnNames'}-> { 5 } = 'category' ;
-      $mhsr->{'ColumnNames'}-> { 6 } = 'actual' ;
-      $mhsr->{'ColumnNames'}-> { 7 } = 'daily_date' ;
+      $mhsr->{'ColumnNames'}-> { 1 } = 'level' ;
+      $mhsr->{'ColumnNames'}-> { 2 } = 'prio' ;
+      $mhsr->{'ColumnNames'}-> { 3 } = 'name' ;
+      $mhsr->{'ColumnNames'}-> { 4 } = 'description' ;
+      $mhsr->{'ColumnNames'}-> { 5 } = 'status' ;
+      $mhsr->{'ColumnNames'}-> { 6 } = 'category' ;
+      $mhsr->{'ColumnNames'}-> { 7 } = 'actual' ;
+      $mhsr->{'ColumnNames'}-> { 8 } = 'daily_date' ;
 
       $str_sql = 
          " SELECT 
               issue_id
+            , level 
             , prio
             , name
             , description

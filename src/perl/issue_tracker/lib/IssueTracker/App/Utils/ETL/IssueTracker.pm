@@ -146,8 +146,12 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
             next unless ( $category ) ; 
             $category      =~ s/([\s\t]{0,5})(\w)([\s\t]{0,5})/$2/g ; 
             $category_item =~ s/$category//mg ; 
-            my @arr_items  = split '\n(\s*)\-' , $category_item ; 
-
+            my $tmp_category_item = $category_item ; 
+            my $item_levels = {} ; 
+            $tmp_category_item =~ s/\n(\s*)([\-]{1,7})/$self->doFillInLevelsPerRow( $2 , \$item_levels )/emg ; 
+            my @arr_items  = split '\n(\s*)([\-]{1,7})' , $category_item ; 
+            
+            my $category_item_count = 0 ; 
             foreach my $item ( @arr_items ) {
                next unless $item ; 
                $hsr->{ $i } = {} ; 
@@ -158,6 +162,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                my $name = $3 ; 
                next unless $name ; 
                $hsr->{ $i }->{ 'issue_id' } = $i ;
+               $hsr->{ $i }->{ 'level' } = $item_levels->{ $category_item_count } ; 
                # $hsr->{ $i }->{ 'item' } = $item ; 
                $hsr->{ $i }->{ 'prio' } = $i ; 
                $hsr->{ $i }->{ 'category' }     = $category ; 
@@ -191,6 +196,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                   $objLogger->doLogDebugMsg ( $debug_msg ) ;  
                }
                $i++ ; 
+               $category_item_count++ ; 
             }
             #eof foreach my $item 
          }
@@ -206,6 +212,22 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       return ( $ret , $msg , $hsr ) ; 
    }	
    # eof sub StrToHashRef 
+
+
+
+
+   sub doFillInLevelsPerRow {
+
+      my $self                = shift ; 
+      my $str_dashes          = shift ; 
+      my $ref_item_levels     = shift ; 
+      my $item_levels         = $$ref_item_levels ; 
+
+      my $row_num = scalar keys %$$ref_item_levels ; 
+      my $num_of_dashes = () = $str_dashes =~ /\-/gi;
+      $item_levels->{ $row_num } = $num_of_dashes ; 
+
+   } 
 
 
 	#
