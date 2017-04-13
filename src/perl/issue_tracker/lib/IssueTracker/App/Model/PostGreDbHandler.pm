@@ -109,40 +109,49 @@ package IssueTracker::App::Model::PostGreDbHandler ;
    # get ALL the table data into hash ref of hash refs 
    # -----------------------------------------------------------------------------
    sub doSelectTableIntoHashRef {
+
       my $self             = shift ; 
       my $table            = shift ;      # the table to get the data from  
       
-      my $msg           = q{} ;         
-      my $ret           = 1 ;          # this is the return value from this method 
-      my $debug_msg     = q{} ; 
-      my $hsr           = {} ;         # this is hash ref of hash refs to populate with
-      my $mhsr           = {} ;         # this is meta hash describing the data hash ^^
-      my $sth           = {} ;         # this is the statement handle
-      my $dbh           = {} ;         # this is the database handle
-      my $str_sql       = q{} ;        # this is the sql string to use for the query
+      my $msg              = q{} ;         
+      my $ret              = 1 ;          # this is the return value from this method 
+      my $debug_msg        = q{} ; 
+      my $hsr              = {} ;         # this is hash ref of hash refs to populate with
+      my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
+      my $sth              = {} ;         # this is the statement handle
+      my $dbh              = {} ;         # this is the database handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
 
-      # Column     |          Type          | Modifiers | Storage  | Stats target | Description
-      # issue_id   | integer                | not null  | plain    |              |
-      # prio       | integer                |           | plain    |              |
-      # name       | character varying(400) | not null  | extended |              |
-      # status     | character varying(50)  | not null  | extended |              |
-      # category   | character varying(100) | not null  | extended |              |
-      # actual     | integer                |           | plain    |              |
-      # daily_date | character varying(50)  | not null  | extended |              |
-      #
+
+#         Column    |          Type           | Modifiers | Storage  | Stats target | Description
+#      -------------+-------------------------+-----------+----------+--------------+-------------
+#       issue_id    | integer                 | not null  | plain    |              |
+#       prio        | integer                 |           | plain    |              |
+#       name        | character varying(100)  | not null  | extended |              |
+#       description | character varying(1000) |           | extended |              |
+#       status      | character varying(50)   | not null  | extended |              |
+#       category    | character varying(100)  | not null  | extended |              |
+#       actual      | integer                 |           | plain    |              |
+#       daily_date  | character varying(50)   | not null  | extended |              |
+
+
       $mhsr->{'ColumnNames'}-> { 0 } = 'issue_id' ;
-      $mhsr->{'ColumnNames'}-> { 1 } = 'prio' ;
-      $mhsr->{'ColumnNames'}-> { 2 } = 'name' ;
-      $mhsr->{'ColumnNames'}-> { 3 } = 'status' ;
-      $mhsr->{'ColumnNames'}-> { 4 } = 'category' ;
-      $mhsr->{'ColumnNames'}-> { 5 } = 'actual' ;
-      $mhsr->{'ColumnNames'}-> { 6 } = 'daily_date' ;
+      $mhsr->{'ColumnNames'}-> { 1 } = 'level' ;
+      $mhsr->{'ColumnNames'}-> { 2 } = 'prio' ;
+      $mhsr->{'ColumnNames'}-> { 3 } = 'name' ;
+      $mhsr->{'ColumnNames'}-> { 4 } = 'description' ;
+      $mhsr->{'ColumnNames'}-> { 5 } = 'status' ;
+      $mhsr->{'ColumnNames'}-> { 6 } = 'category' ;
+      $mhsr->{'ColumnNames'}-> { 7 } = 'actual' ;
+      $mhsr->{'ColumnNames'}-> { 8 } = 'daily_date' ;
 
       $str_sql = 
          " SELECT 
               issue_id
+            , level 
             , prio
             , name
+            , description
             , status
             , category
             , actual

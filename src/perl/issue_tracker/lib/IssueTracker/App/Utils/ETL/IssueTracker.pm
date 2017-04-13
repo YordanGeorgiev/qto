@@ -122,9 +122,11 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 
          foreach my $category_item ( @arr_category_items ) {
             # START DAILY 2017-04-02 09:30 su
-            if ( $category_item =~ m/^\s*#\s*START DAILY ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) {
+            if ( $category_item =~ m/^\s*#\s*START\s+[(DAILY)|(MONTHLY)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) {
                $current_date = $1 ; 
             }
+            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(DAILY)|(MONTHLY)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
+
 
             my $debug_msg = "category_item: $category_item " ; 
             $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
@@ -144,8 +146,12 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
             next unless ( $category ) ; 
             $category      =~ s/([\s\t]{0,5})(\w)([\s\t]{0,5})/$2/g ; 
             $category_item =~ s/$category//mg ; 
-            my @arr_items  = split '\n(\s*)\-' , $category_item ; 
-
+            my $tmp_category_item = $category_item ; 
+            my $item_levels = {} ; 
+            $tmp_category_item =~ s/\n(\s*)([\-]{1,7})/$self->doFillInLevelsPerRow( $2 , \$item_levels )/emg ; 
+            my @arr_items  = split '\n(\s*)([\-]{1,7})' , $category_item ; 
+            
+            my $category_item_count = 0 ; 
             foreach my $item ( @arr_items ) {
                next unless $item ; 
                $hsr->{ $i } = {} ; 
@@ -156,11 +162,28 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                my $name = $3 ; 
                next unless $name ; 
                $hsr->{ $i }->{ 'issue_id' } = $i ;
+               $hsr->{ $i }->{ 'level' } = $item_levels->{ $category_item_count } ; 
                # $hsr->{ $i }->{ 'item' } = $item ; 
                $hsr->{ $i }->{ 'prio' } = $i ; 
                $hsr->{ $i }->{ 'category' }     = $category ; 
                $hsr->{ $i }->{ 'status' }       = $status ; 
-               $hsr->{ $i }->{ 'name' }         = $name ; 
+               # the title is the first line of the title description
+               my $title = ( split /\n/, $name )[0] ; 
+               
+               # the description is what is left from the name 
+               my $description = $name ; 
+               $description =~ s/$title//gm ; 
+
+               # but only if something is left 
+               $description = $title unless ( $description ) ;  
+
+               # and the title should not be longer than 90 chars
+               $title = substr($title, 0, 90 ) . ' ...' if length ( $title ) > 90 ; 
+
+               $hsr->{ $i }->{ 'name' }         = $title ; 
+               $hsr->{ $i }->{ 'description' }  = $description ; 
+            
+
                $hsr->{ $i }->{ 'daily_date' }   = $current_date ; 
                # plan vs. actual , closed ?! , past ?!
                $hsr->{ $i }->{ 'actual' }       = $flag_current ; 
@@ -173,6 +196,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                   $objLogger->doLogDebugMsg ( $debug_msg ) ;  
                }
                $i++ ; 
+               $category_item_count++ ; 
             }
             #eof foreach my $item 
          }
@@ -188,6 +212,22 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       return ( $ret , $msg , $hsr ) ; 
    }	
    # eof sub StrToHashRef 
+
+
+
+
+   sub doFillInLevelsPerRow {
+
+      my $self                = shift ; 
+      my $str_dashes          = shift ; 
+      my $ref_item_levels     = shift ; 
+      my $item_levels         = $$ref_item_levels ; 
+
+      my $row_num = scalar keys %$$ref_item_levels ; 
+      my $num_of_dashes = () = $str_dashes =~ /\-/gi;
+      $item_levels->{ $row_num } = $num_of_dashes ; 
+
+   } 
 
 
 	#
