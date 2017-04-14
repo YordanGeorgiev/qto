@@ -9,10 +9,12 @@ src/sql/pgsql/
 src/sql/pgsql/dev_issue_tracker
 src/sql/pgsql/dev_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/dev_issue_tracker/01.create-table-issue.sql
-src/sql/pgsql/prd_issue_tracker
-src/sql/pgsql/prd_issue_tracker/01.create-table-issue.sql
 src/sql/pgsql/tst_issue_tracker
+src/sql/pgsql/tst_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/tst_issue_tracker/01.create-table-issue.sql
+src/sql/pgsql/prd_issue_tracker
+src/sql/pgsql/prd_issue_tracker/00.create-db.pgsql
+src/sql/pgsql/prd_issue_tracker/01.create-table-issue.sql
 src/perl
 src/perl/issue_tracker
 src/perl/issue_tracker/lib

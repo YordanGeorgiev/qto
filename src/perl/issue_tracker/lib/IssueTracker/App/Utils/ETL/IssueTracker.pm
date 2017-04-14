@@ -122,10 +122,10 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 
          foreach my $category_item ( @arr_category_items ) {
             # START DAILY 2017-04-02 09:30 su
-            if ( $category_item =~ m/^\s*#\s*START\s+[(DAILY)|(MONTHLY)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) {
+            if ( $category_item =~ m/^\s*#\s*START\s+[(DAILY)|(MONTHLY)|(WEEKLY)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) {
                $current_date = $1 ; 
             }
-            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(DAILY)|(MONTHLY)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
+            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(DAILY)|(WEEKLY)|(MONTHLY)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
 
 
             my $debug_msg = "category_item: $category_item " ; 
@@ -182,10 +182,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 
                $hsr->{ $i }->{ 'name' }         = $title ; 
                $hsr->{ $i }->{ 'description' }  = $description ; 
-            
-
                $hsr->{ $i }->{ 'daily_date' }   = $current_date ; 
-               # plan vs. actual , closed ?! , past ?!
                $hsr->{ $i }->{ 'actual' }       = $flag_current ; 
                
                if ( $module_trace == 1 ) { 
