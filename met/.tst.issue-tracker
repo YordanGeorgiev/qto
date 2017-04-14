@@ -316,13 +316,14 @@ src/bash/issue-tracker/tests/log-test-run-entry.test.sh
 src/bash/issue-tracker/helps/log-test-run-entry.help.sh
 dat/tests/1
 1
-tags
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Controller/DbIOController/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Controller/FileIOController/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Data/ExcelBuilder/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Model/PostGreDbHandler/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Configurator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/ETL/IssueTracker/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/IO/FileHandler/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/IO/FileHandler/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Timer/autosplit.ix
 tags
