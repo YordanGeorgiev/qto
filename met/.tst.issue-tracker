@@ -5,6 +5,10 @@ src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 src/bash/issue-tracker/tests/all-issue-tracker-tests.lst
 src/bash/issue-tracker/tests/rem-issue-tracker-actions.lst
 cnf/issue-tracker.doc-pub-host.cnf
+cnf/issue-tracker.dev.doc-pub-host.cnf
+cnf/issue-tracker.tst.doc-pub-host.cnf
+cnf/issue-tracker.prd.doc-pub-host.cnf
+cnf/ysg-issues.prd.doc-pub-host.cnf
 src/sql/pgsql/
 src/sql/pgsql/dev_issue_tracker
 src/sql/pgsql/dev_issue_tracker/00.create-db.pgsql
@@ -315,6 +319,16 @@ src/bash/issue-tracker/funcs/log-test-run-entry.func.sh
 src/bash/issue-tracker/tests/log-test-run-entry.test.sh
 src/bash/issue-tracker/helps/log-test-run-entry.help.sh
 dat/tests/1
+doc/xls
+doc/xls/issue-tracker-user-stories.xls
+doc/xls/issue-tracker-devops-guide.xls
+doc/pdf
+doc/pdf/README.pdf
+doc/pdf/issue-tracker-user-stories.pdf
+doc/pdf/issue-tracker-devops-guide.pdf
+doc/md
+doc/md/issue-tracker-user-stories.md
+doc/md/issue-tracker-devops-guide.md
 1
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Controller/DbIOController/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Controller/FileIOController/autosplit.ix

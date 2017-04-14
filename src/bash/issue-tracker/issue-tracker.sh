@@ -354,7 +354,10 @@ doSetVars(){
    do_print_debug_msgs=0
    # stop set default vars
 
-	doParseConfFile
+	test -z "$issue_tracker_project" && doParseConfFile
+	test -z "$issue_tracker_project" || doSetUndefinedShellVarsFromCnfFile
+
+
 	( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
 
@@ -374,8 +377,31 @@ doSetVars(){
 }
 #eof func doSetVars
 
+#------------------------------------------------------------------------------
+# set vars from the cnf file, but only if they are not pre-set in the calling shell
+#------------------------------------------------------------------------------
+doSetUndefinedShellVarsFromCnfFile(){
 
-#v1.2.5
+   cnf_file=$1;shift 1;
+   test -z "$cnf_file" && echo "You need to pass cnf_file as 1st cmd arg to this func !!!"
+
+   vars_to_set=`sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
+      -e 's/;.*$//' \
+      -e 's/[[:space:]]*$//' \
+      -e 's/^[[:space:]]*//' \
+      -e "s/^\(.*\)=\([^\"']*\)$/test -z \"\$\1\" \&\& export \1=\"\2\"/" \
+      < $cnf_file \
+      | sed -n -e "/^\[MainSection\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
+
+   while IFS=' ' read -r var_to_set
+   do
+      echo "running: $var_to_set"
+      eval "$var_to_set"
+   done < "$vars_to_set"
+}
+#eof func doSetShellVarsFromCnfFile
+
+# v1.2.5
 #------------------------------------------------------------------------------
 # parse the ini like $0.$host_name.cnf and set the variables
 # cleans the unneeded during after run-time stuff. Note the MainSection
@@ -392,6 +418,10 @@ doParseConfFile(){
 	# if we have perl apps they will share the same cnfiguration settings with this one
 	test -f "$product_instance_dir/$run_unit.$host_name.cnf" \
 		&& cnf_file="$product_instance_dir/$run_unit.$host_name.cnf"
+	
+   # if we have perl apps they will share the same cnfiguration settings with this one
+	test -f "$product_instance_dir/$run_unit.$env_type.$host_name.cnf" \
+		&& cnf_file="$product_instance_dir/$run_unit.$env_type.$host_name.cnf"
 
 	# yet finally override if passed as argument to this function
 	# if the the ini file is not passed define the default host independant ini file

@@ -12,7 +12,7 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 
    use IssueTracker::App::Utils::Logger ; 
 
-   our $module_trace                            = 1 ;
+   our $module_trace                            = 1 ; 
    our $IsUnitTest                              = 0 ; 
 	our $appConfig 										= q{} ; 
 	our $objLogger 										= q{} ; 
@@ -174,6 +174,7 @@ package IssueTracker::App::Model::PostGreDbHandler ;
             or $objLogger->error ( "$DBI::errstr" ) ;
 
       $hsr = $sth->fetchall_hashref( 'issue_id' ) ; 
+      binmode(STDOUT, ':utf8');
       p( $hsr ) if $module_trace == 1 ; 
 
       $msg = DBI->errstr ; 

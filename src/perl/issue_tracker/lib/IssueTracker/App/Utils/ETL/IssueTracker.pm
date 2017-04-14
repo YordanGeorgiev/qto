@@ -21,6 +21,10 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 	use IssueTracker::App::Utils::IO::FileHandler ; 
 	use IssueTracker::App::Utils::Logger ;
 	use Data::Printer ; 
+      
+   binmode(STDIN,  ':utf8');
+   binmode(STDOUT, ':utf8');
+   binmode(STDERR, ':utf8');
 
    our $module_trace             = 1  ; 
 	our $appConfig						= {} ; 
@@ -105,9 +109,6 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       my $msg        = 'unknown error while converting string to hash reference' ; 
       my $hsr        = {} ; 
 
-      binmode(STDIN,  ':utf8');
-      binmode(STDOUT, ':utf8');
-      binmode(STDERR, ':utf8');
  
       # each item starts with new line may be some space and - 
       my @arr_category_items  = split '\n(\s*)\n' , $str ; 

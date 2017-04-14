@@ -1,7 +1,8 @@
 # file: cnf/issue-tracker.doc-pub-host.cnf
+[MainSection]
 
 # multiple projects support
-issue_tracker_project = issue-tracker
+issue_tracker_project = ysg-issues
 
 # The logging directory 
 LogDir = %ProductInstanceDir%/dat/log
@@ -19,7 +20,7 @@ LogToFile =          1
 TimeFormat =         YYYY.MM.DD - hh:mm:ss
 
 # the time format of the logging 
-DbType 	=         mariadb
+DbType 	=         postgres
 
 # the log file
 LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
@@ -31,7 +32,7 @@ db_host = doc-pub-host
 db_port = 13306
 
 # OBS ! dev , tst , prd product instances to own db !
-db_name   = %ProductType%_issue_tracker
+db_name   = prd_ysg_issues
 
 # the mariadb user name
 db_user = ysg

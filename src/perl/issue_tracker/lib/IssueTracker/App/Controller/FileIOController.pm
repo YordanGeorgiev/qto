@@ -1,6 +1,6 @@
 package IssueTracker::App::Controller::FileIOController ; 
 
-	use strict; use warnings;
+	use strict; use warnings; use utf8 ; 
 
 	my $VERSION = '1.0.0';    
 
@@ -8,7 +8,6 @@ package IssueTracker::App::Controller::FileIOController ;
 	our @ISA = qw(Exporter);
 	our $AUTOLOAD =();
 	use AutoLoader;
-   use utf8 ;
    use Carp ;
    use Data::Printer ; 
 
@@ -17,7 +16,7 @@ package IssueTracker::App::Controller::FileIOController ;
    use IssueTracker::App::Model::DbHandlerFactory ; 
 
 	
-	our $module_trace = 0 ; 
+	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
 	our $RunDir 						   = '' ; 
 	our $ProductBaseDir 				   = '' ; 

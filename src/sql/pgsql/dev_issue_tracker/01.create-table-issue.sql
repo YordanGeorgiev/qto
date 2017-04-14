@@ -7,7 +7,7 @@ SELECT 'create the "issue" table'
     , level       integer NULL
     , prio        integer NULL
     , name        varchar(100) NOT NULL
-    , description varchar(1000) NULL
+    , description varchar(4000) NULL
     , status      varchar(50) NOT NULL
     , category    varchar(200) NOT NULL
     , current     integer NULL

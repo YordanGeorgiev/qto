@@ -5,6 +5,10 @@ src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 src/bash/issue-tracker/tests/all-issue-tracker-tests.lst
 src/bash/issue-tracker/tests/rem-issue-tracker-actions.lst
 cnf/issue-tracker.doc-pub-host.cnf
+cnf/issue-tracker.dev.doc-pub-host.cnf
+cnf/issue-tracker.tst.doc-pub-host.cnf
+cnf/issue-tracker.prd.doc-pub-host.cnf
+cnf/ysg-issues.prd.doc-pub-host.cnf
 src/sql/pgsql/
 src/sql/pgsql/dev_issue_tracker
 src/sql/pgsql/dev_issue_tracker/00.create-db.pgsql
@@ -317,9 +321,11 @@ src/bash/issue-tracker/helps/log-test-run-entry.help.sh
 dat/tests/1
 doc/xls
 doc/xls/issue-tracker-user-stories.xls
+doc/xls/issue-tracker-devops-guide.xls
 doc/pdf
 doc/pdf/README.pdf
 doc/pdf/issue-tracker-user-stories.pdf
+doc/pdf/issue-tracker-devops-guide.pdf
 doc/md
 doc/md/issue-tracker-user-stories.md
 doc/md/issue-tracker-devops-guide.md
