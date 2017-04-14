@@ -113,7 +113,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       my @arr_category_items  = split '\n(\s*)\n' , $str ; 
       my $i          = 0 ;  
       my $current_date = '' ; 
-      my $flag_current = -1 ; 
+      my $flag_current = 3 ;     # check the wiki syntax of a valid issues file
 
 
       if ( $str ) {      
@@ -131,7 +131,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
             my $debug_msg = "category_item: $category_item " ; 
             $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
 
-            $flag_current++ if $category_item =~ m/^[#]{1,2} /g ; 
+            $flag_current-- if $category_item =~ m/^[#]{1,2} /g ; 
             $msg = "category_item starts with ##" ; 
             $objLogger->doLogDebugMsg ( $msg ) if $category_item =~ m/^##/g ;
             
