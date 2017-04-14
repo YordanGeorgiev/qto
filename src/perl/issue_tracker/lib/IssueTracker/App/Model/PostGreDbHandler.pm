@@ -132,7 +132,6 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 #       status      | character varying(50)   | not null  | extended |              |
 #       category    | character varying(100)  | not null  | extended |              |
 #       current      | integer                 |           | plain    |              |
-#       daily_date  | character varying(50)   | not null  | extended |              |
 
 
       $mhsr->{'ColumnNames'}-> { 0 } = 'issue_id' ;
@@ -143,7 +142,6 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       $mhsr->{'ColumnNames'}-> { 5 } = 'status' ;
       $mhsr->{'ColumnNames'}-> { 6 } = 'category' ;
       $mhsr->{'ColumnNames'}-> { 7 } = 'current' ;
-      $mhsr->{'ColumnNames'}-> { 8 } = 'daily_date' ;
 
       $str_sql = 
          " SELECT 
@@ -155,7 +153,6 @@ package IssueTracker::App::Model::PostGreDbHandler ;
             , status
             , category
             , current
-            , daily_date
          FROM $table ;
       " ; 
 
