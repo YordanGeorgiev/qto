@@ -183,7 +183,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                $hsr->{ $i }->{ 'name' }         = $title ; 
                $hsr->{ $i }->{ 'description' }  = $description ; 
                $hsr->{ $i }->{ 'daily_date' }   = $current_date ; 
-               $hsr->{ $i }->{ 'actual' }       = $flag_current ; 
+               $hsr->{ $i }->{ 'current' }       = $flag_current ; 
                
                if ( $module_trace == 1 ) { 
                   $debug_msg = " START :::: $i" if 

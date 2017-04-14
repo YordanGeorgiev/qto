@@ -10,7 +10,7 @@ CREATE TABLE issue (
  , description varchar(1000) NULL
  , status      varchar(50) NOT NULL
  , category    varchar(200) NOT NULL
- , actual      integer NULL
+ , current     integer NULL
  , daily_date  varchar(50) NOT NULL
 
  );
