@@ -306,6 +306,7 @@ cnf/hosts/doc-pub-host/home/ysg/.tmux-session.1.0.0.20161231_092215.backup
 cnf/hosts/doc-pub-host/home/ysg/.vimrc.1.2.0.20161216_194801.backup
 LICENSE
 lib/readme.txt
+lib/bash/funcs/
 bin/readme.txt
 dat/readme.txt
 cnf/readme.txt
