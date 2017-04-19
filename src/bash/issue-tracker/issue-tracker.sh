@@ -377,27 +377,44 @@ doSetVars(){
 }
 #eof func doSetVars
 
+
 #------------------------------------------------------------------------------
 # set vars from the cnf file, but only if they are not pre-set in the calling shell
 #------------------------------------------------------------------------------
 doSetUndefinedShellVarsFromCnfFile(){
 
-   cnf_file=$1;shift 1;
-   test -z "$cnf_file" && echo "You need to pass cnf_file as 1st cmd arg to this func !!!"
+	# set a default cnfiguration file
+	cnf_file="$run_unit_bash_dir/$run_unit.cnf"
 
-   vars_to_set=`sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
-      -e 's/;.*$//' \
-      -e 's/[[:space:]]*$//' \
-      -e 's/^[[:space:]]*//' \
+	# however if there is a host dependant cnf file override it
+	test -f "$run_unit_bash_dir/$run_unit.$host_name.cnf" \
+		&& cnf_file="$run_unit_bash_dir/$run_unit.$host_name.cnf"
+	
+	# if we have perl apps they will share the same cnfiguration settings with this one
+	test -f "$product_instance_dir/$run_unit.$host_name.cnf" \
+		&& cnf_file="$product_instance_dir/$run_unit.$host_name.cnf"
+   
+   # however if there is a host dependant and env-aware cnf file override it
+	test -f "$run_unit_bash_dir/$run_unit.$host_name.cnf" \
+		&& cnf_file="$run_unit_bash_dir/$run_unit.$env_type.$host_name.cnf"
+
+	INI_SECTION=MainSection
+
+	vars_to_set=`sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
+		-e 's/#.*$//' \
+		-e 's/[[:space:]]*$//' \
+		-e 's/^[[:space:]]*//' \
       -e "s/^\(.*\)=\([^\"']*\)$/test -z \"\$\1\" \&\& export \1=\"\2\"/" \
-      < $cnf_file \
-      | sed -n -e "/^\[MainSection\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
-
+		< $cnf_file \
+		| sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
+   
    while IFS=' ' read -r var_to_set
    do
       echo "running: $var_to_set"
       eval "$var_to_set"
    done < "$vars_to_set"
+
+   vars_to_set=""
 }
 #eof func doSetShellVarsFromCnfFile
 
