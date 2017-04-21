@@ -9,6 +9,9 @@ cnf/issue-tracker.dev.doc-pub-host.cnf
 cnf/issue-tracker.tst.doc-pub-host.cnf
 cnf/issue-tracker.prd.doc-pub-host.cnf
 cnf/ysg-issues.prd.doc-pub-host.cnf
+cnf/ysg-issues.dev.doc-pub-host.cnf
+cnf/ysg-issues.tst.doc-pub-host.cnf
+cnf/here-issues.prd.doc-pub-host.cnf
 src/sql/pgsql/
 src/sql/pgsql/dev_issue_tracker
 src/sql/pgsql/dev_issue_tracker/00.create-db.pgsql
@@ -305,6 +308,8 @@ cnf/hosts/doc-pub-host/home/ysg/.tmux-session.1.0.0.20161231_092215.backup
 cnf/hosts/doc-pub-host/home/ysg/.vimrc.1.2.0.20161216_194801.backup
 LICENSE
 lib/readme.txt
+lib/bash/funcs/
+lib/bash/funcs/parse-cnf-env-vars.sh
 bin/readme.txt
 dat/readme.txt
 cnf/readme.txt

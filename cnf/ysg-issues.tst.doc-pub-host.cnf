@@ -32,9 +32,9 @@ db_host = doc-pub-host
 db_port = 13306
 
 # OBS ! dev , tst , prd product instances to own db !
-db_name   = prd_ysg_issues
+db_name   = tst_ysg_issues
 
-sql_dir = /opt/csitea/issue-tracker/issue-tracker.0.1.1.dev.ysg/src/sql/pgsql/dev_issue_tracker
+sql_dir = /opt/csitea/issue-tracker/issue-tracker.0.1.1.tst.ysg/src/sql/pgsql/tst_issue_tracker
 # the mariadb user name
 db_user = ysg
 
