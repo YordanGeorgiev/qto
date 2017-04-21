@@ -307,6 +307,7 @@ cnf/hosts/doc-pub-host/home/ysg/.vimrc.1.2.0.20161216_194801.backup
 LICENSE
 lib/readme.txt
 lib/bash/funcs/
+lib/bash/funcs/parse-cnf-env-vars.sh
 bin/readme.txt
 dat/readme.txt
 cnf/readme.txt
