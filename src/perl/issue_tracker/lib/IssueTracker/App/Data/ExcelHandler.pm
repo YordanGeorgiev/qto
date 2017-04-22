@@ -1,4 +1,4 @@
-package IssueTracker::App::Data::ExcelBuilder ; 
+package IssueTracker::App::Data::ExcelHandler ; 
 
    use strict ; use warnings ; use utf8 ; 
 
@@ -149,7 +149,7 @@ package IssueTracker::App::Data::ExcelBuilder ;
 
       my $self = shift ; 
 
-      #debug print "ExcelBuilder::doInitialize appConfig : " . p($appConfig );
+      #debug print "ExcelHandler::doInitialize appConfig : " . p($appConfig );
 	   $objLogger 			   = 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
       $ProductInstanceDir   = $appConfig->{ 'ProductInstanceDir' } ; 
 	   $objFileHandler 	   = 'IssueTracker::App::Utils::IO::FileHandler'->new( \$appConfig ) ;

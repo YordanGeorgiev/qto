@@ -335,6 +335,16 @@ package IssueTracker::App::Utils::Initiator ;
 		# set the default ConfFile path if no cmd argument is provided
 		$ConfFile = "$ProductInstanceDir/cnf/$ProductName.$HostName.cnf" ; 
 
+      # override with env conf file if found one ...
+      # cnf/issue-tracker.doc-pub-host.cnf
+      # cnf/issue-tracker.dev.doc-pub-host.cnf
+      # cnf/issue-tracker.tst.doc-pub-host.cnf
+      # cnf/issue-tracker.prd.doc-pub-host.cnf
+      if ( -f "$ProductInstanceDir/cnf/$ProductName.$ProductType.$HostName.cnf" ) {
+		   $ConfFile = "$ProductInstanceDir/cnf/$ProductName.$ProductType.$HostName.cnf" 
+      }
+      
+
 		$self->set('ConfFile' , $ConfFile) ; 
 		$appConfig->{'ConfFile'} 	= $ConfFile ; 
 		$self->{'appConfig'} 		= $appConfig; 

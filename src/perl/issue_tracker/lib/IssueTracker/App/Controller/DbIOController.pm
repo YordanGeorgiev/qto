@@ -15,7 +15,7 @@ package IssueTracker::App::Controller::DbIOController ;
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Utils::ETL::IssueTracker ; 
    use IssueTracker::App::Model::DbHandlerFactory ; 
-   use IssueTracker::App::Data::ExcelBuilder ; 
+   use IssueTracker::App::Data::ExcelHandler ; 
 	
 	our $module_trace = 0 ; 
 	our $appConfig						   = {} ; 
@@ -74,8 +74,8 @@ package IssueTracker::App::Controller::DbIOController ;
       ( $ret , $msg , $hsr , $mhsr )  = $objDbHandler->doSelectTableIntoHashRef( 'issue' ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
       
-      my $objExcelBuilder    = 'IssueTracker::App::Data::ExcelBuilder'->new( \$appConfig ) ;
-      $ret = $objExcelBuilder->doBuildXlsFromHashRef ( $mhsr , $hsr ) ;
+      my $objExcelHandler    = 'IssueTracker::App::Data::ExcelHandler'->new( \$appConfig ) ;
+      $ret = $objExcelHandler->doBuildXlsFromHashRef ( $mhsr , $hsr ) ;
 
    } 
 

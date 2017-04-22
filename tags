@@ -34,7 +34,7 @@ Initialize	src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO/FileHandler.pm	2
 Initialize	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	156;"	subroutine	language:Perl
 IssueTracker::App::Controller::DbIOController	src/perl/issue_tracker/lib/IssueTracker/App/Controller/DbIOController.pm	1;"	package	language:Perl
 IssueTracker::App::Controller::FileIOController	src/perl/issue_tracker/lib/IssueTracker/App/Controller/FileIOController.pm	1;"	package	language:Perl
-IssueTracker::App::Data::ExcelBuilder	src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelBuilder.pm	1;"	package	language:Perl
+IssueTracker::App::Data::ExcelHandler	src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelHandler.pm	1;"	package	language:Perl
 IssueTracker::App::Model::DbHandlerFactory	src/perl/issue_tracker/lib/IssueTracker/App/Model/DbHandlerFactory.pm	1;"	package	language:Perl
 IssueTracker::App::Model::PostGreDbHandler	src/perl/issue_tracker/lib/IssueTracker/App/Model/PostGreDbHandler.pm	1;"	package	language:Perl
 IssueTracker::App::Utils::Configurator	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	1;"	package	language:Perl
@@ -56,11 +56,11 @@ RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	131;"	
 SetAllIniVarsToEnvironmentVars	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	344;"	subroutine	language:Perl
 add_window	src/bash/issue-tracker/funcs/sys/tmux/tmux-common.func.sh	27;"	function	language:Sh
 add_window	src/bash/issue-tracker/specs/sys/tmux/tmux-common.spec.sh	27;"	function	language:Sh
-autofit_columns	src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelBuilder.pm	128;"	subroutine	language:Perl
+autofit_columns	src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelHandler.pm	128;"	subroutine	language:Perl
 clone	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	89;"	subroutine	language:Perl
 doAppendToFile	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	683;"	subroutine	language:Perl
 doBackupFile	src/bash/issue-tracker/funcs/sys/backup-file.func.sh	9;"	function	language:Sh
-doBuildXlsFromHashRef	src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelBuilder.pm	30;"	subroutine	language:Perl
+doBuildXlsFromHashRef	src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelHandler.pm	30;"	subroutine	language:Perl
 doChangeEnvType	src/bash/issue-tracker/funcs/change-env-type.func.sh	7;"	function	language:Sh
 doChangeVersion	src/bash/issue-tracker/funcs/dev/change-version.func.sh	6;"	function	language:Sh
 doCheckPerlSyntax	src/bash/issue-tracker/funcs/perl/check-perl-syntax.func.sh	19;"	function	language:Sh
@@ -109,7 +109,7 @@ doInit	src/bash/issue-tracker/issue-tracker.sh	114;"	function	language:Sh
 doInit	src/bash/issue-tracker/test-issue-tracker.sh	108;"	function	language:Sh
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Controller/DbIOController.pm	88;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Controller/FileIOController.pm	90;"	subroutine	language:Perl
-doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelBuilder.pm	148;"	subroutine	language:Perl
+doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelHandler.pm	148;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Model/PostGreDbHandler.pm	205;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Utils/ETL/IssueTracker.pm	234;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/script/issue_tracker.pl	124;"	subroutine	language:Perl
@@ -282,7 +282,7 @@ main	src/bash/issue-tracker/test-issue-tracker.sh	20;"	function	language:Sh
 main	src/perl/issue_tracker/script/issue_tracker.pl	71;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Controller/DbIOController.pm	117;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Controller/FileIOController.pm	119;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelBuilder.pm	180;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelHandler.pm	180;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Model/DbHandlerFactory.pm	57;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Model/PostGreDbHandler.pm	228;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	57;"	subroutine	language:Perl
