@@ -45,12 +45,13 @@ use IssueTracker::App::Utils::Initiator ;
 use IssueTracker::App::Utils::Configurator ; 
 use IssueTracker::App::Utils::Logger ; 
 use IssueTracker::App::Controller::FileIOController ; 
+use IssueTracker::App::Controller::DbIOController ; 
 use IssueTracker::App::Utils::ETL::IssueTracker ; 
 use IssueTracker::App::Utils::IO::FileHandler ; 
-use IssueTracker::App::Utils::ETL::IssueTracker ; 
 use IssueTracker::App::Model::DbHandlerFactory ; 
 use IssueTracker::App::Model::PostGreDbHandler ; 
-use IssueTracker::App::Controller::DbIOController ; 
+use IssueTracker::App::Utils::Timer ; 
+
 
 my $module_trace                 = 0 ; 
 my $md_file 							= '' ; 
@@ -64,18 +65,20 @@ my $msg                          = q{} ;
 my $objConfigurator              = {} ; 
 my $actions                      = q{} ; 
 my $xls_dir                      = q{} ; 
+my $issue_tracker_project        = q{} ; 
+
 
    #
    # the main shell entry point of the application
    #
    sub main {
       
-      my $msg     = '' ; 
+      my $msg     = 'error during initialization of the tool !!! ' ; 
       my $ret     = 1 ; 
     
       print " issue_tracker.pl START  \n " ; 
-      doInitialize();	
-
+      ( $ret , $msg ) = doInitialize();	
+      doExit ( $ret , $msg ) if ( $ret == 1 ) ; 
 
       my @actions = split /,/ , $actions ; 
      
@@ -84,9 +87,6 @@ my $xls_dir                      = q{} ;
          $objLogger->doLogInfoMsg ( $msg ) ; 
 
          if ( $action eq 'file-to-db' ) {
-            unless ( $issues_file ) {
-               $issues_file = $ENV{'proj_txt_dir'} . '/issues/2017/2017-04/2017-04-25/ysg-issues.2017-04-25.daily.txt'
-            }
 
             $msg = 'issues_file to parse : ' . "\n" . $issues_file ; 
             $objLogger->doLogInfoMsg ( "$msg" ) ; 
@@ -121,11 +121,13 @@ my $xls_dir                      = q{} ;
       doExit ( $ret , $msg ) ; 
 
    }
-   #eof sub main
+   #eof sub mainthe issues_file: ' . "\n" . $issues_file . "\n" ; 
 
 
    sub doInitialize {
-
+      
+      my $msg           = 'error during initialization !!!' ; 
+      my $ret           = 1 ; 
       $objInitiator 		= 'IssueTracker::App::Utils::Initiator'->new();
       $appConfig 			= $objInitiator->get('AppConfig') ; 
       p ( $appConfig  ) if $module_trace == 1 ; 
@@ -135,23 +137,48 @@ my $xls_dir                      = q{} ;
       $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
          
       $objLogger->doLogInfoMsg ( "START MAIN") ; 
-      $objLogger->doLogInfoMsg ( "START LOGGING SETTINGS ") ; 
-      
+     
+      # get the cmd args  
       GetOptions(	
-         'issues_file=s'   => \$issues_file
+           'issues_file=s' => \$issues_file
          , 'do=s'          => \$actions
          , 'xls_dir=s'     => \$xls_dir
       );
       
+      $issue_tracker_project = $ENV{ "issue_tracker_project" } ; 
+      $appConfig->{ 'issue_tracker_project' } = $ENV{ "issue_tracker_project" } ; 
+     
+      # if the issues_file is not specified via the cmd arg 
+      unless ( $issues_file ) {
+         my $objTimer   = 'IssueTracker::App::Utils::Timer'->new() ; 
+	      my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
+         my $nice_month  = "$year" . '-' . "$mon" ; 
+         my $nice_date  = "$year" . '-' . "$mon" . '-' . $mday ; 
+
+         $issues_file   = $ENV{'proj_txt_dir'} . 
+            "/issues/$year/$nice_month/$nice_date/$issue_tracker_project" . '.' . "$nice_date" . ".daily.txt" ;
+
+         # and the issues file does not comply with the project's dir structure and naming
+         # convetions exit with error. Note this is valid for all actions !!!
+         unless ( -f $issues_file ) {
+            $msg .= 'the issues_file: ' . "\n" . $issues_file . "\n" ; 
+            $msg .= 'does not exist !!!' ; 
+            $objLogger->doLogErrorMsg ( $msg ) ; 
+            return ( $ret , $msg ) ; 
+         }
+      }
       $appConfig->{ 'issues_file' } = $issues_file ; 
       $appConfig->{ 'xls_dir' }     = $xls_dir ; 
       $actions = 'file-to-db' unless ( $actions )  ; 
 
+      $objLogger->doLogInfoMsg ( "START LOGGING SETTINGS ") ; 
       p ( $appConfig  ) ; 
       $objLogger->doLogInfoMsg ( "STOP  LOGGING SETTINGS ") ; 
-
+     
+      $ret = 0 ;  
+      return ( $ret , $msg ) ; 
    }
-
+   # eof sub doInialize
 
    sub doExit {
       my $exit_code  = shift ; 

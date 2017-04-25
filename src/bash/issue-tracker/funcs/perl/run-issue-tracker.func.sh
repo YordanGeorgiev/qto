@@ -34,7 +34,7 @@ doRunIssueTracker(){
    exit_code=$?
    doLog "INFO doRunIssueTracker exit_code $exit_code"
    test $exit_code -ne 0 && doExit $exit_code "failed to run issue_tracker.pl"  
-
+   sleep 10
    
    # Action ... !!!
    # perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-xls --issues_file $issues_file \
