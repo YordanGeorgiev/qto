@@ -110,6 +110,9 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       my $msg        = 'unknown error while converting string to hash reference' ; 
       my $hsr        = {} ; 
 
+      my $objTimer   = 'IssueTracker::App::Utils::Timer'->new() ; 
+	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
+      my $nice_date = $year . '-' . $mon . '-' . $mday ; 
  
       # each item starts with new line may be some space and - 
       my @arr_category_items  = split '\n(\s*)\n' , $str ; 
@@ -177,9 +180,10 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                # and the title should not be longer than 90 chars
                $title = substr($title, 0, 90 ) . ' ...' if length ( $title ) > 90 ; 
 
-               $hsr->{ $i }->{ 'name' }         = $title ; 
-               $hsr->{ $i }->{ 'description' }  = $description ; 
-               $hsr->{ $i }->{ 'current' }       = $flag_current ; 
+               $hsr->{ $i }->{ 'name' }            = $title ; 
+               $hsr->{ $i }->{ 'description' }     = $description ; 
+               $hsr->{ $i }->{ 'current' }         = $flag_current ; 
+               $hsr->{ $i }->{ 'run_date' }        = $nice_date ; 
                
                if ( $module_trace == 1 ) { 
                   $debug_msg = " START :::: $i" if 
