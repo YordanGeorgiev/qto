@@ -41,8 +41,8 @@ package IssueTracker::App::Data::ExcelHandler ;
       my $issues_file      = $appConfig->{ 'issues_file' } ; 
       my $xls_file_name    = $issues_file ; 
       $xls_file_name       =~ s/(.*)(\\|\/)(.*)\.([a-zA-Z0-9]*)/$3/g ; 
-      $xls_file_name    = "$xls_file_name" . '.' . "$hour" . "$min" . "$sec" ; 
-      my $xls_dir          = "$ProductInstanceDir/dat/xls/run" ; 
+      $xls_file_name       = "$xls_file_name" . '.' . "$hour" . "$min" . "$sec" ; 
+      my $xls_dir          = $appConfig->{ 'xls_dir' } || "$ProductInstanceDir/dat/xls/run" ; 
       $objFileHandler->MkDir ( "$xls_dir" ) ; 
       my $xls_file         = "$xls_dir/$xls_file_name" . '.xlsx' ; 
 

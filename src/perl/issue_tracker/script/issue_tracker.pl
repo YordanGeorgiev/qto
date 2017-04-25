@@ -52,7 +52,7 @@ use IssueTracker::App::Model::DbHandlerFactory ;
 use IssueTracker::App::Model::PostGreDbHandler ; 
 use IssueTracker::App::Controller::DbIOController ; 
 
-my $module_trace                 = 1 ; 
+my $module_trace                 = 0 ; 
 my $md_file 							= '' ; 
 my $rdbms_type 						= 'postgre' ; #todo: parametrize to 
 my $issues_file                   = '' ; 
@@ -63,7 +63,7 @@ my $objFileHandler               = {} ;
 my $msg                          = q{} ; 
 my $objConfigurator              = {} ; 
 my $actions                      = q{} ; 
-
+my $xls_dir                      = q{} ; 
 
    #
    # the main shell entry point of the application
@@ -76,13 +76,6 @@ my $actions                      = q{} ;
       print " issue_tracker.pl START  \n " ; 
       doInitialize();	
 
-      GetOptions(	
-         'issues_file=s' => \$issues_file
-         , 'do=s'       => \$actions
-      );
-      
-      $appConfig->{ 'issues_file' } = $issues_file ; 
-      $actions = 'file-to-db' unless ( $actions )  ; 
 
       my @actions = split /,/ , $actions ; 
      
@@ -91,9 +84,19 @@ my $actions                      = q{} ;
          $objLogger->doLogInfoMsg ( $msg ) ; 
 
          if ( $action eq 'file-to-db' ) {
+            unless ( $issues_file ) {
+               $issues_file = $ENV{'proj_txt_dir'} . '/issues/2017/2017-04/2017-04-25/ysg-issues.2017-04-25.daily.txt'
+            }
+
             $msg = 'issues_file to parse : ' . "\n" . $issues_file ; 
             $objLogger->doLogInfoMsg ( "$msg" ) ; 
+            
 
+            unless ( -f $issues_file ) {
+               $msg = "the issues_file: $issues_file does not exist !!!. Nothing to do !!!" ; 
+               $objLogger->doLogFatalMsg ( $msg ) ;
+               doExit ( $ret , $msg ) ; 
+            }
             my $objFileIOController = 
                'IssueTracker::App::Controller::FileIOController'->new ( \$appConfig ) ; 
             ( $ret , $msg ) = $objFileIOController->doLoadIssuesFileToDb ( $issues_file ) ; 
@@ -133,6 +136,17 @@ my $actions                      = q{} ;
          
       $objLogger->doLogInfoMsg ( "START MAIN") ; 
       $objLogger->doLogInfoMsg ( "START LOGGING SETTINGS ") ; 
+      
+      GetOptions(	
+         'issues_file=s'   => \$issues_file
+         , 'do=s'          => \$actions
+         , 'xls_dir=s'     => \$xls_dir
+      );
+      
+      $appConfig->{ 'issues_file' } = $issues_file ; 
+      $appConfig->{ 'xls_dir' }     = $xls_dir ; 
+      $actions = 'file-to-db' unless ( $actions )  ; 
+
       p ( $appConfig  ) ; 
       $objLogger->doLogInfoMsg ( "STOP  LOGGING SETTINGS ") ; 
 
@@ -140,9 +154,8 @@ my $actions                      = q{} ;
 
 
    sub doExit {
-
-      my $exit_code = shift ; 
-      my $exit_msg  = shift ; 
+      my $exit_code  = shift ; 
+      my $exit_msg   = shift ; 
 
 
       if ( $exit_code == 0 ) {
@@ -154,6 +167,7 @@ my $actions                      = q{} ;
       }
 
       $objLogger->doLogInfoMsg ( "STOP  MAIN") ; 
+      sleep 1 ; 
       exit ( $exit_code ) ; 
    }
 

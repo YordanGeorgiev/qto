@@ -41,6 +41,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 	our $ConfFile 						= '' ; 
 	our $objLogger						= {} ; 
 	our $objFileHandler				= {} ; 
+   our $hsrStatus                = {} ; 
 
 =head1 SYNOPSIS
 
@@ -162,7 +163,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                # $hsr->{ $i }->{ 'item' } = $item ; 
                $hsr->{ $i }->{ 'prio' } = $i ; 
                $hsr->{ $i }->{ 'category' }     = $category ; 
-               $hsr->{ $i }->{ 'status' }       = $status ; 
+               $hsr->{ $i }->{ 'status' }       = $hsrStatus->{ $status } ; 
                # the title is the first line of the title description
                my $title = ( split /\n/, $name )[0] ; 
                
@@ -230,6 +231,23 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 		
 		$objLogger 	      = "IssueTracker::App::Utils::Logger"->new( \$appConfig ) ; 
 		$objFileHandler 	= "IssueTracker::App::Utils::IO::FileHandler"->new( \$appConfig ) ; 
+
+      $hsrStatus = {
+           'eval'    => '01-eval'      # evaluate whether or not to do it
+         , 'todo'    => '02-todo'      # must do it till the end of the period
+         , 'rem'     => '02-rem'       # remember to act till the end of the period
+         , 'wip'     => '03-wip'       # is work in progress - aka is being done right now
+         , 'act'     => '03-act'       # is being actively done , aka more of an activity type
+         , 'diss'    => '04-diss'      # to dissmiss or disgard
+         , 'test'    => '05-test'      # to test some implementation
+         , 'tst'     => '05-test'      # to test some implementation
+         , 'hld'     => '06-onhold'    # the issue is on hold - 
+         , 'qas'     => '07-qas'       # the issue is in quality assurance mode
+         , 'qa'      => '07-qas'       # the issue is in quality assurance mode
+         , 'blck'    => '08-blocked'   # the issue is blocked
+         , 'done'    => '09-done'      # the issue is done
+      }; 
+
 	}	
 	#eof sub doInitialize
 	
