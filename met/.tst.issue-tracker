@@ -8,9 +8,6 @@ cnf/issue-tracker.doc-pub-host.cnf
 cnf/issue-tracker.dev.doc-pub-host.cnf
 cnf/issue-tracker.tst.doc-pub-host.cnf
 cnf/issue-tracker.prd.doc-pub-host.cnf
-cnf/ysg-issues.prd.doc-pub-host.cnf
-cnf/ysg-issues.dev.doc-pub-host.cnf
-cnf/ysg-issues.tst.doc-pub-host.cnf
 cnf/here-issues.prd.doc-pub-host.cnf
 src/sql/pgsql/
 src/sql/pgsql/dev_issue_tracker

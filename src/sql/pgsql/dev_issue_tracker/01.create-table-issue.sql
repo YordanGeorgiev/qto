@@ -6,10 +6,10 @@ SELECT 'create the "issue" table'
       issue_id    integer NOT NULL
     , level       integer NULL
     , prio        integer NULL
-    , name        varchar(100) NOT NULL
-    , description varchar(4000) NULL
     , status      varchar(50) NOT NULL
     , category    varchar(200) NOT NULL
+    , name        varchar(100) NOT NULL
+    , description varchar(4000) NULL
     , current     integer NULL
 
     );

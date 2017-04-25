@@ -159,7 +159,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                my $name = $3 ; 
                next unless $name ; 
                $hsr->{ $i }->{ 'issue_id' } = $i ;
-               $hsr->{ $i }->{ 'level' } = $item_levels->{ $category_item_count } ; 
+               $hsr->{ $i }->{ 'level' } = $item_levels->{ $category_item_count } + 1 ; 
                # $hsr->{ $i }->{ 'item' } = $item ; 
                $hsr->{ $i }->{ 'prio' } = $i ; 
                $hsr->{ $i }->{ 'category' }     = $category ; 
@@ -242,9 +242,11 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
          , 'test'    => '05-test'      # to test some implementation
          , 'tst'     => '05-test'      # to test some implementation
          , 'hld'     => '06-onhold'    # the issue is on hold - 
+         , 'flow'    => '06-flow'      # follow an event or action to occur
          , 'qas'     => '07-qas'       # the issue is in quality assurance mode
          , 'qa'      => '07-qas'       # the issue is in quality assurance mode
          , 'blck'    => '08-blocked'   # the issue is blocked
+         , 'fail'    => '08-fail'      # the issue is irreversably failed to be imlemented
          , 'done'    => '09-done'      # the issue is done
       }; 
 

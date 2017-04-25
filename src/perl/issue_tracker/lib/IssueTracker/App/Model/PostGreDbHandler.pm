@@ -83,7 +83,8 @@ package IssueTracker::App::Model::PostGreDbHandler ;
          , 'AutoCommit' => 1
       } ) or $msg = DBI->errstr;
       
-      
+      p ( $str_sql_insert ) ; 
+ 
       $ret = $dbh->do( $str_sql_insert ) ; 
       $msg = DBI->errstr ; 
 
@@ -148,10 +149,10 @@ package IssueTracker::App::Model::PostGreDbHandler ;
               issue_id
             , level 
             , prio
-            , name
-            , description
             , status
             , category
+            , name
+            , description
             , current
          FROM $table ;
       " ; 

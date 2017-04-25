@@ -36,7 +36,7 @@ package IssueTracker::App::Data::ExcelHandler ;
       #debug ok p($hsr ) if $module_trace == 1 ; 
       
       my $objTimer = 'IssueTracker::App::Utils::Timer'->new() ; 
-	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
+	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
 
       my $issues_file      = $appConfig->{ 'issues_file' } ; 
       my $xls_file_name    = $issues_file ; 
