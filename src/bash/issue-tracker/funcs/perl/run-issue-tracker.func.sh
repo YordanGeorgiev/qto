@@ -7,9 +7,10 @@
 doRunIssueTracker(){
 
 	doLog "DEBUG START doRunIssueTracker"
-	
-	cat doc/txt/issue-tracker/funcs/perl/run-issue-tracker.func.txt
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+
+   # uncoment to sshow the specs 	
+   #	cat doc/txt/issue-tracker/funcs/perl/run-issue-tracker.func.txt
+	# test -z "$sleep_interval" || sleep "$sleep_interval"
 #	# add your action implementation code here ... 
 #   nice_date=$(date "+%Y-%m-%d")
 #   nice_year=$(date "+%Y")
@@ -28,18 +29,15 @@ doRunIssueTracker(){
  
    # run with pre-defined in the shell prjoject 
    # Action 
-   perl src/perl/issue_tracker/script/issue_tracker.pl --do file-to-db \
-      --xls_dir "/vagrant/ysg/data/txt/issues/2017/2017-04/2017-04-25"
-
+   perl src/perl/issue_tracker/script/issue_tracker.pl --do file-to-db 
    exit_code=$?
+
    doLog "INFO doRunIssueTracker exit_code $exit_code"
    test $exit_code -ne 0 && doExit $exit_code "failed to run issue_tracker.pl"  
    
    # Action ... !!!
    # perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-xls --issues_file $issues_file \
-   perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-xls \
-      --xls_dir "/vagrant/ysg/data/txt/issues/2017/2017-04/2017-04-25"
-
+   perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-xls
    exit_code=$?
    doLog "INFO doRunIssueTracker exit_code $exit_code"
    test $exit_code -ne 0 && doExit $exit_code "failed to run issue_tracker.pl"  

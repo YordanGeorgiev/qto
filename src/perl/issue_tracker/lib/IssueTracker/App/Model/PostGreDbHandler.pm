@@ -143,6 +143,7 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       $mhsr->{'ColumnNames'}-> { 5 } = 'status' ;
       $mhsr->{'ColumnNames'}-> { 6 } = 'category' ;
       $mhsr->{'ColumnNames'}-> { 7 } = 'current' ;
+      $mhsr->{'ColumnNames'}-> { 8 } = 'run_date' ;
 
       $str_sql = 
          " SELECT 
@@ -154,6 +155,7 @@ package IssueTracker::App::Model::PostGreDbHandler ;
             , name
             , description
             , current
+            , run_date
          FROM $table ;
       " ; 
 
@@ -208,11 +210,11 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 
 		#debug print "PostGreDbHandler::doInitialize appConfig : " . p($appConfig );
 		
-		$db_name 			= $appConfig->{'db_name'} 		|| 'prd_pgsql_runner' ; 
-		$db_host 			= $appConfig->{'db_host'} 		|| 'localhost' ;
-		$db_port 			= $appConfig->{'db_port'} 		|| '13306' ; 
-		$db_user 			= $appConfig->{'db_user'} 		|| 'ysg' ; 
-		$db_user_pw 		= $appConfig->{'db_user_pw'} 	|| 'no_pass_provided!!!' ; 
+		$db_name 			= $ENV{ 'db_name' } || $appConfig->{'db_name'} || 'prd_pgsql_runner' ; 
+		$db_host 			= $ENV{ 'db_host' } || $$appConfig->{'db_host'} 		|| 'localhost' ;
+		$db_port 			= $ENV{ 'db_port' } || $$appConfig->{'db_port'} 		|| '13306' ; 
+		$db_user 			= $ENV{ 'db_user' } || $$appConfig->{'db_user'} 		|| 'ysg' ; 
+		$db_user_pw 		= $ENV{ 'db_user_pw' } || $appConfig->{'db_user_pw'} 	|| 'no_pass_provided!!!' ; 
       
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
    }

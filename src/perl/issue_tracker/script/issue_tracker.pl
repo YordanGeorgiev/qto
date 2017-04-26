@@ -155,8 +155,9 @@ my $issue_tracker_project        = q{} ;
          my $nice_month  = "$year" . '-' . "$mon" ; 
          my $nice_date  = "$year" . '-' . "$mon" . '-' . $mday ; 
 
-         $issues_file   = $ENV{'proj_txt_dir'} . 
-            "/issues/$year/$nice_month/$nice_date/$issue_tracker_project" . '.' . "$nice_date" . ".daily.txt" ;
+         $objLogger->doLogDebugMsg ( 'proj_txt_dir' . $ENV{'proj_txt_dir'} ); 
+         $issues_file   = $ENV{'proj_txt_dir'} . '/issues' . 
+            "/$year/$nice_month/$nice_date/$issue_tracker_project" . '-issues.' . "$nice_date" . ".daily.txt" ;
 
          # and the issues file does not comply with the project's dir structure and naming
          # convetions exit with error. Note this is valid for all actions !!!

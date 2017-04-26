@@ -20,6 +20,9 @@ src/sql/pgsql/prd_issue_tracker
 src/sql/pgsql/prd_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/prd_issue_tracker/01.create-table-issue.sql
 src/perl
+src/perl/issue_tracker/script
+src/perl/issue_tracker/script/issue_tracker.pl
+src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
 src/perl/issue_tracker
 src/perl/issue_tracker/lib
 src/perl/issue_tracker/lib/IssueTracker
@@ -39,9 +42,6 @@ src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO/FileHandler.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Timer.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm
-src/perl/issue_tracker/script
-src/perl/issue_tracker/script/issue_tracker.pl
-src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
 1
 doc/txt/issue-tracker/funcs/perl/run-issue-tracker.func.txt
 doc/txt/issue-tracker/helps/perl/run-issue-tracker.help.txt

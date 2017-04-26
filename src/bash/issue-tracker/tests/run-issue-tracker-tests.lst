@@ -1,4 +1,4 @@
-check-perl-syntax
+# check-perl-syntax
 # run-perl-tests
 # check-perl-modules-prerequisites
 run-issue-tracker
