@@ -31,6 +31,7 @@ package IssueTracker::App::Controller::DbIOController ;
 	our $HostName 						   = '' ; 
 	our $ConfFile 						   = '' ; 
 	our $objLogger						   = {} ; 
+	our $objFileHandler			      = {} ; 
    our $rdbms_type                  = 'postgre' ; 
 
 =head1 SYNOPSIS
@@ -80,6 +81,36 @@ package IssueTracker::App::Controller::DbIOController ;
    } 
 
 
+   # 
+	# -----------------------------------------------------------------------------
+   # read the passed issue file , convert it to hash ref of hash refs 
+   # and insert the hsr into a db
+	# -----------------------------------------------------------------------------
+   sub doLoadDbToTxtFile {
+
+      my $self                = shift ; 
+      my $issues_file         = shift ; 	
+
+      my $ret                 = 1 ; 
+      my $msg                 = 'unknown error while loading db issues to xls file' ; 
+      my $str_issues          = q{} ; 
+      my $objIssueTracker 	   = 'IssueTracker::App::Utils::ETL::IssueTracker'->new ( \$appConfig ) ; 
+      my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
+      my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
+
+      my $objDbHandlerFactory = 'IssueTracker::App::Model::DbHandlerFactory'->new( \$appConfig , $self ) ; 
+      my $objDbHandler 			= $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
+
+      ( $ret , $msg , $hsr , $mhsr )  = $objDbHandler->doSelectTableIntoHashRef( 'issue' ) ; 
+      p($hsr) if $module_trace == 1 ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+      
+      ( $ret , $msg , $str_issues ) = $objIssueTracker->doConvertHashRefToStr( $hsr ) ; 
+      $objFileHandler->PrintToFile ( $issues_file , $str_issues ) ; 
+
+      return ( $ret , $msg ) if $ret != 0 ;  
+
+   } 
 
 	#
 	# --------------------------------------------------------
@@ -90,6 +121,7 @@ package IssueTracker::App::Controller::DbIOController ;
 		$appConfig  = ${ shift @_ } if ( @_ );
 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objFileHandler   = 'IssueTracker::App::Utils::IO::FileHandler'->new ( \$appConfig ) ; 
 	}	
 	#eof sub doInitialize
 	

@@ -53,7 +53,7 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 		   foreach my $key ( sort(keys( %{$row_hash} ) ) ) {
             $str_col_list .= ' , ' . $key ; 
             my $value     = $row_hash->{ $key } ; 
-            $value        =~ s/'/''/g ; 
+            $value        =~ s/'/''/g if ( $value ) ; 
             $str_val_list .= ' , \'' . $value . '\''; 
          }
          
@@ -138,12 +138,13 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       $mhsr->{'ColumnNames'}-> { 0 } = 'issue_id' ;
       $mhsr->{'ColumnNames'}-> { 1 } = 'level' ;
       $mhsr->{'ColumnNames'}-> { 2 } = 'prio' ;
-      $mhsr->{'ColumnNames'}-> { 3 } = 'name' ;
-      $mhsr->{'ColumnNames'}-> { 4 } = 'description' ;
-      $mhsr->{'ColumnNames'}-> { 5 } = 'status' ;
-      $mhsr->{'ColumnNames'}-> { 6 } = 'category' ;
-      $mhsr->{'ColumnNames'}-> { 7 } = 'current' ;
-      $mhsr->{'ColumnNames'}-> { 8 } = 'run_date' ;
+      $mhsr->{'ColumnNames'}-> { 3 } = 'status' ;
+      $mhsr->{'ColumnNames'}-> { 4 } = 'category' ;
+      $mhsr->{'ColumnNames'}-> { 5 } = 'name' ;
+      $mhsr->{'ColumnNames'}-> { 6 } = 'description' ;
+      $mhsr->{'ColumnNames'}-> { 7 } = 'start_time' ;
+      $mhsr->{'ColumnNames'}-> { 8 } = 'current' ;
+      $mhsr->{'ColumnNames'}-> { 9 } = 'run_date' ;
 
       $str_sql = 
          " SELECT 
@@ -154,6 +155,7 @@ package IssueTracker::App::Model::PostGreDbHandler ;
             , category
             , name
             , description
+            , start_time
             , current
             , run_date
          FROM $table ;

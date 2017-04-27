@@ -179,7 +179,11 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 
                # and the title should not be longer than 90 chars
                $title = substr($title, 0, 90 ) . ' ...' if length ( $title ) > 90 ; 
-
+               $title =~ /^([\d]{2}:[\d]{2})(.*)/g ; 
+               my $start_time = $1 || 'null' ; 
+               $title =~ s/$start_time//g unless $start_time eq 'null' ; 
+ 
+               $hsr->{ $i }->{ 'start_time' }      = $start_time ; 
                $hsr->{ $i }->{ 'name' }            = $title ; 
                $hsr->{ $i }->{ 'description' }     = $description ; 
                $hsr->{ $i }->{ 'current' }         = $flag_current ; 
@@ -211,8 +215,73 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
    # eof sub StrToHashRef 
 
 
+   sub doConvertHashRefToStr {
+
+      my $self       = shift ; 
+      my $hsr2       = shift ; 
+
+      my $msg        = 'unknown error during hash ref of hash references to string conversion !!!' ;  ; 
+      my $ret        = 1 ; 
+      my $str_issues = q{} ; 
+      
+      p ( $hsr2 ) if $module_trace == 1 ; 
+      my $str_header = '# START DAILY @2017-04-27 su
+   
+## what will I do till the next daily:
+#---------------------------
+#' ; 
+#
+      my $str_middler = '## what did I do since last daily:
+---------------------------
+' ; 
+
+      my $str_footer = '
+
+# STOP  DAILY @2017-04-27 su
+' ; 
 
 
+      $str_issues .= $str_header . "\n\n" ; 
+      my $prev_category = q{} ; 
+
+      foreach my $issue_id ( sort ( keys ( %$hsr2 ) ) ) {
+         my $row = $hsr2->{ $issue_id } ; 
+
+         my $category      = $row->{ 'category'} ; 
+         my $current       = $row->{ 'current'} ; 
+         my $description   = $row->{ 'description'} ; 
+         my $issue_id      = $row->{ 'issue_id'} ; 
+         my $level         = $row->{ 'level'} ; 
+         my $name          = $row->{ 'name'} ; 
+         my $prio          = $row->{ 'prio'} ; 
+         my $run_date      = $row->{ 'run_date'} ; 
+         my $start_time    = $row->{ 'start_time'} ; 
+         my $status        = $row->{ 'status'} ; 
+
+         $str_issues       .= "\n" if ( $prev_category ne $category ) ; 
+         $str_issues       .= $category . "\n" unless ( $prev_category eq $category ) ; 
+         $str_issues       .= '- ' ; 
+         $str_issues       .= $status . "\t\t\t" ; 
+         $str_issues       .= ( $start_time . " " ) if ( $start_time ) ; 
+         $str_issues       .= $name . "\n" ; 
+         $prev_category    = $category ; 
+      }
+      #eof foreach 
+
+      $str_issues .= $str_footer . "\n\n" ; 
+          
+      $msg = " OK for hsr2 to txt conversion " ;  
+      $ret = 0 ; 
+
+      return ( $ret , $msg , $str_issues ) ;
+   }
+   # eof sub doConvertHashRefToStr
+
+
+	#
+	# --------------------------------------------------------
+	# used to calculate the amount of levels 
+	# --------------------------------------------------------
    sub doFillInLevelsPerRow {
 
       my $self                = shift ; 

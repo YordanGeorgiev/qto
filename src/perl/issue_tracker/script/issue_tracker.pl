@@ -56,7 +56,7 @@ use IssueTracker::App::Utils::Timer ;
 my $module_trace                 = 0 ; 
 my $md_file 							= '' ; 
 my $rdbms_type 						= 'postgre' ; #todo: parametrize to 
-my $issues_file                   = '' ; 
+my $issues_file                  = '' ; 
 my $objInitiator                 = {} ; 
 my $appConfig                    = {} ; 
 my $objLogger                    = {} ; 
@@ -108,6 +108,14 @@ my $issue_tracker_project        = q{} ;
             my $objDbIOController = 
                'IssueTracker::App::Controller::DbIOController'->new ( \$appConfig ) ; 
             ( $ret , $msg ) = $objDbIOController->doLoadDbIssuesToXls ( $issues_file ) ; 
+         } 
+         elsif ( $action eq 'db-to-txt' ) {
+            $msg = 'issues_file to produce : ' . "\n" . $issues_file ; 
+            $objLogger->doLogInfoMsg ( "$msg" ) ; 
+
+            my $objDbIOController = 
+               'IssueTracker::App::Controller::DbIOController'->new ( \$appConfig ) ; 
+            ( $ret , $msg ) = $objDbIOController->doLoadDbToTxtFile ( $issues_file ) ; 
          } 
          else {
             $msg = "unknown $action action !!!" ; 
