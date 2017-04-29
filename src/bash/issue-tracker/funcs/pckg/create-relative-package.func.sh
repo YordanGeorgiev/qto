@@ -79,12 +79,12 @@ doCreateRelativePackage(){
 
       test -z "$network_backup_dir" || \
       mkdir -p $network_backup_dir && \
-      cmd="cp -v $zip_file $product_dir/dat/zip/" && doRunCmdOrExit "$cmd" && \
+      cmd="cp -v $zip_file $product_dir/dat/zip/" && doRunCmdAndLog "$cmd" && \
       doLog "INFO with the following local backup  :" && \
       doLog "INFO `stat -c \"%y %n\" $product_dir/dat/zip/$zip_file_name`" && \
       doLog "INFO in the network dir @::" && \
       doLog "INFO :: $network_backup_dir" && \
-      cmd="cp -v $zip_file $network_backup_dir/$zip_file_name" && doRunCmdOrExit "$cmd" && \
+      cmd="cp -v $zip_file $network_backup_dir/$zip_file_name" && doRunCmdAndLog "$cmd" && \
       doLog "INFO with the following network backup  :" && \
       doLog "INFO `stat -c \"%y %n\" \"$network_backup_dir/$zip_file_name\"`"
    fi

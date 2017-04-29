@@ -1,7 +1,11 @@
-check-perl-syntax
+txt-to-db
+# db-to-xls
+# xls-to-db
+# db-to-txt
+# check-perl-syntax
 # run-perl-tests
 # check-perl-modules-prerequisites
-run-issue-tracker
+# run-issue-tracker
 # create-full-7z-package
 # create-full-package
 # create-relative-7z-package

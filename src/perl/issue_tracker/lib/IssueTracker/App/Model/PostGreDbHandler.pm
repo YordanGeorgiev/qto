@@ -42,6 +42,9 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       my $str_val_list     = q{} ; 
       my $error_msg        = q{} ; 
 
+      binmode(STDIN,  ':utf8');
+      binmode(STDOUT, ':utf8');
+      binmode(STDERR, ':utf8');
 
       my $debug_msg        = 'START doInsertSqlHashData' ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
@@ -53,7 +56,7 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 		   foreach my $key ( sort(keys( %{$row_hash} ) ) ) {
             $str_col_list .= ' , ' . $key ; 
             my $value     = $row_hash->{ $key } ; 
-            $value        =~ s/'/''/g ; 
+            $value        =~ s/'/''/g if ( $value ) ; 
             $str_val_list .= ' , \'' . $value . '\''; 
          }
          
@@ -83,7 +86,8 @@ package IssueTracker::App::Model::PostGreDbHandler ;
          , 'AutoCommit' => 1
       } ) or $msg = DBI->errstr;
       
-      
+      p ( $str_sql_insert ) ; 
+ 
       $ret = $dbh->do( $str_sql_insert ) ; 
       $msg = DBI->errstr ; 
 
@@ -131,28 +135,29 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 #       description | character varying(1000) |           | extended |              |
 #       status      | character varying(50)   | not null  | extended |              |
 #       category    | character varying(100)  | not null  | extended |              |
-#       current      | integer                 |           | plain    |              |
 
 
       $mhsr->{'ColumnNames'}-> { 0 } = 'issue_id' ;
       $mhsr->{'ColumnNames'}-> { 1 } = 'level' ;
       $mhsr->{'ColumnNames'}-> { 2 } = 'prio' ;
-      $mhsr->{'ColumnNames'}-> { 3 } = 'name' ;
-      $mhsr->{'ColumnNames'}-> { 4 } = 'description' ;
-      $mhsr->{'ColumnNames'}-> { 5 } = 'status' ;
-      $mhsr->{'ColumnNames'}-> { 6 } = 'category' ;
-      $mhsr->{'ColumnNames'}-> { 7 } = 'current' ;
+      $mhsr->{'ColumnNames'}-> { 3 } = 'status' ;
+      $mhsr->{'ColumnNames'}-> { 4 } = 'category' ;
+      $mhsr->{'ColumnNames'}-> { 5 } = 'name' ;
+      $mhsr->{'ColumnNames'}-> { 6 } = 'description' ;
+      $mhsr->{'ColumnNames'}-> { 7 } = 'start_time' ;
+      $mhsr->{'ColumnNames'}-> { 8 } = 'run_date' ;
 
       $str_sql = 
          " SELECT 
               issue_id
             , level 
             , prio
-            , name
-            , description
             , status
             , category
-            , current
+            , name
+            , description
+            , start_time
+            , run_date
          FROM $table ;
       " ; 
 
@@ -207,11 +212,11 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 
 		#debug print "PostGreDbHandler::doInitialize appConfig : " . p($appConfig );
 		
-		$db_name 			= $appConfig->{'db_name'} 		|| 'prd_pgsql_runner' ; 
-		$db_host 			= $appConfig->{'db_host'} 		|| 'localhost' ;
-		$db_port 			= $appConfig->{'db_port'} 		|| '13306' ; 
-		$db_user 			= $appConfig->{'db_user'} 		|| 'ysg' ; 
-		$db_user_pw 		= $appConfig->{'db_user_pw'} 	|| 'no_pass_provided!!!' ; 
+		$db_name 			= $ENV{ 'db_name' } || $appConfig->{'db_name'} || 'prd_pgsql_runner' ; 
+		$db_host 			= $ENV{ 'db_host' } || $$appConfig->{'db_host'} 		|| 'localhost' ;
+		$db_port 			= $ENV{ 'db_port' } || $$appConfig->{'db_port'} 		|| '13306' ; 
+		$db_user 			= $ENV{ 'db_user' } || $$appConfig->{'db_user'} 		|| 'ysg' ; 
+		$db_user_pw 		= $ENV{ 'db_user_pw' } || $appConfig->{'db_user_pw'} 	|| 'no_pass_provided!!!' ; 
       
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
    }

@@ -2,7 +2,7 @@
 [MainSection]
 
 # multiple projects support
-issue_tracker_project = ysg-issues
+issue_tracker_project = here-issues
 
 # The logging directory 
 LogDir = %ProductInstanceDir%/dat/log
@@ -32,7 +32,7 @@ db_host = doc-pub-host
 db_port = 13306
 
 # OBS ! dev , tst , prd product instances to own db !
-db_name   = prd_ysg_issues
+db_name   = prd_here_issues
 
 # the mariadb user name
 db_user = ysg

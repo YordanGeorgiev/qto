@@ -1,7 +1,7 @@
 package IssueTracker::App::Utils::IO::FileHandler ; 
 	use strict; use warnings; use diagnostics ; 
 
-	my $VERSION = '1.1.7';
+	my $VERSION = '1.1.8';
 
 	require Exporter;
 	our @ISA = qw(Exporter);
@@ -20,54 +20,81 @@ package IssueTracker::App::Utils::IO::FileHandler ;
 
 	### START setting package vars
 	# @ISA = qw(AutoLoader Exporter);
-	my @EXPORT = qw(ReadFileReturnString AppendToFile);
+	my @EXPORT = qw(doReadFileReturnString AppendToFile);
 	our ($cnfHolder) = ();
 	### STOP setting package vars
 
 
 	#
 	# -----------------------------------------------------------------------------
-	# Reads a file returns a sting
+	# Reads a file returns a sting , if second param is utf8 returns utf8 string
+	# usage:
+   # ( $ret , $msg , $str_file ) 
+   #         = $objFileHandler->doReadFileReturnString ( $file , 'utf8' ) ; 
+   # or
+   # ( $ret , $msg , $str_file ) 
+   #         = $objFileHandler->doReadFileReturnString ( $file ) ; 
 	# -----------------------------------------------------------------------------
-	sub ReadFileReturnString {
+	sub doReadFileReturnString {
 
-		 my $self       = shift;
-		 my $FileToRead = shift;
-		 my $mode 		 = shift ; 
+      my $self      = shift;
+      my $file      = shift;
+      my $mode      = shift ; 
 
-		 my $ErrorMsg = "can not read \$FileToRead $FileToRead !!! ";
-		 cluck("$ErrorMsg   $! !!!")
-			unless ((-e $FileToRead) && (-f $FileToRead) && (-r $FileToRead));
+      my $msg        = {} ;     
+      my $ret        = 1 ; 
+      my $s          = q{} ; 
 
-		 #debug print " readFileReturnString \$FileToRead is $FileToRead \n" ;
-		 #todo: detect whether the file is utf8 encoded
-		
-		 #slurp the file	
-		 my $string = ();
-		 {
+      $msg = " the file : $file does not exist !!!" ; 
+      cluck ( $msg ) unless -e $file ; 
 
-			  local $/ = undef;
+      $msg = " the file : $file is not actually a file !!!" ; 
+      cluck ( $msg ) unless -f $file ; 
 
-			  #all resx files are utf8 encoded !!!
-			  if ( defined ( $mode ) && $mode eq 'utf8' ) {
+      $msg = " the file : $file is not readable !!!" ; 
+      cluck ( $msg ) unless -r $file ; 
 
-					open FILE, "<:utf8", "$FileToRead "
-					  or cluck("Couldn't open \$FileToRead $FileToRead : $!");
-					$string = <FILE>;
-					#debug print "UTF8 STRING IS " . $string;
-			  }
-			  else {
-					open FILE, "$FileToRead "
-					  or cluck("Couldn't open \$FileToRead $FileToRead : $!");
-					$string = <FILE>;
-			  }
+      $msg .= "can not read the file $file !!!";
 
-			  close FILE;
-		 }
+      return ( $ret , "$msg ::: $! !!!" , undef ) 
+         unless ((-e $file) && (-f $file) && (-r $file));
 
-		 return $string;
+      $msg = '' ; 
+
+	   $s = eval {	
+          my $string = ();    #slurp the file	
+          {
+            local $/ = undef;
+
+            if ( defined ( $mode ) && $mode eq 'utf8' ) {
+               open FILE, "<:utf8", "$file "
+                 or cluck("failed to open \$file $file : $!");
+               $string = <FILE> ; 
+               die "did not find utf8 string in file: $file" 
+                  unless utf8::valid ( $string ) ; 
+            }
+            else {
+               open FILE, "$file "
+                 or cluck "failed to open \$file $file : $!" ; 
+               $string = <FILE> ; 
+            }
+            close FILE;
+
+          }
+         $string ; 
+       };
+
+       if ( $@ ) {
+         $msg = $! . " " . $@ ; 
+         cluck ( $msg ) ; 
+         $ret = 1 ; 
+         $s = undef ; 
+       } else {
+         $ret = 0 ; $msg = "ok for read file: $file" ;  
+       }
+		 return ( $ret , $msg , $s ) ; 
 	}
-	#eof sub readFileReturnString
+	#eof sub doReadFileReturnString
 
 
 	#
@@ -312,7 +339,7 @@ yordan.georgiev@gmail.com
 
 =head1 COPYRIGHT MOR LICENSE
 
-Copyright (C) 2012 Yordan Georgiev
+Copyright (C) 2017 Yordan Georgiev
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.1 or,
@@ -323,23 +350,10 @@ at your option, any later version of Perl 5 you may have available.
 --	VersionHistory: 
 -------------------------------------------------------------------------------
 
+1.1.8 -- 2017-04-29 21:05:53 -- improved utf8 read with doReadFileReturnString
 1.1.7 -- 2014-09-30 10:45:06 -- ysg -- fiexed bug with use Carp
 1.1.6 -- 2014-06-01 22:30:40 -- ysg -- mkpath -> make_path
 1.1.5 -- 2012-12-26 22:31:30 -- ysg -- re-formattting 
-1.1.4 -- ysg -- Added ReadFileReturnTrimmedStrAtTopBottom
-1.1.3 -- ysg -- Removed ReadDirRecursivelyReturnArrays
-1.1.2 -- ysg -- Added the Count file lines method 
-1.1.1 -- ysg -- Added the Count file lines method 
-1.1.0 -- ysg -- MkDir small change , PrintToFil - > added to Unix Dir
-1.0.9 -- ysg -- Added DeleteDir
-1.0.8 -- ysg -- Added FileIsWritable , FileIsLocked 
-1.0.7 -- ysg -- mkdir in PrintToFil if it does not exist ,
-1.0.6 -- ysg -- Added ReadDirRecursivelyReturnArrays - a cheap File::find
-1.0.5 -- ysg -- Added ReadDirReturnArrayRefsRecursively
-1.0.4 -- ysg -- Added better error handling 
-1.0.3 -- ysg -- Added OO 
-1.0.2 -- ysg -- Added ReadDirReturnArray 
-1.0.1 -- ysg -- Added PrintToFil , AppendToFile
 
 =cut
 

@@ -1,0 +1,37 @@
+# doc/txt/issue-tracker/txt-to-db/txt-to-db.func.txt
+
+	doTxtToDb
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doTxtToDb function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doTxtToDb function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doTxtToDb function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doTxtToDb function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doTxtToDb used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doTxtToDb functions
+
+
+
+# eof file: doc/txt/issue-tracker/txt-to-db/txt-to-db.func.txt

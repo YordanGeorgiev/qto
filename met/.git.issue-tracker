@@ -21,7 +21,7 @@ src/perl/issue_tracker/lib
 src/perl/issue_tracker/lib/IssueTracker
 src/perl/issue_tracker/lib/IssueTracker/App
 src/perl/issue_tracker/lib/IssueTracker/App/Data/
-src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelBuilder.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelHandler.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Controller/FileIOController.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Controller/DbIOController.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
@@ -326,7 +326,7 @@ doc/md/issue-tracker-devops-guide.md
 1
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Controller/DbIOController/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Controller/FileIOController/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Data/ExcelBuilder/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Data/ExcelHandler/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Model/PostGreDbHandler/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Configurator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/ETL/IssueTracker/autosplit.ix

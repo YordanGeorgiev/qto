@@ -19,6 +19,38 @@ doPrintUsage(){
       bash $0 -h
       bash $0 -help
       bash $0 --help
+      
+   1. setup a project : 
+   doParseCnfEnvVars /vagrant/csitea/cnf/projects/issue-tracker/ysg-issues.dev.doc-pub-host.cn
+   
+   2. run an action:  
+
+      bash $0 -a run-issue-tracker
+      bash $0 -a check-perl-modules-prerequisites
+      bash $0 -a check-perl-syntax
+      bash $0 -a run-perl-tests
+      bash $0 -a run-issue-tracker
+      bash $0 -a clone-to-app
+      bash $0 -a gmail-package
+      bash $0 -a morph-dir
+      bash $0 -a change-env-type
+      bash $0 -a change-version
+      bash $0 -a restore-tmux-session
+      bash $0 -a generate-action-files
+      bash $0 -a remove-action-files
+      bash $0 -a create-ctags
+      bash $0 -a remove-package
+      bash $0 -a backup-file
+      bash $0 -a remove-package-files
+      bash $0 -a tmux-common
+      bash $0 -a action-to-remove
+      bash $0 -a print-help
+      bash $0 -a print-usage
+      bash $0 -a action-to-remove
+      bash $0 -a create-full-7z-package
+      bash $0 -a create-full-package
+      bash $0 -a create-relative-7z-package
+      bash $0 -a create-relative-package
 	
 		# and here you have some more packaging calls .. 
       bash $0 -a create-full-package -i <<path_to_include_file>> -a gmail-package
@@ -31,32 +63,10 @@ doPrintUsage(){
 		bash $0 -a to-prd
       bash $0 -a to-ver=1.0.5
       bash $0 -a to-app=<<new_app_name>>
-      bash $0 -a check-perl-syntax
-      bash $0 -a run-perl-tests
+	
 
-      bash $0 -a save-tmux-session
-      bash $0 -a restore-tmux-session
-		
-		# those are eventually issue-trackerers for the correspondent sbt commands
-      bash $0 -a sbt-clean-compile
-      bash $0 -a sbt-compile
-      bash $0 -a sbt-run
-     	
-		# should you have any errors it might be good idea to run those verbose also
-		bash $0 -a sbt-clean-compile-verbose
-      bash $0 -a sbt-compile-verbose
-      bash $0 -a sbt-run-verbose
 
-		# you could run the correspondent calls for the play2 projects
-      bash $0 -a activator-clean-compile
-      bash $0 -a activator-compile
-      bash $0 -a activator-run
-     	
-		# should you have any errors it might be good idea to run those verbose also
-		bash $0 -a activator-clean-compile-verbose
-      bash $0 -a activator-compile-verbose
-      bash $0 -a activator-run-verbose
-	Note the usage is quite long - you might wanto to use the less page :
+Note the usage is quite long - you might wanto to use the less page :
       `basename $0` --usage \| less
 
    #

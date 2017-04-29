@@ -1,4 +1,4 @@
-package IssueTracker::App::Data::ExcelBuilder ; 
+package IssueTracker::App::Data::ExcelHandler ; 
 
    use strict ; use warnings ; use utf8 ; 
 
@@ -36,13 +36,16 @@ package IssueTracker::App::Data::ExcelBuilder ;
       #debug ok p($hsr ) if $module_trace == 1 ; 
       
       my $objTimer = 'IssueTracker::App::Utils::Timer'->new() ; 
-	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
+	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
+      my $nice_month  = "$year" . '-' . "$mon" ; 
+      my $nice_date  = "$year" . '-' . "$mon" . '-' . $mday ; 
+
 
       my $issues_file      = $appConfig->{ 'issues_file' } ; 
       my $xls_file_name    = $issues_file ; 
       $xls_file_name       =~ s/(.*)(\\|\/)(.*)\.([a-zA-Z0-9]*)/$3/g ; 
-      $xls_file_name    = "$xls_file_name" . '.' . "$hour" . "$min" . "$sec" ; 
-      my $xls_dir          = "$ProductInstanceDir/dat/xls/run" ; 
+      $xls_file_name       = "$xls_file_name" . '.' . "$hour" . "$min" . "$sec" ; 
+      my $xls_dir = $appConfig->{ 'xls_dir' } || $ENV{'proj_txt_dir'} . '/issues' . "/$year/$nice_month/$nice_date" ; 
       $objFileHandler->MkDir ( "$xls_dir" ) ; 
       my $xls_file         = "$xls_dir/$xls_file_name" . '.xlsx' ; 
 
@@ -97,8 +100,8 @@ package IssueTracker::App::Data::ExcelBuilder ;
          foreach my $colid ( sort ( keys ( %{$hsr_meta->{'ColumnNames'}} ) ) ) {
             my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid } ; 
        
-            my $cell_length = length ( $hsr_row->{ $col_name } ) || 5 ;  
-            $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length || 5 ; 
+            my $cell_length = length ( $hsr_row->{ $col_name } ) || 10 ; 
+            $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length || 10 ; 
 
             #define the max width 
             if ( $hsr_meta->{ 'ColumnWidths' }->{ $colid } < $cell_length ) {
@@ -149,27 +152,13 @@ package IssueTracker::App::Data::ExcelBuilder ;
 
       my $self = shift ; 
 
-      #debug print "ExcelBuilder::doInitialize appConfig : " . p($appConfig );
+      #debug print "ExcelHandler::doInitialize appConfig : " . p($appConfig );
 	   $objLogger 			   = 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
       $ProductInstanceDir   = $appConfig->{ 'ProductInstanceDir' } ; 
 	   $objFileHandler 	   = 'IssueTracker::App::Utils::IO::FileHandler'->new( \$appConfig ) ;
 
    }
    #eof sub doInitialize
-
-
-#   sub doMoveOldXlsFilesToBackup {
-#      my $self             = shift ; 
-#      my $xls_dir          = "$ProductInstanceDir/dat/backups/" ; 
-#      $objFileHandler->MkDir ( "$xls_dir" ) ; 
-#      use File::Copy;
-#      my @files = glob("$PATH1/*.txt");
-#
-#      for my $file (@files) {
-#          copy($file, $ENV{DIRWORK}) or die "Copy failed: $!";
-#      }
-
-   #}
 
  
    #

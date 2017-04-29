@@ -41,6 +41,8 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 	our $ConfFile 						= '' ; 
 	our $objLogger						= {} ; 
 	our $objFileHandler				= {} ; 
+   our $hsrStatus                = {} ; 
+   our %inverse_hsrStatus        = (); 
 
 =head1 SYNOPSIS
 
@@ -85,8 +87,12 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
          $objLogger->doLogFatalMsg ( $msg ) ; 
       }
       else {
+         # src: http://ahinea.com/en/tech/perl-unicode-struggle.html
+         ( $ret , $msg , $str_issues_file ) 
+            = $objFileHandler->doReadFileReturnString ( $issues_file , 'utf8' ) ; 
 
-         $str_issues_file = $objFileHandler->ReadFileReturnString ( $issues_file , 'utf8' ) ; 
+         return ( $ret , $msg ) unless $ret == 0 ; 
+
          $ret = 0 ; 
          $msg = "read successfully issues_file : $issues_file" ; 
          $objLogger->doLogDebugMsg ( $str_issues_file ) if ( $module_trace == 1 ) ; 
@@ -109,11 +115,13 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       my $msg        = 'unknown error while converting string to hash reference' ; 
       my $hsr        = {} ; 
 
+      my $objTimer   = 'IssueTracker::App::Utils::Timer'->new() ; 
+	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
+      my $nice_date = $year . '-' . $mon . '-' . $mday ; 
  
       # each item starts with new line may be some space and - 
       my @arr_category_items  = split '\n(\s*)\n' , $str ; 
       my $i          = 0 ;  
-      my $flag_current = 3 ;     # check the wiki syntax of a valid issues file
 
 
       if ( $str ) {      
@@ -127,7 +135,6 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
             my $debug_msg = "category_item: $category_item " ; 
             $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
 
-            $flag_current-- if $category_item =~ m/^[#]{1,2} /g ; 
             $msg = "category_item starts with ##" ; 
             $objLogger->doLogDebugMsg ( $msg ) if $category_item =~ m/^##/g ;
             
@@ -158,11 +165,11 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                my $name = $3 ; 
                next unless $name ; 
                $hsr->{ $i }->{ 'issue_id' } = $i ;
-               $hsr->{ $i }->{ 'level' } = $item_levels->{ $category_item_count } ; 
+               $hsr->{ $i }->{ 'level' } = $item_levels->{ $category_item_count } + 1 ; 
                # $hsr->{ $i }->{ 'item' } = $item ; 
                $hsr->{ $i }->{ 'prio' } = $i ; 
                $hsr->{ $i }->{ 'category' }     = $category ; 
-               $hsr->{ $i }->{ 'status' }       = $status ; 
+               $hsr->{ $i }->{ 'status' }       = $hsrStatus->{ $status } ; 
                # the title is the first line of the title description
                my $title = ( split /\n/, $name )[0] ; 
                
@@ -175,10 +182,14 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 
                # and the title should not be longer than 90 chars
                $title = substr($title, 0, 90 ) . ' ...' if length ( $title ) > 90 ; 
-
-               $hsr->{ $i }->{ 'name' }         = $title ; 
-               $hsr->{ $i }->{ 'description' }  = $description ; 
-               $hsr->{ $i }->{ 'current' }       = $flag_current ; 
+               $title =~ /^([\d]{2}:[\d]{2})(.*)/g ; 
+               my $start_time = $1 || 'null' ; 
+               $title =~ s/$start_time//g unless $start_time eq 'null' ; 
+ 
+               $hsr->{ $i }->{ 'start_time' }      = $start_time ; 
+               $hsr->{ $i }->{ 'name' }            = $title ; 
+               $hsr->{ $i }->{ 'description' }     = $description ; 
+               $hsr->{ $i }->{ 'run_date' }        = $nice_date ; 
                
                if ( $module_trace == 1 ) { 
                   $debug_msg = " START :::: $i" if 
@@ -206,8 +217,74 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
    # eof sub StrToHashRef 
 
 
+   sub doConvertHashRefToStr {
+
+      my $self       = shift ; 
+      my $hsr2       = shift ; 
+
+      my $msg        = 'unknown error during hash ref of hash references to string conversion !!!' ;  ; 
+      my $ret        = 1 ; 
+      my $str_issues = q{} ; 
+      my $run_date   = q{} ;  
+      p ( $hsr2 ) if $module_trace == 1 ; 
+      my $str_header = '# START DAILY %run_date%
+   
+## what will I do till the next daily:
+#---------------------------
+#' ; 
+#
+      my $str_middler = '## what did I do since last daily:
+---------------------------
+' ; 
+
+      my $str_footer = '
+
+# STOP  DAILY @%run_date%
+' ; 
 
 
+      $str_issues .= $str_header . "\n\n" ; 
+      my $prev_category = q{} ; 
+
+      foreach my $issue_id ( sort ( keys ( %$hsr2 ) ) ) {
+         my $row = $hsr2->{ $issue_id } ; 
+
+         $run_date         = $row->{ 'run_date'} ; 
+         my $category      = $row->{ 'category'} ; 
+         my $current       = $row->{ 'current'} ; 
+         my $description   = $row->{ 'description'} ; 
+         my $issue_id      = $row->{ 'issue_id'} ; 
+         my $level         = $row->{ 'level'} ; 
+         my $name          = $row->{ 'name'} ; 
+         my $prio          = $row->{ 'prio'} ; 
+         my $start_time    = $row->{ 'start_time'} ; 
+         my $status        = $row->{ 'status'} ; 
+         $status           = $inverse_hsrStatus{ $status } ; 
+
+         $str_issues       .= "\n" if ( $prev_category ne $category ) ; 
+         $str_issues       .= $category . "\n" unless ( $prev_category eq $category ) ; 
+         $str_issues       .= '- ' ; 
+         $str_issues       .= $status . "\t\t\t" ; 
+         $str_issues       .= ( $start_time . " " ) if ( $start_time ) ; 
+         $str_issues       .= $name . "\n" ; 
+         $prev_category    = $category ; 
+      }
+      #eof foreach 
+
+      $str_issues .= $str_footer . "\n\n" ; 
+      $str_issues =~ s|%run_date%|$run_date|g ;  
+      $msg = " OK for hsr2 to txt conversion " ;  
+      $ret = 0 ; 
+
+      return ( $ret , $msg , $str_issues ) ;
+   }
+   # eof sub doConvertHashRefToStr
+
+
+	#
+	# --------------------------------------------------------
+	# used to calculate the amount of levels 
+	# --------------------------------------------------------
    sub doFillInLevelsPerRow {
 
       my $self                = shift ; 
@@ -230,6 +307,26 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 		
 		$objLogger 	      = "IssueTracker::App::Utils::Logger"->new( \$appConfig ) ; 
 		$objFileHandler 	= "IssueTracker::App::Utils::IO::FileHandler"->new( \$appConfig ) ; 
+
+      $hsrStatus = {
+           'eval'    => '01-eval'      # evaluate whether or not to do it
+         , 'todo'    => '02-todo'      # must do it till the end of the period
+         , 'rem'     => '02-rem'       # remember to act till the end of the period
+         , 'wip'     => '03-wip'       # is work in progress - aka is being done right now
+         , 'act'     => '03-act'       # is being actively done , aka more of an activity type
+         , 'diss'    => '04-diss'      # to dissmiss or disgard
+         , 'test'    => '05-test'      # to test some implementation
+         , 'tst'     => '05-test'      # to test some implementation
+         , 'hld'     => '06-onhold'    # the issue is on hold - 
+         , 'flow'    => '06-flow'      # follow an event or action to occur
+         , 'qas'     => '07-qas'       # the issue is in quality assurance mode
+         , 'qa'      => '07-qas'       # the issue is in quality assurance mode
+         , 'blck'    => '08-blocked'   # the issue is blocked
+         , 'fail'    => '08-fail'      # the issue is irreversably failed to be imlemented
+         , 'done'    => '09-done'      # the issue is done
+      }; 
+      
+      %inverse_hsrStatus = reverse %$hsrStatus;
 	}	
 	#eof sub doInitialize
 	
