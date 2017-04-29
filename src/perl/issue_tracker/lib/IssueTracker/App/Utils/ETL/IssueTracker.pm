@@ -87,8 +87,12 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
          $objLogger->doLogFatalMsg ( $msg ) ; 
       }
       else {
+         # src: http://ahinea.com/en/tech/perl-unicode-struggle.html
+         ( $ret , $msg , $str_issues_file ) 
+            = $objFileHandler->doReadFileReturnString ( $issues_file , 'utf8' ) ; 
 
-         $str_issues_file = $objFileHandler->ReadFileReturnString ( $issues_file , 'utf8' ) ; 
+         return ( $ret , $msg ) unless $ret == 0 ; 
+
          $ret = 0 ; 
          $msg = "read successfully issues_file : $issues_file" ; 
          $objLogger->doLogDebugMsg ( $str_issues_file ) if ( $module_trace == 1 ) ; 

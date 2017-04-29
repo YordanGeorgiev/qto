@@ -20,54 +20,80 @@ package IssueTracker::App::Utils::IO::FileHandler ;
 
 	### START setting package vars
 	# @ISA = qw(AutoLoader Exporter);
-	my @EXPORT = qw(ReadFileReturnString AppendToFile);
+	my @EXPORT = qw(doReadFileReturnString AppendToFile);
 	our ($cnfHolder) = ();
 	### STOP setting package vars
 
 
 	#
 	# -----------------------------------------------------------------------------
-	# Reads a file returns a sting
+	# Reads a file returns a sting , if second param is utf8 returns utf8 string
+	# usage:
+   # ( $ret , $msg , $str_file ) 
+   #         = $objFileHandler->doReadFileReturnString ( $file , 'utf8' ) ; 
+   # or
+   # ( $ret , $msg , $str_file ) 
+   #         = $objFileHandler->doReadFileReturnString ( $file ) ; 
 	# -----------------------------------------------------------------------------
-	sub ReadFileReturnString {
+	sub doReadFileReturnString {
 
-		 my $self       = shift;
-		 my $FileToRead = shift;
-		 my $mode 		 = shift ; 
+      my $self      = shift;
+      my $file      = shift;
+      my $mode      = shift ; 
 
-		 my $ErrorMsg = "can not read \$FileToRead $FileToRead !!! ";
-		 cluck("$ErrorMsg   $! !!!")
-			unless ((-e $FileToRead) && (-f $FileToRead) && (-r $FileToRead));
+      my $msg        = {} ;     
+      my $ret        = 1 ; 
+      my $s          = q{} ; 
 
-		 #debug print " readFileReturnString \$FileToRead is $FileToRead \n" ;
-		 #todo: detect whether the file is utf8 encoded
-		
-		 #slurp the file	
-		 my $string = ();
-		 {
+      $msg = " the file : $file does not exist !!!" ; 
+      cluck ( $msg ) unless -e $file ; 
 
-			  local $/ = undef;
+      $msg = " the file : $file is not actually a file !!!" ; 
+      cluck ( $msg ) unless -f $file ; 
 
-			  #all resx files are utf8 encoded !!!
-			  if ( defined ( $mode ) && $mode eq 'utf8' ) {
+      $msg = " the file : $file is not readable !!!" ; 
+      cluck ( $msg ) unless -r $file ; 
 
-					open FILE, "<:utf8", "$FileToRead "
-					  or cluck("Couldn't open \$FileToRead $FileToRead : $!");
-					$string = <FILE>;
-					#debug print "UTF8 STRING IS " . $string;
-			  }
-			  else {
-					open FILE, "$FileToRead "
-					  or cluck("Couldn't open \$FileToRead $FileToRead : $!");
-					$string = <FILE>;
-			  }
+      $msg .= "can not read the file $file !!!";
 
-			  close FILE;
-		 }
+      return ( $ret , "$msg ::: $! !!!" , undef ) 
+         unless ((-e $file) && (-f $file) && (-r $file));
 
-		 return $string;
+      $msg = '' ; 
+
+	   $s = eval {	
+          my $string = ();    #slurp the file	
+          {
+            local $/ = undef;
+
+            if ( defined ( $mode ) && $mode eq 'utf8' ) {
+               open FILE, "<:utf8", "$file "
+                 or cluck("failed to open \$file $file : $!");
+               $string = <FILE> or cluck $@ ; 
+               die "did not find utf8 string in file: $file" 
+                  unless utf8::valid ( $string ) ; 
+            }
+            else {
+               open FILE, "$file "
+                 or cluck "failed to open \$file $file : $!" ; 
+               $string = <FILE> or cluck $@ ; 
+            }
+            close FILE;
+
+          }
+         $string ; 
+       };
+
+       if ( $@ ) {
+         $msg = $! . " " . $@ ; 
+         $ret = 1 ; 
+         $s = undef ; 
+       } else {
+         $ret = 0 ; $msg = "ok for read file: $file" ;  
+       }
+		 return ( $ret , $msg , $s ) ; 
 	}
-	#eof sub readFileReturnString
+	#eof sub doReadFileReturnString
 
 
 	#
