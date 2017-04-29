@@ -61,7 +61,6 @@ my $objInitiator                 = {} ;
 my $appConfig                    = {} ; 
 my $objLogger                    = {} ; 
 my $objFileHandler               = {} ; 
-my $msg                          = q{} ; 
 my $objConfigurator              = {} ; 
 my $actions                      = q{} ; 
 my $xls_dir                      = q{} ; 
@@ -78,7 +77,7 @@ my $issue_tracker_project        = q{} ;
     
       print " issue_tracker.pl START  \n " ; 
       ( $ret , $msg ) = doInitialize();	
-      doExit ( $ret , $msg ) if ( $ret == 1 ) ; 
+      doExit ( $ret , $msg ) unless ( $ret == 0 ) ; 
 
       my @actions = split /,/ , $actions ; 
      
@@ -86,7 +85,7 @@ my $issue_tracker_project        = q{} ;
          $msg = "running the $action action " ; 
          $objLogger->doLogInfoMsg ( $msg ) ; 
 
-         if ( $action eq 'file-to-db' ) {
+         if ( $action eq 'txt-to-db' ) {
 
             $msg = 'issues_file to parse : ' . "\n" . $issues_file ; 
             $objLogger->doLogInfoMsg ( "$msg" ) ; 
@@ -153,9 +152,17 @@ my $issue_tracker_project        = q{} ;
          , 'xls_dir=s'     => \$xls_dir
       );
       
-      $issue_tracker_project = $ENV{ "issue_tracker_project" } ; 
-      $appConfig->{ 'issue_tracker_project' } = $ENV{ "issue_tracker_project" } ; 
-     
+      $issue_tracker_project                  = $ENV{ "issue_tracker_project" } ; 
+
+      unless ( $issue_tracker_project ) {
+         $msg = "set you current project by: \n" ; 
+         $msg .= "doParseCnfEnvVars <<path-to-issue-tracker-project-configuration-file>>" ; 
+         $objLogger->doLogErrorMsg ( $msg ) ; 
+         return ( $ret , $msg ) ; 
+      }
+      
+      $appConfig->{ 'issue_tracker_project' } = $issue_tracker_project ; 
+       
       # if the issues_file is not specified via the cmd arg 
       unless ( $issues_file ) {
          my $objTimer   = 'IssueTracker::App::Utils::Timer'->new() ; 
@@ -178,7 +185,7 @@ my $issue_tracker_project        = q{} ;
       }
       $appConfig->{ 'issues_file' } = $issues_file ; 
       $appConfig->{ 'xls_dir' }     = $xls_dir ; 
-      $actions = 'file-to-db' unless ( $actions )  ; 
+      $actions = 'txt-to-db' unless ( $actions )  ; 
 
       $objLogger->doLogInfoMsg ( "START LOGGING SETTINGS ") ; 
       p ( $appConfig  ) ; 
@@ -189,17 +196,20 @@ my $issue_tracker_project        = q{} ;
    }
    # eof sub doInialize
 
+
+   #
+   # pass the exit msg and the exit to the calling process
+   #
    sub doExit {
+
       my $exit_code  = shift ; 
       my $exit_msg   = shift ; 
 
-
       if ( $exit_code == 0 ) {
-         $objLogger->doLogInfoMsg ( $msg ) ;       
+         $objLogger->doLogInfoMsg ( $exit_msg ) ;       
       } else {
-
-         $objLogger->doLogErrorMsg ( $msg ) ;       
-         $objLogger->doLogFatalMsg ( $msg ) ;       
+         $objLogger->doLogErrorMsg ( $exit_msg ) ;       
+         $objLogger->doLogFatalMsg ( $exit_msg ) ;       
       }
 
       $objLogger->doLogInfoMsg ( "STOP  MAIN") ; 

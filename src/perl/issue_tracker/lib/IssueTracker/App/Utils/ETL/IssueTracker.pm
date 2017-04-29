@@ -42,6 +42,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 	our $objLogger						= {} ; 
 	our $objFileHandler				= {} ; 
    our $hsrStatus                = {} ; 
+   our %inverse_hsrStatus        = (); 
 
 =head1 SYNOPSIS
 
@@ -117,7 +118,6 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       # each item starts with new line may be some space and - 
       my @arr_category_items  = split '\n(\s*)\n' , $str ; 
       my $i          = 0 ;  
-      my $flag_current = 3 ;     # check the wiki syntax of a valid issues file
 
 
       if ( $str ) {      
@@ -131,7 +131,6 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
             my $debug_msg = "category_item: $category_item " ; 
             $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
 
-            $flag_current-- if $category_item =~ m/^[#]{1,2} /g ; 
             $msg = "category_item starts with ##" ; 
             $objLogger->doLogDebugMsg ( $msg ) if $category_item =~ m/^##/g ;
             
@@ -186,7 +185,6 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                $hsr->{ $i }->{ 'start_time' }      = $start_time ; 
                $hsr->{ $i }->{ 'name' }            = $title ; 
                $hsr->{ $i }->{ 'description' }     = $description ; 
-               $hsr->{ $i }->{ 'current' }         = $flag_current ; 
                $hsr->{ $i }->{ 'run_date' }        = $nice_date ; 
                
                if ( $module_trace == 1 ) { 
@@ -223,9 +221,9 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       my $msg        = 'unknown error during hash ref of hash references to string conversion !!!' ;  ; 
       my $ret        = 1 ; 
       my $str_issues = q{} ; 
-      
+      my $run_date   = q{} ;  
       p ( $hsr2 ) if $module_trace == 1 ; 
-      my $str_header = '# START DAILY @2017-04-27 su
+      my $str_header = '# START DAILY %run_date%
    
 ## what will I do till the next daily:
 #---------------------------
@@ -237,7 +235,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 
       my $str_footer = '
 
-# STOP  DAILY @2017-04-27 su
+# STOP  DAILY @%run_date%
 ' ; 
 
 
@@ -247,6 +245,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       foreach my $issue_id ( sort ( keys ( %$hsr2 ) ) ) {
          my $row = $hsr2->{ $issue_id } ; 
 
+         $run_date         = $row->{ 'run_date'} ; 
          my $category      = $row->{ 'category'} ; 
          my $current       = $row->{ 'current'} ; 
          my $description   = $row->{ 'description'} ; 
@@ -254,9 +253,9 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
          my $level         = $row->{ 'level'} ; 
          my $name          = $row->{ 'name'} ; 
          my $prio          = $row->{ 'prio'} ; 
-         my $run_date      = $row->{ 'run_date'} ; 
          my $start_time    = $row->{ 'start_time'} ; 
          my $status        = $row->{ 'status'} ; 
+         $status           = $inverse_hsrStatus{ $status } ; 
 
          $str_issues       .= "\n" if ( $prev_category ne $category ) ; 
          $str_issues       .= $category . "\n" unless ( $prev_category eq $category ) ; 
@@ -269,7 +268,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       #eof foreach 
 
       $str_issues .= $str_footer . "\n\n" ; 
-          
+      $str_issues =~ s|%run_date%|$run_date|g ;  
       $msg = " OK for hsr2 to txt conversion " ;  
       $ret = 0 ; 
 
@@ -322,7 +321,8 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
          , 'fail'    => '08-fail'      # the issue is irreversably failed to be imlemented
          , 'done'    => '09-done'      # the issue is done
       }; 
-
+      
+      %inverse_hsrStatus = reverse %$hsrStatus;
 	}	
 	#eof sub doInitialize
 	

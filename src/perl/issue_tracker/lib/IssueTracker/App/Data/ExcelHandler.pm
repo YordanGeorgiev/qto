@@ -100,8 +100,8 @@ package IssueTracker::App::Data::ExcelHandler ;
          foreach my $colid ( sort ( keys ( %{$hsr_meta->{'ColumnNames'}} ) ) ) {
             my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid } ; 
        
-            my $cell_length = length ( $hsr_row->{ $col_name } ) || 5 ;  
-            $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length || 5 ; 
+            my $cell_length = length ( $hsr_row->{ $col_name } ) || 10 ; 
+            $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length || 10 ; 
 
             #define the max width 
             if ( $hsr_meta->{ 'ColumnWidths' }->{ $colid } < $cell_length ) {
@@ -159,20 +159,6 @@ package IssueTracker::App::Data::ExcelHandler ;
 
    }
    #eof sub doInitialize
-
-
-#   sub doMoveOldXlsFilesToBackup {
-#      my $self             = shift ; 
-#      my $xls_dir          = "$ProductInstanceDir/dat/backups/" ; 
-#      $objFileHandler->MkDir ( "$xls_dir" ) ; 
-#      use File::Copy;
-#      my @files = glob("$PATH1/*.txt");
-#
-#      for my $file (@files) {
-#          copy($file, $ENV{DIRWORK}) or die "Copy failed: $!";
-#      }
-
-   #}
 
  
    #

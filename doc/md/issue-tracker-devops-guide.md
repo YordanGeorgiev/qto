@@ -25,7 +25,7 @@ Table of Contents
     * [4.1. Load issue txt files to db](#41-load-issue-txt-files-to-db)
       * [4.1.1. Check the postgres status](#411-check-the-postgres-status)
       * [4.1.2. Run the create db and create issue table scripts](#412-run-the-create-db-and-create-issue-table-scripts)
-      * [4.1.3. Run the issue-tracker file to db load](#413-run-the-issue-tracker-file-to-db-load)
+      * [4.1.3. Run the issue-tracker file to db load](#413-run-the-issue-tracker-txt-to-db-load)
       * [4.1.4. Verify the inserted data from the db](#414-verify-the-inserted-data-from-the-db)
   * [5. BUSINESS LOGIC](#5-business-logic)
     * [5.1. Business entities](#51-business-entities)

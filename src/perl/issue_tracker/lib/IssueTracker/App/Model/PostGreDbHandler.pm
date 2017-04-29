@@ -42,6 +42,9 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       my $str_val_list     = q{} ; 
       my $error_msg        = q{} ; 
 
+      binmode(STDIN,  ':utf8');
+      binmode(STDOUT, ':utf8');
+      binmode(STDERR, ':utf8');
 
       my $debug_msg        = 'START doInsertSqlHashData' ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
@@ -132,7 +135,6 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 #       description | character varying(1000) |           | extended |              |
 #       status      | character varying(50)   | not null  | extended |              |
 #       category    | character varying(100)  | not null  | extended |              |
-#       current      | integer                 |           | plain    |              |
 
 
       $mhsr->{'ColumnNames'}-> { 0 } = 'issue_id' ;
@@ -143,8 +145,7 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       $mhsr->{'ColumnNames'}-> { 5 } = 'name' ;
       $mhsr->{'ColumnNames'}-> { 6 } = 'description' ;
       $mhsr->{'ColumnNames'}-> { 7 } = 'start_time' ;
-      $mhsr->{'ColumnNames'}-> { 8 } = 'current' ;
-      $mhsr->{'ColumnNames'}-> { 9 } = 'run_date' ;
+      $mhsr->{'ColumnNames'}-> { 8 } = 'run_date' ;
 
       $str_sql = 
          " SELECT 
@@ -156,7 +157,6 @@ package IssueTracker::App::Model::PostGreDbHandler ;
             , name
             , description
             , start_time
-            , current
             , run_date
          FROM $table ;
       " ; 

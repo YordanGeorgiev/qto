@@ -207,7 +207,7 @@ doCheckReadyToStart(){
 # clean and exit with passed status and message
 #------------------------------------------------------------------------------
 doExit(){
-   exit_msg="${exit_msg#* }"
+   exit_msg="$*"
 
    if (( $exit_code != 0 )); then
       exit_msg=" ERROR --- exit_code $exit_code --- exit_msg : $exit_msg"
