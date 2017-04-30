@@ -56,7 +56,7 @@ use IssueTracker::App::Utils::Timer ;
 my $module_trace                 = 0 ; 
 my $md_file 							= '' ; 
 my $rdbms_type 						= 'postgre' ; #todo: parametrize to 
-my $issues_file                  = '' ; 
+my $issues_file                  = 'undefined issues_file' ; 
 my $objInitiator                 = {} ; 
 my $appConfig                    = {} ; 
 my $objLogger                    = {} ; 
@@ -82,6 +82,7 @@ my $issue_tracker_project        = q{} ;
       my @actions = split /,/ , $actions ; 
      
       foreach my $action ( @actions ) { 
+         $action = 'undefined action ' unless $action ; 
          $msg = "running the $action action " ; 
          $objLogger->doLogInfoMsg ( $msg ) ; 
 
@@ -203,7 +204,7 @@ my $issue_tracker_project        = q{} ;
    sub doExit {
 
       my $exit_code  = shift ; 
-      my $exit_msg   = shift ; 
+      my $exit_msg   = shift || 'exit issue_tracker.pl' ; 
 
       if ( $exit_code == 0 ) {
          $objLogger->doLogInfoMsg ( $exit_msg ) ;       
@@ -212,8 +213,7 @@ my $issue_tracker_project        = q{} ;
          $objLogger->doLogFatalMsg ( $exit_msg ) ;       
       }
 
-      $objLogger->doLogInfoMsg ( "STOP  MAIN") ; 
-      sleep 1 ; 
+      my $msg = "STOP MAIN" ; $objLogger->doLogInfoMsg ( $msg ) ; 
       exit ( $exit_code ) ; 
    }
 

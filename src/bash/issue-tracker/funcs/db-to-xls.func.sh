@@ -2,7 +2,7 @@
 
 # v1.0.9
 # ---------------------------------------------------------
-# todo: add doDbToXls comments ...
+# the wrapper func for db to xls issues conversion
 # ---------------------------------------------------------
 doDbToXls(){
 

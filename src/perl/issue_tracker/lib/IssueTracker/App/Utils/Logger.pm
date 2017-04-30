@@ -156,7 +156,7 @@ if you don't export anything, such as for a purely object-oriented module.
 	sub Initialize {
 
 		my $self = shift;
-		$appConfig = { Foo => 'Bar', } unless ( $appConfig );
+		$appConfig = { 'Foo' => 'Bar', } unless ( $appConfig );
 
 		# if the log dir does not exist create it
 		my $LogDir = '';
@@ -244,108 +244,6 @@ if you don't export anything, such as for a purely object-oriented module.
 
 
 
-	#
-	# -----------------------------------------------------------------------------
-	# Just a wrapper around the Data::Printer 
-	# with some additional logic on when what to print
-	# to only print when debugging
-	# call by: $objLogger->LogArray ( \@array )  ;
-	# only print on global setting PrintInfoMsgs in ini file set to 1
-	# call by: $objLogger->LogArray ( \@array , 'INFO' ) ; 
-	# only print on global setting PrintWarningMsgs in ini file set to 1
-	# call by: $objLogger->LogArray ( \@array , 'WARN' ) ; 
-	# -----------------------------------------------------------------------------
-	sub doLogArray {
-
-		my $self    	= shift ;
-		my $refArray 	= shift ; 
-		my $msg_type 	= shift ; 	
-
-		my @array 		= @$refArray ; 
-		
-		# if no message type is passed ( msg_type undefined ) do set it to debug
-		$msg_type 		= $msg_type // 'DEBUG' ; 
-
-		#debug print "\$msg_type is $msg_type	\n\n\n" ; 
-		# some optimization in the array is huge ... been there done that ... 
-		return if ( $msg_type eq 'INFO' 	&& $appConfig->{'PrintInfoMsgs'} 		!= 1 )  ; 
-		return if ( $msg_type eq 'WARN' 	&& $appConfig->{'PrintWarningMsgs'}	!= 1 )  ; 
-		return if ( $msg_type eq 'ERROR' && $appConfig->{'PrintErrorMsgs'}		!= 1 )  ; 
-		return if ( $msg_type eq 'TRACE' && $appConfig->{'PrintTraceMsgs'}		!= 1 )  ; 
-
-
-		my $msg = p(@array);
-
-		$self->doLogMsg( $msg )    	if ( $msg_type eq "SIMPLE" ) ;
-		$self->LogDebugMsg( $msg )  	if ( $msg_type eq "DEBUG" ) ;
-		$self->LogErrorMsg( $msg )  	if ( $msg_type eq "ERROR" ) ;
-		$self->LogWarningMsg( $msg ) 	if ( $msg_type eq "WARN" ) ;
-		$self->LogInfoMsg( $msg )    	if ( $msg_type eq "INFO" ) ;
-		$self->LogWarningMsg( $msg ) 	if ( $msg_type eq "TRACE" );
-
-		
-		if ( $appConfig->{'PrintConsoleMsgs'} == 1 ) {	
-			p(@array ) if ( $appConfig->{'PrintDebugMsgs'} 		== 1 && $msg_type eq 'DEBUG' ) ; 	
-			p(@array ) if ( $appConfig->{'PrintInfoMsgs'} 		== 1 && $msg_type eq 'INFO' ) ; 	
-			p(@array ) if ( $appConfig->{'PrintErrorMsgs'} 		== 1 && $msg_type eq 'ERROR' ) ; 	
-			p(@array ) if ( $appConfig->{'PrintWarningMsgs'} 	== 1 && $msg_type eq 'WARN' ) ; 	
-			p(@array ) if ( $appConfig->{'PrintTraceMsgs'} 		== 1 && $msg_type eq 'TRACE' ) ; 	
-		}
-
-			
-	}
-	# eof sub doLogArray
-
-
-	#
-	# -----------------------------------------------------------------------------
-	# Just a wrapper around the Data::Printer 
-	# with some additional logic on when what to print
-	# to only print when debugging
-	# call by: $objLogger->logHash ( \%hash )  ;
-	# only print on global setting PrintInfoMsgs in ini file set to 1
-	# call by: $objLogger->logHash ( \%hash , 'INFO' ) ; 
-	# only print on global setting PrintWarningMsgs in ini file set to 1
-	# call by: $objLogger->logHash ( \%hash , 'WARN' ) ; 
-	# -----------------------------------------------------------------------------
-	sub doLogHashRef {
-
-		my $self    	= shift ;
-		my $refhash 	= shift ; 
-		my $msg_type 	= shift ; 	
-
-		my %hash 		= %{$refhash} ; 
-		
-		# if no message type is passed ( msg_type undefined ) do set it to debug
-		$msg_type 		= $msg_type // 'DEBUG' ; 
-
-		#debug print "\$msg_type is $msg_type	\n\n\n" ; 
-		# some optimization in the hash is huge ... been there done that ... 
-		return if ( $msg_type eq 'INFO' 	&& $appConfig->{'PrintInfoMsgs'} 		!= 1 )  ; 
-		return if ( $msg_type eq 'WARN' 	&& $appConfig->{'PrintWarningMsgs'}	!= 1 )  ; 
-		return if ( $msg_type eq 'ERROR' && $appConfig->{'PrintErrorMsgs'}		!= 1 )  ; 
-		return if ( $msg_type eq 'TRACE' && $appConfig->{'PrintTraceMsgs'}		!= 1 )  ; 
-
-
-		my $msg = p(%hash);
-
-		$self->doLogMsg( $msg )        if ( $msg_type eq "SIMPLE" ) ;
-		$self->LogDebugMsg( $msg )   if ( $msg_type eq "DEBUG" ) ;
-		$self->LogErrorMsg( $msg )   if ( $msg_type eq "ERROR" ) ;
-		$self->LogWarningMsg( $msg ) if ( $msg_type eq "WARN" ) ;
-		$self->LogInfoMsg( $msg )    if ( $msg_type eq "INFO" ) ;
-		$self->LogWarningMsg( $msg ) if ( $msg_type eq "TRACE" );
-
-		
-		p(%hash ) if ( $appConfig->{'PrintDebugMsgs'} 	== 1 && $msg_type eq 'DEBUG' ) ; 	
-		p(%hash ) if ( $appConfig->{'PrintInfoMsgs'} 		== 1 && $msg_type eq 'INFO' ) ; 	
-		p(%hash ) if ( $appConfig->{'PrintErrorMsgs'} 	== 1 && $msg_type eq 'ERROR' ) ; 	
-		p(%hash ) if ( $appConfig->{'PrintWarningMsgs'} 	== 1 && $msg_type eq 'WARN' ) ; 	
-		p(%hash ) if ( $appConfig->{'PrintTraceMsgs'} 	== 1 && $msg_type eq 'TRACE' ) ; 	
-			
-	}
-	# eof sub doLogHash
-
 
 	#
 	# -----------------------------------------------------------------------------
@@ -354,7 +252,7 @@ if you don't export anything, such as for a purely object-oriented module.
 	sub doLogFatalMsg {
 
 		my $self    = shift;
-		my $msg     = "@_";
+		my $msg     = "@_" ? @_ : "null fatal_msg passed" ; 
 		my $msgType = '[FATAL]'; 
 		
 		$appConfig->{ 'PrintErrorMsgs' } = 1 ; 
@@ -371,7 +269,7 @@ if you don't export anything, such as for a purely object-oriented module.
 	sub doLogErrorMsg {
 
 		my $self    = shift;
-		my $msg     = "@_";
+		my $msg     = "@_" ? @_ : "null error_msg passed" ; 
 		my $msgType = '[ERROR]';
 
 		# Do not print anything if the PrintWarningMsgs = 0
@@ -478,9 +376,10 @@ if you don't export anything, such as for a purely object-oriented module.
 	sub doLogInfoMsg {
 
 		my $self = shift;
-
-		# oldmy $msg = "@_" || "";
-		my $msg = ( @_ ) ? "@_" : "";
+      my $msg  = q{} ; 
+      
+      $msg = "null info msg passed" unless @_ ;  
+		$msg = "@_" if @_ ; 
 		my $msgType = '[INFO ]';
 
 		# Do not print anything if the PrintWarningMsgs = 0
