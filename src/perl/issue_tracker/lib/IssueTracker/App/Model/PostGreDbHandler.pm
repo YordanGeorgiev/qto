@@ -145,7 +145,8 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       $mhsr->{'ColumnNames'}-> { 5 } = 'name' ;
       $mhsr->{'ColumnNames'}-> { 6 } = 'description' ;
       $mhsr->{'ColumnNames'}-> { 7 } = 'start_time' ;
-      $mhsr->{'ColumnNames'}-> { 8 } = 'run_date' ;
+      $mhsr->{'ColumnNames'}-> { 8 } = 'stop_time' ;
+      $mhsr->{'ColumnNames'}-> { 9 } = 'run_date' ;
 
       $str_sql = 
          " SELECT 
@@ -157,6 +158,7 @@ package IssueTracker::App::Model::PostGreDbHandler ;
             , name
             , description
             , start_time
+            , stop_time
             , run_date
          FROM $table ;
       " ; 

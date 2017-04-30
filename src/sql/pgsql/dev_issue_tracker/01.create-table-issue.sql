@@ -11,6 +11,7 @@ SELECT 'create the "issue" table'
     , name           varchar (100) NOT NULL
     , description    varchar (4000)
     , start_time     text NULL
+    , stop_time     text NULL
     , run_date       date NULL
     );
 

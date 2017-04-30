@@ -56,7 +56,7 @@ use IssueTracker::App::Utils::Timer ;
 my $module_trace                 = 0 ; 
 my $md_file 							= '' ; 
 my $rdbms_type 						= 'postgre' ; #todo: parametrize to 
-my $issues_file                  = 'undefined issues_file' ; 
+my $issues_file                  = 'undefined-issues-file' ; 
 my $objInitiator                 = {} ; 
 my $appConfig                    = {} ; 
 my $objLogger                    = {} ; 
@@ -125,7 +125,8 @@ my $issue_tracker_project        = q{} ;
 
       } 
       #eof foreach action 
-
+   
+      $msg = "OK for all action runs" ; 
       doExit ( $ret , $msg ) ; 
 
    }
@@ -165,7 +166,7 @@ my $issue_tracker_project        = q{} ;
       $appConfig->{ 'issue_tracker_project' } = $issue_tracker_project ; 
        
       # if the issues_file is not specified via the cmd arg 
-      unless ( $issues_file ) {
+      if ( $issues_file eq 'undefined-issues-file' ) {
          my $objTimer   = 'IssueTracker::App::Utils::Timer'->new() ; 
 	      my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
          my $nice_month  = "$year" . '-' . "$mon" ; 

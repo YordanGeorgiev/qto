@@ -20,6 +20,7 @@ package IssueTracker::App::Data::ExcelHandler ;
    our $objFileHandler    = q{} ; 
    our $ProductInstanceDir = {} ; 
 
+
    #
    # ------------------------------------------------------
    # builds and xls file into the xls dir 
@@ -55,7 +56,7 @@ package IssueTracker::App::Data::ExcelHandler ;
       # Create a new Excel workbook
       my $objWorkbook      = 'Excel::Writer::XLSX'->new( $xls_file );
       my $sheet_name        = $xls_file_name ; 
-      $sheet_name          = 'data' ; 
+      $sheet_name          = 'issue' ; 
       my $objWorksheet     = $objWorkbook->add_worksheet( $sheet_name );
 
 
@@ -117,7 +118,7 @@ package IssueTracker::App::Data::ExcelHandler ;
       #eof foreach row 
      
       # does not work why ?! 
-      # $self->autofit_columns ( $objWorksheet , $hsr_meta ) ; 
+      $self->autofit_columns ( $objWorksheet , $hsr_meta ) ; 
      
       $msg = 'STOP writing the xls file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
       $msg = $xls_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
@@ -135,14 +136,14 @@ package IssueTracker::App::Data::ExcelHandler ;
         my $hsr_meta  = shift ; 
         my $col       = 0;
     
-        for my $width (@{$worksheet->{'data'}}) {
+        for my $width (@{$worksheet->{'issue'}}) {
            
             $worksheet->set_column($col, $col, 40 ) if $width;
             # $worksheet->set_column($col, $col, $hsr_meta->{'ColumnWidths'}->{ $col } ) if $width;
             $col++;
         }
    }
-    #
+    
 
 
    # -----------------------------------------------------------------------------

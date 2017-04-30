@@ -141,7 +141,6 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
             next if $category_item =~ m/^[#]{1,2} /g ; 
             
             next if $category_item =~ m/^--/g ; 
-               
             
             # the first line of the category_item is the category
             my $category = ( split /\n/, $category_item )[0] ;  
@@ -159,33 +158,70 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                $hsr->{ $i } = {} ; 
                my $debug_msg = "item: $item " ; 
                $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
-               $item =~ m/^\s([a-zA-Z0-9]*)\s*(\t{1,5})(.*)/ ; 
-               my $status = $1 ; 
-               my $name = $3 ; 
+               $item =~ m/^\s*([a-zA-Z0-9]+)\s*(\t{1,5})(.*)/ ; 
+               my $status = q{} ; 
+               my $name = q{} ; 
+               $status = $1 ; 
+               $name = $3 ; 
                next unless $name ; 
+
                $hsr->{ $i }->{ 'issue_id' } = $i ;
                $hsr->{ $i }->{ 'level' } = $item_levels->{ $category_item_count } + 1 ; 
                # $hsr->{ $i }->{ 'item' } = $item ; 
                $hsr->{ $i }->{ 'prio' } = $i ; 
                $hsr->{ $i }->{ 'category' }     = $category ; 
                $hsr->{ $i }->{ 'status' }       = $hsrStatus->{ $status } ; 
+
                # the title is the first line of the title description
                my $title = ( split /\n/, $name )[0] ; 
+
+               # extract the start_time if any exists
+               $title =~ m/^([\d]{2}:[\d]{2})\s+(.*)/g ; 
+               my $start_time = q{} ; 
+               $start_time = 'null'       if $status eq $1 ; 
+               $start_time = $1           unless $status eq $1 ; 
+               $title =~ s/$start_time//g  unless $start_time eq 'null' ; 
                
-               # the description is what is left from the name 
-               my $description = $name ; 
-               $description =~ s/$title//gm ; 
+               # extract the stop_time if any exists 
+               $title =~ m/^\s+[\-]\s+([\d]{2}:[\d]{2})(.*)/g ; 
+               my $stop_time = q{} ; 
 
-               # but only if something is left 
-               $description = $title unless ( $description ) ;  
-
+               if ( $start_time eq 'null' ) {
+                  $stop_time = 'null' ;  
+               }
+               elsif ( !(defined $1) ) {
+                  $stop_time = 'null' ;  
+               }
+               elsif ( $status eq $1 ) {
+                  $stop_time = 'null' ;  
+               }
+               elsif ( defined $1 ) {
+                  $stop_time = $1 ; 
+               }
+               else {
+                  $stop_time = $1 ; 
+               }
+               $title =~ s/^\s*[\-]\s*$stop_time\s+//g  unless $stop_time eq 'null' ; 
+               $title =~ s/^\s+(.*)/$1/g ;   #remove trailing and fronting spaces
+               
+               # debug $objLogger->doLogDebugMsg ( "\$item is $item" ) ; 
+               # debug $objLogger->doLogDebugMsg ( "\$status is $status" ) ; 
+               # debug $objLogger->doLogDebugMsg ( "\$title is $title" ) ; 
+               # debug $objLogger->doLogDebugMsg ( "\$1 is $1" ) ; 
+               # debug $objLogger->doLogDebugMsg ( "\$start_time is $start_time" ) ; 
+               # debug $objLogger->doLogDebugMsg ( "\$stop_time is $stop_time" ) ; 
+               
+               my $description = q{} ; 
+               $description .= $start_time unless ( $start_time eq 'null' ) ;  
+               $description .= ' - ' . $stop_time unless ( $stop_time eq 'null' ) ;  
+               $description .= "\n" if $description ; 
+               $description .= $title ; 
+                 
                # and the title should not be longer than 90 chars
                $title = substr($title, 0, 90 ) . ' ...' if length ( $title ) > 90 ; 
-               $title =~ /^([\d]{2}:[\d]{2})(.*)/g ; 
-               my $start_time = $1 || 'null' ; 
-               $title =~ s/$start_time//g unless $start_time eq 'null' ; 
  
                $hsr->{ $i }->{ 'start_time' }      = $start_time ; 
+               $hsr->{ $i }->{ 'stop_time' }       = $stop_time ; 
                $hsr->{ $i }->{ 'name' }            = $title ; 
                $hsr->{ $i }->{ 'description' }     = $description ; 
                $hsr->{ $i }->{ 'run_date' }        = $nice_date ; 
