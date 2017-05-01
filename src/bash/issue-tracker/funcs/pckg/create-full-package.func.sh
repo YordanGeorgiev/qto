@@ -38,8 +38,8 @@ doCreateFullPackage(){
 	zip_file_name=$(echo $include_file | rev | cut -d'.' -f 1 | rev)
 	zip_file_name="$zip_file_name.$product_version.$tgt_env_type.$timestamp.$host_name.zip"
 	zip_file="$product_dir/$zip_file_name"
-	mkdir -p $product_instance_dir/dat/$issue-tracker/tmp
-	echo $zip_file>$product_instance_dir/dat/$issue-tracker/tmp/zip_file
+	mkdir -p $product_instance_dir/dat/$run_unit/tmp
+	echo $zip_file>$product_instance_dir/dat/$run_unit/tmp/zip_file
 
 
 	# zip MM ops

@@ -59,8 +59,8 @@ doCreateRelative7zPackage(){
 	zip_7z_file_name=$(echo $include_file | rev | cut -d. -f 1 | rev)
 	zip_7z_file_name="$zip_7z_file_name.$product_version.$env_type.$timestamp.$host_name.rel.7z"
 	zip_7z_file="$product_dir/$zip_7z_file_name"
-	mkdir -p $product_instance_dir/dat/$issue-tracker/tmp
-	echo $zip_7z_file>$product_instance_dir/dat/$issue-tracker/tmp/zip_7z_file
+	mkdir -p $product_instance_dir/dat/$run_unit/tmp
+	echo $zip_7z_file>$product_instance_dir/dat/$run_unit/tmp/zip_7z_file
 	
 	# All  input  patterns must match at least one file and all input files found must be readable.
 	# 7z does recursively include all the contents of the dirs - and we want exactly the oppposite
