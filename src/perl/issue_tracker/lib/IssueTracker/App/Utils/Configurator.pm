@@ -2,7 +2,7 @@ package IssueTracker::App::Utils::Configurator ;
 
 	use strict ;  use warnings ;  use diagnostics ; 
 
-	my $VERSION='2.6.0' ; #doc at the end
+	my $VERSION='2.6.1' ; #doc at the end
 	require Exporter;
 
 	my @ISA = qw(AutoLoader Exporter);
@@ -22,31 +22,31 @@ package IssueTracker::App::Utils::Configurator ;
 	our $cnfHolder = {
 
 		# Whether or not to print messages to STDOUT and / or STDERR
-		  PrintConsoleMsgs =>               1
+		  PrintConsoleMsgs               => 1
 		# Whether or not to pring INFO messages
-		, PrintInfoMsgs =>                  1                             
+		, PrintInfoMsgs                  => 1                             
 		# Whether or not to pring WARNING messages
-		, PrintWarningMsgs =>               1                             
+		, PrintWarningMsgs               => 1                             
 		# Whether or not to pring ERROR messages
-		, PrintErrorMsgs =>                 1                             
+		, PrintErrorMsgs                 => 1                             
 		# Whether or not to pring DEBUG messages
-		, PrintDebugMsgs =>                 1
+		, PrintDebugMsgs                 => 1
 		# Whether or not to pring TRACE messages
-		, PrintTraceMsgs =>                 1 
+		, PrintTraceMsgs                 => 1 
 		# The logging directory 
-		, LogDir => '%ProductInstanceDir%/dat/log'
+		, LogDir                         => '%ProductInstanceDir%/dat/log'
 		# the environment name of this product instance 
-		, EnvironmentName =>   	'%ProductName%.%ProductVersion%.%ProductType%.%ProductOwner%'
+		, ProductInstanceEnvironment     => '%ProductName%.%ProductVersion%.%ProductType%.%ProductOwner%'
 		# the default Log file
-		, LogFile =>            '%LogDir%/%ProductName%.log'
+		, LogFile                        => '%LogDir%/%ProductName%.log'
 		# the default chars separating the time from the txt
-		, LogTimeToTextSeparator =>'###'
+		, LogTimeToTextSeparator         =>'###'
 		# whether or not to log to a file
-		, LogToFile =>          1
+		, LogToFile                      => 1
 		# the time format of the logging 
-		, TimeFormat =>         'YYYY.MM.DD - hh:mm:ss'
+		, TimeFormat                     => 'YYYY-MM-DD hh:mm:ss'
 		# the time format of the logging 
-		, DbType 	=>         'maria_db'
+		, DbType 	                     => 'maria_db'
 	  };  
 	  
 
@@ -90,7 +90,7 @@ package IssueTracker::App::Utils::Configurator ;
 	{
 		my $invocant 			= shift;    
 		$ConfFile 				= shift ; 
-      my $cnf_holder   	= shift ; 
+      my $cnf_holder   	   = shift ; 
 
 		
 		#debug print "\n Configurator.pm 89 \$ConfFile : $ConfFile \n" ; sleep 5 ; 
@@ -518,7 +518,7 @@ yordan.georgiev@gmail.com
 
 =head1 COPYRIGHT LICENSE
 
-Copyright (C) 2016 Yordan Georgiev
+Copyright (C) 2017 Yordan Georgiev
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.1 or,
@@ -530,6 +530,7 @@ at your option, any later version of Perl 5 you may have available.
 # 	-- VersionHistory -- 
 # =========================================================
 #
+2.6.1 -- 2017-05-07 11:54:08 -- ysg -- env name to product instance env name
 2.6.0 -- 2016-11-14 15:28:15 -- ysg -- fixed bug with non-interpolating
 2.5.0 -- 2014-08-25 22:57:41 -- ysg -- refactoring, clean-up unneeded settings 
 2.4.0 -- 2012-12-28 19:06:28 -- ysg -- added #include = <<file_path>>

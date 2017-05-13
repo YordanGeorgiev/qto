@@ -1,12 +1,12 @@
 #!/bin/bash 
 
-# v1.1.0
+# v1.2.0
 #------------------------------------------------------------------------------
 # creates the full package as component of larger product platform
 #------------------------------------------------------------------------------
 doCreateFullPackage(){
 
-	doLog "INFO === START === create-full-package" ;
+	doLog "INFO START create-full-package.func.sh" ;
 
 	#define default vars
 	test -z $include_file         && \
@@ -46,7 +46,7 @@ doCreateFullPackage(){
 	# -MM  --must-match
 	# All  input  patterns must match at least one file and all input files found must be readable.
 	set -x ; ret=1
-	cat $include_file | egrep -v "$perl_ignore_file_pattern" | egrep -v '^\s*#' | perl -ne 's|\n|\000|g;print'| \
+	cat $include_file | egrep -v "$perl_ignore_file_pattern" | sed '/^#/ d' | perl -ne 's|\n|\000|g;print'| \
 	xargs -0 -I "{}" zip -MM $zip_file "$org_name/$run_unit/$environment_name/{}"
 	ret=$? 
 	set +x
@@ -56,7 +56,7 @@ doCreateFullPackage(){
 			test -f "$product_instance_dir/$f" && continue ; 
 			test -f "$product_instance_dir/$f" || doLog 'ERROR not a file '"$f" ;  
 		); 
-		done < <(cat $include_file)
+		done < <(cat $include_file | egrep -v "$perl_ignore_file_pattern" | sed '/^#/ d')
 	);
 
    fatal_msg="FATAL !!! deleted $zip_file , because of packaging errors $! !!!"
@@ -66,9 +66,10 @@ doCreateFullPackage(){
 	doLog "INFO created the following full development package:"
 	doLog "INFO `stat -c \"%y %n\" $zip_file`"
 
-	test -d $network_backup_dir && doRunCmdAndLog "cp -v $zip_file $network_backup_dir/"
+	test -z ${network_backup_dir+x} && test -d $network_backup_dir \
+      && doRunCmdAndLog "cp -v $zip_file $network_backup_dir/"
 
-	doLog "INFO === STOP  === create-full-package" ;
+	doLog "INFO STOP  create-full-package.func.sh" ;
 }
 #eof func doCreateFullPackage
 

@@ -4,33 +4,16 @@
 	
 	# Purpose:
 	# ------------------------------------------------------
-	-- todo: what is the purpose of the doTxtToDb function
-
-	# Prequisites
-	# ------------------------------------------------------
-	-- todo: what are the prerequisites of the doTxtToDb function
-
-	# Installation
-	# ------------------------------------------------------
-	-- todo: what are the required installations for the  
-		doTxtToDb function to execute without errors
-
-	# Interdependancies
-	# ------------------------------------------------------
-	-- todo: what are the interdependancies for the  
-		doTxtToDb function to execute without errors
+	the wrapper function for the txt-to-db action
 
 	# Usage:
 	# ------------------------------------------------------
-	-- todo: how can be the doTxtToDb used 
+	$0 -a txt-to-db
 
-	# Developent
-	# ------------------------------------------------------
-	-- todo: what issues, todos could be pointed for development
 
 	# Caveats:
 	# ------------------------------------------------------
-	-- todo: what are the known caveats of the doTxtToDb functions
+	none known so far
 
 
 

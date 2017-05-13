@@ -12,25 +12,23 @@
 
 	# Installation
 	# ------------------------------------------------------
-	-- todo: what are the required installations for the  
-		doTestCheckPerlSyntax function to execute without errors
+   perl 
 
 	# Interdependancies
 	# ------------------------------------------------------
-	-- todo: what are the interdependancies for the  
-		doTestCheckPerlSyntax function to execute without errors
+   check the preq script 
 
 	# Usage:
 	# ------------------------------------------------------
-	-- todo: how can be the doTestCheckPerlSyntax used 
+   $0 -a check-perl-syntax
 
 	# Development
 	# ------------------------------------------------------
-	-- todo: what issues, todos could be pointed for development
+	
 
 	# Caveats:
 	# ------------------------------------------------------
-	-- todo: what are the known caveats of the doTestCheckPerlSyntax functions
+   none so far 	
 
 
 

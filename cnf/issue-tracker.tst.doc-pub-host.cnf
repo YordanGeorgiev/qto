@@ -16,13 +16,13 @@ LogTimeToTextSeparator = ###
 LogToFile =          1
 
 # the time format of the logging 
-TimeFormat =         YYYY.MM.DD - hh:mm:ss
+TimeFormat =         YYYY-MM-DD hh:mm:ss
 
 # the time format of the logging 
 DbType 	=         mariadb
 
 # the log file
-LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
+LogFile=%LogDir%/%ProductName%.%YYYY%-%MM%-%DD%.log
 
 # the host on which the mariadb is running 
 db_host = doc-pub-host

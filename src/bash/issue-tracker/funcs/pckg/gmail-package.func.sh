@@ -1,4 +1,4 @@
-#v0.2.1
+# v0.2.1
 #------------------------------------------------------------------------------
 #  gmail the latest created package - requires mutt binary !!!
 #------------------------------------------------------------------------------
@@ -6,14 +6,14 @@ doGmailPackage(){
 	
 	mutt --help >/dev/null 2>&1 ||
 	{ doLog "ERROR. mutt is not installed or not in PATH. Aborting." >&2; exit 1; }
-
-	zip_file=$(ls -r1 "$product_dir"/*.zip | head -1)
-   test -z "$zip_file" && zip_file=$(ls -r1 "$product_instance_dir"/*.zip | head -1)
-   test -z "$zip_file" && doExit 1 " no zip file found for gmailing !!!"
+	# zip_file=$(ls -r1 "$product_dir"/*.zip | head -1)
+   zip_file=$(cat $product_instance_dir/dat/$run_unit/tmp/zip_file)
+   test -z "${zip_file+x}" && zip_file=$(ls -r1 "$product_instance_dir"/*.zip | head -1)
+   test -z "${zip_file+x}" && doExit 1 " no zip file found for gmailing !!!"
 
    zip_file_name=`basename $zip_file`
 
-
+   set -x
 	# create a fake txt file type attachment
 	cp -v "$zip_file" "$zip_file"'.txt'
 
@@ -26,6 +26,7 @@ doGmailPackage(){
 	done
 	set +x
 
+   sleep 10
 	rm -fv "$zip_file"'.txt'	
-}
 
+}

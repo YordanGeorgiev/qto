@@ -3,7 +3,7 @@
 SELECT 'create the "issue" table'
 ; 
    CREATE TABLE issue (
-      issue_id       integer NOT NULL
+      issue_id       integer NOT NULL PRIMARY KEY
     , level          integer NULL
     , prio           integer NULL
     , status         varchar (50) NOT NULL
@@ -11,7 +11,7 @@ SELECT 'create the "issue" table'
     , name           varchar (100) NOT NULL
     , description    varchar (4000)
     , start_time     text NULL
-    , stop_time     text NULL
+    , stop_time      text NULL
     , run_date       date NULL
     );
 

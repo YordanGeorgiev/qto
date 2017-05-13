@@ -1,15 +1,13 @@
-package IssueTracker::App::Utils::ETL::IssueTracker ; 
+package IssueTracker::App::ETL::Txt::TxtParserDaily ; 
 
 	use strict; use warnings;
    use utf8 ; 
-	my $VERSION = '1.1.0';    #doc at the end
+	my $VERSION = '1.1.1';    #doc at the end
 
 	require Exporter;
 	our @ISA = qw(Exporter);
 	our $AUTOLOAD =();
-	our $ModuleDebug = 0 ; 
 	use AutoLoader;
-
 
 	use Cwd qw/abs_path/;
 	use File::Path qw(make_path) ;
@@ -26,31 +24,25 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
    binmode(STDOUT, ':utf8');
    binmode(STDERR, ':utf8');
 
-   our $module_trace             = 1  ; 
+   our $module_trace             = 0 ; 
 	our $appConfig						= {} ; 
-	our $RunDir 						= '' ; 
-	our $ProductBaseDir 				= '' ; 
-	our $ProductDir 					= '' ; 
-	our $ProductInstanceDir 			= '' ; 
-	our $EnvironmentName 			= '' ; 
-	our $ProductName 					= '' ; 
-	our $ProductType 					= '' ; 
-	our $ProductVersion 				= '' ; 
-	our $ProductOwner 				= '' ; 
 	our $HostName 						= '' ; 
-	our $ConfFile 						= '' ; 
 	our $objLogger						= {} ; 
 	our $objFileHandler				= {} ; 
    our $hsrStatus                = {} ; 
    our %inverse_hsrStatus        = (); 
 
+
+
+
+
 =head1 SYNOPSIS
 
 	doResolves the product version and base dirs , bootstraps cnfig files if needed
 
-		use IssueTracker::App::Utils::ETL::IssueTracker ;
+		use IssueTracker::App::ETL::IssueTracker ;
 		my $objIssueTracker = 
-			'IssueTracker::App::Utils::ETL::IssueTracker'->new ( \$appConfig ) ; 
+			'IssueTracker::App::ETL::IssueTracker'->new ( \$appConfig ) ; 
 =cut 
 
 =head1 EXPORT
@@ -68,7 +60,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 
 	#
 	# --------------------------------------------------------
-	# just and example method
+	# read the issues file for the daily period
 	# --------------------------------------------------------
 	sub doReadIssueFile {
 
@@ -97,7 +89,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
          $objLogger->doLogDebugMsg ( $str_issues_file ) if ( $module_trace == 1 ) ; 
       }
       
-      $msg =  " STOP  doReadIssueFile with ret: $ret" ; 
+      $msg =  "STOP  doReadIssueFile with ret: $ret" ; 
       $objLogger->doLogInfoMsg ( $msg ) ; 
       return ( $ret , $msg , $str_issues_file ) ; 
 	}
@@ -116,15 +108,17 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
 
       my $objTimer   = 'IssueTracker::App::Utils::Timer'->new() ; 
 	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
-      my $nice_date = $year . '-' . $mon . '-' . $mday ; 
+      my $nice_date  = $year . '-' . $mon . '-' . $mday ; 
  
       # each item starts with new line may be some space and - 
       my @arr_category_items  = split '\n(\s*)\n' , $str ; 
       my $i          = 0 ;  
 
+      my $prev_start_time  = q{} ; 
+      my $prev_stop_time   = q{} ; 
 
       if ( $str ) {      
-         $msg = 'START ::: parsing issue file string into hash ref of hash refs' ; 
+         $msg = 'START TxtParserDaily::doConvertStrToHashRef' ; 
          $objLogger->doLogInfoMsg ( $msg ) ;  
 
          foreach my $category_item ( @arr_category_items ) {
@@ -134,8 +128,8 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
             my $debug_msg = "category_item: $category_item " ; 
             $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
 
-            $msg = "category_item starts with ##" ; 
-            $objLogger->doLogDebugMsg ( $msg ) if $category_item =~ m/^##/g ;
+            # debug $msg = "category_item starts with ##" ; 
+            # debug $objLogger->doLogDebugMsg ( $msg ) if $category_item =~ m/^##/g ;
             
             # one or two # are either the file start , stop or the act , plan sections
             next if $category_item =~ m/^[#]{1,2} /g ; 
@@ -166,7 +160,11 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                next unless $name ; 
 
                $hsr->{ $i }->{ 'issue_id' } = $i ;
+
+               $item_levels->{ $category_item_count } = 1 
+                  unless ( exists $item_levels->{ $category_item_count });
                $hsr->{ $i }->{ 'level' } = $item_levels->{ $category_item_count } + 1 ; 
+
                # $hsr->{ $i }->{ 'item' } = $item ; 
                $hsr->{ $i }->{ 'prio' } = $i ; 
                $hsr->{ $i }->{ 'category' }     = $category ; 
@@ -178,22 +176,22 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                # extract the start_time if any exists
                $title =~ m/^([\d]{2}:[\d]{2})\s+(.*)/g ; 
                my $start_time = q{} ; 
-               $start_time = 'null'       if $status eq $1 ; 
+               $start_time = 'NULL'       if $status eq $1 ; 
                $start_time = $1           unless $status eq $1 ; 
-               $title =~ s/$start_time//g  unless $start_time eq 'null' ; 
+               $title =~ s/$start_time//g  unless $start_time eq 'NULL' ; 
                
                # extract the stop_time if any exists 
                $title =~ m/^\s+[\-]\s+([\d]{2}:[\d]{2})(.*)/g ; 
                my $stop_time = q{} ; 
 
-               if ( $start_time eq 'null' ) {
-                  $stop_time = 'null' ;  
+               if ( $start_time eq 'NULL' ) {
+                  $stop_time = 'NULL' ;  
                }
                elsif ( !(defined $1) ) {
-                  $stop_time = 'null' ;  
+                  $stop_time = 'NULL' ;  
                }
                elsif ( $status eq $1 ) {
-                  $stop_time = 'null' ;  
+                  $stop_time = 'NULL' ;  
                }
                elsif ( defined $1 ) {
                   $stop_time = $1 ; 
@@ -201,7 +199,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                else {
                   $stop_time = $1 ; 
                }
-               $title =~ s/^\s*[\-]\s*$stop_time\s+//g  unless $stop_time eq 'null' ; 
+               $title =~ s/^\s*[\-]\s*$stop_time\s+//g  unless $stop_time eq 'NULL' ; 
                $title =~ s/^\s+(.*)/$1/g ;   #remove trailing and fronting spaces
                
                # debug $objLogger->doLogDebugMsg ( "\$item is $item" ) ; 
@@ -212,13 +210,19 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                # debug $objLogger->doLogDebugMsg ( "\$stop_time is $stop_time" ) ; 
                
                my $description = q{} ; 
-               $description .= $start_time unless ( $start_time eq 'null' ) ;  
-               $description .= ' - ' . $stop_time unless ( $stop_time eq 'null' ) ;  
+               $description .= $start_time unless ( $start_time eq 'NULL' ) ;  
+               $description .= ' - ' . $stop_time unless ( $stop_time eq 'NULL' ) ;  
                $description .= "\n" if $description ; 
                $description .= $title ; 
                  
                # and the title should not be longer than 90 chars
                $title = substr($title, 0, 90 ) . ' ...' if length ( $title ) > 90 ; 
+
+               # if this is sub-item it should inherit the time of the upper item
+               if ( $hsr->{ $i }->{ 'level' } > 2 ) {
+                  $start_time = $prev_start_time ; 
+                  $stop_time = $prev_stop_time ; 
+               }
  
                $hsr->{ $i }->{ 'start_time' }      = $start_time ; 
                $hsr->{ $i }->{ 'stop_time' }       = $stop_time ; 
@@ -235,8 +239,12 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
                }
                $i++ ; 
                $category_item_count++ ; 
+            
+               $prev_start_time = $start_time ; 
+               $prev_stop_time = $stop_time ; 
             }
             #eof foreach my $item 
+            #
          }
          #eof foreach my $category_item 
          $ret = 0 ; 
@@ -244,12 +252,11 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       
       }
       
-      $msg = 'STOP  ::: parsing issue file string into hash ref of hash refs' ; 
+      $msg = 'STOP  TxtParserDaily::doConvertStrToHashRef' ; 
       $objLogger->doLogInfoMsg ( $msg ) ;  
 
       return ( $ret , $msg , $hsr ) ; 
-   }	
-   # eof sub StrToHashRef 
+   }
 
 
    sub doConvertHashRefToStr {
@@ -281,7 +288,7 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       $str_issues .= $str_header . "\n\n" ; 
       my $prev_category = q{} ; 
 
-      foreach my $issue_id ( sort ( keys ( %$hsr2 ) ) ) {
+      foreach my $issue_id ( sort { $hsr2->{$a}->{ 'prio' } <=> $hsr2->{$b}->{ 'prio' } } keys (%$hsr2))  {
          my $row = $hsr2->{ $issue_id } ; 
 
          $run_date         = $row->{ 'run_date'} ; 
@@ -293,14 +300,16 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
          my $name          = $row->{ 'name'} ; 
          my $prio          = $row->{ 'prio'} ; 
          my $start_time    = $row->{ 'start_time'} ; 
+         my $stop_time     = $row->{ 'stop_time'} ; 
          my $status        = $row->{ 'status'} ; 
          $status           = $inverse_hsrStatus{ $status } ; 
-
+         $description      =~ s/\r\n/\n/gm ; 
          $str_issues       .= "\n" if ( $prev_category ne $category ) ; 
          $str_issues       .= $category . "\n" unless ( $prev_category eq $category ) ; 
          $str_issues       .= '- ' ; 
-         $str_issues       .= $status . "\t\t\t" ; 
-         $str_issues       .= ( $start_time . " " ) if ( $start_time ) ; 
+         $str_issues       .= $status . "\t\t" ; 
+         $str_issues       .= ( $start_time . " " ) if ( $start_time ne 'NULL' ) ; 
+         $str_issues       .= ( '- ' . $stop_time . " " ) if ( $stop_time ne 'NULL' ) ; 
          $str_issues       .= $name . "\n" ; 
          $prev_category    = $category ; 
       }
@@ -327,74 +336,75 @@ package IssueTracker::App::Utils::ETL::IssueTracker ;
       my $ref_item_levels     = shift ; 
       my $item_levels         = $$ref_item_levels ; 
 
-      my $row_num = scalar keys %$$ref_item_levels ; 
+      my $row_num = scalar keys %$$ref_item_levels || 0 ; 
       my $num_of_dashes = () = $str_dashes =~ /\-/gi;
       $item_levels->{ $row_num } = $num_of_dashes ; 
 
    } 
 
+	
+	
+   #
+	# -----------------------------------------------------------------------------
+	# the constructor 
+	# -----------------------------------------------------------------------------
+	sub new {
 
-	#
+		my $invocant 			= shift ;    
+		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		
+      # might be class or object, but in both cases invocant
+		my $class = ref ( $invocant ) || $invocant ; 
+
+		my $self = {};        # Anonymous hash reference holds instance attributes
+		bless( $self, $class );    # Say: $self is a $class
+      $self = $self->doInitialize() ; 
+		return $self;
+	}  
+	#eof const
+
+	
+   #
 	# --------------------------------------------------------
 	# intializes this object 
 	# --------------------------------------------------------
-	sub doInitialize {
-		
-		$objLogger 	      = "IssueTracker::App::Utils::Logger"->new( \$appConfig ) ; 
-		$objFileHandler 	= "IssueTracker::App::Utils::IO::FileHandler"->new( \$appConfig ) ; 
+   sub doInitialize {
+      my $self          = shift ; 
 
+      %$self = (
+           appConfig => $appConfig
+       );
+
+	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objFileHandler   = 'IssueTracker::App::Utils::IO::FileHandler'->new ( \$appConfig ) ; 
+      
       $hsrStatus = {
            'eval'    => '01-eval'      # evaluate whether or not to do it
          , 'todo'    => '02-todo'      # must do it till the end of the period
          , 'rem'     => '02-rem'       # remember to act till the end of the period
          , 'wip'     => '03-wip'       # is work in progress - aka is being done right now
          , 'act'     => '03-act'       # is being actively done , aka more of an activity type
+         , 'actv'    => '03-actv'      # is being actively done , aka more of an activity type
          , 'diss'    => '04-diss'      # to dissmiss or disgard
+         , 'late'    => '04-late'      # too late
+         , 'fail'    => '04-fail'      # to failmiss or disgard
          , 'test'    => '05-test'      # to test some implementation
-         , 'tst'     => '05-test'      # to test some implementation
+         , 'tst'     => '05-tst'       # to test some implementation
          , 'hld'     => '06-onhold'    # the issue is on hold - 
+         , 'part'    => '06-part'      # the issue has been partly completed - might have more work
          , 'flow'    => '06-flow'      # follow an event or action to occur
          , 'qas'     => '07-qas'       # the issue is in quality assurance mode
-         , 'qa'      => '07-qas'       # the issue is in quality assurance mode
+         , 'qa'      => '07-qa'        # the issue is in quality assurance mode
          , 'blck'    => '08-blocked'   # the issue is blocked
-         , 'fail'    => '08-fail'      # the issue is irreversably failed to be imlemented
          , 'done'    => '09-done'      # the issue is done
       }; 
       
       %inverse_hsrStatus = reverse %$hsrStatus;
+
+      return $self ; 
 	}	
 	#eof sub doInitialize
-	
-
-=head1 SUBROUTINES/METHODS
-
-	STOP  SUBS 
-	# -----------------------------------------------------------------------------
-=cut
-
-
-=head2 new
-	# -----------------------------------------------------------------------------
-	# the constructor
-=cut 
-
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
-	sub new {
-		
-		my $invocant = shift;    
-		# might be class or object, but in both cases invocant
-		my $class = ref ( $invocant ) || $invocant ; 
-
-		my $self = {};        # Anonymous hash reference holds instance attributes
-		bless( $self, $class );    # Say: $self is a $class
-
-      $self->doInitialize();
-		return $self;
-	}  
-	#eof const
-
+   
 
 =head2
 	# -----------------------------------------------------------------------------
@@ -537,3 +547,7 @@ yordan.georgiev@gmail.com
 
 =cut 
 
+1;
+
+
+__END__

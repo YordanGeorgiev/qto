@@ -13,16 +13,17 @@ package IssueTracker::App::Data::ExcelHandler ;
 	use IssueTracker::App::Utils::Logger ;
    use IssueTracker::App::Utils::Timer ; 
 
-   our $module_trace      = 0 ; 
-   our $IsUnitTest        = 0 ; 
-   our $appConfig         = q{} ; 
-   our $objLogger         = q{} ; 
-   our $objFileHandler    = q{} ; 
+   our $module_trace       = 0 ; 
+   our $IsUnitTest         = 0 ; 
+   our $appConfig          = {} ; 
+   our $objLogger          = {} ; 
+   our $objFileHandler     = {} ; 
    our $ProductInstanceDir = {} ; 
 
 
    #
    # ------------------------------------------------------
+   # ExcelHandler
    # builds and xls file into the xls dir 
    # from the passed hash ref of hashs refs by using the calling
    # sql script as a source for the xls file path to produce
@@ -43,6 +44,9 @@ package IssueTracker::App::Data::ExcelHandler ;
 
 
       my $issues_file      = $appConfig->{ 'issues_file' } ; 
+      $msg = "ExcelHandler issues_file: \n $issues_file " ; 
+      $objLogger->doLogDebugMsg ( $msg ) ; 
+
       my $xls_file_name    = $issues_file ; 
       $xls_file_name       =~ s/(.*)(\\|\/)(.*)\.([a-zA-Z0-9]*)/$3/g ; 
       $xls_file_name       = "$xls_file_name" . '.' . "$hour" . "$min" . "$sec" ; 
@@ -74,7 +78,8 @@ package IssueTracker::App::Data::ExcelHandler ;
          $hsr_meta->{'ColumnWidths'}->{ $colid } = length ( $hsr_meta->{ 'ColumnNames'}->{ $colid } ) ; 
       }
 
-      foreach my $rowid ( sort ( keys ( %$hsr ) ) ) {
+      foreach my $rowid ( sort { $hsr->{$a}->{ 'prio' } <=> $hsr->{$b}->{ 'prio' } } keys (%$hsr))  {
+      # foreach my $rowid ( sort ( keys ( %$hsr ) ) ) {
 
          my $objFormat        = {} ; 
          # $objFormat->set_autofit();
@@ -108,7 +113,9 @@ package IssueTracker::App::Data::ExcelHandler ;
             if ( $hsr_meta->{ 'ColumnWidths' }->{ $colid } < $cell_length ) {
                $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length ;                
             }
-            
+
+            $hsr_row->{ $col_name } = '' if $hsr_row->{ $col_name } eq 'NULL' ; 
+      
             # $objWorksheet->set_column($colid, $colid, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
             $objWorksheet->set_column($colid, $colid, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
             $objWorksheet->write($rowid, $colid, $hsr_row->{ $col_name } , $objFormat )  ; 
@@ -146,42 +153,42 @@ package IssueTracker::App::Data::ExcelHandler ;
     
 
 
-   # -----------------------------------------------------------------------------
-   # doInitialize the object with the minimum data it will need to operate 
-   # -----------------------------------------------------------------------------
-   sub doInitialize {
+   
+	# -----------------------------------------------------------------------------
+	# the constructor 
+	# -----------------------------------------------------------------------------
+	sub new {
 
-      my $self = shift ; 
+		my $class = shift;    # Class name is in the first parameter
+		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		my $self = {};        # Anonymous hash reference holds instance attributes
+		bless( $self, $class );    # Say: $self is a $class
+      $self = $self->doInitialize();
+		return $self;
+	}  
+	#eof const
+
+   #
+	# --------------------------------------------------------
+	# intializes this object 
+	# --------------------------------------------------------
+   sub doInitialize {
+      my $self          = shift ; 
+
+      %$self = (
+           appConfig => $appConfig
+       );
 
       #debug print "ExcelHandler::doInitialize appConfig : " . p($appConfig );
-	   $objLogger 			   = 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
       $ProductInstanceDir   = $appConfig->{ 'ProductInstanceDir' } ; 
-	   $objFileHandler 	   = 'IssueTracker::App::Utils::IO::FileHandler'->new( \$appConfig ) ;
 
-   }
-   #eof sub doInitialize
+	   $objFileHandler   = 'IssueTracker::App::Utils::IO::FileHandler'->new ( \$appConfig ) ; 
+	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
 
- 
-   #
-   # -----------------------------------------------------------------------------
-   # the constructor 
-   # source:http://www.netalive.org/tinkering/serious-perl/#oop_constructors
-   # -----------------------------------------------------------------------------
-   sub new {
+      return $self ; 
+	}	
+	#eof sub doInitialize
 
-      my $class            = shift ;    # Class name is in the first parameter
-      $appConfig = ${ shift @_ } if ( @_ );
-
-      # Anonymous hash reference holds instance attributes
-      my $self = { }; 
-      bless($self, $class);     # Say: $self is a $class
-
-      $self->doInitialize() ; 
-      return $self;
-   } 
-   #eof const 
-   
-   
 
 
 

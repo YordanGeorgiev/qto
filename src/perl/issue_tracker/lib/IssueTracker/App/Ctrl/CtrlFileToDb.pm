@@ -1,6 +1,6 @@
-package IssueTracker::App::Controller::DbIOController ; 
+package IssueTracker::App::Ctrl::CtrlFileToDb ; 
 
-	use strict; use warnings;
+	use strict; use warnings; use utf8 ; 
 
 	my $VERSION = '1.0.0';    
 
@@ -8,16 +8,14 @@ package IssueTracker::App::Controller::DbIOController ;
 	our @ISA = qw(Exporter);
 	our $AUTOLOAD =();
 	use AutoLoader;
-   use utf8 ;
    use Carp ;
    use Data::Printer ; 
 
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Utils::ETL::IssueTracker ; 
-   use IssueTracker::App::Model::DbHandlerFactory ; 
-   use IssueTracker::App::Data::ExcelHandler ; 
+   use IssueTracker::App::Db::DbHandlerFactory ; 
+   use IssueTracker::App::ETL::Txt::TxtParserFactory ; 
 	
-	our $module_trace = 0 ; 
+	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
 	our $RunDir 						   = '' ; 
 	our $ProductBaseDir 				   = '' ; 
@@ -31,13 +29,13 @@ package IssueTracker::App::Controller::DbIOController ;
 	our $HostName 						   = '' ; 
 	our $ConfFile 						   = '' ; 
 	our $objLogger						   = {} ; 
-	our $objFileHandler			      = {} ; 
    our $rdbms_type                  = 'postgre' ; 
 
+
 =head1 SYNOPSIS
-      my $objDbIOController = 
-         'IssueTracker::App::Controller::DbIOController'->new ( \$appConfig ) ; 
-      ( $ret , $msg ) = $objDbIOController->doLoadIssuesFileToDb ( $issues_file ) ; 
+      my $objCtrlFileToDb = 
+         'IssueTracker::App::Ctrl::CtrlFileToDb'->new ( \$appConfig ) ; 
+      ( $ret , $msg ) = $objCtrlFileToDb->doLoadIssuesFileToDb ( $issues_file ) ; 
 =cut 
 
 =head1 EXPORT
@@ -58,26 +56,31 @@ package IssueTracker::App::Controller::DbIOController ;
    # read the passed issue file , convert it to hash ref of hash refs 
    # and insert the hsr into a db
 	# -----------------------------------------------------------------------------
-   sub doLoadDbIssuesToXls {
+   sub doLoadTxtIssuesFileToDb {
 
       my $self                = shift ; 
-      my $issues_file          = shift ; 	
+      my $issues_file         = shift ; 	
 
-      my $ret                 = 1 ; 
-      my $msg                 = 'unknown error while loading db issues to xls file' ; 
-      my $objIssueTracker 	   = 'IssueTracker::App::Utils::ETL::IssueTracker'->new ( \$appConfig ) ; 
-      my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
-      my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
+      my $period              = $ENV{ 'period' } || 'daily' ;  
+      my $objTxtParserFactory = 'IssueTracker::App::ETL::Txt::TxtParserFactory'->new( \$appConfig , $self ) ; 
+      my $objTxtParser 			= $objTxtParserFactory->doInstantiate ( "$period" );
 
-      my $objDbHandlerFactory = 'IssueTracker::App::Model::DbHandlerFactory'->new( \$appConfig , $self ) ; 
+      my ( $ret , $msg , $str_issues_file ) 
+                              = $objTxtParser->doReadIssueFile ( $issues_file ) ; 
+      return ( $ret , $msg ) if $ret != 0 ;  
+
+
+      my $hsr = {} ;          # a hash ref of hash refs 	
+      ( $ret , $msg , $hsr ) 
+                              = $objTxtParser->doConvertStrToHashRef ( $str_issues_file ) ; 
+      return ( $ret , $msg ) if $ret != 0 ;  
+
+
+      p($hsr) if $module_trace == 1 ; 
+      my $objDbHandlerFactory = 'IssueTracker::App::Db::DbHandlerFactory'->new( \$appConfig , $self ) ; 
       my $objDbHandler 			= $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
-
-      ( $ret , $msg , $hsr , $mhsr )  = $objDbHandler->doSelectTableIntoHashRef( 'issue' ) ; 
-      return ( $ret , $msg ) unless $ret == 0 ; 
-      
-      my $objExcelHandler    = 'IssueTracker::App::Data::ExcelHandler'->new( \$appConfig ) ;
-      $ret = $objExcelHandler->doBuildXlsFromHashRef ( $mhsr , $hsr ) ;
-
+      ( $ret , $msg )         = $objDbHandler->doInsertSqlHashData ( $hsr ) ; 
+      return ( $ret , $msg ) ; 
    } 
 
 
@@ -86,44 +89,21 @@ package IssueTracker::App::Controller::DbIOController ;
    # read the passed issue file , convert it to hash ref of hash refs 
    # and insert the hsr into a db
 	# -----------------------------------------------------------------------------
-   sub doLoadDbToTxtFile {
+   sub doLoadXlsIssuesFileToDb {
 
       my $self                = shift ; 
       my $issues_file         = shift ; 	
-
       my $ret                 = 1 ; 
-      my $msg                 = 'unknown error while loading db issues to xls file' ; 
-      my $str_issues          = q{} ; 
-      my $objIssueTracker 	   = 'IssueTracker::App::Utils::ETL::IssueTracker'->new ( \$appConfig ) ; 
-      my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
-      my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
+      my $msg                 = q{} ; 
+      my $hsr                 = {} ; 
 
-      my $objDbHandlerFactory = 'IssueTracker::App::Model::DbHandlerFactory'->new( \$appConfig , $self ) ; 
+      my $objDbHandlerFactory = 'IssueTracker::App::Db::DbHandlerFactory'->new( \$appConfig , $self ) ; 
       my $objDbHandler 			= $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
-
-      ( $ret , $msg , $hsr , $mhsr )  = $objDbHandler->doSelectTableIntoHashRef( 'issue' ) ; 
-      p($hsr) if $module_trace == 1 ; 
-      return ( $ret , $msg ) unless $ret == 0 ; 
-      
-      ( $ret , $msg , $str_issues ) = $objIssueTracker->doConvertHashRefToStr( $hsr ) ; 
-      $objFileHandler->PrintToFile ( $issues_file , $str_issues ) ; 
-
-      return ( $ret , $msg ) if $ret != 0 ;  
+      ( $ret , $msg )         = $objDbHandler->doInsertSqlHashData ( $hsr ) ; 
+      return ( $ret , $msg ) ; 
 
    } 
 
-	#
-	# --------------------------------------------------------
-	# intializes this object 
-	# --------------------------------------------------------
-	sub doInitialize {
-	   my $self       = shift ; 	
-		$appConfig  = ${ shift @_ } if ( @_ );
-
-	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
-	   $objFileHandler   = 'IssueTracker::App::Utils::IO::FileHandler'->new ( \$appConfig ) ; 
-	}	
-	#eof sub doInitialize
 	
 
 =head1 WIP
@@ -147,18 +127,34 @@ package IssueTracker::App::Controller::DbIOController ;
 	# the constructor 
 	# -----------------------------------------------------------------------------
 	sub new {
-      my $class            = shift ;    # Class name is in the first parameter
-		$appConfig = ${ shift @_ } if ( @_ );
 
-      # Anonymous hash reference holds instance attributes
-      my $self = { }; 
-      bless($self, $class);     # Say: $self is a $class
+		my $class      = shift;    # Class name is in the first parameter
+		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 
-      $self->doInitialize( \$appConfig ) ; 
-      return $self;
-		
+		my $self = {};        # Anonymous hash reference holds instance attributes
+		bless( $self, $class );    # Say: $self is a $class
+      $self = $self->doInitialize() ; 
+		return $self;
 	}  
 	#eof const
+	
+   #
+	# --------------------------------------------------------
+	# intializes this object 
+	# --------------------------------------------------------
+   sub doInitialize {
+      my $self = shift ; 
+
+      %$self = (
+           appConfig => $appConfig
+      );
+
+	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
+
+
+      return $self ; 
+	}	
+	#eof sub doInitialize
 
 =head2
 	# -----------------------------------------------------------------------------

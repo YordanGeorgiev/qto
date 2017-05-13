@@ -13,11 +13,11 @@ package IssueTracker::App::Utils::Timer ;
 	use Time::Local qw( timelocal_nocheck ) ; 
 
 
-	# =============================================================================
+   # ---------------------------------------------------------
 	# START OO
 
 	# the default time format
-	my $TimeFormat = 'YYYY.MM.DD - hh:mm:ss' ; 
+	my $TimeFormat = 'YYYY-MM-DD hh:mm:ss' ; 
 
 
 	#
@@ -91,9 +91,9 @@ package IssueTracker::App::Utils::Timer ;
 	} 
 
 	# STOP OO
-	# =============================================================================
+	# 
 
-	# =============================================================================
+	# 
 	# START functions
 
 	#
@@ -116,9 +116,7 @@ package IssueTracker::App::Utils::Timer ;
 
 		return "$HumanReadableTime"; 
 
-		#old return "$year\.$mon\.$mday" . "-" . "$hour\:$min\:$sec"; 
-
-	} #eof sub GetANiceTime
+	} 
 
 
 	#
@@ -249,7 +247,7 @@ package IssueTracker::App::Utils::Timer ;
 
 
 # STOP functions
-# =============================================================================
+# ---------------------------------------------------------
 
 
 1;

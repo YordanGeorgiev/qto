@@ -1,4 +1,4 @@
-package IssueTracker::App::Model::PostGreDbHandler ; 
+package IssueTracker::App::Db::PostGreDbHandler ; 
 
    use strict ; use warnings ; use utf8 ; 
 
@@ -12,10 +12,10 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 
    use IssueTracker::App::Utils::Logger ; 
 
-   our $module_trace                            = 1 ; 
+   our $module_trace                            = 0 ; 
    our $IsUnitTest                              = 0 ; 
-	our $appConfig 										= q{} ; 
-	our $objLogger 										= q{} ; 
+	our $appConfig 										= {} ; 
+	our $objLogger 										= {} ; 
 
 	our $db_name                                 = q{} ; 
 	our $db_host 										   = q{} ; 
@@ -28,7 +28,7 @@ package IssueTracker::App::Model::PostGreDbHandler ;
 	#
    # ------------------------------------------------------
 	#  input: hash ref of hash refs containing the issues 
-	#  file data  and meta data 
+	#  output: the data in the issue table
    # ------------------------------------------------------
 	sub doInsertSqlHashData {
 
@@ -41,14 +41,17 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       my $str_col_list     = q{} ; 
       my $str_val_list     = q{} ; 
       my $error_msg        = q{} ; 
+		my $dbh					= {} ; 
+		my $rv					= 0 ; 
 
       binmode(STDIN,  ':utf8');
       binmode(STDOUT, ':utf8');
       binmode(STDERR, ':utf8');
 
-      my $debug_msg        = 'START doInsertSqlHashData' ; 
+      my $debug_msg        = 'START PostGreDbHandler::doInsertSqlHashData' ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
 	  
+      $str_sql_insert .= ' TRUNCATE TABLE issue ; ' ; 
  
 		foreach my $key ( sort(keys( %{$sql_hash} ) ) ) {
          my $row_hash = $sql_hash->{ $key } ; 
@@ -57,7 +60,8 @@ package IssueTracker::App::Model::PostGreDbHandler ;
             $str_col_list .= ' , ' . $key ; 
             my $value     = $row_hash->{ $key } ; 
             $value        =~ s/'/''/g if ( $value ) ; 
-            $str_val_list .= ' , \'' . $value . '\''; 
+            $str_val_list .= ' , \'' . $value . '\'' if defined $value ; 
+            $str_val_list .= ' , NULL' unless defined $value ; 
          }
          
          $str_col_list = substr ( $str_col_list , 3 ) ; 
@@ -70,37 +74,56 @@ package IssueTracker::App::Model::PostGreDbHandler ;
          $str_val_list = '' ; 
       }
       
-      # p ( $str_sql_insert ) if $module_trace == 1 ; 
+      p ( $str_sql_insert ) if $module_trace == 1 ; 
 
       # proper authentication implementation src:
       # http://stackoverflow.com/a/19980156/65706
-      #
       $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
       $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-     
-      # my $dbh = DBI->connect("DBI:Pg:dbname=$db_name;host=$db_host", $db_user, $db_user_pw )
-      my $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
-           'RaiseError' => 1
-         , 'ShowErrorStatement' => 1
-         , 'AutoCommit' => 1
-      } ) or $msg = DBI->errstr;
-      
-      p ( $str_sql_insert ) ; 
- 
-      $ret = $dbh->do( $str_sql_insert ) ; 
-      $msg = DBI->errstr ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
 
-      unless ( defined ( $msg ) ) {
-         $msg = 'INSERT OK' ; 
-         $ret = 0 ; 
+
+      eval {
+         $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
+              'RaiseError'          => 1
+            , 'ShowErrorStatement'  => 1
+            , 'AutoCommit'          => 1
+         } );
+      } or $ret = 2  ;
+
+      if ( $ret == 2 ) {
+         $msg = DBI->errstr;
+         $objLogger->doLogErrorMsg ( $msg ) ;
+         return ( $ret , $msg ) ;
       } else {
-         $objLogger->doLogErrorMsg ( $msg ) ; 
+         $msg = 'OK for connect ' ;
+         $objLogger->doLogDebugMsg ( $msg ) ;
       }
 
-      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
+      p ( $str_sql_insert ) if $module_trace == 1 ; 
+ 
 
-      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
+		# Action !!!
+		eval {
+			$rv = $dbh->do($str_sql_insert) ;
+		} or $msg = $@ ;
+
+		unless ( $rv == 1 ) {
+			$msg .= " DBI upsert error :" . $msg  ;
+			$objLogger->doLogFatalMsg ( $msg ) ;   ;
+			return ( $ret , $msg ) ; # all or nothing ok
+		}
+		else {
+			$msg = "OK for insert " ;
+			$objLogger->doLogInfoMsg ( $msg ) ;
+			$ret = 0 ;
+		}
+
+      $msg = 'OK for insert for all tables' ;
+      return ( $ret , $msg ) ;
+
+      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
+      $debug_msg        = 'STOP PostGreDbHandler::doInsertSqlHashData ret ' . $ret ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
       return ( $ret , $msg ) ; 	
@@ -125,7 +148,6 @@ package IssueTracker::App::Model::PostGreDbHandler ;
       my $sth              = {} ;         # this is the statement handle
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
-
 
 #         Column    |          Type           | Modifiers | Storage  | Stats target | Description
 #      -------------+-------------------------+-----------+----------+--------------+-------------
@@ -160,7 +182,9 @@ package IssueTracker::App::Model::PostGreDbHandler ;
             , start_time
             , stop_time
             , run_date
-         FROM $table ;
+         FROM $table 
+         order by prio asc
+         ;
       " ; 
 
       # authentication src: http://stackoverflow.com/a/19980156/65706
@@ -201,48 +225,51 @@ package IssueTracker::App::Model::PostGreDbHandler ;
    }
    # eof sub doSelectTableIntoHashRef
 
-
-
+	
    #
-   # -----------------------------------------------------------------------------
-   # doInitialize the object with the minimum dat it will need to operate 
-   # -----------------------------------------------------------------------------
-   sub doInitialize {
-      
-      my $self          = shift ; 
-		my $appConfig     = ${ shift @_ } if ( @_ );
+	# -----------------------------------------------------------------------------
+	# the constructor 
+	# -----------------------------------------------------------------------------
+	sub new {
 
-		#debug print "PostGreDbHandler::doInitialize appConfig : " . p($appConfig );
+		my $invocant 			= shift ;    
+		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		
-		$db_name 			= $ENV{ 'db_name' } || $appConfig->{'db_name'} || 'prd_pgsql_runner' ; 
+      # might be class or object, but in both cases invocant
+		my $class = ref ( $invocant ) || $invocant ; 
+
+		my $self = {};        # Anonymous hash reference holds instance attributes
+		bless( $self, $class );    # Say: $self is a $class
+      $self = $self->doInitialize() ; 
+		return $self;
+	}  
+	#eof const
+	
+   #
+	# --------------------------------------------------------
+	# intializes this object 
+	# --------------------------------------------------------
+   sub doInitialize {
+      my $self = shift ; 
+
+      %$self = (
+           appConfig => $appConfig
+      );
+
+		# print "PostGreDbHandler::doInitialize appConfig : " . p($appConfig );
+      # sleep 6 ; 
+		
+		$db_name 			= $ENV{ 'db_name' } || $appConfig->{'db_name'}        || 'prd_pgsql_runner' ; 
 		$db_host 			= $ENV{ 'db_host' } || $$appConfig->{'db_host'} 		|| 'localhost' ;
 		$db_port 			= $ENV{ 'db_port' } || $$appConfig->{'db_port'} 		|| '13306' ; 
 		$db_user 			= $ENV{ 'db_user' } || $$appConfig->{'db_user'} 		|| 'ysg' ; 
 		$db_user_pw 		= $ENV{ 'db_user_pw' } || $appConfig->{'db_user_pw'} 	|| 'no_pass_provided!!!' ; 
       
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
-   }
-   #eof sub doInitialize
 
-	
-   #
-   # -----------------------------------------------------------------------------
-   # the constructor 
-   # source:http://www.netalive.org/tinkering/serious-perl/#oop_constructors
-   # -----------------------------------------------------------------------------
-   sub new {
-
-      my $class            = shift ;    # Class name is in the first parameter
-		$appConfig           = ${ shift @_ } if ( @_ );
-
-      # Anonymous hash reference holds instance attributes
-      my $self = { }; 
-      bless($self, $class);     # Say: $self is a $class
-
-      $self->doInitialize( \$appConfig ) ; 
-      return $self;
-   } 
-   #eof const 
+      return $self ; 
+	}	
+	#eof sub doInitialize
    
 
 

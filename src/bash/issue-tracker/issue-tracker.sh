@@ -256,6 +256,27 @@ doLog(){
 }
 #eof func doLog
 
+# v1.2.5 
+#------------------------------------------------------------------------------
+# echo pass params and print them to a log file and terminal
+# with timestamp and $host_name and $0 PID
+# usage:
+# doLog "INFO some info message"
+# doLog "DEBUG some debug message"
+#------------------------------------------------------------------------------
+doRunLog(){
+   uuid="$*"
+
+   # print to the terminal if we have one
+   # test -t 1 && echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S"` [issue-tracker][@$host_name] [$$] $msg "
+
+   # define default log file none specified in cnf file
+   test -z $run_log_file && \
+		mkdir -p $product_instance_dir/dat/log && \
+			export run_log_file="$product_instance_dir/dat/log/$run_unit.`date "+%Y%m%d_%H%M%S"`.run.log"
+   echo "`date "+%Y-%m-%d - %H:%M:%S"` $uuid " >> $run_log_file
+}
+#eof func doLog
 
 #v1.1.0
 #------------------------------------------------------------------------------
@@ -366,7 +387,8 @@ doSetVars(){
 	doLog "INFO # ===		 START MAIN   === $run_unit"
 	doLog "INFO # -----------------------"
 	doLog "INFO # --------------------------------------"
-		
+   doRunLog 'e880f14d-38f1-4bce-968e-2dc6b0d7e461'
+	
 		exit_code=0
 		doLog "INFO using the following vars:"
 		cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"

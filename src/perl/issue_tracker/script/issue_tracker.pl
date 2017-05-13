@@ -2,8 +2,15 @@
 
 use strict;
 use warnings;
+use utf8;
+use strict;
+use autodie;
+use warnings; 
+use warnings    qw< FATAL  utf8     >;
+use open        qw< :std  :utf8     >;
+use charnames   qw< :full >;
+use feature     qw< unicode_strings >;
 
-   $|++;
 
 
 require Exporter ;
@@ -13,11 +20,15 @@ our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT = qw() ;
 our $AUTOLOAD =();
 
-use utf8 ;
 use Data::Printer ; 
-use Carp ;
 use Cwd qw ( abs_path ) ;
 use Getopt::Long;
+use File::Basename      qw< basename >;
+use Carp                qw< carp croak confess cluck >;
+use Encode              qw< encode decode >;
+use Unicode::Normalize  qw< NFD NFC >;
+
+$| = 1;
 
 
    BEGIN {
@@ -40,17 +51,34 @@ use Getopt::Long;
       }
    }
 
+END { close STDOUT }
+
+
 # use own modules ...
 use IssueTracker::App::Utils::Initiator ; 
 use IssueTracker::App::Utils::Configurator ; 
 use IssueTracker::App::Utils::Logger ; 
-use IssueTracker::App::Controller::FileIOController ; 
-use IssueTracker::App::Controller::DbIOController ; 
-use IssueTracker::App::Utils::ETL::IssueTracker ; 
+use IssueTracker::App::Ctrl::CtrlFileToDb ; 
+use IssueTracker::App::Ctrl::CtrlDbToFile ; 
 use IssueTracker::App::Utils::IO::FileHandler ; 
-use IssueTracker::App::Model::DbHandlerFactory ; 
-use IssueTracker::App::Model::PostGreDbHandler ; 
+use IssueTracker::App::Db::DbHandlerFactory ; 
+use IssueTracker::App::Db::PostGreDbHandler ; 
 use IssueTracker::App::Utils::Timer ; 
+
+# give a full stack dump on any untrapped exceptions
+local $SIG{__DIE__} = sub {
+   $0 = basename($0);  # shorter messages
+    confess "Uncaught exception: @_" unless $^S;
+};
+
+# now promote run-time warnings into stackdumped exceptions
+#   *unless* we're in an try block, in which 
+#   case just generate a clucking stackdump instead
+local $SIG{__WARN__} = sub {
+   $0 = basename($0);  # shorter messages
+    if ($^S) { cluck   "Trapped warning: @_" } 
+    else     { confess "Deadly warning: @_"  }
+};
 
 
 my $module_trace                 = 0 ; 
@@ -65,6 +93,8 @@ my $objConfigurator              = {} ;
 my $actions                      = q{} ; 
 my $xls_dir                      = q{} ; 
 my $issue_tracker_project        = q{} ; 
+my $period                       = q{} ;  
+
 
 
    #
@@ -83,12 +113,12 @@ my $issue_tracker_project        = q{} ;
      
       foreach my $action ( @actions ) { 
          $action = 'undefined action ' unless $action ; 
-         $msg = "running the $action action " ; 
+         $msg = "START RUN the $action action " ; 
          $objLogger->doLogInfoMsg ( $msg ) ; 
 
          if ( $action eq 'txt-to-db' ) {
 
-            $msg = 'issues_file to parse : ' . "\n" . $issues_file ; 
+            $msg = 'issue_tracker.pl :: issues_file to parse : ' . "\n" . $issues_file ; 
             $objLogger->doLogInfoMsg ( "$msg" ) ; 
             
 
@@ -96,32 +126,43 @@ my $issue_tracker_project        = q{} ;
                $msg = "the issues_file: $issues_file does not exist !!!. Nothing to do !!!" ; 
                $objLogger->doLogFatalMsg ( $msg ) ;
                doExit ( $ret , $msg ) ; 
+               
             }
-            my $objFileIOController = 
-               'IssueTracker::App::Controller::FileIOController'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objFileIOController->doLoadIssuesFileToDb ( $issues_file ) ; 
+            my $objCtrlFileToDb = 
+               'IssueTracker::App::Ctrl::CtrlFileToDb'->new ( \$appConfig ) ; 
+            ( $ret , $msg ) = $objCtrlFileToDb->doLoadTxtIssuesFileToDb ( $issues_file ) ; 
          } 
          elsif ( $action eq 'db-to-xls' ) {
             $msg = 'issues_file to parse : ' . "\n" . $issues_file ; 
             $objLogger->doLogInfoMsg ( "$msg" ) ; 
 
-            my $objDbIOController = 
-               'IssueTracker::App::Controller::DbIOController'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objDbIOController->doLoadDbIssuesToXls ( $issues_file ) ; 
+            my $objCtrlDbToFile = 
+               'IssueTracker::App::Ctrl::CtrlDbToFile'->new ( \$appConfig ) ; 
+            ( $ret , $msg ) = $objCtrlDbToFile->doLoadDbIssuesToXls ( $issues_file ) ; 
+         } 
+         elsif ( $action eq 'xls-to-db' ) {
+            $msg = 'issues_file to pproduce : ' . "\n" . $issues_file ; 
+            $objLogger->doLogInfoMsg ( "$msg" ) ; 
+
+            my $objCtrlFileToDb = 
+               'IssueTracker::App::Ctrl::CtrlFileToDb'->new ( \$appConfig ) ; 
+            ( $ret , $msg ) = $objCtrlFileToDb->doLoadXlsIssuesFileToDb ( $issues_file ) ; 
          } 
          elsif ( $action eq 'db-to-txt' ) {
             $msg = 'issues_file to produce : ' . "\n" . $issues_file ; 
             $objLogger->doLogInfoMsg ( "$msg" ) ; 
 
-            my $objDbIOController = 
-               'IssueTracker::App::Controller::DbIOController'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objDbIOController->doLoadDbToTxtFile ( $issues_file ) ; 
+            my $objCtrlDbToFile = 
+               'IssueTracker::App::Ctrl::CtrlDbToFile'->new ( \$appConfig ) ; 
+            ( $ret , $msg ) = $objCtrlDbToFile->doLoadDbToTxtFile ( $issues_file ) ; 
          } 
          else {
             $msg = "unknown $action action !!!" ; 
             $objLogger->doLogErrorMsg ( $msg ) ; 
          }
          
+         $msg = "STOP  RUN the $action action " ; 
+         $objLogger->doLogInfoMsg ( $msg ) ; 
 
       } 
       #eof foreach action 
@@ -152,14 +193,18 @@ my $issue_tracker_project        = q{} ;
            'issues_file=s' => \$issues_file
          , 'do=s'          => \$actions
          , 'xls_dir=s'     => \$xls_dir
+         , 'period=s'      => \$period
       );
       
-      $issue_tracker_project                  = $ENV{ "issue_tracker_project" } ; 
+      $issue_tracker_project = $ENV{ "issue_tracker_project" } ; 
+      $period = $ENV{ "period" } unless $period ; 
+      $period = 'daily' unless $period ; 
 
       unless ( $issue_tracker_project ) {
          $msg = "set you current project by: \n" ; 
          $msg .= "doParseCnfEnvVars <<path-to-issue-tracker-project-configuration-file>>" ; 
          $objLogger->doLogErrorMsg ( $msg ) ; 
+         $objLogger->doLogFatalMsg ( $msg ) ; 
          return ( $ret , $msg ) ; 
       }
       
@@ -172,18 +217,24 @@ my $issue_tracker_project        = q{} ;
          my $nice_month  = "$year" . '-' . "$mon" ; 
          my $nice_date  = "$year" . '-' . "$mon" . '-' . $mday ; 
 
-         $objLogger->doLogDebugMsg ( 'proj_txt_dir' . $ENV{'proj_txt_dir'} ); 
+         $msg = 'proj_txt_dir: ' . $ENV{'proj_txt_dir'} ; 
+         $objLogger->doLogDebugMsg ( $msg ) ; 
          $issues_file   = $ENV{'proj_txt_dir'} . '/issues' . 
-            "/$year/$nice_month/$nice_date/$issue_tracker_project" . '-issues.' . "$nice_date" . ".daily.txt" ;
+            "/$year/$nice_month/$nice_date/$issue_tracker_project" . '-issues.'
+          . "$nice_date" . '.' . "$period" . '.txt' ;
+
+         $msg = 'issues_file: ' . $issues_file ; 
+         $objLogger->doLogDebugMsg ( $msg ) ; 
 
          # and the issues file does not comply with the project's dir structure and naming
          # convetions exit with error. Note this is valid for all actions !!!
          unless ( -f $issues_file ) {
-            $msg .= 'the issues_file: ' . "\n" . $issues_file . "\n" ; 
+            $msg = 'the issues_file: ' . "\n" . $issues_file . "\n" ; 
             $msg .= 'does not exist !!!' ; 
             $objLogger->doLogErrorMsg ( $msg ) ; 
             return ( $ret , $msg ) ; 
          }
+
       }
       $appConfig->{ 'issues_file' } = $issues_file ; 
       $appConfig->{ 'xls_dir' }     = $xls_dir ; 
@@ -214,7 +265,10 @@ my $issue_tracker_project        = q{} ;
          $objLogger->doLogFatalMsg ( $exit_msg ) ;       
       }
 
-      my $msg = "STOP MAIN" ; $objLogger->doLogInfoMsg ( $msg ) ; 
+      my $msg = "STOP MAIN" ; 
+		$objLogger->doLogInfoMsg ( $msg ) ; 
+     	$msg = "19d94b2c-096c-4bf9-b6ba-780c3f90bf70" ; 
+		$objLogger->doRunLogMsg ( $msg ) ; 
       exit ( $exit_code ) ; 
    }
 

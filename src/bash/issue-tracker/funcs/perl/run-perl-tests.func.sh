@@ -1,6 +1,6 @@
 # src/bash/issue-tracker/funcs/run-perl-tests.func.sh
 
-# v1.0.9
+# v1.1.0
 # ---------------------------------------------------------
 # todo: add doRunPerlTests comments ...
 # ---------------------------------------------------------
@@ -17,7 +17,7 @@ doRunPerlTests(){
 	test -z "$sleep_iterval" || sleep $sleep_iterval
 	
 	doLog "INFO Component testing Logger.pm with TestLogger "
-	perl src/perl/issue_tracker/t/TestFileIOController.pl
+	perl src/perl/issue_tracker/t/TestCtrlFileToDb.pm
 	test -z "$sleep_iterval" || sleep $sleep_iterval
 	doLog "INFO STOP  : doRunPerlTests"
 }

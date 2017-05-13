@@ -1,4 +1,4 @@
-package IssueTracker::App::Model::DbHandlerFactory ; 
+package IssueTracker::App::Db::DbHandlerFactory ; 
 
 	use strict; use warnings;
 	
@@ -9,9 +9,10 @@ package IssueTracker::App::Model::DbHandlerFactory ;
 	our $db_type			= 'mariadb' ; 
 	our $objItem			= {} ; 
 	our $objController 	= {} ; 
+   our $objLogger       = {} ; 
 
-	# use IssueTracker::App::Model::MariaDbHandler  ; 
-   use IssueTracker::App::Model::PostGreDbHandler ; 
+	# use IssueTracker::App::Db::MariaDbHandler  ; 
+   use IssueTracker::App::Db::PostGreDbHandler ; 
 
 
 	#
@@ -40,8 +41,8 @@ package IssueTracker::App::Model::DbHandlerFactory ;
 			$DbHandler 				= 'MariaDbHandler' ; 
 		}
 
-		my $package_file     	= "IssueTracker/App/Model/$DbHandler.pm";
-		my $objDbHandler   		= "IssueTracker::App::Model::$DbHandler";
+		my $package_file     	= "IssueTracker/App/Db/$DbHandler.pm";
+		my $objDbHandler   		= "IssueTracker::App::Db::$DbHandler";
 
 		require $package_file;
 
@@ -50,26 +51,43 @@ package IssueTracker::App::Model::DbHandlerFactory ;
 	# eof sub doInstantiate
 	
 
-	#
+   #
 	# -----------------------------------------------------------------------------
 	# the constructor 
 	# -----------------------------------------------------------------------------
 	sub new {
-		
+
 		my $invocant 			= shift ;    
-		$appConfig           = ${ shift @_ } if ( @_ );
+		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
       $objController       = shift ; 
 		
-		# might be class or object, but in both cases invocant
+      # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
 
 		my $self = {};        # Anonymous hash reference holds instance attributes
-		
 		bless( $self, $class );    # Say: $self is a $class
+      $self = $self->doInitialize() ; 
 		return $self;
-	}   
+	}  
 	#eof const
+	
+   #
+	# --------------------------------------------------------
+	# intializes this object 
+	# --------------------------------------------------------
+   sub doInitialize {
+      my $self = shift ; 
 
+      %$self = (
+           appConfig => $appConfig
+      );
+
+	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
+
+
+      return $self ; 
+	}	
+	#eof sub doInitialize
 
 1;
 
