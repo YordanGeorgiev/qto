@@ -10,7 +10,7 @@ doHelpGmailPackage(){
 	
 	cat doc/txt/issue-tracker/helps/gmail-package.help.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

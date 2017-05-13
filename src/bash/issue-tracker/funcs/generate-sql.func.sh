@@ -56,7 +56,7 @@ doGenerateSQL(){
    chmod -v 770 *.sql 
    cd $product_instance_dir
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 
 	doLog "DEBUG STOP  doGenerateSQL"

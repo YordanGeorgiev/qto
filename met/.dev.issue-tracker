@@ -14,8 +14,6 @@ src/perl/issue_tracker/t
 src/perl/issue_tracker/t/TestCtrlFileToDb.pm
 src/perl/issue_tracker/t/TestInitiator.pm
 src/perl/issue_tracker/t/TestLogger.pl
-src/bash/issue-tracker/test-issue-tracker.sh
-src/bash/issue-tracker/issue-tracker.sh
 src/perl/issue_tracker/lib/IssueTracker
 src/perl/issue_tracker/lib/IssueTracker/App/ETL/Txt
 src/perl/issue_tracker/lib/IssueTracker/App/ETL/Txt/TxtParserDaily.pm

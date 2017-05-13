@@ -10,7 +10,7 @@ doXlsToDb(){
 	
 	cat doc/txt/issue-tracker/funcs/xls-to-db.func.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 
    # find out the latest xls file from the project daily dir
    # pass it to the xls-to-rdbms tool as the input xls file

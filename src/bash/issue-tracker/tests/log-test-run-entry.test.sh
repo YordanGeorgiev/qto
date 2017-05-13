@@ -10,7 +10,7 @@ doTestLogTestRunEntry(){
 	
 	cat doc/txt/issue-tracker/tests/log-test-run-entry.test.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 
    action_n='some-action-name'
 

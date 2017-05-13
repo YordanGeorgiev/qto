@@ -85,7 +85,7 @@ doRunTests(){
 				   # and clear the screen
 		         doLog "INFO STOP :: testing action: \"$action\""
                # test $exit_code -ne 0 && doExit $exit_code "FATAL $function_name"
-				   test -z "$sleep_interval" || sleep $sleep_interval
+				   sleep $sleep_interval
 				   printf "\033[2J";printf "\033[0;0H"
             fi
 			);
@@ -113,8 +113,8 @@ doInit(){
    ( set -o posix ; set ) | sort >"$tmp_dir/vars.before"
    my_name_ext=`basename $0`
    run_unit_tester=${my_name_ext%.*}
-   test $OSTYPE = 'cygwin' && host_name=`hostname -s`
-   test $OSTYPE != 'cygwin' && host_name=`hostname`
+   host_name=$(hostname -s)
+   ${sleep_interval:=0}   # to slow down during debuging export sleep_iterval=3
 }
 #eof doInit
 
@@ -249,7 +249,6 @@ doRunCmdOrExit(){
 # set the variables from the $0.$host_name.cnf file which has ini like syntax
 #------------------------------------------------------------------------------
 doSetVars(){
-	test -z "$sleep_interval" && export sleep_iterval=3
    cd $wrap_bash_dir
    for i in {1..3} ; do cd .. ; done ;
    export product_instance_dir=`pwd`;

@@ -10,12 +10,12 @@ doTestDbToTxt(){
 	
 	cat doc/txt/issue-tracker/tests/db-to-txt.test.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# Action !!!
    src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
 
    exit_code=$?
-   test -z "$sleep_interval" || sleep "$sleep_interval"
+   sleep "$sleep_interval"
    test $exit_code -ne 0 && return
 
 	doLog "DEBUG STOP  doTestDbToTxt"

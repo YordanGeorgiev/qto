@@ -10,7 +10,7 @@ doDbToXls(){
 	
 	cat doc/txt/issue-tracker/funcs/db-to-xls.func.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
    doLog "INFO START testing db-to-xls"

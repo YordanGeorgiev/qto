@@ -9,7 +9,7 @@ doSpecCreateRelativePackage(){
 	doLog "DEBUG START doSpecCreateRelativePackage"
 	
 	cat doc/txt/issue-tracker/specs/pckg/create-relative-package.spec.txt
-	test -z "$sleep_interval" ||  sleep $sleep_interval
+	sleep $sleep_interval
 	doLog "DEBUG STOP  doSpecCreateRelativePackage"
 }
 # eof func doSpecCreateRelativePackage

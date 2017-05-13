@@ -10,7 +10,7 @@ doSpecGenerateSQL(){
 	
 	cat doc/txt/issue-tracker/specs/generate-sql.spec.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

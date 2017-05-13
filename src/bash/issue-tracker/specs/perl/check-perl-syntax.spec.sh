@@ -9,7 +9,7 @@ doSpecCheckPerlSyntax(){
 	doLog "DEBUG START doSpecCheckPerlSyntax"
 	
 	cat doc/txt/issue-tracker/specs/check-perl-syntax.spec.txt
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 
 	doLog "DEBUG STOP  doSpecCheckPerlSyntax"

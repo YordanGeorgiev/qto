@@ -10,7 +10,7 @@ doTestCreateCtags(){
 	
 	cat doc/txt/issue-tracker/tests/create-ctags.test.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

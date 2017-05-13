@@ -10,7 +10,7 @@ doHelpXlsToDb(){
 	
 	cat doc/txt/issue-tracker/helps/xls-to-db.help.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

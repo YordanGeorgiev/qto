@@ -10,7 +10,7 @@ doHelpCloneToApp(){
 	
 	cat doc/txt/issue-tracker/helps/clone-to-app.help.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

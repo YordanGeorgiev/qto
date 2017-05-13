@@ -9,7 +9,6 @@ create-relative-package
 check-perl-modules-prerequisites
 check-perl-syntax
 run-perl-tests
-run-issue-tracker
 clone-to-app
 gmail-package
 morph-dir

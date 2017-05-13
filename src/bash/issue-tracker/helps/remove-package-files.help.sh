@@ -10,7 +10,7 @@ doHelpRemovePackageFiles(){
 	
 	cat doc/txt/issue-tracker/helps/remove-package-files.help.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

@@ -10,7 +10,7 @@ doSpecXlsToDb(){
 	
 	cat doc/txt/issue-tracker/specs/xls-to-db.spec.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

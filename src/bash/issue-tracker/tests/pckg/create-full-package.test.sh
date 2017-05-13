@@ -18,25 +18,25 @@ doTestCreateFullPackage(){
 	bash src/bash/issue-tracker/issue-tracker.sh -a create-full-package
    export exit_code=$?
 	doLog " create-relative-package.test-1 exit_code: $exit_code "
-   test -z "$sleep_interval" || sleep "$sleep_interval"
+   sleep "$sleep_interval"
    test $exit_code -ne 0 && return
 
 	bash src/bash/issue-tracker/issue-tracker.sh -a create-full-package -i $product_instance_dir/met/.tst.issue-tracker
    export exit_code=$?
 	doLog " create-relative-package.test-1 exit_code: $exit_code "
-   test -z "$sleep_interval" || sleep "$sleep_interval"
+   sleep "$sleep_interval"
    test $exit_code -ne 0 && return
 	
 	bash src/bash/issue-tracker/issue-tracker.sh -a create-full-package -i $product_instance_dir/met/.prd.issue-tracker
    export exit_code=$?
 	doLog " create-relative-package.test-1 exit_code: $exit_code "
-   test -z "$sleep_interval" || sleep "$sleep_interval"
+   sleep "$sleep_interval"
    test $exit_code -ne 0 && return
 	
 	bash src/bash/issue-tracker/issue-tracker.sh -a create-full-package -i $product_instance_dir/met/.git.issue-tracker
    export exit_code=$?
 	doLog " create-relative-package.test-1 exit_code: $exit_code "
-   test -z "$sleep_interval" || sleep "$sleep_interval"
+   sleep "$sleep_interval"
    test $exit_code -ne 0 && return
 	
 

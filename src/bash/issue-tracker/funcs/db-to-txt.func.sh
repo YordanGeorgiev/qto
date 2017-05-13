@@ -10,7 +10,7 @@ doDbToTxt(){
 	
 	cat doc/txt/issue-tracker/funcs/db-to-txt.func.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
    

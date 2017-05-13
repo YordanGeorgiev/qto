@@ -9,7 +9,7 @@ doSpecRunPerlTests(){
 	doLog "DEBUG START doSpecRunPerlTests"
 	
 	cat doc/txt/issue-tracker/specs/perl/run-perl-tests.spec.txt
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 
 	doLog "DEBUG STOP  doSpecRunPerlTests"

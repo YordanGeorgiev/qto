@@ -10,7 +10,7 @@ doSpecDbToTxt(){
 	
 	cat doc/txt/issue-tracker/specs/db-to-txt.spec.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

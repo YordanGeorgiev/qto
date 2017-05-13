@@ -10,7 +10,7 @@ doHelpDbToTxt(){
 	
 	cat doc/txt/issue-tracker/helps/db-to-txt.help.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

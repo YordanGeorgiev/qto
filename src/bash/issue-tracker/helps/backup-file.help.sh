@@ -10,7 +10,7 @@ doHelpBackupFile(){
 	
 	cat doc/txt/issue-tracker/helps/backup-file.help.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

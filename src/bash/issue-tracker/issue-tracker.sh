@@ -119,8 +119,8 @@ doInit(){
    ( set -o posix ; set )| sort >"$tmp_dir/vars.before"
    my_name_ext=`basename $0`
    run_unit=${my_name_ext%.*}
-   test $OSTYPE = 'cygwin' && host_name=`hostname -s`
-   test $OSTYPE != 'cygwin' && host_name=`hostname`
+   host_name=$(hostname -s)
+   ${sleep_interval:=0}
 }
 #eof doInit
 

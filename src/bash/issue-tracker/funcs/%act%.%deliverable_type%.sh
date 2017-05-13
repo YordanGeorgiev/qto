@@ -10,7 +10,7 @@
 	
 	cat doc/txt/issue-tracker/%deliverable_type%s/%act%.%deliverable_type%.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

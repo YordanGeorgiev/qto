@@ -10,13 +10,13 @@ doTestDbToXls(){
 	
 	cat doc/txt/issue-tracker/tests/db-to-xls.test.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# Action !!!
    src/bash/issue-tracker/issue-tracker.sh -a db-to-xls
    
    exit_code=$?
 	doLog " txt-to-db.test-1 exit_code: $exit_code "
-   test -z "$sleep_interval" || sleep "$sleep_interval"
+   sleep "$sleep_interval"
    test $exit_code -ne 0 && return
 
 	doLog "DEBUG STOP  doTestDbToXls"

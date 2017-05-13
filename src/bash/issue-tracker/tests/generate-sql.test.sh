@@ -10,7 +10,7 @@ doTestGenerateSQL(){
 	
 	cat doc/txt/issue-tracker/tests/generate-sql.test.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
    bash src/bash/issue-tracker/issue-tracker.sh -a generate-sql

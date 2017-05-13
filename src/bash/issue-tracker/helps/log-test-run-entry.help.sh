@@ -10,7 +10,7 @@ doHelpLogTestRunEntry(){
 	
 	cat doc/txt/issue-tracker/helps/log-test-run-entry.help.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

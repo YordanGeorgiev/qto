@@ -9,7 +9,7 @@ doSpecRemoveActionFiles(){
 	doLog "DEBUG START doSpecRemoveActionFiles"
 	
 	cat doc/txt/issue-tracker/specs/remove-action-files.spec.txt
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 
 	doLog "DEBUG STOP  doSpecRemoveActionFiles"

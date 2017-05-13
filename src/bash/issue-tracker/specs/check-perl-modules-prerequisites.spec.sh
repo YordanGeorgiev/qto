@@ -10,7 +10,7 @@ doSpecCheckPerlModulesPrerequisites(){
 	
 	cat doc/txt/issue-tracker/specs/check-perl-modules-prerequisites.spec.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

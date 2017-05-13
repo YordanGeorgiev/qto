@@ -10,7 +10,7 @@ doSpecRemovePackageFiles(){
 	
 	cat doc/txt/issue-tracker/specs/remove-package-files.spec.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

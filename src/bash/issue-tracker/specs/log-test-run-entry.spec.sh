@@ -10,7 +10,7 @@ doSpecLogTestRunEntry(){
 	
 	cat doc/txt/issue-tracker/specs/log-test-run-entry.spec.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 

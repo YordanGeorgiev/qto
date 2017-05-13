@@ -30,6 +30,14 @@ doMorphDir(){
 			#debug doLog doing find and replace in $file 
 			doLog "DEBUG working on file: $file"
 			doLog "DEBUG searching for $to_srch , replacing with :: $to_repl"
+
+         # we do not want to mess with out .git dir
+         # or how-to check that a string contains another string
+         case "$file" in 
+            *.git*)
+            continue
+            ;;
+         esac
 			perl -pi -e "s#$to_srch#$to_repl#g" "$file"
 		);
 		done < <(find $dir_to_morph -type f -exec file {} \; | grep text | cut -d: -f1)
@@ -38,8 +46,17 @@ doMorphDir(){
 
 		#search and repl %var_id% with var_id_val in deploy_tmp_dir 
 		doLog "INFO search and replace in dir and file paths dir_to_morph:$dir_to_morph"
-		find $dir_to_morph -type d|perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;`mkdir -p $n` ;'
-		find $dir_to_morph -type f|perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;rename($o,$n) unless -e $n ;'
+      # rename the dirs according to the pattern
+      while read -r dir ; do (
+         perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;`mkdir -p $n` ;'
+      );
+      done < <(find $dir_to_morph -type d|grep -v '.git')
+
+      # rename the files according to the pattern
+      while read -r file ; do (
+         perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;rename($o,$n) unless -e $n ;'
+      );
+      done < <(find $dir_to_morph -type f|grep -v '.git')
 
 }
 #eof doMorphDir

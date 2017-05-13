@@ -10,7 +10,7 @@ doSpecCloneToApp(){
 	
 	cat doc/txt/issue-tracker/specs/clone-to-app.spec.txt
 	
-	test -z "$sleep_interval" || sleep "$sleep_interval"
+	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
 
