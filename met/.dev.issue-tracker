@@ -1,5 +1,4 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
-src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 src/bash/issue-tracker/issue-tracker.sh
 src/bash/issue-tracker/test-issue-tracker.sh
 src/bash/issue-tracker/tests/all-issue-tracker-tests.lst
@@ -27,7 +26,6 @@ src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelHandler.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlFileToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToFile.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
-src/perl/issue_tracker/lib/IssueTracker/App/Utils/ETL
 src/perl/issue_tracker/lib/IssueTracker/App/Db/DbHandlerFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/PostGreDbHandler.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm
@@ -81,14 +79,6 @@ doc/txt/issue-tracker/funcs/db-to-xls.func.txt
 doc/txt/issue-tracker/specs/db-to-xls.spec.txt
 doc/txt/issue-tracker/helps/db-to-xls.help.txt
 #---
-doc/txt/issue-tracker/funcs/perl/run-issue-tracker.func.txt
-doc/txt/issue-tracker/helps/perl/run-issue-tracker.help.txt
-doc/txt/issue-tracker/specs/perl/run-issue-tracker.spec.txt
-doc/txt/issue-tracker/tests/perl/run-issue-tracker.test.txt
-src/bash/issue-tracker/helps/perl/run-issue-tracker.help.sh
-src/bash/issue-tracker/specs/perl/run-issue-tracker.spec.sh
-src/bash/issue-tracker/funcs/perl/run-issue-tracker.func.sh
-src/bash/issue-tracker/tests/perl/run-issue-tracker.test.sh
 #---
 doc/txt/issue-tracker/funcs/perl/check-perl-syntax.func.txt
 doc/txt/issue-tracker/helps/perl/check-perl-syntax.help.txt
