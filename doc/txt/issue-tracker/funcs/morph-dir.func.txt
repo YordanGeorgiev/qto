@@ -4,7 +4,7 @@
 	
 	# Purpose:
 	# ------------------------------------------------------
-	-- todo: what is the purpose of the doMorphDir function
+	to search and replace 
 
 	# Prequisites
 	# ------------------------------------------------------

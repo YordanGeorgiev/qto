@@ -227,6 +227,7 @@ src/bash/issue-tracker/funcs/pckg/create-relative-package.func.sh
 src/bash/issue-tracker/tests/pckg/create-relative-package.test.sh
 met
 met/.dev.issue-tracker
+met/.src.issue-tracker
 met/.tst.issue-tracker
 met/.prd.issue-tracker
 met/.git.issue-tracker

@@ -1,3 +1,5 @@
+# this is kind of a srch history file
+
 # search for the sleep_interval
 :g/sleep_interval/ | :vimgrep /sleep_interval/ `find . -type f -not -path '.git'`
 
