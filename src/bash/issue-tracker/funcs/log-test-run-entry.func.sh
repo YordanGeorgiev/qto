@@ -48,8 +48,8 @@ doLogTestRunEntry(){
          echo -e `date "+%Y-%m-%d %H:%M:%S"`"\t STOP  $component_name test run report" >> "$test_run_report_file"
          cat "$test_run_report_file"
          echo -e "\n\n"
-         doLog "product instance tests listing"
-         find "$product_instance_dir"'/dat/tests' -type f -exec stat -c "%y %n" {} \; | sort -nr
+         # doLog "product instance tests listing"
+         # find "$product_instance_dir"'/dat/tests' -type f -exec stat -c "%y %n" {} \; | sort -nr
          echo -e "\n\n"
          ;;
      *)

@@ -15,7 +15,7 @@ doTestDbToXls(){
    src/bash/issue-tracker/issue-tracker.sh -a db-to-xls
    
    exit_code=$?
-	doLog " txt-to-db.test-1 exit_code: $exit_code "
+	doLog "INFO txt-to-db.test-1 exit_code: $exit_code "
    sleep "$sleep_interval"
    test $exit_code -ne 0 && return
 

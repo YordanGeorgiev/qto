@@ -22,7 +22,7 @@
 	# ------------------------------------------------------
    1. fill in the lst file 
 	2. ensure tabs are used as token separators
-   3. enssure you have a template @ src/sql/mssql/run
+   3. enssure you have a template -05-14 src/sql/mssql/run
    4. Action !!!
    bash src/bash/issue-tracker/issue-tracker.sh -a generate-sql
     

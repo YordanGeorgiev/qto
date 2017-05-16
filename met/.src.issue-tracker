@@ -1,5 +1,29 @@
+
+:g/YYYY.mm.dd/| :vimgrep /YYYY.mm.dd/ `find . -type f \| grep -v .git`
+
+
+# copy from here 
+:g/srch/| :vimgrep /srch/ `find . -type f \| grep -v .git`
+
+
+
+:g/txt-to-db.test-1/| :vimgrep /txt-to-db.test-1/ `find . -type f -not -path '.git'`
+
+# search for the annoying "instance tests listing"
+:g/instance tests listing/ | :vimgrep /instance tests listing/ `find . -type f -not -path '.git'`
+ 
+# where does msg come from
+OK for all action runs
+
+:g/OK for all action runs/ | :vimgrep /OK for all action runs/ `find . -type f -not -path '.git'`
+
+:g/created the following full development package/ | :vimgrep /created the following full development package/ `find . -type f -not -path '.git'`
+created the following full development package
+
+# search for the doExit function
+:g/doExit/ | :vimgrep /doExit/ `find . -type f -not -path '.git'`
+
 # this is kind of a srch history file
 
 # search for the sleep_interval
 :g/sleep_interval/ | :vimgrep /sleep_interval/ `find . -type f -not -path '.git'`
-

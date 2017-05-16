@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+package issue_tracker ; 
 
 use strict;
 use warnings;
@@ -87,7 +88,7 @@ my $rdbms_type 						= 'postgre' ; #todo: parametrize to
 my $issues_file                  = 'undefined-issues-file' ; 
 my $objInitiator                 = {} ; 
 my $appConfig                    = {} ; 
-my $objLogger                    = {} ; 
+our $objLogger                   = {} ; 
 my $objFileHandler               = {} ; 
 my $objConfigurator              = {} ; 
 my $actions                      = q{} ; 
@@ -240,9 +241,12 @@ my $period                       = q{} ;
       $appConfig->{ 'xls_dir' }     = $xls_dir ; 
       $actions = 'txt-to-db' unless ( $actions )  ; 
 
-      $objLogger->doLogInfoMsg ( "START LOGGING SETTINGS ") ; 
-      p ( $appConfig  ) ; 
-      $objLogger->doLogInfoMsg ( "STOP  LOGGING SETTINGS ") ; 
+
+      if ( $module_trace == 1 ) {
+         $msg="START LOGGING SETINGS" ; $objLogger->doLogInfoMsg ( $msg ) ; 
+         p ( $appConfig  ) ; 
+         $msg="STOP  LOGGING SETINGS" ; $objLogger->doLogInfoMsg ( $msg ) ; 
+      }
      
       $ret = 0 ;  
       return ( $ret , $msg ) ; 

@@ -11,9 +11,8 @@ doDbToTxt(){
 	cat doc/txt/issue-tracker/funcs/db-to-txt.func.txt
 	
 	sleep "$sleep_interval"
-	# add your action implementation code here ... 
+
 	# Action !!!
-   
    perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-txt
    exit_code=$?
    doLog "INFO doRunIssueTracker exit_code $exit_code"

@@ -3,16 +3,16 @@
 
 umask 022    ;
 
+# set -eu -o pipefail
+
 # print the commands
 # set -x
 # print each input line as well
 # set -v
 # exit the script if any statement returns a non-true return value. gotcha !!!
 # set -e
-trap 'doExit $LINENO $BASH_COMMAND; exit' SIGHUP SIGINT SIGQUIT
-trap "exit $exit_code" TERM
+trap "exit 1" TERM
 export TOP_PID=$$
-
 
 #v1.2.5 
 #------------------------------------------------------------------------------
@@ -20,7 +20,10 @@ export TOP_PID=$$
 #------------------------------------------------------------------------------
 main(){
 	doInit
-	case $1 in
+   
+   test -z "${1+x}" && arg='print-usage'
+
+	case $arg in
 		'-usage')
 		actions="print-usage "
 		;;
@@ -35,7 +38,7 @@ main(){
 		;;
 	esac
 
-	test -z "$actions" && doParseCmdArgs "$@"
+	test -z "${actions+x}" && doParseCmdArgs "$@"
 
 	doSetVars
 	doCheckReadyToStart
@@ -107,7 +110,7 @@ doRunActions(){
 #eof func doRunActions
 
 
-#v1.2.5 
+#v 1.2.5 
 #------------------------------------------------------------------------------
 # register the run-time vars before the call of the $0
 #------------------------------------------------------------------------------
@@ -120,7 +123,7 @@ doInit(){
    my_name_ext=`basename $0`
    run_unit=${my_name_ext%.*}
    host_name=$(hostname -s)
-   ${sleep_interval:=0}
+: "${sleep_interval:=0}"
 }
 #eof doInit
 
@@ -205,6 +208,9 @@ doCheckReadyToStart(){
 # v1.2.7
 #------------------------------------------------------------------------------
 # clean and exit with passed status and message
+# call by: 
+# export exit_code=0 ; doExit "ok msg"
+# export exit_code=1 ; doExit "NOK msg"
 #------------------------------------------------------------------------------
 doExit(){
    exit_msg="$*"
@@ -224,9 +230,9 @@ doExit(){
 	cd $call_start_dir 
 
    #src: http://stackoverflow.com/a/9894126/65706
-   test $exit_code -ne 0 && kill -s TERM $TOP_PID
+   test $exit_code -ne 0 && kill -s TERM "$TOP_PID" && exit $exit_code
    test $exit_code -eq 0 && exit 0
-   
+   #test $exit_code -ne 0 && kill -9 "$TOP_PID"
 }
 #eof func doExit
 

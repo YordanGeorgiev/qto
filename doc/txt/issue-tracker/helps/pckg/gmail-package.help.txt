@@ -11,7 +11,7 @@ doGmailPackage(){
 	# take the latest modified zip file if we ran without a create-package call
 	test -z "$zip_file" && \
 		zip_file=$(stat -c "%y %n" $product_dir/*.zip \
-			| sort -nr | head -n 1 | perl -nle '@t=split /\s+/;print $t[3]')
+			| sort -nr | head -n 1 | perl -nle '-05-14t=split /\s+/;print $t[3]')
    zip_file_name=`basename $zip_file`
 
 

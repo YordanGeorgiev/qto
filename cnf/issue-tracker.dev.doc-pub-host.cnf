@@ -1,4 +1,5 @@
 # file: cnf/issue-tracker.doc-pub-host.cnf
+[MainSection]
 
 # multiple projects support
 issue_tracker_project = issue-tracker
@@ -55,5 +56,8 @@ PrintDebugMsgs =                 1
 # Whether or not to pring TRACE messages
 PrintTraceMsgs =                 1 
 
-Emails = yordan.georgiev@gmail.com
+Emails=yordan.georgiev@gmail.com
+
+# where to place the backups of the 
+network_backup_dir=/vagrant/csitea/issue-tracker/dat/zip
 # eof file: cnf/issue-tracker.doc-pub-host.cnf

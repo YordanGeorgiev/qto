@@ -92,7 +92,9 @@ package IssueTracker::App::Ctrl::CtrlDbToFile ;
       my $objDbHandler 			= $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
 
       ( $ret , $msg , $hsr , $mhsr )  = $objDbHandler->doSelectTableIntoHashRef( 'issue' ) ; 
-      p($hsr) if $module_trace == 1 ; 
+
+      p($hsr) if $module_trace == 1 ;
+      $objLogger->doLogDebugMsg ( "STOP print" ) if $module_trace == 1 ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
       
       my $period              = $ENV{ 'period' } || 'daily' ;  

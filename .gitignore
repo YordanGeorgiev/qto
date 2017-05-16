@@ -3,3 +3,5 @@
 **/*.log
 dat/xls/run/*.xlsx
 dat/tests/t*.txt
+dat/issue-tracker/**
+src/bash/issue-tracker/tmp/**

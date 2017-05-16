@@ -4,33 +4,25 @@
 	
 	# Purpose:
 	# ------------------------------------------------------
-	-- todo: what is the purpose of the doDbToXls function
+	wrapper around the database to xls conversion of the issue-tracker
 
-	# Prequisites
-	# ------------------------------------------------------
-	-- todo: what are the prerequisites of the doDbToXls function
-
-	# Installation
-	# ------------------------------------------------------
-	-- todo: what are the required installations for the  
-		doDbToXls function to execute without errors
 
 	# Interdependancies
 	# ------------------------------------------------------
-	-- todo: what are the interdependancies for the  
-		doDbToXls function to execute without errors
+	- the postgre database 
+   - the proj txt dir where to output the xls file
+   - the xls file where to output to
 
 	# Usage:
 	# ------------------------------------------------------
-	-- todo: how can be the doDbToXls used 
+	$0 -a db-to-xls
 
 	# Developent
 	# ------------------------------------------------------
-	-- todo: what issues, todos could be pointed for development
 
 	# Caveats:
 	# ------------------------------------------------------
-	-- todo: what are the known caveats of the doDbToXls functions
+	none known so far 
 
 
 

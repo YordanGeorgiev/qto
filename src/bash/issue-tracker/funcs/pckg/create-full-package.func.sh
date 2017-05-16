@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-# v1.2.0
+# v1.2.1
 #------------------------------------------------------------------------------
 # creates the full package as component of larger product platform
 #------------------------------------------------------------------------------
@@ -15,8 +15,12 @@ doCreateFullPackage(){
 	# relative file path is passed turn it to absolute one 
 	[[ $include_file == /* ]] || include_file=$product_instance_dir/$include_file
 
-	test -f "$include_file" || \
-		doExit 3 "the deployment file: "'"'"$include_file"'" does not exist !!!'
+   if [ ! -f "$include_file" ]; then
+      msg="the deployment file: "'"'"$include_file"'" does not exist !!!'
+      export exit_code=1 ;  
+      doExit "$msg"
+      exit 1
+   fi
 
    tgt_env_type=$(echo `basename "$include_file"`|cut -d'.' -f2)
 
@@ -41,7 +45,6 @@ doCreateFullPackage(){
 	mkdir -p $product_instance_dir/dat/$run_unit/tmp
 	echo $zip_file>$product_instance_dir/dat/$run_unit/tmp/zip_file
 
-
 	# zip MM ops
 	# -MM  --must-match
 	# All  input  patterns must match at least one file and all input files found must be readable.
@@ -54,20 +57,30 @@ doCreateFullPackage(){
 		while IFS='' read f ; do (
 			test -d "$product_instance_dir/$f" && continue ; 
 			test -f "$product_instance_dir/$f" && continue ; 
-			test -f "$product_instance_dir/$f" || doLog 'ERROR not a file '"$f" ;  
+			test -f "$product_instance_dir/$f" || doLog 'ERROR not a file: "'"$f"'"' ;  
+			test -f "$product_instance_dir/$f" || ret=1 && exit 1
 		); 
 		done < <(cat $include_file | egrep -v "$perl_ignore_file_pattern" | sed '/^#/ d')
 	);
 
-   fatal_msg="FATAL !!! deleted $zip_file , because of packaging errors $! !!!"
-	[ $ret == 0 ] || rm -fv $zip_file
-	[ $ret == 0 ] || doExit 1 "$fatal_msg"
+   if [ ! $ret -eq 0 ]; then
+      msg="deleted $zip_file , because of packaging errors $! !!!"
+	   rm -fv $zip_file
+      export exit_code=1 ;  doExit "$msg" ; 
+      exit 1
+   fi
 
-	doLog "INFO created the following full development package:"
-	doLog "INFO `stat -c \"%y %n\" $zip_file`"
+	msg="created the following full development package:"
+   doLog "INFO $msg"
+   msg="`stat -c \"%y %n\" $zip_file`"
+   doLog "INFO $msg"
 
-	test -z ${network_backup_dir+x} && test -d $network_backup_dir \
-      && doRunCmdAndLog "cp -v $zip_file $network_backup_dir/"
+   if [ -d "$network_backup_dir" ]; then
+      doRunCmdAndLog "cp -v $zip_file $network_backup_dir/"
+   else
+      msg="skip backup as network_backup_dir is not configured"
+      doLog "INFO $msg"
+   fi
 
 	doLog "INFO STOP  create-full-package.func.sh" ;
 }

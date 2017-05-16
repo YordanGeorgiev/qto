@@ -4,13 +4,13 @@ package IssueTracker::App::Utils::Logger ;
 	use v5.10.0;
    use utf8 ; 
 
-	my $VERSION = '2.1.7';    
+	my $VERSION = '2.1.8';    
 	#doc at the end
 
 	require Exporter;
 	use AutoLoader  ;
    our @ISA    = qw(Exporter);
-   #our @EXPORT = qw(get set dumpFields doLogInfoMsg doLogFatalMsg doLogDebugMsg doLogTraceMsg doLogErrorMsg doLogMsg doLogWarningMsg doLogBroadCastMsg );
+   #our @EXPORT = qw(get set dumpFields doLogInfoMsg doLogFatalMsg doLogDebugMsg doLogTraceMsg doLogErrorMsg doLogMsg doLogWarningMsg );
 
 	use Carp qw(cluck croak);
 	use File::Path;
@@ -19,6 +19,7 @@ package IssueTracker::App::Utils::Logger ;
 
 	# the hash holding the vars
 	our ( $RunDir , $LogFile ) = ();
+   our ( $caller_pckg, $filename, $line ) = ();
    our $appConfig   = {} ; 
 	our $PID = "$$" ; 
 	our $objTimer ; 
@@ -59,6 +60,8 @@ if you don't export anything, such as for a purely object-oriented module.
 		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 
+      ( $caller_pckg, $filename, $line ) = caller();
+      $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
 		bless( $self, $class );    # Say: $self is a $class
 		
       $self = $self->doInitialize() ; 
@@ -97,13 +100,11 @@ if you don't export anything, such as for a purely object-oriented module.
       $appConfig->{ 'PrintConsoleMsgs' } = 1 
          unless ( defined $appConfig->{ 'PrintConsoleMsgs' } ); 
 
-
 		$appConfig->{ 'PrintErrorMsgs' } = 1
-		  unless ( defined ( ref $appConfig->{ 'PrintErrorMsgs' } )) ; 
-      
+	      unless ( defined ( ref $appConfig->{ 'PrintErrorMsgs' } )) ; 
 
 		$appConfig->{ 'PrintDebugMsgs' } = 1
-		  unless ( defined( $appConfig->{ 'PrintDebugMsgs' } ) );
+         unless ( defined( $appConfig->{ 'PrintDebugMsgs' } ) );
 
 		$appConfig->{ 'PrintInfoMsgs' } = 1
 		  unless ( defined( $appConfig->{ 'PrintInfoMsgs' } ) );
@@ -243,8 +244,6 @@ if you don't export anything, such as for a purely object-oriented module.
 	#eof sub
 
 
-
-
 	#
 	# -----------------------------------------------------------------------------
 	# ALWAYS logs a fatal message
@@ -254,6 +253,8 @@ if you don't export anything, such as for a purely object-oriented module.
 		my $self = shift;
       my $msg  = q{} ; 
       
+      ( $caller_pckg, $filename, $line ) = caller();
+      $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
       $msg = "null info msg passed" unless @_ ;  
 		$msg = "@_" if @_ ; 
 		my $msgType = '[FATAL]'; 
@@ -271,12 +272,15 @@ if you don't export anything, such as for a purely object-oriented module.
 	# -----------------------------------------------------------------------------
 	sub doLogErrorMsg {
 		my $self = shift;
-      my $msg  = q{} ; 
+      my $msg  = q{} ;   
       
       $msg = "null info msg passed" unless @_ ;  
 		$msg = "@_" if @_ ; 
 
 		my $msgType = '[ERROR]';
+      
+      ( $caller_pckg, $filename, $line ) = caller();
+      $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
 
 		# Do not print anything if the PrintWarningMsgs = 0
 		return if ( $appConfig->{ 'LogMsgs' } == 0 );
@@ -291,68 +295,6 @@ if you don't export anything, such as for a purely object-oriented module.
 	# eof sub doLogErrorMsg 
 
 
-	#
-	# -----------------------------------------------------------------------------
-	# logs an error message
-	# -----------------------------------------------------------------------------
-	sub doLogBroadCastMsg {
-
-		my $self = shift;
-
-		# Do not print anything if the PrintWarningMsgs = 0
-		return if ( $appConfig->{ 'LogMsgs' } == 0 );
-
-
-		my @BroadCastTypes = ();
-		my @msgs           = @_;
-
-		#the msg is the last one of the
-		my $msg = $msgs[ $#msgs ];
-
-		foreach my $BroadCastType ( @msgs ) {
-
-			# print "before \$BroadCastType is $BroadCastType \n" ;
-			# print "before if \@BroadCastTypes is @BroadCastTypes \n" ;
-			# print "before if \@msgs is @msgs \n" ;
-
-			if (
-
-					$BroadCastType eq "SIMPLE"
-				or $BroadCastType eq "DEBUG"
-				or $BroadCastType eq "ERROR"
-				or $BroadCastType eq "WARN"
-				or $BroadCastType eq "INFO"
-				or $BroadCastType eq "TRACE"
-
-			  )
-			{
-
-				# print "AFTER \@BroadCastTypes is @BroadCastTypes \n" ;
-				# print "AFTER \@msgs is @msgs \n" ;
-				push( @BroadCastTypes, $BroadCastType );
-
-			}
-
-		}
-		#eof sub
-
-
-		# do the actual "BroadCast"
-		foreach my $BroadCastType ( @BroadCastTypes ) {
-
-			$self->doLogMsg( $msg )        if ( $BroadCastType eq "SIMPLE" );
-			$self->LogDebugMsg( $msg )   if ( $BroadCastType eq "DEBUG" );
-			$self->LogErrorMsg( $msg )   if ( $BroadCastType eq "ERROR" );
-			$self->LogWarningMsg( $msg ) if ( $BroadCastType eq "WARN" );
-			$self->LogInfoMsg( $msg )    if ( $BroadCastType eq "INFO" );
-			$self->LogWarningMsg( $msg ) if ( $BroadCastType eq "TRACE" );
-
-		} #eof foreach
-
-	}
-	#eof sub doLogBroadCastMsg
-
-
 	# -----------------------------------------------------------------------------
 	# logs an warning message
 	# -----------------------------------------------------------------------------
@@ -360,12 +302,17 @@ if you don't export anything, such as for a purely object-oriented module.
 
 		my $self = shift;
       my $msg  = q{} ; 
+      ( $caller_pckg, $filename, $line ) = caller();
+      $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
       
       $msg = "null info msg passed" unless @_ ;  
 		$msg = "@_" if @_ ; 
 		my $msgType = '[WARN ]';
 
-		# Do not print anything if the PrintWarningMsgs = 0
+      ( $caller_pckg, $filename, $line ) = caller();
+      $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
+		
+      # Do not print anything if the PrintWarningMsgs = 0
 		return if ( $appConfig->{ 'LogMsgs' } == 0 );
 
 		# Do not print anything if the PrintWarningMsgs = 0
@@ -386,10 +333,13 @@ if you don't export anything, such as for a purely object-oriented module.
 
 		my $self = shift;
       my $msg  = q{} ; 
-      
+            
       $msg = "null info msg passed" unless @_ ;  
 		$msg = "@_" if @_ ; 
 		my $msgType = '[INFO ]';
+		
+      ( $caller_pckg, $filename, $line ) = caller();
+      $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
 
 		# Do not print anything if the PrintWarningMsgs = 0
 		return unless ( $appConfig->{ 'LogMsgs' } == 1 );
@@ -406,7 +356,7 @@ if you don't export anything, such as for a purely object-oriented module.
 
 	#
 	# -----------------------------------------------------------------------------
-	# logs an trace message
+	# todo: add global trace_level setting
 	# -----------------------------------------------------------------------------
 	sub doLogTraceMsg {
 
@@ -415,6 +365,7 @@ if you don't export anything, such as for a purely object-oriented module.
 		my $msgType = '[TRACE]';
 
 		my ( $package, $filename, $line ) = caller();
+      $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
 
 		# Do not print anything if the PrintDebugMsgs = 0
 		return unless ( $appConfig->{ 'PrintTraceMsgs' } == 1 );
@@ -441,11 +392,10 @@ if you don't export anything, such as for a purely object-oriented module.
 		my $self    = shift;
 		my $msg     = "@_";
 
-		my $msgType = '[DEBUG]';
+		my $msgType = '[DEBUG] ' ; 
 
-		#my ( $package, $filename, $line ) = caller();
-		#$msg = "$msg : FROM Package: $package  FileName: $filename Line: $line  ";
-		#print $msg ; 
+      ( $caller_pckg, $filename, $line ) = caller();
+      $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
 
 		# Do not print anything if the PrintWarningMsgs = 0
 		return if ( $appConfig->{ 'LogMsgs' } == 0 );
@@ -474,7 +424,7 @@ if you don't export anything, such as for a purely object-oriented module.
 			$HumanReadableTime 		= "$HumanReadableTime" ; 
 
 		my $msgPrefix = () ; 
-		$msgPrefix = "$msgType $HumanReadableTime [$PID] $LogTimeToTextSeparator"; 
+		$msgPrefix = "$msgType $HumanReadableTime [$PID] [$caller_pckg:$line] $LogTimeToTextSeparator"; 
 
 		if (  $msgType eq '[WARN ]'
 			|| $msgType eq '[INFO ]'
@@ -518,14 +468,14 @@ if you don't export anything, such as for a purely object-oriented module.
 
 	#
 	# -----------------------------------------------------------------------------
-	# logs a message based on the cnfiguration settings 
+	# logs a message based on the configuration settings 
 	# -----------------------------------------------------------------------------
 	sub doLogMsg {
 
 		my $self    = shift;
 		my $msgType = shift || "" ; 
 		my $msg     = shift || 'null msg passed' ; 
-
+      
       $msg = $self->BuildMsg( $msgType, $msg);
 		
 
