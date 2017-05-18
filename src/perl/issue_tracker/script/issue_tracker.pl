@@ -186,8 +186,8 @@ my $period                       = q{} ;
       $objConfigurator 	= 
          'IssueTracker::App::Utils::Configurator'->new( $objInitiator->{'ConfFile'} , \$appConfig ) ; 
       $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
-         
-      $objLogger->doLogInfoMsg ( "START MAIN") ; 
+       
+      my $m = "START MAIN" ; $objLogger->doLogInfoMsg ( $m ) ; 
      
       # get the cmd args  
       GetOptions(	

@@ -270,19 +270,19 @@ package IssueTracker::App::ETL::Txt::TxtParserWeekly ;
       my $str_issues = q{} ; 
       my $run_date   = q{} ;  
       p ( $hsr2 ) if $module_trace == 1 ; 
-      my $str_header = '# START Weekly %run_date%
+      my $str_header = '# START weekly %run_date%
    
-## what will I do till the next Weekly:
+## what will I do till the next weekly:
 #---------------------------
 #' ; 
 #
-      my $str_middler = '## what did I do since last Weekly:
+      my $str_middler = '## what did I do since last weekly:
 ---------------------------
 ' ; 
 
       my $str_footer = '
 
-# STOP  Weekly @%run_date%
+# STOP  weekly @%run_date%
 ' ; 
 
 
@@ -302,12 +302,17 @@ package IssueTracker::App::ETL::Txt::TxtParserWeekly ;
          my $prio          = $row->{ 'prio'} ; 
          my $start_time    = $row->{ 'start_time'} ; 
          my $stop_time     = $row->{ 'stop_time'} ; 
-         my $status        = $row->{ 'status'} ; 
+         my $status        = $row->{ 'status'} || 'unknwn' ; 
          $status           = $inverse_hsrStatus{ $status } ; 
          $description      =~ s/\r\n/\n/gm ; 
          $str_issues       .= "\n" if ( $prev_category ne $category ) ; 
          $str_issues       .= $category . "\n" unless ( $prev_category eq $category ) ; 
-         $str_issues       .= '- ' ; 
+         my $levels_dash   = '' ; 
+         for ( my $i = 1 ; $i<$level ; $i++ ) {
+            $str_issues    .= ' ' ; 
+            $levels_dash   .= '-' ; 
+         }
+         $str_issues       .= ' ' . $levels_dash . ' ' ; 
          $str_issues       .= $status . "\t\t" ; 
          $str_issues       .= ( $start_time . " " ) if ( $start_time ne 'NULL' ) ; 
          $str_issues       .= ( '- ' . $stop_time . " " ) if ( $stop_time ne 'NULL' ) ; 
@@ -323,6 +328,7 @@ package IssueTracker::App::ETL::Txt::TxtParserWeekly ;
 
       return ( $ret , $msg , $str_issues ) ;
    }
+
    # eof sub doConvertHashRefToStr
 
 

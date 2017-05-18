@@ -1,37 +1,25 @@
-# doc/txt/issue-tracker/db-to-txt/db-to-txt.func.txt
+# doc/txt/issue-tracker/funcs/db-to-txt.func.txt
 
-	doDbToTxt
+	action: db-to-txt , function: doDbToTxt
 	
 	# Purpose:
 	# ------------------------------------------------------
-	-- todo: what is the purpose of the doDbToTxt function
+	to convert the data from the issue table in the postgre db
+   to the issues file for the set period
 
 	# Prequisites
 	# ------------------------------------------------------
-	-- todo: what are the prerequisites of the doDbToTxt function
+	db setup , data in the issue table
+   the proj txt dir
 
-	# Installation
-	# ------------------------------------------------------
-	-- todo: what are the required installations for the  
-		doDbToTxt function to execute without errors
-
-	# Interdependancies
-	# ------------------------------------------------------
-	-- todo: what are the interdependancies for the  
-		doDbToTxt function to execute without errors
 
 	# Usage:
 	# ------------------------------------------------------
-	-- todo: how can be the doDbToTxt used 
-
-	# Developent
-	# ------------------------------------------------------
-	-- todo: what issues, todos could be pointed for development
+	bash $0 -a db-to-txt
 
 	# Caveats:
 	# ------------------------------------------------------
-	-- todo: what are the known caveats of the doDbToTxt functions
+	none known so far
 
 
-
-# eof file: doc/txt/issue-tracker/db-to-txt/db-to-txt.func.txt
+# eof file: doc/txt/issue-tracker/funcs/db-to-txt.func.txt

@@ -16,7 +16,7 @@ package IssueTracker::App::Ctrl::CtrlDbToFile ;
    use IssueTracker::App::Db::DbHandlerFactory ; 
    use IssueTracker::App::Data::ExcelHandler ; 
 
-	our $module_trace                = 1 ; 
+	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
 	our $objLogger						   = {} ; 
 	our $objFileHandler			      = {} ; 

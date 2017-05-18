@@ -165,6 +165,7 @@ package IssueTracker::App::ETL::Txt::TxtParserMonthly ;
                   unless ( exists $item_levels->{ $category_item_count });
                $hsr->{ $i }->{ 'level' } = $item_levels->{ $category_item_count } + 1 ; 
 
+
                # $hsr->{ $i }->{ 'item' } = $item ; 
                $hsr->{ $i }->{ 'prio' } = $i ; 
                $hsr->{ $i }->{ 'category' }     = $category ; 
@@ -269,25 +270,26 @@ package IssueTracker::App::ETL::Txt::TxtParserMonthly ;
       my $str_issues = q{} ; 
       my $run_date   = q{} ;  
       p ( $hsr2 ) if $module_trace == 1 ; 
-      my $str_header = '# START Monthly %run_date%
+      my $str_header = '# START monthly %run_date%
    
-## what will I do till the next Monthly:
+## what will I do till the next monthly:
 #---------------------------
 #' ; 
 #
-      my $str_middler = '## what did I do since last Monthly:
+      my $str_middler = '## what did I do since last monthly:
 ---------------------------
 ' ; 
 
       my $str_footer = '
 
-# STOP  Monthly @%run_date%
+# STOP  monthly @%run_date%
 ' ; 
 
 
       $str_issues .= $str_header . "\n\n" ; 
       my $prev_category = q{} ; 
 
+      # foreach my $issue_id ( sort { $hsr2->{$a}->{ 'category' } eq $hsr2->{$b}->{ 'category' } } keys (%$hsr2))  {
       foreach my $issue_id ( sort { $hsr2->{$a}->{ 'prio' } <=> $hsr2->{$b}->{ 'prio' } } keys (%$hsr2))  {
          my $row = $hsr2->{ $issue_id } ; 
 
@@ -303,11 +305,19 @@ package IssueTracker::App::ETL::Txt::TxtParserMonthly ;
          my $stop_time     = $row->{ 'stop_time'} ; 
          my $status        = $row->{ 'status'} ; 
          $status           = $inverse_hsrStatus{ $status } ; 
+         $status           = 'unknwn' unless $status ; 
          $description      =~ s/\r\n/\n/gm ; 
          $str_issues       .= "\n" if ( $prev_category ne $category ) ; 
          $str_issues       .= $category . "\n" unless ( $prev_category eq $category ) ; 
-         $str_issues       .= '- ' ; 
-         $str_issues       .= $status . "\t\t" ; 
+         my $levels_dash   = '' ; 
+         for ( my $i = 1 ; $i<$level ; $i++ ) {
+            $str_issues    .= ' ' ;
+            $levels_dash   .= '-' ; 
+         }
+         $str_issues       .= $levels_dash . ' ' ; 
+         $str_issues       .= $status . "\t\t" if $level == 2 ; 
+         $str_issues       .= $status . "\t" if $level == 3 ; 
+         $str_issues       .= $status . " " if $level == 4 ; 
          $str_issues       .= ( $start_time . " " ) if ( $start_time ne 'NULL' ) ; 
          $str_issues       .= ( '- ' . $stop_time . " " ) if ( $stop_time ne 'NULL' ) ; 
          $str_issues       .= $name . "\n" ; 
@@ -391,6 +401,7 @@ package IssueTracker::App::ETL::Txt::TxtParserMonthly ;
          , 'test'    => '05-test'      # to test some implementation
          , 'tst'     => '05-tst'       # to test some implementation
          , 'hld'     => '06-onhold'    # the issue is on hold - 
+         , 'hold'    => '06-onhold'    # the issue is on hold - 
          , 'part'    => '06-part'      # the issue has been partly completed - might have more work
          , 'flow'    => '06-flow'      # follow an event or action to occur
          , 'qas'     => '07-qas'       # the issue is in quality assurance mode

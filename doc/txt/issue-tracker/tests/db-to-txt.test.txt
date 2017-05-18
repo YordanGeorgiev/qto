@@ -4,33 +4,28 @@
 	
 	# Purpose:
 	# ------------------------------------------------------
-	-- todo: what is the purpose of the doTestDbToTxt function
+	to to test the db-to-txt conversion action
 
 	# Prequisites
 	# ------------------------------------------------------
-	-- todo: what are the prerequisites of the doTestDbToTxt function
-
-	# Installation
-	# ------------------------------------------------------
-	-- todo: what are the required installations for the  
-		doTestDbToTxt function to execute without errors
+	- the postgre db with the issue table
 
 	# Interdependancies
 	# ------------------------------------------------------
-	-- todo: what are the interdependancies for the  
-		doTestDbToTxt function to execute without errors
+	- the postgre db , issue table
+	- the proj txt dir
 
 	# Usage:
 	# ------------------------------------------------------
-	-- todo: how can be the doTestDbToTxt used 
+	add / uncomment the action to the following file: 
+   src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 
 	# Developent
 	# ------------------------------------------------------
-	-- todo: what issues, todos could be pointed for development
 
 	# Caveats:
 	# ------------------------------------------------------
-	-- todo: what are the known caveats of the doTestDbToTxt functions
+	- none known so far
 
 
 

@@ -60,7 +60,7 @@ package IssueTracker::App::ETL::Txt::TxtParserDaily ;
 
 	#
 	# --------------------------------------------------------
-	# read the issues file for the daily period
+	# read the issues file for the Daily period
 	# --------------------------------------------------------
 	sub doReadIssueFile {
 
@@ -122,7 +122,7 @@ package IssueTracker::App::ETL::Txt::TxtParserDaily ;
          $objLogger->doLogInfoMsg ( $msg ) ;  
 
          foreach my $category_item ( @arr_category_items ) {
-            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(DAILY)|(WEEKLY)|(MONTHLY)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
+            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(Daily)|(WEEKLY)|(Daily)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
 
 
             my $debug_msg = "category_item: $category_item " ; 
@@ -303,11 +303,19 @@ package IssueTracker::App::ETL::Txt::TxtParserDaily ;
          my $stop_time     = $row->{ 'stop_time'} ; 
          my $status        = $row->{ 'status'} ; 
          $status           = $inverse_hsrStatus{ $status } ; 
+         $status           = 'unknwn' unless $status ; 
          $description      =~ s/\r\n/\n/gm ; 
          $str_issues       .= "\n" if ( $prev_category ne $category ) ; 
          $str_issues       .= $category . "\n" unless ( $prev_category eq $category ) ; 
-         $str_issues       .= '- ' ; 
-         $str_issues       .= $status . "\t\t" ; 
+         my $levels_dash   = '' ; 
+         for ( my $i = 1 ; $i<$level ; $i++ ) {
+            $str_issues    .= ' ' ;
+            $levels_dash   .= '-' ; 
+         }
+         $str_issues       .= $levels_dash . ' ' ; 
+         $str_issues       .= $status . "\t\t" if $level == 2 ; 
+         $str_issues       .= $status . "\t" if $level == 3 ; 
+         $str_issues       .= $status . " " if $level == 4 ; 
          $str_issues       .= ( $start_time . " " ) if ( $start_time ne 'NULL' ) ; 
          $str_issues       .= ( '- ' . $stop_time . " " ) if ( $stop_time ne 'NULL' ) ; 
          $str_issues       .= $name . "\n" ; 
@@ -391,6 +399,7 @@ package IssueTracker::App::ETL::Txt::TxtParserDaily ;
          , 'test'    => '05-test'      # to test some implementation
          , 'tst'     => '05-tst'       # to test some implementation
          , 'hld'     => '06-onhold'    # the issue is on hold - 
+         , 'hold'    => '06-onhold'    # the issue is on hold - 
          , 'part'    => '06-part'      # the issue has been partly completed - might have more work
          , 'flow'    => '06-flow'      # follow an event or action to occur
          , 'qas'     => '07-qas'       # the issue is in quality assurance mode

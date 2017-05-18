@@ -392,7 +392,7 @@ if you don't export anything, such as for a purely object-oriented module.
 		my $self    = shift;
 		my $msg     = "@_";
 
-		my $msgType = '[DEBUG] ' ; 
+		my $msgType = '[DEBUG]' ; 
 
       ( $caller_pckg, $filename, $line ) = caller();
       $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
@@ -414,7 +414,7 @@ if you don't export anything, such as for a purely object-oriented module.
 	# -----------------------------------------------------------------------------
 	# builds a nice message 
 	# -----------------------------------------------------------------------------
-	sub BuildMsg {
+	sub doBuildMsg {
 
 		my $self    	= shift;
 		my $msgType 	= shift;
@@ -424,7 +424,7 @@ if you don't export anything, such as for a purely object-oriented module.
 			$HumanReadableTime 		= "$HumanReadableTime" ; 
 
 		my $msgPrefix = () ; 
-		$msgPrefix = "$msgType $HumanReadableTime [$PID] [$caller_pckg:$line] $LogTimeToTextSeparator"; 
+		$msgPrefix = "$msgType $HumanReadableTime [$PID] [" . sprintf("%23s", "$caller_pckg:$line ] " ) . "$LogTimeToTextSeparator"; 
 
 		if (  $msgType eq '[WARN ]'
 			|| $msgType eq '[INFO ]'
@@ -445,7 +445,7 @@ if you don't export anything, such as for a purely object-oriented module.
 
 		return $msg;
 	}
-	# eof sub BuildMsg
+	# eof sub doBuildMsg
 
 
 	#
@@ -476,7 +476,7 @@ if you don't export anything, such as for a purely object-oriented module.
 		my $msgType = shift || "" ; 
 		my $msg     = shift || 'null msg passed' ; 
       
-      $msg = $self->BuildMsg( $msgType, $msg);
+      $msg = $self->doBuildMsg( $msgType, $msg);
 		
 
 		#print to STDOUT and STDERR only if cnfigured to print to console

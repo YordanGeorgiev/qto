@@ -98,7 +98,7 @@ package IssueTracker::App::Utils::Timer ;
 
 	#
 	# -----------------------------------------------------------------------------
-	# return the current time in the YYYY.MM.DD - dd:hh:ss format
+	# return the current time in the YYYY-MM-DD - dd:hh:ss format
 	# -----------------------------------------------------------------------------
 	sub GetHumanReadableTime {
 
@@ -192,7 +192,7 @@ package IssueTracker::App::Utils::Timer ;
 
 	#
 	# -----------------------------------------------------------------------------
-	# return the current time in the YYYY.MM.DD - dd:hh:ss format
+	# return the current time in the YYYY-MM-DD - dd:hh:ss format
 	# -----------------------------------------------------------------------------
 	sub GetANiceTime {
 

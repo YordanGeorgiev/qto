@@ -269,19 +269,19 @@ package IssueTracker::App::ETL::Txt::TxtParserYearly ;
       my $str_issues = q{} ; 
       my $run_date   = q{} ;  
       p ( $hsr2 ) if $module_trace == 1 ; 
-      my $str_header = '# START Yearly %run_date%
+      my $str_header = '# START DAILY %run_date%
    
-## what will I do till the next Yearly:
+## what will I do till the next daily:
 #---------------------------
 #' ; 
 #
-      my $str_middler = '## what did I do since last Yearly:
+      my $str_middler = '## what did I do since last daily:
 ---------------------------
 ' ; 
 
       my $str_footer = '
 
-# STOP  Yearly @%run_date%
+# STOP  DAILY @%run_date%
 ' ; 
 
 
@@ -303,11 +303,19 @@ package IssueTracker::App::ETL::Txt::TxtParserYearly ;
          my $stop_time     = $row->{ 'stop_time'} ; 
          my $status        = $row->{ 'status'} ; 
          $status           = $inverse_hsrStatus{ $status } ; 
+         $status           = 'unknwn' unless $status ; 
          $description      =~ s/\r\n/\n/gm ; 
          $str_issues       .= "\n" if ( $prev_category ne $category ) ; 
          $str_issues       .= $category . "\n" unless ( $prev_category eq $category ) ; 
-         $str_issues       .= '- ' ; 
-         $str_issues       .= $status . "\t\t" ; 
+         my $levels_dash   = '' ; 
+         for ( my $i = 1 ; $i<$level ; $i++ ) {
+            $str_issues    .= ' ' ;
+            $levels_dash   .= '-' ; 
+         }
+         $str_issues       .= $levels_dash . ' ' ; 
+         $str_issues       .= $status . "\t\t" if $level == 2 ; 
+         $str_issues       .= $status . "\t" if $level == 3 ; 
+         $str_issues       .= $status . " " if $level == 4 ; 
          $str_issues       .= ( $start_time . " " ) if ( $start_time ne 'NULL' ) ; 
          $str_issues       .= ( '- ' . $stop_time . " " ) if ( $stop_time ne 'NULL' ) ; 
          $str_issues       .= $name . "\n" ; 
@@ -322,6 +330,7 @@ package IssueTracker::App::ETL::Txt::TxtParserYearly ;
 
       return ( $ret , $msg , $str_issues ) ;
    }
+
    # eof sub doConvertHashRefToStr
 
 

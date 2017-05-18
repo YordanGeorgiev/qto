@@ -1,4 +1,4 @@
-# doc/txt/issue-tracker/%act%/%act%.%deliverable_type%.txt
+# doc/txt/issue-tracker/%deliverable_type%/%act%.%deliverable_type%.txt
 
 	%full_func%
 	
@@ -33,5 +33,4 @@
 	-- todo: what are the known caveats of the %full_func% functions
 
 
-
-# eof file: doc/txt/issue-tracker/%act%/%act%.%deliverable_type%.txt
+# eof file: doc/txt/issue-tracker/%deliverable_type%/%act%.%deliverable_type%.txt

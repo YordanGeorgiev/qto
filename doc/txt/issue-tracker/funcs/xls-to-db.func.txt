@@ -4,33 +4,27 @@
 	
 	# Purpose:
 	# ------------------------------------------------------
-	-- todo: what is the purpose of the doXlsToDb function
+	to insert the data from a passed xls file sheeto the postgre db
 
 	# Prequisites
 	# ------------------------------------------------------
-	-- todo: what are the prerequisites of the doXlsToDb function
+	- the postgre db - with setup
+   - the xls file
 
-	# Installation
-	# ------------------------------------------------------
-	-- todo: what are the required installations for the  
-		doXlsToDb function to execute without errors
 
 	# Interdependancies
 	# ------------------------------------------------------
-	-- todo: what are the interdependancies for the  
-		doXlsToDb function to execute without errors
+	- the postgre db - with setup
+   - the xls file
 
 	# Usage:
 	# ------------------------------------------------------
-	-- todo: how can be the doXlsToDb used 
+	bash $0 -a xls-to-db
 
-	# Developent
-	# ------------------------------------------------------
-	-- todo: what issues, todos could be pointed for development
 
 	# Caveats:
 	# ------------------------------------------------------
-	-- todo: what are the known caveats of the doXlsToDb functions
+	none: known so far
 
 
 

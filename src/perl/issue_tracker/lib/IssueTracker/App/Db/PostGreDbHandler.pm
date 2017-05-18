@@ -48,7 +48,7 @@ package IssueTracker::App::Db::PostGreDbHandler ;
       binmode(STDOUT, ':utf8');
       binmode(STDERR, ':utf8');
 
-      my $debug_msg        = 'START PostGreDbHandler::doInsertSqlHashData' ; 
+      my $debug_msg        = 'START doInsertSqlHashData' ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
 	  
       $str_sql_insert .= ' TRUNCATE TABLE issue ; ' ; 
@@ -123,7 +123,7 @@ package IssueTracker::App::Db::PostGreDbHandler ;
       return ( $ret , $msg ) ;
 
       # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      $debug_msg        = 'STOP PostGreDbHandler::doInsertSqlHashData ret ' . $ret ; 
+      $debug_msg        = 'STOP  doInsertSqlHashData ret ' . $ret ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
       return ( $ret , $msg ) ; 	
