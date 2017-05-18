@@ -25,6 +25,12 @@ src/perl/issue_tracker/t/TestCtrlFileToDb.pm
 src/perl/issue_tracker/t/TestInitiator.pm
 src/perl/issue_tracker/t/TestLogger.pl
 src/perl/issue_tracker/lib/IssueTracker
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderTxtDaily.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderXlsDaily.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WriterTxtDaily.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WriterXlsDaily.pm
 src/perl/issue_tracker/lib/IssueTracker/App/ETL/Txt
 src/perl/issue_tracker/lib/IssueTracker/App/ETL/Txt/TxtParserDaily.pm
 src/perl/issue_tracker/lib/IssueTracker/App/ETL/Txt/TxtParserWeekly.pm
