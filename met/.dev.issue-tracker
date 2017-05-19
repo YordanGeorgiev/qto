@@ -32,6 +32,9 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/Out
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WriterTxtDaily.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WriterXlsDaily.pm
 src/perl/issue_tracker/lib/IssueTracker/App/ETL/Txt
+src/perl/issue_tracker/lib/IssueTracker/App/RAM
+src/perl/issue_tracker/lib/IssueTracker/App/RAM/ConverterTxtToHsr2.pm
+src/perl/issue_tracker/lib/IssueTracker/App/RAM/ConverterHsr2ToTxt.pm
 src/perl/issue_tracker/lib/IssueTracker/App/ETL/Txt/TxtParserDaily.pm
 src/perl/issue_tracker/lib/IssueTracker/App/ETL/Txt/TxtParserWeekly.pm
 src/perl/issue_tracker/lib/IssueTracker/App/ETL/Txt/TxtParserMonthly.pm
@@ -40,6 +43,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/ETL/Txt/TxtParserFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App
 src/perl/issue_tracker/lib/IssueTracker/App/Data/
 src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelHandler.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlFileToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToFile.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils

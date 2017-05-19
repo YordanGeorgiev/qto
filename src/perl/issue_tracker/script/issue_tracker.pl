@@ -59,12 +59,11 @@ END { close STDOUT }
 use IssueTracker::App::Utils::Initiator ; 
 use IssueTracker::App::Utils::Configurator ; 
 use IssueTracker::App::Utils::Logger ; 
-use IssueTracker::App::Ctrl::CtrlFileToDb ; 
-use IssueTracker::App::Ctrl::CtrlDbToFile ; 
 use IssueTracker::App::Utils::IO::FileHandler ; 
 use IssueTracker::App::Db::DbHandlerFactory ; 
 use IssueTracker::App::Db::PostGreDbHandler ; 
 use IssueTracker::App::Utils::Timer ; 
+use IssueTracker::App::Ctrl::Dispatcher ; 
 
 # give a full stack dump on any untrapped exceptions
 local $SIG{__DIE__} = sub {
@@ -110,65 +109,10 @@ my $period                       = q{} ;
       ( $ret , $msg ) = doInitialize();	
       doExit ( $ret , $msg ) unless ( $ret == 0 ) ; 
 
-      my @actions = split /,/ , $actions ; 
-     
-      foreach my $action ( @actions ) { 
-         $action = 'undefined action ' unless $action ; 
-         $msg = "START RUN the $action action " ; 
-         $objLogger->doLogInfoMsg ( $msg ) ; 
-
-         if ( $action eq 'txt-to-db' ) {
-
-            $msg = 'issue_tracker.pl :: issues_file to parse : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
-            
-
-            unless ( -f $issues_file ) {
-               $msg = "the issues_file: $issues_file does not exist !!!. Nothing to do !!!" ; 
-               $objLogger->doLogFatalMsg ( $msg ) ;
-               doExit ( $ret , $msg ) ; 
-               
-            }
-            my $objCtrlFileToDb = 
-               'IssueTracker::App::Ctrl::CtrlFileToDb'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlFileToDb->doLoadTxtIssuesFileToDb ( $issues_file ) ; 
-         } 
-         elsif ( $action eq 'db-to-xls' ) {
-            $msg = 'issues_file to parse : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
-
-            my $objCtrlDbToFile = 
-               'IssueTracker::App::Ctrl::CtrlDbToFile'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToFile->doLoadDbIssuesToXls ( $issues_file ) ; 
-         } 
-         elsif ( $action eq 'xls-to-db' ) {
-            $msg = 'issues_file to pproduce : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
-
-            my $objCtrlFileToDb = 
-               'IssueTracker::App::Ctrl::CtrlFileToDb'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlFileToDb->doLoadXlsIssuesFileToDb ( $issues_file ) ; 
-         } 
-         elsif ( $action eq 'db-to-txt' ) {
-            $msg = 'issues_file to produce : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
-
-            my $objCtrlDbToFile = 
-               'IssueTracker::App::Ctrl::CtrlDbToFile'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToFile->doLoadDbToTxtFile ( $issues_file ) ; 
-         } 
-         else {
-            $msg = "unknown $action action !!!" ; 
-            $objLogger->doLogErrorMsg ( $msg ) ; 
-         }
-         
-         $msg = "STOP  RUN the $action action " ; 
-         $objLogger->doLogInfoMsg ( $msg ) ; 
-
-      } 
-      #eof foreach action 
+      my $objDispatcher = 
+         'IssueTracker::App::Ctrl::Dispatcher'->new ( \$appConfig ) ; 
+      ( $ret , $msg ) = $objDispatcher->doRun ( $actions , $issues_file) ; 
    
-      $msg = "OK for all action runs" ; 
       doExit ( $ret , $msg ) ; 
 
    }

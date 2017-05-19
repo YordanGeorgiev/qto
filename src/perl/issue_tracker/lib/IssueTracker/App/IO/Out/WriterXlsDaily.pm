@@ -1,4 +1,4 @@
-package IssueTracker::App::IO::In::WriterXlsDaily ; 
+package IssueTracker::App::IO::Out::WriterXlsDaily ; 
 
    use strict ; use warnings ; use utf8 ; 
 
