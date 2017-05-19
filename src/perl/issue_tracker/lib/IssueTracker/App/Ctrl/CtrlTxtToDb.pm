@@ -1,4 +1,4 @@
-package IssueTracker::App::Ctrl::Dispatcher ; 
+package IssueTracker::App::Ctrl::CtrlTxtToDb ; 
 
 	use strict; use warnings; use utf8 ; 
 
@@ -12,9 +12,8 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    use Data::Printer ; 
 
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Ctrl::CtrlFileToDb ; 
-   use IssueTracker::App::Ctrl::CtrlTxtToDb ; 
-   use IssueTracker::App::Ctrl::CtrlDbToFile ; 
+   use IssueTracker::App::Db::DbHandlerFactory ; 
+   use IssueTracker::App::IO::In::TxtReaderFactory ; 
 	
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
@@ -34,9 +33,9 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
 
 =head1 SYNOPSIS
-      my $objDispatcher = 
-         'IssueTracker::App::Ctrl::Dispatcher'->new ( \$appConfig ) ; 
-      ( $ret , $msg ) = $objDispatcher->doRun ( $actions , $issues_file) ; 
+      my $objCtrlTxtToDb = 
+         'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig ) ; 
+      ( $ret , $msg ) = $objCtrlTxtToDb->doLoadIssuesFileToDb ( $issues_file ) ; 
 =cut 
 
 =head1 EXPORT
@@ -52,86 +51,38 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 =cut
 
 
+   # 
+	# -----------------------------------------------------------------------------
+   # read the passed issue file , convert it to hash ref of hash refs 
+   # and insert the hsr into a db
+	# -----------------------------------------------------------------------------
+   sub doLoad {
 
-   sub doRun {
+      my $self                = shift ; 
+      my $issues_file         = shift ; 	
 
-      my $self          = shift ; 
-      my $actions       = shift ; 
-      my $issues_file   = shift ; 
+      my $period              = $ENV{ 'period' } || 'daily' ;  
+      my $objTxtReaderFactory = 'IssueTracker::App::IO::In::TxtReaderFactory'->new( \$appConfig , $self ) ; 
+      my $objReaderTxt 			= $objTxtReaderFactory->doInstantiate ( "$period" );
 
-      my @actions = split /,/ , $actions ; 
-      my $msg = 'error in Dispatcher' ; 
-      my $ret = 1 ; 
+      my ( $ret , $msg , $str_issues_file ) 
+                              = $objReaderTxt->doReadIssueFile ( $issues_file ) ; 
+      return ( $ret , $msg ) if $ret != 0 ;  
 
-     
-      foreach my $action ( @actions ) { 
-         $action = 'undefined action ' unless $action ; 
-         $msg = "START RUN the $action action " ; 
-         $objLogger->doLogInfoMsg ( $msg ) ; 
 
-         if ( $action eq 'txt-to-db' ) {
+      my $hsr = {} ;          # a hash ref of hash refs 	
+      ( $ret , $msg , $hsr ) 
+                              = $objReaderTxt->doConvertStrToHashRef ( $str_issues_file ) ; 
+      return ( $ret , $msg ) if $ret != 0 ;  
 
-            $msg = 'issue_tracker.pl :: issues_file to parse : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
-            
 
-            unless ( -f $issues_file ) {
-               $msg = "the issues_file: $issues_file does not exist !!!. Nothing to do !!!" ; 
-               $objLogger->doLogFatalMsg ( $msg ) ;
-               doExit ( $ret , $msg ) ; 
-            }
-
-            my $objCtrlTxtToDb = 
-               'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlTxtToDb->doLoad ( $issues_file ) ; 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         } 
-         elsif ( $action eq 'db-to-xls' ) {
-            $msg = 'issues_file to parse : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
-
-            my $objCtrlDbToFile = 
-               'IssueTracker::App::Ctrl::CtrlDbToFile'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToFile->doLoadDbIssuesToXls ( $issues_file ) ; 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         } 
-         elsif ( $action eq 'xls-to-db' ) {
-            $msg = 'issues_file to pproduce : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
-
-            my $objCtrlFileToDb = 
-               'IssueTracker::App::Ctrl::CtrlFileToDb'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlFileToDb->doLoadXlsIssuesFileToDb ( $issues_file ) ; 
-            return ( $ret , $msg ) ; 
-         } 
-         elsif ( $action eq 'db-to-txt' ) {
-            $msg = 'issues_file to produce : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
-
-            my $objCtrlDbToFile = 
-               'IssueTracker::App::Ctrl::CtrlDbToFile'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToFile->doLoadDbToTxtFile ( $issues_file ) ; 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         } 
-         else {
-            $msg = "unknown $action action !!!" ; 
-            $objLogger->doLogErrorMsg ( $msg ) ; 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         }
-         
-         $msg = "STOP  RUN the $action action " ; 
-         $objLogger->doLogInfoMsg ( $msg ) ; 
-
-      } 
-      #eof foreach action 
-
-      $msg = "OK for all action runs" ; 
-      $ret = 0 ; 
+      p($hsr) if $module_trace == 1 ; 
+      my $objDbHandlerFactory = 'IssueTracker::App::Db::DbHandlerFactory'->new( \$appConfig , $self ) ; 
+      my $objDbHandler 			= $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
+      ( $ret , $msg )         = $objDbHandler->doInsertSqlHashData ( $hsr ) ; 
       return ( $ret , $msg ) ; 
-   }
-   # eof sub doRun
+   } 
 
-	
 
 =head1 WIP
 

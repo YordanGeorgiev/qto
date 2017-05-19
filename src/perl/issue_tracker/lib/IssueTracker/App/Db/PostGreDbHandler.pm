@@ -34,7 +34,10 @@ package IssueTracker::App::Db::PostGreDbHandler ;
 
 		my $self 				= shift ; 
 		my $sql_hash 			= shift ; 	
-      
+   
+
+      p ( $sql_hash ) if $module_trace == 1  ;
+      $objLogger->doLogDebugMsg ( "STOP print sql_hash " ) ;    
       my $ret              = 1 ; 
       my $msg              = 'unknown error while sql insert ' ; 		
       my $str_sql_insert   = q{} ; 
@@ -55,6 +58,10 @@ package IssueTracker::App::Db::PostGreDbHandler ;
  
 		foreach my $key ( sort(keys( %{$sql_hash} ) ) ) {
          my $row_hash = $sql_hash->{ $key } ; 
+         
+         p ( $row_hash ) if $module_trace > 1 ; 
+         my $debug_msg        = 'STOP print row_hash ' ; 
+         $objLogger->doLogDebugMsg ( $debug_msg ) ; 
 
 		   foreach my $key ( sort(keys( %{$row_hash} ) ) ) {
             $str_col_list .= ' , ' . $key ; 
