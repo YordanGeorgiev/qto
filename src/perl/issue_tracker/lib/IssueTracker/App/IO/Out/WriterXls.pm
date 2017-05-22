@@ -1,4 +1,4 @@
-package IssueTracker::App::IO::Out::WriterXlsDaily ; 
+package IssueTracker::App::IO::Out::WriterXls ; 
 
    use strict ; use warnings ; use utf8 ; 
 
@@ -23,7 +23,7 @@ package IssueTracker::App::IO::Out::WriterXlsDaily ;
 
    #
    # ------------------------------------------------------
-   # WriterXlsDaily
+   # WriterXls
    # builds and xls file into the xls dir 
    # from the passed hash ref of hashs refs by using the calling
    # sql script as a source for the xls file path to produce
@@ -44,7 +44,7 @@ package IssueTracker::App::IO::Out::WriterXlsDaily ;
 
 
       my $issues_file      = $appConfig->{ 'issues_file' } ; 
-      $msg = "WriterXlsDaily issues_file: \n $issues_file " ; 
+      $msg = "WriterXls issues_file: \n $issues_file " ; 
       $objLogger->doLogDebugMsg ( $msg ) ; 
 
       my $xls_file_name    = $issues_file ; 
@@ -179,7 +179,7 @@ package IssueTracker::App::IO::Out::WriterXlsDaily ;
            appConfig => $appConfig
        );
 
-      #debug print "WriterXlsDaily::doInitialize appConfig : " . p($appConfig );
+      #debug print "WriterXls::doInitialize appConfig : " . p($appConfig );
       $ProductInstanceDir   = $appConfig->{ 'ProductInstanceDir' } ; 
 
 	   $objFileHandler   = 'IssueTracker::App::Utils::IO::FileHandler'->new ( \$appConfig ) ; 

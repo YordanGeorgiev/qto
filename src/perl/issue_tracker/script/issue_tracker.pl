@@ -92,6 +92,7 @@ my $objFileHandler               = {} ;
 my $objConfigurator              = {} ; 
 my $actions                      = q{} ; 
 my $xls_dir                      = q{} ; 
+my $xls_file                     = q{} ; 
 my $issue_tracker_project        = q{} ; 
 my $period                       = q{} ;  
 
@@ -111,7 +112,7 @@ my $period                       = q{} ;
 
       my $objDispatcher = 
          'IssueTracker::App::Ctrl::Dispatcher'->new ( \$appConfig ) ; 
-      ( $ret , $msg ) = $objDispatcher->doRun ( $actions , $issues_file) ; 
+      ( $ret , $msg ) = $objDispatcher->doRun ( $actions , $issues_file , $xls_file) ; 
    
       doExit ( $ret , $msg ) ; 
 
@@ -138,6 +139,7 @@ my $period                       = q{} ;
            'issues_file=s' => \$issues_file
          , 'do=s'          => \$actions
          , 'xls_dir=s'     => \$xls_dir
+         , 'xls-file=s'     => \$xls_file
          , 'period=s'      => \$period
       );
       

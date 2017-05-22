@@ -1,4 +1,4 @@
-package IssueTracker::App::Ctrl::Dispatcher ; 
+package IssueTracker::App::Ctrl::CtrlXlsToDb ; 
 
 	use strict; use warnings; use utf8 ; 
 
@@ -12,13 +12,10 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    use Data::Printer ; 
 
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Ctrl::CtrlFileToDb ; 
-   use IssueTracker::App::Ctrl::CtrlDbToFile ; 
-
-   use IssueTracker::App::Ctrl::CtrlTxtToDb ; 
-   use IssueTracker::App::Ctrl::CtrlDbToXls ; 
-   use IssueTracker::App::Ctrl::CtrlXlsToDb ; 	
-
+   use IssueTracker::App::Db::DbHandlerFactory ; 
+   use IssueTracker::App::ETL::Txt::TxtParserFactory ; 
+   use IssueTracker::App::IO::In::ReaderXls ; 
+	
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
 	our $RunDir 						   = '' ; 
@@ -37,9 +34,9 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
 
 =head1 SYNOPSIS
-      my $objDispatcher = 
-         'IssueTracker::App::Ctrl::Dispatcher'->new ( \$appConfig ) ; 
-      ( $ret , $msg ) = $objDispatcher->doRun ( $actions , $issues_file) ; 
+      my $objCtrlXlsToDb = 
+         'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig ) ; 
+      ( $ret , $msg ) = $objCtrlXlsToDb->doLoadIssuesFileToDb ( $issues_file ) ; 
 =cut 
 
 =head1 EXPORT
@@ -56,82 +53,39 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
 
 
-   sub doRun {
 
-      my $self          = shift ; 
-      my $actions       = shift ; 
-      my $issues_file   = shift ; 
-      my $xls_file      = shift ; 
+   # 
+	# -----------------------------------------------------------------------------
+   # read the passed issue file , convert it to hash ref of hash refs 
+   # and insert the hsr into a db
+	# -----------------------------------------------------------------------------
+   sub doReadAndLoad {
+      my $self             = shift ; 
+      my $xls_file         = shift ; 
+      my $tables_list      = shift ; 
 
-      my @actions = split /,/ , $actions ; 
-      my $msg = 'error in Dispatcher' ; 
-      my $ret = 1 ; 
+      my $ret              = 1 ; 
+      my $msg              = 'file read' ; 
+      my $hsr2             = {} ; 
 
-     
-      foreach my $action ( @actions ) { 
-         $action = 'undefined action ' unless $action ; 
-         $msg = "START RUN the $action action " ; 
-         $objLogger->doLogInfoMsg ( $msg ) ; 
+      my $objReaderXls     = 'IssueTracker::App::IO::In::ReaderXls'->new ( \$appConfig ) ; 
+      
+      # read the xls into hash ref of hash ref
+      ( $ret , $msg , $hsr2 ) = 
+            $objReaderXls->doReadXlsFileToHsr2 ( $xls_file ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
 
-         if ( $action eq 'txt-to-db' ) {
 
-            $msg = 'issues_file to parse : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
-            
+      $msg                 = 'unknown error while inserting db tables !!!' ; 
+      my $rdbms_type          = $appConfig->{ 'rdbms_type' } || 'postgre' ; 
 
-            unless ( -f $issues_file ) {
-               $msg = "the issues_file: $issues_file does not exist !!!. Nothing to do !!!" ; 
-               $objLogger->doLogFatalMsg ( $msg ) ;
-               doExit ( $ret , $msg ) ; 
-            }
+      my $objDbHandlerFactory = 'IssueTracker::App::Db::DbHandlerFactory'->new( \$appConfig  ) ; 
+      my $objDbHandler 		   = $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
+      p($hsr2) if $module_trace == 1 ; 
 
-            my $objCtrlTxtToDb = 
-               'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlTxtToDb->doLoad ( $issues_file ) ; 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         } 
-         elsif ( $action eq 'db-to-xls' ) {
-
-            my $objCtrlDbToXls = 
-               'IssueTracker::App::Ctrl::CtrlDbToXls'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToXls->doLoad ( ); 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         } 
-         elsif ( $action eq 'xls-to-db' ) {
-            $msg = 'issues_file to pproduce : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
-
-            my $objCtrlXlsToDb = 
-               'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlXlsToDb->doReadAndLoad ( $xls_file ) ; 
-            return ( $ret , $msg ) ; 
-         } 
-         elsif ( $action eq 'db-to-txt' ) {
-            $msg = 'issues_file to produce : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
-
-            my $objCtrlDbToFile = 
-               'IssueTracker::App::Ctrl::CtrlDbToFile'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToFile->doLoadDbToTxtFile ( $issues_file ) ; 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         } 
-         else {
-            $msg = "unknown $action action !!!" ; 
-            $objLogger->doLogErrorMsg ( $msg ) ; 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         }
-         
-         $msg = "STOP  RUN the $action action " ; 
-         $objLogger->doLogInfoMsg ( $msg ) ; 
-
-      } 
-      #eof foreach action 
-
-      $msg = "OK for all action runs" ; 
-      $ret = 0 ; 
+      ( $ret , $msg  )        = $objDbHandler->doInsertDbTablesWithHsr2( $hsr2 ) ; 
       return ( $ret , $msg ) ; 
-   }
-   # eof sub doRun
+   } 
 
 	
 

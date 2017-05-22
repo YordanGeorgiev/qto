@@ -31,10 +31,11 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderTxtMonthly.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderTxtWeekly.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderTxtYearly.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderXlsDaily.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/TxtReaderFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WriterTxtDaily.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WriterXlsDaily.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WriterXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/ETL/Txt
 src/perl/issue_tracker/lib/IssueTracker/App/RAM
 src/perl/issue_tracker/lib/IssueTracker/App/RAM/ConverterTxtToHsr2.pm
@@ -49,6 +50,8 @@ src/perl/issue_tracker/lib/IssueTracker/App/Data/
 src/perl/issue_tracker/lib/IssueTracker/App/Data/ExcelHandler.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlFileToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToFile.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
@@ -433,7 +436,7 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/ETL/Txt/TxtParserYearly/autospl
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/ReaderTxtDaily/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/ReaderXlsDaily/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WriterTxtDaily/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WriterXlsDaily/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WriterXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/ConverterHsr2ToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/ConverterTxtToHsr2/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Configurator/autosplit.ix

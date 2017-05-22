@@ -21,9 +21,9 @@ doXlsToDb(){
    # bash /opt/csitea/src/bash/xls-to-rdbms.sh -a run-xls-to-rdbms
    # bash /opt/csitea/xls-to-rdbms/xls-to-rdbms.0.0.4.dev.ysg/src/bash/xls-to-rdbms/xls-to-rdbms.sh \
    #   -a run-xls-to-rdbms 
+   perl src/perl/issue_tracker/script/issue_tracker.pl \
+      --do xls-to-db --xls-file $xls_file
 
-   perl /opt/csitea/xls-to-rdbms/xls-to-rdbms.0.0.4.dev.ysg/src/perl/xls_to_rdbms/script/xls_to_rdbms.pl \
-      --do xls-to-db --xls-file $xls_file --db_name $db_name
    exit_code=$?
    doLog "INFO doRunIssueTracker exit_code $exit_code"
    test $exit_code -ne 0 && doExit $exit_code "failed to run issue_tracker.pl"  

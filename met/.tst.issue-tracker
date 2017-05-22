@@ -30,7 +30,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderTxtDaily.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderXlsDaily.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WriterTxtDaily.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WriterXlsDaily.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WriterXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/ETL/Txt
 src/perl/issue_tracker/lib/IssueTracker/App/RAM
 src/perl/issue_tracker/lib/IssueTracker/App/RAM/ConverterTxtToHsr2.pm
