@@ -12,12 +12,11 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    use Data::Printer ; 
 
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Ctrl::CtrlFileToDb ; 
-   use IssueTracker::App::Ctrl::CtrlDbToFile ; 
 
    use IssueTracker::App::Ctrl::CtrlTxtToDb ; 
    use IssueTracker::App::Ctrl::CtrlDbToXls ; 
    use IssueTracker::App::Ctrl::CtrlXlsToDb ; 	
+   use IssueTracker::App::Ctrl::CtrlDbToTxt ; 
 
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
@@ -110,9 +109,9 @@ package IssueTracker::App::Ctrl::Dispatcher ;
             $msg = 'issues_file to produce : ' . "\n" . $issues_file ; 
             $objLogger->doLogInfoMsg ( "$msg" ) ; 
 
-            my $objCtrlDbToFile = 
-               'IssueTracker::App::Ctrl::CtrlDbToFile'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToFile->doLoadDbToTxtFile ( $issues_file ) ; 
+            my $objCtrlDbToTxt = 
+               'IssueTracker::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig ) ; 
+            ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndLoad ( $issues_file ) ; 
             return ( $ret , $msg ) unless $ret == 0 ; 
          } 
          else {

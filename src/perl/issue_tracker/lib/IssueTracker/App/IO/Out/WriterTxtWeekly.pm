@@ -1,4 +1,4 @@
-package IssueTracker::App::ETL::Txt::TxtParserDaily ; 
+package IssueTracker::App::IO::Out::WriterTxtWeekly ; 
 
 	use strict; use warnings;
    use utf8 ; 
@@ -60,7 +60,7 @@ package IssueTracker::App::ETL::Txt::TxtParserDaily ;
 
 	#
 	# --------------------------------------------------------
-	# read the issues file for the Daily period
+	# read the issues file for the Weekly period
 	# --------------------------------------------------------
 	sub doReadIssueFile {
 
@@ -118,11 +118,11 @@ package IssueTracker::App::ETL::Txt::TxtParserDaily ;
       my $prev_stop_time   = q{} ; 
 
       if ( $str ) {      
-         $msg = 'START TxtParserDaily::doConvertStrToHashRef' ; 
+         $msg = 'START WriterTxtWeekly::doConvertStrToHashRef' ; 
          $objLogger->doLogInfoMsg ( $msg ) ;  
 
          foreach my $category_item ( @arr_category_items ) {
-            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(Daily)|(WEEKLY)|(Daily)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
+            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(Weekly)|(WEEKLY)|(Weekly)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
 
 
             my $debug_msg = "category_item: $category_item " ; 
@@ -252,7 +252,7 @@ package IssueTracker::App::ETL::Txt::TxtParserDaily ;
       
       }
       
-      $msg = 'STOP  TxtParserDaily::doConvertStrToHashRef' ; 
+      $msg = 'STOP  WriterTxtWeekly::doConvertStrToHashRef' ; 
       $objLogger->doLogInfoMsg ( $msg ) ;  
 
       return ( $ret , $msg , $hsr ) ; 
@@ -269,19 +269,19 @@ package IssueTracker::App::ETL::Txt::TxtParserDaily ;
       my $str_issues = q{} ; 
       my $run_date   = q{} ;  
       p ( $hsr2 ) if $module_trace == 1 ; 
-      my $str_header = '# START DAILY %run_date%
+      my $str_header = '# START Weekly %run_date%
    
-## what will I do till the next daily:
+## what will I do till the next Weekly:
 #---------------------------
 #' ; 
 #
-      my $str_middler = '## what did I do since last daily:
+      my $str_middler = '## what did I do since last Weekly:
 ---------------------------
 ' ; 
 
       my $str_footer = '
 
-# STOP  DAILY @%run_date%
+# STOP  Weekly @%run_date%
 ' ; 
 
 

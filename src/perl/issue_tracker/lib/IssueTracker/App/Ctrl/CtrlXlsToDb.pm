@@ -13,7 +13,6 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::DbHandlerFactory ; 
-   use IssueTracker::App::ETL::Txt::TxtParserFactory ; 
    use IssueTracker::App::IO::In::ReaderXls ; 
 	
 	our $module_trace                = 0 ; 

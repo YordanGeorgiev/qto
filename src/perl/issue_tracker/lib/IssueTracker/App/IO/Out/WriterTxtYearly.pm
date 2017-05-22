@@ -1,4 +1,4 @@
-package IssueTracker::App::ETL::Txt::TxtParserYearly ; 
+package IssueTracker::App::IO::Out::WriterTxtYearly ; 
 
 	use strict; use warnings;
    use utf8 ; 
@@ -118,11 +118,11 @@ package IssueTracker::App::ETL::Txt::TxtParserYearly ;
       my $prev_stop_time   = q{} ; 
 
       if ( $str ) {      
-         $msg = 'START TxtParserYearly::doConvertStrToHashRef' ; 
+         $msg = 'START WriterTxtYearly::doConvertStrToHashRef' ; 
          $objLogger->doLogInfoMsg ( $msg ) ;  
 
          foreach my $category_item ( @arr_category_items ) {
-            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(Yearly)|(WEEKLY)|(MONTHLY)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
+            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(Yearly)|(WEEKLY)|(Yearly)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
 
 
             my $debug_msg = "category_item: $category_item " ; 
@@ -252,7 +252,7 @@ package IssueTracker::App::ETL::Txt::TxtParserYearly ;
       
       }
       
-      $msg = 'STOP  TxtParserYearly::doConvertStrToHashRef' ; 
+      $msg = 'STOP  WriterTxtYearly::doConvertStrToHashRef' ; 
       $objLogger->doLogInfoMsg ( $msg ) ;  
 
       return ( $ret , $msg , $hsr ) ; 
@@ -269,19 +269,19 @@ package IssueTracker::App::ETL::Txt::TxtParserYearly ;
       my $str_issues = q{} ; 
       my $run_date   = q{} ;  
       p ( $hsr2 ) if $module_trace == 1 ; 
-      my $str_header = '# START DAILY %run_date%
+      my $str_header = '# START Yearly %run_date%
    
-## what will I do till the next daily:
+## what will I do till the next Yearly:
 #---------------------------
 #' ; 
 #
-      my $str_middler = '## what did I do since last daily:
+      my $str_middler = '## what did I do since last Yearly:
 ---------------------------
 ' ; 
 
       my $str_footer = '
 
-# STOP  DAILY @%run_date%
+# STOP  Yearly @%run_date%
 ' ; 
 
 
@@ -330,7 +330,6 @@ package IssueTracker::App::ETL::Txt::TxtParserYearly ;
 
       return ( $ret , $msg , $str_issues ) ;
    }
-
    # eof sub doConvertHashRefToStr
 
 
@@ -400,6 +399,7 @@ package IssueTracker::App::ETL::Txt::TxtParserYearly ;
          , 'test'    => '05-test'      # to test some implementation
          , 'tst'     => '05-tst'       # to test some implementation
          , 'hld'     => '06-onhold'    # the issue is on hold - 
+         , 'hold'    => '06-onhold'    # the issue is on hold - 
          , 'part'    => '06-part'      # the issue has been partly completed - might have more work
          , 'flow'    => '06-flow'      # follow an event or action to occur
          , 'qas'     => '07-qas'       # the issue is in quality assurance mode

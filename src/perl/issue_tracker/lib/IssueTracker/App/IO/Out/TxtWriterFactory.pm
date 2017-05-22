@@ -1,8 +1,8 @@
-package IssueTracker::App::ETL::Txt::TxtParserFactory ; 
-	use strict; use warnings;
+package IssueTracker::App::IO::Out::TxtWriterFactory ; 
+
+   use strict; use warnings;
 	
 	use Data::Printer ; 
-	
 
 	our $appConfig 		= {} ; 
 	our $period			   = $ENV{'period'} || 'daily' ; 
@@ -10,16 +10,15 @@ package IssueTracker::App::ETL::Txt::TxtParserFactory ;
 	our $objController 	= {} ; 
    our $objLogger       = {} ; 
 
-	# use IssueTracker::App::Db::TxtParserWeekly  ; 
-   use IssueTracker::App::ETL::Txt::TxtParserDaily ; 
-   use IssueTracker::App::ETL::Txt::TxtParserWeekly ; 
-   use IssueTracker::App::ETL::Txt::TxtParserMonthly ; 
-   use IssueTracker::App::ETL::Txt::TxtParserYearly ; 
-
+	# use IssueTracker::App::Db::WriterTxtWeekly  ; 
+   use IssueTracker::App::IO::Out::WriterTxtDaily ;  
+   use IssueTracker::App::IO::Out::WriterTxtWeekly ;  
+   use IssueTracker::App::IO::Out::WriterTxtMonthly ;  
+   use IssueTracker::App::IO::Out::WriterTxtYearly ;  
 
 	#
 	# -----------------------------------------------------------------------------
-	# fabricates different TxtParser object 
+	# fabricates different WriterTxt object 
 	# -----------------------------------------------------------------------------
 	sub doInstantiate {
 
@@ -27,34 +26,34 @@ package IssueTracker::App::ETL::Txt::TxtParserFactory ;
 		my $period			= shift // $period ; # the default is mysql
 
 		my @args 			= ( @_ ) ; 
-		my $TxtParser 		= {}   ; 
+		my $WriterTxt 		= {}   ; 
 
 		# get the application cnfiguration hash
 		# global app cnfig hash
 
 		if ( $period eq 'daily' ) {
-			$TxtParser 				= 'TxtParserDaily' ; 
+			$WriterTxt 				= 'WriterTxtDaily' ; 
 		}
 		elsif ( $period eq 'weekly' ) {
-			$TxtParser 				= 'TxtParserWeekly' ; 
+			$WriterTxt 				= 'WriterTxtWeekly' ; 
 		}
 		elsif ( $period eq 'monthly' ) {
-			$TxtParser 				= 'TxtParserMonthly' ; 
+			$WriterTxt 				= 'WriterTxtMonthly' ; 
 		}
 		elsif ( $period eq 'yearly' ) {
-			$TxtParser 				= 'TxtParserYearly' ; 
+			$WriterTxt 				= 'WriterTxtYearly' ; 
 		}
 		else {
 			# future support for different RDBMS 's should be added here ...
-			$TxtParser 				= 'TxtParserDaily' ; 
+			$WriterTxt 				= 'WriterTxtDaily' ; 
 		}
 
-		my $package_file     	= "IssueTracker/App/ETL/Txt/$TxtParser.pm";
-		my $objTxtParser   		= "IssueTracker::App::ETL::Txt::$TxtParser";
+		my $package_file     	= "IssueTracker/App/IO/Out/$WriterTxt.pm";
+		my $objWriterTxt   		= "IssueTracker::App::IO::Out::$WriterTxt";
 
 		require $package_file;
 
-		return $objTxtParser->new( \$appConfig , $objController , @args);
+		return $objWriterTxt->new( \$appConfig , $objController , @args);
 
 	}
 	# eof sub doInstantiate

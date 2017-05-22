@@ -36,7 +36,7 @@ $| = 1;
 
 use IssueTracker::App::Utils::Initiator ; 
 use IssueTracker::App::Utils::Logger ; 
-use IssueTracker::App::Ctrl::CtrlFileToDb ; 
+use IssueTracker::App::Ctrl::CtrlTxtToDb ; 
 
 
 my $objInitiator 				= 'IssueTracker::App::Utils::Initiator'->new();	
@@ -68,16 +68,16 @@ my $issues_file            = $ProductInstanceDir . "/non/existent/file.txt" ;
 my $ret                    = 0 ; 
 my $msg                    = {} ; 
 
-my $objCtrlFileToDb = 
-   'IssueTracker::App::Ctrl::CtrlFileToDb'->new ( \$appConfig ) ; 
+my $objCtrlTxtToDb = 
+   'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig ) ; 
 
-isa_ok($objCtrlFileToDb, "IssueTracker::App::Ctrl::CtrlFileToDb");
+isa_ok($objCtrlTxtToDb, "IssueTracker::App::Ctrl::CtrlTxtToDb");
 $test_counter++ ; 
 
-can_ok($objCtrlFileToDb, $_) for qw(doLoadTxtIssuesFileToDb);
+can_ok($objCtrlTxtToDb, $_) for qw(doLoadTxtIssuesFileToDb);
 $test_counter++ ; 
 
-( $ret , $msg )            = $objCtrlFileToDb->doLoadTxtIssuesFileToDb ( $issues_file ) ; 
+( $ret , $msg )            = $objCtrlTxtToDb->doLoadTxtIssuesFileToDb ( $issues_file ) ; 
 ok ( $ret eq 1 )  ; 
 
 =debug

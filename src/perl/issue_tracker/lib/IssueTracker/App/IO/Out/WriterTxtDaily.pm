@@ -58,45 +58,6 @@ package IssueTracker::App::IO::Out::WriterTxtDaily ;
 =cut
 
 
-	#
-	# --------------------------------------------------------
-	# read the issues file for the Daily period
-	# --------------------------------------------------------
-	sub doReadIssueFile {
-
-      my $self       = shift ; 
-      my $issues_file = shift ; 
-
-      my $msg  = '' ; 
-      my $ret  = 1 ; 
-      my $str_issues_file = q{} ; 
-
-      $msg =  "START doReadIssueFile" ; 
-      $objLogger->doLogInfoMsg ( $msg ) ; 
-
-      unless ( -r $issues_file ) {
-         $msg = "the issues_file : $issues_file does not exist !!!" ; 
-         $objLogger->doLogFatalMsg ( $msg ) ; 
-      }
-      else {
-         # src: http://ahinea.com/en/tech/perl-unicode-struggle.html
-         ( $ret , $msg , $str_issues_file ) 
-            = $objFileHandler->doReadFileReturnString ( $issues_file , 'utf8' ) ; 
-         return ( $ret , $msg ) unless $ret == 0 ; 
-
-         $ret = 0 ; 
-         $msg = "read successfully issues_file : $issues_file" ; 
-         $objLogger->doLogDebugMsg ( $str_issues_file ) if ( $module_trace == 1 ) ; 
-      }
-      
-      $msg =  "STOP  doReadIssueFile with ret: $ret" ; 
-      $objLogger->doLogInfoMsg ( $msg ) ; 
-      return ( $ret , $msg , $str_issues_file ) ; 
-	}
-	# eof sub doConvertMdFileToBigSqlHash
-
-
-
    sub doConvertStrToHashRef {
 
       my $self       = shift ; 
@@ -118,7 +79,7 @@ package IssueTracker::App::IO::Out::WriterTxtDaily ;
       my $prev_stop_time   = q{} ; 
 
       if ( $str ) {      
-         $msg = 'START WriterTxtDaily::doConvertStrToHashRef' ; 
+         $msg = 'START TxtParserDaily::doConvertStrToHashRef' ; 
          $objLogger->doLogInfoMsg ( $msg ) ;  
 
          foreach my $category_item ( @arr_category_items ) {
@@ -252,7 +213,7 @@ package IssueTracker::App::IO::Out::WriterTxtDaily ;
       
       }
       
-      $msg = 'STOP  WriterTxtDaily::doConvertStrToHashRef' ; 
+      $msg = 'STOP  TxtParserDaily::doConvertStrToHashRef' ; 
       $objLogger->doLogInfoMsg ( $msg ) ;  
 
       return ( $ret , $msg , $hsr ) ; 

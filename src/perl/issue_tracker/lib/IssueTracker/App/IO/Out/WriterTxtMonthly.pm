@@ -1,4 +1,4 @@
-package IssueTracker::App::ETL::Txt::TxtParserMonthly ; 
+package IssueTracker::App::IO::Out::WriterTxtMonthly ; 
 
 	use strict; use warnings;
    use utf8 ; 
@@ -118,11 +118,11 @@ package IssueTracker::App::ETL::Txt::TxtParserMonthly ;
       my $prev_stop_time   = q{} ; 
 
       if ( $str ) {      
-         $msg = 'START TxtParserMonthly::doConvertStrToHashRef' ; 
+         $msg = 'START WriterTxtMonthly::doConvertStrToHashRef' ; 
          $objLogger->doLogInfoMsg ( $msg ) ;  
 
          foreach my $category_item ( @arr_category_items ) {
-            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(Monthly)|(WEEKLY)|(MONTHLY)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
+            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(Monthly)|(WEEKLY)|(Monthly)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
 
 
             my $debug_msg = "category_item: $category_item " ; 
@@ -164,7 +164,6 @@ package IssueTracker::App::ETL::Txt::TxtParserMonthly ;
                $item_levels->{ $category_item_count } = 1 
                   unless ( exists $item_levels->{ $category_item_count });
                $hsr->{ $i }->{ 'level' } = $item_levels->{ $category_item_count } + 1 ; 
-
 
                # $hsr->{ $i }->{ 'item' } = $item ; 
                $hsr->{ $i }->{ 'prio' } = $i ; 
@@ -253,7 +252,7 @@ package IssueTracker::App::ETL::Txt::TxtParserMonthly ;
       
       }
       
-      $msg = 'STOP  TxtParserMonthly::doConvertStrToHashRef' ; 
+      $msg = 'STOP  WriterTxtMonthly::doConvertStrToHashRef' ; 
       $objLogger->doLogInfoMsg ( $msg ) ;  
 
       return ( $ret , $msg , $hsr ) ; 
@@ -270,26 +269,25 @@ package IssueTracker::App::ETL::Txt::TxtParserMonthly ;
       my $str_issues = q{} ; 
       my $run_date   = q{} ;  
       p ( $hsr2 ) if $module_trace == 1 ; 
-      my $str_header = '# START monthly %run_date%
+      my $str_header = '# START Monthly %run_date%
    
-## what will I do till the next monthly:
+## what will I do till the next Monthly:
 #---------------------------
 #' ; 
 #
-      my $str_middler = '## what did I do since last monthly:
+      my $str_middler = '## what did I do since last Monthly:
 ---------------------------
 ' ; 
 
       my $str_footer = '
 
-# STOP  monthly @%run_date%
+# STOP  Monthly @%run_date%
 ' ; 
 
 
       $str_issues .= $str_header . "\n\n" ; 
       my $prev_category = q{} ; 
 
-      # foreach my $issue_id ( sort { $hsr2->{$a}->{ 'category' } eq $hsr2->{$b}->{ 'category' } } keys (%$hsr2))  {
       foreach my $issue_id ( sort { $hsr2->{$a}->{ 'prio' } <=> $hsr2->{$b}->{ 'prio' } } keys (%$hsr2))  {
          my $row = $hsr2->{ $issue_id } ; 
 
