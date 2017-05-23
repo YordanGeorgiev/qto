@@ -313,7 +313,6 @@ package IssueTracker::App::RAM::ConverterHsr2ToTxt ;
    } 
 
 	
-	
    #
 	# -----------------------------------------------------------------------------
 	# the constructor 

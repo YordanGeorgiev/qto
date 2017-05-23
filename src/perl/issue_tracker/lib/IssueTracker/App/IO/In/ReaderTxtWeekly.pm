@@ -93,7 +93,7 @@ package IssueTracker::App::IO::In::ReaderTxtWeekly ;
       $objLogger->doLogInfoMsg ( $msg ) ; 
       return ( $ret , $msg , $str_issues_file ) ; 
 	}
-	# eof sub doConvertMdFileToBigSqlHash
+	# eof sub doReadIssuesFile
 
 
 

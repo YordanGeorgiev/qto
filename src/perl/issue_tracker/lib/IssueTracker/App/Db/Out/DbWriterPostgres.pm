@@ -1,4 +1,4 @@
-package IssueTracker::App::Db::PostGreDbHandler ; 
+package IssueTracker::App::Db::Out::DbWriterPostgres ; 
 
    use strict ; use warnings ; use utf8 ; 
 
@@ -492,7 +492,7 @@ package IssueTracker::App::Db::PostGreDbHandler ;
            appConfig => $appConfig
       );
 
-		# print "PostGreDbHandler::doInitialize appConfig : " . p($appConfig );
+		# print "PostgreWriter::doInitialize appConfig : " . p($appConfig );
       # sleep 6 ; 
 		
 		$db_name 			= $ENV{ 'db_name' } || $appConfig->{'db_name'}        || 'prd_pgsql_runner' ; 

@@ -6,7 +6,7 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm	176;"	subroutine	language:Perl
 AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm	168;"	subroutine	language:Perl
-AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	142;"	subroutine	language:Perl
+AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	145;"	subroutine	language:Perl
 AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm	146;"	subroutine	language:Perl
 AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	192;"	subroutine	language:Perl
 AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderTxtDaily.pm	425;"	subroutine	language:Perl
@@ -26,7 +26,7 @@ AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	155;"	subro
 AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Timer.pm	45;"	subroutine	language:Perl
 DESTROY	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm	248;"	subroutine	language:Perl
 DESTROY	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm	240;"	subroutine	language:Perl
-DESTROY	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	214;"	subroutine	language:Perl
+DESTROY	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	217;"	subroutine	language:Perl
 DESTROY	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm	218;"	subroutine	language:Perl
 DESTROY	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	264;"	subroutine	language:Perl
 DESTROY	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderTxtDaily.pm	497;"	subroutine	language:Perl
@@ -85,7 +85,7 @@ PrintToFile	src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO/FileHandler.pm	
 ReadFileReturnArrayRef	src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO/FileHandler.pm	187;"	subroutine	language:Perl
 RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm	236;"	subroutine	language:Perl
 RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm	228;"	subroutine	language:Perl
-RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	202;"	subroutine	language:Perl
+RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	205;"	subroutine	language:Perl
 RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm	206;"	subroutine	language:Perl
 RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	252;"	subroutine	language:Perl
 RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderTxtDaily.pm	485;"	subroutine	language:Perl
@@ -208,7 +208,7 @@ doInit	src/bash/issue-tracker/issue-tracker.sh	117;"	function	language:Sh
 doInit	src/bash/issue-tracker/test-issue-tracker.sh	108;"	function	language:Sh
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm	156;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm	148;"	subroutine	language:Perl
-doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	123;"	subroutine	language:Perl
+doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	126;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm	127;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	173;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Db/DbHandlerFactory.pm	78;"	subroutine	language:Perl
@@ -380,7 +380,7 @@ doTxtToDb	src/bash/issue-tracker/funcs/txt-to-db.func.sh	7;"	function	language:S
 doXlsToDb	src/bash/issue-tracker/funcs/xls-to-db.func.sh	7;"	function	language:Sh
 dumpFields	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm	221;"	subroutine	language:Perl
 dumpFields	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm	213;"	subroutine	language:Perl
-dumpFields	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	187;"	subroutine	language:Perl
+dumpFields	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	190;"	subroutine	language:Perl
 dumpFields	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm	191;"	subroutine	language:Perl
 dumpFields	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	237;"	subroutine	language:Perl
 dumpFields	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderTxtDaily.pm	470;"	subroutine	language:Perl
@@ -405,7 +405,7 @@ dump_tmux_session	src/bash/issue-tracker/specs/sys/tmux/tmux-common.spec.sh	6;"	
 flushScreen	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	239;"	subroutine	language:Perl
 get	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm	194;"	subroutine	language:Perl
 get	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm	186;"	subroutine	language:Perl
-get	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	160;"	subroutine	language:Perl
+get	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	163;"	subroutine	language:Perl
 get	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm	164;"	subroutine	language:Perl
 get	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	210;"	subroutine	language:Perl
 get	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderTxtDaily.pm	443;"	subroutine	language:Perl
@@ -467,7 +467,7 @@ main	src/bash/issue-tracker/test-issue-tracker.sh	20;"	function	language:Sh
 main	src/perl/issue_tracker/script/issue_tracker.pl	104;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm	140;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm	132;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	107;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	110;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm	111;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	157;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Db/DbHandlerFactory.pm	58;"	subroutine	language:Perl
@@ -501,7 +501,7 @@ session_exists	src/bash/issue-tracker/funcs/sys/tmux/tmux-common.func.sh	22;"	fu
 session_exists	src/bash/issue-tracker/specs/sys/tmux/tmux-common.spec.sh	22;"	function	language:Sh
 set	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm	208;"	subroutine	language:Perl
 set	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm	200;"	subroutine	language:Perl
-set	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	174;"	subroutine	language:Perl
+set	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	177;"	subroutine	language:Perl
 set	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm	178;"	subroutine	language:Perl
 set	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	224;"	subroutine	language:Perl
 set	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderTxtDaily.pm	457;"	subroutine	language:Perl
