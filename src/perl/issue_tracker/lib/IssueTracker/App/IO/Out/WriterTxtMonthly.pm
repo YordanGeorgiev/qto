@@ -58,45 +58,6 @@ package IssueTracker::App::IO::Out::WriterTxtMonthly ;
 =cut
 
 
-	#
-	# --------------------------------------------------------
-	# read the issues file for the Monthly period
-	# --------------------------------------------------------
-	sub doReadIssueFile {
-
-      my $self       = shift ; 
-      my $issues_file = shift ; 
-
-      my $msg  = '' ; 
-      my $ret  = 1 ; 
-      my $str_issues_file = q{} ; 
-
-      $msg =  "START doReadIssueFile" ; 
-      $objLogger->doLogInfoMsg ( $msg ) ; 
-
-      unless ( -r $issues_file ) {
-         $msg = "the issues_file : $issues_file does not exist !!!" ; 
-         $objLogger->doLogFatalMsg ( $msg ) ; 
-      }
-      else {
-         # src: http://ahinea.com/en/tech/perl-unicode-struggle.html
-         ( $ret , $msg , $str_issues_file ) 
-            = $objFileHandler->doReadFileReturnString ( $issues_file , 'utf8' ) ; 
-         return ( $ret , $msg ) unless $ret == 0 ; 
-
-         $ret = 0 ; 
-         $msg = "read successfully issues_file : $issues_file" ; 
-         $objLogger->doLogDebugMsg ( $str_issues_file ) if ( $module_trace == 1 ) ; 
-      }
-      
-      $msg =  "STOP  doReadIssueFile with ret: $ret" ; 
-      $objLogger->doLogInfoMsg ( $msg ) ; 
-      return ( $ret , $msg , $str_issues_file ) ; 
-	}
-	# eof sub doConvertMdFileToBigSqlHash
-
-
-
    sub doConvertStrToHashRef {
 
       my $self       = shift ; 
@@ -118,11 +79,11 @@ package IssueTracker::App::IO::Out::WriterTxtMonthly ;
       my $prev_stop_time   = q{} ; 
 
       if ( $str ) {      
-         $msg = 'START WriterTxtMonthly::doConvertStrToHashRef' ; 
+         $msg = 'START TxtParserMONTHLY::doConvertStrToHashRef' ; 
          $objLogger->doLogInfoMsg ( $msg ) ;  
 
          foreach my $category_item ( @arr_category_items ) {
-            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(Monthly)|(WEEKLY)|(Monthly)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
+            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(MONTHLY)|(WEEKLY)|(MONTHLY)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
 
 
             my $debug_msg = "category_item: $category_item " ; 
@@ -252,7 +213,7 @@ package IssueTracker::App::IO::Out::WriterTxtMonthly ;
       
       }
       
-      $msg = 'STOP  WriterTxtMonthly::doConvertStrToHashRef' ; 
+      $msg = 'STOP  TxtParserMONTHLY::doConvertStrToHashRef' ; 
       $objLogger->doLogInfoMsg ( $msg ) ;  
 
       return ( $ret , $msg , $hsr ) ; 
@@ -269,19 +230,19 @@ package IssueTracker::App::IO::Out::WriterTxtMonthly ;
       my $str_issues = q{} ; 
       my $run_date   = q{} ;  
       p ( $hsr2 ) if $module_trace == 1 ; 
-      my $str_header = '# START Monthly %run_date%
+      my $str_header = '# START MONTHLY @%run_date%
    
-## what will I do till the next Monthly:
+## what will I do till the next MONTHLY:
 #---------------------------
 #' ; 
 #
-      my $str_middler = '## what did I do since last Monthly:
+      my $str_middler = '## what did I do since last MONTHLY:
 ---------------------------
 ' ; 
 
       my $str_footer = '
 
-# STOP  Monthly @%run_date%
+# STOP  MONTHLY @%run_date%
 ' ; 
 
 

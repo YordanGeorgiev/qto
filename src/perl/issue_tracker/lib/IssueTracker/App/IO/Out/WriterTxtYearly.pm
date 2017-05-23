@@ -58,45 +58,6 @@ package IssueTracker::App::IO::Out::WriterTxtYearly ;
 =cut
 
 
-	#
-	# --------------------------------------------------------
-	# read the issues file for the Yearly period
-	# --------------------------------------------------------
-	sub doReadIssueFile {
-
-      my $self       = shift ; 
-      my $issues_file = shift ; 
-
-      my $msg  = '' ; 
-      my $ret  = 1 ; 
-      my $str_issues_file = q{} ; 
-
-      $msg =  "START doReadIssueFile" ; 
-      $objLogger->doLogInfoMsg ( $msg ) ; 
-
-      unless ( -r $issues_file ) {
-         $msg = "the issues_file : $issues_file does not exist !!!" ; 
-         $objLogger->doLogFatalMsg ( $msg ) ; 
-      }
-      else {
-         # src: http://ahinea.com/en/tech/perl-unicode-struggle.html
-         ( $ret , $msg , $str_issues_file ) 
-            = $objFileHandler->doReadFileReturnString ( $issues_file , 'utf8' ) ; 
-         return ( $ret , $msg ) unless $ret == 0 ; 
-
-         $ret = 0 ; 
-         $msg = "read successfully issues_file : $issues_file" ; 
-         $objLogger->doLogDebugMsg ( $str_issues_file ) if ( $module_trace == 1 ) ; 
-      }
-      
-      $msg =  "STOP  doReadIssueFile with ret: $ret" ; 
-      $objLogger->doLogInfoMsg ( $msg ) ; 
-      return ( $ret , $msg , $str_issues_file ) ; 
-	}
-	# eof sub doConvertMdFileToBigSqlHash
-
-
-
    sub doConvertStrToHashRef {
 
       my $self       = shift ; 
@@ -118,11 +79,11 @@ package IssueTracker::App::IO::Out::WriterTxtYearly ;
       my $prev_stop_time   = q{} ; 
 
       if ( $str ) {      
-         $msg = 'START WriterTxtYearly::doConvertStrToHashRef' ; 
+         $msg = 'START TxtParserYEARLY::doConvertStrToHashRef' ; 
          $objLogger->doLogInfoMsg ( $msg ) ;  
 
          foreach my $category_item ( @arr_category_items ) {
-            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(Yearly)|(WEEKLY)|(Yearly)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
+            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(YEARLY)|(WEEKLY)|(YEARLY)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
 
 
             my $debug_msg = "category_item: $category_item " ; 
@@ -252,7 +213,7 @@ package IssueTracker::App::IO::Out::WriterTxtYearly ;
       
       }
       
-      $msg = 'STOP  WriterTxtYearly::doConvertStrToHashRef' ; 
+      $msg = 'STOP  TxtParserYEARLY::doConvertStrToHashRef' ; 
       $objLogger->doLogInfoMsg ( $msg ) ;  
 
       return ( $ret , $msg , $hsr ) ; 
@@ -269,19 +230,19 @@ package IssueTracker::App::IO::Out::WriterTxtYearly ;
       my $str_issues = q{} ; 
       my $run_date   = q{} ;  
       p ( $hsr2 ) if $module_trace == 1 ; 
-      my $str_header = '# START Yearly %run_date%
+      my $str_header = '# START YEARLY @%run_date%
    
-## what will I do till the next Yearly:
+## what will I do till the next YEARLY:
 #---------------------------
 #' ; 
 #
-      my $str_middler = '## what did I do since last Yearly:
+      my $str_middler = '## what did I do since last YEARLY:
 ---------------------------
 ' ; 
 
       my $str_footer = '
 
-# STOP  Yearly @%run_date%
+# STOP  YEARLY @%run_date%
 ' ; 
 
 

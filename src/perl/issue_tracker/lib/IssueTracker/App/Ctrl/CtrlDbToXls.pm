@@ -1,4 +1,4 @@
-package IssueTracker::App::Ctrl::CtrlDbToFile ; 
+package IssueTracker::App::Ctrl::CtrlDbToXls ; 
 
 	use strict; use warnings;
 
@@ -46,7 +46,7 @@ package IssueTracker::App::Ctrl::CtrlDbToFile ;
    # read the passed issue file , convert it to hash ref of hash refs 
    # and insert the hsr into a db
 	# -----------------------------------------------------------------------------
-   sub doLoadDbIssuesToXls {
+   sub doReadAndLoad {
 
       my $self                = shift ; 
       my $issues_file          = shift ; 	

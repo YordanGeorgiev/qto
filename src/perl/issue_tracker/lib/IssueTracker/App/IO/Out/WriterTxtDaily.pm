@@ -230,7 +230,7 @@ package IssueTracker::App::IO::Out::WriterTxtDaily ;
       my $str_issues = q{} ; 
       my $run_date   = q{} ;  
       p ( $hsr2 ) if $module_trace == 1 ; 
-      my $str_header = '# START DAILY %run_date%
+      my $str_header = '# START DAILY @%run_date%
    
 ## what will I do till the next daily:
 #---------------------------

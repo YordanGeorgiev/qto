@@ -93,7 +93,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
             my $objCtrlDbToXls = 
                'IssueTracker::App::Ctrl::CtrlDbToXls'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToXls->doLoad ( ); 
+            ( $ret , $msg ) = $objCtrlDbToXls->doReadAndLoad ( ); 
             return ( $ret , $msg ) unless $ret == 0 ; 
          } 
          elsif ( $action eq 'xls-to-db' ) {
