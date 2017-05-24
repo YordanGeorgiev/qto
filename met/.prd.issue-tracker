@@ -33,7 +33,6 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderTxtYearly.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/ReaderXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/TxtReaderFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out
-src/perl/issue_tracker/lib/IssueTracker/App/IO/Out
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/TxtWriterFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WriterTxtDaily.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WriterTxtWeekly.pm
@@ -44,6 +43,13 @@ src/perl/issue_tracker/lib/IssueTracker/App/RAM
 src/perl/issue_tracker/lib/IssueTracker/App/RAM/ConverterTxtToHsr2.pm
 src/perl/issue_tracker/lib/IssueTracker/App/RAM/ConverterHsr2ToTxt.pm
 src/perl/issue_tracker/lib/IssueTracker/App
+src/perl/issue_tracker/lib/IssueTracker/App/Db
+src/perl/issue_tracker/lib/IssueTracker/App/Db/In
+src/perl/issue_tracker/lib/IssueTracker/App/Db/In/DbReadersFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/In/DbReaderPostgres.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
+src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWritersFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWriterPostgres.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Data/
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm
@@ -51,8 +57,6 @@ src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
-src/perl/issue_tracker/lib/IssueTracker/App/Db/DbHandlerFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Db/PostGreDbHandler.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO/FileHandler.pm
@@ -442,4 +446,3 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/IO/FileHandler/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Timer/autosplit.ix
-

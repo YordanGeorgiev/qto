@@ -11,13 +11,13 @@ package IssueTracker::App::Db::Out::DbWritersFactory ;
 	our $objController 	= {} ; 
    our $objLogger       = {} ; 
 
-	# use IssueTracker::App::Db::MariaDbHandler  ; 
+	# use IssueTracker::App::Db::MariaDbWriter  ; 
    use IssueTracker::App::Db::Out::DbWriterPostgres ; 
 
 
 	#
 	# -----------------------------------------------------------------------------
-	# fabricates different dbHandler object 
+	# fabricates different DbWriter object 
 	# -----------------------------------------------------------------------------
 	sub doInstantiate {
 
@@ -25,28 +25,28 @@ package IssueTracker::App::Db::Out::DbWritersFactory ;
 		my $db_type			= shift // $db_type ; # the default is mysql
 
 		my @args 			= ( @_ ) ; 
-		my $DbHandler 		= {}   ; 
+		my $DbWriter 		= {}   ; 
 
 		# get the application cnfiguration hash
 		# global app cnfig hash
 
 		if ( $db_type eq 'mariadb' ) {
-			$DbHandler 				= 'MariaDbHandler' ; 
+			$DbWriter 				= 'DbWriterMariaDb' ; 
 		}
 		if ( $db_type eq 'postgre' ) {
-			$DbHandler 				= 'PostGreDbHandler' ; 
+			$DbWriter 				= 'DbWriterPostgres' ; 
 		}
 		else {
 			# future support for different RDBMS 's should be added here ...
-			$DbHandler 				= 'MariaDbHandler' ; 
+			$DbWriter 				= 'MariaDbWriter' ; 
 		}
 
-		my $package_file     	= "IssueTracker/App/Db/$DbHandler.pm";
-		my $objDbHandler   		= "IssueTracker::App::Db::$DbHandler";
+		my $package_file     	= "IssueTracker/App/Db/Out/$DbWriter.pm";
+		my $objDbWriter   		= "IssueTracker::App::Db::Out::$DbWriter";
 
 		require $package_file;
 
-		return $objDbHandler->new( \$appConfig , $objController , @args);
+		return $objDbWriter->new( \$appConfig , $objController , @args);
 	}
 	# eof sub doInstantiate
 	

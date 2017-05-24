@@ -12,7 +12,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
    use Data::Printer ; 
 
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Db::DbHandlerFactory ; 
+   use IssueTracker::App::Db::Out::DbWritersFactory ; 
    use IssueTracker::App::IO::In::ReaderXls ; 
 	
 	our $module_trace                = 0 ; 
@@ -78,11 +78,11 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       $msg                 = 'unknown error while inserting db tables !!!' ; 
       my $rdbms_type          = $appConfig->{ 'rdbms_type' } || 'postgre' ; 
 
-      my $objDbHandlerFactory = 'IssueTracker::App::Db::DbHandlerFactory'->new( \$appConfig  ) ; 
-      my $objDbHandler 		   = $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
+      my $objDbWritersFactory = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$appConfig  ) ; 
+      my $objDbWriter 		   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" );
       p($hsr2) if $module_trace == 1 ; 
 
-      ( $ret , $msg  )        = $objDbHandler->doInsertDbTablesWithHsr2( $hsr2 ) ; 
+      ( $ret , $msg  )        = $objDbWriter->doInsertDbTablesWithHsr2( $hsr2 ) ; 
       return ( $ret , $msg ) ; 
    } 
 

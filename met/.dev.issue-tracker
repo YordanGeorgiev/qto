@@ -44,14 +44,12 @@ src/perl/issue_tracker/lib/IssueTracker/App/RAM/ConverterTxtToHsr2.pm
 src/perl/issue_tracker/lib/IssueTracker/App/RAM/ConverterHsr2ToTxt.pm
 src/perl/issue_tracker/lib/IssueTracker/App
 src/perl/issue_tracker/lib/IssueTracker/App/Db
-src/perl/issue_tracker/lib/IssueTracker/App/Db/DbHandlerFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/DbReadersFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/DbReaderPostgres.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWritersFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWriterPostgres.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Db/PostGreDbHandler.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Data/
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm

@@ -13,9 +13,9 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
    use Data::Printer ; 
 
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Db::DbHandlerFactory ; 
+   use IssueTracker::App::Db::In::DbReadersFactory ; 
    use IssueTracker::App::IO::Out::TxtWriterFactory ; 
-
+   use IssueTracker::App::RAM::ConverterHsr2ToTxt ; 
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
 	our $objLogger						   = {} ; 
@@ -57,10 +57,10 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       my $hsr                 = {} ;   # this is the data hash ref of hash reffs 
       my $mhsr                = {} ;   # this is the meta hash describing the data hash ^^
 
-      my $objDbHandlerFactory = 'IssueTracker::App::Db::DbHandlerFactory'->new( \$appConfig , $self ) ; 
-      my $objDbHandler 			= $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
+      my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
+      my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
 
-      ( $ret , $msg , $hsr , $mhsr )  = $objDbHandler->doSelectTableIntoHashRef( 'issue' ) ; 
+      ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( 'issue' ) ; 
 
       p($hsr) if $module_trace == 1 ;
       $objLogger->doLogDebugMsg ( "STOP print" ) if $module_trace == 1 ; 
@@ -71,7 +71,8 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       my $objTxtWriterFactory = 'IssueTracker::App::IO::Out::TxtWriterFactory'->new( \$appConfig , $self ) ; 
       my $objWriterTxt 			= $objTxtWriterFactory->doInstantiate ( "$period" );
       
-      ( $ret , $msg , $str_issues ) = $objWriterTxt->doConvertHashRefToStr( $hsr ) ; 
+      my $objConverterHsr2ToTxt = 'IssueTracker::App::RAM::ConverterHsr2ToTxt'->new ( \$appConfig , $self ) ; 
+      ( $ret , $msg , $str_issues ) = $objConverterHsr2ToTxt->doConvertHashRefToStr( $hsr ) ; 
       $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
 
       return ( $ret , $msg ) if $ret != 0 ;  

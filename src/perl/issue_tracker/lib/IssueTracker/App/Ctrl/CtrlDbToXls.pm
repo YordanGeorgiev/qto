@@ -13,7 +13,7 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
    use Data::Printer ; 
 
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Db::DbHandlerFactory ; 
+   use IssueTracker::App::Db::In::DbReadersFactory ; 
    use IssueTracker::App::IO::Out::WriterXls ; 
 
 	our $module_trace                = 0 ; 
@@ -59,10 +59,10 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
       my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
       my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
 
-      my $objDbHandlerFactory = 'IssueTracker::App::Db::DbHandlerFactory'->new( \$appConfig , $self ) ; 
-      my $objDbHandler 			= $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
+      my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
+      my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
 
-      ( $ret , $msg , $hsr , $mhsr )  = $objDbHandler->doSelectTableIntoHashRef( 'issue' ) ; 
+      ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( 'issue' ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
  
       my $objWriterXls    = 'IssueTracker::App::IO::Out::WriterXls'->new( \$appConfig ) ;
@@ -88,10 +88,10 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
       my $hsr                 = {} ;   # this is the data hash ref of hash reffs 
       my $mhsr                = {} ;   # this is the meta hash describing the data hash ^^
 
-      my $objDbHandlerFactory = 'IssueTracker::App::Db::DbHandlerFactory'->new( \$appConfig , $self ) ; 
-      my $objDbHandler 			= $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
+      my $objDbReadersFactory = 'IssueTracker::App::Db::DbReaderFactory'->new( \$appConfig , $self ) ; 
+      my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
 
-      ( $ret , $msg , $hsr , $mhsr )  = $objDbHandler->doSelectTableIntoHashRef( 'issue' ) ; 
+      ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( 'issue' ) ; 
 
       p($hsr) if $module_trace == 1 ;
       $objLogger->doLogDebugMsg ( "STOP print" ) if $module_trace == 1 ; 

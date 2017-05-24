@@ -60,8 +60,6 @@ use IssueTracker::App::Utils::Initiator ;
 use IssueTracker::App::Utils::Configurator ; 
 use IssueTracker::App::Utils::Logger ; 
 use IssueTracker::App::Utils::IO::FileHandler ; 
-use IssueTracker::App::Db::DbHandlerFactory ; 
-use IssueTracker::App::Db::PostGreDbHandler ; 
 use IssueTracker::App::Utils::Timer ; 
 use IssueTracker::App::Ctrl::Dispatcher ; 
 
@@ -139,7 +137,7 @@ my $period                       = q{} ;
            'issues_file=s' => \$issues_file
          , 'do=s'          => \$actions
          , 'xls_dir=s'     => \$xls_dir
-         , 'xls-file=s'     => \$xls_file
+         , 'xls-file=s'    => \$xls_file
          , 'period=s'      => \$period
       );
       
