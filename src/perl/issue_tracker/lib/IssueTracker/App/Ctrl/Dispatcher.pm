@@ -111,7 +111,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
             my $objCtrlDbToTxt = 
                'IssueTracker::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndLoad ( $issues_file ) ; 
+            ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndWrite ( $issues_file ) ; 
             return ( $ret , $msg ) unless $ret == 0 ; 
          } 
          else {

@@ -13,7 +13,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
    use Data::Printer ; 
 
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Db::In::DbReadersFactory ; 
+   use IssueTracker::App::Db::Out::DbWritersFactory ; 
    use IssueTracker::App::IO::Out::TxtWriterFactory ; 
    use IssueTracker::App::RAM::ConverterHsr2ToTxt ; 
 	our $module_trace                = 0 ; 
@@ -41,12 +41,13 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
 =cut
 
 
+
    # 
 	# -----------------------------------------------------------------------------
    # read the passed issue file , convert it to hash ref of hash refs 
    # and insert the hsr into a db
 	# -----------------------------------------------------------------------------
-   sub doReadAndLoad {
+   sub doReadAndWrite {
 
       my $self                = shift ; 
       my $issues_file         = shift ; 	
@@ -57,60 +58,20 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       my $hsr                 = {} ;   # this is the data hash ref of hash reffs 
       my $mhsr                = {} ;   # this is the meta hash describing the data hash ^^
 
-      my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
-      my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
+      my $objDbWritersFactory = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$appConfig , $self ) ; 
+      my $objDbWriter 			= $objDbWritersFactory->doInstantiate ( "$rdbms_type" );
 
-      ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( 'issue' ) ; 
+      ( $ret , $msg , $hsr , $mhsr )  = $objDbWriter->doSelectTableIntoHashRef( 'issue' ) ; 
 
       p($hsr) if $module_trace == 1 ;
       $objLogger->doLogDebugMsg ( "STOP print" ) if $module_trace == 1 ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
       
       my $period              = $ENV{ 'period' } || 'daily' ;  
-      
       my $objTxtWriterFactory = 'IssueTracker::App::IO::Out::TxtWriterFactory'->new( \$appConfig , $self ) ; 
-      my $objWriterTxt 			= $objTxtWriterFactory->doInstantiate ( "$period" );
+      my $objTxtWriter 			= $objTxtWriterFactory->doInstantiate ( "$period" );
       
-      my $objConverterHsr2ToTxt = 'IssueTracker::App::RAM::ConverterHsr2ToTxt'->new ( \$appConfig , $self ) ; 
-      ( $ret , $msg , $str_issues ) = $objConverterHsr2ToTxt->doConvertHashRefToStr( $hsr ) ; 
-      $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
-
-      return ( $ret , $msg ) if $ret != 0 ;  
-
-   } 
-   
-   
-
-   # 
-	# -----------------------------------------------------------------------------
-   # read the passed issue file , convert it to hash ref of hash refs 
-   # and insert the hsr into a db
-	# -----------------------------------------------------------------------------
-   sub doLoadDbToTxtFile {
-
-      my $self                = shift ; 
-      my $issues_file         = shift ; 	
-
-      my $ret                 = 1 ; 
-      my $msg                 = 'unknown error while loading db issues to xls file' ; 
-      my $str_issues          = q{} ; 
-      my $hsr                 = {} ;   # this is the data hash ref of hash reffs 
-      my $mhsr                = {} ;   # this is the meta hash describing the data hash ^^
-
-      my $objDbHandlerFactory = 'IssueTracker::App::Db::DbHandlerFactory'->new( \$appConfig , $self ) ; 
-      my $objDbHandler 			= $objDbHandlerFactory->doInstantiate ( "$rdbms_type" );
-
-      ( $ret , $msg , $hsr , $mhsr )  = $objDbHandler->doSelectTableIntoHashRef( 'issue' ) ; 
-
-      p($hsr) if $module_trace == 1 ;
-      $objLogger->doLogDebugMsg ( "STOP print" ) if $module_trace == 1 ; 
-      return ( $ret , $msg ) unless $ret == 0 ; 
-      
-      my $period              = $ENV{ 'period' } || 'daily' ;  
-      my $objTxtParserFactory = 'IssueTracker::App::ETL::Txt::TxtParserFactory'->new( \$appConfig , $self ) ; 
-      my $objTxtParser 			= $objTxtParserFactory->doInstantiate ( "$period" );
-      
-      ( $ret , $msg , $str_issues ) = $objTxtParser->doConvertHashRefToStr( $hsr ) ; 
+      ( $ret , $msg , $str_issues ) = $objTxtWriter->doConvertHashRefToStr( $hsr ) ; 
       $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
 
       return ( $ret , $msg ) if $ret != 0 ;  

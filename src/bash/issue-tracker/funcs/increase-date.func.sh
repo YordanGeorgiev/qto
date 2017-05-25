@@ -5,7 +5,7 @@ doIncreaseDate(){
 
 	doLog "DEBUG START doIncreaseDate"
 	# cat doc/txt/issue-tracker/funcs/increase-date.func.txt
-   test -z ${issue_tracker_project+x} && export exit_code=1 \
+   test -z ${proj_txt_dir+x} && export exit_code=1 \
       && doExit "define a project by doParseIniEnvVars <<path-to-proj-conf-file>> !!!" && exit 1
 
    # find the latest project_daily_txt_dir

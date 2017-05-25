@@ -1,5 +1,6 @@
 # this is kind of a srch history file - PREPEND !!!
 :g/srch/| :vimgrep /srch/ `find . -type f \| grep -v .git \| grep -v .log`
+:g/doConvertHashRefToStr/| :vimgrep /srch/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/DbHandler/| :vimgrep /DbHandler/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/doConvertStrToHashRef/| :vimgrep /doConvertStrToHashRef/ `find . -type f \| grep -v .git \| grep -v .log`
 
