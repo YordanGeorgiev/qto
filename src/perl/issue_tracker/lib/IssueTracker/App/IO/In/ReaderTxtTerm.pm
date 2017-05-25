@@ -1,4 +1,4 @@
-package IssueTracker::App::IO::Out::WriterTxtYearly ; 
+package IssueTracker::App::IO::In::ReaderTxtTerm ; 
 
 	use strict; use warnings;
    use utf8 ; 
@@ -31,7 +31,7 @@ package IssueTracker::App::IO::Out::WriterTxtYearly ;
 	our $objFileHandler				= {} ; 
    our $hsrStatus                = {} ; 
    our %inverse_hsrStatus        = (); 
-
+   our $term                     = 'daily' ; 
 
 
 
@@ -58,99 +58,45 @@ package IssueTracker::App::IO::Out::WriterTxtYearly ;
 =cut
 
 
-
-   sub doConvertHashRefToStr {
-
-      my $self       = shift ; 
-      my $hsr2       = shift ; 
-
-      my $msg        = 'unknown error during hash ref of hash references to string conversion !!!' ;  ; 
-      my $ret        = 1 ; 
-      my $str_issues = q{} ; 
-      my $run_date   = q{} ;  
-      p ( $hsr2 ) if $module_trace == 1 ; 
-      my $str_header = '# START YEARLY @%run_date%
-   
-## what will I do till the next YEARLY:
-#---------------------------
-#' ; 
-#
-      my $str_middler = '## what did I do since last YEARLY:
----------------------------
-' ; 
-
-      my $str_footer = '
-
-# STOP  YEARLY @%run_date%
-' ; 
-
-
-      $str_issues .= $str_header . "\n\n" ; 
-      my $prev_category = q{} ; 
-
-      foreach my $issue_id ( sort { $hsr2->{$a}->{ 'prio' } <=> $hsr2->{$b}->{ 'prio' } } keys (%$hsr2))  {
-         my $row = $hsr2->{ $issue_id } ; 
-
-         $run_date         = $row->{ 'run_date'} ; 
-         my $category      = $row->{ 'category'} ; 
-         my $current       = $row->{ 'current'} ; 
-         my $description   = $row->{ 'description'} ; 
-         my $issue_id      = $row->{ 'issue_id'} ; 
-         my $level         = $row->{ 'level'} ; 
-         my $name          = $row->{ 'name'} ; 
-         my $prio          = $row->{ 'prio'} ; 
-         my $start_time    = $row->{ 'start_time'} ; 
-         my $stop_time     = $row->{ 'stop_time'} ; 
-         my $status        = $row->{ 'status'} ; 
-         $status           = $inverse_hsrStatus{ $status } ; 
-         $status           = 'unknwn' unless $status ; 
-         $description      =~ s/\r\n/\n/gm ; 
-         $str_issues       .= "\n" if ( $prev_category ne $category ) ; 
-         $str_issues       .= $category . "\n" unless ( $prev_category eq $category ) ; 
-         my $levels_dash   = '' ; 
-         for ( my $i = 1 ; $i<$level ; $i++ ) {
-            $str_issues    .= ' ' ;
-            $levels_dash   .= '-' ; 
-         }
-         $str_issues       .= $levels_dash . ' ' ; 
-         $str_issues       .= $status . "\t\t" if $level == 2 ; 
-         $str_issues       .= $status . "\t" if $level == 3 ; 
-         $str_issues       .= $status . " " if $level == 4 ; 
-         $str_issues       .= ( $start_time . " " ) if ( $start_time ne 'NULL' ) ; 
-         $str_issues       .= ( '- ' . $stop_time . " " ) if ( $stop_time ne 'NULL' ) ; 
-         $str_issues       .= $name . "\n" ; 
-         $prev_category    = $category ; 
-      }
-      #eof foreach 
-
-      $str_issues .= $str_footer . "\n\n" ; 
-      $str_issues =~ s|%run_date%|$run_date|g ;  
-      $msg = " OK for hsr2 to txt conversion " ;  
-      $ret = 0 ; 
-
-      return ( $ret , $msg , $str_issues ) ;
-   }
-   # eof sub doConvertHashRefToStr
-
-
 	#
 	# --------------------------------------------------------
-	# used to calculate the amount of levels 
+	# read the issues file for the Daily period
 	# --------------------------------------------------------
-   sub doFillInLevelsPerRow {
+	sub doReadIssueFile {
 
-      my $self                = shift ; 
-      my $str_dashes          = shift ; 
-      my $ref_item_levels     = shift ; 
-      my $item_levels         = $$ref_item_levels ; 
+      my $self       = shift ; 
+      my $issues_file = shift ; 
 
-      my $row_num = scalar keys %$$ref_item_levels || 0 ; 
-      my $num_of_dashes = () = $str_dashes =~ /\-/gi;
-      $item_levels->{ $row_num } = $num_of_dashes ; 
+      my $msg  = '' ; 
+      my $ret  = 1 ; 
+      my $str_issues_file = q{} ; 
 
-   } 
+      $msg =  "START doReadIssueFile" ; 
+      $objLogger->doLogInfoMsg ( $msg ) ; 
 
-	
+      unless ( -r $issues_file ) {
+         $msg = "the issues_file : $issues_file does not exist !!!" ; 
+         $objLogger->doLogFatalMsg ( $msg ) ; 
+      }
+      else {
+         # src: http://ahinea.com/en/tech/perl-unicode-struggle.html
+         ( $ret , $msg , $str_issues_file ) 
+            = $objFileHandler->doReadFileReturnString ( $issues_file , 'utf8' ) ; 
+         return ( $ret , $msg ) unless $ret == 0 ; 
+
+         $ret = 0 ; 
+         $msg = "read successfully issues_file : $issues_file" ; 
+         $objLogger->doLogDebugMsg ( $str_issues_file ) if ( $module_trace == 1 ) ; 
+      }
+      
+      $msg =  "STOP  doReadIssueFile with ret: $ret" ; 
+      $objLogger->doLogInfoMsg ( $msg ) ; 
+      return ( $ret , $msg , $str_issues_file ) ; 
+	}
+	# eof sub doConvertMdFileToBigSqlHash
+
+
+
 	
    #
 	# -----------------------------------------------------------------------------
@@ -160,7 +106,7 @@ package IssueTracker::App::IO::Out::WriterTxtYearly ;
 
 		my $invocant 			= shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-		
+	   $term = shift || 'daily' ; 	
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
 
@@ -209,7 +155,7 @@ package IssueTracker::App::IO::Out::WriterTxtYearly ;
       }; 
       
       %inverse_hsrStatus = reverse %$hsrStatus;
-
+      
       return $self ; 
 	}	
 	#eof sub doInitialize

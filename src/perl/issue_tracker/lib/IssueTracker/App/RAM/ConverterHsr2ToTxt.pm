@@ -28,9 +28,11 @@ package IssueTracker::App::RAM::ConverterHsr2ToTxt ;
 	our $appConfig						= {} ; 
 	our $HostName 						= '' ; 
 	our $objLogger						= {} ; 
+	our $objController				= {} ; 
 	our $objFileHandler				= {} ; 
    our $hsrStatus                = {} ; 
    our %inverse_hsrStatus        = (); 
+   our $term                     = 'daily' ; 
 
 
 
@@ -84,7 +86,7 @@ package IssueTracker::App::RAM::ConverterHsr2ToTxt ;
          $objLogger->doLogInfoMsg ( $msg ) ;  
 
          foreach my $category_item ( @arr_category_items ) {
-            last if ( $category_item =~ m/^\s*#\s*STOP\s+[(Daily)|(WEEKLY)|(Daily)] ([\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
+            last if ( $category_item =~ m/^\s*#\s*STOP\s+$term\s+(@[\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
 
 
             my $debug_msg = "category_item: $category_item " ; 
@@ -136,7 +138,8 @@ package IssueTracker::App::RAM::ConverterHsr2ToTxt ;
                my $title = ( split /\n/, $name )[0] ; 
 
                # extract the start_time if any exists
-               $title =~ m/^([\d]{2}:[\d]{2})\s+(.*)/g ; 
+               # old $title =~ m/^([\d]{2}:[\d]{2})\s+(.*)/g ; 
+               $title =~ m/^(([\d]{2}-[\d]{2}-[\d]{2})?\s+[\d]{2}:[\d]{2})\s+(.*)/g ; 
                my $start_time = q{} ; 
                $start_time = 'NULL'       if $status eq $1 ; 
                $start_time = $1           unless $status eq $1 ; 
@@ -321,7 +324,9 @@ package IssueTracker::App::RAM::ConverterHsr2ToTxt ;
 
 		my $invocant 			= shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-		
+	   $objController       = shift ; 
+      $term                = shift || 'daily' ; 
+	
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
 

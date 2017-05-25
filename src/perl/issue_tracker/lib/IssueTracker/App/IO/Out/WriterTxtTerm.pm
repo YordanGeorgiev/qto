@@ -1,4 +1,4 @@
-package IssueTracker::App::IO::Out::WriterTxtMonthly ; 
+package IssueTracker::App::IO::Out::WriterTxtTerm ; 
 
 	use strict; use warnings;
    use utf8 ; 
@@ -16,10 +16,12 @@ package IssueTracker::App::IO::Out::WriterTxtMonthly ;
 	use File::Copy::Recursive ; 
 	use Sys::Hostname;
 	use Carp qw /cluck confess shortmess croak carp/ ; 
-	use IssueTracker::App::Utils::IO::FileHandler ; 
-	use IssueTracker::App::Utils::Logger ;
+   use Scalar::Util qw /looks_like_number/ ; 
 	use Data::Printer ; 
       
+	use IssueTracker::App::Utils::IO::FileHandler ; 
+	use IssueTracker::App::Utils::Logger ;
+   
    binmode(STDIN,  ':utf8');
    binmode(STDOUT, ':utf8');
    binmode(STDERR, ':utf8');
@@ -28,10 +30,11 @@ package IssueTracker::App::IO::Out::WriterTxtMonthly ;
 	our $appConfig						= {} ; 
 	our $HostName 						= '' ; 
 	our $objLogger						= {} ; 
+	our $objController	         = {} ; 
 	our $objFileHandler				= {} ; 
    our $hsrStatus                = {} ; 
    our %inverse_hsrStatus        = (); 
-
+   our $term                     = 'daily' ; 
 
 
 
@@ -57,7 +60,6 @@ package IssueTracker::App::IO::Out::WriterTxtMonthly ;
 	START SUBS 
 =cut
 
-
    sub doConvertHashRefToStr {
 
       my $self       = shift ; 
@@ -68,26 +70,40 @@ package IssueTracker::App::IO::Out::WriterTxtMonthly ;
       my $str_issues = q{} ; 
       my $run_date   = q{} ;  
       p ( $hsr2 ) if $module_trace == 1 ; 
-      my $str_header = '# START MONTHLY @%run_date%
+      my $str_header = '# START ' . uc($term) . ' @%run_date%
    
-## what will I do till the next MONTHLY:
+## what will I do till the next ' . uc($term) . ':
 #---------------------------
 #' ; 
 #
-      my $str_middler = '## what did I do since last MONTHLY:
----------------------------
-' ; 
 
       my $str_footer = '
 
-# STOP  MONTHLY @%run_date%
+# STOP  ' . uc($term) . ' @%run_date%
 ' ; 
-
 
       $str_issues .= $str_header . "\n\n" ; 
       my $prev_category = q{} ; 
+      my @attributes = qw (run_date category current description issue_id level name prio start_time stop_time status) ; 
+      my $issues_order_by_attribute = $ENV{ 'issues_order_by_attribute' } || 'prio' ; 
 
-      foreach my $issue_id ( sort { $hsr2->{$a}->{ 'prio' } <=> $hsr2->{$b}->{ 'prio' } } keys (%$hsr2))  {
+      unless ( grep( /^$issues_order_by_attribute$/, @attributes ) ) {
+         $msg = 'Did not find the value of the pre-defined issues_order_by_attribute: "' ; 
+         $msg .=  $issues_order_by_attribute . '" from the issues attributes list: "'  . " \n @attributes \n" . '"'; 
+         $objLogger->doLogWarningMsg ( $msg ) ; 
+         $issues_order_by_attribute = 'start_time' ; 
+         $msg = 'using the "start_time" as the default sorting attribute' ; 
+         $objLogger->doLogWarningMsg ( $msg ) ; 
+      }
+ 
+      my $operator = '<=>' ; 
+      $operator = 'cmp'  unless ( looks_like_number( $issues_order_by_attribute ) ) ; 
+
+      foreach my $issue_id ( 
+         eval 'sort {      ' .
+            '$hsr2->{$a}->{ $issues_order_by_attribute }' . $operator . '$hsr2->{$b}->{ $issues_order_by_attribute }' .
+            '} keys (%$hsr2)' )  {
+
          my $row = $hsr2->{ $issue_id } ; 
 
          $run_date         = $row->{ 'run_date'} ; 
@@ -131,25 +147,6 @@ package IssueTracker::App::IO::Out::WriterTxtMonthly ;
    }
    # eof sub doConvertHashRefToStr
 
-
-	#
-	# --------------------------------------------------------
-	# used to calculate the amount of levels 
-	# --------------------------------------------------------
-   sub doFillInLevelsPerRow {
-
-      my $self                = shift ; 
-      my $str_dashes          = shift ; 
-      my $ref_item_levels     = shift ; 
-      my $item_levels         = $$ref_item_levels ; 
-
-      my $row_num = scalar keys %$$ref_item_levels || 0 ; 
-      my $num_of_dashes = () = $str_dashes =~ /\-/gi;
-      $item_levels->{ $row_num } = $num_of_dashes ; 
-
-   } 
-
-	
 	
    #
 	# -----------------------------------------------------------------------------
@@ -159,10 +156,11 @@ package IssueTracker::App::IO::Out::WriterTxtMonthly ;
 
 		my $invocant 			= shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+      $objController       = shift ; 
+      $term                = shift || 'daily' ; 
 		
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
-
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize() ; 

@@ -5,16 +5,13 @@ package IssueTracker::App::IO::Out::TxtWriterFactory ;
 	use Data::Printer ; 
 
 	our $appConfig 		= {} ; 
-	our $period			   = $ENV{'period'} || 'daily' ; 
+	our $term			   = $ENV{'period'} || 'daily' ; 
 	our $objItem			= {} ; 
 	our $objController 	= {} ; 
    our $objLogger       = {} ; 
 
 	# use IssueTracker::App::Db::WriterTxtWeekly  ; 
-   use IssueTracker::App::IO::Out::WriterTxtDaily ;  
-   use IssueTracker::App::IO::Out::WriterTxtWeekly ;  
-   use IssueTracker::App::IO::Out::WriterTxtMonthly ;  
-   use IssueTracker::App::IO::Out::WriterTxtYearly ;  
+   use IssueTracker::App::IO::Out::WriterTxtTerm ;  
 
 	#
 	# -----------------------------------------------------------------------------
@@ -23,7 +20,7 @@ package IssueTracker::App::IO::Out::TxtWriterFactory ;
 	sub doInstantiate {
 
 		my $self 			= shift ; 	
-		my $period			= shift // $period ; # the default is mysql
+		my $term			   = shift // $term ; # the default is 'daily'
 
 		my @args 			= ( @_ ) ; 
 		my $WriterTxt 		= {}   ; 
@@ -31,21 +28,21 @@ package IssueTracker::App::IO::Out::TxtWriterFactory ;
 		# get the application cnfiguration hash
 		# global app cnfig hash
 
-		if ( $period eq 'daily' ) {
-			$WriterTxt 				= 'WriterTxtDaily' ; 
+		if ( $term eq 'daily' ) {
+			$WriterTxt 				= 'WriterTxtTerm' ; 
 		}
-		elsif ( $period eq 'weekly' ) {
-			$WriterTxt 				= 'WriterTxtWeekly' ; 
+		elsif ( $term eq 'weekly' ) {
+			$WriterTxt 				= 'WriterTxtTerm' ; 
 		}
-		elsif ( $period eq 'monthly' ) {
-			$WriterTxt 				= 'WriterTxtMonthly' ; 
+		elsif ( $term eq 'monthly' ) {
+			$WriterTxt 				= 'WriterTxtTerm' ; 
 		}
-		elsif ( $period eq 'yearly' ) {
-			$WriterTxt 				= 'WriterTxtYearly' ; 
+		elsif ( $term eq 'yearly' ) {
+			$WriterTxt 				= 'WriterTxtTerm' ; 
 		}
 		else {
 			# future support for different RDBMS 's should be added here ...
-			$WriterTxt 				= 'WriterTxtDaily' ; 
+			$WriterTxt 				= 'WriterTxtTerm' ; 
 		}
 
 		my $package_file     	= "IssueTracker/App/IO/Out/$WriterTxt.pm";
@@ -53,7 +50,7 @@ package IssueTracker::App::IO::Out::TxtWriterFactory ;
 
 		require $package_file;
 
-		return $objWriterTxt->new( \$appConfig , $objController , @args);
+		return $objWriterTxt->new( \$appConfig , $objController , $term , @args);
 
 	}
 	# eof sub doInstantiate
@@ -66,8 +63,9 @@ package IssueTracker::App::IO::Out::TxtWriterFactory ;
 	sub new {
 
 		my $invocant 			= shift ;    
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$appConfig           = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
       $objController       = shift ; 
+      $term                = shift || 'daily' ; 
 		
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 

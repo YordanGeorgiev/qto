@@ -5,16 +5,13 @@ package IssueTracker::App::IO::In::TxtReaderFactory ;
 	use Data::Printer ; 
 
 	our $appConfig 		= {} ; 
-	our $period			   = $ENV{'period'} || 'daily' ; 
+	our $term			   = $ENV{'period'} || 'daily' ; 
 	our $objItem			= {} ; 
 	our $objController 	= {} ; 
    our $objLogger       = {} ; 
 
 	# use IssueTracker::App::Db::ReaderTxtWeekly  ; 
-   use IssueTracker::App::IO::In::ReaderTxtDaily ;  
-   use IssueTracker::App::IO::In::ReaderTxtWeekly ;  
-   use IssueTracker::App::IO::In::ReaderTxtMonthly ;  
-   use IssueTracker::App::IO::In::ReaderTxtYearly ;  
+   use IssueTracker::App::IO::In::ReaderTxtTerm ;  
 
 	#
 	# -----------------------------------------------------------------------------
@@ -23,7 +20,7 @@ package IssueTracker::App::IO::In::TxtReaderFactory ;
 	sub doInstantiate {
 
 		my $self 			= shift ; 	
-		my $period			= shift // $period ; # the default is mysql
+		my $term			= shift // $term ; # the default is mysql
 
 		my @args 			= ( @_ ) ; 
 		my $ReaderTxt 		= {}   ; 
@@ -31,21 +28,21 @@ package IssueTracker::App::IO::In::TxtReaderFactory ;
 		# get the application cnfiguration hash
 		# global app cnfig hash
 
-		if ( $period eq 'daily' ) {
-			$ReaderTxt 				= 'ReaderTxtDaily' ; 
+		if ( $term eq 'daily' ) {
+			$ReaderTxt 				= 'ReaderTxtTerm' ; 
 		}
-		elsif ( $period eq 'weekly' ) {
-			$ReaderTxt 				= 'ReaderTxtWeekly' ; 
+		elsif ( $term eq 'weekly' ) {
+			$ReaderTxt 				= 'ReaderTxtTerm' ; 
 		}
-		elsif ( $period eq 'monthly' ) {
-			$ReaderTxt 				= 'ReaderTxtMonthly' ; 
+		elsif ( $term eq 'monthly' ) {
+			$ReaderTxt 				= 'ReaderTxtTerm' ; 
 		}
-		elsif ( $period eq 'yearly' ) {
-			$ReaderTxt 				= 'ReaderTxtYearly' ; 
+		elsif ( $term eq 'yearly' ) {
+			$ReaderTxt 				= 'ReaderTxtTerm' ; 
 		}
 		else {
 			# future support for different RDBMS 's should be added here ...
-			$ReaderTxt 				= 'ReaderTxtDaily' ; 
+			$ReaderTxt 				= 'ReaderTxtTerm' ; 
 		}
 
 		my $package_file     	= "IssueTracker/App/IO/In/$ReaderTxt.pm";
@@ -53,7 +50,7 @@ package IssueTracker::App::IO::In::TxtReaderFactory ;
 
 		require $package_file;
 
-		return $objReaderTxt->new( \$appConfig , $objController , @args);
+		return $objReaderTxt->new( \$appConfig , $objController , $term , @args);
 
 	}
 	# eof sub doInstantiate
