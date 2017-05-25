@@ -14,7 +14,6 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::Out::DbWritersFactory ; 
    use IssueTracker::App::IO::In::TxtReaderFactory ; 
-   use IssueTracker::App::RAM::ConverterTxtToHsr2 ; 
 	
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
@@ -72,9 +71,8 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
 
 
       my $hsr = {} ;          # a hash ref of hash refs 	
-      my $objConverterTxtToHsr2  = 'IssueTracker::App::RAM::ConverterTxtToHsr2'->new ( \$appConfig , $self ) ; 
       ( $ret , $msg , $hsr ) 
-                                 = $objConverterTxtToHsr2->doConvertStrToHashRef ( $str_issues_file ) ; 
+                                 = $objReaderTxt->doConvertStrToHashRef ( $str_issues_file ) ; 
       return ( $ret , $msg ) if $ret != 0 ;  
 
 

@@ -197,7 +197,12 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
             $str_val_list .= ' , \'' . $value . '\'' if defined $value ; 
             $str_val_list .= ' , NULL' unless defined $value ; 
          }
-         
+
+         # p ( $str_col_list ) ; 
+         # p ( $str_val_list ) ; 
+         next unless ( $str_col_list ) ; 
+         next unless ( $str_val_list ) ; 
+ 
          $str_col_list = substr ( $str_col_list , 3 ) ; 
          $str_val_list = substr ( $str_val_list , 3 ) ; 
 
