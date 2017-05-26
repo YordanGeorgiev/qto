@@ -414,6 +414,7 @@ doc/txt/issue-tracker/tests/remove-package-files.test.txt
 doc/txt/issue-tracker/specs/remove-package-files.spec.txt
 doc/txt/issue-tracker/helps/remove-package-files.help.txt
 doc/txt/issue-tracker/funcs/remove-package-files.func.txt
+tags
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlTxtToDb/autosplit.ix
@@ -426,10 +427,8 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/ReaderXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WriterTxtTerm/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WriterXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/ConverterHsr2ToTxt/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/ConverterTxtToHsr2/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Configurator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/IO/FileHandler/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Timer/autosplit.ix
-tags
