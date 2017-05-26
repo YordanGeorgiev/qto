@@ -67,7 +67,7 @@ package IssueTracker::App::Utils::IO::FileHandler ;
             local $/ = undef;
 
             if ( defined ( $mode ) && $mode eq 'utf8' ) {
-               open FILE, "<:utf8", "$file "
+               open FILE, "<:utf8", "$file"
                  or cluck("failed to open \$file $file : $!");
                $string = <FILE> ; 
                die "did not find utf8 string in file: $file" 

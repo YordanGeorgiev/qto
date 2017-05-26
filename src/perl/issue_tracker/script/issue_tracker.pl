@@ -170,6 +170,9 @@ my $period                       = q{} ;
 
          $msg = 'issues_file: ' . $issues_file ; 
          $objLogger->doLogDebugMsg ( $msg ) ; 
+         
+         my $ProductInstanceDir = $appConfig->{'ProductInstanceDir' } ;
+         $issues_file = $ProductInstanceDir . "/" . $issues_file unless ( $issues_file =~ m/^\//g ) ; 
 
          # and the issues file does not comply with the project's dir structure and naming
          # convetions exit with error. Note this is valid for all actions !!!

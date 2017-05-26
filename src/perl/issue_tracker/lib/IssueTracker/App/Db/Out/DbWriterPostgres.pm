@@ -231,7 +231,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       } or $ret = 2  ;
 
       if ( $ret == 2 ) {
-         $msg = DBI->errstr;
+         $msg = DBI->errstr || 'null dbi-errstr' ;
          $objLogger->doLogErrorMsg ( $msg ) ;
          return ( $ret , $msg ) ;
       } else {

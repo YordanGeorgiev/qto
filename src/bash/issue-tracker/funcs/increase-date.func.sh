@@ -8,6 +8,9 @@ doIncreaseDate(){
    test -z ${proj_txt_dir+x} && export exit_code=1 \
       && doExit "define a project by doParseIniEnvVars <<path-to-proj-conf-file>> !!!" && exit 1
 
+   # if a relative path is passed add to the product version dir
+   [[ $proj_txt_dir == /* ]] || export proj_txt_dir="$product_instance_dir"/"$proj_txt_dir"
+
    # find the latest project_daily_txt_dir
    latest_proj_daily_txt_dir=$(find "$proj_txt_dir/issues" -type d|sort -nr | head -n 1|grep -v tmp)
 

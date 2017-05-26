@@ -51,6 +51,10 @@ use ExtUtils::Installed;
 			File::Copy
 			File::Find
 			File::Path
+        	Excel::Writer::XLSX
+			Spreadsheet::ParseExcel
+			Spreadsheet::XLSX
+		   DBD::Pg
 		);
 
 		for(@modules) {
