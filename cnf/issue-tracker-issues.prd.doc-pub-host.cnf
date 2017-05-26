@@ -7,11 +7,10 @@ issue_tracker_project = issue-tracker
 # OBS ! dev , tst , prd product instances to own db !
 db_name   = prd_issue_tracker
 
-# where the scripts to run are situated
-sql_dir = /opt/csitea/issue-tracker/issue-tracker.0.1.8.prd.ysg/src/sql/pgsql/prd_issue_tracker
+sql_dir = src/sql/pgsql/prd_issue_tracker
 
 # where are stored the txt issues files
-proj_txt_dir = /vagrant/csitea/issue-tracker/doc/txt
+proj_txt_dir = doc/txt
 
 # The logging directory 
 LogDir = %ProductInstanceDir%/dat/log

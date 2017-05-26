@@ -1,0 +1,39 @@
+# START DAILY 2017-04-19 09:30 ke
+
+## what will I do till the next daily:
+---------------------------
+
+csitea-issue-tracker-features
+- qas			add ability to run txt-to-db as action in preconfigured project
+- tst			add ability to run db-to-xls as action in preconfigured project
+- tst			add ability to run xls-to-db as action in preconfigured project
+- wip			add ability to run db-to-txt as action in preconfigured project
+
+csitea-issue-tracker-docs
+- fail 		add switch projects scenario description to devops
+
+
+## what did I do since last daily:
+---------------------------
+
+csitea-issue-tracker-features
+- part		xls->db -- add upsert
+- qas			xls -> db via insert
+- todo		db -> txt
+- test		add support for multiple projects
+
+
+csitea-issue-tracker-issues
+- done		plan the full project profiles feature
+ -- done		plan for projects should have source data dirs ( txt , xls ) 
+ -- done		plan for projects should have tgt data dirs ( txt , xls )
+ -- done		plan for projects should switch the db of the issue-tracker
+- done 		specs for start_time matching from the title
+
+csitea-issue-tracker-docs
+- fail 		add switch projects scenario description to devops
+
+csitea-issue-tracker-userstories
+- eval		more user-stories
+
+# STOP  DAILY 2017-04-19 09:30 ke

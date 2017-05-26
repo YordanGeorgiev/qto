@@ -1,0 +1,26 @@
+# START DAILY 2017-04-29 09:30 ke
+
+## what will I do till the next daily:
+---------------------------
+
+
+csitea-issue-tracker-bugs
+- todo		fix add &lt;&lt;section&gt;&gt; to tech overview
+- done		fix bug DBD::Pg::db do failed: ERROR:  invalid byte sequence for encoding "UTF8"
+- done		fix bug with flowed control flow and non-reporting error msg
+
+csitea-issue-tracker-features
+- done		
+- done		remove current attribute from issue table	
+- done		better utf8 handling in FileHandler
+- done		add ability to run txt-to-db as action in preconfigured project -> v0.1.1 
+- tst			add ability to run db-to-xls as action in preconfigured project
+- tst			add ability to run xls-to-db as action in preconfigured project
+- wip			add ability to run db-to-txt as action in preconfigured project
+
+csitea-issue-tracker-docs
+- fail 		add switch projects scenario description to devops
+
+
+
+# STOP  DAILY 2017-04-29 09:30

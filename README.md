@@ -9,8 +9,10 @@ Table of Contents
     * [2.2. Fetch the source](#22-fetch-the-source)
     * [2.3. Build the first issue-tracker instance](#23-build-the-first-issue-tracker-instance)
     * [2.4. Create you local conf file](#24-create-you-local-conf-file)
-    * [2.5. Install the required Perl modules](#25-install-the-required-perl-modules)
-    * [2.6. Start hacking](#26-start-hacking)
+    * [2.5. Set the issue-tracker project vars in he shell ](#25-set-the-issue-tracker-project-vars-in-he-shell-)
+    * [2.6. Apply the db and issue create scirpts](#26-apply-the-db-and-issue-create-scirpts)
+    * [2.7. Install the required Perl modules](#27-install-the-required-perl-modules)
+    * [2.8. Start hacking](#28-start-hacking)
   * [3. ADDITIONAL DOCS](#3-additional-docs)
 
 
@@ -89,13 +91,8 @@ The default conf file provides only limited functionality ( this is by design ) 
     find "$dir/" -type f -exec perl -pi -e "s#$to_srch#$to_repl#g" {} \;
     find "$dir/" -type f -name '*.bak' | xargs rm -f
 
-### 2.5. Install the required Perl modules
-Just run the prerequisites checker script which will provide you with copy pastable instructions
-
-    sudo perl src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
-
-### 2.6. Start hacking
-Start usage:
+### 2.5. Set the issue-tracker project vars in he shell 
+You need to set the issue-tracker project vars in he shell , as there might be many different projects configured to be managed wit hthe issue-tracker - each one with its own db ( dev, tst , prd ) and txt dir structures ( could be also dev,tst,prd ). 
 
     
     cd /opt/csitea/issue-tracker/issue-tracker.0.1.8.dev.$USER
@@ -103,6 +100,27 @@ Start usage:
     # source the proj confs loading func into your bash shell 
     source lib/bash/funcs/parse-cnf-env-vars.sh
     
+    # the the vars of a project - in this case the issue-tracker itself ( could be totally different one with different db and txt dir structure )
+    doParseIniEnvVars cnf/issue-tracker-issues.dev."$(hostname -s)".cnf
+
+### 2.6. Apply the db and issue create scirpts
+If you do not have the PostgreSQL installed check the instructions in the installations and configuratios section of the DevOps guide:
+https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-devops-guide.md#1-installations-and-configurations
+If you do have it , apply the db and issue create scirpts as follows:
+
+    bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
+
+### 2.7. Install the required Perl modules
+Just run the prerequisites checker script which will provide you with copy pastable instructions
+
+    sudo perl src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
+    
+    # after installing all the modules check the perl syntax of the whole project:
+    bash src/bash/issue-tracker/issue-tracker.sh -a check-perl-syntax
+
+### 2.8. Start hacking
+Start usage:
+
     doParseIniEnvVars cnf/ysg-issues.dev.doc-pub-host.cnf
     
     bash src/bash/issue-tracker/issue-tracker.sh -a txt-to-db

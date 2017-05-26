@@ -1,0 +1,13 @@
+# START WEEKLY-17 2017-04-29 09:30
+
+## what will I do till the next weekly:
+---------------------------
+
+csitea-issue-tracker-features
+- done		add ability to run txt-to-db as action in preconfigured project
+- done		add ability to run db-to-xls as action in preconfigured project
+- tst			add ability to run xls-to-db as action in preconfigured project
+- wip			add ability to run db-to-txt as action in preconfigured project
+
+
+# STOP  WEEKLY-16 2017-04-29 09:30

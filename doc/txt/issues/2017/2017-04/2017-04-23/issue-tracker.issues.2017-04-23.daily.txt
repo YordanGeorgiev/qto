@@ -1,0 +1,52 @@
+# START DAILY 2017-04-19 09:30 ke
+
+## what will I do till the next daily:
+---------------------------
+
+csitea-issue-tracker
+- todo		plan the full project profiles feature
+ -- todo		plan for projects should have source data dirs ( txt , xls ) 
+ -- todo		plan for projects should have tgt data dirs ( txt , xls )
+ -- todo		plan for projects should switch the db of the issue-tracker
+- eval 		specs for start_time matching from the title
+
+csitea-issue-tracker-features
+- wip			xls -> db via upsert
+- eval		db -> txt
+- test		add support for multiple projects
+
+csitea-issue-tracker-docs
+- fail 		add switch projects scenario description to devops
+
+csitea-issue-tracker-userstories
+- eval		more user-stories
+
+
+
+
+## what did I do since last daily:
+---------------------------
+
+issue-tracker-features
+- wip			xls -> db via upsert
+  -- done	define name, publicity xls-to-rdbms
+  -- done	clone new wrapp into xls-to-rdbms
+  -- done	issue-tracker into perl-wrapper v1.1.7
+  -- done	clean-up perl-wrapper v1.1.7
+  -- done	clone new perl-wrapper into xls-to-rdbms
+  -- done	merge perl-wrapper into xls-to-rdbms
+- todo		db -> txt
+- test		add support for multiple projects
+- done		create own issue-tracking dir structure
+
+issue-tracker-docs
+- fail 		add switch projects scenario description to devops
+
+issue-tracker-issues
+- done			rearranging to new daily, weekly, monthly dir structure
+
+issue-tracker-userstories
+- done		add the userstories for project switching
+
+
+# STOP  DAILY 2017-04-19 09:30 ke

@@ -1,0 +1,22 @@
+# START DAILY @2017-05-25
+   
+## what will I do till the next daily:
+#---------------------------
+#
+
+issue-tracker-docs
+ - wip		add the Feature book 
+
+issue-tracker-bugs
+ - todo		fix the duplication bug
+  
+issue-tracker-features
+ - done		add configurable order_by attr in db-to-txt action
+ - done		add support for YYYY-mm-dd HH:MM in start_time
+ 
+csitea-issue-tracker-features
+ - qas		add the sort by action 
+ 
+# STOP  DAILY @2017-05-25
+
+
