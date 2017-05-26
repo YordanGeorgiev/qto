@@ -38,8 +38,8 @@ The examples are for Ubuntu - use you OS package manager …
 
     # use your OS package manager … if you are not on Ubuntu 
     
-    apt-get autoclean
-    apt-get install --only-upgrade bash
+    sudo apt-get autoclean
+    sudo apt-get install --only-upgrade bash
     
     sudo apt-get install -y perl
     
@@ -47,7 +47,7 @@ The examples are for Ubuntu - use you OS package manager …
     sudo apt-get install -y excuberant-ctags
     sudo apt-get install -y 7z
     
-    apt-get upgrade
+    sudo apt-get upgrade
 
 ### 2.2. Fetch the source
 Fetch the source from git hub as follows:
@@ -77,7 +77,7 @@ The default conf file provides only limited functionality ( this is by design ) 
     # START -- search and replace recursively 
     export dir=`pwd`
     export to_srch="doc-pub-host"
-    export to_repl="$(hostname -s)
+    export to_repl="$(hostname -s)"
     
     #-- search and replace in file and dir paths
     find "$dir/" -type d |\
@@ -92,7 +92,7 @@ The default conf file provides only limited functionality ( this is by design ) 
 ### 2.5. Install the required Perl modules
 Just run the prerequisites checker script which will provide you with copy pastable instructions
 
-    perl src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
+    sudo perl src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
 
 ### 2.6. Start hacking
 Start usage:
