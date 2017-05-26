@@ -9,7 +9,8 @@ Table of Contents
     * [2.2. Fetch the source](#22-fetch-the-source)
     * [2.3. Build the first issue-tracker instance](#23-build-the-first-issue-tracker-instance)
     * [2.4. Create you local conf file](#24-create-you-local-conf-file)
-    * [2.5. Start hacking](#25-start-hacking)
+    * [2.5. Install the required Perl modules](#25-install-the-required-perl-modules)
+    * [2.6. Start hacking](#26-start-hacking)
   * [3. ADDITIONAL DOCS](#3-additional-docs)
 
 
@@ -35,6 +36,8 @@ The nice to have are:
 
 The examples are for Ubuntu - use you OS package manager …
 
+    # use your OS package manager … if you are not on Ubuntu 
+    
     apt-get autoclean
     apt-get install --only-upgrade bash
     
@@ -69,17 +72,38 @@ Each issue-tracker instance has it's own version, environmnt type and owner. For
 The default conf file provides only limited functionality ( this is by design ) , thus copy and configure the configuration file for your host
 
     # go to the product version dir
-    cd /opt/csitea/issue-tracker/issue-tracker /opt/csitea/issue-tracker/issue-tracker.0.1.8.dev.$USER
+    cd /opt/csitea/issue-tracker/issue-tracker.0.1.8.dev.$USER
     
-    mv -v sfw/bash/issue-tracker/issue-tracker.set-your-host.conf sfw/bash/issue-tracker/issue-tracker.`hostname -s`.conf
+    # START -- search and replace recursively 
+    export dir=`pwd`
+    export to_srch="doc-pub-host"
+    export to_repl="$(hostname -s)
+    
+    #-- search and replace in file and dir paths
+    find "$dir/" -type d |\
+    perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;`mkdir -p $n` ;'
+    find "$dir/" -type f |\
+    perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;rename($o,$n) unless -e $n ;'
+    
+    #-- search and replace in file contents
+    find "$dir/" -type f -exec perl -pi -e "s#$to_srch#$to_repl#g" {} \;
+    find "$dir/" -type f -name '*.bak' | xargs rm -f
 
-### 2.5. Start hacking
+### 2.5. Install the required Perl modules
+Just run the prerequisites checker script which will provide you with copy pastable instructions
+
+    perl src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
+
+### 2.6. Start hacking
 Start usage:
 
     
     cd /opt/csitea/issue-tracker/issue-tracker.0.1.8.dev.$USER
     
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/ysg-issues.dev.doc-pub-host.cnf
+    # source the proj confs loading func into your bash shell 
+    source lib/bash/funcs/parse-cnf-env-vars.sh
+    
+    doParseIniEnvVars cnf/ysg-issues.dev.doc-pub-host.cnf
     
     bash src/bash/issue-tracker/issue-tracker.sh -a txt-to-db
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-xls
