@@ -8,10 +8,10 @@ Table of Contents
     * [1.2. Add the media keys](#12-add-the-media-keys)
     * [1.3. Install the postgre package with apt](#13-install-the-postgre-package-with-apt)
     * [1.4. Change the postgre user password](#14-change-the-postgre-user-password)
-      * [1.4.1. Start the psql client as the postgres shell user](#141-start-the-psql-client-as-the-postgres-shell-user)
-      * [1.4.2. Create the pgsql user ](#142-create-the-pgsql-user-)
-    * [1.5. Install and configure postgre](#15-install-and-configure-postgre)
-    * [1.6. Install the perl modules ( optional)](#16-install-the-perl-modules-(-optional))
+      * [1.4.1. start the postgreSQL](#141-start-the-postgresql)
+      * [1.4.2. Start the psql client as the postgres shell user](#142-start-the-psql-client-as-the-postgres-shell-user)
+      * [1.4.3. Create the pgsql user ](#143-create-the-pgsql-user-)
+    * [1.5. Install the perl modules ( optional)](#15-install-the-perl-modules-(-optional))
   * [2. MAINTENANCE AND OPERATIONS](#2-maintenance-and-operations)
     * [2.1. RUNSTATE MANAGEMENT](#21-runstate-management)
       * [2.1.1. To check the status of the postgreSql](#211-to-check-the-status-of-the-postgresql)
@@ -59,11 +59,14 @@ Add the media keys as follows:
 ### 1.3. Install the postgre package with apt
 Install the postgre package with apt
 
-    # update the apt repositories
+    # update your repos
     sudo apt-get update
     
-    # install
-    sudo apt-get install postgresql-9.4
+    # install the postgresql binary
+    sudo apt-get install postgresql postgresql-contrib
+    
+    # enable postgre
+    sudo update-rc.d postgresql enable
 
 ### 1.4. Change the postgre user password
 Configure the Ubuntu repositories
@@ -74,7 +77,12 @@ Configure the Ubuntu repositories
     # and verify 
     su - postgres
 
-#### 1.4.1. Start the psql client as the postgres shell user
+#### 1.4.1. start the postgreSQL
+Start the postgreSQL by issuing the following command
+
+    sudo /etc/init.d/postgresql start
+
+#### 1.4.2. Start the psql client as the postgres shell user
 Start the psql client as the postgres shell user
 source:
 http://dba.stackexchange.com/a/54253/1245
@@ -91,38 +99,25 @@ http://dba.stackexchange.com/a/54253/1245
     #and quit
     \q
 
-#### 1.4.2. Create the pgsql user 
+#### 1.4.3. Create the pgsql user 
 Create the pgsql user and grant him the privileges to create dbs and to connect to the postgres db. 
 You could alternatively configure different way of authenticatio according to the options provided in this stackoverflow answer:
 http://stackoverflow.com/a/9736231/65706
 
     # create the pgsql user to be the same as the shell 
-    # user you are going to execute the scripts with ( in my case it is ysg )
-    # postgres=# 
-    create user ysg ;
+    # user you are going to execute the scripts with 
+    sudo su - postgres  -c "psql -c 'CREATE USER '$USER' ;'"
     
     # grant him the priviledges
-    grant all privileges on database postgres to ysg ;
+    sudo su - postgres  -c "psql -c 'grant all privileges on database postgres to '$USER' ;'"
     
     # grant him the privilege to create db's 
-    ALTER USER ysg CREATEDB;
+    sudo su - postgres  -c "psql -c 'ALTER USER '$USER' CREATEDB;'"
     
     # and exit
     \q
 
-### 1.5. Install and configure postgre
-Install and configure postgre as follows
-
-    # update your repos
-    sudo apt-get update
-    
-    # install the postgresql binary
-    sudo apt-get install postgresql postgresql-contrib
-    
-    # enable postgre
-    sudo update-rc.d postgresql enable
-
-### 1.6. Install the perl modules ( optional)
+### 1.5. Install the perl modules ( optional)
 Install the perl module by first installing the server development package
 
     

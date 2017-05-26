@@ -77,19 +77,19 @@ The default conf file provides only limited functionality ( this is by design ) 
     cd /opt/csitea/issue-tracker/issue-tracker.0.1.8.dev.$USER
     
     # START -- search and replace recursively 
-    export dir=`pwd`
+    export dir=.
     export to_srch="doc-pub-host"
     export to_repl="$(hostname -s)"
     
-    #-- search and replace in file and dir paths
-    find "$dir/" -type d |\
+    #-- search and replace in file and dir paths excludding the .git dir
+    find "$dir/"  -not -path "./.git/*" -type d |\
     perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;`mkdir -p $n` ;'
-    find "$dir/" -type f |\
+    find "$dir/"  -not -path "./.git/*" -type f |\
     perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;rename($o,$n) unless -e $n ;'
     
-    #-- search and replace in file contents
-    find "$dir/" -type f -exec perl -pi -e "s#$to_srch#$to_repl#g" {} \;
-    find "$dir/" -type f -name '*.bak' | xargs rm -f
+    #-- search and replace in file contents excludging the .git dir
+    find "$dir/" -not -path "./.git/*" -type f -exec perl -pi -e "s#$to_srch#$to_repl#g" {} \;
+    find "$dir/" -not -path "./.git/*" -type f -name '*.bak' | xargs rm -f
 
 ### 2.5. Set the issue-tracker project vars in he shell 
 You need to set the issue-tracker project vars in he shell , as there might be many different projects configured to be managed wit hthe issue-tracker - each one with its own db ( dev, tst , prd ) and txt dir structures ( could be also dev,tst,prd ). 
