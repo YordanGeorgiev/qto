@@ -1,7 +1,3 @@
-# file: ~/.tmux.cnf
-
-# v1.0.1
-# this is your <<prefix>>
 # remap prefix from 'C-b' to 'C-j', because it is the only letter left from  the 
 # bash shortcuts with the Control option
 unbind C-b

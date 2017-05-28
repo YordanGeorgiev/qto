@@ -1,5 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
+src/bash/issue-tracker/bootstrap-issue-tracker.sh
 src/bash/issue-tracker/issue-tracker.sh
 src/bash/issue-tracker/test-issue-tracker.sh
 src/bash/issue-tracker/tests/all-issue-tracker-tests.lst

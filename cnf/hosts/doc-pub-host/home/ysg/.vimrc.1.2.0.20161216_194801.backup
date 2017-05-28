@@ -67,7 +67,7 @@ map <F3> :bn!<CR>
 " f3 would go to the previous bugger
 map <F2> :bp!<CR>
 
-" :vimgrep /$to-srch/ `find . -type f -name '*.pm' -o -name '*.pl'`
+" :vimgrep /srch/ `find . -type f -name '*.pm' -o -name '*.pl'`
 " F5 should find the next occurrence after vimgrep
 map <F5> :cp!<CR>
 

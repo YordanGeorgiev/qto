@@ -1,12 +1,13 @@
 # this is kind of a srch history file - PREPEND !!!
 :g/srch/| :vimgrep /srch/ `find . -type f \| grep -v .git \| grep -v .log`
+
+:g/doParse/| :vimgrep /doParse/ `find . -type f \| grep -v .git \| grep -v .log`
+:g/mkdir/| :vimgrep /mkdir/ `find . -type f -name '*.sh' \| grep -v .git \| grep -v .log`
 :g/doConvertHashRefToStr/| :vimgrep /srch/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/DbHandler/| :vimgrep /DbHandler/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/doConvertStrToHashRef/| :vimgrep /doConvertStrToHashRef/ `find . -type f \| grep -v .git \| grep -v .log`
 
-
-
-
+:q/mkdir/ | :noautocmd vimgrep /mkdir/ **/*.sh
 
 :g/STOP print row_hash/| :vimgrep /STOP print row_hash/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/module_trace/| :vimgrep /module_trace/ `find . -type f \| grep -v .git \| grep -v .log`

@@ -1,8 +1,8 @@
 #
 # ---------------------------------------------------------
 # source this lib function by:
-# source lib/bash/funcs/parse-cnf-env-vars.sh
-# call by: doParseCnfEnvVars cnf/ysg-issues.prd.doc-pub-host.cnf
+# source ./lib/bash/funcs/parse-cnf-env-vars.sh
+# call by: doParseCnfEnvVars cnf/issue-tracker.dev.doc-pub-host.cnf
 # verify by: 
 # echo $issue_tracker_project 
 # should echo:

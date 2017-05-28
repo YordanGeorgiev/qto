@@ -226,7 +226,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       } or $ret = 2  ;
 
       if ( $ret == 2 ) {
-         $msg = DBI->errstr;
+         $msg = DBI->errstr || 'null-dbi-error-msg' ; 
          $objLogger->doLogErrorMsg ( $msg ) ;
          return ( $ret , $msg ) ;
       } else {
@@ -391,7 +391,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
          } or $ret = 2  ;
          
          if ( $ret == 2 ) {
-            $msg = DBI->errstr;
+            $msg = DBI->errstr || 'null-dbi-error-msg' ; 
             $objLogger->doLogErrorMsg ( $msg ) ; 
             return ( $ret , $msg ) ; 
          } else {
