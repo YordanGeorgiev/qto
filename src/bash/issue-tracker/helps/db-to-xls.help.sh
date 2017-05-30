@@ -2,7 +2,7 @@
 
 # v1.0.9
 # ---------------------------------------------------------
-# todo: add doHelpDbToXls comments ...
+# wrapper func to present the db-to-xls help file
 # ---------------------------------------------------------
 doHelpDbToXls(){
 

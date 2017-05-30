@@ -99,7 +99,10 @@ doc/txt/issue-tracker/helps/txt-to-db.help.txt
 src/sql/pgsql/
 src/sql/pgsql/dev_issue_tracker
 src/sql/pgsql/dev_issue_tracker/00.create-db.pgsql
-src/sql/pgsql/dev_issue_tracker/01.create-table-issue.sql
+src/sql/pgsql/dev_issue_tracker/01.create-table-daily_issue.sql
+src/sql/pgsql/dev_issue_tracker/02.create-table-weekly_issue.sql
+src/sql/pgsql/dev_issue_tracker/03.create-table-monthly_issue.sql
+src/sql/pgsql/dev_issue_tracker/04.create-table-yearly_issue.sql
 src/sql/pgsql/tst_issue_tracker
 src/sql/pgsql/tst_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/tst_issue_tracker/01.create-table-issue.sql

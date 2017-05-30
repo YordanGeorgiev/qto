@@ -18,7 +18,6 @@
 
 :g/hld/| :vimgrep /hld/ `find . -type f \| grep -v .git \| grep -v .log`
 
-
 :g/doInsertSqlHashData/| :vimgrep /doInsertSqlHashData/ `find . -type f \| grep -v .git \| grep -v .log`
 
 

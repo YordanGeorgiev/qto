@@ -1,5 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
+src/bash/issue-tracker/bootstrap-issue-tracker.sh
 src/bash/issue-tracker/issue-tracker.sh
 src/bash/issue-tracker/test-issue-tracker.sh
 src/bash/issue-tracker/tests/all-issue-tracker-tests.lst
@@ -57,10 +58,25 @@ src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Timer.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm
 #----
-cnf/issue-tracker.doc-pub-host.cnf
+cnf
+cnf/hosts
+cnf/hosts/doc-pub-host
+cnf/hosts/doc-pub-host/home
+cnf/hosts/doc-pub-host/home/ysg
+cnf/hosts/doc-pub-host/home/ysg/.muttrc
+cnf/hosts/doc-pub-host/home/ysg/.tmux.cnf
+cnf/hosts/doc-pub-host/home/ysg/.tmux.cnf.1.1.1.20161231_092125.backup
+cnf/hosts/doc-pub-host/home/ysg/.tmux-session.1.0.0.20161216_202609.backup
+cnf/hosts/doc-pub-host/home/ysg/.tmux-session.1.0.0.20161231_092215.backup
+cnf/hosts/doc-pub-host/home/ysg/.vimrc.1.2.0.20161216_194801.backup
 cnf/issue-tracker.dev.doc-pub-host.cnf
-cnf/issue-tracker.tst.doc-pub-host.cnf
+cnf/issue-tracker.doc-pub-host.cnf
+cnf/issue-tracker-issues.dev.doc-pub-host.cnf
+cnf/issue-tracker-issues.prd.doc-pub-host.cnf
+cnf/issue-tracker-issues.tst.doc-pub-host.cnf
 cnf/issue-tracker.prd.doc-pub-host.cnf
+cnf/issue-tracker.tst.doc-pub-host.cnf
+cnf/readme.txt
 #----
 src/bash/issue-tracker/tests/db-to-txt.test.sh
 src/bash/issue-tracker/funcs/db-to-txt.func.sh
@@ -83,7 +99,10 @@ doc/txt/issue-tracker/helps/txt-to-db.help.txt
 src/sql/pgsql/
 src/sql/pgsql/dev_issue_tracker
 src/sql/pgsql/dev_issue_tracker/00.create-db.pgsql
-src/sql/pgsql/dev_issue_tracker/01.create-table-issue.sql
+src/sql/pgsql/dev_issue_tracker/01.create-table-daily_issue.sql
+src/sql/pgsql/dev_issue_tracker/02.create-table-weekly_issue.sql
+src/sql/pgsql/dev_issue_tracker/03.create-table-monthly_issue.sql
+src/sql/pgsql/dev_issue_tracker/04.create-table-yearly_issue.sql
 src/sql/pgsql/tst_issue_tracker
 src/sql/pgsql/tst_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/tst_issue_tracker/01.create-table-issue.sql

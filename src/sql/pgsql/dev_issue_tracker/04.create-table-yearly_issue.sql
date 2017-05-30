@@ -1,9 +1,9 @@
--- DROP TABLE IF EXISTS issue ; 
+-- DROP TABLE IF EXISTS yearly_issue ; 
 
-SELECT 'create the "issue" table'
+SELECT 'create the "yearly_issue" table'
 ; 
-   CREATE TABLE issue (
-      issue_id       integer NOT NULL PRIMARY KEY
+   CREATE TABLE yearly_issue (
+      yearly_issue_id       integer NOT NULL PRIMARY KEY
     , level          integer NULL
     , prio           integer NULL
     , status         varchar (50) NOT NULL
@@ -21,7 +21,7 @@ SELECT 'show the columns of the just created table'
 
    SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute
-   WHERE  attrelid = 'public.issue'::regclass
+   WHERE  attrelid = 'public.yearly_issue'::regclass
    AND    attnum > 0
    AND    NOT attisdropped
    ORDER  BY attnum
