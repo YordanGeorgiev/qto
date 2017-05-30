@@ -134,7 +134,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       
       
       $ret = $dbh->do( $str_sql_truncate ) ; 
-      $msg = DBI->errstr ; 
+      $msg = DBI->errstr || 'null dbi_err_msg' ; 
 
       unless ( defined ( $msg ) ) {
          $msg = 'INSERT OK' ; 
@@ -152,118 +152,6 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 	}
 	#eof sub doHsr2ToDb
 
-	#
-   # ------------------------------------------------------
-	#  input: hash ref of hash refs containing the issues 
-	#  output: the data in the issue table
-   # ------------------------------------------------------
-	sub doInsertSqlHashData {
-
-		my $self 				= shift ; 
-		my $sql_hash 			= shift ; 	
-   
-
-      p ( $sql_hash ) if $module_trace == 1  ;
-      $objLogger->doLogDebugMsg ( "STOP print sql_hash " ) ;    
-      my $ret              = 1 ; 
-      my $msg              = 'unknown error while sql insert ' ; 		
-      my $str_sql_insert   = q{} ; 
-      my $str_col_list     = q{} ; 
-      my $str_val_list     = q{} ; 
-      my $error_msg        = q{} ; 
-		my $dbh					= {} ; 
-		my $rv					= 0 ; 
-
-      binmode(STDIN,  ':utf8');
-      binmode(STDOUT, ':utf8');
-      binmode(STDERR, ':utf8');
-
-      my $debug_msg        = 'START doInsertSqlHashData' ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-	  
-      $str_sql_insert .= ' TRUNCATE TABLE issue ; ' ; 
- 
-		foreach my $key ( sort(keys( %{$sql_hash} ) ) ) {
-         my $row_hash = $sql_hash->{ $key } ; 
-         
-         p ( $row_hash ) if $module_trace > 1 ; 
-         my $debug_msg        = 'STOP print row_hash ' ; 
-         $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace > 1 ; 
-
-		   foreach my $key ( sort(keys( %{$row_hash} ) ) ) {
-            $str_col_list .= ' , ' . $key ; 
-            my $value     = $row_hash->{ $key } ; 
-            $value        =~ s/'/''/g if ( $value ) ; 
-            $str_val_list .= ' , \'' . $value . '\'' if defined $value ; 
-            $str_val_list .= ' , NULL' unless defined $value ; 
-         }
-         
-         $str_col_list = substr ( $str_col_list , 3 ) ; 
-         $str_val_list = substr ( $str_val_list , 3 ) ; 
-
-         $str_sql_insert .= 'INSERT INTO issue ' ; 
-         $str_sql_insert .= '( ' . $str_col_list . ') VALUES (' . $str_val_list . ');' . "\n" ; 
-
-         $str_col_list = '' ; 
-         $str_val_list = '' ; 
-      }
-      
-      p ( $str_sql_insert ) if $module_trace == 1 ; 
-
-      # proper authentication implementation src:
-      # http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
-      $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
-
-
-      eval {
-         $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
-              'RaiseError'          => 1
-            , 'ShowErrorStatement'  => 1
-            , 'AutoCommit'          => 1
-         } );
-      } or $ret = 2  ;
-
-      if ( $ret == 2 ) {
-         $msg = DBI->errstr || 'null-dbi-error-msg' ; 
-         $objLogger->doLogErrorMsg ( $msg ) ;
-         return ( $ret , $msg ) ;
-      } else {
-         $msg = 'OK for connect ' ;
-         $objLogger->doLogDebugMsg ( $msg ) ;
-      }
-
-      p ( $str_sql_insert ) if $module_trace == 1 ; 
- 
-
-		# Action !!!
-		eval {
-			$rv = $dbh->do($str_sql_insert) ;
-		} or $msg = $@ ;
-
-		unless ( $rv == 1 ) {
-			$msg .= " DBI upsert error :" . $msg  ;
-			$objLogger->doLogFatalMsg ( $msg ) ;   ;
-			return ( $ret , $msg ) ; # all or nothing ok
-		}
-		else {
-			$msg = "OK for insert " ;
-			$objLogger->doLogInfoMsg ( $msg ) ;
-			$ret = 0 ;
-		}
-
-      $msg = 'OK for insert for all tables' ;
-      return ( $ret , $msg ) ;
-
-      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      $debug_msg        = 'STOP  doInsertSqlHashData ret ' . $ret ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-      
-      return ( $ret , $msg ) ; 	
-	}
-	#eof sub doInsertSqlHashData
-
 
    #
    # -----------------------------------------------------------------------------
@@ -272,7 +160,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
    sub doSelectTableIntoHashRef {
 
       my $self             = shift ; 
-      my $table            = shift ;      # the table to get the data from  
+      my $table            = shift || 'daily_issue' ;  # the table to get the data from  
       
       my $msg              = q{} ;         
       my $ret              = 1 ;          # this is the return value from this method 
@@ -283,17 +171,20 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
 
-#         Column    |          Type           | Modifiers | Storage  | Stats target | Description
-#      -------------+-------------------------+-----------+----------+--------------+-------------
-#       issue_id    | integer                 | not null  | plain    |              |
-#       prio        | integer                 |           | plain    |              |
-#       name        | character varying(100)  | not null  | extended |              |
-#       description | character varying(1000) |           | extended |              |
-#       status      | character varying(50)   | not null  | extended |              |
-#       category    | character varying(100)  | not null  | extended |              |
+# ordinal_position | table_name  |  column_name   |     data_type     | is_nullable
+#------------------+-------------+----------------+-------------------+-------------
+#                1 | daily_issue | daily_issue_id | integer           | NO
+#                2 | daily_issue | level          | integer           | YES
+#                3 | daily_issue | prio           | integer           | YES
+#                4 | daily_issue | status         | character varying | NO
+#                5 | daily_issue | category       | character varying | NO
+#                6 | daily_issue | name           | character varying | NO
+#                7 | daily_issue | description    | character varying | YES
+#                8 | daily_issue | start_time     | text              | YES
+#                9 | daily_issue | stop_time      | text              | YES
+#               10 | daily_issue | run_date       | date              | YES
 
-
-      $mhsr->{'ColumnNames'}-> { 0 } = 'issue_id' ;
+      $mhsr->{'ColumnNames'}-> { 0 } = "$table" . '_id' ;
       $mhsr->{'ColumnNames'}-> { 1 } = 'level' ;
       $mhsr->{'ColumnNames'}-> { 2 } = 'prio' ;
       $mhsr->{'ColumnNames'}-> { 3 } = 'status' ;
@@ -306,7 +197,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 
       $str_sql = 
          " SELECT 
-              issue_id
+              " . "$table" . "_id
             , level 
             , prio
             , status
@@ -338,7 +229,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
 
-      $hsr = $sth->fetchall_hashref( 'issue_id' ) ; 
+      $hsr = $sth->fetchall_hashref( $table . '_id' ) ; 
       binmode(STDOUT, ':utf8');
       p( $hsr ) if $module_trace == 1 ; 
 
@@ -359,108 +250,6 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
    }
    # eof sub doSelectTableIntoHashRef
 
-	#
-	# -----------------------------------------------------------------------------
-	# runs the insert sql by passed data part 
-	# by convention is assumed that the first column is unique and update could 
-	# be performed on it ... should there be duplicates the update should fail
-	# -----------------------------------------------------------------------------
-	sub doInsertDbTablesWithHsr2 {
-
-		my $self 			   = shift ; 
-		my $hsr2 		      = shift ; 
-		my $ret 				   = 1 ; 
-		my $msg 				   = ' failed to connect during insert to db !!! ' ; 
-		my $debug_msg 		   = ' failed to connect during insert to db !!! ' ; 
-      my $sth              = {} ;    # this is the statement handle
-      my $dbh              = {} ;    # this is the database handle
-      my $str_sql          = q{} ;   # this is the sql string to use for the query
-      my $rv               = 0 ;     # apperantly insert ok returns rv = 1 !!! 
-
-      # obs this does not support ordered primary key tables first order yet !!!
-      foreach my $table_name ( keys %$hsr2 ) { 
-         my $hs_table = $hsr2->{ $table_name } ; 
-         my $hs_headers = $hsr2->{ $table_name }->{ 0 } ; 		   
-     
-         eval { 
-            $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
-                 'RaiseError'          => 1
-               , 'ShowErrorStatement'  => 1
-               , 'AutoCommit'          => 1
-            } ); 
-         } or $ret = 2  ;
-         
-         if ( $ret == 2 ) {
-            $msg = DBI->errstr || 'null-dbi-error-msg' ; 
-            $objLogger->doLogErrorMsg ( $msg ) ; 
-            return ( $ret , $msg ) ; 
-         } else {
-            $msg = 'connect OK' ; 
-            $objLogger->doLogDebugMsg ( $msg ) ; 
-         }
-
-         my $sql_str          = '' ; 
-         my $sql_str_insrt    = "INSERT INTO $table_name " ; 
-         $sql_str_insrt      .= '(' ; 
-
-         foreach my $col_num ( sort ( keys %$hs_headers )) {
-            my $column_name = $hs_headers->{ $col_num } ; 
-            $sql_str_insrt .= " $column_name " . ' , ' ; 
-         } 
-         
-         for (1..3) { chop ( $sql_str_insrt) } ; 
-         $sql_str_insrt	.= ')' ; 
-
-         foreach my $row_num ( sort ( keys %$hs_table ) ) { 
-
-            next if $row_num == 0 ; 
-            my $hs_row = $hs_table->{ $row_num } ; 
-            my $data_str = q{} ; 
-
-            foreach my $col_num ( sort ( keys ( %$hs_row ) ) ) {
-               my $cell_value = $hs_row -> { $col_num } ; 
-               $cell_value = '' unless ( defined ( $cell_value )) ; 
-               $cell_value =~ s|\\|\\\\|g ; 
-               # replace the ' chars with \'
-               $cell_value 		=~ s|\'|\'\'|g ; 
-               $data_str .= "'" . "$cell_value" . "' , " ; 
-            }
-            #eof foreach col_num
-            
-            # remove the " , " at the end 
-            for (1..3) { chop ( $data_str ) } ; 
-            
-            $sql_str .= $sql_str_insrt ;  
-            $sql_str	.=  " VALUES (" . "$data_str" . ') ; ' . "\n" ; 
-
-
-         } 
-         #eof foreach row
-           	
-				$sql_str = "TRUNCATE TABLE $table_name ; $sql_str " ; 	 
-            $objLogger->doLogDebugMsg ( "sql_str : $sql_str " ) ; 
-
-         # Action !!! 
-         $msg = " DBI upsert error on table: $table_name: " . $msg  ; $ret = 1 ; 
-         eval { 
-            $rv = $dbh->do($sql_str) ; 
-         } or return ( $ret , $msg ) ; 
-
-
-
-         if ( $rv == 1 ) { 
-            $msg = "upsert OK for table $table_name" ;          
-            $objLogger->doLogInfoMsg ( $msg ) ; 
-            $ret = 0 ; 
-         }
-
-      } 
-      #eof foreach table_name
-		
-      $msg = 'upsert OK for all tables' ; 
-		return ( $ret , $msg ) ; 
-	}
-	#eof sub doInsertDbTablesWithHsr2
 	
    #
 	# -----------------------------------------------------------------------------

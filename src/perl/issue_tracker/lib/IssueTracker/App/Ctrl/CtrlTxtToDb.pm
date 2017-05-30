@@ -64,22 +64,24 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
       my $period                 = $ENV{ 'period' } || 'daily' ;  
       my $objTxtReaderFactory    = 'IssueTracker::App::IO::In::TxtReaderFactory'->new( \$appConfig , $self ) ; 
       my $objReaderTxt 			   = $objTxtReaderFactory->doInstantiate ( "$period" );
+		my $term							= $ENV{'period' } || 'daily' ; 
+		my $table						= $term . '_issue' ; 
 
       my ( $ret , $msg , $str_issues_file ) 
-                                 = $objReaderTxt->doReadIssueFile ( $issues_file ) ; 
+                                 = $objReaderTxt->doReadIssueFile ( $issues_file , $table ) ; 
       return ( $ret , $msg ) if $ret != 0 ;  
 
 
       my $hsr = {} ;          # a hash ref of hash refs 	
       ( $ret , $msg , $hsr ) 
-                                 = $objReaderTxt->doConvertStrToHashRef ( $str_issues_file ) ; 
+                                 = $objReaderTxt->doConvertStrToHashRef ( $str_issues_file , $table ) ; 
       return ( $ret , $msg ) if $ret != 0 ;  
 
 
       p($hsr) if $module_trace == 1 ; 
       my $objDbWritersFactory    = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$appConfig , $self ) ; 
       my $objDbWriter 			   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" );
-      ( $ret , $msg )            = $objDbWriter->doInsertSqlHashData ( $hsr ) ; 
+      ( $ret , $msg )            = $objDbWriter->doInsertSqlHashData ( $hsr , $table ) ; 
       return ( $ret , $msg ) ; 
    } 
 

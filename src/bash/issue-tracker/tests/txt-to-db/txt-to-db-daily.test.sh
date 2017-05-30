@@ -4,18 +4,22 @@
 # ---------------------------------------------------------
 # tests the issues txt file to db load action
 # ---------------------------------------------------------
-doTestTxtToDb(){
+doTestTxtToDbDaily(){
 
-	doLog "DEBUG START doTestTxtToDb"
-   doTestTxtToDbDaily
-   doTestTxtToDbWeekly
-   doTestTxtToDbMonthly
+	doLog "DEBUG START doTestTxtToDbDaily"
+   export period='daily'
+   bash src/bash/issue-tracker/issue-tracker.sh -a txt-to-db
+   exit_code=$?
 
-   # bash src/bash/issue-tracker/issue-tracker.sh -a txt-to-db
-   # exit_code=$?
+   # and check the values from the db
+   psql -d "$db_name" -c '
+   SELECT '"$period"'_issue_id , category , name 
+   FROM '"$period"'_issue order by name
+   ;';
+
    sleep "$sleep_interval"
    test $exit_code -ne 0 && return
-	doLog "DEBUG STOP  doTestTxtToDb"
+	doLog "DEBUG STOP  doTestTxtToDbDaily"
 }
 # eof func doTestTxtToDb
 

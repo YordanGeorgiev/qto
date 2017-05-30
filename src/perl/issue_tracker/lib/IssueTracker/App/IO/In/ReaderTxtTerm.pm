@@ -64,6 +64,7 @@ package IssueTracker::App::IO::In::ReaderTxtTerm ;
 
       my $self       = shift ; 
       my $str        = shift ; 
+		my $table		= shift || 'daily_issue' ; 
 
       my $ret        = 1 ; 
       my $msg        = 'unknown error while converting string to hash reference' ; 
@@ -132,7 +133,7 @@ package IssueTracker::App::IO::In::ReaderTxtTerm ;
                $name = $3 ; 
                next unless $name ; 
 
-               $hsr->{ $i }->{ 'issue_id' } = $i ;
+               $hsr->{ $i }->{ "$table" . '_id' } = $i ;
 
                $item_levels->{ $category_item_count } = 1 
                   unless ( exists $item_levels->{ $category_item_count });

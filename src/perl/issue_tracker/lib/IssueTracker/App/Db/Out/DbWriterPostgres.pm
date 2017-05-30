@@ -33,6 +33,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
 		my $self 				= shift ; 
 		my $hsr2 			   = shift ; 	# the hash ref of hash refs  aka hs r on power 2
+      my $term             = shift || 'daily' ; 
       
       my $ret              = 1 ; 
       my $msg              = 'unknown error while sql insert ' ; 		
@@ -152,6 +153,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 	}
 	#eof sub doHsr2ToDb
 
+
 	#
    # ------------------------------------------------------
 	#  input: hash ref of hash refs containing the issues 
@@ -161,7 +163,8 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
 		my $self 				= shift ; 
 		my $sql_hash 			= shift ; 	
-   
+		my $table				= shift || 'daily_issue' ; 
+  
 
       p ( $sql_hash ) if $module_trace == 1  ;
       $objLogger->doLogDebugMsg ( "STOP print sql_hash " ) ;    
@@ -173,6 +176,12 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       my $error_msg        = q{} ; 
 		my $dbh					= {} ; 
 		my $rv					= 0 ; 
+      
+      unless ( $sql_hash ) {
+         $msg = 'no data in sql hash - probably an error' ; 
+         $objLogger->doLogErrorMsg ( $msg ) ; 
+         return ( $ret , $msg ) ; 
+      }
 
       binmode(STDIN,  ':utf8');
       binmode(STDOUT, ':utf8');
@@ -181,7 +190,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       my $debug_msg        = 'START doInsertSqlHashData' ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
 	  
-      $str_sql_insert .= ' TRUNCATE TABLE issue ; ' ; 
+      $str_sql_insert .= ' TRUNCATE TABLE ' . "$table" . '; ' ; 
  
 		foreach my $key ( sort(keys( %{$sql_hash} ) ) ) {
          my $row_hash = $sql_hash->{ $key } ; 
@@ -206,7 +215,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          $str_col_list = substr ( $str_col_list , 3 ) ; 
          $str_val_list = substr ( $str_val_list , 3 ) ; 
 
-         $str_sql_insert .= 'INSERT INTO issue ' ; 
+         $str_sql_insert .= 'INSERT INTO ' . "$table" . ' '  ; 
          $str_sql_insert .= '( ' . $str_col_list . ') VALUES (' . $str_val_list . ');' . "\n" ; 
 
          $str_col_list = '' ; 
