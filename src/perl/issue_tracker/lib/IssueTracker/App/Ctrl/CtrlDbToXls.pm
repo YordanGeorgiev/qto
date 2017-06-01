@@ -67,7 +67,7 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
       return ( $ret , $msg ) unless $ret == 0 ; 
  
       my $objWriterXls    = 'IssueTracker::App::IO::Out::WriterXls'->new( \$appConfig ) ;
-      $ret = $objWriterXls->doBuildXlsFromHashRef ( $mhsr , $hsr ) ;
+      $ret = $objWriterXls->doBuildXlsFromHashRef ( $mhsr , $hsr , $table ) ;
 
    } 
    

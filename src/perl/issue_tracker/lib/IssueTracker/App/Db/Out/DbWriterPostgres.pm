@@ -34,7 +34,8 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 		my $self 				= shift ; 
 		my $hsr2 			   = shift ; 	# the hash ref of hash refs  aka hs r on power 2
       my $term             = shift || 'daily' ; 
-      
+      my $table            = "$term" . '_issue' ; 
+
       my $ret              = 1 ; 
       my $msg              = 'unknown error while sql insert ' ; 		
       my $str_sql_insert   = q{} ; 
@@ -66,7 +67,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          $str_col_list = substr ( $str_col_list , 3 ) ; 
          $str_val_list = substr ( $str_val_list , 3 ) ; 
 
-         $str_sql_insert .= 'INSERT INTO issue ' ; 
+         $str_sql_insert .= 'INSERT INTO ' . "$table" ; 
          $str_sql_insert .= '( ' . $str_col_list . ') VALUES (' . $str_val_list . ');' . "\n" ; 
 
          $str_col_list = '' ; 
@@ -279,99 +280,6 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 	#eof sub doInsertSqlHashData
 
 
-   #
-   # -----------------------------------------------------------------------------
-   # get ALL the table data into hash ref of hash refs 
-   # -----------------------------------------------------------------------------
-   sub doSelectTableIntoHashRef {
-
-      my $self             = shift ; 
-      my $table            = shift ;      # the table to get the data from  
-      
-      my $msg              = q{} ;         
-      my $ret              = 1 ;          # this is the return value from this method 
-      my $debug_msg        = q{} ; 
-      my $hsr              = {} ;         # this is hash ref of hash refs to populate with
-      my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
-      my $sth              = {} ;         # this is the statement handle
-      my $dbh              = {} ;         # this is the database handle
-      my $str_sql          = q{} ;        # this is the sql string to use for the query
-
-#         Column    |          Type           | Modifiers | Storage  | Stats target | Description
-#      -------------+-------------------------+-----------+----------+--------------+-------------
-#       issue_id    | integer                 | not null  | plain    |              |
-#       prio        | integer                 |           | plain    |              |
-#       name        | character varying(100)  | not null  | extended |              |
-#       description | character varying(1000) |           | extended |              |
-#       status      | character varying(50)   | not null  | extended |              |
-#       category    | character varying(100)  | not null  | extended |              |
-
-
-      $mhsr->{'ColumnNames'}-> { 0 } = 'issue_id' ;
-      $mhsr->{'ColumnNames'}-> { 1 } = 'level' ;
-      $mhsr->{'ColumnNames'}-> { 2 } = 'prio' ;
-      $mhsr->{'ColumnNames'}-> { 3 } = 'status' ;
-      $mhsr->{'ColumnNames'}-> { 4 } = 'category' ;
-      $mhsr->{'ColumnNames'}-> { 5 } = 'name' ;
-      $mhsr->{'ColumnNames'}-> { 6 } = 'description' ;
-      $mhsr->{'ColumnNames'}-> { 7 } = 'start_time' ;
-      $mhsr->{'ColumnNames'}-> { 8 } = 'stop_time' ;
-      $mhsr->{'ColumnNames'}-> { 9 } = 'run_date' ;
-
-      $str_sql = 
-         " SELECT 
-              issue_id
-            , level 
-            , prio
-            , status
-            , category
-            , name
-            , description
-            , start_time
-            , stop_time
-            , run_date
-         FROM $table 
-         order by prio asc
-         ;
-      " ; 
-
-      # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
-      $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-     
-      $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
-           'RaiseError' => 1
-         , 'ShowErrorStatement' => 1
-         , 'AutoCommit' => 1
-      } ) or $msg = DBI->errstr;
-      
-      # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
-      $sth = $dbh->prepare($str_sql);  
-
-      $sth->execute()
-            or $objLogger->error ( "$DBI::errstr" ) ;
-
-      $hsr = $sth->fetchall_hashref( 'issue_id' ) ; 
-      binmode(STDOUT, ':utf8');
-      p( $hsr ) if $module_trace == 1 ; 
-
-      $msg = DBI->errstr ; 
-
-      unless ( defined ( $msg ) ) {
-         $msg = 'SELECT OK for table: ' . "$table" ; 
-         $ret = 0 ; 
-      } else {
-         $objLogger->doLogErrorMsg ( $msg ) ; 
-      }
-
-      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-      
-      return ( $ret , $msg , $hsr , $mhsr ) ; 	
-   }
-   # eof sub doSelectTableIntoHashRef
 
 	#
 	# -----------------------------------------------------------------------------

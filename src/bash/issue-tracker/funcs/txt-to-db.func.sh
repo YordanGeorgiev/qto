@@ -9,7 +9,7 @@ doTxtToDb(){
 	doLog "DEBUG START doTxtToDb"
 	
 	# cat doc/txt/issue-tracker/funcs/txt-to-db.func.txt
-	
+   test -z ${issues_order_by_attribute+x} && export issues_order_by_attribute=prio
 	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
@@ -20,6 +20,14 @@ doTxtToDb(){
    export exit_code=$?
    doLog "INFO doRunIssueTracker exit_code $exit_code"
    test $exit_code -ne 0 && doExit $exit_code "failed to run txt-to-db action for issue_tracker"  
+
+
+   psql -d "$db_name" -c '
+   SELECT '"$period"'_issue_id , category , name 
+   FROM '"$period"'_issue order by '"$issues_order_by_attribute"'
+   ;';
+
+
 
 	doLog "DEBUG STOP  doTxtToDb"
 }

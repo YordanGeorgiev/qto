@@ -135,7 +135,10 @@ package IssueTracker::App::IO::In::ReaderXls ;
       my $self             = shift ; 
       my $hsr_meta         = shift ; 
       my $hsr              = shift ; 
+      my $table            = shift ; 
+
       my $msg              = q{} ; 
+      
       #debug ok p($hsr ) if $module_trace == 1 ; 
       
       my $objTimer = 'IssueTracker::App::Utils::Timer'->new() ; 
@@ -155,7 +158,7 @@ package IssueTracker::App::IO::In::ReaderXls ;
       # Create a new Excel workbook
       my $objWorkbook      = 'Excel::Writer::XLSX'->new( $xls_file );
       my $sheet_name        = $xls_file_name ; 
-      $sheet_name          = 'data' ; 
+      $sheet_name          = $table ; 
       my $objWorksheet     = $objWorkbook->add_worksheet( $sheet_name );
 
 

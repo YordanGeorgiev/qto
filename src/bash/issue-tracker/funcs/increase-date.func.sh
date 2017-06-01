@@ -15,7 +15,10 @@ doIncreaseDate(){
    latest_proj_daily_txt_dir=$(find "$proj_txt_dir/issues" -type d|sort -nr | head -n 1|grep -v tmp)
 
    # define the today's daily_txt_dir
+   todays_monthly_txt_dir="$proj_txt_dir"'/issues/'"$(date +%Y)"'/'"$(date +%Y-%m)"
+   mkdir -p $todays_monthly_txt_dir
    todays_daily_txt_dir="$proj_txt_dir"'/issues/'"$(date +%Y)"'/'"$(date +%Y-%m)"'/'"$(date +%Y-%m-%d)"
+   
    test -d "$todays_daily_txt_dir" && exit_code=1 && doExit "nothing to do, as $todays_daily_txt_dir exists !!!"
 
    todays_tmp_dir=$tmp_dir/$(date "+%Y-%m-%d")    # becauses of vboxsf !!!

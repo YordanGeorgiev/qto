@@ -52,24 +52,26 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       my $self                = shift ; 
       my $issues_file         = shift ; 	
 
+      
       my $ret                 = 1 ; 
       my $msg                 = 'unknown error while loading db issues to xls file' ; 
       my $str_issues          = q{} ; 
       my $hsr                 = {} ;   # this is the data hash ref of hash reffs 
       my $mhsr                = {} ;   # this is the meta hash describing the data hash ^^
+      my $term                = $ENV{'period'} || 'daily' ; 
+      my $table               = $term . '_issue' ; 
 
-      my $objDbWritersFactory = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$appConfig , $self ) ; 
-      my $objDbWriter 			= $objDbWritersFactory->doInstantiate ( "$rdbms_type" );
+      my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
+      my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
 
-      ( $ret , $msg , $hsr , $mhsr )  = $objDbWriter->doSelectTableIntoHashRef( 'issue' ) ; 
+      ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( $table ) ; 
 
       p($hsr) if $module_trace == 1 ;
       $objLogger->doLogDebugMsg ( "STOP print" ) if $module_trace == 1 ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
       
-      my $period              = $ENV{ 'period' } || 'daily' ;  
       my $objTxtWriterFactory = 'IssueTracker::App::IO::Out::TxtWriterFactory'->new( \$appConfig , $self ) ; 
-      my $objTxtWriter 			= $objTxtWriterFactory->doInstantiate ( "$period" );
+      my $objTxtWriter 			= $objTxtWriterFactory->doInstantiate ( "$term" );
       
       ( $ret , $msg , $str_issues ) = $objTxtWriter->doConvertHashRefToStr( $hsr ) ; 
       $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
