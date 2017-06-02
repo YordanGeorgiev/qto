@@ -149,7 +149,7 @@ package IssueTracker::App::IO::In::ReaderTxtTerm ;
 
                # extract the start_time if any exists
                # old $title =~ m/^([\d]{2}:[\d]{2})\s+(.*)/g ; 
-               $title =~ m/^(([\d]{2}-[\d]{2}-[\d]{2})?\s+[\d]{2}:[\d]{2})\s+(.*)/g ; 
+               $title =~ m/^(([\d]{2}-[\d]{2}-[\d]{2})?\s*[\d]{2}:[\d]{2})\s+(.*)/g ; 
                my $start_time = q{} ; 
                $start_time = 'NULL'       if $status eq $1 ; 
                $start_time = $1           unless $status eq $1 ; 
@@ -178,7 +178,7 @@ package IssueTracker::App::IO::In::ReaderTxtTerm ;
                $title =~ s/^\s+(.*)/$1/g ;   #remove trailing and fronting spaces
                
                # debug $objLogger->doLogDebugMsg ( "\$item is $item" ) ; 
-               # debug $objLogger->doLogDebugMsg ( "\$status is $status" ) ; 
+               # debug $objLogger->doLogDebugMsg ( "\status is $status" ) ; 
                # debug $objLogger->doLogDebugMsg ( "\$title is $title" ) ; 
                # debug $objLogger->doLogDebugMsg ( "\$1 is $1" ) ; 
                # debug $objLogger->doLogDebugMsg ( "\$start_time is $start_time" ) ; 

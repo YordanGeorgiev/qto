@@ -100,6 +100,10 @@ package IssueTracker::App::IO::In::ReaderXls ;
 						# this one seems to return the value as it has been typed into ...
 						$token = $cell->unformatted() ; 
 						# debug print "token is :: " . $token . "\n" ; 
+                  # this one of those wtf moments ?!
+                  $token =~ s/\&gt;/\>/g ; 
+                  $token =~ s/\&lt;/\</g; 
+                  $token =~ s/\&amp;/\&/g; 
                }
 
 				 	$hsRow->{ $col_num } = $token ; 			
@@ -120,114 +124,7 @@ package IssueTracker::App::IO::In::ReaderXls ;
 		return ( $ret , $msg , $hsr2 ) ; 
 
 	}
-	#eof sub doXlsToHashOfHashes
-
-
-   #
-   # ------------------------------------------------------
-   # builds and xls file into the xls dir 
-   # from the passed hash ref of hashs refs by using the calling
-   # sql script as a source for the xls file path to produce
-   # src: http://search.cpan.org/~jmcnamara/Excel-Writer-XLSX/lib/Excel/Writer/XLSX.pm
-   # ------------------------------------------------------
-   sub doBuildXlsFromHashRef {
-
-      my $self             = shift ; 
-      my $hsr_meta         = shift ; 
-      my $hsr              = shift ; 
-      my $table            = shift ; 
-
-      my $msg              = q{} ; 
-      
-      #debug ok p($hsr ) if $module_trace == 1 ; 
-      
-      my $objTimer = 'IssueTracker::App::Utils::Timer'->new() ; 
-	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
-
-      my $issues_file      = $appConfig->{ 'issues_file' } ; 
-      my $xls_file_name    = $issues_file ; 
-      $xls_file_name       =~ s/(.*)(\\|\/)(.*)\.([a-zA-Z0-9]*)/$3/g ; 
-      $xls_file_name    = "$xls_file_name" . '.' . "$hour" . "$min" . "$sec" ; 
-      my $xls_dir          = "$ProductInstanceDir/dat/xls/run" ; 
-      $objFileHandler->MkDir ( "$xls_dir" ) ; 
-      my $xls_file         = "$xls_dir/$xls_file_name" . '.xlsx' ; 
-
-      $msg = 'START writing the xls file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
-      $msg = $xls_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
- 
-      # Create a new Excel workbook
-      my $objWorkbook      = 'Excel::Writer::XLSX'->new( $xls_file );
-      my $sheet_name        = $xls_file_name ; 
-      $sheet_name          = $table ; 
-      my $objWorksheet     = $objWorkbook->add_worksheet( $sheet_name );
-
-
-      # print the headers  
-      foreach my $colid ( sort ( keys (  %{$hsr_meta->{ 'ColumnNames'}} ) ) ) {
-
-         my $objFormat    =  $objWorkbook->add_format(
-            'color' => 'black'
-          , 'font'  => 'Lucida Console'
-          , 'bold'  => '1'
-         );
-         $objWorksheet->write(0, $colid, $hsr_meta->{ 'ColumnNames'}->{ $colid } , $objFormat )  ; 
-
-         # set the initial widh of the column as the width of the title column
-         $hsr_meta->{'ColumnWidths'}->{ $colid } = length ( $hsr_meta->{ 'ColumnNames'}->{ $colid } ) ; 
-      }
-
-      foreach my $rowid ( sort ( keys ( %$hsr ) ) ) {
-
-         my $objFormat        = {} ; 
-         # $objFormat->set_autofit();
-         # alternate colors
-         if ( $rowid % 2 == 1 ) {
-            $objFormat = $objWorkbook->add_format(
-                'font'  => 'Lucida Console'
-            );
-            $objFormat->set_bg_color('silver') ; 
-         }
-         else {
-            $objFormat = $objWorkbook->add_format(
-                'font'  => 'Lucida Console'
-            );
-            $objFormat->set_bg_color('white') ; 
-         }
-          
-         $objFormat->set_text_wrap();
-
-         my $hsr_row = $hsr->{ "$rowid" } ; 
-         $rowid = $rowid+1 ; 
-         p($hsr_row ) if $module_trace == 1 ; 
-         
-         foreach my $colid ( sort ( keys ( %{$hsr_meta->{'ColumnNames'}} ) ) ) {
-            my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid } ; 
-       
-            my $cell_length = length ( $hsr_row->{ $col_name } ) || 5 ;  
-            $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length || 5 ; 
-
-            #define the max width 
-            if ( $hsr_meta->{ 'ColumnWidths' }->{ $colid } < $cell_length ) {
-               $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length ;                
-            }
-            
-            # $objWorksheet->set_column($colid, $colid, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
-            $objWorksheet->set_column($colid, $colid, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
-            $objWorksheet->write($rowid, $colid, $hsr_row->{ $col_name } , $objFormat )  ; 
-         }
-         
-      } 
-      #eof foreach row 
-     
-      # does not work why ?! 
-      # $self->autofit_columns ( $objWorksheet , $hsr_meta ) ; 
-     
-      $msg = 'STOP writing the xls file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
-      $msg = $xls_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
-      
-      return 0 if -f $xls_file ; 
-   }
-   #eof sub doBuildXlsFromHashRef
+	#eof sub doReadXlsFileToHsr2
 
    
    # Adjust the column widths to fit the longest string in the column

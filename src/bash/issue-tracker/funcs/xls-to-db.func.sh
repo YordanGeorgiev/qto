@@ -11,6 +11,7 @@ doXlsToDb(){
 	cat doc/txt/issue-tracker/funcs/xls-to-db.func.txt
 	
 	sleep "$sleep_interval"
+   test -z ${issues_order_by_attribute+x} && export issues_order_by_attribute=prio
 
    # find out the latest xls file from the project daily dir
    # pass it to the xls-to-rdbms tool as the input xls file
@@ -25,6 +26,12 @@ doXlsToDb(){
       --do xls-to-db --xls-file $xls_file
 
    exit_code=$?
+   
+   psql -d "$db_name" -c '
+   SELECT '"$period"'_issue_id , category , name , start_time , stop_time
+   FROM '"$period"'_issue order by '"$issues_order_by_attribute"'; '
+
+
    doLog "INFO doRunIssueTracker exit_code $exit_code"
    test $exit_code -ne 0 && doExit $exit_code "failed to run issue_tracker.pl"  
   
