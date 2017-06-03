@@ -3,7 +3,7 @@
 SELECT 'create the "daily_issue" table'
 ; 
    CREATE TABLE daily_issue (
-      daily_issue_id       integer NOT NULL PRIMARY KEY
+      id             integer NOT NULL PRIMARY KEY
     , level          integer NULL
     , prio           integer NULL
     , status         varchar (50) NOT NULL

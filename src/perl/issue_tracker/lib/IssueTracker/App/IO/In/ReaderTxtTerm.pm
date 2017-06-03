@@ -133,7 +133,7 @@ package IssueTracker::App::IO::In::ReaderTxtTerm ;
                $name = $3 ; 
                next unless $name ; 
 
-               $hsr->{ $i }->{ "$table" . '_id' } = $i ;
+               $hsr->{ $i }->{ 'id' } = $i ;
 
                $item_levels->{ $category_item_count } = 1 
                   unless ( exists $item_levels->{ $category_item_count });

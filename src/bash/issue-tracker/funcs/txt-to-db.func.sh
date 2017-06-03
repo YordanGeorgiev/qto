@@ -10,6 +10,7 @@ doTxtToDb(){
 	
 	# cat doc/txt/issue-tracker/funcs/txt-to-db.func.txt
    test -z ${issues_order_by_attribute+x} && export issues_order_by_attribute=prio
+   test -z ${period+x} && export period=daily
 	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
@@ -23,7 +24,7 @@ doTxtToDb(){
 
 
    psql -d "$db_name" -c '
-   SELECT '"$period"'_issue_id , category , name , start_time , stop_time
+   SELECT id , category , name , start_time , stop_time
    FROM '"$period"'_issue order by '"$issues_order_by_attribute"'
    ;';
 

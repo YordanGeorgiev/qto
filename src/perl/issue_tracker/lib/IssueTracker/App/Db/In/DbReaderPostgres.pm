@@ -56,7 +56,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 #                9 | daily_issue | stop_time      | text              | YES
 #               10 | daily_issue | run_date       | date              | YES
 
-      $mhsr->{'ColumnNames'}-> { 0 } = "$table" . '_id' ;
+      $mhsr->{'ColumnNames'}-> { 0 } = 'id' ; 
       $mhsr->{'ColumnNames'}-> { 1 } = 'level' ;
       $mhsr->{'ColumnNames'}-> { 2 } = 'prio' ;
       $mhsr->{'ColumnNames'}-> { 3 } = 'status' ;
@@ -69,7 +69,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 
       $str_sql = 
          " SELECT 
-              " . "$table" . "_id
+              id
             , level 
             , prio
             , status
@@ -101,7 +101,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
 
-      $hsr = $sth->fetchall_hashref( $table . '_id' ) ; 
+      $hsr = $sth->fetchall_hashref( 'id' ) ; 
       binmode(STDOUT, ':utf8');
       p( $hsr ) if $module_trace == 1 ; 
 
