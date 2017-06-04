@@ -13,6 +13,8 @@ SELECT 'create the "yearly_issue" table'
     , start_time     text NULL
     , stop_time      text NULL
     , run_date       date NULL
+    , updated_by     varchar (50) NULL
+    , owner          varchar (50) NULL
     );
 
 

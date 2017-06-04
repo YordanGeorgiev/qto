@@ -66,6 +66,8 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       $mhsr->{'ColumnNames'}-> { 7 } = 'start_time' ;
       $mhsr->{'ColumnNames'}-> { 8 } = 'stop_time' ;
       $mhsr->{'ColumnNames'}-> { 9 } = 'run_date' ;
+      $mhsr->{'ColumnNames'}-> { 10 } = 'updated_by' ;
+      $mhsr->{'ColumnNames'}-> { 11 } = 'owner' ;
 
       $str_sql = 
          " SELECT 
@@ -79,6 +81,8 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
             , start_time
             , stop_time
             , run_date
+            , updated_by
+            , owner
          FROM $table 
          order by prio asc
          ;

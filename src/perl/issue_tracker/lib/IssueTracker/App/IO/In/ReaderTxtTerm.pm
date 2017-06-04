@@ -203,6 +203,8 @@ package IssueTracker::App::IO::In::ReaderTxtTerm ;
                $hsr->{ $i }->{ 'name' }            = $title ; 
                $hsr->{ $i }->{ 'description' }     = $description ; 
                $hsr->{ $i }->{ 'run_date' }        = $nice_date ; 
+               $hsr->{ $i }->{ 'updated_by' }      = $ENV { 'USER' } || 'unknown' ; 
+               $hsr->{ $i }->{ 'owner' }           = $ENV { 'USER' } || 'unknown' ; 
                
                if ( $module_trace == 1 ) { 
                   $debug_msg = " START :::: $i" if 
