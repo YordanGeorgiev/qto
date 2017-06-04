@@ -146,10 +146,9 @@ package IssueTracker::App::IO::In::ReaderTxtTerm ;
 
                # the title is the first line of the title description
                my $title = ( split /\n/, $name )[0] ; 
-
-               # extract the start_time if any exists
-               # old $title =~ m/^([\d]{2}:[\d]{2})\s+(.*)/g ; 
-               $title =~ m/^(([\d]{2}-[\d]{2}-[\d]{2})?\s*[\d]{2}:[\d]{2})\s+(.*)/g ; 
+               # extract the start_time if any exists, example:
+               # 2017-06-03 15:00 - 19:00 Kauklahdessa grillaamassa
+               $title =~ m/^\s*(([\d]{2,4}-[\d]{2}-[\d]{2})?\s+[\d]{2}:[\d]{2})\s+(.*)$/g ; 
                my $start_time = q{} ; 
                $start_time = 'NULL'       if $status eq $1 ; 
                $start_time = $1           unless $status eq $1 ; 
