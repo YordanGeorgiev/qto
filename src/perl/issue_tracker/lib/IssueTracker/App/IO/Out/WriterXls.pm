@@ -34,6 +34,7 @@ package IssueTracker::App::IO::Out::WriterXls ;
       my $self             = shift ; 
       my $hsr_meta         = shift ; 
       my $hsr              = shift ; 
+      my $table            = shift ; 
       my $msg              = q{} ; 
       #debug ok p($hsr ) if $module_trace == 1 ; 
       
@@ -59,8 +60,8 @@ package IssueTracker::App::IO::Out::WriterXls ;
  
       # Create a new Excel workbook
       my $objWorkbook      = 'Excel::Writer::XLSX'->new( $xls_file );
-      my $sheet_name        = $xls_file_name ; 
-      $sheet_name          = 'issue' ; 
+      my $sheet_name       = $xls_file_name ; 
+      $sheet_name          = $table ; 
       my $objWorksheet     = $objWorkbook->add_worksheet( $sheet_name );
 
 
