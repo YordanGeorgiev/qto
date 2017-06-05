@@ -97,7 +97,6 @@ package IssueTracker::App::IO::In::ReaderTxtTerm ;
             
             # one or two # are either the file start , stop or the act , plan sections
             next if $category_item =~ m/^[#]{1,2} /g ; 
-            
             next if $category_item =~ m/^--/g ; 
             
             # the first line of the category_item is the category
@@ -115,15 +114,17 @@ package IssueTracker::App::IO::In::ReaderTxtTerm ;
             # $objLogger->doLogDebugMsg ( "start category_item" );
             # p ( $category_item ); 
             # $objLogger->doLogDebugMsg ( "stop  category_item" );
-
-            my @arr_items  = split '\n\s*([\-]{1,7})\s+' , $category_item ; 
+            # debug p($category_item); 
+            my @arr_items  = split /\n^\s*([\-]{1,7})\s*/m , $category_item ; 
             
             my $category_item_count = 0 ; 
             foreach my $item ( @arr_items ) {
+               # debug print "\$item : $item \n" ; 
+               # debug print "\$i : $i \n" ; 
                next unless $item ; 
-               next if $item eq '-' ;  # because of the buggy split above ... 
+               # which creates the duplicates
+               next if $item =~ m/^\s*([\-]{1,7})/g ;  # because of the buggy split above ... 
 
-               $hsr->{ $i } = {} ; 
                my $debug_msg = "item: $item " ; 
                $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
                $item =~ m/^\s*([a-zA-Z0-9]+)\s*(\t{1,5})(.*)/ ; 
@@ -132,6 +133,7 @@ package IssueTracker::App::IO::In::ReaderTxtTerm ;
                $status = $1 ; 
                $name = $3 ; 
                next unless $name ; 
+               $hsr->{ $i } = {} ; 
 
                $hsr->{ $i }->{ 'id' } = $i ;
 
@@ -143,12 +145,11 @@ package IssueTracker::App::IO::In::ReaderTxtTerm ;
                $hsr->{ $i }->{ 'prio' } = $i ; 
                $hsr->{ $i }->{ 'category' }     = $category ; 
                $hsr->{ $i }->{ 'status' }       = $hsrStatus->{ $status } ; 
-
                # the title is the first line of the title description
                my $title = ( split /\n/, $name )[0] ; 
                # extract the start_time if any exists, example:
-               # 2017-06-03 15:00 - 19:00 Kauklahdessa grillaamassa
-               $title =~ m/^\s*(([\d]{2,4}-[\d]{2}-[\d]{2})?\s+[\d]{2}:[\d]{2})\s+(.*)$/g ; 
+               # 2017-06-03 15:00 - 19:00 some issue title
+               $title =~ m/^\s*(([\d]{2,4}-[\d]{2}-[\d]{2})?\s*[\d]{2}:[\d]{2})\s+(.*)$/g ; 
                my $start_time = q{} ; 
                $start_time = 'NULL'       if $status eq $1 ; 
                $start_time = $1           unless $status eq $1 ; 
@@ -205,6 +206,19 @@ package IssueTracker::App::IO::In::ReaderTxtTerm ;
                $hsr->{ $i }->{ 'run_date' }        = $nice_date ; 
                $hsr->{ $i }->{ 'updated_by' }      = $ENV { 'USER' } || 'unknown' ; 
                $hsr->{ $i }->{ 'owner' }           = $ENV { 'USER' } || 'unknown' ; 
+
+               # start setting the parent id
+               for ( my $j=$i;$j>=0;$j--) {
+                  $hsr->{ $i }->{ 'parent_id' } = undef ; 
+                  if ( exists $hsr->{ $i-1 } ) {
+                     if ( $hsr->{ $i }->{ 'level' } > $hsr->{ $j }->{ 'level' } ) {
+                        $hsr->{ $i }->{ 'parent_id' } = $j ; 
+                        last;
+                     }
+                  }
+               }
+               # stop  setting the parent id
+
                
                if ( $module_trace == 1 ) { 
                   $debug_msg = " START :::: $i" if 

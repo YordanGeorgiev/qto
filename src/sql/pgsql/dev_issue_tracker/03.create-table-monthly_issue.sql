@@ -15,6 +15,7 @@ SELECT 'create the "monthly_issue" table'
     , run_date       date NULL
     , updated_by     varchar (50) NULL
     , owner          varchar (50) NULL
+    , parent_id      integer NULL 
     );
 
 

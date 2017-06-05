@@ -43,6 +43,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
 
+
 # ordinal_position | table_name  |  column_name   |     data_type     | is_nullable
 #------------------+-------------+----------------+-------------------+-------------
 #                1 | daily_issue | daily_issue_id | integer           | NO
@@ -56,6 +57,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 #                9 | daily_issue | stop_time      | text              | YES
 #               10 | daily_issue | run_date       | date              | YES
 
+
       $mhsr->{'ColumnNames'}-> { 0 } = 'id' ; 
       $mhsr->{'ColumnNames'}-> { 1 } = 'level' ;
       $mhsr->{'ColumnNames'}-> { 2 } = 'prio' ;
@@ -68,6 +70,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       $mhsr->{'ColumnNames'}-> { 9 } = 'run_date' ;
       $mhsr->{'ColumnNames'}-> { 10 } = 'updated_by' ;
       $mhsr->{'ColumnNames'}-> { 11 } = 'owner' ;
+      $mhsr->{'ColumnNames'}-> { 12 } = 'parent_id' ;
 
       $str_sql = 
          " SELECT 
@@ -83,6 +86,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
             , run_date
             , updated_by
             , owner
+            , parent_id
          FROM $table 
          order by prio asc
          ;
