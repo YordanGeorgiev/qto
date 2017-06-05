@@ -91,7 +91,7 @@ package IssueTracker::App::IO::In::ReaderXls ;
                my $token = '';
 
                # to represent NULL in the sql
-               unless ( $cell ) {
+               unless ( defined ( $cell ) ) {
                	$token = 'NULL';
                }
                else {
@@ -121,6 +121,8 @@ package IssueTracker::App::IO::In::ReaderXls ;
 
       $ret = 0 ; 
       $msg = 'xls file parse OK' ; 
+
+
 		return ( $ret , $msg , $hsr2 ) ; 
 
 	}

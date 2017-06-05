@@ -12,7 +12,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
    use IssueTracker::App::Utils::Logger ; 
 
-   our $module_trace                            = 0 ; 
+   our $module_trace                            = 1 ; 
    our $IsUnitTest                              = 0 ; 
 	our $appConfig 										= {} ; 
 	our $objLogger 										= {} ; 
@@ -336,16 +336,22 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          foreach my $row_num ( sort ( keys %$hs_table ) ) { 
 
             next if $row_num == 0 ; 
+            
             my $hs_row = $hs_table->{ $row_num } ; 
             my $data_str = q{} ; 
-
+            p($hs_row);
             foreach my $col_num ( sort ( keys ( %$hs_row ) ) ) {
-               my $cell_value = $hs_row -> { $col_num } ; 
-               $cell_value = '' unless ( defined ( $cell_value )) ; 
-               $cell_value =~ s|\\|\\\\|g ; 
-               # replace the ' chars with \'
-               $cell_value 		=~ s|\'|\'\'|g ; 
-               $data_str .= "'" . "$cell_value" . "' , " ; 
+               my $cell_value = $hs_row ->{ $col_num } ; 
+               if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
+                     or $cell_value eq 'null' or $cell_value eq "'NULL'" ) {
+                  $cell_value = 'NULL' ;  
+                  $data_str .= "$cell_value" . " , " ; 
+               } else { 
+                  $cell_value =~ s|\\|\\\\|g ; 
+                  # replace the ' chars with \'
+                  $cell_value 		=~ s|\'|\'\'|g ; 
+                  $data_str .= "'" . "$cell_value" . "' , " ; 
+               }
             }
             #eof foreach col_num
             

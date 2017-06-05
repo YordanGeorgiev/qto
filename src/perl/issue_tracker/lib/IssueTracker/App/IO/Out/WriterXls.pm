@@ -114,9 +114,14 @@ package IssueTracker::App::IO::Out::WriterXls ;
             if ( $hsr_meta->{ 'ColumnWidths' }->{ $colid } < $cell_length ) {
                $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length ;                
             }
+            unless ( 
+                  defined ( $hsr_row ) 
+               or defined ( $hsr_row->{ $col_name } ) 
+               or $hsr_row->{ $col_name } ne 'NULL' ) {
+                  p( $hsr_row );
+                  $hsr_row->{ $col_name } = '' ; 
+            }
 
-            $hsr_row->{ $col_name } = '' if $hsr_row->{ $col_name } eq 'NULL' ; 
-      
             # $objWorksheet->set_column($colid, $colid, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
             $objWorksheet->set_column($colid, $colid, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
             $objWorksheet->write($rowid, $colid, $hsr_row->{ $col_name } , $objFormat )  ; 

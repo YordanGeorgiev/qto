@@ -218,7 +218,8 @@ package IssueTracker::App::IO::In::ReaderTxtTerm ;
                   }
                }
                # stop  setting the parent id
-
+               
+               #debug p ( $hsr->{ $i } );
                
                if ( $module_trace == 1 ) { 
                   $debug_msg = " START :::: $i" if 

@@ -72,42 +72,6 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
    } 
    
    
-
-   # 
-	# -----------------------------------------------------------------------------
-   # read the passed issue file , convert it to hash ref of hash refs 
-   # and insert the hsr into a db
-	# -----------------------------------------------------------------------------
-   sub doLoadDbToTxtFile {
-
-      my $self                = shift ; 
-      my $issues_file         = shift ; 	
-
-      my $ret                 = 1 ; 
-      my $msg                 = 'unknown error while loading db issues to xls file' ; 
-      my $str_issues          = q{} ; 
-      my $hsr                 = {} ;   # this is the data hash ref of hash reffs 
-      my $mhsr                = {} ;   # this is the meta hash describing the data hash ^^
-
-      my $objDbReadersFactory = 'IssueTracker::App::Db::DbReaderFactory'->new( \$appConfig , $self ) ; 
-      my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
-
-      ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( 'issue' ) ; 
-
-      p($hsr) if $module_trace == 1 ;
-      $objLogger->doLogDebugMsg ( "STOP print" ) if $module_trace == 1 ; 
-      return ( $ret , $msg ) unless $ret == 0 ; 
-      
-      my $period              = $ENV{ 'period' } || 'daily' ;  
-      my $objTxtParserFactory = 'IssueTracker::App::ETL::Txt::TxtParserFactory'->new( \$appConfig , $self ) ; 
-      my $objTxtParser 			= $objTxtParserFactory->doInstantiate ( "$period" );
-      
-      ( $ret , $msg , $str_issues ) = $objTxtParser->doConvertHashRefToStr( $hsr ) ; 
-      $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
-
-      return ( $ret , $msg ) if $ret != 0 ;  
-
-   } 
 	
 
 =head1 WIP
