@@ -84,7 +84,7 @@ package IssueTracker::App::IO::Out::WriterTxtTerm ;
 
       $str_issues .= $str_header . "\n\n" ; 
       my $prev_category = q{} ; 
-      my @attributes = qw (run_date category current description issue_id level name prio start_time stop_time status) ; 
+      my @attributes = qw (id run_date category current description issue_id level name prio start_time stop_time status) ; 
       my $issues_order_by_attribute = $ENV{ 'issues_order_by_attribute' } || 'prio' ; 
 
       unless ( grep( /^$issues_order_by_attribute$/, @attributes ) ) {
