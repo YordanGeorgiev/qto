@@ -5,6 +5,7 @@ Table of Contents
 
   * [1. ISSUES DATA TRANSFORMATION ACTIONS](#1-issues-data-transformation-actions)
     * [1.1. txt-to-db action](#11-txt-to-db-action)
+      * [1.1.1. txt-to-db action period handling](#111-txt-to-db-action-period-handling)
     * [1.2. db-to-xls action](#12-db-to-xls-action)
     * [1.3. xls-to-db action](#13-xls-to-db-action)
     * [1.4. db-to-txt action](#14-db-to-txt-action)
@@ -39,6 +40,16 @@ This call with truncate the issue table from the db and convert all the issues d
     
     # check the data by :
     psql -d "$db_name" -c 'SELECT issue_id , category , name FROM issue order by name'
+
+#### 1.1.1. txt-to-db action period handling
+Issues txt files are stored in a daily folder with the following naming convention:
+&lt;&lt;project&gt;&gt;.&lt;&lt;current_date&gt;&gt;.&lt;&lt;period&gt;&gt;.txt
+The tool knows to correctly fetch the issues files for the configured period ( by export period=weekly ) and copy its data in to the &lt;&lt;period&gt;&gt;_issue table. 
+
+    ysg-issues.2017-06-03.daily.txt
+    ysg-issues.2017-06-03.monthly.txt
+    ysg-issues.2017-06-03.weekly.txt
+    ysg-issues.2017-06-03.yearly.txt
 
 ### 1.2. db-to-xls action
 You can load your already stored in the issue table issues and load them into a xls file. 

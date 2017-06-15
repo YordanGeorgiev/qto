@@ -1,8 +1,8 @@
--- DROP TABLE IF EXISTS daily_issue ; 
+-- DROP TABLE IF EXISTS daily_issues ; 
 
-SELECT 'create the "daily_issue" table'
+SELECT 'create the "daily_issues" table'
 ; 
-   CREATE TABLE daily_issue (
+   CREATE TABLE daily_issues (
       id             integer NOT NULL PRIMARY KEY
     , level          integer NULL
     , prio           integer NULL
@@ -21,7 +21,7 @@ SELECT 'show the columns of the just created table'
 
    SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute
-   WHERE  attrelid = 'public.daily_issue'::regclass
+   WHERE  attrelid = 'public.daily_issues'::regclass
    AND    attnum > 0
    AND    NOT attisdropped
    ORDER  BY attnum

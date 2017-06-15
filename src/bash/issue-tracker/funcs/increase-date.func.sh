@@ -32,7 +32,18 @@ doIncreaseDate(){
       extsion=$(echo $f|cut -d'.' -f 5); 
       doLog "DEBUG extsion: $extsion"
       mv -v "$f" '.'"$proj".`date "+%Y-%m-%d"`."$period"."$extsion"
-   done < <(find . -type f -name '*.txt' -o -name '*.sh')
+   # obs works only on gnu find !
+   done < <(find . -type f -regex ".*\.\(sh\|txt\)")
+   
+   while read -r f ; do 
+      export yesterday=$(echo $f|cut -d'.' -f 3);
+      period=$(echo $f|cut -d'.' -f 4); 
+      proj=$(echo $f|cut -d'.' -f 2); 
+      hourly_timestamp=$(echo $f|cut -d'.' -f 5); 
+      extsion=$(echo $f|cut -d'.' -f 6); 
+      doLog "DEBUG extsion: $extsion"
+      mv -v "$f" '.'"$proj".`date "+%Y-%m-%d"`."$period"."$hourly_timestamp"."$extsion"
+   done < <(find . -type f -name "*.xlsx")
    
    # search and replace the daily
    today=$(date +%Y-%m-%d)

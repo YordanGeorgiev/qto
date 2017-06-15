@@ -1,8 +1,8 @@
--- DROP TABLE IF EXISTS weekly_issue ; 
+-- DROP TABLE IF EXISTS weekly_issues ; 
 
-SELECT 'create the "weekly_issue" table'
+SELECT 'create the "weekly_issues" table'
 ; 
-   CREATE TABLE weekly_issue (
+   CREATE TABLE weekly_issues (
       id             integer NOT NULL PRIMARY KEY
     , level          integer NULL
     , prio           integer NULL
@@ -21,7 +21,7 @@ SELECT 'show the columns of the just created table'
 
    SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute
-   WHERE  attrelid = 'public.weekly_issue'::regclass
+   WHERE  attrelid = 'public.weekly_issues'::regclass
    AND    attnum > 0
    AND    NOT attisdropped
    ORDER  BY attnum

@@ -1,4 +1,14 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+# ---
+src/bash/issue-tracker/funcs/gmail-txt-issues.func.sh
+src/bash/issue-tracker/tests/gmail-txt-issues.test.sh
+src/bash/issue-tracker/specs/gmail-txt-issues.spec.sh
+src/bash/issue-tracker/helps/gmail-txt-issues.help.sh
+doc/txt/issue-tracker/tests/gmail-txt-issues.test.txt
+doc/txt/issue-tracker/specs/gmail-txt-issues.spec.txt
+doc/txt/issue-tracker/helps/gmail-txt-issues.help.txt
+doc/txt/issue-tracker/funcs/gmail-txt-issues.func.txt
+# ---
 src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 src/bash/issue-tracker/bootstrap-issue-tracker.sh
 src/bash/issue-tracker/issue-tracker.sh
@@ -100,25 +110,21 @@ doc/txt/issue-tracker/funcs/txt-to-db.func.txt
 doc/txt/issue-tracker/specs/txt-to-db.spec.txt
 doc/txt/issue-tracker/helps/txt-to-db.help.txt
 #----
-src/sql/pgsql/
-src/sql/pgsql/dev_issue_tracker
-src/sql/pgsql/dev_issue_tracker/00.create-db.pgsql
-src/sql/pgsql/dev_issue_tracker/01.create-table-daily_issue.sql
-src/sql/pgsql/dev_issue_tracker/02.create-table-weekly_issue.sql
-src/sql/pgsql/dev_issue_tracker/03.create-table-monthly_issue.sql
+src/sql/pgsql/dev_issue_tracker/
+src/sql/pgsql/dev_issue_tracker/01.create-table-daily_issues.sql
+src/sql/pgsql/dev_issue_tracker/02.create-table-weekly_issues.sql
+src/sql/pgsql/dev_issue_tracker/03.create-table-monthly_issues.sql
 src/sql/pgsql/dev_issue_tracker/04.create-table-yearly_issue.sql
-src/sql/pgsql/tst_issue_tracker
-src/sql/pgsql/tst_issue_tracker/00.create-db.pgsql
-src/sql/pgsql/tst_issue_tracker/01.create-table-daily_issue.sql
-src/sql/pgsql/tst_issue_tracker/02.create-table-weekly_issue.sql
-src/sql/pgsql/tst_issue_tracker/03.create-table-monthly_issue.sql
-src/sql/pgsql/tst_issue_tracker/04.create-table-yearly_issue.sql
 src/sql/pgsql/prd_issue_tracker
-src/sql/pgsql/prd_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/prd_issue_tracker/01.create-table-daily_issue.sql
 src/sql/pgsql/prd_issue_tracker/02.create-table-weekly_issue.sql
 src/sql/pgsql/prd_issue_tracker/03.create-table-monthly_issue.sql
 src/sql/pgsql/prd_issue_tracker/04.create-table-yearly_issue.sql
+src/sql/pgsql/tst_issue_tracker
+src/sql/pgsql/tst_issue_tracker/01.create-table-daily_issue.sql
+src/sql/pgsql/tst_issue_tracker/02.create-table-weekly_issue.sql
+src/sql/pgsql/tst_issue_tracker/03.create-table-monthly_issue.sql
+src/sql/pgsql/tst_issue_tracker/04.create-table-yearly_issue.sql
 #----
 src/bash/issue-tracker/tests/db-to-xls.test.sh
 src/bash/issue-tracker/funcs/db-to-xls.func.sh

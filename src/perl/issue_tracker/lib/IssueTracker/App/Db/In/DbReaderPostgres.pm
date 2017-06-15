@@ -32,7 +32,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
    sub doSelectTableIntoHashRef {
 
       my $self             = shift ; 
-      my $table            = shift || 'daily_issue' ;  # the table to get the data from  
+      my $table            = shift || 'daily_issues' ;  # the table to get the data from  
       
       my $msg              = q{} ;         
       my $ret              = 1 ;          # this is the return value from this method 

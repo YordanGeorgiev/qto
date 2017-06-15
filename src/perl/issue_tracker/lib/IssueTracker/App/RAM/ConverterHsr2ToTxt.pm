@@ -42,9 +42,9 @@ package IssueTracker::App::RAM::ConverterHsr2ToTxt ;
 
 	doResolves the product version and base dirs , bootstraps cnfig files if needed
 
-		use IssueTracker::App::ETL::IssueTracker ;
-		my $objIssueTracker = 
-			'IssueTracker::App::ETL::IssueTracker'->new ( \$appConfig ) ; 
+      use IssueTracker::App::RAM::ConverterHsr2ToTxt ; 
+		my $objConverterHsr2ToTxt = 
+			'IssueTracker::App::RAM::ConverterHsr2ToTxt'->new ( \$appConfig ) ; 
 =cut 
 
 =head1 EXPORT
@@ -60,171 +60,7 @@ package IssueTracker::App::RAM::ConverterHsr2ToTxt ;
 =cut
 
 
-
-   sub doConvertStrToHashRef {
-
-      my $self       = shift ; 
-      my $str        = shift ; 
-
-      my $ret        = 1 ; 
-      my $msg        = 'unknown error while converting string to hash reference' ; 
-      my $hsr        = {} ; 
-
-      my $objTimer   = 'IssueTracker::App::Utils::Timer'->new() ; 
-	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
-      my $nice_date  = $year . '-' . $mon . '-' . $mday ; 
- 
-      # each item starts with new line may be some space and - 
-      my @arr_category_items  = split '\n(\s*)\n' , $str ; 
-      my $i          = 0 ;  
-
-      my $prev_start_time  = q{} ; 
-      my $prev_stop_time   = q{} ; 
-
-      if ( $str ) {      
-         $msg = 'START ConverterHsr2ToTxt::doConvertStrToHashRef' ; 
-         $objLogger->doLogInfoMsg ( $msg ) ;  
-
-         foreach my $category_item ( @arr_category_items ) {
-            last if ( $category_item =~ m/^\s*#\s*STOP\s+$term\s+(@[\d]{4}\-[\d]{2}\-[\d]{2})(.*)/g ) ; 
-
-
-            my $debug_msg = "category_item: $category_item " ; 
-            $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
-
-            # debug $msg = "category_item starts with ##" ; 
-            # debug $objLogger->doLogDebugMsg ( $msg ) if $category_item =~ m/^##/g ;
-            
-            # one or two # are either the file start , stop or the act , plan sections
-            next if $category_item =~ m/^[#]{1,2} /g ; 
-            
-            next if $category_item =~ m/^--/g ; 
-            
-            # the first line of the category_item is the category
-            my $category = ( split /\n/, $category_item )[0] ;  
-            next unless ( $category ) ; 
-            $category      =~ s/([\s\t]{0,5})(\w)([\s\t]{0,5})/$2/g ; 
-            $category_item =~ s/$category//mg ; 
-            my $tmp_category_item = $category_item ; 
-            my $item_levels = {} ; 
-            $tmp_category_item =~ s/\n(\s*)([\-]{1,7})/$self->doFillInLevelsPerRow( $2 , \$item_levels )/emg ; 
-            my @arr_items  = split '\n(\s*)([\-]{1,7})' , $category_item ; 
-            
-            my $category_item_count = 0 ; 
-            foreach my $item ( @arr_items ) {
-               next unless $item ; 
-               $hsr->{ $i } = {} ; 
-               my $debug_msg = "item: $item " ; 
-               $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
-               $item =~ m/^\s*([a-zA-Z0-9]+)\s*(\t{1,5})(.*)/ ; 
-               my $status = q{} ; 
-               my $name = q{} ; 
-               $status = $1 ; 
-               $name = $3 ; 
-               next unless $name ; 
-
-               $hsr->{ $i }->{ 'issue_id' } = $i ;
-
-               $item_levels->{ $category_item_count } = 1 
-                  unless ( exists $item_levels->{ $category_item_count });
-               $hsr->{ $i }->{ 'level' } = $item_levels->{ $category_item_count } + 1 ; 
-
-               # $hsr->{ $i }->{ 'item' } = $item ; 
-               $hsr->{ $i }->{ 'prio' } = $i ; 
-               $hsr->{ $i }->{ 'category' }     = $category ; 
-               $hsr->{ $i }->{ 'status' }       = $hsrStatus->{ $status } ; 
-
-               # the title is the first line of the title description
-               my $title = ( split /\n/, $name )[0] ; 
-
-               # extract the start_time if any exists
-               # old $title =~ m/^([\d]{2}:[\d]{2})\s+(.*)/g ; 
-               $title =~ m/^(([\d]{2}-[\d]{2}-[\d]{2})?\s+[\d]{2}:[\d]{2})\s+(.*)/g ; 
-               my $start_time = q{} ; 
-               $start_time = 'NULL'       if $status eq $1 ; 
-               $start_time = $1           unless $status eq $1 ; 
-               $title =~ s/$start_time//g  unless $start_time eq 'NULL' ; 
-               
-               # extract the stop_time if any exists 
-               $title =~ m/^\s+[\-]\s+([\d]{2}:[\d]{2})(.*)/g ; 
-               my $stop_time = q{} ; 
-
-               if ( $start_time eq 'NULL' ) {
-                  $stop_time = 'NULL' ;  
-               }
-               elsif ( !(defined $1) ) {
-                  $stop_time = 'NULL' ;  
-               }
-               elsif ( $status eq $1 ) {
-                  $stop_time = 'NULL' ;  
-               }
-               elsif ( defined $1 ) {
-                  $stop_time = $1 ; 
-               }
-               else {
-                  $stop_time = $1 ; 
-               }
-               $title =~ s/^\s*[\-]\s*$stop_time\s+//g  unless $stop_time eq 'NULL' ; 
-               $title =~ s/^\s+(.*)/$1/g ;   #remove trailing and fronting spaces
-               
-               # debug $objLogger->doLogDebugMsg ( "\$item is $item" ) ; 
-               # debug $objLogger->doLogDebugMsg ( "\$status is $status" ) ; 
-               # debug $objLogger->doLogDebugMsg ( "\$title is $title" ) ; 
-               # debug $objLogger->doLogDebugMsg ( "\$1 is $1" ) ; 
-               # debug $objLogger->doLogDebugMsg ( "\$start_time is $start_time" ) ; 
-               # debug $objLogger->doLogDebugMsg ( "\$stop_time is $stop_time" ) ; 
-               
-               my $description = q{} ; 
-               $description .= $start_time unless ( $start_time eq 'NULL' ) ;  
-               $description .= ' - ' . $stop_time unless ( $stop_time eq 'NULL' ) ;  
-               $description .= "\n" if $description ; 
-               $description .= $title ; 
-                 
-               # and the title should not be longer than 90 chars
-               $title = substr($title, 0, 90 ) . ' ...' if length ( $title ) > 90 ; 
-
-               # if this is sub-item it should inherit the time of the upper item
-               if ( $hsr->{ $i }->{ 'level' } > 2 ) {
-                  $start_time = $prev_start_time ; 
-                  $stop_time = $prev_stop_time ; 
-               }
- 
-               $hsr->{ $i }->{ 'start_time' }      = $start_time ; 
-               $hsr->{ $i }->{ 'stop_time' }       = $stop_time ; 
-               $hsr->{ $i }->{ 'name' }            = $title ; 
-               $hsr->{ $i }->{ 'description' }     = $description ; 
-               $hsr->{ $i }->{ 'run_date' }        = $nice_date ; 
-               
-               if ( $module_trace == 1 ) { 
-                  $debug_msg = " START :::: $i" if 
-                  $objLogger->doLogDebugMsg ( $debug_msg ) ;  
-                  p ( $hsr->{ $i } ) ; 
-                  $debug_msg = " STOP  :::: $i" ; 
-                  $objLogger->doLogDebugMsg ( $debug_msg ) ;  
-               }
-               $i++ ; 
-               $category_item_count++ ; 
-            
-               $prev_start_time = $start_time ; 
-               $prev_stop_time = $stop_time ; 
-            }
-            #eof foreach my $item 
-            #
-         }
-         #eof foreach my $category_item 
-         $ret = 0 ; 
-         $msg = '' ; 
-      
-      }
-      
-      $msg = 'STOP  ConverterHsr2ToTxt::doConvertStrToHashRef' ; 
-      $objLogger->doLogInfoMsg ( $msg ) ;  
-
-      return ( $ret , $msg , $hsr ) ; 
-   }
-
-
-   sub doConvertHashRefToStr {
+   sub doPrepareHashForPrinting {
 
       my $self       = shift ; 
       my $hsr2       = shift ; 
@@ -232,88 +68,31 @@ package IssueTracker::App::RAM::ConverterHsr2ToTxt ;
       my $msg        = 'unknown error during hash ref of hash references to string conversion !!!' ;  ; 
       my $ret        = 1 ; 
       my $str_issues = q{} ; 
-      my $run_date   = q{} ;  
       p ( $hsr2 ) if $module_trace == 1 ; 
-      my $str_header = '# START DAILY @%run_date%
-   
-## what will I do till the next daily:
-#---------------------------
-#' ; 
-#
-      my $str_middler = '## what did I do since last daily:
----------------------------
-' ; 
 
-      my $str_footer = '
+      foreach my $issue_id ( sort { $hsr2->{$a}->{ 'id' } <=> $hsr2->{$b}->{ 'id' } } keys (%$hsr2))  {
 
-# STOP  DAILY @%run_date%
-' ; 
-
-
-      $str_issues .= $str_header . "\n\n" ; 
-      my $prev_category = q{} ; 
-
-      foreach my $issue_id ( sort { $hsr2->{$a}->{ 'prio' } <=> $hsr2->{$b}->{ 'prio' } } keys (%$hsr2))  {
          my $row = $hsr2->{ $issue_id } ; 
 
-         $run_date         = $row->{ 'run_date'} ; 
-         my $category      = $row->{ 'category'} ; 
-         my $current       = $row->{ 'current'} ; 
-         my $description   = $row->{ 'description'} ; 
-         my $issue_id      = $row->{ 'issue_id'} ; 
-         my $level         = $row->{ 'level'} ; 
-         my $name          = $row->{ 'name'} ; 
-         my $prio          = $row->{ 'prio'} ; 
-         my $start_time    = $row->{ 'start_time'} ; 
-         my $stop_time     = $row->{ 'stop_time'} ; 
-         my $status        = $row->{ 'status'} ; 
-         $status           = $inverse_hsrStatus{ $status } ; 
-         $status           = 'unknwn' unless $status ; 
-         $description      =~ s/\r\n/\n/gm ; 
-         $str_issues       .= "\n" if ( $prev_category ne $category ) ; 
-         $str_issues       .= $category . "\n" unless ( $prev_category eq $category ) ; 
-         my $levels_dash   = '' ; 
-         for ( my $i = 1 ; $i<$level ; $i++ ) {
-            $str_issues    .= ' ' ;
-            $levels_dash   .= '-' ; 
-         }
-         $str_issues       .= $levels_dash . ' ' ; 
-         $str_issues       .= $status . "\t\t" if $level == 2 ; 
-         $str_issues       .= $status . "\t" if $level == 3 ; 
-         $str_issues       .= $status . " " if $level == 4 ; 
-         $str_issues       .= ( $start_time . " " ) if ( $start_time ne 'NULL' ) ; 
-         $str_issues       .= ( '- ' . $stop_time . " " ) if ( $stop_time ne 'NULL' ) ; 
-         $str_issues       .= $name . "\n" ; 
-         $prev_category    = $category ; 
-      }
-      #eof foreach 
+         $row->{ 'run_date'} = ''      unless defined ( $row->{ 'run_date' } ) ; 
+         $row->{ 'category'} = ''      unless defined ( $row->{ 'category' } ) ; 
+         $row->{ 'level'} = 2          unless defined ( $row->{ 'level' } ) ; 
+         $row->{ 'prio'} = 5           unless defined ( $row->{ 'prio' } ) ; 
+         $row->{ 'status'} = 'unknown' unless defined ( $row->{ 'run_date' } ) ; 
+         $row->{ 'name'} = ''          unless defined ( $row->{ 'name' } ) ; 
+         $row->{ 'description'} = $row->{'name'} unless defined ( $row->{ 'description' } ) ; 
+         $row->{ 'start_time'} = ''   unless defined ( $row->{ 'start_time' } ) ; 
+         $row->{ 'stop_time'} = ''   unless defined ( $row->{ 'stop_time' } ) ; 
+         $row->{ 'updated_by'} = ''      unless defined ( $row->{ 'updated_by' } ) ; 
+         $row->{ 'owner'} = ''      unless defined ( $row->{ 'owner' } ) ; 
 
-      $str_issues .= $str_footer . "\n\n" ; 
-      $str_issues =~ s|%run_date%|$run_date|g ;  
       $msg = " OK for hsr2 to txt conversion " ;  
       $ret = 0 ; 
+      }
 
-      return ( $ret , $msg , $str_issues ) ;
+      return ( $ret , $msg , $hsr2) ;
    }
    # eof sub doConvertHashRefToStr
-
-
-	#
-	# --------------------------------------------------------
-	# used to calculate the amount of levels 
-	# --------------------------------------------------------
-   sub doFillInLevelsPerRow {
-
-      my $self                = shift ; 
-      my $str_dashes          = shift ; 
-      my $ref_item_levels     = shift ; 
-      my $item_levels         = $$ref_item_levels ; 
-
-      my $row_num = scalar keys %$$ref_item_levels || 0 ; 
-      my $num_of_dashes = () = $str_dashes =~ /\-/gi;
-      $item_levels->{ $row_num } = $num_of_dashes ; 
-
-   } 
 
 	
    #

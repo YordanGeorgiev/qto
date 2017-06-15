@@ -16,6 +16,8 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
    use IssueTracker::App::Db::Out::DbWritersFactory ; 
    use IssueTracker::App::IO::Out::TxtWriterFactory ; 
    use IssueTracker::App::RAM::ConverterHsr2ToTxt ; 
+   use IssueTracker::App::RAM::ConverterHsr2ToTxt ; 
+
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
 	our $objLogger						   = {} ; 
@@ -59,7 +61,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       my $hsr                 = {} ;   # this is the data hash ref of hash reffs 
       my $mhsr                = {} ;   # this is the meta hash describing the data hash ^^
       my $term                = $ENV{'period'} || 'daily' ; 
-      my $table               = $term . '_issue' ; 
+      my $table               = $term . '_issues' ; 
 
       my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
       my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
@@ -73,6 +75,12 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       my $objTxtWriterFactory = 'IssueTracker::App::IO::Out::TxtWriterFactory'->new( \$appConfig , $self ) ; 
       my $objTxtWriter 			= $objTxtWriterFactory->doInstantiate ( "$term" );
       
+		my $objConverterHsr2ToTxt = 
+			'IssueTracker::App::RAM::ConverterHsr2ToTxt'->new ( \$appConfig ) ; 
+      ( $ret , $msg , $hsr )  = $objConverterHsr2ToTxt->doPrepareHashForPrinting( $hsr) ; 
+
+
+
       ( $ret , $msg , $str_issues ) = $objTxtWriter->doConvertHashRefToStr( $hsr ) ; 
       $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
 

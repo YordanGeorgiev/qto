@@ -54,7 +54,7 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
       my $ret                 = 1 ; 
       my $msg                 = 'unknown error while loading db issues to xls file' ; 
 		my $term						= $ENV{ 'period' } || 'daily' ; 
-		my $table 					= $term . '_issue' ; 
+		my $table 					= $term . '_issues' ; 
 
 
       my $hsr                 = {} ;      # this is the data hash ref of hash reffs 

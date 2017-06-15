@@ -132,7 +132,10 @@ package IssueTracker::App::IO::Out::WriterTxtTerm ;
          $str_issues       .= $status . "\t" if $level == 3 ; 
          $str_issues       .= $status . " " if $level == 4 ; 
          $str_issues       .= ( $start_time . " " ) if (  defined ( $start_time) && $start_time ne 'NULL' ) ; 
-         $str_issues       .= ( '- ' . $stop_time . " " ) if ( defined $stop_time && $stop_time ne 'NULL' ) ; 
+
+         if ( defined $stop_time && $stop_time ne 'NULL' && $stop_time ne '' ) {
+            $str_issues       .= ( '- ' . $stop_time . " " ) ; 
+         }
          $str_issues       .= $name . "\n" ; 
          $prev_category    = $category ; 
       }

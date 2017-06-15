@@ -114,6 +114,8 @@ http://stackoverflow.com/a/9736231/65706
     # grant him the privilege to create db's 
     sudo su - postgres  -c "psql -c 'ALTER USER '$USER' CREATEDB;'"
     
+    sudo su - postgres  -c 'psql -c "select * from information_schema.role_table_grants where grantee='"'"$USER"'"';"'
+    
     # and exit
     \q
 

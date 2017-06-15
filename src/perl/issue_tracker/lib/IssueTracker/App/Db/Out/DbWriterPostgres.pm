@@ -34,7 +34,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 		my $self 				= shift ; 
 		my $hsr2 			   = shift ; 	# the hash ref of hash refs  aka hs r on power 2
       my $term             = shift || 'daily' ; 
-      my $table            = "$term" . '_issue' ; 
+      my $table            = "$term" . '_issues' ; 
 
       my $ret              = 1 ; 
       my $msg              = 'unknown error while sql insert ' ; 		
@@ -46,7 +46,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       #( $ret , $msg ) = $self->doTruncateTable ( 'issue' ) ; 
       #return ( $ret , $msg ) unless ( $ret == 0 ) ; 
      
-      $str_sql_insert .= ' TRUNCATE TABLE issue ; ' ; 
+      $str_sql_insert .= ' TRUNCATE TABLE issues ; ' ; 
       
 
       my $debug_msg        = 'START doInsertSqlHashData' ; 
