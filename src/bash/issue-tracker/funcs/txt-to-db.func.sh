@@ -25,7 +25,7 @@ doTxtToDb(){
 
    psql -d "$db_name" -c '
    SELECT id , category , name , start_time , stop_time
-   FROM '"$period"'_issue order by '"$issues_order_by_attribute"'
+   FROM '"$period"'_issues order by '"$issues_order_by_attribute"'
    ;';
 
 

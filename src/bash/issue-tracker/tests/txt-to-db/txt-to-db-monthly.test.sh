@@ -13,7 +13,7 @@ doTestTxtToDbMonthly(){
 
    # and check the values from the db
    psql -d "$db_name" -c '
-   SELECT '"$period"'_issue_id , category , name 
+   SELECT id , category , name 
    FROM '"$period"'_issue order by name
    ;';
 

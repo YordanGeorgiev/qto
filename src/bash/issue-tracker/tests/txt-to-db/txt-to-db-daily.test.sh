@@ -13,8 +13,8 @@ doTestTxtToDbDaily(){
 
    # and check the values from the db
    psql -d "$db_name" -c '
-   SELECT '"$period"'_issue_id , category , name 
-   FROM '"$period"'_issue order by name
+   SELECT id , category , name 
+   FROM '"$period"'_issues order by name
    ;';
 
    sleep "$sleep_interval"

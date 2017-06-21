@@ -8,7 +8,7 @@ doXlsToDb(){
 
 	doLog "DEBUG START doXlsToDb"
 	
-	cat doc/txt/issue-tracker/funcs/xls-to-db.func.txt
+	# cat doc/txt/issue-tracker/funcs/xls-to-db.func.txt
 	
 	sleep "$sleep_interval"
    test -z ${issues_order_by_attribute+x} && export issues_order_by_attribute='category'
@@ -25,7 +25,7 @@ doXlsToDb(){
    
    psql -d "$db_name" -c '
    SELECT id , category , name , start_time , stop_time
-   FROM '"$period"'_issue order by '"$issues_order_by_attribute"'
+   FROM '"$period"'_issues order by '"$issues_order_by_attribute"'
    ;';
 
    doLog "INFO doRunIssueTracker exit_code $exit_code"

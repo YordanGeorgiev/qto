@@ -8,7 +8,7 @@ doDbToTxt(){
 
 	doLog "DEBUG START doDbToTxt"
 	
-	cat doc/txt/issue-tracker/funcs/db-to-txt.func.txt
+	# cat doc/txt/issue-tracker/funcs/db-to-txt.func.txt
 	
 	sleep "$sleep_interval"
 

@@ -10,7 +10,6 @@ doGmailTxtIssues(){
 	
    mutt --help >/dev/null 2>&1 ||
 	{ doLog "ERROR. mutt is not installed or not in PATH. Aborting." >&2; exit 1; }
-   set -x	
    todays_daily_txt_dir="$proj_txt_dir"'/issues/'"$(date +%Y)"'/'"$(date +%Y-%m)"'/'"$(date +%Y-%m-%d)"
   
    msg="nothing to do, as $todays_daily_txt_dir does NOT exist!!!"
@@ -25,9 +24,11 @@ doGmailTxtIssues(){
    while read -r f ; do 
       subj=$(cat $f|head -n1)
       subj=$(echo $subj|perl -ne 's/START //g;print;')
-      set -x
       for Email in $Emails; do (
+         echo -e "running: \n"
+         echo mutt -s "$issue_tracker_project proj ::: $subj :::" -a "$f" -- "$Email" \< $f
          mutt -s "$issue_tracker_project proj ::: $subj :::" -a "$f" -- "$Email" < $f
+         echo -e "\n"
       );
       done
    done < <(find $todays_daily_txt_dir -type f -name '*.txt')

@@ -65,7 +65,7 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
       my $objTxtReaderFactory    = 'IssueTracker::App::IO::In::TxtReaderFactory'->new( \$appConfig , $self ) ; 
       my $objReaderTxt 			   = $objTxtReaderFactory->doInstantiate ( "$period" );
 		my $term							= $ENV{'period' } || 'daily' ; 
-		my $table						= $term . '_issue' ; 
+		my $table						= $term . '_issues' ; 
 
       my ( $ret , $msg , $str_issues_file ) 
                                  = $objReaderTxt->doReadIssueFile ( $issues_file , $table ) ; 
