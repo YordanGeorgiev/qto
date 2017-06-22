@@ -1,5 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+cnf/perl/.perltidyrc
 src/bash/issue-tracker/funcs/gmail-txt-issues.func.sh
 src/bash/issue-tracker/tests/gmail-txt-issues.test.sh
 src/bash/issue-tracker/specs/gmail-txt-issues.spec.sh

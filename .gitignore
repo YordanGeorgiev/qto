@@ -1,6 +1,7 @@
 # exclude all the zip files
 **/*.zip
 **/*.log
+**/*.tdy
 dat/xls/run/*.xlsx
 dat/tests/t*.txt
 dat/issue-tracker/**
