@@ -13,6 +13,9 @@ SELECT 'create the "yearly_issues" table'
     , start_time     text NULL
     , stop_time      text NULL
     , run_date       date NULL
+    , updated_by     varchar (50) NULL
+    , owner          varchar (50) NULL
+    , parent_id      integer NULL 
     );
 
 

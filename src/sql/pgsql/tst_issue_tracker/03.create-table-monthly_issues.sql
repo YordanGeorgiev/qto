@@ -1,8 +1,8 @@
--- DROP TABLE IF EXISTS daily_issues ; 
+-- DROP TABLE IF EXISTS monthly_issues ; 
 
-SELECT 'create the "daily_issues" table'
+SELECT 'create the "monthly_issues" table'
 ; 
-   CREATE TABLE daily_issues (
+   CREATE TABLE monthly_issues (
       id             integer NOT NULL PRIMARY KEY
     , level          integer NULL
     , prio           integer NULL
@@ -13,6 +13,9 @@ SELECT 'create the "daily_issues" table'
     , start_time     text NULL
     , stop_time      text NULL
     , run_date       date NULL
+    , updated_by     varchar (50) NULL
+    , owner          varchar (50) NULL
+    , parent_id      integer NULL 
     );
 
 
@@ -21,7 +24,7 @@ SELECT 'show the columns of the just created table'
 
    SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute
-   WHERE  attrelid = 'public.daily_issues'::regclass
+   WHERE  attrelid = 'public.monthly_issues'::regclass
    AND    attnum > 0
    AND    NOT attisdropped
    ORDER  BY attnum
