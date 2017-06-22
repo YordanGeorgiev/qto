@@ -104,15 +104,14 @@ package IssueTracker::App::Utils::IO::FileHandler ;
 	# -----------------------------------------------------------------------------
 	sub PrintToFile {
 
-		my $self       = shift;
-		my $FileOutput = shift
-			 || cluck("FileHandler::PrintToFile undef \$FileOutput  !!!");
-		my $StringToPrint = shift
-		|| cluck("FileHandler::PrintToFile undef \$StringToPrint  !!!");
+		my $self             = shift;
+		my $FileOutput       = shift
+		   || cluck("FileHandler::PrintToFile undef \$FileOutput  !!!");
+		my $StringToPrint    = shift
+		   || cluck("FileHandler::PrintToFile undef \$StringToPrint  !!!");
+		my $mode             = shift 
+         || 'utf8' ; 
 
-		my $mode = '' ; 
-		$mode = shift if ( @_ ) ; 
-		$mode = '' unless $mode ; 
 
 		#$FileOutput = $self->ToUnixDir($FileOutput);
 
@@ -129,13 +128,22 @@ package IssueTracker::App::Utils::IO::FileHandler ;
 		}
 
 
-		#READ ALL ROWS OF A FILE TO ALIST
-		open(FILEOUTPUT, ">$FileOutput")
-		|| cluck("could not open the \$FileOutput $FileOutput! $! \n");
+      if ( $mode eq 'utf8' ) {
 
+         binmode(STDIN,  ':utf8');
+         binmode(STDOUT, ':utf8');
+         binmode(STDERR, ':utf8');
 
-		#use utf-8 bin mode is told to do so 
-		binmode(FILEOUTPUT, ":utf8") if ( $mode eq 'utf8' ) ; 
+         open(FILEOUTPUT, ">:utf8", "$FileOutput")
+         || cluck("could not open the \$FileOutput $FileOutput! $! \n");
+
+         binmode(FILEOUTPUT, ":utf8") ; 
+         
+      } else {
+         open(FILEOUTPUT, ">$FileOutput")
+         || cluck("could not open the \$FileOutput $FileOutput! $! \n");
+      }
+      
 
 		print FILEOUTPUT $StringToPrint;
 		close FILEOUTPUT;

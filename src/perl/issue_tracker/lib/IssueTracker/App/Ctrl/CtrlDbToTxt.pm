@@ -80,7 +80,6 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       ( $ret , $msg , $hsr )  = $objConverterHsr2ToTxt->doPrepareHashForPrinting( $hsr) ; 
 
 
-
       ( $ret , $msg , $str_issues ) = $objTxtWriter->doConvertHashRefToStr( $hsr ) ; 
       $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
 
