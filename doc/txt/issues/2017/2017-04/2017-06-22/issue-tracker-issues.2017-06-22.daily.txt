@@ -1,0 +1,23 @@
+# START DAILY @2017-06-22
+   
+## what will I do till the next DAILY:
+#---------------------------
+#
+
+
+issue-tracker-setup
+ - done		10:30 - 11:30 configure the perltidy
+
+issue-tracker-features
+ - done		13:30 - 15:30 add perltidy call during the check-perl-syntax call
+ - done		15:30 - 15:45 create an empty issue_tracker mojo app
+ - todo		22:00 - 23:00 add the mojo-hypnotoad-stop action
+ - todo		22:00 - 23:00 update the DevOps guide on how-to start and stop the web app
+ - todo		22:00 - 23:00 add the mojo-morbo-stop action
+ - todo		22:00 - 23:00 add the mojo-morbo-start action
+ - todo		22:00 - 23:00 add the mojo-hypnotoad-start action
+
+
+# STOP  DAILY @2017-06-22
+
+
