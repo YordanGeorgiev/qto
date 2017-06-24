@@ -1,0 +1,36 @@
+# doc/txt/issue-tracker/test/mojo-morbo-start.test.txt
+
+	doTestMojoMorboStart
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doTestMojoMorboStart function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doTestMojoMorboStart function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doTestMojoMorboStart function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doTestMojoMorboStart function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doTestMojoMorboStart used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doTestMojoMorboStart functions
+
+
+# eof file: doc/txt/issue-tracker/test/mojo-morbo-start.test.txt

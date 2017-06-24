@@ -77,7 +77,7 @@ doRunActions(){
    test -z "$actions" && doPrintUsage && doExit 0 
 
 	while read -d ' ' action ; do (
-		doLog "action: \"$action\""
+		doLog "DEBUG action: \"$action\""
 
 		while read -r func_file ; do (
          doLog "DEBUG func_file: $func_file"

@@ -1,5 +1,41 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/bash/issue-tracker/tests/mojo-morbo-start.test.sh
+src/bash/issue-tracker/funcs/mojo-morbo-start.func.sh
+src/bash/issue-tracker/specs/mojo-morbo-start.spec.sh
+src/bash/issue-tracker/helps/mojo-morbo-start.help.sh
+doc/txt/issue-tracker/tests/mojo-morbo-start.test.txt
+doc/txt/issue-tracker/specs/mojo-morbo-start.spec.txt
+doc/txt/issue-tracker/helps/mojo-morbo-start.help.txt
+doc/txt/issue-tracker/funcs/mojo-morbo-start.func.txt
+# ---
+src/bash/issue-tracker/tests/mojo-morbo-stop.test.sh
+src/bash/issue-tracker/specs/mojo-morbo-stop.spec.sh
+src/bash/issue-tracker/helps/mojo-morbo-stop.help.sh
+src/bash/issue-tracker/funcs/mojo-morbo-stop.func.sh
+doc/txt/issue-tracker/tests/mojo-morbo-stop.test.txt
+doc/txt/issue-tracker/specs/mojo-morbo-stop.spec.txt
+doc/txt/issue-tracker/helps/mojo-morbo-stop.help.txt
+doc/txt/issue-tracker/funcs/mojo-morbo-stop.func.txt
+# ---
+src/bash/issue-tracker/tests/mojo-hypnotoad-start.test.sh
+src/bash/issue-tracker/specs/mojo-hypnotoad-start.spec.sh
+src/bash/issue-tracker/helps/mojo-hypnotoad-start.help.sh
+src/bash/issue-tracker/funcs/mojo-hypnotoad-start.func.sh
+doc/txt/issue-tracker/tests/mojo-hypnotoad-start.test.txt
+doc/txt/issue-tracker/specs/mojo-hypnotoad-start.spec.txt
+doc/txt/issue-tracker/helps/mojo-hypnotoad-start.help.txt
+doc/txt/issue-tracker/funcs/mojo-hypnotoad-start.func.txt
+# ---
+src/bash/issue-tracker/tests/mojo-hypnotoad-stop.test.sh
+src/bash/issue-tracker/specs/mojo-hypnotoad-stop.spec.sh
+src/bash/issue-tracker/helps/mojo-hypnotoad-stop.help.sh
+src/bash/issue-tracker/funcs/mojo-hypnotoad-stop.func.sh
+doc/txt/issue-tracker/tests/mojo-hypnotoad-stop.test.txt
+doc/txt/issue-tracker/specs/mojo-hypnotoad-stop.spec.txt
+doc/txt/issue-tracker/helps/mojo-hypnotoad-stop.help.txt
+doc/txt/issue-tracker/funcs/mojo-hypnotoad-stop.func.txt
+# ---
 src/perl/issue_tracker/script
 src/perl/issue_tracker/script/issue_tracker
 src/perl/issue_tracker/script/issue_tracker
