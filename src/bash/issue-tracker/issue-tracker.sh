@@ -52,7 +52,7 @@ main(){
 # the "reflection" func - identify the the funcs per file
 #------------------------------------------------------------------------------
 get_function_list () {
-    env -i bash --noprofile --norc -c '
+    env -i PATH=/bin:/usr/bin:/usr/local/bin bash --noprofile --norc -c '
     source "'"$1"'"
     typeset -f |
     grep '\''^[^{} ].* () $'\'' |
@@ -77,16 +77,19 @@ doRunActions(){
    test -z "$actions" && doPrintUsage && doExit 0 
 
 	while read -d ' ' action ; do (
-		#debug doLog "action: \"$action\""
+		doLog "action: \"$action\""
+
 		while read -r func_file ; do (
+         doLog "DEBUG func_file: $func_file"
+
 			while read -r function_name ; do (
+            doLog "DEBUG function_name: $function_name"
 
 				action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
 				test "$action_name" != $action && continue
 				
 				doLog "INFO running action :: $action_name":"$function_name"
 				test "$action_name" == "$action" && $function_name
-
 
 			);
 			done< <(get_function_list "$func_file")

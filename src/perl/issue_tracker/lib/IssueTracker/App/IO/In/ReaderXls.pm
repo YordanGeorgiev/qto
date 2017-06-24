@@ -65,6 +65,8 @@ package IssueTracker::App::IO::In::ReaderXls ;
 
 			my $hsWorkSheet         = {} ; 
          my $WorkSheetName       = $worksheet->{ 'Name' };
+
+         next unless $WorkSheetName =~ m/^.*_issues$/g ; 
          $objLogger->doLogDebugMsg( "foreach my worksheet: " . $WorkSheetName )
            if ( $module_trace == 1 );
          
