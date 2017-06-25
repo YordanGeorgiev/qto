@@ -17,7 +17,7 @@ Table of Contents
     
 
 ## 1. What is it ?!
-A tool to handle multiple projects issues programmatically using txt files , xls files and PostgreSQL db as a source .
+A tool to manage multiple projects issues programmatically using txt files , xls files and PostgreSQL db.
 
     
 
@@ -34,6 +34,9 @@ The nice to have are:
  tmux, vim ,ctags
 
 The examples are for Ubuntu - use you OS package manager …
+
+If you do not have postgres than you would have to follow the longer installation instructions :
+https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-devops-guide.md#1-installations-and-configurations
 
     # use your OS package manager … if you are not on Ubuntu 
     
@@ -60,11 +63,15 @@ Fetch the source from git hub as follows:
 ### 2.3. run the boot-strap script
 The bootstrap script will interpolate change the git deployment dir to a "product_instance_dir" ( your instance of the issue-tracker, having the same version as this one, but running on a different host with different owner - your )
 
+    # defiine the latest and greates product_version
+    export product_version=$(cd issue-tracker;git tag|sort -nr| head -n 1;cd ..)
+    
     # run the bootstrap script : 
     bash issue-tracker/src/bash/issue-tracker/bootstrap-issue-tracker.sh
     
-    # now go to your product instance dir
-    cd /opt/csitea/issue-tracker/issue-tracker.0.1.8.dev.$USER
+    
+    # now go to your product instance dir , note it is a DEV environment
+    cd /opt/csitea/issue-tracker/issue-tracker.$product_version.dev.$USER
     
 
 ### 2.4. Apply the db and issue create scirpts
@@ -72,6 +79,7 @@ If you do not have the PostgreSQL installed check the instructions in the instal
 https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-devops-guide.md#1-installations-and-configurations
 If you do have it , apply the db and issue create scirpts as follows:
 
+    # apply the postgre sql scripts
     bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
 
 ### 2.5. Install the required Perl modules
