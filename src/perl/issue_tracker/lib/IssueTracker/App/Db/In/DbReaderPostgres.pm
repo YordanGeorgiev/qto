@@ -25,6 +25,69 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 	our $web_host 											= q{} ; 
 
 
+   sub doSelectTablesColumnList {
+
+      my $self          = shift ; 
+      my $table         = shift || 'daily_issues' ; 
+
+
+      my $msg              = q{} ;         
+      my $ret              = 1 ;          # this is the return value from this method 
+      my $debug_msg        = q{} ; 
+      my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
+      my $sth              = {} ;         # this is the statement handle
+      my $dbh              = {} ;         # this is the database handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      
+      $str_sql = " 
+         SELECT attnum, attname
+         FROM   pg_attribute
+         WHERE  attrelid = '" . $table . "'::regclass
+         AND    attnum > 0
+         AND    NOT attisdropped
+         ORDER  BY attnum
+      ;
+      " ; 
+
+      # authentication src: http://stackoverflow.com/a/19980156/65706
+      $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+     
+      $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
+           'RaiseError' => 1
+         , 'ShowErrorStatement' => 1
+         , 'AutoCommit' => 1
+      } ) or $msg = DBI->errstr;
+      
+      # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
+      $sth = $dbh->prepare($str_sql);  
+
+      $sth->execute()
+            or $objLogger->error ( "$DBI::errstr" ) ;
+
+      $mhsr = $sth->fetchall_hashref( 'attnum' ) ; 
+      binmode(STDOUT, ':utf8');
+      p( $mhsr ) if $module_trace == 1 ; 
+
+      $msg = DBI->errstr ; 
+
+      unless ( defined ( $msg ) ) {
+         $msg = 'SELECT meta OK for table: ' . "$table" ; 
+         $ret = 0 ; 
+      } else {
+         $objLogger->doLogErrorMsg ( $msg ) ; 
+      }
+
+      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
+      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      
+      return ( $ret , $msg , $mhsr ) ; 	
+   }
+   # eof sub 
+
+
    #
    # -----------------------------------------------------------------------------
    # get ALL the table data into hash ref of hash refs 
@@ -39,6 +102,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       my $debug_msg        = q{} ; 
       my $hsr              = {} ;         # this is hash ref of hash refs to populate with
       my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
+      my $dmhsr             = {} ;        # this is meta hash describing the data hash ^^
       my $sth              = {} ;         # this is the statement handle
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
@@ -57,37 +121,31 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 #                9 | daily_issue | stop_time      | text              | YES
 #               10 | daily_issue | run_date       | date              | YES
 
+      ( $ret , $msg , $dmhsr ) = $self->doSelectTablesColumnList ( $table ) ; 
+      return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
-      $mhsr->{'ColumnNames'}-> { 0 } = 'id' ; 
-      $mhsr->{'ColumnNames'}-> { 1 } = 'level' ;
-      $mhsr->{'ColumnNames'}-> { 2 } = 'prio' ;
-      $mhsr->{'ColumnNames'}-> { 3 } = 'status' ;
-      $mhsr->{'ColumnNames'}-> { 4 } = 'category' ;
-      $mhsr->{'ColumnNames'}-> { 5 } = 'name' ;
-      $mhsr->{'ColumnNames'}-> { 6 } = 'description' ;
-      $mhsr->{'ColumnNames'}-> { 7 } = 'start_time' ;
-      $mhsr->{'ColumnNames'}-> { 8 } = 'stop_time' ;
-      $mhsr->{'ColumnNames'}-> { 9 } = 'run_date' ;
-      $mhsr->{'ColumnNames'}-> { 10 } = 'updated_by' ;
-      $mhsr->{'ColumnNames'}-> { 11 } = 'owner' ;
-      $mhsr->{'ColumnNames'}-> { 12 } = 'parent_id' ;
+      foreach my $key ( sort ( keys %$dmhsr ) ) {
+         $mhsr->{'ColumnNames'}-> { $key } = $dmhsr->{ $key } ; 
+      }
+
+#
+#      $mhsr->{'ColumnNames'}-> { 0 } = 'id' ; 
+#      $mhsr->{'ColumnNames'}-> { 1 } = 'level' ;
+#      $mhsr->{'ColumnNames'}-> { 2 } = 'prio' ;
+#      $mhsr->{'ColumnNames'}-> { 3 } = 'status' ;
+#      $mhsr->{'ColumnNames'}-> { 4 } = 'category' ;
+#      $mhsr->{'ColumnNames'}-> { 5 } = 'name' ;
+#      $mhsr->{'ColumnNames'}-> { 6 } = 'description' ;
+#      $mhsr->{'ColumnNames'}-> { 7 } = 'start_time' ;
+#      $mhsr->{'ColumnNames'}-> { 8 } = 'stop_time' ;
+#      $mhsr->{'ColumnNames'}-> { 9 } = 'run_date' ;
+#      $mhsr->{'ColumnNames'}-> { 10 } = 'updated_by' ;
+#      $mhsr->{'ColumnNames'}-> { 11 } = 'owner' ;
+#      $mhsr->{'ColumnNames'}-> { 12 } = 'parent_id' ;
 
       $str_sql = 
          " SELECT 
-              id
-            , level 
-            , prio
-            , status
-            , category
-            , name
-            , description
-            , start_time
-            , stop_time
-            , run_date
-            , updated_by
-            , owner
-            , parent_id
-         FROM $table 
+         * FROM $table 
          order by prio asc
          ;
       " ; 

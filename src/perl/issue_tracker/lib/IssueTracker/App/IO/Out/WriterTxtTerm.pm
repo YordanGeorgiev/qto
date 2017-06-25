@@ -119,7 +119,8 @@ sub doConvertHashRefToStr {
     my $description = $row->{'description'};
     my $issue_id    = $row->{'issue_id'};
     my $level       = $row->{'level'};
-    my $name        = $row->{'name'};
+    my $name        = $row->{'name'} || $row->{'description' } ; 
+    $name =~ s/(\r){0,1}\n/ ;/gm ; 
     my $prio        = $row->{'prio'};
     my $start_time  = $row->{'start_time'};
     my $stop_time   = $row->{'stop_time'};
