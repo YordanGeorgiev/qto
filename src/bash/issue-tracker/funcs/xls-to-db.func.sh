@@ -26,7 +26,7 @@ doXlsToDb(){
    exit_code=$?
    
    psql -d "$db_name" -c '
-   SELECT id , category , name , start_time , stop_time
+   SELECT id , category , substring ( description from 0 for 40 ) as descrption , start_time , stop_time
    FROM '"$period"'_issues order by '"$issues_order_by_attribute"'
    ;';
 

@@ -13,24 +13,29 @@ Table of Contents
       * [1.4.3. Create the pgsql user ](#143-create-the-pgsql-user-)
     * [1.5. Install the perl modules ( optional)](#15-install-the-perl-modules-(-optional))
   * [2. MAINTENANCE AND OPERATIONS](#2-maintenance-and-operations)
-    * [2.1. RUNSTATE MANAGEMENT](#21-runstate-management)
+    * [2.1. RDBMS Runstate management](#21-rdbms-runstate-management)
       * [2.1.1. To check the status of the postgreSql](#211-to-check-the-status-of-the-postgresql)
       * [2.1.2. To stop the postgreSql](#212-to-stop-the-postgresql)
       * [2.1.3. To start the postgreSql](#213-to-start-the-postgresql)
       * [2.1.4. to check the port on which it is listening ](#214-to-check-the-port-on-which-it-is-listening-)
-  * [3. NAMING CONVENTIONS](#3-naming-conventions)
-    * [3.1. Dirs naming conventions](#31-dirs-naming-conventions)
-      * [3.1.1. Root Dirs naming conventions](#311-root-dirs-naming-conventions)
-  * [4. DYNAMIC SCENARIOS](#4-dynamic-scenarios)
-    * [4.1. Load issue txt files to db](#41-load-issue-txt-files-to-db)
-      * [4.1.1. Check the postgres status](#411-check-the-postgres-status)
-      * [4.1.2. Run the create db and create issue table scripts](#412-run-the-create-db-and-create-issue-table-scripts)
-      * [4.1.3. Run the issue-tracker file to db load](#413-run-the-issue-tracker-file-to-db-load)
-      * [4.1.4. Verify the inserted data from the db](#414-verify-the-inserted-data-from-the-db)
-  * [5. BUSINESS LOGIC](#5-business-logic)
-    * [5.1. Business entities](#51-business-entities)
-    * [5.2. Categories](#52-categories)
-    * [5.3. Issues / Issue items / items](#53-issues-/-issue-items-/-items)
+      * [2.1.5. Check the postgres status](#215-check-the-postgres-status)
+    * [2.2. Application Layer runstate management](#22-application-layer-runstate-management)
+      * [2.2.1. start the application layer](#221-start-the-application-layer)
+      * [2.2.2. stop the application layer](#222-stop-the-application-layer)
+  * [3. USAGE SCENARIOS](#3-usage-scenarios)
+    * [3.1. Run increase-date action](#31-run-increase-date-action)
+    * [3.2. Run xls-to-db action](#32-run-xls-to-db-action)
+    * [3.3. Run db-to-txt action](#33-run-db-to-txt-action)
+    * [3.4. Load xls issues to db and from db to txt files](#34-load-xls-issues-to-db-and-from-db-to-txt-files)
+    * [3.5. Run the issue-tracker file to db load](#35-run-the-issue-tracker-file-to-db-load)
+    * [3.6. Verify the inserted data from the db](#36-verify-the-inserted-data-from-the-db)
+  * [4. BUSINESS LOGIC](#4-business-logic)
+    * [4.1. Projects management](#41-projects-management)
+    * [4.2. Categories](#42-categories)
+    * [4.3. Issues / Issue items / items](#43-issues-/-issue-items-/-items)
+  * [5. NAMING CONVENTIONS](#5-naming-conventions)
+    * [5.1. Dirs naming conventions](#51-dirs-naming-conventions)
+      * [5.1.1. Root Dirs naming conventions](#511-root-dirs-naming-conventions)
   * [6. SOURCE CODE MANAGEMENT](#6-source-code-management)
     * [6.1. The meaning of the used brances](#61-the-meaning-of-the-used-brances)
 
@@ -139,7 +144,7 @@ Install the perl module by first installing the server development package
 
      
 
-### 2.1. RUNSTATE MANAGEMENT
+### 2.1. RDBMS Runstate management
  
 
      
@@ -165,37 +170,7 @@ To check the port on which it is listening issue:
     sudo netstat -tulntp | grep -i postgres
     # tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      8095/postgres
 
-## 3. NAMING CONVENTIONS
-
-
-     
-
-### 3.1. Dirs naming conventions
-The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
-
-    
-
-#### 3.1.1. Root Dirs naming conventions
-The root dirs and named as follows:
-bin - contains the produced binaries for th project
-cnf - for the configuration
-dat - for the data of the app
-lib - for any external libraries used
-src - for the source code of the actual projects and subprojects
-
-    
-
-## 4. DYNAMIC SCENARIOS
-
-
-    
-
-### 4.1. Load issue txt files to db
-This scenario implements the "Load issues file from file system to db" user story. 
-
-    
-
-#### 4.1.1. Check the postgres status
+#### 2.1.5. Check the postgres status
 Check the postgres status.
 Check the port to which the postres is running with this command:
 
@@ -207,19 +182,55 @@ Check the port to which the postres is running with this command:
     # check on which ports it is runnning
     sudo netstat -plunt |grep postgres
 
-#### 4.1.2. Run the create db and create issue table scripts
-Run the create db and create issue table scripts with the following call
+### 2.2. Application Layer runstate management
+ 
 
-    # run the create db and create table scrpt
-    # define the sql_dir where the issue tracker sql scripts are stored 
-    export sql_dir=/opt/csitea/issue-tracker/issue-tracker.0.0.5.dev.ysg/src/sql/pgsql/dev_issue_tracker
-    
-    # run the scripts
-    bash /opt/csitea/pgsql-runner/src/bash/pgsql-runner.sh  -a run-pgsql-scripts
-    
-    # ensure from the STDOUT msgs that both the db and the table were created
+     
 
-#### 4.1.3. Run the issue-tracker file to db load
+#### 2.2.1. start the application layer
+To start the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern 
+
+    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-hypnotoad-start
+    
+    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
+
+#### 2.2.2. stop the application layer
+To stop the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern 
+
+    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-hypnotoad-stop
+    
+    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop
+
+## 3. USAGE SCENARIOS
+
+
+    
+
+### 3.1. Run increase-date action
+You track the issues of your projects by storing them into xls files in "daily" proj_txt dirs. 
+Each time the day changes by running the increase-date action you will be able to clone the data of the previous date and start working on the currnent date. 
+
+    bash src/bash/issue-tracker/issue-tracker.sh -a increase-date
+
+### 3.2. Run xls-to-db action
+You insert the date of the daily , weekly , monthly or yearly issues from the daily input excel file(s) by running the xls-to-db action. 
+
+    bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db
+
+### 3.3. Run db-to-txt action
+ 
+
+     
+
+### 3.4. Load xls issues to db and from db to txt files
+to load xls issues to db and from db to txt files
+
+    bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db -a db-to-txt 
+    
+    # or run for all the periods
+    for period in `echo daily weekly monthly yearly`; do export period=$period ; bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db -a db-to-txt ; done ;
+
+### 3.5. Run the issue-tracker file to db load
 Run the issue-tracker file to db load 
 
     # ensure the following actions will be tested
@@ -231,23 +242,25 @@ Run the issue-tracker file to db load
     # test those uncommented actions
     bash src/bash/issue-tracker/test-issue-tracker.sh
 
-#### 4.1.4. Verify the inserted data from the db
+### 3.6. Verify the inserted data from the db
 Verify the inserted data from the db as follows:
 
     # check that the rows where inserted
     echo 'SELECT * FROM issue ; ' | psql -d dev_issue_tracker
 
-## 5. BUSINESS LOGIC
+## 4. BUSINESS LOGIC
 
 
     
 
-### 5.1. Business entities
+### 4.1. Projects management
+You can manage multiple projects with the issue-tracker tool. Each project has its own data directories, database storage and configurations. You could also have different envornments named dev,tst,prd for each project separately. 
+As the tool is backwards compatible you could have differrrent instances of the issue-tracker projects with different versions ( and set of features ) operatiing against differrent project ( each one in its own version).
+You must pre-set the configuration variables of an issue-tracker project each time you start working on a project from the shell
 
+    doParseIniEnvVars /vagrant/csitea/cnf/projects/isg-pub/isg-pub.issue-tracker.doc-pub-host.conf
 
-    
-
-### 5.2. Categories
+### 4.2. Categories
 Each issue item could be categorized under one and only one category. One category might have 1 or more issues. 
 The categories could contain letters ,numbers, dashes
 
@@ -255,7 +268,7 @@ The categories could contain letters ,numbers, dashes
     organisation-it
     organisation-it-operations
 
-### 5.3. Issues / Issue items / items
+### 4.3. Issues / Issue items / items
 Issue item is the shortest possible description of task , activity , note or anything requiring distinguishable and prerferable measurable action or producing verfifiable outcome.
 Issues could be of different types - tasks, activities, notes etc. 
 
@@ -263,6 +276,26 @@ Issues could be of different types - tasks, activities, notes etc.
     go get the milk
     do the homework
     procurement e-mail discussion follow-up
+
+## 5. NAMING CONVENTIONS
+
+
+     
+
+### 5.1. Dirs naming conventions
+The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
+
+    
+
+#### 5.1.1. Root Dirs naming conventions
+The root dirs and named as follows:
+bin - contains the produced binaries for th project
+cnf - for the configuration
+dat - for the data of the app
+lib - for any external libraries used
+src - for the source code of the actual projects and subprojects
+
+    
 
 ## 6. SOURCE CODE MANAGEMENT
 The issue-tracker is a derivative of the wrapp tool - this means that development and deployment process must be integrated into a single pipeline. 
