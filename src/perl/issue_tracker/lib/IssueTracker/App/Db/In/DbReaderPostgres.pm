@@ -85,7 +85,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       
       return ( $ret , $msg , $mhsr ) ; 	
    }
-   # eof sub 
+   # eof sub doSelectTablesColumnList
 
 
    #
@@ -108,19 +108,6 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       my $str_sql          = q{} ;        # this is the sql string to use for the query
 
 
-# ordinal_position | table_name  |  column_name   |     data_type     | is_nullable
-#------------------+-------------+----------------+-------------------+-------------
-#                1 | daily_issue | daily_issue_id | integer           | NO
-#                2 | daily_issue | level          | integer           | YES
-#                3 | daily_issue | prio           | integer           | YES
-#                4 | daily_issue | status         | character varying | NO
-#                5 | daily_issue | category       | character varying | NO
-#                6 | daily_issue | name           | character varying | NO
-#                7 | daily_issue | description    | character varying | YES
-#                8 | daily_issue | start_time     | text              | YES
-#                9 | daily_issue | stop_time      | text              | YES
-#               10 | daily_issue | run_date       | date              | YES
-
       ( $ret , $msg , $dmhsr ) = $self->doSelectTablesColumnList ( $table ) ; 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
@@ -128,20 +115,6 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
          $mhsr->{'ColumnNames'}-> { $key } = $dmhsr->{ $key } ; 
       }
 
-#
-#      $mhsr->{'ColumnNames'}-> { 0 } = 'id' ; 
-#      $mhsr->{'ColumnNames'}-> { 1 } = 'level' ;
-#      $mhsr->{'ColumnNames'}-> { 2 } = 'prio' ;
-#      $mhsr->{'ColumnNames'}-> { 3 } = 'status' ;
-#      $mhsr->{'ColumnNames'}-> { 4 } = 'category' ;
-#      $mhsr->{'ColumnNames'}-> { 5 } = 'name' ;
-#      $mhsr->{'ColumnNames'}-> { 6 } = 'description' ;
-#      $mhsr->{'ColumnNames'}-> { 7 } = 'start_time' ;
-#      $mhsr->{'ColumnNames'}-> { 8 } = 'stop_time' ;
-#      $mhsr->{'ColumnNames'}-> { 9 } = 'run_date' ;
-#      $mhsr->{'ColumnNames'}-> { 10 } = 'updated_by' ;
-#      $mhsr->{'ColumnNames'}-> { 11 } = 'owner' ;
-#      $mhsr->{'ColumnNames'}-> { 12 } = 'parent_id' ;
 
       $str_sql = 
          " SELECT 

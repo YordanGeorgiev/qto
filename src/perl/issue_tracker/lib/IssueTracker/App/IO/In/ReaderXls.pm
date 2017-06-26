@@ -90,6 +90,8 @@ package IssueTracker::App::IO::In::ReaderXls ;
 
 					#debug print "col_num:: $col_num \n" ; 	
                my $cell  = $worksheet->{'Cells'}[ $row ][ $col ];
+               my $obj_header = $worksheet->{'Cells'}[ 0 ][ $col ];
+               my $header = $obj_header->unformatted() ; 
                my $token = '';
 
                # to represent NULL in the sql
@@ -108,7 +110,7 @@ package IssueTracker::App::IO::In::ReaderXls ;
                   $token =~ s/\&amp;/\&/g; 
                }
 
-				 	$hsRow->{ $col_num } = $token ; 			
+				 	$hsRow->{ $header } = $token ; 			
 					$col_num++ ; 
 				}
 				#eof for col

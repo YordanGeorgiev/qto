@@ -8,11 +8,11 @@ SELECT 'create the "monthly_issues" table'
     , prio           integer NULL
     , status         varchar (50) NOT NULL
     , category       varchar (200) NOT NULL
-    , name           varchar (100) NOT NULL
+    , name           varchar (200) NOT NULL
     , description    varchar (4000)
     , start_time     text NULL
     , stop_time      text NULL
-    , run_date       date NULL
+    , update_time    timestamp NOT NULL
     , updated_by     varchar (50) NULL
     , owner          varchar (50) NULL
     , parent_id      integer NULL 

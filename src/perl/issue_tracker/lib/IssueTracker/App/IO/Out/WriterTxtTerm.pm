@@ -20,8 +20,9 @@ use Carp qw /cluck confess shortmess croak carp/;
 use Scalar::Util qw /looks_like_number/;
 use Data::Printer;
 
-use IssueTracker::App::Utils::IO::FileHandler;
-use IssueTracker::App::Utils::Logger;
+use IssueTracker::App::Utils::IO::FileHandler ; 
+use IssueTracker::App::Utils::Logger ; 
+use IssueTracker::App::Utils::Timer ; 
 
 binmode(STDIN,  ':utf8');
 binmode(STDOUT, ':utf8');
@@ -67,9 +68,10 @@ sub doConvertHashRefToStr {
     = 'unknown error during hash ref of hash references to string conversion !!!';
   my $ret        = 1;
   my $str_issues = q{};
-  my $run_date   = q{};
+  my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+  my $run_time         = $objTimer->GetHumanReadableTime();
   p($hsr2) if $module_trace == 1;
-  my $str_header = '# START ' . uc($term) . ' @%run_date%
+  my $str_header = '# START ' . uc($term) . ' @%run_time%
    
 ## what will I do till the next ' . uc($term) . ':
 #---------------------------
@@ -78,13 +80,13 @@ sub doConvertHashRefToStr {
 
   my $str_footer = '
 
-# STOP  ' . uc($term) . ' @%run_date%
+# STOP  ' . uc($term) . ' @%run_time%
 ';
 
   $str_issues .= $str_header . "\n\n";
   my $prev_category = q{};
   my @attributes
-    = qw (id run_date category current description issue_id level name prio start_time stop_time status);
+    = qw (id run_time category current description issue_id level name prio start_time stop_time status);
   my $issues_order_by_attribute = $ENV{'issues_order_by_attribute'} || 'start_time' ; 
 
   unless (grep(/^$issues_order_by_attribute$/, @attributes)) {
@@ -113,7 +115,6 @@ sub doConvertHashRefToStr {
 
     my $row = $hsr2->{$issue_id};
 
-    $run_date = $row->{'run_date'};
     my $category    = $row->{'category'};
     my $current     = $row->{'current'};
     my $description = $row->{'description'};
@@ -153,7 +154,7 @@ sub doConvertHashRefToStr {
   #eof foreach
 
   $str_issues .= $str_footer . "\n\n";
-  $str_issues =~ s|%run_date%|$run_date|g;
+  $str_issues =~ s|%run_time%|$run_time|g;
   $msg = " OK for hsr2 to txt conversion ";
   $ret = 0;
 

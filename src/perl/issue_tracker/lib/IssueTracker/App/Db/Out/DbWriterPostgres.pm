@@ -11,6 +11,9 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 	use Carp ; 
 
    use IssueTracker::App::Utils::Logger ; 
+   use IssueTracker::App::Db::In::DbReadersFactory ; 
+   use IssueTracker::App::Utils::Timer ; 
+
 
    our $module_trace                            = 1 ; 
    our $IsUnitTest                              = 0 ; 
@@ -23,6 +26,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 	our $db_user 											= q{} ; 
 	our $db_user_pw	 									= q{} ; 
 	our $web_host 											= q{} ; 
+
 
 	#
    # ------------------------------------------------------
@@ -43,9 +47,20 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       my $str_val_list     = q{} ; 
       my $error_msg        = q{} ; 
 
-      #( $ret , $msg ) = $self->doTruncateTable ( 'issue' ) ; 
-      #return ( $ret , $msg ) unless ( $ret == 0 ) ; 
-     
+      my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
+      my $objDbReader 		= $objDbReadersFactory->doInstantiate ( 'postgre' );
+		
+      my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+		my $update_time      = $objTimer->GetHumanReadableTime();
+      
+      my $dmhsr            = {} ; 
+
+      ( $ret , $msg , $dmhsr ) = $objDbReader->doSelectTablesColumnList ( $table ) ; 
+      return  ( $ret , $msg , undef ) unless $ret == 0 ; 
+
+      # debug p($dmhsr); 
+      # sleep 6 ; 
+      
       $str_sql_insert .= ' TRUNCATE TABLE issues ; ' ; 
       
 
@@ -56,11 +71,17 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 		foreach my $key ( sort(keys( %{$hsr2} ) ) ) {
          my $row_hash = $hsr2->{ $key } ; 
 
-		   foreach my $key ( sort(keys( %{$row_hash} ) ) ) {
+		   foreach my $key ( sort(keys( %{$dmhsr} ) ) ) {
             $str_col_list .= ' , ' . $key ; 
-            my $value     = $row_hash->{ $key } || 'null' ; 
-            $value =~ s|\\|\\\\|g ;
-            $value       =~ s|\'|\\\'|g ;
+
+            my $value = 'null' ; 
+            unless ( $key eq 'update_time' ) {
+               $value     = $row_hash->{ $key } || 'null' ; 
+               $value =~ s|\\|\\\\|g ;
+               $value       =~ s|\'|\\\'|g ;
+            } else {
+               $value     = $update_time ; 
+            }
             $str_val_list .= ' , \'' . $value . '\''; 
          }
          
@@ -110,64 +131,15 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 	#
    # ------------------------------------------------------
 	#  input: hash ref of hash refs containing the issues 
-	#  file data  and meta data 
-   # ------------------------------------------------------
-	sub doTruncateTable {
-
-		my $self 				= shift ; 
-		my $table 			   = shift ; 	# the table to truncat
-      
-      my $ret              = 1 ; 
-      my $msg              = 'unknown error while sql truncate ' ; 		
-      my $str_sql_truncate = q{} ; 
-      my $error_msg        = q{} ; 
-
-      $str_sql_truncate .= 'TRUNCATE TABLE issue ; ' ; 
-
-      my $debug_msg        = 'START doTruncateTable' ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-	  
-     
-      my $dbh = DBI->connect("DBI:Pg:dbname=$db_name", "", "" , {
-           'RaiseError' => 1
-         , 'ShowErrorStatement' => 1
-         , 'AutoCommit' => 1
-      } ) or $msg = DBI->errstr;
-      
-      
-      $ret = $dbh->do( $str_sql_truncate ) ; 
-      $msg = DBI->errstr ; 
-
-      unless ( defined ( $msg ) ) {
-         $msg = 'INSERT OK' ; 
-         $ret = 0 ; 
-      } else {
-         $objLogger->doLogErrorMsg ( $msg ) ; 
-      }
-
-      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-
-      $debug_msg        = 'doTruncateTable ret ' . $ret ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-      
-      return ( $ret , $msg ) ; 	
-	}
-	#eof sub doHsr2ToDb
-
-
-	#
-   # ------------------------------------------------------
-	#  input: hash ref of hash refs containing the issues 
 	#  output: the data in the issue table
    # ------------------------------------------------------
 	sub doInsertSqlHashData {
 
 		my $self 				= shift ; 
 		my $sql_hash 			= shift ; 	
-		my $table				= shift || 'daily_issue' ; 
+		my $table				= shift || 'daily_issues' ; 
   
 
-      p ( $sql_hash ) if $module_trace == 1  ;
       $objLogger->doLogDebugMsg ( "STOP print sql_hash " ) ;    
       my $ret              = 1 ; 
       my $msg              = 'unknown error while sql insert ' ; 		
@@ -192,7 +164,15 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
 	  
       $str_sql_insert .= ' TRUNCATE TABLE ' . "$table" . '; ' ; 
- 
+      
+      my $dmhsr            = {} ; 
+      my $update_time      = q{} ; 
+
+      my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
+      my $objDbReader 		= $objDbReadersFactory->doInstantiate ( 'postgre' );
+      ( $ret , $msg , $dmhsr ) = $objDbReader->doSelectTablesColumnList ( $table ) ; 
+      return  ( $ret , $msg , undef ) unless $ret == 0 ; 
+      # debug p($dmhsr); 
 		foreach my $key ( sort(keys( %{$sql_hash} ) ) ) {
          my $row_hash = $sql_hash->{ $key } ; 
          
@@ -200,10 +180,17 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          my $debug_msg        = 'STOP print row_hash ' ; 
          $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace > 1 ; 
 
-		   foreach my $key ( sort(keys( %{$row_hash} ) ) ) {
+		   foreach my $key ( sort(keys( %{$dmhsr} ) ) ) {
             $str_col_list .= ' , ' . $key ; 
-            my $value     = $row_hash->{ $key } ; 
-            $value        =~ s/'/''/g if ( $value ) ; 
+            my $value = 'null' ; 
+            unless ( $key eq 'update_time' ) {
+               $value     = $row_hash->{ $key } || 'null' ; 
+               $value     =~ s|\\|\\\\|g ;
+               $value     =~ s|\'|\\\'|g ;
+               $value     =~ s/'/''/g if ( $value ) ; 
+            } else {
+               $value     = $update_time ; 
+            }
             $str_val_list .= ' , \'' . $value . '\'' if defined $value ; 
             $str_val_list .= ' , NULL' unless defined $value ; 
          }
@@ -298,11 +285,26 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       my $dbh              = {} ;    # this is the database handle
       my $str_sql          = q{} ;   # this is the sql string to use for the query
       my $rv               = 0 ;     # apperantly insert ok returns rv = 1 !!! 
+      
+      my $hs_headers       = {} ; 
+      my $update_time      = q{} ; 
+      my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+		$update_time         = $objTimer->GetHumanReadableTime();
+      
+      my $dmhsr            = {} ; 
+
+      my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
+      my $objDbReader 		= $objDbReadersFactory->doInstantiate ( 'postgre' );
 
       # obs this does not support ordered primary key tables first order yet !!!
-      foreach my $table_name ( keys %$hsr2 ) { 
-         my $hs_table = $hsr2->{ $table_name } ; 
-         my $hs_headers = $hsr2->{ $table_name }->{ 0 } ; 		   
+      foreach my $table ( keys %$hsr2 ) { 
+
+         ( $ret , $msg , $hs_headers ) = $objDbReader->doSelectTablesColumnList ( $table ) ; 
+         return  ( $ret , $msg , undef ) unless $ret == 0 ; 
+
+         #debug p($hs_headers ) ; 
+
+         my $hs_table = $hsr2->{ $table } ; 
      
          eval { 
             $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
@@ -322,11 +324,11 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          }
 
          my $sql_str          = '' ; 
-         my $sql_str_insrt    = "INSERT INTO $table_name " ; 
+         my $sql_str_insrt    = "INSERT INTO $table " ; 
          $sql_str_insrt      .= '(' ; 
 
-         foreach my $col_num ( sort ( keys %$hs_headers )) {
-            my $column_name = $hs_headers->{ $col_num } ; 
+         foreach my $col_num ( sort ( keys %{$hs_headers} )) {
+            my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
             $sql_str_insrt .= " $column_name " . ' , ' ; 
          } 
          
@@ -340,11 +342,19 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
             my $hs_row = $hs_table->{ $row_num } ; 
             my $data_str = q{} ; 
             p($hs_row);
-            foreach my $col_num ( sort ( keys ( %$hs_row ) ) ) {
-               my $cell_value = $hs_row ->{ $col_num } ; 
+            foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
+               my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
+               my $cell_value = $hs_row ->{ $column_name } ; 
                if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
                      or $cell_value eq 'null' or $cell_value eq "'NULL'" ) {
-                  $cell_value = 'NULL' ;  
+
+                  unless ( $column_name eq 'update_time' ) {
+                     $cell_value = 'NULL'  
+                  } 
+                  else {
+                     $cell_value = "'" . $update_time . "'" if ( $column_name eq 'update_time' ) ; 
+                  }
+
                   $data_str .= "$cell_value" . " , " ; 
                } else { 
                   $cell_value =~ s|\\|\\\\|g ; 
@@ -365,11 +375,11 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          } 
          #eof foreach row
            	
-				$sql_str = "TRUNCATE TABLE $table_name ; $sql_str " ; 	 
+				$sql_str = "TRUNCATE TABLE $table ; $sql_str " ; 	 
             $objLogger->doLogDebugMsg ( "sql_str : $sql_str " ) ; 
 
          # Action !!! 
-         $msg = " DBI upsert error on table: $table_name: " . $msg  ; $ret = 1 ; 
+         $msg = " DBI upsert error on table: $table: " . $msg  ; $ret = 1 ; 
          eval { 
             $rv = $dbh->do($sql_str) ; 
          } or return ( $ret , $msg ) ; 
@@ -377,13 +387,13 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
 
          if ( $rv == 1 ) { 
-            $msg = "upsert OK for table $table_name" ;          
+            $msg = "upsert OK for table $table" ;          
             $objLogger->doLogInfoMsg ( $msg ) ; 
             $ret = 0 ; 
          }
 
       } 
-      #eof foreach table_name
+      #eof foreach table
 		
       $msg = 'upsert OK for all tables' ; 
 		return ( $ret , $msg ) ; 
