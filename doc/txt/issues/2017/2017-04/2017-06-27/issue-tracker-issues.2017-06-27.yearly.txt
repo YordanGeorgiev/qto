@@ -1,0 +1,50 @@
+# START YEARLY @2017-06-27 09:20:49
+   
+## what will I do till the next YEARLY:
+#---------------------------
+#
+
+
+issue-tracker-features
+ - done		2017-03-01 - 2017-10-01 implement 2-level nesting for all actions
+ - done		2017-03-01 - 2017-12-31 add the xls-to-db and db-to-txt action
+
+issue-tracker-bugs
+ - act		2017-03-01 - 2017-12-31 keep the amount of bugs on monthly basis to less than 5
+
+issue-tracker-design
+ - act		2017-03-01 - 2017-12-31 achieve simplistic design and ease to use
+
+issue-tracker-features
+ - done		2017-03-01 - 2017-12-31 add the txt-to-db and db-to-xls action
+ - qas		2017-06-12 - 2017-06-15 implement the gmail-txt-issues action
+
+issue-tracker-system
+ - todo		2017-06-23 - 2017-12-31 add web framework app layer
+
+issue-tracker-features
+ - todo		2017-10-01 - 2017-12-31 implement 2 -> 7 -level nesting for all actions
+
+issue-tracker-system
+ - todo		2017-10-01 - 2017-12-31 start combining isg-pub and issue - tracker
+
+issue-tracker-features
+ - eval		2017-10-01 - 2017-12-31 integration with google calendar
+ - todo		2017-10-01 - 2017-12-31 integration with isg-pub
+
+issue-tracker-system
+ - act		2017-11-01 - 2017-12-31 scalability: operate more than 15 - 20 projects
+
+issue-tracker-features
+ - qas		2017-12-31 - 2017-12-31 implement daily handling of issues, notes , cheatsheets and input xls for mulitple projects
+
+issue-tracker-maintenance
+ - act		2017-12-31 - 2017-12-31 achieve minimalistic maintenance
+
+issue-tracker-features
+ - qas		2017-12-31 - 2017-12-31 add issues sorting by any attribute for any action
+
+
+# STOP  YEARLY @2017-06-27 09:20:49
+
+
