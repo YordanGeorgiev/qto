@@ -55,9 +55,11 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
       $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
-           'RaiseError' => 1
-         , 'ShowErrorStatement' => 1
-         , 'AutoCommit' => 1
+                 'RaiseError'          => 1
+               , 'ShowErrorStatement'  => 1
+               , 'PrintError'          => 1
+               , 'AutoCommit'          => 1
+               , 'pg_utf8_strings'     => 1
       } ) or $msg = DBI->errstr;
       
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
@@ -129,9 +131,11 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
       $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
-           'RaiseError' => 1
-         , 'ShowErrorStatement' => 1
-         , 'AutoCommit' => 1
+                 'RaiseError'          => 1
+               , 'ShowErrorStatement'  => 1
+               , 'PrintError'          => 1
+               , 'AutoCommit'          => 1
+               , 'pg_utf8_strings'     => 1
       } ) or $msg = DBI->errstr;
       
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html

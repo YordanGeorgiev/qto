@@ -57,6 +57,7 @@ sub doCheckRequiredModules {
     Spreadsheet::ParseExcel
     Spreadsheet::XLSX
     DBD::Pg
+    Spreadsheet::ParseExcel::FmtJapan
   );
 
   for (@modules) {

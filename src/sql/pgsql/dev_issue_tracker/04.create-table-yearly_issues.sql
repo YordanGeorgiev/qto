@@ -8,7 +8,7 @@ SELECT 'create the "yearly_issues" table'
     , prio           integer NULL
     , status         varchar (50) NOT NULL
     , category       varchar (200) NOT NULL
-    , name           varchar (100) NOT NULL
+    , name           varchar (200) NOT NULL
     , description    varchar (4000)
     , start_time     text NULL
     , stop_time      text NULL

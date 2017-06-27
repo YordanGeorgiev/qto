@@ -102,9 +102,11 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
       my $dbh = DBI->connect("DBI:Pg:dbname=$db_name", "", "" , {
-           'RaiseError' => 1
-         , 'ShowErrorStatement' => 1
-         , 'AutoCommit' => 1
+                 'RaiseError'          => 1
+               , 'ShowErrorStatement'  => 1
+               , 'PrintError'          => 1
+               , 'AutoCommit'          => 1
+               , 'pg_utf8_strings'     => 1
       } ) or $msg = DBI->errstr;
       
       
@@ -221,9 +223,11 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
       eval {
          $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
-              'RaiseError'          => 1
-            , 'ShowErrorStatement'  => 1
-            , 'AutoCommit'          => 1
+                 'RaiseError'          => 1
+               , 'ShowErrorStatement'  => 1
+               , 'PrintError'          => 1
+               , 'AutoCommit'          => 1
+               , 'pg_utf8_strings'     => 1
          } );
       } or $ret = 2  ;
 
@@ -278,6 +282,9 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
 		my $self 			   = shift ; 
 		my $hsr2 		      = shift ; 
+      binmode(STDIN,  ':utf8');
+      binmode(STDOUT, ':utf8');
+      binmode(STDERR, ':utf8');
 		my $ret 				   = 1 ; 
 		my $msg 				   = ' failed to connect during insert to db !!! ' ; 
 		my $debug_msg 		   = ' failed to connect during insert to db !!! ' ; 
@@ -310,7 +317,9 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
             $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
+               , 'PrintError'          => 1
                , 'AutoCommit'          => 1
+               , 'pg_utf8_strings'     => 1
             } ); 
          } or $ret = 2  ;
          
