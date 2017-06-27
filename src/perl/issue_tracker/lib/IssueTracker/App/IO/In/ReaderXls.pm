@@ -105,7 +105,7 @@ sub doReadXlsFileToHsr2 {
           $token = 'NULL';
         }
         else {
-          # this one seems to return the value ONLY if 
+          # this one seems to return the value ONLY if
           # it is formateed properly with Ctrl + 1
           # $token = $cell->Value();
           # this one seems to return the value as it has been typed into ...
@@ -137,13 +137,11 @@ sub doReadXlsFileToHsr2 {
       $row_num++;
 
       # debug sleep 3 ;
-    }
-
-    #eof foreach row
+    }    #eof foreach row
 
     $hsr2->{"$WorkSheetName"} = $hsWorkSheet;
 
-    # p($hsWorkSheet );
+    # debug p($hsWorkSheet );
   }
 
   $ret = 0;
@@ -152,9 +150,7 @@ sub doReadXlsFileToHsr2 {
 
   return ($ret, $msg, $hsr2);
 
-}
-
-#eof sub doReadXlsFileToHsr2
+}    #eof sub doReadXlsFileToHsr2
 
 
 # Adjust the column widths to fit the longest string in the column
@@ -173,7 +169,6 @@ sub autofit_columns {
     $col++;
   }
 }
-#
 
 
 # -----------------------------------------------------------------------------
@@ -189,8 +184,6 @@ sub doInitialize {
   $objFileHandler
     = 'IssueTracker::App::Utils::IO::FileHandler'->new(\$appConfig);
 }
-
-#eof sub doInitialize
 
 
 #
@@ -210,8 +203,6 @@ sub new {
   $self->doInitialize();
   return $self;
 }
-
-#eof const
 
 
 1;
