@@ -13,10 +13,11 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
    use Data::Printer ; 
 
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Db::Out::DbWritersFactory ; 
+   use IssueTracker::App::Db::In::DbReadersFactory ; 
    use IssueTracker::App::IO::Out::TxtWriterFactory ; 
    use IssueTracker::App::RAM::ConverterHsr2ToTxt ; 
    use IssueTracker::App::RAM::ConverterHsr2ToTxt ; 
+
 
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 

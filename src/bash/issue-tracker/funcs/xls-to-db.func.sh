@@ -17,7 +17,8 @@ doXlsToDb(){
    # find out the latest xls file from the project daily dir
    # pass it to the xls-to-rdbms tool as the input xls file
 
-   export xls_file=$(find $proj_txt_dir -name '*.xlsx'| grep '.all.'| sort -nr|head -n 1)
+   test -z ${xls_file+x} && \
+      export xls_file=$(find $proj_txt_dir -name '*.xlsx'| grep '.all.'| sort -nr|head -n 1)
    test -z ${xls_file+x} && \
       export xls_file=$(find $proj_txt_dir -name '*.xlsx'| grep $period| sort -nr|head -n 1)
    # Action !!!

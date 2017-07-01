@@ -43,6 +43,7 @@ src/perl/issue_tracker/lib
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
 src/perl/issue_tracker/lib/IssueTracker/Controller/Example.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/Get.pm
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/basic.t
 src/perl/issue_tracker/public
@@ -549,3 +550,11 @@ doc/txt/issues/2017/2017-04/2017-06-22/issue-tracker-unstrc.2017-06-22.notes.txt
 doc/xls/issue-tracker-features-and-functionalities.xls
 doc/xls/issue-tracker-readme.xls
 #---
+src/bash/issue-tracker/tests/curl-test-get-item.test.sh
+src/bash/issue-tracker/funcs/curl-test-get-item.func.sh
+src/bash/issue-tracker/specs/curl-test-get-item.spec.sh
+src/bash/issue-tracker/helps/curl-test-get-item.help.sh
+doc/txt/issue-tracker/tests/curl-test-get-item.test.txt
+doc/txt/issue-tracker/specs/curl-test-get-item.spec.txt
+doc/txt/issue-tracker/helps/curl-test-get-item.help.txt
+doc/txt/issue-tracker/funcs/curl-test-get-item.func.txt

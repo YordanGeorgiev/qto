@@ -25,6 +25,74 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 	our $web_host 											= q{} ; 
 
 
+
+   #
+   # -----------------------------------------------------------------------------
+   # 
+   # -----------------------------------------------------------------------------
+   sub doSelectItemByGuid {
+
+      my $self             = shift ; 
+      my $db               = shift ; 
+      my $table            = shift || 'daily_issues' ;  # the table to get the data from  
+      my $guid             = shift ; 
+      
+      my $msg              = q{} ;         
+      my $ret              = 1 ;          # this is the return value from this method 
+      my $debug_msg        = q{} ; 
+      my $hsr              = {} ;         # this is hash ref of hash refs to populate with
+      my $sth              = {} ;         # this is the statement handle
+      my $dbh              = {} ;         # this is the database handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+
+      $str_sql = 
+         " SELECT 
+         * FROM $table 
+         WHERE 1=1
+         AND guid = '" . $guid . "'
+         ;
+      " ; 
+
+      # authentication src: http://stackoverflow.com/a/19980156/65706
+      $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+     
+      $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
+                 'RaiseError'          => 1
+               , 'ShowErrorStatement'  => 1
+               , 'PrintError'          => 1
+               , 'AutoCommit'          => 1
+               , 'pg_utf8_strings'     => 1
+      } ) or $msg = DBI->errstr;
+      
+      $sth = $dbh->prepare($str_sql);  
+
+      $sth->execute()
+            or $objLogger->error ( "$DBI::errstr" ) ;
+
+      $hsr = $sth->fetchall_hashref( 'guid' ) ; 
+      binmode(STDOUT, ':utf8');
+      p( $hsr ) if $module_trace == 1 ; 
+
+      $msg = DBI->errstr ; 
+
+      unless ( defined ( $msg ) ) {
+         $msg = 'SELECT OK for table: ' . "$table" ; 
+         $ret = 0 ; 
+      } else {
+         $objLogger->doLogErrorMsg ( $msg ) ; 
+      }
+
+      $debug_msg        = ' ret ' . $ret ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      
+      return ( $ret , $msg , $hsr ) ; 	
+   }
+   # eof sub doSelectItemByGuid
+
+
+
    sub doSelectTablesColumnList {
 
       my $self          = shift ; 

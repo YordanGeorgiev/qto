@@ -61,8 +61,10 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       # debug p($dmhsr); 
       # sleep 6 ; 
       
-      $str_sql_insert .= ' TRUNCATE TABLE issues ; ' ; 
-      
+      my $do_trucate_tables = $ENV{ 'do_truncate_tables' } || 0 ; 
+      if ( $do_trucate_tables == 1 ) { 
+         $str_sql_insert .= "TRUNCATE TABLE $table ;" ; 
+      }
 
       my $debug_msg        = 'START doInsertSqlHashData' ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
@@ -166,7 +168,10 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       my $debug_msg        = 'START doInsertSqlHashData' ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
 	  
-      $str_sql_insert .= ' TRUNCATE TABLE ' . "$table" . '; ' ; 
+      my $do_trucate_tables = $ENV{ 'do_truncate_tables' } || 0 ; 
+      if ( $do_trucate_tables == 1 ) { 
+         $str_sql_insert .= "TRUNCATE TABLE $table ;" ; 
+      }
       
       my $dmhsr            = {} ; 
       my $update_time      = q{} ; 
@@ -355,6 +360,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
             my $data_str = q{} ; 
             p($hs_row);
             foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
+
                my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
                next if $column_name eq 'guid' ; 
                my $cell_value = $hs_row ->{ $column_name } ; 
@@ -387,9 +393,13 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
          } 
          #eof foreach row
-           	
-				$sql_str = "TRUNCATE TABLE $table ; $sql_str " ; 	 
-            $objLogger->doLogDebugMsg ( "sql_str : $sql_str " ) ; 
+          
+
+         my $do_trucate_tables = $ENV{ 'do_truncate_tables' } || 0 ; 
+         if ( $do_trucate_tables == 1 ) { 
+            $sql_str = "TRUNCATE TABLE $table ; $sql_str " ; 
+         }
+         $objLogger->doLogDebugMsg ( "sql_str : $sql_str " ) ; 
 
          # Action !!! 
          $msg = " DBI upsert error on table: $table: " . $msg  ; $ret = 1 ; 
