@@ -72,6 +72,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          my $row_hash = $hsr2->{ $key } ; 
 
 		   foreach my $key ( sort(keys( %{$dmhsr} ) ) ) {
+            next if $key eq 'guid' ; 
             $str_col_list .= ' , ' . $key ; 
 
             my $value = 'null' ; 
@@ -84,7 +85,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
             }
             $str_val_list .= ' , \'' . $value . '\''; 
          }
-         
+          
          $str_col_list = substr ( $str_col_list , 3 ) ; 
          $str_val_list = substr ( $str_val_list , 3 ) ; 
 
@@ -95,7 +96,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          $str_val_list = '' ; 
       }
       
-      p ( $str_sql_insert ) if $module_trace == 1 ; 
+      p ( $str_sql_insert ) ; 
 
       # proper authentication implementation src:
       # http://stackoverflow.com/a/19980156/65706
@@ -183,6 +184,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace > 1 ; 
 
 		   foreach my $key ( sort(keys( %{$dmhsr} ) ) ) {
+            next if $key eq 'uuid' ; 
             $str_col_list .= ' , ' . $key ; 
             my $value = 'null' ; 
             unless ( $key eq 'update_time' ) {
@@ -212,7 +214,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          $str_val_list = '' ; 
       }
       
-      p ( $str_sql_insert ) if $module_trace == 1 ; 
+      p ( $str_sql_insert ) ; 
 
       # proper authentication implementation src:
       # http://stackoverflow.com/a/19980156/65706
@@ -338,6 +340,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
          foreach my $col_num ( sort ( keys %{$hs_headers} )) {
             my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
+            next if $column_name eq 'guid' ; 
             $sql_str_insrt .= " $column_name " . ' , ' ; 
          } 
          
@@ -353,6 +356,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
             p($hs_row);
             foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
                my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
+               next if $column_name eq 'guid' ; 
                my $cell_value = $hs_row ->{ $column_name } ; 
                if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
                      or $cell_value eq 'null' or $cell_value eq "'NULL'" ) {

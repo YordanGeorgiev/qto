@@ -80,7 +80,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
       my $objDbWritersFactory = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$appConfig  ) ; 
       my $objDbWriter 		   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" );
-      p($hsr2)  if $module_trace == 1 ; 
+      p($hsr2) if $module_trace == 1 ; 
 
       ( $ret , $msg  )        = $objDbWriter->doInsertDbTablesWithHsr2( $hsr2 ) ; 
       return ( $ret , $msg ) ; 

@@ -71,7 +71,7 @@ sub doReadXlsFileToHsr2 {
     my $hsWorkSheet   = {};
     my $WorkSheetName = $worksheet->{'Name'};
 
-    next unless $WorkSheetName =~ m/^.*_issues$/g;
+    next unless $WorkSheetName =~ m/^.*[_issues|_eps]$/g;
     $objLogger->doLogDebugMsg("foreach my worksheet: " . $WorkSheetName)
       if ($module_trace == 1);
 
