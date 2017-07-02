@@ -1,0 +1,10 @@
+# doc/txt/issue-tracker/test/curl-test-get-item.test.txt
+
+	doTestCurlTestGetItem
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to test the curl-test-get-item action
+
+
+# eof file: doc/txt/issue-tracker/test/curl-test-get-item.test.txt

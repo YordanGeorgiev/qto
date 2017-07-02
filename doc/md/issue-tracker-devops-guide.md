@@ -11,6 +11,7 @@ Table of Contents
       * [1.4.1. start the postgreSQL](#141-start-the-postgresql)
       * [1.4.2. Start the psql client as the postgres shell user](#142-start-the-psql-client-as-the-postgres-shell-user)
       * [1.4.3. Create the pgsql user ](#143-create-the-pgsql-user-)
+      * [1.4.4. add the uuid generation capability enabling extension](#144-add-the-uuid-generation-capability-enabling-extension)
     * [1.5. Install the perl modules ( optional)](#15-install-the-perl-modules-(-optional))
   * [2. MAINTENANCE AND OPERATIONS](#2-maintenance-and-operations)
     * [2.1. RDBMS Runstate management](#21-rdbms-runstate-management)
@@ -23,19 +24,22 @@ Table of Contents
       * [2.2.1. start the application layer](#221-start-the-application-layer)
       * [2.2.2. stop the application layer](#222-stop-the-application-layer)
   * [3. USAGE SCENARIOS](#3-usage-scenarios)
-    * [3.1. Run increase-date action](#31-run-increase-date-action)
-    * [3.2. Run xls-to-db action](#32-run-xls-to-db-action)
-    * [3.3. Run db-to-txt action](#33-run-db-to-txt-action)
-    * [3.4. Load xls issues to db and from db to txt files](#34-load-xls-issues-to-db-and-from-db-to-txt-files)
-    * [3.5. Run the issue-tracker file to db load](#35-run-the-issue-tracker-file-to-db-load)
-    * [3.6. Verify the inserted data from the db](#36-verify-the-inserted-data-from-the-db)
+    * [3.1. Shell based actions usage](#31-shell-based-actions-usage)
+      * [3.1.1. Run increase-date action](#311-run-increase-date-action)
+      * [3.1.2. Run xls-to-db action](#312-run-xls-to-db-action)
+      * [3.1.3. Run db-to-txt action](#313-run-db-to-txt-action)
+      * [3.1.4. Load xls issues to db and from db to txt files](#314-load-xls-issues-to-db-and-from-db-to-txt-files)
+      * [3.1.5. Run the issue-tracker file to db load](#315-run-the-issue-tracker-file-to-db-load)
+      * [3.1.6. Verify the inserted data from the db](#316-verify-the-inserted-data-from-the-db)
+    * [3.2. web based routes usage](#32-web-based-routes-usage)
+      * [3.2.1. Run the http://&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;proj-db&gt;&gt;/get/&lt;&lt;table&gt;&gt;/&lt;&lt;guid&gt;&gt; route](#321-run-the-http//web-hostweb-port/proj-db/get/table/guid-route)
   * [4. BUSINESS LOGIC](#4-business-logic)
     * [4.1. Projects management](#41-projects-management)
     * [4.2. Categories](#42-categories)
-    * [4.3. Issues / Issue items / items](#43-issues-/-issue-items-/-items)
+      * [4.2.1. Issues / Issue items / items](#421-issues-/-issue-items-/-items)
   * [5. NAMING CONVENTIONS](#5-naming-conventions)
     * [5.1. Dirs naming conventions](#51-dirs-naming-conventions)
-      * [5.1.1. Root Dirs naming conventions](#511-root-dirs-naming-conventions)
+    * [5.2. Root Dirs naming conventions](#52-root-dirs-naming-conventions)
   * [6. SOURCE CODE MANAGEMENT](#6-source-code-management)
     * [6.1. The meaning of the used brances](#61-the-meaning-of-the-used-brances)
 
@@ -119,10 +123,15 @@ http://stackoverflow.com/a/9736231/65706
     # grant him the privilege to create db's 
     sudo su - postgres  -c "psql -c 'ALTER USER '$USER' CREATEDB;'"
     
-    sudo su - postgres  -c 'psql -c "select * from information_schema.role_table_grants where grantee='"'"$USER"'"';"'
+    sudo su - postgres  -c 'psql -c "select * from information_schema.role_table_grants
+     where grantee='"'"$USER"'"';"'
+
+#### 1.4.4. add the uuid generation capability enabling extension
+add the uuid generation capability enabling extension
+
+    sudo su - postgres  -c "psql template1 -c 'CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";'"
     
-    # and exit
-    \q
+    sudo su - postgres  -c "psql template1 -c 'CREATE EXTENSION IF NOT EXISTS \"pgcrypto\";'"
 
 ### 1.5. Install the perl modules ( optional)
 Install the perl module by first installing the server development package
@@ -206,31 +215,37 @@ To stop the application layer in development mode use the morbo command ( debug 
 
     
 
-### 3.1. Run increase-date action
+### 3.1. Shell based actions usage
+
+
+    
+
+#### 3.1.1. Run increase-date action
 You track the issues of your projects by storing them into xls files in "daily" proj_txt dirs. 
 Each time the day changes by running the increase-date action you will be able to clone the data of the previous date and start working on the currnent date. 
 
     bash src/bash/issue-tracker/issue-tracker.sh -a increase-date
 
-### 3.2. Run xls-to-db action
+#### 3.1.2. Run xls-to-db action
 You insert the date of the daily , weekly , monthly or yearly issues from the daily input excel file(s) by running the xls-to-db action. 
 
     bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db
 
-### 3.3. Run db-to-txt action
+#### 3.1.3. Run db-to-txt action
  
 
      
 
-### 3.4. Load xls issues to db and from db to txt files
+#### 3.1.4. Load xls issues to db and from db to txt files
 to load xls issues to db and from db to txt files
 
     bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db -a db-to-txt 
     
     # or run for all the periods
-    for period in `echo daily weekly monthly yearly`; do export period=$period ; bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db -a db-to-txt ; done ;
+    for period in `echo daily weekly monthly yearly`; do export period=$period ; 
+    bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db -a db-to-txt ; done ;
 
-### 3.5. Run the issue-tracker file to db load
+#### 3.1.5. Run the issue-tracker file to db load
 Run the issue-tracker file to db load 
 
     # ensure the following actions will be tested
@@ -242,11 +257,27 @@ Run the issue-tracker file to db load
     # test those uncommented actions
     bash src/bash/issue-tracker/test-issue-tracker.sh
 
-### 3.6. Verify the inserted data from the db
+#### 3.1.6. Verify the inserted data from the db
 Verify the inserted data from the db as follows:
 
     # check that the rows where inserted
     echo 'SELECT * FROM issue ; ' | psql -d dev_issue_tracker
+
+### 3.2. web based routes usage
+
+
+    
+
+#### 3.2.1. Run the http://&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;proj-db&gt;&gt;/get/&lt;&lt;table&gt;&gt;/&lt;&lt;guid&gt;&gt; route
+Load a table with guid's.
+Check a single item with your browser, for example:
+http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
+
+    # load the items
+    while read -r f; do export xls_file=$f; bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db  ; done < <(find $proj_txt_dir -type f)
+    
+    # verify the data
+    psql -d $db_name -c "SELECT * FROM company_eps "
 
 ## 4. BUSINESS LOGIC
 
@@ -268,7 +299,7 @@ The categories could contain letters ,numbers, dashes
     organisation-it
     organisation-it-operations
 
-### 4.3. Issues / Issue items / items
+#### 4.2.1. Issues / Issue items / items
 Issue item is the shortest possible description of task , activity , note or anything requiring distinguishable and prerferable measurable action or producing verfifiable outcome.
 Issues could be of different types - tasks, activities, notes etc. 
 
@@ -287,7 +318,7 @@ The dir structure should be logical and a person navigating to a dir should almo
 
     
 
-#### 5.1.1. Root Dirs naming conventions
+### 5.2. Root Dirs naming conventions
 The root dirs and named as follows:
 bin - contains the produced binaries for th project
 cnf - for the configuration
