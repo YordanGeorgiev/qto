@@ -70,7 +70,7 @@ package IssueTracker::App::RAM::ConverterHsr2ToTxt ;
       my $str_issues = q{} ; 
       p ( $hsr2 ) if $module_trace == 1 ; 
 
-      foreach my $issue_id ( sort { $hsr2->{$a}->{ 'id' } <=> $hsr2->{$b}->{ 'id' } } keys (%$hsr2))  {
+      foreach my $issue_id ( sort { $hsr2->{$a}->{ 'guid' } cmp $hsr2->{$b}->{ 'guid' } } keys (%$hsr2))  {
 
          my $row = $hsr2->{ $issue_id } ; 
 

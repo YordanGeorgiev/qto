@@ -71,9 +71,8 @@ sub doReadXlsFileToHsr2 {
     my $hsWorkSheet   = {};
     my $WorkSheetName = $worksheet->{'Name'};
 
-    next unless $WorkSheetName =~ m/^.*[_issues|_eps]$/g;
-    $objLogger->doLogDebugMsg("foreach my worksheet: " . $WorkSheetName)
-      if ($module_trace == 1);
+    next unless $WorkSheetName =~ m/^.*_issues$/g;
+    $objLogger->doLogInfoMsg("read worksheet: " . $WorkSheetName) ; 
 
     my $RowMin = $worksheet->{'MinRow'};
     my $RowMax = $worksheet->{'MaxRow'};
@@ -94,7 +93,7 @@ sub doReadXlsFileToHsr2 {
       #print "row_num:: $row_num \n" ;
       for my $col ($MinCol .. $MaxCol) {
 
-        # debug print "col_num:: $col_num \n" ;
+        print "col_num:: $col_num \n" ;
         my $cell       = $worksheet->{'Cells'}[$row][$col];
         my $obj_header = $worksheet->{'Cells'}[0][$col];
         my $header     = $obj_header->unformatted();

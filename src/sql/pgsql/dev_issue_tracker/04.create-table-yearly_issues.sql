@@ -3,7 +3,7 @@
 SELECT 'create the "yearly_issues" table'
 ; 
    CREATE TABLE yearly_issues (
-      id             integer NOT NULL PRIMARY KEY
+      guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , level          integer NULL
     , prio           integer NULL
     , status         varchar (50) NOT NULL
@@ -16,11 +16,13 @@ SELECT 'create the "yearly_issues" table'
     , updated_by     varchar (50) NULL
     , owner          varchar (50) NULL
     , parent_id      integer NULL 
+    , CONSTRAINT pk_yearly_issues_guid PRIMARY KEY (guid)
+    ) WITH (
+      OIDS=FALSE
     );
 
-
-SELECT 'show the columns of the just created table'
-; 
+   SELECT 'show the columns of the just created table'
+   ; 
 
    SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute

@@ -212,7 +212,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
 
-      $hsr = $sth->fetchall_hashref( 'id' ) ; 
+      $hsr = $sth->fetchall_hashref( 'guid' ) ; 
       binmode(STDOUT, ':utf8');
       p( $hsr ) if $module_trace == 1 ; 
 
