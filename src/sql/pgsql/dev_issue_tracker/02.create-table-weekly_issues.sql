@@ -5,6 +5,7 @@ SELECT 'create the "weekly_issues" table'
    CREATE TABLE weekly_issues (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , level          integer NULL
+    , seq            integer NULL
     , prio           integer NULL
     , status         varchar (50) NOT NULL
     , category       varchar (200) NOT NULL

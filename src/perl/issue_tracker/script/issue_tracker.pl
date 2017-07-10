@@ -92,7 +92,7 @@ my $xls_dir               = q{};
 my $xls_file              = q{};
 my $issue_tracker_project = q{};
 my $period                = q{};
-
+my $tables                = 'daily' ;
 
 #
 # the main shell entry point of the application
@@ -113,7 +113,6 @@ sub main {
 
 }
 
-#eof sub mainthe issues_file: ' . "\n" . $issues_file . "\n" ;
 
 
 sub doInitialize {
@@ -138,12 +137,15 @@ sub doInitialize {
     'do=s'          => \$actions,
     'xls_dir=s'     => \$xls_dir,
     'xls-file=s'    => \$xls_file,
-    'period=s'      => \$period
+    'period=s'      => \$period ,
+    'tables=s'      => \$tables
   );
 
   $issue_tracker_project = $ENV{"issue_tracker_project"};
   $period                = $ENV{"period"} unless $period;
   $period                = 'daily' unless $period;
+  
+  $appConfig->{'tables'} = $tables ; 
 
   unless ($issue_tracker_project) {
     $msg = "set you current project by: \n";

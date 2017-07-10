@@ -86,7 +86,7 @@ sub doConvertHashRefToStr {
   $str_issues .= $str_header . "\n\n";
   my $prev_category = q{};
   my @attributes
-    = qw (id run_time category current description issue_id level name prio start_time stop_time status);
+    = qw (guid run_time category current description issue_id level name prio start_time stop_time status);
   my $issues_order_by_attribute = $ENV{'issues_order_by_attribute'} || 'start_time' ; 
 
   unless (grep(/^$issues_order_by_attribute$/, @attributes)) {
@@ -110,8 +110,7 @@ sub doConvertHashRefToStr {
     . '$hsr2->{$a}->{ $issues_order_by_attribute }'
     . $operator
     . '$hsr2->{$b}->{ $issues_order_by_attribute }'
-    . '} keys (%$hsr2)')
-  {
+    . '} keys (%$hsr2)')  {
 
     my $row = $hsr2->{$issue_id};
 
@@ -133,7 +132,7 @@ sub doConvertHashRefToStr {
     $str_issues .= $category . "\n" unless ($prev_category eq $category);
     my $levels_dash = '';
 
-    for (my $i = 1; $i < $level; $i++) {
+    for (my $i = 0; $i < $level; $i++) {
       $str_issues  .= ' ';
       $levels_dash .= '-';
     }

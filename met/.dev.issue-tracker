@@ -161,6 +161,7 @@ src/sql/pgsql/dev_issue_tracker/01.create-table-daily_issues.sql
 src/sql/pgsql/dev_issue_tracker/02.create-table-weekly_issues.sql
 src/sql/pgsql/dev_issue_tracker/03.create-table-monthly_issues.sql
 src/sql/pgsql/dev_issue_tracker/04.create-table-yearly_issues.sql
+src/sql/pgsql/dev_issue_tracker/05.create-table-decadally_issues.sql
 src/sql/pgsql/tst_issue_tracker
 src/sql/pgsql/tst_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/tst_issue_tracker/01.create-table-daily_issues.sql

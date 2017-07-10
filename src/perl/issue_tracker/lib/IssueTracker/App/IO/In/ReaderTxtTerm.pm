@@ -202,7 +202,7 @@ sub doConvertStrToHashRef {
         # $title = substr($title, 0, 90 ) . ' ...' if length ( $title ) > 90 ;
 
         # if this is sub-item it should inherit the time of the upper item
-        if ($hsr->{$i}->{'level'} > 2) {
+        if ($hsr->{$i}->{'level'} > 1 ) {
           $start_time = $prev_start_time;
           $stop_time  = $prev_stop_time;
         }

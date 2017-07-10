@@ -53,22 +53,31 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 
       my $ret                 = 1 ; 
       my $msg                 = 'unknown error while loading db issues to xls file' ; 
-		my $term						= $ENV{ 'period' } || 'daily' ; 
-		my $table 					= $term . '_issues' ; 
+      my @tables              = ();
+      my $tables              = $appConfig->{ 'tables' } ;  
+	   push ( @tables , split(',',$tables ) ) ; 
 
 
-      my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
-      my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
+      for my $table ( @tables ) { 
+         my $term						= $ENV{ 'period' } || 'daily' ; 
+         my $table 					= $term . '_issues' ; 
 
-      my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
-      my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
 
-      ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( $table ) ; 
+         my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
+         my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
+
+         my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
+         my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
+
+         ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( $table ) ; 
+         return ( $ret , $msg ) unless $ret == 0 ; 
+    
+         my $objWriterXls    = 'IssueTracker::App::IO::Out::WriterXls'->new( \$appConfig ) ;
+         $ret = $objWriterXls->doBuildXlsFromHashRef ( $mhsr , $hsr , $table ) ;
+         return ( $ret , $msg ) unless $ret == 0 ; 
+      }
+
       return ( $ret , $msg ) unless $ret == 0 ; 
- 
-      my $objWriterXls    = 'IssueTracker::App::IO::Out::WriterXls'->new( \$appConfig ) ;
-      $ret = $objWriterXls->doBuildXlsFromHashRef ( $mhsr , $hsr , $table ) ;
-
    } 
    
    

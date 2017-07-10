@@ -55,7 +55,6 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       my $self                = shift ; 
       my $issues_file         = shift ; 	
 
-      
       my $ret                 = 1 ; 
       my $msg                 = 'unknown error while loading db issues to xls file' ; 
       my $str_issues          = q{} ; 
@@ -64,6 +63,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       my $term                = $ENV{'period'} || 'daily' ; 
       my $table               = $term . '_issues' ; 
 
+      
       my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
       my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
 

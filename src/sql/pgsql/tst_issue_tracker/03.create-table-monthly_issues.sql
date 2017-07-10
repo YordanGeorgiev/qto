@@ -3,7 +3,7 @@
 SELECT 'create the "monthly_issues" table'
 ; 
    CREATE TABLE monthly_issues (
-      id             integer NOT NULL PRIMARY KEY
+      guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , level          integer NULL
     , prio           integer NULL
     , status         varchar (50) NOT NULL
@@ -16,6 +16,9 @@ SELECT 'create the "monthly_issues" table'
     , updated_by     varchar (50) NULL
     , owner          varchar (50) NULL
     , parent_id      integer NULL 
+    , CONSTRAINT pk_monthly_issues_guid PRIMARY KEY (guid)
+    ) WITH (
+      OIDS=FALSE
     );
 
 

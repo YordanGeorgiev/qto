@@ -13,17 +13,18 @@ doXlsToDb(){
 	sleep "$sleep_interval"
    test -z ${issues_order_by_attribute+x} && export issues_order_by_attribute='category'
    test -z ${period+x} && export period='daily'
+   test -z ${tables+x} && export tables='daily'
 
    # find out the latest xls file from the project daily dir
    # pass it to the xls-to-rdbms tool as the input xls file
-
+   
    test -z ${xls_file+x} && \
       export xls_file=$(find $proj_txt_dir -name '*.xlsx'| grep '.all.'| sort -nr|head -n 1)
    test -z ${xls_file+x} && \
       export xls_file=$(find $proj_txt_dir -name '*.xlsx'| grep $period| sort -nr|head -n 1)
    # Action !!!
    perl src/perl/issue_tracker/script/issue_tracker.pl \
-      --do xls-to-db --xls-file $xls_file
+      --do xls-to-db --xls-file $xls_file --tables $tables
    exit_code=$?
    
    psql -d "$db_name" -c '
