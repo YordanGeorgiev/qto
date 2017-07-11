@@ -13,7 +13,8 @@ doDbToTxt(){
 	sleep "$sleep_interval"
 
 	# Action !!!
-   perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-txt
+   test -z ${tables+x} && export tables='daily_issues'
+   perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-txt --tables $tables
    exit_code=$?
    doLog "INFO doRunIssueTracker exit_code $exit_code"
    test $exit_code -ne 0 && doExit $exit_code "failed to run issue_tracker.pl"  

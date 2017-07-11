@@ -26,7 +26,7 @@ our $appConfig          = q{};
 our $objLogger          = q{};
 our $objFileHandler     = q{};
 our $ProductInstanceDir = {};
-
+our @tables             = () ; 
 
 #
 # ------------------------------------------------------
@@ -71,8 +71,15 @@ sub doReadXlsFileToHsr2 {
     my $hsWorkSheet   = {};
     my $WorkSheetName = $worksheet->{'Name'};
 
-    next unless $WorkSheetName =~ m/^.*_issues$/g;
+
     $objLogger->doLogInfoMsg("read worksheet: " . $WorkSheetName) ; 
+    foreach my $table ( @tables ) {
+      $objLogger->doLogInfoMsg("table " . $table ) ; 
+    }
+	 next unless grep( /^$WorkSheetName$/, @tables ) ; 
+    # next unless $WorkSheetName =~ m/^.*_issues$/g;
+    $objLogger->doLogInfoMsg("read worksheet: " . $WorkSheetName) ; 
+    
 
     my $RowMin = $worksheet->{'MinRow'};
     my $RowMax = $worksheet->{'MaxRow'};
@@ -93,7 +100,7 @@ sub doReadXlsFileToHsr2 {
       #print "row_num:: $row_num \n" ;
       for my $col ($MinCol .. $MaxCol) {
 
-        print "col_num:: $col_num \n" ;
+        # print "col_num:: $col_num \n" ;
         my $cell       = $worksheet->{'Cells'}[$row][$col];
         my $obj_header = $worksheet->{'Cells'}[0][$col];
         my $header     = $obj_header->unformatted();
@@ -140,7 +147,7 @@ sub doReadXlsFileToHsr2 {
 
     $hsr2->{"$WorkSheetName"} = $hsWorkSheet;
 
-    # debug p($hsWorkSheet );
+    p($hsWorkSheet );
   }
 
   $ret = 0;
@@ -149,7 +156,7 @@ sub doReadXlsFileToHsr2 {
 
   return ($ret, $msg, $hsr2);
 
-}    #eof sub doReadXlsFileToHsr2
+}    
 
 
 # Adjust the column widths to fit the longest string in the column
@@ -194,12 +201,18 @@ sub new {
 
   my $class = shift;    # Class name is in the first parameter
   $appConfig = ${shift @_} if (@_);
-
+  @tables = @{ $_[0] } ; 
+   
   # Anonymous hash reference holds instance attributes
   my $self = {};
   bless($self, $class);    # Say: $self is a $class
 
   $self->doInitialize();
+
+
+    foreach my $table ( @tables ) {
+      $objLogger->doLogInfoMsg("ReaderXls sub newtable " . $table ) ; 
+    }
   return $self;
 }
 

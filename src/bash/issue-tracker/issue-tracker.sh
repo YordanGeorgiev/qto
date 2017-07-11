@@ -139,7 +139,7 @@ doInit(){
 doParseCmdArgs(){
 
    # traverse all the possible cmd args
-   while getopts ":a:c:i:h:" opt; do
+   while getopts ":a:c:i:h:t:" opt; do
      case $opt in
       a)
          actions="$actions$OPTARG "

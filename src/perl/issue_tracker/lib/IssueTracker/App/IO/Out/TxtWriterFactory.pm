@@ -6,6 +6,7 @@ package IssueTracker::App::IO::Out::TxtWriterFactory ;
 
 	our $appConfig 		= {} ; 
 	our $term			   = $ENV{'period'} || 'daily' ; 
+	our $table			   = $ENV{'tables'} || 'daily_issues' ; 
 	our $objItem			= {} ; 
 	our $objController 	= {} ; 
    our $objLogger       = {} ; 
@@ -20,37 +21,18 @@ package IssueTracker::App::IO::Out::TxtWriterFactory ;
 	sub doInstantiate {
 
 		my $self 			= shift ; 	
-		my $term			   = shift // $term ; # the default is 'daily'
+		my $table			= shift // $table ; # the default is 'daily'
 
 		my @args 			= ( @_ ) ; 
 		my $WriterTxt 		= {}   ; 
-
-		# get the application cnfiguration hash
-		# global app cnfig hash
-
-		if ( $term eq 'daily' ) {
-			$WriterTxt 				= 'WriterTxtTerm' ; 
-		}
-		elsif ( $term eq 'weekly' ) {
-			$WriterTxt 				= 'WriterTxtTerm' ; 
-		}
-		elsif ( $term eq 'monthly' ) {
-			$WriterTxt 				= 'WriterTxtTerm' ; 
-		}
-		elsif ( $term eq 'yearly' ) {
-			$WriterTxt 				= 'WriterTxtTerm' ; 
-		}
-		else {
-			# future support for different RDBMS 's should be added here ...
-			$WriterTxt 				= 'WriterTxtTerm' ; 
-		}
+	   $WriterTxt 				= 'WriterTxtTerm' ; 
 
 		my $package_file     	= "IssueTracker/App/IO/Out/$WriterTxt.pm";
 		my $objWriterTxt   		= "IssueTracker::App::IO::Out::$WriterTxt";
 
 		require $package_file;
 
-		return $objWriterTxt->new( \$appConfig , $objController , $term , @args);
+		return $objWriterTxt->new( \$appConfig , $table , @args);
 
 	}
 	# eof sub doInstantiate
@@ -64,8 +46,6 @@ package IssueTracker::App::IO::Out::TxtWriterFactory ;
 
 		my $invocant 			= shift ;    
 		$appConfig           = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-      $objController       = shift ; 
-      $term                = shift || 'daily' ; 
 		
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 

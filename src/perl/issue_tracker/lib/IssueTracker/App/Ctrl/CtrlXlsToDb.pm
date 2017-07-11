@@ -65,9 +65,14 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
       my $ret              = 1 ; 
       my $msg              = 'file read' ; 
+      
+      my @tables              = ();
+      my $tables              = $appConfig->{ 'tables' } ;  
+	   push ( @tables , split(',',$tables ) ) ; 
+
       my $hsr2             = {} ; 
 
-      my $objReaderXls     = 'IssueTracker::App::IO::In::ReaderXls'->new ( \$appConfig ) ; 
+      my $objReaderXls     = 'IssueTracker::App::IO::In::ReaderXls'->new ( \$appConfig , \@tables ) ; 
       
       # read the xls into hash ref of hash ref
       ( $ret , $msg , $hsr2 ) = 
@@ -79,10 +84,9 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       my $rdbms_type          = $appConfig->{ 'rdbms_type' } || 'postgre' ; 
 
       my $objDbWritersFactory = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$appConfig  ) ; 
-      my $objDbWriter 		   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" );
+      my $objDbWriter 		   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" , \@tables );
       p($hsr2) if $module_trace == 1 ; 
-
-      ( $ret , $msg  )        = $objDbWriter->doInsertDbTablesWithHsr2( $hsr2 ) ; 
+      ( $ret , $msg  )        = $objDbWriter->doInsertDbTablesWithHsr2( $hsr2 , \@tables) ; 
       return ( $ret , $msg ) ; 
    } 
 

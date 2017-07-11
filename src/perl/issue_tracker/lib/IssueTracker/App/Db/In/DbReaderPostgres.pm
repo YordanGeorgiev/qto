@@ -166,7 +166,11 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 
       my $self             = shift ; 
       my $table            = shift || 'daily_issues' ;  # the table to get the data from  
-      
+   
+
+      $objLogger->doLogDebugMsg ( "doSelectTableIntoHashRef table: $table " ) ; 
+      sleep 1 ; 
+
       my $msg              = q{} ;         
       my $ret              = 1 ;          # this is the return value from this method 
       my $debug_msg        = q{} ; 

@@ -38,7 +38,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 =head1 SYNOPSIS
       my $objDispatcher = 
          'IssueTracker::App::Ctrl::Dispatcher'->new ( \$appConfig ) ; 
-      ( $ret , $msg ) = $objDispatcher->doRun ( $actions , $issues_file) ; 
+      ( $ret , $msg ) = $objDispatcher->doRun ( $actions ) ; 
 =cut 
 
 =head1 EXPORT
@@ -59,7 +59,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
       my $self          = shift ; 
       my $actions       = shift ; 
-      my $issues_file   = shift ; 
       my $xls_file      = shift ; 
 
       my @actions = split /,/ , $actions ; 
@@ -74,19 +73,9 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
          if ( $action eq 'txt-to-db' ) {
 
-            $msg = 'issues_file to parse : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
-            
-
-            unless ( -f $issues_file ) {
-               $msg = "the issues_file: $issues_file does not exist !!!. Nothing to do !!!" ; 
-               $objLogger->doLogFatalMsg ( $msg ) ;
-               doExit ( $ret , $msg ) ; 
-            }
-
             my $objCtrlTxtToDb = 
                'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlTxtToDb->doLoad ( $issues_file ) ; 
+            ( $ret , $msg ) = $objCtrlTxtToDb->doLoad () ; 
             return ( $ret , $msg ) unless $ret == 0 ; 
          } 
          elsif ( $action eq 'db-to-xls' ) {
@@ -97,8 +86,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
             return ( $ret , $msg ) unless $ret == 0 ; 
          } 
          elsif ( $action eq 'xls-to-db' ) {
-            $msg = 'issues_file to pproduce : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
 
             my $objCtrlXlsToDb = 
                'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig ) ; 
@@ -106,12 +93,10 @@ package IssueTracker::App::Ctrl::Dispatcher ;
             return ( $ret , $msg ) ; 
          } 
          elsif ( $action eq 'db-to-txt' ) {
-            $msg = 'issues_file to produce : ' . "\n" . $issues_file ; 
-            $objLogger->doLogInfoMsg ( "$msg" ) ; 
 
             my $objCtrlDbToTxt = 
                'IssueTracker::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndWrite ( $issues_file ) ; 
+            ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndWrite ( ) ; 
             return ( $ret , $msg ) unless $ret == 0 ; 
          } 
          else {

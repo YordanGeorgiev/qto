@@ -1,4 +1,5 @@
 # this is kind of a srch history file - PREPEND !!!
+:g/col_num/| :vimgrep /col_num/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/srch/| :vimgrep /srch/ `find . -type f \| grep -v .git \| grep -v .log`
 
 :g/insert into/| :vimgrep /insert into/ `find . -type f \| grep -v .git \| grep -v .log`

@@ -59,30 +59,40 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
    sub doLoad {
 
       my $self                   = shift ; 
-      my $issues_file            = shift ; 	
-
+      my $ret                    = 1 ; 
+      my $msg                    = '' ; 
       my $period                 = $ENV{ 'period' } || 'daily' ;  
       my $objTxtReaderFactory    = 'IssueTracker::App::IO::In::TxtReaderFactory'->new( \$appConfig , $self ) ; 
       my $objReaderTxt 			   = $objTxtReaderFactory->doInstantiate ( "$period" );
-		my $term							= $ENV{'period' } || 'daily' ; 
-		my $table						= $term . '_issues' ; 
-
-      my ( $ret , $msg , $str_issues_file ) 
-                                 = $objReaderTxt->doReadIssueFile ( $issues_file , $table ) ; 
-      return ( $ret , $msg ) if $ret != 0 ;  
-
-
-      my $hsr = {} ;          # a hash ref of hash refs 	
-      ( $ret , $msg , $hsr ) 
-                                 = $objReaderTxt->doConvertStrToHashRef ( $str_issues_file , $table ) ; 
-      return ( $ret , $msg ) if $ret != 0 ;  
+      
+      
+      my @tables              = ();
+      my $tables              = $appConfig->{ 'tables' } ;  
+	   push ( @tables , split(',',$tables ) ) ; 
 
 
-      p($hsr) if $module_trace == 1 ; 
-      my $objDbWritersFactory    = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$appConfig , $self ) ; 
-      my $objDbWriter 			   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" );
-      ( $ret , $msg )            = $objDbWriter->doInsertSqlHashData ( $hsr , $table ) ; 
-      return ( $ret , $msg ) ; 
+      foreach my $table ( @tables ) {
+         my ( $ret , $msg , $str_issues_file ) 
+                                    = $objReaderTxt->doReadIssueFile ( $table ) ; 
+         return ( $ret , $msg ) if $ret != 0 ;  
+
+
+         my $hsr = {} ;          # a hash ref of hash refs 	
+         ( $ret , $msg , $hsr ) 
+                                    = $objReaderTxt->doConvertStrToHashRef ( $str_issues_file , $table ) ; 
+         return ( $ret , $msg ) if $ret != 0 ;  
+
+
+         p($hsr) if $module_trace == 1 ; 
+         my $objDbWritersFactory    = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$appConfig , $self ) ; 
+         my $objDbWriter 			   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" );
+         ( $ret , $msg )            = $objDbWriter->doInsertSqlHashData ( $hsr , $table ) ; 
+
+         return ( $ret , $msg ) unless $ret == 0 ; 
+
+      }
+
+         return ( $ret , $msg ) ; 
    } 
 
 

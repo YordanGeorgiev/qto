@@ -58,7 +58,6 @@ END { close STDOUT }
 use IssueTracker::App::Utils::Initiator;
 use IssueTracker::App::Utils::Configurator;
 use IssueTracker::App::Utils::Logger;
-use IssueTracker::App::Utils::IO::FileHandler;
 use IssueTracker::App::Utils::Timer;
 use IssueTracker::App::Ctrl::Dispatcher;
 
@@ -81,11 +80,9 @@ local $SIG{__WARN__} = sub {
 my $module_trace = 0;
 my $md_file      = '';
 my $rdbms_type   = 'postgre';                 #todo: parametrize to
-my $issues_file  = 'undefined-issues-file';
 my $objInitiator = {};
 my $appConfig    = {};
 our $objLogger = {};
-my $objFileHandler        = {};
 my $objConfigurator       = {};
 my $actions               = q{};
 my $xls_dir               = q{};
@@ -107,7 +104,7 @@ sub main {
   doExit($ret, $msg) unless ($ret == 0);
 
   my $objDispatcher = 'IssueTracker::App::Ctrl::Dispatcher'->new(\$appConfig);
-  ($ret, $msg) = $objDispatcher->doRun($actions, $issues_file, $xls_file);
+  ($ret, $msg) = $objDispatcher->doRun($actions, $xls_file);
 
   doExit($ret, $msg);
 
@@ -133,7 +130,6 @@ sub doInitialize {
 
   # get the cmd args
   GetOptions(
-    'issues_file=s' => \$issues_file,
     'do=s'          => \$actions,
     'xls_dir=s'     => \$xls_dir,
     'xls-file=s'    => \$xls_file,
@@ -158,42 +154,6 @@ sub doInitialize {
 
   $appConfig->{'issue_tracker_project'} = $issue_tracker_project;
 
-  # if the issues_file is not specified via the cmd arg
-  if ($issues_file eq 'undefined-issues-file') {
-    my $objTimer = 'IssueTracker::App::Utils::Timer'->new();
-    my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst)
-      = $objTimer->GetTimeUnits();
-    my $nice_month = "$year" . '-' . "$mon";
-    my $nice_date  = "$year" . '-' . "$mon" . '-' . $mday;
-
-    $msg = 'proj_txt_dir: ' . $ENV{'proj_txt_dir'};
-    $objLogger->doLogDebugMsg($msg);
-    $issues_file
-      = $ENV{'proj_txt_dir'}
-      . '/issues'
-      . "/$year/$nice_month/$nice_date/$issue_tracker_project"
-      . '-issues.'
-      . "$nice_date" . '.'
-      . "$period" . '.txt';
-
-    $msg = 'issues_file: ' . $issues_file;
-    $objLogger->doLogDebugMsg($msg);
-
-    my $ProductInstanceDir = $appConfig->{'ProductInstanceDir'};
-    $issues_file = $ProductInstanceDir . "/" . $issues_file
-      unless ($issues_file =~ m/^\//g);
-
-# and the issues file does not comply with the project's dir structure and naming
-# convetions exit with error. Note this is valid for all actions !!!
-    unless (-f $issues_file) {
-      $msg = 'the issues_file: ' . "\n" . $issues_file . "\n";
-      $msg .= 'does not exist !!!';
-      $objLogger->doLogErrorMsg($msg);
-      return ($ret, $msg);
-    }
-
-  }
-  $appConfig->{'issues_file'} = $issues_file;
   $appConfig->{'xls_dir'}     = $xls_dir;
   $actions = 'txt-to-db' unless ($actions);
 

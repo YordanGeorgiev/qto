@@ -20,6 +20,7 @@ use Carp qw /cluck confess shortmess croak carp/;
 use IssueTracker::App::Utils::IO::FileHandler;
 use IssueTracker::App::Utils::Logger;
 use Data::Printer;
+use IssueTracker::App::Utils::Timer ; 
 
 binmode(STDIN,  ':utf8');
 binmode(STDOUT, ':utf8');
@@ -33,7 +34,7 @@ our $objFileHandler    = {};
 our $hsrStatus         = {};
 our %inverse_hsrStatus = ();
 our $term              = 'daily';
-
+our $issues_file       = () ; 
 
 =head1 SYNOPSIS
 
@@ -279,12 +280,11 @@ sub doFillInLevelsPerRow {
 
 #
 # --------------------------------------------------------
-# read the issues file for the Daily period
+# read the issues file for the Daily term
 # --------------------------------------------------------
 sub doReadIssueFile {
 
   my $self        = shift;
-  my $issues_file = shift;
 
   my $msg             = '';
   my $ret             = 1;
@@ -344,6 +344,9 @@ sub new {
 sub doInitialize {
   my $self = shift;
 
+  my $msg = '' ; 
+  my $ret = 1 ; 
+
   %$self = (appConfig => $appConfig);
 
   $objLogger = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
@@ -352,8 +355,8 @@ sub doInitialize {
 
   $hsrStatus = {
       'eval' => '01-eval'    # evaluate whether or not to do it
-    , 'todo' => '02-todo'    # must do it till the end of the period
-    , 'rem'  => '02-rem'     # remember to act till the end of the period
+    , 'todo' => '02-todo'    # must do it till the end of the term
+    , 'rem'  => '02-rem'     # remember to act till the end of the term
     , 'wip'  => '03-wip'     # is work in progress - aka is being done right now
     , 'act'  => '03-act'     # is being actively done, aka an activity
     , 'actv' => '03-actv'    # is being actively done, aka an activity
@@ -374,6 +377,43 @@ sub doInitialize {
 
   %inverse_hsrStatus = reverse %$hsrStatus;
 
+
+   my $issue_tracker_project = $appConfig->{ 'issue_tracker_project' } ; 
+
+  
+    my $objTimer = 'IssueTracker::App::Utils::Timer'->new();
+    my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst)
+      = $objTimer->GetTimeUnits();
+    my $nice_month = "$year" . '-' . "$mon";
+    my $nice_date  = "$year" . '-' . "$mon" . '-' . $mday;
+
+    $msg = 'proj_txt_dir: ' . $ENV{'proj_txt_dir'};
+    $objLogger->doLogDebugMsg($msg);
+    $issues_file
+      = $ENV{'proj_txt_dir'}
+      . '/issues'
+      . "/$year/$nice_month/$nice_date/$issue_tracker_project"
+      . '-issues.'
+      . "$nice_date" . '.'
+      . "$term" . '.txt';
+
+    $msg = 'issues_file: ' . $issues_file;
+    $objLogger->doLogDebugMsg($msg);
+
+    my $ProductInstanceDir = $appConfig->{'ProductInstanceDir'};
+    $issues_file = $ProductInstanceDir . "/" . $issues_file
+      unless ($issues_file =~ m/^\//g);
+
+   # and the issues file does not comply with the project's dir structure and naming
+   # convetions exit with error. Note this is valid for all actions !!!
+    unless (-f $issues_file) {
+      $msg = 'the issues_file: ' . "\n" . $issues_file . "\n";
+      $msg .= 'does not exist !!!';
+      $objLogger->doLogErrorMsg($msg);
+      return ($ret, $msg);
+    }
+
+  $appConfig->{'issues_file'} = $issues_file;
   return $self;
 }
 

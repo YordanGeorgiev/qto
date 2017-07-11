@@ -59,9 +59,6 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 
 
       for my $table ( @tables ) { 
-         my $term						= $ENV{ 'period' } || 'daily' ; 
-         my $table 					= $term . '_issues' ; 
-
 
          my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
          my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^

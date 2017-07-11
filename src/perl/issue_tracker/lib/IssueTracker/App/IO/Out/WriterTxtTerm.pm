@@ -36,7 +36,10 @@ our $objController     = {};
 our $objFileHandler    = {};
 our $hsrStatus         = {};
 our %inverse_hsrStatus = ();
+our $table              = 'daily_issues' ; 
 our $term              = 'daily';
+our $issues_file       = () ; 
+
 
 =head1 SYNOPSIS
 
@@ -68,6 +71,7 @@ sub doConvertHashRefToStr {
     = 'unknown error during hash ref of hash references to string conversion !!!';
   my $ret        = 1;
   my $str_issues = q{};
+  my $str_activity_issues = " ";
   my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
   my $run_time         = $objTimer->GetHumanReadableTime();
   p($hsr2) if $module_trace == 1;
@@ -113,6 +117,8 @@ sub doConvertHashRefToStr {
     . '} keys (%$hsr2)')  {
 
     my $row = $hsr2->{$issue_id};
+    my $str_row = q{} ; 
+
 
     my $category    = $row->{'category'};
     my $current     = $row->{'current'};
@@ -125,39 +131,46 @@ sub doConvertHashRefToStr {
     my $start_time  = $row->{'start_time'};
     my $stop_time   = $row->{'stop_time'};
     my $status      = $row->{'status'};
+
     $status = $inverse_hsrStatus{$status};
     $status = 'unknwn' unless $status;
     $description =~ s/\r\n/\n/gm;
-    $str_issues .= "\n" if ($prev_category ne $category);
-    $str_issues .= $category . "\n" unless ($prev_category eq $category);
+    $str_row .= "\n" if ($prev_category ne $category);
+    $str_row .= $category . "\n" unless ($prev_category eq $category);
     my $levels_dash = '';
 
     for (my $i = 0; $i < $level; $i++) {
-      $str_issues  .= ' ';
+      $str_row  .= ' ';
       $levels_dash .= '-';
     }
-    $str_issues .= $levels_dash . ' ';
-    $str_issues .= $status . "\t\t" if $level == 2;
-    $str_issues .= $status . "\t" if $level == 3;
-    $str_issues .= $status . " " if $level == 4;
-    $str_issues .= ($start_time . " ")
+    $str_row .= $levels_dash . ' ';
+    $str_row .= $status . "\t\t" if $level == 1 ; 
+    $str_row .= $status . "\t" if $level == 2;
+    $str_row .= $status . " " if $level == 3;
+    $str_row .= ($start_time . " ")
       if (defined($start_time) && $start_time ne 'NULL');
 
     if (defined $stop_time && $stop_time ne 'NULL' && $stop_time ne '') {
-      $str_issues .= ('- ' . $stop_time . " ");
+      $str_row .= ('- ' . $stop_time . " ");
     }
-    $str_issues .= $name . "\n";
+    $str_row .= $name . "\n";
     $prev_category = $category;
+
+
+    if ( $issues_order_by_attribute eq 'start_time' && !defined($start_time) ) {
+      $str_activity_issues .= $str_row ; 
+    }
+    $str_issues .= $str_row ; 
   }
 
-  #eof foreach
 
+  $str_issues .= $str_activity_issues ; 
   $str_issues .= $str_footer . "\n\n";
   $str_issues =~ s|%run_time%|$run_time|g;
   $msg = " OK for hsr2 to txt conversion ";
   $ret = 0;
 
-  return ($ret, $msg, $str_issues);
+  return ($ret, $msg, $issues_file , $str_issues);
 }
 
 # eof sub doConvertHashRefToStr
@@ -170,8 +183,9 @@ sub new {
 
   my $invocant = shift;
   $appConfig     = ${shift @_} || {'foo' => 'bar',};
-  $objController = shift;
-  $term          = shift || 'daily';
+  $table         = shift || 'daily_issues' ; 
+  $term          = $table ; 
+  $term          =~ s/_issues//g ; 
 
   # might be class or object, but in both cases invocant
   my $class = ref($invocant) || $invocant;
@@ -190,6 +204,10 @@ sub new {
 sub doInitialize {
   my $self = shift;
 
+   my $msg = '' ; 
+   my $ret = 1 ; 
+
+
   %$self = (appConfig => $appConfig);
 
   $objLogger = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
@@ -202,8 +220,7 @@ sub doInitialize {
     , 'rem'  => '02-rem'   # remember to act till the end of the period
     , 'wip'  => '03-wip'   # is work in progress - aka is being done right now
     , 'act' => '03-act'    # is being actively done , aka more of an activity type
-    ,
-    'actv' => '03-actv'  # is being actively done , aka more of an activity type
+    , 'actv' => '03-actv'  # is being actively done ,more of an activity type
     , 'diss' => '04-diss'      # to dissmiss or disgard
     , 'late' => '04-late'      # too late
     , 'fail' => '04-fail'      # to failmiss or disgard
@@ -221,6 +238,34 @@ sub doInitialize {
 
   %inverse_hsrStatus = reverse %$hsrStatus;
 
+   my $issue_tracker_project = $appConfig->{ 'issue_tracker_project' } ; 
+
+  
+    my $objTimer = 'IssueTracker::App::Utils::Timer'->new();
+    my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst)
+      = $objTimer->GetTimeUnits();
+    my $nice_month = "$year" . '-' . "$mon";
+    my $nice_date  = "$year" . '-' . "$mon" . '-' . $mday;
+
+    $msg = 'proj_txt_dir: ' . $ENV{'proj_txt_dir'};
+    $objLogger->doLogDebugMsg($msg);
+    $issues_file
+      = $ENV{'proj_txt_dir'}
+      . '/issues'
+      . "/$year/$nice_month/$nice_date/$issue_tracker_project"
+      . '-issues.'
+      . "$nice_date" . '.'
+      . "$term" . '.txt';
+
+    $msg = 'issues_file: ' . $issues_file;
+    $objLogger->doLogDebugMsg($msg);
+
+    my $ProductInstanceDir = $appConfig->{'ProductInstanceDir'};
+    $issues_file = $ProductInstanceDir . "/" . $issues_file
+      unless ($issues_file =~ m/^\//g);
+
+
+  $appConfig->{'issues_file'} = $issues_file;
   return $self;
 }
 

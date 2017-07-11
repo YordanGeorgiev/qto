@@ -26,7 +26,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 	our $db_user 											= q{} ; 
 	our $db_user_pw	 									= q{} ; 
 	our $web_host 											= q{} ; 
-
+   our @tables                                  = ( 'daily_issues' );
 
 	#
    # ------------------------------------------------------
@@ -289,12 +289,18 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
 		my $self 			   = shift ; 
 		my $hsr2 		      = shift ; 
+      my @tables = @{ $_[0] } ; 
+
       binmode(STDIN,  ':utf8');
       binmode(STDOUT, ':utf8');
       binmode(STDERR, ':utf8');
 		my $ret 				   = 1 ; 
 		my $msg 				   = ' failed to connect during insert to db !!! ' ; 
 		my $debug_msg 		   = ' failed to connect during insert to db !!! ' ; 
+
+      return ( $ret , $msg , undef ) unless $hsr2 ; 
+      return ( $ret , $msg , undef ) unless @tables ; 
+
       my $sth              = {} ;    # this is the statement handle
       my $dbh              = {} ;    # this is the database handle
       my $str_sql          = q{} ;   # this is the sql string to use for the query
@@ -312,6 +318,12 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
       # obs this does not support ordered primary key tables first order yet !!!
       foreach my $table ( keys %$hsr2 ) { 
+
+         $objLogger->doLogDebugMsg ( "doInsertDbTablesWithHsr2 table: $table" );
+         sleep 3 ; 
+         next unless grep( /^$table$/, @tables ) ; 
+
+         # load ONLY the tables defined to load
 
          ( $ret , $msg , $hs_headers ) = $objDbReader->doSelectTablesColumnList ( $table ) ; 
          return  ( $ret , $msg , undef ) unless $ret == 0 ; 
@@ -431,13 +443,15 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
 		my $invocant 			= shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-		
+		@tables     = @{ $_[0] } || ('daily_issues') ; 
+      
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize() ; 
+
 		return $self;
 	}  
 	#eof const
