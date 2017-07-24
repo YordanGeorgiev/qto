@@ -10,47 +10,47 @@ package IssueTracker::App::IO::In::TxtReaderFactory ;
 	our $objController 	= {} ; 
    our $objLogger       = {} ; 
 
-	# use IssueTracker::App::Db::ReaderTxtWeekly  ; 
-   use IssueTracker::App::IO::In::ReaderTxtTerm ;  
+	# use IssueTracker::App::Db::TxtReaderWeekly  ; 
+   use IssueTracker::App::IO::In::TxtReader ;  
 
 	#
 	# -----------------------------------------------------------------------------
-	# fabricates different ReaderTxt object 
+	# fabricates different TxtReader object 
 	# -----------------------------------------------------------------------------
 	sub doInstantiate {
 
-		my $self 			= shift ; 	
-		my $term			= shift // $term ; # the default is mysql
+		my $self 	      = shift ; 	
+		my $table			= shift // 'daily_issues' ; 
 
 		my @args 			= ( @_ ) ; 
-		my $ReaderTxt 		= {}   ; 
+		my $TxtReader 		= {}   ; 
 
 		# get the application cnfiguration hash
 		# global app cnfig hash
 
 		if ( $term eq 'daily' ) {
-			$ReaderTxt 				= 'ReaderTxtTerm' ; 
+			$TxtReader 				= 'TxtReader' ; 
 		}
 		elsif ( $term eq 'weekly' ) {
-			$ReaderTxt 				= 'ReaderTxtTerm' ; 
+			$TxtReader 				= 'TxtReader' ; 
 		}
 		elsif ( $term eq 'monthly' ) {
-			$ReaderTxt 				= 'ReaderTxtTerm' ; 
+			$TxtReader 				= 'TxtReader' ; 
 		}
 		elsif ( $term eq 'yearly' ) {
-			$ReaderTxt 				= 'ReaderTxtTerm' ; 
+			$TxtReader 				= 'TxtReader' ; 
 		}
 		else {
 			# future support for different RDBMS 's should be added here ...
-			$ReaderTxt 				= 'ReaderTxtTerm' ; 
+			$TxtReader 				= 'TxtReader' ; 
 		}
 
-		my $package_file     	= "IssueTracker/App/IO/In/$ReaderTxt.pm";
-		my $objReaderTxt   		= "IssueTracker::App::IO::In::$ReaderTxt";
+		my $package_file     	= "IssueTracker/App/IO/In/$TxtReader.pm";
+		my $objTxtReader   		= "IssueTracker::App::IO::In::$TxtReader";
 
 		require $package_file;
 
-		return $objReaderTxt->new( \$appConfig , $objController , $term , @args);
+		return $objTxtReader->new( \$appConfig , $objController , $term , @args);
 
 	}
 	# eof sub doInstantiate

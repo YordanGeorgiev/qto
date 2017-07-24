@@ -27,7 +27,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 	our $db_user_pw	 									= q{} ; 
 	our $web_host 											= q{} ; 
    our @tables                                  = ( 'daily_issues' );
-
+   our $objController                           = () ; 
 	#
    # ------------------------------------------------------
 	#  input: hash ref of hash refs containing the issues 
@@ -37,8 +37,8 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
 		my $self 				= shift ; 
 		my $hsr2 			   = shift ; 	# the hash ref of hash refs  aka hs r on power 2
+      my $table            = shift ; 
       my $term             = shift || 'daily' ; 
-      my $table            = "$term" . '_issues' ; 
 
       my $ret              = 1 ; 
       my $msg              = 'unknown error while sql insert ' ; 		
@@ -66,9 +66,12 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          $str_sql_insert .= "TRUNCATE TABLE $table ;" ; 
       }
 
+	 
+      p ( $hsr2 ) ; 
+      sleep 10 ; 
+      
       my $debug_msg        = 'START doInsertSqlHashData' ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-	  
  
 		foreach my $key ( sort(keys( %{$hsr2} ) ) ) {
          my $row_hash = $hsr2->{ $key } ; 
@@ -145,7 +148,6 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 		my $table				= shift || 'daily_issues' ; 
   
 
-      $objLogger->doLogDebugMsg ( "STOP print sql_hash " ) ;    
       my $ret              = 1 ; 
       my $msg              = 'unknown error while sql insert ' ; 		
       my $str_sql_insert   = q{} ; 
@@ -180,28 +182,32 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       my $objDbReader 		= $objDbReadersFactory->doInstantiate ( 'postgre' );
       ( $ret , $msg , $dmhsr ) = $objDbReader->doSelectTablesColumnList ( $table ) ; 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
-      # debug p($dmhsr); 
-		foreach my $key ( sort(keys( %{$sql_hash} ) ) ) {
-         my $row_hash = $sql_hash->{ $key } ; 
-         
-         p ( $row_hash ) if $module_trace > 1 ; 
-         my $debug_msg        = 'STOP print row_hash ' ; 
-         $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace > 1 ; 
 
-		   foreach my $key ( sort(keys( %{$dmhsr} ) ) ) {
-            next if $key eq 'uuid' ; 
-            $str_col_list .= ' , ' . $key ; 
+		foreach my $key ( sort(keys( %{$sql_hash} ) ) ) {
+
+         my $row_hash = $sql_hash->{ $key } ; 
+
+		   foreach my $k ( sort(keys( %{$dmhsr} ) ) ) {
+
+            my $col = $dmhsr->{ $k }->{ 'attname' } ; 
+            next if $col eq 'guid' ; 
+
+            $str_col_list .= ' , ' . $col ; 
             my $value = 'null' ; 
             unless ( $key eq 'update_time' ) {
-               $value     = $row_hash->{ $key } || 'null' ; 
+               $value     = $row_hash->{ $col } ; 
+
+               unless ( defined $value ) { 
+                  $str_val_list .= ' , NULL' ; 
+                  next ; 
+               }
                $value     =~ s|\\|\\\\|g ;
                $value     =~ s|\'|\\\'|g ;
                $value     =~ s/'/''/g if ( $value ) ; 
             } else {
                $value     = $update_time ; 
             }
-            $str_val_list .= ' , \'' . $value . '\'' if defined $value ; 
-            $str_val_list .= ' , NULL' unless defined $value ; 
+            $str_val_list .= ' , \'' . $value . '\''  ; 
          }
 
          # p ( $str_col_list ) ; 
@@ -307,9 +313,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       my $rv               = 0 ;     # apperantly insert ok returns rv = 1 !!! 
       
       my $hs_headers       = {} ; 
-      my $update_time      = q{} ; 
-      my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
-		$update_time         = $objTimer->GetHumanReadableTime();
+      my $update_time      = q{} ; # must have the default value now() in db
       
       my $dmhsr            = {} ; 
 
@@ -358,6 +362,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          foreach my $col_num ( sort ( keys %{$hs_headers} )) {
             my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
             next if $column_name eq 'guid' ; 
+            next if $column_name eq 'update_time' ; 
             $sql_str_insrt .= " $column_name " . ' , ' ; 
          } 
          
@@ -375,18 +380,15 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
                my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
                next if $column_name eq 'guid' ; 
+               next if $column_name eq 'update_time' ; 
                my $cell_value = $hs_row ->{ $column_name } ; 
+
                if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
                      or $cell_value eq 'null' or $cell_value eq "'NULL'" ) {
 
-                  unless ( $column_name eq 'update_time' ) {
-                     $cell_value = 'NULL'  
-                  } 
-                  else {
-                     $cell_value = "'" . $update_time . "'" if ( $column_name eq 'update_time' ) ; 
-                  }
-
+                  $cell_value = 'NULL'   ; 
                   $data_str .= "$cell_value" . " , " ; 
+
                } else { 
                   $cell_value =~ s|\\|\\\\|g ; 
                   # replace the ' chars with \'
@@ -401,7 +403,6 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
             
             $sql_str .= $sql_str_insrt ;  
             $sql_str	.=  " VALUES (" . "$data_str" . ') ; ' . "\n" ; 
-
 
          } 
          #eof foreach row
@@ -443,8 +444,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
 		my $invocant 			= shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-		@tables     = @{ $_[0] } || ('daily_issues') ; 
-      
+      $objController = shift ;  
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
 

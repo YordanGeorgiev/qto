@@ -3,19 +3,22 @@
 # v1.0.9
 # ---------------------------------------------------------
 # start the issue_tracker web app with the morbo
+# cat doc/txt/issue-tracker/funcs/mojo-morbo-start.func.txt
 # ---------------------------------------------------------
 doMojoMorboStart(){
 
 	doLog "DEBUG START doMojoMorboStart"
 	
-	# cat doc/txt/issue-tracker/funcs/mojo-morbo-start.func.txt
-	
 	sleep "$sleep_interval"
+
 	# Action !!!
-   cd src/perl/issue_tracker/script/
-   morbo issue_tracker &
-   cd $procuct_instance_dir
-	doLog "DEBUG STOP  doMojoMorboStart"
+   bash -c "morbo $product_instance_dir/src/perl/issue_tracker/script/issue_tracker" &
+	doLog "DEBUG check with netstat "
+   # sudo visudoers 
+   # ysg ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
+   netstat -tulpn | grep issue_tracker
+	
+   doLog "DEBUG STOP  doMojoMorboStart"
 }
 # eof func doMojoMorboStart
 

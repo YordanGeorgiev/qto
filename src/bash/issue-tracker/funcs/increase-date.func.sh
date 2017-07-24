@@ -1,10 +1,13 @@
 # src/bash/issue-tracker/funcs/increase-date.func.sh
 
-# v1.0.9
+#
+# ---------------------------------------------------------
+# v1.1.1.2
+# cat doc/txt/issue-tracker/funcs/increase-date.func.txt
+# ---------------------------------------------------------
 doIncreaseDate(){
 
 	doLog "DEBUG START doIncreaseDate"
-	# cat doc/txt/issue-tracker/funcs/increase-date.func.txt
    test -z ${proj_txt_dir+x} && export exit_code=1 \
       && doExit "define a project by doParseIniEnvVars <<path-to-proj-conf-file>> !!!" && exit 1
 
@@ -18,8 +21,13 @@ doIncreaseDate(){
    todays_monthly_txt_dir="$proj_txt_dir"'/issues/'"$(date +%Y)"'/'"$(date +%Y-%m)"
    mkdir -p $todays_monthly_txt_dir
    todays_daily_txt_dir="$proj_txt_dir"'/issues/'"$(date +%Y)"'/'"$(date +%Y-%m)"'/'"$(date +%Y-%m-%d)"
-   
-   test -d "$todays_daily_txt_dir" && exit_code=1 && doExit "nothing to do, as $todays_daily_txt_dir exists !!!"
+  
+   error_msg="
+   nothing can be done - as the daily dir : 
+      $todays_daily_txt_dir 
+   already exists !!!
+   "
+   test -d "$todays_daily_txt_dir" && export exit_code=1 && doExit "$error_msg"
 
    todays_tmp_dir=$tmp_dir/$(date "+%Y-%m-%d")    # becauses of vboxsf !!!
    cmd="cp -vr $latest_proj_daily_txt_dir $todays_tmp_dir/"
@@ -27,24 +35,26 @@ doIncreaseDate(){
 
    cd $todays_tmp_dir
    while read -r f ; do 
-      export yesterday=$(echo $f|cut -d'.' -f 3);
-      period=$(echo $f|cut -d'.' -f 4); proj=$(echo $f|cut -d'.' -f 2); 
-      extsion=$(echo $f|cut -d'.' -f 5); 
-      doLog "DEBUG extsion: $extsion"
-      mv -v "$f" '.'"$proj".`date "+%Y-%m-%d"`."$period"."$extsion"
+      export yesterday=$(echo $f|cut -d'.' -f 4);
+      table=$(echo $f|cut -d'.' -f 3); proj=$(echo $f|cut -d'.' -f 2); 
+      file_ext=$(echo $f|cut -d'.' -f 5); 
+      doLog "DEBUG file_ext: $file_ext"
+      mv -v "$f" '.'"$proj"."$table".`date "+%Y-%m-%d"`."$file_ext"
    # obs works only on gnu find !
    done < <(find . -type f -regex ".*\.\(sh\|txt\)")
-   
+  
+
    while read -r f ; do 
-      export yesterday=$(echo $f|cut -d'.' -f 3);
+      export yesterday=$(echo $f|cut -d'.' -f 5);
       period=$(echo $f|cut -d'.' -f 4); 
       proj=$(echo $f|cut -d'.' -f 2); 
       hourly_timestamp=$(echo $f|cut -d'.' -f 5); 
-      extsion=$(echo $f|cut -d'.' -f 6); 
-      doLog "DEBUG extsion: $extsion"
-      mv -v "$f" '.'"$proj".`date "+%Y-%m-%d"`."$period"."$hourly_timestamp"."$extsion"
+      file_ext=$(echo $f|cut -d'.' -f 6); 
+      doLog "DEBUG file_ext: $file_ext"
+      mv -v "$f" '.'"$proj"."$period".`date "+%Y%m%d_%H%M%S"`."$file_ext"
    done < <(find . -type f -name "*.xlsx")
-   
+  
+
    # search and replace the daily
    today=$(date +%Y-%m-%d)
    while read -r f ; do 

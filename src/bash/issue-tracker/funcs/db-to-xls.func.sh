@@ -14,8 +14,8 @@ doDbToXls(){
 	# add your action implementation code here ... 
 	# Action !!!
    doLog "INFO START testing db-to-xls"
-   # perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-xls --issues_file $issues_file \
-   perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-xls
+   test -z ${tables+x} && export tables='daily_issues'
+   perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-xls --tables $tables
    exit_code=$?
    doLog "INFO doRunIssueTracker exit_code $exit_code"
    test $exit_code -ne 0 && doExit $exit_code "failed to run issue_tracker.pl"  

@@ -2,13 +2,12 @@
 
 # v1.0.9
 # ---------------------------------------------------------
-# todo: add doSpecIncreaseDate comments ...
+# cat doc/txt/issue-tracker/specs/increase-date.spec.txt
 # ---------------------------------------------------------
 doSpecIncreaseDate(){
 
 	doLog "DEBUG START doSpecIncreaseDate"
 	
-	cat doc/txt/issue-tracker/specs/increase-date.spec.txt
 	
 	sleep "$sleep_interval"
 	# add your action implementation code here ... 

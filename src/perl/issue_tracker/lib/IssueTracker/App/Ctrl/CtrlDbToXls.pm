@@ -14,7 +14,7 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::In::DbReadersFactory ; 
-   use IssueTracker::App::IO::Out::WriterXls ; 
+   use IssueTracker::App::IO::Out::XlsWriter ; 
 
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
@@ -54,7 +54,7 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
       my $ret                 = 1 ; 
       my $msg                 = 'unknown error while loading db issues to xls file' ; 
       my @tables              = ();
-      my $tables              = $appConfig->{ 'tables' } ;  
+      my $tables              = $appConfig->{ 'tables' } || 'daily_issues' ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
 
@@ -65,12 +65,12 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 
          my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
          my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
-
+      
          ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
     
-         my $objWriterXls    = 'IssueTracker::App::IO::Out::WriterXls'->new( \$appConfig ) ;
-         $ret = $objWriterXls->doBuildXlsFromHashRef ( $mhsr , $hsr , $table ) ;
+         my $objXlsWriter    = 'IssueTracker::App::IO::Out::XlsWriter'->new( \$appConfig ) ;
+         $ret = $objXlsWriter->doBuildXlsFromHashRef ( $mhsr , $hsr , $table ) ;
          return ( $ret , $msg ) unless $ret == 0 ; 
       }
 

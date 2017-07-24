@@ -17,7 +17,7 @@ doTxtToDb(){
 
    # run with pre-defined in the shell prjoject 
    doLog "INFO START testing txt-to-db"
-   perl src/perl/issue_tracker/script/issue_tracker.pl --do txt-to-db 
+   perl src/perl/issue_tracker/script/issue_tracker.pl --do txt-to-db --tables $tables
    export exit_code=$?
    doLog "INFO doRunIssueTracker exit_code $exit_code"
    test $exit_code -ne 0 && doExit $exit_code "failed to run txt-to-db action for issue_tracker"  

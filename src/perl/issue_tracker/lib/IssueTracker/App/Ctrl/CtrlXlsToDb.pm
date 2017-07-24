@@ -13,7 +13,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::Out::DbWritersFactory ; 
-   use IssueTracker::App::IO::In::ReaderXls ; 
+   use IssueTracker::App::IO::In::XlsReader ; 
 	
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
@@ -71,12 +71,11 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 	   push ( @tables , split(',',$tables ) ) ; 
 
       my $hsr2             = {} ; 
-
-      my $objReaderXls     = 'IssueTracker::App::IO::In::ReaderXls'->new ( \$appConfig , \@tables ) ; 
+      my $objXlsReader     = 'IssueTracker::App::IO::In::XlsReader'->new ( \$appConfig , \@tables ) ; 
       
       # read the xls into hash ref of hash ref
       ( $ret , $msg , $hsr2 ) = 
-            $objReaderXls->doReadXlsFileToHsr2 ( $xls_file ) ; 
+            $objXlsReader->doReadXlsFileToHsr2 ( $xls_file ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
@@ -92,10 +91,6 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
 	
 
-=head1 WIP
-
-	
-=cut
 
 =head1 SUBROUTINES/METHODS
 

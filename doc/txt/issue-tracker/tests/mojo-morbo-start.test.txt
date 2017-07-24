@@ -4,33 +4,29 @@
 	
 	# Purpose:
 	# ------------------------------------------------------
-	-- todo: what is the purpose of the doTestMojoMorboStart function
+	to test the staring of the mojo issue-tracker app 
 
 	# Prequisites
 	# ------------------------------------------------------
-	-- todo: what are the prerequisites of the doTestMojoMorboStart function
+   - Mojolicious installed
+   perl src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
 
-	# Installation
+   # Installation
 	# ------------------------------------------------------
-	-- todo: what are the required installations for the  
-		doTestMojoMorboStart function to execute without errors
-
+   perl src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
+   
 	# Interdependancies
-	# ------------------------------------------------------
-	-- todo: what are the interdependancies for the  
-		doTestMojoMorboStart function to execute without errors
-
+   # ------------------------------------------------------
+   mojo 
 	# Usage:
 	# ------------------------------------------------------
-	-- todo: how can be the doTestMojoMorboStart used 
+	$0 -a mojo-morbo-start
 
-	# Developent
+	# Issues
 	# ------------------------------------------------------
-	-- todo: what issues, todos could be pointed for development
 
 	# Caveats:
 	# ------------------------------------------------------
-	-- todo: what are the known caveats of the doTestMojoMorboStart functions
-
+   none known so far
 
 # eof file: doc/txt/issue-tracker/test/mojo-morbo-start.test.txt

@@ -8,12 +8,13 @@ SELECT 'create the "yearly_issues" table'
     , seq            integer NULL
     , prio           integer NULL
     , status         varchar (50) NOT NULL
+    , tags           varchar (200)
     , category       varchar (200) NOT NULL
     , name           varchar (200) NOT NULL
     , description    varchar (4000)
     , start_time     text NULL
     , stop_time      text NULL
-    , update_time    timestamp NOT NULL
+    , update_time    timestamp DEFAULT NOW()
     , updated_by     varchar (50) NULL
     , owner          varchar (50) NULL
     , parent_id      integer NULL 

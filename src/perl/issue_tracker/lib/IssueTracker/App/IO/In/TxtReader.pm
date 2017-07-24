@@ -1,4 +1,4 @@
-package IssueTracker::App::IO::In::ReaderTxtTerm;
+package IssueTracker::App::IO::In::TxtReader;
 
 use strict;
 use warnings;
@@ -19,6 +19,7 @@ use Sys::Hostname;
 use Carp qw /cluck confess shortmess croak carp/;
 use IssueTracker::App::Utils::IO::FileHandler;
 use IssueTracker::App::Utils::Logger;
+use IssueTracker::App::Utils::Timer ; 
 use Data::Printer;
 use IssueTracker::App::Utils::Timer ; 
 
@@ -35,6 +36,8 @@ our $hsrStatus         = {};
 our %inverse_hsrStatus = ();
 our $term              = 'daily';
 our $issues_file       = () ; 
+our $table             = () ; 
+our $objController     = () ; 
 
 =head1 SYNOPSIS
 
@@ -285,13 +288,30 @@ sub doFillInLevelsPerRow {
 sub doReadIssueFile {
 
   my $self        = shift;
+  my $table       = shift ; 
 
   my $msg             = '';
   my $ret             = 1;
   my $str_issues_file = q{};
-
+  my $table_file_name = $table ; 
+  $table_file_name =~ s/_/-/g ; 
+  
   $msg = "START doReadIssueFile";
   $objLogger->doLogInfoMsg($msg);
+   
+  my $issue_tracker_project = $ENV{"issue_tracker_project"};
+  my $objTimer = 'IssueTracker::App::Utils::Timer'->new();
+  my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst)
+   = $objTimer->GetTimeUnits();
+  my $nice_month = "$year" . '-' . "$mon";
+  my $nice_date  = "$year" . '-' . "$mon" . '-' . $mday;
+
+    $issues_file
+      = $ENV{'proj_txt_dir'}
+      . '/issues'
+      . "/$year/$nice_month/$nice_date/$issue_tracker_project"
+      . '.' .$table_file_name . '.'
+      . "$nice_date" . '.txt' ; 
 
   unless (-r $issues_file) {
     $msg = "the issues_file : $issues_file does not exist !!!";
@@ -323,7 +343,9 @@ sub new {
 
   my $invocant = shift;
   $appConfig = ${shift @_} || {'foo' => 'bar',};
-  $term = shift || 'daily';
+  $objController = shift ; 
+  $objController = shift ; 
+  $term = shift || 'daily_issues' ;
 
   # might be class or object, but in both cases invocant
   my $class = ref($invocant) || $invocant;
@@ -378,42 +400,6 @@ sub doInitialize {
   %inverse_hsrStatus = reverse %$hsrStatus;
 
 
-   my $issue_tracker_project = $appConfig->{ 'issue_tracker_project' } ; 
-
-  
-    my $objTimer = 'IssueTracker::App::Utils::Timer'->new();
-    my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst)
-      = $objTimer->GetTimeUnits();
-    my $nice_month = "$year" . '-' . "$mon";
-    my $nice_date  = "$year" . '-' . "$mon" . '-' . $mday;
-
-    $msg = 'proj_txt_dir: ' . $ENV{'proj_txt_dir'};
-    $objLogger->doLogDebugMsg($msg);
-    $issues_file
-      = $ENV{'proj_txt_dir'}
-      . '/issues'
-      . "/$year/$nice_month/$nice_date/$issue_tracker_project"
-      . '-issues.'
-      . "$nice_date" . '.'
-      . "$term" . '.txt';
-
-    $msg = 'issues_file: ' . $issues_file;
-    $objLogger->doLogDebugMsg($msg);
-
-    my $ProductInstanceDir = $appConfig->{'ProductInstanceDir'};
-    $issues_file = $ProductInstanceDir . "/" . $issues_file
-      unless ($issues_file =~ m/^\//g);
-
-   # and the issues file does not comply with the project's dir structure and naming
-   # convetions exit with error. Note this is valid for all actions !!!
-    unless (-f $issues_file) {
-      $msg = 'the issues_file: ' . "\n" . $issues_file . "\n";
-      $msg .= 'does not exist !!!';
-      $objLogger->doLogErrorMsg($msg);
-      return ($ret, $msg);
-    }
-
-  $appConfig->{'issues_file'} = $issues_file;
   return $self;
 }
 

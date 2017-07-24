@@ -24,7 +24,6 @@ package IssueTracker::App::Db::Out::DbWritersFactory ;
 		my $self 			= shift ; 	
 		my $db_type			= shift // $db_type ; # the default is mysql
 
-		my @tables     = @{ $_[0] } || ('daily_issues') ; 
 		my @args 			= ( @_ ) ; 
 		my $DbWriter 		= {}   ; 
 
@@ -47,7 +46,7 @@ package IssueTracker::App::Db::Out::DbWritersFactory ;
 
 		require $package_file;
 
-		return $objDbWriter->new( \$appConfig , \@tables , @args);
+		return $objDbWriter->new( \$appConfig , @args);
 	}
 	# eof sub doInstantiate
 	

@@ -62,24 +62,24 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
       my $ret                    = 1 ; 
       my $msg                    = '' ; 
       my $period                 = $ENV{ 'period' } || 'daily' ;  
-      my $objTxtReaderFactory    = 'IssueTracker::App::IO::In::TxtReaderFactory'->new( \$appConfig , $self ) ; 
-      my $objReaderTxt 			   = $objTxtReaderFactory->doInstantiate ( "$period" );
       
       
       my @tables              = ();
       my $tables              = $appConfig->{ 'tables' } ;  
 	   push ( @tables , split(',',$tables ) ) ; 
-
+   
 
       foreach my $table ( @tables ) {
+         my $objTxtReaderFactory    = 'IssueTracker::App::IO::In::TxtReaderFactory'->new( \$appConfig , $self ) ; 
+         my $objTxtReader 			   = $objTxtReaderFactory->doInstantiate ( $table ); 
          my ( $ret , $msg , $str_issues_file ) 
-                                    = $objReaderTxt->doReadIssueFile ( $table ) ; 
+                                    = $objTxtReader->doReadIssueFile ( $table ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
 
 
          my $hsr = {} ;          # a hash ref of hash refs 	
          ( $ret , $msg , $hsr ) 
-                                    = $objReaderTxt->doConvertStrToHashRef ( $str_issues_file , $table ) ; 
+                                    = $objTxtReader->doConvertStrToHashRef ( $str_issues_file , $table ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
 
 

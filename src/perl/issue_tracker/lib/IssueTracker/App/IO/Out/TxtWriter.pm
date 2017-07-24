@@ -1,4 +1,4 @@
-package IssueTracker::App::IO::Out::WriterTxtTerm;
+package IssueTracker::App::IO::Out::TxtWriter;
 
 use strict;
 use warnings;
@@ -249,13 +249,16 @@ sub doInitialize {
 
     $msg = 'proj_txt_dir: ' . $ENV{'proj_txt_dir'};
     $objLogger->doLogDebugMsg($msg);
+    $table =~ s/_/-/g ; 
     $issues_file
       = $ENV{'proj_txt_dir'}
       . '/issues'
       . "/$year/$nice_month/$nice_date/$issue_tracker_project"
-      . '-issues.'
-      . "$nice_date" . '.'
-      . "$term" . '.txt';
+      . '.'
+      . "$table"
+      . '.'
+      . "$nice_date"
+      . '.txt';
 
     $msg = 'issues_file: ' . $issues_file;
     $objLogger->doLogDebugMsg($msg);

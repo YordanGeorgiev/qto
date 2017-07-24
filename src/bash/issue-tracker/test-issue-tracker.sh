@@ -13,7 +13,7 @@ trap 'doExit $LINENO $BASH_COMMAND; exit' SIGHUP SIGINT SIGQUIT
 trap "exit $exit_code" TERM
 export TOP_PID=$$
 
-# v1.2.5 
+# v1.2.8 
 #------------------------------------------------------------------------------
 # the main function called
 #------------------------------------------------------------------------------
@@ -27,11 +27,11 @@ main(){
 #eof main
 
 
-# v1.2.5 
+# v1.2.8 
 #------------------------------------------------------------------------------
 # the "reflection" func
 #------------------------------------------------------------------------------
-get_function_list () {
+get_function_list() {
     env -i bash --noprofile --norc -c '
     source "'"$1"'"
     typeset -f |
@@ -47,7 +47,7 @@ get_function_list () {
 
 
 #
-# v1.1.4
+# v1.2.8
 #------------------------------------------------------------------------------
 # run all the actions
 #------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ doRunTests(){
 #eof fun doRunTests
 
 
-# v1.2.5 
+# v1.2.8 
 #------------------------------------------------------------------------------
 # register the run-time vars before the call of the $0
 #------------------------------------------------------------------------------
@@ -156,7 +156,7 @@ doExit(){
 }
 #eof func doExit
 
-# v1.2.5 
+# v1.2.8 
 #------------------------------------------------------------------------------
 # echo pass params and print them to a log file and terminal
 # with timestamp and $host_name and $0 PID
@@ -182,7 +182,7 @@ doLog(){
 #eof func doLog
 
 
-#v1.1.0
+#v1.2.8
 #------------------------------------------------------------------------------
 # cleans the unneeded during after run-time stuff
 # do put here the after cleaning code
@@ -200,7 +200,7 @@ doCleanAfterRun(){
 #eof func doCleanAfterRun
 
 
-# v1.2.5 
+# v1.2.8 
 #------------------------------------------------------------------------------
 # run a command and log the call and its output to the log_file
 # doPrintHelp: doRunCmdAndLog "$cmd"
@@ -221,7 +221,7 @@ doRunCmdAndLog(){
 #eof func doRunCmdAndLog
 
 
-# v1.2.5 
+# v1.2.8 
 #------------------------------------------------------------------------------
 # run a command on failure exit with message
 # doPrintHelp: doRunCmdOrExit "$cmd"
@@ -244,7 +244,7 @@ doRunCmdOrExit(){
 #eof func doRunCmdOrExit
 
 
-# v1.2.5 
+# v1.2.8 
 #------------------------------------------------------------------------------
 # set the variables from the $0.$host_name.cnf file which has ini like syntax
 #------------------------------------------------------------------------------
@@ -311,7 +311,7 @@ doSetVars(){
 #eof func doSetVars
 
 
-# v1.2.5
+# v1.2.8
 #------------------------------------------------------------------------------
 # parse the ini like $0.$host_name.cnf and set the variables
 # cleans the unneeded during after run-time stuff. Note the MainSection
@@ -357,7 +357,7 @@ main "$@"
 #
 #----------------------------------------------------------
 # Purpose:
-# a simplistic tester for the simplistic bash stub issue-trackerer
+# a simplistic tester for the issue-tracker
 #----------------------------------------------------------
 #
 #----------------------------------------------------------

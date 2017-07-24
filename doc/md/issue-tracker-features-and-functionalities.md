@@ -102,8 +102,8 @@ You can load your already stored in the issue table issues and load them into th
 #### 2.1.1. morph-dir action
 You can recursively search and replace strings in both file and dir paths and their contents ( as soon as they non-binary , txt files ) by issuing the following commands:
 
-    export to_srch=WriterTxtDaily
-    export to_repl=WriterTxtTerm
+    export to_srch=TxtWriterDaily
+    export to_repl=TxtWriter
     export dir_to_morph=`pwd`
     bash src/bash/issue-tracker/issue-tracker.sh -a morph-dir
     fg

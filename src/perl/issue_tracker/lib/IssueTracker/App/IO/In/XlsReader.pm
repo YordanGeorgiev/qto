@@ -1,4 +1,4 @@
-package IssueTracker::App::IO::In::ReaderXls;
+package IssueTracker::App::IO::In::XlsReader;
 
 use strict;
 use warnings;
@@ -71,13 +71,7 @@ sub doReadXlsFileToHsr2 {
     my $hsWorkSheet   = {};
     my $WorkSheetName = $worksheet->{'Name'};
 
-
-    $objLogger->doLogInfoMsg("read worksheet: " . $WorkSheetName) ; 
-    foreach my $table ( @tables ) {
-      $objLogger->doLogInfoMsg("table " . $table ) ; 
-    }
 	 next unless grep( /^$WorkSheetName$/, @tables ) ; 
-    # next unless $WorkSheetName =~ m/^.*_issues$/g;
     $objLogger->doLogInfoMsg("read worksheet: " . $WorkSheetName) ; 
     
 
@@ -211,7 +205,7 @@ sub new {
 
 
     foreach my $table ( @tables ) {
-      $objLogger->doLogInfoMsg("ReaderXls sub newtable " . $table ) ; 
+      $objLogger->doLogInfoMsg("XlsReader sub newtable " . $table ) ; 
     }
   return $self;
 }

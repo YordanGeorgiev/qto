@@ -6,12 +6,12 @@ package IssueTracker::App::Db::In::DbReadersFactory ;
 	
 
 	our $appConfig 		= {} ; 
-	our $db_type			= 'mariadb' ; 
+	our $db_type			= 'postgres' ; 
 	our $objItem			= {} ; 
 	our $objController 	= {} ; 
    our $objLogger       = {} ; 
 
-	# use IssueTracker::App::Db::MariaDbReader  ; 
+	# use IssueTracker::App::Db::DbReaderMariaDb  ; 
    use IssueTracker::App::Db::In::DbReaderPostgres ; 
 
 	#
@@ -30,14 +30,14 @@ package IssueTracker::App::Db::In::DbReadersFactory ;
 		# global app cnfig hash
 
 		if ( $db_type eq 'mariadb' ) {
-			$DbReader 				= 'MariaDbReader' ; 
+			$DbReader 				= 'DbReaderMariaDb' ; 
 		}
 		if ( $db_type eq 'postgre' ) {
 			$DbReader 				= 'DbReaderPostgres' ; 
 		}
 		else {
 			# future support for different RDBMS 's should be added here ...
-			$DbReader 				= 'MariaDbReader' ; 
+			$DbReader 				= 'DbReaderMariaDb' ; 
 		}
 
 		my $package_file     	= "IssueTracker/App/Db/In/$DbReader.pm";

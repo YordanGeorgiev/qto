@@ -11,12 +11,12 @@ package IssueTracker::App::IO::Out::TxtWriterFactory ;
 	our $objController 	= {} ; 
    our $objLogger       = {} ; 
 
-	# use IssueTracker::App::Db::WriterTxtWeekly  ; 
-   use IssueTracker::App::IO::Out::WriterTxtTerm ;  
+	# use IssueTracker::App::Db::TxtWriterWeekly  ; 
+   use IssueTracker::App::IO::Out::TxtWriter ;  
 
 	#
 	# -----------------------------------------------------------------------------
-	# fabricates different WriterTxt object 
+	# fabricates different TxtWriter object 
 	# -----------------------------------------------------------------------------
 	sub doInstantiate {
 
@@ -24,15 +24,15 @@ package IssueTracker::App::IO::Out::TxtWriterFactory ;
 		my $table			= shift // $table ; # the default is 'daily'
 
 		my @args 			= ( @_ ) ; 
-		my $WriterTxt 		= {}   ; 
-	   $WriterTxt 				= 'WriterTxtTerm' ; 
+		my $TxtWriter 		= {}   ; 
+	   $TxtWriter 				= 'TxtWriter' ; 
 
-		my $package_file     	= "IssueTracker/App/IO/Out/$WriterTxt.pm";
-		my $objWriterTxt   		= "IssueTracker::App::IO::Out::$WriterTxt";
+		my $package_file     	= "IssueTracker/App/IO/Out/$TxtWriter.pm";
+		my $objTxtWriter   		= "IssueTracker::App::IO::Out::$TxtWriter";
 
 		require $package_file;
 
-		return $objWriterTxt->new( \$appConfig , $table , @args);
+		return $objTxtWriter->new( \$appConfig , $table , @args);
 
 	}
 	# eof sub doInstantiate
