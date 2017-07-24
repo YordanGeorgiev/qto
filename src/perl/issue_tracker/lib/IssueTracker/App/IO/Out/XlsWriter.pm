@@ -41,16 +41,11 @@ package IssueTracker::App::IO::Out::XlsWriter ;
       my $objTimer = 'IssueTracker::App::Utils::Timer'->new() ; 
 	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
       my $nice_month  = "$year" . '-' . "$mon" ; 
-      my $nice_date  = "$year" . '-' . "$mon" . '-' . $mday ; 
+      my $nice_datetime  = "$year" ."$mon". "$mday" . '_' . "$hour" . "$min" . "$sec" ; 
+      my $nice_date  = "$year" . '-' . "$mon" . '-' . "$mday" ; 
 
 
-      my $issues_file      = $appConfig->{ 'issues_file' } ; 
-      $msg = "XlsWriter issues_file: \n $issues_file " ; 
-      $objLogger->doLogDebugMsg ( $msg ) ; 
-
-      my $xls_file_name    = $issues_file ; 
-      $xls_file_name       =~ s/(.*)(\\|\/)(.*)\.([a-zA-Z0-9]*)/$3/g ; 
-      $xls_file_name       = "$xls_file_name" . '.' . "$hour" . "$min" . "$sec" ; 
+      my $xls_file_name       = $ENV{'issue_tracker_project'} . '.' . $table . '.' . $nice_datetime ; 
       my $xls_dir = $appConfig->{ 'xls_dir' } || $ENV{'proj_txt_dir'} . '/issues' . "/$year/$nice_month/$nice_date" ; 
       $objFileHandler->MkDir ( "$xls_dir" ) ; 
       my $xls_file         = "$xls_dir/$xls_file_name" . '.xlsx' ; 
@@ -68,18 +63,21 @@ package IssueTracker::App::IO::Out::XlsWriter ;
       # print the headers  
       foreach my $colid ( sort ( keys (  %{$hsr_meta->{ 'ColumnNames'}} ) ) ) {
 
+         my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
          my $objFormat    =  $objWorkbook->add_format(
             'color' => 'black'
           , 'font'  => 'Lucida Console'
           , 'bold'  => '1'
          );
-         $objWorksheet->write(0, $colid, $hsr_meta->{ 'ColumnNames'}->{ $colid } , $objFormat )  ; 
+         $objWorksheet->write(0, $colid, $col_name , $objFormat )  ; 
 
          # set the initial widh of the column as the width of the title column
          $hsr_meta->{'ColumnWidths'}->{ $colid } = length ( $hsr_meta->{ 'ColumnNames'}->{ $colid } ) ; 
       }
 
-      foreach my $rowid ( sort { $hsr->{$a}->{ 'prio' } <=> $hsr->{$b}->{ 'prio' } } keys (%$hsr))  {
+
+      my $rowid = 0 ; 
+      foreach my $guid ( sort { $hsr->{$a}->{ 'seq' } <=> $hsr->{$b}->{ 'seq' } } keys (%$hsr))  {
       # foreach my $rowid ( sort ( keys ( %$hsr ) ) ) {
 
          my $objFormat        = {} ; 
@@ -100,12 +98,12 @@ package IssueTracker::App::IO::Out::XlsWriter ;
           
          $objFormat->set_text_wrap();
 
-         my $hsr_row = $hsr->{ "$rowid" } ; 
+         my $hsr_row = $hsr->{ "$guid" } ; 
          $rowid = $rowid+1 ; 
-         # debug p($hsr_row ) if $module_trace == 1 ; 
-         
+
+
          foreach my $colid ( sort ( keys ( %{$hsr_meta->{'ColumnNames'}} ) ) ) {
-            my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid } ; 
+            my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
        
             my $cell_length = length ( $hsr_row->{ $col_name } ) || 10 ; 
             $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length || 10 ; 
@@ -136,6 +134,7 @@ package IssueTracker::App::IO::Out::XlsWriter ;
       $msg = 'STOP writing the xls file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
       $msg = $xls_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
       
+      $rowid++ ; 
       return 0 if -f $xls_file ; 
    }
    #eof sub doBuildXlsFromHashRef

@@ -74,7 +74,7 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
          return ( $ret , $msg ) unless $ret == 0 ; 
       }
 
-      return ( $ret , $msg ) unless $ret == 0 ; 
+      return ( $ret , $msg  ) ; 
    } 
    
    

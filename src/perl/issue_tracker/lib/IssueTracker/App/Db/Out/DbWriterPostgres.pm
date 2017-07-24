@@ -435,7 +435,8 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 		return ( $ret , $msg ) ; 
 	}
 	#eof sub doInsertDbTablesWithHsr2
-	
+
+
    #
 	# -----------------------------------------------------------------------------
 	# the constructor 
