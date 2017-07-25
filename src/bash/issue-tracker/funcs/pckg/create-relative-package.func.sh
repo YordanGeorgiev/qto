@@ -12,7 +12,7 @@ doCreateRelativePackage(){
 		test $? -ne 0 && doExit 2 "Failed to create $product_instance_dir/dat/zip !"
 
 	#define default vars
-	test -z $include_file         && \
+	test -z ${include_file:-}         && \
 		include_file="$product_instance_dir/met/.$env_type.$run_unit"
 
 	# relative file path is passed turn it to absolute one 
@@ -49,7 +49,7 @@ doCreateRelativePackage(){
 	# start: add the perl_ignore_file_pattern
 	while read -r line ; do \
 		got=$(echo $line|perl -ne 'm|^\s*#\s*perl_ignore_file_pattern\s*=(.*)$|g;print $1'); \
-		test -z "$got" || perl_ignore_file_pattern="$got|$perl_ignore_file_pattern" ;
+		test -z "$got" || perl_ignore_file_pattern="$got|${perl_ignore_file_pattern:-}" ;
 	done < <(cat $include_file)
 
 	# or how-to remove the last char from a string 	
@@ -77,16 +77,16 @@ doCreateRelativePackage(){
       doLog "INFO created the following relative package:"
       doLog "INFO `stat -c \"%y %n\" $zip_file_name`"
 
-      test -z "$network_backup_dir" || \
-      mkdir -p $network_backup_dir && \
-      cmd="cp -v $zip_file $product_dir/dat/zip/" && doRunCmdAndLog "$cmd" && \
-      doLog "INFO with the following local backup  :" && \
-      doLog "INFO `stat -c \"%y %n\" $product_dir/dat/zip/$zip_file_name`" && \
-      doLog "INFO in the network dir @::" && \
-      doLog "INFO :: $network_backup_dir" && \
-      cmd="cp -v $zip_file $network_backup_dir/$zip_file_name" && doRunCmdAndLog "$cmd" && \
-      doLog "INFO with the following network backup  :" && \
-      doLog "INFO `stat -c \"%y %n\" \"$network_backup_dir/$zip_file_name\"`"
+      if [[ ${network_backup_dir+x} && -n $network_backup_dir ]] ; then
+         if [ -d "$network_backup_dir" ] ; then
+            doRunCmdAndLog "cp -v $zip_file $network_backup_dir/"
+            doLog "INFO with the following network backup  :" && \
+            doLog "INFO `stat -c \"%y %n\" \"$network_backup_dir/$zip_file_name\"`"
+         else
+            msg="skip backup as network_backup_dir is not configured"
+            doLog "INFO $msg"
+         fi
+      fi
    fi
 
 

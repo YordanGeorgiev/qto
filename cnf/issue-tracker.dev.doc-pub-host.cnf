@@ -59,7 +59,7 @@ PrintTraceMsgs =                 1
 Emails=yordan.georgiev@gmail.com
 
 # where to place the backups of the 
-network_backup_dir=/vagrant/csitea/issue-tracker/dat/zip
+# network_backup_dir=/vagrant/csitea/issue-tracker/dat/zip
 
 
 # eof file: cnf/issue-tracker.doc-pub-host.cnf

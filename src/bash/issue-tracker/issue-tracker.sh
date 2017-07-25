@@ -3,14 +3,14 @@
 
 umask 022    ;
 
-# set -eu -o pipefail
+set -u -o pipefail
 
 # print the commands
 # set -x
 # print each input line as well
 # set -v
 # exit the script if any statement returns a non-true return value. gotcha !!!
-# set -e
+# set -e # src: http://mywiki.wooledge.org/BashFAQ/105
 trap "exit 1" TERM
 export TOP_PID=$$
 
@@ -23,7 +23,7 @@ main(){
    
    test -z "${1+x}" && arg='print-usage'
 
-	case $arg in
+	case ${arg:-} in
 		'-usage')
 		actions="print-usage "
 		;;
@@ -142,7 +142,7 @@ doParseCmdArgs(){
    while getopts ":a:c:i:h:t:" opt; do
      case $opt in
       a)
-         actions="$actions$OPTARG "
+         actions="${actions:-}""$OPTARG "
          ;;
       c)
          export run_unit="$OPTARG "
@@ -261,7 +261,7 @@ doLog(){
    test -t 1 && echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S"` [issue-tracker][@$host_name] [$$] $msg "
 
    # define default log file none specified in cnf file
-   test -z $log_file && \
+   test -z ${log_file:-} && \
 		mkdir -p $product_instance_dir/dat/log/bash && \
 			log_file="$product_instance_dir/dat/log/bash/$run_unit.`date "+%Y%m"`.log"
    echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S"` [$run_unit][@$host_name] [$$] $msg " >> $log_file
@@ -283,7 +283,7 @@ doRunLog(){
    # test -t 1 && echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S"` [issue-tracker][@$host_name] [$$] $msg "
 
    # define default log file none specified in cnf file
-   test -z $run_log_file && \
+   test -z ${run_log_file:-} && \
 		mkdir -p $product_instance_dir/dat/log && \
 			export run_log_file="$product_instance_dir/dat/log/$run_unit.`date "+%Y%m%d_%H%M%S"`.run.log"
    echo "`date "+%Y-%m-%d - %H:%M:%S"` $uuid " >> $run_log_file
@@ -387,7 +387,7 @@ doSetVars(){
    do_print_debug_msgs=0
    # stop set default vars
 
-	test -z "$issue_tracker_project" && doParseConfFile
+	test -z "${issue_tracker_project:-}" && doParseConfFile
 	test -z "$issue_tracker_project" || doSetUndefinedShellVarsFromCnfFile
 
 
@@ -476,7 +476,7 @@ doParseConfFile(){
 
 	# yet finally override if passed as argument to this function
 	# if the the ini file is not passed define the default host independant ini file
-	test -z "$1" || cnf_file=$1;shift 1;
+	test -z "${1:-}" || cnf_file=$1;shift 1;
 	#debug echo "@doParseConfFile cnf_file:: $cnf_file" 
 	# coud be later on parametrized ... 
 	INI_SECTION=MainSection

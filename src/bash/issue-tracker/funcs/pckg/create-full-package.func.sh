@@ -9,7 +9,7 @@ doCreateFullPackage(){
 	doLog "INFO START create-full-package.func.sh" ;
 
 	#define default vars
-	test -z $include_file         && \
+	test -z ${include_file:-}         && \
 		include_file="$product_instance_dir/met/.$env_type.$run_unit"
 
 	# relative file path is passed turn it to absolute one 
@@ -27,7 +27,7 @@ doCreateFullPackage(){
 	# start: add the perl_ignore_file_pattern
 	while read -r line ; do \
 		got=$(echo $line|perl -ne 'm|^\s*#\s*perl_ignore_file_pattern\s*=(.*)$|g;print $1'); \
-		test -z "$got" || perl_ignore_file_pattern="$got|$perl_ignore_file_pattern" ;
+		test -z "$got" || perl_ignore_file_pattern="$got|${perl_ignore_file_pattern:-}" ;
 	done < <(cat $include_file)
 
 	# or how-to remove the last char from a string 	
@@ -75,13 +75,14 @@ doCreateFullPackage(){
    msg="`stat -c \"%y %n\" $zip_file`"
    doLog "INFO $msg"
 
-   if [ -d "$network_backup_dir" ]; then
-      doRunCmdAndLog "cp -v $zip_file $network_backup_dir/"
-   else
-      msg="skip backup as network_backup_dir is not configured"
-      doLog "INFO $msg"
+   if [[ ${network_backup_dir+x} && -n $network_backup_dir ]] ; then
+      if [ -d "$network_backup_dir" ] ; then
+         doRunCmdAndLog "cp -v $zip_file $network_backup_dir/"
+      else
+         msg="skip backup as network_backup_dir is not configured"
+         doLog "INFO $msg"
+      fi
    fi
-
 	doLog "INFO STOP  create-full-package.func.sh" ;
 }
 #eof func doCreateFullPackage
