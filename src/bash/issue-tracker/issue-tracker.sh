@@ -341,10 +341,10 @@ doRunCmdOrExit(){
 
    doLog "DEBUG running cmd or exit: \"$cmd\""
    msg=$($cmd 2>&1)
-   ret_cmd=$?
+   exit_code=$?
    # if occured during the execution exit with error
    error_msg=": FATAL : Failed to run the command \"$cmd\" with the output \"$msg\" !!!"
-   [ $ret_cmd -eq 0 ] || doExit "$ret_cmd" "$error_msg"
+   [ $exit_code -eq 0 ] || doExit "$exit_code" "$error_msg"
 
    #if no occured just log the message
    doLog "DEBUG : cmdoutput : \"$msg\""

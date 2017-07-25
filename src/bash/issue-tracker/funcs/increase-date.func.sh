@@ -2,7 +2,7 @@
 
 #
 # ---------------------------------------------------------
-# v1.1.1.2
+# v1.1.3
 # cat doc/txt/issue-tracker/funcs/increase-date.func.txt
 # ---------------------------------------------------------
 doIncreaseDate(){
@@ -34,31 +34,43 @@ doIncreaseDate(){
    doRunCmdOrExit "$cmd"
 
    cd $todays_tmp_dir
+
+   # foreach sh or txt file
    while read -r f ; do 
-      export yesterday=$(echo $f|cut -d'.' -f 4);
+      export last_day=$(echo $f|cut -d'.' -f 4);
+
       table=$(echo $f|cut -d'.' -f 3); proj=$(echo $f|cut -d'.' -f 2); 
+      doLog "DEBUG table: $table"
+
       file_ext=$(echo $f|cut -d'.' -f 5); 
       doLog "DEBUG file_ext: $file_ext"
+
       mv -v "$f" '.'"$proj"."$table".`date "+%Y-%m-%d"`."$file_ext"
    # obs works only on gnu find !
    done < <(find . -type f -regex ".*\.\(sh\|txt\)")
   
 
+   # foreach xls file
    while read -r f ; do 
-      export yesterday=$(echo $f|cut -d'.' -f 5);
-      period=$(echo $f|cut -d'.' -f 4); 
       proj=$(echo $f|cut -d'.' -f 2); 
-      hourly_timestamp=$(echo $f|cut -d'.' -f 5); 
-      file_ext=$(echo $f|cut -d'.' -f 6); 
+      doLog "DEBUG proj: $proj"
+
+      table=$(echo $f|cut -d'.' -f 3); 
+      doLog "DEBUG table: $table"
+
+      timestamp=$(echo $f|cut -d'.' -f4); 
+      doLog "DEBUG timestamp: $timestamp"
+
+      file_ext=$(echo $f|cut -d'.' -f 5); 
       doLog "DEBUG file_ext: $file_ext"
-      mv -v "$f" '.'"$proj"."$period".`date "+%Y%m%d_%H%M%S"`."$file_ext"
+
+      mv -v "$f" '.'"$proj"."$table".`date "+%Y%m%d_%H%M%S"`."$file_ext"
    done < <(find . -type f -name "*.xlsx")
-  
 
    # search and replace the daily
    today=$(date +%Y-%m-%d)
    while read -r f ; do 
-      perl -pi -e 's/\@'"$yesterday"'/\@'"$today"'/g;' "$f" ; 
+      perl -pi -e 's/\@'"$last_day"'/\@'"$today"'/g;' "$f" ; 
    done < <(find . -type f -name '*.txt' -o -name '*.sh')
    
    rm -f *.bak       # remove any possible bak files

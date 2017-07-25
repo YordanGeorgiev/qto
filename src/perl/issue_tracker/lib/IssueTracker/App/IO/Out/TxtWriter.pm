@@ -147,6 +147,7 @@ sub doConvertHashRefToStr {
     $str_row .= $status . "\t\t" if $level == 1 ; 
     $str_row .= $status . "\t" if $level == 2;
     $str_row .= $status . " " if $level == 3;
+
     $str_row .= ($start_time . " ")
       if (defined($start_time) && $start_time ne 'NULL');
 
@@ -157,10 +158,13 @@ sub doConvertHashRefToStr {
     $prev_category = $category;
 
 
-    if ( $issues_order_by_attribute eq 'start_time' && !defined($start_time) ) {
+    # because we want activities to be printed at the end of the txt file
+    if ( $issues_order_by_attribute eq 'start_time' && $start_time eq "") {
       $str_activity_issues .= $str_row ; 
+    } 
+    else {
+      $str_issues .= $str_row ; 
     }
-    $str_issues .= $str_row ; 
   }
 
 
