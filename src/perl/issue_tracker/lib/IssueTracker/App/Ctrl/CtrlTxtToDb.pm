@@ -92,7 +92,9 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
 
       }
 
-         return ( $ret , $msg ) ; 
+      $ret = 0 ; 
+      $msg = "all tables loaded" ; 
+      return ( $ret , $msg ) ; 
    } 
 
 

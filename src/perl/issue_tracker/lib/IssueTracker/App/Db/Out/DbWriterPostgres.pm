@@ -191,6 +191,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
             my $col = $dmhsr->{ $k }->{ 'attname' } ; 
             next if $col eq 'guid' ; 
+            next if $col eq 'update_time' ; 
 
             $str_col_list .= ' , ' . $col ; 
             my $value = 'null' ; 
