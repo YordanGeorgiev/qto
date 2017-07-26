@@ -2,7 +2,7 @@
 
 # v0.1.8
 # ---------------------------------------------------------
-# todo: add doXlsToDb comments ...
+# load xls to db
 # ---------------------------------------------------------
 doXlsToDb(){
 
@@ -19,7 +19,7 @@ doXlsToDb(){
    # pass it to the xls-to-rdbms tool as the input xls file
    
    test -z ${xls_file+x} && \
-      export xls_file=$(find $proj_txt_dir -name '*.xlsx'| grep '.all.'| sort -nr|head -n 1)
+      export xls_file=$(find ${proj_txt_dir+} -name '*.xlsx'| grep '.all.'| sort -nr|head -n 1)
    test -z ${xls_file+x} && \
       export xls_file=$(find $proj_txt_dir -name '*.xlsx'| grep $period| sort -nr|head -n 1)
    # Action !!!

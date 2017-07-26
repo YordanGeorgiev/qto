@@ -19,7 +19,6 @@ SELECT 'create the "daily_issues" table'
     , update_time    timestamp DEFAULT NOW()
     , updated_by     varchar (50) NULL
     , owner          varchar (50) NULL
-    , parent_id      integer NULL 
     , CONSTRAINT pk_daily_issues_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE

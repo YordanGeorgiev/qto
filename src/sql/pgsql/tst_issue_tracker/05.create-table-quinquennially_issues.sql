@@ -1,8 +1,8 @@
--- DROP TABLE IF EXISTS decadally_issues ; 
+-- DROP TABLE IF EXISTS quinquennially_issues ; 
 
-SELECT 'create the "decadally_issues" table'
+SELECT 'create the "quinquennially_issues" table'
 ; 
-   CREATE TABLE decadally_issues (
+   CREATE TABLE quinquennially_issues (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , level          integer NULL
     , seq            integer NULL
@@ -17,8 +17,7 @@ SELECT 'create the "decadally_issues" table'
     , update_time    timestamp DEFAULT NOW()
     , updated_by     varchar (50) NULL
     , owner          varchar (50) NULL
-    , parent_id      integer NULL 
-    , CONSTRAINT pk_decadally_issues_guid PRIMARY KEY (guid)
+    , CONSTRAINT pk_quinquennially_issues_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
     );
@@ -29,7 +28,7 @@ SELECT 'create the "decadally_issues" table'
 
    SELECT attrelid::regclass, attnum, attname , attnotnull
    FROM   pg_attribute
-   WHERE  attrelid = 'public.decadally_issues'::regclass
+   WHERE  attrelid = 'public.quinquennially_issues'::regclass
    AND    attnum > 0
    AND    NOT attisdropped
    ORDER  BY attnum

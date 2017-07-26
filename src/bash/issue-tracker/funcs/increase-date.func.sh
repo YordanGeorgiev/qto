@@ -1,5 +1,6 @@
 # src/bash/issue-tracker/funcs/increase-date.func.sh
-
+# today is --date="+0 day"
+# tommorrow is --date="+1 day"
 #
 # ---------------------------------------------------------
 # v1.1.3
@@ -20,7 +21,7 @@ doIncreaseDate(){
    # define the today's daily_txt_dir
    todays_monthly_txt_dir="$proj_txt_dir"'/issues/'"$(date +%Y)"'/'"$(date +%Y-%m)"
    mkdir -p $todays_monthly_txt_dir
-   todays_daily_txt_dir="$proj_txt_dir"'/issues/'"$(date +%Y)"'/'"$(date +%Y-%m)"'/'"$(date +%Y-%m-%d)"
+   todays_daily_txt_dir="$proj_txt_dir"'/issues/'"$(date +%Y)"'/'"$(date +%Y-%m)"'/'"$(date --date="+1 day" +%Y-%m-%d)"
   
    error_msg="
    nothing can be done - as the daily dir : 
@@ -45,7 +46,7 @@ doIncreaseDate(){
       file_ext=$(echo $f|cut -d'.' -f 5); 
       doLog "DEBUG file_ext: $file_ext"
 
-      mv -v "$f" '.'"$proj"."$table".`date "+%Y-%m-%d"`."$file_ext"
+      mv -v "$f" '.'"$proj"."$table".`date --date="+1 day" "+%Y-%m-%d"`."$file_ext"
    # obs works only on gnu find !
    done < <(find . -type f -regex ".*\.\(sh\|txt\)")
   
@@ -64,7 +65,7 @@ doIncreaseDate(){
       file_ext=$(echo $f|cut -d'.' -f 5); 
       doLog "DEBUG file_ext: $file_ext"
 
-      mv -v "$f" '.'"$proj"."$table".`date "+%Y%m%d_%H%M%S"`."$file_ext"
+      mv -v "$f" '.'"$proj"."$table".`date --date="+1 day" "+%Y%m%d_%H%M%S"`."$file_ext"
    done < <(find . -type f -name "*.xlsx")
 
    # search and replace the daily
@@ -74,7 +75,6 @@ doIncreaseDate(){
    done < <(find . -type f -name '*.txt' -o -name '*.sh')
    
    rm -f *.bak       # remove any possible bak files
-
    mv $todays_tmp_dir $todays_daily_txt_dir 
 
    msg=" OK for creating the daily project dir:

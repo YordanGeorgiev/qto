@@ -14,10 +14,11 @@ SELECT 'create the "monthly_issues" table'
     , description    varchar (4000)
     , start_time     text NULL
     , stop_time      text NULL
+    , planned_hours  decimal (3,2) NULL
+    , actual_hours   decimal (3,2) NULL
     , update_time    timestamp DEFAULT NOW()
     , updated_by     varchar (50) NULL
     , owner          varchar (50) NULL
-    , parent_id      integer NULL 
     , CONSTRAINT pk_monthly_issues_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE

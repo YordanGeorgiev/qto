@@ -1,8 +1,8 @@
--- DROP TABLE IF EXISTS daily_issues ; 
+-- DROP TABLE IF EXISTS decadally_issues ; 
 
-SELECT 'create the "daily_issues" table'
+SELECT 'create the "decadally_issues" table'
 ; 
-   CREATE TABLE daily_issues (
+   CREATE TABLE decadally_issues (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , level          integer NULL
     , seq            integer NULL
@@ -14,23 +14,21 @@ SELECT 'create the "daily_issues" table'
     , description    varchar (4000)
     , start_time     text NULL
     , stop_time      text NULL
-    , planned_hours  decimal (3,2) NULL
-    , actual_hours   decimal (3,2) NULL
     , update_time    timestamp DEFAULT NOW()
     , updated_by     varchar (50) NULL
     , owner          varchar (50) NULL
-    , CONSTRAINT pk_daily_issues_guid PRIMARY KEY (guid)
+    , CONSTRAINT pk_decadally_issues_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
     );
 
+   SELECT 'show the columns of the just created table'
+   ; 
 
-SELECT 'show the columns of the just created table'
-; 
 
-   SELECT attrelid::regclass, attnum, attname
+   SELECT attrelid::regclass, attnum, attname , attnotnull
    FROM   pg_attribute
-   WHERE  attrelid = 'public.daily_issues'::regclass
+   WHERE  attrelid = 'public.decadally_issues'::regclass
    AND    attnum > 0
    AND    NOT attisdropped
    ORDER  BY attnum
