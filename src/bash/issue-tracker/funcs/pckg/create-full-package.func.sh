@@ -70,7 +70,7 @@ doCreateFullPackage(){
       exit 1
    fi
 
-	msg="created the following full development package:"
+   msg="created the following full development package:"
    doLog "INFO $msg"
    msg="`stat -c \"%y %n\" $zip_file`"
    doLog "INFO $msg"
@@ -78,12 +78,20 @@ doCreateFullPackage(){
    if [[ ${network_backup_dir+x} && -n $network_backup_dir ]] ; then
       if [ -d "$network_backup_dir" ] ; then
          doRunCmdAndLog "cp -v $zip_file $network_backup_dir/"
-      else
-         msg="skip backup as network_backup_dir is not configured"
+         msg=" with the following network dir backup :
+         ""$(stat -c "%y %n" "$network_backup_dir/$zip_file_name")"
          doLog "INFO $msg"
+      else
+         msg="skip backup as network_backup_dir does not exist"
+         doLog "ERROR $msg"
       fi
+   else
+      msg="skip the creation of the network backup as no network_backup_dir is configured"
+      doLog "INFO  $msg"
    fi
-	doLog "INFO STOP  create-full-package.func.sh" ;
+
+   doLog "INFO STOP  create-full-package.func.sh" 
+
 }
 #eof func doCreateFullPackage
 

@@ -22,7 +22,7 @@ doRunPgsqlScripts(){
    sql_script="$sql_dir/""00.create-db.pgsql"
    
    # run the sql save the result into a tmp log file
-   psql -v ON_ERROR_STOP=1 -q -t -X -U "$pgsql_user" \
+   psql -v ON_ERROR_STOP=1 -q -t -X -U "${pgsql_user:-}" \
        -v db_name="$db_name" -f "$sql_script" postgres > "$tmp_log_file" 2>&1
    ret=$?
    
@@ -38,7 +38,7 @@ doRunPgsqlScripts(){
 	cat "$tmp_log_file" >> $log_file
    sleep 2
 
-	test -z "$is_sql_biz_as_usual_run" && sleep 1 ; 
+	test -z "${is_sql_biz_as_usual_run:-}" && sleep 1 ; 
 	printf "\033[2J";printf "\033[0;0H"  ;    #and flush the screen
 	
 	doLog "INFO should run the following sql files: "
@@ -52,7 +52,7 @@ doRunPgsqlScripts(){
 		relative_sql_script=$(echo $sql_script|perl -ne "s#$product_instance_dir##g;print")
 
 		# give the poor dev a time to see what is happening
-		test -z "$is_sql_biz_as_usual_run" && sleep 1 ; 
+		test -z "${is_sql_biz_as_usual_run:-}" && sleep 1 ; 
 
 		# and clear the screen
 		printf "\033[2J";printf "\033[0;0H"
@@ -60,7 +60,7 @@ doRunPgsqlScripts(){
 		doLog "INFO START ::: running $relative_sql_script"
 		echo -e '\n\n'
 		# run the sql save the result into a tmp log file
-		psql -v ON_ERROR_STOP=1 -q -t -X -U "$pgsql_user" \
+		psql -v ON_ERROR_STOP=1 -q -t -X -U "${pgsql_user:-}" \
          -v db_name="$db_name" -f "$sql_script" "$db_name" > "$tmp_log_file" 2>&1
        
 		# show the user what is happenning 
@@ -74,12 +74,11 @@ doRunPgsqlScripts(){
 		echo -e '\n\n'
 
 		doLog "INFO STOP  ::: running $relative_sql_script"
-		#debug sleep 1 
 	);
 	done < <(find "$sql_dir" -type f -name "*.sql"|sort -n)
 	
 	doLog "INFO STOP  :: running sql scripts "	
-	test -z "$is_sql_biz_as_usual_run" && sleep 1 ; 
+	test -z "${is_sql_biz_as_usual_run:-}" && sleep 1 ; 
 	
 	printf "\033[2J";printf "\033[0;0H"  ;    #and flush the screen
 	doLog "DEBUG STOP  doRunPgsqlScripts"

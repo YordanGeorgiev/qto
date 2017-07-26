@@ -258,13 +258,13 @@ doLog(){
    [[ $type_of_msg == INFO ]] && type_of_msg="INFO "
 
    # print to the terminal if we have one
-   test -t 1 && echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S"` [issue-tracker][@$host_name] [$$] $msg "
+   test -t 1 && echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [issue-tracker][@$host_name] [$$] $msg "
 
    # define default log file none specified in cnf file
    test -z ${log_file:-} && \
 		mkdir -p $product_instance_dir/dat/log/bash && \
 			log_file="$product_instance_dir/dat/log/bash/$run_unit.`date "+%Y%m"`.log"
-   echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S"` [$run_unit][@$host_name] [$$] $msg " >> $log_file
+   echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$run_unit][@$host_name] [$$] $msg " >> $log_file
 }
 #eof func doLog
 
