@@ -77,7 +77,10 @@ doIncreaseDate(){
 
    mv $todays_tmp_dir $todays_daily_txt_dir 
 
-   doLog "INFO OK for increase-date on $todays_daily_txt_dir"
+   msg=" OK for creating the daily project dir:
+         $todays_daily_txt_dir"
+   doLog "INFO ""$msg"
+
 	doLog "DEBUG STOP  doIncreaseDate"
 }
 # eof func doIncreaseDate

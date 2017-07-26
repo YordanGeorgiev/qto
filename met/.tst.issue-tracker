@@ -1,58 +1,5 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
-src/bash/issue-tracker/tests/mojo-morbo-start.test.sh
-src/bash/issue-tracker/funcs/mojo-morbo-start.func.sh
-src/bash/issue-tracker/specs/mojo-morbo-start.spec.sh
-src/bash/issue-tracker/helps/mojo-morbo-start.help.sh
-doc/txt/issue-tracker/tests/mojo-morbo-start.test.txt
-doc/txt/issue-tracker/specs/mojo-morbo-start.spec.txt
-doc/txt/issue-tracker/helps/mojo-morbo-start.help.txt
-doc/txt/issue-tracker/funcs/mojo-morbo-start.func.txt
-# ---
-src/bash/issue-tracker/tests/mojo-morbo-stop.test.sh
-src/bash/issue-tracker/specs/mojo-morbo-stop.spec.sh
-src/bash/issue-tracker/helps/mojo-morbo-stop.help.sh
-src/bash/issue-tracker/funcs/mojo-morbo-stop.func.sh
-doc/txt/issue-tracker/tests/mojo-morbo-stop.test.txt
-doc/txt/issue-tracker/specs/mojo-morbo-stop.spec.txt
-doc/txt/issue-tracker/helps/mojo-morbo-stop.help.txt
-doc/txt/issue-tracker/funcs/mojo-morbo-stop.func.txt
-# ---
-src/bash/issue-tracker/tests/mojo-hypnotoad-start.test.sh
-src/bash/issue-tracker/specs/mojo-hypnotoad-start.spec.sh
-src/bash/issue-tracker/helps/mojo-hypnotoad-start.help.sh
-src/bash/issue-tracker/funcs/mojo-hypnotoad-start.func.sh
-doc/txt/issue-tracker/tests/mojo-hypnotoad-start.test.txt
-doc/txt/issue-tracker/specs/mojo-hypnotoad-start.spec.txt
-doc/txt/issue-tracker/helps/mojo-hypnotoad-start.help.txt
-doc/txt/issue-tracker/funcs/mojo-hypnotoad-start.func.txt
-# ---
-src/bash/issue-tracker/tests/mojo-hypnotoad-stop.test.sh
-src/bash/issue-tracker/specs/mojo-hypnotoad-stop.spec.sh
-src/bash/issue-tracker/helps/mojo-hypnotoad-stop.help.sh
-src/bash/issue-tracker/funcs/mojo-hypnotoad-stop.func.sh
-doc/txt/issue-tracker/tests/mojo-hypnotoad-stop.test.txt
-doc/txt/issue-tracker/specs/mojo-hypnotoad-stop.spec.txt
-doc/txt/issue-tracker/helps/mojo-hypnotoad-stop.help.txt
-doc/txt/issue-tracker/funcs/mojo-hypnotoad-stop.func.txt
-# ---
-src/perl/issue_tracker/script
-src/perl/issue_tracker/script/issue_tracker
-src/perl/issue_tracker/script/issue_tracker
-src/perl/issue_tracker/lib
-src/perl/issue_tracker/lib/IssueTracker.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller
-src/perl/issue_tracker/lib/IssueTracker/Controller/Example.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/Get.pm
-src/perl/issue_tracker/t
-src/perl/issue_tracker/t/basic.t
-src/perl/issue_tracker/public
-src/perl/issue_tracker/public/index.html
-src/perl/issue_tracker/templates/layouts
-src/perl/issue_tracker/templates/layouts/default.html.ep
-src/perl/issue_tracker/templates/example
-src/perl/issue_tracker/templates/example/welcome.html.ep
-# ---
 src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 src/bash/issue-tracker/bootstrap-issue-tracker.sh
 src/bash/issue-tracker/issue-tracker.sh
@@ -103,6 +50,41 @@ src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Timer.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm
 #----
+# ---
+src/bash/issue-tracker/tests/mojo-hypnotoad-start.test.sh
+src/bash/issue-tracker/specs/mojo-hypnotoad-start.spec.sh
+src/bash/issue-tracker/helps/mojo-hypnotoad-start.help.sh
+src/bash/issue-tracker/funcs/mojo-hypnotoad-start.func.sh
+doc/txt/issue-tracker/tests/mojo-hypnotoad-start.test.txt
+doc/txt/issue-tracker/specs/mojo-hypnotoad-start.spec.txt
+doc/txt/issue-tracker/helps/mojo-hypnotoad-start.help.txt
+doc/txt/issue-tracker/funcs/mojo-hypnotoad-start.func.txt
+# ---
+src/bash/issue-tracker/tests/mojo-hypnotoad-stop.test.sh
+src/bash/issue-tracker/specs/mojo-hypnotoad-stop.spec.sh
+src/bash/issue-tracker/helps/mojo-hypnotoad-stop.help.sh
+src/bash/issue-tracker/funcs/mojo-hypnotoad-stop.func.sh
+doc/txt/issue-tracker/tests/mojo-hypnotoad-stop.test.txt
+doc/txt/issue-tracker/specs/mojo-hypnotoad-stop.spec.txt
+doc/txt/issue-tracker/helps/mojo-hypnotoad-stop.help.txt
+doc/txt/issue-tracker/funcs/mojo-hypnotoad-stop.func.txt
+# ---
+src/perl/issue_tracker/script
+src/perl/issue_tracker/script/issue_tracker
+src/perl/issue_tracker/script/issue_tracker
+src/perl/issue_tracker/lib
+src/perl/issue_tracker/lib/IssueTracker.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller
+src/perl/issue_tracker/lib/IssueTracker/Controller/Example.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/Get.pm
+src/perl/issue_tracker/t
+src/perl/issue_tracker/t/basic.t
+src/perl/issue_tracker/public
+src/perl/issue_tracker/public/index.html
+src/perl/issue_tracker/templates/layouts
+src/perl/issue_tracker/templates/layouts/default.html.ep
+src/perl/issue_tracker/templates/example
+src/perl/issue_tracker/templates/example/welcome.html.ep
 cnf
 cnf/hosts
 cnf/hosts/doc-pub-host
@@ -161,18 +143,21 @@ src/sql/pgsql/dev_issue_tracker/01.create-table-daily_issues.sql
 src/sql/pgsql/dev_issue_tracker/02.create-table-weekly_issues.sql
 src/sql/pgsql/dev_issue_tracker/03.create-table-monthly_issues.sql
 src/sql/pgsql/dev_issue_tracker/04.create-table-yearly_issues.sql
+src/sql/pgsql/dev_issue_tracker/05.create-table-decadally_issues.sql
 src/sql/pgsql/tst_issue_tracker
 src/sql/pgsql/tst_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/tst_issue_tracker/01.create-table-daily_issues.sql
 src/sql/pgsql/tst_issue_tracker/02.create-table-weekly_issues.sql
 src/sql/pgsql/tst_issue_tracker/03.create-table-monthly_issues.sql
 src/sql/pgsql/tst_issue_tracker/04.create-table-yearly_issues.sql
+src/sql/pgsql/tst_issue_tracker/05.create-table-decadally_issues.sql
 src/sql/pgsql/prd_issue_tracker
 src/sql/pgsql/prd_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/prd_issue_tracker/01.create-table-daily_issues.sql
 src/sql/pgsql/prd_issue_tracker/02.create-table-weekly_issues.sql
 src/sql/pgsql/prd_issue_tracker/03.create-table-monthly_issues.sql
 src/sql/pgsql/prd_issue_tracker/04.create-table-yearly_issues.sql
+src/sql/pgsql/prd_issue_tracker/05.create-table-decadally_issues.sql
 #----
 src/bash/issue-tracker/tests/db-to-xls.test.sh
 src/bash/issue-tracker/funcs/db-to-xls.func.sh
@@ -558,3 +543,21 @@ doc/txt/issue-tracker/tests/curl-test-get-item.test.txt
 doc/txt/issue-tracker/specs/curl-test-get-item.spec.txt
 doc/txt/issue-tracker/helps/curl-test-get-item.help.txt
 doc/txt/issue-tracker/funcs/curl-test-get-item.func.txt
+# ---
+src/bash/issue-tracker/funcs/mojo-morbo-start.func.sh
+src/bash/issue-tracker/tests/mojo-morbo-start.test.sh
+src/bash/issue-tracker/specs/mojo-morbo-start.spec.sh
+src/bash/issue-tracker/helps/mojo-morbo-start.help.sh
+doc/txt/issue-tracker/tests/mojo-morbo-start.test.txt
+doc/txt/issue-tracker/specs/mojo-morbo-start.spec.txt
+doc/txt/issue-tracker/helps/mojo-morbo-start.help.txt
+doc/txt/issue-tracker/funcs/mojo-morbo-start.func.txt
+# ---
+src/bash/issue-tracker/tests/mojo-morbo-stop.test.sh
+src/bash/issue-tracker/specs/mojo-morbo-stop.spec.sh
+src/bash/issue-tracker/helps/mojo-morbo-stop.help.sh
+src/bash/issue-tracker/funcs/mojo-morbo-stop.func.sh
+doc/txt/issue-tracker/tests/mojo-morbo-stop.test.txt
+doc/txt/issue-tracker/specs/mojo-morbo-stop.spec.txt
+doc/txt/issue-tracker/helps/mojo-morbo-stop.help.txt
+doc/txt/issue-tracker/funcs/mojo-morbo-stop.func.txt
