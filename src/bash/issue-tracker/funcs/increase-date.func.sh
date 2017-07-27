@@ -1,36 +1,63 @@
 # src/bash/issue-tracker/funcs/increase-date.func.sh
-# today is --date="+0 day"
+# today is --date="+1 day"
 # tommorrow is --date="+1 day"
 #
 # ---------------------------------------------------------
-# v1.1.3
+# v1.1.4
 # cat doc/txt/issue-tracker/funcs/increase-date.func.txt
 # ---------------------------------------------------------
 doIncreaseDate(){
 
 	doLog "DEBUG START doIncreaseDate"
-   test -z ${proj_txt_dir+x} && export exit_code=1 \
+   test -z ${proj_daily_data_root_dir+x} && export exit_code=1 \
       && doExit "define a project by doParseIniEnvVars <<path-to-proj-conf-file>> !!!" && exit 1
 
    # if a relative path is passed add to the product version dir
-   [[ $proj_txt_dir == /* ]] || export proj_txt_dir="$product_instance_dir"/"$proj_txt_dir"
+   [[ $proj_daily_data_root_dir == /* ]] || export proj_daily_data_root_dir="$product_instance_dir"/"$proj_daily_data_root_dir"
 
    # find the latest project_daily_txt_dir
-   latest_proj_daily_txt_dir=$(find "$proj_txt_dir/issues" -type d|sort -nr | head -n 1|grep -v tmp)
+   latest_proj_daily_txt_dir=$(find "$proj_daily_data_root_dir" -type d|sort -nr | head -n 1|grep -v tmp)
+   
+	# debug set -x
+   if [[ ${tgt_date+x} && -n $tgt_date ]] ; then
+		
+		case "$tgt_date" in
+			  today)
+         		set -x ;export tgt_date=$(date --date="+0 day" "+%Y-%m-%d")
+					;;
+			  tomorrow)
+         		export tgt_date=$(date --date="+1 day" "+%Y-%m-%d")
+					;;
+			  yesterday)
+         		export tgt_date=$(date --date="-1 day" "+%Y-%m-%d")
+					;;
+			  *)
+					# check that the date is the %Y-%m-%d format
+				 	doRunCmdOrExit 'date +%Y-%m-%d -d '"$tgt_date"
+		esac
 
+   else
+      export tgt_date=$(date --date="+0 day" "+%Y-%m-%d")
+      msg="skip the creation of the network backup as no network_backup_dir is configured"
+      doLog "INFO  $msg"
+   fi
+   
+	msg="using the following date: \"$tgt_date\""
+  	doLog "INFO $msg"
+   
    # define the today's daily_txt_dir
-   todays_monthly_txt_dir="$proj_txt_dir"'/issues/'"$(date +%Y)"'/'"$(date +%Y-%m)"
-   mkdir -p $todays_monthly_txt_dir
-   todays_daily_txt_dir="$proj_txt_dir"'/issues/'"$(date +%Y)"'/'"$(date +%Y-%m)"'/'"$(date --date="+1 day" +%Y-%m-%d)"
+   tgt_days_monthly_data_dir="$proj_daily_data_root_dir"/"$(date "+%Y" -d "$tgt_date")"'/'$(date "+%Y-%m" -d "$tgt_date")
+   mkdir -p $tgt_days_monthly_data_dir
+   tgt_dates_daily_data_dir="$tgt_days_monthly_data_dir"'/'$(date "+%Y-%m-%d" -d "$tgt_date")
   
    error_msg="
    nothing can be done - as the daily dir : 
-      $todays_daily_txt_dir 
+      $tgt_dates_daily_data_dir 
    already exists !!!
    "
-   test -d "$todays_daily_txt_dir" && export exit_code=1 && doExit "$error_msg"
+   test -d "$tgt_dates_daily_data_dir" && export exit_code=1 && doExit "$error_msg"
 
-   todays_tmp_dir=$tmp_dir/$(date "+%Y-%m-%d")    # becauses of vboxsf !!!
+   todays_tmp_dir=$tmp_dir/$(date "+%Y-%m-%d" -d "$tgt_date")    # becauses of vboxsf !!!
    cmd="cp -vr $latest_proj_daily_txt_dir $todays_tmp_dir/"
    doRunCmdOrExit "$cmd"
 
@@ -46,7 +73,7 @@ doIncreaseDate(){
       file_ext=$(echo $f|cut -d'.' -f 5); 
       doLog "DEBUG file_ext: $file_ext"
 
-      mv -v "$f" '.'"$proj"."$table".`date --date="+1 day" "+%Y-%m-%d"`."$file_ext"
+      mv -v "$f" '.'"$proj"."$table".`date "+%Y-%m-%d" -d "$tgt_date"`."$file_ext"
    # obs works only on gnu find !
    done < <(find . -type f -regex ".*\.\(sh\|txt\)")
   
@@ -65,7 +92,7 @@ doIncreaseDate(){
       file_ext=$(echo $f|cut -d'.' -f 5); 
       doLog "DEBUG file_ext: $file_ext"
 
-      mv -v "$f" '.'"$proj"."$table".`date --date="+1 day" "+%Y%m%d_%H%M%S"`."$file_ext"
+      mv -v "$f" '.'"$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
    done < <(find . -type f -name "*.xlsx")
 
    # search and replace the daily
@@ -75,10 +102,10 @@ doIncreaseDate(){
    done < <(find . -type f -name '*.txt' -o -name '*.sh')
    
    rm -f *.bak       # remove any possible bak files
-   mv $todays_tmp_dir $todays_daily_txt_dir 
+   mv $todays_tmp_dir $tgt_dates_daily_data_dir 
 
    msg=" OK for creating the daily project dir:
-         $todays_daily_txt_dir"
+         $tgt_dates_daily_data_dir"
    doLog "INFO ""$msg"
 
 	doLog "DEBUG STOP  doIncreaseDate"

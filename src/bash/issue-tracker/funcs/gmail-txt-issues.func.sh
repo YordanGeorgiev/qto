@@ -10,7 +10,7 @@ doGmailTxtIssues(){
 	
    mutt --help >/dev/null 2>&1 ||
 	{ doLog "ERROR. mutt is not installed or not in PATH. Aborting." >&2; exit 1; }
-   todays_daily_txt_dir="$proj_txt_dir"'/issues/'"$(date +%Y)"'/'"$(date +%Y-%m)"'/'"$(date +%Y-%m-%d)"
+   todays_daily_txt_dir="$proj_daily_data_root_dir"'/issues/'"$(date +%Y)"'/'"$(date +%Y-%m)"'/'"$(date +%Y-%m-%d)"
   
    msg="nothing to do, as $todays_daily_txt_dir does NOT exist!!!"
    test -d "$todays_daily_txt_dir" || export exit_code=1

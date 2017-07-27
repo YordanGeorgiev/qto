@@ -274,7 +274,7 @@ Check a single item with your browser, for example:
 http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
 
     # load the items
-    while read -r f; do export xls_file=$f; bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db  ; done < <(find $proj_txt_dir -type f)
+    while read -r f; do export xls_file=$f; bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db  ; done < <(find $proj_daily_data_root_dir -type f)
     
     # verify the data
     psql -d $db_name -c "SELECT * FROM company_eps "

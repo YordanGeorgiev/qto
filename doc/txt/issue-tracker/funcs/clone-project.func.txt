@@ -1,0 +1,36 @@
+# doc/txt/issue-tracker/func/clone-project.func.txt
+
+	doCloneProject
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doCloneProject function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doCloneProject function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doCloneProject function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doCloneProject function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doCloneProject used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doCloneProject functions
+
+
+# eof file: doc/txt/issue-tracker/func/clone-project.func.txt

@@ -56,7 +56,7 @@ doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/slk.prd.doc-pub-hos
 bash /opt/csitea/pgsql-runner/src/bash/pgsql-runner.sh -a run-pgsql-scripts
 
 # how-to check project's todays files
-find $proj_txt_dir | grep $(date "+%Y-%m-%d")
+find $proj_daily_data_root_dir | grep $(date "+%Y-%m-%d")
 
 
 # eof file: issue-tracker.cheat.2017-05-18.cheat.sh

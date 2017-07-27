@@ -75,7 +75,7 @@ doGenerateActionFiles(){
 		doLog "DEBUG STOP  :: checking action: $act"
 		
 	); 
-	done< <(cat src/bash/$run_unit/tests/all-issue-tracker-tests.lst)
+	done< <(cat src/bash/$run_unit/tests/new-issue-tracker-tests.lst)
 	
 	doLog "DEBUG STOP  : doGenerateActionFiles"
 

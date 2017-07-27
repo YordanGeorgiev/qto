@@ -11,8 +11,6 @@ set -u -o pipefail
 # set -v
 # exit the script if any statement returns a non-true return value. gotcha !!!
 # set -e # src: http://mywiki.wooledge.org/BashFAQ/105
-trap "exit 1" TERM
-export TOP_PID=$$
 
 #v1.2.5 
 #------------------------------------------------------------------------------
@@ -139,13 +137,16 @@ doInit(){
 doParseCmdArgs(){
 
    # traverse all the possible cmd args
-   while getopts ":a:c:i:h:t:" opt; do
+   while getopts ":a:c:d:i:h:t:" opt; do
      case $opt in
       a)
          actions="${actions:-}""$OPTARG "
          ;;
       c)
          export run_unit="$OPTARG "
+         ;;
+      d)
+         export tgt_date="$OPTARG"
          ;;
       i)
          include_file="$OPTARG"
@@ -209,7 +210,8 @@ doCheckReadyToStart(){
 
 
 
-
+trap "exit 1" TERM
+export TOP_PID=$$
 
 # v1.2.7
 #------------------------------------------------------------------------------
@@ -258,7 +260,7 @@ doLog(){
    [[ $type_of_msg == INFO ]] && type_of_msg="INFO "
 
    # print to the terminal if we have one
-   test -t 1 && echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [issue-tracker][@$host_name] [$$] $msg "
+   test -t 1 && echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$run_unit][@$host_name] [$$] $msg "
 
    # define default log file none specified in cnf file
    test -z ${log_file:-} && \
@@ -267,6 +269,7 @@ doLog(){
    echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$run_unit][@$host_name] [$$] $msg " >> $log_file
 }
 #eof func doLog
+
 
 # v1.2.5 
 #------------------------------------------------------------------------------
@@ -337,17 +340,27 @@ doRunCmdAndLog(){
 # set -e ; doRunCmdOrExit "$cmd" ; set +e
 #------------------------------------------------------------------------------
 doRunCmdOrExit(){
-   cmd="$*" ;
+   cmd=$* ;
 
    doLog "DEBUG running cmd or exit: \"$cmd\""
    msg=$($cmd 2>&1)
-   exit_code=$?
-   # if occured during the execution exit with error
-   error_msg=": FATAL : Failed to run the command \"$cmd\" with the output \"$msg\" !!!"
-   [ $exit_code -eq 0 ] || doExit "$exit_code" "$error_msg"
+   export exit_code=$?
 
-   #if no occured just log the message
-   doLog "DEBUG : cmdoutput : \"$msg\""
+   # if occured during the execution exit with error
+   error_msg="Failed to run the command: 
+		\"$cmd\" with the output: 
+		\"$msg\" !!!"
+
+	if [ $exit_code -ne 0 ] ; then
+		doLog "ERROR $msg"
+		doLog "FATAL $msg"
+		doExit "$exit_code" "$error_msg"
+	else
+   	#if no errors occured just log the message
+   	doLog "DEBUG : cmdoutput : \"$msg\""
+		doLog "INFO  $msg"
+	fi
+
 }
 #eof func doRunCmdOrExit
 
