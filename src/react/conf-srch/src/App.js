@@ -66,7 +66,6 @@ function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-// https://github.com/moroshko/react-autosuggest/issues/27
 function getSuggestions(value) {
   const escapedValue = escapeRegexCharacters(value.trim());
   
@@ -89,7 +88,7 @@ function renderSuggestion(suggestion) {
   );
 }
 
-class MyAutosuggest extends React.Component {
+class App extends Component {
   constructor() {
     super();
 
@@ -99,14 +98,10 @@ class MyAutosuggest extends React.Component {
     };    
   }
 
-  onChange = (_, { newValue }) => {
-    const { id, onChange } = this.props;
-    
+  onChange = (event, { newValue, method }) => {
     this.setState({
       value: newValue
     });
-    
-    onChange(id, newValue);
   };
   
   onSuggestionsFetchRequested = ({ value }) => {
@@ -122,57 +117,26 @@ class MyAutosuggest extends React.Component {
   };
 
   render() {
-    const { id, placeholder } = this.props;
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder,
+      placeholder: "Type 'c'",
       value,
       onChange: this.onChange
     };
-    
+
     return (
       <Autosuggest 
-        id={id}
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
-        inputProps={inputProps} 
-      />
+        inputProps={inputProps} />
     );
   }
 }
 
-class App extends Component {
-  onChange(id, newValue) {
-    console.log(`${id} changed to ${newValue}`);
-  }
-  
-  render() {
-    return (
 
-      <div className="App">
-        <div className="App-header">
-          <h2> srch for cnfs</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-
-      <div>
-        <MyAutosuggest
-          id="type-c"
-          placeholder="Type 'c'"
-          onChange={this.onChange}
-        />
-      </div>
-
-      </div>
-
-    );
-  }
-}
 
 export default App ; 
 

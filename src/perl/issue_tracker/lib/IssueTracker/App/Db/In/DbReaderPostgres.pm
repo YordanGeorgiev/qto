@@ -158,6 +158,88 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
    # eof sub doSelectTablesColumnList
 
 
+
+   #
+   # -----------------------------------------------------------------------------
+   # get ALL the table data into hash ref of hash refs 
+   # -----------------------------------------------------------------------------
+   sub doSearchConfigurationEntries {
+
+      my $self             = shift ; 
+      my $db_name          = shift || 'ysg_issues' ; # the default db
+      my $table            = shift || 'confs' ;  # the table to get the data from  
+      my $query_str        = shift || '*' ;  # the table to get the data from  
+   
+
+      $objLogger->doLogDebugMsg ( "doSelectTableIntoHashRef table: $table " ) ; 
+
+      my $msg              = q{} ;         
+      my $ret              = 1 ;          # this is the return value from this method 
+      my $debug_msg        = q{} ; 
+      my $hsr              = {} ;         # this is hash ref of hash refs to populate with
+      my $sth              = {} ;         # this is the statement handle
+      my $dbh              = {} ;         # this is the database handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+
+
+      $str_sql = 
+         " SELECT 
+         guid, value FROM $table 
+         WHERE 1=1
+         AND value like '%" . $query_str . "%'
+         ;
+      " ; 
+
+     
+      $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
+                 'RaiseError'          => 1
+               , 'ShowErrorStatement'  => 1
+               , 'PrintError'          => 1
+               , 'AutoCommit'          => 1
+               , 'pg_utf8_strings'     => 1
+      } ) or $msg = DBI->errstr;
+      
+      $sth = $dbh->prepare($str_sql);  
+
+      $sth->execute()
+            or $objLogger->error ( "$DBI::errstr" ) ;
+
+
+
+		my @query_output = () ; 
+      # LOOP THROUGH RESULTS
+      binmode(STDOUT, ':utf8');
+      while ( my $row = $sth->fetchrow_hashref ){
+          my %hash = %$row ;
+          #say "UTF8 flag is turned on in the STRING $key" if is_utf8( $hash{$key} );
+          push @query_output, $row
+          #if is_utf8( $hash{$key} );
+      } #eof while
+      
+		$msg = DBI->errstr ; 
+
+      unless ( defined ( $msg ) ) {
+         $msg = 'SELECT OK for table: ' . "$table" ; 
+         $ret = 0 ; 
+      } else {
+         $objLogger->doLogErrorMsg ( $msg ) ; 
+      }
+
+      # CLOSE THE DATABASE CONNECTION
+      $dbh->disconnect();
+      
+		# src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
+      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+
+      #debug p(@query_output);
+      return ( $ret , $msg , \@query_output ) ; 	
+   
+	}
+   # eof sub doSearchConfigurationEntries
+
+
+
    #
    # -----------------------------------------------------------------------------
    # get ALL the table data into hash ref of hash refs 
@@ -169,7 +251,6 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
    
 
       $objLogger->doLogDebugMsg ( "doSelectTableIntoHashRef table: $table " ) ; 
-      sleep 1 ; 
 
       my $msg              = q{} ;         
       my $ret              = 1 ;          # this is the return value from this method 
@@ -246,7 +327,9 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 
 		my $invocant 			= shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-		
+	
+      p($appConfig ) ; 
+
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
 
@@ -271,10 +354,10 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 		# print "PostgreReader::doInitialize appConfig : " . p($appConfig );
       # sleep 6 ; 
 		
-		$db_name 			= $ENV{ 'db_name' } || $appConfig->{'db_name'}        || 'prd_pgsql_runner' ; 
-		$db_host 			= $ENV{ 'db_host' } || $$appConfig->{'db_host'} 		|| 'localhost' ;
-		$db_port 			= $ENV{ 'db_port' } || $$appConfig->{'db_port'} 		|| '13306' ; 
-		$db_user 			= $ENV{ 'db_user' } || $$appConfig->{'db_user'} 		|| 'ysg' ; 
+		$db_name 			= $ENV{ 'db_name' } || $appConfig->{'db_name'}     || 'prd_ysg_issues' ; 
+		$db_host 			= $ENV{ 'db_host' } || $appConfig->{'db_host'} 		|| 'localhost' ;
+		$db_port 			= $ENV{ 'db_port' } || $appConfig->{'db_port'} 		|| '13306' ; 
+		$db_user 			= $ENV{ 'db_user' } || $appConfig->{'db_user'} 		|| 'ysg' ; 
 		$db_user_pw 		= $ENV{ 'db_user_pw' } || $appConfig->{'db_user_pw'} 	|| 'no_pass_provided!!!' ; 
       
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;

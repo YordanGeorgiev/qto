@@ -12,7 +12,7 @@ doCreateCtags(){
 	cd $product_instance_dir
 
 	cmd="rm -fv ./tags"                          && doRunCmdAndLog "$cmd"
-	cmd="ctags  -R -n --fields=+i+K+S+l+m+a ."   && doRunCmdAndLog "$cmd"
+	cmd="ctags  -R -n --fields=+i+K+S+l+m+a --exclude=src/react/conf-srch/node_modules ."   && doRunCmdAndLog "$cmd"
 	cmd="ls -la $product_instance_dir/tags"       && doRunCmdAndLog "$cmd"
 
 	popd
