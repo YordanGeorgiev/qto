@@ -8,6 +8,24 @@ src/bash/issue-tracker/tests/all-issue-tracker-tests.lst
 src/bash/issue-tracker/tests/rem-issue-tracker-actions.lst
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # --- 
+src/react/conf-srch/
+src/react/conf-srch/.gitignore
+src/react/conf-srch/package.json
+src/react/conf-srch/public
+src/react/conf-srch/public/favicon.ico
+src/react/conf-srch/public/index.html
+src/react/conf-srch/public/manifest.json
+src/react/conf-srch/README.md
+src/react/conf-srch/src
+src/react/conf-srch/src/App.css
+src/react/conf-srch/src/App.js
+src/react/conf-srch/src/App.test.js
+src/react/conf-srch/src/index.css
+src/react/conf-srch/src/index.js
+src/react/conf-srch/src/logo.svg
+src/react/conf-srch/src/registerServiceWorker.js
+src/react/conf-srch/yarn.lock
+# ---
 doc/txt/issue-tracker/funcs/clone-project.func.txt
 doc/txt/issue-tracker/helps/clone-project.help.txt
 doc/txt/issue-tracker/specs/clone-project.spec.txt
