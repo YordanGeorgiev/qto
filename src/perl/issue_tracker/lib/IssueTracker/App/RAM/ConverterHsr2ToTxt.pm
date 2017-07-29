@@ -138,7 +138,8 @@ package IssueTracker::App::RAM::ConverterHsr2ToTxt ;
          , 'wip'     => '03-wip'       # is work in progress - aka is being done right now
          , 'act'     => '03-act'       # is being actively done , aka more of an activity type
          , 'actv'    => '03-actv'      # is being actively done , aka more of an activity type
-         , 'diss'    => '04-diss'      # to dissmiss or disgard
+         , 'disg'    => '03-disg'      # to disgard - a more positive
+         , 'diss'    => '04-diss'      # to dissmiss - a more negative
          , 'late'    => '04-late'      # too late
          , 'fail'    => '04-fail'      # to failmiss or disgard
          , 'test'    => '05-test'      # to test some implementation

@@ -70,6 +70,7 @@ sub doReadXlsFileToHsr2 {
 
     my $hsWorkSheet   = {};
     my $WorkSheetName = $worksheet->{'Name'};
+    $objLogger->doLogInfoMsg("check worksheet: " . $WorkSheetName) ; 
 
 	 next unless grep( /^$WorkSheetName$/, @tables ) ; 
     $objLogger->doLogInfoMsg("read worksheet: " . $WorkSheetName) ; 

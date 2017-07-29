@@ -2,6 +2,7 @@
 :g/srch/| :vimgrep /srch/ `find . -type f \| grep -v .git \| grep -v .log`
 
 
+:g/-diss/| :vimgrep /-diss/ `find . -type f \| grep -v .git \| grep -v .log`
 
 :g/doReadIssueFile/| :vimgrep /doReadIssueFile/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/col_num/| :vimgrep /col_num/ `find . -type f \| grep -v .git \| grep -v .log`

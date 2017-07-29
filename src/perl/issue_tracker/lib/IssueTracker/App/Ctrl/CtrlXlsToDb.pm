@@ -69,7 +69,6 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       my @tables              = ();
       my $tables              = $appConfig->{ 'tables' } ;  
 	   push ( @tables , split(',',$tables ) ) ; 
-
       my $hsr2             = {} ; 
       my $objXlsReader     = 'IssueTracker::App::IO::In::XlsReader'->new ( \$appConfig , \@tables ) ; 
       

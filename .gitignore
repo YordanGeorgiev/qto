@@ -6,3 +6,4 @@ dat/xls/run/*.xlsx
 dat/tests/t*.txt
 dat/issue-tracker/**
 src/bash/issue-tracker/tmp/**
+src/perl/issue_tracker/script/hypnotoad.pid

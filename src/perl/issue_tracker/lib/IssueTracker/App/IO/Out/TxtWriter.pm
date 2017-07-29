@@ -256,7 +256,6 @@ sub doInitialize {
     $table =~ s/_/-/g ; 
     $issues_file
       = $ENV{'proj_daily_data_root_dir'}
-      . '/issues'
       . "/$year/$nice_month/$nice_date/$issue_tracker_project"
       . '.'
       . "$table"

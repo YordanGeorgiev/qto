@@ -23,7 +23,7 @@ doIncreaseDate(){
 		
 		case "$tgt_date" in
 			  today)
-         		set -x ;export tgt_date=$(date --date="+0 day" "+%Y-%m-%d")
+         		export tgt_date=$(date --date="+0 day" "+%Y-%m-%d")
 					;;
 			  tomorrow)
          		export tgt_date=$(date --date="+1 day" "+%Y-%m-%d")

@@ -379,10 +379,11 @@ sub doInitialize {
       'eval' => '01-eval'    # evaluate whether or not to do it
     , 'todo' => '02-todo'    # must do it till the end of the term
     , 'rem'  => '02-rem'     # remember to act till the end of the term
-    , 'wip'  => '03-wip'     # is work in progress - aka is being done right now
+    , 'wip'  => '03./-wip'     # is work in progress - aka is being done right now
     , 'act'  => '03-act'     # is being actively done, aka an activity
     , 'actv' => '03-actv'    # is being actively done, aka an activity
-    , 'diss' => '04-diss'    # to dissmiss or disgard
+    , 'disg' => '03-disg'      # to disgard - a more positive
+    , 'diss' => '04-diss'      # to dissmiss - a more negative
     , 'late' => '04-late'    # too late
     , 'fail' => '04-fail'    # to failmiss or disgard
     , 'test' => '05-test'    # to test some implementation
