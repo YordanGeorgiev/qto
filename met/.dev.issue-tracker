@@ -109,7 +109,6 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/Srch.pm
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/basic.t
 src/perl/issue_tracker/public
-src/perl/issue_tracker/public/index.html
 src/perl/issue_tracker/templates/layouts
 src/perl/issue_tracker/templates/layouts/default.html.ep
 src/perl/issue_tracker/templates/example
@@ -554,18 +553,6 @@ doc/txt/issue-tracker/funcs/gmail-txt-issues.func.txt
 doc/md/issue-tracker-features-and-functionalities.md
 doc/pdf/issue-tracker-features-and-functionalities.pdf
 doc/pdf/issue-tracker-readme.pdf
-doc/txt/issues/2017/2017-04/2017-06-22
-doc/txt/issues/2017/2017-04/2017-06-22/issue-tracker-cheat.2017-06-22.sheet.sh
-doc/txt/issues/2017/2017-04/2017-06-22/issue-tracker-issues.2017-06-22.all.235959.xlsx
-doc/txt/issues/2017/2017-04/2017-06-22/issue-tracker-issues.2017-06-22.daily.235959.xlsx
-doc/txt/issues/2017/2017-04/2017-06-22/issue-tracker-issues.2017-06-22.daily.txt
-doc/txt/issues/2017/2017-04/2017-06-22/issue-tracker-issues.2017-06-22.monthly.235959.xlsx
-doc/txt/issues/2017/2017-04/2017-06-22/issue-tracker-issues.2017-06-22.monthly.txt
-doc/txt/issues/2017/2017-04/2017-06-22/issue-tracker-issues.2017-06-22.weekly.235959.xlsx
-doc/txt/issues/2017/2017-04/2017-06-22/issue-tracker-issues.2017-06-22.weekly.txt
-doc/txt/issues/2017/2017-04/2017-06-22/issue-tracker-issues.2017-06-22.yearly.225959.xlsx
-doc/txt/issues/2017/2017-04/2017-06-22/issue-tracker-issues.2017-06-22.yearly.txt
-doc/txt/issues/2017/2017-04/2017-06-22/issue-tracker-unstrc.2017-06-22.notes.txt
 doc/xls/issue-tracker-features-and-functionalities.xls
 doc/xls/issue-tracker-readme.xls
 #---

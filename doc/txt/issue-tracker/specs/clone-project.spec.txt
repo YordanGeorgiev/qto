@@ -1,38 +1,33 @@
 # doc/txt/issue-tracker/spec/clone-project.spec.txt
 
-	doSpecCloneProject
-	
-cp -v /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.prd.doc-pub-host.cnf
-/vagrant/csitea/cnf/projects/issue-tracker/enricher-issues.prd.doc-pub-host.cnf
-vim /vagrant/csitea/cnf/projects/issue-tracker/enricher-issues.prd.doc-pub-host.cnf
-doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/enricher-issues.prd.doc-pub-host.cnf
-echo $proj_daily_data_root_dir
-fg
-vim /vagrant/csitea/cnf/projects/issue-tracker/enricher-issues.prd.doc-pub-host.cnf
-doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/enricher-issues.prd.doc-pub-host.cnf
+# load the newly defined cloned project dir
+doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/ysg-issues.prd.doc-pub-host.cnf
 
-# create the src_clone proj_daily_data_root_dir
+# go to the ysg projects daily data root dir
+cd $proj_daily_data_root_dir
+
+# define yesterday 
+export tgt_date=$(date --date="-1 day" "+%Y-%m-%d")
+
+# create a zip package of the yester-day day 
+while read -r f ; do zip $tgt_date.zip $f ; done < <(find "$(date "+%Y" -d "$tgt_date")"'/'$(date
+"+%Y-%m" -d "$tgt_date")/$(date "+%Y-%m-%d" -d "$tgt_date"))
+
+# load the newly defined cloned project dir
+doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/helia.prd.doc-pub-host.cnf
+
+# create the new projects daily data root dir
 mkdir -p $proj_daily_data_root_dir
 
-# to to the relative path of the src_clone
-cd /vagrant/ysg/data/txt/issues/
-zip ysg-issues.2017-07-27.zip 2017/2017-07/2017-07-27/*
-unzip -o ysg-issues.2017-07-27.zip -d $proj_tx_dir/
+# unzip the yesterday daily dir for the new project
+unzip -o $tgt_date.zip -d $proj_daily_data_root_dir/
 
-# create the tgt_clone daily data dir
-sudo unzip -o ysg-issues.2017-07-27.zip -d $proj_tx_dir/
+# morph the dir
+export to_srch=ysg
+export to_repl=helia
+cd $product_instance_dir
+bash src/bash/issue-tracker/issue-tracker.sh -a morph-dir
 
-unzip -o ysg-issues.2017-07-27.zip -d $proj_daily_data_root_dir/
-
-# go to cloned proj_daily_data_dir
-cd /vagrant/futu/futu-here/enricher-issues/doc/txt/2017/2017-07/2017-07-27
-
-# check
-while read -r f ; do f1=$(echo $f|cut -d'.' -f1); fr=$(echo $f|cut -d'.' -f2-); echo -e "\$f : $f
-\t\t \$f1 : $f1 \t\t  \$fr : $fr" ; done < <(ls -1 *)
-
-# Action ok
-while read -r f ; do f1=$(echo $f|cut -d'.' -f1); fr=$(echo $f|cut -d'.' -f2-); echo -e "\$f : $f
-\t\t \$f1 : $f1 \t\t  \$fr : $fr" ; mv -v $f enricher.$fr ; done < <(ls -1 *)
-
+# and increase the dat
+bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d today
 # eof file: doc/txt/issue-tracker/spec/clone-project.spec.txt
