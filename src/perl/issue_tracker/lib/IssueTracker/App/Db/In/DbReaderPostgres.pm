@@ -184,7 +184,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 
       $str_sql = 
          " SELECT 
-         guid, value FROM $table 
+         guid, value as name FROM $table 
          WHERE 1=1
          AND value like '%" . $query_str . "%'
          ;

@@ -68,7 +68,6 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
 	 
       p ( $hsr2 ) ; 
-      sleep 10 ; 
       
       my $debug_msg        = 'START doInsertSqlHashData' ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
@@ -83,7 +82,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
             my $value = 'null' ; 
             unless ( $key eq 'update_time' ) {
                $value     = $row_hash->{ $key } || 'null' ; 
-               $value =~ s|\\|\\\\|g ;
+               # $value =~ s|\\|\\\\|g ;
                $value       =~ s|\'|\\\'|g ;
             } else {
                $value     = $update_time ; 
@@ -202,7 +201,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
                   $str_val_list .= ' , NULL' ; 
                   next ; 
                }
-               $value     =~ s|\\|\\\\|g ;
+               # $value     =~ s|\\|\\\\|g ;
                $value     =~ s|\'|\\\'|g ;
                $value     =~ s/'/''/g if ( $value ) ; 
             } else {
@@ -391,7 +390,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
                   $data_str .= "$cell_value" . " , " ; 
 
                } else { 
-                  $cell_value =~ s|\\|\\\\|g ; 
+                  # $cell_value =~ s|\\|\\\\|g ; 
                   # replace the ' chars with \'
                   $cell_value 		=~ s|\'|\'\'|g ; 
                   $data_str .= "'" . "$cell_value" . "' , " ; 

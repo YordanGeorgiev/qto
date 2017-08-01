@@ -58,12 +58,17 @@ sub startup {
 	, action       => 'doGetItem'
 	);
 	
-   # http://doc-pub-host:3000/prd_issue_tracker/srch/confs/con
+   # http://doc-pub-host:3000/prd_ysg_issues/srch/confs/con
 	$r->get('/:db/srch/:item/:srch')->to(
 	  controller   => 'Srch'
 	, action       => 'doSrchItem'
 	);
 
+   # http://doc-pub-host:3000/prd_ysg_issues/srch/confs/con
+	$r->options('/:db/srch/:item/:srch')->to(
+	  controller   => 'Srch'
+	, action       => 'doSrchItem'
+	);
 }
 
 

@@ -24,7 +24,7 @@ sub doSrchItem {
   my $self       = shift;
   my $db         = $self->stash('db');
   my $item       = $self->stash('item');
-  my $query_str  = $self->stash('srch');
+  my $query_str  = $self->stash('srch') || '%' ; 
   my $rdbms_type = 'postgre';
   my $appConfig = {};
 
@@ -34,15 +34,25 @@ sub doSrchItem {
 
   $appConfig = $self->app->get('AppConfig');
   $objLogger  = $self->app->get('ObjLogger');
-   p($appConfig);
+  # p($appConfig);
   my $objDbReadersFactory
     = 'IssueTracker::App::Db::In::DbReadersFactory'->new(\$appConfig, $self);
   my $objDbReader = $objDbReadersFactory->doInstantiate("$rdbms_type");
   ($ret, $msg, $hrs) = $objDbReader->doSearchConfigurationEntries($db, $item , $query_str);
 
+  $self->res->headers->from_hash({
+       'Access-Control-Allow-Origin' => '*'
+     , 'Access-Control-Allow-Credentials' => 'true'
+     , 'Access-Control-Allow-Methods' => 'GET,HEAD,OPTIONS,POST,PUT'
+     , 'Access-Control-Allow-Headers' => 'Access-Control-Allow-Headers,Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Access-Control-Allow-Origin'
+   });
+
   $self->res->headers->accept_charset('UTF-8');
+  $self->res->headers->allow('GET' , 'POST', 'OPTIONS' );
+  $self->res->headers->access_control_allow_origin('*');
   $self->res->headers->accept_language('fi, en');
-  $self->res->headers->content_type('application/json; charset=utf-8');
+ # $self->res->headers->content_type('application/json; charset=utf-8');
+
   $self->render(json => $hrs);
 
 }

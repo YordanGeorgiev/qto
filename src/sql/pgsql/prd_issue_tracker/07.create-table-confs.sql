@@ -5,6 +5,7 @@ SELECT 'create the "confs" table'
    CREATE TABLE confs (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , seq            integer NULL
+    , prio           integer NULL
     , category       varchar (200) NOT NULL
     , name           varchar (200) NOT NULL
     , value          varchar (4000)

@@ -1,67 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
 import Autosuggest from 'react-autosuggest';
+import axios from 'axios' ; 
 
-const languages = [
+var list_items = [
   {
     name: 'C',
-    year: 1972
-  },
-  {
-    name: 'C#',
-    year: 2000
-  },
-  {
-    name: 'C++',
-    year: 1983
-  },
-  {
-    name: 'Clojure',
-    year: 2007
-  },
-  {
-    name: 'Elm',
-    year: 2012
-  },
-  {
-    name: 'Go',
-    year: 2009
-  },
-  {
-    name: 'Haskell',
-    year: 1990
-  },
-  {
-    name: 'Java',
-    year: 1995
-  },
-  {
-    name: 'Javascript',
-    year: 1995
-  },
-  {
-    name: 'Perl',
-    year: 1987
-  },
-  {
-    name: 'PHP',
-    year: 1995
-  },
-  {
-    name: 'Python',
-    year: 1991
-  },
-  {
-    name: 'Ruby',
-    year: 1995
-  },
-  {
-    name: 'Scala',
-    year: 2003
+    guid: 1972
   }
-];
+]; 
 
-// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
+
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -73,10 +22,16 @@ function getSuggestions(value) {
     return [];
   }
 
-  const regex = new RegExp('^' + escapedValue, 'i');
+   // ignore case , match contains any
+   const regex = new RegExp('^.*' + escapedValue + '.*' , 'i');
 
-  return languages.filter(language => regex.test(language.name));
+	// console.log ( "getSuggestions" ) 
+   // console.log ( list_items ) 
+   // console.log ( regex ) 
+   return list_items.filter( list_item => regex.test( list_item.name ) )
+
 }
+
 
 function getSuggestionValue(suggestion) {
   return suggestion.name;
@@ -91,7 +46,6 @@ function renderSuggestion(suggestion) {
 class App extends Component {
   constructor() {
     super();
-
     this.state = {
       value: '',
       suggestions: []
@@ -115,6 +69,21 @@ class App extends Component {
       suggestions: []
     });
   };
+
+
+ componentDidMount() {
+   axios.get('http://doc-pub-host:3000/prd_ysg_issues/srch/confs/%' , {
+      headers: { 
+			"Access-Control-Allow-Origin": "*" }
+   	})
+      .then(response => {
+			list_items = response.data 
+			// console.log ( "componentDidMount" ) 
+			// console.log ( list_items ) 
+         this.setState({ suggestions: list_items })
+      });
+
+  }
 
   render() {
     const { value, suggestions } = this.state;
