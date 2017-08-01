@@ -32,7 +32,7 @@ body {
 }
 
 .react-autosuggest__input {
-  width: 240px;
+  width: 600px;
   height: 30px;
   padding: 10px 20px;
   font-family: Helvetica, sans-serif;
@@ -59,7 +59,7 @@ body {
   display: block;
   position: absolute;
   top: 51px;
-  width: 280px;
+  width: 640px;
   border: 1px solid #aaa;
   background-color: #fff;
   font-family: Helvetica, sans-serif;
@@ -67,7 +67,7 @@ body {
   font-size: 16px;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
-  max-height: 100px;
+  max-height: 500px;
   overflow-y: auto;
   z-index: 2;
 }
@@ -84,6 +84,6 @@ body {
 }
 
 .react-autosuggest__suggestion--highlighted {
-  background-color: #ddd;
+  background-color: #C3E0FB ;
 }
 

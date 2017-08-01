@@ -65,7 +65,8 @@ sub doReadXlsFileToHsr2 {
 
   }    #eof if not $objWorkbook
 
-
+  my $flg_found_at_least_one_table = 0 ; 
+  $msg = "did not any of the tables:  " . "@tables" ; 
   foreach my $worksheet (@{$objWorkbook->{Worksheet}}) {
 
     my $hsWorkSheet   = {};
@@ -73,7 +74,9 @@ sub doReadXlsFileToHsr2 {
     $objLogger->doLogInfoMsg("check worksheet: " . $WorkSheetName) ; 
 
 	 next unless grep( /^$WorkSheetName$/, @tables ) ; 
-    $objLogger->doLogInfoMsg("read worksheet: " . $WorkSheetName) ; 
+    $flg_found_at_least_one_table++ ; 
+    $msg = "read worksheet: " . $WorkSheetName ; 
+    $objLogger->doLogInfoMsg( $msg ) ; 
     
 
     my $RowMin = $worksheet->{'MinRow'};
@@ -142,11 +145,11 @@ sub doReadXlsFileToHsr2 {
 
     $hsr2->{"$WorkSheetName"} = $hsWorkSheet;
 
-    p($hsWorkSheet );
+    # p($hsWorkSheet );
   }
 
-  $ret = 0;
-  $msg = 'xls file parse OK';
+ $ret = 0 if $flg_found_at_least_one_table > 0 ; 
+ $msg = 'xls file parse OK' if $flg_found_at_least_one_table > 0 ;
 
 
   return ($ret, $msg, $hsr2);

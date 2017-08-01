@@ -78,6 +78,29 @@ class App extends Component {
    	})
       .then(response => {
 			list_items = response.data 
+         for(var i=0; i < response.data.length; i++) {
+            
+            var currentTime = new Date()
+            // returns the year (four digits)
+
+            var year = currentTime.getFullYear()
+            year = (year < 10 ? '0' : '') + year
+
+            // returns the month (from 0 to 11)
+            var month = currentTime.getMonth() + 1
+            month = (month < 10 ? '0' : '') + month
+
+            // returns the day of the month (from 1 to 31)
+            var day = currentTime.getDate()
+            day = (day < 10 ? '0' : '') + day
+
+            var name = response.data[i].name
+            name = name.replace(/%YYYY%/g, year )
+            name = name.replace(/%mm%/g, month )
+            name = name.replace(/%dd%/g, day )
+            list_items[i].name = name
+         }
+
 			// console.log ( "componentDidMount" ) 
 			// console.log ( list_items ) 
          this.setState({ suggestions: list_items })
@@ -88,7 +111,7 @@ class App extends Component {
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: "Type 'c'",
+      placeholder: "search ...",
       value,
       onChange: this.onChange
     };
