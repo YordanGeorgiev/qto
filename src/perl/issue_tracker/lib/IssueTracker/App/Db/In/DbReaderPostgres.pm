@@ -246,8 +246,9 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
    # -----------------------------------------------------------------------------
    sub doSelectTableIntoHashRef {
 
-      my $self             = shift ; 
-      my $table            = shift || 'daily_issues' ;  # the table to get the data from  
+      my $self                   = shift ; 
+      my $table                  = shift || 'daily_issues' ;  # the table to get the data from  
+      my $filter_by_attributes   = shift ; 
    
 
       $objLogger->doLogDebugMsg ( "doSelectTableIntoHashRef table: $table " ) ; 
@@ -270,14 +271,20 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
          $mhsr->{'ColumnNames'}-> { $key } = $dmhsr->{ $key } ; 
       }
 
-
+      
       $str_sql = 
          " SELECT 
          * FROM $table 
+         WHERE 1=1 " ; 
+      $str_sql .= $filter_by_attributes . " " if $filter_by_attributes ; 
+
+      $str_sql .= "
          order by prio asc
          ;
       " ; 
-
+      
+      # debug p ( '$str_sql: ' . "$str_sql" . "\n" ) ; 
+      
       # authentication src: http://stackoverflow.com/a/19980156/65706
       $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
       $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 

@@ -64,7 +64,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       my $tables              = $appConfig->{ 'tables' } || 'daily_issues' ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
-
+      my $filter_by_attributes = $ENV{'filter_by_attributes'} || undef ; 
 
 
       for my $table ( @tables ) { 
@@ -72,7 +72,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
          my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
          my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
 
-         ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( $table ) ; 
+         ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( $table , $filter_by_attributes ) ; 
 
          p($hsr) if $module_trace == 1 ;
          $objLogger->doLogDebugMsg ( "STOP print" ) if $module_trace == 1 ; 

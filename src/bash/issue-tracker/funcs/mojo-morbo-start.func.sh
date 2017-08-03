@@ -17,7 +17,10 @@ doMojoMorboStart(){
    # sudo visudoers 
    # ysg ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
    netstat -tulpn | grep issue_tracker
-	
+
+   cd src/react/conf-srch/ ; 
+   yarn start &
+   cd -
    doLog "DEBUG STOP  doMojoMorboStart"
 }
 # eof func doMojoMorboStart
