@@ -78,10 +78,10 @@ doRunActions(){
 		doLog "DEBUG action: \"$action\""
 
 		while read -r func_file ; do (
-         doLog "DEBUG func_file: $func_file"
+         # debug doLog "DEBUG func_file: $func_file"
 
 			while read -r function_name ; do (
-            doLog "DEBUG function_name: $function_name"
+            # debug doLog "DEBUG function_name: $function_name"
 
 				action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
 				test "$action_name" != $action && continue
@@ -256,7 +256,7 @@ doExit(){
 doLog(){
    type_of_msg=$(echo $*|cut -d" " -f1)
    msg="$(echo $*|cut -d" " -f2-)"
-   [[ $type_of_msg == DEBUG ]] && [[ $do_print_debug_msgs -ne 1 ]] && return
+   [[ $type_of_msg == DEBUG ]] && [[ ${do_print_debug_msgs-} -ne 1 ]] && return
    [[ $type_of_msg == INFO ]] && type_of_msg="INFO "
 
    # print to the terminal if we have one
@@ -397,7 +397,7 @@ doSetVars(){
 	cd "$run_unit_bash_dir/"
 
    # start set default vars
-   do_print_debug_msgs=0
+   #do_print_debug_msgs=0
    # stop set default vars
 
 	test -z "${issue_tracker_project:-}" && doParseConfFile
@@ -445,23 +445,35 @@ doSetUndefinedShellVarsFromCnfFile(){
 	test -f "$product_instance_dir/$run_unit.$env_type.$host_name.cnf" \
 		&& cnf_file="$product_instance_dir/$run_unit.$env_type.$host_name.cnf"
 
-	INI_SECTION=MainSection
+   test -z "${ini_section-}" && ini_section=MainSection
 
-	vars_to_set=`sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
-		-e 's/#.*$//' \
-		-e 's/[[:space:]]*$//' \
-		-e 's/^[[:space:]]*//' \
-      -e "s/^\(.*\)=\([^\"']*\)$/test -z \"\$\1\" \&\& export \1=\"\2\"/" \
-		< $cnf_file \
-		| sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
-   
-   while IFS=' ' read -r var_to_set
-   do
-      echo "running: $var_to_set"
-      eval "$var_to_set"
-   done < "$vars_to_set"
+   doLog "DEBUG reading: the following configuration file"
+   doLog "DEBUG ""$cnf_file"
 
-   vars_to_set=""
+   # and pre-register for nice logging
+   ( set -o posix ; set ) | sort >"$tmp_dir/vars.before"
+   settings=`sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
+      -e 's/#.*$//' \
+      -e 's/[[:space:]]*$//' \
+      -e 's/^[[:space:]]*//' \
+      -e "s/^\(.*\)=\([^\"']*\)$/\1=\"\2\"/" \
+      < $cnf_file \
+      | sed -n -e "/^\[$ini_section\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
+
+   # export the var_name=var_value pairs
+   # debug set -x
+   while IFS=' ' read -d' ' s ; do eval 'export '$s ; done <<< $settings
+   s=''
+   set +x
+   # and post-register for nice logging
+   ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
+
+   doLog "INFO added the following vars from section: [$ini_section]"
+   cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
+   echo -e "$cmd"
+   echo -e "$cmd" >> $log_file
+   echo -e "\n\n"
+   sleep 1; printf "\033[2J";printf "\033[0;0H" # and clear the screen
 }
 #eof func doSetShellVarsFromCnfFile
 
