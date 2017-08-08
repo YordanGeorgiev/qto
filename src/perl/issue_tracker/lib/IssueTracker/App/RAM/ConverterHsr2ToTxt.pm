@@ -145,7 +145,7 @@ package IssueTracker::App::RAM::ConverterHsr2ToTxt ;
          , 'test'    => '05-test'      # to test some implementation
          , 'tst'     => '05-tst'       # to test some implementation
          , 'hld'     => '06-onhold'    # the issue is on hold - 
-         , 'hold'    => '06-onhold'    # the issue is on hold - 
+         , 'hold'    => '06-hold'    # the issue is on hold - 
          , 'part'    => '06-part'      # the issue has been partly completed - might have more work
          , 'flow'    => '06-flow'      # follow an event or action to occur
          , 'qas'     => '07-qas'       # the issue is in quality assurance mode

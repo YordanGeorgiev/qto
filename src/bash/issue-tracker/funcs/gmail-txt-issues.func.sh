@@ -2,7 +2,7 @@
 
 # v1.0.0
 # ---------------------------------------------------------
-# todo: add doGmailTxtIssues comments ...
+# cat doc/txt/issue-tracker/funcs/gmail-txt-issues.func.txt
 # ---------------------------------------------------------
 doGmailTxtIssues(){
 
@@ -19,7 +19,6 @@ doGmailTxtIssues(){
    msg="the $todays_daily_txt_dir dir exist proceed"
    doLog "DEBUG $msg"
 
-	# cat doc/txt/issue-tracker/funcs/gmail-txt-issues.func.txt
 	sleep "$sleep_interval"
    while read -r f ; do 
       subj=$(cat $f|head -n1)

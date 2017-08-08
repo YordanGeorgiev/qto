@@ -90,7 +90,7 @@ sub doConvertHashRefToStr {
   $str_issues .= $str_header . "\n\n";
   my $prev_category = q{};
   my @attributes
-    = qw (guid run_time category current description issue_id level name prio start_time stop_time status);
+    = qw (guid seq run_time category current description level name prio start_time stop_time status);
   my $issues_order_by_attribute = $ENV{'issues_order_by_attribute'} || 'start_time' ; 
 
   unless (grep(/^$issues_order_by_attribute$/, @attributes)) {
@@ -132,7 +132,7 @@ sub doConvertHashRefToStr {
     my $stop_time   = $row->{'stop_time'};
     my $status      = $row->{'status'};
 
-    $status = $inverse_hsrStatus{$status};
+    $status = $inverse_hsrStatus{$status} if $status ; 
     $status = 'unknwn' unless $status;
     $description =~ s/\r\n/\n/gm;
     $str_row .= "\n" if ($prev_category ne $category);
@@ -408,9 +408,6 @@ yordan.georgiev@gmail.com
 # VersionHistory: 
 # ---------------------------------------------------------
 #
-1.2.0 --- 2014-09-11 20:44:26 -- tests on Windows 
-1.1.0 --- 2014-08-27 11:29:25 -- tests passed with Test::More
-1.0.0 --- 2014-08-25 08:25:15 -- refactored away from main calling script
 
 =cut 
 1;

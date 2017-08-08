@@ -1,6 +1,6 @@
 # doc/txt/issue-tracker/spec/clone-project.spec.txt
 
-# load the newly defined cloned project dir
+# load the project to be cloned
 doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/ysg-issues.prd.doc-pub-host.cnf
 
 # go to the ysg projects daily data root dir
@@ -10,11 +10,10 @@ cd $proj_daily_data_root_dir
 export tgt_date=$(date --date="-1 day" "+%Y-%m-%d")
 
 # create a zip package of the yester-day day 
-while read -r f ; do zip $tgt_date.zip $f ; done < <(find "$(date "+%Y" -d "$tgt_date")"'/'$(date
-"+%Y-%m" -d "$tgt_date")/$(date "+%Y-%m-%d" -d "$tgt_date"))
+while read -r f ; do zip $tgt_date.zip $f ; done < <(find "$(date "+%Y" -d "$tgt_date")"'/'$(date "+%Y-%m" -d "$tgt_date")/$(date "+%Y-%m-%d" -d "$tgt_date"))
 
 # load the newly defined cloned project dir
-doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/helia.prd.doc-pub-host.cnf
+doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/vel-dan.prd.doc-pub-host.cnf
 
 # create the new projects daily data root dir
 mkdir -p $proj_daily_data_root_dir
@@ -22,11 +21,17 @@ mkdir -p $proj_daily_data_root_dir
 # unzip the yesterday daily dir for the new project
 unzip -o $tgt_date.zip -d $proj_daily_data_root_dir/
 
+# go back to the product instance dir
+cd -
+
 # morph the dir
 export to_srch=ysg
-export to_repl=helia
-cd $product_instance_dir
+export to_repl=vel-dan
+export dir_to_morph=$proj_daily_data_root_dir
 bash src/bash/issue-tracker/issue-tracker.sh -a morph-dir
+
+# start working again on the project to be cloned
+doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/vel-dan.prd.doc-pub-host.cnf
 
 # and increase the dat
 bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d today
