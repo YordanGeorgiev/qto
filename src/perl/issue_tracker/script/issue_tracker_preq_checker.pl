@@ -58,6 +58,11 @@ sub doCheckRequiredModules {
     Spreadsheet::XLSX
     DBD::Pg
     Spreadsheet::ParseExcel::FmtJapan
+    Text::CSV_XS;
+    Net::Google::Spreadsheets::V4
+    Net::Google::DataAPI::Auth::OAuth2
+    Term::Prompt
+    Net::Google::Spreadsheets;
   );
 
   for (@modules) {

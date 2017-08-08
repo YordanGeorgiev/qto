@@ -68,10 +68,10 @@ doIncreaseDate(){
       export last_day=$(echo $f|cut -d'.' -f 4);
 
       table=$(echo $f|cut -d'.' -f 3); proj=$(echo $f|cut -d'.' -f 2); 
-      doLog "DEBUG table: $table"
+      #debug doLog "DEBUG table: $table"
 
       file_ext=$(echo $f|cut -d'.' -f 5); 
-      doLog "DEBUG file_ext: $file_ext"
+      # debug doLog "DEBUG file_ext: $file_ext"
 
       mv -v "$f" '.'"$proj"."$table".`date "+%Y-%m-%d" -d "$tgt_date"`."$file_ext"
    # obs works only on gnu find !
@@ -81,16 +81,16 @@ doIncreaseDate(){
    # foreach xls file
    while read -r f ; do 
       proj=$(echo $f|cut -d'.' -f 2); 
-      doLog "DEBUG proj: $proj"
+      #debug doLog "DEBUG proj: $proj"
 
       table=$(echo $f|cut -d'.' -f 3); 
-      doLog "DEBUG table: $table"
+      #debug doLog "DEBUG table: $table"
 
       timestamp=$(echo $f|cut -d'.' -f4); 
-      doLog "DEBUG timestamp: $timestamp"
+      #debug doLog "DEBUG timestamp: $timestamp"
 
       file_ext=$(echo $f|cut -d'.' -f 5); 
-      doLog "DEBUG file_ext: $file_ext"
+      # debug doLog "DEBUG file_ext: $file_ext"
 
       mv -v "$f" '.'"$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
    done < <(find . -type f -name "*.xlsx")

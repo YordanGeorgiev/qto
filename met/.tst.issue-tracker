@@ -1,5 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/perl/scripts/poc/google_sheet_via_oauth.pl
 src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 src/bash/issue-tracker/bootstrap-issue-tracker.sh
 src/bash/issue-tracker/issue-tracker.sh
