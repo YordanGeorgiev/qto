@@ -21,14 +21,16 @@ use Data::Printer ;
 
 
 my $oauth2 = Net::Google::DataAPI::Auth::OAuth2->new(
-    client_id => $ENV{CLIENT_ID},
-    client_secret => $ENV{CLIENT_SECRET},
-    scope => ['https://www.googleapis.com/auth/spreadsheets'],
+    client_id        => $ENV{CLIENT_ID},
+    client_secret    => $ENV{CLIENT_SECRET},
+    scope            => ['https://www.googleapis.com/auth/spreadsheets'],
 );
 my $url = $oauth2->authorize_url();
 # system("open '$url'");
 print "go to the following url with your browser \n" ; 
 print "$url\n" ; 
+
+
 my $code = prompt('x', 'paste code: ', '', '');
 my $objToken = $oauth2->get_access_token($code);
 
