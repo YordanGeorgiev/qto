@@ -185,7 +185,6 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 		foreach my $key ( sort(keys( %{$sql_hash} ) ) ) {
 
          my $row_hash = $sql_hash->{ $key } ; 
-
 		   foreach my $k ( sort(keys( %{$dmhsr} ) ) ) {
 
             my $col = $dmhsr->{ $k }->{ 'attname' } ; 
@@ -375,7 +374,13 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
             
             my $hs_row = $hs_table->{ $row_num } ; 
             my $data_str = q{} ; 
-            p($hs_row);
+
+            # because obviously postgre prefers lc in col names by default on Ubuntu
+            my %row_h = %$hs_row ; 
+            %row_h = map { lc $_ => $row_h{$_} } keys %row_h;
+            $hs_row = \%row_h ; 
+            p($hs_row) ; 
+
             foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
 
                my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 

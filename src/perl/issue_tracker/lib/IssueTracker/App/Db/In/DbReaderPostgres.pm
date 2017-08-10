@@ -110,7 +110,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       $str_sql = " 
          SELECT attnum, attname
          FROM   pg_attribute
-         WHERE  attrelid = '" . $table . "'::regclass
+         WHERE  attrelid = '" . lc($table) . "'::regclass
          AND    attnum > 0
          AND    NOT attisdropped
          ORDER  BY attnum
@@ -258,7 +258,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       my $debug_msg        = q{} ; 
       my $hsr              = {} ;         # this is hash ref of hash refs to populate with
       my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
-      my $dmhsr             = {} ;        # this is meta hash describing the data hash ^^
+      my $dmhsr            = {} ;        # this is meta hash describing the data hash ^^
       my $sth              = {} ;         # this is the statement handle
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
@@ -270,7 +270,6 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       foreach my $key ( sort ( keys %$dmhsr ) ) {
          $mhsr->{'ColumnNames'}-> { $key } = $dmhsr->{ $key } ; 
       }
-
       
       $str_sql = 
          " SELECT 
@@ -278,10 +277,11 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
          WHERE 1=1 " ; 
       $str_sql .= $filter_by_attributes . " " if $filter_by_attributes ; 
 
+      # not all items have the prio attribute
       $str_sql .= "
          order by prio asc
          ;
-      " ; 
+      " if exists $dmhsr-> { 'prio' } ; 
       
       # debug p ( '$str_sql: ' . "$str_sql" . "\n" ) ; 
       

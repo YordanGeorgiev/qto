@@ -59,6 +59,7 @@ src/perl/issue_tracker/lib/IssueTracker
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/TxtReader.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/XlsReader.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/UrlReader.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/TxtReaderFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/TxtWriterFactory.pm
@@ -187,6 +188,9 @@ src/sql/pgsql/dev_issue_tracker/05.create-table-quinquennially_issues.sql
 src/sql/pgsql/dev_issue_tracker/06.create-table-decadally_issues.sql
 src/sql/pgsql/dev_issue_tracker/07.create-table-confs.sql
 src/sql/pgsql/dev_issue_tracker/08.create-table-procurement_items.sql
+src/sql/pgsql/dev_issue_tracker/09.create-table-questions.sql
+src/sql/pgsql/dev_issue_tracker/10.create-table-problems.sql
+src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/tst_issue_tracker
 src/sql/pgsql/tst_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/tst_issue_tracker/01.create-table-daily_issues.sql

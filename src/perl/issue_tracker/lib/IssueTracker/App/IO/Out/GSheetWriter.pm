@@ -37,68 +37,38 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
    #
    # ------------------------------------------------------
    # GSheetWriter
+   # ( $ret , $msg )  = $objGSheetWriter->doWriteGSheetFromHashRef ( 
+   #           $mhsr , $hsr , \$objGoogleService , $table , $refresh_token , $spread_sheet_id ) ; 
    # ------------------------------------------------------
    sub doWriteGSheetFromHashRef {
 
       my $self             = shift ; 
       my $hsr_meta         = shift ; 
       my $hsr              = shift ; 
+      my $objGoogleService = ${ shift @_ } ; 
       my $table            = shift ; 
+      my $refresh_token    = shift ; 
+      my $spread_sheet_id  = shift ; 
+
       my $msg              = 'unknown error during google sheet write' ; 
       my $ret              = 1 ; 
-      #debug ok p($hsr ) if $module_trace == 1 ; 
-      p ( $hsr_meta )  ; 
 
-      my $objTimer = 'IssueTracker::App::Utils::Timer'->new() ; 
-	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
-      my $nice_month  = "$year" . '-' . "$mon" ; 
-      my $nice_datetime  = "$year" ."$mon". "$mday" . '_' . "$hour" . "$min" . "$sec" ; 
-      my $nice_date  = "$year" . '-' . "$mon" . '-' . "$mday" ; 
+      # debug ok p($hsr ) if $module_trace == 1 ; 
+      # debug p ( $hsr_meta )  ; 
 
 
-
-      my $oauth2 = Net::Google::DataAPI::Auth::OAuth2->new(
-          client_id        => $ENV{CLIENT_ID},
-          client_secret    => $ENV{CLIENT_SECRET},
-          scope            => ['https://www.googleapis.com/auth/spreadsheets'],
-      );
-
-      my $url = $oauth2->authorize_url();
-      # system("open '$url'");
-      print "go to the following url with your browser \n" ; 
-      print "$url\n" ; 
-   
-      sleep 40 ; 
-
-      my $code = $ENV{ 'CODE' } ; 
-      # binmode STDOUT, ":encoding(utf8)";
-      # my $code = prompt('x', 'paste code: ', '', '');
-      my $objToken = $oauth2->get_access_token($code);
-      #       p( $objToken ) ; 
-      my $refresh_token = $objToken->refresh_token() ; 
-
-      print "my refresh token is : \n" ; 
-      p($refresh_token ) ; 
-      # debug p ( $objToken ) ; 
-
+      # https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/request
       my @rows = () ; 
-      my $gs = Net::Google::Spreadsheets::V4->new(
-            client_id      => $ENV{CLIENT_ID}
-          , client_secret  => $ENV{CLIENT_SECRET}
-          , refresh_token  => $refresh_token 
-          , spreadsheet_id => '1hGNULaWpYwtnMDDPPkZT73zLGDUgv5blwJtK7hAiVIU'
-      );
 
       my($content, $res);
 
-      my $title = $table ; 
+      my $title = $table ;       # by convention the name of the db table is the same as the xls sheet name
+      my $sheet = $objGoogleService->get_sheet(title => $title);
 
-      my $sheet = $gs->get_sheet(title => $title);
-
-
+      
       # create a sheet if does not exit
       unless ($sheet) {
-          ($content, $res) = $gs->request(
+          ($content, $res) = $objGoogleService->request(
               POST => ':batchUpdate',
               {
                   requests => [
@@ -120,26 +90,33 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
       my $sheet_prop = $sheet->{properties};
 
       # clear all cells
-      $gs->clear_sheet(sheet_id => $sheet_prop->{sheetId});
+      $objGoogleService->clear_sheet(sheet_id => $sheet_prop->{sheetId});
 
 
 
       # print the headers  
       my $rowid = 0 ; 
       my @row = () ; 
-      push ( @row , $rowid ) ; 
+      push ( @row , '#' ) ; 
 
       # foreach my $colid ( sort ( keys (  %{$hsr_meta->{ 'ColumnNames'}} ) ) ) {
       #foreach my $colid ( sort { $hsr_meta->{$a}->{'attnum'} <=> $hsr_meta->{$b}->{'attnum'}} keys (%$hsr_meta)) {
+      my $default_col_to_sort_by = 'seq' ; 
+      my $flg_found_default_col_to_sort_by = 0 ; 
       my $hsr_meta1 = $hsr_meta->{ 'ColumnNames' } ; 
       foreach my $colid ( sort { $hsr_meta1->{$a}->{'attnum'} <=> $hsr_meta1->{$b}->{'attnum'}} keys (%$hsr_meta1)) {
-         print "\$colid is $colid \n" ; 
+         # debug print "\$colid is $colid \n" ; 
          my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
+         $flg_found_default_col_to_sort_by++ if $col_name eq $default_col_to_sort_by ; 
          push ( @row , $col_name ) ; 
       }
       push ( @rows , \@row ) ; 
+      $default_col_to_sort_by = 'seqid' if $flg_found_default_col_to_sort_by == 0 ; 
 
-      foreach my $guid ( sort { $hsr->{$a}->{ 'seq' } <=> $hsr->{$b}->{ 'seq' } } keys (%$hsr))  {
+
+      foreach my $guid ( 
+         sort { $hsr->{$a}->{ $default_col_to_sort_by } <=> $hsr->{$b}->{ $default_col_to_sort_by } } keys (%$hsr)
+         )  {
 
 #         if ( $rowid % 2 == 1 ) {
 #            $objFormat = $objWorkbook->add_format(
@@ -163,8 +140,8 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
          #foreach my $colid ( sort ( keys ( %{$hsr_meta->{'ColumnNames'}} ) ) ) {
          foreach my $colid ( sort { $hsr_meta1->{$a}->{'attnum'} <=> $hsr_meta1->{$b}->{'attnum'}} keys (%$hsr_meta1)) {
             my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
-            print "col_name $col_name \n" ; 
-            print "colid $colid \n" ; 
+            # debug print "col_name $col_name \n" ; 
+            # debug print "colid $colid \n" ; 
             push ( @row , $hsr_row->{ $col_name } ) ; 
             # $objWorksheet->write($rowid, $colid, $hsr_row->{ $col_name } , $objFormat )  ; 
          }
@@ -179,13 +156,6 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
       my @requests = ();
       my $idx = 0;
 
-#      my @rows = (
-#          [qw(name age favorite)], # header
-#          [qw(tarou 31 curry)],
-#          [qw(jirou 18 gyoza)],
-#          [qw(saburou 27 ramen)],
-#      );
-
       for my $row (@rows) {
           push @requests, {
               pasteData => {
@@ -194,7 +164,7 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
                       rowIndex    => $idx++,
                       columnIndex => 0,
                   },
-                  data => $gs->to_csv(@$row),
+                  data => $objGoogleService->to_csv(@$row),
                   type => 'PASTE_NORMAL',
                   delimiter => ',',
               },
@@ -231,7 +201,7 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
           },
       };
 
-      ($content, $res) = $gs->request(
+      ($content, $res) = $objGoogleService->request(
           POST => ':batchUpdate',
           {
               requests => \@requests,

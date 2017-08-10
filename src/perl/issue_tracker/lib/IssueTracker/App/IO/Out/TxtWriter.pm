@@ -117,6 +117,14 @@ sub doConvertHashRefToStr {
     . '} keys (%$hsr2)')  {
 
     my $row = $hsr2->{$issue_id};
+   
+   # ignore camel case named cols and sheets
+   my %row_h = %$row ; 
+   %row_h = map { lc $_ => $row_h{$_} } keys %row_h;
+   $row = \%row_h ; 
+   
+    p $row ; 
+
     my $str_row = q{} ; 
 
 

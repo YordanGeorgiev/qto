@@ -11,10 +11,14 @@ package IssueTracker::App::Ctrl::CtrlDbToGSheet ;
    use utf8 ;
    use Carp ;
    use Data::Printer ; 
+   no warnings 'deprecated';
+   use Net::Google::DataAPI::Auth::OAuth2 ; 
+   use warnings 'deprecated';
 
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::In::DbReadersFactory ; 
    use IssueTracker::App::IO::Out::GSheetWriter ; 
+   use IssueTracker::App::IO::In::UrlReader ; 
 
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
@@ -57,6 +61,66 @@ package IssueTracker::App::Ctrl::CtrlDbToGSheet ;
       my $tables              = $appConfig->{ 'tables' } || 'daily_issues' ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
+      my $oauth2 = Net::Google::DataAPI::Auth::OAuth2->new(
+          client_id        => $ENV{CLIENT_ID},
+          client_secret    => $ENV{CLIENT_SECRET},
+          scope            => ['https://www.googleapis.com/auth/spreadsheets' 
+                             , 'https://www.googleapis.com/auth/drive'
+                             , 'https://spreadsheets.google.com/feeds'
+                             ],
+# https://www.googleapis.com/auth/drive	View and manage the files in your Google D# # i# rive
+# https://www.googleapis.com/auth/drive.file	View and manage Google Drive files and folders that you have opened or created with this app
+# https://www.googleapis.com/auth/drive.readonly	View the files in your Google Drive
+# https://www.googleapis.com/auth/spreadsheets	View and manage your spreadsheets in Google Drive
+# https://www.googleapis.com/auth/spreadsheets.readonly	View your Google Spreadsheets
+      );
+
+      my $url = $oauth2->authorize_url();
+      # my $url = '' ; 
+      # system("open '$url'");
+      print "go to the following url with your browser \n" ; 
+      print "$url\n" ; 
+      my $issue_tracker_proj = $ENV{'issue_tracker_project'} ; 
+      my $home_dir = $ENV{'HOME'} ; 
+      print "copy the string from your browser \n" ; 
+      print 'echo <<CODE>> > ' . "$home_dir/.google/.code." . $issue_tracker_proj . "\n" ; 
+      sleep 6 ; 
+
+      my $code = $objFileHandler->doReadFileReturnString ( "$home_dir/.google/.code." . $issue_tracker_proj ) ; 
+      print "\$code is $code" ; 
+      sleep 3 ; 
+
+      # binmode STDOUT, ":encoding(utf8)";
+      
+      # my $code = prompt('x', 'paste code: ', '', '');
+      my $objToken = $oauth2->get_access_token($code);
+      my $refresh_token = $objToken->refresh_token ; 
+
+      # debug p ( $objToken ) ; 
+      #
+      my $client_id        = $ENV{ 'CLIENT_ID' } ; 
+      my $client_secret    = $ENV{ 'CLIENT_SECRET' } ; 
+      my $spread_sheet_id  = $ENV{ 'google_spread_sheet_id' }  ; 
+      
+      p( $objToken ) ; 
+      print "start my refresh token is : \n" ; 
+      p( $objToken ) ; 
+      print "my client id is : $client_id \n" ; 
+      print "my client secret is : $client_secret \n" ; 
+      print "my google_spread_sheet_id is : $spread_sheet_id \n" ; 
+      print "stop  my refresh token is : \n" ; 
+      p($refresh_token ) ; 
+      sleep 10 ; 
+
+      my $objGoogleService = Net::Google::Spreadsheets::V4->new(
+            client_id      => $client_id
+          , client_secret  => $client_secret
+          , refresh_token  => $refresh_token 
+          , spreadsheet_id => $spread_sheet_id
+      );
+      print "start debuggin the \$objGoogleService \n" ; 
+      p ( $objGoogleService ) ; 
+      print "stop  debuggin the \$objGoogleService \n" ; 
 
       for my $table ( @tables ) { 
 
@@ -70,7 +134,9 @@ package IssueTracker::App::Ctrl::CtrlDbToGSheet ;
          return ( $ret , $msg ) unless $ret == 0 ; 
     
          my $objGSheetWriter    = 'IssueTracker::App::IO::Out::GSheetWriter'->new( \$appConfig ) ;
-         ( $ret , $msg )  = $objGSheetWriter->doWriteGSheetFromHashRef ( $mhsr , $hsr , $table ) ;
+         ( $ret , $msg )  = $objGSheetWriter->doWriteGSheetFromHashRef ( 
+               $mhsr , $hsr , \$objGoogleService , $table , $refresh_token , $spread_sheet_id ) ; 
+
          return ( $ret , $msg ) unless $ret == 0 ; 
       }
 
