@@ -72,7 +72,7 @@ class App extends Component {
 
 
  componentDidMount() {
-   axios.get('http://doc-pub-host:3000/prd_ysg_issues/srch/confs/%' , {
+   axios.get('http://doc-pub-host:3000/dev_ysg_issues/srch/confs/%' , {
       headers: { 
 			"Access-Control-Allow-Origin": "*" }
    	})

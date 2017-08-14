@@ -118,20 +118,6 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
          sort { $hsr->{$a}->{ $default_col_to_sort_by } <=> $hsr->{$b}->{ $default_col_to_sort_by } } keys (%$hsr)
          )  {
 
-#         if ( $rowid % 2 == 1 ) {
-#            $objFormat = $objWorkbook->add_format(
-#                'font'  => 'Lucida Console'
-#            );
-#            $objFormat->set_bg_color('silver') ; 
-#         }
-#         else {
-#            $objFormat = $objWorkbook->add_format(
-#                'font'  => 'Lucida Console'
-#            );
-#            $objFormat->set_bg_color('white') ; 
-#         }
-          
-
          my $hsr_row = $hsr->{ "$guid" } ; 
          $rowid = $rowid+1 ; 
 
@@ -140,6 +126,7 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
          #foreach my $colid ( sort ( keys ( %{$hsr_meta->{'ColumnNames'}} ) ) ) {
          foreach my $colid ( sort { $hsr_meta1->{$a}->{'attnum'} <=> $hsr_meta1->{$b}->{'attnum'}} keys (%$hsr_meta1)) {
             my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
+				next if $col_name eq 'guid' ; 
             # debug print "col_name $col_name \n" ; 
             # debug print "colid $colid \n" ; 
             push ( @row , $hsr_row->{ $col_name } ) ; 
@@ -155,6 +142,9 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
       # import data
       my @requests = ();
       my $idx = 0;
+
+
+
 
       for my $row (@rows) {
           push @requests, {
@@ -172,6 +162,7 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
       }
 
       # format a header row
+		# https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets#wrapstrategy
       push @requests, {
           repeatCell => {
               range => {
@@ -187,6 +178,7 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
                           blue  => 0.0,
                       },
                       horizontalAlignment => 'CENTER',
+							 wrapStrategy		=>  'WRAP',
                       textFormat => {
                           foregroundColor => {
                               red   => 1.0,
@@ -197,17 +189,34 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
                       },
                   },
               },
-              fields => 'userEnteredFormat(backgroundColor,textFormat,horizontalAlignment)',
+              fields => 'userEnteredFormat(backgroundColor,textFormat,horizontalAlignment,wrapStrategy)',
           },
       };
-
+		
+      # set txt wrap for all the data rows
+		# https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets#wrapstrategy
+      push @requests, {
+          repeatCell => {
+              range => {
+                  sheetId       => $sheet_prop->{sheetId},
+                  startRowIndex => 1,
+                  endRowIndex   => scalar ( @rows ) ,
+              },
+              cell => {
+                  userEnteredFormat => {
+							 wrapStrategy		=>  'WRAP',
+                  },
+              },
+              fields => 'userEnteredFormat(wrapStrategy)',
+          },
+      };
       ($content, $res) = $objGoogleService->request(
           POST => ':batchUpdate',
           {
               requests => \@requests,
           },
       );
-
+		
       $ret = 0 ; 
       $msg = 'google sheet write done' ; 
 

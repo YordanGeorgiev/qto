@@ -198,10 +198,10 @@ doCreateDefaultConfFile(){
 #------------------------------------------------------------------------------
 doCheckReadyToStart(){
 
-   test -f $cnf_file || doCreateDefaultConfFile 
+   test -f ${cnf_file-} || doCreateDefaultConfFile 
 
 	# check http://stackoverflow.com/a/677212/65706
-	# but which works for both cygwin and Ubuntu
+	# but which works for both cygwin and Ubuntu ?!
 	command -v zip 2>/dev/null || { echo >&2 "The zip binary is missing ! Aborting ..."; exit 1; }
 	which perl 2>/dev/null || { echo >&2 "The perl binary is missing ! Aborting ..."; exit 1; }
 
@@ -397,12 +397,12 @@ doSetVars(){
 	cd "$run_unit_bash_dir/"
 
    # start set default vars
-   #do_print_debug_msgs=0
+   # do_print_debug_msgs=0
    # stop set default vars
-
+   # set -x
 	test -z "${issue_tracker_project:-}" && doParseConfFile
-	test -z "$issue_tracker_project" || doSetUndefinedShellVarsFromCnfFile
-
+	#test -z "${issue_tracker_project:-}" || doSetUndefinedShellVarsFromCnfFile
+   # sleep 20
 
 	( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
@@ -445,7 +445,7 @@ doSetUndefinedShellVarsFromCnfFile(){
 	test -f "$product_instance_dir/$run_unit.$env_type.$host_name.cnf" \
 		&& cnf_file="$product_instance_dir/$run_unit.$env_type.$host_name.cnf"
 
-   test -z "${ini_section-}" && ini_section=MainSection
+   test -z "${INI_SECTION-}" && INI_SECTION=MainSection
 
    doLog "DEBUG reading: the following configuration file"
    doLog "DEBUG ""$cnf_file"
@@ -458,7 +458,7 @@ doSetUndefinedShellVarsFromCnfFile(){
       -e 's/^[[:space:]]*//' \
       -e "s/^\(.*\)=\([^\"']*\)$/\1=\"\2\"/" \
       < $cnf_file \
-      | sed -n -e "/^\[$ini_section\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
+      | sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
 
    # export the var_name=var_value pairs
    # debug set -x
@@ -468,7 +468,7 @@ doSetUndefinedShellVarsFromCnfFile(){
    # and post-register for nice logging
    ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
-   doLog "INFO added the following vars from section: [$ini_section]"
+   doLog "INFO added the following vars from section: [$INI_SECTION]"
    cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
    echo -e "$cmd"
    echo -e "$cmd" >> $log_file

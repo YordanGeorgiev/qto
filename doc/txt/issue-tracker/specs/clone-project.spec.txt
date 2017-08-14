@@ -17,6 +17,7 @@ doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/vel-dan.prd.doc-pub
 
 # create the new projects daily data root dir
 mkdir -p $proj_daily_data_root_dir
+export dir_to_morph=$proj_daily_data_root_dir
 
 # unzip the yesterday daily dir for the new project
 unzip -o $tgt_date.zip -d $proj_daily_data_root_dir/
@@ -27,7 +28,6 @@ cd -
 # morph the dir
 export to_srch=ysg
 export to_repl=vel-dan
-export dir_to_morph=$proj_daily_data_root_dir
 bash src/bash/issue-tracker/issue-tracker.sh -a morph-dir
 
 # start working again on the project to be cloned
