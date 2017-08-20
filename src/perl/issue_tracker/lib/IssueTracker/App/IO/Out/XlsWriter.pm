@@ -61,21 +61,30 @@ package IssueTracker::App::IO::Out::XlsWriter ;
 
 
       # print the headers  
+      my $nxt_colid = 1 ; 
+      # the format tof the title row
+      my $objFormat     =  $objWorkbook->add_format(
+         'color' => 'black'
+       , 'font'  => 'Lucida Console'
+       , 'bold'  => '1'
+      );
+
       foreach my $colid ( sort ( keys (  %{$hsr_meta->{ 'ColumnNames'}} ) ) ) {
 
          my $col_name      = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
          my $col_lenth     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attlen' } ; 
-         my $objFormat     =  $objWorkbook->add_format(
-            'color' => 'black'
-          , 'font'  => 'Lucida Console'
-          , 'bold'  => '1'
-         );
-         $objWorksheet->write(0, $colid, $col_name , $objFormat )  ; 
+         $objWorksheet->write(0, $colid-2, $col_name , $objFormat )  unless $colid == 1 ; 
 
          # set the initial widh of the column as the width of the title column
          $hsr_meta->{'ColumnWidths'}->{ $colid } = $col_lenth ; 
          $hsr_meta->{ 'ColumnWidths' }->{ $colid } = 60 if $col_lenth > 60 ; 
+         $nxt_colid++ ; 
       }
+     
+      # put the guid at the end
+      $hsr_meta->{'ColumnNames'}->{ $nxt_colid }->{ 'attname' } = 'guid' ;  
+      $hsr_meta->{ 'ColumnWidths' }->{ $nxt_colid } = 43 ; 
+      $objWorksheet->write(0, $nxt_colid-2, 'guid' , $objFormat )  ; 
 
       my $rowid = 0 ; 
       foreach my $guid ( sort { $hsr->{$a}->{ 'seq' } <=> $hsr->{$b}->{ 'seq' } } keys (%$hsr))  {
@@ -104,6 +113,7 @@ package IssueTracker::App::IO::Out::XlsWriter ;
 
 
          foreach my $colid ( sort ( keys ( %{$hsr_meta->{'ColumnNames'}} ) ) ) {
+            next if $colid == 1 ; # put the guid at the end
             my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
        
             my $cell_length = length ( $hsr_row->{ $col_name } ) || 10 ; 
@@ -127,8 +137,8 @@ package IssueTracker::App::IO::Out::XlsWriter ;
             # debug print "$col_name width is " . $hsr_meta->{ 'ColumnWidths' }->{ $colid } . "\n" ; 
 
             # $objWorksheet->set_column($colid, $colid, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
-            $objWorksheet->set_column($colid, $colid, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
-            $objWorksheet->write($rowid, $colid, $hsr_row->{ $col_name } , $objFormat )  ; 
+            $objWorksheet->set_column($colid, $colid-2, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
+            $objWorksheet->write($rowid, $colid-2, $hsr_row->{ $col_name } , $objFormat )  ; 
          }
          
       } 
