@@ -3,12 +3,12 @@
 # v1.0.9
 # ---------------------------------------------------------
 # the wrapper func for db to xls issues conversion
+# cat doc/txt/issue-tracker/funcs/db-to-xls.func.txt
 # ---------------------------------------------------------
 doDbToXls(){
 
 	doLog "DEBUG START doDbToXls"
 	
-	cat doc/txt/issue-tracker/funcs/db-to-xls.func.txt
 	
 	sleep "$sleep_interval"
 	# add your action implementation code here ... 

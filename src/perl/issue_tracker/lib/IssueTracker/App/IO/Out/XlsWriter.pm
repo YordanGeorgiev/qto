@@ -46,7 +46,7 @@ package IssueTracker::App::IO::Out::XlsWriter ;
 
 
       my $xls_file_name       = $ENV{'issue_tracker_project'} . '.' . $table . '.' . $nice_datetime ; 
-      my $xls_dir = $appConfig->{ 'xls_dir' } || $ENV{'proj_daily_data_root_dir'} . '/issues' . "/$year/$nice_month/$nice_date" ; 
+      my $xls_dir = $appConfig->{ 'xls_dir' } || $ENV{'proj_daily_data_root_dir'} . "/$year/$nice_month/$nice_date" ; 
       $objFileHandler->MkDir ( "$xls_dir" ) ; 
       my $xls_file         = "$xls_dir/$xls_file_name" . '.xlsx' ; 
 
@@ -63,8 +63,9 @@ package IssueTracker::App::IO::Out::XlsWriter ;
       # print the headers  
       foreach my $colid ( sort ( keys (  %{$hsr_meta->{ 'ColumnNames'}} ) ) ) {
 
-         my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
-         my $objFormat    =  $objWorkbook->add_format(
+         my $col_name      = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
+         my $col_lenth     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attlen' } ; 
+         my $objFormat     =  $objWorkbook->add_format(
             'color' => 'black'
           , 'font'  => 'Lucida Console'
           , 'bold'  => '1'
@@ -72,9 +73,9 @@ package IssueTracker::App::IO::Out::XlsWriter ;
          $objWorksheet->write(0, $colid, $col_name , $objFormat )  ; 
 
          # set the initial widh of the column as the width of the title column
-         $hsr_meta->{'ColumnWidths'}->{ $colid } = length ( $hsr_meta->{ 'ColumnNames'}->{ $colid } ) ; 
+         $hsr_meta->{'ColumnWidths'}->{ $colid } = $col_lenth ; 
+         $hsr_meta->{ 'ColumnWidths' }->{ $colid } = 60 if $col_lenth > 60 ; 
       }
-
 
       my $rowid = 0 ; 
       foreach my $guid ( sort { $hsr->{$a}->{ 'seq' } <=> $hsr->{$b}->{ 'seq' } } keys (%$hsr))  {
@@ -106,19 +107,24 @@ package IssueTracker::App::IO::Out::XlsWriter ;
             my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
        
             my $cell_length = length ( $hsr_row->{ $col_name } ) || 10 ; 
-            $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length || 10 ; 
-
             #define the max width 
             if ( $hsr_meta->{ 'ColumnWidths' }->{ $colid } < $cell_length ) {
                $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length ;                
             }
+            $hsr_meta->{ 'ColumnWidths' }->{ $colid } = 60 
+               if $hsr_meta->{ 'ColumnWidths' }->{ $colid } > 60 ; 
+
+
             unless ( 
                   defined ( $hsr_row ) 
                or defined ( $hsr_row->{ $col_name } ) 
                or $hsr_row->{ $col_name } ne 'NULL' ) {
-                  p( $hsr_row );
+                  # p( $hsr_row );
                   $hsr_row->{ $col_name } = '' ; 
             }
+
+            # to adjust the columns width debug as follows:
+            # debug print "$col_name width is " . $hsr_meta->{ 'ColumnWidths' }->{ $colid } . "\n" ; 
 
             # $objWorksheet->set_column($colid, $colid, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
             $objWorksheet->set_column($colid, $colid, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
@@ -128,8 +134,6 @@ package IssueTracker::App::IO::Out::XlsWriter ;
       } 
       #eof foreach row 
      
-      # does not work why ?! 
-      $self->autofit_columns ( $objWorksheet , $hsr_meta ) ; 
      
       $msg = 'STOP writing the xls file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
       $msg = $xls_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
@@ -139,22 +143,6 @@ package IssueTracker::App::IO::Out::XlsWriter ;
    }
    #eof sub doBuildXlsFromHashRef
 
-   
-   # Adjust the column widths to fit the longest string in the column
-   sub autofit_columns {
-    
-        my $self      = shift ; 
-        my $worksheet = shift;
-        my $hsr_meta  = shift ; 
-        my $col       = 0;
-    
-        for my $width (@{$worksheet->{'issue'}}) {
-           
-            $worksheet->set_column($col, $col, 40 ) if $width;
-            # $worksheet->set_column($col, $col, $hsr_meta->{'ColumnWidths'}->{ $col } ) if $width;
-            $col++;
-        }
-   }
    
 
  

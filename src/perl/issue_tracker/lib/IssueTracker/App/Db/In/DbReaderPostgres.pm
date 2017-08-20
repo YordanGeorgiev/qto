@@ -108,7 +108,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       my $str_sql          = q{} ;        # this is the sql string to use for the query
       
       $str_sql = " 
-         SELECT attnum, attname,attlen
+         SELECT attnum, attname, attlen
          FROM   pg_attribute
          WHERE  attrelid = '" . lc($table) . "'::regclass
          AND    attnum > 0
