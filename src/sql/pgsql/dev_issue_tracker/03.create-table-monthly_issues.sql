@@ -17,8 +17,8 @@ SELECT 'create the "monthly_issues" table'
     , planned_hours  decimal (6,2) NULL
     , actual_hours   decimal (6,2) NULL
     , update_time    timestamp DEFAULT NOW()
-    , updated_by     varchar (50) NULL
     , owner          varchar (50) NULL
+    , type           varchar (50) NOT NULL
     , CONSTRAINT pk_monthly_issues_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE

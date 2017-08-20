@@ -17,7 +17,6 @@ SELECT 'create the "daily_issues" table'
     , planned_hours  decimal (6,2) NULL
     , actual_hours   decimal (6,2) NULL
     , update_time    timestamp DEFAULT NOW()
-    , updated_by     varchar (50) NULL
     , owner          varchar (50) NULL
     , CONSTRAINT pk_daily_issues_guid PRIMARY KEY (guid)
     ) WITH (

@@ -13,7 +13,8 @@ doIncreaseDate(){
       && doExit "define a project by doParseIniEnvVars <<path-to-proj-conf-file>> !!!" && exit 1
 
    # if a relative path is passed add to the product version dir
-   [[ $proj_daily_data_root_dir == /* ]] || export proj_daily_data_root_dir="$product_instance_dir"/"$proj_daily_data_root_dir"
+   [[ $proj_daily_data_root_dir == /* ]] || \
+      export proj_daily_data_root_dir="$product_instance_dir"/"$proj_daily_data_root_dir"
 
    # find the latest project_daily_txt_dir
    latest_proj_daily_txt_dir=$(find "$proj_daily_data_root_dir" -type d|sort -nr | head -n 1|grep -v tmp)
@@ -44,12 +45,14 @@ doIncreaseDate(){
    
 	msg="using the following date: \"$tgt_date\""
   	doLog "INFO $msg"
-   
+  
+   # set -x
    # define the today's daily_txt_dir
-   tgt_days_monthly_data_dir="$proj_daily_data_root_dir"/"$(date "+%Y" -d "$tgt_date")"'/'$(date "+%Y-%m" -d "$tgt_date")
+   tgt_days_monthly_data_dir="$proj_daily_data_root_dir"/$(date "+%Y" -d "$tgt_date")
+   tgt_days_monthly_data_dir="$tgt_days_monthly_data_dir"/$(date "+%Y-%m" -d "$tgt_date")
    mkdir -p $tgt_days_monthly_data_dir
    tgt_dates_daily_data_dir="$tgt_days_monthly_data_dir"'/'$(date "+%Y-%m-%d" -d "$tgt_date")
-  
+ 
    error_msg="
    nothing can be done - as the daily dir : 
       $tgt_dates_daily_data_dir 
@@ -60,7 +63,6 @@ doIncreaseDate(){
    todays_tmp_dir=$tmp_dir/$(date "+%Y-%m-%d" -d "$tgt_date")    # becauses of vboxsf !!!
    cmd="cp -vr $latest_proj_daily_txt_dir $todays_tmp_dir/"
    doRunCmdOrExit "$cmd"
-
    cd $todays_tmp_dir
 
    # foreach sh or txt file
@@ -73,7 +75,7 @@ doIncreaseDate(){
       file_ext=$(echo $f|cut -d'.' -f 5); 
       # debug doLog "DEBUG file_ext: $file_ext"
 
-      mv -v "$f" '.'"$proj"."$table".`date "+%Y-%m-%d" -d "$tgt_date"`."$file_ext"
+      mv "$f" '.'"$proj"."$table".`date "+%Y-%m-%d" -d "$tgt_date"`."$file_ext"
    # obs works only on gnu find !
    done < <(find . -type f -regex ".*\.\(sh\|txt\)")
   
@@ -92,7 +94,7 @@ doIncreaseDate(){
       file_ext=$(echo $f|cut -d'.' -f 5); 
       # debug doLog "DEBUG file_ext: $file_ext"
 
-      mv -v "$f" '.'"$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
+      mv "$f" '.'"$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
    done < <(find . -type f -name "*.xlsx")
 
    # search and replace the daily

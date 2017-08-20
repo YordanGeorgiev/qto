@@ -2,13 +2,12 @@
 
 # v1.0.9
 # ---------------------------------------------------------
-# todo: add doSpecCloneProject comments ...
+# cat doc/txt/issue-tracker/specs/clone-project.spec.txt
 # ---------------------------------------------------------
 doSpecCloneProject(){
 
 	doLog "DEBUG START doSpecCloneProject"
 	
-	cat doc/txt/issue-tracker/specs/clone-project.spec.txt
 	
 	sleep "$sleep_interval"
 	# add your action implementation code here ... 

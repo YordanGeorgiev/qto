@@ -56,12 +56,9 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
       # debug ok p($hsr ) if $module_trace == 1 ; 
       # debug p ( $hsr_meta )  ; 
 
-
       # https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/request
       my @rows = () ; 
-
       my($content, $res);
-
       my $title = $table ;       # by convention the name of the db table is the same as the xls sheet name
       my $sheet = $objGoogleService->get_sheet(title => $title);
 
@@ -108,6 +105,7 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
          # debug print "\$colid is $colid \n" ; 
          my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
          $flg_found_default_col_to_sort_by++ if $col_name eq $default_col_to_sort_by ; 
+         next if $col_name eq 'guid' ; 
          push ( @row , $col_name ) ; 
       }
       push ( @rows , \@row ) ; 
@@ -118,6 +116,7 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
          sort { $hsr->{$a}->{ $default_col_to_sort_by } <=> $hsr->{$b}->{ $default_col_to_sort_by } } keys (%$hsr)
          )  {
 
+
          my $hsr_row = $hsr->{ "$guid" } ; 
          $rowid = $rowid+1 ; 
 
@@ -126,9 +125,9 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
          #foreach my $colid ( sort ( keys ( %{$hsr_meta->{'ColumnNames'}} ) ) ) {
          foreach my $colid ( sort { $hsr_meta1->{$a}->{'attnum'} <=> $hsr_meta1->{$b}->{'attnum'}} keys (%$hsr_meta1)) {
             my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
-				next if $col_name eq 'guid' ; 
             # debug print "col_name $col_name \n" ; 
             # debug print "colid $colid \n" ; 
+            next if $col_name eq 'guid' ; 
             push ( @row , $hsr_row->{ $col_name } ) ; 
             # $objWorksheet->write($rowid, $colid, $hsr_row->{ $col_name } , $objFormat )  ; 
          }
@@ -142,9 +141,6 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
       # import data
       my @requests = ();
       my $idx = 0;
-
-
-
 
       for my $row (@rows) {
           push @requests, {
@@ -162,7 +158,6 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
       }
 
       # format a header row
-		# https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets#wrapstrategy
       push @requests, {
           repeatCell => {
               range => {
@@ -192,7 +187,7 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
               fields => 'userEnteredFormat(backgroundColor,textFormat,horizontalAlignment,wrapStrategy)',
           },
       };
-		
+      
       # set txt wrap for all the data rows
 		# https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets#wrapstrategy
       push @requests, {
@@ -210,37 +205,20 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
               fields => 'userEnteredFormat(wrapStrategy)',
           },
       };
+
       ($content, $res) = $objGoogleService->request(
           POST => ':batchUpdate',
           {
               requests => \@requests,
           },
       );
-		
+
       $ret = 0 ; 
       $msg = 'google sheet write done' ; 
 
       return ( $ret , $msg ) ; 
    }
    #eof sub doBuildXlsFromHashRef
-
-   
-   # Adjust the column widths to fit the longest string in the column
-   sub autofit_columns {
-    
-        my $self      = shift ; 
-        my $worksheet = shift;
-        my $hsr_meta  = shift ; 
-        my $col       = 0;
-    
-        for my $width (@{$worksheet->{'issue'}}) {
-           
-            $worksheet->set_column($col, $col, 40 ) if $width;
-            # $worksheet->set_column($col, $col, $hsr_meta->{'ColumnWidths'}->{ $col } ) if $width;
-            $col++;
-        }
-   }
-   
 
  
    # 

@@ -15,8 +15,8 @@ SELECT 'create the "decadally_issues" table'
     , start_time     text NULL
     , stop_time      text NULL
     , update_time    timestamp DEFAULT NOW()
-    , updated_by     varchar (50) NULL
     , owner          varchar (50) NULL
+    , type           varchar (50) NULL
     , CONSTRAINT pk_decadally_issues_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE

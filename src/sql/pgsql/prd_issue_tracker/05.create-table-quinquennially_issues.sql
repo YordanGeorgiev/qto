@@ -15,7 +15,6 @@ SELECT 'create the "quinquennially_issues" table'
     , start_time     text NULL
     , stop_time      text NULL
     , update_time    timestamp DEFAULT NOW()
-    , updated_by     varchar (50) NULL
     , owner          varchar (50) NULL
     , CONSTRAINT pk_quinquennially_issues_guid PRIMARY KEY (guid)
     ) WITH (
