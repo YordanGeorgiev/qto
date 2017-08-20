@@ -221,14 +221,6 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          $str_sql_insert .= '( ' . $str_col_list . ') VALUES (' . $str_val_list . ');' . "\n" ; 
 
 
-			# how-to upsert: https://stackoverflow.com/a/36799500/65706
-			# INSERT INTO category_gallery (
-			#  category_id, gallery_id, create_date, create_by_user_id
-			#  ) VALUES ($1, $2, $3, $4)
-			#  ON CONFLICT (category_id, gallery_id)
-			#  DO UPDATE SET
-			#    last_modified_date = EXCLUDED.create_date,
-			#    last_modified_by_user_id = EXCLUDED.create_by_user_id ;
 
          $str_col_list = '' ; 
          $str_val_list = '' ; 
@@ -341,9 +333,11 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          ( $ret , $msg , $hs_headers ) = $objDbReader->doSelectTablesColumnList ( $table ) ; 
          return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
-         #debug p($hs_headers ) ; 
 
          my $hs_table = $hsr2->{ $table } ; 
+         #p $hs_headers ;  
+         # p $hs_table->{ 0 } ; 
+         #debug p($hs_headers ) ; 
      
          eval { 
             $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
@@ -370,9 +364,10 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
          foreach my $col_num ( sort ( keys %{$hs_headers} )) {
             my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
-            next if $column_name eq 'guid' ; 
             next if $column_name eq 'update_time' ; 
-            $sql_str_insrt .= " $column_name " . ' , ' ; 
+               # if the xls does not contain the guid's do just insert
+            $sql_str_insrt .= " $column_name " . ' , ' 
+               if exists $hs_table->{ 0 }->{ $column_name } ; 
          } 
          
          for (1..3) { chop ( $sql_str_insrt) } ; 
@@ -394,10 +389,11 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
             foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
 
                my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
-               next if $column_name eq 'guid' ; 
-               next if $column_name eq 'update_time' ; 
-               my $cell_value = $hs_row ->{ $column_name } ; 
+               # if the xls does not have the table column ( ie guid )
+               next unless exists $hs_table->{ 0 }->{ $column_name } ; 
 
+               my $cell_value = $hs_row ->{ $column_name } ; 
+               # if the xls does not contain the guid's do just insert
                if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
                      or $cell_value eq 'null' or $cell_value eq "'NULL'" ) {
 
@@ -417,7 +413,32 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
             for (1..3) { chop ( $data_str ) } ; 
             
             $sql_str .= $sql_str_insrt ;  
-            $sql_str	.=  " VALUES (" . "$data_str" . ') ; ' . "\n" ; 
+            $sql_str	.=  " VALUES (" . "$data_str" . ') ' ; 
+
+            # if the xls has guid column do upsert
+            if ( $hs_table->{0}->{ 'guid' } ) {
+
+               $sql_str	.=  "\n ON CONFLICT ( guid ) \n" ; 
+               $sql_str	.=  " DO UPDATE SET \n" ; 
+            
+               # how-to upsert: https://stackoverflow.com/a/36799500/65706
+               # INSERT INTO category_gallery (
+               #  category_id, gallery_id, create_date, create_by_user_id
+               #  ) VALUES ($1, $2, $3, $4)
+               #  ON CONFLICT (category_id, gallery_id)
+               #  DO UPDATE SET
+               #    last_modified_date = EXCLUDED.create_date,
+               #    last_modified_by_user_id = EXCLUDED.create_by_user_id ;
+
+               foreach my $col_num ( sort ( keys %{$hs_headers} )) {
+                  my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
+                  next if $column_name eq 'update_time' ; 
+                  $sql_str .= " $column_name " . '= EXCLUDED.' . $column_name . ' , ' ; 
+               } 
+               # remove the " , " at the end 
+               for (1..3) { chop ( $sql_str ) } ; 
+            }
+            $sql_str .= '; ' . "\n" ; 
 
          } 
          #eof foreach row

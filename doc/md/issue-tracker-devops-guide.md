@@ -12,6 +12,7 @@ Table of Contents
       * [1.4.2. Start the psql client as the postgres shell user](#142-start-the-psql-client-as-the-postgres-shell-user)
       * [1.4.3. Create the pgsql user ](#143-create-the-pgsql-user-)
       * [1.4.4. add the uuid generation capability enabling extension](#144-add-the-uuid-generation-capability-enabling-extension)
+      * [1.4.5. Install the dblink extension as follows](#145-install-the-dblink-extension-as-follows)
     * [1.5. Install the perl modules ( optional)](#15-install-the-perl-modules-(-optional))
   * [2. MAINTENANCE AND OPERATIONS](#2-maintenance-and-operations)
     * [2.1. RDBMS Runstate management](#21-rdbms-runstate-management)
@@ -54,16 +55,15 @@ Table of Contents
 ### 1.1. Configure the Ubuntu repositories
 Configure the Ubuntu repositories
 
-    # creae the following repo list file
-    sudo vim /etc/apt/sources.list.d/pgdg.list
+    sudo add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
     
-    # add the following line in it:
-    deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main
+    sudo apt-get update
+    sudo apt-get install postgresql-9.6
 
 ### 1.2. Add the media keys
 Add the media keys as follows:
 
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc |   sudo apt-key add -
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 
 ### 1.3. Install the postgre package with apt
 Install the postgre package with apt
@@ -132,6 +132,11 @@ add the uuid generation capability enabling extension
     sudo su - postgres  -c "psql template1 -c 'CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";'"
     
     sudo su - postgres  -c "psql template1 -c 'CREATE EXTENSION IF NOT EXISTS \"pgcrypto\";'"
+
+#### 1.4.5. Install the dblink extension as follows
+Install the dblink extension as follows
+
+    sudo su - postgres  -c "psql template1 -c 'CREATE EXTENSION IF NOT EXISTS \"dblink\";'"
 
 ### 1.5. Install the perl modules ( optional)
 Install the perl module by first installing the server development package
@@ -274,7 +279,10 @@ Check a single item with your browser, for example:
 http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
 
     # load the items
-    while read -r f; do export xls_file=$f; bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db  ; done < <(find $proj_daily_data_root_dir -type f)
+    while read -r f; do 
+    export xls_file=$f; 
+    bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db  ; 
+    done < <(find $proj_txt_dir -type f)
     
     # verify the data
     psql -d $db_name -c "SELECT * FROM company_eps "
