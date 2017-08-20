@@ -16,6 +16,7 @@ Table of Contents
     * [1.5. Track issues relations](#15-track-issues-relations)
     * [1.6. Access issues txt format from email](#16-access-issues-txt-format-from-email)
     * [1.7. Access issues data from Google sheet](#17-access-issues-data-from-google-sheet)
+    * [1.8. Project's persons issue combinations](#18-project's-persons-issue-combinations)
   * [2. SYSADMIN PERSPECTIVE](#2-sysadmin-perspective)
     * [2.1. System deployability](#21-system-deployability)
     * [2.2. System performance](#22-system-performance)
@@ -50,6 +51,8 @@ load-by-txt-to-db-action)
           * [3.3.1.1. Load issues file from file system to db](#3311-load-issues-file-from-file-system-to-db)
       * [3.3.2. Load issues by db-to-xls action](#332-load-issues-by-db-to-xls-action)
       * [3.3.3. Load issues by xls-to-db action](#333-load-issues-by-xls-to-db-action)
+          * [3.3.3.1. Load issues by xls-to-db action for insert or upset](#3331-load-issues-by-xls-to-db-action-for-insert-or-upset)
+          * [3.3.3.2. Load issues by xls-to-db action by truncating or not the loadable table](#3332-load-issues-by-xls-to-db-action-by-truncating-or-not-the-loadable-table)
       * [3.3.4. Load issues by db-to-txt](#334-load-issues-by-db-to-txt)
           * [3.3.4.1. xls-to-db action load sort by issues prio attribute](#3341-xls-to-db-action-load-sort-by-issues-prio-attribute)
           * [3.3.4.2. db-to-txt action load sort by issues start_time attribute](#3342-db-to-txt-action-load-sort-by-issues-start_time-attribute)
@@ -119,8 +122,9 @@ I wanto to be able to monitor the metrics of the issues.
 
 ### 1.3. Track issues history
 As an issues-manager 
-In order to keep track on what and when was planned 
-I wanto to be able to keep track on daily basis what was planned on a project daily, weekly, monthly, yearly and decadally issues. 
+In order to keep track on what and when was planned on daily basis
+I wanto to be able to keep track what was planned on a project term  - day,week,month,year,quinquennial or decade  
+
 
     
 
@@ -133,8 +137,8 @@ I wanto to be able to save their start_time and stop_time per issue in every pos
 
 #### 1.4.1. time centric planning
 As an issues-manager 
-In order to be able to plan the issues data for a certain day
-I wanto to be able to perform all the features of the issue-tracker on that specific day regardless whether it is today , in the past or in the future
+In order to be able to plan the issues data for a certain term - day,week,month,year,quinquennial or decade
+I wanto to be able to perform all the features of the issue-tracker on that specific period regardless whether it is today , in the past or in the future
 
     bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d today
     bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d tomorrow
@@ -142,7 +146,7 @@ I wanto to be able to perform all the features of the issue-tracker on that spec
 
 #### 1.4.2. time centric reporting
 As an issues-manager 
-In order to be able to report the issues data for a certain day
+In order to be able to report the issues data for for a certain term - day,week,month,year,quinquennial or decade
 I wanto to be able to perform all the features of the issue-tracker on that specific day regardless whether it is today , in the past or in the future
 
     bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d yesterday
@@ -166,6 +170,13 @@ I wanto to be able to send each period txt file from the daily folder via gmail.
 As the biz user  of the issue tracker tool 
 In order to be able to share and edit the data with multiple users authenticated within the Google eco system
 I wanto to be able to access , edit and update the issues data from google sheeet
+
+    
+
+### 1.8. Project's persons issue combinations
+As the project manager  of an issue-tracker project 
+In order to be able to quickly and reliably combine the reported hours by the project's people
+I wanto to be able to read their issue-tracker formatted google sheets and combine them into a single project's google issue-tracker sheet
 
     
 
@@ -408,7 +419,23 @@ in order to store my issues in structured form to db for further processing afte
 I want to be able to load my latest xls file with a single line shell call to a db 
 by choosing the names of the tables to load 
 
-    
+     
+
+##### 3.3.3.1. Load issues by xls-to-db action for insert or upset
+As an cli user of the System 
+in order to insert or upsert my issues in structured form to db for further processing after being sorted in Excel
+I want to be able to load my latest xls file with a single line shell call to a db 
+by choosing the names of the tables to load and specifying upsert by adding the guid column to the xls sheet 
+
+     
+
+##### 3.3.3.2. Load issues by xls-to-db action by truncating or not the loadable table
+As an cli user of the System 
+in order to store my issues in structured form to db for further processing after being sorted in Excel
+I want to be able to load my latest xls file with a single line shell call to a db 
+by choosing the names of the tables to load 
+
+     
 
 #### 3.3.4. Load issues by db-to-txt
 As an cli user of the System 
@@ -557,7 +584,7 @@ I want to be able to move issues data from one project to another via the UI
 
 ### 4.4. Issues export to Google calendar
 As the UI user of an issue-tracker instance 
-In order to be able to visualize and manage my issues better 
+In order to be able to visualize and manage my start- and stop_time having issues better 
 I wanto to be able to export my issues to Google calendar 
 
 
@@ -565,7 +592,7 @@ I wanto to be able to export my issues to Google calendar
 
 ### 4.5. Issues import from Google calendar
 As the UI user of an issue-tracker instance 
-In order to be able to visualize and manage my issues better 
+In order to be able to visualize and manage my my start- and stop_time having issues better 
 I wanto to be able to import my Google calendar issues into my issue-tracker profile on an issue-tracker instance
 
     

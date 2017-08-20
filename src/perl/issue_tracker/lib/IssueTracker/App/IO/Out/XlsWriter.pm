@@ -115,6 +115,7 @@ package IssueTracker::App::IO::Out::XlsWriter ;
          foreach my $colid ( sort ( keys ( %{$hsr_meta->{'ColumnNames'}} ) ) ) {
             next if $colid == 1 ; # put the guid at the end
             my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
+
        
             my $cell_length = length ( $hsr_row->{ $col_name } ) || 10 ; 
             #define the max width 

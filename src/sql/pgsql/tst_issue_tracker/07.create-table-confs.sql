@@ -7,10 +7,11 @@ SELECT 'create the "confs" table'
     , seq            integer NULL
     , prio           integer NULL
     , category       varchar (200) NOT NULL
-    , status         varchar (50) NOT NULL
     , name           varchar (200) NOT NULL
     , value          varchar (4000)
     , description    varchar (4000)
+    , owner          varchar (50) NULL
+    , update_time    timestamp DEFAULT NOW()
     , CONSTRAINT pk_confs_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE

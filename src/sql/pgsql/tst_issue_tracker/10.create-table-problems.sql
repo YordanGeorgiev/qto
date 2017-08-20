@@ -12,8 +12,8 @@ SELECT 'create the "problems" table'
     , name           varchar (200) NOT NULL
     , description    varchar (4000) NOT NULL
     , solution_proposal varchar (4000) NULL
-    , update_time    timestamp DEFAULT NOW()
     , owner          varchar (50) NULL
+    , update_time    timestamp DEFAULT NOW()
     , CONSTRAINT pk_problems_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE

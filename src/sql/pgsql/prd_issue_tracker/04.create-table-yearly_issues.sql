@@ -14,8 +14,9 @@ SELECT 'create the "yearly_issues" table'
     , description    varchar (4000)
     , start_time     text NULL
     , stop_time      text NULL
-    , update_time    timestamp DEFAULT NOW()
+    , type           varchar (50) NOT NULL
     , owner          varchar (50) NULL
+    , update_time    timestamp DEFAULT NOW()
     , CONSTRAINT pk_yearly_issues_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE

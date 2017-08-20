@@ -364,7 +364,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 
          foreach my $col_num ( sort ( keys %{$hs_headers} )) {
             my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
-            next if $column_name eq 'update_time' ; 
+            # next if $column_name eq 'update_time' ; 
                # if the xls does not contain the guid's do just insert
             $sql_str_insrt .= " $column_name " . ' , ' 
                if exists $hs_table->{ 0 }->{ $column_name } ; 
@@ -373,6 +373,8 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
          for (1..3) { chop ( $sql_str_insrt) } ; 
          $sql_str_insrt	.= ')' ; 
 
+         my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+		   my $update_time      = $objTimer->GetHumanReadableTime();
          foreach my $row_num ( sort ( keys %$hs_table ) ) { 
 
             next if $row_num == 0 ; 
@@ -393,6 +395,8 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
                next unless exists $hs_table->{ 0 }->{ $column_name } ; 
 
                my $cell_value = $hs_row ->{ $column_name } ; 
+               $cell_value = $update_time if $column_name eq 'update_time' ; 
+               
                # if the xls does not contain the guid's do just insert
                if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
                      or $cell_value eq 'null' or $cell_value eq "'NULL'" ) {
