@@ -19,6 +19,7 @@ doMojoMorboStart(){
    netstat -tulpn | grep issue_tracker
 
    cd src/react/conf-srch/ ; 
+   test -d node_modules || npm install
    yarn start &
    cd -
    doLog "DEBUG STOP  doMojoMorboStart"

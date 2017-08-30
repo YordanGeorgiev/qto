@@ -134,13 +134,13 @@ package IssueTracker::App::RAM::ConverterHsr2ToTxt ;
       $hsrStatus = {
            'eval'    => '01-eval'      # evaluate whether or not to do it
          , 'todo'    => '02-todo'      # must do it till the end of the period
+         , 'late'    => '02-late'      # must do it till the end of the period
          , 'rem'     => '02-rem'       # remember to act till the end of the period
          , 'wip'     => '03-wip'       # is work in progress - aka is being done right now
          , 'act'     => '03-act'       # is being actively done , aka more of an activity type
          , 'actv'    => '03-actv'      # is being actively done , aka more of an activity type
          , 'disg'    => '03-disg'      # to disgard - a more positive
          , 'diss'    => '04-diss'      # to dissmiss - a more negative
-         , 'late'    => '04-late'      # too late
          , 'fail'    => '04-fail'      # to failmiss or disgard
          , 'test'    => '05-test'      # to test some implementation
          , 'tst'     => '05-tst'       # to test some implementation

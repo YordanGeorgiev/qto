@@ -26,7 +26,7 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
 	use IssueTracker::App::Utils::Logger ;
    use IssueTracker::App::Utils::Timer ; 
 
-   our $module_trace       = 0 ; 
+   our $module_trace       = 1 ; 
    our $IsUnitTest         = 0 ; 
    our $appConfig          = {} ; 
    our $objLogger          = {} ; 
@@ -106,8 +106,11 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
          my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
          $flg_found_default_col_to_sort_by++ if $col_name eq $default_col_to_sort_by ; 
          next if $col_name eq 'guid' ; 
+         next if $col_name eq 'planned_hours' ; 
+         next if $col_name eq 'actual_hours' ; 
          push ( @row , $col_name ) ; 
       }
+         push ( @row , 'guid' );
       push ( @rows , \@row ) ; 
       $default_col_to_sort_by = 'seqid' if $flg_found_default_col_to_sort_by == 0 ; 
 
@@ -128,14 +131,17 @@ package IssueTracker::App::IO::Out::GSheetWriter ;
             # debug print "col_name $col_name \n" ; 
             # debug print "colid $colid \n" ; 
             next if $col_name eq 'guid' ; 
+            next if $col_name eq 'planned_hours' ; 
+            next if $col_name eq 'actual_hours' ; 
             push ( @row , $hsr_row->{ $col_name } ) ; 
             # $objWorksheet->write($rowid, $colid, $hsr_row->{ $col_name } , $objFormat )  ; 
          }
+         push ( @row , $hsr_row->{ 'guid' } ) ; 
          push ( @rows , \@row ) ; 
       } 
       #eof foreach row 
       
-      p(@rows ) ; 
+      p(@rows ) if $module_trace == 1 ; 
 
       $rowid++ ; 
       # import data

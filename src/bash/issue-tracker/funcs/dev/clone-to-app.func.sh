@@ -15,7 +15,10 @@ doCloneToApp(){
 	tgt_environment_name=$(echo $tgt_environment_name | perl -ne "s/$env_type/dev/g;print")
 	tgt_product_dir=$product_base_dir/$tgt_app
 	tgt_product_instance_dir=$tgt_product_dir/$tgt_environment_name
+
 	mkdir -p $tgt_product_instance_dir 
+	[[ $? -eq 0 ]] || \
+      doExit 2 "ERROR --- cannot create the tgt_product_instance_dir: $tgt_product_instance_dir !"
 
 	# remove everything from the tgt product version dir - no extra files allowed !!!
 	rm -fvr $tgt_product_instance_dir

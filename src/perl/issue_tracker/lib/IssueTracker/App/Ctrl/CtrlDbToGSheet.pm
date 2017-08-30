@@ -2,7 +2,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGSheet ;
 
 	use strict; use warnings;
 
-	my $VERSION = '1.0.0';    
+	my $VERSION = '1.2.0';    
 
 	require Exporter;
 	our @ISA = qw(Exporter);
@@ -53,7 +53,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGSheet ;
    sub doReadAndLoad {
 
       my $self                = shift ; 
-      my $issues_file          = shift ; 	
+      my $issues_file         = shift ; 	
 
       my $ret                 = 1 ; 
       my $msg                 = 'unknown error while loading db issues to xls file' ; 
@@ -68,11 +68,16 @@ package IssueTracker::App::Ctrl::CtrlDbToGSheet ;
                              , 'https://www.googleapis.com/auth/drive'
                              , 'https://spreadsheets.google.com/feeds'
                              ],
-# https://www.googleapis.com/auth/drive	View and manage the files in your Google D# # i# rive
-# https://www.googleapis.com/auth/drive.file	View and manage Google Drive files and folders that you have opened or created with this app
-# https://www.googleapis.com/auth/drive.readonly	View the files in your Google Drive
-# https://www.googleapis.com/auth/spreadsheets	View and manage your spreadsheets in Google Drive
-# https://www.googleapis.com/auth/spreadsheets.readonly	View your Google Spreadsheets
+      # https://www.googleapis.com/auth/drive	
+      # View and manage the files in your Google D# # i# rive
+      # https://www.googleapis.com/auth/drive.file	
+      # View and manage Google Drive files and folders that you have opened or created with this app
+      # https://www.googleapis.com/auth/drive.readonly	
+      # View the files in your Google Drive
+      # https://www.googleapis.com/auth/spreadsheets	
+      # View and manage your spreadsheets in Google Drive
+      # https://www.googleapis.com/auth/spreadsheets.readonly	
+      # View your Google Spreadsheets
       );
 
       my $url = $oauth2->authorize_url();
@@ -90,27 +95,25 @@ package IssueTracker::App::Ctrl::CtrlDbToGSheet ;
       print "\$code is $code" ; 
       sleep 3 ; 
 
-      # binmode STDOUT, ":encoding(utf8)";
       
-      # my $code = prompt('x', 'paste code: ', '', '');
       my $objToken = $oauth2->get_access_token($code);
       my $refresh_token = $objToken->refresh_token ; 
 
-      # debug p ( $objToken ) ; 
-      #
+
       my $client_id        = $ENV{ 'CLIENT_ID' } ; 
       my $client_secret    = $ENV{ 'CLIENT_SECRET' } ; 
       my $spread_sheet_id  = $ENV{ 'google_spread_sheet_id' }  ; 
-      
-      p( $objToken ) ; 
-      print "start my refresh token is : \n" ; 
-      p( $objToken ) ; 
-      print "my client id is : $client_id \n" ; 
-      print "my client secret is : $client_secret \n" ; 
-      print "my google_spread_sheet_id is : $spread_sheet_id \n" ; 
-      print "stop  my refresh token is : \n" ; 
-      p($refresh_token ) ; 
-      sleep 10 ; 
+     
+      if ( $module_trace == 1 ) {
+         p ( $objToken ) ; 
+         print "start my refresh token is : \n" ; 
+         p( $objToken ) if $module_trace == 1 ; 
+         print "my client id is : $client_id \n" ; 
+         print "my client secret is : $client_secret \n" ; 
+         print "my google_spread_sheet_id is : $spread_sheet_id \n" ; 
+         print "stop  my refresh token is : \n" ; 
+         p($refresh_token ) ; 
+      }
 
       my $objGoogleService = Net::Google::Spreadsheets::V4->new(
             client_id      => $client_id
@@ -118,9 +121,12 @@ package IssueTracker::App::Ctrl::CtrlDbToGSheet ;
           , refresh_token  => $refresh_token 
           , spreadsheet_id => $spread_sheet_id
       );
-      print "start debuggin the \$objGoogleService \n" ; 
-      p ( $objGoogleService ) ; 
-      print "stop  debuggin the \$objGoogleService \n" ; 
+
+      if ( $module_trace == 1 ) {
+         print "start debuggin the \$objGoogleService \n" ; 
+         p ( $objGoogleService ) ; 
+         print "stop  debuggin the \$objGoogleService \n" ; 
+       }
 
       for my $table ( @tables ) { 
 

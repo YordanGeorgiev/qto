@@ -1,6 +1,5 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
-src/perl/scripts/poc/google_sheet_via_oauth.pl
 src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 src/bash/issue-tracker/bootstrap-issue-tracker.sh
 src/bash/issue-tracker/issue-tracker.sh
@@ -620,3 +619,4 @@ doc/txt/issue-tracker/tests/mojo-morbo-stop.test.txt
 doc/txt/issue-tracker/specs/mojo-morbo-stop.spec.txt
 doc/txt/issue-tracker/helps/mojo-morbo-stop.help.txt
 doc/txt/issue-tracker/funcs/mojo-morbo-stop.func.txt
+src/react/conf-srch/package-lock.json
