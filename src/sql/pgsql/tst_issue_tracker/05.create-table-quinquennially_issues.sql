@@ -15,6 +15,8 @@ SELECT 'create the "quinquennially_issues" table'
     , start_time     text NULL
     , stop_time      text NULL
     , type           varchar (50) NOT NULL
+    , planned_hours  decimal (6,2) NULL
+    , actual_hours   decimal (6,2) NULL
     , owner          varchar (50) NULL
     , update_time    timestamp DEFAULT NOW()
     , CONSTRAINT pk_quinquennially_issues_guid PRIMARY KEY (guid)

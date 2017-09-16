@@ -13,7 +13,7 @@ export tgt_date=$(date --date="-1 day" "+%Y-%m-%d")
 while read -r f ; do zip $tgt_date.zip $f ; done < <(find "$(date "+%Y" -d "$tgt_date")"'/'$(date "+%Y-%m" -d "$tgt_date")/$(date "+%Y-%m-%d" -d "$tgt_date"))
 
 # load the newly defined cloned project dir
-doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/csitea.prd.doc-pub-host.cnf
+doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/aspark-starter.prd.doc-pub-host.cnf
 
 # create the new projects daily data root dir
 mkdir -p $proj_daily_data_root_dir
@@ -27,11 +27,11 @@ cd -
 
 # morph the dir
 export to_srch=ysg
-export to_repl=csitea
+export to_repl=aspark-starter
 bash src/bash/issue-tracker/issue-tracker.sh -a morph-dir
 
 # start working again on the project to be cloned
-doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/csitea.prd.doc-pub-host.cnf
+doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/aspark-starter.prd.doc-pub-host.cnf
 
 # and increase the dat
 bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d today

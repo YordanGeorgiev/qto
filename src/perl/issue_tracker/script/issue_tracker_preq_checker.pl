@@ -11,7 +11,7 @@ use ExtUtils::Installed;
 #  test $ret -ne 0 && doExit 1 "[FATAL] perl modules not found!!!"
 
 my $PrintOkCheck = 1;
-
+doCheckUbuntuOSPackages();
 # check that all the required modules are installed
 my ($ret, $msg) = doCheckRequiredModules();
 
@@ -43,6 +43,21 @@ sub doListAllInstalledModules {
 
 #eof sub
 
+sub doCheckUbuntuOSPackages {
+
+  my @ospackages = qw(
+   libxml-atom-perl
+   postgresql-9.6
+   libdbd-pgsql
+  );
+
+  for (@ospackages) {
+   my $cmd="sudo apt-get install -y $_ \n" ; 
+   `$cmd` ; 
+  }
+
+}
+
 
 sub doCheckRequiredModules {
 
@@ -53,16 +68,15 @@ sub doCheckRequiredModules {
     File::Copy
     File::Find
     File::Path
+    Term::Prompt
     Excel::Writer::XLSX
     Spreadsheet::ParseExcel
     Spreadsheet::XLSX
-    DBD::Pg
     Spreadsheet::ParseExcel::FmtJapan
-    Text::CSV_XS;
-    Net::Google::Spreadsheets::V4
     Net::Google::DataAPI::Auth::OAuth2
-    Term::Prompt
+    Net::Google::Spreadsheets::V4
     Net::Google::Spreadsheets;
+    Text::CSV_XS
   );
 
   for (@modules) {
