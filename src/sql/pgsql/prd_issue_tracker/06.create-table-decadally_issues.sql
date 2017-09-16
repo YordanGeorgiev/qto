@@ -14,6 +14,8 @@ SELECT 'create the "decadally_issues" table'
     , description    varchar (4000)
     , start_time     text NULL
     , stop_time      text NULL
+    , planned_hours  decimal (6,2) NULL
+    , actual_hours   decimal (6,2) NULL
     , type           varchar (50) NULL
     , owner          varchar (50) NULL
     , update_time    timestamp DEFAULT NOW()
