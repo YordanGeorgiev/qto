@@ -523,7 +523,7 @@ if you don't export anything, such as for a purely object-oriented module.
 		my	$msg 		= shift || 'null uuid passed' ; 
 		 
 		$msg = $self->doBuildRunLogMsg( $msg );
-      my $RunLogFile = $appConfig->{ 'RunLogFile' } || $ENV{'run_log_file' } ; 		
+      my $RunLogFile = $appConfig->{ 'RunLogFile' } || $ENV{'run_log_file' } || "$0.log" ; 
 		$self->doAppendToFile ( $RunLogFile, "$msg" );
 
 	}

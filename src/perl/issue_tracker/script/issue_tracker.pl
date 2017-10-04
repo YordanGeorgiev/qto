@@ -64,7 +64,7 @@ use IssueTracker::App::Ctrl::Dispatcher;
 # give a full stack dump on any untrapped exceptions
 local $SIG{__DIE__} = sub {
   $0 = basename($0);    # shorter messages
-  confess "Uncaught exception: @_" unless $^S;
+  confess "\n\n\n FATAL Uncaught exception: @_" unless $^S;
 };
 
 # now promote run-time warnings into stackdumped exceptions
@@ -72,8 +72,8 @@ local $SIG{__DIE__} = sub {
 #   case just generate a clucking stackdump instead
 local $SIG{__WARN__} = sub {
   $0 = basename($0);    # shorter messages
-  if   ($^S) { cluck "Trapped warning: @_" }
-  else       { confess "Deadly warning: @_" }
+  if   ($^S) { cluck "\n\n FATAL Trapped warning: @_" }
+  else       { confess "\n\n FATAL Deadly warning: @_" }
 };
 
 

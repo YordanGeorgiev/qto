@@ -9,7 +9,7 @@ doTxtToDb(){
 	doLog "DEBUG START doTxtToDb"
 	
 	# cat doc/txt/issue-tracker/funcs/txt-to-db.func.txt
-   test -z ${issues_order_by_attribute+x} && export issues_order_by_attribute=prio
+   test -z ${items_order_by_attribute+x} && export items_order_by_attribute=prio
    test -z ${period+x} && export period=daily
 	sleep "$sleep_interval"
 	# add your action implementation code here ... 
@@ -25,7 +25,7 @@ doTxtToDb(){
 
    psql -d "$db_name" -c '
    SELECT id , category , name , start_time , stop_time
-   FROM '"$period"'_issues order by '"$issues_order_by_attribute"'
+   FROM '"$period"'_issues order by '"$items_order_by_attribute"'
    ;';
 
 

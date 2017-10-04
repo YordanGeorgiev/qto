@@ -85,7 +85,7 @@ You can load your already stored in the issue table issues and load them into th
 #### 1.4.1. db-to-txt action with pre-defined sorting attribute
 You can load your already stored in the issue table issues and load them into the same issues txt file by using a pre-defined sorting attribute. 
 
-    export issues_order_by_attribute=start_time
+    export items_order_by_attribute=start_time
     
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
 

@@ -62,6 +62,7 @@ sub doCheckUbuntuOSPackages {
 sub doCheckRequiredModules {
 
   my @modules = qw(
+    URL::Encode
     ExtUtils::Installed
     Carp::Always
     Data::Printer

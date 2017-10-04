@@ -101,8 +101,8 @@ Start usage:
     # now edit the files in the xls 
     bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
-    export issues_order_by_attribute=start_time
-    export issues_order_by_attribute=prio
+    export items_order_by_attribute=start_time
+    export items_order_by_attribute=prio
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
 
 ## 3. ADDITIONAL DOCS

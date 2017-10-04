@@ -87,6 +87,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Db/In/DbReaderPostgres.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWritersFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWriterPostgres.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWriterMariaDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Data/
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm

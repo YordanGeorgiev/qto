@@ -13,6 +13,7 @@ package IssueTracker::App::Db::Out::DbWritersFactory ;
 
 	# use IssueTracker::App::Db::MariaDbWriter  ; 
    use IssueTracker::App::Db::Out::DbWriterPostgres ; 
+   use IssueTracker::App::Db::Out::DbWriterMariaDb ; 
 
 
 	#
@@ -38,7 +39,7 @@ package IssueTracker::App::Db::Out::DbWritersFactory ;
 		}
 		else {
 			# future support for different RDBMS 's should be added here ...
-			$DbWriter 				= 'MariaDbWriter' ; 
+			$DbWriter 				= 'DbWriterMariaDb' ; 
 		}
 
 		my $package_file     	= "IssueTracker/App/Db/Out/$DbWriter.pm";
