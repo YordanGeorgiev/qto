@@ -12,6 +12,7 @@ Table of Contents
     * [2.5. Install the required Perl modules](#25-install-the-required-perl-modules)
     * [2.6. Start hacking](#26-start-hacking)
   * [3. ADDITIONAL DOCS](#3-additional-docs)
+  * [4. AND FINALLY THE PROJECT STATUS](#4-and-finally-the-project-status)
 
 
     
@@ -28,12 +29,12 @@ A tool to manage multiple projects issues programmatically using txt files , xls
 
 ### 2.1. Prerequisites
 The must have binaries are:
- bash, perl, zip
+ bash, perl, zip,postgres 9.6
 
 The nice to have are:
  tmux, vim ,ctags
 
-The examples are for Ubuntu - use you OS package manager …
+The examples are for Ubuntu - use your OS package manager …
 
 If you do not have postgres than you would have to follow the longer installation instructions :
 https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-devops-guide.md#1-installations-and-configurations
@@ -75,7 +76,7 @@ The bootstrap script will interpolate change the git deployment dir to a "produc
     
 
 ### 2.4. Apply the db and issue create scirpts
-If you do not have the PostgreSQL installed check the instructions in the installations and configuratios section of the DevOps guide:
+If you do not have the PostgreSQL ( v9.5 &gt; ) with currrent Linux user configured role installed check the instructions in the installations and configuratios section of the DevOps guide:
 https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-devops-guide.md#1-installations-and-configurations
 If you do have it , apply the db and issue create scirpts as follows:
 
@@ -93,7 +94,7 @@ Just run the prerequisites checker script which will provide you with copy pasta
 ### 2.6. Start hacking
 Start usage:
 
-    doParseIniEnvVars cnf/ysg-issues.dev.doc-pub-host.cnf
+    doParseIniEnvVars cnf/issue-tracker-issues.dev.doc-pub-host.cnf
     
     bash src/bash/issue-tracker/issue-tracker.sh -a txt-to-db
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-xls
@@ -101,12 +102,21 @@ Start usage:
     # now edit the files in the xls 
     bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
-    export items_order_by_attribute=start_time
-    export items_order_by_attribute=prio
+    export issues_order_by_attribute=start_time
+    export issues_order_by_attribute=prio
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
+    
+    # publish to gsheet issues:
+    export do_truncate_tables=1 ; bash src/bash/issue-tracker/issue-tracker.sh -a db-to-gsheet -t daily_issues,weekly_issues,monthly_issues,yearly_issues
 
 ## 3. ADDITIONAL DOCS
 Additonal docs could be found in the doc/md dir. 
+
+    
+
+## 4. AND FINALLY THE PROJECT STATUS
+The issue tracker project status could be tracked by the issue-tracker data stored in the following gsheet:
+https://docs.google.com/spreadsheets/d/e/2PACX-1vQ3ijqJkY03mDXiaT3mcvr96NkgRnsONSAHyBGwnukuRezhHTaAZsUxOcoQ6fHfZmcHXP2KpD6kfCPR/pubhtml
 
     
 
