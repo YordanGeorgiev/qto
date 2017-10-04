@@ -36,8 +36,10 @@ Table of Contents
       * [3.2.1. Run the http://&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;proj-db&gt;&gt;/get/&lt;&lt;table&gt;&gt;/&lt;&lt;guid&gt;&gt; route](#321-run-the-http//web-hostweb-port/proj-db/get/table/guid-route)
   * [4. BUSINESS LOGIC](#4-business-logic)
     * [4.1. Projects management](#41-projects-management)
-    * [4.2. Categories](#42-categories)
-      * [4.2.1. Issues / Issue items / items](#421-issues-/-issue-items-/-items)
+    * [4.2. Increase the date for all projects](#42-increase-the-date-for-all-projects)
+    * [4.3. Categories](#43-categories)
+      * [4.3.1. Issues / Issue items / items](#431-issues-/-issue-items-/-items)
+      * [4.3.2. to search for the project daily file](#432-to-search-for-the-project-daily-file)
   * [5. NAMING CONVENTIONS](#5-naming-conventions)
     * [5.1. Dirs naming conventions](#51-dirs-naming-conventions)
     * [5.2. Root Dirs naming conventions](#52-root-dirs-naming-conventions)
@@ -233,7 +235,11 @@ Each time the day changes by running the increase-date action you will be able t
 
 #### 3.1.2. Run xls-to-db action
 You insert the date of the daily , weekly , monthly or yearly issues from the daily input excel file(s) by running the xls-to-db action. 
+If you have the guid column with uuid's than this will be upsert and not bare insert.
+You should be able to update only non-nullable column by reducing the number of columns in your xls sheet.
 
+    
+    export do_truncate_tables=1 ;
     bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db
 
 #### 3.1.3. Run db-to-txt action
@@ -299,7 +305,12 @@ You must pre-set the configuration variables of an issue-tracker project each ti
 
     doParseIniEnvVars /vagrant/csitea/cnf/projects/isg-pub/isg-pub.issue-tracker.doc-pub-host.conf
 
-### 4.2. Categories
+### 4.2. Increase the date for all projects
+to increase the date for all the projects at once use the following oneliner.
+
+    while read -r f ; do doParseIniEnvVars $f ; bash src/bash/issue-tracker/issue-tracker.sh -a increase-date ; done < <(find doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/ -type f)
+
+### 4.3. Categories
 Each issue item could be categorized under one and only one category. One category might have 1 or more issues. 
 The categories could contain letters ,numbers, dashes
 
@@ -307,7 +318,7 @@ The categories could contain letters ,numbers, dashes
     organisation-it
     organisation-it-operations
 
-#### 4.2.1. Issues / Issue items / items
+#### 4.3.1. Issues / Issue items / items
 Issue item is the shortest possible description of task , activity , note or anything requiring distinguishable and prerferable measurable action or producing verfifiable outcome.
 Issues could be of different types - tasks, activities, notes etc. 
 
@@ -315,6 +326,14 @@ Issues could be of different types - tasks, activities, notes etc.
     go get the milk
     do the homework
     procurement e-mail discussion follow-up
+
+#### 4.3.2. to search for the project daily file
+to search for the project daily file run the following liner first to start the dev server of the react mini-app.
+Than point your broser at the following url:
+http://doc-pub-host:3307/
+( Hardcoded for now … ) 
+
+    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
 
 ## 5. NAMING CONVENTIONS
 

@@ -16,6 +16,7 @@ Table of Contents
     * [1.5. Track issues relations](#15-track-issues-relations)
     * [1.6. Access issues txt format from email](#16-access-issues-txt-format-from-email)
     * [1.7. Access issues data from Google sheet](#17-access-issues-data-from-google-sheet)
+      * [1.7.1. Apply publish filter while posting to Google Sheet](#171-apply-publish-filter-while-posting-to-google-sheet)
     * [1.8. Project's persons issue combinations](#18-project's-persons-issue-combinations)
   * [2. SYSADMIN PERSPECTIVE](#2-sysadmin-perspective)
     * [2.1. System deployability](#21-system-deployability)
@@ -62,8 +63,9 @@ load-by-txt-to-db-action)
     * [3.5. Single shell call for projects switching](#35-single-shell-call-for-projects-switching)
     * [3.6. Issues publishing from shell calls](#36-issues-publishing-from-shell-calls)
       * [3.6.1. Issues publishing in e-mail format](#361-issues-publishing-in-e-mail-format)
-      * [3.6.2. Issues publishing in google sheet format](#362-issues-publishing-in-google-sheet-format)
+      * [3.6.2. Issues handling in google sheet format](#362-issues-handling-in-google-sheet-format)
       * [3.6.3. Issues publishing in google calendar format](#363-issues-publishing-in-google-calendar-format)
+    * [3.7. Metadata handling](#37-metadata-handling)
   * [4. UI PERSPECTIVE](#4-ui-perspective)
     * [4.1. Time management](#41-time-management)
       * [4.1.1. copy an issue-tracker instance issue to  a google calendar event](#411-copy-an-issue-tracker-instance-issue-to-a-google-calendar-event)
@@ -170,6 +172,13 @@ I wanto to be able to send each period txt file from the daily folder via gmail.
 As the biz user  of the issue tracker tool 
 In order to be able to share and edit the data with multiple users authenticated within the Google eco system
 I wanto to be able to access , edit and update the issues data from google sheeet
+
+    
+
+#### 1.7.1. Apply publish filter while posting to Google Sheet
+As the biz user  of the issue tracker tool 
+In order to show only relevant data to the future viewers of the published to Google sheets issues data
+I wanto to be able to apply publishing filter for columns to be left unpublished per item table per project
 
     
 
@@ -508,12 +517,12 @@ I wanto to be able to issue a single shell call for copying the current items da
 
 #### 3.6.1. Issues publishing in e-mail format
 As a DevOps 
-In order to be able to quickly share the current issues data in tabular format
+In order to be able to quickly share the current issues data in email format
 I wanto to be able to issue a single shell call for copying the current items data to email by specifying the tables to be published
 
     
 
-#### 3.6.2. Issues publishing in google sheet format
+#### 3.6.2. Issues handling in google sheet format
 As a DevOps 
 In order to be able to quickly share the current issues data in tabular format
 I wanto to be able to issue a single shell call for copying the current items data to google sheet by specifying the tables to be published
@@ -524,6 +533,14 @@ I wanto to be able to issue a single shell call for copying the current items da
 As a DevOps 
 In order to be able to quickly share the current issues data in google calendar format
 I wanto to be able to issue a single shell call for copying the current items data to google calenda by specifying the tables to be published for the items having set start_time and stop_time attributes. 
+
+    
+
+### 3.7. Metadata handling
+As a DevOps 
+In order to be able to programatically manage all aspects of my data
+I wanto to have a single entry point to manage the meta data per tables , colums and UI elements
+so that even a table, column or whatever object is not popullated in the meta still there will be default values for it usable by the application
 
     
 
