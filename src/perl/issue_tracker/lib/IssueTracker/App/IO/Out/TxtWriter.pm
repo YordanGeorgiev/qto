@@ -91,29 +91,29 @@ sub doConvertHashRefToStr {
   my $prev_category = q{};
   my @attributes
     = qw (guid seq run_time category current description level name prio start_time stop_time status);
-  my $issues_order_by_attribute = $ENV{'issues_order_by_attribute'} || 'start_time' ; 
+  my $items_order_by_attribute = $ENV{'items_order_by_attribute'} || 'start_time' ; 
 
-  unless (grep(/^$issues_order_by_attribute$/, @attributes)) {
+  unless (grep(/^$items_order_by_attribute$/, @attributes)) {
     $msg
-      = 'Did not find the value of the pre-defined issues_order_by_attribute: "';
+      = 'Did not find the value of the pre-defined items_order_by_attribute: "';
     $msg
-      .= $issues_order_by_attribute
+      .= $items_order_by_attribute
       . '" from the issues attributes list: "'
       . " \n @attributes \n" . '"';
     $objLogger->doLogWarningMsg($msg);
-    $issues_order_by_attribute = 'start_time';
+    $items_order_by_attribute = 'start_time';
     $msg = 'using the "start_time" as the default sorting attribute';
     $objLogger->doLogWarningMsg($msg);
   }
 
   my $operator = '<=>';
-  $operator = 'cmp' unless (looks_like_number($issues_order_by_attribute));
+  $operator = 'cmp' unless (looks_like_number($items_order_by_attribute));
 
   foreach my $issue_id (
       eval 'sort {      '
-    . '$hsr2->{$a}->{ $issues_order_by_attribute }'
+    . '$hsr2->{$a}->{ $items_order_by_attribute }'
     . $operator
-    . '$hsr2->{$b}->{ $issues_order_by_attribute }'
+    . '$hsr2->{$b}->{ $items_order_by_attribute }'
     . '} keys (%$hsr2)')  {
 
     my $row = $hsr2->{$issue_id};
@@ -167,7 +167,7 @@ sub doConvertHashRefToStr {
 
 
     # because we want activities to be printed at the end of the txt file
-    if ( $issues_order_by_attribute eq 'start_time' && $start_time eq "") {
+    if ( $items_order_by_attribute eq 'start_time' && $start_time eq "") {
       $str_activity_issues .= $str_row ; 
     } 
     else {
@@ -184,8 +184,8 @@ sub doConvertHashRefToStr {
 
   return ($ret, $msg, $issues_file , $str_issues);
 }
-
 # eof sub doConvertHashRefToStr
+
 
 #
 # -----------------------------------------------------------------------------

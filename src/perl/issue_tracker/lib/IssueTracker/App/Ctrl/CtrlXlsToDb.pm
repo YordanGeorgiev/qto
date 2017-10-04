@@ -79,12 +79,23 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
 
       $msg                 = 'unknown error while inserting db tables !!!' ; 
-      my $rdbms_type          = $appConfig->{ 'rdbms_type' } || 'postgre' ; 
+      my $rdbms_type          = $ENV{ 'rdbms_type' } || 'postgre' ; 
 
       my $objDbWritersFactory = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$appConfig  ) ; 
       my $objDbWriter 		   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" , \@tables );
       p($hsr2) if $module_trace == 1 ; 
-      ( $ret , $msg  )        = $objDbWriter->doInsertDbTablesWithHsr2( $hsr2 , \@tables) ; 
+
+      my $load_model = $ENV{ 'load_model' } || 'upsert' ; 
+
+      if ( $load_model eq 'upsert' ) {
+         ( $ret , $msg  )        = $objDbWriter->doUpsertTableWithHsr2( $hsr2 , \@tables) ; 
+      } 
+      elsif ( $load_model eq 'nested-set' ) {
+         ( $ret , $msg  )        = $objDbWriter->doLoadNestedSetTable( $hsr2 , \@tables) ; 
+      } 
+      else {
+         ( $ret , $msg  )        = $objDbWriter->doUpsertTableWithHsr2( $hsr2 , \@tables) ; 
+      }
       return ( $ret , $msg ) ; 
    } 
 

@@ -292,7 +292,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
 	# by convention is assumed that the first column is unique and update could 
 	# be performed on it ... should there be duplicates the update should fail
 	# -----------------------------------------------------------------------------
-	sub doInsertDbTablesWithHsr2 {
+	sub doUpsertTableWithHsr2 {
 
 		my $self 			   = shift ; 
 		my $hsr2 		      = shift ; 
@@ -324,7 +324,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       # obs this does not support ordered primary key tables first order yet !!!
       foreach my $table ( keys %$hsr2 ) { 
 
-         $objLogger->doLogDebugMsg ( "doInsertDbTablesWithHsr2 table: $table" );
+         $objLogger->doLogDebugMsg ( "doUpsertTableWithHsr2 table: $table" );
          sleep 3 ; 
          next unless grep( /^$table$/, @tables ) ; 
 
@@ -474,7 +474,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       $msg = 'upsert OK for all tables' ; 
 		return ( $ret , $msg ) ; 
 	}
-	#eof sub doInsertDbTablesWithHsr2
+	#eof sub doUpsertTableWithHsr2
 
 
    #
