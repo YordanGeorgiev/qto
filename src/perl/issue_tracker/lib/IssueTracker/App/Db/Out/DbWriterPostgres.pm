@@ -325,7 +325,7 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
       foreach my $table ( keys %$hsr2 ) { 
 
          $objLogger->doLogDebugMsg ( "doUpsertTableWithHsr2 table: $table" );
-         sleep 3 ; 
+         sleep 2 ; 
          next unless grep( /^$table$/, @tables ) ; 
 
          # load ONLY the tables defined to load
@@ -398,8 +398,11 @@ package IssueTracker::App::Db::Out::DbWriterPostgres ;
                $cell_value = $update_time if $column_name eq 'update_time' ; 
                
                # if the xls does not contain the guid's do just insert
+               # note that even cells with 1 space are considered for nulls !!!
+               # this is simply because of Shift + arrow works on 1 space
                if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
-                     or $cell_value eq 'null' or $cell_value eq "'NULL'" ) {
+                     or $cell_value eq 'null' or $cell_value eq "'NULL'" 
+                     or $cell_value eq ' ' ) {  
 
                   $cell_value = 'NULL'   ; 
                   $data_str .= "$cell_value" . " , " ; 

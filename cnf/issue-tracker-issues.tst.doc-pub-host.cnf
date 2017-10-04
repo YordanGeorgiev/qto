@@ -5,13 +5,13 @@
 issue_tracker_project = issue-tracker
 
 # OBS ! dev , tst , prd product instances to own db !
-db_name   = tst_issue_tracker
+db_name   = prd_issue_tracker
 
 # where the scripts to run are situated
-sql_dir = src/sql/pgsql/tst_issue_tracker
+sql_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.5.dev.ysg/src/sql/pgsql/dev_issue_tracker
 
 # where are stored the txt issues files
-proj_daily_data_root_dir = doc/txt
+proj_daily_data_root_dir = /vagrant/csitea/issue-tracker/doc/txt/issues
 
 # The logging directory 
 LogDir = %ProductInstanceDir%/dat/log
@@ -40,6 +40,8 @@ db_host = doc-pub-host
 # the pgsql port
 db_port = 13306
 
+
+
 # the mariadb user name
 db_user = ysg
 
@@ -63,3 +65,4 @@ PrintTraceMsgs =                 1
 
 Emails=yordan.georgiev@gmail.com
 # eof file: cnf/issue-tracker.doc-pub-host.cnf
+PS1="$issue_tracker_project $PS1"
