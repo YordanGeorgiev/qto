@@ -12,12 +12,12 @@ SELECT 'create the "monthly_issues" table'
     , category       varchar (200) NOT NULL
     , name           varchar (200) NOT NULL
     , description    varchar (4000)
+    , type           varchar (50) NOT NULL DEFAULT 'task'
+    , owner          varchar (50) NULL
     , start_time     text NULL
     , stop_time      text NULL
     , planned_hours  decimal (6,2) NULL
     , actual_hours   decimal (6,2) NULL
-    , type           varchar (50) NOT NULL
-    , owner          varchar (50) NULL
     , update_time    timestamp DEFAULT NOW()
     , CONSTRAINT pk_monthly_issues_guid PRIMARY KEY (guid)
     ) WITH (

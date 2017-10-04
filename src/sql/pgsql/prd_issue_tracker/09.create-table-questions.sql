@@ -1,5 +1,4 @@
 -- DROP TABLE IF EXISTS questions ; 
-
 SELECT 'create the "questions" table'
 ; 
    CREATE TABLE questions (
