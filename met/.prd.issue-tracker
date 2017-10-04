@@ -87,6 +87,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Db/In/DbReaderPostgres.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWritersFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWriterPostgres.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWriterMariaDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Data/
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm
@@ -621,3 +622,5 @@ doc/txt/issue-tracker/specs/mojo-morbo-stop.spec.txt
 doc/txt/issue-tracker/helps/mojo-morbo-stop.help.txt
 doc/txt/issue-tracker/funcs/mojo-morbo-stop.func.txt
 src/react/conf-srch/package-lock.json
+doc/txt/issues/2017/2017-10/2017-10-04
+doc/txt/issues/2017/2017-10/2017-10-04/issue-tracker.all.20170820_000000.xlsx
