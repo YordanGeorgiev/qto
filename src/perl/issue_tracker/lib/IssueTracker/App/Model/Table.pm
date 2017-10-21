@@ -1,6 +1,6 @@
-package IssueTracker::App::Ctrl::CtrlDbToConflu ; 
+package IssueTracker::App::Model::Table ; 
 
-	use strict; use warnings;
+	use strict; use warnings; use utf8 ; 
 
 	my $VERSION = '1.0.0';    
 
@@ -8,24 +8,18 @@ package IssueTracker::App::Ctrl::CtrlDbToConflu ;
 	our @ISA = qw(Exporter);
 	our $AUTOLOAD =();
 	use AutoLoader;
-   use utf8 ;
    use Carp ;
    use Data::Printer ; 
 
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Db::In::DbReadersFactory ; 
-   use IssueTracker::App::IO::Out::ConfluWriter ; 
 
-	our $module_trace                = 0 ; 
-	our $appConfig						   = {} ; 
-	our $objLogger						   = {} ; 
-	our $objFileHandler			      = {} ; 
-   our $rdbms_type                  = 'postgre' ; 
+   # that is a database has tables
+   our $hsr_columns     = {} ; 
+   our $objLogger       = {} ; 
+
 
 =head1 SYNOPSIS
-      my $objCtrlDbToFile = 
-         'IssueTracker::App::Ctrl::CtrlDbToFile'->new ( \$appConfig ) ; 
-      ( $ret , $msg ) = $objCtrlDbToFile->doLoadIssuesFileToDb ( $issues_file ) ; 
+
 =cut 
 
 =head1 EXPORT
@@ -41,44 +35,6 @@ package IssueTracker::App::Ctrl::CtrlDbToConflu ;
 =cut
 
 
-   # 
-	# -----------------------------------------------------------------------------
-   # read the passed issue file , convert it to hash ref of hash refs 
-   # and insert the hsr into a db
-	# -----------------------------------------------------------------------------
-   sub doReadAndLoad {
-
-      my $self                = shift ; 
-      my $issues_file          = shift ; 	
-
-      my $ret                 = 1 ; 
-      my $msg                 = 'unknown error while loading db issues to xls file' ; 
-      my @tables              = ();
-      my $tables              = $appConfig->{ 'tables' } || 'daily_issues' ; 
-	   push ( @tables , split(',',$tables ) ) ; 
-
-
-      for my $table ( @tables ) { 
-
-         my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
-         my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
-
-         my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
-         my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
-      
-         ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( $table ) ; 
-         return ( $ret , $msg ) unless $ret == 0 ; 
-    
-         my $objConfluWriter    = 'IssueTracker::App::IO::Out::ConfluWriter'->new( \$appConfig ) ;
-         $ret = $objConfluWriter->doBuildConfluTableFromHashRef ( $mhsr , $hsr , $table ) ;
-         return ( $ret , $msg ) unless $ret == 0 ; 
-      }
-
-      return ( $ret , $msg  ) ; 
-   } 
-   
-   
-	
 
 =head1 WIP
 
@@ -102,34 +58,26 @@ package IssueTracker::App::Ctrl::CtrlDbToConflu ;
 	# -----------------------------------------------------------------------------
 	sub new {
 
-		my $class = shift;    # Class name is in the first parameter
-		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		my $class      = shift;    # Class name is in the first parameter
+      $hsr_columns   = @{ shift @_ }  || {} ; 
+
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize( ) ; 
+      $self = $self->doInitialize() ; 
 		return $self;
 	}  
 	#eof const
-
-
+	
    #
 	# --------------------------------------------------------
 	# intializes this object 
 	# --------------------------------------------------------
    sub doInitialize {
-      my $self          = shift ; 
-
-      %$self = (
-           appConfig => $appConfig
-       );
-
-	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
-	   $objFileHandler   = 'IssueTracker::App::Utils::IO::FileHandler'->new ( \$appConfig ) ; 
-
+      my $self = shift ; 
+	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$main::appConfig );
       return $self ; 
 	}	
 	#eof sub doInitialize
-
 
 =head2
 	# -----------------------------------------------------------------------------
@@ -230,11 +178,11 @@ __END__
 
 =head1 NAME
 
-CtrlDbToConflu
+UrlSniper 
 
 =head1 SYNOPSIS
 
-use IssueTracker::App::Ctrl::CtrlDbToConflu ; 
+use UrlSniper  ; 
 
 
 =head1 DESCRIPTION

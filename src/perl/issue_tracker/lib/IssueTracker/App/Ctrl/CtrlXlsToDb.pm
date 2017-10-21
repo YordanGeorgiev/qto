@@ -16,7 +16,6 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
    use IssueTracker::App::IO::In::XlsReader ; 
 	
 	our $module_trace                = 0 ; 
-	our $appConfig						   = {} ; 
 	our $RunDir 						   = '' ; 
 	our $ProductBaseDir 				   = '' ; 
 	our $ProductDir 					   = '' ; 
@@ -33,9 +32,6 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
 
 =head1 SYNOPSIS
-      my $objCtrlXlsToDb = 
-         'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig ) ; 
-      ( $ret , $msg ) = $objCtrlXlsToDb->doLoadIssuesFileToDb ( $issues_file ) ; 
 =cut 
 
 =head1 EXPORT
@@ -67,10 +63,10 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       my $msg              = 'file read' ; 
       
       my @tables              = ();
-      my $tables              = $appConfig->{ 'tables' } ;  
+      my $tables              = $main::appConfig->{ 'tables' } ;  
 	   push ( @tables , split(',',$tables ) ) ; 
       my $hsr2             = {} ; 
-      my $objXlsReader     = 'IssueTracker::App::IO::In::XlsReader'->new ( \$appConfig , \@tables ) ; 
+      my $objXlsReader     = 'IssueTracker::App::IO::In::XlsReader'->new ( \$main::appConfig , \@tables ) ; 
       
       # read the xls into hash ref of hash ref
       ( $ret , $msg , $hsr2 ) = 
@@ -81,7 +77,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       $msg                 = 'unknown error while inserting db tables !!!' ; 
       my $rdbms_type          = $ENV{ 'rdbms_type' } || 'postgre' ; 
 
-      my $objDbWritersFactory = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$appConfig  ) ; 
+      my $objDbWritersFactory = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$main::appConfig  ) ; 
       my $objDbWriter 		   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" , \@tables );
       p($hsr2) if $module_trace == 1 ; 
 
@@ -120,8 +116,6 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 	sub new {
 
 		my $class      = shift;    # Class name is in the first parameter
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize() ; 
@@ -136,11 +130,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
    sub doInitialize {
       my $self = shift ; 
 
-      %$self = (
-           appConfig => $appConfig
-      );
-
-	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$main::appConfig ) ;
 
 
       return $self ; 
@@ -174,8 +164,8 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
 		my $self = shift;
 		my $name = shift;
-		croak "\@UrlSniper.pm sub get TRYING to get undefined name" unless $name ;  
-		croak "\@UrlSniper.pm sub get TRYING to get undefined value" unless ( $self->{"$name"} ) ; 
+		croak "\@TRYING to get an undef name" unless $name ;  
+		croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
 
 		return $self->{ $name };
 	}    #eof sub get

@@ -244,8 +244,8 @@ sub doRunURL {
 
 		my $self = shift;
 		my $name = shift;
-		croak "\@UrlSniper.pm sub get TRYING to get undefined name" unless $name ;  
-		croak "\@UrlSniper.pm sub get TRYING to get undefined value" unless ( $self->{"$name"} ) ; 
+		croak "\@TRYING to get an undef name" unless $name ;  
+		croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
 
 		return $self->{ $name };
 	}    #eof sub get

@@ -17,7 +17,7 @@ require Exporter;
 our @ISA         = qw(Exporter);
 our %EXPORT_TAGS = ('all' => [qw()]);
 our @EXPORT_OK   = (@{$EXPORT_TAGS{'all'}});
-our @EXPORT      = qw();
+our @EXPORT      = qw($appConfig);
 our $AUTOLOAD    = ();
 
 use Data::Printer;
@@ -81,7 +81,7 @@ my $module_trace = 0;
 my $md_file      = '';
 my $rdbms_type   = 'postgre';                 #todo: parametrize to
 my $objInitiator = {};
-my $appConfig    = {};
+our $appConfig    = {};
 our $objLogger = {};
 my $objConfigurator       = {};
 my $actions               = q{};
