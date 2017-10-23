@@ -91,6 +91,8 @@ if you don't export anything, such as for a purely object-oriented module.
 
 		#debug print "The log file is " . $appConfig->{ 'LogFile' } ;
 		$LogFile = $appConfig->{ 'LogFile' };
+      croak unless $LogFile ; 
+      sleep 1 unless $LogFile ; 
 
 		#if the log file is not defined we create one
 		unless ( defined ( $appConfig->{ 'LogFile' } ) ) {
@@ -534,13 +536,14 @@ if you don't export anything, such as for a purely object-oriented module.
 	# Appends the passed str to a file
 	# -----------------------------------------------------------------------------
 	sub doAppendToFile {
+      my $msg 					= '' ; 
+		$msg           	   = 'Logger::doAppendToFile undef file for writing passed !!!' ; 
+		$msg               	= 'Logger::AppendTostr undef str for writing passed !!!' ; 
 
 		my $self       		= shift;
-		my $msg 					= '' ; 
-		$msg           	   = 'Logger::doAppendToFile undef file for writing passed !!!' ; 
 		my $file 				= shift || cluck( $msg ) ; 
-		$msg               	= 'Logger::AppendTostr undef str for writing passed !!!' ; 
 		my $str_to_print 		= shift || cluck( $msg );
+		
 		
 		$msg 					= '' ; 
 		my $error_msg 			= '' ; 
@@ -553,9 +556,15 @@ if you don't export anything, such as for a purely object-oriented module.
    
 
 		$file =~ m/^(.*)([\/|\\])(.*)/g;
-		my $FileDir = $1;
+		my $FileDir = $1 ; 
+      unless ( $FileDir ) {
+         use Cwd qw (abs_path);
+         $FileDir = Cwd::abs_path($0);
+		   $FileDir =~ m/(.*)([\/|\\])(.*)/g;
+		   $FileDir = $1 ; 
+		   $self->MkDir( $FileDir ) ; 
+      }
 
-		# the owner of t
 		$self->MkDir( $FileDir ) unless ( -d $FileDir ) ; 
 
 

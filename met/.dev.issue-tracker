@@ -96,6 +96,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToGSheet.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToConflu.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlMetaToJson.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Model/DataBase.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Model/Table.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Model/Column.pm
