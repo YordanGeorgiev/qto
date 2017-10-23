@@ -1,4 +1,4 @@
-package IssueTracker::App::Ctrl::Dispatcher ; 
+package IssueTracker::App::Ctrl::CtrlMetaToJson ; 
 
 	use strict; use warnings; use utf8 ; 
 
@@ -12,17 +12,10 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    use Data::Printer ; 
 
    use IssueTracker::App::Utils::Logger ; 
-
-   use IssueTracker::App::Ctrl::CtrlTxtToDb ; 
-   use IssueTracker::App::Ctrl::CtrlXlsToDb ; 	
-   use IssueTracker::App::Ctrl::CtrlDbToTxt ; 
-   use IssueTracker::App::Ctrl::CtrlDbToXls ; 
-   use IssueTracker::App::Ctrl::CtrlDbToGSheet ; 
-   use IssueTracker::App::Ctrl::CtrlDbToConflu ; 
-   use IssueTracker::App::Ctrl::CtrlMetaToJson ; 
-
+   use IssueTracker::App::IO::In::XlsReader ; 
+   use IssueTracker::App::Db::In::DbReadersFactory ; 
+	
 	our $module_trace                = 0 ; 
-	our $appConfig						   = {} ; 
 	our $RunDir 						   = '' ; 
 	our $ProductBaseDir 				   = '' ; 
 	our $ProductDir 					   = '' ; 
@@ -39,9 +32,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
 
 =head1 SYNOPSIS
-      my $objDispatcher = 
-         'IssueTracker::App::Ctrl::Dispatcher'->new ( \$appConfig ) ; 
-      ( $ret , $msg ) = $objDispatcher->doRun ( $actions ) ; 
 =cut 
 
 =head1 EXPORT
@@ -56,118 +46,32 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 	START SUBS 
 =cut
 
-   sub doTxtToDb {
-
-      my $objCtrlTxtToDb = 
-         'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig ) ; 
-      my ( $ret , $msg ) = $objCtrlTxtToDb->doLoad () ; 
-      return ( $ret , $msg ) unless $ret == 0 ; 
-   }
-
-   sub doDbToXls {
-
-      my $objCtrlDbToXls = 
-         'IssueTracker::App::Ctrl::CtrlDbToXls'->new ( \$appConfig ) ; 
-      my ( $ret , $msg ) = $objCtrlDbToXls->doReadAndLoad ( ); 
-      return ( $ret , $msg ) unless $ret == 0 ; 
-
-   }
-   
-   sub doDbToGSheet {
-
-      my $objCtrlDbToGsheet = 
-         'IssueTracker::App::Ctrl::CtrlDbToGSheet'->new ( \$appConfig ) ; 
-      my ( $ret , $msg ) = $objCtrlDbToGsheet->doReadAndLoad ( ); 
-      return ( $ret , $msg ) unless $ret == 0 ; 
-
-   }
-
-   sub doDbToConlfu {
-
-      my $objCtrlDbToConflu = 
-         'IssueTracker::App::Ctrl::CtrlDbToConflu'->new ( \$appConfig ) ; 
-      my ( $ret , $msg ) = $objCtrlDbToConflu->doReadAndLoad ( ); 
-      return ( $ret , $msg ) unless $ret == 0 ; 
-   }
-
-   sub doXlsToDb {
-
-      my $objCtrlXlsToDb = 
-         'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig ) ; 
-      my ( $ret , $msg ) = $objCtrlXlsToDb->doReadAndLoad ( ) ; 
-      return ( $ret , $msg ) ; 
-   }
-   
-   sub doLoadMetaToJson {
-
-      my $objCtrlMetaToJson = 
-         'IssueTracker::App::Ctrl::CtrlMetaToJson'->new ( \$appConfig ) ; 
-      my ( $ret , $msg ) = $objCtrlMetaToJson->doRun () ; 
-      return ( $ret , $msg ) ; 
-   }
-
-   sub doDbToTxt {
-
-      my $objCtrlDbToTxt = 
-         'IssueTracker::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig ) ; 
-      my ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndWrite ( ) ; 
-      return ( $ret , $msg ) unless $ret == 0 ; 
-
-   }
 
 
+
+   # 
+	# -----------------------------------------------------------------------------
+   # read the passed issue file , convert it to hash ref of hash refs 
+   # and insert the hsr into a db
+	# -----------------------------------------------------------------------------
    sub doRun {
+      my $self             = shift ; 
 
-      my $self          = shift ; 
-      my $actions       = shift ; 
+      my $ret              = 1 ; 
+      my $msg              = 'file read' ; 
+      
+      my $rdbms_type          = $ENV{ 'rdbms_type' } || 'postgre' ; 
 
-      my @actions = split /,/ , $actions ; 
-      my $msg = 'error in Dispatcher' ; 
-      my $ret = 0 ; 
+      my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$issue_tracker::appConfig  ) ; 
+      my $objDbReader 		   = $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
 
-     
-      foreach my $action ( @actions ) { 
 
-         $ret = 0 ; 
-         $action = 'undefined action ' unless $action ; 
-         $msg = "START RUN the $action action " ; 
-         $objLogger->doLogInfoMsg ( $msg ) ; 
-           
-
-         my $func = $action ; 
-         $func =~ s/(\w+)/($a=lc $1)=~s<(^[a-z]|-[a-z])><($b=uc$1);$b;>eg;$a;/eg ; 
-         $func =~ s|-||g;
-         $func = "do" . $func ; 
-         
-         # print "func: $func" . "\n" ; 
-         # sleep 10 ; 
-
-         eval ($func);
-         return ( $ret , $msg ) if $@ ; 
-         # return ( $ret , $msg ) unless $ret == 0 ; 
-
-         $msg = "unknown $action action !!!" ; 
-         $objLogger->doLogErrorMsg ( $msg ) ; 
-         # return ( $ret , $msg ) unless $ret == 0 ; 
-         
-         $msg = "STOP  RUN the $action action " ; 
-         $objLogger->doLogInfoMsg ( $msg ) ; 
-
-      } 
-      #eof foreach action 
-
-      $msg = "OK for all action runs" ; 
-      $ret = 0 ; 
+      ( $ret , $msg  )        = $objDbReader->doSelectTablesList( ) ; 
       return ( $ret , $msg ) ; 
-   }
-   # eof sub doRun
+   } 
 
 	
 
-=head1 WIP
-
-	
-=cut
 
 =head1 SUBROUTINES/METHODS
 
@@ -187,8 +91,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 	sub new {
 
 		my $class      = shift;    # Class name is in the first parameter
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize() ; 
@@ -203,11 +105,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    sub doInitialize {
       my $self = shift ; 
 
-      %$self = (
-           appConfig => $appConfig
-      );
-
-	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$issue_tracker::appConfig ) ;
 
 
       return $self ; 

@@ -24,6 +24,76 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 	our $db_user_pw	 									= q{} ; 
 	our $web_host 											= q{} ; 
 
+   
+   
+   sub doSelectTablesList {
+
+      my $self          = shift ; 
+
+      my $msg              = q{} ;         
+      my $ret              = 1 ;          # this is the return value from this method 
+      my $debug_msg        = q{} ; 
+      my $hsr             = {} ;         # this is meta hash describing the data hash ^^
+      my $sth              = {} ;         # this is the statement handle
+      my $dbh              = {} ;         # this is the database handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      
+      $str_sql = " 
+      SELECT  
+           table_catalog 
+         , table_schema 
+         , table_name 
+         , ROW_NUMBER () OVER (ORDER BY table_name) as row_id
+      FROM information_schema.tables  
+      WHERE 1=1 
+      AND table_type = 'BASE TABLE' 
+      AND table_schema = 'public' 
+      ORDER BY table_type, table_name
+      ;
+      " ; 
+
+      # authentication src: http://stackoverflow.com/a/19980156/65706
+      $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 
+      # $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+     
+      $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
+                 'RaiseError'          => 1
+               , 'ShowErrorStatement'  => 1
+               , 'PrintError'          => 1
+               , 'AutoCommit'          => 1
+               , 'pg_utf8_strings'     => 1
+      } ) or $msg = DBI->errstr;
+      
+      # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
+      $sth = $dbh->prepare($str_sql);  
+
+      $sth->execute()
+            or $objLogger->error ( "$DBI::errstr" ) ;
+
+      $hsr = $sth->fetchall_hashref( 'row_id' ) ; 
+      p($hsr )  ; 
+      sleep 10 ; 
+      binmode(STDOUT, ':utf8');
+      p( $hsr ) if $module_trace == 1 ; 
+
+      $msg = DBI->errstr ; 
+
+      unless ( defined ( $msg ) ) {
+         $msg = 'SELECT meta OK ' ; 
+         $ret = 0 ; 
+      } else {
+         $objLogger->doLogErrorMsg ( $msg ) ; 
+      }
+
+      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
+      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
+      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      
+      return ( $ret , $msg , $hsr ) ; 	
+   }
+   # eof sub doSelectTablesColumnList
+
 
 
    #
@@ -157,73 +227,6 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
    }
    # eof sub doSelectTablesColumnList
 
-
-   sub doSelectTablesList {
-
-      my $self          = shift ; 
-      my $table         = shift || 'daily_issues' ; 
-
-
-      my $msg              = q{} ;         
-      my $ret              = 1 ;          # this is the return value from this method 
-      my $debug_msg        = q{} ; 
-      my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
-      my $sth              = {} ;         # this is the statement handle
-      my $dbh              = {} ;         # this is the database handle
-      my $str_sql          = q{} ;        # this is the sql string to use for the query
-      
-      $str_sql = " 
-      SELECT 
-         table_catalog 
-         , table_schema 
-         , table_name 
-      FROM information_schema.tables  
-      WHERE 1=1 
-      AND table_type = 'BASE TABLE' 
-      AND table_schema = 'public' 
-      ORDER BY table_type, table_name
-      ;
-      " ; 
-
-      # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
-      $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-     
-      $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
-                 'RaiseError'          => 1
-               , 'ShowErrorStatement'  => 1
-               , 'PrintError'          => 1
-               , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
-      } ) or $msg = DBI->errstr;
-      
-      # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
-      $sth = $dbh->prepare($str_sql);  
-
-      $sth->execute()
-            or $objLogger->error ( "$DBI::errstr" ) ;
-
-      $mhsr = $sth->fetchall_hashref( 'attnum' ) ; 
-      binmode(STDOUT, ':utf8');
-      p( $mhsr ) if $module_trace == 1 ; 
-
-      $msg = DBI->errstr ; 
-
-      unless ( defined ( $msg ) ) {
-         $msg = 'SELECT meta OK for table: ' . "$table" ; 
-         $ret = 0 ; 
-      } else {
-         $objLogger->doLogErrorMsg ( $msg ) ; 
-      }
-
-      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-      
-      return ( $ret , $msg , $mhsr ) ; 	
-   }
-   # eof sub doSelectTablesColumnList
 
 
    #
