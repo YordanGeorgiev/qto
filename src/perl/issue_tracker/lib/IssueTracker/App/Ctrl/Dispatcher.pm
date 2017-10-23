@@ -55,12 +55,62 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 	START SUBS 
 =cut
 
+   sub doTxtToDb {
+
+      my $objCtrlTxtToDb = 
+         'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig ) ; 
+      my ( $ret , $msg ) = $objCtrlTxtToDb->doLoad () ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+   }
+
+   sub doDbToXls {
+
+      my $objCtrlDbToXls = 
+         'IssueTracker::App::Ctrl::CtrlDbToXls'->new ( \$appConfig ) ; 
+      my ( $ret , $msg ) = $objCtrlDbToXls->doReadAndLoad ( ); 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+   }
+   
+   sub doDbToGSheet {
+
+      my $objCtrlDbToGsheet = 
+         'IssueTracker::App::Ctrl::CtrlDbToGSheet'->new ( \$appConfig ) ; 
+      my ( $ret , $msg ) = $objCtrlDbToGsheet->doReadAndLoad ( ); 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+   }
+
+   sub doDbToConlfu {
+
+      my $objCtrlDbToConflu = 
+         'IssueTracker::App::Ctrl::CtrlDbToConflu'->new ( \$appConfig ) ; 
+      my ( $ret , $msg ) = $objCtrlDbToConflu->doReadAndLoad ( ); 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+   }
+
+   sub doXlsToDb {
+
+      my $objCtrlXlsToDb = 
+         'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig ) ; 
+      my ( $ret , $msg ) = $objCtrlXlsToDb->doReadAndLoad ( ) ; 
+      return ( $ret , $msg ) ; 
+   }
+
+   sub doDbToTxt {
+
+      my $objCtrlDbToTxt = 
+         'IssueTracker::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig ) ; 
+      my ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndWrite ( ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+   }
+
 
    sub doRun {
 
       my $self          = shift ; 
       my $actions       = shift ; 
-      my $xls_file      = shift ; 
 
       my @actions = split /,/ , $actions ; 
       my $msg = 'error in Dispatcher' ; 
@@ -71,54 +121,20 @@ package IssueTracker::App::Ctrl::Dispatcher ;
          $action = 'undefined action ' unless $action ; 
          $msg = "START RUN the $action action " ; 
          $objLogger->doLogInfoMsg ( $msg ) ; 
+           
 
-         if ( $action eq 'txt-to-db' ) {
+         my $func = $action ; 
+         $func =~ s/(\w+)/($a=lc $1)=~s<(^[a-z]|-[a-z])><($b=uc$1);$b;>eg;$a;/eg ; 
+         $func =~ s|-||g;
+         $func = "do" . $func ; 
 
-            my $objCtrlTxtToDb = 
-               'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlTxtToDb->doLoad () ; 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         } 
-         elsif ( $action eq 'db-to-xls' ) {
+         ( $ret , $msg ) = eval ( $func ) ; 
+         return ( $ret , $msg ) unless $ret == 0 ; 
+         return ( $ret , $msg ) if $@ ; 
 
-            my $objCtrlDbToXls = 
-               'IssueTracker::App::Ctrl::CtrlDbToXls'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToXls->doReadAndLoad ( ); 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         } 
-         elsif ( $action eq 'db-to-gsheet' ) {
-
-            my $objCtrlDbToGsheet = 
-               'IssueTracker::App::Ctrl::CtrlDbToGSheet'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToGsheet->doReadAndLoad ( ); 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         } 
-         elsif ( $action eq 'db-to-conflu' ) {
-
-            my $objCtrlDbToConflu = 
-               'IssueTracker::App::Ctrl::CtrlDbToConflu'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToConflu->doReadAndLoad ( ); 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         } 
-         elsif ( $action eq 'xls-to-db' ) {
-
-            my $objCtrlXlsToDb = 
-               'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlXlsToDb->doReadAndLoad ( $xls_file ) ; 
-            return ( $ret , $msg ) ; 
-         } 
-         elsif ( $action eq 'db-to-txt' ) {
-
-            my $objCtrlDbToTxt = 
-               'IssueTracker::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig ) ; 
-            ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndWrite ( ) ; 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         } 
-         else {
-            $msg = "unknown $action action !!!" ; 
-            $objLogger->doLogErrorMsg ( $msg ) ; 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-         }
+         $msg = "unknown $action action !!!" ; 
+         $objLogger->doLogErrorMsg ( $msg ) ; 
+         return ( $ret , $msg ) unless $ret == 0 ; 
          
          $msg = "STOP  RUN the $action action " ; 
          $objLogger->doLogInfoMsg ( $msg ) ; 
