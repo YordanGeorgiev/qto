@@ -56,17 +56,17 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 	# -----------------------------------------------------------------------------
    sub doReadAndLoad {
       my $self             = shift ; 
-      my $xls_file         = shift ; 
       my $tables_list      = shift ; 
 
       my $ret              = 1 ; 
       my $msg              = 'file read' ; 
       
       my @tables              = ();
-      my $tables              = $main::appConfig->{ 'tables' } ;  
+      my $tables              = $issue_tracker::appConfig->{ 'tables' } ;  
+      my $xls_file            = $issue_tracker::appConfig->{ 'xls_file' } ; 
 	   push ( @tables , split(',',$tables ) ) ; 
       my $hsr2             = {} ; 
-      my $objXlsReader     = 'IssueTracker::App::IO::In::XlsReader'->new ( \$main::appConfig , \@tables ) ; 
+      my $objXlsReader     = 'IssueTracker::App::IO::In::XlsReader'->new ( \$issue_tracker::appConfig , \@tables ) ; 
       
       # read the xls into hash ref of hash ref
       ( $ret , $msg , $hsr2 ) = 
@@ -77,7 +77,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       $msg                 = 'unknown error while inserting db tables !!!' ; 
       my $rdbms_type          = $ENV{ 'rdbms_type' } || 'postgre' ; 
 
-      my $objDbWritersFactory = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$main::appConfig  ) ; 
+      my $objDbWritersFactory = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$issue_tracker::appConfig  ) ; 
       my $objDbWriter 		   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" , \@tables );
       p($hsr2) if $module_trace == 1 ; 
 
@@ -130,7 +130,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
    sub doInitialize {
       my $self = shift ; 
 
-	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$main::appConfig ) ;
+	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$issue_tracker::appConfig ) ;
 
 
       return $self ; 

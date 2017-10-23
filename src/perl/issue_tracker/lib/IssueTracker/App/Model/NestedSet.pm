@@ -17,7 +17,7 @@ package IssueTracker::App::Model::NestedSet ;
    our $hsr_columns     = {} ; 
    our $hsr_rows        = {} ; 
    our $objLogger       = {} ; 
-   our $appConfig       = $main::appConfig ; 
+   our $appConfig       = $issue_tracker::appConfig ; 
 
 =head1 SYNOPSIS
 

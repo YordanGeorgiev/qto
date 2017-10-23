@@ -104,7 +104,7 @@ sub main {
   doExit($ret, $msg) unless ($ret == 0);
 
   my $objDispatcher = 'IssueTracker::App::Ctrl::Dispatcher'->new(\$appConfig);
-  ($ret, $msg) = $objDispatcher->doRun($actions, $xls_file);
+  ($ret, $msg) = $objDispatcher->doRun($actions);
 
   doExit($ret, $msg);
 
@@ -143,6 +143,7 @@ sub doInitialize {
   
   $appConfig->{'tables'} = $tables ; 
 
+
   unless ($issue_tracker_project) {
     $msg = "set you current project by: \n";
     $msg
@@ -155,7 +156,7 @@ sub doInitialize {
   $appConfig->{'issue_tracker_project'} = $issue_tracker_project;
 
   $appConfig->{'xls_dir'}     = $xls_dir;
-  $actions = 'txt-to-db' unless ($actions);
+  $appConfig->{'xls_file'}     = $xls_file;
 
 
   if ($module_trace == 1) {

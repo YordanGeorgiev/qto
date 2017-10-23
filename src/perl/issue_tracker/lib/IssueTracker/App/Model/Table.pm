@@ -74,7 +74,7 @@ package IssueTracker::App::Model::Table ;
 	# --------------------------------------------------------
    sub doInitialize {
       my $self = shift ; 
-	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$main::appConfig );
+	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$issue_tracker::appConfig );
       return $self ; 
 	}	
 	#eof sub doInitialize
