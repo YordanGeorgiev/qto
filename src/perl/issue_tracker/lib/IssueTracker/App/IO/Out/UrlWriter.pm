@@ -108,11 +108,9 @@ sub doRunURL {
    }
 
    p ( $content ) ; 
-   sleep 10 ; 
 
    my $enc_content = url_encode ( $content ) ; 
    p ( $enc_content) ; 
-   sleep 10 ; 
 
    if ( $http_method_type eq 'POST' ) {
       $curl->setopt(WWW::Curl::Easy::CURLOPT_POST, 1);
@@ -149,7 +147,6 @@ sub doRunURL {
       print "start printing response" ; 
       p ( $response_content ) ; 
       print "stop  printing response" ; 
-      sleep 3 ; 
       #my $json_str = HTTP::Response->parse($response_body);
       # print("Received response: $response_body\n");
       #p($response_body);

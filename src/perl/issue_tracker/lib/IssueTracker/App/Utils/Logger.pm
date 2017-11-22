@@ -92,7 +92,6 @@ if you don't export anything, such as for a purely object-oriented module.
 		#debug print "The log file is " . $appConfig->{ 'LogFile' } ;
 		$LogFile = $appConfig->{ 'LogFile' };
       croak unless $LogFile ; 
-      sleep 1 unless $LogFile ; 
 
 		#if the log file is not defined we create one
 		unless ( defined ( $appConfig->{ 'LogFile' } ) ) {

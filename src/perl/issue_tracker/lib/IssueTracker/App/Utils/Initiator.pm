@@ -125,7 +125,7 @@ package IssueTracker::App::Utils::Initiator ;
 		$ProductDir 						= $self->untaint ( $product_dir); 
 		$self->{'ProductDir'} 			= $ProductDir ; 
 		$appConfig->{'ProductDir'} 	= $ProductDir ; 
-		$self->{'appConfig'} 				= $appConfig; 
+		$self->{'AppConfig'} 				= $appConfig; 
 		return $ProductDir;
 	}
 	#eof sub doResolveMyProductDir
@@ -161,9 +161,9 @@ package IssueTracker::App::Utils::Initiator ;
 		$ProductInstanceDir 						= $product_instance_dir ; 
 		$product_instance_dir 					= $self->untaint ( $product_instance_dir); 
 		$ProductInstanceDir 						= $self->untaint ( $product_instance_dir); 
-		$self->{'ProductInstanceDir'} 			= $ProductInstanceDir ; 
+		$self->{'ProductInstanceDir'} 	   = $ProductInstanceDir ; 
 		$appConfig->{'ProductInstanceDir'} 	= $ProductInstanceDir ; 
-		$self->{'appConfig'} 				= $appConfig; 
+		$self->{'AppConfig'} 				   = $appConfig; 
 
 		return $ProductInstanceDir;
 	}
@@ -186,7 +186,7 @@ package IssueTracker::App::Utils::Initiator ;
 		$ProductInstanceEnvironment 			= $self->untaint ( $ProductInstanceEnvironment ); 
 
 		$appConfig->{ 'ProductInstanceEnvironment' } 		= $ProductInstanceEnvironment ; 
-		$self->{'appConfig'} 				= $appConfig; 
+		$self->{'AppConfig'} 				= $appConfig; 
 		return $ProductInstanceEnvironment;
 	}
 	#eof sub doResolveMyProductInstanceEnvironment
@@ -208,7 +208,7 @@ package IssueTracker::App::Utils::Initiator ;
 		$ProductName = $tokens[0] ; 
 
 		$appConfig->{ 'ProductName' } 			= $ProductName ; 
-		$self->{'appConfig'} 				= $appConfig; 
+		$self->{'AppConfig'} 				= $appConfig; 
 		return $ProductName;
 	}
 	#eof sub doResolveMyProductName
@@ -237,7 +237,7 @@ package IssueTracker::App::Utils::Initiator ;
 		#debug print "\n\n ProductVersion : $ProductVersion " ; 
 		
 		$appConfig->{ 'ProductVersion' } 		= $ProductVersion ; 
-		$self->{'appConfig'} 				= $appConfig; 
+		$self->{'AppConfig'} 				= $appConfig; 
 		return $ProductVersion;
 	}
 	#eof sub doResolveMyProductVersion
@@ -266,7 +266,7 @@ package IssueTracker::App::Utils::Initiator ;
 
 		$appConfig->{ 'ProductType' } 			= $ProductType ; 
 		$self->{ 'ProductType' } 			= $ProductType ; 
-		$self->{'appConfig'} 				= $appConfig; 
+		$self->{'AppConfig'} 				= $appConfig; 
 
 		return $ProductType;
 	}
@@ -294,7 +294,7 @@ package IssueTracker::App::Utils::Initiator ;
 		#debug print "\n\n ProductOwner : $ProductOwner " ; 
 
 		$appConfig->{ 'ProductOwner' } 			= $ProductOwner ; 
-		$self->{'appConfig'} 				= $appConfig; 
+		$self->{'AppConfig'} 				= $appConfig; 
 		return $ProductOwner;
 	}
 	#eof sub doResolveMyProductOwner
@@ -313,7 +313,7 @@ package IssueTracker::App::Utils::Initiator ;
 		$HostName = hostname ; 
 		$self->set ( 'HostName' , $HostName );
 		$appConfig->{ 'HostName' }	= $HostName ; 
-		$self->{'appConfig'} 				= $appConfig; 
+		$self->{'AppConfig'} 				= $appConfig; 
 		return $HostName;
 	}
 	#eof sub doResolveMyHostName
@@ -347,7 +347,7 @@ package IssueTracker::App::Utils::Initiator ;
 
 		$self->set('ConfFile' , $ConfFile) ; 
 		$appConfig->{'ConfFile'} 	= $ConfFile ; 
-		$self->{'appConfig'} 		= $appConfig; 
+		$self->{'AppConfig'} 		= $appConfig; 
 
 		 
 		return $ConfFile;
@@ -382,7 +382,7 @@ package IssueTracker::App::Utils::Initiator ;
 		$HostName 					= $self->doResolveMyHostName();
 		$ConfFile 					= $self->doResolveMyConfFile();
 
-		print $self->dumpFields();
+		# debug print $self->dumpFields();
 
 		return $self;
 	}  
