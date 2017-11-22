@@ -95,7 +95,7 @@ doCheckPerlSyntax(){
 #
 # VersionHistory:
 #------------------------------------------------------------------------------
-# 0.1.8 --- 2016-07-31 13:27:21 -- 
+# 0.1.8 --- 2016-07-31 13:27:21
 
 
 # eof file: src/bash/issue-tracker/funcs/check-perl-syntax.func.sh

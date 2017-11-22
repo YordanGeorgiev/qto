@@ -73,9 +73,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
 
       $hsr = $sth->fetchall_hashref( 'row_id' ) ; 
       p($hsr )  ; 
-      sleep 10 ; 
       binmode(STDOUT, ':utf8');
-      p( $hsr ) if $module_trace == 1 ; 
 
       $msg = DBI->errstr ; 
 
@@ -92,7 +90,7 @@ package IssueTracker::App::Db::In::DbReaderPostgres ;
       
       return ( $ret , $msg , $hsr ) ; 	
    }
-   # eof sub doSelectTablesColumnList
+   # eof sub doSelectTablesList
 
 
 

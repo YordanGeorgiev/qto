@@ -59,6 +59,8 @@ package IssueTracker::App::Ctrl::CtrlMetaToJson ;
 
       my $ret              = 1 ; 
       my $msg              = 'file read' ; 
+      my $hsr              = {} ; 
+
       
       my $rdbms_type          = $ENV{ 'rdbms_type' } || 'postgre' ; 
 
@@ -66,7 +68,8 @@ package IssueTracker::App::Ctrl::CtrlMetaToJson ;
       my $objDbReader 		   = $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
 
 
-      ( $ret , $msg  )        = $objDbReader->doSelectTablesList( ) ; 
+      ( $ret , $msg , $hsr  ) = $objDbReader->doSelectTablesList( ) ; 
+      p($hsr) ; 
       return ( $ret , $msg ) ; 
    } 
 

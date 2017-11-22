@@ -438,7 +438,6 @@ package IssueTracker::App::Db::Out::DbWriterMariaDb ;
       foreach my $table ( keys %$hsr2 ) { 
 
          $objLogger->doLogDebugMsg ( "doUpsertTableWithHsr2 table: $table" );
-         sleep 3 ; 
          next unless grep( /^$table$/, @tables ) ; 
 
          # load ONLY the tables defined to load

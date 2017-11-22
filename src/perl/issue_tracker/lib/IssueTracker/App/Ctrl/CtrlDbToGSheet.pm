@@ -89,11 +89,11 @@ package IssueTracker::App::Ctrl::CtrlDbToGSheet ;
       my $home_dir = $ENV{'HOME'} ; 
       print "copy the string from your browser \n" ; 
       print 'echo <<CODE>> > ' . "$home_dir/.google/.code." . $issue_tracker_proj . "\n" ; 
-      sleep 6 ; 
+      sleep 6 ; # give time to the human to get it done ...
 
       my $code = $objFileHandler->doReadFileReturnString ( "$home_dir/.google/.code." . $issue_tracker_proj ) ; 
       print "\$code is $code" ; 
-      sleep 3 ; 
+      sleep 3 ; # give time to the developer to verify it ...
 
       
       my $objToken = $oauth2->get_access_token($code);

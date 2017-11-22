@@ -573,10 +573,12 @@ doc/txt/issue-tracker/specs/run-pgsql-scripts.spec.txt
 doc/txt/issue-tracker/helps/run-pgsql-scripts.help.txt
 doc/txt/issue-tracker/funcs/run-pgsql-scripts.func.txt
 tags
+# ---
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToConflu/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToXls/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlMetaToJson/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlTxtToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlXlsToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/Dispatcher/autosplit.ix
@@ -605,7 +607,7 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/IO/FileHandler/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Timer/autosplit.ix
-# ---
+# ----
 cnf/perl/.perltidyrc
 src/bash/issue-tracker/funcs/gmail-txt-issues.func.sh
 src/bash/issue-tracker/tests/gmail-txt-issues.test.sh

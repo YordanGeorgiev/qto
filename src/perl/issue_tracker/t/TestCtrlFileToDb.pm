@@ -55,7 +55,6 @@ my $HostName					= $objInitiator->doResolveMyHostName();
 
 $appConfig						= $objInitiator->get ('AppConfig'); 
 # p($appConfig) ; 
-# sleep 6 ; 
 
 $appConfig->{'PrintConsoleMsgs' } = 0 ; 
 
@@ -85,7 +84,6 @@ ok ( $ret eq 1 )  ;
    p ( $appConfig ) ; 
    p ( $objLogger );
    print "stop  $0 \n" ; 
-   sleep 6 ; 
 =cut
 
 
