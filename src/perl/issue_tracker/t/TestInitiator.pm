@@ -4,12 +4,11 @@ use FindBin;
 BEGIN { unshift @INC, "$FindBin::Bin/../lib" }
 
 use IssueTracker::App::Utils::Initiator ; 
-use Test::More tests => 20 ; 
+use Test::More tests => 19 ; 
 use Data::Printer ; 
 
 my $msg                    = (); 
 my $objInitiator 				= 'IssueTracker::App::Utils::Initiator'->new();	
-my $appConfig					= {} ;
 my $ProductBaseDir 			= $objInitiator->doResolveMyProductBaseDir();
 my $ProductDir 				= $objInitiator->doResolveMyProductDir();
 my $ProductInstanceDir 		= $objInitiator->doResolveMyProductInstanceDir();
@@ -20,7 +19,7 @@ my $ProductType 				= $objInitiator->doResolveMyProductType();
 my $ProductOwner 				= $objInitiator->doResolveMyProductOwner();
 my $ConfFile 					= $objInitiator->doResolveMyConfFile();
 my $HostName					= $objInitiator->doResolveMyHostName();
-
+my $appConfig					= {} ;
 $appConfig						= $objInitiator->get ('AppConfig'); 
 
 # p($appConfig) ; 
@@ -110,5 +109,5 @@ ok ( $HostName 				eq $appConfig->{'HostName'} , $msg) ;
 
 # 19.
 $msg                       = 'The value of the ConfFile from the appConfig' ; 
-ok ( $ConfFile 				eq $appConfig->{'ConfFile'} ) ;
+ok ( $ConfFile 				eq $appConfig->{'ConfFile'} , $msg ) ;
 

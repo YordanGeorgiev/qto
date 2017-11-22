@@ -124,7 +124,7 @@ doInit(){
    my_name_ext=`basename $0`
    run_unit=${my_name_ext%.*}
    host_name=$(hostname -s)
-: "${sleep_interval:=0}"
+   "${sleep_interval:=0}"
 }
 #eof doInit
 
