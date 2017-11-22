@@ -23,8 +23,8 @@ package IssueTracker::App::Utils::Initiator ;
 	our $RunDir 						= '' ; 
 	our $ProductBaseDir 				= '' ; 
 	our $ProductDir 					= '' ; 
-	our $ProductInstanceDir 			= ''; 
-	our $ProductInstanceEnvironment 			= '' ; 
+	our $ProductInstanceDir 	   = ''; 
+	our $ProductInstanceEnvironment = '' ; 
 	our $ProductName 					= '' ; 
 	our $ProductType 					= '' ; 
 	our $ProductVersion 				= ''; 
@@ -566,6 +566,7 @@ yordan.georgiev@gmail.com
 # VersionHistory: 
 # ---------------------------------------------------------
 #
+1.3.0 --- 2017-11-22 22:26:56 -- Improved Tests
 1.2.0 --- 2014-09-11 20:44:26 -- tests on Windows 
 1.1.0 --- 2014-08-27 11:29:25 -- tests passed with Test::More
 1.0.0 --- 2014-08-25 08:25:15 -- refactored away from main calling script
