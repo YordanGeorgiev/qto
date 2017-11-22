@@ -73,8 +73,8 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
    }
    
-   sub doDbToGSheet {
-
+   sub doDbToGsheet {
+      my $self = shift ;  
       my $objCtrlDbToGsheet = 
          'IssueTracker::App::Ctrl::CtrlDbToGSheet'->new ( \$appConfig ) ; 
       my ( $ret , $msg ) = $objCtrlDbToGsheet->doReadAndLoad ( ); 
@@ -138,11 +138,11 @@ package IssueTracker::App::Ctrl::Dispatcher ;
          $func =~ s/(\w+)/($a=lc $1)=~s<(^[a-z]|-[a-z])><($b=uc$1);$b;>eg;$a;/eg ; 
          $func =~ s|-||g;
          $func = "do" . $func ; 
-         
-         # print "func: $func" . "\n" ; 
-         # sleep 10 ; 
-
-         eval ($func);
+         print "func: $func" . "\n" ; 
+         sleep 3 ; 
+         no strict 'refs' ; 
+         $self->$func ; 
+         use strict 'refs'; 
          return ( $ret , $msg ) if $@ ; 
          # return ( $ret , $msg ) unless $ret == 0 ; 
 
