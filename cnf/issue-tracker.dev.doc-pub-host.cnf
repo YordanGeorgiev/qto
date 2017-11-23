@@ -5,7 +5,7 @@
 issue_tracker_project = issue-tracker
 
 # The logging directory 
-LogDir = %ProductInstanceDir%/dat/log
+LogDir = %ProductInstanceDir%/dat/log/perl
 
 # the default Log file
 LogFile =         %LogDir%/%ProductName%.log

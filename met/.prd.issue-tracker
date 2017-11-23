@@ -61,9 +61,8 @@ src/bash/issue-tracker/install-prerequisites-on-ubuntu.sh
 src/perl/issue_tracker
 src/perl/issue_tracker/lib
 src/perl/issue_tracker/t
-src/perl/issue_tracker/t/TestCtrlFileToDb.pm
+src/perl/issue_tracker/t/TestConfigurator.pm
 src/perl/issue_tracker/t/TestInitiator.pm
-src/perl/issue_tracker/t/TestLogger.pl
 src/perl/issue_tracker/lib/IssueTracker
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/TxtReader.pm

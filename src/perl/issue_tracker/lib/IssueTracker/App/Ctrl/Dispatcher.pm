@@ -57,6 +57,8 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 =cut
 
    sub doTxtToDb {
+      my $self = shift ; 
+      use strict 'refs'; 
 
       my $objCtrlTxtToDb = 
          'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig ) ; 
@@ -65,6 +67,8 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    }
 
    sub doDbToXls {
+      my $self = shift ; 
+      use strict 'refs'; 
 
       my $objCtrlDbToXls = 
          'IssueTracker::App::Ctrl::CtrlDbToXls'->new ( \$appConfig ) ; 
@@ -74,6 +78,8 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    }
    
    sub doDbToGsheet {
+      my $self = shift ; 
+      use strict 'refs'; 
       my $self = shift ;  
       my $objCtrlDbToGsheet = 
          'IssueTracker::App::Ctrl::CtrlDbToGSheet'->new ( \$appConfig ) ; 
@@ -83,6 +89,8 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    }
 
    sub doDbToConlfu {
+      my $self = shift ; 
+      use strict 'refs'; 
 
       my $objCtrlDbToConflu = 
          'IssueTracker::App::Ctrl::CtrlDbToConflu'->new ( \$appConfig ) ; 
@@ -91,6 +99,8 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    }
 
    sub doXlsToDb {
+      my $self = shift ; 
+      use strict 'refs'; 
 
       my $objCtrlXlsToDb = 
          'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig ) ; 
@@ -99,6 +109,8 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    }
    
    sub doLoadMetaToJson {
+      my $self = shift ; 
+      use strict 'refs'; 
 
       my $objCtrlMetaToJson = 
          'IssueTracker::App::Ctrl::CtrlMetaToJson'->new ( \$appConfig ) ; 
@@ -108,6 +120,8 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
    sub doDbToTxt {
 
+      my $self = shift ; 
+      use strict 'refs'; 
       my $objCtrlDbToTxt = 
          'IssueTracker::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig ) ; 
       my ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndWrite ( ) ; 
@@ -138,11 +152,8 @@ package IssueTracker::App::Ctrl::Dispatcher ;
          $func =~ s/(\w+)/($a=lc $1)=~s<(^[a-z]|-[a-z])><($b=uc$1);$b;>eg;$a;/eg ; 
          $func =~ s|-||g;
          $func = "do" . $func ; 
-         print "func: $func" . "\n" ; 
-         sleep 3 ; 
          no strict 'refs' ; 
          $self->$func ; 
-         use strict 'refs'; 
          return ( $ret , $msg ) if $@ ; 
          # return ( $ret , $msg ) unless $ret == 0 ; 
 
