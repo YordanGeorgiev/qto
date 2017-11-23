@@ -11,6 +11,10 @@ doRunPerlTests(){
 	doLog "INFO Component testing Initiator.pm with TestInitiator "
 	perl src/perl/issue_tracker/t/TestInitiator.pm
 	test -z "$sleep_interval" || sleep $sleep_interval
+
+	doLog "INFO Component testing Configurator.pm with TestInitiator "
+	perl src/perl/issue_tracker/t/TestConfigurator.pm
+	test -z "$sleep_interval" || sleep $sleep_interval
 	
 }
 # eof func doRunPerlTests

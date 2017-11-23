@@ -18,7 +18,7 @@ doGmailPackage(){
 
 	echo $zip_file>$tmp_dir/.msg
 
-   doLog "DEBUG cnf_files is $cnf_file"
+   doLog "DEBUG cnf_files is ${cnf_file+x}"
    doLog "DEBUG Emails: $Emails"
 
 	set -x
