@@ -1,7 +1,7 @@
 # doc/txt/issue-tracker/spec/clone-project.spec.txt
 
 # load the src project configuration file
-doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/ysg-issues.prd.doc-pub-host.cnf
+doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/ysg-issues.prd.host-name.cnf
 
 # go to the ysg projects daily data root dir
 cd $proj_daily_data_root_dir
@@ -13,7 +13,7 @@ export tgt_date=$(date --date="-1 day" "+%Y-%m-%d")
 while read -r f ; do zip $tgt_date.zip $f ; done < <(find "$(date "+%Y" -d "$tgt_date")"'/'$(date "+%Y-%m" -d "$tgt_date")/$(date "+%Y-%m-%d" -d "$tgt_date"))
 
 # load the newly defined cloned project dir
-doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/nokia.prd.doc-pub-host.cnf
+doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/nokia.prd.host-name.cnf
 
 # create the new projects daily data root dir
 mkdir -p $proj_daily_data_root_dir
@@ -31,7 +31,7 @@ export to_repl=nokia
 bash src/bash/issue-tracker/issue-tracker.sh -a morph-dir
 
 # start working again on the project to be cloned
-doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/nokia.prd.doc-pub-host.cnf
+doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/nokia.prd.host-name.cnf
 
 # and increase the dat
 bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d today

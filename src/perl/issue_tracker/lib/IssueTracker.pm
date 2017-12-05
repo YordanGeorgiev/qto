@@ -52,19 +52,19 @@ sub startup {
 
   $r->get('/')->to('example#welcome');
 
-	# http://doc-pub-host:3000/dev_stockit/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
+	# http://host-name:3000/dev_stockit/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
 	$r->get('/:db/get/:item/:guid')->to(
 	  controller   => 'Get'
 	, action       => 'doGetItem'
 	);
 	
-   # http://doc-pub-host:3000/prd_ysg_issues/srch/confs/con
+   # http://host-name:3000/prd_ysg_issues/srch/confs/con
 	$r->get('/:db/srch/:item/:srch')->to(
 	  controller   => 'Srch'
 	, action       => 'doSrchItem'
 	);
 
-   # http://doc-pub-host:3000/prd_ysg_issues/srch/confs/con
+   # http://host-name:3000/prd_ysg_issues/srch/confs/con
 	$r->options('/:db/srch/:item/:srch')->to(
 	  controller   => 'Srch'
 	, action       => 'doSrchItem'

@@ -336,10 +336,10 @@ package IssueTracker::App::Utils::Initiator ;
 		$ConfFile = "$ProductInstanceDir/cnf/$ProductName.$HostName.cnf" ; 
 
       # override with env conf file if found one ...
-      # cnf/issue-tracker.doc-pub-host.cnf
-      # cnf/issue-tracker.dev.doc-pub-host.cnf
-      # cnf/issue-tracker.tst.doc-pub-host.cnf
-      # cnf/issue-tracker.prd.doc-pub-host.cnf
+      # cnf/issue-tracker.host-name.cnf
+      # cnf/issue-tracker.dev.host-name.cnf
+      # cnf/issue-tracker.tst.host-name.cnf
+      # cnf/issue-tracker.prd.host-name.cnf
       if ( -f "$ProductInstanceDir/cnf/$ProductName.$ProductType.$HostName.cnf" ) {
 		   $ConfFile = "$ProductInstanceDir/cnf/$ProductName.$ProductType.$HostName.cnf" 
       }

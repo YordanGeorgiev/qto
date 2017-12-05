@@ -21,7 +21,7 @@ doPrintUsage(){
       bash $0 --help
       
    1. setup a project : 
-   doParseCnfEnvVars /vagrant/csitea/cnf/projects/issue-tracker/ysg-issues.dev.doc-pub-host.cn
+   doParseCnfEnvVars /vagrant/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cn
    
    2. run an action:  
 

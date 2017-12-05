@@ -1,7 +1,10 @@
-# file: cnf/issue-tracker.doc-pub-host.cnf
+# file: cnf/issue-tracker.host-name.cnf
 
 # multiple projects support
 issue_tracker_project = issue-tracker
+
+# where to get the DDL's for the db from
+sql_dir=/opt/csitea/issue-tracker/issue-tracker.0.2.0.prd.ysg/src/sql/pgsql/prd_issue_tracker
 
 # The logging directory 
 LogDir = %ProductInstanceDir%/dat/log
@@ -25,7 +28,7 @@ DbType 	=         mariadb
 LogFile=%LogDir%/%ProductName%.%YYYY%-%MM%-%DD%.log
 
 # the host on which the mariadb is running 
-db_host = doc-pub-host
+db_host = host-name
 
 # the pgsql port
 db_port = 13306
@@ -54,4 +57,4 @@ PrintDebugMsgs =                 1
 # Whether or not to pring TRACE messages
 PrintTraceMsgs =                 1 
 
-# eof file: cnf/issue-tracker.doc-pub-host.cnf
+# eof file: cnf/issue-tracker.host-name.cnf

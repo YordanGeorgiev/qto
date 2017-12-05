@@ -80,7 +80,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    sub doDbToGsheet {
       my $self = shift ; 
       use strict 'refs'; 
-      my $self = shift ;  
       my $objCtrlDbToGsheet = 
          'IssueTracker::App::Ctrl::CtrlDbToGSheet'->new ( \$appConfig ) ; 
       my ( $ret , $msg ) = $objCtrlDbToGsheet->doReadAndLoad ( ); 

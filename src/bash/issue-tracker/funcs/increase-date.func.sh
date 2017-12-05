@@ -7,7 +7,6 @@
 # cat doc/txt/issue-tracker/funcs/increase-date.func.txt
 # ---------------------------------------------------------
 doIncreaseDate(){
-
 	doLog "DEBUG START doIncreaseDate"
    test -z ${proj_daily_data_root_dir+x} && export exit_code=1 \
       && doExit "define a project by doParseIniEnvVars <<path-to-proj-conf-file>> !!!" && exit 1
