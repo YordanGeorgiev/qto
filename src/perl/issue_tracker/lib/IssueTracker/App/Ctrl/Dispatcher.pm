@@ -152,21 +152,20 @@ package IssueTracker::App::Ctrl::Dispatcher ;
          $func =~ s|-||g;
          $func = "do" . $func ; 
          no strict 'refs' ; 
-         $self->$func ; 
-         return ( $ret , $msg ) if $@ ; 
-         # return ( $ret , $msg ) unless $ret == 0 ; 
+         ($ret , $msg ) = $self->$func ; 
 
-         $msg = "unknown $action action !!!" ; 
-         $objLogger->doLogErrorMsg ( $msg ) ; 
-         # return ( $ret , $msg ) unless $ret == 0 ; 
-         
          $msg = "STOP  RUN the $action action " ; 
          $objLogger->doLogInfoMsg ( $msg ) ; 
 
+         if ( $@ ) {
+            $msg = "unknown $action action !!!" ; 
+            $objLogger->doLogErrorMsg ( $msg ) ; 
+            return ( $ret , $msg ) if $@ ; 
+         }
       } 
       #eof foreach action 
 
-      $msg = "OK for all action runs" ; 
+      $msg = "OK for all action runs: @actions" ; 
       $ret = 0 ; 
       return ( $ret , $msg ) ; 
    }
