@@ -123,7 +123,8 @@ sub doInitialize {
     = 'IssueTracker::App::Utils::Configurator'->new($objInitiator->{'ConfFile'},
     \$appConfig);
   $appConfig                 = $objConfigurator->getConfHolder()  ;
-  p($appConfig) if $module_trace == 1;
+
+  p($appConfig)  ; 
 
   $objLogger = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
 
@@ -173,7 +174,7 @@ sub doInitialize {
   return ($ret, $msg);
 }
 
-# eof sub doInialize
+# eof sub doInitialize
 
 
 #

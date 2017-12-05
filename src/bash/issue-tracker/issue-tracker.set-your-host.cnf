@@ -1,4 +1,4 @@
-# file: src/bash/issue-tracker/issue-tracker.doc-pub-host.cnf
+# file: src/bash/issue-tracker/issue-tracker.host-name.cnf
 [MainSection]
 
 #use simple var_name=var_value syntax 

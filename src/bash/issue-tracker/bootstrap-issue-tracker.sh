@@ -22,7 +22,7 @@ mkdir -p "$product_dir" ; cd $_
 mv -v $product_dump_dir "$product_instance_dir"; cd $product_instance_dir
 # START -- search and replace recursively 
 export dir=.
-export to_srch="doc-pub-host"
+export to_srch="host-name"
 export to_repl="$(hostname -s)"
 
 #-- search and replace in file and dir paths excludding the .git dir

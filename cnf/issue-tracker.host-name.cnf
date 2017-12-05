@@ -1,17 +1,7 @@
-# file: cnf/issue-tracker.doc-pub-host.cnf
-[MainSection]
+# file: cnf/issue-tracker.host-name.cnf
 
 # multiple projects support
 issue_tracker_project = issue-tracker
-
-# OBS ! dev , tst , prd product instances to own db !
-db_name   = prd_issue_tracker
-
-# where the scripts to run are situated
-sql_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.5.dev.ysg/src/sql/pgsql/dev_issue_tracker
-
-# where are stored the txt issues files
-proj_daily_data_root_dir = /vagrant/csitea/issue-tracker/doc/txt/issues
 
 # The logging directory 
 LogDir = %ProductInstanceDir%/dat/log
@@ -26,21 +16,22 @@ LogTimeToTextSeparator = ###
 LogToFile =          1
 
 # the time format of the logging 
-TimeFormat =         YYYY.MM.DD - hh:mm:ss
+TimeFormat =         YYYY-MM-DD hh:mm:ss
 
 # the time format of the logging 
-DbType 	=         postgres
+DbType 	=         mariadb
 
 # the log file
-LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
+LogFile=%LogDir%/%ProductName%.%YYYY%-%MM%-%DD%.log
 
 # the host on which the mariadb is running 
-db_host = doc-pub-host
+db_host = host-name
 
 # the pgsql port
 db_port = 13306
 
-
+# OBS ! dev , tst , prd product instances to own db !
+db_name   = %ProductType%_issue_tracker
 
 # the mariadb user name
 db_user = ysg
@@ -63,6 +54,5 @@ PrintDebugMsgs =                 1
 # Whether or not to pring TRACE messages
 PrintTraceMsgs =                 1 
 
-Emails=yordan.georgiev@gmail.com
-# eof file: cnf/issue-tracker.doc-pub-host.cnf
-PS1="$issue_tracker_project $PS1"
+Emails = yordan.georgiev@gmail.com
+# eof file: cnf/issue-tracker.host-name.cnf

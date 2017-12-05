@@ -1,4 +1,4 @@
-# file: src/bash/issue-tracker/issue-tracker.doc-pub-host.cnf
+# file: src/bash/issue-tracker/issue-tracker.host-name.cnf
 [MainSection]
 
 #use simple var_name=var_value syntax 
@@ -15,4 +15,4 @@ db="$env_type"_"$app_name"
 # where to place the backups of the 
 network_backup_dir=/var/backups
 
-#eof file: src/bash/issue-tracker/issue-tracker.doc-pub-host.cnf
+#eof file: src/bash/issue-tracker/issue-tracker.host-name.cnf

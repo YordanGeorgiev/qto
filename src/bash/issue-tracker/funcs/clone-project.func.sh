@@ -15,7 +15,7 @@ doCloneProject(){
    export global_cnf_dir='/vagrant/csitea/cnf/projects/issue-tracker'
 
    # load the src project configuration file
-   doParseIniEnvVars "$global_cnf_dir"'/'"$src_proj"".prd.doc-pub-host.cnf"
+   doParseIniEnvVars "$global_cnf_dir"'/'"$src_proj"".prd.host-name.cnf"
 
    # go to the ysg projects daily data root dir
    cd $proj_daily_data_root_dir
@@ -28,7 +28,7 @@ doCloneProject(){
    done < <(find "$(date "+%Y" -d "$tgt_date")"'/'$(date "+%Y-%m" -d "$tgt_date")/$(date "+%Y-%m-%d" -d "$tgt_date"))
 
    # load the newly defined cloned project dir
-   doParseIniEnvVars "$global_cnf_dir"'/'"$tgt_proj"".prd.doc-pub-host.cnf"
+   doParseIniEnvVars "$global_cnf_dir"'/'"$tgt_proj"".prd.host-name.cnf"
 
    # create the new projects daily data root dir
    mkdir -p $proj_daily_data_root_dir
@@ -46,7 +46,7 @@ doCloneProject(){
    bash src/bash/issue-tracker/issue-tracker.sh -a morph-dir
 
    # start working again on the project to be cloned
-   doParseIniEnvVars "$global_cnf_dir"'/'"$tgt_proj"".prd.doc-pub-host.cnf"
+   doParseIniEnvVars "$global_cnf_dir"'/'"$tgt_proj"".prd.host-name.cnf"
 
    # and increase the dat
    bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d today

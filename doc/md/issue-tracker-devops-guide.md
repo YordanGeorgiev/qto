@@ -282,7 +282,7 @@ Verify the inserted data from the db as follows:
 #### 3.2.1. Run the http://&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;proj-db&gt;&gt;/get/&lt;&lt;table&gt;&gt;/&lt;&lt;guid&gt;&gt; route
 Load a table with guid's.
 Check a single item with your browser, for example:
-http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
+http://host-name:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
 
     # load the items
     while read -r f; do 
@@ -303,7 +303,7 @@ You can manage multiple projects with the issue-tracker tool. Each project has i
 As the tool is backwards compatible you could have differrrent instances of the issue-tracker projects with different versions ( and set of features ) operatiing against differrent project ( each one in its own version).
 You must pre-set the configuration variables of an issue-tracker project each time you start working on a project from the shell
 
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/isg-pub/isg-pub.issue-tracker.doc-pub-host.conf
+    doParseIniEnvVars /vagrant/csitea/cnf/projects/isg-pub/isg-pub.issue-tracker.host-name.conf
 
 ### 4.2. Increase the date for all projects
 to increase the date for all the projects at once use the following oneliner.
@@ -330,7 +330,7 @@ Issues could be of different types - tasks, activities, notes etc.
 #### 4.3.2. to search for the project daily file
 to search for the project daily file run the following liner first to start the dev server of the react mini-app.
 Than point your broser at the following url:
-http://doc-pub-host:3307/
+http://host-name:3307/
 ( Hardcoded for now … ) 
 
     bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start

@@ -76,7 +76,6 @@ if you don't export anything, such as for a purely object-oriented module.
       # if the log dir does not exist create it
 		my $LogDir = '';
 		$LogDir = $appConfig->{ 'LogDir' };
-
 		# define the log dir as the current dir if not cnfigured 
 		unless ( defined( $LogDir ) ) {
 			$0 =~ m/^(.*)(\\|\/)(.*)\.([a-z]*)/;
@@ -86,7 +85,7 @@ if you don't export anything, such as for a purely object-oriented module.
 
 		# if the log dir is cnfigured but it does not exist 
 		if ( defined( $LogDir ) && !-d "$LogDir" ) {
-			MkDir( "$LogDir" ) || cluck( " Cannot create the \$LogDir : $LogDir $! !!! " );
+			$self->MkDir( "$LogDir" ) || cluck( " Cannot create the \$LogDir : $LogDir $! !!! " );
 		}
 
 		#debug print "The log file is " . $appConfig->{ 'LogFile' } ;
@@ -606,8 +605,7 @@ if you don't export anything, such as for a purely object-oriented module.
 	# use by if ( $self->MkDir ( $dir_to_create ) ; 
 	# -----------------------------------------------------------------------------
 	sub MkDir {
-
-		my $self        	= shift;
+      my $self = shift ; 
 		my $dir_to_create = shift;
 
 		my $error_msg 		= '' ; 
@@ -619,7 +617,7 @@ if you don't export anything, such as for a purely object-oriented module.
 		unless ( -d "$dir_to_create" ) {
 			eval { 
 				use autodie ; 
-				my $error_msg = "Logger::MkDir failed to create directory $dir_to_create $! !!!"  ; 
+				my $error_msg = "Logger::MkDir failed to create the directory \"$dir_to_create\" $! !!!"  ; 
 				mkpath( "$dir_to_create" ) || cluck( "$error_msg" ) ;  
 			};
 

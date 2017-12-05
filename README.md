@@ -94,7 +94,7 @@ Just run the prerequisites checker script which will provide you with copy pasta
 ### 2.6. Start hacking
 Start usage:
 
-    doParseIniEnvVars cnf/issue-tracker-issues.dev.doc-pub-host.cnf
+    doParseIniEnvVars cnf/issue-tracker-issues.dev.host-name.cnf
     
     bash src/bash/issue-tracker/issue-tracker.sh -a txt-to-db
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-xls

@@ -17,7 +17,7 @@
    
 	# Usage:
 	# ------------------------------------------------------
-	doParseIniEnvVars /vagrant/csitea/cnf/projects/isg-pub/isg-pub.futu-here.doc-pub-host.conf
+	doParseIniEnvVars /vagrant/csitea/cnf/projects/isg-pub/isg-pub.futu-here.host-name.conf
    $0 -a increase-date
 
 	# Developent
