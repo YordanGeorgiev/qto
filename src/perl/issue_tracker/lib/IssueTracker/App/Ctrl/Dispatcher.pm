@@ -22,6 +22,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    use IssueTracker::App::Ctrl::CtrlMetaToJson ; 
 
 	our $module_trace                = 0 ; 
+   our $module_test_run             = 0 ; 
 	our $appConfig						   = {} ; 
 	our $RunDir 						   = '' ; 
 	our $ProductBaseDir 				   = '' ; 
@@ -138,7 +139,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       my $msg = 'error in Dispatcher' ; 
       my $ret = 0 ; 
 
-     
       foreach my $action ( @actions ) { 
 
          $ret = 0 ; 
@@ -146,12 +146,14 @@ package IssueTracker::App::Ctrl::Dispatcher ;
          $msg = "START RUN the $action action " ; 
          $objLogger->doLogInfoMsg ( $msg ) ; 
            
-
+         # run-some-action -> doRunSomeAction
          my $func = $action ; 
          $func =~ s/(\w+)/($a=lc $1)=~s<(^[a-z]|-[a-z])><($b=uc$1);$b;>eg;$a;/eg ; 
          $func =~ s|-||g;
          $func = "do" . $func ; 
          no strict 'refs' ; 
+         $objLogger->doLogInfoMsg ( "module_test_run: " . $module_test_run ) ; 
+         return $func if ( $module_test_run == 1 ) ; 
          ($ret , $msg ) = $self->$func ; 
 
          $msg = "STOP  RUN the $action action " ; 
@@ -163,7 +165,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
             return ( $ret , $msg ) if $@ ; 
          }
       } 
-      #eof foreach action 
+      
 
       $msg = "OK for all action runs: @actions" ; 
       $ret = 0 ; 
@@ -197,7 +199,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
 		my $class      = shift;    # Class name is in the first parameter
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-
+      $module_test_run = shift if @_ ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize() ; 

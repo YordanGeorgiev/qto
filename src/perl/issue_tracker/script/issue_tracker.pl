@@ -103,7 +103,7 @@ sub main {
   ($ret, $msg) = doInitialize();
   doExit($ret, $msg) unless ($ret == 0);
 
-  my $objDispatcher = 'IssueTracker::App::Ctrl::Dispatcher'->new(\$appConfig);
+  my $objDispatcher = 'IssueTracker::App::Ctrl::Dispatcher'->new(\$appConfig );
   ($ret, $msg) = $objDispatcher->doRun($actions);
 
   doExit($ret, $msg);
