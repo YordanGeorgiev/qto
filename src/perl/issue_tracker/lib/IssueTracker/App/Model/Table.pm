@@ -63,7 +63,7 @@ package IssueTracker::App::Model::Table ;
 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize() ; 
+      $self = $self->doInitialize() if $hsr_columns ; 
 		return $self;
 	}  
 	#eof const
@@ -79,6 +79,7 @@ package IssueTracker::App::Model::Table ;
 	}	
 	#eof sub doInitialize
 
+   
 =head2
 	# -----------------------------------------------------------------------------
 	# overrided autoloader prints - a run-time error - perldoc AutoLoader

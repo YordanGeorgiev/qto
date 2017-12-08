@@ -146,7 +146,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
          $msg = "START RUN the $action action " ; 
          $objLogger->doLogInfoMsg ( $msg ) ; 
            
-
+         #run-some-action -> doRunSomeAction
          my $func = $action ; 
          $func =~ s/(\w+)/($a=lc $1)=~s<(^[a-z]|-[a-z])><($b=uc$1);$b;>eg;$a;/eg ; 
          $func =~ s|-||g;
@@ -163,7 +163,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
             return ( $ret , $msg ) if $@ ; 
          }
       } 
-      #eof foreach action 
+      
 
       $msg = "OK for all action runs: @actions" ; 
       $ret = 0 ; 
