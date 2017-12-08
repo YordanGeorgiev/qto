@@ -12,7 +12,7 @@ set -u -o pipefail
 # exit the script if any statement returns a non-true return value. gotcha !!!
 # set -e # src: http://mywiki.wooledge.org/BashFAQ/105
 
-#v0.2.5 
+#v0.2.7 
 #------------------------------------------------------------------------------
 # the main function called
 #------------------------------------------------------------------------------
@@ -37,6 +37,7 @@ main(){
 	esac
 
 	test -z "${actions+x}" && doParseCmdArgs "$@"
+   export exit_code=1 # assume a general error
 
 	doSetVars
 	doCheckReadyToStart
@@ -45,7 +46,7 @@ main(){
 }
 #eof main
 
-# v0.2.5 
+# v0.2.7 
 #------------------------------------------------------------------------------
 # the "reflection" func - identify the the funcs per file
 #------------------------------------------------------------------------------
@@ -65,7 +66,7 @@ get_function_list () {
 
 
 
-# v0.2.5 
+# v0.2.7 
 #------------------------------------------------------------------------------
 # run all the actions
 #------------------------------------------------------------------------------
@@ -111,7 +112,7 @@ doRunActions(){
 #eof func doRunActions
 
 
-#v0.2.5 
+#v0.2.7 
 #------------------------------------------------------------------------------
 # register the run-time vars before the call of the $0
 #------------------------------------------------------------------------------
@@ -124,13 +125,13 @@ doInit(){
    my_name_ext=`basename $0`
    run_unit=${my_name_ext%.*}
    host_name=$(hostname -s)
-   "${sleep_interval:=0}"
+   export sleep_interval="${sleep_interval:=0}"
 }
 #eof doInit
 
 
 
-#v0.2.5 
+#v0.2.7 
 #------------------------------------------------------------------------------
 # parse the single letter command line args
 #------------------------------------------------------------------------------
@@ -171,7 +172,7 @@ doParseCmdArgs(){
 
 
 
-#v0.2.5 
+#v0.2.7 
 #------------------------------------------------------------------------------
 # create an example host dependant ini file
 #------------------------------------------------------------------------------
@@ -192,7 +193,7 @@ doCreateDefaultConfFile(){
 #eof func doCreateDefaultConfFile
 
 
-#v0.2.5 
+#v0.2.7 
 #------------------------------------------------------------------------------
 # perform the checks to ensure that all the vars needed to run are set
 #------------------------------------------------------------------------------
@@ -213,7 +214,7 @@ doCheckReadyToStart(){
 trap "exit 1" TERM
 export TOP_PID=$$
 
-# v0.2.5
+# v0.2.7
 #------------------------------------------------------------------------------
 # clean and exit with passed status and message
 # call by: 
@@ -223,7 +224,7 @@ export TOP_PID=$$
 doExit(){
    exit_msg="$*"
 
-   if (( $exit_code != 0 )); then
+   if (( ${exit_code} != 0 )); then
       exit_msg=" ERROR --- exit_code $exit_code --- exit_msg : $exit_msg"
       >&2 echo "$exit_msg"
       # doSendReport
@@ -245,7 +246,7 @@ doExit(){
 #eof func doExit
 
 
-#v0.2.5 
+#v0.2.7 
 #------------------------------------------------------------------------------
 # echo pass params and print them to a log file and terminal
 # with timestamp and $host_name and $0 PID
@@ -272,7 +273,7 @@ doLog(){
 #eof func doLog
 
 
-# v0.2.5 
+# v0.2.7 
 #------------------------------------------------------------------------------
 # echo pass params and print them to a log file and terminal
 # with timestamp and $host_name and $0 PID
@@ -294,7 +295,7 @@ doRunLog(){
 }
 #eof func doLog
 
-#v0.2.5
+#v0.2.7
 #------------------------------------------------------------------------------
 # cleans the unneeded during after run-time stuff
 # do put here the after cleaning code
@@ -312,7 +313,7 @@ doCleanAfterRun(){
 #eof func doCleanAfterRun
 
 
-#v0.2.5 
+#v0.2.7 
 #------------------------------------------------------------------------------
 # run a command and log the call and its output to the log_file
 # doPrintHelp: doRunCmdAndLog "$cmd"
@@ -333,7 +334,7 @@ doRunCmdAndLog(){
 #eof func doRunCmdAndLog
 
 
-#v0.2.5 
+#v0.2.7 
 #------------------------------------------------------------------------------
 # run a command on failure exit with message
 # doPrintHelp: doRunCmdOrExit "$cmd"
@@ -366,7 +367,7 @@ doRunCmdOrExit(){
 #eof func doRunCmdOrExit
 
 
-#v0.2.5 
+#v0.2.7 
 #------------------------------------------------------------------------------
 # set the variables from the $0.$host_name.cnf file which has ini like syntax
 #------------------------------------------------------------------------------
@@ -478,7 +479,7 @@ doSetUndefinedShellVarsFromCnfFile(){
 }
 #eof func doSetShellVarsFromCnfFile
 
-# v0.2.5
+# v0.2.7
 #------------------------------------------------------------------------------
 # parse the ini like $0.$host_name.cnf and set the variables
 # cleans the unneeded during after run-time stuff. Note the MainSection
@@ -550,4 +551,4 @@ main "$@"
 # 1.0.0 --- 2016-09-11 12:24:15 -- init from bash-stub
 #----------------------------------------------------------
 #
-#eof file: issue-tracker.sh v0.2.5
+#eof file: issue-tracker.sh v0.2.7
