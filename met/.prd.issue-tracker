@@ -98,14 +98,6 @@ src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToGSheet.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToConflu.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlMetaToJson.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Model/DataBase.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Model/Table.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Model/Column.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Model/Row.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Model/Cell.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Model/NestedCell.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Model/ResultSet.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Model/NestedSet.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO
