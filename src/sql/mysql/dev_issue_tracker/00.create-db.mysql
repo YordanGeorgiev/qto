@@ -6,19 +6,12 @@ DEALLOCATE PREPARE stmt;
 
 
 SELECT 'check that the database has been created' AS '' ; 
-SET @query = CONCAT('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ''' 
-, @project_lang_db  , '''' );
+SET @query = CONCAT('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ''' , @mysql_db_name  , '''' );
 -- SELECT 'RUNNING THE FOLLOWING query : ' , @query ; 
 PREPARE stmt FROM @query;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 
--- copy paste 
---SET @query = CONCAT('Select * FROM ', @db , '.' , @tbl ) ; 
---SELECT 'RUNNING THE FOLLOWING query : ' , @query ; 
---PREPARE stmt FROM @query;
---EXECUTE stmt;
---DEALLOCATE PREPARE stmt;
 
 /*
 

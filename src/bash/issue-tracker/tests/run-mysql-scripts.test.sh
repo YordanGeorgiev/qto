@@ -7,39 +7,88 @@
 doTestRunMysqlScripts(){
 
 	doLog "DEBUG START doTestRunMysqlScripts"
-   
-   # Action !!!
-   msg="test-01 if the mysql_scripts_dir is empty the default one should be used"
    # to get the doParseIniEnvVars func
    source $product_instance_dir/src/bash/lib/.bash_funcs.host-name
-
+   
+   msg="test-01 if the mysql_scripts_dir is empty the default one should be used"
+   doLog "INFO $msg"
    # pre-load a configurtion file
    doParseIniEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf
 
    # set an undefined mysql_scripts_dir for the test case run
    export mysql_scripts_dir=""
-   
-   doLog "INFO $msg"
+   # Action !!! 
    bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts & export child_pid=$!
-   sleep 4
+   sleep 4 # give some time for the child the finish
    child_log_file=$product_instance_dir/dat/log/bash/issue-tracker.`date "+%Y%m"`.log
-   str_to_grep='\['"$child_pid"'\]'" running all the files from the mysql_scripts_dir: $product_instance_dir/src/sql/mysql/dev_issue_tracker"
+   str_to_grep='\['"$child_pid"'\]'" running all the files from the mysql_scripts_dir: "
+   str_to_grep="$str_to_grep""$product_instance_dir/src/sql/mysql/dev_issue_tracker"
    test $(grep -c "$str_to_grep" $child_log_file) -eq 1 || export exit_code=1
    test $exit_code -eq 1 && doExit $exit_code "test run failed for test : $msg"
 
-   #bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
    
-   #doLog "INFO test-02 test run if the mysql_scripts dir is not existing dir"
-   #export mysql_scripts_dir=undefined
+   msg="test-02 test run if the mysql_scripts dir is not existing dir"
+   doLog "INFO $msg"
+   doParseIniEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf
+   export mysql_scripts_dir=undefined
+   # Action !!!
+   bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
+   ret=$?
+   test $ret -eq 0 && export exit_code=1
+   test $ret -eq 0 && doExit $exit_code "test failed for $msg"
+   test $ret -ne 0 && export exit_code=0
+   # --
 
-   #doLog "INFO test-02 test run if the mysql_scripts dir is not existing dir"
-   #doParseIniEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf
 
-   #doLog "INFO test-02 test with existing mysql_scripts dir the creation of the mysql db"
-   #bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
+   msg="test-03 test run if the mysql_scripts dir is defined in the configuration file"
+   doLog "INFO $msg"
+   doParseIniEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf
+   # Action !!!
+   bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
+   str_to_grep='\['"$child_pid"'\]'" running all the files from the mysql_scripts_dir: "
+   str_to_grep="$str_to_grep""$mysql_scripts_dir"
+   test $(grep -c "$str_to_grep" $child_log_file) -eq 1 || export exit_code=1
+   test $exit_code -eq 1 && doExit $exit_code "test run failed for test : $msg"
+   # --
 
-	# add your action implementation code here ... 
-	# Action !!!
+
+   msg="test-04 if a relative path is set add to the product instance dir"
+   doLog "INFO $msg"
+   doParseIniEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf
+   mysql_scripts_dir_chk=$mysql_scripts_dir
+   export mysql_scripts_dir='src/sql/mysql/dev_issue_tracker'
+   str_to_grep='\['"$child_pid"'\]'" running all the files from the mysql_scripts_dir: "
+   str_to_grep="$str_to_grep""$mysql_scripts_dir_chk"
+   test $(grep -c "$str_to_grep" $child_log_file) -eq 1 || export exit_code=1
+   test $exit_code -eq 1 && doExit $exit_code "test run failed for test : $msg"
+   # ---
+   
+   msg="test-05 test run if the mysql_user is not set"
+   doLog "INFO $msg"
+   doParseIniEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf
+   export mysql_user=""
+   # Action !!!
+   bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
+   ret=$?
+   test $ret -eq 0 && export exit_code=1
+   test $ret -eq 0 && doExit $exit_code "test failed for $msg"
+   test $ret -ne 0 && export exit_code=0
+   # --
+   
+   
+   msg="test-06 test run if the mysql_user_pw is not set"
+   doLog "INFO $msg"
+   doParseIniEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf
+   export mysql_user_pw=""
+   # Action !!!
+   bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
+   ret=$?
+   test $ret -eq 0 && export exit_code=1
+   test $ret -eq 0 && doExit $exit_code "test failed for $msg"
+   test $ret -ne 0 && export exit_code=0
+   # --
+
+
 
 	doLog "DEBUG STOP  doTestRunMysqlScripts"
 }
