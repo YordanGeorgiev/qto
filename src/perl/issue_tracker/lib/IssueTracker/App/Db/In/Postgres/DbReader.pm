@@ -1,4 +1,4 @@
-package IssueTracker::App::Db::In::DbReaderPostgres ; 
+package IssueTracker::App::Db::In::Postgres::DbReader ; 
 
    use strict ; use warnings ; use utf8 ; 
 

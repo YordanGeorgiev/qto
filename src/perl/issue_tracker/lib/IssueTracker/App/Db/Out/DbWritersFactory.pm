@@ -12,8 +12,8 @@ package IssueTracker::App::Db::Out::DbWritersFactory ;
    our $objLogger       = {} ; 
 
 	# use IssueTracker::App::Db::MariaDbWriter  ; 
-   use IssueTracker::App::Db::Out::DbWriterPostgres ; 
-   use IssueTracker::App::Db::Out::DbWriterMariaDb ; 
+   use IssueTracker::App::Db::Out::Postgres::DbWriter ; 
+   use IssueTracker::App::Db::Out::MariaDb::DbWriter ; 
 
 
 	#
@@ -30,20 +30,24 @@ package IssueTracker::App::Db::Out::DbWritersFactory ;
 
 		# get the application cnfiguration hash
 		# global app cnfig hash
+		my $package_file     	= () ; 
+		my $objDbWriter   		= () ;
 
 		if ( $db_type eq 'mariadb' ) {
 			$DbWriter 				= 'DbWriterMariaDb' ; 
+		   $package_file     	= "IssueTracker/App/Db/Out/MariaDb/DbWriter.pm";
+		   $objDbWriter   		= "IssueTracker::App::Db::Out::MariaDb::DbWriter";
 		}
 		if ( $db_type eq 'postgre' ) {
-			$DbWriter 				= 'DbWriterPostgres' ; 
+		   $package_file     	= "IssueTracker/App/Db/Out/Postgres/DbWriter.pm";
+		   $objDbWriter   		= "IssueTracker::App::Db::Out::Postgres::DbWriter";
 		}
 		else {
 			# future support for different RDBMS 's should be added here ...
-			$DbWriter 				= 'DbWriterMariaDb' ; 
+		   $package_file     	= "IssueTracker/App/Db/Out/Postgres/DbWriter.pm";
+		   $objDbWriter   		= "IssueTracker::App::Db::Out::Postgres::DbWriter";
 		}
 
-		my $package_file     	= "IssueTracker/App/Db/Out/$DbWriter.pm";
-		my $objDbWriter   		= "IssueTracker::App::Db::Out::$DbWriter";
 
 		require $package_file;
 

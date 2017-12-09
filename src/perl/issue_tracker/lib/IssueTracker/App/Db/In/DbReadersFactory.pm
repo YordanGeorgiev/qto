@@ -12,7 +12,7 @@ package IssueTracker::App::Db::In::DbReadersFactory ;
    our $objLogger       = {} ; 
 
 	# use IssueTracker::App::Db::DbReaderMariaDb  ; 
-   use IssueTracker::App::Db::In::DbReaderPostgres ; 
+   use IssueTracker::App::Db::In::Postgres::DbReader ; 
 
 	#
 	# -----------------------------------------------------------------------------
@@ -24,24 +24,26 @@ package IssueTracker::App::Db::In::DbReadersFactory ;
 		my $db_type			= shift // $db_type ; # the default is mysql
 
 		my @args 			= ( @_ ) ; 
-		my $DbReader 		= {}   ; 
+		my $package_file     	= () ; 
+		my $objDbReader   		= () ; 
 
 		# get the application cnfiguration hash
 		# global app cnfig hash
 
 		if ( $db_type eq 'mariadb' ) {
-			$DbReader 				= 'DbReaderMariaDb' ; 
+		   $package_file     	= "IssueTracker/App/Db/In/MariaDb/DbReader.pm";
+		   $objDbReader   		= "IssueTracker::App::Db::In::MariaDb::DbReader";
 		}
 		if ( $db_type eq 'postgre' ) {
-			$DbReader 				= 'DbReaderPostgres' ; 
+		   $package_file     	= "IssueTracker/App/Db/In/Postgres/DbReader.pm";
+		   $objDbReader   		= "IssueTracker::App::Db::In::Postgres::DbReader";
 		}
 		else {
 			# future support for different RDBMS 's should be added here ...
-			$DbReader 				= 'DbReaderMariaDb' ; 
+		   $package_file     	= "IssueTracker/App/Db/In/Postgres/DbReader.pm";
+		   $objDbReader   		= "IssueTracker::App::Db::In::Postgres::DbReader";
 		}
 
-		my $package_file     	= "IssueTracker/App/Db/In/$DbReader.pm";
-		my $objDbReader   		= "IssueTracker::App::Db::In::$DbReader";
 
 		require $package_file;
 
