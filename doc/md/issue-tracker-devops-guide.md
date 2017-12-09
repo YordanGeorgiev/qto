@@ -291,7 +291,7 @@ http://host-name:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a7fc
     done < <(find $proj_txt_dir -type f)
     
     # verify the data
-    psql -d $db_name -c "SELECT * FROM company_eps "
+    psql -d $postgres_db_name -c "SELECT * FROM company_eps "
 
 ## 4. BUSINESS LOGIC
 

@@ -21,8 +21,6 @@
 :g/the issues file/| :vimgrep /the issues file/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/\&gt/| :vimgrep /\&gt/ `find . -type f \| grep -v .git \| grep -v .log`
 
-
-
 :g/issue/| :vimgrep /issue/ `find . -type f -name '*.pm' \| grep -v .git \| grep -v .log`
 
 :g/doParse/| :vimgrep /doParse/ `find . -type f \| grep -v .git \| grep -v .log`

@@ -1,0 +1,34 @@
+SET @query = CONCAT('CREATE DATABASE /*!32312 IF NOT EXISTS*/ `', @mysql_db_name , '` /*!40100 DEFAULT CHARACTER SET utf8 */') ; 
+-- SELECT 'RUNNING THE FOLLOWING query : ' , @query ; 
+PREPARE stmt FROM @query;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+
+SELECT 'check that the database has been created' AS '' ; 
+SET @query = CONCAT('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ''' 
+, @project_lang_db  , '''' );
+-- SELECT 'RUNNING THE FOLLOWING query : ' , @query ; 
+PREPARE stmt FROM @query;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- copy paste 
+--SET @query = CONCAT('Select * FROM ', @db , '.' , @tbl ) ; 
+--SELECT 'RUNNING THE FOLLOWING query : ' , @query ; 
+--PREPARE stmt FROM @query;
+--EXECUTE stmt;
+--DEALLOCATE PREPARE stmt;
+
+/*
+
+ GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'
+ IDENTIFIED BY 'secret'  
+ WITH GRANT OPTION;
+ FLUSH PRIVILEGES;
+
+-- allow the use to connect remotely 
+CREATE USER 'root'@'%' IDENTIFIED BY '0024plapla' ; 
+GRANT ALL PRIVILEGEroot*.* TO 'root'@'%' WITH GRANT OPTION;
+
+*/

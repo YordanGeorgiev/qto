@@ -35,13 +35,13 @@ This call with truncate the issue table from the db and convert all the issues d
     doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.host-name.cnf
     
     # ensure there is no data in the issue table
-    psql -d "$db_name" -c 'TRUNCATE TABLE issue ;'
+    psql -d "$postgres_db_name" -c 'TRUNCATE TABLE issue ;'
     
     # run the txt-to-db action
     bash src/bash/issue-tracker/issue-tracker.sh -a txt-to-db
     
     # check the data by :
-    psql -d "$db_name" -c 'SELECT issue_id , category , name FROM issue order by name'
+    psql -d "$postgres_db_name" -c 'SELECT issue_id , category , name FROM issue order by name'
 
 ### 1.2. db-to-xls action
 You can unload your already stored ANY xls table with unique id's and load them into a xls file. 
@@ -51,7 +51,7 @@ You can unload your already stored ANY xls table with unique id's and load them 
     
     
     # check the data by :
-    psql -d "$db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
+    psql -d "$postgres_db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
     
     # run the db-to-xls action
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-xls
@@ -61,26 +61,26 @@ You can unload your already stored ANY xls table with unique id's and load them 
 You can load the latest produced xls file ( note as long as your xls sheet headers match the columns in your db table ANY xls is compatible )
 
     # check the data by :
-    psql -d "$db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
+    psql -d "$postgres_db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
     
     # run the db-to-xls action
     bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db
     
     # check the updated data
-    psql -d "$db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by start_time'
+    psql -d "$postgres_db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by start_time'
     
 
 ### 1.4. db-to-txt action
 You can load your already stored in the issue table issues and load them into the same issues txt file
 
     # check the data by :
-    psql -d "$db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
+    psql -d "$postgres_db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
     
     # run the db-to-xls action
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
     
     # check the updated data
-    psql -d "$db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by start_time'
+    psql -d "$postgres_db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by start_time'
 
 #### 1.4.1. db-to-txt action with pre-defined sorting attribute
 You can load your already stored in the issue table issues and load them into the same issues txt file by using a pre-defined sorting attribute. 
