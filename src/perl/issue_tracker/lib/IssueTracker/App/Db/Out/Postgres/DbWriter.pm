@@ -1,4 +1,4 @@
-package IssueTracker::App::Db::Out::DbWriterMariaDb ; 
+package IssueTracker::App::Db::Out::Postgres::DbWriter ; 
 
    use strict ; use warnings ; use utf8 ; 
 
@@ -28,119 +28,6 @@ package IssueTracker::App::Db::Out::DbWriterMariaDb ;
 	our $web_host 											= q{} ; 
    our @tables                                  = ( 'daily_issues' );
    our $objController                           = () ; 
-
-
-   sub doLoadNestedSetTable {
-
-		my $self 			   = shift ; 
-		my $hsr2 		      = shift ; 
-      my @tables = @{ $_[0] } ; 
-
-      # debug p($hsr2) ; 
-      foreach my $guid ( sort { $hsr2->{$a}->{ 'seq' } <=> $hsr2->{$b}->{ 'seq' } } keys (%$hsr2))  {
-         my $hsr_row = $hsr2->{ "$guid" } ; 
-         p ( $hsr_row ) ; 
-         # get the hs
-         # sort by seq_id
-         # set prev_seq_id , set prev_level
-         # for each hs row get id , seq_id , curr_level
-         # if curr_level < prev_level => doAddToParentWithNoChilden
-         # if curr_level = prev_level => doAddToParentWithChilden
-         # if curr_level > prev_level => doAddToParentWithChilden
-         # seq_id++ ;
-      }
-
-      return 1 ; 
-   }
-
-	# -----------------------------------------------------------------------------
-	# added when item's parent does not have children
-	# needs the parent id as parameter
-	# -----------------------------------------------------------------------------
-	sub doAddToParentWithNoChildren {
-
-#			my $self 					= shift ; 
-#			my $table_name 			= shift ; 
-#			my $parent_item_id 		= shift ; 
-#
-#			my $ret 						= 0 ; 
-#			my $msg 						= q{}  ;
-#
-#			my $pLeftRank				= 0 ; 
-#			my $pRightRank				= 0 ; 
-#			my $LeftRank				= q{} ; 
-#			my $RightRank				= q{} ; 
-#
-#			my $sql_str = 
-#				'SELECT LeftRank from ' . $table_name . ' WHERE ' . $table_name . 'Id = ?' 
-#			; 
-#			$sth = $dbh->prepare( $sql_str ) ; 
-#			#$sth = $dbh->prepare( qq (
-#			#	SELECT LeftRank from Item where ItemId = ?
-#			#));
-#			$sth->execute ( $parent_item_id ) or $ret = 1  ;
-#			$msg = $DBI::errstr if ( $ret == 1 ) ; 
-#			$objLogger->LogFatalMsg ( $msg ) if $ret == 1 ; 
-#
-#
-#			my @row = $sth->fetchrow_array ; 
-#			#debug $objLogger->LogDebugMsg ( "row " . @row);
-#			( $pLeftRank ) =  @row  ; 
-#			$objLogger->LogDebugMsg ( "pLeftRank: \"" . $pLeftRank . "\"" );
-#			$sth->finish;
-#
-#			$LeftRank = $pLeftRank + 1 ; 
-#			$RightRank = $pLeftRank + 2 ; 
-#
-#			$objLogger->LogDebugMsg ( "LeftRank: \"" . $LeftRank  . "\"");
-#			$objLogger->LogDebugMsg ( "RightRank: \"" . $RightRank . "\"" );
-#
-#			# shift the right rank to the right 
-#			$sql_str = '
-#				UPDATE ' . $table_name . '
-#				set RightRank = ( RightRank + 2 ) 
-#				WHERE 1=1 
-#				AND RightRank > ?'
-#			;
-#			$sth = $dbh->prepare( $sql_str ) ; 
-#			#$sth = $dbh->prepare( qq(
-#			#	UPDATE Item 
-#			#	set RightRank = ( RightRank + 2 ) 
-#			#	WHERE 1=1 
-#			#	AND RightRank > ? 
-#			#));
-#
-#			$sth->execute( $pLeftRank ) or $ret = 1  ;
-#			$sth->finish;
-#			$msg = $DBI::errstr if ( $ret == 1 ) ; 
-#			$objLogger->LogFatalMsg ( $msg ) if $ret == 1 ; 
-#			
-#			# shift the left rank to the right 
-#			$sql_str = '
-#				UPDATE ' . $table_name . '
-#				set LeftRank = ( LeftRank + 2 ) 
-#				WHERE 1=1 
-#				AND LeftRank > ?'
-#			;
-#			$sth = $dbh->prepare( $sql_str ) ; 
-#			#$sth = $dbh->prepare( qq( 
-#			#	UPDATE Item 
-#			#	set LeftRank = ( LeftRank + 2 ) 
-#			#	WHERE 1=1 
-#			#	AND LeftRank > ? 
-#			#));
-#
-#			$sth->execute( $pLeftRank ) or $ret = 1  ;
-#			$msg = $DBI::errstr if ( $ret == 1 ) ; 
-#			$objLogger->LogFatalMsg ( $msg ) if $ret == 1 ; 
-#			$sth->finish;
-#		
-#			$ret = 0 ; $msg = 'subordinate shifting ok' ; 
-#
-#			return ( $LeftRank , $RightRank ) ; 
-	}
-	#eof sub doAddItemToParentWithoutChildren
-
 	#
    # ------------------------------------------------------
 	#  input: hash ref of hash refs containing the issues 
@@ -438,6 +325,7 @@ package IssueTracker::App::Db::Out::DbWriterMariaDb ;
       foreach my $table ( keys %$hsr2 ) { 
 
          $objLogger->doLogDebugMsg ( "doUpsertTableWithHsr2 table: $table" );
+         sleep 2 ; 
          next unless grep( /^$table$/, @tables ) ; 
 
          # load ONLY the tables defined to load
@@ -510,8 +398,11 @@ package IssueTracker::App::Db::Out::DbWriterMariaDb ;
                $cell_value = $update_time if $column_name eq 'update_time' ; 
                
                # if the xls does not contain the guid's do just insert
+               # note that even cells with 1 space are considered for nulls !!!
+               # this is simply because of Shift + arrow works on 1 space
                if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
-                     or $cell_value eq 'null' or $cell_value eq "'NULL'" ) {
+                     or $cell_value eq 'null' or $cell_value eq "'NULL'" 
+                     or $cell_value eq ' ' ) {  
 
                   $cell_value = 'NULL'   ; 
                   $data_str .= "$cell_value" . " , " ; 
@@ -536,6 +427,15 @@ package IssueTracker::App::Db::Out::DbWriterMariaDb ;
 
                $sql_str	.=  "\n ON CONFLICT ( guid ) \n" ; 
                $sql_str	.=  " DO UPDATE SET \n" ; 
+            
+               # how-to upsert: https://stackoverflow.com/a/36799500/65706
+               # INSERT INTO category_gallery (
+               #  category_id, gallery_id, create_date, create_by_user_id
+               #  ) VALUES ($1, $2, $3, $4)
+               #  ON CONFLICT (category_id, gallery_id)
+               #  DO UPDATE SET
+               #    last_modified_date = EXCLUDED.create_date,
+               #    last_modified_by_user_id = EXCLUDED.create_by_user_id ;
 
                foreach my $col_num ( sort ( keys %{$hs_headers} )) {
                   my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
