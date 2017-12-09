@@ -89,6 +89,34 @@ doTestRunMysqlScripts(){
    # --
 
 
+   msg="test-07 fail if the db creation fails"
+   doLog "INFO $msg"
+   doParseIniEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf
+   export mysql_scripts_dir="$product_instance_dir/src/sql/mysql/dev_issue_tracker"
+   export mysql_create_db_script="$mysql_scripts_dir/00.create-db.mysql"
+   # break the syntax of the sql on purpose
+   perl -pi -e 's/CREATE DATABASE/UNCREATE DATABASE/g' $mysql_create_db_script
+   # Action !!!
+   bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
+   ret=$?
+   test $ret -eq 0 && export exit_code=1
+   test $ret -eq 0 && doExit $exit_code "test failed for $msg"
+   test $ret -ne 0 && export exit_code=0
+   # restore the syntax
+   perl -pi -e 's/UNCREATE DATABASE/CREATE DATABASE/g' $mysql_create_db_script
+   # --
+
+
+   msg="test-08 the full run is ok if all the ok conditions are met"
+   doLog "INFO $msg"
+   doParseIniEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf
+   # Action !!!
+   bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
+   ret=$?
+   test $ret -eq 0 && export exit_code=0
+   test $ret -ne 0 && export exit_code=1
+   test $ret -ne 0 && doExit $exit_code "test failed for $msg"
+   # --
 
 	doLog "DEBUG STOP  doTestRunMysqlScripts"
 }
