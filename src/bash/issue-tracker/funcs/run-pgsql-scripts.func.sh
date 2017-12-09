@@ -14,19 +14,19 @@ doRunPgsqlScripts(){
 	printf "\033[2J";printf "\033[0;0H"  ;    #and flush the screen
 
    # if the calling shell did not have exported sql_dir var	
-	test -z "$sql_dir" && \
-	   sql_dir="$product_instance_dir/src/sql/pgsql/$db_name"
+	test -z "${sql_dir:-}" && \
+	   sql_dir="$product_instance_dir/src/sql/pgsql/${db_name:-}"
 
    # echo db_name : $db_name 
    # sleep 10 ; 
 
    # if a relative path is passed add to the product version dir
-	[[ $sql_dir == /* ]] || export sql_dir="$product_instance_dir"/"$sql_dir"
+	[[ ${sql_dir:-} == /* ]] || export sql_dir="$product_instance_dir"/"$sql_dir"
    sql_script="$sql_dir/""00.create-db.pgsql"
    
    # run the sql save the result into a tmp log file
    psql -v ON_ERROR_STOP=1 -q -t -X -U "${pgsql_user:-}" \
-       -v db_name="$db_name" -f "$sql_script" postgres > "$tmp_log_file" 2>&1
+       -v db_name="${db_name:-}" -f "$sql_script" postgres > "$tmp_log_file" 2>&1
    ret=$?
    doLog "INFO ret: $ret" 
    
