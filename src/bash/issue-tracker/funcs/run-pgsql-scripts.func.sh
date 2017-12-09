@@ -10,19 +10,19 @@ doRunPgsqlScripts(){
 	doLog "DEBUG START doRunPgsqlScripts"
 	
    export tmp_log_file="$tmp_dir/.$$.log"
-	doLog "INFO START :: running sql scripts "	
+	doLog "INFO START :: running pg sql scripts "	
 	printf "\033[2J";printf "\033[0;0H"  ;    #and flush the screen
 
-   # if the calling shell did not have exported sql_dir var	
-	test -z "${sql_dir:-}" && \
-	   sql_dir="$product_instance_dir/src/sql/pgsql/${db_name:-}"
+   # if the calling shell did not have exported pgsql_scripts_dir var	
+	test -z "${pgsql_scripts_dir:-}" && \
+	   pgsql_scripts_dir="$product_instance_dir/src/sql/pgsql/${db_name:-}"
 
    # echo db_name : $db_name 
    # sleep 10 ; 
 
    # if a relative path is passed add to the product version dir
-	[[ ${sql_dir:-} == /* ]] || export sql_dir="$product_instance_dir"/"$sql_dir"
-   sql_script="$sql_dir/""00.create-db.pgsql"
+	[[ ${pgsql_scripts_dir:-} == /* ]] || export pgsql_scripts_dir="$product_instance_dir"/"$pgsql_scripts_dir"
+   sql_script="$pgsql_scripts_dir/""00.create-db.pgsql"
    
    # run the sql save the result into a tmp log file
    psql -v ON_ERROR_STOP=1 -q -t -X -U "${pgsql_user:-}" \
@@ -51,7 +51,7 @@ doRunPgsqlScripts(){
 	
 	doLog "INFO should run the following sql files: "
    echo -e "\n\n"
-	find "$sql_dir" -type f -name "*.sql"|sort -n
+	find "$pgsql_scripts_dir" -type f -name "*.sql"|sort -n
    sleep $sleep_interval
 
 	# run the sql scripts in alphabetical order
@@ -85,7 +85,7 @@ doRunPgsqlScripts(){
 		echo -e '\n\n'
 
 		doLog "INFO STOP  ::: running $relative_sql_script"
-	done < <(find "$sql_dir" -type f -name "*.sql"|sort -n)
+	done < <(find "$pgsql_scripts_dir" -type f -name "*.sql"|sort -n)
 	
 	doLog "INFO STOP  :: running sql scripts "	
 	test -z "${is_sql_biz_as_usual_run:-}" || sleep $sleep_interval ; 
