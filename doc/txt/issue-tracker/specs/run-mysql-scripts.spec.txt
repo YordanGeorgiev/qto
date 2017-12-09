@@ -1,0 +1,36 @@
+# doc/txt/issue-tracker/spec/run-mysql-scripts.spec.txt
+
+	doSpecRunMysqlScripts
+	
+	# Purpose:
+	# ------------------------------------------------------
+	the purpose of this func is to run all the mysql scripts under 
+   a configured mysql dir and fail on the first error 
+
+	# Prequisites
+	# ------------------------------------------------------
+	mysql or mariadb installed
+
+	# Installation
+	# ------------------------------------------------------
+   check the preq script
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doSpecRunMysqlScripts function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doSpecRunMysqlScripts used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doSpecRunMysqlScripts functions
+
+
+# eof file: doc/txt/issue-tracker/spec/run-mysql-scripts.spec.txt

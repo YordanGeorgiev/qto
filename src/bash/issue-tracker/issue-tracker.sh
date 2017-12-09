@@ -186,7 +186,7 @@ doCreateDefaultConfFile(){
 	echo -e "#the e-mails to send the package to ">>$cnf_file
 	echo -e "Emails=some.email@company.com\n" >> $cnf_file
 	echo -e "#the name of this application's db" >> $cnf_file
-	echo -e "db_name=$env_type""_""$run_unit\n\n" >> $cnf_file
+	echo -e "postgres_db_name=$env_type""_""$run_unit\n\n" >> $cnf_file
 	echo -e "#eof file: $cnf_file" >> $cnf_file
 
 }

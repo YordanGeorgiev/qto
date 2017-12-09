@@ -32,11 +32,11 @@ db_host = host-name
 db_port = 13306
 
 # OBS ! dev , tst , prd product instances to own db !
-# db_name   = %ProductType%_issue_tracker
-db_name   = dev_ysg_issues
+# postgres_db_name   = %ProductType%_issue_tracker
+postgres_db_name   = dev_ysg_issues
 
 # the mariadb user name
-db_user = ysg
+postgres_db_user = ysg
 
 # Whether or not to print messages to STDOUT and / or STDERR
 PrintConsoleMsgs =               1

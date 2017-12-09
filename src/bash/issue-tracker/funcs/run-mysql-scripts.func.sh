@@ -1,37 +1,44 @@
-# file: src/bash/issue-tracker/funcs/run-pgsql-scripts.func.sh
+# src/bash/issue-tracker/funcs/run-mysql-scripts.func.sh
 
-# v1.0.3
+# v1.0.9
 # ---------------------------------------------------------
-# the docs	:
-# cat doc/txt/issue-tracker/funcs/run-pgsql-scripts.func.txt
+# run all the mysql scripts under the src/sql/mysql/db_
 # ---------------------------------------------------------
-doRunPgsqlScripts(){
+doRunMySqlScripts(){
 
-	doLog "DEBUG START doRunPgsqlScripts"
+	doLog "DEBUG START doRunMySqlScripts"
 	
    export tmp_log_file="$tmp_dir/.$$.log"
-	doLog "INFO START :: running pg sql scripts "	
+   test -d $tmp_dir || mkdir -p $tmp_dir
+
+	doLog "INFO START :: running mysql sql scripts "	
 	printf "\033[2J";printf "\033[0;0H"  ;    #and flush the screen
 
-   # if the calling shell did not have exported pgsql_scripts_dir var	
-	test -z "${pgsql_scripts_dir:-}" && \
-	   pgsql_scripts_dir="$product_instance_dir/src/sql/pgsql/${postgres_db_name:-}"
+   # if the calling shell did not have exported mysql_scripts_dir var	
+	test -z "${mysql_scripts_dir:-}" && \
+	   mysql_scripts_dir="$product_instance_dir/src/sql/mysql/${env_type:-}_issue_tracker"
+  
+   test -d $mysql_scripts_dir || doExit "the mysql_scripts_dir: $mysql_scripts_dir
+   does NOT EXIST. Nothing to do !!!"
 
-   # echo postgres_db_name : $postgres_db_name 
+   doLog "INFO running all the files from the mysql_scripts_dir: $mysql_scripts_dir"
+   # echo mysql_db_name : $mysql_db_name 
    # sleep 10 ; 
 
    # if a relative path is passed add to the product version dir
-	[[ ${pgsql_scripts_dir:-} == /* ]] || export pgsql_scripts_dir="$product_instance_dir"/"$pgsql_scripts_dir"
-   sql_script="$pgsql_scripts_dir/""00.create-db.pgsql"
-   
-   # run the sql save the result into a tmp log file
-   psql -v ON_ERROR_STOP=1 -q -t -X -U "${pgsql_user:-}" \
-       -v postgres_db_name="${postgres_db_name:-}" -f "$sql_script" postgres > "$tmp_log_file" 2>&1
+	[[ ${mysql_scripts_dir:-} == /* ]] || export mysql_scripts_dir="$product_instance_dir"/"$mysql_scripts_dir"
+   sql_script="$mysql_scripts_dir/""00.create-db.mysql"
+  
+   exit 0
+
+   test -z "$mysql_scripts_dir" && mysql -u"$mysql_db_user" -p"$mysql_user_pw" \
+   -e "set @mysql_db_name='$mysql_db_name';source $sql_script ;" > "$tmp_log_file" 2>&1
    ret=$?
    doLog "INFO ret: $ret" 
    
    # show the user what is happenning 
    cat "$tmp_log_file"
+   exit 1
 
    test $ret -ne 0 && sleep 3
    test $ret -ne 0 && export exit_code=1
@@ -51,7 +58,7 @@ doRunPgsqlScripts(){
 	
 	doLog "INFO should run the following sql files: "
    echo -e "\n\n"
-	find "$pgsql_scripts_dir" -type f -name "*.sql"|sort -n
+	find "$mysql_scripts_dir" -type f -name "*.sql"|sort -n
    sleep $sleep_interval
 
 	# run the sql scripts in alphabetical order
@@ -68,9 +75,11 @@ doRunPgsqlScripts(){
 		doLog "INFO START ::: running $relative_sql_script"
 		echo -e '\n\n'
 		# run the sql save the result into a tmp log file
-		psql -v ON_ERROR_STOP=1 -q -t -X -U "${pgsql_user:-}" \
-         -v postgres_db_name="$postgres_db_name" -f "$sql_script" "$postgres_db_name" > "$tmp_log_file" 2>&1
-      ret=$?
+		# psql -v ON_ERROR_STOP=1 -q -t -X -U "${MySql_user:-}" \
+      #  -v mysql_db_name="$mysql_db_name" -f "$sql_script" "$mysql_db_name" > "$tmp_log_file" 2>&1
+      #ret=$?
+      ret=0
+
 
 		# show the user what is happenning 
 		cat "$tmp_log_file"
@@ -84,15 +93,15 @@ doRunPgsqlScripts(){
 		echo -e '\n\n'
 
 		doLog "INFO STOP  ::: running $relative_sql_script"
-	done < <(find "$pgsql_scripts_dir" -type f -name "*.sql"|sort -n)
+	done < <(find "$mysql_scripts_dir" -type f -name "*.sql"|sort -n)
 	
-	doLog "INFO STOP  :: running sql scripts "	
+	doLog "INFO STOP  :: running mysql sql scripts "	
 	test -z "${is_sql_biz_as_usual_run:-}" || sleep $sleep_interval ; 
 	
 	printf "\033[2J";printf "\033[0;0H"  ;    #and flush the screen
-	doLog "DEBUG STOP  doRunPgsqlScripts"
+	doLog "DEBUG STOP  doRunMySqlScripts"
 }
-# eof func doRunPgsqlScripts
+# eof func doRunMySqlScripts
 
 
-# eof file: src/bash/issue-tracker/funcs/run-pgsql-scripts.func.sh
+# eof file: src/bash/issue-tracker/funcs/run-mysql-scripts.func.sh

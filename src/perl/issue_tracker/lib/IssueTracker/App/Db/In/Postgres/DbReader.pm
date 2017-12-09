@@ -17,11 +17,11 @@ package IssueTracker::App::Db::In::Postgres::DbReader ;
 	our $appConfig 										= {} ; 
 	our $objLogger 										= {} ; 
 
-	our $db_name                                 = q{} ; 
+	our $postgres_db_name                                 = q{} ; 
 	our $db_host 										   = q{} ; 
 	our $db_port 										   = q{} ;
-	our $db_user 											= q{} ; 
-	our $db_user_pw	 									= q{} ; 
+	our $postgres_db_user 											= q{} ; 
+	our $postgres_db_user_pw	 									= q{} ; 
 	our $web_host 											= q{} ; 
 
    
@@ -53,11 +53,11 @@ package IssueTracker::App::Db::In::Postgres::DbReader ;
       " ; 
 
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
-      $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 
+      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
       # $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
-      $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
+      $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
@@ -122,8 +122,8 @@ package IssueTracker::App::Db::In::Postgres::DbReader ;
       " ; 
 
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
-      $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 
+      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
       $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
@@ -186,11 +186,11 @@ package IssueTracker::App::Db::In::Postgres::DbReader ;
       " ; 
 
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
-      $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 
+      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
-      $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
+      $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
@@ -234,7 +234,7 @@ package IssueTracker::App::Db::In::Postgres::DbReader ;
    sub doSearchConfigurationEntries {
 
       my $self             = shift ; 
-      my $db_name          = shift || 'ysg_issues' ; # the default db
+      my $postgres_db_name          = shift || 'ysg_issues' ; # the default db
       my $table            = shift || 'confs' ;  # the table to get the data from  
       my $query_str        = shift || '*' ;  # the table to get the data from  
    
@@ -259,7 +259,7 @@ package IssueTracker::App::Db::In::Postgres::DbReader ;
       " ; 
 
      
-      $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
+      $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
@@ -354,11 +354,11 @@ package IssueTracker::App::Db::In::Postgres::DbReader ;
       # debug p ( '$str_sql: ' . "$str_sql" . "\n" ) ; 
       
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n db_name: $db_name \n db_host: $db_host " ; 
-      $debug_msg .= "\n db_user: $db_user \n db_user_pw $db_user_pw \n" ; 
+      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
-      $dbh = DBI->connect("dbi:Pg:dbname=$db_name", "", "" , {
+      $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
@@ -429,11 +429,11 @@ package IssueTracker::App::Db::In::Postgres::DbReader ;
 		# print "PostgreReader::doInitialize appConfig : " . p($appConfig );
       # sleep 6 ; 
 		
-		$db_name 			= $ENV{ 'db_name' } || $appConfig->{'db_name'}     || 'prd_ysg_issues' ; 
+		$postgres_db_name 			= $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}     || 'prd_ysg_issues' ; 
 		$db_host 			= $ENV{ 'db_host' } || $appConfig->{'db_host'} 		|| 'localhost' ;
 		$db_port 			= $ENV{ 'db_port' } || $appConfig->{'db_port'} 		|| '13306' ; 
-		$db_user 			= $ENV{ 'db_user' } || $appConfig->{'db_user'} 		|| 'ysg' ; 
-		$db_user_pw 		= $ENV{ 'db_user_pw' } || $appConfig->{'db_user_pw'} 	|| 'no_pass_provided!!!' ; 
+		$postgres_db_user 			= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'ysg' ; 
+		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' } || $appConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
       
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
 

@@ -23,7 +23,7 @@ doTxtToDb(){
    test $exit_code -ne 0 && doExit $exit_code "failed to run txt-to-db action for issue_tracker"  
 
 
-   psql -d "$db_name" -c '
+   psql -d "$postgres_db_name" -c '
    SELECT id , category , name , start_time , stop_time
    FROM '"$period"'_issues order by '"$items_order_by_attribute"'
    ;';
