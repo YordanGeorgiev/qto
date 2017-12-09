@@ -1,9 +1,10 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/sql/mysql/dev_issue_tracker/00.create-db.mysql
+src/bash/issue-tracker/funcs/run-mysql-scripts.func.sh
+src/bash/issue-tracker/tests/run-mysql-scripts.test.sh
 src/bash/lib/.bash_funcs.host-name
 src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
-src/bash/issue-tracker/tests/run-mysql-scripts.test.sh
-src/bash/issue-tracker/funcs/run-mysql-scripts.func.sh
 doc/txt/issue-tracker/specs/run-mysql-scripts.spec.txt
 doc/txt/issue-tracker/funcs/run-mysql-scripts.func.txt
 doc/txt/issue-tracker/helps/run-mysql-scripts.help.txt

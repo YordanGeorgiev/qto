@@ -7,7 +7,7 @@
 doRunMySqlScripts(){
 
 	doLog "DEBUG START doRunMySqlScripts"
-	
+   export exit_code=1	
    export tmp_log_file="$tmp_dir/.$$.log"
    test -d $tmp_dir || mkdir -p $tmp_dir
 
@@ -17,40 +17,41 @@ doRunMySqlScripts(){
    # if the calling shell did not have exported mysql_scripts_dir var	
 	test -z "${mysql_scripts_dir:-}" && \
 	   mysql_scripts_dir="$product_instance_dir/src/sql/mysql/${env_type:-}_issue_tracker"
-  
-   test -d $mysql_scripts_dir || doExit "the mysql_scripts_dir: $mysql_scripts_dir
-   does NOT EXIST. Nothing to do !!!"
+   
+   msg="the mysql_scripts_dir: $mysql_scripts_dir does NOT EXIST. Nothing to do !!!"
+   test -d $mysql_scripts_dir || doExit $exit_code "$msg"
 
-   doLog "INFO running all the files from the mysql_scripts_dir: $mysql_scripts_dir"
-   # echo mysql_db_name : $mysql_db_name 
-   # sleep 10 ; 
+   msg="running all the files from the mysql_scripts_dir: $mysql_scripts_dir"
+   doLog "INFO $msg"
 
    # if a relative path is passed add to the product version dir
 	[[ ${mysql_scripts_dir:-} == /* ]] || export mysql_scripts_dir="$product_instance_dir"/"$mysql_scripts_dir"
    sql_script="$mysql_scripts_dir/""00.create-db.mysql"
   
-   exit 0
-
-   test -z "$mysql_scripts_dir" && mysql -u"$mysql_db_user" -p"$mysql_user_pw" \
-   -e "set @mysql_db_name='$mysql_db_name';source $sql_script ;" > "$tmp_log_file" 2>&1
-   ret=$?
-   doLog "INFO ret: $ret" 
+   msg="the mysql_user: $mysql_user is not set. Nothing to do !!!"
+   test -z "$mysql_user" && doExit $exit_code "$msg"
+   
+   msg="the mysql_user_pw: $mysql_user_pw is not set. Nothing to do !!!"
+   test -z "$mysql_user_pw" && doExit $exit_code "$msg"
+   
+   # create the db
+   mysql -u"$mysql_user" -p"$mysql_user_pw" \
+   -e "set @mysql_db_name='$mysql_db_name';source $sql_script ;"  > "$tmp_log_file" 2>&1
    
    # show the user what is happenning 
    cat "$tmp_log_file"
-   exit 1
-
-   test $ret -ne 0 && sleep 3
-   test $ret -ne 0 && export exit_code=1
-   test $ret -ne 0 && exit 1
-   test $ret -ne 0 && doExit "pid: $$ psql ret $ret - failed to run sql_script: $sql_script !!!"
-   test $ret -ne 0 && break
- 
-	# show the developer what happened
-	cat "$tmp_log_file" 
-
 	# and save the tmp log file into the log file
 	cat "$tmp_log_file" >> $log_file
+
+   msg="return non-zero ret ef the db has not been created"
+   mysql -u"$mysql_user" -p"$mysql_user_pw" -e "use $mysql_db_name"
+   ret=$?
+   doLog "INFO ret: $ret for $msg" 
+   test $ret -ne 0 && sleep 3
+   test $ret -ne 0 && export exit_code=1
+   test $ret -ne 0 && doExit $exit_code "failed to create the mysql_db : $mysql_db"
+   test $ret -ne 0 && break
+
    sleep $sleep_interval
 
 	test -z "${is_sql_biz_as_usual_run:-}" || sleep 1 ; 
