@@ -32,26 +32,26 @@ You can load you issues from an "issues txt file" , having a specic syntax into 
 This call with truncate the issue table from the db and convert all the issues data from the issues txt file into the issue table. 
 
     # pre-load the vars of an issue-tracker project
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.host-name.cnf
+    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.doc-pub-host.cnf
     
     # ensure there is no data in the issue table
-    psql -d "$postgres_db_name" -c 'TRUNCATE TABLE issue ;'
+    psql -d "$db_name" -c 'TRUNCATE TABLE issue ;'
     
     # run the txt-to-db action
     bash src/bash/issue-tracker/issue-tracker.sh -a txt-to-db
     
     # check the data by :
-    psql -d "$postgres_db_name" -c 'SELECT issue_id , category , name FROM issue order by name'
+    psql -d "$db_name" -c 'SELECT issue_id , category , name FROM issue order by name'
 
 ### 1.2. db-to-xls action
 You can unload your already stored ANY xls table with unique id's and load them into a xls file. 
 
     # pre-load the vars of an issue-tracker project
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.host-name.cnf
+    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.doc-pub-host.cnf
     
     
     # check the data by :
-    psql -d "$postgres_db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
+    psql -d "$db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
     
     # run the db-to-xls action
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-xls
@@ -59,28 +59,32 @@ You can unload your already stored ANY xls table with unique id's and load them 
 
 ### 1.3. xls-to-db action
 You can load the latest produced xls file ( note as long as your xls sheet headers match the columns in your db table ANY xls is compatible )
+You can control whether or not the loadable table should be truncted by setting the do_truncate_tables environment variable to 1 or 0. 
 
     # check the data by :
-    psql -d "$postgres_db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
+    psql -d "$db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
     
     # run the db-to-xls action
     bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db
     
     # check the updated data
-    psql -d "$postgres_db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by start_time'
+    psql -d "$db_name" -c '
+    SELECT issue_id , start_time , stop_time , category , name FROM issue order by start_time'
     
 
 ### 1.4. db-to-txt action
 You can load your already stored in the issue table issues and load them into the same issues txt file
 
     # check the data by :
-    psql -d "$postgres_db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
+    psql -d "$db_name" -c '
+    SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
     
     # run the db-to-xls action
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
     
     # check the updated data
-    psql -d "$postgres_db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by start_time'
+    psql -d "$db_name" -c '
+    SELECT issue_id , start_time , stop_time , category , name FROM issue order by start_time'
 
 #### 1.4.1. db-to-txt action with pre-defined sorting attribute
 You can load your already stored in the issue table issues and load them into the same issues txt file by using a pre-defined sorting attribute. 
@@ -114,7 +118,7 @@ You can recursively search and replace strings in both file and dir paths and th
 The issue-tracker could be used against many different projects as soon as they have the needed file and dir structure , configuration file and dedicated db in the PostgreSQL. 
 
     # pre-load the vars of an issue-tracker project
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.host-name.cnf
+    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.doc-pub-host.cnf
 
 #### 2.1.3. issue-tracker tool perl code syntax check
 You can check the perl code syntax with the following command:
@@ -128,8 +132,11 @@ You can check the perl code syntax with the following command:
 
 #### 2.2.1. single item data fetch in json via web
 You can get the data of a single item in db by guid in json format via the web interface , for example:
-http://host-name:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
+http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
 
     # run for the loaded items
-    while read -r guid ; do curl "http://host-name:3000/dev_stockit_issues/get/company_eps/$guid" ; done < <(psql -d dev_stockit_issues -t -c "SELECT guid FROM company_eps")
+    while read -r guid ; do 
+    curl "http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/$guid" ; 
+    done < <(psql -d dev_stockit_issues -t -c "
+    SELECT guid FROM company_eps")
 

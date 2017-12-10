@@ -45,6 +45,8 @@ Table of Contents
     * [5.2. Root Dirs naming conventions](#52-root-dirs-naming-conventions)
   * [6. SOURCE CODE MANAGEMENT](#6-source-code-management)
     * [6.1. The meaning of the used brances](#61-the-meaning-of-the-used-brances)
+  * [7. SCENARIOS](#7-scenarios)
+    * [7.1. A small team project hours tracking scenario](#71-a-small-team-project-hours-tracking-scenario)
 
 
     
@@ -138,7 +140,7 @@ add the uuid generation capability enabling extension
 #### 1.4.5. Install the dblink extension as follows
 Install the dblink extension as follows
 
-    sudo su - postgres  -c "psql template1 -c 'CREATE EXTENSION IF NOT EXISTS \"dblink\";'"
+    sudo su - postgres  -c "psql template1 -c 'CREATE EXTENSION IF NOT EXISTS \"dblink\";' "
 
 ### 1.5. Install the perl modules ( optional)
 Install the perl module by first installing the server development package
@@ -282,7 +284,7 @@ Verify the inserted data from the db as follows:
 #### 3.2.1. Run the http://&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;proj-db&gt;&gt;/get/&lt;&lt;table&gt;&gt;/&lt;&lt;guid&gt;&gt; route
 Load a table with guid's.
 Check a single item with your browser, for example:
-http://host-name:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
+http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
 
     # load the items
     while read -r f; do 
@@ -291,7 +293,7 @@ http://host-name:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a7fc
     done < <(find $proj_txt_dir -type f)
     
     # verify the data
-    psql -d $postgres_db_name -c "SELECT * FROM company_eps "
+    psql -d $db_name -c "SELECT * FROM company_eps "
 
 ## 4. BUSINESS LOGIC
 
@@ -303,7 +305,7 @@ You can manage multiple projects with the issue-tracker tool. Each project has i
 As the tool is backwards compatible you could have differrrent instances of the issue-tracker projects with different versions ( and set of features ) operatiing against differrent project ( each one in its own version).
 You must pre-set the configuration variables of an issue-tracker project each time you start working on a project from the shell
 
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/isg-pub/isg-pub.issue-tracker.host-name.conf
+    doParseIniEnvVars /vagrant/csitea/cnf/projects/isg-pub/isg-pub.issue-tracker.doc-pub-host.conf
 
 ### 4.2. Increase the date for all projects
 to increase the date for all the projects at once use the following oneliner.
@@ -330,7 +332,7 @@ Issues could be of different types - tasks, activities, notes etc.
 #### 4.3.2. to search for the project daily file
 to search for the project daily file run the following liner first to start the dev server of the react mini-app.
 Than point your broser at the following url:
-http://host-name:3307/
+http://doc-pub-host:3307/
 ( Hardcoded for now … ) 
 
     bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
@@ -365,6 +367,16 @@ In almost all development projects there are slightly or even quite big differen
 The ideology of issue tracker is that the code which is under active development is in the dev branch , the code which is under testing in the tst branch , the code which is in production in the prd branch. 
 Only after the code in production has been successfully operated and prooved working it could be moved to the master branch and the version increased. 
 Once you wanto to start adding new feature branch from the master branch. 
+
+    
+
+## 7. SCENARIOS
+
+
+     
+
+### 7.1. A small team project hours tracking scenario
+This scenario describes the steps and processes, which could be implemented to achieve a small team ( 3-10 ) members issue-tracking with hours reporting by using the issue-handler combined with Google Cloud authentication and storage.
 
     
 
