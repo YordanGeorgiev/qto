@@ -1,6 +1,18 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/bash/issue-tracker/funcs/run-mysql-scripts.func.sh
+src/bash/issue-tracker/tests/run-mysql-scripts.test.sh
+src/bash/lib/.bash_funcs.host-name
 src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
+doc/txt/issue-tracker/specs/run-mysql-scripts.spec.txt
+doc/txt/issue-tracker/funcs/run-mysql-scripts.func.txt
+doc/txt/issue-tracker/helps/run-mysql-scripts.help.txt
+doc/txt/issue-tracker/tests/run-mysql-scripts.test.txt
+src/bash/issue-tracker/helps/run-mysql-scripts.help.sh
+src/bash/issue-tracker/specs/run-mysql-scripts.spec.sh
+# --
+src/sql/mysql/dev_issue_tracker/00.create-db.mysql
+# ---
 src/bash/issue-tracker/bootstrap-issue-tracker.sh
 src/bash/issue-tracker/issue-tracker.sh
 src/bash/issue-tracker/test-issue-tracker.sh
@@ -283,10 +295,6 @@ src/bash/issue-tracker/issue-tracker.cnf
 src/bash/issue-tracker/issue-tracker.host-name.cnf
 src/bash/issue-tracker/issue-tracker.set-your-host.cnf
 src/bash/issue-tracker/issue-tracker.CMac.cnf
-#---
-src/sql/mysql/run/select-all-from-%db%.%table%.SQL
-src/sql/mysql/run/delete-all-from-%db%.%table%.SQL
-dat/lst/sql/mysql/run/db-table.list
 #---
 doc/txt/issue-tracker/funcs/remove-package.func.txt
 doc/txt/issue-tracker/helps/pckg/remove-package.help.txt
@@ -632,6 +640,22 @@ doc/txt/issue-tracker/tests/mojo-morbo-stop.test.txt
 doc/txt/issue-tracker/specs/mojo-morbo-stop.spec.txt
 doc/txt/issue-tracker/helps/mojo-morbo-stop.help.txt
 doc/txt/issue-tracker/funcs/mojo-morbo-stop.func.txt
+src/sql/mysql/
+src/sql/mysql/dev_issue_tracker
+src/sql/mysql/dev_issue_tracker/00.create-db.mysql
+src/sql/mysql/dev_issue_tracker/01.create-ItemController-table.sql
+src/sql/mysql/dev_issue_tracker/02.create-ItemView-table.sql
+src/sql/mysql/dev_issue_tracker/03.create-ItemModel-table.sql
+src/sql/mysql/dev_issue_tracker/06.create-Feature-table.sql
+src/sql/mysql/dev_issue_tracker/07.create-Requirement-table.sql
+src/sql/mysql/dev_issue_tracker/15.create-UserStory-table.sql
+src/sql/mysql/dev_issue_tracker/31.create-CellValue-table.sql
+src/sql/mysql/dev_issue_tracker/46.create-DevOps-table.sql
+src/sql/mysql/dev_issue_tracker/37.create-Image-table.sql
+src/sql/mysql/dev_issue_tracker/40.create-Tag-table.sql
+src/sql/mysql/dev_issue_tracker/41.create-TagMap-table.sql
+src/sql/mysql/dev_issue_tracker/50.create-ReadMe-table.sql
+# ---
 src/react/conf-srch/package-lock.json
 doc/txt/issues/2017/2017-10/2017-10-04
 doc/txt/issues/2017/2017-10/2017-10-04/issue-tracker.all.20170820_000000.xlsx

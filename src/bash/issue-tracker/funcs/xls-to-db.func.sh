@@ -31,7 +31,7 @@ doXlsToDb(){
       --do xls-to-db --xls-file $xls_file --tables $tables
    exit_code=$?
    
-#   psql -d "$db_name" -c '
+#   psql -d "$postgres_db_name" -c '
 #   SELECT category , substring ( description from 0 for 40 ) as descrption , start_time , stop_time
 #   FROM '"$tables"'_issues order by '"$items_order_by_attribute"'
 #   ;';

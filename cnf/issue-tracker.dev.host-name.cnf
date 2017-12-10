@@ -1,11 +1,23 @@
-# file: cnf/issue-tracker.host-name.cnf
+# file: cnf/issue-tracker.doc-pub-host.cnf
 [MainSection]
+
+# the id from the url of the google spread sheet
+google_spread_sheet_id = 1p4YwuSB3GtQ0i5ginn4Vc95t09w1WNWJra2yUH1aL0Y
 
 # multiple projects support
 issue_tracker_project = issue-tracker
 
+# OBS ! dev , tst , prd product instances to own db !
+postgres_db_name   = prd_issue_tracker
+
+# where the scripts to run are situated
+pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.7.dev.ysg/src/sql/pgsql/dev_issue_tracker
+
+# where are stored the txt issues files
+proj_daily_data_root_dir = /vagrant/csitea/issue-tracker/doc/txt/issues
+
 # The logging directory 
-LogDir = %ProductInstanceDir%/dat/log/perl
+LogDir = %ProductInstanceDir%/dat/log
 
 # the default Log file
 LogFile =         %LogDir%/%ProductName%.log
@@ -17,26 +29,22 @@ LogTimeToTextSeparator = ###
 LogToFile =          1
 
 # the time format of the logging 
-TimeFormat =         YYYY-MM-DD hh:mm:ss
+TimeFormat =         YYYY.MM.DD - hh:mm:ss
 
 # the time format of the logging 
-DbType 	=         mariadb
+DbType 	=         postgres
 
 # the log file
-LogFile=%LogDir%/%ProductName%.%YYYY%-%MM%-%DD%.log
+LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
 
 # the host on which the mariadb is running 
-db_host = host-name
+db_host = doc-pub-host
 
 # the pgsql port
 db_port = 13306
 
-# OBS ! dev , tst , prd product instances to own db !
-# db_name   = %ProductType%_issue_tracker
-db_name   = dev_ysg_issues
-
 # the mariadb user name
-db_user = ysg
+postgres_db_user = ysg
 
 # Whether or not to print messages to STDOUT and / or STDERR
 PrintConsoleMsgs =               1
@@ -56,10 +64,34 @@ PrintDebugMsgs =                 1
 # Whether or not to pring TRACE messages
 PrintTraceMsgs =                 1 
 
+# where to backup the zip packages
+network_backup_dir=/vagrant/var/csitea/issue-tracker/dat/zip
+
 Emails=yordan.georgiev@gmail.com
+PS1="$issue_tracker_project $PS1"
 
-# where to place the backups of the 
-# network_backup_dir=/vagrant/csitea/issue-tracker/dat/zip
+# v0.2.7
+# on which host the mysql is running
+mysql_host=host-name
+ 
+# on which port the mysql is listening 
+mysql_port=13306
 
+# the name of the mysql db 
+mysql_db_name = dev_issue_tracker
 
-# eof file: cnf/issue-tracker.host-name.cnf
+# the name of the mysql user 
+mysql_user = usrisgpuben
+
+# the pw of the mysql user
+mysql_user_pw = secret
+
+# where are the mysql scripts situated
+mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.7.dev.ysg/src/sql/mysql/dev_issue_tracker
+
+# the mysql db data containing load xls
+load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tracker-en.xlsx
+
+# in bash because of a bug this is ignored ...
+foo=bar
+# eof file: cnf/issue-tracker.doc-pub-host.cnf

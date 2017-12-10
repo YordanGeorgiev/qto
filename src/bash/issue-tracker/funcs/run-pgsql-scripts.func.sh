@@ -15,9 +15,9 @@ doRunPgsqlScripts(){
 
    # if the calling shell did not have exported pgsql_scripts_dir var	
 	test -z "${pgsql_scripts_dir:-}" && \
-	   pgsql_scripts_dir="$product_instance_dir/src/sql/pgsql/${db_name:-}"
+	   pgsql_scripts_dir="$product_instance_dir/src/sql/pgsql/${postgres_db_name:-}"
 
-   # echo db_name : $db_name 
+   # echo postgres_db_name : $postgres_db_name 
    # sleep 10 ; 
 
    # if a relative path is passed add to the product version dir
@@ -26,7 +26,7 @@ doRunPgsqlScripts(){
    
    # run the sql save the result into a tmp log file
    psql -v ON_ERROR_STOP=1 -q -t -X -U "${pgsql_user:-}" \
-       -v db_name="${db_name:-}" -f "$sql_script" postgres > "$tmp_log_file" 2>&1
+       -v postgres_db_name="${postgres_db_name:-}" -f "$sql_script" postgres > "$tmp_log_file" 2>&1
    ret=$?
    doLog "INFO ret: $ret" 
    
@@ -69,9 +69,8 @@ doRunPgsqlScripts(){
 		echo -e '\n\n'
 		# run the sql save the result into a tmp log file
 		psql -v ON_ERROR_STOP=1 -q -t -X -U "${pgsql_user:-}" \
-         -v db_name="$db_name" -f "$sql_script" "$db_name" > "$tmp_log_file" 2>&1
+         -v postgres_db_name="$postgres_db_name" -f "$sql_script" "$postgres_db_name" > "$tmp_log_file" 2>&1
       ret=$?
-
 
 		# show the user what is happenning 
 		cat "$tmp_log_file"

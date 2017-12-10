@@ -32,6 +32,11 @@ done < <(cat << "EOF"
 	postgresql-9.6
 	libdbd-pgsql
 	libxml-atom-perl
+   git
+   vim
+   libxml-atom-perl
+   tar
+   gzip
 EOF
 )
 
@@ -53,7 +58,6 @@ while read -r p ; do
 		fi ;
 	fi
 done < <(cat << "EOF"
-	vim
 	tig
 EOF
 )

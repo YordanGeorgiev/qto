@@ -13,7 +13,7 @@ doCurlTestGetItem(){
 	sleep "$sleep_interval"
 	# Action !!!
    while read -r guid ; do 
-      curl "http://$web_host"':'"$web_port/$db_name/get/company_eps/$guid" ; 
+      curl "http://$web_host"':'"$web_port/$postgres_db_name/get/company_eps/$guid" ; 
    done < <(psql -d dev_stockit_issues -t -c "SELECT guid FROM company_eps")
 
 	doLog "DEBUG STOP  doCurlTestGetItem"

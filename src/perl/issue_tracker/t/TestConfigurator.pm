@@ -67,10 +67,10 @@ ok ( exists $appConfig->{'LogToFile'} , $msg ) ;
 
 #
 #db_host
-#db_name
+#postgres_db_name
 #db_port
 #DbType
-#db_user
+#postgres_db_user
 #Emails
 #HostName
 #issue_tracker_project

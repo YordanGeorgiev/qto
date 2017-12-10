@@ -1,5 +1,6 @@
+run-mysql-scripts
 # mojo-morbo-start
-mojo-morbo-stop
+# mojo-morbo-stop
 # increase-date
 # txt-to-db
 # db-to-xls
