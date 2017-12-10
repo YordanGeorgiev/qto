@@ -17,20 +17,17 @@
 
 	# Interdependancies
 	# ------------------------------------------------------
-	-- todo: what are the interdependancies for the  
-		doSpecRunMysqlScripts function to execute without errors
+	- mysql installed
+   - conf files with defined mysql connection params
 
 	# Usage:
 	# ------------------------------------------------------
-	-- todo: how can be the doSpecRunMysqlScripts used 
-
-	# Developent
-	# ------------------------------------------------------
-	-- todo: what issues, todos could be pointed for development
+   bash src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
 
 	# Caveats:
 	# ------------------------------------------------------
-	-- todo: what are the known caveats of the doSpecRunMysqlScripts functions
+   - the cnf files might not be part of the package
+	- none known
 
 
 # eof file: doc/txt/issue-tracker/spec/run-mysql-scripts.spec.txt
