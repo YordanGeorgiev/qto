@@ -45,8 +45,6 @@ package IssueTracker::App::Utils::Configurator ;
 		, LogToFile                      => 1
 		# the time format of the logging 
 		, TimeFormat                     => 'YYYY-MM-DD hh:mm:ss'
-		# the time format of the logging 
-		, DbType 	                     => 'maria_db'
 	  };  
 	  
 

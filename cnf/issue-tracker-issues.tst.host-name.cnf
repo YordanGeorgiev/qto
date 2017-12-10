@@ -28,9 +28,6 @@ LogToFile =          1
 # the time format of the logging 
 TimeFormat =         YYYY.MM.DD - hh:mm:ss
 
-# the time format of the logging 
-DbType 	=         postgres
-
 # the log file
 LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
 
@@ -39,8 +36,6 @@ db_host = host-name
 
 # the pgsql port
 db_port = 13306
-
-
 
 # the mariadb user name
 postgres_db_user = ysg

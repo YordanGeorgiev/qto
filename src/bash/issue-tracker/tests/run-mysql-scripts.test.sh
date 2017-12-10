@@ -13,7 +13,7 @@ doTestRunMysqlScripts(){
    msg="test-01 if the mysql_scripts_dir is empty the default one should be used"
    doLog "INFO $msg"
    # pre-load a configurtion file
-   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.dev.host-name.cnf
+   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.$env_type.host-name.cnf
 
    # set an undefined mysql_scripts_dir for the test case run
    export mysql_scripts_dir=""
@@ -29,7 +29,7 @@ doTestRunMysqlScripts(){
    
    msg="test-02 test run if the mysql_scripts dir is not existing dir"
    doLog "INFO $msg"
-   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.dev.host-name.cnf
+   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.$env_type.host-name.cnf
    export mysql_scripts_dir=undefined
    # Action !!!
    bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
@@ -42,7 +42,7 @@ doTestRunMysqlScripts(){
 
    msg="test-03 test run if the mysql_scripts dir is defined in the configuration file"
    doLog "INFO $msg"
-   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.dev.host-name.cnf
+   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.$env_type.host-name.cnf
    # Action !!!
    bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
    str_to_grep='\['"$child_pid"'\]'" running all the files from the mysql_scripts_dir: "
@@ -54,7 +54,7 @@ doTestRunMysqlScripts(){
 
    msg="test-04 if a relative path is set add to the product instance dir"
    doLog "INFO $msg"
-   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.dev.host-name.cnf
+   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.$env_type.host-name.cnf
    mysql_scripts_dir_chk=$mysql_scripts_dir
    export mysql_scripts_dir='src/sql/mysql/dev_issue_tracker'
    str_to_grep='\['"$child_pid"'\]'" running all the files from the mysql_scripts_dir: "
@@ -65,7 +65,7 @@ doTestRunMysqlScripts(){
    
    msg="test-05 test run if the mysql_user is not set"
    doLog "INFO $msg"
-   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.dev.host-name.cnf
+   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.$env_type.host-name.cnf
    export mysql_user=""
    # Action !!!
    bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
@@ -78,7 +78,7 @@ doTestRunMysqlScripts(){
    
    msg="test-06 test run if the mysql_user_pw is not set"
    doLog "INFO $msg"
-   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.dev.host-name.cnf
+   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.$env_type.host-name.cnf
    export mysql_user_pw=""
    # Action !!!
    bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
@@ -91,7 +91,7 @@ doTestRunMysqlScripts(){
 
    msg="test-07 fail if the db creation fails"
    doLog "INFO $msg"
-   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.dev.host-name.cnf
+   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.$env_type.host-name.cnf
    export mysql_scripts_dir="$product_instance_dir/src/sql/mysql/dev_issue_tracker"
    export mysql_create_db_script="$mysql_scripts_dir/00.create-db.mysql"
    # break the syntax of the sql on purpose
@@ -109,7 +109,7 @@ doTestRunMysqlScripts(){
 
    msg="test-08 the full run is ok if all the ok conditions are met"
    doLog "INFO $msg"
-   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.dev.host-name.cnf
+   doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.$env_type.host-name.cnf
    # Action !!!
    bash $product_instance_dir/src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
    ret=$?
