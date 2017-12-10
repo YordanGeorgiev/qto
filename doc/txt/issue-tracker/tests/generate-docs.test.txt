@@ -1,0 +1,40 @@
+# doc/txt/issue-tracker/test/generate-docs.test.txt
+
+	doTestGenerateDocs
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to test the creation of md and pdf docs 
+
+	# Prequisites
+	# ------------------------------------------------------
+   installed and configured mariadb client having access 
+   to mariadb server with isg-pub documentation database 
+
+
+	# Installation
+	# ------------------------------------------------------
+   check the docs 
+
+	# Interdependancies
+	# ------------------------------------------------------
+   - mariadb server , client , bash ,perl 	
+   - configured mariadb user
+
+	# Usage:
+	# ------------------------------------------------------
+	edit the run-test .lst file
+
+	# Developent
+	# ------------------------------------------------------
+   -- add logic for the removal of the md files befor the tst
+   -- add logic for the removal of the pd files before the tst
+   -- add the call 
+   -- after the call the files should be under 
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- none so far 
+
+
+# eof file: doc/txt/issue-tracker/test/generate-docs.test.txt

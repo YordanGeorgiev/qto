@@ -1,5 +1,14 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/bash/issue-tracker/tests/generate-docs.test.sh
+src/bash/issue-tracker/funcs/generate-docs.func.sh
+src/bash/issue-tracker/helps/generate-docs.help.sh
+src/bash/issue-tracker/specs/generate-docs.spec.sh
+doc/txt/issue-tracker/funcs/generate-docs.func.txt
+doc/txt/issue-tracker/helps/generate-docs.help.txt
+doc/txt/issue-tracker/specs/generate-docs.spec.txt
+doc/txt/issue-tracker/tests/generate-docs.test.txt
+# ---
 src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 cnf/issue-tracker.dev.host-name.cnf
 cnf/issue-tracker.tst.host-name.cnf
@@ -656,6 +665,7 @@ src/sql/mysql/dev_issue_tracker/46.create-DevOps-table.sql
 src/sql/mysql/dev_issue_tracker/37.create-Image-table.sql
 src/sql/mysql/dev_issue_tracker/40.create-Tag-table.sql
 src/sql/mysql/dev_issue_tracker/41.create-TagMap-table.sql
+src/sql/mysql/dev_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/dev_issue_tracker/50.create-ReadMe-table.sql
 # ---
 src/sql/mysql/tst_issue_tracker
