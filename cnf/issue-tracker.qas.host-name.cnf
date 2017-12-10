@@ -7,11 +7,11 @@ google_spread_sheet_id = 1p4YwuSB3GtQ0i5ginn4Vc95t09w1WNWJra2yUH1aL0Y
 # multiple projects support
 issue_tracker_project = issue-tracker
 
-# OBS ! dev , tst , prd product instances to own db !
-postgres_db_name   = tst_issue_tracker
+# OBS ! dev , tst , qas, prd product instances to own db !
+postgres_db_name   = qas_issue_tracker
 
 # where the scripts to run are situated
-pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.7.tst.ysg/src/sql/pgsql/tst_issue_tracker
+pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.7.qas.ysg/src/sql/pgsql/qas_issue_tracker
 
 # where are stored the txt issues files
 proj_daily_data_root_dir = /vagrant/csitea/issue-tracker/doc/txt/issues
@@ -75,7 +75,7 @@ mysql_host=host-name
 mysql_port=13306
 
 # the name of the mysql db 
-mysql_db_name = tst_issue_tracker
+mysql_db_name = qas_issue_tracker
 
 # the name of the mysql user 
 mysql_user = usrisgpuben
@@ -84,7 +84,7 @@ mysql_user = usrisgpuben
 mysql_user_pw = secret
 
 # where are the mysql scripts situated
-mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.7.tst.ysg/src/sql/mysql/tst_issue_tracker
+mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.7.qas.ysg/src/sql/mysql/qas_issue_tracker
 
 # the mysql db data containing load xls
 load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tracker-en.xlsx

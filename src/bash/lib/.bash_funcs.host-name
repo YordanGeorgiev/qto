@@ -1,16 +1,4 @@
 # file: ~/.bash_funcs.`hostname -s`
-src/sql/mysql/
-src/sql/mysql/dev_issue_tracker
-src/sql/mysql/dev_issue_tracker/00.create-db.mysql
-src/sql/mysql/dev_issue_tracker/01.create-ItemController-table.sql
-src/sql/mysql/dev_issue_tracker/02.create-ItemView-table.sql
-src/sql/mysql/dev_issue_tracker/03.create-ItemModel-table.sql
-src/sql/mysql/dev_issue_tracker/06.create-Feature-table.sql
-src/sql/mysql/dev_issue_tracker/07.create-Requirement-table.sql
-src/sql/mysql/dev_issue_tracker/15.create-UserStory-table.sql
-src/sql/mysql/dev_issue_tracker/31.create-CellValue-table.sql
-src/sql/mysql/dev_issue_tracker/46.create-DevOps-table.sql
-src/sql/mysql/dev_issue_tracker/50.create-ReadMe-table.sql
 # ---
 # docs at the end ... 
 #
@@ -19,7 +7,7 @@ src/sql/mysql/dev_issue_tracker/50.create-ReadMe-table.sql
 # ---------------------------------------------------------
 # call by: doParseIniEnvVars sfw/sh/isg-pub/isg-pub.mini-nz.ysg-host-name.conf
 #; file: mini-nz.sh.hostname.conf docs at the end 
-#[MainSection]
+# [MainSection]
 #; the name of the project 
 #project=mini-nz
 #;
