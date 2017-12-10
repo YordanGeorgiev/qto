@@ -651,6 +651,9 @@ src/sql/mysql/dev_issue_tracker/07.create-Requirement-table.sql
 src/sql/mysql/dev_issue_tracker/15.create-UserStory-table.sql
 src/sql/mysql/dev_issue_tracker/31.create-CellValue-table.sql
 src/sql/mysql/dev_issue_tracker/46.create-DevOps-table.sql
+src/sql/mysql/dev_issue_tracker/37.create-Image-table.sql
+src/sql/mysql/dev_issue_tracker/40.create-Tag-table.sql
+src/sql/mysql/dev_issue_tracker/41.create-TagMap-table.sql
 src/sql/mysql/dev_issue_tracker/50.create-ReadMe-table.sql
 # ---
 src/react/conf-srch/package-lock.json
