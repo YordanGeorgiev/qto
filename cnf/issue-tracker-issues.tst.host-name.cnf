@@ -60,4 +60,4 @@ PrintTraceMsgs =                 1
 
 Emails=yordan.georgiev@gmail.com
 # eof file: cnf/issue-tracker.host-name.cnf
-PS1="$issue_tracker_project $PS1"
+PS1="$issue_tracker_project \u@\h [\d \t] [\w] $ \n\n "

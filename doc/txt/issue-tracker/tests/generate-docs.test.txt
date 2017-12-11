@@ -27,10 +27,14 @@
 
 	# Developent
 	# ------------------------------------------------------
-   -- add logic for the removal of the md files befor the tst
-   -- add logic for the removal of the pd files before the tst
-   -- add the call 
-   -- after the call the files should be under 
+   -- tst - add logic for the removal of the md files befor the tst
+   -- todo - add logic for the removal of the ppd files before the tst
+   -- done - add the call 
+   -- todo after the call the files should be under 
+   -- todo - update the shell txt docs
+   -- todo - add the test cases for the undefined mysql v0.2.8 vars
+   -- todo - add the test cases for a failed case
+
 
 	# Caveats:
 	# ------------------------------------------------------
