@@ -12,7 +12,8 @@
 # <(find src/bash/issue-tracker/funcs/ -type f)
 #------------------------------------------------------------------------------
 doMorphDir(){
-		
+
+      set -x 
 		# some initial checks the users should set the vars in their shells !!!
 		test -z $dir_to_morph && doExit 1 "You must export dir_to_morph=<<the-dir>> - it is empty !!!"	
 		test -d $dir_to_morph || doExit 1 "The dir to morph : \"$dir_to_morph\" is not a dir !!!"
@@ -31,27 +32,33 @@ doMorphDir(){
 			doLog "DEBUG working on file: $file"
 			doLog "DEBUG searching for $to_srch , replacing with :: $to_repl"
 
+         # we do not want to mess with out .git dir
+         # or how-to check that a string contains another string
+         case "$file" in 
+            *.git*)
+            continue
+            ;;
+         esac
 			perl -pi -e "s#$to_srch#$to_repl#g" "$file"
 		);
-		done < <(find $dir_to_morph -not -path "*/node_modules/*" -type f \
-            -exec file {} \; | grep text | cut -d: -f1)
+		done < <(find $dir_to_morph -type f -not -exec file {} \; | grep text | cut -d: -f1)
 		
 		doLog "INFO STOP  :: search and replace in non-binary files"
 
 		#search and repl %var_id% with var_id_val in deploy_tmp_dir 
 		doLog "INFO search and replace in dir and file paths dir_to_morph:$dir_to_morph"
+
       # rename the dirs according to the pattern
       while read -r dir ; do (
-         perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;`mkdir -p $n` if -d $_ ;'
+         perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;`mkdir -p $n` ;'
       );
-      done < <(find $dir_to_morph -not -path "*/node_modules/*" -type f|grep -v '.git')
-
+      done < <(find $dir_to_morph -type d|grep -v '.git')
 
       # rename the files according to the pattern
       while read -r file ; do (
          perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;rename($o,$n) unless -e $n ;'
       );
-      done < <(find $dir_to_morph -not -path "*/node_modules/*" -type f|grep -v '.git')
+      done < <(find $dir_to_morph -type f -not -path "*/node_modules/*" |grep -v '.git')
 
 }
 #eof doMorphDir
