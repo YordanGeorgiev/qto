@@ -65,7 +65,7 @@ PrintTraceMsgs =                 1
 network_backup_dir=/vagrant/var/csitea/issue-tracker/dat/zip
 
 Emails=yordan.georgiev@gmail.com
-PS1="$issue_tracker_project $PS1"
+PS1="$issue_tracker_project \u@\h [\d \t] [\w] $ \n\n "
 
 # v0.2.7
 # on which host the mysql is running
@@ -84,7 +84,7 @@ mysql_user = usrisgpuben
 mysql_user_pw = secret
 
 # where are the mysql scripts situated
-mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.7.dev.ysg/src/sql/mysql/dev_issue_tracker
+mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.8.dev.ysg/src/sql/mysql/dev_issue_tracker
 
 # the mysql db data containing load xls
 load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tracker-en.xlsx

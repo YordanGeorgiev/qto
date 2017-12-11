@@ -65,7 +65,7 @@ PrintTraceMsgs =                 1
 network_backup_dir=/vagrant/var/csitea/issue-tracker/dat/zip
 
 Emails=yordan.georgiev@gmail.com
-PS1="$issue_tracker_project $PS1"
+PS1="$issue_tracker_project \u@\h [\d \t] [\w] $ \n\n "
 
 # v0.2.7
 # on which host the mysql is running
