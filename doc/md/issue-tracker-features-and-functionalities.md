@@ -9,13 +9,17 @@ Table of Contents
     * [1.3. xls-to-db action](#13-xls-to-db-action)
     * [1.4. db-to-txt action](#14-db-to-txt-action)
       * [1.4.1. db-to-txt action with pre-defined sorting attribute](#141-db-to-txt-action-with-pre-defined-sorting-attribute)
+    * [1.5. run-pgsql-scripts](#15-run-pgsql-scripts)
+    * [1.6. run-mysql-scripts](#16-run-mysql-scripts)
   * [2. DEVOPS FEATURES AND FUNCTIONALITIES](#2-devops-features-and-functionalities)
-    * [2.1. Shell based actions](#21-shell-based-actions)
+    * [2.1. development efficiency increasing actions](#21-development-efficiency-increasing-actions)
       * [2.1.1. morph-dir action](#211-morph-dir-action)
       * [2.1.2. work against different projects](#212-work-against-different-projects)
       * [2.1.3. issue-tracker tool perl code syntax check](#213-issue-tracker-tool-perl-code-syntax-check)
     * [2.2. Web based routes](#22-web-based-routes)
       * [2.2.1. single item data fetch in json via web](#221-single-item-data-fetch-in-json-via-web)
+    * [2.3. Documentation related](#23-documentation-related)
+      * [2.3.1. Single call export of the md and pdf documentation files](#231-single-call-export-of-the-md-and-pdf-documentation-files)
 
 
     
@@ -93,12 +97,22 @@ You can load your already stored in the issue table issues and load them into th
     
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
 
+### 1.5. run-pgsql-scripts
+You can create a preconfigured &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; postgres via a single shell call. The scripts will fail if any of the sql scripts have a syntax error - all the ddl events will be displayed in the STDOUT and stored in the shell log file for later audit
+
+    
+
+### 1.6. run-mysql-scripts
+You can create a preconfigured &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; in mariadb  via a single shell call. The scripts will fail if any of the sql scripts have a syntax error - all the ddl events will be displayed in the STDOUT and stored in the shell log file for later audit
+
+    
+
 ## 2. DEVOPS FEATURES AND FUNCTIONALITIES
 
 
      
 
-### 2.1. Shell based actions
+### 2.1. development efficiency increasing actions
 
 
     
@@ -139,4 +153,14 @@ http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a
     curl "http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/$guid" ; 
     done < <(psql -d dev_stockit_issues -t -c "
     SELECT guid FROM company_eps")
+
+### 2.3. Documentation related
+
+
+    
+
+#### 2.3.1. Single call export of the md and pdf documentation files
+Single call export of the md and pdf documentation files
+
+    
 

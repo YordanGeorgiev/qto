@@ -1,8 +1,6 @@
 # doc/txt/issue-tracker/test/generate-docs.test.txt
 
-	doTestGenerateDocs
-	
-	# Purpose:
+	# Purpose: doTestGenerateDocs
 	# ------------------------------------------------------
 	to test the creation of md and pdf docs 
 
@@ -11,10 +9,9 @@
    installed and configured mariadb client having access 
    to mariadb server with isg-pub documentation database 
 
-
 	# Installation
 	# ------------------------------------------------------
-   check the docs 
+   check the DevOps guide , Installation section
 
 	# Interdependancies
 	# ------------------------------------------------------
@@ -23,22 +20,24 @@
 
 	# Usage:
 	# ------------------------------------------------------
-	edit the run-test .lst file
+   add the 
+   generate-docs 
+   line into the src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
+   file. Start the test script:
+   bash src/bash/issue-tracker/test-issue-tracker.sh
 
 	# Developent
 	# ------------------------------------------------------
-   -- tst - add logic for the removal of the md files befor the tst
+   -- todo - add logic for the removal of the md files befor the tst
    -- todo - add logic for the removal of the ppd files before the tst
    -- done - add the call 
-   -- todo after the call the files should be under 
-   -- todo - update the shell txt docs
-   -- todo - add the test cases for the undefined mysql v0.2.8 vars
-   -- todo - add the test cases for a failed case
-
+   -- done - add the test cases for the undefined mysql v0.2.8 vars
+   -- done - add the test cases for a failed case
+   -- todo - after the call the files should be under 
+   -- qas  - update the shell txt docs
 
 	# Caveats:
 	# ------------------------------------------------------
-	-- none so far 
-
+	-- none known
 
 # eof file: doc/txt/issue-tracker/test/generate-docs.test.txt
