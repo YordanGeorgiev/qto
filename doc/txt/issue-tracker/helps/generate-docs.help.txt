@@ -1,36 +1,44 @@
-# doc/txt/issue-tracker/help/generate-docs.help.txt
+# doc/txt/issue-tracker/func/generate-docs.func.txt
 
-	doHelpGenerateDocs
+	doGenerateDocs
 	
 	# Purpose:
 	# ------------------------------------------------------
-	-- todo: what is the purpose of the doHelpGenerateDocs function
+	to generate the following types of docs for the tool:
+   - github syntax md files
+   - pdf files
+   - xls files containign the export of the tables
+
 
 	# Prequisites
 	# ------------------------------------------------------
-	-- todo: what are the prerequisites of the doHelpGenerateDocs function
+	installed and configured mariadb server and client
+   deployed and operational access to isg-pub instance
 
 	# Installation
 	# ------------------------------------------------------
-	-- todo: what are the required installations for the  
-		doHelpGenerateDocs function to execute without errors
+   check the Installation section of the isg-pub documentation 
 
 	# Interdependancies
 	# ------------------------------------------------------
-	-- todo: what are the interdependancies for the  
-		doHelpGenerateDocs function to execute without errors
+   - running isg-pub instance
+   - deployed and populated isg-pub mysql database
+   - mariadb user with access to the database 
+   - wkhtmltopdf configured on the isg-pub instance server 
+      for the pdf export
 
 	# Usage:
 	# ------------------------------------------------------
-	-- todo: how can be the doHelpGenerateDocs used 
+   - start the instance	
 
 	# Developent
 	# ------------------------------------------------------
-	-- todo: what issues, todos could be pointed for development
+   -- ensure the new vars introduced are available in all projects 
+         configuration files
 
 	# Caveats:
 	# ------------------------------------------------------
-	-- todo: what are the known caveats of the doHelpGenerateDocs functions
+	-- if the isg-pub instance is not running 
 
 
-# eof file: doc/txt/issue-tracker/help/generate-docs.help.txt
+# eof file: doc/txt/issue-tracker/func/generate-docs.func.txt

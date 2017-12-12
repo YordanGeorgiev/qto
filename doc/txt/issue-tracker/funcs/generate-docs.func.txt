@@ -9,7 +9,6 @@
    - pdf files
    - xls files containign the export of the tables
 
-
 	# Prequisites
 	# ------------------------------------------------------
 	installed and configured mariadb server and client
@@ -23,13 +22,17 @@
 	# ------------------------------------------------------
    - running isg-pub instance
    - deployed and populated isg-pub mysql database
+   - proper mysql related configuration in the cnf files
    - mariadb user with access to the database 
    - wkhtmltopdf configured on the isg-pub instance server 
       for the pdf export
 
 	# Usage:
 	# ------------------------------------------------------
-   - start the instance	
+   - create the documentation db with the run-mysql-scripts
+      action
+   - start the isg-pub instance	
+   - populate the mysql doc db from the isg-pub instance	
 
 	# Developent
 	# ------------------------------------------------------
