@@ -91,6 +91,7 @@ src/perl/issue_tracker/t/TestConfigurator.pm
 src/perl/issue_tracker/t/TestInitiator.pm
 src/perl/issue_tracker/t/TestLogger.pl
 src/perl/issue_tracker/t/TestDispatcher.pl
+src/perl/issue_tracker/t/TestMdlHsr2.pl
 src/perl/issue_tracker/lib/IssueTracker
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/TxtReader.pm
@@ -115,6 +116,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/DbWriter.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/DbWriter.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWritersFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm
