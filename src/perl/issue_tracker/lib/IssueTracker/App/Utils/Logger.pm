@@ -424,7 +424,7 @@ if you don't export anything, such as for a purely object-oriented module.
 			$HumanReadableTime 		= "$HumanReadableTime" ; 
 
 		my $msgPrefix = () ; 
-		$msgPrefix = "$msgType $HumanReadableTime [$PID] [" . sprintf("%23s", "$caller_pckg:$line ] " ) . "$LogTimeToTextSeparator"; 
+		$msgPrefix = "$msgType $HumanReadableTime [$PID] " . sprintf("%23s", "$caller_pckg:$line " ) . "$LogTimeToTextSeparator"; 
 
 		if (  $msgType eq '[WARN ]'
 			|| $msgType eq '[INFO ]'
