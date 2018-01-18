@@ -7,11 +7,11 @@ google_spread_sheet_id = 1p4YwuSB3GtQ0i5ginn4Vc95t09w1WNWJra2yUH1aL0Y
 # multiple projects support
 issue_tracker_project = issue-tracker
 
-# OBS ! dev , tst , qas, prd product instances to own db !
+# OBS ! dev , tst , prd product instances to own db !
 postgres_db_name   = qas_issue_tracker
 
 # where the scripts to run are situated
-pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.7.qas.ysg/src/sql/pgsql/qas_issue_tracker
+pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.8.qas.ysg/src/sql/pgsql/qas_issue_tracker
 
 # where are stored the txt issues files
 proj_daily_data_root_dir = /vagrant/csitea/issue-tracker/doc/txt/issues
@@ -69,7 +69,7 @@ PS1="$issue_tracker_project \u@\h [\d \t] [\w] $ \n\n "
 
 # v0.2.7
 # on which host the mysql is running
-mysql_host=host-name
+mysql_host=localhost
  
 # on which port the mysql is listening 
 mysql_port=13306
@@ -84,10 +84,17 @@ mysql_user = usrisgpuben
 mysql_user_pw = secret
 
 # where are the mysql scripts situated
-mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.7.qas.ysg/src/sql/mysql/qas_issue_tracker
+mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.8.qas.ysg/src/sql/mysql/qas_issue_tracker
 
 # the mysql db data containing load xls
 load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tracker-en.xlsx
+
+# v0.2.8
+# the web host where the web application layer is deployed 
+web_host=host-name
+
+# the web port the web application layer is listening to
+web_port=5001
 
 # in bash because of a bug this is ignored ...
 foo=bar

@@ -1,13 +1,19 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
+# ---
+src/bash/issue-tracker/tests/generate-docs.test.sh
+src/bash/issue-tracker/funcs/generate-docs.func.sh
+src/bash/issue-tracker/helps/generate-docs.help.sh
+doc/txt/issue-tracker/funcs/generate-docs.func.txt
+doc/txt/issue-tracker/helps/generate-docs.help.txt
+doc/txt/issue-tracker/tests/generate-docs.test.txt
+# ---
 src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 cnf/issue-tracker.dev.host-name.cnf
 cnf/issue-tracker.tst.host-name.cnf
 cnf/issue-tracker.qas.host-name.cnf
 cnf/issue-tracker.prd.host-name.cnf
-cnf/issue-tracker-issues.dev.host-name.cnf
-cnf/issue-tracker-issues.prd.host-name.cnf
-cnf/issue-tracker-issues.tst.host-name.cnf
 cnf/issue-tracker.host-name.cnf
 # ---
 src/bash/issue-tracker/funcs/run-mysql-scripts.func.sh
@@ -27,7 +33,6 @@ src/bash/issue-tracker/issue-tracker.sh
 src/bash/issue-tracker/test-issue-tracker.sh
 src/bash/issue-tracker/tests/all-issue-tracker-tests.lst
 src/bash/issue-tracker/tests/rem-issue-tracker-actions.lst
-src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
 src/bash/issue-tracker/tests/db-to-conflu.test.sh
 src/bash/issue-tracker/funcs/db-to-conflu.func.sh
@@ -86,6 +91,7 @@ src/perl/issue_tracker/t/TestConfigurator.pm
 src/perl/issue_tracker/t/TestInitiator.pm
 src/perl/issue_tracker/t/TestLogger.pl
 src/perl/issue_tracker/t/TestDispatcher.pl
+src/perl/issue_tracker/t/TestMdlHsr2.pl
 src/perl/issue_tracker/lib/IssueTracker
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/TxtReader.pm
@@ -110,6 +116,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/DbWriter.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/DbWriter.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWritersFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm
@@ -656,6 +663,7 @@ src/sql/mysql/dev_issue_tracker/46.create-DevOps-table.sql
 src/sql/mysql/dev_issue_tracker/37.create-Image-table.sql
 src/sql/mysql/dev_issue_tracker/40.create-Tag-table.sql
 src/sql/mysql/dev_issue_tracker/41.create-TagMap-table.sql
+src/sql/mysql/dev_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/dev_issue_tracker/50.create-ReadMe-table.sql
 # ---
 src/sql/mysql/tst_issue_tracker

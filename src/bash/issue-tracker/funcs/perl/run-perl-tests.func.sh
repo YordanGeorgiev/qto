@@ -2,7 +2,7 @@
 
 # v1.1.1
 # ---------------------------------------------------------
-# implement the calls to all the unit testing 
+# implement the calls to all the perl unit testing 
 # ---------------------------------------------------------
 doRunPerlTests(){
 	
@@ -18,6 +18,10 @@ doRunPerlTests(){
 
 	doLog "INFO Component testing Dispatcher.pm with TestDispatcher.pl"
    perl src/perl/issue_tracker/t/TestDispatcher.pl	
+	test -z "$sleep_interval" || sleep $sleep_interval
+	
+   doLog "INFO Component testing MdlHsr2.pm with TestMdlHsr2.pl"
+   perl src/perl/issue_tracker/t/TestMdlHsr2.pl	
 	test -z "$sleep_interval" || sleep $sleep_interval
 }
 # eof func doRunPerlTests
