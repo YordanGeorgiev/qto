@@ -9,7 +9,7 @@ src/perl/issue_tracker/t/TestInitiator.pm
 src/perl/issue_tracker/t/TestConfigurator.pm
 src/perl/issue_tracker/t/TestLogger.pl
 src/perl/issue_tracker/t/TestDispatcher.pl
-src/perl/issue_tracker/t/TestMdlHsr2.pl
+#src/perl/issue_tracker/t/TestMdlHsr2.pl
 # ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
@@ -112,7 +112,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/DbWriter.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/DbWriter.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWritersFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
+#src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm
@@ -672,6 +672,7 @@ src/sql/mysql/tst_issue_tracker/37.create-Image-table.sql
 src/sql/mysql/tst_issue_tracker/40.create-Tag-table.sql
 src/sql/mysql/tst_issue_tracker/41.create-TagMap-table.sql
 src/sql/mysql/tst_issue_tracker/46.create-DevOps-table.sql
+src/sql/mysql/tst_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/tst_issue_tracker/50.create-ReadMe-table.sql
 # ---
 src/sql/mysql/prd_issue_tracker
@@ -687,6 +688,7 @@ src/sql/mysql/prd_issue_tracker/37.create-Image-table.sql
 src/sql/mysql/prd_issue_tracker/40.create-Tag-table.sql
 src/sql/mysql/prd_issue_tracker/41.create-TagMap-table.sql
 src/sql/mysql/prd_issue_tracker/46.create-DevOps-table.sql
+src/sql/mysql/prd_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/prd_issue_tracker/50.create-ReadMe-table.sql
 # ---
 src/sql/mysql/qas_issue_tracker
