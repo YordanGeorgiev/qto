@@ -12,14 +12,11 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    use Data::Printer ; 
 
    use IssueTracker::App::Utils::Logger ; 
-
    use IssueTracker::App::Ctrl::CtrlTxtToDb ; 
    use IssueTracker::App::Ctrl::CtrlXlsToDb ; 	
    use IssueTracker::App::Ctrl::CtrlDbToTxt ; 
    use IssueTracker::App::Ctrl::CtrlDbToXls ; 
    use IssueTracker::App::Ctrl::CtrlDbToGSheet ; 
-   use IssueTracker::App::Ctrl::CtrlDbToConflu ; 
-   use IssueTracker::App::Ctrl::CtrlMetaToJson ; 
 
 	our $module_trace                = 0 ; 
    our $module_test_run             = 0 ; 
@@ -88,16 +85,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
    }
 
-   sub doDbToConlfu {
-      my $self = shift ; 
-      use strict 'refs'; 
-
-      my $objCtrlDbToConflu = 
-         'IssueTracker::App::Ctrl::CtrlDbToConflu'->new ( \$appConfig ) ; 
-      my ( $ret , $msg ) = $objCtrlDbToConflu->doReadAndLoad ( ); 
-      return ( $ret , $msg ) unless $ret == 0 ; 
-   }
-
    sub doXlsToDb {
       my $self = shift ; 
       use strict 'refs'; 
@@ -108,16 +95,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       return ( $ret , $msg ) ; 
    }
    
-   sub doLoadMetaToJson {
-      my $self = shift ; 
-      use strict 'refs'; 
-
-      my $objCtrlMetaToJson = 
-         'IssueTracker::App::Ctrl::CtrlMetaToJson'->new ( \$appConfig ) ; 
-      my ( $ret , $msg ) = $objCtrlMetaToJson->doRun () ; 
-      return ( $ret , $msg ) ; 
-   }
-
    sub doDbToTxt {
 
       my $self = shift ; 
