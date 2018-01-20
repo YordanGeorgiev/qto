@@ -128,7 +128,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/SetGetable.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Timer.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm
-#----
+# ---
 # ---
 src/bash/issue-tracker/tests/mojo-hypnotoad-start.test.sh
 src/bash/issue-tracker/specs/mojo-hypnotoad-start.spec.sh
@@ -149,7 +149,6 @@ doc/txt/issue-tracker/helps/mojo-hypnotoad-stop.help.txt
 doc/txt/issue-tracker/funcs/mojo-hypnotoad-stop.func.txt
 # ---
 src/perl/issue_tracker/script
-src/perl/issue_tracker/script/issue_tracker
 src/perl/issue_tracker/script/issue_tracker
 src/perl/issue_tracker/lib
 src/perl/issue_tracker/lib/IssueTracker.pm
@@ -175,7 +174,7 @@ cnf/hosts/host-name/home/ysg/.tmux-session.1.0.0.20161216_202609.backup
 cnf/hosts/host-name/home/ysg/.tmux-session.1.0.0.20161231_092215.backup
 cnf/hosts/host-name/home/ysg/.vimrc.1.2.0.20161216_194801.backup
 cnf/readme.txt
-#----
+# ---
 src/bash/issue-tracker/tests/increase-date.test.sh
 src/bash/issue-tracker/funcs/increase-date.func.sh
 src/bash/issue-tracker/specs/increase-date.spec.sh

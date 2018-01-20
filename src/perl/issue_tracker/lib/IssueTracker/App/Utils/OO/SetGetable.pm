@@ -104,11 +104,11 @@ __END__
 
 =head1 DESCRIPTION
    A simple base module for setters and getters. 
-   Java coders would have to ALWAYS write 
-   objJava.setFoo(bar)
-   objJava.getFoo()
+   Java coders would have to ALWAYS ( and countless times ) define and implement
+   objJavaClass.setFoo(bar)
+   objJavaClass.getFoo()
    
-   while the childs of this module would ONLY ONCE write 
+   while with perl the childs of this module would ONLY ONCE write 
    objChild->set("foo" , "bar" )
    objChild->get("foo") ; 
 
@@ -118,7 +118,8 @@ __END__
 
 =head1 SEE ALSO
 
-perldoc perlvars
+perldoc Exporter
+perldoc perlobj
 
 No mailing list for this module
 
