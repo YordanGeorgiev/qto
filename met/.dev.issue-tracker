@@ -45,15 +45,6 @@ src/bash/issue-tracker/test-issue-tracker.sh
 src/bash/issue-tracker/tests/all-issue-tracker-tests.lst
 src/bash/issue-tracker/tests/rem-issue-tracker-actions.lst
 # ---
-src/bash/issue-tracker/tests/db-to-conflu.test.sh
-src/bash/issue-tracker/funcs/db-to-conflu.func.sh
-src/bash/issue-tracker/specs/db-to-conflu.spec.sh
-src/bash/issue-tracker/helps/db-to-conflu.help.sh
-doc/txt/issue-tracker/tests/db-to-conflu.test.txt
-doc/txt/issue-tracker/funcs/db-to-conflu.func.txt
-doc/txt/issue-tracker/specs/db-to-conflu.spec.txt
-doc/txt/issue-tracker/helps/db-to-conflu.help.txt
-# ---
 src/bash/issue-tracker/tests/db-to-gsheet.test.sh
 src/bash/issue-tracker/specs/db-to-gsheet.spec.sh
 src/bash/issue-tracker/helps/db-to-gsheet.help.sh
@@ -108,7 +99,6 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/Out
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/TxtWriterFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/TxtWriter.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/XlsWriter.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/ConfluWriter.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/GSheetWriter.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/UrlWriter.pm
 src/perl/issue_tracker/lib/IssueTracker/App/RAM
@@ -129,7 +119,6 @@ src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToGSheet.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToConflu.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO
@@ -589,7 +578,6 @@ doc/txt/issue-tracker/helps/run-pgsql-scripts.help.txt
 doc/txt/issue-tracker/funcs/run-pgsql-scripts.func.txt
 tags
 # ---
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToConflu/autosplit.ix
 src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToTxt/autosplit.ix
@@ -603,7 +591,6 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/Postgres/DbWriter/autosp
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/TxtReader/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/UrlReader/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/XlsReader/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/ConfluWriter/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/GSheetWriter/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/TxtWriter/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/UrlWriter/autosplit.ix
