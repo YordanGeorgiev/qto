@@ -21,7 +21,11 @@ doRunPerlTests(){
 	test -z "$sleep_interval" || sleep $sleep_interval
 	
    doLog "INFO Component testing MdlHsr2.pm with TestMdlHsr2.pl"
-   perl src/perl/issue_tracker/t/TestMdlHsr2.pl	
+   # perl src/perl/issue_tracker/t/TestMdlHsr2.pl	
+	test -z "$sleep_interval" || sleep $sleep_interval
+
+   doLog "INFO Unit testing or the SetGetable base class"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestSetGetable.pl
 	test -z "$sleep_interval" || sleep $sleep_interval
 }
 # eof func doRunPerlTests

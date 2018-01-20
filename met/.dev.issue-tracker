@@ -1,5 +1,16 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+# testing
+src/perl/issue_tracker/t
+src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/
+src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/SetGetableChild.pm
+src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestSetGetable.pl
+src/perl/issue_tracker/t/TestInitiator.pm
+src/perl/issue_tracker/t/TestConfigurator.pm
+src/perl/issue_tracker/t/TestLogger.pl
+src/perl/issue_tracker/t/TestDispatcher.pl
+src/perl/issue_tracker/t/TestMdlHsr2.pl
+# ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
 src/bash/issue-tracker/tests/generate-docs.test.sh
@@ -79,6 +90,7 @@ src/bash/issue-tracker/helps/clone-project.help.sh
 src/bash/issue-tracker/specs/clone-project.spec.sh
 src/bash/issue-tracker/tests/clone-project.test.sh
 # ---
+# testing
 src/perl
 src/perl/issue_tracker/script
 src/perl/issue_tracker/script/issue_tracker.pl
@@ -86,12 +98,6 @@ src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
 src/bash/issue-tracker/install-prerequisites-on-ubuntu.sh
 src/perl/issue_tracker
 src/perl/issue_tracker/lib
-src/perl/issue_tracker/t
-src/perl/issue_tracker/t/TestConfigurator.pm
-src/perl/issue_tracker/t/TestInitiator.pm
-src/perl/issue_tracker/t/TestLogger.pl
-src/perl/issue_tracker/t/TestDispatcher.pl
-src/perl/issue_tracker/t/TestMdlHsr2.pl
 src/perl/issue_tracker/lib/IssueTracker
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/TxtReader.pm
@@ -129,6 +135,8 @@ src/perl/issue_tracker/lib/IssueTracker/App/Utils
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO/FileHandler.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO
+src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/SetGetable.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Timer.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm
@@ -583,6 +591,7 @@ doc/txt/issue-tracker/funcs/run-pgsql-scripts.func.txt
 tags
 # ---
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToConflu/autosplit.ix
+src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToXls/autosplit.ix

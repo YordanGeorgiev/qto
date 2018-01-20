@@ -24,10 +24,9 @@ doTxtToDb(){
 
 
    psql -d "$postgres_db_name" -c '
-   SELECT id , category , name , start_time , stop_time
+   SELECT guid , category , name , start_time , stop_time
    FROM '"$period"'_issues order by '"$items_order_by_attribute"'
    ;';
-
 
 
 	doLog "DEBUG STOP  doTxtToDb"

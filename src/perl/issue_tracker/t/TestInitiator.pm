@@ -33,7 +33,8 @@ ok ( $ProductBaseDir 		eq '/opt/csitea' , $msg ) ;
 $msg                       = 'The ProductDir is the ProductBaseDir + the ProductName' ; 
 ok ( $ProductDir 				eq '/opt/csitea/issue-tracker' , $msg ) ; 
 
-# 3.
+# 3. # if not set , set in in the shell by:
+# export product_instance_dir=/opt/csitea/issue-tracker/issue-tracker.0.2.8.dev.ysg
 $msg                       = 'The ProductInstanceDir is the next level' ; 
 ok ( $ProductInstanceDir 	eq $ENV{'product_instance_dir'} , $msg ) ; 
 
