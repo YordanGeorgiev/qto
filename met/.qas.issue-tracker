@@ -130,7 +130,6 @@ src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToGSheet.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToConflu.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlMetaToJson.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO
@@ -595,7 +594,6 @@ src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToXls/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlMetaToJson/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlTxtToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlXlsToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/Dispatcher/autosplit.ix
