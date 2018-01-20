@@ -5,13 +5,16 @@ package IssueTracker::App::Utils::Configurator ;
 	my $VERSION='2.6.1' ; #doc at the end
 	require Exporter;
 
-	my @ISA = qw(AutoLoader Exporter);
+	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
 	my @EXPORT = qw(getConfHolder clone);
 
 	use AutoLoader ; 
 	use Carp ; 
 	use IO::File; 
-	our $ModuleDebug 			= 0  ; 
+
+   use base qw(IssueTracker::App::Utils::OO::SetGetable);
+	
+   our $ModuleDebug 			= 0  ; 
 	our $NowInUnitTest 		= 0  ; 
 	our $ConfFile 				= '' ; 
 	our $HostName 				= () ; 
@@ -369,31 +372,6 @@ package IssueTracker::App::Utils::Configurator ;
 			return $str_dump ; 
 	} 
 	#eof sub DumpEnvVars
-
-
-	# -----------------------------------------------------------------------------
-	# get a value from the cnfiguration hash by its name
-	# -----------------------------------------------------------------------------
-	sub get  {
-			
-			shift;
-			my $name_l = shift;
-			return $cnfHolder->{$name_l};
-	}  
-	# eof sub get 
-
-
-	# -----------------------------------------------------------------------------
-	# sets a value into the cnfiguration hash 
-	# -----------------------------------------------------------------------------
-	sub set  {
-			
-			shift;
-			my $name_l = shift;
-			my $Value = shift;
-			$cnfHolder->{$name_l}=$Value;
-	} 
-	#eof sub
 
 
 	# -----------------------------------------------------------------------------

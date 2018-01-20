@@ -5,17 +5,18 @@ package IssueTracker::App::IO::In::UrlReader;
 	my $VERSION = '1.0.0';    #doc at the end
 
 	require Exporter;
-	our @ISA = qw(Exporter);
+	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
 	our $AUTOLOAD =();
 	our $ModuleDebug = 0 ; 
 	use AutoLoader;
-
 
 	use Cwd qw/abs_path/;
 	use File::Path qw(make_path) ;
 	use File::Find ; 
 	use Sys::Hostname;
 	use Carp qw /cluck confess shortmess croak carp/ ; 
+   
+   use base qw(IssueTracker::App::Utils::OO::SetGetable);
    use IssueTracker::App::Utils::IO::FileHandler ; 
    use IssueTracker::App::Utils::Logger ;
    use WWW::Curl::Easy ; 
@@ -204,46 +205,6 @@ sub doReadURL {
 	# eof sub AUTOLOAD
 
 
-	# -----------------------------------------------------------------------------
-	# return a field's value
-	# -----------------------------------------------------------------------------
-	sub get {
-
-		my $self = shift;
-		my $name = shift;
-		croak "\@TRYING to get an undef name" unless $name ;  
-		croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
-
-		return $self->{ $name };
-	}    #eof sub get
-
-
-	# -----------------------------------------------------------------------------
-	# set a field's value
-	# -----------------------------------------------------------------------------
-	sub set {
-
-		my $self  = shift;
-		my $name  = shift;
-		my $value = shift;
-		$self->{ "$name" } = $value;
-	}
-	# eof sub set
-
-
-	# -----------------------------------------------------------------------------
-	# return the fields of this obj instance
-	# -----------------------------------------------------------------------------
-	sub dumpFields {
-		my $self      = shift;
-		my $strFields = ();
-		foreach my $key ( keys %$self ) {
-			$strFields .= " $key = $self->{$key} \n ";
-		}
-
-		return $strFields;
-	}    
-	# eof sub dumpFields
 		
 
 	# -----------------------------------------------------------------------------

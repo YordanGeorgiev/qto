@@ -3,10 +3,10 @@ package IssueTracker::App::IO::Out::TxtWriter;
 use strict;
 use warnings;
 use utf8;
-my $VERSION = '1.1.1';    #doc at the end
+my $VERSION = '1.1.2';    #doc at the end
 
 require Exporter;
-our @ISA      = qw(Exporter);
+our @ISA = qw(Exporter IssueTracker::App::Utils::OO::SetGetable);
 our $AUTOLOAD = ();
 use AutoLoader;
 
@@ -20,6 +20,7 @@ use Carp qw /cluck confess shortmess croak carp/;
 use Scalar::Util qw /looks_like_number/;
 use Data::Printer;
 
+use base qw(IssueTracker::App::Utils::OO::SetGetable);
 use IssueTracker::App::Utils::IO::FileHandler ; 
 use IssueTracker::App::Utils::Logger ; 
 use IssueTracker::App::Utils::Timer ; 
@@ -43,11 +44,6 @@ our $issues_file       = () ;
 
 =head1 SYNOPSIS
 
-	doResolves the product version and base dirs , bootstraps cnfig files if needed
-
-		use IssueTracker::App::ETL::IssueTracker ;
-		my $objIssueTracker = 
-			'IssueTracker::App::ETL::IssueTracker'->new ( \$appConfig ) ; 
 =cut 
 
 =head1 EXPORT
@@ -306,47 +302,6 @@ sub AUTOLOAD {
 
 # eof sub AUTOLOAD
 
-# -----------------------------------------------------------------------------
-# return a field's value
-# -----------------------------------------------------------------------------
-sub get {
-
-  my $self = shift;
-  my $name = shift;
-  croak "\@IssueTracker.pm sub get TRYING to get undefined name" unless $name;
-  croak "\@IssueTracker.pm sub get TRYING to get undefined value"
-    unless ($self->{"$name"});
-
-  return $self->{$name};
-}    #eof sub get
-
-# -----------------------------------------------------------------------------
-# set a field's value
-# -----------------------------------------------------------------------------
-sub set {
-
-  my $self  = shift;
-  my $name  = shift;
-  my $value = shift;
-  $self->{"$name"} = $value;
-}
-
-# eof sub set
-
-# -----------------------------------------------------------------------------
-# return the fields of this obj instance
-# -----------------------------------------------------------------------------
-sub dumpFields {
-  my $self      = shift;
-  my $strFields = ();
-  foreach my $key (keys %$self) {
-    $strFields .= " $key = $self->{$key} \n ";
-  }
-
-  return $strFields;
-}
-
-# eof sub dumpFields
 
 # -----------------------------------------------------------------------------
 # wrap any logic here on clean up for this class
@@ -382,7 +337,7 @@ __END__
 
 =head1 NAME
 
-IssueTracker 
+TxtWriter
 
 =head1 SYNOPSIS
 
@@ -408,7 +363,6 @@ No mailing list for this module
 yordan.georgiev@gmail.com
 
 =head1 
-
 
 
 

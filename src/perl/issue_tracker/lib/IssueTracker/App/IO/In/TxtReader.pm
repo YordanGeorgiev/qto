@@ -6,7 +6,7 @@ use utf8;
 my $VERSION = '1.1.1';    #doc at the end
 
 require Exporter;
-our @ISA      = qw(Exporter);
+our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
 our $AUTOLOAD = ();
 use AutoLoader;
 
@@ -17,6 +17,8 @@ use File::Copy;
 use File::Copy::Recursive;
 use Sys::Hostname;
 use Carp qw /cluck confess shortmess croak carp/;
+
+use base qw(IssueTracker::App::Utils::OO::SetGetable);
 use IssueTracker::App::Utils::IO::FileHandler;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Utils::Timer ; 
@@ -430,49 +432,6 @@ sub AUTOLOAD {
 # eof sub AUTOLOAD
 
 
-# -----------------------------------------------------------------------------
-# return a field's value
-# -----------------------------------------------------------------------------
-sub get {
-
-  my $self = shift;
-  my $name = shift;
-  croak "\@IssueTracker.pm sub get TRYING to get undefined name" unless $name;
-  croak "\@IssueTracker.pm sub get TRYING to get undefined value"
-    unless ($self->{"$name"});
-
-  return $self->{$name};
-}    #eof sub get
-
-
-# -----------------------------------------------------------------------------
-# set a field's value
-# -----------------------------------------------------------------------------
-sub set {
-
-  my $self  = shift;
-  my $name  = shift;
-  my $value = shift;
-  $self->{"$name"} = $value;
-}
-
-# eof sub set
-
-
-# -----------------------------------------------------------------------------
-# return the fields of this obj instance
-# -----------------------------------------------------------------------------
-sub dumpFields {
-  my $self      = shift;
-  my $strFields = ();
-  foreach my $key (keys %$self) {
-    $strFields .= " $key = $self->{$key} \n ";
-  }
-
-  return $strFields;
-}
-
-# eof sub dumpFields
 
 
 # -----------------------------------------------------------------------------

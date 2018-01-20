@@ -4,11 +4,10 @@ package IssueTracker::App::Utils::IO::FileHandler ;
 	my $VERSION = '1.1.8';
 
 	require Exporter;
-	our @ISA = qw(Exporter);
+	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
 	use AutoLoader  ;
 
 	use Carp qw(cluck croak);
-
 	use File::Path qw(make_path) ;
 	use File::Compare;
 	use IO::File;
@@ -17,12 +16,11 @@ package IssueTracker::App::Utils::IO::FileHandler ;
 	use File::Copy;
 	use File::Path ; 
 	use Carp ; 
+   
+   use base qw(IssueTracker::App::Utils::OO::SetGetable);
 
-	### START setting package vars
-	# @ISA = qw(AutoLoader Exporter);
 	my @EXPORT = qw(doReadFileReturnString AppendToFile);
 	our ($cnfHolder) = ();
-	### STOP setting package vars
 
 
 	#
@@ -256,47 +254,6 @@ package IssueTracker::App::Utils::IO::FileHandler ;
 		 goto &$AUTOLOAD;    # Restart the new routine.
 	}
 	#eof sub AUTOLOAD
-
-
-	# -----------------------------------------------------------------------------
-	# return an attribue of the class instance
-	# -----------------------------------------------------------------------------
-	sub get {
-
-		 my $self = shift;
-		 my $name = shift;
-		 return $self->{$name};
-	}
-	#eof sub get
-
-
-	# -----------------------------------------------------------------------------
-	# sets an attribue of the class instance
-	# -----------------------------------------------------------------------------
-	sub set {
-
-		 my $self  = shift;
-		 my $name  = shift;
-		 my $value = shift;
-		 $self->{$name} = $value;
-	}
-	#eof sub set
-
-
-	# -----------------------------------------------------------------------------
-	# dumps the fields of the class instance
-	# -----------------------------------------------------------------------------
-	sub dumpFields {
-		 my $self      = shift;
-		 my $strFields = ();
-		 foreach my $key (keys %$self) {
-			  $strFields .= "$key = $self->{$key}\n";
-		 }
-
-		 return $strFields;
-	}
-	#eof sub dumpFields
-
 
 	# -----------------------------------------------------------------------------
 	# called automatically by perl , yet nice to have sometimes when ...

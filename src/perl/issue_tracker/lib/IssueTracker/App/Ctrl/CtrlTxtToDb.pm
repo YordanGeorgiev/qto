@@ -171,48 +171,6 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
 
 
 	# -----------------------------------------------------------------------------
-	# return a field's value
-	# -----------------------------------------------------------------------------
-	sub get {
-
-		my $self = shift;
-		my $name = shift;
-		croak "\@TRYING to get an undef name" unless $name ;  
-		croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
-
-		return $self->{ $name };
-	}    #eof sub get
-
-
-	# -----------------------------------------------------------------------------
-	# set a field's value
-	# -----------------------------------------------------------------------------
-	sub set {
-
-		my $self  = shift;
-		my $name  = shift;
-		my $value = shift;
-		$self->{ "$name" } = $value;
-	}
-	# eof sub set
-
-
-	# -----------------------------------------------------------------------------
-	# return the fields of this obj instance
-	# -----------------------------------------------------------------------------
-	sub dumpFields {
-		my $self      = shift;
-		my $strFields = ();
-		foreach my $key ( keys %$self ) {
-			$strFields .= " $key = $self->{$key} \n ";
-		}
-
-		return $strFields;
-	}    
-	# eof sub dumpFields
-		
-
-	# -----------------------------------------------------------------------------
 	# wrap any logic here on clean up for this class
 	# -----------------------------------------------------------------------------
 	sub RunBeforeExit {
