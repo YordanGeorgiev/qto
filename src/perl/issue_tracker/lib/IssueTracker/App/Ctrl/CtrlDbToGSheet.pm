@@ -5,7 +5,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGSheet ;
 	my $VERSION = '1.2.0';    
 
 	require Exporter;
-	our @ISA = qw(Exporter);
+	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
 	our $AUTOLOAD =();
 	use AutoLoader;
    use utf8 ;
@@ -15,6 +15,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGSheet ;
    use Net::Google::DataAPI::Auth::OAuth2 ; 
    use warnings 'deprecated';
 
+   use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::In::DbReadersFactory ; 
    use IssueTracker::App::IO::Out::GSheetWriter ; 
@@ -223,46 +224,6 @@ package IssueTracker::App::Ctrl::CtrlDbToGSheet ;
 	# eof sub AUTOLOAD
 
 
-	# -----------------------------------------------------------------------------
-	# return a field's value
-	# -----------------------------------------------------------------------------
-	sub get {
-
-		my $self = shift;
-		my $name = shift;
-		croak "\@TRYING to get an undef name" unless $name ;  
-		croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
-
-		return $self->{ $name };
-	}    #eof sub get
-
-
-	# -----------------------------------------------------------------------------
-	# set a field's value
-	# -----------------------------------------------------------------------------
-	sub set {
-
-		my $self  = shift;
-		my $name  = shift;
-		my $value = shift;
-		$self->{ "$name" } = $value;
-	}
-	# eof sub set
-
-
-	# -----------------------------------------------------------------------------
-	# return the fields of this obj instance
-	# -----------------------------------------------------------------------------
-	sub dumpFields {
-		my $self      = shift;
-		my $strFields = ();
-		foreach my $key ( keys %$self ) {
-			$strFields .= " $key = $self->{$key} \n ";
-		}
-
-		return $strFields;
-	}    
-	# eof sub dumpFields
 		
 
 	# -----------------------------------------------------------------------------
