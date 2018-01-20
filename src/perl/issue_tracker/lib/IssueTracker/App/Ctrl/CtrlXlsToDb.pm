@@ -80,6 +80,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
       my $objDbWritersFactory = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$issue_tracker::appConfig  ) ; 
       my $objDbWriter 		   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" , \@tables );
+
       p($hsr2) if $module_trace == 1 ; 
 
       my $load_model = $ENV{ 'load_model' } || 'upsert' ; 
