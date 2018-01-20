@@ -5,12 +5,14 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
 	my $VERSION = '1.0.0';    
 
 	require Exporter;
-	our @ISA = qw(Exporter);
+	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
 	our $AUTOLOAD =();
 	use AutoLoader;
+   use utf8 ;
    use Carp ;
    use Data::Printer ; 
 
+   use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::Out::DbWritersFactory ; 
    use IssueTracker::App::IO::In::TxtReaderFactory ; 
