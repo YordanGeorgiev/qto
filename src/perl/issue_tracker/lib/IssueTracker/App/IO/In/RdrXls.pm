@@ -1,4 +1,4 @@
-package IssueTracker::App::IO::In::XlsReader;
+package IssueTracker::App::IO::In::RdrXls;
 
 use strict;
 use warnings;
@@ -209,7 +209,7 @@ sub new {
 
 
     foreach my $table ( @tables ) {
-      $objLogger->doLogInfoMsg("XlsReader sub newtable " . $table ) ; 
+      $objLogger->doLogInfoMsg("RdrXls sub newtable " . $table ) ; 
     }
   return $self;
 }

@@ -1,4 +1,4 @@
-package IssueTracker::App::IO::In::TxtReader;
+package IssueTracker::App::IO::In::RdrText;
 
 use strict;
 use warnings;
@@ -6,7 +6,7 @@ use utf8;
 my $VERSION = '1.1.1';    #doc at the end
 
 require Exporter;
-our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
+our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::AutoLoadable) ;
 our $AUTOLOAD = ();
 use AutoLoader;
 
@@ -18,7 +18,7 @@ use File::Copy::Recursive;
 use Sys::Hostname;
 use Carp qw /cluck confess shortmess croak carp/;
 
-use base qw(IssueTracker::App::Utils::OO::SetGetable);
+use base qw(IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::SetGetable);
 use IssueTracker::App::Utils::IO::FileHandler;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Utils::Timer ; 
@@ -407,58 +407,6 @@ sub doInitialize {
 }
 
 #eof sub doInitialize
-
-
-=head2
-	# -----------------------------------------------------------------------------
-	# overrided autoloader prints - a run-time error - perldoc AutoLoader
-	# -----------------------------------------------------------------------------
-=cut
-
-
-sub AUTOLOAD {
-
-  my $self = shift;
-  no strict 'refs';
-  my $name = our $AUTOLOAD;
-  *$AUTOLOAD = sub {
-    my $msg
-      = "BOOM! BOOM! BOOM! \n RunTime Error !!! \n Undefined Function $name(@_) \n ";
-    croak "$self , $msg $!";
-  };
-  goto &$AUTOLOAD;    # Restart the new routine.
-}
-
-# eof sub AUTOLOAD
-
-
-
-
-# -----------------------------------------------------------------------------
-# wrap any logic here on clean up for this class
-# -----------------------------------------------------------------------------
-sub RunBeforeExit {
-
-  my $self = shift;
-
-  #debug print "%$self RunBeforeExit ! \n";
-}
-
-#eof sub RunBeforeExit
-
-
-# -----------------------------------------------------------------------------
-# called automatically by perl's garbage collector use to know when
-# -----------------------------------------------------------------------------
-sub DESTROY {
-  my $self = shift;
-
-  #debug print "the DESTRUCTOR is called  \n" ;
-  $self->RunBeforeExit();
-  return;
-}
-
-#eof sub DESTROY
 
 
 # STOP functions

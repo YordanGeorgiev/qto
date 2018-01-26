@@ -1,4 +1,4 @@
-package IssueTracker::App::IO::In::TxtReaderFactory ; 
+package IssueTracker::App::IO::In::RdrTextFactory ; 
 
    use strict; use warnings;
 	
@@ -10,12 +10,12 @@ package IssueTracker::App::IO::In::TxtReaderFactory ;
 	our $objController 	= {} ; 
    our $objLogger       = {} ; 
 
-	# use IssueTracker::App::Db::TxtReaderWeekly  ; 
-   use IssueTracker::App::IO::In::TxtReader ;  
+	# use IssueTracker::App::Db::RdrTextWeekly  ; 
+   use IssueTracker::App::IO::In::RdrText ;  
 
 	#
 	# -----------------------------------------------------------------------------
-	# fabricates different TxtReader object 
+	# fabricates different RdrText object 
 	# -----------------------------------------------------------------------------
 	sub doInstantiate {
 
@@ -23,34 +23,34 @@ package IssueTracker::App::IO::In::TxtReaderFactory ;
 		my $table			= shift // 'daily_issues' ; 
 
 		my @args 			= ( @_ ) ; 
-		my $TxtReader 		= {}   ; 
+		my $RdrText 		= {}   ; 
 
 		# get the application cnfiguration hash
 		# global app cnfig hash
 
 		if ( $term eq 'daily' ) {
-			$TxtReader 				= 'TxtReader' ; 
+			$RdrText 				= 'RdrText' ; 
 		}
 		elsif ( $term eq 'weekly' ) {
-			$TxtReader 				= 'TxtReader' ; 
+			$RdrText 				= 'RdrText' ; 
 		}
 		elsif ( $term eq 'monthly' ) {
-			$TxtReader 				= 'TxtReader' ; 
+			$RdrText 				= 'RdrText' ; 
 		}
 		elsif ( $term eq 'yearly' ) {
-			$TxtReader 				= 'TxtReader' ; 
+			$RdrText 				= 'RdrText' ; 
 		}
 		else {
 			# future support for different RDBMS 's should be added here ...
-			$TxtReader 				= 'TxtReader' ; 
+			$RdrText 				= 'RdrText' ; 
 		}
 
-		my $package_file     	= "IssueTracker/App/IO/In/$TxtReader.pm";
-		my $objTxtReader   		= "IssueTracker::App::IO::In::$TxtReader";
+		my $package_file     	= "IssueTracker/App/IO/In/$RdrText.pm";
+		my $objRdrText   		= "IssueTracker::App::IO::In::$RdrText";
 
 		require $package_file;
 
-		return $objTxtReader->new( \$appConfig , $objController , $term , @args);
+		return $objRdrText->new( \$appConfig , $objController , $term , @args);
 
 	}
 	# eof sub doInstantiate

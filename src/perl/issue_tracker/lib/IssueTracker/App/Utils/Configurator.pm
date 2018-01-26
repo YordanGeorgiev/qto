@@ -5,7 +5,7 @@ package IssueTracker::App::Utils::Configurator ;
 	my $VERSION='2.6.1' ; #doc at the end
 	require Exporter;
 
-	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
+	our @ISA = qw(Exporter IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::AutoLoadable) ;
 	my @EXPORT = qw(getConfHolder clone);
 
 	use AutoLoader ; 
@@ -13,6 +13,7 @@ package IssueTracker::App::Utils::Configurator ;
 	use IO::File; 
 
    use base qw(IssueTracker::App::Utils::OO::SetGetable);
+   use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
 	
    our $ModuleDebug 			= 0  ; 
 	our $NowInUnitTest 		= 0  ; 
@@ -494,43 +495,10 @@ yordan.georgiev@gmail.com
 
 =head1 COPYRIGHT LICENSE
 
-Copyright (C) 2017 Yordan Georgiev
+Copyright (C) 2018 Yordan Georgiev
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.1 or,
 at your option, any later version of Perl 5 you may have available.
-
-
-#
-# =========================================================
-# 	-- VersionHistory -- 
-# =========================================================
-#
-2.6.1 -- 2017-05-07 11:54:08 -- ysg -- env name to product instance env name
-2.6.0 -- 2016-11-14 15:28:15 -- ysg -- fixed bug with non-interpolating
-2.5.0 -- 2014-08-25 22:57:41 -- ysg -- refactoring, clean-up unneeded settings 
-2.4.0 -- 2012-12-28 19:06:28 -- ysg -- added #include = <<file_path>>
-2.3.0 -- 2012-12-26 14:35:48 -- ysg -- imporoved doc 
-2.2.2 -- 2012-06-22 19:48:41 -- ysg -- Refactored var names 
-2.2.1 -- ysg -- added if ( $NowInUnitTest ) ; 
-2.2.0 -- ysg -- If key has Dir or File in its name, but not Command change / 's to \'s on Windows 
-2.1.0 -- ysg -- Added the clone constructor - creating a clone cnfigurator based on exising hash
-2.0.1 -- ysg -- Improved dumping of environment and ini variables 
-2.0.0 -- ysg -- SetAllIniVarsToEnvironmentVars
-1.9.1 -- ysg -- Removed default vars, set by each module's Initialize,fixed constructor
-1.8.1 -- ysg -- Added Control Flow doc 
-1.8.0 -- ysg -- Added HostName interpolation with Sys::Hostname
-1.7.0 -- ysg -- Added default value for MustRunCmdCommands
-1.6.0 -- ysg -- Fixed bug with MM mm gi 
-1.5.0 -- ysg -- Added BaseDir passing from caller in constructor
-1.4.0 -- ysg -- Added YYYYMMDD hhmmss substitution interpolation
-1.3.0 -- ysg -- Added default values for $cnfHolder according to latest 2.0.0 vars
-1.2.8 -- ysg -- Added the "¤" , "." , "_" chars in the doReadConfFile for the vars part
-1.0.0 -- ysg -- Added proper doc
-0.9.0 -- ysg -- added Env vars interpolation
-0.8.6 -- ysg -- added left most = in init
-0.7.0 -- ysg -- Added run-time exception handling , full OO 
-0.6.0 -- ysg -- Added DumpIni 
-0.5.0 -- ysg -- Stolen shamelessly from SC 4.2
 
 =cut

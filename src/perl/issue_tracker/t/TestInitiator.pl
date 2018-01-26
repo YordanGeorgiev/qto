@@ -45,7 +45,7 @@ $msg                       = 'The environment name is defined by the version , p
 ok ( $EnvironmentName 		eq $EnvNameToCompare , $msg ) ; 
 
 # 5.
-$msg                       = 'obvious ...' ; 
+$msg                       = 'check the product-name ...' ; 
 ok ( $ProductName          eq 'issue-tracker' , $msg ) ; 
 
 # 6. 
@@ -112,3 +112,6 @@ ok ( $HostName 				eq $appConfig->{'HostName'} , $msg) ;
 $msg                       = 'The value of the ConfFile from the appConfig' ; 
 ok ( $ConfFile 				eq $appConfig->{'ConfFile'} , $msg ) ;
 
+# 20.
+# todo: how-to test that the method fails ?!
+# nok ( $objInitiator->doRunNonExistentMethod ) ; 

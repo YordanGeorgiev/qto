@@ -4,9 +4,12 @@
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/SetGetableChild.pm
+src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/AutoLoadableChild.pm
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestSetGetable.pl
-src/perl/issue_tracker/t/TestInitiator.pm
-src/perl/issue_tracker/t/TestConfigurator.pm
+src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestAutoLoadable.pl
+src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/AutoLoadable.pm
+src/perl/issue_tracker/t/TestInitiator.pl
+src/perl/issue_tracker/t/TestConfigurator.pl
 src/perl/issue_tracker/t/TestLogger.pl
 src/perl/issue_tracker/t/TestDispatcher.pl
 #src/perl/issue_tracker/t/TestMdlHsr2.pl
@@ -91,10 +94,10 @@ src/perl/issue_tracker
 src/perl/issue_tracker/lib
 src/perl/issue_tracker/lib/IssueTracker
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In
-src/perl/issue_tracker/lib/IssueTracker/App/IO/In/TxtReader.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/In/XlsReader.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrText.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/UrlReader.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/In/TxtReaderFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrTextFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/TxtWriterFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/TxtWriter.pm
@@ -578,6 +581,7 @@ doc/txt/issue-tracker/funcs/run-pgsql-scripts.func.txt
 tags
 # ---
 src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
+src/perl/issue_tracker/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToXls/autosplit.ix
@@ -587,9 +591,9 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/Dispatcher/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/DbReader/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/MariaDb/DbWriter/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/Postgres/DbWriter/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/TxtReader/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrText/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/UrlReader/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/XlsReader/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/GSheetWriter/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/TxtWriter/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/UrlWriter/autosplit.ix
