@@ -1,7 +1,7 @@
 package IssueTracker::Controller::Get;
 use Mojo::Base 'Mojolicious::Controller';
 
-use IssueTracker::App::Db::In::DbReadersFactory;
+use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 
 our $module_trace   = 0;
@@ -32,10 +32,10 @@ sub doGetItem {
   my $hrs = {};
 
 
-  my $objDbReadersFactory
-    = 'IssueTracker::App::Db::In::DbReadersFactory'->new(\$appConfig, $self);
-  my $objDbReader = $objDbReadersFactory->doInstantiate("$rdbms_type");
-  ($ret, $msg, $hrs) = $objDbReader->doSelectItemByGuid($db, $item, $guid);
+  my $objRdrDbsFactory
+    = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, $self);
+  my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+  ($ret, $msg, $hrs) = $objRdrDb->doSelectItemByGuid($db, $item, $guid);
 
   $self->res->headers->accept_charset('UTF-8');
   $self->res->headers->accept_language('fi, en');

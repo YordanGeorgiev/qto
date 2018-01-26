@@ -86,7 +86,7 @@ sub doConvertStrToHashRef {
   my $prev_stop_time  = q{};
 
   if ($str) {
-    $msg = 'START ConverterHsr2ToTxt::doConvertStrToHashRef';
+    $msg = 'START CnrHsr2ToTxt::doConvertStrToHashRef';
     $objLogger->doLogInfoMsg($msg);
 
     foreach my $category_item (@arr_category_items) {
@@ -260,7 +260,7 @@ sub doConvertStrToHashRef {
 
   }
 
-  $msg = 'STOP  ConverterHsr2ToTxt::doConvertStrToHashRef';
+  $msg = 'STOP  CnrHsr2ToTxt::doConvertStrToHashRef';
   $objLogger->doLogInfoMsg($msg);
   return ($ret, $msg, $hsr);
 }

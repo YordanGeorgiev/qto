@@ -14,7 +14,7 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
 
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Db::Out::DbWritersFactory ; 
+   use IssueTracker::App::Db::Out::WtrDbsFactory ; 
    use IssueTracker::App::IO::In::RdrTextFactory ; 
 	
 	our $module_trace                = 0 ; 
@@ -86,9 +86,9 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
 
 
          p($hsr) if $module_trace == 1 ; 
-         my $objDbWritersFactory    = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$appConfig , $self ) ; 
-         my $objDbWriter 			   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" );
-         ( $ret , $msg )            = $objDbWriter->doInsertSqlHashData ( $hsr , $table ) ; 
+         my $objWtrDbsFactory    = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( \$appConfig , $self ) ; 
+         my $objWtrDb 			   = $objWtrDbsFactory->doInstantiate ( "$rdbms_type" );
+         ( $ret , $msg )            = $objWtrDb->doInsertSqlHashData ( $hsr , $table ) ; 
 
          return ( $ret , $msg ) unless $ret == 0 ; 
 

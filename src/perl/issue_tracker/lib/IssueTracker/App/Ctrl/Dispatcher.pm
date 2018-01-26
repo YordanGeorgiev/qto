@@ -17,7 +17,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    use IssueTracker::App::Ctrl::CtrlXlsToDb ; 	
    use IssueTracker::App::Ctrl::CtrlDbToTxt ; 
    use IssueTracker::App::Ctrl::CtrlDbToXls ; 
-   use IssueTracker::App::Ctrl::CtrlDbToGSheet ; 
+   use IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ; 
 
 	our $module_trace                = 0 ; 
    our $module_test_run             = 0 ; 
@@ -80,7 +80,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       my $self = shift ; 
       use strict 'refs'; 
       my $objCtrlDbToGsheet = 
-         'IssueTracker::App::Ctrl::CtrlDbToGSheet'->new ( \$appConfig ) ; 
+         'IssueTracker::App::Ctrl::CtrlDbToGoogleSheet'->new ( \$appConfig ) ; 
       my ( $ret , $msg ) = $objCtrlDbToGsheet->doReadAndLoad ( ); 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
