@@ -1,6 +1,6 @@
 # src/bash/issue-tracker/funcs/run-perl-tests.func.sh
 
-# v1.1.1
+# v1.1.3
 # ---------------------------------------------------------
 # implement the calls to all the perl unit testing 
 # ---------------------------------------------------------
@@ -13,7 +13,7 @@ doRunPerlTests(){
 	test -z "$sleep_interval" || sleep $sleep_interval
 
 	doLog "INFO Component testing Configurator.pm with TestInitiator "
-	perl src/perl/issue_tracker/t/TestConfigurator.pm
+	perl src/perl/issue_tracker/t/TestConfigurator.pl
 	test -z "$sleep_interval" || sleep $sleep_interval
 
 	doLog "INFO Component testing Dispatcher.pm with TestDispatcher.pl"

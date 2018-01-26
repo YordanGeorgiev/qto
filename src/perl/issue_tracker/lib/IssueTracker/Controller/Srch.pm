@@ -4,7 +4,7 @@ use Mojo::Base 'Mojolicious::Controller';
 
 use Data::Printer;
 
-use IssueTracker::App::Db::In::DbReadersFactory;
+use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 
 our $module_trace   = 0;
@@ -35,10 +35,10 @@ sub doSrchItem {
   $appConfig = $self->app->get('AppConfig');
   $objLogger  = $self->app->get('ObjLogger');
   # p($appConfig);
-  my $objDbReadersFactory
-    = 'IssueTracker::App::Db::In::DbReadersFactory'->new(\$appConfig, $self);
-  my $objDbReader = $objDbReadersFactory->doInstantiate("$rdbms_type");
-  ($ret, $msg, $hrs) = $objDbReader->doSearchConfigurationEntries($db, $item , $query_str);
+  my $objRdrDbsFactory
+    = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, $self);
+  my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+  ($ret, $msg, $hrs) = $objRdrDb->doSearchConfigurationEntries($db, $item , $query_str);
 
   $self->res->headers->from_hash({
        'Access-Control-Allow-Origin' => '*'
