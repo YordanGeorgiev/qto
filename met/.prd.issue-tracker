@@ -26,7 +26,6 @@ doc/txt/issue-tracker/tests/generate-docs.test.txt
 src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 cnf/issue-tracker.dev.host-name.cnf
 cnf/issue-tracker.tst.host-name.cnf
-cnf/issue-tracker.qas.host-name.cnf
 cnf/issue-tracker.prd.host-name.cnf
 cnf/issue-tracker.host-name.cnf
 # ---
