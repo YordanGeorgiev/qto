@@ -9,7 +9,7 @@ doRunPerlTests(){
 	doLog "DEBUG START : doRunPerlTests"
 
 	doLog "INFO Component testing Initiator.pm with TestInitiator "
-	perl src/perl/issue_tracker/t/TestInitiator.pm
+	perl src/perl/issue_tracker/t/TestInitiator.pl
 	test -z "$sleep_interval" || sleep $sleep_interval
 
 	doLog "INFO Component testing Configurator.pm with TestInitiator "
@@ -26,6 +26,10 @@ doRunPerlTests(){
 
    doLog "INFO Unit testing or the SetGetable base class"
    perl src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestSetGetable.pl
+	test -z "$sleep_interval" || sleep $sleep_interval
+   
+   doLog "INFO Unit testing or the AutoLoadable  base class"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestAutoLoadable.pl
 	test -z "$sleep_interval" || sleep $sleep_interval
 }
 # eof func doRunPerlTests

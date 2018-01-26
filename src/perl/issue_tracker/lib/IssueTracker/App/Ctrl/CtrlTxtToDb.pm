@@ -15,7 +15,7 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::Out::DbWritersFactory ; 
-   use IssueTracker::App::IO::In::TxtReaderFactory ; 
+   use IssueTracker::App::IO::In::RdrTextFactory ; 
 	
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
@@ -72,16 +72,16 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
    
 
       foreach my $table ( @tables ) {
-         my $objTxtReaderFactory    = 'IssueTracker::App::IO::In::TxtReaderFactory'->new( \$appConfig , $self ) ; 
-         my $objTxtReader 			   = $objTxtReaderFactory->doInstantiate ( $table ); 
+         my $objRdrTextFactory    = 'IssueTracker::App::IO::In::RdrTextFactory'->new( \$appConfig , $self ) ; 
+         my $objRdrText 			   = $objRdrTextFactory->doInstantiate ( $table ); 
          my ( $ret , $msg , $str_issues_file ) 
-                                    = $objTxtReader->doReadIssueFile ( $table ) ; 
+                                    = $objRdrText->doReadIssueFile ( $table ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
 
 
          my $hsr = {} ;          # a hash ref of hash refs 	
          ( $ret , $msg , $hsr ) 
-                                    = $objTxtReader->doConvertStrToHashRef ( $str_issues_file , $table ) ; 
+                                    = $objRdrText->doConvertStrToHashRef ( $str_issues_file , $table ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
 
 
