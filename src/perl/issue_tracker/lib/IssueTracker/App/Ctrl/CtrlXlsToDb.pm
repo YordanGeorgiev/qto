@@ -13,8 +13,8 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Db::Out::DbWritersFactory ; 
-   use IssueTracker::App::IO::In::XlsReader ; 
+   use IssueTracker::App::Db::Out::WtrDbsFactory ; 
+   use IssueTracker::App::IO::In::RdrXls ; 
 	
 	our $module_trace                = 0 ; 
 	our $RunDir 						   = '' ; 
@@ -67,32 +67,32 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       my $xls_file            = $issue_tracker::appConfig->{ 'xls_file' } ; 
 	   push ( @tables , split(',',$tables ) ) ; 
       my $hsr2             = {} ; 
-      my $objXlsReader     = 'IssueTracker::App::IO::In::XlsReader'->new ( \$issue_tracker::appConfig , \@tables ) ; 
+      my $objRdrXls     = 'IssueTracker::App::IO::In::RdrXls'->new ( \$issue_tracker::appConfig , \@tables ) ; 
       
       # read the xls into hash ref of hash ref
       ( $ret , $msg , $hsr2 ) = 
-            $objXlsReader->doReadXlsFileToHsr2 ( $xls_file ) ; 
+            $objRdrXls->doReadXlsFileToHsr2 ( $xls_file ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
       $msg                 = 'unknown error while inserting db tables !!!' ; 
       my $rdbms_type          = $ENV{ 'rdbms_type' } || 'postgre' ; 
 
-      my $objDbWritersFactory = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$issue_tracker::appConfig  ) ; 
-      my $objDbWriter 		   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" , \@tables );
+      my $objWtrDbsFactory = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( \$issue_tracker::appConfig  ) ; 
+      my $objWtrDb 		   = $objWtrDbsFactory->doInstantiate ( "$rdbms_type" , \@tables );
 
       p($hsr2) if $module_trace == 1 ; 
 
       my $load_model = $ENV{ 'load_model' } || 'upsert' ; 
 
       if ( $load_model eq 'upsert' ) {
-         ( $ret , $msg  )        = $objDbWriter->doUpsertTableWithHsr2( $hsr2 , \@tables) ; 
+         ( $ret , $msg  )        = $objWtrDb->doUpsertTableWithHsr2( $hsr2 , \@tables) ; 
       } 
       elsif ( $load_model eq 'nested-set' ) {
-         ( $ret , $msg  )        = $objDbWriter->doLoadNestedSetTable( $hsr2 , \@tables) ; 
+         ( $ret , $msg  )        = $objWtrDb->doLoadNestedSetTable( $hsr2 , \@tables) ; 
       } 
       else {
-         ( $ret , $msg  )        = $objDbWriter->doUpsertTableWithHsr2( $hsr2 , \@tables) ; 
+         ( $ret , $msg  )        = $objWtrDb->doUpsertTableWithHsr2( $hsr2 , \@tables) ; 
       }
       return ( $ret , $msg ) ; 
    } 

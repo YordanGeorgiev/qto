@@ -13,7 +13,7 @@
 #------------------------------------------------------------------------------
 doMorphDir(){
 
-      set -x 
+      # set -x 
 		# some initial checks the users should set the vars in their shells !!!
 		test -z $dir_to_morph && doExit 1 "You must export dir_to_morph=<<the-dir>> - it is empty !!!"	
 		test -d $dir_to_morph || doExit 1 "The dir to morph : \"$dir_to_morph\" is not a dir !!!"
