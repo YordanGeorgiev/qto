@@ -47,32 +47,6 @@ package IssueTracker::App::Mdl::MdlHsr2 ;
 	#eof sub doInitialize
 
 
-   #   
-   # -----------------------------------------------------------------------------
-	# return a field's value
-	# -----------------------------------------------------------------------------
-	sub get {
-
-		my $self = shift;
-		my $name = shift;
-		croak "\@TRYING to get an undef name" unless $name ;  
-		croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
-
-		return $self->{ $name };
-	}    
-
-
-   #
-	# -----------------------------------------------------------------------------
-	# set a field's value
-	# -----------------------------------------------------------------------------
-	sub set {
-
-		my $self  = shift;
-		my $name  = shift;
-		my $value = shift;
-		$self->{ "$name" } = $value;
-	}
 
 1;
 
