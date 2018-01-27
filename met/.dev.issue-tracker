@@ -11,7 +11,8 @@ src/perl/issue_tracker/t/TestInitiator.pl
 src/perl/issue_tracker/t/TestConfigurator.pl
 src/perl/issue_tracker/t/TestLogger.pl
 src/perl/issue_tracker/t/TestDispatcher.pl
-#src/perl/issue_tracker/t/TestMdlHsr2.pl
+src/perl/issue_tracker/t/TestMdlHsr2.pl
+src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
 # ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---

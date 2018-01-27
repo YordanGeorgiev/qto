@@ -1,12 +1,37 @@
 use strict ; use warnings ; 
 package IssueTracker::App::Mdl::MdlHsr2 ; 
 
-   use Carp ; 
+	my $VERSION = '1.1.0';    #doc at the end
+
+	require Exporter;
+	our @ISA = qw(Exporter IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::AutoLoadable) ;
+	our $AUTOLOAD =();
+	our $ModuleDebug = 0 ; 
+	use AutoLoader;
+
+
+	use Carp qw /cluck confess shortmess croak carp/ ; 
+   use Data::Printer ; 
+
+   use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
+   use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
 
    our $appConfig       = {} ; 
-   my $hsr2             = {} ; # this is the hash ref of hash refs 
-   my $mhsr2            = {} ; # and this is the meta hash ref of hash refs 
+   our $hsr2             = {} ; # this is the hash ref of hash refs 
+   our $mhsr2            = {} ; # and this is the meta hash ref of hash refs 
    our $objLogger       = {} ; 
+
+   # 
+	# -----------------------------------------------------------------------------
+	# merge a hash ref to the model's hash ref
+   # src: https://stackoverflow.com/a/1242125/65706
+	# -----------------------------------------------------------------------------
+   sub addHsr2{
+      my $self = shift ; 
+      my $row  = shift ; 
+
+      @{$hsr2}{keys %$row} = values %$row;
+   }
 
 
 	# -----------------------------------------------------------------------------
@@ -16,7 +41,7 @@ package IssueTracker::App::Mdl::MdlHsr2 ;
 
 		my $class      = shift;    # Class name is in the first parameter
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-		$hsr2          = shift @_  || $hsr2 ; 
+		my $hsr2          = shift @_  || $hsr2 ; 
 		$mhsr2          = shift @_  || $mhsr2 ; 
 
 		my $self = {};        # Anonymous hash reference holds instance attributes
@@ -65,6 +90,7 @@ use MdlHsr2 ;
 =head1 DESCRIPTION
 the main model of the application : 
 passed between the readers, writers and the converters
+basically perl hash ref of hash refs with specific MUST-HAVE keys - uuid or id
 
 =head2 EXPORT
 
