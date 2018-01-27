@@ -5,21 +5,19 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 	my $VERSION = '1.0.0';    
 
 	require Exporter;
-	our @ISA = qw(Exporter);
+	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
 	our $AUTOLOAD =();
 	use AutoLoader;
    use Carp ;
    use Data::Printer ; 
 
+   use base qw(IssueTracker::App::Utils::OO::SetGetable);
    use IssueTracker::App::Utils::Logger ; 
-
    use IssueTracker::App::Ctrl::CtrlTxtToDb ; 
    use IssueTracker::App::Ctrl::CtrlXlsToDb ; 	
    use IssueTracker::App::Ctrl::CtrlDbToTxt ; 
    use IssueTracker::App::Ctrl::CtrlDbToXls ; 
-   use IssueTracker::App::Ctrl::CtrlDbToGSheet ; 
-   use IssueTracker::App::Ctrl::CtrlDbToConflu ; 
-   use IssueTracker::App::Ctrl::CtrlMetaToJson ; 
+   use IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ; 
 
 	our $module_trace                = 0 ; 
    our $module_test_run             = 0 ; 
@@ -82,20 +80,10 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       my $self = shift ; 
       use strict 'refs'; 
       my $objCtrlDbToGsheet = 
-         'IssueTracker::App::Ctrl::CtrlDbToGSheet'->new ( \$appConfig ) ; 
+         'IssueTracker::App::Ctrl::CtrlDbToGoogleSheet'->new ( \$appConfig ) ; 
       my ( $ret , $msg ) = $objCtrlDbToGsheet->doReadAndLoad ( ); 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
-   }
-
-   sub doDbToConlfu {
-      my $self = shift ; 
-      use strict 'refs'; 
-
-      my $objCtrlDbToConflu = 
-         'IssueTracker::App::Ctrl::CtrlDbToConflu'->new ( \$appConfig ) ; 
-      my ( $ret , $msg ) = $objCtrlDbToConflu->doReadAndLoad ( ); 
-      return ( $ret , $msg ) unless $ret == 0 ; 
    }
 
    sub doXlsToDb {
@@ -108,16 +96,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       return ( $ret , $msg ) ; 
    }
    
-   sub doLoadMetaToJson {
-      my $self = shift ; 
-      use strict 'refs'; 
-
-      my $objCtrlMetaToJson = 
-         'IssueTracker::App::Ctrl::CtrlMetaToJson'->new ( \$appConfig ) ; 
-      my ( $ret , $msg ) = $objCtrlMetaToJson->doRun () ; 
-      return ( $ret , $msg ) ; 
-   }
-
    sub doDbToTxt {
 
       my $self = shift ; 
@@ -244,48 +222,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 	}   
 	# eof sub AUTOLOAD
 
-
-	# -----------------------------------------------------------------------------
-	# return a field's value
-	# -----------------------------------------------------------------------------
-	sub get {
-
-		my $self = shift;
-		my $name = shift;
-		croak "\@TRYING to get an undef name" unless $name ;  
-		croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
-
-		return $self->{ $name };
-	}    #eof sub get
-
-
-	# -----------------------------------------------------------------------------
-	# set a field's value
-	# -----------------------------------------------------------------------------
-	sub set {
-
-		my $self  = shift;
-		my $name  = shift;
-		my $value = shift;
-		$self->{ "$name" } = $value;
-	}
-	# eof sub set
-
-
-	# -----------------------------------------------------------------------------
-	# return the fields of this obj instance
-	# -----------------------------------------------------------------------------
-	sub dumpFields {
-		my $self      = shift;
-		my $strFields = ();
-		foreach my $key ( keys %$self ) {
-			$strFields .= " $key = $self->{$key} \n ";
-		}
-
-		return $strFields;
-	}    
-	# eof sub dumpFields
-		
 
 	# -----------------------------------------------------------------------------
 	# wrap any logic here on clean up for this class

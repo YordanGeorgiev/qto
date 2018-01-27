@@ -5,7 +5,8 @@ package IssueTracker::App::Utils::Initiator ;
 	my $VERSION = '1.2.0';    #doc at the end
 
 	require Exporter;
-	our @ISA = qw(Exporter);
+	our @ISA = qw(Exporter IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::AutoLoadable) ;
+   # use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
 	our $AUTOLOAD =();
 	our $ModuleDebug = 0 ; 
 	use AutoLoader;
@@ -16,9 +17,12 @@ package IssueTracker::App::Utils::Initiator ;
 	use File::Find ; 
 	use File::Copy;
 	use File::Copy::Recursive ; 
+   use IssueTracker::App::Utils::OO::AutoLoadable ; 
 	use Sys::Hostname;
 	use Carp qw /cluck confess shortmess croak carp/ ; 
-	
+   use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
+   use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
+
 	our $appConfig						= {} ; 
 	our $RunDir 						= '' ; 
 	our $ProductBaseDir 				= '' ; 
@@ -387,92 +391,6 @@ package IssueTracker::App::Utils::Initiator ;
 		return $self;
 	}  
 	#eof const
-
-=head2
-	# -----------------------------------------------------------------------------
-	# overrided autoloader prints - a run-time error - perldoc AutoLoader
-	# -----------------------------------------------------------------------------
-=cut
-	sub AUTOLOAD {
-
-		my $self = shift;
-		no strict 'refs';
-		my $name = our $AUTOLOAD;
-		*$AUTOLOAD = sub {
-			my $msg =
-			  "BOOM! BOOM! BOOM! \n RunTime Error !!! \n Undefined Function $name(@_) \n ";
-			croak "$self , $msg $!";
-		};
-		goto &$AUTOLOAD;    # Restart the new routine.
-	}   
-	# eof sub AUTOLOAD
-
-
-	# -----------------------------------------------------------------------------
-	# return a field's value
-	# -----------------------------------------------------------------------------
-	sub get {
-
-		my $self = shift;
-		my $name = shift;
-		croak "\@Initiator.pm sub get TRYING to get undefined name" unless $name ;  
-		croak "\@Initiator.pm sub get TRYING to get undefined value" unless ( $self->{"$name"} ) ; 
-
-		return $self->{ $name };
-	}    #eof sub get
-
-
-	# -----------------------------------------------------------------------------
-	# set a field's value
-	# -----------------------------------------------------------------------------
-	sub set {
-
-		my $self  = shift;
-		my $name  = shift;
-		my $value = shift;
-		$self->{ "$name" } = $value;
-	}
-	# eof sub set
-
-
-	# -----------------------------------------------------------------------------
-	# return the fields of this obj instance
-	# -----------------------------------------------------------------------------
-	sub dumpFields {
-		my $self      = shift;
-		my $strFields = ();
-		foreach my $key ( keys %$self ) {
-			$strFields .= " $key = $self->{$key} \n ";
-		}
-
-		return $strFields;
-	}    
-	# eof sub dumpFields
-		
-
-	# -----------------------------------------------------------------------------
-	# wrap any logic here on clean up for this class
-	# -----------------------------------------------------------------------------
-	sub RunBeforeExit {
-
-		my $self = shift;
-
-		#debug print "%$self RunBeforeExit ! \n";
-	}
-	#eof sub RunBeforeExit
-
-
-	# -----------------------------------------------------------------------------
-	# called automatically by perl's garbage collector use to know when
-	# -----------------------------------------------------------------------------
-	sub DESTROY {
-		my $self = shift;
-
-		#debug print "the DESTRUCTOR is called  \n" ;
-		$self->RunBeforeExit();
-		return;
-	}   
-	#eof sub DESTROY
 
 
 	# STOP functions

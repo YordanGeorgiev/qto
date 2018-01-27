@@ -4,10 +4,11 @@ package IssueTracker::App::Utils::Timer ;
 	my $VERSION='1.2.8' ; 
 
 	require Exporter;
-	my @ISA = qw(Exporter);
+	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
 	use AutoLoader ; 
-
 	my @EXPORT = qw(dumpFields GetHumanReadableTime GetANiceTime GenerateDates);
+
+   use base qw(IssueTracker::App::Utils::OO::SetGetable);
 
 	use POSIX qw(strftime);
 	use Time::Local qw( timelocal_nocheck ) ; 
@@ -53,36 +54,6 @@ package IssueTracker::App::Utils::Timer ;
 		};
 		goto &$AUTOLOAD;    # Restart the new routine.
 	}  
-
-
-   sub get  {
-   
-      my $self = shift;
-      my $name = shift;
-      return $self->{$name};
-   } #eof sub get 
-
-
-   sub set  {
-   
-      my $self = shift;
-      my $name = shift;
-      my $value = shift;
-      $self->{$name}=$value;
-		return ; 
-   } #eof sub set 
-
-
-   sub dumpFields    {
-      my $self = shift ; 
-      my $strFields = () ; 
-      foreach my $key (keys %$self)    {
-         $strFields .= "$key = $self->{$key}\n";
-      }
-      
-      return $strFields ; 
-   } #eof sub dumpFields 
-
 
 	sub DESTROY {
 		my $self = shift;

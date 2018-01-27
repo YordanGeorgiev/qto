@@ -1,5 +1,18 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+# testing
+src/perl/issue_tracker/t
+src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/
+src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/SetGetableChild.pm
+src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/AutoLoadableChild.pm
+src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestSetGetable.pl
+src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestAutoLoadable.pl
+src/perl/issue_tracker/t/TestInitiator.pl
+src/perl/issue_tracker/t/TestConfigurator.pl
+src/perl/issue_tracker/t/TestLogger.pl
+src/perl/issue_tracker/t/TestDispatcher.pl
+#src/perl/issue_tracker/t/TestMdlHsr2.pl
+# ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
 src/bash/issue-tracker/tests/generate-docs.test.sh
@@ -12,7 +25,6 @@ doc/txt/issue-tracker/tests/generate-docs.test.txt
 src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 cnf/issue-tracker.dev.host-name.cnf
 cnf/issue-tracker.tst.host-name.cnf
-cnf/issue-tracker.qas.host-name.cnf
 cnf/issue-tracker.prd.host-name.cnf
 cnf/issue-tracker.host-name.cnf
 # ---
@@ -33,15 +45,6 @@ src/bash/issue-tracker/issue-tracker.sh
 src/bash/issue-tracker/test-issue-tracker.sh
 src/bash/issue-tracker/tests/all-issue-tracker-tests.lst
 src/bash/issue-tracker/tests/rem-issue-tracker-actions.lst
-# ---
-src/bash/issue-tracker/tests/db-to-conflu.test.sh
-src/bash/issue-tracker/funcs/db-to-conflu.func.sh
-src/bash/issue-tracker/specs/db-to-conflu.spec.sh
-src/bash/issue-tracker/helps/db-to-conflu.help.sh
-doc/txt/issue-tracker/tests/db-to-conflu.test.txt
-doc/txt/issue-tracker/funcs/db-to-conflu.func.txt
-doc/txt/issue-tracker/specs/db-to-conflu.spec.txt
-doc/txt/issue-tracker/helps/db-to-conflu.help.txt
 # ---
 src/bash/issue-tracker/tests/db-to-gsheet.test.sh
 src/bash/issue-tracker/specs/db-to-gsheet.spec.sh
@@ -79,6 +82,7 @@ src/bash/issue-tracker/helps/clone-project.help.sh
 src/bash/issue-tracker/specs/clone-project.spec.sh
 src/bash/issue-tracker/tests/clone-project.test.sh
 # ---
+# testing
 src/perl
 src/perl/issue_tracker/script
 src/perl/issue_tracker/script/issue_tracker.pl
@@ -86,53 +90,47 @@ src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
 src/bash/issue-tracker/install-prerequisites-on-ubuntu.sh
 src/perl/issue_tracker
 src/perl/issue_tracker/lib
-src/perl/issue_tracker/t
-src/perl/issue_tracker/t/TestConfigurator.pm
-src/perl/issue_tracker/t/TestInitiator.pm
-src/perl/issue_tracker/t/TestLogger.pl
-src/perl/issue_tracker/t/TestDispatcher.pl
-src/perl/issue_tracker/t/TestMdlHsr2.pl
 src/perl/issue_tracker/lib/IssueTracker
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In
-src/perl/issue_tracker/lib/IssueTracker/App/IO/In/TxtReader.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/In/XlsReader.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/In/UrlReader.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/In/TxtReaderFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrText.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrXls.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrURL.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrTextFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out
-src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/TxtWriterFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/TxtWriter.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/XlsWriter.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/ConfluWriter.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/GSheetWriter.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/UrlWriter.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrTextFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrText.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrXls.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGoogleSheet.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrURL.pm
 src/perl/issue_tracker/lib/IssueTracker/App/RAM
-src/perl/issue_tracker/lib/IssueTracker/App/RAM/ConverterHsr2ToTxt.pm
+src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToTxt.pm
 src/perl/issue_tracker/lib/IssueTracker/App
 src/perl/issue_tracker/lib/IssueTracker/App/Db
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In
-src/perl/issue_tracker/lib/IssueTracker/App/Db/In/DbReadersFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/DbReader.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/DbWriter.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/DbWriter.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/In/RdrDbsFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrDb.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrDb.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
-src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/DbWritersFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/WtrDbsFactory.pm
+#src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToGSheet.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToConflu.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlMetaToJson.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO/FileHandler.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO
+src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/SetGetable.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/AutoLoadable.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Timer.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm
-#----
+# ---
 # ---
 src/bash/issue-tracker/tests/mojo-hypnotoad-start.test.sh
 src/bash/issue-tracker/specs/mojo-hypnotoad-start.spec.sh
@@ -153,7 +151,6 @@ doc/txt/issue-tracker/helps/mojo-hypnotoad-stop.help.txt
 doc/txt/issue-tracker/funcs/mojo-hypnotoad-stop.func.txt
 # ---
 src/perl/issue_tracker/script
-src/perl/issue_tracker/script/issue_tracker
 src/perl/issue_tracker/script/issue_tracker
 src/perl/issue_tracker/lib
 src/perl/issue_tracker/lib/IssueTracker.pm
@@ -179,7 +176,7 @@ cnf/hosts/host-name/home/ysg/.tmux-session.1.0.0.20161216_202609.backup
 cnf/hosts/host-name/home/ysg/.tmux-session.1.0.0.20161231_092215.backup
 cnf/hosts/host-name/home/ysg/.vimrc.1.2.0.20161216_194801.backup
 cnf/readme.txt
-#----
+# ---
 src/bash/issue-tracker/tests/increase-date.test.sh
 src/bash/issue-tracker/funcs/increase-date.func.sh
 src/bash/issue-tracker/specs/increase-date.spec.sh
@@ -582,26 +579,25 @@ doc/txt/issue-tracker/helps/run-pgsql-scripts.help.txt
 doc/txt/issue-tracker/funcs/run-pgsql-scripts.func.txt
 tags
 # ---
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToConflu/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGSheet/autosplit.ix
+src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
+src/perl/issue_tracker/lib/auto/AutoLoadableChild/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToXls/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlMetaToJson/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlTxtToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlXlsToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/Dispatcher/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/DbReader/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/MariaDb/DbWriter/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/Postgres/DbWriter/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/TxtReader/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/UrlReader/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/XlsReader/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/ConfluWriter/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/GSheetWriter/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/TxtWriter/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/UrlWriter/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/XlsWriter/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/ConverterHsr2ToTxt/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrDb/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/MariaDb/WtrDb/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/Postgres/WtrDb/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrText/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrURL/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrXls/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrGoogleSheet/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrText/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrURL/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrXls/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Configurator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/IO/FileHandler/autosplit.ix
@@ -679,6 +675,7 @@ src/sql/mysql/tst_issue_tracker/37.create-Image-table.sql
 src/sql/mysql/tst_issue_tracker/40.create-Tag-table.sql
 src/sql/mysql/tst_issue_tracker/41.create-TagMap-table.sql
 src/sql/mysql/tst_issue_tracker/46.create-DevOps-table.sql
+src/sql/mysql/tst_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/tst_issue_tracker/50.create-ReadMe-table.sql
 # ---
 src/sql/mysql/prd_issue_tracker
@@ -694,6 +691,7 @@ src/sql/mysql/prd_issue_tracker/37.create-Image-table.sql
 src/sql/mysql/prd_issue_tracker/40.create-Tag-table.sql
 src/sql/mysql/prd_issue_tracker/41.create-TagMap-table.sql
 src/sql/mysql/prd_issue_tracker/46.create-DevOps-table.sql
+src/sql/mysql/prd_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/prd_issue_tracker/50.create-ReadMe-table.sql
 # ---
 src/sql/mysql/qas_issue_tracker

@@ -1,4 +1,6 @@
 package IssueTracker;
+
+our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
 use Mojo::Base 'Mojolicious';
 
 use strict ; use warnings ; 
@@ -11,6 +13,7 @@ use open qw< :std  :utf8     >;
 use charnames qw< :full >;
 use feature qw< unicode_strings >;
 
+use base qw(IssueTracker::App::Utils::OO::SetGetable);
 
 use Data::Printer;
 use Cwd qw ( abs_path );
@@ -96,46 +99,6 @@ sub doInitialize {
 	return ($ret, $msg);
 }
 # eof sub doInialize
-
-
-   # -----------------------------------------------------------------------------
-   # return a field's value
-   # -----------------------------------------------------------------------------
-   sub get {
-
-      my $self = shift;
-      my $name = shift;
-
-      return $self->{ $name };
-   }    #eof sub get
-
-
-   # -----------------------------------------------------------------------------
-   # set a field's value
-   # -----------------------------------------------------------------------------
-   sub set {
-
-      my $self  = shift;
-      my $name  = shift;
-      my $value = shift;
-      $self->{ "$name" } = $value;
-   }
-   # eof sub set
-
-
-   # -----------------------------------------------------------------------------
-   # return the fields of this obj instance
-   # -----------------------------------------------------------------------------
-   sub dumpFields {
-      my $self      = shift;
-      my $strFields = ();
-      foreach my $key ( keys %$self ) {
-         $strFields .= " $key = $self->{$key} \n ";
-      }
-
-      return $strFields;
-   }
-   # eof sub dumpFields
 
 
 1 ;

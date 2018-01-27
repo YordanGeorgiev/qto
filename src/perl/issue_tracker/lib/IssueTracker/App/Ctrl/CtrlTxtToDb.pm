@@ -5,15 +5,17 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
 	my $VERSION = '1.0.0';    
 
 	require Exporter;
-	our @ISA = qw(Exporter);
+	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
 	our $AUTOLOAD =();
 	use AutoLoader;
+   use utf8 ;
    use Carp ;
    use Data::Printer ; 
 
+   use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Db::Out::DbWritersFactory ; 
-   use IssueTracker::App::IO::In::TxtReaderFactory ; 
+   use IssueTracker::App::Db::Out::WtrDbsFactory ; 
+   use IssueTracker::App::IO::In::RdrTextFactory ; 
 	
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
@@ -70,23 +72,23 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
    
 
       foreach my $table ( @tables ) {
-         my $objTxtReaderFactory    = 'IssueTracker::App::IO::In::TxtReaderFactory'->new( \$appConfig , $self ) ; 
-         my $objTxtReader 			   = $objTxtReaderFactory->doInstantiate ( $table ); 
+         my $objRdrTextFactory    = 'IssueTracker::App::IO::In::RdrTextFactory'->new( \$appConfig , $self ) ; 
+         my $objRdrText 			   = $objRdrTextFactory->doInstantiate ( $table ); 
          my ( $ret , $msg , $str_issues_file ) 
-                                    = $objTxtReader->doReadIssueFile ( $table ) ; 
+                                    = $objRdrText->doReadIssueFile ( $table ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
 
 
          my $hsr = {} ;          # a hash ref of hash refs 	
          ( $ret , $msg , $hsr ) 
-                                    = $objTxtReader->doConvertStrToHashRef ( $str_issues_file , $table ) ; 
+                                    = $objRdrText->doConvertStrToHashRef ( $str_issues_file , $table ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
 
 
          p($hsr) if $module_trace == 1 ; 
-         my $objDbWritersFactory    = 'IssueTracker::App::Db::Out::DbWritersFactory'->new( \$appConfig , $self ) ; 
-         my $objDbWriter 			   = $objDbWritersFactory->doInstantiate ( "$rdbms_type" );
-         ( $ret , $msg )            = $objDbWriter->doInsertSqlHashData ( $hsr , $table ) ; 
+         my $objWtrDbsFactory    = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( \$appConfig , $self ) ; 
+         my $objWtrDb 			   = $objWtrDbsFactory->doInstantiate ( "$rdbms_type" );
+         ( $ret , $msg )            = $objWtrDb->doInsertSqlHashData ( $hsr , $table ) ; 
 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
@@ -167,48 +169,6 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
 	}   
 	# eof sub AUTOLOAD
 
-
-	# -----------------------------------------------------------------------------
-	# return a field's value
-	# -----------------------------------------------------------------------------
-	sub get {
-
-		my $self = shift;
-		my $name = shift;
-		croak "\@TRYING to get an undef name" unless $name ;  
-		croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
-
-		return $self->{ $name };
-	}    #eof sub get
-
-
-	# -----------------------------------------------------------------------------
-	# set a field's value
-	# -----------------------------------------------------------------------------
-	sub set {
-
-		my $self  = shift;
-		my $name  = shift;
-		my $value = shift;
-		$self->{ "$name" } = $value;
-	}
-	# eof sub set
-
-
-	# -----------------------------------------------------------------------------
-	# return the fields of this obj instance
-	# -----------------------------------------------------------------------------
-	sub dumpFields {
-		my $self      = shift;
-		my $strFields = ();
-		foreach my $key ( keys %$self ) {
-			$strFields .= " $key = $self->{$key} \n ";
-		}
-
-		return $strFields;
-	}    
-	# eof sub dumpFields
-		
 
 	# -----------------------------------------------------------------------------
 	# wrap any logic here on clean up for this class

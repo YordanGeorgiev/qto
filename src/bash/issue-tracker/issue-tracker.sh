@@ -19,13 +19,11 @@ set -u -o pipefail
 main(){
 	doInit
    
-   test -z "${1+x}" && arg='print-usage'
+   test -z "${1+x}" && actions='print-usage'
+   [ $# -eq 0 ] && $@='-usage'
 
 	case ${arg:-} in
 		'-usage')
-		actions="print-usage "
-		;;
-		'--usage')
 		actions="print-usage "
 		;;
 		'-help')
@@ -73,7 +71,7 @@ get_function_list () {
 doRunActions(){
 
 	cd $product_instance_dir
-   test -z "$actions" && doPrintUsage && doExit 0 
+   test -z "${actions+1}" && doPrintUsage && doExit 0 
 
 	while read -d ' ' action ; do (
 		doLog "DEBUG action: \"$action\""
@@ -126,6 +124,7 @@ doInit(){
    run_unit=${my_name_ext%.*}
    host_name=$(hostname -s)
    export sleep_interval="${sleep_interval:=0}"
+   exit_code=1
 }
 #eof doInit
 

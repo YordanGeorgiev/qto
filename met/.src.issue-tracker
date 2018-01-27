@@ -2,8 +2,8 @@
 # 
 :g/srch/| :vimgrep /srch/ `find . -type f \| grep -v .git \| grep -v .log`
 
-
-:g/AutoLoadable/| :vimgrep /AutoLoadable/ `find . -type f \| grep -v .git \| grep -v .log`
+:g/CtrlMetaToJson/| :vimgrep /CtrlMetaToJson/ `find . -type f \| grep -v .git \| grep -v .log`
+:g/sub get/| :vimgrep /sub get/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/DbType/| :vimgrep /DbType/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/seq_id/| :vimgrep /seq_id/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/main::/| :vimgrep /main::/ `find . -type f \| grep -v .git \| grep -v .log`

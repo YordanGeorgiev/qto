@@ -5,16 +5,17 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 	my $VERSION = '1.0.0';    
 
 	require Exporter;
-	our @ISA = qw(Exporter);
+	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
 	our $AUTOLOAD =();
 	use AutoLoader;
    use utf8 ;
    use Carp ;
    use Data::Printer ; 
 
+   use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Db::In::DbReadersFactory ; 
-   use IssueTracker::App::IO::Out::XlsWriter ; 
+   use IssueTracker::App::Db::In::RdrDbsFactory ; 
+   use IssueTracker::App::IO::Out::WtrXls ; 
 
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
@@ -63,14 +64,14 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
          my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
          my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
 
-         my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
-         my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
+         my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
+         my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" );
       
-         ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( $table ) ; 
+         ( $ret , $msg , $hsr , $mhsr )  = $objRdrDb->doSelectTableIntoHashRef( $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
     
-         my $objXlsWriter    = 'IssueTracker::App::IO::Out::XlsWriter'->new( \$appConfig ) ;
-         $ret = $objXlsWriter->doBuildXlsFromHashRef ( $mhsr , $hsr , $table ) ;
+         my $objWtrXls    = 'IssueTracker::App::IO::Out::WtrXls'->new( \$appConfig ) ;
+         $ret = $objWtrXls->doBuildXlsFromHashRef ( $mhsr , $hsr , $table ) ;
          return ( $ret , $msg ) unless $ret == 0 ; 
       }
 
@@ -150,50 +151,6 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 	}   
 	# eof sub AUTOLOAD
 
-
-	# -----------------------------------------------------------------------------
-	# return a field's value
-	# -----------------------------------------------------------------------------
-	sub get {
-
-		my $self = shift;
-		my $name = shift;
-		croak "\@TRYING to get an undef name" unless $name ;  
-		croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
-
-		return $self->{ $name };
-	}    #eof sub get
-
-
-	# -----------------------------------------------------------------------------
-	# set a field's value
-	# -----------------------------------------------------------------------------
-	sub set {
-
-		my $self  = shift;
-		my $name  = shift;
-		my $value = shift;
-		$self->{ "$name" } = $value;
-	}
-	# eof sub set
-
-
-	# -----------------------------------------------------------------------------
-	# return the fields of this obj instance
-	# -----------------------------------------------------------------------------
-	sub dumpFields {
-		my $self      = shift;
-		my $strFields = ();
-		foreach my $key ( keys %$self ) {
-			$strFields .= " $key = $self->{$key} \n ";
-		}
-
-		return $strFields;
-	}    
-	# eof sub dumpFields
-		
-
-	# -----------------------------------------------------------------------------
 	# wrap any logic here on clean up for this class
 	# -----------------------------------------------------------------------------
 	sub RunBeforeExit {

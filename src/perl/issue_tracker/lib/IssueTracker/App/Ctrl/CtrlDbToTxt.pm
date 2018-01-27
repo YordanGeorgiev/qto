@@ -5,18 +5,19 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
 	my $VERSION = '1.0.0';    
 
 	require Exporter;
-	our @ISA = qw(Exporter);
+	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
 	our $AUTOLOAD =();
 	use AutoLoader;
    use utf8 ;
    use Carp ;
    use Data::Printer ; 
 
+   use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Db::In::DbReadersFactory ; 
-   use IssueTracker::App::IO::Out::TxtWriterFactory ; 
-   use IssueTracker::App::RAM::ConverterHsr2ToTxt ; 
-   use IssueTracker::App::RAM::ConverterHsr2ToTxt ; 
+   use IssueTracker::App::Db::In::RdrDbsFactory ; 
+   use IssueTracker::App::IO::Out::WtrTextFactory ; 
+   use IssueTracker::App::RAM::CnrHsr2ToTxt ; 
+   use IssueTracker::App::RAM::CnrHsr2ToTxt ; 
 
 
 	our $module_trace                = 0 ; 
@@ -69,24 +70,24 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
 
       for my $table ( @tables ) { 
          my $issues_file = ();  
-         my $objDbReadersFactory = 'IssueTracker::App::Db::In::DbReadersFactory'->new( \$appConfig , $self ) ; 
-         my $objDbReader 			= $objDbReadersFactory->doInstantiate ( "$rdbms_type" );
+         my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
+         my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" );
 
-         ( $ret , $msg , $hsr , $mhsr )  = $objDbReader->doSelectTableIntoHashRef( $table , $filter_by_attributes ) ; 
+         ( $ret , $msg , $hsr , $mhsr )  = $objRdrDb->doSelectTableIntoHashRef( $table , $filter_by_attributes ) ; 
 
          p($hsr) if $module_trace == 1 ;
          $objLogger->doLogDebugMsg ( "STOP print" ) if $module_trace == 1 ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
          
-         my $objTxtWriterFactory = 'IssueTracker::App::IO::Out::TxtWriterFactory'->new( \$appConfig , $self ) ; 
-         my $objTxtWriter 			= $objTxtWriterFactory->doInstantiate ( $table );
+         my $objWtrTextFactory = 'IssueTracker::App::IO::Out::WtrTextFactory'->new( \$appConfig , $self ) ; 
+         my $objWtrText 			= $objWtrTextFactory->doInstantiate ( $table );
          
-         my $objConverterHsr2ToTxt = 
-            'IssueTracker::App::RAM::ConverterHsr2ToTxt'->new ( \$appConfig ) ; 
-         ( $ret , $msg , $hsr )  = $objConverterHsr2ToTxt->doPrepareHashForPrinting( $hsr) ; 
+         my $objCnrHsr2ToTxt = 
+            'IssueTracker::App::RAM::CnrHsr2ToTxt'->new ( \$appConfig ) ; 
+         ( $ret , $msg , $hsr )  = $objCnrHsr2ToTxt->doPrepareHashForPrinting( $hsr) ; 
 
 
-         ( $ret , $msg , $issues_file , $str_issues ) = $objTxtWriter->doConvertHashRefToStr( $hsr ) ; 
+         ( $ret , $msg , $issues_file , $str_issues ) = $objWtrText->doConvertHashRefToStr( $hsr ) ; 
          $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
 
          return ( $ret , $msg ) if $ret != 0 ;  
@@ -165,48 +166,6 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
 	}   
 	# eof sub AUTOLOAD
 
-
-	# -----------------------------------------------------------------------------
-	# return a field's value
-	# -----------------------------------------------------------------------------
-	sub get {
-
-		my $self = shift;
-		my $name = shift;
-		croak "\@TRYING to get an undef name" unless $name ;  
-		croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
-
-		return $self->{ $name };
-	}    #eof sub get
-
-
-	# -----------------------------------------------------------------------------
-	# set a field's value
-	# -----------------------------------------------------------------------------
-	sub set {
-
-		my $self  = shift;
-		my $name  = shift;
-		my $value = shift;
-		$self->{ "$name" } = $value;
-	}
-	# eof sub set
-
-
-	# -----------------------------------------------------------------------------
-	# return the fields of this obj instance
-	# -----------------------------------------------------------------------------
-	sub dumpFields {
-		my $self      = shift;
-		my $strFields = ();
-		foreach my $key ( keys %$self ) {
-			$strFields .= " $key = $self->{$key} \n ";
-		}
-
-		return $strFields;
-	}    
-	# eof sub dumpFields
-		
 
 	# -----------------------------------------------------------------------------
 	# wrap any logic here on clean up for this class
