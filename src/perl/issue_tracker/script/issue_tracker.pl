@@ -114,20 +114,17 @@ sub main {
 
 sub doInitialize {
 
-  my $msg = 'error during initialization !!!';
-  my $ret = 1;
-  $objInitiator = 'IssueTracker::App::Utils::Initiator'->new();
-  $appConfig    = $objInitiator->get('AppConfig');
+  my $msg          = 'error during initialization !!!';
+  my $ret          = 1;
+  $objInitiator    = 'IssueTracker::App::Utils::Initiator'->new();
+  $appConfig       = $objInitiator->get('AppConfig');
 
-  $objConfigurator
-    = 'IssueTracker::App::Utils::Configurator'->new($objInitiator->{'ConfFile'},
-    \$appConfig);
-  $appConfig                 = $objConfigurator->getConfHolder()  ;
-
+  $objConfigurator = 'IssueTracker::App::Utils::Configurator'->new(
+      $objInitiator->{'ConfFile'}, \$appConfig);
+  $appConfig       = $objConfigurator->getConfHolder()  ;
   p($appConfig)  ; 
 
   $objLogger = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
-
   my $m = "START MAIN";
   $objLogger->doLogInfoMsg($m);
 
@@ -143,9 +140,7 @@ sub doInitialize {
   $issue_tracker_project = $ENV{"issue_tracker_project"};
   $period                = $ENV{"period"} unless $period;
   $period                = 'daily' unless $period;
-  
   $appConfig->{'tables'} = $tables ; 
-
 
   unless ($issue_tracker_project) {
     $msg = "set you current project by: \n";
@@ -157,18 +152,8 @@ sub doInitialize {
   }
 
   $appConfig->{'issue_tracker_project'} = $issue_tracker_project;
-
   $appConfig->{'xls_dir'}     = $xls_dir;
   $appConfig->{'xls_file'}     = $xls_file;
-
-
-  if ($module_trace == 1) {
-    $msg = "START LOGGING SETINGS";
-    $objLogger->doLogInfoMsg($msg);
-    p($appConfig);
-    $msg = "STOP  LOGGING SETINGS";
-    $objLogger->doLogInfoMsg($msg);
-  }
 
   $ret = 0;
   return ($ret, $msg);

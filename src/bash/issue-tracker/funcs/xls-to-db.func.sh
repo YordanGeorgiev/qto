@@ -14,18 +14,21 @@ doXlsToDb(){
    test -z ${items_order_by_attribute+x} && export items_order_by_attribute='category'
    test -z ${period+x} && export period='daily'
    test -z ${tables+x} && export tables='daily_issues'
-
+   
    # find out the latest xls file from the project daily dir
    # pass it to the xls-to-rdbms tool as the input xls file
    
    test -z ${xls_file+x} && \
       export xls_file=$(find ${proj_daily_data_root_dir} -name '*.xlsx'| grep '.all.'| sort -rn|head -n 1)
-   test -z ${xls_file+x} && \
+   test -z ${xls_file} && \
       export xls_file=$(find $proj_daily_data_root_dir -name '*.xlsx'| grep $period| sort -rn|head -n 1)
+   test -z ${xls_file} && \
+      doExit 1 "failed to define xls_file !!!"
 
    doLog "\${proj_daily_data_root_dir+}: ${proj_daily_data_root_dir+}"
    doLog "INFO \$xls_file: $xls_file"
-   
+
+
    # Action !!!
    perl src/perl/issue_tracker/script/issue_tracker.pl \
       --do xls-to-db --xls-file $xls_file --tables $tables
