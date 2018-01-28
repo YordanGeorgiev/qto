@@ -8,11 +8,12 @@ doGenerateDocs(){
 
 	doLog "DEBUG START doGenerateDocs"
 	
-   test -z "$mysql_user" && doExit 1 "mysql_user not set - Nothing to do !!!" 
-   test -z "$mysql_user_pw" && doExit 1 "mysql_user_pw not set - Nothing to do !!!"
-   test -z "$mysql_host" && doExit 1 "mysql_host not set - Nothing to do !!!"
-   test -z "$mysql_port" && doExit 1 "mysql_port not set - Nothing to do !!!"
-   test -z "$mysql_db_name" && doExit 1 "mysql_db_name not set - Nothing to do !!!"
+   test -z "${mysql_user+x}" && doExit 1 "mysql_user not set - Nothing to do !!!" 
+   test -z "${mysql_user_pw+x}" && doExit 1 "mysql_user_pw not set - Nothing to do !!!"
+   test -z "${mysql_host+x}" && doExit 1 "mysql_host not set - Nothing to do !!!"
+   test -z "${mysql_port+x}" && doExit 1 "mysql_port not set - Nothing to do !!!"
+   test -z "${mysql_db_name+x}" && doExit 1 "mysql_db_name not set - Nothing to do !!!"
+   test -z "${web_host+x}" && doExit 1 "web_host not set - Nothing to do !!!"
 	
 	doLog "DEBUG START exporting github md files"
    sql="

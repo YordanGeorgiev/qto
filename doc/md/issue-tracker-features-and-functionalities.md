@@ -5,12 +5,14 @@ Table of Contents
 
   * [1. ISSUES DATA TRANSFORMATION ACTIONS](#1-issues-data-transformation-actions)
     * [1.1. txt-to-db action](#11-txt-to-db-action)
+      * [1.1.1. txt-to-db action period handling](#111-txt-to-db-action-period-handling)
     * [1.2. db-to-xls action](#12-db-to-xls-action)
     * [1.3. xls-to-db action](#13-xls-to-db-action)
     * [1.4. db-to-txt action](#14-db-to-txt-action)
       * [1.4.1. db-to-txt action with pre-defined sorting attribute](#141-db-to-txt-action-with-pre-defined-sorting-attribute)
     * [1.5. run-pgsql-scripts](#15-run-pgsql-scripts)
     * [1.6. run-mysql-scripts](#16-run-mysql-scripts)
+    * [1.7. generate-docs](#17-generate-docs)
   * [2. DEVOPS FEATURES AND FUNCTIONALITIES](#2-devops-features-and-functionalities)
     * [2.1. development efficiency increasing actions](#21-development-efficiency-increasing-actions)
       * [2.1.1. morph-dir action](#211-morph-dir-action)
@@ -46,6 +48,16 @@ This call with truncate the issue table from the db and convert all the issues d
     
     # check the data by :
     psql -d "$db_name" -c 'SELECT issue_id , category , name FROM issue order by name'
+
+#### 1.1.1. txt-to-db action period handling
+Issues txt files are stored in a daily folder with the following naming convention:
+&lt;&lt;project&gt;&gt;.&lt;&lt;current_date&gt;&gt;.&lt;&lt;period&gt;&gt;.txt
+The tool knows to correctly fetch the issues files for the configured period ( by export period=weekly ) and copy its data in to the &lt;&lt;period&gt;&gt;_issue table. 
+
+    ysg-issues.2017-06-03.daily.txt
+    ysg-issues.2017-06-03.monthly.txt
+    ysg-issues.2017-06-03.weekly.txt
+    ysg-issues.2017-06-03.yearly.txt
 
 ### 1.2. db-to-xls action
 You can unload your already stored ANY xls table with unique id's and load them into a xls file. 
@@ -106,6 +118,11 @@ You can create a preconfigured &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; postg
 You can create a preconfigured &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; in mariadb  via a single shell call. The scripts will fail if any of the sql scripts have a syntax error - all the ddl events will be displayed in the STDOUT and stored in the shell log file for later audit
 
     
+
+### 1.7. generate-docs
+You can generate all the md and pdf docs via single shell call by issuing the following command: 
+
+    bash src/bash/issue-tracker/issue-tracker.sh -a generate-docs
 
 ## 2. DEVOPS FEATURES AND FUNCTIONALITIES
 

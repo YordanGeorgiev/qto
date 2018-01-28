@@ -28,7 +28,6 @@ doXlsToDb(){
    doLog "\${proj_daily_data_root_dir+}: ${proj_daily_data_root_dir+}"
    doLog "INFO \$xls_file: $xls_file"
 
-
    # Action !!!
    perl src/perl/issue_tracker/script/issue_tracker.pl \
       --do xls-to-db --xls-file $xls_file --tables $tables

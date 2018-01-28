@@ -67,7 +67,6 @@ network_backup_dir=/vagrant/var/csitea/issue-tracker/dat/zip
 Emails=yordan.georgiev@gmail.com
 PS1="$issue_tracker_project \u@\h [\d \t] [\w] $ \n\n "
 
-# v0.2.7
 # on which host the mysql is running
 mysql_host=localhost
  
@@ -84,12 +83,11 @@ mysql_user = usrisgpuben
 mysql_user_pw = secret
 
 # where are the mysql scripts situated
-mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.8.prd.ysg/src/sql/mysql/prd_issue_tracker
+mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.0.prd.ysg/src/sql/mysql/prd_issue_tracker
 
 # the mysql db data containing load xls
 load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tracker-en.xlsx
 
-# v0.2.8
 # the web host where the web application layer is deployed 
 web_host=host-name
 
@@ -98,4 +96,5 @@ web_port=5001
 
 # in bash because of a bug this is ignored ...
 foo=bar
+
 # eof file: cnf/issue-tracker.doc-pub-host.cnf
