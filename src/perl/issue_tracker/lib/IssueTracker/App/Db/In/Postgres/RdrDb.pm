@@ -11,11 +11,13 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
 	use Carp ; 
 
    use IssueTracker::App::Utils::Logger ; 
+   use IssueTracker::App::Mdl::MdlHsr2 ; 
 
    our $module_trace                            = 0 ; 
    our $IsUnitTest                              = 0 ; 
 	our $appConfig 										= {} ; 
 	our $objLogger 										= {} ; 
+	our $objMdlHsr2                              = {} ; 
 
 	our $postgres_db_name                                 = q{} ; 
 	our $db_host 										   = q{} ; 
@@ -72,7 +74,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
             or $objLogger->error ( "$DBI::errstr" ) ;
 
       $hsr = $sth->fetchall_hashref( 'row_id' ) ; 
-      p($hsr )  ; 
+      # p($hsr )  ; 
       binmode(STDOUT, ':utf8');
 
       $msg = DBI->errstr ; 
@@ -315,6 +317,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
    sub doSelectTableIntoHashRef {
 
       my $self                   = shift ; 
+      my $objMdlHsr2             = ${shift @_ } ; 
       my $table                  = shift || 'daily_issues' ;  # the table to get the data from  
       my $filter_by_attributes   = shift ; 
    
@@ -324,7 +327,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
       my $msg              = q{} ;         
       my $ret              = 1 ;          # this is the return value from this method 
       my $debug_msg        = q{} ; 
-      my $hsr              = {} ;         # this is hash ref of hash refs to populate with
+      my $hsr2             = {} ;         # this is hash ref of hash refs to populate with
       my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
       my $dmhsr            = {} ;        # this is meta hash describing the data hash ^^
       my $sth              = {} ;         # this is the statement handle
@@ -372,9 +375,11 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
 
-      $hsr = $sth->fetchall_hashref( 'guid' ) ; 
+      $hsr2 = $sth->fetchall_hashref( 'guid' ) ; 
+      $objMdlHsr2->set('hsr2' , $hsr2 ); 
       binmode(STDOUT, ':utf8');
-      p( $hsr ) ; 
+      # p( $objMdlHsr2->get( 'hsr2' ) );
+      # sleep 100 ; 
 
       $msg = DBI->errstr ; 
 
@@ -389,7 +394,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
       $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
-      return ( $ret , $msg , $hsr , $mhsr ) ; 	
+      return ( $ret , $msg ) ; 	
    }
    # eof sub doSelectTableIntoHashRef
 
@@ -436,6 +441,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
 		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' } || $appConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
       
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
+      $objMdlHsr2             = 'IssueTracker::App::Mdl::MdlHsr2'->new ( \$appConfig ) ; 
 
       return $self ; 
 	}	

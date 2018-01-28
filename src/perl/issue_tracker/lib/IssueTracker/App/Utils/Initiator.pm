@@ -6,7 +6,6 @@ package IssueTracker::App::Utils::Initiator ;
 
 	require Exporter;
 	our @ISA = qw(Exporter IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::AutoLoadable) ;
-   # use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
 	our $AUTOLOAD =();
 	our $ModuleDebug = 0 ; 
 	use AutoLoader;

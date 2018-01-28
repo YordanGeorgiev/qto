@@ -5,7 +5,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
 	my $VERSION = '1.0.0';    
 
 	require Exporter;
-	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
+	our @ISA = qw(Exporter IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::AutoLoadable) ;
 	our $AUTOLOAD =();
 	use AutoLoader;
    use utf8 ;
@@ -13,14 +13,14 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
    use Data::Printer ; 
 
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
+   use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::In::RdrDbsFactory ; 
    use IssueTracker::App::IO::Out::WtrTextFactory ; 
    use IssueTracker::App::RAM::CnrHsr2ToTxt ; 
-   use IssueTracker::App::RAM::CnrHsr2ToTxt ; 
+   use IssueTracker::App::Mdl::MdlHsr2 ; 
 
-
-	our $module_trace                = 0 ; 
+	our $module_trace                = 1 ; 
 	our $appConfig						   = {} ; 
 	our $objLogger						   = {} ; 
 	our $objFileHandler			      = {} ; 
@@ -66,6 +66,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
 	   push ( @tables , split(',',$tables ) ) ; 
 
       my $filter_by_attributes = $ENV{'filter_by_attributes'} || undef ; 
+      my $objMdlHsr2             = 'IssueTracker::App::Mdl::MdlHsr2'->new ( \$appConfig ) ; 
 
 
       for my $table ( @tables ) { 
@@ -73,23 +74,22 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
          my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
          my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" );
 
-         ( $ret , $msg , $hsr , $mhsr )  = $objRdrDb->doSelectTableIntoHashRef( $table , $filter_by_attributes ) ; 
-
-         p($hsr) if $module_trace == 1 ;
-         $objLogger->doLogDebugMsg ( "STOP print" ) if $module_trace == 1 ; 
+         ( $ret , $msg )  = 
+            $objRdrDb->doSelectTableIntoHashRef( \$objMdlHsr2 , $table , $filter_by_attributes ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
-         
+
          my $objWtrTextFactory = 'IssueTracker::App::IO::Out::WtrTextFactory'->new( \$appConfig , $self ) ; 
          my $objWtrText 			= $objWtrTextFactory->doInstantiate ( $table );
          
          my $objCnrHsr2ToTxt = 
             'IssueTracker::App::RAM::CnrHsr2ToTxt'->new ( \$appConfig ) ; 
-         ( $ret , $msg , $hsr )  = $objCnrHsr2ToTxt->doPrepareHashForPrinting( $hsr) ; 
+         ( $ret , $msg )  = $objCnrHsr2ToTxt->doPrepareHashForPrinting( \$objMdlHsr2 ) ; 
+         return ( $ret , $msg ) if $ret != 0 ;  
+         
+         ( $ret , $msg )  = $objCnrHsr2ToTxt->doConvertHashRefToStr( \$objMdlHsr2 ) ; 
+         return ( $ret , $msg ) if $ret != 0 ;  
 
-
-         ( $ret , $msg , $issues_file , $str_issues ) = $objWtrText->doConvertHashRefToStr( $hsr ) ; 
-         $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
-
+         ( $ret , $msg ) = $objWtrText->doPrintIssuesFile( \$objMdlHsr2 ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
       }
          return ( $ret , $msg ) ; 
@@ -140,62 +140,11 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
        );
 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
-	   $objFileHandler   = 'IssueTracker::App::Utils::IO::FileHandler'->new ( \$appConfig ) ; 
 
       return $self ; 
 	}	
 	#eof sub doInitialize
 
-
-=head2
-	# -----------------------------------------------------------------------------
-	# overrided autoloader prints - a run-time error - perldoc AutoLoader
-	# -----------------------------------------------------------------------------
-=cut
-	sub AUTOLOAD {
-
-		my $self = shift;
-		no strict 'refs';
-		my $name = our $AUTOLOAD;
-		*$AUTOLOAD = sub {
-			my $msg =
-			  "BOOM! BOOM! BOOM! \n RunTime Error !!! \n Undefined Function $name(@_) \n ";
-			croak "$self , $msg $!";
-		};
-		goto &$AUTOLOAD;    # Restart the new routine.
-	}   
-	# eof sub AUTOLOAD
-
-
-	# -----------------------------------------------------------------------------
-	# wrap any logic here on clean up for this class
-	# -----------------------------------------------------------------------------
-	sub RunBeforeExit {
-
-		my $self = shift;
-
-		#debug print "%$self RunBeforeExit ! \n";
-	}
-	#eof sub RunBeforeExit
-
-
-	# -----------------------------------------------------------------------------
-	# called automatically by perl's garbage collector use to know when
-	# -----------------------------------------------------------------------------
-	sub DESTROY {
-		my $self = shift;
-
-		#debug print "the DESTRUCTOR is called  \n" ;
-		$self->RunBeforeExit();
-		return;
-	}   
-	#eof sub DESTROY
-
-
-	# STOP functions
-	# =============================================================================
-
-	
 
 
 1;

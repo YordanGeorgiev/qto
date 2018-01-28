@@ -13,14 +13,15 @@ package IssueTracker::App::RAM::CnrHsr2ToTxt ;
 	use File::Path qw(make_path) ;
 	use File::Find ; 
 	use File::Copy;
-	use File::Copy::Recursive ; 
 	use Sys::Hostname;
+	use Data::Printer ; 
 	use Carp qw /cluck confess shortmess croak carp/ ; 
+   use Scalar::Util qw /looks_like_number/;
    
    use base qw(IssueTracker::App::Utils::OO::SetGetable);
 	use IssueTracker::App::Utils::IO::FileHandler ; 
 	use IssueTracker::App::Utils::Logger ;
-	use Data::Printer ; 
+   use IssueTracker::App::Mdl::MdlHsr2 ; 
       
    binmode(STDIN,  ':utf8');
    binmode(STDOUT, ':utf8');
@@ -58,11 +59,137 @@ package IssueTracker::App::RAM::CnrHsr2ToTxt ;
 	START SUBS 
 =cut
 
+sub doConvertHashRefToStr {
+
+  my $self              = shift;
+  my $objMdlHsr2        = ${shift @_} ;
+  my $hsr2              = $objMdlHsr2->get('hsr2');
+
+  my $msg
+    = 'unknown error during hash ref of hash references to string conversion !!!';
+  my $ret        = 1;
+  my $str_issues = q{};
+  my $str_activity_issues = " ";
+  my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+  my $run_time         = $objTimer->GetHumanReadableTime();
+  p($hsr2) if $module_trace == 1;
+  my $str_header = '# START ' . uc($term) . ' @%run_time%
+   
+## what will I do till the next ' . uc($term) . ':
+#---------------------------
+#';
+  #
+
+  my $str_footer = '
+
+# STOP  ' . uc($term) . ' @%run_time%
+';
+
+  $str_issues .= $str_header . "\n\n";
+  my $prev_category = q{};
+  my @attributes
+    = qw (guid seq run_time category current description level name prio start_time stop_time status);
+  my $items_order_by_attribute = $ENV{'items_order_by_attribute'} || 'start_time' ; 
+
+  unless (grep(/^$items_order_by_attribute$/, @attributes)) {
+    $msg
+      = 'Did not find the value of the pre-defined items_order_by_attribute: "';
+    $msg
+      .= $items_order_by_attribute
+      . '" from the issues attributes list: "'
+      . " \n @attributes \n" . '"';
+    $objLogger->doLogWarningMsg($msg);
+    $items_order_by_attribute = 'start_time';
+    $msg = 'using the "start_time" as the default sorting attribute';
+    $objLogger->doLogWarningMsg($msg);
+  }
+
+  my $operator = '<=>';
+  $operator = 'cmp' unless (looks_like_number($items_order_by_attribute));
+
+  foreach my $issue_id (
+      eval 'sort {      '
+    . '$hsr2->{$a}->{ $items_order_by_attribute }'
+    . $operator
+    . '$hsr2->{$b}->{ $items_order_by_attribute }'
+    . '} keys (%$hsr2)')  {
+
+    my $row = $hsr2->{$issue_id};
+   
+   # ignore camel case named cols and sheets
+   my %row_h = %$row ; 
+   %row_h = map { lc $_ => $row_h{$_} } keys %row_h;
+   $row = \%row_h ; 
+   
+    p $row ; 
+
+    my $str_row = q{} ; 
+
+
+    my $category    = $row->{'category'};
+    my $current     = $row->{'current'};
+    my $description = $row->{'description'};
+    my $issue_id    = $row->{'issue_id'};
+    my $level       = $row->{'level'};
+    my $name        = $row->{'name'} || $row->{'description' } ; 
+    $name =~ s/(\r){0,1}\n/ ;/gm ; 
+    my $prio        = $row->{'prio'};
+    my $start_time  = $row->{'start_time'};
+    my $stop_time   = $row->{'stop_time'};
+    my $status      = $row->{'status'};
+
+    $status = $inverse_hsrStatus{$status} if $status ; 
+    $status = 'unknwn' unless $status;
+    $description =~ s/\r\n/\n/gm;
+    $str_row .= "\n" if ($prev_category ne $category);
+    $str_row .= $category . "\n" unless ($prev_category eq $category);
+    my $levels_dash = '';
+
+    for (my $i = 0; $i < $level; $i++) {
+      $str_row  .= ' ';
+      $levels_dash .= '-';
+    }
+    $str_row .= $levels_dash . ' ';
+    $str_row .= $status . "\t\t" if $level == 1 ; 
+    $str_row .= $status . "\t" if $level == 2;
+    $str_row .= $status . " " if $level == 3;
+
+    $str_row .= ($start_time . " ")
+      if (defined($start_time) && $start_time ne 'NULL');
+
+    if (defined $stop_time && $stop_time ne 'NULL' && $stop_time ne '') {
+      $str_row .= ('- ' . $stop_time . " ");
+    }
+    $str_row .= $name . "\n";
+    $prev_category = $category;
+
+
+    # because we want activities to be printed at the end of the txt file
+    if ( $items_order_by_attribute eq 'start_time' && $start_time eq "") {
+      $str_activity_issues .= $str_row ; 
+    } 
+    else {
+      $str_issues .= $str_row ; 
+    }
+  }
+
+
+  $str_issues .= $str_activity_issues ; 
+  $str_issues .= $str_footer . "\n\n";
+  $str_issues =~ s|%run_time%|$run_time|g;
+  $objMdlHsr2->set('str_issues' , $str_issues );
+  $msg = " OK for hsr2 to txt conversion ";
+  $ret = 0;
+
+  return ($ret, $msg );
+}
+# eof sub doConvertHashRefToStr
 
    sub doPrepareHashForPrinting {
 
-      my $self       = shift ; 
-      my $hsr2       = shift ; 
+      my $self                   = shift ; 
+      my $objMdlHsr2             = ${shift @_ } ; 
+      my $hsr2                   = $objMdlHsr2->get('hsr2') ;
 
       my $msg        = 'unknown error during hash ref of hash references to string conversion !!!' ;  ; 
       my $ret        = 1 ; 
@@ -89,9 +216,9 @@ package IssueTracker::App::RAM::CnrHsr2ToTxt ;
       $ret = 0 ; 
       }
 
-      return ( $ret , $msg , $hsr2) ;
+      return ( $ret , $msg ) ;
    }
-   # eof sub doConvertHashRefToStr
+   # eof sub doPrepareHashForPrinting
 
 	
    #
