@@ -43,12 +43,13 @@ package IssueTracker::App::IO::Out::WtrGoogleSheet ;
    sub doWriteGSheetFromHashRef {
 
       my $self             = shift ; 
-      my $hsr_meta         = shift ; 
-      my $hsr              = shift ; 
+      my $objMdlHsr2       = ${ shift @_ } ; 
       my $objGoogleService = ${ shift @_ } ; 
       my $table            = shift ; 
       my $refresh_token    = shift ; 
       my $spread_sheet_id  = shift ; 
+      my $hsr_meta         = $objMdlHsr2->get('hsr_meta');
+      my $hsr              = $objMdlHsr2->get('hsr2');
 
       my $msg              = 'unknown error during google sheet write' ; 
       my $ret              = 1 ; 
@@ -96,14 +97,11 @@ package IssueTracker::App::IO::Out::WtrGoogleSheet ;
       my @row = () ; 
       push ( @row , '#' ) ; 
 
-      # foreach my $colid ( sort ( keys (  %{$hsr_meta->{ 'ColumnNames'}} ) ) ) {
-      #foreach my $colid ( sort { $hsr_meta->{$a}->{'attnum'} <=> $hsr_meta->{$b}->{'attnum'}} keys (%$hsr_meta)) {
       my $default_col_to_sort_by = 'seq' ; 
       my $flg_found_default_col_to_sort_by = 0 ; 
-      my $hsr_meta1 = $hsr_meta->{ 'ColumnNames' } ; 
-      foreach my $colid ( sort { $hsr_meta1->{$a}->{'attnum'} <=> $hsr_meta1->{$b}->{'attnum'}} keys (%$hsr_meta1)) {
+      foreach my $colid ( sort { $hsr_meta->{$a}->{'attnum'} <=> $hsr_meta->{$b}->{'attnum'}} keys (%$hsr_meta)) {
          # debug print "\$colid is $colid \n" ; 
-         my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
+         my $col_name     = $hsr_meta->{ $colid }->{ 'attname' } ; 
          $flg_found_default_col_to_sort_by++ if $col_name eq $default_col_to_sort_by ; 
          next if $col_name eq 'guid' ; 
          next if $col_name eq 'planned_hours' ; 
@@ -125,9 +123,8 @@ package IssueTracker::App::IO::Out::WtrGoogleSheet ;
 
          my @row = () ; 
          push ( @row , $rowid ) ; 
-         #foreach my $colid ( sort ( keys ( %{$hsr_meta->{'ColumnNames'}} ) ) ) {
-         foreach my $colid ( sort { $hsr_meta1->{$a}->{'attnum'} <=> $hsr_meta1->{$b}->{'attnum'}} keys (%$hsr_meta1)) {
-            my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
+         foreach my $colid ( sort { $hsr_meta->{$a}->{'attnum'} <=> $hsr_meta->{$b}->{'attnum'}} keys (%$hsr_meta)) {
+            my $col_name     = $hsr_meta->{ $colid }->{ 'attname' } ; 
             # debug print "col_name $col_name \n" ; 
             # debug print "colid $colid \n" ; 
             next if $col_name eq 'guid' ; 

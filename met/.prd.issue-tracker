@@ -7,12 +7,12 @@ src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/SetGetableChild.pm
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/AutoLoadableChild.pm
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestSetGetable.pl
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestAutoLoadable.pl
-src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/AutoLoadable.pm
 src/perl/issue_tracker/t/TestInitiator.pl
 src/perl/issue_tracker/t/TestConfigurator.pl
 src/perl/issue_tracker/t/TestLogger.pl
 src/perl/issue_tracker/t/TestDispatcher.pl
-#src/perl/issue_tracker/t/TestMdlHsr2.pl
+src/perl/issue_tracker/t/TestMdlHsr2.pl
+src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
 # ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
@@ -114,12 +114,12 @@ src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/WtrDbsFactory.pm
-#src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm
@@ -127,6 +127,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO/FileHandler.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/SetGetable.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/AutoLoadable.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Timer.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm

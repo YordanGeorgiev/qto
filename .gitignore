@@ -9,3 +9,4 @@ src/bash/issue-tracker/tmp/**
 src/perl/issue_tracker/script/hypnotoad.pid
 src/react/conf-srch/node_modules/**
 **/~$*.xlsx
+**/.DS_Store

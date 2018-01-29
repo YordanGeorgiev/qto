@@ -114,7 +114,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/WtrDbsFactory.pm
-#src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm

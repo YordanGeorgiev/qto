@@ -25,6 +25,7 @@ doParseIniEnvVars(){
             $component_dir/$component_name.$host_name.conf
    eval `sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
       -e 's/;.*$//' \
+      -e 's/#.*$//' \
       -e 's/[[:space:]]*$//' \
       -e 's/^[[:space:]]*//' \
       -e "s/^\(.*\)=\([^\"']*\)$/export \1=\"\2\"/" \

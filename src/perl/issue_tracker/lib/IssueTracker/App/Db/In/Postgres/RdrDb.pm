@@ -336,6 +336,8 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
 
 
       ( $ret , $msg , $dmhsr ) = $self->doSelectTablesColumnList ( $table ) ; 
+      $objMdlHsr2->set('hsr_meta' , $dmhsr );
+
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
       foreach my $key ( sort ( keys %$dmhsr ) ) {
@@ -378,8 +380,6 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
       $hsr2 = $sth->fetchall_hashref( 'guid' ) ; 
       $objMdlHsr2->set('hsr2' , $hsr2 ); 
       binmode(STDOUT, ':utf8');
-      # p( $objMdlHsr2->get( 'hsr2' ) );
-      # sleep 100 ; 
 
       $msg = DBI->errstr ; 
 
