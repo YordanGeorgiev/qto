@@ -15,6 +15,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::Out::WtrDbsFactory ; 
    use IssueTracker::App::IO::In::RdrXls ; 
+   use IssueTracker::App::Mdl::MdlHsr2 ; 
 	
 	our $module_trace                = 0 ; 
 	our $RunDir 						   = '' ; 
@@ -56,23 +57,25 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
    # and insert the hsr into a db
 	# -----------------------------------------------------------------------------
    sub doReadAndLoad {
-      my $self             = shift ; 
-      my $tables_list      = shift ; 
+      my $self                = shift ; 
+      my $tables_list         = shift ; 
 
-      my $ret              = 1 ; 
-      my $msg              = 'file read' ; 
+      my $ret                 = 1 ; 
+      my $msg                 = 'file read' ; 
       
       my @tables              = ();
       my $tables              = $issue_tracker::appConfig->{ 'tables' } ;  
       my $xls_file            = $issue_tracker::appConfig->{ 'xls_file' } ; 
 	   push ( @tables , split(',',$tables ) ) ; 
-      my $hsr2             = {} ; 
-      my $objRdrXls     = 'IssueTracker::App::IO::In::RdrXls'->new ( \$issue_tracker::appConfig , \@tables ) ; 
+
+      my $objMdlHsr2          = 'IssueTracker::App::Mdl::MdlHsr2'->new ( \$issue_tracker::appConfig ) ; 
+      my $objRdrXls           = 'IssueTracker::App::IO::In::RdrXls'->new ( \$issue_tracker::appConfig , \@tables ) ; 
       
       # read the xls into hash ref of hash ref
-      ( $ret , $msg , $hsr2 ) = 
-            $objRdrXls->doReadXlsFileToHsr2 ( $xls_file ) ; 
+      ( $ret , $msg  ) = 
+            $objRdrXls->doReadXlsFileToHsr2 ( $xls_file , \$objMdlHsr2) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
+      my $hsr2                = $objMdlHsr2->get('hsr2' ); 
 
 
       $msg                 = 'unknown error while inserting db tables !!!' ; 
@@ -86,13 +89,13 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       my $load_model = $ENV{ 'load_model' } || 'upsert' ; 
 
       if ( $load_model eq 'upsert' ) {
-         ( $ret , $msg  )        = $objWtrDb->doUpsertTableWithHsr2( $hsr2 , \@tables) ; 
+         ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objMdlHsr2 , \@tables) ; 
       } 
       elsif ( $load_model eq 'nested-set' ) {
          ( $ret , $msg  )        = $objWtrDb->doLoadNestedSetTable( $hsr2 , \@tables) ; 
       } 
       else {
-         ( $ret , $msg  )        = $objWtrDb->doUpsertTableWithHsr2( $hsr2 , \@tables) ; 
+         ( $ret , $msg  )        = $objWtrDb->doUpsertTable( $hsr2 , \@tables) ; 
       }
       return ( $ret , $msg ) ; 
    } 

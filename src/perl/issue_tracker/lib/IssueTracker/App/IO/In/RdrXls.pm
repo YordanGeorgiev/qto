@@ -33,8 +33,10 @@ our @tables             = () ;
 # convert an excel file into a hash ref of hash ref of hash refs
 # ------------------------------------------------------
 sub doReadXlsFileToHsr2 {
-  my $self     = shift;
-  my $xls_file = shift;
+
+  my $self           = shift;
+  my $xls_file       = shift;
+  my $objMdlHsr2     = ${ shift @_ } ; 
 
   my $ret = 1;
   my $msg = "open the xls_file: $xls_file";
@@ -151,8 +153,8 @@ sub doReadXlsFileToHsr2 {
  $ret = 0 if $flg_found_at_least_one_table > 0 ; 
  $msg = 'xls file parse OK' if $flg_found_at_least_one_table > 0 ;
 
-
-  return ($ret, $msg, $hsr2);
+  $objMdlHsr2->set('hsr2' , $hsr2 ); 
+  return ($ret, $msg);
 
 }    
 

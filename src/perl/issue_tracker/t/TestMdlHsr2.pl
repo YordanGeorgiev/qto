@@ -56,9 +56,9 @@ ok ( !%$mhsr2 , $msg ) ;
 # 5.
 # -----
 $msg = 'verify that the model can add hash ref of hash refs' ; 
-my $hsr2_to_pass = { 'key1' => 'value' }; 
-$objInitiator 				= 'IssueTracker::App::Utils::Initiator'->new( $hsr2_to_pass ) ; 
-my $hsr2_to_chck = { 'key1' => 'value' }; 
+my $hsr2_to_pass           = { 'key1' => 'value' }; 
+$objInitiator 				   = 'IssueTracker::App::Utils::Initiator'->new( $hsr2_to_pass ) ; 
+my $hsr2_to_chck           = { 'key1' => 'value' }; 
 $objMdlHsr2->addHsr2( $hsr2_to_pass ) ; 
 my $hsr2_to_out = $objMdlHsr2->get('hsr2' ) ; 
 

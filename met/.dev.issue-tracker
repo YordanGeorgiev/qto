@@ -1,6 +1,5 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
-# testing
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/SetGetableChild.pm
