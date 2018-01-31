@@ -11,13 +11,13 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
 	use Carp ; 
 
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Mdl::MdlHsr2 ; 
+   use IssueTracker::App::Mdl::MdlHsrs ; 
 
    our $module_trace                            = 0 ; 
    our $IsUnitTest                              = 0 ; 
 	our $appConfig 										= {} ; 
 	our $objLogger 										= {} ; 
-	our $objMdlHsr2                              = {} ; 
+	our $objMdlHsrs                              = {} ; 
 
 	our $postgres_db_name                                 = q{} ; 
 	our $db_host 										   = q{} ; 
@@ -317,7 +317,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
    sub doSelectTableIntoHashRef {
 
       my $self                   = shift ; 
-      my $objMdlHsr2             = ${shift @_ } ; 
+      my $objMdlHsrs             = ${shift @_ } ; 
       my $table                  = shift || 'daily_issues' ;  # the table to get the data from  
       my $filter_by_attributes   = shift ; 
    
@@ -336,7 +336,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
 
 
       ( $ret , $msg , $dmhsr ) = $self->doSelectTablesColumnList ( $table ) ; 
-      $objMdlHsr2->set('hsr_meta' , $dmhsr );
+      $objMdlHsrs->set('hsr_meta' , $dmhsr );
 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
@@ -378,7 +378,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
             or $objLogger->error ( "$DBI::errstr" ) ;
 
       $hsr2 = $sth->fetchall_hashref( 'guid' ) ; 
-      $objMdlHsr2->set('hsr2' , $hsr2 ); 
+      $objMdlHsrs->set('hsr2' , $hsr2 ); 
       binmode(STDOUT, ':utf8');
 
       $msg = DBI->errstr ; 
@@ -441,7 +441,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
 		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' } || $appConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
       
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
-      $objMdlHsr2             = 'IssueTracker::App::Mdl::MdlHsr2'->new ( \$appConfig ) ; 
+      $objMdlHsrs             = 'IssueTracker::App::Mdl::MdlHsrs'->new ( \$appConfig ) ; 
 
       return $self ; 
 	}	

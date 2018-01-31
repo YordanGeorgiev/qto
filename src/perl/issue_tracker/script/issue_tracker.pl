@@ -122,7 +122,7 @@ sub doInitialize {
   $objConfigurator = 'IssueTracker::App::Utils::Configurator'->new(
       $objInitiator->{'ConfFile'}, \$appConfig);
   $appConfig       = $objConfigurator->getConfHolder()  ;
-  p($appConfig)  ; 
+  # p($appConfig)  ; 
 
   $objLogger = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
   my $m = "START MAIN";

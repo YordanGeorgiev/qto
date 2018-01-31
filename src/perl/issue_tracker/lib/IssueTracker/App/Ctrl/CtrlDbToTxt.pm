@@ -18,7 +18,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
    use IssueTracker::App::Db::In::RdrDbsFactory ; 
    use IssueTracker::App::IO::Out::WtrTextFactory ; 
    use IssueTracker::App::RAM::CnrHsr2ToTxt ; 
-   use IssueTracker::App::Mdl::MdlHsr2 ; 
+   use IssueTracker::App::Mdl::MdlHsrs ; 
 
 	our $module_trace                = 1 ; 
 	our $appConfig						   = {} ; 
@@ -66,7 +66,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
 	   push ( @tables , split(',',$tables ) ) ; 
 
       my $filter_by_attributes = $ENV{'filter_by_attributes'} || undef ; 
-      my $objMdlHsr2             = 'IssueTracker::App::Mdl::MdlHsr2'->new ( \$appConfig ) ; 
+      my $objMdlHsrs             = 'IssueTracker::App::Mdl::MdlHsrs'->new ( \$appConfig ) ; 
 
 
       for my $table ( @tables ) { 
@@ -75,7 +75,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
          my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" );
 
          ( $ret , $msg )  = 
-            $objRdrDb->doSelectTableIntoHashRef( \$objMdlHsr2 , $table , $filter_by_attributes ) ; 
+            $objRdrDb->doSelectTableIntoHashRef( \$objMdlHsrs , $table , $filter_by_attributes ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
          my $objWtrTextFactory = 'IssueTracker::App::IO::Out::WtrTextFactory'->new( \$appConfig , $self ) ; 
@@ -83,13 +83,13 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
          
          my $objCnrHsr2ToTxt = 
             'IssueTracker::App::RAM::CnrHsr2ToTxt'->new ( \$appConfig ) ; 
-         ( $ret , $msg )  = $objCnrHsr2ToTxt->doPrepareHashForPrinting( \$objMdlHsr2 ) ; 
+         ( $ret , $msg )  = $objCnrHsr2ToTxt->doPrepareHashForPrinting( \$objMdlHsrs ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
          
-         ( $ret , $msg )  = $objCnrHsr2ToTxt->doConvertHashRefToStr( \$objMdlHsr2 ) ; 
+         ( $ret , $msg )  = $objCnrHsr2ToTxt->doConvertHashRefToStr( \$objMdlHsrs ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
 
-         ( $ret , $msg ) = $objWtrText->doPrintIssuesFile( \$objMdlHsr2 ) ; 
+         ( $ret , $msg ) = $objWtrText->doPrintIssuesFile( \$objMdlHsrs ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
       }
          return ( $ret , $msg ) ; 

@@ -63,7 +63,7 @@ IssueTracker::App::IO::Out::WtrText	src/perl/issue_tracker/lib/IssueTracker/App/
 IssueTracker::App::IO::Out::WtrTextFactory	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrTextFactory.pm	1;"	package	language:Perl
 IssueTracker::App::IO::Out::WtrURL	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrURL.pm	1;"	package	language:Perl
 IssueTracker::App::IO::Out::WtrXls	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrXls.pm	1;"	package	language:Perl
-IssueTracker::App::Mdl::MdlHsr2	src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm	2;"	package	language:Perl
+IssueTracker::App::Mdl::MdlHsrs	src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsrs.pm	2;"	package	language:Perl
 IssueTracker::App::RAM::CnrHsr2ToTxt	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToTxt.pm	1;"	package	language:Perl
 IssueTracker::App::Utils::Configurator	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	1;"	package	language:Perl
 IssueTracker::App::Utils::IO::FileHandler	src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO/FileHandler.pm	1;"	package	language:Perl
@@ -94,7 +94,7 @@ SetAllIniVarsToEnvironmentVars	src/perl/issue_tracker/lib/IssueTracker/App/Utils
 SetGetableChild	src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/SetGetableChild.pm	3;"	package	language:Perl
 TestAutoLoadable	src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestAutoLoadable.pl	2;"	package	language:Perl
 TestSetGetable	src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestSetGetable.pl	2;"	package	language:Perl
-addHsr2	src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm	27;"	subroutine	language:Perl
+addHsr2	src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsrs.pm	27;"	subroutine	language:Perl
 add_window	doc/txt/issue-tracker/helps/sys/tmux/tmux-common.help.txt	27;"	function	language:Sh
 add_window	doc/txt/issue-tracker/specs/sys/tmux/tmux-common.spec.txt	27;"	function	language:Sh
 add_window	src/bash/issue-tracker/funcs/sys/tmux/tmux-common.func.sh	27;"	function	language:Sh
@@ -341,7 +341,7 @@ doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrText.pm	212;"
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrTextFactory.pm	64;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrURL.pm	176;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrXls.pm	179;"	subroutine	language:Perl
-doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm	67;"	subroutine	language:Perl
+doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsrs.pm	67;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToTxt.pm	123;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	73;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/script/issue_tracker.pl	115;"	subroutine	language:Perl
@@ -529,8 +529,8 @@ doTestTxtToDbWeekly	src/bash/issue-tracker/tests/txt-to-db/txt-to-db-weekly.test
 doTestXlsToDb	src/bash/issue-tracker/tests/xls-to-db.test.sh	7;"	function	language:Sh
 doTxtToDb	src/bash/issue-tracker/funcs/txt-to-db.func.sh	7;"	function	language:Sh
 doTxtToDb	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	58;"	subroutine	language:Perl
-doUpsertTableWithHsr2	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrDb.pm	321;"	subroutine	language:Perl
-doUpsertTableWithHsr2	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrDb.pm	295;"	subroutine	language:Perl
+doUpsertTablesWithHsr2	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrDb.pm	321;"	subroutine	language:Perl
+doUpsertTablesWithHsr2	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrDb.pm	295;"	subroutine	language:Perl
 doWriteGSheetFromHashRef	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGoogleSheet.pm	43;"	subroutine	language:Perl
 doXlsToDb	src/bash/issue-tracker/funcs/xls-to-db.func.sh	7;"	function	language:Sh
 doXlsToDb	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	89;"	subroutine	language:Perl
@@ -624,7 +624,7 @@ new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrText.pm	190;"	subrouti
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrTextFactory.pm	45;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrURL.pm	205;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrXls.pm	164;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm	49;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsrs.pm	49;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToTxt.pm	101;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	59;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO/FileHandler.pm	215;"	subroutine	language:Perl

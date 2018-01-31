@@ -10,8 +10,8 @@ src/perl/issue_tracker/t/TestInitiator.pl
 src/perl/issue_tracker/t/TestConfigurator.pl
 src/perl/issue_tracker/t/TestLogger.pl
 src/perl/issue_tracker/t/TestDispatcher.pl
-src/perl/issue_tracker/t/TestMdlHsr2.pl
-src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
+src/perl/issue_tracker/t/TestMdlHsrs.pl
+src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsrs.pm
 # ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
@@ -113,7 +113,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/WtrDbsFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsr2.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsrs.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm

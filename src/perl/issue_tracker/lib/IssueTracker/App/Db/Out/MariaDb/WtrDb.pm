@@ -318,11 +318,11 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
 	# by convention is assumed that the first column is unique and update could 
 	# be performed on it ... should there be duplicates the update should fail
 	# -----------------------------------------------------------------------------
-	sub doUpsertTable {
+	sub doUpsertTables {
 
 		my $self 			   = shift ; 
-      my $objMdlHsr2       = ${ shift @_ } ; 
-		my $hsr2 		      = $objMdlHsr2->get('hsr2' ); 
+      my $objMdlHsrs       = ${ shift @_ } ; 
+		my $hsr2 		      = $objMdlHsrs->get('hsr2' ); 
       my @tables = @{ $_[0] } ; 
 
       binmode(STDIN,  ':utf8');
@@ -351,7 +351,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
       # obs this does not support ordered primary key tables first order yet !!!
       foreach my $table ( keys %$hsr2 ) { 
 
-         $objLogger->doLogDebugMsg ( "doUpsertTable table: $table" );
+         $objLogger->doLogDebugMsg ( "doUpsertTables table: $table" );
          next unless grep( /^$table$/, @tables ) ; 
 
          # load ONLY the tables defined to load
@@ -491,7 +491,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
       $msg = 'upsert OK for all tables' ; 
 		return ( $ret , $msg ) ; 
 	}
-	#eof sub doUpsertTable
+	#eof sub doUpsertTables
 
 
    #

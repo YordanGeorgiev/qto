@@ -1,5 +1,5 @@
 use strict ; use warnings ; 
-package IssueTracker::App::Mdl::MdlHsr2 ; 
+package IssueTracker::App::Mdl::MdlHsrs ; 
 
 	my $VERSION = '1.1.0';    #doc at the end
 
@@ -17,8 +17,8 @@ package IssueTracker::App::Mdl::MdlHsr2 ;
    use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
 
    our $appConfig       = {} ; 
-   our $hsr2             = {} ; # this is the hash ref of hash refs 
-   our $mhsr2            = {} ; # and this is the meta hash ref of hash refs 
+   our $hsr2            = {} ; # this is the hash ref of hash refs 
+   our $mhsr2           = {} ; # and this is the meta hash ref of hash refs 
    our $objLogger       = {} ; 
 
    # 
@@ -26,11 +26,16 @@ package IssueTracker::App::Mdl::MdlHsr2 ;
 	# merge a hash ref to the model's hash ref
    # src: https://stackoverflow.com/a/1242125/65706
 	# -----------------------------------------------------------------------------
-   sub addHsr2{
+   sub addHsr {
       my $self = shift ; 
       my $row  = shift ; 
 
+      p $hsr2 ; 
+      print "STOP addHsr before \n" ; 
       @{$hsr2}{keys %$row} = values %$row;
+      print "STOP addHsr after \n" ; 
+
+      p $hsr2 ; 
    }
 
 
@@ -59,13 +64,12 @@ package IssueTracker::App::Mdl::MdlHsr2 ;
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+             appConfig => $appConfig
            , hsr2 => $hsr2
            , mhsr2 => $mhsr2
       );
 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
-      
 
       return $self ; 
 	}	
@@ -80,11 +84,11 @@ __END__
 
 =head1 NAME
 
-MdlHsr2
+MdlHsrs
 
 =head1 SYNOPSIS
 
-use MdlHsr2 ; 
+use MdlHsrs ; 
 
 
 =head1 DESCRIPTION

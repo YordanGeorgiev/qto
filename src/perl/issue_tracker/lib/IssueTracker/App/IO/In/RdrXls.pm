@@ -32,11 +32,11 @@ our @tables             = () ;
 # ------------------------------------------------------
 # convert an excel file into a hash ref of hash ref of hash refs
 # ------------------------------------------------------
-sub doReadXlsFileToHsr2 {
+sub doReadXlsFileToHsr3 {
 
   my $self           = shift;
   my $xls_file       = shift;
-  my $objMdlHsr2     = ${ shift @_ } ; 
+  my $objMdlHsrs     = ${ shift @_ } ; 
 
   my $ret = 1;
   my $msg = "open the xls_file: $xls_file";
@@ -47,7 +47,7 @@ sub doReadXlsFileToHsr2 {
 
   # my $objWorkbook      = $objXlsParser->Parse( $xls_file , $formatter );
   my $objWorkbook = $objXlsParser->Parse($xls_file);
-  my $hsr2 = {};    # this is the data hash ref of hash refs
+  my $hsr3 = {};    # this is the data hash ref of hash refs
 
   # check if we are using Excel2007 open xml format
   if (!defined $objWorkbook) {
@@ -145,7 +145,7 @@ sub doReadXlsFileToHsr2 {
       # debug sleep 3 ;
     }    #eof foreach row
 
-    $hsr2->{"$WorkSheetName"} = $hsWorkSheet;
+    $hsr3->{"$WorkSheetName"} = $hsWorkSheet;
 
     # p($hsWorkSheet );
   }
@@ -153,7 +153,7 @@ sub doReadXlsFileToHsr2 {
  $ret = 0 if $flg_found_at_least_one_table > 0 ; 
  $msg = 'xls file parse OK' if $flg_found_at_least_one_table > 0 ;
 
-  $objMdlHsr2->set('hsr2' , $hsr2 ); 
+  $objMdlHsrs->set('hsr3' , $hsr3 ); 
   return ($ret, $msg);
 
 }    

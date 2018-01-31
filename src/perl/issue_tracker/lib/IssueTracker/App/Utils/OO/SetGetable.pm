@@ -8,7 +8,6 @@ package IssueTracker::App::Utils::OO::SetGetable ;
 	our $ModuleDebug = 0 ; 
    use Carp ; 
 
-
    our @EXPORT_OK = qw(get set dumpFields);  # symbols to export on request
 
 	# -----------------------------------------------------------------------------

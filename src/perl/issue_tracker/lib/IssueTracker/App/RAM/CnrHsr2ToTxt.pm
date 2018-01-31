@@ -21,7 +21,7 @@ package IssueTracker::App::RAM::CnrHsr2ToTxt ;
    use base qw(IssueTracker::App::Utils::OO::SetGetable);
 	use IssueTracker::App::Utils::IO::FileHandler ; 
 	use IssueTracker::App::Utils::Logger ;
-   use IssueTracker::App::Mdl::MdlHsr2 ; 
+   use IssueTracker::App::Mdl::MdlHsrs ; 
       
    binmode(STDIN,  ':utf8');
    binmode(STDOUT, ':utf8');
@@ -62,8 +62,8 @@ package IssueTracker::App::RAM::CnrHsr2ToTxt ;
 sub doConvertHashRefToStr {
 
   my $self              = shift;
-  my $objMdlHsr2        = ${shift @_} ;
-  my $hsr2              = $objMdlHsr2->get('hsr2');
+  my $objMdlHsrs        = ${shift @_} ;
+  my $hsr2              = $objMdlHsrs->get('hsr2');
 
   my $msg
     = 'unknown error during hash ref of hash references to string conversion !!!';
@@ -177,7 +177,7 @@ sub doConvertHashRefToStr {
   $str_issues .= $str_activity_issues ; 
   $str_issues .= $str_footer . "\n\n";
   $str_issues =~ s|%run_time%|$run_time|g;
-  $objMdlHsr2->set('str_issues' , $str_issues );
+  $objMdlHsrs->set('str_issues' , $str_issues );
   $msg = " OK for hsr2 to txt conversion ";
   $ret = 0;
 
@@ -188,8 +188,8 @@ sub doConvertHashRefToStr {
    sub doPrepareHashForPrinting {
 
       my $self                   = shift ; 
-      my $objMdlHsr2             = ${shift @_ } ; 
-      my $hsr2                   = $objMdlHsr2->get('hsr2') ;
+      my $objMdlHsrs             = ${shift @_ } ; 
+      my $hsr2                   = $objMdlHsrs->get('hsr2') ;
 
       my $msg        = 'unknown error during hash ref of hash references to string conversion !!!' ;  ; 
       my $ret        = 1 ; 

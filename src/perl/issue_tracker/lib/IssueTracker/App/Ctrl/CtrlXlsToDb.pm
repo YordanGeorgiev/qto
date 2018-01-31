@@ -15,7 +15,8 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::Out::WtrDbsFactory ; 
    use IssueTracker::App::IO::In::RdrXls ; 
-   use IssueTracker::App::Mdl::MdlHsr2 ; 
+   use IssueTracker::App::Mdl::MdlHsrs ; 
+   use IssueTracker::App::Cnvr::CnrXlsHsr3ToDbHsr3 ; 
 	
 	our $module_trace                = 0 ; 
 	our $RunDir 						   = '' ; 
@@ -49,8 +50,6 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 =cut
 
 
-
-
    # 
 	# -----------------------------------------------------------------------------
    # read the passed issue file , convert it to hash ref of hash refs 
@@ -68,15 +67,14 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       my $xls_file            = $issue_tracker::appConfig->{ 'xls_file' } ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
-      my $objMdlHsr2          = 'IssueTracker::App::Mdl::MdlHsr2'->new ( \$issue_tracker::appConfig ) ; 
+      my $objMdlHsrs          = 'IssueTracker::App::Mdl::MdlHsrs'->new ( \$issue_tracker::appConfig ) ; 
       my $objRdrXls           = 'IssueTracker::App::IO::In::RdrXls'->new ( \$issue_tracker::appConfig , \@tables ) ; 
       
       # read the xls into hash ref of hash ref
       ( $ret , $msg  ) = 
-            $objRdrXls->doReadXlsFileToHsr2 ( $xls_file , \$objMdlHsr2) ; 
+            $objRdrXls->doReadXlsFileToHsr3 ( $xls_file , \$objMdlHsrs) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
-      my $hsr2                = $objMdlHsr2->get('hsr2' ); 
-
+      my $hsr3                = $objMdlHsrs->get('hsr3' ); 
 
       $msg                 = 'unknown error while inserting db tables !!!' ; 
       my $rdbms_type          = $ENV{ 'rdbms_type' } || 'postgre' ; 
@@ -84,18 +82,30 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       my $objWtrDbsFactory = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( \$issue_tracker::appConfig  ) ; 
       my $objWtrDb 		   = $objWtrDbsFactory->doInstantiate ( "$rdbms_type" , \@tables );
 
-      p($hsr2) if $module_trace == 1 ; 
+      p($hsr3) if $module_trace == 1 ; 
 
       my $load_model = $ENV{ 'load_model' } || 'upsert' ; 
+      # p ( $hsr3 ) ; 
+      # print " STOP before \n" ; 
 
       if ( $load_model eq 'upsert' ) {
-         ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objMdlHsr2 , \@tables) ; 
+         ( $ret , $msg  )        = $objWtrDb->doUpsertTables( \$objMdlHsrs , \@tables) ; 
+
       } 
       elsif ( $load_model eq 'nested-set' ) {
-         ( $ret , $msg  )        = $objWtrDb->doLoadNestedSetTable( $hsr2 , \@tables) ; 
+         foreach my $table ( keys %$hsr3 ) { 
+            my $hsr2 = $hsr3->{ "$table" } ; 
+            my $objCnrXlsHsr3ToDbHsr3 = 
+                  'IssueTracker::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$issue_tracker::appConfig) ; 
+            $hsr2 = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2 ) ; 
+            ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objMdlHsrs , $table ) ; 
+            p ( $hsr2 ) ; 
+            print " STOP after \n" ; 
+         }
+
       } 
       else {
-         ( $ret , $msg  )        = $objWtrDb->doUpsertTable( $hsr2 , \@tables) ; 
+         ( $ret , $msg  )        = $objWtrDb->doUpsertTables( $hsr3 , \@tables) ; 
       }
       return ( $ret , $msg ) ; 
    } 

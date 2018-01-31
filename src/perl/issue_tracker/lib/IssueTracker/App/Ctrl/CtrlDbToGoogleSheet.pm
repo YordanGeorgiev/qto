@@ -21,7 +21,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::In::RdrDbsFactory ; 
    use IssueTracker::App::IO::Out::WtrGoogleSheet ; 
-   use IssueTracker::App::Mdl::MdlHsr2 ; 
+   use IssueTracker::App::Mdl::MdlHsrs ; 
 
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
@@ -139,13 +139,13 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
          my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
          my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" );
       
-         my $objMdlHsr2             = 'IssueTracker::App::Mdl::MdlHsr2'->new ( \$appConfig ) ; 
-         ( $ret , $msg  )  = $objRdrDb->doSelectTableIntoHashRef( \$objMdlHsr2 , $table ) ; 
+         my $objMdlHsrs             = 'IssueTracker::App::Mdl::MdlHsrs'->new ( \$appConfig ) ; 
+         ( $ret , $msg  )  = $objRdrDb->doSelectTableIntoHashRef( \$objMdlHsrs , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
     
          my $objWtrGoogleSheet    = 'IssueTracker::App::IO::Out::WtrGoogleSheet'->new( \$appConfig ) ;
          ( $ret , $msg )  = $objWtrGoogleSheet->doWriteGSheetFromHashRef ( 
-               \$objMdlHsr2 , \$objGoogleService , $table , $refresh_token , $spread_sheet_id ) ; 
+               \$objMdlHsrs , \$objGoogleService , $table , $refresh_token , $spread_sheet_id ) ; 
 
          return ( $ret , $msg ) unless $ret == 0 ; 
       }

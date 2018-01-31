@@ -64,8 +64,8 @@ our $issues_file       = () ;
 # -----------------------------------------------------------------------------
 sub doPrintIssuesFile {
    my $self       = shift ; 
-   my $objMdlHsr2 = ${ shift @_ } ; 
-   my $str_issues = $objMdlHsr2->get('str_issues' ) ; 
+   my $objMdlHsrs = ${ shift @_ } ; 
+   my $str_issues = $objMdlHsrs->get('str_issues' ) ; 
 
    $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
 }
