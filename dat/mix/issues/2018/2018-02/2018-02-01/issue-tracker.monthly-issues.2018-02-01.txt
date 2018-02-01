@@ -1,0 +1,51 @@
+# START DAILY @2018-02-01 14:12:05
+   
+## what will I do till the next DAILY:
+#---------------------------
+#
+
+ - done		10:40 - 11:00 implement upsert in DbWriterPostgres
+ - eval		2017-08-14 00:00 - 2017-08-30 19:30 gsheet-to-db feature
+
+issue-tracker
+ - eval		2017-08-14 00:00 - 2017-08-30 19:30 gsheet-to-db feature
+ - hld		2017-10-03 08:16 implement mysql nested-set load
+
+issue-tracker-features
+ - hld		2017-10-03 08:16 implement mysql nested-set load
+
+issue-tracker
+ - qas		2017-10-03 08:16 add unit tests for the "platform" modules
+ - qas		2017-10-03 08:16 change the issue-tracker setup for code and data accessibility from host and vms
+ - done		2017-10-04 19:30 - 2017-10-04 21:30 imporove the error handling in run-pgsql-scripts
+ - done		2017-10-04 19:30 - 2017-10-04 21:30 imporove the error handling in run-pgsql-scripts
+ - wip		2018-01-07 21:00 - 2018-01-21 21:00 apply the interfaces for the most common methods in the perl code
+ - qas		2018-01-19 21:00 - 2018-01-21 21:00 Change names of modules to reflect the Input-Output-Control-Module architecture
+ - qas		2018-01-19 21:00 - 2018-01-21 21:00 add interfaces for the most common methods in the perl code
+ 
+issue-tracker
+ - eval		 publish all the issue-tracker events into the google sheet calendar
+
+issue-tracker-features
+ - act		 clone a src issue-tracker daily dir into a tgt issue-tracker project daily dir
+
+issue-tracker
+ - hld		 add load-meta-to-json action
+ - qas		 implement upsert in DbWriterPostgres
+
+issue-tracker-features
+ - eval		 publish all the issue-tracker events into the google sheet calendar
+
+issue-tracker
+ - act		 clone a src issue-tracker daily dir into a tgt issue-tracker project daily dir
+
+issue-tracker-docs
+ - late		 publish the issue-tracker xls to google sheet
+
+issue-tracker-features
+ - qas		 implement upsert in DbWriterPostgres
+
+
+# STOP  DAILY @2018-02-01 14:12:05
+
+

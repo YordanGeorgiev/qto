@@ -10,7 +10,6 @@ package IssueTracker::App::Utils::Initiator ;
 	our $ModuleDebug = 0 ; 
 	use AutoLoader;
 
-
 	use Cwd qw/abs_path/;
 	use File::Path qw(make_path) ;
 	use File::Find ; 
@@ -34,6 +33,7 @@ package IssueTracker::App::Utils::Initiator ;
 	our $ProductOwner 				= '' ; 
 	our $HostName 						= '' ; 
 	our $ConfFile 						= '' ; 
+   our $rel_levels               = 0 ; 
 
 =head1 SYNOPSIS
 
@@ -63,13 +63,13 @@ package IssueTracker::App::Utils::Initiator ;
 		my $msg  = ();
 		# the product base dir is 5 levels above the path of 
 		# this script dir
-		my $levels_up = 6 ; 
+		my $levels_up = 6 + $rel_levels ; 
 
 		#doResolve the run dir where this scripts is placed
 		my $my_absolute_path = abs_path( $0 );
 		my $product_base_dir = '' ; 
 
-		#debug print "\$my_absolute_path is $my_absolute_path \n" ;
+		#debug#debug  print "\$my_absolute_path is $my_absolute_path \n" ;
 		$my_absolute_path =~ m/^(.*)(\\|\/)(.*)/;
 		$my_absolute_path = $1;
 
@@ -89,7 +89,7 @@ package IssueTracker::App::Utils::Initiator ;
 		$appConfig->{'ProductBaseDir'} 	= $ProductBaseDir ; 
 		$self->{'AppConfig'} 				= $appConfig; 
 
-		#deebug print "ProductBaseDir: $ProductBaseDir \n" ; 
+		# debug print "ProductBaseDir: $ProductBaseDir \n" ; 
 		return $ProductBaseDir;
 	}
 	#eof sub doResolveMyProductBaseDir
@@ -104,7 +104,7 @@ package IssueTracker::App::Utils::Initiator ;
 
 		my $self = shift;
 		my $msg  = ();
-		my $levels_up = 5 ; # the product dir is 4 steps above 
+		my $levels_up = 5 + $rel_levels ; # the product dir is 4 steps above 
 		#doResolve the run dir where this scripts is placed
 		my $my_absolute_path = abs_path( $0 );
 		my $product_dir = '' ; 
@@ -143,7 +143,7 @@ package IssueTracker::App::Utils::Initiator ;
 
 		my $self = shift;
 		my $msg  = ();
-		my $levels_up = 4 ; 
+		my $levels_up = 4 + $rel_levels ; 
 
 		#doResolve the run dir where this scripts is placed
 		my $my_absolute_path = abs_path( $0 );
@@ -371,6 +371,7 @@ package IssueTracker::App::Utils::Initiator ;
 		my $invocant = shift;    
 		# might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
+      $rel_levels = shift || 0 ; 
 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class

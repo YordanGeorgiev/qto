@@ -1,5 +1,8 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/perl/issue_tracker/lib/IssueTracker/App/Cnvr
+src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
+src/perl/issue_tracker/t/lib/IssueTracker/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/SetGetableChild.pm
@@ -223,6 +226,7 @@ src/sql/pgsql/dev_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/dev_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/dev_issue_tracker/12.create-table-purchases.sql
+src/sql/pgsql/dev_issue_tracker/99.create-table-test_hierarchy_table.sql
 src/sql/pgsql/tst_issue_tracker
 src/sql/pgsql/tst_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/tst_issue_tracker/01.create-table-daily_issues.sql

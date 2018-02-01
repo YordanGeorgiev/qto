@@ -26,12 +26,19 @@ $appConfig						= $objInitiator->get ('AppConfig');
 # sleep 6 ; 
 # 1. 
 # todo: remove hardcoding ...
+my $product_base_dir       = $ENV { 'product_instance_dir' } ; 
+$product_base_dir          =~ s/(.*)([\/\\])(.*)/$1/g ; 
+$product_base_dir          =~ s/(.*)([\/\\])(.*)/$1/g ; 
+my $product_dir            = "$product_base_dir/$3" ; 
+
 $msg                       = 'The ProductBaseDir is the BaseDir + the organisation dir' ; 
-ok ( $ProductBaseDir 		eq '/opt/csitea' , $msg ) ; 
+# ok ( $ProductBaseDir 		eq '/vagrant/opt/csitea' , $msg ) ; 
+ok ( $ProductBaseDir 		eq $product_base_dir, $msg ) ; 
 
 # 2.
-$msg                       = 'The ProductDir is the ProductBaseDir + the ProductName' ; 
-ok ( $ProductDir 				eq '/opt/csitea/issue-tracker' , $msg ) ; 
+$msg                       = 'The ProductDir is the ProductBaseDir + the ProductName ' ; 
+$msg .= " : $product_dir " ; 
+ok ( $ProductDir 				eq $product_dir , $msg ) ; 
 
 # 3. # if not set , set in in the shell by:
 # export product_instance_dir=/opt/csitea/issue-tracker/issue-tracker.0.2.8.dev.ysg

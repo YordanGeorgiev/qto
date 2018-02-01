@@ -2,6 +2,7 @@
 # ---
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
+src/perl/issue_tracker/t/lib/IssueTracker/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/SetGetableChild.pm
