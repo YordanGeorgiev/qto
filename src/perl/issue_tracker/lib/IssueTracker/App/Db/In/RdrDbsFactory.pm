@@ -6,7 +6,7 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
 	
 
 	our $appConfig 		= {} ; 
-	our $db_type			= 'postgres' ; 
+	our $rdbms_type			= 'postgre' ; 
 	our $objItem			= {} ; 
 	our $objController 	= {} ; 
    our $objLogger       = {} ; 
@@ -21,7 +21,7 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
 	sub doInstantiate {
 
 		my $self 			= shift ; 	
-		my $db_type			= shift // $db_type ; # the default is mysql
+		my $rdbms_type			= shift // $rdbms_type ; # the default is mysql
 
 		my @args 			= ( @_ ) ; 
 		my $package_file     	= () ; 
@@ -30,11 +30,11 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
 		# get the application cnfiguration hash
 		# global app cnfig hash
 
-		if ( $db_type eq 'mariadb' ) {
+		if ( $rdbms_type eq 'mariadb' ) {
 		   $package_file     	= "IssueTracker/App/Db/In/MariaDb/RdrDb.pm";
 		   $objRdrDb   		= "IssueTracker::App::Db::In::MariaDb::RdrDb";
 		}
-		if ( $db_type eq 'postgre' ) {
+		if ( $rdbms_type eq 'postgre' ) {
 		   $package_file     	= "IssueTracker/App/Db/In/Postgres/RdrDb.pm";
 		   $objRdrDb   		= "IssueTracker::App::Db::In::Postgres::RdrDb";
 		}

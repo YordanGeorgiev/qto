@@ -24,13 +24,18 @@ doRunPerlTests(){
    # perl src/perl/issue_tracker/t/TestMdlHsrs.pl	
 	test -z "$sleep_interval" || sleep $sleep_interval
 
-   doLog "INFO Unit testing or the SetGetable base class"
+   doLog "INFO Unit testing or the SetGetable base module " 
    perl src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestSetGetable.pl
 	test -z "$sleep_interval" || sleep $sleep_interval
    
-   doLog "INFO Unit testing or the AutoLoadable  base class"
+   doLog "INFO Unit testing or the AutoLoadable  base module" 
    perl src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestAutoLoadable.pl
 	test -z "$sleep_interval" || sleep $sleep_interval
+
+   doLog "INFO Unit testing or the CnrXlsHsr3ToDbHsr3 module" 
+   perl src/perl/issue_tracker/t/lib/IssueTracker/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
+	test -z "$sleep_interval" || sleep $sleep_interval
+
 }
 # eof func doRunPerlTests
 

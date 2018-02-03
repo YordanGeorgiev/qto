@@ -67,7 +67,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrDb ;
       }
 
 	 
-      p ( $hsr2 ) ; 
+      #p ( $hsr2 ) ; 
       
       my $debug_msg        = 'START doInsertSqlHashData' ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
@@ -435,6 +435,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrDb ;
                foreach my $col_num ( sort ( keys %{$hs_headers} )) {
                   my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
                   next if $column_name eq 'update_time' ; 
+                  # next if $column_name eq 'id' ; # id's are unique !!!
                   $sql_str .= " $column_name " . '= EXCLUDED.' . $column_name . ' , ' ; 
                } 
                # remove the " , " at the end 

@@ -322,7 +322,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
 
 		my $self 			   = shift ; 
       my $objMdlHsrs       = ${ shift @_ } ; 
-		my $hsr2 		      = $objMdlHsrs->get('hsr2' ); 
+		my $hsr3 		      = $objMdlHsrs->get('hsr3' ); 
       my @tables = @{ $_[0] } ; 
 
       binmode(STDIN,  ':utf8');
@@ -332,7 +332,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
 		my $msg 				   = ' failed to connect during insert to db !!! ' ; 
 		my $debug_msg 		   = ' failed to connect during insert to db !!! ' ; 
 
-      return ( $ret , $msg , undef ) unless $hsr2 ; 
+      return ( $ret , $msg , undef ) unless $hsr3 ; 
       return ( $ret , $msg , undef ) unless @tables ; 
 
       my $sth              = {} ;    # this is the statement handle
@@ -349,7 +349,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
       my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( 'postgre' );
 
       # obs this does not support ordered primary key tables first order yet !!!
-      foreach my $table ( keys %$hsr2 ) { 
+      foreach my $table ( keys %$hsr3 ) { 
 
          $objLogger->doLogDebugMsg ( "doUpsertTables table: $table" );
          next unless grep( /^$table$/, @tables ) ; 
@@ -360,7 +360,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
          return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
 
-         my $hs_table = $hsr2->{ $table } ; 
+         my $hs_table = $hsr3->{ $table } ; 
          #p $hs_headers ;  
          # p $hs_table->{ 0 } ; 
          #debug p($hs_headers ) ; 
