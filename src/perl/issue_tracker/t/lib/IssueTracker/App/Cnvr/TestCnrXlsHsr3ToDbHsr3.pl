@@ -4,7 +4,7 @@ use FindBin;
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../lib" }
 BEGIN { unshift @INC, "$FindBin::Bin/../lib" }
 
-use Test::More tests => 6 ; 
+use Test::More tests => 7 ;
 
 use Getopt::Long;
 use Data::Printer ; 
@@ -224,6 +224,69 @@ $hsr2_exp = {
 is_deeply( $hsr2_out , $hsr2_exp , $msg ) ;
 
 
+# test-07
+# -----
+$msg = ' test-07 :: add element on the same level having already sibling element' ; 
+
+$hsr2_in = { 
+0 => {
+   'id'     => 'id' , 
+   'name'   => "name",
+   'level'  => "level"
+   }
+, 1 => {
+   'id'     => 1 , 
+   'name'   => "the name-01",
+   'level'  => 0
+   },
+, 2 => {
+   'id'     => 2 , 
+   'name'   => "the name-02",
+   'level'  => 1
+   }
+, 3 => {
+   'id'     => 3 , 
+   'name'   => "the name-03",
+   'level'  => 1
+   }
+};
+
+
+( $ret , $m , $hsr2_out ) = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2_in ) ; 
+
+$hsr2_exp = { 
+0 => {
+   'id'     => 'id' , 
+   'lft'    => 'lft' , 
+   'rgt'    => 'rgt' ,
+   'level'  => "level",
+   'name'   => "name" 
+   }
+, 1 => {
+   'id'     => 1 , 
+   'level'  => 0 ,
+   'lft'    => 1 , 
+   'rgt'    => 6 ,
+   'name'   => "the name-01" ,
+   }
+, 2 => {
+   'id'     => 2 , 
+   'level'  => 1 ,
+   'lft'    => 2 , 
+   'rgt'    => 3 ,
+   'name'   => "the name-02" ,
+   }
+, 3 => {
+   'id'     => 3 , 
+   'level'  => 1 ,
+   'lft'    => 4 , 
+   'rgt'    => 5 ,
+   'name'   => "the name-03" ,
+   }
+};
+
+# ok (1==1, 'fake' )  ; 
+is_deeply( $hsr2_out , $hsr2_exp , $msg ) ;
 
 
 

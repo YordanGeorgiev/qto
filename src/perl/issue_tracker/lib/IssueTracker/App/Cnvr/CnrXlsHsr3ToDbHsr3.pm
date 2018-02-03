@@ -54,18 +54,29 @@ sub doConvert {
          if ( $level == $hsr2->{ $rid-1 }->{'level'}+1 ) {
             $lft = $hsr2->{ $rid-1 }->{ 'rgt' } ; 
             $rgt = $lft + 1 ; 
-            $hsr2->{ $rid-1 }->{ 'rgt' } = $rgt + 1 ; 
+            foreach my $irid ( sort keys %$hsr2 ) {
+               if ( $irid != 0 && $irid < $rid ) {
+                  $hsr2->{ $irid }->{ 'rgt' } = $rgt + 1 ; 
+               }
+            }
          }
          elsif ( $level == $hsr2->{ $rid-1 }->{'level'} ) {
-         }
-         elsif ( $level == $hsr2->{ $rid-1 }->{'level'}-1 ) {
+            $lft = $hsr2->{ $rid-1 }->{ 'rgt' } + 1 ; 
+            $rgt = $lft + 1 ; 
+            foreach my $irid ( sort keys %$hsr2 ) {
+               if ( $irid != 0 && $irid < $rid ) {
+                 if ( $level > $hsr2->{ $irid }->{'level'} ){
+                     $hsr2->{ $irid }->{ 'rgt' } = $hsr2->{ $irid }->{ 'rgt' } + 2 ; 
+                 }
+               }
+            }
          }
          elsif( $level < $hsr2->{ $rid-1 }->{'level'}+2 ) {
             $msg = 'level decreased with more than 1 at row id:' . $rid ; 
             carp $msg ; 
             return ( $ret , $msg ) ; 
          }
-         else  { #( $level >= $hsr2->{ $rid-1 }->{'level'}+2 ) {
+         else  {     #( $level >= $hsr2->{ $rid-1 }->{'level'}+2 ) {
             $msg = 'level increased with more than 1 at row id:' . $rid ; 
             carp $msg ; 
             return ( $ret , $msg ) ; 
