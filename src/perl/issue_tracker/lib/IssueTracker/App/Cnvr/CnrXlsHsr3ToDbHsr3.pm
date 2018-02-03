@@ -11,53 +11,80 @@ use Carp ;
 sub doConvert {
    my $self       = shift ; 
    my $hsr2_in    = shift ; 
-   my $hsr2_out   = {} ; 
+   my $hsr2       = {} ; 
   
    my $msg        = 'unkown error has occurred !!!' ; 
-   my $ret        = 1 ; 
-   my $lft        = 1 ; 
-   my $rgt        = 2 ; 
-   my $rid        = 0 ; 
+   my $ret        = 1 ;      # assume error from the start  
+   my $lft        = 'lft' ;  # use header col name for defaults
+   my $rgt        = 'rgt' ;  # use header col name for defaults
+   my $rid        = 0 ;      # the row id as set by the reader
+   my $state  = {} ; 
 
    foreach my $key ( sort keys %$hsr2_in ) {
 
-      # print "rid : $rid \n" ; 
-      # print "key : $key \n" ; 
+      #print "rid : $rid \n" ; 
+      #print "key : $key \n" ; 
 
       my $row = $hsr2_in->{ "$key" } ; 
-      #p ( "row is $row ) ; 
       my $level = $row->{ 'level' } ; 
-      if ( $rid == 0 ) {
-         if ( !defined ( $level ) || $level ne 'level' ) {
-            $msg = "the root element should have always level = 0" ; 
-            carp $msg ; 
-            return ( $ret , $msg ) ; 
-         } 
-         $row->{ 'lft' } = 'lft' ;  
-         $row->{ 'rgt' } = 'rgt' ; 
-         $hsr2_out->{ $rid } = $row ; 
-         $rid++ ;
-         next  ; 
-      }
 
-      if ( $rid == 1 ) {
-         if ( !defined ( $level ) || $level != 0 ) {
-            $msg = "the root element should have always level = 0" ; 
+      
+      if ( !defined ( $level ) ) {
+         $msg = " the level for row id $rid was not defined !!!" ; 
+         carp $msg ; 
+         return ( $ret , $msg ) ; 
+      } 
+
+      if ( $rid == 0 ) {
+         if ( $level ne 'level' ) {
+            $msg = "the header for the level should always be : level" ; 
             carp $msg ; 
             return ( $ret , $msg ) ; 
          } 
       }
+      elsif ( $rid == 1 ) {
+         if ( $level != 0 ) {
+            $msg = "the root element should have always level = 0" ; 
+            carp $msg ; 
+            return ( $ret , $msg ) ; 
+         } 
+         $lft = 1 ; $rgt = 2 ; 
+      }
+      else {         # ( $rid > 1 )
+         if ( $level == $hsr2->{ $rid-1 }->{'level'}+1 ) {
+            $lft = $hsr2->{ $rid-1 }->{ 'rgt' } ; 
+            $rgt = $lft + 1 ; 
+            $hsr2->{ $rid-1 }->{ 'rgt' } = $rgt + 1 ; 
+         }
+         elsif ( $level == $hsr2->{ $rid-1 }->{'level'} ) {
+         }
+         elsif ( $level == $hsr2->{ $rid-1 }->{'level'}-1 ) {
+         }
+         elsif( $level < $hsr2->{ $rid-1 }->{'level'}+2 ) {
+            $msg = 'level decreased with more than 1 at row id:' . $rid ; 
+            carp $msg ; 
+            return ( $ret , $msg ) ; 
+         }
+         else  { #( $level >= $hsr2->{ $rid-1 }->{'level'}+2 ) {
+            $msg = 'level increased with more than 1 at row id:' . $rid ; 
+            carp $msg ; 
+            return ( $ret , $msg ) ; 
+         }
+      } #eof elsif rid > 1
+
       $row->{ 'lft' } = $lft ;  
       $row->{ 'rgt' } = $rgt ; 
-      $hsr2_out->{ $rid } = $row ; 
-      $self->doPrintRow  ( $row ) ; 
+      $hsr2->{ $rid } = $row ; 
+      # $self->doPrintRow  ( $row ) ; 
+      $rid++ ;
+
    } #eof foreach key
 
-   # p $hsr2_out ;
+   # p $hsr2 ;
 
    $ret = 0 ; 
    $msg = 'ok for conversion of hsr2 to a hierarchy hs2' ; 
-   return ( $ret , $msg , $hsr2_out ) ; 
+   return ( $ret , $msg , $hsr2 ) ; 
 }
 
 
@@ -65,9 +92,9 @@ sub doPrintRow {
    my $self = shift ; 
    my $row  = shift ; 
 
-   # print "start row: \n" ; 
-   # p $row ; 
-   # print "stop  row: \n" ; 
+   print "start row: \n" ; 
+   p $row ; 
+   print "stop  row: \n" ; 
 
 }
 	# -----------------------------------------------------------------------------

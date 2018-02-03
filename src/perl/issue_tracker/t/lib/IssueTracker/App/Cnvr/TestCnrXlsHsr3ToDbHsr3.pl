@@ -4,7 +4,7 @@ use FindBin;
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../lib" }
 BEGIN { unshift @INC, "$FindBin::Bin/../lib" }
 
-use Test::More tests => 4 ; 
+use Test::More tests => 6 ; 
 
 use Getopt::Long;
 use Data::Printer ; 
@@ -37,7 +37,6 @@ my $hsr2_exp = {} ;
 my $m = {} ; 
 
 
-$msg = ' ensure that the converter should exit if the level column is not available' ; 
 $hsr2_in = { 
 0 => {
    'id' => 'id' , 
@@ -54,14 +53,19 @@ my @trap = trap {
    print $m ; exit $ret  ; 
    };
 
-# 1.
+# test-01
 # -----
-is( $trap->exit, 1, 'Expecting &some_code to exit with 1' );
+$msg = ' test-01 :: if the level column is not available the converter should exit with 1' ; 
+is( $trap->exit, 1, $msg );
 
-
-# 2.
+# test-02
 # -----
-is( $trap->stdout, 'the root element should have always level = 0', 'Expect the proper error msg' );
+$msg = ' test-02 :: if exitting with error, the proper error msg should be issued' ; 
+is( $trap->stdout, ' the level for row id 0 was not defined !!!', $msg ) ; 
+
+# 3.
+# -----
+$msg = ' test-03 :: if the first row level is not 0 it should exit with ret 1' ; 
 
 $hsr2_in = { 
 0 => {
@@ -93,18 +97,17 @@ $hsr2_exp = {
    }
 };
 
-( $ret , $msg , $hsr2_out ) = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2_in ) ; 
 @trap = trap {
    ( $ret , $m , $hsr2_out ) = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2_in ) ; 
    print $m ; exit $ret  ; 
    };
 
-# 3.
+is( $trap->exit, 1, $msg );
+
+
+# test-04
 # -----
-is( $trap->exit, 1, 'Expecting &some_code to exit with 1' );
-
-
-$msg = ' if the first row level is not 0 it should exit ' ; 
+$msg = ' test-04 :: if the root element level is 0 => lft should be 1 and rgt = 2 ' ; 
 $hsr2_in = { 
 0 => {
    'id'     => 'id' , 
@@ -118,36 +121,107 @@ $hsr2_in = {
    }
 };
 
-( $ret , $msg , $hsr2_out ) = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2_in ) ; 
+( $ret , $m , $hsr2_out ) = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2_in ) ; 
+
+$hsr2_exp = { 
+0 => {
+   'id'     => 'id' , 
+   'level'  => "level",
+   'lft'    => 'lft' , 
+   'rgt'    => 'rgt'  ,
+   'name'   => "name"
+   },
+1 => {
+   'id'     => 1 , 
+   'level'  => 0 ,
+   'lft'    => 1 , 
+   'rgt'    => 2 ,
+   'name'   => "the name"
+   }
+};
+
+is_deeply( $hsr2_out , $hsr2_exp , $msg ) ;
+
+# test-05
+# -----
+$msg = ' test-05 :: if the second element does not have a level of 1 should exit with 1' ; 
+
+$hsr2_in = { 
+0 => {
+   'id'     => 'id' , 
+   'name'   => "name",
+   'level'  => "level"
+   },
+1 => {
+   'id'     => 1 , 
+   'name'   => "the name",
+   'level'  => 0
+   },
+2 => {
+   'id'     => 1 , 
+   'name'   => "the name",
+   'level'  => 2
+   }
+};
+
+@trap = trap {
+   ( $ret , $m , $hsr2_out ) = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2_in ) ; 
+   print $m ; exit $ret  ; 
+   };
+is( $trap->exit, 1, $msg );
+
+# test-06
+# -----
+$msg = ' test-06 :: if the second element has a level of 1 lft => 3 , right = 4' ; 
+
+
+$hsr2_in = { 
+0 => {
+   'id'     => 'id' , 
+   'name'   => "name",
+   'level'  => "level"
+   },
+1 => {
+   'id'     => 1 , 
+   'name'   => "the name",
+   'level'  => 0
+   },
+2 => {
+   'id'     => 2 , 
+   'name'   => "the name",
+   'level'  => 1
+   }
+};
+
+
+   ( $ret , $m , $hsr2_out ) = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2_in ) ; 
 
 $hsr2_exp = { 
 0 => {
    'id'     => 'id' , 
    'lft'    => 'lft' , 
-   'name'   => "name",
+   'rgt'    => 'rgt' ,
    'level'  => "level",
-   'rgt'    => 'rgt' 
+   'name'   => "name" 
    },
 1 => {
    'id'     => 1 , 
-   'lft'    => 1 , 
-   'name'   => "the name",
    'level'  => 0 ,
-   'rgt'    => 2 
+   'lft'    => 1 , 
+   'rgt'    => 4 ,
+   'name'   => "the name" ,
+   } ,
+2 => {
+   'id'     => 2 , 
+   'level'  => 1 ,
+   'lft'    => 2 , 
+   'rgt'    => 3 ,
+   'name'   => "the name" ,
    }
 };
 
-# 4.
-# -----
+# ok (1==1, 'fake' )  ; 
 is_deeply( $hsr2_out , $hsr2_exp , $msg ) ;
-
-
-
-
-
-
-
-
 
 
 
