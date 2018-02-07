@@ -58,6 +58,9 @@ sub doConvert {
          elsif ( $level == $hsr2->{ $rid-1 }->{'level'} ) {
            ( $hsr2 ,$lft , $rgt ) = $self->doAddItemWithSiblings ( $hsr2 , $hsr2_in , $level , $lft , $rgt , $rid ) ; 
          }
+         elsif ( $level == $hsr2->{ $rid-1 }->{'level'}-1 ) {
+           ( $hsr2 ,$lft , $rgt ) = $self->doAddItemWithSiblings ( $hsr2 , $hsr2_in , $level , $lft , $rgt , $rid ) ; 
+         }
          elsif( $level < $hsr2->{ $rid-1 }->{'level'}+2 ) {
             $msg = 'level decreased with more than 1 at row id:' . $rid ; 
             carp $msg ; 
@@ -100,8 +103,22 @@ sub doAddItemWithSiblings {
       my $ilvl = $hsr2->{$irid}->{'level'} ; 
 
       if ( $irid < $rid ) {
+         
+         my $prgt = 0 ; 
+         if ( $level == $hsr2->{ $rid-1 }->{ 'level' } ) {
+            $prgt = $hsr2->{ $rid-1 }->{ 'rgt' } ; 
+            $lft = $hsr2->{ $rid-1 }->{ 'rgt' } + 1 ; 
+         }
+         if ( $level < $hsr2->{ $rid-1 }->{ 'level' } ) {
+            for (my $i = $rid -1; $i >= 1; $i--) {
+               if ( $level == $hsr2->{ $i }->{ 'level' } ) {
+                  $prgt = $hsr2->{ $i }->{ 'rgt' } ;
+                  $lft = $prgt +1 ; 
+                  last ;
+               }
+            }
+         }
 
-         my $prgt = $hsr2->{ $rid-1 }->{ 'rgt' } ; 
          if ( $hsr2->{ $irid }->{ 'lft' } > $prgt ){
             $hsr2->{ $irid }->{ 'lft' } = $hsr2->{ $irid }->{ 'lft' } + 2 ; 
          }
@@ -110,7 +127,6 @@ sub doAddItemWithSiblings {
          }
       }
    }
-   $lft = $hsr2->{ $rid-1 }->{ 'rgt' } + 1 ; 
    $rgt = $lft + 1 ; 
    return ( $hsr2 , $lft , $rgt ) ; 
 }

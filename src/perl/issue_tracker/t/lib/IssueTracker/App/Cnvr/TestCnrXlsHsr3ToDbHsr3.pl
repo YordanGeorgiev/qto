@@ -4,8 +4,7 @@ use FindBin;
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../lib" }
 BEGIN { unshift @INC, "$FindBin::Bin/../lib" }
 
-use Test::More tests => 8 ; 
-
+use Test::More tests => 9 ; 
 use Getopt::Long;
 use Data::Printer ; 
 use Test::Trap;
@@ -31,9 +30,9 @@ my $hsr_out    = {} ;
 my $msg        = '' ; 
 my $ret        = 1 ; 
 my $hsr2_in    = {} ; 
-my $hsr2_out    = {} ; 
-my $hsr2_exp = {} ; 
-my $m = {} ; 
+my $hsr2_out   = {} ; 
+my $hsr2_exp   = {} ; 
+my $m          = {} ; 
 
 
 $hsr2_in = { 
@@ -85,7 +84,7 @@ $hsr2_exp = {
    'id'     => 'id' , 
    'lft'    => 'lft' , 
    'rgt'    => 'rgt' ,
-   'level' => "level",
+   'level'  => "level",
    'name'   => "name" 
    },
 1 => {
@@ -93,7 +92,7 @@ $hsr2_exp = {
    'lft'    => 1 , 
    'rgt'    => 2 ,
    'name'   => "the name" ,
-   'level' => 1 
+   'level'  => 1 
    }
 };
 
@@ -116,7 +115,7 @@ $hsr2_in = {
    },
 1 => {
    'id'     => 1 , 
-   'name'   => "the name",
+   'name'   => "the title",
    'level'  => 0
    }
 };
@@ -136,7 +135,7 @@ $hsr2_exp = {
    'level'  => 0 ,
    'lft'    => 1 , 
    'rgt'    => 2 ,
-   'name'   => "the name"
+   'name'   => "the title"
    }
 };
 
@@ -154,12 +153,12 @@ $hsr2_in = {
    }
 , 1 => {
      'id'     => 1  
-   , 'name'   => "the name"
+   , 'name'   => "the title"
    , 'level'  => 0
    }
 , 2 => {
      'id'     => 1  
-   , 'name'   => "the name"
+   , 'name'   => "1.0 name-2"
    , 'level'  => 2
    }
 };
@@ -189,7 +188,7 @@ $hsr2_in = {
    }
 , 2 => {
      'id'     => 2  
-   , 'name'   => "1.0.0"
+   , 'name'   => "1.0 name-2"
    , 'level'  => 1
    }
 };
@@ -217,7 +216,7 @@ $hsr2_exp = {
    , 'level'  => 1 
    , 'lft'    => 2  
    , 'rgt'    => 3 
-   , 'name'   => "1.0.0" 
+   , 'name'   => "1.0 name-2"
    }
 };
 
@@ -242,7 +241,7 @@ $hsr2_in = {
    }
  , 2 => {
      'id'     => 2  
-   , 'name'   => "the name-02"
+   , 'name'   => "1.0 name-2"
    , 'level'  => 1
    }
  , 3 => {
@@ -275,7 +274,7 @@ $hsr2_exp = {
    , 'level'  => 1 
    , 'lft'    => 2  
    , 'rgt'    => 3 
-   , 'name'   => "the name-02" 
+   , 'name'   => "1.0 name-2"
    }
  , 3 => {
      'id'     => 3  
@@ -308,17 +307,17 @@ $hsr2_in = {
    }
  , 2 => {
      'id'     => 2  
-   , 'name'   => "the name-02"
+   , 'name'   => "1.0 name-2"
    , 'level'  => 1
    }
  , 3 => {
      'id'     => 3  
-   , 'name'   => "the name-03"
+   , 'name'   => "2.0 name-03"
    , 'level'  => 1
    }
  , 4 => {
       'id'     => 4
-    , 'name'   => "the name-04"
+    , 'name'   => "2.1 name-04"
     , 'level'  => 2
    }
 };
@@ -346,21 +345,21 @@ $hsr2_exp = {
    , 'level'  => 1 
    , 'lft'    => 2  
    , 'rgt'    => 3 
-   , 'name'   => "the name-02" 
+   , 'name'   => "1.0 name-2"
    }
 , 3 => { # 2. 
      'id'     => 3 
    , 'level'  => 1 
    , 'lft'    => 4 
    , 'rgt'    => 7
-   , 'name'   => "the name-03"
+   , 'name'   => "2.0 name-03"
    }
 , 4 => { # 2.1
      'id'     => 4
    , 'level'  => 2
    , 'lft'    => 5
    , 'rgt'    => 6
-   , 'name'   => "the name-04"
+   , 'name'   => "2.1 name-04"
    }
 };
 
@@ -370,7 +369,93 @@ is_deeply( $hsr2_out , $hsr2_exp , $msg ) ;
 
 
 
+# test-09
+# -----
+$msg = ' test-09 :: go up , add element on a smaller level with siblings' ; 
 
+$hsr2_in = { 
+0 => {
+     'id'     => 'id'  
+   , 'name'   => "name"
+   , 'level'  => "level"
+   }
+ , 1 => {
+     'id'     => 1  
+   , 'name'   => "the name-01"
+   , 'level'  => 0
+   }
+ , 2 => {
+     'id'     => 2  
+   , 'name'   => "1.0 name-2"
+   , 'level'  => 1
+   }
+ , 3 => {
+     'id'     => 3  
+   , 'name'   => "2.0 name-03"
+   , 'level'  => 1
+   }
+ , 4 => {
+      'id'     => 4
+    , 'name'   => "2.1 name-04"
+    , 'level'  => 2
+   }
+ , 5 => {
+      'id'     => 5
+    , 'name'   => "3.0 name-05"
+    , 'level'  => 1
+   }
+};
+
+
+( $ret , $m , $hsr2_out ) = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2_in ) ; 
+
+$hsr2_exp = { 
+0 => { # headers
+     'id'     => 'id'  
+   , 'lft'    => 'lft'  
+   , 'rgt'    => 'rgt' 
+   , 'level'  => "level"
+   , 'name'   => "name" 
+   }
+, 1 => { # root
+   'id'     => 1  
+   , 'level'  => 0 
+   , 'lft'    => 1  
+   , 'rgt'    => 10
+   , 'name'   => "the name-01" 
+   }
+, 2 => { # 1. 
+     'id'     => 2  
+   , 'level'  => 1 
+   , 'lft'    => 2  
+   , 'rgt'    => 3 
+   , 'name'   => "1.0 name-2"
+   }
+, 3 => { # 2. 
+     'id'     => 3 
+   , 'level'  => 1 
+   , 'lft'    => 4 
+   , 'rgt'    => 7
+   , 'name'   => "2.0 name-03"
+   }
+, 4 => { # 2.1
+     'id'     => 4
+   , 'level'  => 2
+   , 'lft'    => 5
+   , 'rgt'    => 6
+   , 'name'   => "2.1 name-04"
+   }
+ , 5 => {
+     'id'     => 5
+   , 'level'  => 1
+   , 'lft'    => 8 
+   , 'rgt'    => 9
+   , 'name'   => "3.0 name-05"
+}
+};
+
+# ok (1==1, 'fake' )  ; 
+is_deeply( $hsr2_out , $hsr2_exp , $msg ) ;
 
 
 
