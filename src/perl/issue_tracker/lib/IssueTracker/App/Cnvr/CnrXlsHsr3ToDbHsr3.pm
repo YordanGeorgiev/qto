@@ -12,13 +12,14 @@ sub doConvert {
    my $self       = shift ; 
    my $hsr2_in    = shift ; 
    my $hsr2       = {} ; 
+   my $cp         = {} ;  # child -> parent 
   
    my $msg        = 'unkown error has occurred !!!' ; 
    my $ret        = 1 ;      # assume error from the start  
    my $lft        = 'lft' ;  # use header col name for defaults
    my $rgt        = 'rgt' ;  # use header col name for defaults
    my $rid        = 0 ;      # the row id as set by the reader
-   my $state  = {} ; 
+   my $state      = {} ; 
 
    foreach my $key ( sort keys %$hsr2_in ) {
 
@@ -50,26 +51,12 @@ sub doConvert {
          } 
          $lft = 1 ; $rgt = 2 ; 
       }
-      else {         # ( $rid > 1 )
+      else {         # ( $rid > 1 ) descending without siblings
          if ( $level == $hsr2->{ $rid-1 }->{'level'}+1 ) {
-            $lft = $hsr2->{ $rid-1 }->{ 'rgt' } ; 
-            $rgt = $lft + 1 ; 
-            foreach my $irid ( sort keys %$hsr2 ) {
-               if ( $irid != 0 && $irid < $rid ) {
-                  $hsr2->{ $irid }->{ 'rgt' } = $rgt + 1 ; 
-               }
-            }
-         }
+           ( $hsr2 ,$lft , $rgt ) = $self->doAddItemWithNoSiblings ( $hsr2 , $hsr2_in , $level , $lft , $rgt , $rid ) ; 
+         } # descending with sibling
          elsif ( $level == $hsr2->{ $rid-1 }->{'level'} ) {
-            $lft = $hsr2->{ $rid-1 }->{ 'rgt' } + 1 ; 
-            $rgt = $lft + 1 ; 
-            foreach my $irid ( sort keys %$hsr2 ) {
-               if ( $irid != 0 && $irid < $rid ) {
-                 if ( $level > $hsr2->{ $irid }->{'level'} ){
-                     $hsr2->{ $irid }->{ 'rgt' } = $hsr2->{ $irid }->{ 'rgt' } + 2 ; 
-                 }
-               }
-            }
+           ( $hsr2 ,$lft , $rgt ) = $self->doAddItemWithSiblings ( $hsr2 , $hsr2_in , $level , $lft , $rgt , $rid ) ; 
          }
          elsif( $level < $hsr2->{ $rid-1 }->{'level'}+2 ) {
             $msg = 'level decreased with more than 1 at row id:' . $rid ; 
@@ -97,6 +84,68 @@ sub doConvert {
    $msg = 'ok for conversion of hsr2 to a hierarchy hs2' ; 
    return ( $ret , $msg , $hsr2 ) ; 
 }
+
+
+sub doAddItemWithSiblings {
+   my $self  = shift ;
+   my $hsr2  = shift ;
+   my $hsr2_in  = shift ;
+   my $level = shift ; 
+   my $lft   = shift ; 
+   my $rgt   = shift ; 
+   my $rid   = shift ; 
+
+   foreach my $irid ( sort keys %$hsr2_in ) {
+      next if $irid == 0 ; 
+      my $ilvl = $hsr2->{$irid}->{'level'} ; 
+
+      if ( $irid < $rid ) {
+
+         my $prgt = $hsr2->{ $rid-1 }->{ 'rgt' } ; 
+         if ( $hsr2->{ $irid }->{ 'lft' } > $prgt ){
+            $hsr2->{ $irid }->{ 'lft' } = $hsr2->{ $irid }->{ 'lft' } + 2 ; 
+         }
+         if ( $hsr2->{ $irid }->{ 'rgt' } > $prgt ){
+            $hsr2->{ $irid }->{ 'rgt' } = $hsr2->{ $irid }->{ 'rgt' } + 2 ; 
+         }
+      }
+   }
+   $lft = $hsr2->{ $rid-1 }->{ 'rgt' } + 1 ; 
+   $rgt = $lft + 1 ; 
+   return ( $hsr2 , $lft , $rgt ) ; 
+}
+
+sub doAddItemWithNoSiblings {
+
+   my $self  = shift ;
+   my $hsr2  = shift ;
+   my $hsr2_in  = shift ;
+   my $level = shift ; 
+   my $lft   = shift ; 
+   my $rgt   = shift ; 
+   my $rid   = shift ; 
+
+   # print "$hsr2->{ $rid-1 }->{ 'lft' } !!! \n\n" ;  
+   $hsr2->{ $rid }->{ 'pid' } = $rid-1 ; 
+   my $plft = $hsr2->{ $rid-1 }->{ 'lft' } ; 
+   foreach my $irid ( sort keys %$hsr2_in ) {
+      next if $irid == 0 ; 
+      my $ilvl = $hsr2_in->{ $irid }->{'level'} ; 
+
+       if ( $irid < $rid ) {
+         if ( $hsr2->{ $irid }->{ 'lft' } > $plft ) {
+            $hsr2->{ $irid }->{ 'lft' } = $hsr2->{ $irid }->{ 'lft' } +2 ; 
+         }
+         if ( $hsr2->{ $irid }->{ 'rgt' } > $plft ) {
+            $hsr2->{ $irid }->{ 'rgt' } = $hsr2->{ $irid }->{ 'rgt' } +2 ; 
+         }
+       }
+   $lft = $plft + 1 ; 
+   $rgt = $plft + 2 ; 
+   }
+   return ( $hsr2 , $lft , $rgt ) ; 
+}
+
 
 
 sub doPrintRow {

@@ -714,5 +714,9 @@ src/sql/mysql/qas_issue_tracker/46.create-DevOps-table.sql
 src/sql/mysql/qas_issue_tracker/50.create-ReadMe-table.sql
 # --- 
 src/react/conf-srch/package-lock.json
-doc/txt/issues/2017/2017-10/2017-10-04
-doc/txt/issues/2017/2017-10/2017-10-04/issue-tracker.all.20170820_000000.xlsx
+dat/mix/issues/2018/2018-02/2018-02-03
+dat/mix/issues/2018/2018-02/2018-02-03/issue-tracker.all.20180203_000000.xlsx
+dat/mix/issues/2018/2018-02/2018-02-03/issue-tracker.monthly-issues.2018-02-03.txt
+dat/mix/issues/2018/2018-02/2018-02-03/issue-tracker.daily-issues.2018-02-03.txt
+dat/mix/issues/2018/2018-02/2018-02-03/issue-tracker.test-hierarchy-table.2018-02-03.txt
+dat/mix/issues/2018/2018-02/2018-02-03/~$issue-tracker.all.20180203_000000.xlsx

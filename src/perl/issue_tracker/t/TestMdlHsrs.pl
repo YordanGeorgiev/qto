@@ -56,12 +56,12 @@ ok ( !%$mhsr2 , $msg ) ;
 # 5.
 # -----
 $msg = '5. verify that the model can add hash ref of hash refs' ; 
-my $hsr2_to_pass           = { "1" => {'key1' => 'value'} }; 
-my $hsr2_to_chk           = { "1" => {'key1' => 'value'} }; 
-$objMdlHsrs->addHsr( $hsr2_to_pass ) ; 
+my $hsr2_in           = { "1" => {'key1' => 'value'} }; 
+my $hsr2_exp           = { "1" => {'key1' => 'value'} }; 
+$objMdlHsrs->addHsr( $hsr2_in ) ; 
 my $hsr2_to_out = $objMdlHsrs->get('hsr2' ) ; 
 
-is_deeply( $hsr2_to_out , $hsr2_to_pass , $msg ) ;
+is_deeply( $hsr2_to_out , $hsr2_in , $msg ) ;
 
 # 6.
 # -----
@@ -69,13 +69,13 @@ $msg = '6. verify that we cann add the root branch of a hierarchy hsr2' ;
 my $hsr2_to_init        = { "1" => {'a' => 0 } }; 
 $objMdlHsrs->set( 'hsr2' , $hsr2_to_init ) ;
 
-$hsr2_to_pass           = { "1" => {'b' => 1 } }; 
-$objMdlHsrs->addHsr( $hsr2_to_pass ) ; 
+$hsr2_in           = { "1" => {'b' => 1 } }; 
+$objMdlHsrs->addHsr( $hsr2_in ) ; 
 
 $hsr2_exp               = { "1" => {'a' => 0 }, 
                             "1" => {'b' => 1 }}; 
 my $empty_h             = { "1" => {} } ; 
-$hsr2_got = $objMdlHsrs->get('hsr2') ; 
+my $hsr2_out = $objMdlHsrs->get('hsr2') ; 
 #is_deeply( $hsr2_to_out , $hsr2_exp , $msg ) ;
 ok ( 1==1 , "fake" )
 
