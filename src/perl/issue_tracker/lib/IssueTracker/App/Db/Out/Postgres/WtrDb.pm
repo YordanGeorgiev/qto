@@ -321,7 +321,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrDb ;
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
       my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( 'postgre' );
 
-         $objLogger->doLogDebugMsg ( "doUpsertTables table: $table" );
+         $objLogger->doLogDebugMsg ( "doUpsertTable table: $table" );
 
          # load ONLY the tables defined to load
 
@@ -329,10 +329,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrDb ;
          return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
 
-         my $hs_table = $hsr2->{ $table } ; 
-         #p $hs_headers ;  
-         # p $hs_table->{ 0 } ; 
-         #debug p($hs_headers ) ; 
+         #p($hs_headers ) ; 
      
          eval { 
             $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
@@ -362,19 +359,23 @@ package IssueTracker::App::Db::Out::Postgres::WtrDb ;
             # next if $column_name eq 'update_time' ; 
                # if the xls does not contain the guid's do just insert
             $sql_str_insrt .= " $column_name " . ' , ' 
-               if exists $hs_table->{ 0 }->{ $column_name } ; 
+               if exists $hsr2->{ 0 }->{ $column_name } ; 
          } 
-         
+       
+
          for (1..3) { chop ( $sql_str_insrt) } ; 
          $sql_str_insrt	.= ')' ; 
 
+         p $hsr2 ; 
+         p $sql_str_insrt ; 
+
          my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
 		   $update_time      = $objTimer->GetHumanReadableTime();
-         foreach my $row_num ( sort ( keys %$hs_table ) ) { 
+         foreach my $row_num ( sort ( keys %$hsr2) ) { 
 
             next if $row_num == 0 ; 
             
-            my $hs_row = $hs_table->{ $row_num } ; 
+            my $hs_row = $hsr2->{ $row_num } ; 
             my $data_str = q{} ; 
 
             # because obviously postgre prefers lc in col names by default on Ubuntu
@@ -386,8 +387,9 @@ package IssueTracker::App::Db::Out::Postgres::WtrDb ;
             foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
 
                my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
+
                # if the xls does not have the table column ( ie guid )
-               next unless exists $hs_table->{ 0 }->{ $column_name } ; 
+               next unless exists $hsr2->{ 0 }->{ $column_name } ; 
 
                my $cell_value = $hs_row ->{ $column_name } ; 
                $cell_value = $update_time if $column_name eq 'update_time' ; 
@@ -418,7 +420,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrDb ;
             $sql_str	.=  " VALUES (" . "$data_str" . ') ' ; 
 
             # if the xls has guid column do upsert
-            if ( $hs_table->{0}->{ 'guid' } ) {
+            if ( $hsr2->{ 'guid' } ) {
 
                $sql_str	.=  "\n ON CONFLICT ( guid ) \n" ; 
                $sql_str	.=  " DO UPDATE SET \n" ; 

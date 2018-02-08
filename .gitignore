@@ -10,3 +10,4 @@ src/perl/issue_tracker/script/hypnotoad.pid
 src/react/conf-srch/node_modules/**
 **/~$*.xlsx
 **/.DS_Store
+dat/mix/issues/2018/2018-02/2018-02-03/**

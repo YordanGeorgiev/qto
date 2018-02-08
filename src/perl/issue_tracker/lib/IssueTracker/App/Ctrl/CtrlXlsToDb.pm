@@ -98,9 +98,10 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
             my $hsr2 = $hsr3->{ "$table" } ; 
             my $objCnrXlsHsr3ToDbHsr3 = 
                   'IssueTracker::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$issue_tracker::appConfig) ; 
-            $hsr2 = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2 ) ; 
-            ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objMdlHsrs , $table ) ; 
             p ( $hsr2 ) ; 
+            $hsr2 = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2 ) ; 
+            $objMdlHsrs->set('hsr2' , $hsr2 );
+            ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objMdlHsrs , $table ) ; 
             print " STOP after \n" ; 
          }
 
