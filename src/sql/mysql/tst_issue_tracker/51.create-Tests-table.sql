@@ -1,24 +1,28 @@
-	DROP TABLE IF EXISTS `Tag`;
+	DROP TABLE IF EXISTS `Tests`;
 	/*!40101 SET @saved_cs_client     = @@character_set_client */;
 	/*!40101 SET character_set_client = utf8 */;
 
 
-	CREATE TABLE `Tag` (
-		`TagId` 			bigint 			NOT NULL UNIQUE
+	CREATE TABLE `Tests` (
+		`TestsId` 			bigint 			NOT NULL UNIQUE
 	 , `Level`				smallint 		NOT NULL 
 	 , `SeqId`				decimal 			NOT NULL -- because there must be order !!!
 	 , `LeftRank`			bigint			NOT NULL
 	 , `RightRank`			bigint			NOT NULL
-	 , `LogicalOrder`		varchar(30) 	NOT NULL
+	 , `Prio`				smallint 		NOT NULL DEFAULT '0'
+	 , `Status` 			varchar(12) 	DEFAULT NULL
+	 , `Type` 				varchar(14) 	DEFAULT NULL
 	 , `Name` 				varchar(200) 	NOT NULL
 	 , `Description` 		varchar(4000) 	DEFAULT NULL
+	 , `SrcCode` 			varchar(4000) 	DEFAULT NULL
+	 , `Comment` 			varchar(4000) 	DEFAULT NULL
+	 , `UpdateTime` 		datetime 		DEFAULT NULL	
+	 , `FileType` 			varchar(10) 	DEFAULT NULL
 	 
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	/*!40101 SET character_set_client = @saved_cs_client */;
-	
 	
 	-- now check that the table exists 
-	SHOW TABLES LIKE 'Tag';
+	SHOW TABLES LIKE 'Tests';
 	
 	SELECT FOUND_ROWS() AS 'FOUND'  ;
 
@@ -28,7 +32,7 @@
 	from information_schema.COLUMNS
 	WHERE 1=1
 	AND TABLE_SCHEMA=DATABASE()
-	AND TABLE_NAME='Tag' ; 
+	AND TABLE_NAME='Tests' ; 
 
 
 

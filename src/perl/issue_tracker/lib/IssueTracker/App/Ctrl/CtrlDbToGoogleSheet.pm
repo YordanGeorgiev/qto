@@ -21,13 +21,14 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::In::RdrDbsFactory ; 
    use IssueTracker::App::IO::Out::WtrGoogleSheet ; 
-   use IssueTracker::App::Mdl::MdlHsrs ; 
+   use IssueTracker::App::Mdl::Model ; 
 
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
 	our $objLogger						   = {} ; 
+	our $objModel						   = {} ; 
 	our $objFileHandler			      = {} ; 
-   our $rdbms_type                  = 'postgre' ; 
+   our $rdbms_type                  = 'postgres' ; 
 
 =head1 SYNOPSIS
       my $objCtrlDbToFile = 
@@ -137,15 +138,15 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
          my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
 
          my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
-         my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" );
+         my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" , \$objModel );
       
-         my $objMdlHsrs             = 'IssueTracker::App::Mdl::MdlHsrs'->new ( \$appConfig ) ; 
-         ( $ret , $msg  )  = $objRdrDb->doSelectTableIntoHashRef( \$objMdlHsrs , $table ) ; 
+         my $objModel             = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
+         ( $ret , $msg  )  = $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
     
          my $objWtrGoogleSheet    = 'IssueTracker::App::IO::Out::WtrGoogleSheet'->new( \$appConfig ) ;
          ( $ret , $msg )  = $objWtrGoogleSheet->doWriteGSheetFromHashRef ( 
-               \$objMdlHsrs , \$objGoogleService , $table , $refresh_token , $spread_sheet_id ) ; 
+               \$objModel , \$objGoogleService , $table , $refresh_token , $spread_sheet_id ) ; 
 
          return ( $ret , $msg ) unless $ret == 0 ; 
       }
@@ -181,6 +182,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
 		my $class = shift;    # Class name is in the first parameter
 		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
+		$objModel = ${shift @_};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize( ) ; 
 		return $self;

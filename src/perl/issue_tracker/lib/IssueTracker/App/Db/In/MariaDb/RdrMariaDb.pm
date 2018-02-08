@@ -1,4 +1,4 @@
-package IssueTracker::App::Db::In::Postgres::RdrDb ; 
+package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ; 
 
    use strict ; use warnings ; use utf8 ; 
 
@@ -11,19 +11,19 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
 	use Carp ; 
 
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Mdl::MdlHsrs ; 
+   use IssueTracker::App::Mdl::Model ; 
 
    our $module_trace                            = 0 ; 
    our $IsUnitTest                              = 0 ; 
 	our $appConfig 										= {} ; 
 	our $objLogger 										= {} ; 
-	our $objMdlHsrs                              = {} ; 
+	our $objModel                                = {} ; 
 
-	our $postgres_db_name                                 = q{} ; 
-	our $db_host 										   = q{} ; 
-	our $db_port 										   = q{} ;
-	our $postgres_db_user 											= q{} ; 
-	our $postgres_db_user_pw	 									= q{} ; 
+	our $mysql_db_name                                 = q{} ; 
+	our $mysql_host 										   = q{} ; 
+	our $mysql_port 										   = q{} ;
+	our $mysql_user 											= q{} ; 
+	our $mysql_user_pw	 									= q{} ; 
 	our $web_host 											= q{} ; 
 
    
@@ -55,16 +55,15 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
       " ; 
 
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
-      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
+      $debug_msg .= "\n mysql_db_name: $mysql_db_name \n mysql_host: $mysql_host " ; 
+      $debug_msg .= "\n mysql_user: $mysql_user \n mysql_user_pw $mysql_user_pw \n" ; 
       # $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
-      $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
+      $dbh = DBI->connect("dbi:mysql:database=$mysql_db_name;host=$mysql_host;port=$mysql_port", "$mysql_user", "$mysql_user_pw" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
                , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
       } ) or $msg = DBI->errstr;
       
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
@@ -86,8 +85,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
          $objLogger->doLogErrorMsg ( $msg ) ; 
       }
 
-      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
+      $debug_msg        = 'doSelectTablesList ret ' . $ret ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
       return ( $ret , $msg , $hsr ) ; 	
@@ -124,16 +122,15 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
       " ; 
 
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
-      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
+      $debug_msg .= "\n mysql_db_name: $mysql_db_name \n mysql_host: $mysql_host " ; 
+      $debug_msg .= "\n mysql_user: $mysql_user \n mysql_user_pw $mysql_user_pw \n" ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
-      $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
+      $dbh = DBI->connect("dbi:mysql:database=$mysql_db_name;host=$mysql_host;port=$mysql_port", "$mysql_user", "$mysql_user_pw" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
                , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
       } ) or $msg = DBI->errstr;
       
       $sth = $dbh->prepare($str_sql);  
@@ -178,26 +175,26 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
       my $str_sql          = q{} ;        # this is the sql string to use for the query
       
       $str_sql = " 
-         SELECT attnum, attname, attlen
-         FROM   pg_attribute
-         WHERE  attrelid = '" . lc($table) . "'::regclass
-         AND    attnum > 0
-         AND    NOT attisdropped
-         ORDER  BY attnum
+         SELECT 
+         ORDINAL_POSITION,COLUMN_NAME,CHARACTER_MAXIMUM_LENGTH 
+         FROM INFORMATION_SCHEMA.COLUMNS
+         WHERE 1=1
+         AND TABLE_SCHEMA='" . $mysql_db_name . "' 
+         AND TABLE_NAME='" . $table . "' 
+         ORDER  BY ORDINAL_POSITION ASC
       ;
       " ; 
 
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
-      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
+      $debug_msg .= "\n mysql_db_name: $mysql_db_name \n mysql_host: $mysql_host " ; 
+      $debug_msg .= "\n mysql_user: $mysql_user \n mysql_user_pw $mysql_user_pw \n" ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
-      $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
+      $dbh = DBI->connect("dbi:mysql:database=$mysql_db_name;host=$mysql_host;port=$mysql_port", "$mysql_user", "$mysql_user_pw" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
                , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
       } ) or $msg = DBI->errstr;
       
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
@@ -206,7 +203,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
 
-      $mhsr = $sth->fetchall_hashref( 'attnum' ) ; 
+      $mhsr = $sth->fetchall_hashref( 'ORDINAL_POSITION' ) ; 
       binmode(STDOUT, ':utf8');
       p( $mhsr ) if $module_trace == 1 ; 
 
@@ -220,7 +217,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
       }
 
       # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
+      $debug_msg        = 'doSelectTablesColumnList ret ' . $ret ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
       return ( $ret , $msg , $mhsr ) ; 	
@@ -236,7 +233,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
    sub doSearchConfigurationEntries {
 
       my $self             = shift ; 
-      my $postgres_db_name          = shift || 'ysg_issues' ; # the default db
+      my $mysql_db_name          = shift || croak "mysql db name not defined !!!" ; 
       my $table            = shift || 'confs' ;  # the table to get the data from  
       my $query_str        = shift || '*' ;  # the table to get the data from  
    
@@ -261,12 +258,11 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
       " ; 
 
      
-      $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
+      $dbh = DBI->connect("dbi:mysql:database=$mysql_db_name;host=$mysql_host;port=$mysql_port", "$mysql_user", "$mysql_user_pw" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
                , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
       } ) or $msg = DBI->errstr;
       
       $sth = $dbh->prepare($str_sql);  
@@ -317,7 +313,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
    sub doSelectTableIntoHashRef {
 
       my $self                   = shift ; 
-      my $objMdlHsrs             = ${shift @_ } ; 
+      my $objModel             = ${shift @_ } ; 
       my $table                  = shift || 'daily_issues' ;  # the table to get the data from  
       my $filter_by_attributes   = shift ; 
    
@@ -336,7 +332,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
 
 
       ( $ret , $msg , $dmhsr ) = $self->doSelectTablesColumnList ( $table ) ; 
-      $objMdlHsrs->set('hsr_meta' , $dmhsr );
+      $objModel->set('hsr_meta' , $dmhsr );
 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
@@ -359,16 +355,15 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
       # debug p ( '$str_sql: ' . "$str_sql" . "\n" ) ; 
       
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
-      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
+      $debug_msg .= "\n mysql_db_name: $mysql_db_name \n mysql_host: $mysql_host " ; 
+      $debug_msg .= "\n mysql_user: $mysql_user \n mysql_user_pw $mysql_user_pw \n" ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
-      $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
+      $dbh = DBI->connect("dbi:mysql:database=$mysql_db_name;host=$mysql_host;port=$mysql_port", "$mysql_user", "$mysql_user_pw" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
                , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
       } ) or $msg = DBI->errstr;
       
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
@@ -378,7 +373,7 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
             or $objLogger->error ( "$DBI::errstr" ) ;
 
       $hsr2 = $sth->fetchall_hashref( 'guid' ) ; 
-      $objMdlHsrs->set('hsr2' , $hsr2 ); 
+      $objModel->set('hsr2' , $hsr2 ); 
       binmode(STDOUT, ':utf8');
 
       $msg = DBI->errstr ; 
@@ -407,8 +402,8 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
 
 		my $invocant 			= shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-	
-      p($appConfig ) ; 
+      $objModel      = ${ shift @_ } ; 	
+      #p($appConfig ) ; 
 
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
@@ -434,14 +429,14 @@ package IssueTracker::App::Db::In::Postgres::RdrDb ;
 		# print "PostgreReader::doInitialize appConfig : " . p($appConfig );
       # sleep 6 ; 
 		
-		$postgres_db_name 			= $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}     || 'prd_ysg_issues' ; 
-		$db_host 			= $ENV{ 'db_host' } || $appConfig->{'db_host'} 		|| 'localhost' ;
-		$db_port 			= $ENV{ 'db_port' } || $appConfig->{'db_port'} 		|| '13306' ; 
-		$postgres_db_user 			= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'ysg' ; 
-		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' } || $appConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
+		$mysql_db_name 	   = $ENV{ 'mysql_db_name' } || $appConfig->{'mysql_db_name'}     || croak "mysql db name undef !!!" ; 
+		$mysql_host 			= $ENV{ 'mysql_host' } || $appConfig->{'mysql_host'} 		|| 'localhost' ;
+		$mysql_port 			= $ENV{ 'mysql_port' } || $appConfig->{'mysql_port'} 		|| '13306' ; 
+		$mysql_user 			= $ENV{ 'mysql_user' } || $appConfig->{'mysql_user'} 		|| 'ysg' ; 
+		$mysql_user_pw 		= $ENV{ 'mysql_user_pw' } || $appConfig->{'mysql_user_pw'} 	|| 'no_pass_provided!!!' ; 
       
-	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
-      $objMdlHsrs             = 'IssueTracker::App::Mdl::MdlHsrs'->new ( \$appConfig ) ; 
+	   $objLogger 			   = 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
+      $objModel          = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
 
       return $self ; 
 	}	

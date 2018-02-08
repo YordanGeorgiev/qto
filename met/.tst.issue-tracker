@@ -13,8 +13,8 @@ src/perl/issue_tracker/t/TestInitiator.pl
 src/perl/issue_tracker/t/TestConfigurator.pl
 src/perl/issue_tracker/t/TestLogger.pl
 src/perl/issue_tracker/t/TestDispatcher.pl
-src/perl/issue_tracker/t/TestMdlHsrs.pl
-src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsrs.pm
+src/perl/issue_tracker/t/TestModel.pl
+src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm
 # ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
@@ -111,12 +111,13 @@ src/perl/issue_tracker/lib/IssueTracker/App
 src/perl/issue_tracker/lib/IssueTracker/App/Db
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/RdrDbsFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrDb.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrDb.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrDb.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/WtrDbsFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Mdl/MdlHsrs.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm
@@ -583,7 +584,6 @@ doc/txt/issue-tracker/helps/run-pgsql-scripts.help.txt
 doc/txt/issue-tracker/funcs/run-pgsql-scripts.func.txt
 tags
 # ---
-src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
 src/perl/issue_tracker/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToTxt/autosplit.ix
@@ -591,9 +591,10 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlTxtToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlXlsToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/Dispatcher/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrDb/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/MariaDb/WtrDb/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/Postgres/WtrDb/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/MariaDb/RdrMariaDb/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrPostgresDb/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrText/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrURL/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrXls/autosplit.ix
@@ -601,12 +602,14 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrGoogleSheet/autosplit
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrText/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrURL/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrXls/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Mdl/Model/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Configurator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/IO/FileHandler/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Timer/autosplit.ix
+src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
 # ----
 cnf/perl/.perltidyrc
 src/bash/issue-tracker/funcs/gmail-txt-issues.func.sh
@@ -665,6 +668,7 @@ src/sql/mysql/dev_issue_tracker/40.create-Tag-table.sql
 src/sql/mysql/dev_issue_tracker/41.create-TagMap-table.sql
 src/sql/mysql/dev_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/dev_issue_tracker/50.create-ReadMe-table.sql
+src/sql/mysql/dev_issue_tracker/51.create-Tests-table.sql
 # ---
 src/sql/mysql/tst_issue_tracker
 src/sql/mysql/tst_issue_tracker/00.create-db.mysql
@@ -698,21 +702,10 @@ src/sql/mysql/prd_issue_tracker/46.create-DevOps-table.sql
 src/sql/mysql/prd_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/prd_issue_tracker/50.create-ReadMe-table.sql
 # ---
-src/sql/mysql/qas_issue_tracker
-src/sql/mysql/qas_issue_tracker/00.create-db.mysql
-src/sql/mysql/qas_issue_tracker/01.create-ItemController-table.sql
-src/sql/mysql/qas_issue_tracker/02.create-ItemView-table.sql
-src/sql/mysql/qas_issue_tracker/03.create-ItemModel-table.sql
-src/sql/mysql/qas_issue_tracker/06.create-Feature-table.sql
-src/sql/mysql/qas_issue_tracker/07.create-Requirement-table.sql
-src/sql/mysql/qas_issue_tracker/15.create-UserStory-table.sql
-src/sql/mysql/qas_issue_tracker/31.create-CellValue-table.sql
-src/sql/mysql/qas_issue_tracker/37.create-Image-table.sql
-src/sql/mysql/qas_issue_tracker/40.create-Tag-table.sql
-src/sql/mysql/qas_issue_tracker/41.create-TagMap-table.sql
-src/sql/mysql/qas_issue_tracker/46.create-DevOps-table.sql
-src/sql/mysql/qas_issue_tracker/50.create-ReadMe-table.sql
-# --- 
 src/react/conf-srch/package-lock.json
-doc/txt/issues/2017/2017-10/2017-10-04
-doc/txt/issues/2017/2017-10/2017-10-04/issue-tracker.all.20170820_000000.xlsx
+dat/mix/issues/2018/2018-02/2018-02-03
+dat/mix/issues/2018/2018-02/2018-02-03/issue-tracker.all.20180203_000000.xlsx
+dat/mix/issues/2018/2018-02/2018-02-03/issue-tracker.monthly-issues.2018-02-03.txt
+dat/mix/issues/2018/2018-02/2018-02-03/issue-tracker.daily-issues.2018-02-03.txt
+dat/mix/issues/2018/2018-02/2018-02-03/issue-tracker.test-hierarchy-table.2018-02-03.txt
+dat/mix/issues/2018/2018-02/2018-02-03/~$issue-tracker.all.20180203_000000.xlsx

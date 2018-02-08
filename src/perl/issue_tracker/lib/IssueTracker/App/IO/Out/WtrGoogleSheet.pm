@@ -43,13 +43,13 @@ package IssueTracker::App::IO::Out::WtrGoogleSheet ;
    sub doWriteGSheetFromHashRef {
 
       my $self             = shift ; 
-      my $objMdlHsrs       = ${ shift @_ } ; 
+      my $objModel       = ${ shift @_ } ; 
       my $objGoogleService = ${ shift @_ } ; 
       my $table            = shift ; 
       my $refresh_token    = shift ; 
       my $spread_sheet_id  = shift ; 
-      my $hsr_meta         = $objMdlHsrs->get('hsr_meta');
-      my $hsr              = $objMdlHsrs->get('hsr2');
+      my $hsr_meta         = $objModel->get('hsr_meta');
+      my $hsr              = $objModel->get('hsr2');
 
       my $msg              = 'unknown error during google sheet write' ; 
       my $ret              = 1 ; 

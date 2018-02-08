@@ -12,10 +12,9 @@
    , `Status`   			varchar(20) 	NOT NULL
 	, `Prio`            	smallint       NOT NULL
 	, `Name`            	varchar(200)   NOT NULL
-	, `Description`     	varchar(4000)  NOT NULL
-	, `SrcCode`         	varchar(4000)  NOT NULL
+	, `Description`     	varchar(4000)  NULL
+	, `SrcCode`         	varchar(4000)  NULL
 	, `UpdateTime` 		datetime 		DEFAULT NULL	
-	, `uuid`         	   varchar(60)    NOT NULL
 
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	/*!40101 SET character_set_client = @saved_cs_client */;

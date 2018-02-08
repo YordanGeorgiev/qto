@@ -36,7 +36,7 @@ sub doReadXlsFileToHsr3 {
 
   my $self           = shift;
   my $xls_file       = shift;
-  my $objMdlHsrs     = ${ shift @_ } ; 
+  my $objModel     = ${ shift @_ } ; 
 
   my $ret = 1;
   my $msg = "open the xls_file: $xls_file";
@@ -153,7 +153,7 @@ sub doReadXlsFileToHsr3 {
  $ret = 0 if $flg_found_at_least_one_table > 0 ; 
  $msg = 'xls file parse OK' if $flg_found_at_least_one_table > 0 ;
 
-  $objMdlHsrs->set('hsr3' , $hsr3 ); 
+  $objModel->set('hsr3' , $hsr3 ); 
   return ($ret, $msg);
 
 }    

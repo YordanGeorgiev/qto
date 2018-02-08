@@ -11,11 +11,11 @@
 	 , `RightRank`				bigint			NOT NULL
 	 , `doTruncTable`			boolean NOT NULL					-- whether or not to truncate the table before load
 	 , `doLoadData`			boolean NOT NULL					-- whether or not to load the data for this item
-	 , `IsBook`					boolean NOT NULL					-- whether or not to fetch this as part of the app doc model
+	 , `IsBook`					boolean NOT NULL DEFAULT 0	   -- whether or not to fetch this as part of the app doc model
 	 , `Name` 					varchar (200) NOT NULL			-- the technical name of this item
-	 , `Sheet` 					varchar (200) NOT NULL			-- the technical Sheet name in the xls file
+	 , `Sheet` 					varchar (200) NULL			-- the technical Sheet name in the xls file
 	 , `Description` 			varchar (4000) DEFAULT NULL		-- the description of this item
-	 , `FileType`  			varchar (10) NOT NULL
+	 , `FileType`  			varchar (10) NULL
 	 
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	/*!40101 SET character_set_client = @saved_cs_client */;

@@ -1,4 +1,4 @@
-package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
+package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ; 
 
    use strict ; use warnings ; use utf8 ; 
 
@@ -19,6 +19,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
    our $IsUnitTest                              = 0 ; 
 	our $appConfig 										= {} ; 
 	our $objLogger 										= {} ; 
+   our $rdbms_type                              = 'postgre' ; 
 
 	our $postgres_db_name                                 = q{} ; 
 	our $db_host 										   = q{} ; 
@@ -28,32 +29,6 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
 	our $web_host 											= q{} ; 
    our @tables                                  = ( 'daily_issues' );
    our $objController                           = () ; 
-
-
-   sub doLoadNestedSetTable {
-
-		my $self 			   = shift ; 
-		my $hsr2 		      = shift ; 
-      my @tables = @{ $_[0] } ; 
-
-      # debug p($hsr2) ; 
-      foreach my $guid ( sort { $hsr2->{$a}->{ 'seq' } <=> $hsr2->{$b}->{ 'seq' } } keys (%$hsr2))  {
-         my $hsr_row = $hsr2->{ "$guid" } ; 
-         p ( $hsr_row ) ; 
-         # get the hs
-         # sort by seq_id
-         # set prev_seq_id , set prev_level
-         # for each hs row get id , seq_id , curr_level
-         # if curr_level < prev_level => doAddToParentWithNoChilden
-         # if curr_level = prev_level => doAddToParentWithChilden
-         # if curr_level > prev_level => doAddToParentWithChilden
-         # seq_id++ ;
-      }
-
-      return 1 ; 
-   }
-
-
 	#
    # ------------------------------------------------------
 	#  input: hash ref of hash refs containing the issues 
@@ -93,7 +68,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
       }
 
 	 
-      p ( $hsr2 ) ; 
+      #p ( $hsr2 ) ; 
       
       my $debug_msg        = 'START doInsertSqlHashData' ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
@@ -204,7 +179,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
       my $update_time      = q{} ; 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
-      my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( 'postgre' );
+      my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( $rdbms_type );
       ( $ret , $msg , $dmhsr ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
@@ -311,6 +286,196 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
 	#eof sub doInsertSqlHashData
 
 
+	#
+	# -----------------------------------------------------------------------------
+	# runs the insert sql by passed data part 
+	# by convention is assumed that the first column is unique and update could 
+	# be performed on it ... should there be duplicates the update should fail
+	# -----------------------------------------------------------------------------
+	sub doUpsertTable {
+
+		my $self 			   = shift ; 
+      my $objModel       = ${ shift @_ } ; 
+      my $table            = shift ;
+		my $hsr2 		      = $objModel->get( 'hsr2' ) ; 
+
+      binmode(STDIN,  ':utf8');
+      binmode(STDOUT, ':utf8');
+      binmode(STDERR, ':utf8');
+		my $ret 				   = 1 ; 
+		my $msg 				   = ' failed to connect during insert to db !!! ' ; 
+		my $debug_msg 		   = ' failed to connect during insert to db !!! ' ; 
+
+      return ( $ret , $msg , undef ) unless $hsr2 ; 
+      return ( $ret , $msg , undef ) unless $table ; 
+
+      my $sth              = {} ;    # this is the statement handle
+      my $dbh              = {} ;    # this is the database handle
+      my $str_sql          = q{} ;   # this is the sql string to use for the query
+      my $rv               = 0 ;     # apperantly insert ok returns rv = 1 !!! 
+      
+      my $hs_headers       = {} ; 
+      my $update_time      = q{} ; # must have the default value now() in db
+      
+      my $dmhsr            = {} ; 
+
+      my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
+      my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( $rdbms_type );
+
+         $objLogger->doLogDebugMsg ( "doUpsertTable table: $table" );
+
+         # load ONLY the tables defined to load
+
+         ( $ret , $msg , $hs_headers ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
+         return  ( $ret , $msg , undef ) unless $ret == 0 ; 
+
+
+         #p($hs_headers ) ; 
+     
+         eval { 
+            $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
+                 'RaiseError'          => 1
+               , 'ShowErrorStatement'  => 1
+               , 'PrintError'          => 1
+               , 'AutoCommit'          => 1
+               , 'pg_utf8_strings'     => 1
+            } ); 
+         } or $ret = 2  ;
+         
+         if ( $ret == 2 ) {
+            $msg = DBI->errstr;
+            $objLogger->doLogErrorMsg ( $msg ) ; 
+            return ( $ret , $msg ) ; 
+         } else {
+            $msg = 'connect OK' ; 
+            $objLogger->doLogDebugMsg ( $msg ) ; 
+         }
+
+         my $sql_str          = '' ; 
+         my $sql_str_insrt    = "INSERT INTO $table " ; 
+         $sql_str_insrt      .= '(' ; 
+
+         foreach my $col_num ( sort ( keys %{$hs_headers} )) {
+            my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
+            # next if $column_name eq 'update_time' ; 
+               # if the xls does not contain the guid's do just insert
+            $sql_str_insrt .= " $column_name " . ' , ' 
+               if exists $hsr2->{ 0 }->{ $column_name } ; 
+         } 
+       
+
+         for (1..3) { chop ( $sql_str_insrt) } ; 
+         $sql_str_insrt	.= ')' ; 
+
+         p $hsr2 ; 
+         p $sql_str_insrt ; 
+
+         my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+		   $update_time      = $objTimer->GetHumanReadableTime();
+         foreach my $row_num ( sort ( keys %$hsr2) ) { 
+
+            next if $row_num == 0 ; 
+            
+            my $hs_row = $hsr2->{ $row_num } ; 
+            my $data_str = q{} ; 
+
+            # because obviously postgre prefers lc in col names by default on Ubuntu
+            my %row_h = %$hs_row ; 
+            %row_h = map { lc $_ => $row_h{$_} } keys %row_h;
+            $hs_row = \%row_h ; 
+            p($hs_row) ; 
+
+            foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
+
+               my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
+
+               # if the xls does not have the table column ( ie guid )
+               next unless exists $hsr2->{ 0 }->{ $column_name } ; 
+
+               my $cell_value = $hs_row ->{ $column_name } ; 
+               $cell_value = $update_time if $column_name eq 'update_time' ; 
+               
+               # if the xls does not contain the guid's do just insert
+               # note that even cells with 1 space are considered for nulls !!!
+               # this is simply because of Shift + arrow works on 1 space
+               if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
+                     or $cell_value eq 'null' or $cell_value eq "'NULL'" 
+                     or $cell_value eq ' ' ) {  
+
+                  $cell_value = 'NULL'   ; 
+                  $data_str .= "$cell_value" . " , " ; 
+
+               } else { 
+                  # $cell_value =~ s|\\|\\\\|g ; 
+                  # replace the ' chars with \'
+                  $cell_value 		=~ s|\'|\'\'|g ; 
+                  $data_str .= "'" . "$cell_value" . "' , " ; 
+               }
+            }
+            #eof foreach col_num
+            
+            # remove the " , " at the end 
+            for (1..3) { chop ( $data_str ) } ; 
+            
+            $sql_str .= $sql_str_insrt ;  
+            $sql_str	.=  " VALUES (" . "$data_str" . ') ' ; 
+
+            # if the xls has guid column do upsert
+            if ( $hsr2->{ 'guid' } ) {
+
+               $sql_str	.=  "\n ON CONFLICT ( guid ) \n" ; 
+               $sql_str	.=  " DO UPDATE SET \n" ; 
+            
+               # how-to upsert: https://stackoverflow.com/a/36799500/65706
+               # INSERT INTO category_gallery (
+               #  category_id, gallery_id, create_date, create_by_user_id
+               #  ) VALUES ($1, $2, $3, $4)
+               #  ON CONFLICT (category_id, gallery_id)
+               #  DO UPDATE SET
+               #    last_modified_date = EXCLUDED.create_date,
+               #    last_modified_by_user_id = EXCLUDED.create_by_user_id ;
+
+               foreach my $col_num ( sort ( keys %{$hs_headers} )) {
+                  my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
+                  next if $column_name eq 'update_time' ; 
+                  # next if $column_name eq 'id' ; # id's are unique !!!
+                  $sql_str .= " $column_name " . '= EXCLUDED.' . $column_name . ' , ' ; 
+               } 
+               # remove the " , " at the end 
+               for (1..3) { chop ( $sql_str ) } ; 
+            }
+            $sql_str .= '; ' . "\n" ; 
+
+         } 
+         #eof foreach row
+          
+
+         my $do_trucate_tables = $ENV{ 'do_truncate_tables' } || 0 ; 
+         if ( $do_trucate_tables == 1 ) { 
+            $sql_str = "TRUNCATE TABLE $table ; $sql_str " ; 
+         }
+         $objLogger->doLogDebugMsg ( "sql_str : $sql_str " ) ; 
+
+         # Action !!! 
+         $msg = " DBI upsert error on table: $table: " . $msg  ; $ret = 1 ; 
+         eval { 
+            $rv = $dbh->do($sql_str) ; 
+         } or return ( $ret , $msg ) ; 
+
+
+
+         if ( $rv == 1 ) { 
+            $msg = "upsert OK for table $table" ;          
+            $objLogger->doLogInfoMsg ( $msg ) ; 
+            $ret = 0 ; 
+         }
+
+      #eof foreach table
+		
+      $msg = 'upsert OK for all table' ; 
+		return ( $ret , $msg ) ; 
+	}
+	#eof sub doUpsertTable
 
 	#
 	# -----------------------------------------------------------------------------
@@ -321,8 +486,8 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
 	sub doUpsertTables {
 
 		my $self 			   = shift ; 
-      my $objMdlHsrs       = ${ shift @_ } ; 
-		my $hsr3 		      = $objMdlHsrs->get('hsr3' ); 
+      my $objModel       = ${ shift @_ } ; 
+		my $hsr3 		      = $objModel->get( 'hsr3' ) ; 
       my @tables = @{ $_[0] } ; 
 
       binmode(STDIN,  ':utf8');
@@ -346,12 +511,13 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
       my $dmhsr            = {} ; 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
-      my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( 'postgre' );
+      my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( $rdbms_type  );
 
       # obs this does not support ordered primary key tables first order yet !!!
       foreach my $table ( keys %$hsr3 ) { 
 
          $objLogger->doLogDebugMsg ( "doUpsertTables table: $table" );
+         sleep 2 ; 
          next unless grep( /^$table$/, @tables ) ; 
 
          # load ONLY the tables defined to load
@@ -424,8 +590,11 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
                $cell_value = $update_time if $column_name eq 'update_time' ; 
                
                # if the xls does not contain the guid's do just insert
+               # note that even cells with 1 space are considered for nulls !!!
+               # this is simply because of Shift + arrow works on 1 space
                if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
-                     or $cell_value eq 'null' or $cell_value eq "'NULL'" ) {
+                     or $cell_value eq 'null' or $cell_value eq "'NULL'" 
+                     or $cell_value eq ' ' ) {  
 
                   $cell_value = 'NULL'   ; 
                   $data_str .= "$cell_value" . " , " ; 
@@ -450,6 +619,15 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
 
                $sql_str	.=  "\n ON CONFLICT ( guid ) \n" ; 
                $sql_str	.=  " DO UPDATE SET \n" ; 
+            
+               # how-to upsert: https://stackoverflow.com/a/36799500/65706
+               # INSERT INTO category_gallery (
+               #  category_id, gallery_id, create_date, create_by_user_id
+               #  ) VALUES ($1, $2, $3, $4)
+               #  ON CONFLICT (category_id, gallery_id)
+               #  DO UPDATE SET
+               #    last_modified_date = EXCLUDED.create_date,
+               #    last_modified_by_user_id = EXCLUDED.create_by_user_id ;
 
                foreach my $col_num ( sort ( keys %{$hs_headers} )) {
                   my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
@@ -529,9 +707,9 @@ package IssueTracker::App::Db::Out::MariaDb::WtrDb ;
       # sleep 6 ; 
 		
 		$postgres_db_name 			= $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}        || 'prd_pgsql_runner' ; 
-		$db_host 			= $ENV{ 'db_host' } || $$appConfig->{'db_host'} 		|| 'localhost' ;
-		$db_port 			= $ENV{ 'db_port' } || $$appConfig->{'db_port'} 		|| '13306' ; 
-		$postgres_db_user 			= $ENV{ 'postgres_db_user' } || $$appConfig->{'postgres_db_user'} 		|| 'ysg' ; 
+		$db_host 			         = $ENV{ 'db_host' } || $appConfig->{'db_host'} 		|| 'localhost' ;
+		$db_port 			         = $ENV{ 'db_port' } || $appConfig->{'db_port'} 		|| '13306' ; 
+		$postgres_db_user 			= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'ysg' ; 
 		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' } || $appConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
       
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;

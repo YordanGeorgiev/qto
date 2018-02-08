@@ -1,5 +1,5 @@
 use strict ; use warnings ; 
-package IssueTracker::App::Mdl::MdlHsrs ; 
+package IssueTracker::App::Mdl::Model ; 
 
 	my $VERSION = '1.1.0';    #doc at the end
 
@@ -84,11 +84,11 @@ __END__
 
 =head1 NAME
 
-MdlHsrs
+Model
 
 =head1 SYNOPSIS
 
-use MdlHsrs ; 
+use Model ; 
 
 
 =head1 DESCRIPTION
