@@ -102,11 +102,12 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
             $objLogger->doLogInfoMsg ( $msg ) ; 
             my $hsr2 = $hsr3->{ "$table" } ; 
             my $objCnrXlsHsr3ToDbHsr3 = 
-                  'IssueTracker::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$issue_tracker::appConfig , $rdbms_type ) ; 
-            # p ( $hsr2 ) ; 
+                  'IssueTracker::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$issue_tracker::appConfig) ; 
+            p ( $hsr2 ) ; 
             $hsr2 = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2 ) ; 
-            $objModel->set('hsr2' , $hsr2 );
-            ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objModel , $table ) ; 
+            $objMdlHsrs->set('hsr2' , $hsr2 );
+            ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objMdlHsrs , $table ) ; 
+            print " STOP after \n" ; 
          }
 
       } 
