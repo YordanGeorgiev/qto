@@ -100,7 +100,7 @@ You cannot achieve user-friendliness for the end-users unless your developers an
 ## 2. INSTALLATIONS AND CONFIGURATIONS
 
 
-     
+    
 
 ### 2.1. Configure the Ubuntu repositories
 Configure the Ubuntu repositories
@@ -206,12 +206,12 @@ Install the perl module by first installing the server development package
 ## 3. MAINTENANCE AND OPERATIONS
 
 
-     
+    
 
 ### 3.1. RDBMS Runstate management
- 
 
-     
+
+    
 
 #### 3.1.1. To check the status of the postgreSql
 To check the status of the postgreSql issue:
@@ -247,9 +247,9 @@ Check the port to which the postres is running with this command:
     sudo netstat -plunt |grep postgres
 
 ### 3.2. Application Layer runstate management
- 
 
-     
+
+    
 
 #### 3.2.1. start the application layer
 To start the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern 
@@ -291,9 +291,9 @@ You should be able to update only non-nullable column by reducing the number of 
     bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db
 
 #### 4.1.3. Run db-to-txt action
- 
 
-     
+
+    
 
 #### 4.1.4. Load xls issues to db and from db to txt files
 to load xls issues to db and from db to txt files
@@ -386,7 +386,7 @@ http://doc-pub-host:3307/
 ## 6. NAMING CONVENTIONS
 
 
-     
+    
 
 ### 6.1. Dirs naming conventions
 The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
@@ -447,7 +447,7 @@ The prd branch is the one deployed to the production environment. This code is N
 ## 8. SCENARIOS
 
 
-     
+    
 
 ### 8.1. A small team project hours tracking scenario
 This scenario describes the steps and processes, which could be implemented to achieve a small team ( 3-10 ) members issue-tracking with hours reporting by using the issue-handler combined with Google Cloud authentication and storage.
