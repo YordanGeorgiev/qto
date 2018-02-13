@@ -31,7 +31,7 @@ You can load your issues data from different sources into different targets, whe
 A single call performing the transformation of one issues source data into another taget data instance artifact are called actions. 
 This section contains the description of this feature-set per action.  
 
-     
+    
 
 ### 1.1. txt-to-db action
 You can load you issues from an "issues txt file" , having a specic syntax into a PosgtreSQL issue table, by issueing the shell.
@@ -127,7 +127,7 @@ You can generate all the md and pdf docs via single shell call by issuing the fo
 ## 2. DEVOPS FEATURES AND FUNCTIONALITIES
 
 
-     
+    
 
 ### 2.1. development efficiency increasing actions
 

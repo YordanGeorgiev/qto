@@ -94,6 +94,8 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       } 
       elsif ( $load_model eq 'nested-set' ) {
          foreach my $table ( keys %$hsr3 ) { 
+            $msg = "START hierarchy conversion for table: $table " ; 
+            $objLogger->doLogInfoMsg ( $msg ) ; 
             my $hsr2 = $hsr3->{ "$table" } ; 
             my $objCnrXlsHsr3ToDbHsr3 = 
                   'IssueTracker::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$issue_tracker::appConfig , $rdbms_type ) ; 
