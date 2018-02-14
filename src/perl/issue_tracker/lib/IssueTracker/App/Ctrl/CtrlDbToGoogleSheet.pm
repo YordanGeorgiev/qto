@@ -65,6 +65,15 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
       my $tables              = $appConfig->{ 'tables' } || 'daily_issues' ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
+      unless ( $ENV{CLIENT_ID} or $ENV{CLIENT_SECRET} ) {
+         croak "undefined CLIENT_ID and/or CLIENT_SECRET !!!" ; 
+         print '
+          you could define a google sheets credentials file as follows
+          cat ~/.google/.credentials.ysg
+          export CLIENT_ID=\'924286520981-fse4rpb9k58k9uj4j7d1q2j0cfro1f00.apps.googleusercontent.com\'
+          export CLIENT_SECRET=\'17y0XxEryalDrjCM5rxQc61R\'
+          ' ; 
+      }
       my $oauth2 = Net::Google::DataAPI::Auth::OAuth2->new(
           client_id        => $ENV{CLIENT_ID},
           client_secret    => $ENV{CLIENT_SECRET},
@@ -182,7 +191,6 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
 		my $class = shift;    # Class name is in the first parameter
 		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
-		$objModel = ${shift @_};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize( ) ; 
 		return $self;
