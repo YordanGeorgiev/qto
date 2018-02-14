@@ -1,21 +1,18 @@
 package IssueTracker::App::IO::In::RdrXls;
 
-use strict;
-use warnings;
-use utf8;
+use strict; use warnings; use utf8;
 
 require Exporter;
 use AutoLoader;
 use Encode qw( encode decode encode_utf8 is_utf8 );
 use POSIX qw(strftime);
 
-use Data::Printer;
 use Carp;
+use Data::Printer;
 use Spreadsheet::ParseExcel;
 use Text::Iconv;
 use Spreadsheet::XLSX;
 
-use IssueTracker::App::Utils::IO::FileHandler;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Utils::Timer;
 use Spreadsheet::ParseExcel::FmtJapan;
@@ -24,7 +21,6 @@ our $module_trace       = 0;
 our $IsUnitTest         = 0;
 our $appConfig          = q{};
 our $objLogger          = q{};
-our $objFileHandler     = q{};
 our $ProductInstanceDir = {};
 our @tables             = () ; 
 
@@ -128,7 +124,7 @@ sub doReadXlsFileToHsr3 {
           # debug print "is_utf8 " . is_utf8 ( $token ) ;
           # p($token);
 
-          # and this one of those wtf moments ?!
+          # and this is one of those wtf moments ?!
           $token =~ s/\&gt;/\>/g;
           $token =~ s/\&lt;/\</g;
           $token =~ s/\&amp;/\&/g;
@@ -143,18 +139,19 @@ sub doReadXlsFileToHsr3 {
       $row_num++;
 
       # debug sleep 3 ;
-    }    #eof foreach row
+    }    
+    #eof foreach row
 
     $hsr3->{"$WorkSheetName"} = $hsWorkSheet;
 
     # p($hsWorkSheet );
   }
 
- $ret = 0 if $flg_found_at_least_one_table > 0 ; 
- $msg = 'xls file parse OK' if $flg_found_at_least_one_table > 0 ;
+   $ret = 0 if $flg_found_at_least_one_table > 0 ; 
+   $msg = 'xls file parse OK' if $flg_found_at_least_one_table > 0 ;
 
-  $objModel->set('hsr3' , $hsr3 ); 
-  return ($ret, $msg);
+   $objModel->set('hsr3' , $hsr3 ); 
+   return ($ret, $msg);
 
 }    
 
@@ -187,8 +184,6 @@ sub doInitialize {
   #debug print "ExcelHandler::doInitialize appConfig : " . p($appConfig );
   $objLogger          = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
   $ProductInstanceDir = $appConfig->{'ProductInstanceDir'};
-  $objFileHandler
-    = 'IssueTracker::App::Utils::IO::FileHandler'->new(\$appConfig);
 }
 
 

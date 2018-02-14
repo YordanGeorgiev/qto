@@ -58,7 +58,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
       my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( $rdbms_type );
 		
       my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
-		my $update_time      = $objTimer->GetHumanReadableTime();
+		my $UpdateTime      = $objTimer->GetHumanReadableTime();
       
       my $dmhsr            = {} ; 
 
@@ -87,12 +87,12 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
             $str_col_list .= ' , ' . $key ; 
 
             my $value = 'null' ; 
-            unless ( $key eq 'update_time' ) {
+            unless ( $key eq 'UpdateTime' ) {
                $value     = $row_hash->{ $key } || 'null' ; 
                # $value =~ s|\\|\\\\|g ;
                $value       =~ s|\'|\\\'|g ;
             } else {
-               $value     = $update_time ; 
+               $value     = $UpdateTime ; 
             }
             $str_val_list .= ' , \'' . $value . '\''; 
          }
@@ -181,7 +181,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
       }
       
       my $dmhsr            = {} ; 
-      my $update_time      = q{} ; 
+      my $UpdateTime      = q{} ; 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
       my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( $rdbms_type );
@@ -210,7 +210,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
                $value     =~ s|\'|\\\'|g ;
                $value     =~ s/'/''/g if ( $value ) ; 
             } else {
-               $value     = $update_time ; 
+               $value     = $UpdateTime ; 
             }
             $str_val_list .= ' , \'' . $value . '\''  ; 
          }
@@ -319,7 +319,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
       my $rv               = 0 ;     # apperantly insert ok returns rv = 1 !!! 
       
       my $hs_headers       = {} ; 
-      my $update_time      = q{} ; # must have the default value now() in db
+      my $UpdateTime      = q{} ; # must have the default value now() in db
       
       my $dmhsr            = {} ; 
 
@@ -370,7 +370,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
 
       foreach my $col_num ( sort ( keys %{$hs_headers} )) {
          my $column_name = $hs_headers->{ $col_num }->{ 'COLUMN_NAME' }; 
-         # next if $column_name eq 'update_time' ; 
+         # next if $column_name eq 'UpdateTime' ; 
             # if the xls does not contain the guid's do just insert
          $sql_str_insrt .= " $column_name " . ' , ' 
             if exists $hsr2->{ 0 }->{ $column_name } ; 
@@ -384,7 +384,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
       # p $sql_str_insrt ; 
 
       my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
-      $update_time      = $objTimer->GetHumanReadableTime();
+      $UpdateTime      = $objTimer->GetHumanReadableTime();
       foreach my $row_num ( sort ( keys %$hsr2) ) { 
 
          next if $row_num == 0 ; 
@@ -407,7 +407,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
             next unless exists $hsr2->{ 0 }->{ $column_name } ; 
 
             my $cell_value = $hs_row ->{ $column_name } ; 
-            $cell_value = $update_time if $column_name eq 'UpdateTime' ; 
+            $cell_value = $UpdateTime if $column_name eq 'UpdateTime' ; 
             
             # if the xls does not contain the guid's do just insert
             # note that even cells with 1 space are considered for nulls !!!
@@ -441,8 +441,8 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
             $sql_str	.=  " DO UPDATE SET \n" ; 
          
             foreach my $col_num ( sort ( keys %{$hs_headers} )) {
-               my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
-               next if $column_name eq 'update_time' ; 
+               my $column_name = $hs_headers->{ $col_num }->{ 'COLUMN_NAME' }; 
+               next if $column_name eq 'UpdateTime' ; 
                # next if $column_name eq 'id' ; # id's are unique !!!
                $sql_str .= " $column_name " . '= EXCLUDED.' . $column_name . ' , ' ; 
             } 
@@ -473,185 +473,6 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
 		return ( $ret , $msg ) ; 
 	}
 	#eof sub doUpsertTable
-
-
-	#
-	# -----------------------------------------------------------------------------
-	# runs the insert sql by passed data part 
-	# by convention is assumed that the first column is unique and update could 
-	# be performed on it ... should there be duplicates the update should fail
-	# -----------------------------------------------------------------------------
-	sub doUpsertTables {
-
-		my $self 			   = shift ; 
-      my $objModel       = ${ shift @_ } ; 
-		my $hsr3 		      = $objModel->get('hsr3' ); 
-      my @tables = @{ $_[0] } ; 
-
-      binmode(STDIN,  ':utf8');
-      binmode(STDOUT, ':utf8');
-      binmode(STDERR, ':utf8');
-		my $ret 				   = 1 ; 
-		my $msg 				   = ' failed to connect during insert to db !!! ' ; 
-		my $debug_msg 		   = ' failed to connect during insert to db !!! ' ; 
-
-      return ( $ret , $msg , undef ) unless $hsr3 ; 
-      return ( $ret , $msg , undef ) unless @tables ; 
-
-      my $sth              = {} ;    # this is the statement handle
-      my $dbh              = {} ;    # this is the database handle
-      my $str_sql          = q{} ;   # this is the sql string to use for the query
-      my $rv               = 0 ;     # apperantly insert ok returns rv = 1 !!! 
-      
-      my $hs_headers       = {} ; 
-      my $update_time      = q{} ; # must have the default value now() in db
-      
-      my $dmhsr            = {} ; 
-
-      my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig ); 
-      my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( $rdbms_type );
-
-      # obs this does not support ordered primary key tables first order yet !!!
-      foreach my $table ( keys %$hsr3 ) { 
-
-         $objLogger->doLogDebugMsg ( "doUpsertTables table: $table" );
-         next unless grep( /^$table$/, @tables ) ; 
-
-         # load ONLY the tables defined to load
-
-         ( $ret , $msg , $hs_headers ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
-         return  ( $ret , $msg , undef ) unless $ret == 0 ; 
-
-
-         my $hs_table = $hsr3->{ $table } ; 
-     
-         eval { 
-            $dbh = DBI->connect("dbi:mysql:database=$mysql_db_name;host=$mysql_host;port=$mysql_port"
-               , "$mysql_user", "$mysql_user_pw" , {
-                 'RaiseError'          => 1
-               , 'ShowErrorStatement'  => 1
-               , 'PrintError'          => 1
-               , 'AutoCommit'          => 1
-            } ); 
-         } or $ret = 2  ;
-         
-         if ( $ret == 2 ) {
-            $msg = DBI->errstr;
-            $objLogger->doLogErrorMsg ( $msg ) ; 
-            return ( $ret , $msg ) ; 
-         } else {
-            $msg = 'connect OK' ; 
-            $objLogger->doLogDebugMsg ( $msg ) ; 
-         }
-
-         my $sql_str          = '' ; 
-         my $sql_str_insrt    = "INSERT INTO $table " ; 
-         $sql_str_insrt      .= '(' ; 
-
-         foreach my $col_num ( sort ( keys %{$hs_headers} )) {
-            my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
-            # next if $column_name eq 'update_time' ; 
-               # if the xls does not contain the guid's do just insert
-            $sql_str_insrt .= " $column_name " . ' , ' 
-               if exists $hs_table->{ 0 }->{ $column_name } ; 
-         } 
-         
-         for (1..3) { chop ( $sql_str_insrt) } ; 
-         $sql_str_insrt	.= ')' ; 
-
-         my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
-		   my $update_time      = $objTimer->GetHumanReadableTime();
-         foreach my $row_num ( sort ( keys %$hs_table ) ) { 
-
-            next if $row_num == 0 ; 
-            
-            my $hs_row = $hs_table->{ $row_num } ; 
-            my $data_str = q{} ; 
-
-            # because obviously postgre prefers lc in col names by default on Ubuntu
-            my %row_h = %$hs_row ; 
-            %row_h = map { lc $_ => $row_h{$_} } keys %row_h;
-            $hs_row = \%row_h ; 
-            # p($hs_row) ; 
-
-            foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
-
-               my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
-               # if the xls does not have the table column ( ie guid )
-               next unless exists $hs_table->{ 0 }->{ $column_name } ; 
-
-               my $cell_value = $hs_row ->{ $column_name } ; 
-               $cell_value = $update_time if $column_name eq 'update_time' ; 
-               
-               # if the xls does not contain the guid's do just insert
-               if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
-                     or $cell_value eq 'null' or $cell_value eq "'NULL'" ) {
-
-                  $cell_value = 'NULL'   ; 
-                  $data_str .= "$cell_value" . " , " ; 
-
-               } else { 
-                  # $cell_value =~ s|\\|\\\\|g ; 
-                  # replace the ' chars with \'
-                  $cell_value 		=~ s|\'|\'\'|g ; 
-                  $data_str .= "'" . "$cell_value" . "' , " ; 
-               }
-            }
-            #eof foreach col_num
-            
-            # remove the " , " at the end 
-            for (1..3) { chop ( $data_str ) } ; 
-            
-            $sql_str .= $sql_str_insrt ;  
-            $sql_str	.=  " VALUES (" . "$data_str" . ') ' ; 
-
-            # if the xls has guid column do upsert
-            if ( $hs_table->{0}->{ 'guid' } ) {
-
-               $sql_str	.=  "\n ON CONFLICT ( guid ) \n" ; 
-               $sql_str	.=  " DO UPDATE SET \n" ; 
-
-               foreach my $col_num ( sort ( keys %{$hs_headers} )) {
-                  my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
-                  next if $column_name eq 'update_time' ; 
-                  $sql_str .= " $column_name " . '= EXCLUDED.' . $column_name . ' , ' ; 
-               } 
-               # remove the " , " at the end 
-               for (1..3) { chop ( $sql_str ) } ; 
-            }
-            $sql_str .= '; ' . "\n" ; 
-
-         } 
-         #eof foreach row
-          
-
-         my $do_trucate_tables = $ENV{ 'do_truncate_tables' } || 0 ; 
-         if ( $do_trucate_tables == 1 ) { 
-            $sql_str = "TRUNCATE TABLE $table ; $sql_str " ; 
-         }
-         $objLogger->doLogDebugMsg ( "sql_str : $sql_str " ) ; 
-
-         # Action !!! 
-         $msg = " DBI upsert error on table: $table: " . $msg  ; $ret = 1 ; 
-         eval { 
-            $rv = $dbh->do($sql_str) ; 
-         } or return ( $ret , $msg ) ; 
-
-
-
-         if ( $rv == 1 ) { 
-            $msg = "upsert OK for table $table" ;          
-            $objLogger->doLogInfoMsg ( $msg ) ; 
-            $ret = 0 ; 
-         }
-
-      } 
-      #eof foreach table
-		
-      $msg = 'upsert OK for all tables' ; 
-		return ( $ret , $msg ) ; 
-	}
-	#eof sub doUpsertTables
 
 
    #

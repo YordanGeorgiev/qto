@@ -1,20 +1,17 @@
-# file: cnf/issue-tracker.doc-pub-host.cnf
+# file: cnf/issue-tracker.host-name.cnf
 [MainSection]
-
-# the id from the url of the google spread sheet
-google_spread_sheet_id = 1p4YwuSB3GtQ0i5ginn4Vc95t09w1WNWJra2yUH1aL0Y
 
 # multiple projects support
 issue_tracker_project = issue-tracker
 
-# OBS ! dev , tst , prd product instances to own db !
-postgres_db_name   = prd_issue_tracker
+# OBS ! tst , tst , prd product instances to own db !
+postgres_db_name   = tst_issue_tracker
 
 # where the scripts to run are situated
-pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.8.tst.ysg/src/sql/pgsql/tst_issue_tracker
+pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.0.tst.ysg/src/sql/pgsql/tst_issue_tracker
 
 # where are stored the txt issues files
-proj_daily_data_root_dir = /vagrant/csitea/issue-tracker/doc/txt/issues
+proj_daily_data_root_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.0.tst.ysg/dat/mix/issues
 
 # The logging directory 
 LogDir = %ProductInstanceDir%/dat/log
@@ -29,13 +26,16 @@ LogTimeToTextSeparator = ###
 LogToFile =          1
 
 # the time format of the logging 
-TimeFormat =         YYYY.MM.DD - hh:mm:ss
+TimeFormat =         YYYY.MM.DD hh:mm:ss
+
+# the time format of the logging 
+DbType 	=         postgres
 
 # the log file
 LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
 
 # the host on which the mariadb is running 
-db_host = doc-pub-host
+db_host = host-name
 
 # the pgsql port
 db_port = 13306
@@ -61,15 +61,16 @@ PrintDebugMsgs =                 1
 # Whether or not to pring TRACE messages
 PrintTraceMsgs =                 1 
 
-# where to backup the zip packages
-network_backup_dir=/vagrant/var/csitea/issue-tracker/dat/zip
+# the id from the url of the google spread sheet
+google_spread_sheet_id = 1p4YwuSB3GtQ0i5ginn4Vc95t09w1WNWJra2yUH1aL0Y
 
 Emails=yordan.georgiev@gmail.com
+# changed the propmpt
 PS1="$issue_tracker_project \u@\h [\d \t] [\w] $ \n\n "
 
-# v0.2.7
+# v0.3.0
 # on which host the mysql is running
-mysql_host=localhost
+mysql_host=host-name
  
 # on which port the mysql is listening 
 mysql_port=13306
@@ -83,19 +84,24 @@ mysql_user = usrisgpuben
 # the pw of the mysql user
 mysql_user_pw = secret
 
+
 # where are the mysql scripts situated
-mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.2.8.tst.ysg/src/sql/mysql/tst_issue_tracker
+mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.0.tst.ysg/src/sql/mysql/tst_issue_tracker
 
-# the mysql db data containing load xls
-load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tracker-en.xlsx
-
-# v0.2.8
-# the web host where the web application layer is deployed 
+# the web host where the isg-pub instance residues 
 web_host=host-name
 
-# the web port the web application layer is listening to
+# the number of the web port 
 web_port=5001
 
-# in bash because of a bug this is ignored ...
+# the mysql db data containing load xls
+# after 
+# load_xls=/opt/csitea/issue-tracker/issue-tracker.0.3.0.tst.ysg/doc/xls/issue-tracker-en.xlsx
+load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tracker-en.xlsx
+
+PS1='issue-tracker-tst \u@\h [\d \t] [\w] $ \n\n '
+
+# the last entry is always ignored - this is a bug in the cnf parser 
 foo=bar
-# eof file: cnf/issue-tracker.doc-pub-host.cnf
+
+# eof file: cnf/issue-tracker.tst.host-name.cnf
