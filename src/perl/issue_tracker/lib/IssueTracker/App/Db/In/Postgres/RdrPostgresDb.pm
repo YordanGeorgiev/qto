@@ -337,7 +337,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 
       ( $ret , $msg , $dmhsr ) = $self->doSelectTablesColumnList ( $table ) ; 
-      $objModel->set('hsr_meta' , $dmhsr );
 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
@@ -345,6 +344,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $mhsr->{'ColumnNames'}-> { $key } = $dmhsr->{ $key } ; 
       }
       
+      $objModel->set('hsr_meta' , $mhsr );
       $str_sql = 
          " SELECT 
          * FROM $table 

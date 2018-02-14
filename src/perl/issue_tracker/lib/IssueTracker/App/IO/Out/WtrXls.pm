@@ -32,12 +32,16 @@ package IssueTracker::App::IO::Out::WtrXls ;
    sub doBuildXlsFromHashRef {
 
       my $self             = shift ; 
-      my $hsr_meta         = shift ; 
-      my $hsr              = shift ; 
+      my $objModel         = ${shift @_ } ;   
       my $table            = shift ; 
       my $msg              = q{} ; 
-      #debug ok p($hsr ) if $module_trace == 1 ; 
-      
+      my $hsr2              = $objModel->get('hsr2') ; 
+      my $hsr_meta         = $objModel->get('hsr_meta'  ); 
+
+      # p $hsr_meta ; 
+      #  sleep 10 ; 
+
+
       my $objTimer = 'IssueTracker::App::Utils::Timer'->new() ; 
 	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
       my $nice_month  = "$year" . '-' . "$mon" ; 
@@ -87,7 +91,7 @@ package IssueTracker::App::IO::Out::WtrXls ;
       $objWorksheet->write(0, $nxt_colid-2, 'guid' , $objFormat )  ; 
 
       my $rowid = 0 ; 
-      foreach my $guid ( sort { $hsr->{$a}->{ 'seq' } <=> $hsr->{$b}->{ 'seq' } } keys (%$hsr))  {
+      foreach my $guid ( sort { $hsr2->{$a}->{ 'seq' } <=> $hsr2->{$b}->{ 'seq' } } keys (%$hsr2))  {
       # foreach my $rowid ( sort ( keys ( %$hsr ) ) ) {
 
          my $objFormat        = {} ; 
@@ -108,22 +112,24 @@ package IssueTracker::App::IO::Out::WtrXls ;
           
          $objFormat->set_text_wrap();
 
-         my $hsr_row = $hsr->{ "$guid" } ; 
+         my $hsr_row = $hsr2->{ "$guid" } ; 
+
          $rowid = $rowid+1 ; 
 
 
          foreach my $colid ( sort ( keys ( %{$hsr_meta->{'ColumnNames'}} ) ) ) {
             next if $colid == 1 ; # put the guid at the end
-            my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
-
+            my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ;
        
             my $cell_length = length ( $hsr_row->{ $col_name } ) || 10 ; 
             #define the max width 
             if ( $hsr_meta->{ 'ColumnWidths' }->{ $colid } < $cell_length ) {
-               $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length ;                
+               $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length ;
             }
-            $hsr_meta->{ 'ColumnWidths' }->{ $colid } = 60 
-               if $hsr_meta->{ 'ColumnWidths' }->{ $colid } > 60 ; 
+
+            $hsr_meta->{ 'ColumnWidths' }->{ $colid } = 60
+               if $hsr_meta->{ 'ColumnWidths' }->{ $colid } > 60 ;
+
 
 
             unless ( 
@@ -138,7 +144,7 @@ package IssueTracker::App::IO::Out::WtrXls ;
             # debug print "$col_name width is " . $hsr_meta->{ 'ColumnWidths' }->{ $colid } . "\n" ; 
 
             # $objWorksheet->set_column($colid, $colid, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
-            $objWorksheet->set_column($colid, $colid-2, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
+            $objWorksheet->set_column($colid, $colid-2, $hsr_meta->{ $colid } );
             $objWorksheet->write($rowid, $colid-2, $hsr_row->{ $col_name } , $objFormat )  ; 
          }
          
