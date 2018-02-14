@@ -332,7 +332,6 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
 
 
       ( $ret , $msg , $dmhsr ) = $self->doSelectTablesColumnList ( $table ) ; 
-      $objModel->set('hsr_meta' , $dmhsr );
 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
@@ -353,6 +352,7 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       " if exists $dmhsr-> { 'prio' } ; 
       
       # debug p ( '$str_sql: ' . "$str_sql" . "\n" ) ; 
+      $objModel->set('hsr_meta' , $mhsr );
       
       # authentication src: http://stackoverflow.com/a/19980156/65706
       $debug_msg .= "\n mysql_db_name: $mysql_db_name \n mysql_host: $mysql_host " ; 

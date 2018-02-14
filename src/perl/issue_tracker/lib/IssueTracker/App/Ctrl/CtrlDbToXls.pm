@@ -22,7 +22,7 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 	our $appConfig						   = {} ; 
 	our $objLogger						   = {} ; 
 	our $objFileHandler			      = {} ; 
-   our $rdbms_type                  = 'postgre' ; 
+   our $rdbms_type                  = 'postgres' ; 
 
 =head1 SYNOPSIS
       my $objCtrlDbToFile = 
@@ -69,11 +69,11 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
          my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
          my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" , \$objModel );
       
-         ( $ret , $msg , $hsr , $mhsr )  = $objRdrDb->doSelectTableIntoHashRef( $table ) ; 
+         ( $ret , $msg )  = $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
     
          my $objWtrXls    = 'IssueTracker::App::IO::Out::WtrXls'->new( \$appConfig ) ;
-         $ret = $objWtrXls->doBuildXlsFromHashRef ( $mhsr , $hsr , $table ) ;
+         $ret = $objWtrXls->doBuildXlsFromHashRef ( \$objModel , $table ) ;
          return ( $ret , $msg ) unless $ret == 0 ; 
       }
 
