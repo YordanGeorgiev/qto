@@ -1,0 +1,24 @@
+# START DAILY @2018-02-14 22:16:03
+   
+## what will I do till the next DAILY:
+#---------------------------
+#
+
+ - todo		2017-08-14 00:00 - 2017-08-30 19:30 gsheet-to-db feature
+ - qas		2017-10-03 08:16 add unit tests for the "platform" modules
+ - wip		2017-10-03 08:16 implement mysql nested-set load
+ - done		2017-10-03 08:16 change the issue-tracker setup for code and data accessibility from host and vms
+ - wip		2018-01-07 21:00 - 2018-01-21 21:00 apply the interfaces for the most common methods in the perl code
+ - qas		2018-01-19 21:00 - 2018-01-21 21:00 Change names of modules to reflect the Input-Output-Control-Module architecture
+ - qas		2018-01-19 21:00 - 2018-01-21 21:00 add interfaces for the most common methods in the perl code
+ - wip		2018-02-03 21:00 - 2018-04-15 21:00 implement upsert for table with bigint id and uuid
+ 
+issue-tracker
+ - hld		 add load-meta-to-json action
+ - done		 solve the problem with the difficulty for accessing the daily xls and the configuration
+ - todo		 publish all the issue-tracker events into the google sheet calendar
+
+
+# STOP  DAILY @2018-02-14 22:16:03
+
+

@@ -22,7 +22,7 @@ doTestRunMysqlScripts(){
    sleep 4 # give some time for the child the finish
    child_log_file=$product_instance_dir/dat/log/bash/issue-tracker.`date "+%Y%m"`.log
    str_to_grep='\['"$child_pid"'\]'" running all the files from the mysql_scripts_dir: "
-   str_to_grep="$str_to_grep""$product_instance_dir/src/sql/mysql/dev_issue_tracker"
+   str_to_grep="$str_to_grep""$product_instance_dir/src/sql/mysql/"$env_type"_issue_tracker"
    test $(grep -c "$str_to_grep" $child_log_file) -eq 1 || export exit_code=1
    test $exit_code -eq 1 && doExit $exit_code "test run failed for test : $msg"
 
@@ -56,7 +56,7 @@ doTestRunMysqlScripts(){
    doLog "INFO $msg"
    doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.$env_type.host-name.cnf
    mysql_scripts_dir_chk=$mysql_scripts_dir
-   export mysql_scripts_dir='src/sql/mysql/dev_issue_tracker'
+   export mysql_scripts_dir='src/sql/mysql/'"$env_type"'_issue_tracker'
    str_to_grep='\['"$child_pid"'\]'" running all the files from the mysql_scripts_dir: "
    str_to_grep="$str_to_grep""$mysql_scripts_dir_chk"
    test $(grep -c "$str_to_grep" $child_log_file) -eq 1 || export exit_code=1
@@ -107,7 +107,7 @@ doTestRunMysqlScripts(){
    # --
 
 
-   msg="test-08 the full run is ok if all the ok conditions are met"
+"$env_type"msg="test-08 the full run is ok if all the ok conditions are met"
    doLog "INFO $msg"
    doParseIniEnvVars $product_instance_dir/cnf/issue-tracker.$env_type.host-name.cnf
    # Action !!!

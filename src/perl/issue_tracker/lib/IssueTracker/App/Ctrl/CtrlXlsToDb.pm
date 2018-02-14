@@ -84,6 +84,10 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       p($hsr3) if $module_trace == 1 ; 
 
       my $load_model = $ENV{ 'load_model' } || 'upsert' ; 
+
+      # for now only nested-set support for mysql and mariadb
+      $load_model = 'nested-set' if ( $rdbms_type eq 'mysql' or $rdbms_type eq 'mariadb' ) ; 
+
       # p ( $hsr3 ) ; 
       # print " STOP before \n" ; 
 
