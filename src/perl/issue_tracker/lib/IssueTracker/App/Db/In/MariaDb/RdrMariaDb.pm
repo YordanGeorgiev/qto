@@ -163,6 +163,7 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
    sub doSelectTablesColumnList {
 
       my $self          = shift ; 
+      my $objModel      = ${ shift @_ } ; 
       my $table         = shift || 'daily_issues' ; 
 
 
@@ -205,9 +206,11 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
 
       $mhsr = $sth->fetchall_hashref( 'ORDINAL_POSITION' ) ; 
       binmode(STDOUT, ':utf8');
-      p( $mhsr ) if $module_trace == 1 ; 
+      #p( $mhsr ) ; 
 
       $msg = DBI->errstr ; 
+
+      carp "failed to load meta-data for the table : $table !!!" unless %$mhsr  ; 
 
       unless ( defined ( $msg ) ) {
          $msg = 'SELECT meta OK for table: ' . "$table" ; 
@@ -219,7 +222,8 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
       $debug_msg        = 'doSelectTablesColumnList ret ' . $ret ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-      
+
+      $objModel->set('hs_headers' , $mhsr ) ; 
       return ( $ret , $msg , $mhsr ) ; 	
    }
    # eof sub doSelectTablesColumnList
