@@ -318,7 +318,6 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
       my $str_sql          = q{} ;   # this is the sql string to use for the query
       my $rv               = 0 ;     # apperantly insert ok returns rv = 1 !!! 
       
-      my $hs_headers       = {} ; 
       my $UpdateTime      = q{} ; # must have the default value now() in db
       
       my $dmhsr            = {} ; 
@@ -330,9 +329,9 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
 
       # load ONLY the tables defined to load
 
-      ( $ret , $msg , $hs_headers ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
+      ( $ret , $msg ) = $objRdrDb->doSelectTablesColumnList ( \$objModel , $table ) ; 
+      my $hs_headers       = $objModel->get('hs_headers' ); 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
-
 
       # p($hs_headers )  ; 
   
@@ -368,6 +367,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
       my $sql_str_insrt    = "INSERT INTO $table " ; 
       $sql_str_insrt      .= '(' ; 
 
+
       foreach my $col_num ( sort ( keys %{$hs_headers} )) {
          my $column_name = $hs_headers->{ $col_num }->{ 'COLUMN_NAME' }; 
          # next if $column_name eq 'UpdateTime' ; 
@@ -375,7 +375,9 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
          $sql_str_insrt .= " $column_name " . ' , ' 
             if exists $hsr2->{ 0 }->{ $column_name } ; 
       } 
-    
+   
+      #print "$sql_str_insrt" ; 
+      #sleep 10 ; 
 
       for (1..3) { chop ( $sql_str_insrt) } ; 
       $sql_str_insrt	.= ')' ; 
