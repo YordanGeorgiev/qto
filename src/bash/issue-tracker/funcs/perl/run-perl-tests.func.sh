@@ -20,8 +20,8 @@ doRunPerlTests(){
    perl src/perl/issue_tracker/t/TestDispatcher.pl	
 	test -z "$sleep_interval" || sleep $sleep_interval
 	
-   doLog "INFO Component testing MdlHsrs.pm with TestMdlHsrs.pl"
-   # perl src/perl/issue_tracker/t/TestMdlHsrs.pl	
+   doLog "INFO Component testing Model.pm with TestModel.pl"
+   # perl src/perl/issue_tracker/t/TestModel.pl	
 	test -z "$sleep_interval" || sleep $sleep_interval
 
    doLog "INFO Unit testing or the SetGetable base module " 

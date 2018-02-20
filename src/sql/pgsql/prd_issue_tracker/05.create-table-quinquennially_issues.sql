@@ -4,6 +4,7 @@ SELECT 'create the "quinquennially_issues" table'
 ; 
    CREATE TABLE quinquennially_issues (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
+    , id             integer UNIQUE NOT NULL 
     , level          integer NULL
     , seq            integer NULL
     , prio           integer NULL

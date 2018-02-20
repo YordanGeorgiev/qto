@@ -19,13 +19,13 @@ doXlsToDb(){
    # pass it to the xls-to-rdbms tool as the input xls file
    
    test -z ${xls_file+x} && \
-      export xls_file=$(find ${proj_daily_data_root_dir} -name '*.xlsx'| grep '.all.'| sort -rn|head -n 1)
+      export xls_file=$(find ${mix_data_dir} -name '*.xlsx'| grep '.all.'| sort -rn|head -n 1)
    test -z ${xls_file} && \
-      export xls_file=$(find $proj_daily_data_root_dir -name '*.xlsx'| grep $period| sort -rn|head -n 1)
+      export xls_file=$(find $mix_data_dir -name '*.xlsx'| grep $period| sort -rn|head -n 1)
    test -z ${xls_file} && \
       doExit 1 "failed to define xls_file !!!"
 
-   doLog "\${proj_daily_data_root_dir+}: ${proj_daily_data_root_dir+}"
+   doLog "\${mix_data_dir+}: ${mix_data_dir+}"
    doLog "INFO \$xls_file: $xls_file"
 
    # Action !!!

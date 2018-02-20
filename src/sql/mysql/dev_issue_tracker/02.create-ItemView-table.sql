@@ -13,15 +13,15 @@ CREATE TABLE `ItemView` (
  , `Description` 				varchar(4000) 	DEFAULT NULL	-- the description of this item
  , `Type`						varchar(30) 	DEFAULT NULL	-- the description of this item
  , `BranchId` 					bigint 			DEFAULT '1'		-- the description of this item
- , `doGenerateUi`				boolean NOT NULL					-- whether or not to generate html page for this item
+ , `doGenerateUi`				boolean NOT NULL DEFAULT true				-- whether or not to generate html page for this item
  , `doGeneratePdf`			boolean NOT NULL					-- whether or not to generate the pdf files per page
  , `doExportToPdf`			boolean NOT NULL					-- whether or not to export to pdf this document
  , `doExportToMd`				boolean NOT NULL					-- whether or not to export to mdf this entry
  , `doExportToXls`		   boolean NOT NULL					-- whether or not to export to mdf this entry
- , `doGenerateLeftMenu`		boolean NOT NULL					-- whether or not to generate the pdf files per page
+ , `doGenerateLeftMenu`		boolean NOT NULL DEFAULT true -- whether or not to generate the pdf files per page
  , `ItemControllerId` 		bigint 			NOT NULL 
  			REFERENCES ItemController(ItemControllerId)
- , `FileType`  			varchar (10) NOT NULL
+ , `FileType`  			varchar (10) NULL
  ,  PRIMARY KEY (ItemViewId)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

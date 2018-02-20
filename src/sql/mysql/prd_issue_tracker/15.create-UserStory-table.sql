@@ -13,10 +13,9 @@
 	 , `Prio` 				smallint 		DEFAULT NULL
 	 , `EstimatedSize` 	smallint 		DEFAULT NULL
 	 , `Name` 				varchar(200) 	NOT NULL
-    , `SrcCode`         varchar(4000) 	NOT NULL
+    , `SrcCode`         varchar(4000) 	DEFAULT NULL
 	 , `Description` 		varchar(4000) 	DEFAULT NULL
 	 , `UpdateTime` 		datetime 		DEFAULT NULL	
-	 , `guid` 			   varchar(60) 	DEFAULT NULL
 	 , `FileType` 			varchar(10) 	DEFAULT NULL
 	 
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;

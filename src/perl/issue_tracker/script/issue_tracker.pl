@@ -79,7 +79,6 @@ local $SIG{__WARN__} = sub {
 
 my $module_trace = 0;
 my $md_file      = '';
-my $rdbms_type   = 'postgre';                 #todo: parametrize to
 my $objInitiator = {};
 our $appConfig    = {};
 our $objLogger = {};
@@ -90,6 +89,7 @@ my $xls_file              = q{};
 my $issue_tracker_project = q{};
 my $period                = q{};
 my $tables                = 'daily' ;
+my $rdbms_type            = 'postgre';                 #todo: parametrize to
 
 #
 # the main shell entry point of the application
@@ -134,7 +134,8 @@ sub doInitialize {
     'xls_dir=s'     => \$xls_dir,
     'xls-file=s'    => \$xls_file,
     'period=s'      => \$period ,
-    'tables=s'      => \$tables
+    'tables=s'      => \$tables ,
+    'rdbms-type=s'  => \$rdbms_type
   );
 
   $issue_tracker_project = $ENV{"issue_tracker_project"};
