@@ -1,8 +1,10 @@
 -- DROP TABLE IF EXISTS questions ; 
+
 SELECT 'create the "questions" table'
 ; 
    CREATE TABLE questions (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
+    , id             integer UNIQUE NOT NULL 
     , level          integer NULL
     , seq            integer NULL
     , prio           integer NULL

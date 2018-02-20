@@ -242,7 +242,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $query_str        = shift || '*' ;  # the table to get the data from  
    
 
-      $objLogger->doLogDebugMsg ( "doSelectTableIntoHashRef table: $table " ) ; 
+      $objLogger->doLogDebugMsg ( "doSearchConfigurationEntries table: $table " ) ; 
 
       my $msg              = q{} ;         
       my $ret              = 1 ;          # this is the return value from this method 
@@ -318,10 +318,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    sub doSelectTableIntoHashRef {
 
       my $self                   = shift ; 
-      my $objModel             = ${shift @_ } ; 
+      my $objModel               = ${shift @_ } ; 
       my $table                  = shift || 'daily_issues' ;  # the table to get the data from  
       my $filter_by_attributes   = shift ; 
-   
 
       $objLogger->doLogDebugMsg ( "doSelectTableIntoHashRef table: $table " ) ; 
 
@@ -379,20 +378,20 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
             or $objLogger->error ( "$DBI::errstr" ) ;
 
       $hsr2 = $sth->fetchall_hashref( 'guid' ) ; 
-      $objModel->set('hsr2' , $hsr2 ); 
       binmode(STDOUT, ':utf8');
 
       $msg = DBI->errstr ; 
 
       unless ( defined ( $msg ) ) {
          $msg = 'SELECT OK for table: ' . "$table" ; 
+         $objModel->set('hsr2' , $hsr2 ); 
          $ret = 0 ; 
       } else {
          $objLogger->doLogErrorMsg ( $msg ) ; 
       }
 
       # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
+      $debug_msg        = 'doSelectTableIntoHashRef ret ' . $ret ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
       return ( $ret , $msg ) ; 	

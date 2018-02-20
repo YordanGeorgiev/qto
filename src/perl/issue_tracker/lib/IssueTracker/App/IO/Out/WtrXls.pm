@@ -50,7 +50,7 @@ package IssueTracker::App::IO::Out::WtrXls ;
 
 
       my $xls_file_name       = $ENV{'issue_tracker_project'} . '.' . $table . '.' . $nice_datetime ; 
-      my $xls_dir = $appConfig->{ 'xls_dir' } || $ENV{'proj_daily_data_root_dir'} . "/$year/$nice_month/$nice_date" ; 
+      my $xls_dir = $appConfig->{ 'xls_dir' } || $ENV{'mix_data_dir'} . "/$year/$nice_month/$nice_date" ; 
       $objFileHandler->MkDir ( "$xls_dir" ) ; 
       my $xls_file         = "$xls_dir/$xls_file_name" . '.xlsx' ; 
 
