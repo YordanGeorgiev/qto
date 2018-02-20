@@ -152,7 +152,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
          my $objModel             = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
          ( $ret , $msg  )  = $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
-    
+
          my $objWtrGoogleSheet    = 'IssueTracker::App::IO::Out::WtrGoogleSheet'->new( \$appConfig ) ;
          ( $ret , $msg )  = $objWtrGoogleSheet->doWriteGSheetFromHashRef ( 
                \$objModel , \$objGoogleService , $table , $refresh_token , $spread_sheet_id ) ; 

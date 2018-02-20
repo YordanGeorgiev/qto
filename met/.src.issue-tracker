@@ -1,6 +1,8 @@
 # this is kind of a srch history file - PREPEND !!!
 # 
 :g/srch/| :vimgrep /srch/ `find . -type f \| grep -v .git \| grep -v .log`
+
+:g/proj_daily_data_dir/| :vimgrep /proj_daily_data_dir/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/RdrDbsFactory/| :vimgrep /RdrDbsFactory/ `find . -type f \| grep -v .git \| grep -v .log`
 in WtrMariaDb
 :g/Data::Print/| :vimgrep /Data::Print/ `find . -type f \| grep -v .git \| grep -v .log`

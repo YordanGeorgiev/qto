@@ -309,7 +309,7 @@ sub doReadIssueFile {
   my $nice_date  = "$year" . '-' . "$mon" . '-' . $mday;
 
     $issues_file
-      = $ENV{'proj_daily_data_root_dir'}
+      = $ENV{'mix_data_dir'}
       . '/issues'
       . "/$year/$nice_month/$nice_date/$issue_tracker_project"
       . '.' .$table_file_name . '.'
