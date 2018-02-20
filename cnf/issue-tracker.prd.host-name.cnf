@@ -11,7 +11,7 @@ postgres_db_name   = prd_issue_tracker
 pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.0.prd.ysg/src/sql/pgsql/prd_issue_tracker
 
 # where are stored the txt issues files
-proj_daily_data_root_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.0.prd.ysg/dat/mix/issues
+mix_data_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.0.prd.ysg/dat/mix/issues
 
 # The logging directory 
 LogDir = %ProductInstanceDir%/dat/log

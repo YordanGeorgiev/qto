@@ -8,15 +8,15 @@
 # ---------------------------------------------------------
 doIncreaseDate(){
 	doLog "DEBUG START doIncreaseDate"
-   test -z ${proj_daily_data_root_dir+x} && export exit_code=1 \
+   test -z ${mix_data_dir+x} && export exit_code=1 \
       && doExit "define a project by doParseIniEnvVars <<path-to-proj-conf-file>> !!!" && exit 1
 
    # if a relative path is passed add to the product version dir
-   [[ $proj_daily_data_root_dir == /* ]] || \
-      export proj_daily_data_root_dir="$product_instance_dir"/"$proj_daily_data_root_dir"
+   [[ $mix_data_dir == /* ]] || \
+      export mix_data_dir="$product_instance_dir"/"$mix_data_dir"
 
    # find the latest project_daily_txt_dir
-   latest_proj_daily_txt_dir=$(find "$proj_daily_data_root_dir" -type d|sort -nr | head -n 1|grep -v tmp)
+   latest_proj_daily_txt_dir=$(find "$mix_data_dir" -type d|sort -nr | head -n 1|grep -v tmp)
    
 	# debug set -x
    if [[ ${tgt_date+x} && -n $tgt_date ]] ; then
@@ -47,17 +47,17 @@ doIncreaseDate(){
   
    # set -x
    # define the today's daily_txt_dir
-   tgt_days_monthly_data_dir="$proj_daily_data_root_dir"/$(date "+%Y" -d "$tgt_date")
+   tgt_days_monthly_data_dir="$mix_data_dir"/$(date "+%Y" -d "$tgt_date")
    tgt_days_monthly_data_dir="$tgt_days_monthly_data_dir"/$(date "+%Y-%m" -d "$tgt_date")
    mkdir -p $tgt_days_monthly_data_dir
-   tgt_dates_daily_data_dir="$tgt_days_monthly_data_dir"'/'$(date "+%Y-%m-%d" -d "$tgt_date")
+   export daily_data_dir="$tgt_days_monthly_data_dir"'/'$(date "+%Y-%m-%d" -d "$tgt_date")
  
    error_msg="
-   nothing can be done - as the daily dir : 
-      $tgt_dates_daily_data_dir 
+   nothing can be done - as the daily data dir \$daily_data_dir : 
+      $daily_data_dir 
    already exists !!!
    "
-   test -d "$tgt_dates_daily_data_dir" && export exit_code=1 && doExit "$error_msg"
+   test -d "$daily_data_dir" && export exit_code=1 && doExit "$error_msg"
 
    todays_tmp_dir=$tmp_dir/$(date "+%Y-%m-%d" -d "$tgt_date")    # becauses of vboxsf !!!
    cmd="cp -vr $latest_proj_daily_txt_dir $todays_tmp_dir/"
@@ -103,10 +103,10 @@ doIncreaseDate(){
    done < <(find . -type f -name '*.txt' -o -name '*.sh')
    
    rm -f *.bak       # remove any possible bak files
-   mv $todays_tmp_dir $tgt_dates_daily_data_dir 
+   mv $todays_tmp_dir $daily_data_dir 
 
    msg=" OK for creating the daily project dir:
-         $tgt_dates_daily_data_dir"
+         $daily_data_dir"
    doLog "INFO ""$msg"
 
 	doLog "DEBUG STOP  doIncreaseDate"
