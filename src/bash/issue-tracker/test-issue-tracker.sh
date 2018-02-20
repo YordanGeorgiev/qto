@@ -114,7 +114,7 @@ doInit(){
    my_name_ext=`basename $0`
    run_unit_tester=${my_name_ext%.*}
    host_name=$(hostname -s)
-   ${sleep_interval:=0}   # to slow down during debuging export sleep_iterval=3
+   export sleep_interval=${sleep_interval:=0}   # to slow down during debuging export sleep_iterval=3
 }
 #eof doInit
 

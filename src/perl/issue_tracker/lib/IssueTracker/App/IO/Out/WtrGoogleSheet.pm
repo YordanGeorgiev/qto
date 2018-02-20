@@ -43,16 +43,16 @@ package IssueTracker::App::IO::Out::WtrGoogleSheet ;
    sub doWriteGSheetFromHashRef {
 
       my $self             = shift ; 
-      my $objMdlHsrs       = ${ shift @_ } ; 
+      my $objModel       = ${ shift @_ } ; 
       my $objGoogleService = ${ shift @_ } ; 
       my $table            = shift ; 
       my $refresh_token    = shift ; 
       my $spread_sheet_id  = shift ; 
-      my $hsr_meta         = $objMdlHsrs->get('hsr_meta');
-      my $hsr              = $objMdlHsrs->get('hsr2');
+      my $hsr              = $objModel->get('hsr2');
 
       my $msg              = 'unknown error during google sheet write' ; 
       my $ret              = 1 ; 
+      my $hsr_meta         = $objModel->get('hsr_meta')->{'ColumnNames'} ; 
 
       # debug ok p($hsr ) if $module_trace == 1 ; 
       # debug p ( $hsr_meta )  ; 
@@ -110,7 +110,7 @@ package IssueTracker::App::IO::Out::WtrGoogleSheet ;
       }
          push ( @row , 'guid' );
       push ( @rows , \@row ) ; 
-      $default_col_to_sort_by = 'seqid' if $flg_found_default_col_to_sort_by == 0 ; 
+      $default_col_to_sort_by = 'seq' if $flg_found_default_col_to_sort_by == 0 ; 
 
 
       foreach my $guid ( 

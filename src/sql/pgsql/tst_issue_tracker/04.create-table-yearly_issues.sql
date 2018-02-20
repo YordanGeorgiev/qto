@@ -4,6 +4,7 @@ SELECT 'create the "yearly_issues" table'
 ; 
    CREATE TABLE yearly_issues (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
+    , id             integer UNIQUE NOT NULL 
     , level          integer NULL
     , seq            integer NULL
     , prio           integer NULL
@@ -12,12 +13,12 @@ SELECT 'create the "yearly_issues" table'
     , category       varchar (200) NOT NULL
     , name           varchar (200) NOT NULL
     , description    varchar (4000)
+    , type           varchar (50) NOT NULL DEFAULT 'task'
+    , owner          varchar (50) NULL
     , start_time     text NULL
     , stop_time      text NULL
-    , type           varchar (50) NOT NULL
     , planned_hours  decimal (6,2) NULL
     , actual_hours   decimal (6,2) NULL
-    , owner          varchar (50) NULL
     , update_time    timestamp DEFAULT NOW()
     , CONSTRAINT pk_yearly_issues_guid PRIMARY KEY (guid)
     ) WITH (

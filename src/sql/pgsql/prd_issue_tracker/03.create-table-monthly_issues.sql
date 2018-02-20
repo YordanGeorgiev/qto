@@ -4,6 +4,7 @@ SELECT 'create the "monthly_issues" table'
 ; 
    CREATE TABLE monthly_issues (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
+    , id             integer UNIQUE NOT NULL 
     , level          integer NULL
     , seq            integer NULL
     , prio           integer NULL
@@ -23,6 +24,8 @@ SELECT 'create the "monthly_issues" table'
     ) WITH (
       OIDS=FALSE
     );
+
+create unique index idx_uniq_id on monthly_issues (id);
 
 
 SELECT 'show the columns of the just created table'

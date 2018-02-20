@@ -5,10 +5,10 @@ our $appConfig = {} ;
 use Data::Printer ; 
 use Carp ; 
 
-our $lfth      = 'lft' ; # the string used for the left header - lft or LeftRank
-our $rgth      = 'rgt' ;  # the string used for the rgt header - rgt or RightRank
-our $levelh    = 'level' ;  # the string used for the level header - level or Level
-
+our $lfth         = 'lft' ; # the string used for the left header - lft or LeftRank
+our $rgth         = 'rgt' ;  # the string used for the rgt header - rgt or RightRank
+our $levelh       = 'level' ;  # the string used for the level header - level or Level
+our $rdbms_type   = 'postgres' ; 
 #
 # convert a regular hs2 into a hierarchical one 
 # 
@@ -20,18 +20,21 @@ sub doConvert {
   
    my $msg        = 'unknown error has occurred !!!' ; 
    my $ret        = 1 ;      # assume error from the start  
-   my $lft        = 'lft' ;  # use header col name for defaults
-   my $rgt        = 'rgt' ;  # use header col name for defaults
+   my $lft        = $lfth ;  # use header col name for defaults
+   my $rgt        = $rgth ;  # use header col name for defaults
    my $rid        = 0 ;      # the row id as set by the reader
    my $state      = {} ; 
 
-   foreach my $key ( sort keys %$hsr2_in ) {
 
-      #print "rid : $rid \n" ; 
-      #print "key : $key \n" ; 
+   foreach my $key ( sort  {$a<=>$b} keys %$hsr2_in  ) {
+
+      # print "rid : $rid \n" ; 
+      # print "key : $key \n" ; 
 
       my $row = $hsr2_in->{ "$key" } ; 
       my $level = $row->{ $levelh } ; 
+      #print "level : $level \n" ; 
+      # $self->doPrintRow  ( $rid , $row ) ; 
 
       
       if ( !defined ( $level ) ) {
@@ -42,7 +45,9 @@ sub doConvert {
 
       if ( $rid == 0 ) {
          if ( $level ne $levelh ) {
-            $msg = "the header for the level should always be : level" ; 
+            $msg = "the header for the level should always be : 
+               level for postgres 
+               and Level for mysql" ; 
             carp $msg ; 
             return ( $ret , $msg ) ; 
          } 
@@ -62,25 +67,37 @@ sub doConvert {
          elsif ( $level == $hsr2->{ $rid-1 }->{$levelh} ) {
            ( $hsr2 ,$lft , $rgt ) = $self->doAddItemWithSiblings ( $hsr2 , $hsr2_in , $level , $lft , $rgt , $rid ) ; 
          }
-         elsif ( $level == $hsr2->{ $rid-1 }->{$levelh}-1 ) {
+         elsif ( $level <= $hsr2->{ $rid-1 }->{$levelh} - 1 ) {
            ( $hsr2 ,$lft , $rgt ) = $self->doAddItemWithSiblings ( $hsr2 , $hsr2_in , $level , $lft , $rgt , $rid ) ; 
          }
-         elsif( $level < $hsr2->{ $rid-1 }->{$levelh}+2 ) {
-            $msg = 'level decreased with more than 1 at row id:' . $rid ; 
+         elsif ( $level >= $hsr2->{ $rid-1 }->{$levelh} + 2 ) {
+            # print 'rid is : ' . $rid . "\n" ; 
+            # print 'level is : ' . $level . "\n" ; 
+            # print 'prev is : ' . $hsr2->{ $rid-1 }->{$levelh} . "\n" ; 
+            $msg = 'the ' . $levelh . ' increased with more than 1 at row id:' . $rid ; 
             carp $msg ; 
             return ( $ret , $msg ) ; 
          }
-         else  {     #( $level >= $hsr2->{ $rid-1 }->{$levelh}+2 ) {
-            $msg = 'level increased with more than 1 at row id:' . $rid ; 
+         else {
+            print 'rid is : ' . $rid . "\n" ; 
+            print 'level is : ' . $level . "\n" ; 
+            print 'prev is : ' . $hsr2->{ $rid-1 }->{$levelh} . "\n" ; 
+            $msg = 'the ' . $levelh . ' untrapped case for rid ' . "$rid" . "\n" ; 
             carp $msg ; 
             return ( $ret , $msg ) ; 
          }
+         #elsif( $level < $hsr2->{ $rid-1 }->{$levelh} + 2 ) {
+         #   $msg = 'the ' . $levelh .  ' decreased with more than 1 at row id:' . $rid ; 
+         #   carp $msg ; 
+         #   return ( $ret , $msg ) ; 
+         #}
+
       } #eof elsif rid > 1
 
       $row->{ $lfth } = $lft ;  
       $row->{ $rgth } = $rgt ; 
       $hsr2->{ $rid } = $row ; 
-      # $self->doPrintRow  ( $row ) ; 
+      # $self->doPrintRow  ( $rid , $row ) ; 
       $rid++ ;
 
    } #eof foreach key
@@ -170,8 +187,11 @@ sub doAddItemWithNoSiblings {
 
 sub doPrintRow {
    my $self = shift ; 
+   my $rid  = shift ; 
    my $row  = shift ; 
 
+   # debug p $rid ; 
+   # debug print " stop  rid \n" ; 
    print "start row: \n" ; 
    p $row ; 
    print "stop  row: \n" ; 
@@ -184,9 +204,12 @@ sub doPrintRow {
 
 		my $class      = shift;    # Class name is in the first parameter
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-      $lfth          = shift if @_ ; 
-      $rgth          = shift if @_ ; 
-      $levelh        = shift if @_ ; 
+      $rdbms_type    = shift @_ || 'postgres' ; 
+      if ( $rdbms_type eq 'mysql' || $rdbms_type eq 'mariadb' ) {
+         $lfth          = 'LeftRank' ; 
+         $rgth          = 'RightRank' ; 
+         $levelh        = 'Level' ; 
+      }
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       # $self = $self->doInitialize() ; 

@@ -24,58 +24,64 @@ Table of Contents
     * [2.3. System stability](#23-system-stability)
     * [2.4. System reliability](#24-system-reliability)
     * [2.5. Ease of use](#25-ease-of-use)
-  * [3. DEVOPS PERSPECTIVE](#3-devops-perspective)
-    * [3.1. System verifiability and testability](#31-system-verifiability-and-testability)
-      * [3.1.1. Clarity and breavity of the end to end tests](#311-clarity-and-breavity-of-the-end-to-end-tests)
-      * [3.1.2. Abort end-to-end tests on single test fail](#312-abort-end-to-end-tests-on-single-test-fail)
-      * [3.1.3. Control flow logging](#313-control-flow-logging)
-      * [3.1.4. Single entry point for end to end tests](#314-single-entry-point-for-end-to-end-tests)
-      * [3.1.5. Tool run log to human readable description](#315-tool-run-log-to-human-readable-description)
-      * [3.1.6. Userstories to test case relations](#316-userstories-to-test-case-relations)
-          * [3.1.6.1. UUID tracability for test files and userstories](#3161-uuid-tracability-for-test-files-and-userstories)
-      * [3.1.7. Components start run message print](#317-components-start-run-message-print)
-      * [3.1.8. Tool exit with exit code and exit message](#318-tool-exit-with-exit-code-and-exit-message)
-      * [3.1.9. Execution path tracing by UUID's](#319-execution-path-tracing-by-uuid's)
-    * [3.2. Manage details of issues with a single txt file](#32-manage-details-of-issues-with-a-single-txt-file)
-      * [3.2.1. Issues directories naming conventions](#321-issues-directories-naming-conventions)
-      * [3.2.2. Issues files naming conventions](#322-issues-files-naming-conventions)
-      * [3.2.3. Issues file open](#323-issues-file-open)
-      * [3.2.4. Issues files history](#324-issues-files-history)
-      * [3.2.5. Issues files naming conventions](#325-issues-files-naming-conventions)
-          * [3.2.5.1. Issues files naming conventions for the  project](#3251-issues-files-naming-conventions-for-the-project)
-          * [3.2.5.2. Issues files naming conventions for current date](#3252-issues-files-naming-conventions-for-current-date)
-          * [3.2.5.3. Issues files naming conventions for the time frame](#3253-issues-files-naming-conventions-for-the-time-frame)
-    * [3.3. Issues transformations](#33-issues-transformations)
-      * [3.3.1. 
-Load by txt-to-db action](#331-
+  * [3. ETL AND INTEGRATIONS PERSPECTIVE](#3-etl-and-integrations-perspective)
+    * [3.1. Xls-to-mysql-db hierarchical data load](#31-xls-to-mysql-db-hierarchical-data-load)
+      * [3.1.1. error reporting in xls-to-mysql-db hierarchical data load ](#311-error-reporting-in-xls-to-mysql-db-hierarchical-data-load-)
+    * [3.2. Xls-to-postgres-db hierarchical data load](#32-xls-to-postgres-db-hierarchical-data-load)
+      * [3.2.1. error reporting in xls-to-postgres-db hierarchical data load ](#321-error-reporting-in-xls-to-postgres-db-hierarchical-data-load-)
+  * [4. DEVOPS PERSPECTIVE](#4-devops-perspective)
+    * [4.1. System verifiability and testability](#41-system-verifiability-and-testability)
+      * [4.1.1. Clarity and breavity of the end to end tests](#411-clarity-and-breavity-of-the-end-to-end-tests)
+      * [4.1.2. Abort end-to-end tests on single test fail](#412-abort-end-to-end-tests-on-single-test-fail)
+      * [4.1.3. Control flow logging](#413-control-flow-logging)
+      * [4.1.4. Single entry point for end to end tests](#414-single-entry-point-for-end-to-end-tests)
+      * [4.1.5. Tool run log to human readable description](#415-tool-run-log-to-human-readable-description)
+      * [4.1.6. Userstories to test case relations](#416-userstories-to-test-case-relations)
+          * [4.1.6.1. UUID tracability for test files and userstories](#4161-uuid-tracability-for-test-files-and-userstories)
+      * [4.1.7. Components start run message print](#417-components-start-run-message-print)
+      * [4.1.8. Tool exit with exit code and exit message](#418-tool-exit-with-exit-code-and-exit-message)
+      * [4.1.9. Execution path tracing by UUID's](#419-execution-path-tracing-by-uuid's)
+    * [4.2. Manage details of issues with a single txt file](#42-manage-details-of-issues-with-a-single-txt-file)
+      * [4.2.1. Issues directories naming conventions](#421-issues-directories-naming-conventions)
+      * [4.2.2. Issues files naming conventions](#422-issues-files-naming-conventions)
+      * [4.2.3. Issues file open](#423-issues-file-open)
+      * [4.2.4. Issues files history](#424-issues-files-history)
+      * [4.2.5. Issues files naming conventions](#425-issues-files-naming-conventions)
+          * [4.2.5.1. Issues files naming conventions for the  project](#4251-issues-files-naming-conventions-for-the-project)
+          * [4.2.5.2. Issues files naming conventions for current date](#4252-issues-files-naming-conventions-for-current-date)
+          * [4.2.5.3. Issues files naming conventions for the time frame](#4253-issues-files-naming-conventions-for-the-time-frame)
+    * [4.3. Issues transformations](#43-issues-transformations)
+      * [4.3.1. 
+Load by txt-to-db action](#431-
 load-by-txt-to-db-action)
-          * [3.3.1.1. Load issues file from file system to db](#3311-load-issues-file-from-file-system-to-db)
-      * [3.3.2. Load issues by db-to-xls action](#332-load-issues-by-db-to-xls-action)
-      * [3.3.3. Load issues by xls-to-db action](#333-load-issues-by-xls-to-db-action)
-          * [3.3.3.1. Load issues by xls-to-db action for insert or upset](#3331-load-issues-by-xls-to-db-action-for-insert-or-upset)
-          * [3.3.3.2. Load issues by xls-to-db action by truncating or not the loadable table](#3332-load-issues-by-xls-to-db-action-by-truncating-or-not-the-loadable-table)
-      * [3.3.4. Load issues by db-to-txt](#334-load-issues-by-db-to-txt)
-          * [3.3.4.1. xls-to-db action load sort by issues prio attribute](#3341-xls-to-db-action-load-sort-by-issues-prio-attribute)
-          * [3.3.4.2. db-to-txt action load sort by issues start_time attribute](#3342-db-to-txt-action-load-sort-by-issues-start_time-attribute)
-          * [3.3.4.3. db-to-txt action load sort by issues start_time attribute](#3343-db-to-txt-action-load-sort-by-issues-start_time-attribute)
-      * [3.3.5. Load issues file from db to file system](#335-load-issues-file-from-db-to-file-system)
-    * [3.4. issues file filtering](#34-issues-file-filtering)
-    * [3.5. Single shell call for projects switching](#35-single-shell-call-for-projects-switching)
-    * [3.6. Issues publishing from shell calls](#36-issues-publishing-from-shell-calls)
-      * [3.6.1. Issues publishing in e-mail format](#361-issues-publishing-in-e-mail-format)
-      * [3.6.2. Issues handling in google sheet format](#362-issues-handling-in-google-sheet-format)
-      * [3.6.3. Issues publishing in google calendar format](#363-issues-publishing-in-google-calendar-format)
-    * [3.7. Metadata handling](#37-metadata-handling)
-  * [4. UI PERSPECTIVE](#4-ui-perspective)
-    * [4.1. Time management](#41-time-management)
-      * [4.1.1. copy an issue-tracker instance issue to  a google calendar event](#411-copy-an-issue-tracker-instance-issue-to-a-google-calendar-event)
-    * [4.2. Issues listing](#42-issues-listing)
-      * [4.2.1. automatic issue items sequencing](#421-automatic-issue-items-sequencing)
-      * [4.2.2. issues re-ordering by desired or defaut attribute in list view](#422-issues-re-ordering-by-desired-or-defaut-attribute-in-list-view)
-      * [4.2.3. issues list default row height](#423-issues-list-default-row-height)
-    * [4.3. Issues data transfer between different projects](#43-issues-data-transfer-between-different-projects)
-    * [4.4. Issues export to Google calendar](#44-issues-export-to-google-calendar)
-    * [4.5. Issues import from Google calendar](#45-issues-import-from-google-calendar)
+          * [4.3.1.1. Load issues file from file system to db](#4311-load-issues-file-from-file-system-to-db)
+      * [4.3.2. Load issues by db-to-xls action](#432-load-issues-by-db-to-xls-action)
+      * [4.3.3. Load issues by xls-to-db action](#433-load-issues-by-xls-to-db-action)
+          * [4.3.3.1. Load issues by xls-to-db action for insert or upset](#4331-load-issues-by-xls-to-db-action-for-insert-or-upset)
+          * [4.3.3.2. Load issues by xls-to-db action by truncating or not the loadable table](#4332-load-issues-by-xls-to-db-action-by-truncating-or-not-the-loadable-table)
+      * [4.3.4. Load issues by db-to-txt](#434-load-issues-by-db-to-txt)
+          * [4.3.4.1. xls-to-db action load sort by issues prio attribute](#4341-xls-to-db-action-load-sort-by-issues-prio-attribute)
+          * [4.3.4.2. db-to-txt action load sort by issues start_time attribute](#4342-db-to-txt-action-load-sort-by-issues-start_time-attribute)
+          * [4.3.4.3. db-to-txt action load sort by issues start_time attribute](#4343-db-to-txt-action-load-sort-by-issues-start_time-attribute)
+      * [4.3.5. Load issues file from db to file system](#435-load-issues-file-from-db-to-file-system)
+    * [4.4. issues file filtering](#44-issues-file-filtering)
+    * [4.5. Single shell call for projects switching](#45-single-shell-call-for-projects-switching)
+    * [4.6. Issues publishing from shell calls](#46-issues-publishing-from-shell-calls)
+      * [4.6.1. Issues publishing in e-mail format](#461-issues-publishing-in-e-mail-format)
+      * [4.6.2. Issues handling in google sheet format](#462-issues-handling-in-google-sheet-format)
+      * [4.6.3. Issues publishing in google calendar format](#463-issues-publishing-in-google-calendar-format)
+    * [4.7. Metadata handling](#47-metadata-handling)
+  * [5. UI PERSPECTIVE](#5-ui-perspective)
+    * [5.1. Projects switching](#51-projects-switching)
+    * [5.2. Time management](#52-time-management)
+      * [5.2.1. copy an issue-tracker instance issue to  a google calendar event](#521-copy-an-issue-tracker-instance-issue-to-a-google-calendar-event)
+    * [5.3. Issues listing](#53-issues-listing)
+      * [5.3.1. automatic issue items sequencing](#531-automatic-issue-items-sequencing)
+      * [5.3.2. issues re-ordering by desired or defaut attribute in list view](#532-issues-re-ordering-by-desired-or-defaut-attribute-in-list-view)
+      * [5.3.3. issues list default row height](#533-issues-list-default-row-height)
+    * [5.4. Issues data transfer between different projects](#54-issues-data-transfer-between-different-projects)
+    * [5.5. Issues export to Google calendar](#55-issues-export-to-google-calendar)
+    * [5.6. Issues import from Google calendar](#56-issues-import-from-google-calendar)
     
 
 
@@ -232,14 +238,53 @@ As the SysAdmin
 In order to be efficient and decrease the amount of errors
 I wanto to generally perform any command the system within the sysadmin scope via clean and memorable oneliners 
 
-## 3. DEVOPS PERSPECTIVE
+## 3. ETL AND INTEGRATIONS PERSPECTIVE
+    
+
+
+
+### 3.1. Xls-to-mysql-db hierarchical data load
+    
+
+As the Data Integrator
+In order to be efficient while handling the System's hierarchical data 
+I want to be able to
+use a single shell call to load all or chosen table(s) to the mysql db 
+
+#### 3.1.1. error reporting in xls-to-mysql-db hierarchical data load 
+    
+
+As the Data Integrator
+In order to be efficient while troubleshooting data loading errors 
+I want to be able to see : 
+ - which table's load failed
+ - what was the error in failed to 
+
+### 3.2. Xls-to-postgres-db hierarchical data load
+    
+
+As the Data Integrator
+In order to be efficient while handling the System's hierarchical data
+ I want to be able to
+use a single shell call to load all or chosen table(s) to the postgres db 
+
+#### 3.2.1. error reporting in xls-to-postgres-db hierarchical data load 
+    
+
+As the Data Integrator
+In order to be efficient while troubleshooting data loading errors 
+I want to be able to see : 
+ - which table's load failed
+ - what was the error in failed to 
+
+## 4. DEVOPS PERSPECTIVE
     
 
 As a devops operator of issue-tracker tool 
 In order to develop and operate the instance of the issue-tracker tool efficiently  
 I wanto to be sure that each aspect of my tasks and activities are covered by the functionalities of the tool to the maximum possible extend. 
 
-### 3.1. System verifiability and testability
+### 4.1. System verifiability and testability
     
 
 As an ITOPS 
@@ -247,91 +292,91 @@ In order to be able to rely on the operations of the tool
  and manage easily its features and functionalities
 I wanto the easily verify and  test parts or the whole System
 
-#### 3.1.1. Clarity and breavity of the end to end tests
+#### 4.1.1. Clarity and breavity of the end to end tests
     
 
 As an ITOPS 
 In order to be able to verify all the features and functionalities of the tool within the System
 I want to see the results of each test in 1 fow in the following format:.
 
-#### 3.1.2. Abort end-to-end tests on single test fail
+#### 4.1.2. Abort end-to-end tests on single test fail
     
 
 As an ITOPS 
 In order to be able to run continuously end-to-end tests and skip for several runs failing teists
 I want to be able to configure the single e2e entry point script to skip certain tests, but report me what was skipped. 
 
-#### 3.1.3. Control flow logging
+#### 4.1.3. Control flow logging
     
 
 As a CLI user 
 In order to be able to understand what the issue tracker tool is executing
 I wanto to have configurable logging with stderr, stdout and file output
 
-#### 3.1.4. Single entry point for end to end tests
+#### 4.1.4. Single entry point for end to end tests
     
 
 As an DevOps
 In order to be able to verify all the features and functionalities of the tool within the System
 I want to run a single shell call running all the end-to-end test of the application ensuring the prespecified features and functionalities.  
 
-#### 3.1.5. Tool run log to human readable description
+#### 4.1.5. Tool run log to human readable description
     
 
 As a CLI user 
 In order to be able to get a human readable description of the log of the specific run of the tool
 I wanto to be able to translate the recorded uuid's in the execution run log to their respective records
 
-#### 3.1.6. Userstories to test case relations
+#### 4.1.6. Userstories to test case relations
     
 
 As a Developer 
 In order to ensure the stability and expandability of the application
 I want to be able to run for each implemented userstory a single test
 
-##### 3.1.6.1. UUID tracability for test files and userstories
+##### 4.1.6.1. UUID tracability for test files and userstories
     
 
 As a Developer 
 In order to identify each userstory to be tested with its according test
 I want to be able to track each userstory or test code entry point file by UUID.
 
-#### 3.1.7. Components start run message print
+#### 4.1.7. Components start run message print
     
 
 As a CLI user 
 In order to know when a component has been started
 I wanto to be able to see the "START &lt;&lt;COMPONENT_NAME&gt;&gt; on either the STDOUT or the log file of the component
 
-#### 3.1.8. Tool exit with exit code and exit message
+#### 4.1.8. Tool exit with exit code and exit message
     
 
 As a CLI user or calling calling automated component
 In order to be able to understand whether or not the execution of the call to the tool was successful or not 
 I wanto to get the exit code from the tool execution and see the exit message
 
-#### 3.1.9. Execution path tracing by UUID's
+#### 4.1.9. Execution path tracing by UUID's
     
 
 As a DevOps operator
 Foreach execution run of the tool
 I want to be able to walk trough the execution path of the tool programatically. 
 
-### 3.2. Manage details of issues with a single txt file
+### 4.2. Manage details of issues with a single txt file
     
 
 As a CLI user 
 In order to be able quickly to view my issues
 I wanto to be able to update the names , statuses and categories of my daily,weekly,monthly, yearly and decadally issues by simply editing the issues term file
 
-#### 3.2.1. Issues directories naming conventions
+#### 4.2.1. Issues directories naming conventions
     
 
 As a issues manager
 In order to be able to manage lots of issues from different projects stored in plain txt files 
 I wanto to be able to store large quantity of issues txt files by their date on daily, weekly, monthly, yearly and decadally basis
 
-#### 3.2.2. Issues files naming conventions
+#### 4.2.2. Issues files naming conventions
     
 
 As a issues manager
@@ -339,28 +384,28 @@ In order to be able to manage lots of issues from different projects stored in p
 and open them quickly
 I wanto to be able to just type the first letter in a text editor supporting select opened file by typing its first letter and jump to that file
 
-#### 3.2.3. Issues file open
+#### 4.2.3. Issues file open
     
 
 As a CLI user 
 In order to be able quickly to access my issues ( daily , weekly, monthly , yearly )
 I wanto to be able to view my daily issues by simply opening a single txt file
 
-#### 3.2.4. Issues files history
+#### 4.2.4. Issues files history
     
 
 As a CLI user 
 In order to be able quickly to search trough old issues 
 I wanto to be able to access old issues files by their date held in their file names from the file system
 
-#### 3.2.5. Issues files naming conventions
+#### 4.2.5. Issues files naming conventions
     
 
 As a DevOps 
 In order to be able quickly to access and manage programatically issues
 I wanto to be able to quess the file paths of the issues file by their date 
 
-##### 3.2.5.1. Issues files naming conventions for the  project
+##### 4.2.5.1. Issues files naming conventions for the  project
     
 
 As a DevOps 
@@ -368,7 +413,7 @@ In order to be able quickly to switch between different projects
 I wanto to have the project name of the issues file in its name as the first token as follows:
 &lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
 
-##### 3.2.5.2. Issues files naming conventions for current date
+##### 4.2.5.2. Issues files naming conventions for current date
     
 
 As a DevOps 
@@ -376,7 +421,7 @@ In order to be able quickly and programmatically to go back in the history
 I wanto to have the current registration date in the file name and path
 &lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
 
-##### 3.2.5.3. Issues files naming conventions for the time frame
+##### 4.2.5.3. Issues files naming conventions for the time frame
     
 
 As a DevOps 
@@ -384,7 +429,7 @@ In order to be able quickly and programmatically to go back in the history
 I wanto to have the current registration date in the file name and path
 &lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt; ( daily|weekly|monthly|yearly) &gt;&gt;.txt
 
-### 3.3. Issues transformations
+### 4.3. Issues transformations
     
 
 As an cli user of the System 
@@ -396,7 +441,7 @@ db-to-xls - to load a xls file from db table to xls
 xls-to-db - to load a xls file with issues to an issues taable in db
 db-to-txt - to load a txt file from db table 
 
-#### 3.3.1. 
+#### 4.3.1. 
 Load by txt-to-db action
     
 
@@ -404,7 +449,7 @@ As an cli user of the System
 in order to store my issues in structured form to db for further processing
 I want to be able to load any issue file with a single line shell call to a db 
 
-##### 3.3.1.1. Load issues file from file system to db
+##### 4.3.1.1. Load issues file from file system to db
     
 
 As an cli user of the System 
@@ -415,38 +460,38 @@ I want to:
 - and than load any issue file with a single line shell call to a db
 - and optionally specify the period of the issues file ( daily , weekly , monthly , yearly ) with daily as default
 
-#### 3.3.2. Load issues by db-to-xls action
+#### 4.3.2. Load issues by db-to-xls action
     
 
 As an cli user of the System 
 in order to be able to sort and edit my issues in Excel
 I want to be able to unload my issues from one or many tables in the db at once in a single shell call
 
-#### 3.3.3. Load issues by xls-to-db action
-     
+#### 4.3.3. Load issues by xls-to-db action
+    
 
 As an cli user of the System 
 in order to store my issues in structured form to db for further processing after being sorted in Excel
 I want to be able to load my latest xls file with a single line shell call to a db 
 by choosing the names of the tables to load 
 
-##### 3.3.3.1. Load issues by xls-to-db action for insert or upset
-     
+##### 4.3.3.1. Load issues by xls-to-db action for insert or upset
+    
 
 As an cli user of the System 
 in order to insert or upsert my issues in structured form to db for further processing after being sorted in Excel
 I want to be able to load my latest xls file with a single line shell call to a db 
 by choosing the names of the tables to load and specifying upsert by adding the guid column to the xls sheet 
 
-##### 3.3.3.2. Load issues by xls-to-db action by truncating or not the loadable table
-     
+##### 4.3.3.2. Load issues by xls-to-db action by truncating or not the loadable table
+    
 
 As an cli user of the System 
 in order to store my issues in structured form to db for further processing after being sorted in Excel
 I want to be able to load my latest xls file with a single line shell call to a db 
 by choosing the names of the tables to load 
 
-#### 3.3.4. Load issues by db-to-txt
+#### 4.3.4. Load issues by db-to-txt
     
 
 As an cli user of the System 
@@ -455,7 +500,7 @@ I want to :
 - be able to load the issues for a period from the db to a file
 - by choosing the names of the tables to load
 
-##### 3.3.4.1. xls-to-db action load sort by issues prio attribute
+##### 4.3.4.1. xls-to-db action load sort by issues prio attribute
     
 
 As an cli user of the System 
@@ -465,7 +510,7 @@ I want to :
 - be able to specify the order in the issues txt files lines to be based on the prio attribute 
 by choosing the names of the tables to load
 
-##### 3.3.4.2. db-to-txt action load sort by issues start_time attribute
+##### 4.3.4.2. db-to-txt action load sort by issues start_time attribute
     
 
 As an cli user of the System 
@@ -475,7 +520,7 @@ I want to :
 - be able to specify the order in the issues txt files lines to be based on the start_time attribute ( start_time could be in the following format YYYY-mm-dd HH:MM in start_time or HH:MM  )
 by choosing the names of the tables to load
 
-##### 3.3.4.3. db-to-txt action load sort by issues start_time attribute
+##### 4.3.4.3. db-to-txt action load sort by issues start_time attribute
     
 
 As an cli user of the System 
@@ -484,7 +529,7 @@ in order to view the issues by categories
 I want to :
 - be able to specify the order in the issues txt files lines to be based on the category attribute
 
-#### 3.3.5. Load issues file from db to file system
+#### 4.3.5. Load issues file from db to file system
     
 
 As an cli user of the System 
@@ -493,14 +538,14 @@ I want to :
 - be able to load the issues for a period from the db to a file
 - and optionally specify the period of the issues file ( daily , weekly , monthly , yearly ) with daily as default
 
-### 3.4. issues file filtering
+### 4.4. issues file filtering
     
 
 As a CLI user 
 In order to filter quickly my issues 
 I wanto to be able to show the issues with their categories of only certain status
 
-### 3.5. Single shell call for projects switching
+### 4.5. Single shell call for projects switching
     
 
 As an issues-manager 
@@ -508,35 +553,35 @@ In order to be able to switch between different projects quickly
 I wanto to be able to issue a single shell call for loading a project's configuration
 and run the issue-handler against this pre-loaded configurtion
 
-### 3.6. Issues publishing from shell calls
+### 4.6. Issues publishing from shell calls
     
 
 As a DevOps 
 In order to be able to quickly share the current issues data in tabular format
 I wanto to be able to issue a single shell call for copying the current items data to a medium by specifying the tables to be published
 
-#### 3.6.1. Issues publishing in e-mail format
+#### 4.6.1. Issues publishing in e-mail format
     
 
 As a DevOps 
 In order to be able to quickly share the current issues data in email format
 I wanto to be able to issue a single shell call for copying the current items data to email by specifying the tables to be published
 
-#### 3.6.2. Issues handling in google sheet format
+#### 4.6.2. Issues handling in google sheet format
     
 
 As a DevOps 
 In order to be able to quickly share the current issues data in tabular format
 I wanto to be able to issue a single shell call for copying the current items data to google sheet by specifying the tables to be published
 
-#### 3.6.3. Issues publishing in google calendar format
+#### 4.6.3. Issues publishing in google calendar format
     
 
 As a DevOps 
 In order to be able to quickly share the current issues data in google calendar format
 I wanto to be able to issue a single shell call for copying the current items data to google calenda by specifying the tables to be published for the items having set start_time and stop_time attributes. 
 
-### 3.7. Metadata handling
+### 4.7. Metadata handling
     
 
 As a DevOps 
@@ -544,40 +589,47 @@ In order to be able to programatically manage all aspects of my data
 I wanto to have a single entry point to manage the meta data per tables , colums and UI elements
 so that even a table, column or whatever object is not popullated in the meta still there will be default values for it usable by the application
 
-## 4. UI PERSPECTIVE
+## 5. UI PERSPECTIVE
     
 
 As an UI user of the issue-tracker tool 
 In order to manage my issues via the UI successfully  
 I wanto to be sure that each aspect of my tasks and activities which could be performed via the UI of the tool are covered by the functionalities of the tool to the maximum possible extend. 
 
-### 4.1. Time management
+### 5.1. Projects switching
+    
+
+As an issue-tracker ui user 
+In order to be able to quickly swith between projects
+I wanto to be able to access a web page providing autocomplete to preloaded configuration entries for the different projects
+
+### 5.2. Time management
     
 
 As an issue-tracker ui user 
 In order to be prepare for issues such as ( events , tasks ) which have start and stop time
 I wanto to be able to view the issues with the same title, start_time and stop_time in google calendar
 
-#### 4.1.1. copy an issue-tracker instance issue to  a google calendar event
+#### 5.2.1. copy an issue-tracker instance issue to  a google calendar event
     
 
 As an issue-tracker ui user 
 In order to be able to see my issues time-schedule via phone and browser in a calendar view
 I wanto to be able to copy via the ui an issue as a new google calendar event
 
-### 4.2. Issues listing
+### 5.3. Issues listing
     
 
 As an UI user of the system I want to be able to list the issues stored in it. 
 
-#### 4.2.1. automatic issue items sequencing
+#### 5.3.1. automatic issue items sequencing
     
 
 As an UI user of the system 
 In order to save time while arranging all the different issue items
 I want the System to automatically sequence each item in list view by a defaut incremental sequence unless I have specified my own sequence. 
 
-#### 4.2.2. issues re-ordering by desired or defaut attribute in list view
+#### 5.3.2. issues re-ordering by desired or defaut attribute in list view
     
 
 As a UI user 
@@ -585,21 +637,21 @@ In order to prioritize and re-arrange to a logical sequence my issues
 I wanto to be able to drag and drop issues up and down , 
 which would correspondingly increase or decrease their attribute to which they are currently sorted or ordered by. 
 
-#### 4.2.3. issues list default row height
+#### 5.3.3. issues list default row height
     
 
 As a UI user 
 In order to quickly comprehend the data in the lists  
 I wanto each row of the ui to have a certain minimum height and whenever the data cannot fit into this height to be greater than it
 
-### 4.3. Issues data transfer between different projects
+### 5.4. Issues data transfer between different projects
     
 
 As the UI user of an issue-tracker instance 
 In order to save be able to track my personal time usage between different projects and the different interdependancies 
 I want to be able to move issues data from one project to another via the UI
 
-### 4.4. Issues export to Google calendar
+### 5.5. Issues export to Google calendar
     
 
 As the UI user of an issue-tracker instance 
@@ -607,7 +659,7 @@ In order to be able to visualize and manage my start- and stop_time having issue
 I wanto to be able to export my issues to Google calendar 
 
 
-### 4.5. Issues import from Google calendar
+### 5.6. Issues import from Google calendar
     
 
 As the UI user of an issue-tracker instance 

@@ -4,6 +4,7 @@ SELECT 'create the "procurement_items" table'
 ; 
    CREATE TABLE procurement_items (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
+    , id             integer UNIQUE NOT NULL 
     , seq            integer NULL
     , prio           integer NULL
     , category       varchar (200) NOT NULL
