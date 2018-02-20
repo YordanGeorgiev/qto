@@ -11,14 +11,14 @@
  	 , `LeftRank`				bigint			NOT NULL
  	 , `RightRank`				bigint			NOT NULL
 	 , `Name`     				varchar (50) 	NOT NULL
-	 , `TableNameLC`    		varchar (50) 	NOT NULL
-	 , `TableName`      		varchar 	(50) 	NOT NULL
+	 , `TableNameLC`    		varchar (50) 	NULL
+	 , `TableName`      		varchar 	(50) 	NULL
 	 , `Description`   		varchar (200) 	NOT NULL
 	 , `LoadOrder`				bigint 			NOT NULL 
 	 , `IsItem`					boolean 			NOT NULL 
  	 , `ItemControllerId` 	bigint 			NOT NULL 
 	 			REFERENCES ItemController(ItemControllerId)
-	 , `FileType`             	varchar 	(10) NOT NULL
+	 , `FileType`           varchar 	(10) NULL
 	 ,  PRIMARY KEY (ItemModelId)
 
 	) 

@@ -11,8 +11,8 @@ CREATE TABLE `Feature` (
  , `RightRank`			bigint			NOT NULL
  , `Status`   			varchar(20) 	NOT NULL
  , `Name`            varchar(200) 	NOT NULL
- , `Description`     varchar(4000) 	NOT NULL
- , `SrcCode`         varchar(4000) 	NOT NULL
+ , `Description`     varchar(4000) 	NULL
+ , `SrcCode`         varchar(4000) 	NULL
  , `Weight`          smallint DEFAULT NULL
  , `FileType`        varchar(10) DEFAULT NULL
 

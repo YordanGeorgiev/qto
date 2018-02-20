@@ -16,12 +16,13 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::In::RdrDbsFactory ; 
    use IssueTracker::App::IO::Out::WtrXls ; 
+   use IssueTracker::App::Mdl::Model ; 
 
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
 	our $objLogger						   = {} ; 
 	our $objFileHandler			      = {} ; 
-   our $rdbms_type                  = 'postgre' ; 
+   our $rdbms_type                  = 'postgres' ; 
 
 =head1 SYNOPSIS
       my $objCtrlDbToFile = 
@@ -59,19 +60,20 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 	   push ( @tables , split(',',$tables ) ) ; 
 
 
+      my $objModel             = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
       for my $table ( @tables ) { 
 
          my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
          my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
 
          my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
-         my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" );
+         my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" , \$objModel );
       
-         ( $ret , $msg , $hsr , $mhsr )  = $objRdrDb->doSelectTableIntoHashRef( $table ) ; 
+         ( $ret , $msg )  = $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
     
          my $objWtrXls    = 'IssueTracker::App::IO::Out::WtrXls'->new( \$appConfig ) ;
-         $ret = $objWtrXls->doBuildXlsFromHashRef ( $mhsr , $hsr , $table ) ;
+         $ret = $objWtrXls->doBuildXlsFromHashRef ( \$objModel , $table ) ;
          return ( $ret , $msg ) unless $ret == 0 ; 
       }
 

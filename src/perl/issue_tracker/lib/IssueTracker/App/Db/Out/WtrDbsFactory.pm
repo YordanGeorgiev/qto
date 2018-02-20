@@ -12,10 +12,10 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
    our $objLogger       = {} ; 
 
 	# use IssueTracker::App::Db::MariaWtrDb  ; 
-   use IssueTracker::App::Db::Out::Postgres::WtrDb ; 
-   use IssueTracker::App::Db::Out::MariaDb::WtrDb ; 
+   use IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ; 
+   use IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ; 
 
-
+   our $rdbms_type  = 'postgres' ; 
 	#
 	# -----------------------------------------------------------------------------
 	# fabricates different WtrDb object 
@@ -33,19 +33,24 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
 		my $package_file     	= () ; 
 		my $objWtrDb   		= () ;
 
-		if ( $db_type eq 'mariadb' ) {
-			$WtrDb 				= 'WtrDbMariaDb' ; 
-		   $package_file     	= "IssueTracker/App/Db/Out/MariaDb/WtrDb.pm";
-		   $objWtrDb   		= "IssueTracker::App::Db::Out::MariaDb::WtrDb";
+		if ( $db_type eq 'postgres' ) {
+		   $package_file     = "IssueTracker/App/Db/Out/Postgres/WtrPostgresDb.pm";
+		   $objWtrDb   		= "IssueTracker::App::Db::Out::Postgres::WtrPostgresDb" ; 
 		}
-		if ( $db_type eq 'postgre' ) {
-		   $package_file     	= "IssueTracker/App/Db/Out/Postgres/WtrDb.pm";
-		   $objWtrDb   		= "IssueTracker::App::Db::Out::Postgres::WtrDb";
+		elsif ( $db_type eq 'mysql' ) {
+			$WtrDb 				= 'WtrDbMariaDb' ; 
+		   $package_file     	= "IssueTracker/App/Db/Out/MariaDb/WtrMariaDb.pm";
+		   $objWtrDb   		= "IssueTracker::App::Db::Out::MariaDb::WtrMariaDb";
+		}
+		elsif ( $db_type eq 'mariadb' ) {
+			$WtrDb 				= 'WtrDbMariaDb' ; 
+		   $package_file     = "IssueTracker/App/Db/Out/MariaDb/WtrMariaDb.pm";
+		   $objWtrDb   		= "IssueTracker::App::Db::Out::MariaDb::WtrMariaDb";
 		}
 		else {
 			# future support for different RDBMS 's should be added here ...
-		   $package_file     	= "IssueTracker/App/Db/Out/Postgres/WtrDb.pm";
-		   $objWtrDb   		= "IssueTracker::App::Db::Out::Postgres::WtrDb";
+		   $package_file     = "IssueTracker/App/Db/Out/Postgres/WtrMariaDb.pm";
+		   $objWtrDb   		= "IssueTracker::App::Db::Out::Postgres::WtrMariaDb";
 		}
 
 
@@ -65,6 +70,7 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
 		my $invocant 			= shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
       $objController       = shift ; 
+      $rdbms_type          = shift || 'postgres' ; 
 		
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
