@@ -18,7 +18,7 @@ doCloneProject(){
    doParseIniEnvVars "$global_cnf_dir"'/'"$src_proj"".prd.host-name.cnf"
 
    # go to the ysg projects daily data root dir
-   cd $proj_daily_data_root_dir
+   cd $mix_data_dir
 
    # define yesterday 
    export tgt_date=$(date --date="-1 day" "+%Y-%m-%d")
@@ -31,11 +31,11 @@ doCloneProject(){
    doParseIniEnvVars "$global_cnf_dir"'/'"$tgt_proj"".prd.host-name.cnf"
 
    # create the new projects daily data root dir
-   mkdir -p $proj_daily_data_root_dir
-   export dir_to_morph=$proj_daily_data_root_dir
+   mkdir -p $mix_data_dir
+   export dir_to_morph=$mix_data_dir
 
    # unzip the yesterday daily dir for the new project
-   unzip -o $tgt_date.zip -d $proj_daily_data_root_dir/
+   unzip -o $tgt_date.zip -d $mix_data_dir/
 
    # go back to the product instance dir
    cd -

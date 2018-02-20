@@ -64,8 +64,8 @@ our $issues_file       = () ;
 # -----------------------------------------------------------------------------
 sub doPrintIssuesFile {
    my $self       = shift ; 
-   my $objMdlHsrs = ${ shift @_ } ; 
-   my $str_issues = $objMdlHsrs->get('str_issues' ) ; 
+   my $objModel = ${ shift @_ } ; 
+   my $str_issues = $objModel->get('str_issues' ) ; 
 
    $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
 }
@@ -143,11 +143,11 @@ sub doInitialize {
     my $nice_month = "$year" . '-' . "$mon";
     my $nice_date  = "$year" . '-' . "$mon" . '-' . $mday;
 
-    $msg = 'proj_daily_data_root_dir: ' . $ENV{'proj_daily_data_root_dir'};
+    $msg = 'mix_data_dir: ' . $ENV{'mix_data_dir'};
     $objLogger->doLogDebugMsg($msg);
     $table =~ s/_/-/g ; 
     $issues_file
-      = $ENV{'proj_daily_data_root_dir'}
+      = $ENV{'mix_data_dir'}
       . "/$year/$nice_month/$nice_date/$issue_tracker_project"
       . '.'
       . "$table"

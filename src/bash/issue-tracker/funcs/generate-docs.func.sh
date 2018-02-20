@@ -5,9 +5,9 @@
 # cat doc/txt/issue-tracker/funcs/generate-docs.func.txt
 # ---------------------------------------------------------
 doGenerateDocs(){
-
 	doLog "DEBUG START doGenerateDocs"
-	
+
+   test -z "${doc_root_dir+x}" && doc_root_dir=$product_instance_dir
    test -z "${mysql_user+x}" && doExit 1 "mysql_user not set - Nothing to do !!!" 
    test -z "${mysql_user_pw+x}" && doExit 1 "mysql_user_pw not set - Nothing to do !!!"
    test -z "${mysql_host+x}" && doExit 1 "mysql_host not set - Nothing to do !!!"
@@ -35,11 +35,13 @@ doGenerateDocs(){
    while read -r l ; do \
       t=$(echo $l|cut -d" " -f 1); 
       b=$(echo $l|cut -d" " -f 2); 
-      n=$(echo $l|cut -d" " -f 3-);
+      n="$doc_root_dir/"$(echo $l|cut -d" " -f 3-);
       echo start $t,$b; 
+      set -x 
       url='http://'"$web_host"':'"$web_port"'/export?to=githubmd&db='"$mysql_db_name"
       url="$url"'&path-id='$b'&item='$t'&order-by=SeqId&filter-by=Level&filter-value=1,2,3,4,5,6'
       wget -O "$n.md" "$url"
+      set +x
    done }
 	doLog "DEBUG STOP  exporting github md files"
 
@@ -63,7 +65,7 @@ doGenerateDocs(){
    while read -r l ; do \
       t=$(echo $l|cut -d" " -f 1); 
       b=$(echo $l|cut -d" " -f 2); 
-      n=$(echo $l|cut -d" " -f 3-);
+      n="$doc_root_dir/"$(echo $l|cut -d" " -f 3-);
       url='http://'"$web_host"':'"$web_port"'/export?to=pdf&db='"$mysql_db_name"
       url="$url"'&branch-id='$b'&item='$t'&order-by=SeqId&filter-by=Level&filter-value=1,2,3,4,5,6'
       wget -O "$n.pdf" "$url"

@@ -12,7 +12,7 @@ CREATE TABLE `ExportFile` (
  , `BranchId` 					bigint 			DEFAULT '1'		-- the description of this item
  , `Name` 						varchar(200) 	NOT NULL			-- the human readable name of the item as presented 
  , `Description` 				varchar(4000) 	DEFAULT NULL	-- the description of this item
- , `RelativePath` 			varchar(200) 	NOT NULL			-- the human readable name of the item as presented 
+ , `RelativePath` 			varchar(200) 	DEFAULT './' 			-- the human readable name of the item as presented 
  , `Type`						varchar(30) 	DEFAULT 'md'	-- the description of this item
  , `ItemViewId` 		bigint 			NOT NULL 
 		REFERENCES ItemView(ItemViewId)
