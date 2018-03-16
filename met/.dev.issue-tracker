@@ -5,6 +5,8 @@ src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
 src/perl/issue_tracker/t/lib/IssueTracker/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm
+src/perl/issue_tracker/t/TestRdrCmdArgs.pl
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/SetGetableChild.pm
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/AutoLoadableChild.pm
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestSetGetable.pl
