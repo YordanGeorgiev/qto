@@ -35,6 +35,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 	our $ConfFile 						   = '' ; 
 	our $objLogger						   = {} ; 
    our $rdbms_type                  = 'postgre' ; 
+   our $objModel                    = {} ; 
 
 
 =head1 SYNOPSIS
@@ -60,7 +61,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       use strict 'refs'; 
 
       my $objCtrlTxtToDb = 
-         'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig ) ; 
+         'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlTxtToDb->doLoad () ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
    }
@@ -70,7 +71,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       use strict 'refs'; 
 
       my $objCtrlDbToXls = 
-         'IssueTracker::App::Ctrl::CtrlDbToXls'->new ( \$appConfig ) ; 
+         'IssueTracker::App::Ctrl::CtrlDbToXls'->new ( \$appConfig , \$objModel ) ; 
       my ( $ret , $msg ) = $objCtrlDbToXls->doReadAndLoad ( ); 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
@@ -80,7 +81,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       my $self = shift ; 
       use strict 'refs'; 
       my $objCtrlDbToGsheet = 
-         'IssueTracker::App::Ctrl::CtrlDbToGoogleSheet'->new ( \$appConfig ) ; 
+         'IssueTracker::App::Ctrl::CtrlDbToGoogleSheet'->new ( \$appConfig , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlDbToGsheet->doReadAndLoad ( ); 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
@@ -91,7 +92,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       use strict 'refs'; 
 
       my $objCtrlXlsToDb = 
-         'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig ) ; 
+         'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlXlsToDb->doReadAndLoad ( ) ; 
       return ( $ret , $msg ) ; 
    }
@@ -101,7 +102,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       my $self = shift ; 
       use strict 'refs'; 
       my $objCtrlDbToTxt = 
-         'IssueTracker::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig ) ; 
+         'IssueTracker::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndWrite ( ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
@@ -133,6 +134,8 @@ package IssueTracker::App::Ctrl::Dispatcher ;
          $objLogger->doLogInfoMsg ( "module_test_run: " . $module_test_run ) ; 
          return $func if ( $module_test_run == 1 ) ; 
          ($ret , $msg ) = $self->$func ; 
+
+         return ( $ret , $msg ) if $ret != 0 ; 
 
          $msg = "STOP  RUN the $action action " ; 
          $objLogger->doLogInfoMsg ( $msg ) ; 
@@ -177,6 +180,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
 		my $class      = shift;    # Class name is in the first parameter
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
       $module_test_run = shift if @_ ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class

@@ -25,7 +25,8 @@ $appConfig                 = $objConfigurator->getConfHolder()  ;
 
 my $actions               	= 'db-to-xls' ; 
 my $objLogger					= 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
-my $objDispatcher 			= 'IssueTracker::App::Ctrl::Dispatcher'->new(\$appConfig , 1);
+my $objModel               = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
+my $objDispatcher 			= 'IssueTracker::App::Ctrl::Dispatcher'->new(\$appConfig , \$objModel , 1);
 my $functions              = $objDispatcher->doRun($actions);
 ok ( $functions eq 'doDbToXls' , "test-01 ensure the db-to-xls action calls the doDbToXls func" );
 

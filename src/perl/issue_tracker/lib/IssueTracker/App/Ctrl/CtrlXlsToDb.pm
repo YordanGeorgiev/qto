@@ -31,6 +31,8 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 	our $HostName 						   = '' ; 
 	our $ConfFile 						   = '' ; 
 	our $objLogger						   = {} ; 
+	our $objModel                    = {} ; 
+   our $appConfig                   = {} ; 
    our $rdbms_type                  = $ENV{ 'rdbms_type' } || 'postgres' ; 
 
 
@@ -63,11 +65,10 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       my $msg                 = 'file read' ; 
       
       my @tables              = ();
-      my $tables              = $issue_tracker::appConfig->{ 'tables' } ;  
-      my $xls_file            = $issue_tracker::appConfig->{ 'xls_file' } ; 
+      my $tables              = $objModel->get( 'ctrl.tables' ) ; 
+      my $xls_file            = $objModel->get( 'io.xls_file' ) ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
-      my $objModel          = 'IssueTracker::App::Mdl::Model'->new ( \$issue_tracker::appConfig ) ; 
       my $objRdrXls           = 'IssueTracker::App::IO::In::RdrXls'->new ( \$issue_tracker::appConfig , \@tables ) ; 
       
       # read the xls into hash ref of hash ref
@@ -138,6 +139,8 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 	sub new {
 
 		my $class      = shift;    # Class name is in the first parameter
+		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$objModel   = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize() ; 
@@ -153,6 +156,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       my $self = shift ; 
 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$issue_tracker::appConfig ) ;
+      $rdbms_type       = $ENV{ 'rdbms_type' } || $objModel->get( 'ctrl.rdbms_type' ) || 'postgres' ; 
 
 
       return $self ; 
