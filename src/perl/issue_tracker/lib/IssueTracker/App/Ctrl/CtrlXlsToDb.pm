@@ -61,8 +61,6 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
    # and insert the hsr into a db
 	# -----------------------------------------------------------------------------
    sub doReadAndLoad {
-      print "here" ; 
-      sleep 10 ; 
 
       my $self                = shift ; 
       my $tables_list         = shift ; 
@@ -75,7 +73,8 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       my $xls_file            = $objModel->get( 'io.xls-file' ) ;
 	   push ( @tables , split(',',$tables ) ) ; 
 
-      my $objRdrXls           = 'IssueTracker::App::IO::In::RdrXls'->new ( \$issue_tracker::appConfig , \@tables ) ; 
+      my $objRdrXls           = 'IssueTracker::App::IO::In::RdrXls'->new ( 
+            \$issue_tracker::appConfig , \@tables ) ; 
       
       # read the xls into hash ref of hash ref
       ( $ret , $msg  ) = 
@@ -85,7 +84,8 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
       $msg                 = 'unknown error while inserting db tables !!!' ; 
 
-      my $objWtrDbsFactory = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( \$issue_tracker::appConfig  , \$self , $rdbms_type ) ; 
+      my $objWtrDbsFactory = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( 
+            \$issue_tracker::appConfig  , \$self , $rdbms_type ) ; 
       my $objWtrDb 		   = $objWtrDbsFactory->doInstantiate ( "$rdbms_type" , \@tables );
 
       p($hsr3) if $module_trace == 1 ; 
