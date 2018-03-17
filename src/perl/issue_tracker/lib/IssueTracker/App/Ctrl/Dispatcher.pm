@@ -5,13 +5,15 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 	my $VERSION = '1.0.0';    
 
 	require Exporter;
-	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
+	our @ISA = qw(Exporter IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::AutoLoadable) ;
 	our $AUTOLOAD =();
 	use AutoLoader;
    use Carp ;
    use Data::Printer ; 
 
    use base qw(IssueTracker::App::Utils::OO::SetGetable);
+   use base qw(IssueTracker::App::Utils::OO::AutoLoadable); 
+
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Ctrl::CtrlTxtToDb ; 
    use IssueTracker::App::Ctrl::CtrlXlsToDb ; 	
@@ -35,6 +37,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 	our $ConfFile 						   = '' ; 
 	our $objLogger						   = {} ; 
    our $rdbms_type                  = 'postgre' ; 
+   our $objModel                    = {} ; 
 
 
 =head1 SYNOPSIS
@@ -60,9 +63,9 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       use strict 'refs'; 
 
       my $objCtrlTxtToDb = 
-         'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig ) ; 
+         'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlTxtToDb->doLoad () ; 
-      return ( $ret , $msg ) unless $ret == 0 ; 
+      return ( $ret , $msg ) ; 
    }
 
    sub doDbToXls {
@@ -70,9 +73,9 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       use strict 'refs'; 
 
       my $objCtrlDbToXls = 
-         'IssueTracker::App::Ctrl::CtrlDbToXls'->new ( \$appConfig ) ; 
+         'IssueTracker::App::Ctrl::CtrlDbToXls'->new ( \$appConfig , \$objModel ) ; 
       my ( $ret , $msg ) = $objCtrlDbToXls->doReadAndLoad ( ); 
-      return ( $ret , $msg ) unless $ret == 0 ; 
+      return ( $ret , $msg ) ; 
 
    }
    
@@ -80,18 +83,19 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       my $self = shift ; 
       use strict 'refs'; 
       my $objCtrlDbToGsheet = 
-         'IssueTracker::App::Ctrl::CtrlDbToGoogleSheet'->new ( \$appConfig ) ; 
+         'IssueTracker::App::Ctrl::CtrlDbToGoogleSheet'->new ( \$appConfig , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlDbToGsheet->doReadAndLoad ( ); 
-      return ( $ret , $msg ) unless $ret == 0 ; 
+      return ( $ret , $msg ) ; 
 
    }
 
    sub doXlsToDb {
       my $self = shift ; 
       use strict 'refs'; 
+      
 
       my $objCtrlXlsToDb = 
-         'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig ) ; 
+         'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlXlsToDb->doReadAndLoad ( ) ; 
       return ( $ret , $msg ) ; 
    }
@@ -101,14 +105,13 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       my $self = shift ; 
       use strict 'refs'; 
       my $objCtrlDbToTxt = 
-         'IssueTracker::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig ) ; 
+         'IssueTracker::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndWrite ( ) ; 
-      return ( $ret , $msg ) unless $ret == 0 ; 
-
+      return ( $ret , $msg ) ; 
    }
 
 
-   sub doRun {
+   sub doRunActions {
 
       my $self          = shift ; 
       my $actions       = shift ; 
@@ -134,6 +137,8 @@ package IssueTracker::App::Ctrl::Dispatcher ;
          return $func if ( $module_test_run == 1 ) ; 
          ($ret , $msg ) = $self->$func ; 
 
+         return ( $ret , $msg ) if $ret != 0 ; 
+
          $msg = "STOP  RUN the $action action " ; 
          $objLogger->doLogInfoMsg ( $msg ) ; 
 
@@ -144,12 +149,11 @@ package IssueTracker::App::Ctrl::Dispatcher ;
          }
       } 
       
-
       $msg = "OK for all action runs: @actions" ; 
       $ret = 0 ; 
       return ( $ret , $msg ) ; 
    }
-   # eof sub doRun
+   # eof sub doRunActions
 
 	
 
@@ -160,8 +164,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
 =head1 SUBROUTINES/METHODS
 
-	STOP  SUBS 
-	# -----------------------------------------------------------------------------
 =cut
 
 
@@ -170,13 +172,11 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 	# the constructor
 =cut 
 
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
 	sub new {
 
 		my $class      = shift;    # Class name is in the first parameter
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
       $module_test_run = shift if @_ ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
@@ -208,48 +208,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 	# overrided autoloader prints - a run-time error - perldoc AutoLoader
 	# -----------------------------------------------------------------------------
 =cut
-	sub AUTOLOAD {
-
-		my $self = shift;
-		no strict 'refs';
-		my $name = our $AUTOLOAD;
-		*$AUTOLOAD = sub {
-			my $msg =
-			  "BOOM! BOOM! BOOM! \n RunTime Error !!! \n Undefined Function $name(@_) \n ";
-			croak "$self , $msg $!";
-		};
-		goto &$AUTOLOAD;    # Restart the new routine.
-	}   
-	# eof sub AUTOLOAD
-
-
-	# -----------------------------------------------------------------------------
-	# wrap any logic here on clean up for this class
-	# -----------------------------------------------------------------------------
-	sub RunBeforeExit {
-
-		my $self = shift;
-
-		#debug print "%$self RunBeforeExit ! \n";
-	}
-	#eof sub RunBeforeExit
-
-
-	# -----------------------------------------------------------------------------
-	# called automatically by perl's garbage collector use to know when
-	# -----------------------------------------------------------------------------
-	sub DESTROY {
-		my $self = shift;
-
-		#debug print "the DESTRUCTOR is called  \n" ;
-		$self->RunBeforeExit();
-		return;
-	}   
-	#eof sub DESTROY
-
-
-	# STOP functions
-	# =============================================================================
 
 	
 

@@ -21,7 +21,7 @@ use Scalar::Util qw /looks_like_number/;
 use Data::Printer;
 
 use base qw(IssueTracker::App::Utils::OO::SetGetable);
-use IssueTracker::App::Utils::IO::FileHandler ; 
+use IssueTracker::App::IO::Out::WtrFiles ; 
 use IssueTracker::App::Utils::Logger ; 
 use IssueTracker::App::Utils::Timer ; 
 
@@ -34,7 +34,7 @@ our $appConfig         = {};
 our $HostName          = '';
 our $objLogger         = {};
 our $objController     = {};
-our $objFileHandler    = {};
+our $objWtrFiles    = {};
 our $hsrStatus         = {};
 our %inverse_hsrStatus = ();
 our $table              = 'daily_issues' ; 
@@ -67,7 +67,7 @@ sub doPrintIssuesFile {
    my $objModel = ${ shift @_ } ; 
    my $str_issues = $objModel->get('str_issues' ) ; 
 
-   $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
+   my ( $ret , $msg ) = $objWtrFiles->doPrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
 }
 # eof sub doPrintIssuesFile
 
@@ -102,13 +102,11 @@ sub doInitialize {
    my $ret = 1 ; 
 
 
-   $objFileHandler   = 'IssueTracker::App::Utils::IO::FileHandler'->new ( \$appConfig ) ; 
 
   %$self = (appConfig => $appConfig);
 
   $objLogger = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
-  $objFileHandler
-    = 'IssueTracker::App::Utils::IO::FileHandler'->new(\$appConfig);
+  $objWtrFiles   = 'IssueTracker::App::IO::Out::WtrFiles'->new ( \$appConfig ) ; 
 
   $hsrStatus = {
     'eval' => '01-eval'    # evaluate whether or not to do it
@@ -157,7 +155,7 @@ sub doInitialize {
 
     $msg = 'issues_file: ' . $issues_file;
     $objLogger->doLogDebugMsg($msg);
-
+    sleep 3 ; 
     my $ProductInstanceDir = $appConfig->{'ProductInstanceDir'};
     $issues_file = $ProductInstanceDir . "/" . $issues_file
       unless ($issues_file =~ m/^\//g);
