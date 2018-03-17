@@ -36,10 +36,9 @@ doRunPerlTests(){
    perl src/perl/issue_tracker/t/lib/IssueTracker/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
 	test -z "$sleep_interval" || sleep $sleep_interval
 
-   doLog "INFO Unit testing or the RdrCmdArgs module" 
-   perl src/perl/issue_tracker/t/TestRdrCmdArgs.pl --do run
+   doLog "INFO Unit testing or the CtrlXlsToDb module" 
+   perl src/perl/issue_tracker/t/TestCtrlXlsToDb.pl
 	test -z "$sleep_interval" || sleep $sleep_interval
-   
 }
 # eof func doRunPerlTests
 

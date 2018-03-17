@@ -2,7 +2,7 @@ use strict ; use warnings ;
 
 use FindBin;
 BEGIN { unshift @INC, "$FindBin::Bin/../lib" }
-use Test::More tests => 2 ; 
+use Test::More tests => 3 ; 
 
 use Getopt::Long;
 use IssueTracker::App::Utils::Initiator ; 
@@ -36,5 +36,11 @@ ok ( ref $objRdrCmdArgs eq 'IssueTracker::App::IO::In::RdrCmdArgs' , $msg ) ;
 $msg = 'test-02 - ensure the actions are passed to the model' ; 
 ok ( $objModel->get('ctrl.actions') eq 'run' , $msg ) ; 
 
+my $ProductInstanceDir = $appConfig->{'ProductInstanceDir' } ; 
+my $cmd = "$ProductInstanceDir/src/perl/issue_tracker/script/issue_tracker.pl" ; 
+
+$msg = 'test-03 - the whole script should fail because the --do <<action>> is not defined ' ; 
+my $cmd_out = `$cmd 2>&1 1>/dev/null` ; 
+ok ( $?  != 0  , $msg  ) ; 
 
 # FILE-UUID 7bf7ee86-58f3-417a-8413-929131912912

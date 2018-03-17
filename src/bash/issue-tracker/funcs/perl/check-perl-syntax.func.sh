@@ -44,7 +44,7 @@ doCheckPerlSyntax(){
 		
 			# foreach perl file check the syntax by setting the correct INC dirs	
 			while read -r file ; do 
-				perl -MCarp::Always -I `pwd` -I `pwd`/lib -wc "$file"
+				perl -MCarp::Always -I `pwd` -I `pwd`/lib -wc "$file" 
             # run the perltidy inline
             # perltidy -b "$file"
             # sleep 3

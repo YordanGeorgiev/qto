@@ -34,9 +34,9 @@ Quick summary of what the module does.
 
 Perhaps a little code snippet.
 
-    use IssueTracker::Control::Utils::Logger ; 
+    use IssueTracker::App::Utils::Logger ; 
 
-    my $objLogger = IssueTracker::Control::Utils::Logger->new( \$appConfig ) ;
+    my $objLogger = IssueTracker::App::Utils::Logger->new( \$appConfig ) ;
     ...
 
 =head1 EXPORT
@@ -67,7 +67,7 @@ if you don't export anything, such as for a purely object-oriented module.
       $self = $self->doInitialize() ; 
 		return $self;
 	}  
-	#eof const
+	#eof new
 
 
    sub doInitialize {
@@ -566,7 +566,6 @@ if you don't export anything, such as for a purely object-oriented module.
 		$self->MkDir( $FileDir ) unless ( -d $FileDir ) ; 
 
 
-		no warnings 'experimental::smartmatch';
 		# the owner of the process might not be able to write to the file
 		# src: http://search.cpan.org/~pjf/autodie-2.25/lib/autodie.pm	
 		eval {
@@ -579,12 +578,12 @@ if you don't export anything, such as for a purely object-oriented module.
 			close $FH ;
 		};
 
-		given ( $@ ) {
-		  when (undef)   { $msg 		= "[INFO ] No error at all" ; }
-		  when ('open')  { $error_msg = "[FATAL] Failed to open log file: $file" ; }
-		  when (':io')   { $error_msg = "[FATAL] Non-open, IO error while openning log file: $file" ; }
-		  when (':all')  { $error_msg = "[FATAL] All other autodie errors while openning log file: $file" ; }
-		  default        { $msg 		= "[INFO ] No error at all" ; }
+		if ( $@ ) {
+		  if (undef)   { $msg 		= "[INFO ] No error at all" ; }
+		  elsif ('open')  { $error_msg = "[FATAL] Failed to open log file: $file" ; }
+		  elsif (':io')   { $error_msg = "[FATAL] Non-open, IO error while openning log file: $file" ; }
+		  elsif (':all')  { $error_msg = "[FATAL] All other autodie errors while openning log file: $file" ; }
+		  else { $msg 		= "[INFO ] No error at all" ; }
    	}
 		
 		if ( $error_msg ) {	
@@ -593,7 +592,6 @@ if you don't export anything, such as for a purely object-oriented module.
 			croak ( $error_msg ) ; 
 		}	
 
-		use warnings 'experimental::smartmatch';
 		return 1 ; 
 	}
 	# eof sub doAppendToFile
@@ -611,7 +609,6 @@ if you don't export anything, such as for a purely object-oriented module.
 		my $error_msg 		= '' ; 
 		my $msg 				= '' ; 	
 
-		no warnings 'experimental::smartmatch';
 
 		# if there is !no directory!
 		unless ( -d "$dir_to_create" ) {
@@ -621,11 +618,11 @@ if you don't export anything, such as for a purely object-oriented module.
 				mkpath( "$dir_to_create" ) || cluck( "$error_msg" ) ;  
 			};
 
-			given ( $@ ) {
-				when (undef)   { $msg 			= "[INFO ] No error. Proceed " ; }
-				when ('open')  { $error_msg 	= "[FATAL] failed to open the dir: $dir_to_create" ; }
-				when (':io')   { $error_msg 	= "[FATAL] Non-open, IO error for the dir: $dir_to_create " ; }
-				when (':all')  { $error_msg 	= "[FATAL] All other autodie errors for the dir: $dir_to_create " ; }
+			if ( $@ ) {
+				if (undef)   { $msg 			= "[INFO ] No error. Proceed " ; }
+				elsif ('open')  { $error_msg 	= "[FATAL] failed to open the dir: $dir_to_create" ; }
+				elsif (':io')   { $error_msg 	= "[FATAL] Non-open, IO error for the dir: $dir_to_create " ; }
+				elsif (':all')  { $error_msg 	= "[FATAL] All other autodie errors for the dir: $dir_to_create " ; }
 		  		default        { $msg 			= "[INFO ] No error at all" ; }
 			}
 			if ( $error_msg ) {
@@ -644,7 +641,6 @@ if you don't export anything, such as for a purely object-oriented module.
 			return 1;
 		}
 		
-		use warnings 'experimental::smartmatch';
 
 	}    
 	#eof sub

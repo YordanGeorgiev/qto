@@ -5,13 +5,15 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 	my $VERSION = '1.0.0';    
 
 	require Exporter;
-	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
+	our @ISA = qw(Exporter IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::AutoLoadable) ;
 	our $AUTOLOAD =();
 	use AutoLoader;
    use Carp ;
    use Data::Printer ; 
 
    use base qw(IssueTracker::App::Utils::OO::SetGetable);
+   use base qw(IssueTracker::App::Utils::OO::AutoLoadable); 
+
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Ctrl::CtrlTxtToDb ; 
    use IssueTracker::App::Ctrl::CtrlXlsToDb ; 	
@@ -109,7 +111,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    }
 
 
-   sub doRun {
+   sub doRunActions {
 
       my $self          = shift ; 
       my $actions       = shift ; 
@@ -152,7 +154,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       $ret = 0 ; 
       return ( $ret , $msg ) ; 
    }
-   # eof sub doRun
+   # eof sub doRunActions
 
 	
 
@@ -163,8 +165,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
 =head1 SUBROUTINES/METHODS
 
-	STOP  SUBS 
-	# -----------------------------------------------------------------------------
 =cut
 
 
@@ -173,9 +173,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 	# the constructor
 =cut 
 
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
 	sub new {
 
 		my $class      = shift;    # Class name is in the first parameter
@@ -212,48 +209,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 	# overrided autoloader prints - a run-time error - perldoc AutoLoader
 	# -----------------------------------------------------------------------------
 =cut
-	sub AUTOLOAD {
-
-		my $self = shift;
-		no strict 'refs';
-		my $name = our $AUTOLOAD;
-		*$AUTOLOAD = sub {
-			my $msg =
-			  "BOOM! BOOM! BOOM! \n RunTime Error !!! \n Undefined Function $name(@_) \n ";
-			croak "$self , $msg $!";
-		};
-		goto &$AUTOLOAD;    # Restart the new routine.
-	}   
-	# eof sub AUTOLOAD
-
-
-	# -----------------------------------------------------------------------------
-	# wrap any logic here on clean up for this class
-	# -----------------------------------------------------------------------------
-	sub RunBeforeExit {
-
-		my $self = shift;
-
-		#debug print "%$self RunBeforeExit ! \n";
-	}
-	#eof sub RunBeforeExit
-
-
-	# -----------------------------------------------------------------------------
-	# called automatically by perl's garbage collector use to know when
-	# -----------------------------------------------------------------------------
-	sub DESTROY {
-		my $self = shift;
-
-		#debug print "the DESTRUCTOR is called  \n" ;
-		$self->RunBeforeExit();
-		return;
-	}   
-	#eof sub DESTROY
-
-
-	# STOP functions
-	# =============================================================================
 
 	
 
