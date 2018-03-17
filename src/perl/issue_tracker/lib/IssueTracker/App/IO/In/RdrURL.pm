@@ -17,7 +17,6 @@ package IssueTracker::App::IO::In::RdrURL;
 	use Carp qw /cluck confess shortmess croak carp/ ; 
    
    use base qw(IssueTracker::App::Utils::OO::SetGetable);
-   use IssueTracker::App::Utils::IO::FileHandler ; 
    use IssueTracker::App::Utils::Logger ;
    use WWW::Curl::Easy ; 
 	use Data::Printer ; 
