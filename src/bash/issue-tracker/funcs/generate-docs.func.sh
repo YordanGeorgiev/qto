@@ -5,6 +5,7 @@
 # cat doc/txt/issue-tracker/funcs/generate-docs.func.txt
 # ---------------------------------------------------------
 doGenerateDocs(){
+
 	doLog "DEBUG START doGenerateDocs"
 
    test -z "${doc_root_dir+x}" && doc_root_dir=$product_instance_dir
@@ -37,11 +38,9 @@ doGenerateDocs(){
       b=$(echo $l|cut -d" " -f 2); 
       n="$doc_root_dir/"$(echo $l|cut -d" " -f 3-);
       echo start $t,$b; 
-      set -x 
       url='http://'"$web_host"':'"$web_port"'/export?to=githubmd&db='"$mysql_db_name"
       url="$url"'&path-id='$b'&item='$t'&order-by=SeqId&filter-by=Level&filter-value=1,2,3,4,5,6'
       wget -O "$n.md" "$url"
-      set +x
    done }
 	doLog "DEBUG STOP  exporting github md files"
 
