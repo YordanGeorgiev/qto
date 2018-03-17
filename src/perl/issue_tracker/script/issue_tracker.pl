@@ -61,6 +61,7 @@ use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Utils::Timer;
 use IssueTracker::App::Ctrl::Dispatcher;
 use IssueTracker::App::Mdl::Model ; 
+use IssueTracker::App::IO::In::RdrCmdArgs ; 
 
 # give a full stack dump on any untrapped exceptions
 local $SIG{__DIE__} = sub {
@@ -85,7 +86,6 @@ our $appConfig    = {};
 our $objModel     = {};
 our $objLogger    = {};
 my $objConfigurator       = {};
-my $actions               = q{};
 my $xls_dir               = q{};
 my $xls_file              = q{};
 my $issue_tracker_project = q{};
@@ -106,7 +106,8 @@ sub main {
   doExit($ret, $msg) unless ($ret == 0);
 
   my $objDispatcher = 'IssueTracker::App::Ctrl::Dispatcher'->new(\$appConfig , \$objModel);
-  ($ret, $msg) = $objDispatcher->doRun($actions);
+
+  ($ret, $msg) = $objDispatcher->doRunActions($objModel->get('ctrl.actions'));
 
   doExit($ret, $msg);
 
@@ -131,11 +132,12 @@ sub doInitialize {
    $objLogger->doLogInfoMsg($m);
 
    $objModel               = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
-   my $objRdrCmdArgs 			= 'IssueTracker::App::IO::In::RdrCmdArgs'->new(\$appConfig , \$objModel ) ; 
+   my $objRdrCmdArgs 	   = 'IssueTracker::App::IO::In::RdrCmdArgs'->new(\$appConfig , \$objModel ) ; 
 
-   $issue_tracker_project = $ENV{"issue_tracker_project"};
-   $period                = $ENV{"period"} unless $period;
-   $period                = 'daily' unless $period;
+
+   $issue_tracker_project  = $ENV{"issue_tracker_project"};
+   $period                 = $ENV{"period"} unless $period;
+   $period                 = 'daily' unless $period;
 
   unless ($issue_tracker_project) {
     $msg = "set you current project by: \n";
@@ -147,8 +149,6 @@ sub doInitialize {
   }
 
   $appConfig->{'issue_tracker_project'} = $issue_tracker_project;
-  $appConfig->{'xls_dir'}     = $xls_dir;
-  $appConfig->{'xls_file'}     = $xls_file;
 
   $ret = 0;
   return ($ret, $msg);

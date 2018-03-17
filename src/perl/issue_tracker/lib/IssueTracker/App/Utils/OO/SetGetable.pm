@@ -12,6 +12,7 @@ package IssueTracker::App::Utils::OO::SetGetable ;
 
 	# -----------------------------------------------------------------------------
 	# return a field's value - aka the "getter"
+   # chk: http://perldoc.perl.org/Carp.html
 	# -----------------------------------------------------------------------------
 	sub get {
 
