@@ -28,7 +28,6 @@ use Unicode::Normalize qw< NFD NFC >;
 use IssueTracker::App::Utils::Initiator;
 use IssueTracker::App::Utils::Configurator;
 use IssueTracker::App::Utils::Logger;
-use IssueTracker::App::Utils::IO::FileHandler;
 
 
 my $module_trace 					= 0;

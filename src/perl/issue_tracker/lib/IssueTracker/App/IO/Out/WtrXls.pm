@@ -9,7 +9,7 @@ package IssueTracker::App::IO::Out::WtrXls ;
    use Data::Printer ; 
    use Carp ; 
    use Excel::Writer::XLSX ; 
-   use IssueTracker::App::Utils::IO::FileHandler ; 
+   use IssueTracker::App::IO::Out::WtrDirs ; 
 	use IssueTracker::App::Utils::Logger ;
    use IssueTracker::App::Utils::Timer ; 
 
@@ -17,7 +17,7 @@ package IssueTracker::App::IO::Out::WtrXls ;
    our $IsUnitTest         = 0 ; 
    our $appConfig          = {} ; 
    our $objLogger          = {} ; 
-   our $objFileHandler     = {} ; 
+   our $objWtrDirs     = {} ; 
    our $ProductInstanceDir = {} ; 
 
 
@@ -51,7 +51,7 @@ package IssueTracker::App::IO::Out::WtrXls ;
 
       my $xls_file_name       = $ENV{'issue_tracker_project'} . '.' . $table . '.' . $nice_datetime ; 
       my $xls_dir = $appConfig->{ 'xls_dir' } || $ENV{'mix_data_dir'} . "/$year/$nice_month/$nice_date" ; 
-      $objFileHandler->MkDir ( "$xls_dir" ) ; 
+      $objWtrDirs->doMkDir ( "$xls_dir" ) ; 
       my $xls_file         = "$xls_dir/$xls_file_name" . '.xlsx' ; 
 
       $msg = 'START writing the xls file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
@@ -192,7 +192,7 @@ package IssueTracker::App::IO::Out::WtrXls ;
       #debug print "WtrXls::doInitialize appConfig : " . p($appConfig );
       $ProductInstanceDir   = $appConfig->{ 'ProductInstanceDir' } ; 
 
-	   $objFileHandler   = 'IssueTracker::App::Utils::IO::FileHandler'->new ( \$appConfig ) ; 
+	   $objWtrDirs   = 'IssueTracker::App::Utils::IO::WtrDirs'->new ( \$appConfig ) ; 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
 
       return $self ; 

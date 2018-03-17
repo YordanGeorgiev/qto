@@ -23,6 +23,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
 	our $module_trace                = 1 ; 
 	our $appConfig						   = {} ; 
 	our $objLogger						   = {} ; 
+	our $objModel                    = {} ; 
 	our $objFileHandler			      = {} ; 
    our $rdbms_type                  = 'postgre' ; 
 
@@ -62,11 +63,10 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       my $mhsr                = {} ;   # this is the meta hash describing the data hash ^^
       my @tables              = () ;   # which tables to read from
       
-      my $tables              = $appConfig->{ 'tables' } || 'daily_issues' ; 
+      my $tables              = $objModel->get( 'ctrl.tables' )  || 'daily_issues' ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
       my $filter_by_attributes = $ENV{'filter_by_attributes'} || undef ; 
-      my $objModel             = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
 
 
       for my $table ( @tables ) { 
@@ -120,6 +120,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
 
 		my $class = shift;    # Class name is in the first parameter
 		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$objModel   = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize( ) ; 

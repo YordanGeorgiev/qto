@@ -19,7 +19,6 @@ package IssueTracker::App::RAM::CnrHsr2ToTxt ;
    use Scalar::Util qw /looks_like_number/;
    
    use base qw(IssueTracker::App::Utils::OO::SetGetable);
-	use IssueTracker::App::Utils::IO::FileHandler ; 
 	use IssueTracker::App::Utils::Logger ;
    use IssueTracker::App::Mdl::Model ; 
       
@@ -32,7 +31,6 @@ package IssueTracker::App::RAM::CnrHsr2ToTxt ;
 	our $HostName 						= '' ; 
 	our $objLogger						= {} ; 
 	our $objController				= {} ; 
-	our $objFileHandler				= {} ; 
    our $hsrStatus                = {} ; 
    our %inverse_hsrStatus        = (); 
    our $term                     = 'daily' ; 
@@ -255,7 +253,6 @@ sub doConvertHashRefToStr {
        );
 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
-	   $objFileHandler   = 'IssueTracker::App::Utils::IO::FileHandler'->new ( \$appConfig ) ; 
       
       $hsrStatus = {
            'eval'    => '01-eval'      # evaluate whether or not to do it

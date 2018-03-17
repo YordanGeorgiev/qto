@@ -149,7 +149,6 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
          my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
          my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" , \$objModel );
       
-         my $objModel             = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
          ( $ret , $msg  )  = $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
@@ -188,8 +187,9 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
 	# -----------------------------------------------------------------------------
 	sub new {
 
-		my $class = shift;    # Class name is in the first parameter
-		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		my $class   = shift;    # Class name is in the first parameter
+		$appConfig  = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$objModel   = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize( ) ; 

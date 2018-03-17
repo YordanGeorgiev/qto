@@ -23,6 +23,7 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 	our $objLogger						   = {} ; 
 	our $objFileHandler			      = {} ; 
    our $rdbms_type                  = 'postgres' ; 
+	our $objModel						   = {} ; 
 
 =head1 SYNOPSIS
       my $objCtrlDbToFile = 
@@ -56,11 +57,10 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
       my $ret                 = 1 ; 
       my $msg                 = 'unknown error while loading db issues to xls file' ; 
       my @tables              = ();
-      my $tables              = $appConfig->{ 'tables' } || 'daily_issues' ; 
+      my $tables              = $objModel->get( 'ctrl.tables' ) || 'daily_issues' ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
 
-      my $objModel             = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
       for my $table ( @tables ) { 
 
          my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
@@ -105,8 +105,9 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 	# -----------------------------------------------------------------------------
 	sub new {
 
-		my $class = shift;    # Class name is in the first parameter
-		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		my $class   = shift;    # Class name is in the first parameter
+		$appConfig  = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$objModel   = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize( ) ; 

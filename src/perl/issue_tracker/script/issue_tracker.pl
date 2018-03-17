@@ -60,6 +60,8 @@ use IssueTracker::App::Utils::Configurator;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Utils::Timer;
 use IssueTracker::App::Ctrl::Dispatcher;
+use IssueTracker::App::Mdl::Model ; 
+use IssueTracker::App::IO::In::RdrCmdArgs ; 
 
 # give a full stack dump on any untrapped exceptions
 local $SIG{__DIE__} = sub {
@@ -77,13 +79,13 @@ local $SIG{__WARN__} = sub {
 };
 
 
-my $module_trace = 0;
-my $md_file      = '';
-my $objInitiator = {};
+my $module_trace  = 0;
+my $md_file       = '';
+my $objInitiator  = {};
 our $appConfig    = {};
-our $objLogger = {};
+our $objModel     = {};
+our $objLogger    = {};
 my $objConfigurator       = {};
-my $actions               = q{};
 my $xls_dir               = q{};
 my $xls_file              = q{};
 my $issue_tracker_project = q{};
@@ -103,8 +105,9 @@ sub main {
   ($ret, $msg) = doInitialize();
   doExit($ret, $msg) unless ($ret == 0);
 
-  my $objDispatcher = 'IssueTracker::App::Ctrl::Dispatcher'->new(\$appConfig );
-  ($ret, $msg) = $objDispatcher->doRun($actions);
+  my $objDispatcher = 'IssueTracker::App::Ctrl::Dispatcher'->new(\$appConfig , \$objModel);
+
+  ($ret, $msg) = $objDispatcher->doRunActions($objModel->get('ctrl.actions'));
 
   doExit($ret, $msg);
 
@@ -114,34 +117,27 @@ sub main {
 
 sub doInitialize {
 
-  my $msg          = 'error during initialization !!!';
-  my $ret          = 1;
-  $objInitiator    = 'IssueTracker::App::Utils::Initiator'->new();
-  $appConfig       = $objInitiator->get('AppConfig');
+   my $msg          = 'error during initialization !!!';
+   my $ret          = 1;
+   $objInitiator    = 'IssueTracker::App::Utils::Initiator'->new();
+   $appConfig       = $objInitiator->get('AppConfig');
 
-  $objConfigurator = 'IssueTracker::App::Utils::Configurator'->new(
+   $objConfigurator = 'IssueTracker::App::Utils::Configurator'->new(
       $objInitiator->{'ConfFile'}, \$appConfig);
-  $appConfig       = $objConfigurator->getConfHolder()  ;
-  # p($appConfig)  ; 
+   $appConfig       = $objConfigurator->getConfHolder()  ;
+   # p($appConfig)  ; 
 
-  $objLogger = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
-  my $m = "START MAIN";
-  $objLogger->doLogInfoMsg($m);
+   $objLogger = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
+   my $m = "START MAIN";
+   $objLogger->doLogInfoMsg($m);
 
-  # get the cmd args
-  GetOptions(
-    'do=s'          => \$actions,
-    'xls_dir=s'     => \$xls_dir,
-    'xls-file=s'    => \$xls_file,
-    'period=s'      => \$period ,
-    'tables=s'      => \$tables ,
-    'rdbms-type=s'  => \$rdbms_type
-  );
+   $objModel               = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
+   my $objRdrCmdArgs 	   = 'IssueTracker::App::IO::In::RdrCmdArgs'->new(\$appConfig , \$objModel ) ; 
 
-  $issue_tracker_project = $ENV{"issue_tracker_project"};
-  $period                = $ENV{"period"} unless $period;
-  $period                = 'daily' unless $period;
-  $appConfig->{'tables'} = $tables ; 
+
+   $issue_tracker_project  = $ENV{"issue_tracker_project"};
+   $period                 = $ENV{"period"} unless $period;
+   $period                 = 'daily' unless $period;
 
   unless ($issue_tracker_project) {
     $msg = "set you current project by: \n";
@@ -153,8 +149,6 @@ sub doInitialize {
   }
 
   $appConfig->{'issue_tracker_project'} = $issue_tracker_project;
-  $appConfig->{'xls_dir'}     = $xls_dir;
-  $appConfig->{'xls_file'}     = $xls_file;
 
   $ret = 0;
   return ($ret, $msg);

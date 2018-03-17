@@ -5,13 +5,16 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 	my $VERSION = '1.0.0';    
 
 	require Exporter;
-	our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
+	our @ISA = qw(Exporter IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::AutoLoadable) ;
 	our $AUTOLOAD =();
 	use AutoLoader;
+   use utf8 ;
    use Carp ;
    use Data::Printer ; 
 
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
+   use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
+
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::Out::WtrDbsFactory ; 
    use IssueTracker::App::IO::In::RdrXls ; 
@@ -31,7 +34,9 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 	our $HostName 						   = '' ; 
 	our $ConfFile 						   = '' ; 
 	our $objLogger						   = {} ; 
-   our $rdbms_type                  = $ENV{ 'rdbms_type' } || 'postgres' ; 
+	our $objModel                    = {} ; 
+   our $appConfig                   = {} ; 
+   our $rdbms_type                  = {} ; 
 
 
 =head1 SYNOPSIS
@@ -56,6 +61,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
    # and insert the hsr into a db
 	# -----------------------------------------------------------------------------
    sub doReadAndLoad {
+
       my $self                = shift ; 
       my $tables_list         = shift ; 
 
@@ -63,12 +69,12 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       my $msg                 = 'file read' ; 
       
       my @tables              = ();
-      my $tables              = $issue_tracker::appConfig->{ 'tables' } ;  
-      my $xls_file            = $issue_tracker::appConfig->{ 'xls_file' } ; 
+      my $tables              = $objModel->get( 'ctrl.tables' ) ; 
+      my $xls_file            = $objModel->get( 'io.xls-file' ) ;
 	   push ( @tables , split(',',$tables ) ) ; 
 
-      my $objModel          = 'IssueTracker::App::Mdl::Model'->new ( \$issue_tracker::appConfig ) ; 
-      my $objRdrXls           = 'IssueTracker::App::IO::In::RdrXls'->new ( \$issue_tracker::appConfig , \@tables ) ; 
+      my $objRdrXls           = 'IssueTracker::App::IO::In::RdrXls'->new ( 
+            \$issue_tracker::appConfig , \@tables ) ; 
       
       # read the xls into hash ref of hash ref
       ( $ret , $msg  ) = 
@@ -78,7 +84,8 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
       $msg                 = 'unknown error while inserting db tables !!!' ; 
 
-      my $objWtrDbsFactory = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( \$issue_tracker::appConfig  , \$self , $rdbms_type ) ; 
+      my $objWtrDbsFactory = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( 
+            \$issue_tracker::appConfig  , \$self , $rdbms_type ) ; 
       my $objWtrDb 		   = $objWtrDbsFactory->doInstantiate ( "$rdbms_type" , \@tables );
 
       p($hsr3) if $module_trace == 1 ; 
@@ -137,6 +144,8 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 	sub new {
 
 		my $class      = shift;    # Class name is in the first parameter
+		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$objModel   = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize() ; 
@@ -152,8 +161,11 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       my $self = shift ; 
 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$issue_tracker::appConfig ) ;
+      $rdbms_type       = $ENV{ 'rdbms_type' } || $objModel->get( 'ctrl.rdbms-type' ) || 'postgres' ; 
 
+      confess ( "xls file not defined !!! Nothing to do !!!" ) unless $objModel->get( 'io.xls-file' ) ; 
 
+     
       return $self ; 
 	}	
 	#eof sub doInitialize
@@ -163,48 +175,6 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 	# overrided autoloader prints - a run-time error - perldoc AutoLoader
 	# -----------------------------------------------------------------------------
 =cut
-	sub AUTOLOAD {
-
-		my $self = shift;
-		no strict 'refs';
-		my $name = our $AUTOLOAD;
-		*$AUTOLOAD = sub {
-			my $msg =
-			  "BOOM! BOOM! BOOM! \n RunTime Error !!! \n Undefined Function $name(@_) \n ";
-			croak "$self , $msg $!";
-		};
-		goto &$AUTOLOAD;    # Restart the new routine.
-	}   
-	# eof sub AUTOLOAD
-
-
-	# -----------------------------------------------------------------------------
-	# wrap any logic here on clean up for this class
-	# -----------------------------------------------------------------------------
-	sub RunBeforeExit {
-
-		my $self = shift;
-
-		#debug print "%$self RunBeforeExit ! \n";
-	}
-	#eof sub RunBeforeExit
-
-
-	# -----------------------------------------------------------------------------
-	# called automatically by perl's garbage collector use to know when
-	# -----------------------------------------------------------------------------
-	sub DESTROY {
-		my $self = shift;
-
-		#debug print "the DESTRUCTOR is called  \n" ;
-		$self->RunBeforeExit();
-		return;
-	}   
-	#eof sub DESTROY
-
-
-	# STOP functions
-	# =============================================================================
 
 	
 
