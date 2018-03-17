@@ -22,7 +22,6 @@ package IssueTracker::App::IO::Out::WtrGoogleSheet ;
    use utf8;
 
 
-   use IssueTracker::App::Utils::IO::FileHandler ; 
 	use IssueTracker::App::Utils::Logger ;
    use IssueTracker::App::Utils::Timer ; 
 
@@ -30,7 +29,6 @@ package IssueTracker::App::IO::Out::WtrGoogleSheet ;
    our $IsUnitTest         = 0 ; 
    our $appConfig          = {} ; 
    our $objLogger          = {} ; 
-   our $objFileHandler     = {} ; 
    our $ProductInstanceDir = {} ; 
 
 
@@ -253,7 +251,6 @@ package IssueTracker::App::IO::Out::WtrGoogleSheet ;
       #debug print "WtrGoogleSheet::doInitialize appConfig : " . p($appConfig );
       $ProductInstanceDir   = $appConfig->{ 'ProductInstanceDir' } ; 
 
-	   $objFileHandler   = 'IssueTracker::App::Utils::IO::FileHandler'->new ( \$appConfig ) ; 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
 
       return $self ; 

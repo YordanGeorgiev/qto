@@ -19,7 +19,7 @@ use Sys::Hostname;
 use Carp qw /cluck confess shortmess croak carp/;
 
 use base qw(IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::SetGetable);
-use IssueTracker::App::Utils::IO::FileHandler;
+use IssueTracker::App::IO::In::RdrFiles ; 
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Utils::Timer ; 
 use Data::Printer;
@@ -33,7 +33,7 @@ our $module_trace      = 0;
 our $appConfig         = {};
 our $HostName          = '';
 our $objLogger         = {};
-our $objFileHandler    = {};
+our $objRdrFiles    = {};
 our $hsrStatus         = {};
 our %inverse_hsrStatus = ();
 our $term              = 'daily';
@@ -322,7 +322,7 @@ sub doReadIssueFile {
   else {
     # src: http://ahinea.com/en/tech/perl-unicode-struggle.html
     ($ret, $msg, $str_issues_file)
-      = $objFileHandler->doReadFileReturnString($issues_file, 'utf8');
+      = $objRdrFiles->doReadFileReturnString($issues_file, 'utf8');
     return ($ret, $msg) unless $ret == 0;
 
     $ret = 0;
@@ -374,8 +374,8 @@ sub doInitialize {
   %$self = (appConfig => $appConfig);
 
   $objLogger = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
-  $objFileHandler
-    = 'IssueTracker::App::Utils::IO::FileHandler'->new(\$appConfig);
+  $objRdrFiles
+    = 'IssueTracker::App::Utils::IO::RdrFiles'->new(\$appConfig);
 
   $hsrStatus = {
       'eval' => '01-eval'    # evaluate whether or not to do it

@@ -33,11 +33,8 @@ sub doConvert {
 
       my $row = $hsr2_in->{ "$key" } ; 
       my $level = $row->{ $levelh } ; 
-<<<<<<< HEAD
       #print "level : $level \n" ; 
       # $self->doPrintRow  ( $rid , $row ) ; 
-=======
->>>>>>> 76c411d... it-180201 add parametrization for mysql col naming convention in hsr2 converter
 
       
       if ( !defined ( $level ) ) {
@@ -48,13 +45,9 @@ sub doConvert {
 
       if ( $rid == 0 ) {
          if ( $level ne $levelh ) {
-<<<<<<< HEAD
             $msg = "the header for the level should always be : 
                level for postgres 
                and Level for mysql" ; 
-=======
-            $msg = "the header for the level should always be : level" ; 
->>>>>>> 76c411d... it-180201 add parametrization for mysql col naming convention in hsr2 converter
             carp $msg ; 
             return ( $ret , $msg ) ; 
          } 
@@ -74,7 +67,6 @@ sub doConvert {
          elsif ( $level == $hsr2->{ $rid-1 }->{$levelh} ) {
            ( $hsr2 ,$lft , $rgt ) = $self->doAddItemWithSiblings ( $hsr2 , $hsr2_in , $level , $lft , $rgt , $rid ) ; 
          }
-<<<<<<< HEAD
          elsif ( $level <= $hsr2->{ $rid-1 }->{$levelh} - 1 ) {
            ( $hsr2 ,$lft , $rgt ) = $self->doAddItemWithSiblings ( $hsr2 , $hsr2_in , $level , $lft , $rgt , $rid ) ; 
          }
@@ -91,18 +83,6 @@ sub doConvert {
             print 'level is : ' . $level . "\n" ; 
             print 'prev is : ' . $hsr2->{ $rid-1 }->{$levelh} . "\n" ; 
             $msg = 'the ' . $levelh . ' untrapped case for rid ' . "$rid" . "\n" ; 
-=======
-         elsif ( $level == $hsr2->{ $rid-1 }->{$levelh}-1 ) {
-           ( $hsr2 ,$lft , $rgt ) = $self->doAddItemWithSiblings ( $hsr2 , $hsr2_in , $level , $lft , $rgt , $rid ) ; 
-         }
-         elsif( $level < $hsr2->{ $rid-1 }->{$levelh}+2 ) {
-            $msg = 'level decreased with more than 1 at row id:' . $rid ; 
-            carp $msg ; 
-            return ( $ret , $msg ) ; 
-         }
-         else  {     #( $level >= $hsr2->{ $rid-1 }->{$levelh}+2 ) {
-            $msg = 'level increased with more than 1 at row id:' . $rid ; 
->>>>>>> 76c411d... it-180201 add parametrization for mysql col naming convention in hsr2 converter
             carp $msg ; 
             return ( $ret , $msg ) ; 
          }
@@ -224,18 +204,12 @@ sub doPrintRow {
 
 		my $class      = shift;    # Class name is in the first parameter
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-<<<<<<< HEAD
       $rdbms_type    = shift @_ || 'postgres' ; 
       if ( $rdbms_type eq 'mysql' || $rdbms_type eq 'mariadb' ) {
          $lfth          = 'LeftRank' ; 
          $rgth          = 'RightRank' ; 
          $levelh        = 'Level' ; 
       }
-=======
-      $lfth          = shift if @_ ; 
-      $rgth          = shift if @_ ; 
-      $levelh        = shift if @_ ; 
->>>>>>> 76c411d... it-180201 add parametrization for mysql col naming convention in hsr2 converter
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       # $self = $self->doInitialize() ; 

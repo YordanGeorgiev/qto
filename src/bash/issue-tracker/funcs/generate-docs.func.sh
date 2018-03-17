@@ -7,7 +7,8 @@
 doGenerateDocs(){
 
 	doLog "DEBUG START doGenerateDocs"
-	
+
+   test -z "${doc_root_dir+x}" && doc_root_dir=$product_instance_dir
    test -z "${mysql_user+x}" && doExit 1 "mysql_user not set - Nothing to do !!!" 
    test -z "${mysql_user_pw+x}" && doExit 1 "mysql_user_pw not set - Nothing to do !!!"
    test -z "${mysql_host+x}" && doExit 1 "mysql_host not set - Nothing to do !!!"

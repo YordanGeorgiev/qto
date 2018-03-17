@@ -44,7 +44,6 @@ doc/txt/issue-tracker/tests/run-mysql-scripts.test.txt
 src/bash/issue-tracker/helps/run-mysql-scripts.help.sh
 src/bash/issue-tracker/specs/run-mysql-scripts.spec.sh
 # --
-src/sql/mysql/dev_issue_tracker/00.create-db.mysql
 # ---
 src/bash/issue-tracker/bootstrap-issue-tracker.sh
 src/bash/issue-tracker/issue-tracker.sh
@@ -61,24 +60,6 @@ doc/txt/issue-tracker/specs/db-to-gsheet.spec.txt
 doc/txt/issue-tracker/helps/db-to-gsheet.help.txt
 doc/txt/issue-tracker/funcs/db-to-gsheet.func.txt
 # --- 
-src/react/conf-srch/
-src/react/conf-srch/.gitignore
-src/react/conf-srch/package.json
-src/react/conf-srch/public
-src/react/conf-srch/public/favicon.ico
-src/react/conf-srch/public/index.html
-src/react/conf-srch/public/manifest.json
-src/react/conf-srch/README.md
-src/react/conf-srch/src
-src/react/conf-srch/src/App.css
-src/react/conf-srch/src/App.js
-src/react/conf-srch/src/App.test.js
-src/react/conf-srch/src/index.css
-src/react/conf-srch/src/index.js
-src/react/conf-srch/src/logo.svg
-src/react/conf-srch/src/registerServiceWorker.js
-src/react/conf-srch/yarn.lock
-# ---
 doc/txt/issue-tracker/funcs/clone-project.func.txt
 doc/txt/issue-tracker/helps/clone-project.help.txt
 doc/txt/issue-tracker/specs/clone-project.spec.txt
@@ -129,8 +110,10 @@ src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO
-src/perl/issue_tracker/lib/IssueTracker/App/Utils/IO/FileHandler.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrDirs.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrFiles.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrDirs.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrFiles.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/SetGetable.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/AutoLoadable.pm
@@ -484,7 +467,6 @@ src/bash/issue-tracker/specs/generate-action-files.spec.sh
 src/bash/issue-tracker/tests/generate-action-files.test.sh
 #---
 doc/pdf
-doc/pdf/README.pdf
 doc/md
 doc/md/issue-tracker-devops-guide.md
 doc/md/issue-tracker-user-stories.md
@@ -540,7 +522,6 @@ doc/xls
 doc/xls/issue-tracker-user-stories.xls
 doc/xls/issue-tracker-devops-guide.xls
 doc/pdf
-doc/pdf/README.pdf
 doc/pdf/issue-tracker-user-stories.pdf
 doc/pdf/issue-tracker-devops-guide.pdf
 doc/md
@@ -609,7 +590,6 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Mdl/Model/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Configurator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/IO/FileHandler/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Timer/autosplit.ix
 src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
@@ -655,6 +635,39 @@ doc/txt/issue-tracker/tests/mojo-morbo-stop.test.txt
 doc/txt/issue-tracker/specs/mojo-morbo-stop.spec.txt
 doc/txt/issue-tracker/helps/mojo-morbo-stop.help.txt
 doc/txt/issue-tracker/funcs/mojo-morbo-stop.func.txt
+# ---
+# ---
+# ---
+dat/mix/issues/2018/2018-02/2018-02-20/issue-tracker.all.20180220_000000.xlsx
+dat/mix/issues/2018/2018-02/2018-02-20/issue-tracker.daily-issues.2018-02-20.txt
+dat/mix/issues/2018/2018-02/2018-02-20/issue-tracker.monthly-issues.2018-02-20.txt
+dat/mix/issues/2018/2018-02/2018-02-20/issue-tracker.test-hierarchy-table.2018-02-20.txt
+dat/mix/issues/2018/2018-01/2018-01-31/issue-tracker.all.20180131_000000.xlsx
+dat/mix/issues/2018/2018-01/2018-01-31/issue-tracker.daily-issues.2018-01-31.txt
+dat/mix/issues/2018/2018-01/2018-01-31/issue-tracker.monthly-issues.2018-01-31.txt
+dat/mix/issues/2018/2018-01/2018-01-31/issue-tracker.test-hierarchy-table.2018-01-31.txt
+dat/mix/issues/2018/2018-02/2018-02-13/issue-tracker.all.20180213_000000.xlsx
+dat/mix/issues/2018/2018-02/2018-02-13/issue-tracker.daily-issues.2018-02-13.txt
+dat/mix/issues/2018/2018-02/2018-02-13/issue-tracker.monthly-issues.2018-02-13.txt
+dat/mix/issues/2018/2018-02/2018-02-13/issue-tracker.test-hierarchy-table.2018-02-13.txt
+dat/mix/issues/2018/2018-02/2018-02-14/issue-tracker.all.20180214_000000.xlsx
+dat/mix/issues/2018/2018-02/2018-02-14/issue-tracker.daily-issues.2018-02-14.txt
+dat/mix/issues/2018/2018-02/2018-02-14/issue-tracker.monthly-issues.2018-02-14.txt
+dat/mix/issues/2018/2018-02/2018-02-14/issue-tracker.test-hierarchy-table.2018-02-14.txt
+dat/mix/issues/2018/2018-02/2018-02-17/issue-tracker.all.20180217_000000.xlsx
+dat/mix/issues/2018/2018-02/2018-02-17/issue-tracker.daily-issues.2018-02-17.txt
+dat/mix/issues/2018/2018-02/2018-02-17/issue-tracker.monthly-issues.2018-02-17.txt
+dat/mix/issues/2018/2018-02/2018-02-17/issue-tracker.test-hierarchy-table.2018-02-17.txt
+doc/md/issue-tracker-system-guide.md
+doc/pdf/issue-tracker-system-guide.pdf
+met/.prd.issue-tracker
+met/.tst.issue-tracker
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrCmdArgs/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrDirs/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrFiles/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrDirs/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrFiles/autosplit.ix
+# mysql files
 src/sql/mysql/
 src/sql/mysql/dev_issue_tracker
 src/sql/mysql/dev_issue_tracker/00.create-db.mysql
@@ -663,32 +676,18 @@ src/sql/mysql/dev_issue_tracker/02.create-ItemView-table.sql
 src/sql/mysql/dev_issue_tracker/03.create-ItemModel-table.sql
 src/sql/mysql/dev_issue_tracker/06.create-Feature-table.sql
 src/sql/mysql/dev_issue_tracker/07.create-Requirement-table.sql
+src/sql/mysql/dev_issue_tracker/08.create-Concepts-table.sql
+src/sql/mysql/dev_issue_tracker/11.create-Issues-table.sql
 src/sql/mysql/dev_issue_tracker/15.create-UserStory-table.sql
 src/sql/mysql/dev_issue_tracker/31.create-CellValue-table.sql
-src/sql/mysql/dev_issue_tracker/46.create-DevOps-table.sql
 src/sql/mysql/dev_issue_tracker/37.create-Image-table.sql
 src/sql/mysql/dev_issue_tracker/40.create-Tag-table.sql
 src/sql/mysql/dev_issue_tracker/41.create-TagMap-table.sql
+src/sql/mysql/dev_issue_tracker/46.create-DevOps-table.sql
 src/sql/mysql/dev_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/dev_issue_tracker/50.create-ReadMe-table.sql
 src/sql/mysql/dev_issue_tracker/51.create-Tests-table.sql
-# ---
-src/sql/mysql/tst_issue_tracker
-src/sql/mysql/tst_issue_tracker/00.create-db.mysql
-src/sql/mysql/tst_issue_tracker/01.create-ItemController-table.sql
-src/sql/mysql/tst_issue_tracker/02.create-ItemView-table.sql
-src/sql/mysql/tst_issue_tracker/03.create-ItemModel-table.sql
-src/sql/mysql/tst_issue_tracker/06.create-Feature-table.sql
-src/sql/mysql/tst_issue_tracker/07.create-Requirement-table.sql
-src/sql/mysql/tst_issue_tracker/15.create-UserStory-table.sql
-src/sql/mysql/tst_issue_tracker/31.create-CellValue-table.sql
-src/sql/mysql/tst_issue_tracker/37.create-Image-table.sql
-src/sql/mysql/tst_issue_tracker/40.create-Tag-table.sql
-src/sql/mysql/tst_issue_tracker/41.create-TagMap-table.sql
-src/sql/mysql/tst_issue_tracker/46.create-DevOps-table.sql
-src/sql/mysql/tst_issue_tracker/48.create-ExportFile-table.sql
-src/sql/mysql/tst_issue_tracker/50.create-ReadMe-table.sql
-# ---
+src/sql/mysql/dev_issue_tracker/53.create-SystemGuide-table.sql
 src/sql/mysql/prd_issue_tracker
 src/sql/mysql/prd_issue_tracker/00.create-db.mysql
 src/sql/mysql/prd_issue_tracker/01.create-ItemController-table.sql
@@ -696,6 +695,7 @@ src/sql/mysql/prd_issue_tracker/02.create-ItemView-table.sql
 src/sql/mysql/prd_issue_tracker/03.create-ItemModel-table.sql
 src/sql/mysql/prd_issue_tracker/06.create-Feature-table.sql
 src/sql/mysql/prd_issue_tracker/07.create-Requirement-table.sql
+src/sql/mysql/prd_issue_tracker/11.create-Issues-table.sql
 src/sql/mysql/prd_issue_tracker/15.create-UserStory-table.sql
 src/sql/mysql/prd_issue_tracker/31.create-CellValue-table.sql
 src/sql/mysql/prd_issue_tracker/37.create-Image-table.sql
@@ -704,11 +704,23 @@ src/sql/mysql/prd_issue_tracker/41.create-TagMap-table.sql
 src/sql/mysql/prd_issue_tracker/46.create-DevOps-table.sql
 src/sql/mysql/prd_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/prd_issue_tracker/50.create-ReadMe-table.sql
-# ---
-src/react/conf-srch/package-lock.json
-dat/mix/issues/2018/2018-02/2018-02-03
-dat/mix/issues/2018/2018-02/2018-02-03/issue-tracker.all.20180203_000000.xlsx
-dat/mix/issues/2018/2018-02/2018-02-03/issue-tracker.monthly-issues.2018-02-03.txt
-dat/mix/issues/2018/2018-02/2018-02-03/issue-tracker.daily-issues.2018-02-03.txt
-dat/mix/issues/2018/2018-02/2018-02-03/issue-tracker.test-hierarchy-table.2018-02-03.txt
-dat/mix/issues/2018/2018-02/2018-02-03/~$issue-tracker.all.20180203_000000.xlsx
+src/sql/mysql/prd_issue_tracker/51.create-Tests-table.sql
+src/sql/mysql/prd_issue_tracker/53.create-SystemGuide-table.sql
+src/sql/mysql/tst_issue_tracker
+src/sql/mysql/tst_issue_tracker/00.create-db.mysql
+src/sql/mysql/tst_issue_tracker/01.create-ItemController-table.sql
+src/sql/mysql/tst_issue_tracker/02.create-ItemView-table.sql
+src/sql/mysql/tst_issue_tracker/03.create-ItemModel-table.sql
+src/sql/mysql/tst_issue_tracker/06.create-Feature-table.sql
+src/sql/mysql/tst_issue_tracker/07.create-Requirement-table.sql
+src/sql/mysql/tst_issue_tracker/11.create-Issues-table.sql
+src/sql/mysql/tst_issue_tracker/15.create-UserStory-table.sql
+src/sql/mysql/tst_issue_tracker/31.create-CellValue-table.sql
+src/sql/mysql/tst_issue_tracker/37.create-Image-table.sql
+src/sql/mysql/tst_issue_tracker/40.create-Tag-table.sql
+src/sql/mysql/tst_issue_tracker/41.create-TagMap-table.sql
+src/sql/mysql/tst_issue_tracker/46.create-DevOps-table.sql
+src/sql/mysql/tst_issue_tracker/48.create-ExportFile-table.sql
+src/sql/mysql/tst_issue_tracker/50.create-ReadMe-table.sql
+src/sql/mysql/tst_issue_tracker/51.create-Tests-table.sql
+src/sql/mysql/tst_issue_tracker/53.create-SystemGuide-table.sql
