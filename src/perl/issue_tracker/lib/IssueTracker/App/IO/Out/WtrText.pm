@@ -67,7 +67,7 @@ sub doPrintIssuesFile {
    my $objModel = ${ shift @_ } ; 
    my $str_issues = $objModel->get('str_issues' ) ; 
 
-   $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
+   my ( $ret , $msg ) = $objFileHandler->PrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
 }
 # eof sub doPrintIssuesFile
 
@@ -157,7 +157,7 @@ sub doInitialize {
 
     $msg = 'issues_file: ' . $issues_file;
     $objLogger->doLogDebugMsg($msg);
-
+    sleep 3 ; 
     my $ProductInstanceDir = $appConfig->{'ProductInstanceDir'};
     $issues_file = $ProductInstanceDir . "/" . $issues_file
       unless ($issues_file =~ m/^\//g);

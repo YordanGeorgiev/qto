@@ -65,7 +65,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       my $objCtrlTxtToDb = 
          'IssueTracker::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlTxtToDb->doLoad () ; 
-      return ( $ret , $msg ) unless $ret == 0 ; 
+      return ( $ret , $msg ) ; 
    }
 
    sub doDbToXls {
@@ -75,7 +75,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       my $objCtrlDbToXls = 
          'IssueTracker::App::Ctrl::CtrlDbToXls'->new ( \$appConfig , \$objModel ) ; 
       my ( $ret , $msg ) = $objCtrlDbToXls->doReadAndLoad ( ); 
-      return ( $ret , $msg ) unless $ret == 0 ; 
+      return ( $ret , $msg ) ; 
 
    }
    
@@ -85,13 +85,14 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       my $objCtrlDbToGsheet = 
          'IssueTracker::App::Ctrl::CtrlDbToGoogleSheet'->new ( \$appConfig , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlDbToGsheet->doReadAndLoad ( ); 
-      return ( $ret , $msg ) unless $ret == 0 ; 
+      return ( $ret , $msg ) ; 
 
    }
 
    sub doXlsToDb {
       my $self = shift ; 
       use strict 'refs'; 
+      
 
       my $objCtrlXlsToDb = 
          'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig , \$objModel) ; 
@@ -106,8 +107,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       my $objCtrlDbToTxt = 
          'IssueTracker::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndWrite ( ) ; 
-      return ( $ret , $msg ) unless $ret == 0 ; 
-
+      return ( $ret , $msg ) ; 
    }
 
 
@@ -149,7 +149,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
          }
       } 
       
-
       $msg = "OK for all action runs: @actions" ; 
       $ret = 0 ; 
       return ( $ret , $msg ) ; 

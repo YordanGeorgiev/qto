@@ -147,7 +147,7 @@ package IssueTracker::App::Utils::IO::FileHandler ;
 		close FILEOUTPUT;
 
 		#debug $strToReturn .=  $StringToPrint;
-
+      return ( 0 , 'print ok' ) ; 
 	}  
 	#eof sub PrintToFile
 
