@@ -21,7 +21,6 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 	our $module_trace                = 0 ; 
 	our $appConfig						   = {} ; 
 	our $objLogger						   = {} ; 
-	our $objFileHandler			      = {} ; 
    our $rdbms_type                  = 'postgres' ; 
 	our $objModel						   = {} ; 
 
@@ -128,7 +127,6 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
        );
 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
-	   $objFileHandler   = 'IssueTracker::App::Utils::IO::FileHandler'->new ( \$appConfig ) ; 
 
       return $self ; 
 	}	

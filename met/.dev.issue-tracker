@@ -73,6 +73,7 @@ src/bash/issue-tracker/tests/clone-project.test.sh
 src/perl
 src/perl/issue_tracker/script
 src/perl/issue_tracker/script/issue_tracker.pl
+src/perl/issue_tracker/script/issue_tracker
 src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
 src/bash/issue-tracker/install-prerequisites-on-ubuntu.sh
 src/perl/issue_tracker

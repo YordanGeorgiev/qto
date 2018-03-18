@@ -1,6 +1,5 @@
 package IssueTracker;
 
-our @ISA = qw(Exporter  IssueTracker::App::Utils::OO::SetGetable);
 use Mojo::Base 'Mojolicious';
 
 use strict ; use warnings ; 
@@ -13,11 +12,8 @@ use open qw< :std  :utf8     >;
 use charnames qw< :full >;
 use feature qw< unicode_strings >;
 
-use base qw(IssueTracker::App::Utils::OO::SetGetable);
 
-use Data::Printer;
 use Cwd qw ( abs_path );
-use Getopt::Long;
 use File::Basename qw< basename >;
 use Carp qw< carp croak confess cluck >;
 use Encode qw< encode decode >;
@@ -73,6 +69,16 @@ sub startup {
 	);
 }
 
+	sub new {
+
+		my $class      = shift;    # Class name is in the first parameter
+		my $self = {};        # Anonymous hash reference holds instance attributes
+		bless( $self, $class );    # Say: $self is a $class
+      #$self = $self->doInitialize() ; 
+		return $self;
+	}  
+	#eof const
+
 
 sub doInitialize {
 
@@ -100,4 +106,4 @@ sub doInitialize {
 # eof sub doInialize
 
 
-1 ;
+1;
