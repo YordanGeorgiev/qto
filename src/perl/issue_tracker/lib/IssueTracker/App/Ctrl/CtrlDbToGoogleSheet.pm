@@ -20,6 +20,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
 
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::In::RdrDbsFactory ; 
+   use IssueTracker::App::IO::In::RdrFiles ; 
    use IssueTracker::App::IO::Out::WtrGoogleSheet ; 
    use IssueTracker::App::Mdl::Model ; 
 
@@ -27,7 +28,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
 	our $appConfig						   = {} ; 
 	our $objLogger						   = {} ; 
 	our $objModel						   = {} ; 
-	our $objFileHandler			      = {} ; 
+	our $objRdrFiles			      = {} ; 
    our $rdbms_type                  = 'postgres' ; 
 
 =head1 SYNOPSIS
@@ -62,7 +63,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
       my $ret                 = 1 ; 
       my $msg                 = 'unknown error while loading db issues to xls file' ; 
       my @tables              = ();
-      my $tables              = $appConfig->{ 'tables' } || 'daily_issues' ; 
+      my $tables              = $objModel->get( 'ctrl.tables' ) || 'daily_issues' ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
       unless ( $ENV{CLIENT_ID} or $ENV{CLIENT_SECRET} ) {
@@ -104,7 +105,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
       print 'echo <<CODE>> > ' . "$home_dir/.google/.code." . $issue_tracker_proj . "\n" ; 
       sleep 6 ; # give time to the human to get it done ...
 
-      my $code = $objFileHandler->doReadFileReturnString ( "$home_dir/.google/.code." . $issue_tracker_proj ) ; 
+      my $code = $objRdrFiles->doReadFileReturnString ( "$home_dir/.google/.code." . $issue_tracker_proj ) ; 
       print "\$code is $code" ; 
       sleep 3 ; # give time to the developer to verify it ...
 
@@ -210,7 +211,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
        );
 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
-	   $objFileHandler   = 'IssueTracker::App::Utils::IO::FileHandler'->new ( \$appConfig ) ; 
+      $objRdrFiles      = 'IssueTracker::App::IO::In::RdrFiles'->new ( \$appConfig ) ;  
 
       return $self ; 
 	}	
