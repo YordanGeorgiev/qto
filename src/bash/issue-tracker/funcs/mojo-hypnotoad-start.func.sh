@@ -13,8 +13,8 @@ doMojoHypnotoadStart(){
 	
 	sleep "$sleep_interval"
 	# Action !!!
-   cd src/perl/issue_tracker/script/
-   hypnotoad  issue_tracker &
+   cd src/perl/issue_tracker/script
+   hypnotoad  IssueTracker.pm &
    cd $procuct_instance_dir
 
 	doLog "DEBUG STOP  doMojoHypnotoadStart"
