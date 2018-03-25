@@ -101,7 +101,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          $str_val_list = '' ; 
       }
       
-      p ( $str_sql_insert ) ; 
+      p ( $str_sql_insert ) if $module_trace == 1 ; 
 
       # proper authentication implementation src:
       # http://stackoverflow.com/a/19980156/65706
@@ -510,14 +510,13 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       
       my $dmhsr            = {} ; 
 
-      my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
+      my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel , $self ) ; 
       my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( $rdbms_type  );
 
       # obs this does not support ordered primary key tables first order yet !!!
       foreach my $table ( keys %$hsr3 ) { 
 
          $objLogger->doLogDebugMsg ( "doUpsertTables table: $table" );
-         sleep 2 ; 
          next unless grep( /^$table$/, @tables ) ; 
 
          # load ONLY the tables defined to load

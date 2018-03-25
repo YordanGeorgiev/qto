@@ -30,7 +30,7 @@ package IssueTracker::App::IO::In::RdrCmdArgs ;
       my $self = shift ;   
       my $actions       = q{} ; 
       my $xls_dir       = q{} ; 
-      my $xls_file      = q{} ; 
+      my $xls_file      = 'undefined' ; 
       my $period        = q{} ; 
       my $tables        = q{} ; 
       my $rdbms_type    = 'postgres' ; # the default
@@ -38,10 +38,10 @@ package IssueTracker::App::IO::In::RdrCmdArgs ;
      # get the cmd args
      GetOptions(
        'do=s'          => \$actions,
+       'tables=s'      => \$tables ,
        'xls-dir=s'     => \$xls_dir,
        'xls-file=s'    => \$xls_file,
        'period=s'      => \$period ,
-       'tables=s'      => \$tables ,
        'rdbms-type=s'  => \$rdbms_type
      );
 
@@ -50,13 +50,12 @@ package IssueTracker::App::IO::In::RdrCmdArgs ;
 
       confess "no actions defined - Nothing to do !!!" unless $actions ; 
 
-      $objModel->set('ctrl.tables' , $tables ) ; 
-      $objModel->set('ctrl.period' , $period ) ; 
       $objModel->set('ctrl.actions' , $actions ) ; 
+      $objModel->set('ctrl.tables' , $tables ) ; 
+      $objModel->set('io.xls-file' , $xls_file ) if defined $xls_file ; 
+      $objModel->set('io.xls-dir' , $xls_dir ) if defined $xls_dir ; 
       $objModel->set('ctrl.rdbms-type' , $rdbms_type ) ; 
-
-      $objModel->set('io.xls-file' , $xls_file ) ; 
-      $objModel->set('io.xls-dir' , $xls_file ) ; 
+      $objModel->set('ctrl.period' , $period ) ; 
    }
    # eof sub doRead
 

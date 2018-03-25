@@ -6,7 +6,7 @@ package IssueTracker::App::Utils::OO::SetGetable ;
 	our @ISA = qw(Exporter);
 	our $AUTOLOAD =();
 	our $ModuleDebug = 0 ; 
-   use Carp ; 
+   use Carp qw /carp cluck croak confess/ ; 
 
    our @EXPORT_OK = qw(get set dumpFields);  # symbols to export on request
 
@@ -18,8 +18,9 @@ package IssueTracker::App::Utils::OO::SetGetable ;
 
 		my $self = shift;
 		my $name = shift;
-		croak "\@TRYING to get an undef name" unless $name ;  
-		croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
+
+		print STDERR "\@TRYING to get an undef name" unless ( defined $name ) ; 
+      print STDERR "\@TRYING to get an undefined value" unless ( defined $self->{ $name } ); 
 
 		return $self->{ $name };
 	}    
@@ -33,6 +34,10 @@ package IssueTracker::App::Utils::OO::SetGetable ;
 		my $self  = shift;
 		my $name  = shift;
 		my $value = shift;
+
+		print STDERR "\@TRYING to set an undef name" unless ( defined $name ) ; 
+      print STDERR "\@TRYING to set an undefined value" unless ( defined $value ) ; 
+
 		$self->{ "$name" } = $value;
 	}
 	# eof sub set

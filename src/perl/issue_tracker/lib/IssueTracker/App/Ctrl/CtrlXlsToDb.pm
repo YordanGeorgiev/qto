@@ -17,6 +17,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Db::Out::WtrDbsFactory ; 
+   use IssueTracker::App::IO::In::RdrDirs ; 
    use IssueTracker::App::IO::In::RdrXls ; 
    use IssueTracker::App::Mdl::Model ; 
    use IssueTracker::App::Cnvr::CnrXlsHsr3ToDbHsr3 ; 
@@ -33,10 +34,11 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 	our $ProductOwner 				   = '' ; 
 	our $HostName 						   = '' ; 
 	our $ConfFile 						   = '' ; 
-	our $objLogger						   = {} ; 
-	our $objModel                    = {} ; 
    our $appConfig                   = {} ; 
    our $rdbms_type                  = {} ; 
+	our $objLogger						   = {} ; 
+   our $objRdrDirs                  = {} ;
+	our $objModel                    = {} ; 
 
 
 =head1 SYNOPSIS
@@ -68,10 +70,22 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       my $ret                 = 1 ; 
       my $msg                 = 'file read' ; 
       
-      my @tables              = ();
       my $tables              = $objModel->get( 'ctrl.tables' ) ; 
-      my $xls_file            = $objModel->get( 'io.xls-file' ) ;
+      my @tables              = ();
 	   push ( @tables , split(',',$tables ) ) ; 
+      my $xls_file            = '' ; 
+      
+      # if the xls_file is not defined take the latest one from the mix data dir
+      if ( $objModel->get( 'io.xls-file' ) eq 'undefined' ) {
+         my $xls_dir          = $ENV{'mix_data_dir' } ;  ; 
+         my $arrRefXlsFiles   = $objRdrDirs->doReadDirGetFilesByExtension ( $xls_dir , 'xlsx')  ; 
+
+         # ignore tilde containing files - todo: fix regex for file names starting with ~
+         $xls_file            = (reverse sort (grep { $_ !~ m/~/g } @$arrRefXlsFiles))[0] ; 
+         $objModel->set( 'io.xls-file' , $xls_file ) ; 
+         confess ( "xls file not defined !!! Nothing to do !!!" ) unless $objModel->get( 'io.xls-file' ) ; 
+      } 
+      #eof unless defined xls_file
 
       my $objRdrXls           = 'IssueTracker::App::IO::In::RdrXls'->new ( 
             \$issue_tracker::appConfig , \@tables ) ; 
@@ -85,7 +99,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       $msg                 = 'unknown error while inserting db tables !!!' ; 
 
       my $objWtrDbsFactory = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( 
-            \$issue_tracker::appConfig  , \$self , $rdbms_type ) ; 
+            \$issue_tracker::appConfig  , \$objModel , \$self , $rdbms_type ) ; 
       my $objWtrDb 		   = $objWtrDbsFactory->doInstantiate ( "$rdbms_type" , \@tables );
 
       p($hsr3) if $module_trace == 1 ; 
@@ -127,48 +141,32 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
 
 =head1 SUBROUTINES/METHODS
-
-	STOP  SUBS 
-	# -----------------------------------------------------------------------------
 =cut
 
 
 =head2 new
 	# -----------------------------------------------------------------------------
-	# the constructor
-=cut 
-
-	# -----------------------------------------------------------------------------
 	# the constructor 
 	# -----------------------------------------------------------------------------
-	sub new {
+=cut 
 
+	sub new {
 		my $class      = shift;    # Class name is in the first parameter
-		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-		$objModel   = ${ shift @_ } || croak 'objModel not passed !!!' ; 
-		my $self = {};        # Anonymous hash reference holds instance attributes
+		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
+		my $self       = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize() ; 
+      $self->doInitialize() ; 
 		return $self;
 	}  
-	#eof const
-	
-   #
-	# --------------------------------------------------------
-	# intializes this object 
-	# --------------------------------------------------------
+
+
    sub doInitialize {
       my $self = shift ; 
-
-	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$issue_tracker::appConfig ) ;
-      $rdbms_type       = $ENV{ 'rdbms_type' } || $objModel->get( 'ctrl.rdbms-type' ) || 'postgres' ; 
-
-      confess ( "xls file not defined !!! Nothing to do !!!" ) unless $objModel->get( 'io.xls-file' ) ; 
-
-     
-      return $self ; 
+	   $objLogger 	= 'IssueTracker::App::Utils::Logger'->new( \$issue_tracker::appConfig ) ;
+      $rdbms_type = $ENV{ 'rdbms_type' } || $objModel->get( 'ctrl.rdbms-type' ) || 'postgres' ; 
+      $objRdrDirs = 'IssueTracker::App::IO::In::RdrDirs'->new ( \$issue_tracker::appConfig , \$objModel ); 
 	}	
-	#eof sub doInitialize
 
 =head2
 	# -----------------------------------------------------------------------------

@@ -1,23 +1,23 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/perl/issue_tracker/t/TestIssueTracker.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
 src/perl/issue_tracker/t/lib/IssueTracker/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
 src/perl/issue_tracker/t
-src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/
-src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm
 src/perl/issue_tracker/t/TestRdrCmdArgs.pl
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/SetGetableChild.pm
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/AutoLoadableChild.pm
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestSetGetable.pl
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestAutoLoadable.pl
 src/perl/issue_tracker/t/TestInitiator.pl
-src/perl/issue_tracker/t/TestConfigurator.pl
+src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/TestConfigurator.pl
 src/perl/issue_tracker/t/TestLogger.pl
 src/perl/issue_tracker/t/TestDispatcher.pl
 src/perl/issue_tracker/t/TestCtrlXlsToDb.pl
 src/perl/issue_tracker/t/TestModel.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm
 # ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
@@ -92,6 +92,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGoogleSheet.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrURL.pm
 src/perl/issue_tracker/lib/IssueTracker/App/RAM
 src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToTxt.pm
+src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToJson.pm
 src/perl/issue_tracker/lib/IssueTracker/App
 src/perl/issue_tracker/lib/IssueTracker/App/Db
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In
@@ -106,6 +107,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToJson.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet.pm
@@ -148,6 +150,7 @@ src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
 src/perl/issue_tracker/lib/IssueTracker/Controller/Example.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Get.pm
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestGet.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/Srch.pm
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/basic.t
@@ -162,10 +165,6 @@ cnf/hosts/host-name/home
 cnf/hosts/host-name/home/ysg
 cnf/hosts/host-name/home/ysg/.muttrc
 cnf/hosts/host-name/home/ysg/.tmux.cnf
-cnf/hosts/host-name/home/ysg/.tmux.cnf.1.1.1.20161231_092125.backup
-cnf/hosts/host-name/home/ysg/.tmux-session.1.0.0.20161216_202609.backup
-cnf/hosts/host-name/home/ysg/.tmux-session.1.0.0.20161231_092215.backup
-cnf/hosts/host-name/home/ysg/.vimrc.1.2.0.20161216_194801.backup
 cnf/readme.txt
 # ---
 src/bash/issue-tracker/tests/increase-date.test.sh

@@ -30,11 +30,15 @@ package IssueTracker::App::IO::Out::WtrFiles ;
 
 		my $self           = shift;
 		my $out_file       = shift
-		   || cluck("WtrFiles::doPrintToFile undef \$out_file  !!!");
+		   || confess ("WtrFiles::doPrintToFile undef \$out_file  !!!");
 		my $prt_str    = shift
 		   || cluck("WtrFiles::doPrintToFile undef \$prt_str  !!!");
 		my $mode             = shift 
          || 'utf8' ; 
+
+      my $ret            = 1 ; 
+      my $msg            = 'unknown error in print to file' ; 
+
 
 		$out_file =~ m/(.*)(\\|\/)(.*)/g ;
 		my $out_file_dir = "$1$2"  ;
@@ -65,7 +69,9 @@ package IssueTracker::App::IO::Out::WtrFiles ;
 
 		print out_file $prt_str;
 		close out_file;
-
+      $ret = 0 ; 
+      $msg = 'OK for print to file : ' . $out_file ; 
+      return ( $ret , $msg ) ; 
 	}  
 	#eof sub doPrintToFile
 

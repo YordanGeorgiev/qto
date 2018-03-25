@@ -12,7 +12,7 @@ use open qw< :std  :utf8     >;
 use charnames qw< :full >;
 use feature qw< unicode_strings >;
 
-
+use Data::Printer ; 
 use Cwd qw ( abs_path );
 use File::Basename qw< basename >;
 use Carp qw< carp croak confess cluck >;
@@ -24,6 +24,7 @@ use Unicode::Normalize qw< NFD NFC >;
 use IssueTracker::App::Utils::Initiator;
 use IssueTracker::App::Utils::Configurator;
 use IssueTracker::App::Utils::Logger;
+use IssueTracker::App::Mdl::Model ; 
 
 
 my $module_trace 					= 0;
@@ -31,79 +32,107 @@ our $objConfigurator				= {} ;
 our $objInitiator 				= {};
 our $appConfig    				= {};
 our $objLogger 					= {};
+our $objModel                 = {};
 
 
 # This method will run once at server start
 sub startup {
 
-  	my $self = shift;
-	my $ret = 1 ; 
-	my $msg = '' ; 
+   my $self = shift;
+   my $ret = 1 ; 
+   my $msg = '' ; 
 
   # Documentation browser under "/perldoc"
   $self->plugin('PODRenderer');
 
   ($ret, $msg) = $self->doInitialize();
   
-	# Router
+   # Router
   my $r = $self->routes;
 
   $r->get('/')->to('example#welcome');
 
-	# http://host-name:3000/dev_stockit/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
-	$r->get('/:db/get/:item/:guid')->to(
-	  controller   => 'Get'
-	, action       => 'doGetItem'
-	);
-	
+   # http://host-name:3000/dev_stockit/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
+   $r->get('/:db/get/:item/:guid')->to(
+     controller   => 'Get'
+   , action       => 'doGetItem'
+   );
+   
    # http://host-name:3000/prd_ysg_issues/srch/confs/con
-	$r->get('/:db/srch/:item/:srch')->to(
-	  controller   => 'Srch'
-	, action       => 'doSrchItem'
-	);
+   $r->get('/:db/srch/:item/:srch')->to(
+     controller   => 'Srch'
+   , action       => 'doSrchItem'
+   );
 
-   # http://host-name:3000/prd_ysg_issues/srch/confs/con
-	$r->options('/:db/srch/:item/:srch')->to(
-	  controller   => 'Srch'
-	, action       => 'doSrchItem'
-	);
 }
-
-	sub new {
-
-		my $class      = shift;    # Class name is in the first parameter
-		my $self = {};        # Anonymous hash reference holds instance attributes
-		bless( $self, $class );    # Say: $self is a $class
-      #$self = $self->doInitialize() ; 
-		return $self;
-	}  
-	#eof const
 
 
 sub doInitialize {
 
-	my $self = shift ; 
-	my $msg = 'error during initialization !!!';
-	my $ret = 1;
-	$objInitiator = 'IssueTracker::App::Utils::Initiator'->new();
-	$appConfig    = $objInitiator->get('AppConfig');
+   my $self = shift ; 
+   my $msg = 'error during initialization !!!';
+   my $ret = 1;
 
-	$objConfigurator
-		= 'IssueTracker::App::Utils::Configurator'->new($objInitiator->{'ConfFile'},
-		\$appConfig);
-	$objLogger = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
+   $objInitiator = 'IssueTracker::App::Utils::Initiator'->new();
+   $appConfig    = $objInitiator->get('AppConfig');
 
-	p($appConfig) ; 
-  	$self->set('AppConfig' , $appConfig );
+   $objConfigurator  = 'IssueTracker::App::Utils::Configurator'->new( 
+         $objInitiator->{'ConfFile'}, \$appConfig);
+   $objLogger        = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
+   $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
+
+   p($appConfig) ; 
+   $self->set('AppConfig' , $appConfig );
    $self->set('ObjLogger', $objLogger );
+   $self->set('ObjModel', \$objModel );
 
-	my $m = "START MAIN";
-	$objLogger->doLogInfoMsg($m);
+   $msg = "START MAIN";
+   $objLogger->doLogInfoMsg($msg);
 
-	$ret = 0;
-	return ($ret, $msg);
+   $ret = 0;
+   return ($ret, $msg);
 }
 # eof sub doInialize
 
+
+# -----------------------------------------------------------------------------
+# return a field's value - aka the "getter"
+# chk: http://perldoc.perl.org/Carp.html
+# -----------------------------------------------------------------------------
+sub get {
+
+   my $self = shift;
+   my $name = shift;
+   croak "\@TRYING to get an undef name" unless $name ;  
+   croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
+
+   return $self->{ $name };
+}    
+
+
+# -----------------------------------------------------------------------------
+# set a field's value - aka the "setter"
+# -----------------------------------------------------------------------------
+sub set {
+
+   my $self  = shift;
+   my $name  = shift;
+   my $value = shift;
+   $self->{ "$name" } = $value;
+}
+# eof sub set
+
+# -----------------------------------------------------------------------------
+# return the fields of this obj instance
+# -----------------------------------------------------------------------------
+sub dumpFields {
+   my $self      = shift;
+   my $strFields = ();
+   foreach my $key ( keys %$self ) {
+      $strFields .= " $key = $self->{$key} \n ";
+   }
+
+   return $strFields;
+}    
 
 1;

@@ -18,6 +18,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    use IssueTracker::App::Ctrl::CtrlTxtToDb ; 
    use IssueTracker::App::Ctrl::CtrlXlsToDb ; 	
    use IssueTracker::App::Ctrl::CtrlDbToTxt ; 
+   use IssueTracker::App::Ctrl::CtrlDbToJson ; 
    use IssueTracker::App::Ctrl::CtrlDbToXls ; 
    use IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ; 
 
@@ -54,9 +55,18 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
 =head1 SUBROUTINES/METHODS
 
-	# -----------------------------------------------------------------------------
-	START SUBS 
 =cut
+
+   sub doXlsToDb {
+      my $self = shift ; 
+      use strict 'refs'; 
+
+      my $objCtrlXlsToDb = 
+         'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig , \$objModel) ; 
+      my ( $ret , $msg ) = $objCtrlXlsToDb->doReadAndLoad ( ) ; 
+      return ( $ret , $msg ) ; 
+   }
+
 
    sub doTxtToDb {
       my $self = shift ; 
@@ -68,16 +78,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       return ( $ret , $msg ) ; 
    }
 
-   sub doDbToXls {
-      my $self = shift ; 
-      use strict 'refs'; 
-
-      my $objCtrlDbToXls = 
-         'IssueTracker::App::Ctrl::CtrlDbToXls'->new ( \$appConfig , \$objModel ) ; 
-      my ( $ret , $msg ) = $objCtrlDbToXls->doReadAndLoad ( ); 
-      return ( $ret , $msg ) ; 
-
-   }
    
    sub doDbToGsheet {
       my $self = shift ; 
@@ -89,16 +89,6 @@ package IssueTracker::App::Ctrl::Dispatcher ;
 
    }
 
-   sub doXlsToDb {
-      my $self = shift ; 
-      use strict 'refs'; 
-      
-
-      my $objCtrlXlsToDb = 
-         'IssueTracker::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig , \$objModel) ; 
-      my ( $ret , $msg ) = $objCtrlXlsToDb->doReadAndLoad ( ) ; 
-      return ( $ret , $msg ) ; 
-   }
    
    sub doDbToTxt {
 
@@ -110,6 +100,28 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       return ( $ret , $msg ) ; 
    }
 
+
+   sub doDbToJson {
+
+      my $self = shift ; 
+      use strict 'refs'; 
+      my $objCtrlDbToJson = 
+         'IssueTracker::App::Ctrl::CtrlDbToJson'->new ( \$appConfig , \$objModel) ; 
+      my ( $ret , $msg ) = $objCtrlDbToJson->doReadAndWrite ( ) ; 
+      return ( $ret , $msg ) ; 
+   }
+
+
+   sub doDbToXls {
+      my $self = shift ; 
+      use strict 'refs'; 
+
+      my $objCtrlDbToXls = 
+         'IssueTracker::App::Ctrl::CtrlDbToXls'->new ( \$appConfig , \$objModel ) ; 
+      my ( $ret , $msg ) = $objCtrlDbToXls->doReadAndLoad ( ); 
+      return ( $ret , $msg ) ; 
+
+   }
 
    sub doRunActions {
 
@@ -132,8 +144,11 @@ package IssueTracker::App::Ctrl::Dispatcher ;
          $func =~ s/(\w+)/($a=lc $1)=~s<(^[a-z]|-[a-z])><($b=uc$1);$b;>eg;$a;/eg ; 
          $func =~ s|-||g;
          $func = "do" . $func ; 
+         # shorter alternative but with needs undefined warnings clean-up
+         # $func =~ s/(?<=[^\W\-])\-([^\W\-])|([^\W\-]+)|\-/\U$1\L$2/g ; #run-some-act -> runSomeAct
+         # $func = "do" . "\u$func"  ; # runSomeAct -> doRunSomeAct
          no strict 'refs' ; 
-         $objLogger->doLogInfoMsg ( "module_test_run: " . $module_test_run ) ; 
+         # $objLogger->doLogInfoMsg ( "module_test_run: " . $module_test_run ) ; 
          return $func if ( $module_test_run == 1 ) ; 
          ($ret , $msg ) = $self->$func ; 
 

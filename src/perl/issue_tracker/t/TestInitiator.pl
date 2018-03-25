@@ -22,6 +22,14 @@ my $HostName					= $objInitiator->doResolveMyHostName();
 my $appConfig					= {} ;
 $appConfig						= $objInitiator->get ('AppConfig'); 
 
+use Carp ; 
+my $m = 'the issue-tracker calling shell needs always a set of pre-defined env vars,
+thus you need to define your issue tracker project by :
+doParseCnfEnvVars <<path-to-your-issue-tracker-projects-cnf-files>>/<<issue-tracker-cnf-file>>
+for example:
+doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf'  ; 
+croak $m unless ( defined ( $ENV{ "issue_tracker_project" } )) ; 
+
 # p($appConfig) ; 
 # sleep 6 ; 
 # 1. 

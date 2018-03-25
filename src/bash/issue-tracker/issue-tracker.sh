@@ -519,7 +519,9 @@ doParseConfFile(){
 }
 #eof func doParseConfFile
 
-
+doClearTheScreen(){
+	printf "\033[2J";printf "\033[0;0H"
+}
 
 # Action !!!
 main "$@"
