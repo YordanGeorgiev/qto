@@ -1,7 +1,7 @@
 use strict ; use warnings ; 
 
 use FindBin;
-BEGIN { unshift @INC, "$FindBin::Bin/../lib" }
+BEGIN { unshift @INC, "$FindBin::Bin/../../../../../lib" }
 
 use IssueTracker::App::Utils::Initiator ; 
 use IssueTracker::App::Utils::Configurator ; 
@@ -10,12 +10,20 @@ use Test::More tests => 10 ;
 use Data::Printer ; 
 use Scalar::Util qw/reftype/;
 
+use Carp ; 
+my $m = 'the issue-tracker calling shell needs always a set of pre-defined env vars,
+thus you need to define your issue tracker project by :
+doParseCnfEnvVars <<path-to-your-issue-tracker-projects-cnf-files>>/<<issue-tracker-cnf-file>>
+for example:
+doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf'  ; 
+croak $m unless ( defined ( $ENV{ "issue_tracker_project" } )) ; 
 my $msg              = (); 
+my $n                = (); 
 my $objInitiator     = {} ; 
 my $objConfigurator  = {} ; 
 my $appConfig        = {} ; 
 my $ConfFile         = {} ; 
-$objInitiator 		   = 'IssueTracker::App::Utils::Initiator'->new();	
+$objInitiator 		   = 'IssueTracker::App::Utils::Initiator'->new(4);
 $appConfig           = $objInitiator->get('AppConfig');
 
   $objConfigurator
@@ -24,45 +32,45 @@ $appConfig           = $objInitiator->get('AppConfig');
 
 $appConfig           = $objConfigurator->getConfHolder()  ;
 
-# 1.
+$n = 'test-01' ; 
 $msg                 = 'the objConfigurator produces the appConfig hash' ; 
 ok ( reftype $appConfig eq reftype {} , $msg ) ; 
 p($appConfig) ; 
 
-# 2. 
-$msg = "the AppConfig has the PrintConsoleMsgs key" ; 
+$n = 'test-02' ; 
+$msg = "$n " .  "the AppConfig has the PrintConsoleMsgs key" ; 
 ok ( exists $appConfig->{'PrintConsoleMsgs'} , $msg ) ; 
 
-# 3. 
-$msg = "the AppConfig has the PrintDebugMsgs key" ; 
+$n = 'test-03' ; 
+$msg = "$n " .  "the AppConfig has the PrintDebugMsgs key" ; 
 ok ( exists $appConfig->{'PrintDebugMsgs'} , $msg ) ; 
 
-# 4.
-$msg = "the AppConfig has the PrintErrorMsgs key" ; 
+$n = 'test-04' ; 
+$msg = "$n " .  "the AppConfig has the PrintErrorMsgs key" ; 
 ok ( exists $appConfig->{'PrintErrorMsgs'} , $msg ) ; 
 
-# 5.
-$msg = "the AppConfig has the PrintInfoMsgs key" ; 
+$n = 'test-05' ; 
+$msg = "$n " .  "the AppConfig has the PrintInfoMsgs key" ; 
 ok ( exists $appConfig->{'PrintInfoMsgs'} , $msg ) ; 
 
-# 6.
-$msg = "the AppConfig has the PrintTraceMsgs key" ; 
+$n = 'test-06' ; 
+$msg = "$n " .  "the AppConfig has the PrintTraceMsgs key" ; 
 ok ( exists $appConfig->{'PrintTraceMsgs'} , $msg ) ; 
 
-# 7.
-$msg = "the AppConfig has the PrintWarningMsgs key" ; 
+$n = 'test-07' ; 
+$msg = "$n " .  "the AppConfig has the PrintWarningMsgs key" ; 
 ok ( exists $appConfig->{'PrintWarningMsgs'} , $msg ) ; 
 
-# 8.
-$msg = "the AppConfig has the LogDir key" ; 
+$n = 'test-08' ; 
+$msg = "$n " .  "the AppConfig has the LogDir key" ; 
 ok ( exists $appConfig->{'LogDir'} , $msg ) ; 
 
-# 9.
-$msg = "the AppConfig has the LogFile key" ; 
+$n = 'test-09' ; 
+$msg = "$n " .  "the AppConfig has the LogFile key" ; 
 ok ( exists $appConfig->{'LogFile'} , $msg ) ; 
 
-# 10.
-$msg = "the AppConfig has the LogToFile key" ; 
+$n = 'test-10' ; 
+$msg = "$n " .  "the AppConfig has the LogToFile key" ; 
 ok ( exists $appConfig->{'LogToFile'} , $msg ) ; 
 
 #

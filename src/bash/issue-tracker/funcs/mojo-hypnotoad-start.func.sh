@@ -2,13 +2,11 @@
 
 # v1.0.9
 # ---------------------------------------------------------
-# todo: add doMojoHypnotoadStart comments ...
+# cat doc/txt/issue-tracker/funcs/mojo-hypnotoad-start.func.txt
 # ---------------------------------------------------------
 doMojoHypnotoadStart(){
 
 	doLog "DEBUG START doMojoHypnotoadStart"
-	
-	# cat doc/txt/issue-tracker/funcs/mojo-hypnotoad-start.func.txt
 	
 	
 	sleep "$sleep_interval"

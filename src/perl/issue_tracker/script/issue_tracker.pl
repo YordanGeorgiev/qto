@@ -2,16 +2,13 @@
 package issue_tracker;
 
 use strict;
-use warnings;
-use utf8;
-use strict;
-use autodie;
-use warnings;
 use warnings qw< FATAL  utf8     >;
+use autodie qw(:all);
+use utf8;
 use open qw< :std  :utf8     >;
 use charnames qw< :full >;
 use feature qw< unicode_strings >;
-
+use 5.12.0;
 
 require Exporter;
 our @ISA         = qw(Exporter);
@@ -20,13 +17,12 @@ our @EXPORT_OK   = (@{$EXPORT_TAGS{'all'}});
 our @EXPORT      = qw($appConfig);
 our $AUTOLOAD    = ();
 
-use Data::Printer;
 use Cwd qw ( abs_path );
-use Getopt::Long;
 use File::Basename qw< basename >;
 use Carp qw< carp croak confess cluck >;
 use Encode qw< encode decode >;
 use Unicode::Normalize qw< NFD NFC >;
+use Data::Printer;
 
 $| = 1;
 
@@ -74,17 +70,17 @@ local $SIG{__DIE__} = sub {
 #   case just generate a clucking stackdump instead
 local $SIG{__WARN__} = sub {
   $0 = basename($0);    # shorter messages
-  if   ($^S) { cluck "\n\n FATAL Trapped warning: @_" }
-  else       { confess "\n\n FATAL Deadly warning: @_" }
+  if   ($^S) { cluck "\n\n WARN Trapped warning: @_" }
+  else       { cluck "\n\n WARN Deadly ?! warning: @_" }
 };
 
 
-my $module_trace  = 0;
-my $md_file       = '';
-my $objInitiator  = {};
 our $appConfig    = {};
 our $objModel     = {};
 our $objLogger    = {};
+my $module_trace  = 0;
+my $md_file       = '';
+my $objInitiator  = {};
 my $objConfigurator       = {};
 my $xls_dir               = q{};
 my $xls_file              = q{};
@@ -95,7 +91,6 @@ my $rdbms_type            = 'postgre';                 #todo: parametrize to
 
 #
 # the main shell entry point of the application
-#
 sub main {
 
   my $msg = 'error during initialization of the tool !!! ';

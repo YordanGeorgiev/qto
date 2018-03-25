@@ -17,13 +17,12 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    our $IsUnitTest                              = 0 ; 
 	our $appConfig 										= {} ; 
 	our $objLogger 										= {} ; 
-	our $objModel                              = {} ; 
-
-	our $postgres_db_name                                 = q{} ; 
+	our $objModel                                = {} ; 
+	our $postgres_db_name                        = q{} ; 
 	our $db_host 										   = q{} ; 
 	our $db_port 										   = q{} ;
-	our $postgres_db_user 											= q{} ; 
-	our $postgres_db_user_pw	 									= q{} ; 
+	our $postgres_db_user 							   = q{} ; 
+	our $postgres_db_user_pw	 					   = q{} ; 
 	our $web_host 											= q{} ; 
 
    
@@ -407,9 +406,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 		my $invocant 			= shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-	
-      p($appConfig ) ; 
-
+		$objModel      = ${ shift @_ } || print 'objModel not passed in RdrPostgresDb !!!' ; 
+      # p($appConfig ) ; 
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
 
@@ -434,14 +432,13 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		# print "PostgreReader::doInitialize appConfig : " . p($appConfig );
       # sleep 6 ; 
 		
-		$postgres_db_name 			= $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}     || 'prd_ysg_issues' ; 
-		$db_host 			= $ENV{ 'db_host' } || $appConfig->{'db_host'} 		|| 'localhost' ;
-		$db_port 			= $ENV{ 'db_port' } || $appConfig->{'db_port'} 		|| '13306' ; 
-		$postgres_db_user 			= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'ysg' ; 
-		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' } || $appConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
+		$postgres_db_name    = $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}     || 'prd_ysg_issues' ; 
+		$db_host 			   = $ENV{ 'db_host' } || $appConfig->{'db_host'} 		|| 'localhost' ;
+		$db_port 			   = $ENV{ 'db_port' } || $appConfig->{'db_port'} 		|| '13306' ; 
+		$postgres_db_user 	= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'ysg' ; 
+		$postgres_db_user_pw = $ENV{ 'postgres_db_user_pw' } || $appConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
       
-	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
-      $objModel             = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
+	   $objLogger 			   = 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
 
       return $self ; 
 	}	
@@ -450,6 +447,5 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 
 1;
-
 
 __END__

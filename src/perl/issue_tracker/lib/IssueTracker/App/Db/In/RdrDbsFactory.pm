@@ -3,13 +3,13 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
 	use strict; use warnings;
 	
 	use Data::Printer ; 
-	
+   use Carp ; 	
 
 	our $appConfig 		= {} ; 
 	our $rdbms_type      = 'postgres' ; 
 	our $objItem			= {} ; 
-   our $objLogger       = {} ; 
-   our $objModel         = {} ; 
+   # our $objLogger       = {} ; 
+   our $objModel        = {} ; 
 
 	# use IssueTracker::App::Db::RdrDbMariaDb  ; 
    use IssueTracker::App::Db::In::Postgres::RdrPostgresDb ; 
@@ -61,8 +61,9 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
 	# -----------------------------------------------------------------------------
 	sub new {
 
-		my $invocant 			= shift ;    
+		my $invocant   = shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 		
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
@@ -85,7 +86,7 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
            appConfig => $appConfig
       );
 
-	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
+	   #$objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
 
 
       return $self ; 

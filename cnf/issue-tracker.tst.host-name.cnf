@@ -10,6 +10,9 @@ postgres_db_name   = tst_issue_tracker
 # where the scripts to run are situated
 pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.0.tst.ysg/src/sql/pgsql/tst_issue_tracker
 
+# the root dir for all the project data 
+DataDir = /opt/csitea/issue-tracker/issue-tracker.0.3.2.tst.ysg/dat
+
 # where are stored the txt issues files
 mix_data_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.0.tst.ysg/dat/mix/issues
 

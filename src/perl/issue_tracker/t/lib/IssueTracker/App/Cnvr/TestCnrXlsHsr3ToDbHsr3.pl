@@ -14,6 +14,14 @@ use IssueTracker::App::Utils::Logger ;
 use IssueTracker::App::Utils::Configurator ; 
 use IssueTracker::App::Cnvr::CnrXlsHsr3ToDbHsr3 ; 
 
+use Carp ; 
+my $m = 'the issue-tracker calling shell needs always a set of pre-defined env vars,
+thus you need to define your issue tracker project by :
+doParseCnfEnvVars <<path-to-your-issue-tracker-projects-cnf-files>>/<<issue-tracker-cnf-file>>
+for example:
+doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf'  ; 
+croak $m unless ( defined ( $ENV{ "issue_tracker_project" } )) ; 
+
 my $objInitiator 				= 'IssueTracker::App::Utils::Initiator'->new(4);	
 my $appConfig					= {} ;
 $appConfig                 = $objInitiator->get('AppConfig');
@@ -32,7 +40,6 @@ my $ret        = 1 ;
 my $hsr2_in    = {} ; 
 my $hsr2_out   = {} ; 
 my $hsr2_exp   = {} ; 
-my $m          = {} ; 
 
 
 $hsr2_in = { 

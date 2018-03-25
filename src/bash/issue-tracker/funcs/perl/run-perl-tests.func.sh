@@ -5,40 +5,45 @@
 # implement the calls to all the perl unit testing 
 # ---------------------------------------------------------
 doRunPerlTests(){
-	
+   
+   test -z $sleep_interval && sleep_interval=2
 	doLog "DEBUG START : doRunPerlTests"
 
-	doLog "INFO Component testing Initiator.pm with TestInitiator "
+	doLog "INFO START Component testing Initiator.pm with TestInitiator "
 	perl src/perl/issue_tracker/t/TestInitiator.pl
-	test -z "$sleep_interval" || sleep $sleep_interval
+	echo -e "\n\n\n" 
 
-	doLog "INFO Component testing Configurator.pm with TestInitiator "
-	perl src/perl/issue_tracker/t/TestConfigurator.pl
-	test -z "$sleep_interval" || sleep $sleep_interval
+	doLog "INFO START Component testing Configurator.pm with TestInitiator "
+   perl src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/TestConfigurator.pl
+	echo -e "\n\n\n" 
 
-	doLog "INFO Component testing Dispatcher.pm with TestDispatcher.pl"
+	doLog "INFO START Component testing Dispatcher.pm with TestDispatcher.pl"
    perl src/perl/issue_tracker/t/TestDispatcher.pl	
-	test -z "$sleep_interval" || sleep $sleep_interval
+	echo -e "\n\n\n" 
 	
-   doLog "INFO Component testing Model.pm with TestModel.pl"
-   # perl src/perl/issue_tracker/t/TestModel.pl	
-	test -z "$sleep_interval" || sleep $sleep_interval
+   doLog "INFO START Component testing Model.pm with TestModel.pl"
+   perl src/perl/issue_tracker/t/TestModel.pl	
+	echo -e "\n\n\n" 
 
-   doLog "INFO Unit testing or the SetGetable base module " 
+   doLog "INFO START Unit testing or the SetGetable base module " 
    perl src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestSetGetable.pl
-	test -z "$sleep_interval" || sleep $sleep_interval
+	echo -e "\n\n\n" 
    
-   doLog "INFO Unit testing or the AutoLoadable  base module" 
+   doLog "INFO START Unit testing or the AutoLoadable  base module" 
    perl src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestAutoLoadable.pl
-	test -z "$sleep_interval" || sleep $sleep_interval
+	echo -e "\n\n\n" 
 
-   doLog "INFO Unit testing or the CnrXlsHsr3ToDbHsr3 module" 
+   doLog "INFO START Unit testing or the CnrXlsHsr3ToDbHsr3 module" 
    perl src/perl/issue_tracker/t/lib/IssueTracker/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
-	test -z "$sleep_interval" || sleep $sleep_interval
+	echo -e "\n\n\n" 
 
-   doLog "INFO Unit testing or the CtrlXlsToDb module" 
+   doLog "INFO START Unit testing or the CtrlXlsToDb module" 
    perl src/perl/issue_tracker/t/TestCtrlXlsToDb.pl
-	test -z "$sleep_interval" || sleep $sleep_interval
+	echo -e "\n\n\n" 
+
+   doLog "INFO START integration testing - do run all the implemented action tests" 
+   perl src/perl/issue_tracker/t/TestIssueTracker.pl
+	echo -e "\n\n\n" 
 }
 # eof func doRunPerlTests
 
