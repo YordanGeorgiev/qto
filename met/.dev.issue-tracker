@@ -716,6 +716,7 @@ doc/txt/issue-tracker/funcs/run-perl-integration-tests.func.txt
 src/bash/issue-tracker/tests/run-perl-integration-tests.test.sh
 src/bash/issue-tracker/helps/run-perl-integration-tests.help.sh
 src/bash/issue-tracker/funcs/run-perl-integration-tests.func.sh
+<<<<<<< HEAD
 # --- the application data
 dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.all.20180330_000000.xlsx
 dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.daily-issues.2018-03-30.txt
@@ -727,3 +728,5 @@ dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.monthly-issues.2018-04-01.t
 dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.test-hierarchy-table.2018-04-01.txt
 doc/dot/readme/what-is-issue-tracker.dot
 doc/img/readme/what-is-is.png
+=======
+>>>>>>> c9cb528... it-180401 add separate run-perl-unit-tests and run-perl-integration-tests actions
