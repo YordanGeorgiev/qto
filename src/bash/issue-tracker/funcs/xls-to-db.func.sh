@@ -3,12 +3,11 @@
 # v0.1.8
 # ---------------------------------------------------------
 # load xls to db
+# cat doc/txt/issue-tracker/funcs/xls-to-db.func.txt
 # ---------------------------------------------------------
 doXlsToDb(){
 
 	doLog "DEBUG START doXlsToDb"
-	
-	# cat doc/txt/issue-tracker/funcs/xls-to-db.func.txt
 	
 	sleep "$sleep_interval"
    test -z ${items_order_by_attribute+x} && export items_order_by_attribute='category'
@@ -17,20 +16,20 @@ doXlsToDb(){
    
    # find out the latest xls file from the project daily dir
    # pass it to the xls-to-rdbms tool as the input xls file
-   
+   # or leave the app to guess it ... 
    test -z ${xls_file+x} && \
       export xls_file=$(find ${mix_data_dir} -name '*.xlsx'| grep '.all.'| sort -rn|head -n 1)
    test -z ${xls_file} && \
       export xls_file=$(find $mix_data_dir -name '*.xlsx'| grep $period| sort -rn|head -n 1)
-   test -z ${xls_file} && \
-      doExit 1 "failed to define xls_file !!!"
 
-   doLog "\${mix_data_dir+}: ${mix_data_dir+}"
-   doLog "INFO \$xls_file: $xls_file"
+   cmd="perl src/perl/issue_tracker/script/issue_tracker.pl --do xls-to-db --tables $tables"
+   test -z ${xls_file} || cmd="$cmd --xls-file $xls_file"
 
+   doLog "INFO using: mix_data_dir: ${mix_data_dir+}"
+   doLog "INFO using xls_file: $xls_file"
    # Action !!!
-   perl src/perl/issue_tracker/script/issue_tracker.pl \
-      --do xls-to-db --xls-file $xls_file --tables $tables
+   $cmd
+
    exit_code=$?
    
 #   psql -d "$postgres_db_name" -c '

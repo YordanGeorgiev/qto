@@ -1,1 +1,2 @@
-xls-to-db
+run-perl-unit-tests
+run-perl-integration-tests

@@ -197,7 +197,8 @@ doc/txt/issue-tracker/tests/txt-to-db.test.txt
 doc/txt/issue-tracker/funcs/txt-to-db.func.txt
 doc/txt/issue-tracker/specs/txt-to-db.spec.txt
 doc/txt/issue-tracker/helps/txt-to-db.help.txt
-#----
+# ---
+# the postgres DDL scripts
 src/sql/pgsql
 src/sql/pgsql/dev_issue_tracker
 src/sql/pgsql/dev_issue_tracker/00.create-db.pgsql
@@ -271,14 +272,14 @@ doc/txt/issue-tracker/funcs/xls-to-db.func.txt
 doc/txt/issue-tracker/specs/xls-to-db.spec.txt
 doc/txt/issue-tracker/helps/xls-to-db.help.txt
 #----
-doc/txt/issue-tracker/funcs/perl/run-perl-tests.func.txt
-doc/txt/issue-tracker/helps/perl/run-perl-tests.help.txt
-doc/txt/issue-tracker/specs/perl/run-perl-tests.spec.txt
-doc/txt/issue-tracker/tests/perl/run-perl-tests.test.txt
-src/bash/issue-tracker/funcs/perl/run-perl-tests.func.sh
-src/bash/issue-tracker/helps/perl/run-perl-tests.help.sh
-src/bash/issue-tracker/specs/perl/run-perl-tests.spec.sh
-src/bash/issue-tracker/tests/perl/run-perl-tests.test.sh
+doc/txt/issue-tracker/funcs/perl/run-perl-unit-tests.func.txt
+doc/txt/issue-tracker/helps/perl/run-perl-unit-tests.help.txt
+doc/txt/issue-tracker/specs/perl/run-perl-unit-tests.spec.txt
+doc/txt/issue-tracker/tests/perl/run-perl-unit-tests.test.txt
+src/bash/issue-tracker/funcs/perl/run-perl-unit-tests.func.sh
+src/bash/issue-tracker/helps/perl/run-perl-unit-tests.help.sh
+src/bash/issue-tracker/specs/perl/run-perl-unit-tests.spec.sh
+src/bash/issue-tracker/tests/perl/run-perl-unit-tests.test.sh
 README.md
 .gitignore
 src/bash/issue-tracker/tests/rem-issue-tracker-actions.lst
@@ -593,7 +594,12 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Timer/autosplit.ix
 src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToJson/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToJson/autosplit.ix
 # ----
+dat/json/daily_issues.json
+dat/json/monthly_issues.json
+dat/json/yearly_issues.json
 cnf/perl/.perltidyrc
 src/bash/issue-tracker/funcs/gmail-txt-issues.func.sh
 src/bash/issue-tracker/tests/gmail-txt-issues.test.sh
@@ -636,28 +642,6 @@ doc/txt/issue-tracker/specs/mojo-morbo-stop.spec.txt
 doc/txt/issue-tracker/helps/mojo-morbo-stop.help.txt
 doc/txt/issue-tracker/funcs/mojo-morbo-stop.func.txt
 # ---
-# ---
-# ---
-dat/mix/issues/2018/2018-02/2018-02-20/issue-tracker.all.20180220_000000.xlsx
-dat/mix/issues/2018/2018-02/2018-02-20/issue-tracker.daily-issues.2018-02-20.txt
-dat/mix/issues/2018/2018-02/2018-02-20/issue-tracker.monthly-issues.2018-02-20.txt
-dat/mix/issues/2018/2018-02/2018-02-20/issue-tracker.test-hierarchy-table.2018-02-20.txt
-dat/mix/issues/2018/2018-01/2018-01-31/issue-tracker.all.20180131_000000.xlsx
-dat/mix/issues/2018/2018-01/2018-01-31/issue-tracker.daily-issues.2018-01-31.txt
-dat/mix/issues/2018/2018-01/2018-01-31/issue-tracker.monthly-issues.2018-01-31.txt
-dat/mix/issues/2018/2018-01/2018-01-31/issue-tracker.test-hierarchy-table.2018-01-31.txt
-dat/mix/issues/2018/2018-02/2018-02-13/issue-tracker.all.20180213_000000.xlsx
-dat/mix/issues/2018/2018-02/2018-02-13/issue-tracker.daily-issues.2018-02-13.txt
-dat/mix/issues/2018/2018-02/2018-02-13/issue-tracker.monthly-issues.2018-02-13.txt
-dat/mix/issues/2018/2018-02/2018-02-13/issue-tracker.test-hierarchy-table.2018-02-13.txt
-dat/mix/issues/2018/2018-02/2018-02-14/issue-tracker.all.20180214_000000.xlsx
-dat/mix/issues/2018/2018-02/2018-02-14/issue-tracker.daily-issues.2018-02-14.txt
-dat/mix/issues/2018/2018-02/2018-02-14/issue-tracker.monthly-issues.2018-02-14.txt
-dat/mix/issues/2018/2018-02/2018-02-14/issue-tracker.test-hierarchy-table.2018-02-14.txt
-dat/mix/issues/2018/2018-02/2018-02-17/issue-tracker.all.20180217_000000.xlsx
-dat/mix/issues/2018/2018-02/2018-02-17/issue-tracker.daily-issues.2018-02-17.txt
-dat/mix/issues/2018/2018-02/2018-02-17/issue-tracker.monthly-issues.2018-02-17.txt
-dat/mix/issues/2018/2018-02/2018-02-17/issue-tracker.test-hierarchy-table.2018-02-17.txt
 doc/md/issue-tracker-system-guide.md
 doc/pdf/issue-tracker-system-guide.pdf
 met/.prd.issue-tracker
@@ -667,7 +651,8 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrDirs/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrFiles/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrDirs/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrFiles/autosplit.ix
-# mysql files
+# ---
+# the mysql ddl scripts
 src/sql/mysql/
 src/sql/mysql/dev_issue_tracker
 src/sql/mysql/dev_issue_tracker/00.create-db.mysql
@@ -724,3 +709,19 @@ src/sql/mysql/tst_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/tst_issue_tracker/50.create-ReadMe-table.sql
 src/sql/mysql/tst_issue_tracker/51.create-Tests-table.sql
 src/sql/mysql/tst_issue_tracker/53.create-SystemGuide-table.sql
+# ---
+doc/txt/issue-tracker/tests/run-perl-integration-tests.test.txt
+doc/txt/issue-tracker/helps/run-perl-integration-tests.help.txt
+doc/txt/issue-tracker/funcs/run-perl-integration-tests.func.txt
+src/bash/issue-tracker/tests/run-perl-integration-tests.test.sh
+src/bash/issue-tracker/helps/run-perl-integration-tests.help.sh
+src/bash/issue-tracker/funcs/run-perl-integration-tests.func.sh
+# --- the application data
+dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.all.20180330_000000.xlsx
+dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.daily-issues.2018-03-30.txt
+dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.monthly-issues.2018-03-30.txt
+dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.test-hierarchy-table.2018-03-30.txt
+dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.all.20180401_000000.xlsx
+dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.daily-issues.2018-04-01.txt
+dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.monthly-issues.2018-04-01.txt
+dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.test-hierarchy-table.2018-04-01.txt

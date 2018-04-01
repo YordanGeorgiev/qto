@@ -51,7 +51,6 @@ sub doReadXlsFileToHsr3 {
     # works too my $objConverter = () ;
     my $objConverter = Text::Iconv->new("utf-8", "utf-8");
 
-    # my $objConverter  = ();
     $objWorkbook = Spreadsheet::XLSX->new($xls_file, $objConverter);
 
     # exit the whole application if there is no excel defined
@@ -61,7 +60,7 @@ sub doReadXlsFileToHsr3 {
       return ($ret, $msg, {});
     }
 
-  }    #eof if not $objWorkbook
+  } 
 
   my $flg_found_at_least_one_table = 0 ; 
   $msg = "did not any of the tables:  " . "@tables" ; 
@@ -75,13 +74,9 @@ sub doReadXlsFileToHsr3 {
     $flg_found_at_least_one_table++ ; 
     $msg = "read worksheet: " . $WorkSheetName ; 
     $objLogger->doLogInfoMsg( $msg ) ; 
-    
 
     my $RowMin = $worksheet->{'MinRow'};
     my $RowMax = $worksheet->{'MaxRow'};
-
-    #    my ( $RowMin, $RowMax) = $worksheet->row_range();
-    #    my ( $MinCol, $MaxCold ) = $worksheet->col_range();
 
     my $row_num = 0;
     for my $row ($RowMin .. $RowMax) {
@@ -93,7 +88,7 @@ sub doReadXlsFileToHsr3 {
       #debug print "MinCol::$MinCol , MaxCol::$MaxCol \n" ;
       my $col_num = 0;
 
-      #print "row_num:: $row_num \n" ;
+      #debug print "row_num:: $row_num \n" ;
       for my $col ($MinCol .. $MaxCol) {
 
         # print "col_num:: $col_num \n" ;
@@ -138,7 +133,6 @@ sub doReadXlsFileToHsr3 {
       $hsWorkSheet->{"$row_num"} = $hsRow;
       $row_num++;
 
-      # debug sleep 3 ;
     }    
     #eof foreach row
 
@@ -167,8 +161,7 @@ sub autofit_columns {
   for my $width (@{$worksheet->{'data'}}) {
 
     $worksheet->set_column($col, $col, 40) if $width;
-
-# $worksheet->set_column($col, $col, $hsr_meta->{'ColumnWidths'}->{ $col } ) if $width;
+    #debug $worksheet->set_column($col, $col, $hsr_meta->{'ColumnWidths'}->{ $col } ) if $width;
     $col++;
   }
 }

@@ -1,4 +1,4 @@
-# doc/txt/issue-tracker/run-perl-tests/run-perl-tests.spec.txt
+# doc/txt/issue-tracker/run-perl-unit-tests/run-perl-unit-tests.spec.txt
 
 	doSpecRunPerlTests
 	
@@ -34,4 +34,4 @@
 
 
 
-# eof file: doc/txt/issue-tracker/run-perl-tests/run-perl-tests.spec.txt
+# eof file: doc/txt/issue-tracker/run-perl-unit-tests/run-perl-unit-tests.spec.txt

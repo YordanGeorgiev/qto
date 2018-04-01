@@ -11,8 +11,8 @@ doTestDbToGsheet(){
 	cat doc/txt/issue-tracker/tests/db-to-gsheet.test.txt
 	
 	sleep "$sleep_interval"
-	# add your action implementation code here ... 
 	# Action !!!
+   bash src/bash/issue-tracker/issue-tracker.sh -a db-to-gsheet -t $tables
 
 	doLog "DEBUG STOP  doTestDbToGsheet"
 }

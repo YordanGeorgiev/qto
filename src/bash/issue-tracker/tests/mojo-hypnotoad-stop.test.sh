@@ -14,6 +14,7 @@ doTestMojoHypnotoadStop(){
 	# add your action implementation code here ... 
 	# Action !!!
    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-hypnotoad-stop
+   test $exit_code -ne 0 && return
 
 	doLog "DEBUG STOP  doTestMojoHypnotoadStop"
 }
