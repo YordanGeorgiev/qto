@@ -13,6 +13,7 @@ doTestIncreaseDate(){
 	
 	sleep "$sleep_interval"
    bash src/bash/issue-tracker/issue-tracker.sh -a increase-date
+   test $exit_code -ne 0 && return
  
 	# add your action implementation code here ... 
 	# Action !!!

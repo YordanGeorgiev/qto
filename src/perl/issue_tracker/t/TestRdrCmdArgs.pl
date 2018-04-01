@@ -38,8 +38,8 @@ my $objRdrCmdArgs 			= 'IssueTracker::App::IO::In::RdrCmdArgs'->new(\$appConfig 
 $msg = 'test-01 - ensure the objRdrCmdArgs can be created ' ; 
 ok ( ref $objRdrCmdArgs eq 'IssueTracker::App::IO::In::RdrCmdArgs' , $msg ) ; 
 
-# those will fail if you do not use the run-perl-tests.func.sh wrapper
-# as the cmd args are passed from there - fin: run-perl-tests.func.sh
+# those will fail if you do not use the run-perl-unit-tests.func.sh wrapper
+# as the cmd args are passed from there - fin: run-perl-unit-tests.func.sh
 $msg = 'test-02 - ensure the actions are passed to the model' ; 
 ok ( $objModel->get('ctrl.actions') eq 'run' , $msg ) ; 
 

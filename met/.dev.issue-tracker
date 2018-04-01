@@ -271,14 +271,14 @@ doc/txt/issue-tracker/funcs/xls-to-db.func.txt
 doc/txt/issue-tracker/specs/xls-to-db.spec.txt
 doc/txt/issue-tracker/helps/xls-to-db.help.txt
 #----
-doc/txt/issue-tracker/funcs/perl/run-perl-tests.func.txt
-doc/txt/issue-tracker/helps/perl/run-perl-tests.help.txt
-doc/txt/issue-tracker/specs/perl/run-perl-tests.spec.txt
-doc/txt/issue-tracker/tests/perl/run-perl-tests.test.txt
-src/bash/issue-tracker/funcs/perl/run-perl-tests.func.sh
-src/bash/issue-tracker/helps/perl/run-perl-tests.help.sh
-src/bash/issue-tracker/specs/perl/run-perl-tests.spec.sh
-src/bash/issue-tracker/tests/perl/run-perl-tests.test.sh
+doc/txt/issue-tracker/funcs/perl/run-perl-unit-tests.func.txt
+doc/txt/issue-tracker/helps/perl/run-perl-unit-tests.help.txt
+doc/txt/issue-tracker/specs/perl/run-perl-unit-tests.spec.txt
+doc/txt/issue-tracker/tests/perl/run-perl-unit-tests.test.txt
+src/bash/issue-tracker/funcs/perl/run-perl-unit-tests.func.sh
+src/bash/issue-tracker/helps/perl/run-perl-unit-tests.help.sh
+src/bash/issue-tracker/specs/perl/run-perl-unit-tests.spec.sh
+src/bash/issue-tracker/tests/perl/run-perl-unit-tests.test.sh
 README.md
 .gitignore
 src/bash/issue-tracker/tests/rem-issue-tracker-actions.lst
@@ -724,3 +724,10 @@ src/sql/mysql/tst_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/tst_issue_tracker/50.create-ReadMe-table.sql
 src/sql/mysql/tst_issue_tracker/51.create-Tests-table.sql
 src/sql/mysql/tst_issue_tracker/53.create-SystemGuide-table.sql
+# ---
+doc/txt/issue-tracker/tests/run-perl-integration-tests.test.txt
+doc/txt/issue-tracker/helps/run-perl-integration-tests.help.txt
+doc/txt/issue-tracker/funcs/run-perl-integration-tests.func.txt
+src/bash/issue-tracker/tests/run-perl-integration-tests.test.sh
+src/bash/issue-tracker/helps/run-perl-integration-tests.help.sh
+src/bash/issue-tracker/funcs/run-perl-integration-tests.func.sh

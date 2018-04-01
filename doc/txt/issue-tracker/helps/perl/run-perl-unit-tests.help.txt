@@ -1,28 +1,28 @@
-# doc/txt/issue-tracker/run-perl-tests/run-perl-tests.func.txt
+# doc/txt/issue-tracker/run-perl-unit-tests/run-perl-unit-tests.help.txt
 
-	doRunPerlTests
+	doHelpRunPerlTests
 	
 	# Purpose:
 	# ------------------------------------------------------
-	-- todo: what is the purpose of the doRunPerlTests function
+	-- todo: what is the purpose of the doHelpRunPerlTests function
 
 	# Prequisites
 	# ------------------------------------------------------
-	-- todo: what are the prerequisites of the doRunPerlTests function
+	-- todo: what are the prerequisites of the doHelpRunPerlTests function
 
 	# Installation
 	# ------------------------------------------------------
 	-- todo: what are the required installations for the  
-		doRunPerlTests function to execute without errors
+		doHelpRunPerlTests function to execute without errors
 
 	# Interdependancies
 	# ------------------------------------------------------
 	-- todo: what are the interdependancies for the  
-		doRunPerlTests function to execute without errors
+		doHelpRunPerlTests function to execute without errors
 
 	# Usage:
 	# ------------------------------------------------------
-	-- todo: how can be the doRunPerlTests used 
+	-- todo: how can be the doHelpRunPerlTests used 
 
 	# Development
 	# ------------------------------------------------------
@@ -30,8 +30,8 @@
 
 	# Caveats:
 	# ------------------------------------------------------
-	-- todo: what are the known caveats of the doRunPerlTests functions
+	-- todo: what are the known caveats of the doHelpRunPerlTests functions
 
 
 
-# eof file: doc/txt/issue-tracker/run-perl-tests/run-perl-tests.func.txt
+# eof file: doc/txt/issue-tracker/run-perl-unit-tests/run-perl-unit-tests.help.txt
