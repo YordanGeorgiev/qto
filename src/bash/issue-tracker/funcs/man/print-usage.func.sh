@@ -33,7 +33,7 @@ doPrintUsage(){
       bash $0 -a run-issue-tracker
       bash $0 -a check-perl-modules-prerequisites
       bash $0 -a check-perl-syntax
-      bash $0 -a run-perl-tests
+      bash $0 -a run-perl-unit-tests
       bash $0 -a run-issue-tracker
       bash $0 -a clone-to-app
       bash $0 -a gmail-package

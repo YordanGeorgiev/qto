@@ -33,6 +33,8 @@ my $DataDir                = $ENV{'DataDir'} ;
 print "using the following DataDir in test : $DataDir \n" ; 
 
 $ENV{'do_truncate_tables'} = 1 ; 
+$ENV{'load_model'} = 'upsert' ; 
+$ENV{'rdbms_type'} = 'postgres' ; 
 
 $tn      = 'test-01' ; 
 $m       = "$tn:
@@ -40,8 +42,8 @@ $m       = "$tn:
 $cmd = "$ProductInstanceDir/src/perl/issue_tracker/script/issue_tracker.pl --do xls-to-db -t daily_issues" ; 
 
 print "running :\n $cmd \n" ; # and Action !!!
-$cmd_out = `$cmd 2>&1 1>/dev/null` ; 
-# debug $cmd_out = `$cmd` ; 
+# $cmd_out = `$cmd 2>&1 1>/dev/null` ; 
+$cmd_out = `$cmd` ; 
 ok ( $?  == 0  , $m ); 
 
 my $exp_file               = "$DataDir/json/daily_issues.json" ; 

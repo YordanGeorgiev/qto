@@ -1,4 +1,4 @@
-# v1.0.9
+# v1.2.9 
 #------------------------------------------------------------------------------
 # scan all the "defined" actions and generate the 
 # spec , func , test , doc files if the do not exist 
@@ -71,6 +71,10 @@ doGenerateActionFiles(){
 				fi
 			); 
 			done< <(echo 'spec' 'func' 'test' 'help' 'none')
+
+      echo -e "generated the following files: \n" ; 
+      find . | grep -i $act |cut -c 3-|sort -nr
+      echo -e "\n\n" 
 
 		doLog "DEBUG STOP  :: checking action: $act"
 		

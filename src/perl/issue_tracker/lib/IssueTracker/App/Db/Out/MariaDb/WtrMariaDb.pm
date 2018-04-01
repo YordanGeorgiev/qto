@@ -322,7 +322,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
       
       my $dmhsr            = {} ; 
 
-      my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
+      my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
       my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( $rdbms_type );
 
       $objLogger->doLogDebugMsg ( "MariaDb doUpsertTable table: $table" );

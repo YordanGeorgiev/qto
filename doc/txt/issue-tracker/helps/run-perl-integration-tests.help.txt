@@ -1,0 +1,10 @@
+# doc/txt/issue-tracker/help/run-perl-integration-tests.help.txt
+
+	doHelpRunPerlIntegrationTests
+
+	# Usage:
+	# ------------------------------------------------------
+   bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-integration-tests
+
+
+# eof file: doc/txt/issue-tracker/help/run-perl-integration-tests.help.txt
