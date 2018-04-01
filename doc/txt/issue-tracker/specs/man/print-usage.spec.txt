@@ -32,7 +32,7 @@ doPrintUsage(){
       bash $0 -a to-ver=1.0.5
       bash $0 -a to-app=<<new_app_name>>
       bash $0 -a check-perl-syntax
-      bash $0 -a run-perl-tests
+      bash $0 -a run-perl-unit-tests
 
       bash $0 -a save-tmux-session
       bash $0 -a restore-tmux-session

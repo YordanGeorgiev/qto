@@ -1,4 +1,4 @@
-# src/bash/issue-tracker/funcs/run-perl-tests.spec.sh
+# src/bash/issue-tracker/funcs/run-perl-unit-tests.spec.sh
 
 # v1.0.9
 # ---------------------------------------------------------
@@ -8,7 +8,7 @@ doSpecRunPerlTests(){
 
 	doLog "DEBUG START doSpecRunPerlTests"
 	
-	cat doc/txt/issue-tracker/specs/perl/run-perl-tests.spec.txt
+	cat doc/txt/issue-tracker/specs/perl/run-perl-unit-tests.spec.txt
 	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 
@@ -17,4 +17,4 @@ doSpecRunPerlTests(){
 # eof func doSpecRunPerlTests
 
 
-# eof file: src/bash/issue-tracker/funcs/run-perl-tests.spec.sh
+# eof file: src/bash/issue-tracker/funcs/run-perl-unit-tests.spec.sh

@@ -1,5 +1,7 @@
+run-perl-unit-tests
+run-perl-integration-tests
 # run-mysql-scripts
-xls-to-db
+#xls-to-db
 # mojo-morbo-start
 # mojo-morbo-stop
 # increase-date
@@ -15,7 +17,6 @@ xls-to-db
 # create-relative-package
 # check-perl-modules-prerequisites
 # check-perl-syntax
-# run-perl-tests
 # clone-to-app
 # gmail-package
 # morph-dir
