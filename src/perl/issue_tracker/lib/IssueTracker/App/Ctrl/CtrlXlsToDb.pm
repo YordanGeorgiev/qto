@@ -79,14 +79,13 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
       if ( $objModel->get( 'io.xls-file' ) eq 'undefined' ) {
          my $xls_dir          = $ENV{'mix_data_dir' } ;  ; 
          my $arrRefXlsFiles   = $objRdrDirs->doReadDirGetFilesByExtension ( $xls_dir , 'xlsx')  ; 
-
          # ignore tilde containing files - todo: fix regex for file names starting with ~
          $xls_file            = (reverse sort (grep { $_ !~ m/~/g } @$arrRefXlsFiles))[0] ; 
          $objModel->set( 'io.xls-file' , $xls_file ) ; 
          confess ( "xls file not defined !!! Nothing to do !!!" ) unless $objModel->get( 'io.xls-file' ) ; 
       } 
-      #eof unless defined xls_file
-
+      $xls_file               = $objModel->get( 'io.xls-file' ) ; 
+     
       my $objRdrXls           = 'IssueTracker::App::IO::In::RdrXls'->new ( 
             \$issue_tracker::appConfig , \@tables ) ; 
       

@@ -33,6 +33,10 @@ doRunPerlTests(){
    perl src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestAutoLoadable.pl
 	echo -e "\n\n\n" 
 
+   doLog "INFO START Unit testing or the Command Line Reader module" 
+   perl src/perl/issue_tracker/t/TestRdrCmdArgs.pl
+	echo -e "\n\n\n" 
+
    doLog "INFO START Unit testing or the CnrXlsHsr3ToDbHsr3 module" 
    perl src/perl/issue_tracker/t/lib/IssueTracker/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
 	echo -e "\n\n\n" 
