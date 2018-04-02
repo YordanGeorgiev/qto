@@ -431,7 +431,7 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       );
 
 		# print "PostgreReader::doInitialize appConfig : " . p($appConfig );
-      # sleep 6 ; 
+      # debug sleep 6 ; 
 		
 		$mysql_db_name 	   = $ENV{ 'mysql_db_name' } || $appConfig->{'mysql_db_name'}     || croak "mysql db name undef !!!" ; 
 		$mysql_host 			= $ENV{ 'mysql_host' } || $appConfig->{'mysql_host'} 		|| 'localhost' ;

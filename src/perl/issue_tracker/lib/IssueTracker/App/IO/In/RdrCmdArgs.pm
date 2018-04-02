@@ -30,12 +30,13 @@ package IssueTracker::App::IO::In::RdrCmdArgs ;
       my $self = shift ;   
       my $actions       = q{} ; 
       my $xls_dir       = q{} ; 
-      my $xls_file      = 'undefined' ; 
+      my $xls_file      = q{} ; 
       my $period        = q{} ; 
       my $tables        = q{} ; 
       my $rdbms_type    = 'postgres' ; # the default
 
      # get the cmd args
+     # obs from now on those vars bellow if not passed will be '' - defined but empty !!!
      GetOptions(
        'do=s'          => \$actions,
        'tables=s'      => \$tables ,
@@ -44,7 +45,6 @@ package IssueTracker::App::IO::In::RdrCmdArgs ;
        'period=s'      => \$period ,
        'rdbms-type=s'  => \$rdbms_type
      );
-
       $rdbms_type      = 'postgres' unless $rdbms_type ; 
       $period          = 'daily' unless $period ; 
 
@@ -52,8 +52,11 @@ package IssueTracker::App::IO::In::RdrCmdArgs ;
 
       $objModel->set('ctrl.actions' , $actions ) ; 
       $objModel->set('ctrl.tables' , $tables ) ; 
-      $objModel->set('io.xls-file' , $xls_file ) if defined $xls_file ; 
+      $objModel->set('io.xls-file' , $xls_file ) if $xls_file ne '' ; 
+      $objModel->set('io.xls-file' , 'undefined' ) if $xls_file eq '' ; 
+
       $objModel->set('io.xls-dir' , $xls_dir ) if defined $xls_dir ; 
+      $objModel->set('io.xls-dir' , 'undefined' ) unless defined $xls_dir ; 
       $objModel->set('ctrl.rdbms-type' , $rdbms_type ) ; 
       $objModel->set('ctrl.period' , $period ) ; 
    }
@@ -103,7 +106,6 @@ package IssueTracker::App::IO::In::RdrCmdArgs ;
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize() ; 
-      $self->doRead() ; 
 		return $self;
 	}  
 	#eof const
