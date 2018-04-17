@@ -20,7 +20,9 @@ Table of Contents
 ## 1. What is it ?!
 A tool to manage multiple projects' issues programmatically using txt files, xls files, store them into Postgres db and publish them into Google Sheets. 
 
-    
+
+issue tracker objects polygon 
+![The relations between the issue tracker objects ](https://github.com/YordanGeorgiev/issue-tracker/tree/dev/doc/img/readme/what-is-is.png)    
 
 ## 2. INSTALLATION AND CONFIGURATION
 

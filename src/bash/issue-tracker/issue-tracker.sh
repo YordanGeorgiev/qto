@@ -80,7 +80,7 @@ doRunActions(){
          # debug doLog "DEBUG func_file: $func_file"
 
 			while read -r function_name ; do (
-            # debug doLog "DEBUG function_name: $function_name"
+            doLog "DEBUG function_name: $function_name"
 
 				action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
 				test "$action_name" != $action && continue
