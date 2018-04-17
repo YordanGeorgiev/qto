@@ -22,7 +22,7 @@ A tool to manage multiple projects' issues programmatically using txt files, xls
 
 
 issue tracker objects polygon 
-![The relations between the issue tracker objects ](issue-tracker/doc/img/readme/what-is-is.png)    
+![The relations between the issue tracker objects ](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/readme/what-is-is.png)    
 
 ## 2. INSTALLATION AND CONFIGURATION
 
