@@ -8,7 +8,6 @@
 	 , `SeqId`				bigint 			NOT NULL 
 	 , `LeftRank`			bigint			NOT NULL
 	 , `RightRank`			bigint			NOT NULL
-	 , `LogicalOrder`		varchar(30) 	NOT NULL
 	 , `Name` 				varchar(200) 	NOT NULL
 	 , `Description` 		varchar(4000) 	DEFAULT NULL
 	 , `RelativePath` 	varchar(4000) 	DEFAULT NULL

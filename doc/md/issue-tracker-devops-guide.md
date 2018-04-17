@@ -59,6 +59,11 @@ Table of Contents
     * [7.7. Production in the prd branch](#77-production-in-the-prd-branch)
   * [8. SCENARIOS](#8-scenarios)
     * [8.1. A small team project hours tracking scenario](#81-a-small-team-project-hours-tracking-scenario)
+  * [9. WAY OF WORKING](#9-way-of-working)
+    * [9.1. Definition of Done](#91-definition-of-done)
+    * [9.2. E-mail communication](#92-e-mail-communication)
+    * [9.3. Chat / IRC](#93-chat-/-irc)
+    * [9.4. Documentation](#94-documentation)
 
 
     
@@ -451,6 +456,36 @@ The prd branch is the one deployed to the production environment. This code is N
 
 ### 8.1. A small team project hours tracking scenario
 This scenario describes the steps and processes, which could be implemented to achieve a small team ( 3-10 ) members issue-tracking with hours reporting by using the issue-handler combined with Google Cloud authentication and storage.
+
+    
+
+## 9. WAY OF WORKING
+This section describes the way of working within a team working on the issue-tracker project. 
+The work on the issue-tracker project is conducted by using the Scrum methodology, thus the ScruM
+
+    
+
+### 9.1. Definition of Done
+Each issue must have a tangible artifact. An issue without tangible artifact is a trought thrown in the air.
+The DoD must be iterated and updated during each Sprint Review. 
+
+    
+
+### 9.2. E-mail communication
+Do not use e-mail communiction for code style, testing, developing etc. Issues which could be achieved witht the code review intervace of the source code management system. 
+Before writing an e-mail think first could you find a way to avoid writing it at all. 
+Do not expect answer of your e-mail within 2 hours. 
+Use e-mail when you have to get an written evidence on agreed matters, which might cause later on discussions. 
+
+    
+
+### 9.3. Chat / IRC
+Should you want a quicker respond than 2 hours use thre chat tool
+
+    
+
+### 9.4. Documentation
+Undocumented feature is not a feature. 
 
     
 

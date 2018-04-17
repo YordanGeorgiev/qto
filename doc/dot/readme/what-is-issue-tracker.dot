@@ -1,0 +1,22 @@
+graph {
+    requirements -- features; 
+    requirements -- functionalities;
+    requirements -- userstories ;  
+    userstories -- features;
+    userstories -- functionalities;
+    features -- functionalities;
+    functionalities -- tests; // functionalities are proved by tests
+    userstories -- tests; // userstories are proved by tests
+    features -- tests ; // features are proved by tests 
+    people -- issues; // people work on issues 
+    people -- features; // people work on features
+    people -- tests ; // people work on tests
+    people -- functionalities ; // people produce functionalities
+    people -- requirements; // people produce requirements
+    people -- userstories ;     // people produce userstories
+    issues -- userstories; //issues are produced from userstories
+    issues -- tests ; //issues are verified by tests
+    issues -- requirements; // issues answer requirements
+    issues -- functionalities ; // issues produce functionalities
+    issues -- features; // issues produces features
+}

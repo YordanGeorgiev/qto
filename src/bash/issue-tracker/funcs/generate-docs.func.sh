@@ -5,7 +5,6 @@
 # cat doc/txt/issue-tracker/funcs/generate-docs.func.txt
 # ---------------------------------------------------------
 doGenerateDocs(){
-
 	doLog "DEBUG START doGenerateDocs"
 
    test -z "${doc_root_dir+x}" && doc_root_dir=$product_instance_dir
