@@ -49,21 +49,23 @@ Table of Contents
   * [6. NAMING CONVENTIONS](#6-naming-conventions)
     * [6.1. Dirs naming conventions](#61-dirs-naming-conventions)
     * [6.2. Root Dirs naming conventions](#62-root-dirs-naming-conventions)
-  * [7. SOURCE CODE MANAGEMENT](#7-source-code-management)
-    * [7.1. Aim for tracability between userstories, requirements, features and functionalities](#71-aim-for-tracability-between-userstories,-requirements,-features-and-functionalities)
-    * [7.2. Feature development in a feature branch](#72-feature-development-in-a-feature-branch)
-    * [7.3. ALWAYS Start with Unit Test](#73-always-start-with-unit-test)
-    * [7.4. Branch for development - dev](#74-branch-for-development--dev)
-    * [7.5. Testing and integrations in the tst branch](#75-testing-and-integrations-in-the-tst-branch)
-    * [7.6. Quality assurance in the qas branch](#76-quality-assurance-in-the-qas-branch)
-    * [7.7. Production in the prd branch](#77-production-in-the-prd-branch)
-  * [8. SCENARIOS](#8-scenarios)
-    * [8.1. A small team project hours tracking scenario](#81-a-small-team-project-hours-tracking-scenario)
-  * [9. WAY OF WORKING](#9-way-of-working)
-    * [9.1. Definition of Done](#91-definition-of-done)
-    * [9.2. E-mail communication](#92-e-mail-communication)
-    * [9.3. Chat / IRC](#93-chat-/-irc)
-    * [9.4. Documentation](#94-documentation)
+  * [7. APPLICATION CONTROL FLOW ](#7-application-control-flow-)
+    * [7.1. Shell control flow](#71-shell-control-flow)
+  * [8. SOURCE CODE MANAGEMENT](#8-source-code-management)
+    * [8.1. Aim for tracability between userstories, requirements, features and functionalities](#81-aim-for-tracability-between-userstories,-requirements,-features-and-functionalities)
+    * [8.2. Feature development in a feature branch](#82-feature-development-in-a-feature-branch)
+    * [8.3. ALWAYS Start with Unit Test](#83-always-start-with-unit-test)
+    * [8.4. Branch for development - dev](#84-branch-for-development--dev)
+    * [8.5. Testing and integrations in the tst branch](#85-testing-and-integrations-in-the-tst-branch)
+    * [8.6. Quality assurance in the qas branch](#86-quality-assurance-in-the-qas-branch)
+    * [8.7. Production in the prd branch](#87-production-in-the-prd-branch)
+  * [9. SCENARIOS](#9-scenarios)
+    * [9.1. A small team project hours tracking scenario](#91-a-small-team-project-hours-tracking-scenario)
+  * [10. WAY OF WORKING](#10-way-of-working)
+    * [10.1. Definition of Done](#101-definition-of-done)
+    * [10.2. E-mail communication](#102-e-mail-communication)
+    * [10.3. Chat / IRC](#103-chat-/-irc)
+    * [10.4. Documentation](#104-documentation)
 
 
     
@@ -408,70 +410,82 @@ src - for the source code of the actual projects and subprojects
 
     
 
-## 7. SOURCE CODE MANAGEMENT
+## 7. APPLICATION CONTROL FLOW 
+This section provides a generic control flow description for the shell based and ui based control flows. 
+
+    
+
+### 7.1. Shell control flow
+The shell control flow is based on the control model input output architecture. 
+
+
+issue tracker control flow
+![The generic shell tool control flow](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/devops/shell-action-control-flow-diagram.png)    
+
+## 8. SOURCE CODE MANAGEMENT
 The issue-tracker is a derivative of the wrapp tool - this means that development and deployment process must be integrated into a single pipeline. 
 
     
 
-### 7.1. Aim for tracability between userstories, requirements, features and functionalities
+### 8.1. Aim for tracability between userstories, requirements, features and functionalities
 Once the issues are defined and you start working on your own branch which is named by the issue-id aim to map one on one each test in your code with each listed requirement in confluence and / or JIRA. 
 
     
 
-### 7.2. Feature development in a feature branch
+### 8.2. Feature development in a feature branch
 You start the development in your own feature branch named : dev--&lt;&lt;issue-id&gt;&gt;-&lt;&lt;short-and-descriptive-name&gt;&gt;.
 
     
 
-### 7.3. ALWAYS Start with Unit Test
+### 8.3. ALWAYS Start with Unit Test
 Do not ever never write code without starting firsr the unit test on how-to test the code. Period. This is he only way to avoid braking old functionalities when the application code base grows larger. 
 Each time a new bug is found fix it by adding new UnitTest!
 
     
 
-### 7.4. Branch for development - dev
+### 8.4. Branch for development - dev
 No code should be merged into the development branch without broad testing coverage and approval from the owner of the instance - as the owner of the instance is at the end responsible personally for the whole instance. 
 
     
 
-### 7.5. Testing and integrations in the tst branch
+### 8.5. Testing and integrations in the tst branch
 The tst branch is dedicated for testing of all the tests, the deployment, performance testing and configuration changes. Should you need to perform bigger than a small hotfix changes you must branch the tst branch into a separate dev--feature branch and re-run the integration testing and approval all over. 
 
     
 
-### 7.6. Quality assurance in the qas branch
+### 8.6. Quality assurance in the qas branch
 At this phase all the tests with all the expected functionalities should work at once. No small hotfixes are allowed - if a need arrises new branch is created to the tst branch The quality assurance
 
     
 
-### 7.7. Production in the prd branch
+### 8.7. Production in the prd branch
 The prd branch is the one deployed to the production environment. This code is NOT straight merged into the master branch , but after certain time depending on the dynamic of the tool with bugless operation merged. 
 
     
 
-## 8. SCENARIOS
+## 9. SCENARIOS
 
 
     
 
-### 8.1. A small team project hours tracking scenario
+### 9.1. A small team project hours tracking scenario
 This scenario describes the steps and processes, which could be implemented to achieve a small team ( 3-10 ) members issue-tracking with hours reporting by using the issue-handler combined with Google Cloud authentication and storage.
 
     
 
-## 9. WAY OF WORKING
+## 10. WAY OF WORKING
 This section describes the way of working within a team working on the issue-tracker project. 
 The work on the issue-tracker project is conducted by using the Scrum methodology, thus the ScruM
 
     
 
-### 9.1. Definition of Done
+### 10.1. Definition of Done
 Each issue must have a tangible artifact. An issue without tangible artifact is a trought thrown in the air.
 The DoD must be iterated and updated during each Sprint Review. 
 
     
 
-### 9.2. E-mail communication
+### 10.2. E-mail communication
 Do not use e-mail communiction for code style, testing, developing etc. Issues which could be achieved witht the code review intervace of the source code management system. 
 Before writing an e-mail think first could you find a way to avoid writing it at all. 
 Do not expect answer of your e-mail within 2 hours. 
@@ -479,12 +493,12 @@ Use e-mail when you have to get an written evidence on agreed matters, which mig
 
     
 
-### 9.3. Chat / IRC
+### 10.3. Chat / IRC
 Should you want a quicker respond than 2 hours use thre chat tool
 
     
 
-### 9.4. Documentation
+### 10.4. Documentation
 Undocumented feature is not a feature. 
 
     

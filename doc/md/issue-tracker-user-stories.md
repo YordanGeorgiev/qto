@@ -72,16 +72,20 @@ load-by-txt-to-db-action)
       * [4.6.3. Issues publishing in google calendar format](#463-issues-publishing-in-google-calendar-format)
     * [4.7. Metadata handling](#47-metadata-handling)
   * [5. UI PERSPECTIVE](#5-ui-perspective)
-    * [5.1. Projects switching](#51-projects-switching)
-    * [5.2. Time management](#52-time-management)
-      * [5.2.1. copy an issue-tracker instance issue to  a google calendar event](#521-copy-an-issue-tracker-instance-issue-to-a-google-calendar-event)
-    * [5.3. Issues listing](#53-issues-listing)
-      * [5.3.1. automatic issue items sequencing](#531-automatic-issue-items-sequencing)
-      * [5.3.2. issues re-ordering by desired or defaut attribute in list view](#532-issues-re-ordering-by-desired-or-defaut-attribute-in-list-view)
-      * [5.3.3. issues list default row height](#533-issues-list-default-row-height)
-    * [5.4. Issues data transfer between different projects](#54-issues-data-transfer-between-different-projects)
-    * [5.5. Issues export to Google calendar](#55-issues-export-to-google-calendar)
-    * [5.6. Issues import from Google calendar](#56-issues-import-from-google-calendar)
+    * [5.1. Performance](#51-performance)
+      * [5.1.1. Page load times](#511-page-load-times)
+    * [5.2. Projects switching](#52-projects-switching)
+    * [5.3. Time management](#53-time-management)
+      * [5.3.1. copy an issue-tracker instance issue to  a google calendar event](#531-copy-an-issue-tracker-instance-issue-to-a-google-calendar-event)
+    * [5.4. Issues listing](#54-issues-listing)
+      * [5.4.1. automatic issue items sequencing](#541-automatic-issue-items-sequencing)
+      * [5.4.2. issues re-ordering by desired or defaut attribute in list view](#542-issues-re-ordering-by-desired-or-defaut-attribute-in-list-view)
+      * [5.4.3. issues list default row height](#543-issues-list-default-row-height)
+    * [5.5. Issues data transfer between different projects](#55-issues-data-transfer-between-different-projects)
+    * [5.6. Issues export to Google calendar](#56-issues-export-to-google-calendar)
+    * [5.7. Issues import from Google calendar](#57-issues-import-from-google-calendar)
+  * [6. UI DEVELOPER PERSPECTIVE](#6-ui-developer-perspective)
+    * [6.1. Testability](#61-testability)
     
 
 
@@ -596,40 +600,54 @@ As an UI user of the issue-tracker tool
 In order to manage my issues via the UI successfully  
 I wanto to be sure that each aspect of my tasks and activities which could be performed via the UI of the tool are covered by the functionalities of the tool to the maximum possible extend. 
 
-### 5.1. Projects switching
+### 5.1. Performance
+    
+
+As an UI user of the issue-tracker tool 
+In order to enjoy the usage of the tool and interact efficiently   
+I wanto to to have responsive and quick UI.
+
+#### 5.1.1. Page load times
+    
+
+As an UI user of the issue-tracker tool 
+In order to enjoy the usage of the tool and interact efficiently   
+I wanto to to have a maximum page load time on efficient network less than 0.5 seconds and preferably even 0.3 seconds
+
+### 5.2. Projects switching
     
 
 As an issue-tracker ui user 
 In order to be able to quickly swith between projects
 I wanto to be able to access a web page providing autocomplete to preloaded configuration entries for the different projects
 
-### 5.2. Time management
+### 5.3. Time management
     
 
 As an issue-tracker ui user 
 In order to be prepare for issues such as ( events , tasks ) which have start and stop time
 I wanto to be able to view the issues with the same title, start_time and stop_time in google calendar
 
-#### 5.2.1. copy an issue-tracker instance issue to  a google calendar event
+#### 5.3.1. copy an issue-tracker instance issue to  a google calendar event
     
 
 As an issue-tracker ui user 
 In order to be able to see my issues time-schedule via phone and browser in a calendar view
 I wanto to be able to copy via the ui an issue as a new google calendar event
 
-### 5.3. Issues listing
+### 5.4. Issues listing
     
 
 As an UI user of the system I want to be able to list the issues stored in it. 
 
-#### 5.3.1. automatic issue items sequencing
+#### 5.4.1. automatic issue items sequencing
     
 
 As an UI user of the system 
 In order to save time while arranging all the different issue items
 I want the System to automatically sequence each item in list view by a defaut incremental sequence unless I have specified my own sequence. 
 
-#### 5.3.2. issues re-ordering by desired or defaut attribute in list view
+#### 5.4.2. issues re-ordering by desired or defaut attribute in list view
     
 
 As a UI user 
@@ -637,21 +655,21 @@ In order to prioritize and re-arrange to a logical sequence my issues
 I wanto to be able to drag and drop issues up and down , 
 which would correspondingly increase or decrease their attribute to which they are currently sorted or ordered by. 
 
-#### 5.3.3. issues list default row height
+#### 5.4.3. issues list default row height
     
 
 As a UI user 
 In order to quickly comprehend the data in the lists  
 I wanto each row of the ui to have a certain minimum height and whenever the data cannot fit into this height to be greater than it
 
-### 5.4. Issues data transfer between different projects
+### 5.5. Issues data transfer between different projects
     
 
 As the UI user of an issue-tracker instance 
 In order to save be able to track my personal time usage between different projects and the different interdependancies 
 I want to be able to move issues data from one project to another via the UI
 
-### 5.5. Issues export to Google calendar
+### 5.6. Issues export to Google calendar
     
 
 As the UI user of an issue-tracker instance 
@@ -659,10 +677,24 @@ In order to be able to visualize and manage my start- and stop_time having issue
 I wanto to be able to export my issues to Google calendar 
 
 
-### 5.6. Issues import from Google calendar
+### 5.7. Issues import from Google calendar
     
 
 As the UI user of an issue-tracker instance 
 In order to be able to visualize and manage my my start- and stop_time having issues better 
 I wanto to be able to import my Google calendar issues into my issue-tracker profile on an issue-tracker instance
+
+## 6. UI DEVELOPER PERSPECTIVE
+    
+
+As the UI Developer
+In order to be able to deliver working solutions for the UI 
+I wanto to have user friendly development experience. 
+
+### 6.1. Testability
+    
+
+As the UI Developer
+In order to deliver working ui units 
+I wanto to be able to quickly setup the existing project with minimalistic default set of data.  
 

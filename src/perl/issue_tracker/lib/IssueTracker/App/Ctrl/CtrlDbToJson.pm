@@ -68,8 +68,8 @@ package IssueTracker::App::Ctrl::CtrlDbToJson ;
 
       my $filter_by_attributes = $ENV{'filter_by_attributes'} || undef ; 
       my $data_dir = $ENV{"DataDir"} ; 
-      print "data-dir : $data_dir \n" ; 
-      sleep 3 ; 
+      # print "data-dir : $data_dir \n" ; 
+      # sleep 3 ; 
       $data_dir = $appConfig->{"ProductInstanceDir"} . '/dat' unless defined $data_dir ; 
 
       for my $table ( @tables ) { 

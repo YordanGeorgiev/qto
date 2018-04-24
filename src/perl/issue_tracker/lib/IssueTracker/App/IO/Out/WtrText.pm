@@ -155,7 +155,7 @@ sub doInitialize {
 
     $msg = 'issues_file: ' . $issues_file;
     $objLogger->doLogDebugMsg($msg);
-    sleep 3 ; 
+    # sleep 3 ; 
     my $ProductInstanceDir = $appConfig->{'ProductInstanceDir'};
     $issues_file = $ProductInstanceDir . "/" . $issues_file
       unless ($issues_file =~ m/^\//g);
