@@ -8,13 +8,13 @@ issue_tracker_project = issue-tracker
 postgres_db_name   = dev_issue_tracker
 
 # where the scripts to run are situated
-pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.2.dev.ysg/src/sql/pgsql/dev_issue_tracker
+pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.4.dev.ysg/src/sql/pgsql/dev_issue_tracker
 
 # the root dir for all the project data 
-DataDir = /opt/csitea/issue-tracker/issue-tracker.0.3.2.dev.ysg/dat
+DataDir = /opt/csitea/issue-tracker/issue-tracker.0.3.4.dev.ysg/dat
 
 # where are stored the txt issues files
-mix_data_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.2.dev.ysg/dat/mix/issues
+mix_data_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.4.dev.ysg/dat/mix/issues
 
 # The logging directory 
 LogDir = %ProductInstanceDir%/dat/log

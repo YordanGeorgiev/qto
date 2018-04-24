@@ -37,6 +37,7 @@ done < <(cat << "EOF"
    libxml-atom-perl
    tar
    gzip
+   graphviz
 EOF
 )
 
