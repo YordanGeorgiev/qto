@@ -717,13 +717,12 @@ src/bash/issue-tracker/tests/run-perl-integration-tests.test.sh
 src/bash/issue-tracker/helps/run-perl-integration-tests.help.sh
 src/bash/issue-tracker/funcs/run-perl-integration-tests.func.sh
 # --- the application data
-dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.all.20180330_000000.xlsx
-dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.daily-issues.2018-03-30.txt
-dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.monthly-issues.2018-03-30.txt
-dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.test-hierarchy-table.2018-03-30.txt
-dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.all.20180401_000000.xlsx
-dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.daily-issues.2018-04-01.txt
-dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.monthly-issues.2018-04-01.txt
-dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.test-hierarchy-table.2018-04-01.txt
+dat/mix/issues/2018/2018-04/2018-04-28
+dat/mix/issues/2018/2018-04/2018-04-28/issue-tracker.monthly-issues.2018-04-28.txt
+dat/mix/issues/2018/2018-04/2018-04-28/issue-tracker.daily-issues.2018-04-28.txt
+dat/mix/issues/2018/2018-04/2018-04-28/~$issue-tracker.all.20180428_000000.xlsx
+dat/mix/issues/2018/2018-04/2018-04-28/issue-tracker.all.20180428_000000.xlsx
+dat/mix/issues/2018/2018-04/2018-04-28/issue-tracker.test-hierarchy-table.2018-04-28.txt
 doc/dot/readme/what-is-issue-tracker.dot
 doc/img/readme/what-is-is.png
+doc/img/devops/shell-action-control-flow-diagram.png
