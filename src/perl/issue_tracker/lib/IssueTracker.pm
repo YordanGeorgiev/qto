@@ -61,7 +61,7 @@ sub startup {
    # http://host-name:3000/dev_issue_tracker/list/monthly_issues
    $r->get('/:db/list/:item')->to(
      controller   => 'List'
-   , action       => 'doListItem'
+   , action       => 'doListItems'
    );
    
    # http://host-name:3000/prd_ysg_issues/srch/confs/con

@@ -10,6 +10,9 @@ $t->get_ok('/')->status_is(200) ;
 
 # JSON
 $t->get_ok('/dev_issue_tracker/list/monthly_issues')
-  ->status_is(200) ; 
+  ->status_is(200) 
+  ->header_is('Accept-Charset' => 'UTF-8')
+  ->header_is('Accept-Language' => 'fi, en')
+;
 
 done_testing();
