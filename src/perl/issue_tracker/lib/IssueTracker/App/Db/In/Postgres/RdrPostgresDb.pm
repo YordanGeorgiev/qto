@@ -321,6 +321,10 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $table                  = shift || 'daily_issues' ;  # the table to get the data from  
       my $filter_by_attributes   = shift ; 
 
+      if ( defined $objModel->get('postgres_db_name') ) {
+		   $postgres_db_name = $objModel->get('postgres_db_name');
+      }
+
       $objLogger->doLogDebugMsg ( "doSelectTableIntoHashRef table: $table " ) ; 
 
       my $msg              = q{} ;         
