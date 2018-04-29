@@ -64,6 +64,12 @@ sub startup {
    , action       => 'doListItems'
    );
    
+	# http://host-name:3000/dev_issue_tracker/list-tables
+   $r->get('/:db/list-tables')->to(
+     controller   => 'List'
+   , action       => 'doListTables'
+   );
+   
    # http://host-name:3000/prd_ysg_issues/srch/confs/con
    $r->get('/:db/srch/:item/:srch')->to(
      controller   => 'Srch'
