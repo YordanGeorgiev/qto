@@ -150,7 +150,9 @@ src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
 src/perl/issue_tracker/lib/IssueTracker/Controller/Example.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Get.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestGet.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/Srch.pm
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/basic.t

@@ -116,8 +116,8 @@ sub doInitialize {
     , 'wip'  => '03-wip'   # is work in progress - aka is being done right now
     , 'act'  => '03-act'    # is being actively done , aka more of an activity type
     , 'actv' => '03-actv'  # is being actively done ,more of an activity type
-    , 'diss' => '04-diss'      # to dissmiss or disgard
-    , 'fail' => '04-fail'      # to failmiss or disgard
+    , 'diss' => '04-diss'      # to dissmiss or discard
+    , 'fail' => '04-fail'      # to failmiss or discard
     , 'test' => '05-test'      # to test some implementation
     , 'tst'  => '05-tst'       # to test some implementation
     , 'hld'  => '06-onhold'    # the issue is on hold -

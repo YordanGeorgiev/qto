@@ -97,7 +97,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
    #
    # -----------------------------------------------------------------------------
-   # 
+   # retrieve the single row from db by guid
    # -----------------------------------------------------------------------------
    sub doSelectItemByGuid {
 
