@@ -15,4 +15,13 @@ $t->get_ok('/dev_issue_tracker/list/monthly_issues')
   ->header_is('Accept-Language' => 'fi, en')
 ;
 
+
+# src: https://restfulapi.net/http-status-codes/
+#400 (Bad Request)
+#400 is the generic client-side error status, used when no other 4xx error code is appropriate. Errors can be like malformed request syntax, invalid request message parameters, or deceptive request routing etc.
+#
+#The client SHOULD NOT repeat the request without modifications.
+
+
+# fetch all the tables 
 done_testing();
