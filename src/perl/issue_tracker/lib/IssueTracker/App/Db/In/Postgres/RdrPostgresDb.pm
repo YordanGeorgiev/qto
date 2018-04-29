@@ -29,15 +29,20 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    
    sub doSelectTablesList {
 
-      my $self          = shift ; 
+      my $self             = shift ; 
+      my $objModel         = ${shift @_ } ; 
 
       my $msg              = q{} ;         
       my $ret              = 1 ;          # this is the return value from this method 
       my $debug_msg        = q{} ; 
-      my $hsr             = {} ;         # this is meta hash describing the data hash ^^
+      my $hsr              = {} ;         # this is meta hash describing the data hash ^^
       my $sth              = {} ;         # this is the statement handle
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
+      
+      if ( defined $objModel->get('postgres_db_name') ) {
+		   $postgres_db_name = $objModel->get('postgres_db_name');
+      }
       
       $str_sql = " 
       SELECT  
@@ -73,6 +78,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
             or $objLogger->error ( "$DBI::errstr" ) ;
 
       $hsr = $sth->fetchall_hashref( 'row_id' ) ; 
+      $objModel->set('hsr2' , $hsr);
       # p($hsr )  ; 
       binmode(STDOUT, ':utf8');
 
