@@ -85,14 +85,14 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $msg = DBI->errstr ; 
 
       unless ( defined ( $msg ) ) {
-         $msg = 'SELECT meta OK ' ; 
+         $msg = 'SELECT tables-list OK ' ; 
          $ret = 0 ; 
       } else {
          $objLogger->doLogErrorMsg ( $msg ) ; 
       }
 
       # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
+      $debug_msg        = 'doSelectTablesList ret ' . $ret ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
 
       $appConfig->{ "$postgres_db_name".'.tables-list'} = $hsr ;
@@ -101,6 +101,34 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    # eof sub doSelectTablesList
 
 
+   sub table_exists {
+      my $self       = shift ; 
+      my $db         = shift ; 
+      my $table      = shift ; 
+      my $ret        = 1 ; 
+
+      my $table_exists = 0 ; 
+      my $hsr2 = {} ; 
+      my $msg  = () ; 
+
+      unless ( defined ( $appConfig->{"$db" . '.tables-list'} ) ) {
+         ($ret, $msg) = $self->doSelectTablesList(\$objModel);
+         $hsr2 = $objModel->get('hsr2');
+         return $table_exists unless $ret == 0 ; 
+      } 
+
+      $hsr2 = $appConfig->{"$db" . '.tables-list'} ; 
+
+      for my $key ( keys %$hsr2 ) {
+         my $table_name = $hsr2->{ $key }->{'table_name'} ; 
+         if ( $table eq $table_name ) {
+            $table_exists = 1 ; 
+            $msg = ' the table exists ' ; 
+            return $table_exists ; 
+         }
+      }
+      return $table_exists ; 
+   }
 
    #
    # -----------------------------------------------------------------------------
@@ -120,6 +148,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $sth              = {} ;         # this is the statement handle
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
+
 
       $str_sql = 
          " SELECT 
@@ -153,6 +182,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       p( $hsr ) if $module_trace == 1 ; 
 
       $msg = DBI->errstr ; 
+      $objLogger->doLogDebugMsg ( $msg ) ; 
 
       unless ( defined ( $msg ) ) {
          $msg = 'SELECT OK for table: ' . "$table" ; 
@@ -195,9 +225,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       " ; 
 
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
-      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      # debug $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
+      # debug $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
+      # debug $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
       $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
                  'RaiseError'          => 1
@@ -325,15 +355,19 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $objModel               = ${shift @_ } ; 
       my $table                  = shift || 'daily_issues' ;  # the table to get the data from  
       my $filter_by_attributes   = shift ; 
+      my $ret                    = 1 ; 
+      my $msg                    = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
 
       if ( defined $objModel->get('postgres_db_name') ) {
 		   $postgres_db_name = $objModel->get('postgres_db_name');
       }
+      
+      if ( $self->table_exists ( $postgres_db_name , $table ) == 0  ) {
+         $ret = 400 ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $postgres_db_name . ' database '  ; 
+         return ( $ret , $msg ) ; 
+      }
 
-      $objLogger->doLogDebugMsg ( "doSelectTableIntoHashRef table: $table " ) ; 
-
-      my $msg              = q{} ;         
-      my $ret              = 1 ;          # this is the return value from this method 
       my $debug_msg        = q{} ; 
       my $hsr2             = {} ;         # this is hash ref of hash refs to populate with
       my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
@@ -395,8 +429,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       }
 
       # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      $debug_msg        = 'doSelectTableIntoHashRef ret ' . $ret ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      # debug $debug_msg        = 'doSelectTableIntoHashRef ret ' . $ret ; 
+      # debug $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
       return ( $ret , $msg ) ; 	
    }

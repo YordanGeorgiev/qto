@@ -1,12 +1,12 @@
+use strict ; use warnings ; 
 use Test::More;
 use Test::Mojo;
 use Data::Printer ; 
-
 use FindBin;
+
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
+
 my $t = Test::Mojo->new('IssueTracker');
-p $t ; 
-# HTML/XML
 $t->get_ok('/')->status_is(200) ; 
 
 my $appConfig = $t->app->get('AppConfig') ; 
@@ -24,7 +24,8 @@ $t->get_ok('/' . $db_name . '/list-tables')
 ;
 
 my $ua  = $t->ua ; 
-my $hsr2 = $ua->get('/' . $db_name . '/list-tables')->result->json ; 
+my $response = $ua->get('/' . $db_name . '/list-tables')->result->json ; 
+my $hsr2 = $response->{ 'dat' } ; 
 
 # foreach table in the app db in test call db/list/table
 for my $key ( keys %$hsr2 ) {
@@ -34,8 +35,26 @@ for my $key ( keys %$hsr2 ) {
 		->header_is('Accept-Charset' => 'UTF-8')
 		->header_is('Accept-Language' => 'fi, en')
 	;
+
+   my $res = $ua->get('/' . $db_name . '/list/' . $table_name )->result->json ; 
+   my $tm = 'the response msg for the ' . $table_name . ' is correct' ; 
+   ok ( $res->{'msg'} eq "SELECT OK for table: $table_name" , $tm) ; 
+   $tm = 'the return code for the ' . $table_name . ' is correct' ; 
+   ok ( $res->{'ret'} == 200 , $tm) ; 
 }
 
+	my $table_name = 'non_existtent_table' ; 
+	$t->get_ok('/' . $db_name . '/list/' . $table_name)
+		->status_is(400) 
+		->header_is('Accept-Charset' => 'UTF-8')
+		->header_is('Accept-Language' => 'fi, en')
+	;
+
+   my $res = $ua->get('/' . $db_name . '/list/' . $table_name )->result->json ; 
+   my $tm = 'the response msg for the ' . $table_name . ' is correct' ; 
+   ok ( $res->{'msg'} eq " the table $table_name does not exist in the $db_name database " , $tm ) ; 
+   $tm = 'the return code for the ' . $table_name . ' is correct' ; 
+   ok ( $res->{'ret'} == 400 , $tm) ; 
 
 # src: https://restfulapi.net/http-status-codes/
 #400 (Bad Request)
