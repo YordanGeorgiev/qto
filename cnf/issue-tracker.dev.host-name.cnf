@@ -59,7 +59,7 @@ PrintWarningMsgs =               1
 PrintErrorMsgs =                 1                             
 
 # Whether or not to pring DEBUG messages
-PrintDebugMsgs =                 0
+PrintDebugMsgs =                 1
 
 # Whether or not to pring TRACE messages
 PrintTraceMsgs =                 1 

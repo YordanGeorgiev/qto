@@ -40,32 +40,24 @@ Table of Contents
       * [4.1.6. Verify the inserted data from the db](#416-verify-the-inserted-data-from-the-db)
     * [4.2. web based routes usage](#42-web-based-routes-usage)
       * [4.2.1. Run the http://&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;proj-db&gt;&gt;/get/&lt;&lt;table&gt;&gt;/&lt;&lt;guid&gt;&gt; route](#421-run-the-http//web-hostweb-port/proj-db/get/table/guid-route)
-  * [5. BUSINESS LOGIC](#5-business-logic)
-    * [5.1. Projects management](#51-projects-management)
-    * [5.2. Increase the date for all projects](#52-increase-the-date-for-all-projects)
-    * [5.3. Categories](#53-categories)
-      * [5.3.1. Issues / Issue items / items](#531-issues-/-issue-items-/-items)
-      * [5.3.2. to search for the project daily file](#532-to-search-for-the-project-daily-file)
-  * [6. NAMING CONVENTIONS](#6-naming-conventions)
-    * [6.1. Dirs naming conventions](#61-dirs-naming-conventions)
-    * [6.2. Root Dirs naming conventions](#62-root-dirs-naming-conventions)
-  * [7. APPLICATION CONTROL FLOW ](#7-application-control-flow-)
-    * [7.1. Shell control flow](#71-shell-control-flow)
-  * [8. SOURCE CODE MANAGEMENT](#8-source-code-management)
-    * [8.1. Aim for tracability between userstories, requirements, features and functionalities](#81-aim-for-tracability-between-userstories,-requirements,-features-and-functionalities)
-    * [8.2. Feature development in a feature branch](#82-feature-development-in-a-feature-branch)
-    * [8.3. ALWAYS Start with Unit Test](#83-always-start-with-unit-test)
-    * [8.4. Branch for development - dev](#84-branch-for-development--dev)
-    * [8.5. Testing and integrations in the tst branch](#85-testing-and-integrations-in-the-tst-branch)
-    * [8.6. Quality assurance in the qas branch](#86-quality-assurance-in-the-qas-branch)
-    * [8.7. Production in the prd branch](#87-production-in-the-prd-branch)
-  * [9. SCENARIOS](#9-scenarios)
-    * [9.1. A small team project hours tracking scenario](#91-a-small-team-project-hours-tracking-scenario)
-  * [10. WAY OF WORKING](#10-way-of-working)
-    * [10.1. Definition of Done](#101-definition-of-done)
-    * [10.2. E-mail communication](#102-e-mail-communication)
-    * [10.3. Chat / IRC](#103-chat-/-irc)
-    * [10.4. Documentation](#104-documentation)
+  * [5. NAMING CONVENTIONS](#5-naming-conventions)
+    * [5.1. Dirs naming conventions](#51-dirs-naming-conventions)
+    * [5.2. Root Dirs naming conventions](#52-root-dirs-naming-conventions)
+  * [6. SOURCE CODE MANAGEMENT](#6-source-code-management)
+    * [6.1. Aim for tracability between userstories, requirements, features and functionalities](#61-aim-for-tracability-between-userstories,-requirements,-features-and-functionalities)
+    * [6.2. Feature development in a feature branch](#62-feature-development-in-a-feature-branch)
+    * [6.3. ALWAYS Start with Unit Test](#63-always-start-with-unit-test)
+    * [6.4. Branch for development - dev](#64-branch-for-development--dev)
+    * [6.5. Testing and integrations in the tst branch](#65-testing-and-integrations-in-the-tst-branch)
+    * [6.6. Quality assurance in the qas branch](#66-quality-assurance-in-the-qas-branch)
+    * [6.7. Production in the prd branch](#67-production-in-the-prd-branch)
+  * [7. SCENARIOS](#7-scenarios)
+    * [7.1. A small team project hours tracking scenario](#71-a-small-team-project-hours-tracking-scenario)
+  * [8. WAY OF WORKING](#8-way-of-working)
+    * [8.1. Definition of Done](#81-definition-of-done)
+    * [8.2. E-mail communication](#82-e-mail-communication)
+    * [8.3. Chat / IRC](#83-chat-/-irc)
+    * [8.4. Documentation](#84-documentation)
 
 
     
@@ -348,59 +340,17 @@ http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a
     # verify the data
     psql -d $db_name -c "SELECT * FROM company_eps "
 
-## 5. BUSINESS LOGIC
+## 5. NAMING CONVENTIONS
 
 
     
 
-### 5.1. Projects management
-You can manage multiple projects with the issue-tracker tool. Each project has its own data directories, database storage and configurations. You could also have different envornments named dev,tst,prd for each project separately. 
-As the tool is backwards compatible you could have differrrent instances of the issue-tracker projects with different versions ( and set of features ) operatiing against differrent project ( each one in its own version).
-You must pre-set the configuration variables of an issue-tracker project each time you start working on a project from the shell
-
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/isg-pub/isg-pub.issue-tracker.doc-pub-host.conf
-
-### 5.2. Increase the date for all projects
-to increase the date for all the projects at once use the following oneliner.
-
-    while read -r f ; do doParseIniEnvVars $f ; bash src/bash/issue-tracker/issue-tracker.sh -a increase-date ; done < <(find doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/ -type f)
-
-### 5.3. Categories
-Each issue item could be categorized under one and only one category. One category might have 1 or more issues. 
-The categories could contain letters ,numbers, dashes
-
-    Examples:
-    organisation-it
-    organisation-it-operations
-
-#### 5.3.1. Issues / Issue items / items
-Issue item is the shortest possible description of task , activity , note or anything requiring distinguishable and prerferable measurable action or producing verfifiable outcome.
-Issues could be of different types - tasks, activities, notes etc. 
-
-    Examples:
-    go get the milk
-    do the homework
-    procurement e-mail discussion follow-up
-
-#### 5.3.2. to search for the project daily file
-to search for the project daily file run the following liner first to start the dev server of the react mini-app.
-Than point your broser at the following url:
-http://doc-pub-host:3307/
-( Hardcoded for now … ) 
-
-    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
-
-## 6. NAMING CONVENTIONS
-
-
-    
-
-### 6.1. Dirs naming conventions
+### 5.1. Dirs naming conventions
 The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
 
     
 
-### 6.2. Root Dirs naming conventions
+### 5.2. Root Dirs naming conventions
 The root dirs and named as follows:
 bin - contains the produced binaries for th project
 cnf - for the configuration
@@ -410,82 +360,70 @@ src - for the source code of the actual projects and subprojects
 
     
 
-## 7. APPLICATION CONTROL FLOW 
-This section provides a generic control flow description for the shell based and ui based control flows. 
-
-    
-
-### 7.1. Shell control flow
-The shell control flow is based on the control model input output architecture. 
-
-
-issue tracker control flow
-![The generic shell tool control flow](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/devops/shell-action-control-flow-diagram.png)    
-
-## 8. SOURCE CODE MANAGEMENT
+## 6. SOURCE CODE MANAGEMENT
 The issue-tracker is a derivative of the wrapp tool - this means that development and deployment process must be integrated into a single pipeline. 
 
     
 
-### 8.1. Aim for tracability between userstories, requirements, features and functionalities
+### 6.1. Aim for tracability between userstories, requirements, features and functionalities
 Once the issues are defined and you start working on your own branch which is named by the issue-id aim to map one on one each test in your code with each listed requirement in confluence and / or JIRA. 
 
     
 
-### 8.2. Feature development in a feature branch
+### 6.2. Feature development in a feature branch
 You start the development in your own feature branch named : dev--&lt;&lt;issue-id&gt;&gt;-&lt;&lt;short-and-descriptive-name&gt;&gt;.
 
     
 
-### 8.3. ALWAYS Start with Unit Test
+### 6.3. ALWAYS Start with Unit Test
 Do not ever never write code without starting firsr the unit test on how-to test the code. Period. This is he only way to avoid braking old functionalities when the application code base grows larger. 
 Each time a new bug is found fix it by adding new UnitTest!
 
     
 
-### 8.4. Branch for development - dev
+### 6.4. Branch for development - dev
 No code should be merged into the development branch without broad testing coverage and approval from the owner of the instance - as the owner of the instance is at the end responsible personally for the whole instance. 
 
     
 
-### 8.5. Testing and integrations in the tst branch
+### 6.5. Testing and integrations in the tst branch
 The tst branch is dedicated for testing of all the tests, the deployment, performance testing and configuration changes. Should you need to perform bigger than a small hotfix changes you must branch the tst branch into a separate dev--feature branch and re-run the integration testing and approval all over. 
 
     
 
-### 8.6. Quality assurance in the qas branch
+### 6.6. Quality assurance in the qas branch
 At this phase all the tests with all the expected functionalities should work at once. No small hotfixes are allowed - if a need arrises new branch is created to the tst branch The quality assurance
 
     
 
-### 8.7. Production in the prd branch
+### 6.7. Production in the prd branch
 The prd branch is the one deployed to the production environment. This code is NOT straight merged into the master branch , but after certain time depending on the dynamic of the tool with bugless operation merged. 
 
     
 
-## 9. SCENARIOS
+## 7. SCENARIOS
 
 
     
 
-### 9.1. A small team project hours tracking scenario
+### 7.1. A small team project hours tracking scenario
 This scenario describes the steps and processes, which could be implemented to achieve a small team ( 3-10 ) members issue-tracking with hours reporting by using the issue-handler combined with Google Cloud authentication and storage.
 
     
 
-## 10. WAY OF WORKING
+## 8. WAY OF WORKING
 This section describes the way of working within a team working on the issue-tracker project. 
 The work on the issue-tracker project is conducted by using the Scrum methodology, thus the ScruM
 
     
 
-### 10.1. Definition of Done
+### 8.1. Definition of Done
 Each issue must have a tangible artifact. An issue without tangible artifact is a trought thrown in the air.
 The DoD must be iterated and updated during each Sprint Review. 
 
     
 
-### 10.2. E-mail communication
+### 8.2. E-mail communication
 Do not use e-mail communiction for code style, testing, developing etc. Issues which could be achieved witht the code review intervace of the source code management system. 
 Before writing an e-mail think first could you find a way to avoid writing it at all. 
 Do not expect answer of your e-mail within 2 hours. 
@@ -493,12 +431,12 @@ Use e-mail when you have to get an written evidence on agreed matters, which mig
 
     
 
-### 10.3. Chat / IRC
+### 8.3. Chat / IRC
 Should you want a quicker respond than 2 hours use thre chat tool
 
     
 
-### 10.4. Documentation
+### 8.4. Documentation
 Undocumented feature is not a feature. 
 
     
