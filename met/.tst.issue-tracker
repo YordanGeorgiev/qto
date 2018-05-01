@@ -472,7 +472,17 @@ src/bash/issue-tracker/tests/generate-action-files.test.sh
 doc/pdf
 doc/md
 doc/md/issue-tracker-devops-guide.md
+doc/md/issue-tracker-features-and-functionalities.md
+doc/md/issue-tracker-system-guide.md
+doc/md/issue-tracker-tests.md
 doc/md/issue-tracker-user-stories.md
+doc/pdf
+doc/pdf/issue-tracker-devops-guide.pdf
+doc/pdf/issue-tracker-features-and-functionalities.pdf
+doc/pdf/issue-tracker-readme.pdf
+doc/pdf/issue-tracker-system-guide.pdf
+doc/pdf/issue-tracker-tests.pdf
+doc/pdf/issue-tracker-user-stories.pdf
 #---
 doc/txt/issue-tracker/funcs/generate-sql.func.txt
 doc/txt/issue-tracker/helps/generate-sql.help.txt
@@ -524,12 +534,6 @@ dat/tests/1
 doc/xls
 doc/xls/issue-tracker-user-stories.xls
 doc/xls/issue-tracker-devops-guide.xls
-doc/pdf
-doc/pdf/issue-tracker-user-stories.pdf
-doc/pdf/issue-tracker-devops-guide.pdf
-doc/md
-doc/md/issue-tracker-user-stories.md
-doc/md/issue-tracker-devops-guide.md
 #---
 src/bash/issue-tracker/specs/check-perl-modules-prerequisites.spec.sh
 src/bash/issue-tracker/tests/check-perl-modules-prerequisites.test.sh
@@ -664,6 +668,7 @@ src/sql/mysql/dev_issue_tracker/03.create-ItemModel-table.sql
 src/sql/mysql/dev_issue_tracker/06.create-Feature-table.sql
 src/sql/mysql/dev_issue_tracker/07.create-Requirement-table.sql
 src/sql/mysql/dev_issue_tracker/08.create-Concepts-table.sql
+src/sql/mysql/dev_issue_tracker/09.create-Test-table.sql
 src/sql/mysql/dev_issue_tracker/11.create-Issues-table.sql
 src/sql/mysql/dev_issue_tracker/15.create-UserStory-table.sql
 src/sql/mysql/dev_issue_tracker/31.create-CellValue-table.sql
@@ -682,6 +687,7 @@ src/sql/mysql/prd_issue_tracker/02.create-ItemView-table.sql
 src/sql/mysql/prd_issue_tracker/03.create-ItemModel-table.sql
 src/sql/mysql/prd_issue_tracker/06.create-Feature-table.sql
 src/sql/mysql/prd_issue_tracker/07.create-Requirement-table.sql
+src/sql/mysql/prd_issue_tracker/09.create-Test-table.sql
 src/sql/mysql/prd_issue_tracker/11.create-Issues-table.sql
 src/sql/mysql/prd_issue_tracker/15.create-UserStory-table.sql
 src/sql/mysql/prd_issue_tracker/31.create-CellValue-table.sql
@@ -700,6 +706,7 @@ src/sql/mysql/tst_issue_tracker/02.create-ItemView-table.sql
 src/sql/mysql/tst_issue_tracker/03.create-ItemModel-table.sql
 src/sql/mysql/tst_issue_tracker/06.create-Feature-table.sql
 src/sql/mysql/tst_issue_tracker/07.create-Requirement-table.sql
+src/sql/mysql/tst_issue_tracker/09.create-Test-table.sql
 src/sql/mysql/tst_issue_tracker/11.create-Issues-table.sql
 src/sql/mysql/tst_issue_tracker/15.create-UserStory-table.sql
 src/sql/mysql/tst_issue_tracker/31.create-CellValue-table.sql
