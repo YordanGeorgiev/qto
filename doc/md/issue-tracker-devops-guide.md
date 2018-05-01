@@ -9,6 +9,7 @@ Table of Contents
       * [1.1.2. Attempt for 100% test coverage to achieve reliability](#112-attempt-for-100%-test-coverage-to-achieve-reliability)
     * [1.2. Naming conventions principle](#12-naming-conventions-principle)
     * [1.3. Be user-friendly especially to developers and devops](#13-be-user-friendly-especially-to-developers-and-devops)
+    * [1.4. Aim for simplicity](#14-aim-for-simplicity)
   * [2. INSTALLATIONS AND CONFIGURATIONS](#2-installations-and-configurations)
     * [2.1. Configure the Ubuntu repositories](#21-configure-the-ubuntu-repositories)
     * [2.2. Add the media keys](#22-add-the-media-keys)
@@ -40,32 +41,43 @@ Table of Contents
       * [4.1.6. Verify the inserted data from the db](#416-verify-the-inserted-data-from-the-db)
     * [4.2. web based routes usage](#42-web-based-routes-usage)
       * [4.2.1. Run the http://&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;proj-db&gt;&gt;/get/&lt;&lt;table&gt;&gt;/&lt;&lt;guid&gt;&gt; route](#421-run-the-http//web-hostweb-port/proj-db/get/table/guid-route)
-  * [5. BUSINESS LOGIC](#5-business-logic)
-    * [5.1. Projects management](#51-projects-management)
-    * [5.2. Increase the date for all projects](#52-increase-the-date-for-all-projects)
-    * [5.3. Categories](#53-categories)
-      * [5.3.1. Issues / Issue items / items](#531-issues-/-issue-items-/-items)
-      * [5.3.2. to search for the project daily file](#532-to-search-for-the-project-daily-file)
-  * [6. NAMING CONVENTIONS](#6-naming-conventions)
-    * [6.1. Dirs naming conventions](#61-dirs-naming-conventions)
-    * [6.2. Root Dirs naming conventions](#62-root-dirs-naming-conventions)
-  * [7. APPLICATION CONTROL FLOW ](#7-application-control-flow-)
-    * [7.1. Shell control flow](#71-shell-control-flow)
-  * [8. SOURCE CODE MANAGEMENT](#8-source-code-management)
-    * [8.1. Aim for tracability between userstories, requirements, features and functionalities](#81-aim-for-tracability-between-userstories,-requirements,-features-and-functionalities)
-    * [8.2. Feature development in a feature branch](#82-feature-development-in-a-feature-branch)
-    * [8.3. ALWAYS Start with Unit Test](#83-always-start-with-unit-test)
-    * [8.4. Branch for development - dev](#84-branch-for-development--dev)
-    * [8.5. Testing and integrations in the tst branch](#85-testing-and-integrations-in-the-tst-branch)
-    * [8.6. Quality assurance in the qas branch](#86-quality-assurance-in-the-qas-branch)
-    * [8.7. Production in the prd branch](#87-production-in-the-prd-branch)
-  * [9. SCENARIOS](#9-scenarios)
-    * [9.1. A small team project hours tracking scenario](#91-a-small-team-project-hours-tracking-scenario)
-  * [10. WAY OF WORKING](#10-way-of-working)
-    * [10.1. Definition of Done](#101-definition-of-done)
-    * [10.2. E-mail communication](#102-e-mail-communication)
-    * [10.3. Chat / IRC](#103-chat-/-irc)
-    * [10.4. Documentation](#104-documentation)
+  * [5. NAMING CONVENTIONS](#5-naming-conventions)
+    * [5.1. Dirs naming conventions](#51-dirs-naming-conventions)
+    * [5.2. Root Dirs naming conventions](#52-root-dirs-naming-conventions)
+  * [6. SOURCE CODE MANAGEMENT](#6-source-code-management)
+    * [6.1. Aim for tracability between userstories, requirements, features and functionalities](#61-aim-for-tracability-between-userstories,-requirements,-features-and-functionalities)
+    * [6.2. Feature development in a feature branch](#62-feature-development-in-a-feature-branch)
+    * [6.3. ALWAYS Start with Unit Test](#63-always-start-with-unit-test)
+    * [6.4. Branch for development - dev](#64-branch-for-development--dev)
+    * [6.5. Testing and integrations in the tst branch](#65-testing-and-integrations-in-the-tst-branch)
+    * [6.6. Quality assurance in the qas branch](#66-quality-assurance-in-the-qas-branch)
+    * [6.7. Production in the prd branch](#67-production-in-the-prd-branch)
+  * [7. SCENARIOS](#7-scenarios)
+    * [7.1. A small team project hours tracking scenario](#71-a-small-team-project-hours-tracking-scenario)
+  * [8. WAY OF WORKING](#8-way-of-working)
+    * [8.1. Definition of Done](#81-definition-of-done)
+    * [8.2. E-mail communication](#82-e-mail-communication)
+    * [8.3. Chat / IRC](#83-chat-/-irc)
+    * [8.4. Documentation](#84-documentation)
+  * [9. FEATURE IMPLEMENTATION WORKFLOW](#9-feature-implementation-workflow)
+    * [9.1. Issue creation](#91-issue-creation)
+    * [9.2. UserStory creation](#92-userstory-creation)
+    * [9.3. Requirements creation](#93-requirements-creation)
+    * [9.4. Problem registration](#94-problem-registration)
+    * [9.5. Feature branch creation](#95-feature-branch-creation)
+    * [9.6. Create a test-entry point](#96-create-a-test-entry-point)
+    * [9.7. Implementation of Proof of Concept](#97-implementation-of-proof-of-concept)
+    * [9.8. Prototype implementation](#98-prototype-implementation)
+    * [9.9. Unit and / or integration test creation](#99-unit-and-/-or-integration-test-creation)
+    * [9.10. Implementation ](#910-implementation-)
+    * [9.11. Deployment and test to the test environment](#911-deployment-and-test-to-the-test-environment)
+    * [9.12. Deployment and test to the production environment](#912-deployment-and-test-to-the-production-environment)
+    * [9.13. Quality assurance iteration](#913-quality-assurance-iteration)
+    * [9.14. DoD check-list walktrough](#914-dod-check-list-walktrough)
+      * [9.14.1. The feature or functionality current description is added in the docs](#9141-the-feature-or-functionality-current-description-is-added-in-the-docs)
+      * [9.14.2. The related requirement is added in the requirements document](#9142-the-related-requirement-is-added-in-the-requirements-document)
+      * [9.14.3. At least 2 times passed unit tests run in each environment instance](#9143-at-least-2-times-passed-unit-tests-run-in-each-environment-instance)
+      * [9.14.4. At least 2 times passed integration tests run in each environment instance](#9144-at-least-2-times-passed-integration-tests-run-in-each-environment-instance)
 
 
     
@@ -101,6 +113,11 @@ All the names used in the code and the configurations MUST BE human readable and
 
 ### 1.3. Be user-friendly especially to developers and devops
 You cannot achieve user-friendliness for the end-users unless your developers and technical personnel are happy while interacting with your artifacts. 
+
+    
+
+### 1.4. Aim for simplicity
+Things should be as simple as possible, but not simpler - if Einstein said it it makes sense
 
     
 
@@ -348,59 +365,17 @@ http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a
     # verify the data
     psql -d $db_name -c "SELECT * FROM company_eps "
 
-## 5. BUSINESS LOGIC
+## 5. NAMING CONVENTIONS
 
 
     
 
-### 5.1. Projects management
-You can manage multiple projects with the issue-tracker tool. Each project has its own data directories, database storage and configurations. You could also have different envornments named dev,tst,prd for each project separately. 
-As the tool is backwards compatible you could have differrrent instances of the issue-tracker projects with different versions ( and set of features ) operatiing against differrent project ( each one in its own version).
-You must pre-set the configuration variables of an issue-tracker project each time you start working on a project from the shell
-
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/isg-pub/isg-pub.issue-tracker.doc-pub-host.conf
-
-### 5.2. Increase the date for all projects
-to increase the date for all the projects at once use the following oneliner.
-
-    while read -r f ; do doParseIniEnvVars $f ; bash src/bash/issue-tracker/issue-tracker.sh -a increase-date ; done < <(find doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/ -type f)
-
-### 5.3. Categories
-Each issue item could be categorized under one and only one category. One category might have 1 or more issues. 
-The categories could contain letters ,numbers, dashes
-
-    Examples:
-    organisation-it
-    organisation-it-operations
-
-#### 5.3.1. Issues / Issue items / items
-Issue item is the shortest possible description of task , activity , note or anything requiring distinguishable and prerferable measurable action or producing verfifiable outcome.
-Issues could be of different types - tasks, activities, notes etc. 
-
-    Examples:
-    go get the milk
-    do the homework
-    procurement e-mail discussion follow-up
-
-#### 5.3.2. to search for the project daily file
-to search for the project daily file run the following liner first to start the dev server of the react mini-app.
-Than point your broser at the following url:
-http://doc-pub-host:3307/
-( Hardcoded for now … ) 
-
-    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
-
-## 6. NAMING CONVENTIONS
-
-
-    
-
-### 6.1. Dirs naming conventions
+### 5.1. Dirs naming conventions
 The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
 
     
 
-### 6.2. Root Dirs naming conventions
+### 5.2. Root Dirs naming conventions
 The root dirs and named as follows:
 bin - contains the produced binaries for th project
 cnf - for the configuration
@@ -410,82 +385,70 @@ src - for the source code of the actual projects and subprojects
 
     
 
-## 7. APPLICATION CONTROL FLOW 
-This section provides a generic control flow description for the shell based and ui based control flows. 
-
-    
-
-### 7.1. Shell control flow
-The shell control flow is based on the control model input output architecture. 
-
-
-issue tracker control flow
-![The generic shell tool control flow](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/devops/shell-action-control-flow-diagram.png)    
-
-## 8. SOURCE CODE MANAGEMENT
+## 6. SOURCE CODE MANAGEMENT
 The issue-tracker is a derivative of the wrapp tool - this means that development and deployment process must be integrated into a single pipeline. 
 
     
 
-### 8.1. Aim for tracability between userstories, requirements, features and functionalities
+### 6.1. Aim for tracability between userstories, requirements, features and functionalities
 Once the issues are defined and you start working on your own branch which is named by the issue-id aim to map one on one each test in your code with each listed requirement in confluence and / or JIRA. 
 
     
 
-### 8.2. Feature development in a feature branch
+### 6.2. Feature development in a feature branch
 You start the development in your own feature branch named : dev--&lt;&lt;issue-id&gt;&gt;-&lt;&lt;short-and-descriptive-name&gt;&gt;.
 
     
 
-### 8.3. ALWAYS Start with Unit Test
+### 6.3. ALWAYS Start with Unit Test
 Do not ever never write code without starting firsr the unit test on how-to test the code. Period. This is he only way to avoid braking old functionalities when the application code base grows larger. 
 Each time a new bug is found fix it by adding new UnitTest!
 
     
 
-### 8.4. Branch for development - dev
+### 6.4. Branch for development - dev
 No code should be merged into the development branch without broad testing coverage and approval from the owner of the instance - as the owner of the instance is at the end responsible personally for the whole instance. 
 
     
 
-### 8.5. Testing and integrations in the tst branch
+### 6.5. Testing and integrations in the tst branch
 The tst branch is dedicated for testing of all the tests, the deployment, performance testing and configuration changes. Should you need to perform bigger than a small hotfix changes you must branch the tst branch into a separate dev--feature branch and re-run the integration testing and approval all over. 
 
     
 
-### 8.6. Quality assurance in the qas branch
+### 6.6. Quality assurance in the qas branch
 At this phase all the tests with all the expected functionalities should work at once. No small hotfixes are allowed - if a need arrises new branch is created to the tst branch The quality assurance
 
     
 
-### 8.7. Production in the prd branch
+### 6.7. Production in the prd branch
 The prd branch is the one deployed to the production environment. This code is NOT straight merged into the master branch , but after certain time depending on the dynamic of the tool with bugless operation merged. 
 
     
 
-## 9. SCENARIOS
+## 7. SCENARIOS
 
 
     
 
-### 9.1. A small team project hours tracking scenario
+### 7.1. A small team project hours tracking scenario
 This scenario describes the steps and processes, which could be implemented to achieve a small team ( 3-10 ) members issue-tracking with hours reporting by using the issue-handler combined with Google Cloud authentication and storage.
 
     
 
-## 10. WAY OF WORKING
+## 8. WAY OF WORKING
 This section describes the way of working within a team working on the issue-tracker project. 
 The work on the issue-tracker project is conducted by using the Scrum methodology, thus the ScruM
 
     
 
-### 10.1. Definition of Done
-Each issue must have a tangible artifact. An issue without tangible artifact is a trought thrown in the air.
+### 8.1. Definition of Done
+Each issue must have a tangible artifact. An issue without tangible artifact is a tought thrown in the air.
 The DoD must be iterated and updated during each Sprint Review. 
 
     
 
-### 10.2. E-mail communication
+### 8.2. E-mail communication
 Do not use e-mail communiction for code style, testing, developing etc. Issues which could be achieved witht the code review intervace of the source code management system. 
 Before writing an e-mail think first could you find a way to avoid writing it at all. 
 Do not expect answer of your e-mail within 2 hours. 
@@ -493,13 +456,121 @@ Use e-mail when you have to get an written evidence on agreed matters, which mig
 
     
 
-### 10.3. Chat / IRC
+### 8.3. Chat / IRC
 Should you want a quicker respond than 2 hours use thre chat tool
 
     
 
-### 10.4. Documentation
+### 8.4. Documentation
 Undocumented feature is not a feature. 
+
+    
+
+## 9. FEATURE IMPLEMENTATION WORKFLOW
+This section describes the common workflow for implementing a feature. 
+As in other places the main principle to follow is "use common sense" , thus try to follow this workflow for feature implementation, but challenge it as soon as it defies the common sense. 
+
+    
+
+### 9.1. Issue creation
+Even if you do not have a defined documentation artifact - create a new issue, which could be the start for a an action affecting the run-state, configuration , data , features and functionalities or other aspects of the issue-tracker appclication. 
+An issue could be a bug, a request for a feature or even simply an undefined combination of problems and solution which could quickly be formalized by defining a new requirement, another issue, feature-request
+
+    
+
+### 9.2. UserStory creation
+Use the following template while creating the user story:
+As an &lt;&lt;role&gt;&gt;
+In order to &lt;&lt;achieve something&gt;&gt; 
+I wanto to be able &lt;&lt;action-description&gt;&gt; 
+
+    
+
+### 9.3. Requirements creation
+Define a formal requirement as soon as possible. 
+
+    
+
+### 9.4. Problem registration
+Problems are usually entities which last for longer time period. 
+
+    
+
+### 9.5. Feature branch creation
+Create the feature branch by using the following naming convention:
+ - dev--&lt;&lt;short-feature-title&gt;&gt;
+
+    
+
+### 9.6. Create a test-entry point
+Even the smallest proof of concept needs a small test-entry point. Start always witht the testing and the testing scalability in mind. 
+
+    
+
+### 9.7. Implementation of Proof of Concept
+
+
+    
+
+### 9.8. Prototype implementation
+
+
+    
+
+### 9.9. Unit and / or integration test creation
+
+
+    
+
+### 9.10. Implementation 
+Implement by quick unit test runs. Constantly improve both the code , configuration changes and the test code. 
+
+    
+
+### 9.11. Deployment and test to the test environment
+Run the unit and integration tests. 
+
+    # deploy to the tst environment
+    bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
+    
+    # go to the product instance dir of the tst env for this version
+    cd ../issue-tracker.<<version>>.tst.<<owner>>
+    # run the unit tests
+    bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-unit-tests
+    
+
+### 9.12. Deployment and test to the production environment
+Repeat the same to the production environment. As the current version is usually work in progress your stable version will be one level bellow and thanks to the architecture of the tool you could test in the production environment ( as soon as you have proper configuration ) 
+
+    
+
+### 9.13. Quality assurance iteration
+This phase might be longer depending on the feature. Some of the features stay in quality assurance mode EVEN if they have been deployed to production 
+
+    
+
+### 9.14. DoD check-list walktrough
+Perform the DoD checklist as follows
+
+    
+
+#### 9.14.1. The feature or functionality current description is added in the docs
+The feature or functionality current description is added in the Features and Functionalities document. 
+
+    
+
+#### 9.14.2. The related requirement is added in the requirements document
+The related requirement is added in the requirements document - there might be one or more requirements added. 
+
+    
+
+#### 9.14.3. At least 2 times passed unit tests run in each environment instance
+At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. 
+
+    
+
+#### 9.14.4. At least 2 times passed integration tests run in each environment instance
+At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. 
 
     
 
