@@ -41,6 +41,9 @@ doRunPerlTests(){
    perl src/perl/issue_tracker/t/lib/IssueTracker/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
 	echo -e "\n\n\n" 
 
+   doLog "INFO START Unit test the List Controller : <<app-db>>/list/<<table-name>>"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
+	echo -e "\n\n\n" 
 }
 # eof func doRunPerlTests
 

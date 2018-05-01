@@ -77,7 +77,7 @@ sub doListTables {
 	my $hsr2 = {};
 
 	my $objRdrDbsFactory
-	= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
+			= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
 
 	my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectTablesList(\$objModel);

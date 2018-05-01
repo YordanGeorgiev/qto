@@ -94,7 +94,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
       $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-      
+
+      $appConfig->{ "$postgres_db_name".'.tables-list'} = $hsr ;
       return ( $ret , $msg , $hsr ) ; 	
    }
    # eof sub doSelectTablesList
@@ -226,8 +227,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       }
 
       # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
       return ( $ret , $msg , $mhsr ) ; 	
    }
@@ -366,11 +365,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       " if exists $dmhsr-> { 'prio' } ; 
       
       # debug p ( '$str_sql: ' . "$str_sql" . "\n" ) ; 
-      
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
-      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
       $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
                  'RaiseError'          => 1
