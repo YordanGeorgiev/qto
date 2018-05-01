@@ -17,9 +17,6 @@ doRunPgsqlScripts(){
 	test -z "${pgsql_scripts_dir:-}" && \
 	   pgsql_scripts_dir="$product_instance_dir/src/sql/pgsql/${postgres_db_name:-}"
 
-   echo postgres_db_name : $postgres_db_name 
-   sleep 10 ; 
-
    # if a relative path is passed add to the product version dir
 	[[ ${pgsql_scripts_dir:-} == /* ]] || export pgsql_scripts_dir="$product_instance_dir"/"$pgsql_scripts_dir"
    sql_script="$pgsql_scripts_dir/""00.create-db.pgsql"
