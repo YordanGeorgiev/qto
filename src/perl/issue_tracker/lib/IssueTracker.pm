@@ -88,8 +88,15 @@ sub doInitialize {
    $objInitiator = 'IssueTracker::App::Utils::Initiator'->new();
    $appConfig    = $objInitiator->get('AppConfig');
 
+   my $ConfFile = q{} ; 
+   if ( defined $ENV->{ 'conf_file' } ) {
+      $ConfFile = $ENV->{ 'conf_file' } ; 
+   } else {
+      $ConfFile = $objInitiator->{'ConfFile'} ; 
+   }
+
    $objConfigurator  = 'IssueTracker::App::Utils::Configurator'->new( 
-         $objInitiator->{'ConfFile'}, \$appConfig);
+         $ConfFile, \$appConfig);
    $objLogger        = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
    $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
 
