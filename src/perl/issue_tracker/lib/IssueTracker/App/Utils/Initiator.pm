@@ -11,13 +11,15 @@ package IssueTracker::App::Utils::Initiator ;
 	use AutoLoader;
 
 	use Cwd qw/abs_path/;
+   use File::Basename;
 	use File::Path qw(make_path) ;
 	use File::Find ; 
 	use File::Copy;
 	use File::Copy::Recursive ; 
-   use IssueTracker::App::Utils::OO::AutoLoadable ; 
+   use Data::Printer ; 
 	use Sys::Hostname;
 	use Carp qw /cluck confess shortmess croak carp/ ; 
+
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
    use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
 
@@ -34,7 +36,7 @@ package IssueTracker::App::Utils::Initiator ;
 	our $HostName 						= '' ; 
 	our $ConfFile 						= '' ; 
    our $rel_levels               = 0 ; 
-
+   our $my_absolute_path         = '' ; 
 =head1 SYNOPSIS
 
 	doResolves the product version and base dirs , bootstraps cnfig files if needed
@@ -61,15 +63,34 @@ package IssueTracker::App::Utils::Initiator ;
 
 		my $self = shift;
 		my $msg  = ();
-		# the product base dir is 5 levels above the path of 
-		# this script dir
-		my $levels_up = 6 + $rel_levels ; 
-
-		#doResolve the run dir where this scripts is placed
-		my $my_absolute_path = abs_path( $0 );
+		my $levels_up = 9 + $rel_levels ; 
 		my $product_base_dir = '' ; 
+		my @DirParts = @{doGetDirParts($levels_up)};
+      $product_base_dir = join( '/', @DirParts );
+		#untainting ...
+		$ProductBaseDir 						= $product_base_dir ; 
+		$product_base_dir 					= $self->untaint ( $product_base_dir); 
+		$ProductBaseDir 						= $self->untaint ( $product_base_dir); 
+		$self->{'ProductBaseDir'} 			= $ProductBaseDir ; 
+		$appConfig->{'ProductBaseDir'} 	= $ProductBaseDir ; 
+		$self->{'AppConfig'} 				= $appConfig; 
 
-		#debug#debug  print "\$my_absolute_path is $my_absolute_path \n" ;
+		print "ProductBaseDir: $ProductBaseDir \n" ; 
+		return $ProductBaseDir;
+	}
+	#eof sub doResolveMyProductBaseDir
+	
+
+	#
+	# ---------------------------------------------------------
+	# the product base dir is the dir under which all the product
+	# instances are installed 
+	# ---------------------------------------------------------
+	sub doGetDirParts {
+
+		my $msg  = ();
+		my $levels_up = shift ; 
+
 		$my_absolute_path =~ m/^(.*)(\\|\/)(.*)/;
 		$my_absolute_path = $1;
 
@@ -80,21 +101,9 @@ package IssueTracker::App::Utils::Initiator ;
 			#debug print "ok \@DirParts : @DirParts \n" ; 
 		}
 		
-		$product_base_dir = join( '/', @DirParts );
-		#untainting ...
-		$ProductBaseDir 						= $product_base_dir ; 
-		$product_base_dir 					= $self->untaint ( $product_base_dir); 
-		$ProductBaseDir 						= $self->untaint ( $product_base_dir); 
-		$self->{'ProductBaseDir'} 			= $ProductBaseDir ; 
-		$appConfig->{'ProductBaseDir'} 	= $ProductBaseDir ; 
-		$self->{'AppConfig'} 				= $appConfig; 
-
-		# debug print "ProductBaseDir: $ProductBaseDir \n" ; 
-		return $ProductBaseDir;
+		return \@DirParts ; 
 	}
 	#eof sub doResolveMyProductBaseDir
-	
-
 	#
 	# ---------------------------------------------------------
 	# the product version dir is the dir where this product 
@@ -104,31 +113,15 @@ package IssueTracker::App::Utils::Initiator ;
 
 		my $self = shift;
 		my $msg  = ();
-		my $levels_up = 5 + $rel_levels ; # the product dir is 4 steps above 
-		#doResolve the run dir where this scripts is placed
-		my $my_absolute_path = abs_path( $0 );
+		my $levels_up = 7 + $rel_levels ; 
 		my $product_dir = '' ; 
-
-		$my_absolute_path =~ tr|\\|/| if ( $^O eq 'MSWin32' );
-		#debug print "\$my_absolute_path is $my_absolute_path \n" ;
-		$my_absolute_path =~ m/^(.*)(\\|\/)(.*)/;
-		$my_absolute_path = $1;
-
-
-		my @DirParts = split( '/' , $my_absolute_path );
-		for ( my $count = 0; $count < $levels_up ; $count++ ){ 
-			pop @DirParts; 
-			#debug print "ok \@DirParts : @DirParts \n" ; 
-		}
-		
-		$product_dir = join( '/' , @DirParts );
-		#untainting ...
-		$ProductDir 						= $product_dir ; 
-		$product_dir 						= $self->untaint ( $product_dir); 
-		$ProductDir 						= $self->untaint ( $product_dir); 
+		my @DirParts = @{doGetDirParts ( $levels_up )} ; 
+		$ProductDir = join( '/' , @DirParts );
 		$self->{'ProductDir'} 			= $ProductDir ; 
 		$appConfig->{'ProductDir'} 	= $ProductDir ; 
 		$self->{'AppConfig'} 				= $appConfig; 
+      
+      print ( "ProductDir : $ProductDir \n ") ; 
 		return $ProductDir;
 	}
 	#eof sub doResolveMyProductDir
@@ -143,22 +136,9 @@ package IssueTracker::App::Utils::Initiator ;
 
 		my $self = shift;
 		my $msg  = ();
-		my $levels_up = 4 + $rel_levels ; 
-
-		#doResolve the run dir where this scripts is placed
-		my $my_absolute_path = abs_path( $0 );
+		my $levels_up = 5 + $rel_levels ; 
 		my $product_instance_dir = '' ; 
-
-		#debug print "\$my_absolute_path is $my_absolute_path \n" ;
-		$my_absolute_path =~ m/^(.*)(\\|\/)(.*)/;
-		$my_absolute_path = $1;
-		$my_absolute_path =~ tr|\\|/| if ( $^O eq 'MSWin32' );
-
-		my @DirParts = split( '/' , $my_absolute_path );
-		for ( my $count = 0; $count < "$levels_up" ; $count++ ){ 
-			pop @DirParts; 
-			#print "\@DirParts : @DirParts \n" ; 
-		}
+		my @DirParts = @{doGetDirParts ( $levels_up )} ; 
 		
 		$product_instance_dir 					= join( '/' , @DirParts );
 		$ProductInstanceDir 						= $product_instance_dir ; 
@@ -168,6 +148,7 @@ package IssueTracker::App::Utils::Initiator ;
 		$appConfig->{'ProductInstanceDir'} 	= $ProductInstanceDir ; 
 		$self->{'AppConfig'} 				   = $appConfig; 
 
+      print "ProductInstanceDir: $ProductInstanceDir \n" ; 
 		return $ProductInstanceDir;
 	}
 	#eof sub doResolveMyProductInstanceDir
@@ -182,14 +163,16 @@ package IssueTracker::App::Utils::Initiator ;
 		my $self = shift;
 		my $msg  = ();
 
-		my $ProductInstanceDir 	= $self->doResolveMyProductInstanceDir();
 		$ProductInstanceEnvironment 			= $ProductInstanceDir ; 
 		$ProductInstanceEnvironment 			=~ s#$ProductBaseDir\/##g ;
 		$ProductInstanceEnvironment 			=~ s#(.*?)(\/|\\)(.*)#$3#g ;
 		$ProductInstanceEnvironment 			= $self->untaint ( $ProductInstanceEnvironment ); 
 
 		$appConfig->{ 'ProductInstanceEnvironment' } 		= $ProductInstanceEnvironment ; 
+		$self->{ 'ProductInstanceEnvironment' } 		= $ProductInstanceEnvironment ; 
 		$self->{'AppConfig'} 				= $appConfig; 
+
+      print "ProductInstanceEnvironment: $ProductInstanceEnvironment \n" ; 
 		return $ProductInstanceEnvironment;
 	}
 	#eof sub doResolveMyProductInstanceEnvironment
@@ -203,8 +186,6 @@ package IssueTracker::App::Utils::Initiator ;
 
 		my $self = shift;
 		my $msg  = ();
-
-		my $ProductInstanceEnvironment = $self->doResolveMyProductInstanceEnvironment();
 
 		#fetch the the product name from the dir struct
 		my @tokens = split /\./ , $ProductInstanceEnvironment ; 
@@ -228,9 +209,6 @@ package IssueTracker::App::Utils::Initiator ;
 		my $msg  = ();
 		
 		my $ProductVersion	= '' ;
-		my $ProductInstanceDir 		= $self->doResolveMyProductInstanceDir();
-		my $ProductInstanceEnvironment 			= $self->doResolveMyProductInstanceEnvironment();
-		
 
 		my @tokens 			= split /\./ , $ProductInstanceEnvironment ; 
 		$tokens [1] = $tokens [1] // '' ; 
@@ -241,6 +219,7 @@ package IssueTracker::App::Utils::Initiator ;
 		
 		$appConfig->{ 'ProductVersion' } 		= $ProductVersion ; 
 		$self->{'AppConfig'} 				= $appConfig; 
+
 		return $ProductVersion;
 	}
 	#eof sub doResolveMyProductVersion
@@ -260,12 +239,10 @@ package IssueTracker::App::Utils::Initiator ;
 		my $self = shift;
 		my $msg  = ();
 
-		my $ProductInstanceEnvironment = $self->doResolveMyProductInstanceEnvironment();
-
 		my @tokens = split /\./ , $ProductInstanceEnvironment ; 
 		# the type of this environment - dev , test , dev , fb , prod next_line_is_templatized
 		my $ProductType = $tokens[4] ; 
-		#debug print "\n\n ProductType : $ProductType " ; 
+		# debug print "\n\n ProductType : $ProductType " ; 
 
 		$appConfig->{ 'ProductType' } 			= $ProductType ; 
 		$self->{ 'ProductType' } 			= $ProductType ; 
@@ -288,7 +265,6 @@ package IssueTracker::App::Utils::Initiator ;
 		my $self = shift;
 		my $msg  = ();
 
-		my $ProductInstanceEnvironment = $self->doResolveMyProductInstanceEnvironment();
 
 		my @tokens = split /\./ , $ProductInstanceEnvironment ; 
 		# the Owner of this environment - dev , test , dev , fb , prod next_line_is_templatized
@@ -332,7 +308,6 @@ package IssueTracker::App::Utils::Initiator ;
 		my $self 						= shift;
 		my $msg  						= ();
 		
-		my $ProductInstanceDir		= $self->doResolveMyProductInstanceDir();
 		my $HostName					= $self->doResolveMyHostName();
 
 		# set the default ConfFile path if no cmd argument is provided
@@ -376,17 +351,20 @@ package IssueTracker::App::Utils::Initiator ;
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
 
-		$ProductBaseDir 			= $self->doResolveMyProductBaseDir();
-		$ProductInstanceDir 		= $self->doResolveMyProductInstanceDir();
-		$ProductInstanceEnvironment = $self->doResolveMyProductInstanceEnvironment();
-		$ProductName 				= $self->doResolveMyProductName();
-		$ProductVersion 			= $self->doResolveMyProductVersion();
-		$ProductType 				= $self->doResolveMyProductType();
-		$ProductOwner 				= $self->doResolveMyProductOwner();
-		$HostName 					= $self->doResolveMyHostName();
-		$ConfFile 					= $self->doResolveMyConfFile();
+      # !!! important concept - src: https://stackoverflow.com/a/90721/65706
+      $my_absolute_path             = abs_path( __FILE__ ); 
+		$ProductBaseDir 			      = $self->doResolveMyProductBaseDir();
+		$ProductDir 			         = $self->doResolveMyProductDir();
+		$ProductInstanceDir 		      = $self->doResolveMyProductInstanceDir();
+		$ProductInstanceEnvironment   = $self->doResolveMyProductInstanceEnvironment();
+		$ProductName 				      = $self->doResolveMyProductName();
+		$ProductVersion 			      = $self->doResolveMyProductVersion();
+		$ProductType 				      = $self->doResolveMyProductType();
+		$ProductOwner 				      = $self->doResolveMyProductOwner();
+		$HostName 					      = $self->doResolveMyHostName();
+		$ConfFile 					      = $self->doResolveMyConfFile();
 
-		# debug print $self->dumpFields();
+		print $self->dumpFields();
 
 		return $self;
 	}  

@@ -58,6 +58,18 @@ sub startup {
    , action       => 'doGetItem'
    );
    
+   # http://host-name:3000/dev_issue_tracker/list/monthly_issues
+   $r->get('/:db/list/:item')->to(
+     controller   => 'List'
+   , action       => 'doListItems'
+   );
+   
+	# http://host-name:3000/dev_issue_tracker/list-tables
+   $r->get('/:db/list-tables')->to(
+     controller   => 'List'
+   , action       => 'doListTables'
+   );
+   
    # http://host-name:3000/prd_ysg_issues/srch/confs/con
    $r->get('/:db/srch/:item/:srch')->to(
      controller   => 'Srch'
@@ -76,8 +88,15 @@ sub doInitialize {
    $objInitiator = 'IssueTracker::App::Utils::Initiator'->new();
    $appConfig    = $objInitiator->get('AppConfig');
 
+   my $ConfFile = q{} ; 
+   if ( defined $ENV->{ 'conf_file' } ) {
+      $ConfFile = $ENV->{ 'conf_file' } ; 
+   } else {
+      $ConfFile = $objInitiator->{'ConfFile'} ; 
+   }
+
    $objConfigurator  = 'IssueTracker::App::Utils::Configurator'->new( 
-         $objInitiator->{'ConfFile'}, \$appConfig);
+         $ConfFile, \$appConfig);
    $objLogger        = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
    $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
 

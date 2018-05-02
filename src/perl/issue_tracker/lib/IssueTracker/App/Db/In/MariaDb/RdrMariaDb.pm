@@ -321,9 +321,6 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       my $table                  = shift || 'daily_issues' ;  # the table to get the data from  
       my $filter_by_attributes   = shift ; 
    
-
-      $objLogger->doLogDebugMsg ( "doSelectTableIntoHashRef table: $table " ) ; 
-
       my $msg              = q{} ;         
       my $ret              = 1 ;          # this is the return value from this method 
       my $debug_msg        = q{} ; 
@@ -363,7 +360,9 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       $debug_msg .= "\n mysql_user: $mysql_user \n mysql_user_pw $mysql_user_pw \n" ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
-      $dbh = DBI->connect("dbi:mysql:database=$mysql_db_name;host=$mysql_host;port=$mysql_port", "$mysql_user", "$mysql_user_pw" , {
+      $dbh = DBI->connect(
+         "dbi:mysql:database=$mysql_db_name;host=$mysql_host;port=$mysql_port", 
+                     "$mysql_user", "$mysql_user_pw" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
@@ -388,10 +387,7 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       } else {
          $objLogger->doLogErrorMsg ( $msg ) ; 
       }
-
       # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
       return ( $ret , $msg ) ; 	
    }
