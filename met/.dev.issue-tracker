@@ -150,7 +150,9 @@ src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
 src/perl/issue_tracker/lib/IssueTracker/Controller/Example.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Get.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestGet.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/Srch.pm
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/basic.t
@@ -470,7 +472,17 @@ src/bash/issue-tracker/tests/generate-action-files.test.sh
 doc/pdf
 doc/md
 doc/md/issue-tracker-devops-guide.md
+doc/md/issue-tracker-features-and-functionalities.md
+doc/md/issue-tracker-system-guide.md
+doc/md/issue-tracker-tests.md
 doc/md/issue-tracker-user-stories.md
+doc/pdf
+doc/pdf/issue-tracker-devops-guide.pdf
+doc/pdf/issue-tracker-features-and-functionalities.pdf
+doc/pdf/issue-tracker-readme.pdf
+doc/pdf/issue-tracker-system-guide.pdf
+doc/pdf/issue-tracker-tests.pdf
+doc/pdf/issue-tracker-user-stories.pdf
 #---
 doc/txt/issue-tracker/funcs/generate-sql.func.txt
 doc/txt/issue-tracker/helps/generate-sql.help.txt
@@ -522,12 +534,6 @@ dat/tests/1
 doc/xls
 doc/xls/issue-tracker-user-stories.xls
 doc/xls/issue-tracker-devops-guide.xls
-doc/pdf
-doc/pdf/issue-tracker-user-stories.pdf
-doc/pdf/issue-tracker-devops-guide.pdf
-doc/md
-doc/md/issue-tracker-user-stories.md
-doc/md/issue-tracker-devops-guide.md
 #---
 src/bash/issue-tracker/specs/check-perl-modules-prerequisites.spec.sh
 src/bash/issue-tracker/tests/check-perl-modules-prerequisites.test.sh
@@ -662,6 +668,7 @@ src/sql/mysql/dev_issue_tracker/03.create-ItemModel-table.sql
 src/sql/mysql/dev_issue_tracker/06.create-Feature-table.sql
 src/sql/mysql/dev_issue_tracker/07.create-Requirement-table.sql
 src/sql/mysql/dev_issue_tracker/08.create-Concepts-table.sql
+src/sql/mysql/dev_issue_tracker/09.create-Test-table.sql
 src/sql/mysql/dev_issue_tracker/11.create-Issues-table.sql
 src/sql/mysql/dev_issue_tracker/15.create-UserStory-table.sql
 src/sql/mysql/dev_issue_tracker/31.create-CellValue-table.sql
@@ -680,6 +687,7 @@ src/sql/mysql/prd_issue_tracker/02.create-ItemView-table.sql
 src/sql/mysql/prd_issue_tracker/03.create-ItemModel-table.sql
 src/sql/mysql/prd_issue_tracker/06.create-Feature-table.sql
 src/sql/mysql/prd_issue_tracker/07.create-Requirement-table.sql
+src/sql/mysql/prd_issue_tracker/09.create-Test-table.sql
 src/sql/mysql/prd_issue_tracker/11.create-Issues-table.sql
 src/sql/mysql/prd_issue_tracker/15.create-UserStory-table.sql
 src/sql/mysql/prd_issue_tracker/31.create-CellValue-table.sql
@@ -698,6 +706,7 @@ src/sql/mysql/tst_issue_tracker/02.create-ItemView-table.sql
 src/sql/mysql/tst_issue_tracker/03.create-ItemModel-table.sql
 src/sql/mysql/tst_issue_tracker/06.create-Feature-table.sql
 src/sql/mysql/tst_issue_tracker/07.create-Requirement-table.sql
+src/sql/mysql/tst_issue_tracker/09.create-Test-table.sql
 src/sql/mysql/tst_issue_tracker/11.create-Issues-table.sql
 src/sql/mysql/tst_issue_tracker/15.create-UserStory-table.sql
 src/sql/mysql/tst_issue_tracker/31.create-CellValue-table.sql
@@ -716,17 +725,19 @@ doc/txt/issue-tracker/funcs/run-perl-integration-tests.func.txt
 src/bash/issue-tracker/tests/run-perl-integration-tests.test.sh
 src/bash/issue-tracker/helps/run-perl-integration-tests.help.sh
 src/bash/issue-tracker/funcs/run-perl-integration-tests.func.sh
-<<<<<<< HEAD
 # --- the application data
-dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.all.20180330_000000.xlsx
-dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.daily-issues.2018-03-30.txt
-dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.monthly-issues.2018-03-30.txt
-dat/mix/issues/2018/2018-03/2018-03-30/issue-tracker.test-hierarchy-table.2018-03-30.txt
-dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.all.20180401_000000.xlsx
-dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.daily-issues.2018-04-01.txt
-dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.monthly-issues.2018-04-01.txt
-dat/mix/issues/2018/2018-04/2018-04-01/issue-tracker.test-hierarchy-table.2018-04-01.txt
+dat/mix/issues/2018/2018-05/
+dat/mix/issues/2018/2018-05/2018-05-01
+dat/mix/issues/2018/2018-05/2018-05-01/issue-tracker.all.20180501_000000.xlsx
+dat/mix/issues/2018/2018-05/2018-05-01/issue-tracker.daily-issues.2018-05-01.txt
+dat/mix/issues/2018/2018-05/2018-05-01/issue-tracker.monthly-issues.2018-05-01.txt
+dat/mix/issues/2018/2018-05/2018-05-01/issue-tracker.test-hierarchy-table.2018-05-01.txt
+dat/mix/issues/2018/2018-05/2018-05-02
+dat/mix/issues/2018/2018-05/2018-05-02/issue-tracker.test-hierarchy-table.2018-05-02.txt
+dat/mix/issues/2018/2018-05/2018-05-02/issue-tracker.monthly-issues.2018-05-02.txt
+dat/mix/issues/2018/2018-05/2018-05-02/issue-tracker.daily-issues.2018-05-02.txt
+dat/mix/issues/2018/2018-05/2018-05-02/issue-tracker.all.20180502_000000.xlsx
 doc/dot/readme/what-is-issue-tracker.dot
+doc/dot/devops/shell-action-control-flow-diagram.dot
 doc/img/readme/what-is-is.png
-=======
->>>>>>> c9cb528... it-180401 add separate run-perl-unit-tests and run-perl-integration-tests actions
+doc/img/devops/shell-action-control-flow-diagram.png

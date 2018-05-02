@@ -262,9 +262,9 @@ sub doConvertHashRefToStr {
          , 'wip'     => '03-wip'       # is work in progress - aka is being done right now
          , 'act'     => '03-act'       # is being actively done , aka more of an activity type
          , 'actv'    => '03-actv'      # is being actively done , aka more of an activity type
-         , 'disg'    => '03-disg'      # to disgard - a more positive
+         , 'disg'    => '03-disg'      # to discard - a more positive
          , 'diss'    => '04-diss'      # to dissmiss - a more negative
-         , 'fail'    => '04-fail'      # to failmiss or disgard
+         , 'fail'    => '04-fail'      # to failmiss or discard
          , 'test'    => '05-test'      # to test some implementation
          , 'tst'     => '05-tst'       # to test some implementation
          , 'hld'     => '06-onhold'    # the issue is on hold - 
