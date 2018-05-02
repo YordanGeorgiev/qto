@@ -9,6 +9,7 @@ Table of Contents
       * [1.1.2. Attempt for 100% test coverage to achieve reliability](#112-attempt-for-100%-test-coverage-to-achieve-reliability)
     * [1.2. Naming conventions principle](#12-naming-conventions-principle)
     * [1.3. Be user-friendly especially to developers and devops](#13-be-user-friendly-especially-to-developers-and-devops)
+    * [1.4. Aim for simplicity](#14-aim-for-simplicity)
   * [2. INSTALLATIONS AND CONFIGURATIONS](#2-installations-and-configurations)
     * [2.1. Configure the Ubuntu repositories](#21-configure-the-ubuntu-repositories)
     * [2.2. Add the media keys](#22-add-the-media-keys)
@@ -58,6 +59,25 @@ Table of Contents
     * [8.2. E-mail communication](#82-e-mail-communication)
     * [8.3. Chat / IRC](#83-chat-/-irc)
     * [8.4. Documentation](#84-documentation)
+  * [9. FEATURE IMPLEMENTATION WORKFLOW](#9-feature-implementation-workflow)
+    * [9.1. Issue creation](#91-issue-creation)
+    * [9.2. UserStory creation](#92-userstory-creation)
+    * [9.3. Requirements creation](#93-requirements-creation)
+    * [9.4. Problem registration](#94-problem-registration)
+    * [9.5. Feature branch creation](#95-feature-branch-creation)
+    * [9.6. Create a test-entry point](#96-create-a-test-entry-point)
+    * [9.7. Implementation of Proof of Concept](#97-implementation-of-proof-of-concept)
+    * [9.8. Prototype implementation](#98-prototype-implementation)
+    * [9.9. Unit and / or integration test creation](#99-unit-and-/-or-integration-test-creation)
+    * [9.10. Implementation ](#910-implementation-)
+    * [9.11. Deployment and test to the test environment](#911-deployment-and-test-to-the-test-environment)
+    * [9.12. Deployment and test to the production environment](#912-deployment-and-test-to-the-production-environment)
+    * [9.13. Quality assurance iteration](#913-quality-assurance-iteration)
+    * [9.14. DoD check-list walktrough](#914-dod-check-list-walktrough)
+      * [9.14.1. The feature or functionality current description is added in the docs](#9141-the-feature-or-functionality-current-description-is-added-in-the-docs)
+      * [9.14.2. The related requirement is added in the requirements document](#9142-the-related-requirement-is-added-in-the-requirements-document)
+      * [9.14.3. At least 2 times passed unit tests run in each environment instance](#9143-at-least-2-times-passed-unit-tests-run-in-each-environment-instance)
+      * [9.14.4. At least 2 times passed integration tests run in each environment instance](#9144-at-least-2-times-passed-integration-tests-run-in-each-environment-instance)
 
 
     
@@ -93,6 +113,11 @@ All the names used in the code and the configurations MUST BE human readable and
 
 ### 1.3. Be user-friendly especially to developers and devops
 You cannot achieve user-friendliness for the end-users unless your developers and technical personnel are happy while interacting with your artifacts. 
+
+    
+
+### 1.4. Aim for simplicity
+Things should be as simple as possible, but not simpler - if Einstein said it it makes sense
 
     
 
@@ -418,7 +443,7 @@ The work on the issue-tracker project is conducted by using the Scrum methodolog
     
 
 ### 8.1. Definition of Done
-Each issue must have a tangible artifact. An issue without tangible artifact is a trought thrown in the air.
+Each issue must have a tangible artifact. An issue without tangible artifact is a tought thrown in the air.
 The DoD must be iterated and updated during each Sprint Review. 
 
     
@@ -438,6 +463,114 @@ Should you want a quicker respond than 2 hours use thre chat tool
 
 ### 8.4. Documentation
 Undocumented feature is not a feature. 
+
+    
+
+## 9. FEATURE IMPLEMENTATION WORKFLOW
+This section describes the common workflow for implementing a feature. 
+As in other places the main principle to follow is "use common sense" , thus try to follow this workflow for feature implementation, but challenge it as soon as it defies the common sense. 
+
+    
+
+### 9.1. Issue creation
+Even if you do not have a defined documentation artifact - create a new issue, which could be the start for a an action affecting the run-state, configuration , data , features and functionalities or other aspects of the issue-tracker appclication. 
+An issue could be a bug, a request for a feature or even simply an undefined combination of problems and solution which could quickly be formalized by defining a new requirement, another issue, feature-request
+
+    
+
+### 9.2. UserStory creation
+Use the following template while creating the user story:
+As an &lt;&lt;role&gt;&gt;
+In order to &lt;&lt;achieve something&gt;&gt; 
+I wanto to be able &lt;&lt;action-description&gt;&gt; 
+
+    
+
+### 9.3. Requirements creation
+Define a formal requirement as soon as possible. 
+
+    
+
+### 9.4. Problem registration
+Problems are usually entities which last for longer time period. 
+
+    
+
+### 9.5. Feature branch creation
+Create the feature branch by using the following naming convention:
+ - dev--&lt;&lt;short-feature-title&gt;&gt;
+
+    
+
+### 9.6. Create a test-entry point
+Even the smallest proof of concept needs a small test-entry point. Start always witht the testing and the testing scalability in mind. 
+
+    
+
+### 9.7. Implementation of Proof of Concept
+
+
+    
+
+### 9.8. Prototype implementation
+
+
+    
+
+### 9.9. Unit and / or integration test creation
+
+
+    
+
+### 9.10. Implementation 
+Implement by quick unit test runs. Constantly improve both the code , configuration changes and the test code. 
+
+    
+
+### 9.11. Deployment and test to the test environment
+Run the unit and integration tests. 
+
+    # deploy to the tst environment
+    bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
+    
+    # go to the product instance dir of the tst env for this version
+    cd ../issue-tracker.<<version>>.tst.<<owner>>
+    # run the unit tests
+    bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-unit-tests
+    
+
+### 9.12. Deployment and test to the production environment
+Repeat the same to the production environment. As the current version is usually work in progress your stable version will be one level bellow and thanks to the architecture of the tool you could test in the production environment ( as soon as you have proper configuration ) 
+
+    
+
+### 9.13. Quality assurance iteration
+This phase might be longer depending on the feature. Some of the features stay in quality assurance mode EVEN if they have been deployed to production 
+
+    
+
+### 9.14. DoD check-list walktrough
+Perform the DoD checklist as follows
+
+    
+
+#### 9.14.1. The feature or functionality current description is added in the docs
+The feature or functionality current description is added in the Features and Functionalities document. 
+
+    
+
+#### 9.14.2. The related requirement is added in the requirements document
+The related requirement is added in the requirements document - there might be one or more requirements added. 
+
+    
+
+#### 9.14.3. At least 2 times passed unit tests run in each environment instance
+At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. 
+
+    
+
+#### 9.14.4. At least 2 times passed integration tests run in each environment instance
+At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. 
 
     
 
