@@ -725,6 +725,7 @@ doc/txt/issue-tracker/funcs/run-perl-integration-tests.func.txt
 src/bash/issue-tracker/tests/run-perl-integration-tests.test.sh
 src/bash/issue-tracker/helps/run-perl-integration-tests.help.sh
 src/bash/issue-tracker/funcs/run-perl-integration-tests.func.sh
+<<<<<<< HEAD
 # --- the application data
 dat/mix/issues/2018/2018-05/
 dat/mix/issues/2018/2018-05/2018-05-01
