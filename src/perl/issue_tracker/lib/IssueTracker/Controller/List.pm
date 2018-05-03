@@ -61,6 +61,14 @@ sub doListItems {
          'ret'   => 400, 
          'req'   => "GET " . $self->req->url->to_abs
       });
+   } elsif ( $ret == 2 ) {
+
+      $self->res->code(400);
+      $self->render( 'json' =>  { 
+         'msg'   => $msg,
+         'ret'   => 400, 
+         'req'   => "GET " . $self->req->url->to_abs
+      });
    } else {
 
       $msg = 'unknown error has occurred' ; 
@@ -133,6 +141,14 @@ sub doListTables {
          'req'   => "GET " . $self->req->url->to_abs
       })
       ;
+   } elsif ( $ret == 2 ) {
+
+      $self->res->code(400);
+      $self->render( 'json' =>  { 
+         'msg'   => $msg,
+         'ret'   => 400, 
+         'req'   => "GET " . $self->req->url->to_abs
+      });
    } else {
 
       $self->res->code(404);
