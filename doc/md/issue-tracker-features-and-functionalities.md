@@ -28,6 +28,12 @@ Table of Contents
       * [2.3.1. single item data fetch in json via web](#231-single-item-data-fetch-in-json-via-web)
     * [2.4. Documentation related](#24-documentation-related)
       * [2.4.1. Single call export of the md and pdf documentation files](#241-single-call-export-of-the-md-and-pdf-documentation-files)
+  * [3. BACK-END FEATURES AND FUNCTIONALITIES](#3-back-end-features-and-functionalities)
+    * [3.1. list-tables web action](#31-list-tables-web-action)
+      * [3.1.1. error handling for failed connect to db in the list-tables web action](#311-error-handling-for-failed-connect-to-db-in-the-list-tables-web-action)
+    * [3.2. list web action](#32-list-web-action)
+      * [3.2.1. error handling for failed connect to db in the list web action](#321-error-handling-for-failed-connect-to-db-in-the-list-web-action)
+      * [3.2.2. error handling for non-existent table in the list-tables web action](#322-error-handling-for-non-existent-table-in-the-list-tables-web-action)
 
 
     
@@ -220,4 +226,61 @@ http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a
 Single call export of the md and pdf documentation files
 
     
+
+## 3. BACK-END FEATURES AND FUNCTIONALITIES
+
+
+    
+
+### 3.1. list-tables web action
+An http-client could get the list of all the tables of a database to which the issue-tracker has connectivity to by calling the following url:
+&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;database&gt;&gt;/list-tables
+
+
+    
+
+#### 3.1.1. error handling for failed connect to db in the list-tables web action
+If the http-client points to a db to which the app layer does not have a connection ( might be a non-existing one ) the proper response is generated. 
+
+
+    // 20180503234141
+    // http://192.168.56.120:3000/non_existent/list/daily_issues
+    
+    {
+      "msg": "cannot connect to the non_existent database: FATAL:  database \"non_existent\" does not exist",
+      "req": "GET http://192.168.56.120:3000/non_existent/list/daily_issues",
+      "ret": 400
+    }
+
+### 3.2. list web action
+An http-client could get the contents of ANY table of a database to which the issue-tracker has connectivity to by calling the following url:
+&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;database&gt;&gt;/list/&lt;&lt;table-name&gt;&gt;
+
+    
+
+#### 3.2.1. error handling for failed connect to db in the list web action
+If the http-client points to a db to which the app layer does not have a connection ( might be a non-existing one ) the proper response is generated. 
+
+
+    // 20180503234141
+    // http://192.168.56.120:3000/non_existent/list/daily_issues
+    
+    {
+      "msg": "cannot connect to the non_existent database: FATAL:  database \"non_existent\" does not exist",
+      "req": "GET http://192.168.56.120:3000/non_existent/list/daily_issues",
+      "ret": 400
+    }
+
+#### 3.2.2. error handling for non-existent table in the list-tables web action
+if a table does not exist a proper error msg containing response is generated.
+
+
+    // 20180503234346
+    // http://192.168.56.120:3000/non_existent/list/non_existent_table
+    
+    {
+      "msg": "cannot connect to the non_existent database: FATAL:  database \"non_existent\" does not exist",
+      "req": "GET http://192.168.56.120:3000/non_existent/list/non_existent_table",
+      "ret": 400
+    }
 
