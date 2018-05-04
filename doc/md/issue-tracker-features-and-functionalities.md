@@ -30,10 +30,15 @@ Table of Contents
       * [2.4.1. Single call export of the md and pdf documentation files](#241-single-call-export-of-the-md-and-pdf-documentation-files)
   * [3. BACK-END FEATURES AND FUNCTIONALITIES](#3-back-end-features-and-functionalities)
     * [3.1. list-tables web action](#31-list-tables-web-action)
-      * [3.1.1. error handling for failed connect to db in the list-tables web action](#311-error-handling-for-failed-connect-to-db-in-the-list-tables-web-action)
+      * [3.1.1. successfull execution](#311-successfull-execution)
+      * [3.1.2. error handling for failed connect to db in the list-tables web action](#312-error-handling-for-failed-connect-to-db-in-the-list-tables-web-action)
     * [3.2. list web action](#32-list-web-action)
-      * [3.2.1. error handling for failed connect to db in the list web action](#321-error-handling-for-failed-connect-to-db-in-the-list-web-action)
-      * [3.2.2. error handling for non-existent table in the list-tables web action](#322-error-handling-for-non-existent-table-in-the-list-tables-web-action)
+      * [3.2.1. successfull execution](#321-successfull-execution)
+      * [3.2.2. error handling for failed connect to db in the list web action](#322-error-handling-for-failed-connect-to-db-in-the-list-web-action)
+      * [3.2.3. error handling for non-existent table in the list-tables web action](#323-error-handling-for-non-existent-table-in-the-list-tables-web-action)
+      * [3.2.4. filter functionality in list table web action](#324-filter-functionality-in-list-table-web-action)
+      * [3.2.5. successfull execution](#325-successfull-execution)
+          * [3.2.5.1. error handling for wrong filtering syntax by missed fltr-by or fltr-va url params](#3251-error-handling-for-wrong-filtering-syntax-by-missed-fltr-by-or-fltr-va-url-params)
 
 
     
@@ -233,13 +238,45 @@ Single call export of the md and pdf documentation files
     
 
 ### 3.1. list-tables web action
-An http-client could get the list of all the tables of a database to which the issue-tracker has connectivity to by calling the following url:
-&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;database&gt;&gt;/list-tables
+An http-client could get the list of all the tables of a database to which the issue-tracker has connectivity to ( that is not only the one configured in the application layer )
 
 
+    <<web-host>>:<<web-port>>/<<database>>/list-tables
+
+#### 3.1.1. successfull execution
+An http-client could get the list of all the tables of a database to which the issue-tracker has connectivity to
+
+
+    // 20180505205212
+    // http://192.168.56.120:3000/dev_issue_tracker/list-tables
     
+    {
+      "dat": {
+        "1": {
+          "row_id": "1",
+          "table_catalog": "dev_issue_tracker",
+          "table_name": "confs",
+          "table_schema": "public"
+        },
+        "2": {
+          "row_id": "2",
+          "table_catalog": "dev_issue_tracker",
+          "table_name": "daily_issues",
+          "table_schema": "public"
+        },
+        "3": {
+          "row_id": "3",
+          "table_catalog": "dev_issue_tracker",
+          "table_name": "decadally_issues",
+          "table_schema": "public"
+        }
+      },
+      "msg": "SELECT tables-list OK ",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/list-tables",
+      "ret": 200
+    }
 
-#### 3.1.1. error handling for failed connect to db in the list-tables web action
+#### 3.1.2. error handling for failed connect to db in the list-tables web action
 If the http-client points to a db to which the app layer does not have a connection ( might be a non-existing one ) the proper response is generated. 
 
 
@@ -253,12 +290,17 @@ If the http-client points to a db to which the app layer does not have a connect
     }
 
 ### 3.2. list web action
+An http-client could get the contents of ANY table of a database to which the issue-tracker has connectivity to ( ie not only the one configured in the application layer but also other databases in the same postgres instance)  by using the following syntax:
+
+    <<web-host>>:<<web-port>>/<<database>>/list/<<table-name>>
+
+#### 3.2.1. successfull execution
 An http-client could get the contents of ANY table of a database to which the issue-tracker has connectivity to by calling the following url:
 &lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;database&gt;&gt;/list/&lt;&lt;table-name&gt;&gt;
 
     
 
-#### 3.2.1. error handling for failed connect to db in the list web action
+#### 3.2.2. error handling for failed connect to db in the list web action
 If the http-client points to a db to which the app layer does not have a connection ( might be a non-existing one ) the proper response is generated. 
 
 
@@ -271,16 +313,72 @@ If the http-client points to a db to which the app layer does not have a connect
       "ret": 400
     }
 
-#### 3.2.2. error handling for non-existent table in the list-tables web action
+#### 3.2.3. error handling for non-existent table in the list-tables web action
 if a table does not exist a proper error msg containing response is generated.
 
 
-    // 20180503234346
-    // http://192.168.56.120:3000/non_existent/list/non_existent_table
+    // 20180505205015
+    // http://192.168.56.120:3000/dev_issue_tracker/list/non_existent
     
     {
-      "msg": "cannot connect to the non_existent database: FATAL:  database \"non_existent\" does not exist",
-      "req": "GET http://192.168.56.120:3000/non_existent/list/non_existent_table",
+      "msg": " the table non_existent does not exist in the dev_issue_tracker database ",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/list/non_existent",
+      "ret": 400
+    }
+
+#### 3.2.4. filter functionality in list table web action
+The response cold be filtered by ANY attribute with any valid value. 
+
+
+    // using the following syntax:
+    <<web-host>>:<<web-port>>/<<database>>/list/<<table-name>>?fltr-by=<<filter-attribute-to-filter-by>>&fltr-val=<<filter-value-to-filter-by>>
+
+#### 3.2.5. successfull execution
+The response of the list web action could be filtered by using the syntax bellow:
+Those are eventual transated to a where clause in the db select part. 
+
+
+
+    // 20180505204531
+    // http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?fltr-by=prio&fltr-val=1
+    
+    {
+      "dat": {
+        "c89d3283-0a9f-4b8d-9dcc-84a63e64276b": {
+          "actual_hours": null,
+          "category": "issue-tracker-features",
+          "description": "add the web list controller “\r\n - implementation code\r\n - tests \r\n - documentation additions for :\r\n-- requirements\r\n-- userstories\r\n-- tests \r\n-- features and functionalities",
+          "guid": "c89d3283-0a9f-4b8d-9dcc-84a63e64276b",
+          "id": 180402,
+          "level": 2,
+          "name": "add the web list controller",
+          "owner": "ysg",
+          "planned_hours": "3.00",
+          "prio": 1,
+          "seq": 1,
+          "start_time": "2018-04-02 18:00",
+          "status": "07-qas",
+          "stop_time": null,
+          "tags": "feature",
+          "type": "feature",
+          "update_time": "2018-05-04 23:18:45.104771"
+        }
+      },
+      "msg": "SELECT OK for table: monthly_issues",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?fltr-by=prio&fltr-val=1",
+      "ret": 200
+    }
+
+##### 3.2.5.1. error handling for wrong filtering syntax by missed fltr-by or fltr-va url params
+If the request does not have either one of the url params the following response is produced. 
+
+
+    // 20180505204734
+    // http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?fltr-by=prio
+    
+    {
+      "msg": "mall-formed url params for filtering - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<filter-value>>",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?fltr-by=prio",
       "ret": 400
     }
 

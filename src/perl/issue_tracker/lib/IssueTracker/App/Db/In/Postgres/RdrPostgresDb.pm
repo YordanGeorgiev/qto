@@ -25,8 +25,56 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 	our $postgres_db_user_pw	 					   = q{} ; 
 	our $web_host 											= q{} ; 
 
-   
-   
+
+   sub doBuildWhereClause {
+
+      my $self = shift ; 
+		my $sql = '' ; 
+		my $ret = 400 ; 
+		my $msg = ' the following column: %s does not exist ' ; 
+
+      my $ref_filter_names    = $objModel->get('list.web-action.fltr-by' );
+      my $ref_filter_values   = $objModel->get('list.web-action.fltr-val' );
+
+      if ( @$ref_filter_names and @$ref_filter_values  ) {
+      	# build the dynamic filtering for the the in clause
+			$sql = ' AND ' ; 
+
+         for ( my $i = 0 ; $i < scalar ( @$ref_filter_names ) ; $i++ ) {
+				my ( $filter_value , $filter_name ) = () ; 
+            $filter_value = $ref_filter_values->["$i"] ;
+            $filter_name = $ref_filter_names->["$i"] ;
+
+            my @filter_values_list = split (',' , $filter_value ) ;
+            my $str = '(' ;
+            foreach my $item ( @filter_values_list ) {
+               $str .= " '" . $item . "' ," ;
+            }
+            chop ( $str ) ; $str .= ') ' ;
+
+            $sql .= "$filter_name  in $str "
+               if ( defined ( $filter_value ) and defined ( $filter_name ) );
+				$sql .= ' AND ' ; 
+         }
+
+			for (1..4) { chop ( $sql) } ;
+			return ( 0 , "" , $sql ) ; 
+
+      } elsif ( @$ref_filter_names or @$ref_filter_values )  {
+			# if either the filter names or the filter values are null than the filtering url is mall-formed
+			$msg = 'mall-formed url params for filtering - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<filter-value>>' ; 
+      	return ( 400 , "$msg" , "") ; 
+		} else {
+			# simply no filtering attributes nor values are provided return 
+			# to proceed with the select 
+      	return ( 0 , "" , "") ;
+		}
+
+   } 
+   #eof sub doBuildWhereClause
+  
+
+ 
    sub doSelectTablesList {
 
       my $self             = shift ; 
@@ -391,6 +439,12 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          * FROM $table 
          WHERE 1=1 " ; 
       $str_sql .= $filter_by_attributes . " " if $filter_by_attributes ; 
+
+		my $where_clause = '' ; 
+		( $ret , $msg , $where_clause ) = $self->doBuildWhereClause () ; 
+
+		return ( $ret , $msg ) unless $ret == 0 ; 
+		$str_sql .= $where_clause if $where_clause ; 
 
       # not all items have the prio attribute
       $str_sql .= "

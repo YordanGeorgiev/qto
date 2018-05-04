@@ -4,6 +4,7 @@ use Mojo::Base 'Mojolicious::Controller';
 
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
+use Data::Printer ; 
 
 our $module_trace   = 0 ;
 our $appConfig      = {};
@@ -30,7 +31,9 @@ sub doListItems {
  
    my $ret = 0;
    my $msg = 'unknown error during List item';
-  
+
+   $objModel->set('list.web-action.fltr-by' , $self->every_param('fltr-by') ) ; 
+   $objModel->set('list.web-action.fltr-val' , $self->every_param('fltr-val') ) ; 
 
    my $hsr2 = {};
 
@@ -150,3 +153,5 @@ sub doListTables {
 1;
 
 __END__
+
+# feature-guid: ecd424d7-e5bd-45f1-90c8-10fae1316bf9
