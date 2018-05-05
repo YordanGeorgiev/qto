@@ -1,6 +1,7 @@
 # this is kind of a srch history file - PREPEND !!!
 # 
 :g/srch/| :vimgrep /srch/ `find . -type f \| grep -v .git \| grep -v .log`
+:g/eval/| :vimgrep /eval/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/RdrDirs/| :vimgrep /RdrDirs/ `find . -type f \| grep -v .git \| grep -v .log`
 :g/tables/| :vimgrep /tables/ `find . -type f \| grep -v .git \| grep -v .log`
 

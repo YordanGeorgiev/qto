@@ -25,8 +25,56 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 	our $postgres_db_user_pw	 					   = q{} ; 
 	our $web_host 											= q{} ; 
 
-   
-   
+
+   sub doBuildWhereClause {
+
+      my $self = shift ; 
+		my $sql = '' ; 
+		my $ret = 400 ; 
+		my $msg = ' the following column: %s does not exist ' ; 
+
+      my $ref_filter_names    = $objModel->get('list.web-action.fltr-by' );
+      my $ref_filter_values   = $objModel->get('list.web-action.fltr-val' );
+
+      if ( @$ref_filter_names and @$ref_filter_values  ) {
+      	# build the dynamic filtering for the the in clause
+			$sql = ' AND ' ; 
+
+         for ( my $i = 0 ; $i < scalar ( @$ref_filter_names ) ; $i++ ) {
+				my ( $filter_value , $filter_name ) = () ; 
+            $filter_value = $ref_filter_values->["$i"] ;
+            $filter_name = $ref_filter_names->["$i"] ;
+
+            my @filter_values_list = split (',' , $filter_value ) ;
+            my $str = '(' ;
+            foreach my $item ( @filter_values_list ) {
+               $str .= " '" . $item . "' ," ;
+            }
+            chop ( $str ) ; $str .= ') ' ;
+
+            $sql .= "$filter_name  in $str "
+               if ( defined ( $filter_value ) and defined ( $filter_name ) );
+				$sql .= ' AND ' ; 
+         }
+
+			for (1..4) { chop ( $sql) } ;
+			return ( 0 , "" , $sql ) ; 
+
+      } elsif ( @$ref_filter_names or @$ref_filter_values )  {
+			# if either the filter names or the filter values are null than the filtering url is mall-formed
+			$msg = 'mall-formed url params for filtering - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<filter-value>>' ; 
+      	return ( 400 , "$msg" , "") ; 
+		} else {
+			# simply no filtering attributes nor values are provided return 
+			# to proceed with the select 
+      	return ( 0 , "" , "") ;
+		}
+
+   } 
+   #eof sub doBuildWhereClause
+  
+
+ 
    sub doSelectTablesList {
 
       my $self             = shift ; 
@@ -44,6 +92,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		   $postgres_db_name = $objModel->get('postgres_db_name');
       }
       
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
       $str_sql = " 
       SELECT  
            table_catalog 
@@ -62,14 +113,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
       $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
       # $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-     
-      $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
-                 'RaiseError'          => 1
-               , 'ShowErrorStatement'  => 1
-               , 'PrintError'          => 1
-               , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
-      } ) or $msg = DBI->errstr;
       
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
@@ -102,6 +145,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 
    sub table_exists {
+
       my $self       = shift ; 
       my $db         = shift ; 
       my $table      = shift ; 
@@ -113,6 +157,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       unless ( defined ( $appConfig->{"$db" . '.tables-list'} ) ) {
          ($ret, $msg) = $self->doSelectTablesList(\$objModel);
+         return 0 unless $ret == 0 ; 
          $hsr2 = $objModel->get('hsr2');
          return $table_exists unless $ret == 0 ; 
       } 
@@ -343,6 +388,37 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 	}
    # eof sub doSearchConfigurationEntries
 
+   #
+   # -----------------------------------------------------------------------------
+   # open the database handle if possible, if not return proper error msgs
+   # -----------------------------------------------------------------------------
+   sub doConnectToDb {
+      my $self = shift ; 
+      my $postgres_db_name = shift ; 
+   
+      my $ret = 1 ; 
+      my $msg = q{} ; 
+      my $dbh = q{} ; 
+
+      eval { 
+         $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
+                    'RaiseError'          => 1
+                  , 'ShowErrorStatement'  => 1
+                  , 'PrintError'          => 1
+                  , 'AutoCommit'          => 1
+                  , 'pg_utf8_strings'     => 1
+         } ) 
+      };
+
+      if ($@) {
+         $ret = 2 ; 
+         $msg = "cannot connect to the $postgres_db_name database: " . DBI->errstr ; 
+         return ( $ret , $msg , undef ) ; 
+      }
+
+      $ret = 0 ; $msg = "connect ok" ; 
+      return ( $ret , $msg , $dbh ) ; 
+   }
 
 
    #
@@ -357,11 +433,15 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $filter_by_attributes   = shift ; 
       my $ret                    = 1 ; 
       my $msg                    = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
+      my $dbh              = {} ;         # this is the database handle
 
       if ( defined $objModel->get('postgres_db_name') ) {
 		   $postgres_db_name = $objModel->get('postgres_db_name');
       }
-      
+     
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
       if ( $self->table_exists ( $postgres_db_name , $table ) == 0  ) {
          $ret = 400 ; 
          $msg = ' the table ' . $table . ' does not exist in the ' . $postgres_db_name . ' database '  ; 
@@ -373,7 +453,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
       my $dmhsr            = {} ;        # this is meta hash describing the data hash ^^
       my $sth              = {} ;         # this is the statement handle
-      my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
 
 
@@ -392,6 +471,12 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          WHERE 1=1 " ; 
       $str_sql .= $filter_by_attributes . " " if $filter_by_attributes ; 
 
+		my $where_clause = '' ; 
+		( $ret , $msg , $where_clause ) = $self->doBuildWhereClause () ; 
+
+		return ( $ret , $msg ) unless $ret == 0 ; 
+		$str_sql .= $where_clause if $where_clause ; 
+
       # not all items have the prio attribute
       $str_sql .= "
          order by prio asc
@@ -401,13 +486,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       # debug p ( '$str_sql: ' . "$str_sql" . "\n" ) ; 
       # authentication src: http://stackoverflow.com/a/19980156/65706
      
-      $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
-                 'RaiseError'          => 1
-               , 'ShowErrorStatement'  => 1
-               , 'PrintError'          => 1
-               , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
-      } ) or $msg = DBI->errstr;
       
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
