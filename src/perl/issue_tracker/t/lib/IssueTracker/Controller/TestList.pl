@@ -28,22 +28,26 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    my $response = $ua->get('/' . $db_name . '/list-tables')->result->json ; 
    my $hsr2 = $response->{ 'dat' } ; 
 
-   # foreach table in the app db in test call db/list/table
-   for my $key ( keys %$hsr2 ) {
-      my $table_name = $hsr2->{ $key }->{'table_name'} ; 
-      $t->get_ok('/' . $db_name . '/list/' . $table_name)
-         ->status_is(200) 
-         ->header_is('Accept-Charset' => 'UTF-8')
-         ->header_is('Accept-Language' => 'fi, en')
-      ;
+# foreach table in the app db in test call db/list/table
+for my $key ( keys %$hsr2 ) {
+	my $table_name = $hsr2->{ $key }->{'table_name'} ; 
+   
+   # feature-guid: 1d270227-0959-488f-83d3-0397221385a0
+	$t->get_ok('/' . $db_name . '/list/' . $table_name)
+		->status_is(200) 
+		->header_is('Accept-Charset' => 'UTF-8')
+		->header_is('Accept-Language' => 'fi, en')
+	;
 
-      my $res = $ua->get('/' . $db_name . '/list/' . $table_name )->result->json ; 
-      my $tm = 'the response msg for the ' . $table_name . ' is correct' ; 
-      ok ( $res->{'msg'} eq "SELECT OK for table: $table_name" , $tm) ; 
-      $tm = 'the return code for the ' . $table_name . ' is correct' ; 
-      ok ( $res->{'ret'} == 200 , $tm) ; 
-   }
+   # feature-guid: ac8a79af-9114-42e6-86eb-9bc29f7c0190
+   my $res = $ua->get('/' . $db_name . '/list/' . $table_name )->result->json ; 
+   my $tm = 'the response msg for the ' . $table_name . ' is correct' ; 
+   ok ( $res->{'msg'} eq "SELECT OK for table: $table_name" , $tm) ; 
+   $tm = 'the return code for the ' . $table_name . ' is correct' ; 
+   ok ( $res->{'ret'} == 200 , $tm) ; 
+}
 
+   # feature-guid: dfc1216d-5a16-40eb-849a-2785264aa5bd
 	my $table_name = 'non_existtent_table' ; 
 	$t->get_ok('/' . $db_name . '/list/' . $table_name)
 		->status_is(400) 
@@ -51,6 +55,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 		->header_is('Accept-Language' => 'fi, en')
 	;
 
+   # feature-guid: 8d750499-4911-416c-ae81-b3415d13b5ef
    my $res = $ua->get('/' . $db_name . '/list/' . $table_name )->result->json ; 
    $tm = 'the response msg for the ' . $table_name . ' is correct' ; 
    ok ( $res->{'msg'} eq " the table $table_name does not exist in the $db_name database " , $tm ) ; 
@@ -63,11 +68,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    my $exp_err_msg = 'cannot connect to the non_existent_db database: FATAL:  database "non_existent_db" does not exist' ; 
    ok ( $res->{'msg'} eq $exp_err_msg , $tm ) ; 
 
-   $res = $ua->get('/non_existent_db/list-tables'  )->result->json ; 
-   $tm = 'shoud return error for cannot connect to db' ; 
-   $exp_err_msg = 'cannot connect to the non_existent_db database: FATAL:  database "non_existent_db" does not exist' ; 
-   ok ( $res->{'msg'} eq $exp_err_msg , $tm ) ; 
-   
-   
-   # chk: https://restfulapi.net/http-status-codes/
-   done_testing();
+
+# fetch all the tables 
+done_testing();
+
+# feature-guid: ecd424d7-e5bd-45f1-90c8-10fae1316bf9
