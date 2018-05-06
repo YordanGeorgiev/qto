@@ -55,19 +55,38 @@ for my $table ( @tables ) {
    $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
 	$hsr2 = $res->{'dat'} ; 
 
+   # feature-guid: 1f89454a-1801-423d-9784-9477973d05fc
 	foreach my $key ( sort keys %$hsr2 ) {
 		my $row = $hsr2->{$key } ; 
 		$tm = "all the retrieved statuses should be 02-todo for the table: $table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ;
 		ok ( $row->{'status'} eq '02-todo', $tm ) ; 
 	}
 
-	print 'test a response with invalid syntax ' . "\n" ; 
+   # feature-guid: c71d93de-f178-485a-844f-fe8d226628a4
+	print 'test a response with invalid syntax - provide fltr-by only' . "\n" ; 
 	$url_params = '?fltr-by=status' ; 
 	print "\n running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
    $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
 	ok ( $res->{'msg'} 
 		eq 'mall-formed url params for filtering - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<filter-value>>' ) ; 
 	ok ( $res->{'ret'} == 400 ) ; 	
+
+   # feature-guid: c71d93de-f178-485a-844f-fe8d226628a4
+   print 'test a response with invalid syntax - provide fltr-val only ' . "\n" ; 
+	$url_params = '?fltr-val=wrong' ; 
+	print "\n running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
+	ok ( $res->{'msg'} 
+		eq 'mall-formed url params for filtering - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<filter-value>>' ) ; 
+	ok ( $res->{'ret'} == 400 ) ; 	
+
+   # feature-guid: d6561095-c965-4658-a5dc-0350093e75ab
+   print 'test a response with valid syntax, but use unexisting columns' . "\n" ; 
+   $url_params = '?fltr-val=non_existing_column&fltr-val=foo-bar' ; 
+   print "\n running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
+   #ok ( $res->{'msg'} eq "the non_existing_column column does not exist" ) ; 
+   ok ( $res->{'ret'} == 400 ) ; 	
 } 
 #eof foreach table
 
