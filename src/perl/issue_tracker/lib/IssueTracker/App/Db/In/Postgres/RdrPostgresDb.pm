@@ -26,9 +26,24 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 	our $web_host 											= q{} ; 
 
 
+   sub doCheckIfColumnExists {
+      my $self = shift ; 
+      my $cols = shift ; 
+      my $col = shift ; 
+
+      print "checking the folloiwng column name : $col \n " ; 
+
+      foreach my $key1 ( keys %$cols ) {
+         my $row = $cols->{ $key1 } ; 
+         return 1 if $row->{ 'attname' } eq $col; 
+      }
+      return 0 ; 
+   }
+
    sub doBuildWhereClause {
 
       my $self = shift ; 
+      my $cols = shift ; 
 		my $sql = '' ; 
 		my $ret = 400 ; 
 		my $msg = ' the following column: %s does not exist ' ; 
@@ -41,9 +56,12 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 			$sql = ' AND ' ; 
 
          for ( my $i = 0 ; $i < scalar ( @$ref_filter_names ) ; $i++ ) {
-				my ( $filter_value , $filter_name ) = () ; 
-            $filter_value = $ref_filter_values->["$i"] ;
+				my ( $filter_name , $filter_value ) = () ; 
             $filter_name = $ref_filter_names->["$i"] ;
+            $filter_value = $ref_filter_values->["$i"] ;
+        
+            my $col_exists = $self->doCheckIfColumnExists ( $cols->{'ColumnNames'} , $filter_name ) ; 
+      	   return ( 400 , "the $filter_name column does not exist" , "") unless ( $col_exists ) ; 
 
             my @filter_values_list = split (',' , $filter_value ) ;
             my $str = '(' ;
@@ -472,7 +490,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $str_sql .= $filter_by_attributes . " " if $filter_by_attributes ; 
 
 		my $where_clause = '' ; 
-		( $ret , $msg , $where_clause ) = $self->doBuildWhereClause () ; 
+		( $ret , $msg , $where_clause ) = $self->doBuildWhereClause ( $mhsr ) ; 
 
 		return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql .= $where_clause if $where_clause ; 
