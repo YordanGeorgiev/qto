@@ -81,12 +81,38 @@ for my $table ( @tables ) {
 	ok ( $res->{'ret'} == 400 ) ; 	
 
    # feature-guid: d6561095-c965-4658-a5dc-0350093e75ab
-   print 'test a response with valid syntax, but use unexisting columns' . "\n" ; 
-   $url_params = '?fltr-val=non_existing_column&fltr-val=foo-bar' ; 
+   print "\n start test a response with valid syntax, but use unexisting columns \n" ; 
+   $url_params = '?fltr-by=non_existing_column&fltr-val=foo-bar' ; 
+   print "running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
+   ok ( $res->{'msg'} eq "the non_existing_column column does not exist" ) ; 
+   ok ( $res->{'ret'} == 400 ) ; 	
+   print "stop  test a response with valid syntax, but use unexisting columns \n" ; 
+   
+   # feature-guid: 95cdac3a-4a41-4c5b-9ba8-6f8134b0edc9
+   print "\n start test a response with only a single column pick" ; 
+   $url_params = "?pick=name" ; 
    print "\n running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
    $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
-   #ok ( $res->{'msg'} eq "the non_existing_column column does not exist" ) ; 
+   ok ( $res->{'ret'} == 200 ) ; 	
+   print "stop  test a response with only a single column pick" ; 
+  
+   # feature-guid: 95cdac3a-4a41-4c5b-9ba8-6f8134b0edc9 
+   print "\n start test a response with a list column pick" ; 
+   $url_params = "?pick=name,update_time" ; 
+   print "\n running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
+   ok ( $res->{'ret'} == 200 ) ; 	
+   print "stop  test a response with a list column pick" ; 
+  
+   # feature-guid: fd3e2d4e-99a1-4cd8-8ebe-bb47f9de9caf
+   print "\n start test a response with an inexisting column pick" ; 
+   $url_params = "?pick=non_existing_column" ; 
+   print "\n running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
+   ok ( $res->{'msg'} eq "the non_existing_column column does not exist" ) ; 
    ok ( $res->{'ret'} == 400 ) ; 	
+   print "\n start test a response with an inexisting column pick" ; 
 } 
 #eof foreach table
 

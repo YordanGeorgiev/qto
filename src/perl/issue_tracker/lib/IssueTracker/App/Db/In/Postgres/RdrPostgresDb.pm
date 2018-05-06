@@ -31,8 +31,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $cols = shift ; 
       my $col = shift ; 
 
-      print "checking the folloiwng column name : $col \n " ; 
-
       foreach my $key1 ( keys %$cols ) {
          my $row = $cols->{ $key1 } ; 
          return 1 if $row->{ 'attname' } eq $col; 
@@ -483,11 +481,24 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       }
       
       $objModel->set('hsr_meta' , $mhsr );
+
+      my $columns_to_select = "*" ; 
+      if ( defined ( $objModel->get('list.web-action.pick') ) ) {
+         $columns_to_select = 'guid,' . $objModel->get('list.web-action.pick'); 
+         my @cols = split (',' , $columns_to_select ) ;
+         foreach my $col ( @cols ) { 
+            my $col_exists = $self->doCheckIfColumnExists ( $mhsr->{'ColumnNames'} , $col ) ; 
+      	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
+         }
+      }
+
       $str_sql = 
          " SELECT 
-         * FROM $table 
+         $columns_to_select
+         FROM $table 
          WHERE 1=1 " ; 
       $str_sql .= $filter_by_attributes . " " if $filter_by_attributes ; 
+      
 
 		my $where_clause = '' ; 
 		( $ret , $msg , $where_clause ) = $self->doBuildWhereClause ( $mhsr ) ; 
@@ -500,10 +511,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          order by prio asc
          ;
       " if exists $dmhsr-> { 'prio' } ; 
-      
-      # debug p ( '$str_sql: ' . "$str_sql" . "\n" ) ; 
-      # authentication src: http://stackoverflow.com/a/19980156/65706
-     
       
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
