@@ -39,6 +39,7 @@ Table of Contents
       * [3.2.4. filter functionality in list table web action](#324-filter-functionality-in-list-table-web-action)
       * [3.2.5. successfull execution](#325-successfull-execution)
           * [3.2.5.1. error handling for wrong filtering syntax by missed fltr-by or fltr-va url params](#3251-error-handling-for-wrong-filtering-syntax-by-missed-fltr-by-or-fltr-va-url-params)
+          * [3.2.5.2. error handling for unexisting filter name](#3252-error-handling-for-unexisting-filter-name)
 
 
     
@@ -379,6 +380,19 @@ If the request does not have either one of the url params the following response
     {
       "msg": "mall-formed url params for filtering - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<filter-value>>",
       "req": "GET http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?fltr-by=prio",
+      "ret": 400
+    }
+
+##### 3.2.5.2. error handling for unexisting filter name
+If the syntax is correct but an unexisting filtering attribute is provided ( that is the table columns and the attriute name do not match ) the following error msg is returned: 
+
+
+    // 20180506220030
+    // http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?fltr-by=foo&fltr-val=sdklfj
+    
+    {
+      "msg": "the foo column does not exist",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?fltr-by=foo&fltr-val=sdklfj",
       "ret": 400
     }
 

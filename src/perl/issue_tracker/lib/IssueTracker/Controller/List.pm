@@ -34,6 +34,7 @@ sub doListItems {
 
    $objModel->set('list.web-action.fltr-by' , $self->every_param('fltr-by') ) ; 
    $objModel->set('list.web-action.fltr-val' , $self->every_param('fltr-val') ) ; 
+   $objModel->set('list.web-action.pick' , $self->req->query_params->param('pick') );
 
    my $hsr2 = {};
 
