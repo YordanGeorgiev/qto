@@ -46,8 +46,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		my $ret = 400 ; 
 		my $msg = ' the following column: %s does not exist ' ; 
 
-      my $ref_filter_names    = $objModel->get('list.web-action.fltr-by' );
-      my $ref_filter_values   = $objModel->get('list.web-action.fltr-val' );
+      my $ref_filter_names    = $objModel->get('select.web-action.fltr-by' );
+      my $ref_filter_values   = $objModel->get('select.web-action.fltr-val' );
 
       if ( @$ref_filter_names and @$ref_filter_values  ) {
       	# build the dynamic filtering for the the in clause
@@ -483,8 +483,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $objModel->set('hsr_meta' , $mhsr );
 
       my $columns_to_select = "*" ; 
-      if ( defined ( $objModel->get('list.web-action.pick') ) ) {
-         $columns_to_select = 'guid,' . $objModel->get('list.web-action.pick'); 
+      if ( defined ( $objModel->get('select.web-action.pick') ) ) {
+         $columns_to_select = 'guid,' . $objModel->get('select.web-action.pick'); 
          my @cols = split (',' , $columns_to_select ) ;
          foreach my $col ( @cols ) { 
             my $col_exists = $self->doCheckIfColumnExists ( $mhsr->{'ColumnNames'} , $col ) ; 

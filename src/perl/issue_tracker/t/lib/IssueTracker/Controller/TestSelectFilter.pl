@@ -20,24 +20,24 @@ my $res = {} ; #a tmp result json string
 my $hsr2 = {} ; # the tmp hash ref of hash refs
 my $tm = '' ; 
 
-$res = $ua->get('/' . $db_name . '/list-tables')->result->json ; 
+$res = $ua->get('/' . $db_name . '/Select-tables')->result->json ; 
 $hsr2 = $res->{ 'dat' } ; 
 
-# foreach table in the app db in test call db/list/table
+# foreach table in the app db in test call db/select/table
 for my $table ( @tables ) {
 	
 	my $url_params = '' ; # 
 
-	# test a filter by list of integers	
+	# test a filter by Select of integers	
 	$url_params = '?fltr-by=prio&fltr-val=1,2,3' ; 
-	$t->get_ok('/' . $db_name . '/list/' . $table . $url_params )
+	$t->get_ok('/' . $db_name . '/select/' . $table . $url_params )
 		->status_is(200) 
 		->header_is('Accept-Charset' => 'UTF-8')
 		->header_is('Accept-Language' => 'fi, en')
 	;
 
-	print "\n running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
-   $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
+	print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
 	$hsr2 = $res->{'dat'} ; 
 
 	foreach my $key ( sort keys %$hsr2 ) {
@@ -51,8 +51,8 @@ for my $table ( @tables ) {
 
 	print "test a string filter \n" ; 
 	$url_params = '?fltr-by=status&fltr-val=02-todo' ; 
-	print "\n running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
-   $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
+	print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
 	$hsr2 = $res->{'dat'} ; 
 
    # feature-guid: 1f89454a-1801-423d-9784-9477973d05fc
@@ -65,8 +65,8 @@ for my $table ( @tables ) {
    # feature-guid: c71d93de-f178-485a-844f-fe8d226628a4
 	print 'test a response with invalid syntax - provide fltr-by only' . "\n" ; 
 	$url_params = '?fltr-by=status' ; 
-	print "\n running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
-   $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
+	print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
 	ok ( $res->{'msg'} 
 		eq 'mall-formed url params for filtering - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<filter-value>>' ) ; 
 	ok ( $res->{'ret'} == 400 ) ; 	
@@ -74,8 +74,8 @@ for my $table ( @tables ) {
    # feature-guid: c71d93de-f178-485a-844f-fe8d226628a4
    print 'test a response with invalid syntax - provide fltr-val only ' . "\n" ; 
 	$url_params = '?fltr-val=wrong' ; 
-	print "\n running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
-   $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
+	print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
 	ok ( $res->{'msg'} 
 		eq 'mall-formed url params for filtering - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<filter-value>>' ) ; 
 	ok ( $res->{'ret'} == 400 ) ; 	
@@ -83,8 +83,8 @@ for my $table ( @tables ) {
    # feature-guid: d6561095-c965-4658-a5dc-0350093e75ab
    print "\n start test a response with valid syntax, but use unexisting columns \n" ; 
    $url_params = '?fltr-by=non_existing_column&fltr-val=foo-bar' ; 
-   print "running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
-   $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
+   print "running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
    ok ( $res->{'msg'} eq "the non_existing_column column does not exist" ) ; 
    ok ( $res->{'ret'} == 400 ) ; 	
    print "stop  test a response with valid syntax, but use unexisting columns \n" ; 
@@ -92,24 +92,24 @@ for my $table ( @tables ) {
    # feature-guid: 95cdac3a-4a41-4c5b-9ba8-6f8134b0edc9
    print "\n start test a response with only a single column pick" ; 
    $url_params = "?pick=name" ; 
-   print "\n running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
-   $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
+   print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
    ok ( $res->{'ret'} == 200 ) ; 	
    print "stop  test a response with only a single column pick" ; 
   
    # feature-guid: 95cdac3a-4a41-4c5b-9ba8-6f8134b0edc9 
-   print "\n start test a response with a list column pick" ; 
+   print "\n start test a response with a Select column pick" ; 
    $url_params = "?pick=name,update_time" ; 
-   print "\n running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
-   $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
+   print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
    ok ( $res->{'ret'} == 200 ) ; 	
-   print "stop  test a response with a list column pick" ; 
+   print "stop  test a response with a Select column pick" ; 
   
    # feature-guid: fd3e2d4e-99a1-4cd8-8ebe-bb47f9de9caf
    print "\n start test a response with an inexisting column pick" ; 
    $url_params = "?pick=non_existing_column" ; 
-   print "\n running url: /$db_name" . '/list/' . $table . $url_params . "\n" ; 	
-   $res = $ua->get('/' . $db_name . '/list/' . $table . $url_params )->result->json ; 
+   print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
    ok ( $res->{'msg'} eq "the non_existing_column column does not exist" ) ; 
    ok ( $res->{'ret'} == 400 ) ; 	
    print "\n start test a response with an inexisting column pick" ; 

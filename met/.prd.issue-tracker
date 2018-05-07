@@ -1,4 +1,8 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+# --- 
+src/perl/issue_tracker/public/
+src/perl/issue_tracker/public/poc
+src/perl/issue_tracker/public/poc/list-lable.html
 # ---
 src/perl/issue_tracker/t/TestIssueTracker.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr
