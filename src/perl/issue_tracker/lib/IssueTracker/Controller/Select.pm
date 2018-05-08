@@ -34,6 +34,8 @@ sub doSelectItems {
 
    $objModel->set('select.web-action.fltr-by' , $self->every_param('fltr-by') ) ; 
    $objModel->set('select.web-action.fltr-val' , $self->every_param('fltr-val') ) ; 
+   $objModel->set('select.web-action.like-by' , $self->every_param('like-by') ) ; 
+   $objModel->set('select.web-action.like-val' , $self->every_param('like-val') ) ; 
    $objModel->set('select.web-action.pick' , $self->req->query_params->param('pick') );
 
    my $hsr2 = {};
@@ -104,7 +106,7 @@ sub doSelectTables {
 	my $self        = shift;
 	my $db          = $self->stash('db');
 	my $rdbms_type  = 'postgres';
-   my $msg = 'unknown error during Select-tables';
+   my $msg = 'unknown error during select-tables';
 
 	$appConfig		= $self->app->get('AppConfig');
 	$objModel       = ${$self->app->get('ObjModel')} ; 
@@ -122,7 +124,6 @@ sub doSelectTables {
 
 	$self->res->headers->accept_charset('UTF-8');
 	$self->res->headers->accept_language('fi, en');
-
 	$self->res->headers->content_type('application/json; charset=utf-8');
 
    if ( $ret == 0 ) {

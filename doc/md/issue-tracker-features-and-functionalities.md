@@ -29,17 +29,26 @@ Table of Contents
     * [2.4. Documentation related](#24-documentation-related)
       * [2.4.1. Single call export of the md and pdf documentation files](#241-single-call-export-of-the-md-and-pdf-documentation-files)
   * [3. BACK-END FEATURES AND FUNCTIONALITIES](#3-back-end-features-and-functionalities)
-    * [3.1. list-tables web action](#31-list-tables-web-action)
+    * [3.1. select-tables web action](#31-select-tables-web-action)
       * [3.1.1. successfull execution](#311-successfull-execution)
-      * [3.1.2. error handling for failed connect to db in the list-tables web action](#312-error-handling-for-failed-connect-to-db-in-the-list-tables-web-action)
-    * [3.2. list web action](#32-list-web-action)
+      * [3.1.2. error handling for failed connect to db in the select-tables web action](#312-error-handling-for-failed-connect-to-db-in-the-select-tables-web-action)
+    * [3.2. select web action](#32-select-web-action)
       * [3.2.1. successfull execution](#321-successfull-execution)
-      * [3.2.2. error handling for failed connect to db in the list web action](#322-error-handling-for-failed-connect-to-db-in-the-list-web-action)
-      * [3.2.3. error handling for non-existent table in the list-tables web action](#323-error-handling-for-non-existent-table-in-the-list-tables-web-action)
-      * [3.2.4. filter functionality in list table web action](#324-filter-functionality-in-list-table-web-action)
-      * [3.2.5. successfull execution](#325-successfull-execution)
-          * [3.2.5.1. error handling for wrong filtering syntax by missed fltr-by or fltr-va url params](#3251-error-handling-for-wrong-filtering-syntax-by-missed-fltr-by-or-fltr-va-url-params)
-          * [3.2.5.2. error handling for unexisting filter name](#3252-error-handling-for-unexisting-filter-name)
+      * [3.2.2. apply multiple operators on the select properly](#322-apply-multiple-operators-on-the-select-properly)
+      * [3.2.3. error handling for failed connect to db in the select web action](#323-error-handling-for-failed-connect-to-db-in-the-select-web-action)
+      * [3.2.4. error handling for non-existent table in the select-tables web action](#324-error-handling-for-non-existent-table-in-the-select-tables-web-action)
+      * [3.2.5. filter functionality in select table web action](#325-filter-functionality-in-select-table-web-action)
+          * [3.2.5.1. successfull execution](#3251-successfull-execution)
+          * [3.2.5.2. error handling for wrong filtering syntax by missed fltr-by or fltr-va url params](#3252-error-handling-for-wrong-filtering-syntax-by-missed-fltr-by-or-fltr-va-url-params)
+          * [3.2.5.3. error handling for unexisting filter name](#3253-error-handling-for-unexisting-filter-name)
+      * [3.2.6. pick functionality in select table web action](#326-pick-functionality-in-select-table-web-action)
+          * [3.2.6.1. successfull execution](#3261-successfull-execution)
+          * [3.2.6.2. error handling if a picked column does not exist](#3262-error-handling-if-a-picked-column-does-not-exist)
+      * [3.2.7. Use filtering with the like operator in select table web action](#327-use-filtering-with-the-like-operator-in-select-table-web-action)
+          * [3.2.7.1. successfull execution for number types types](#3271-successfull-execution-for-number-types-types)
+          * [3.2.7.2. successfull execution for text types](#3272-successfull-execution-for-text-types)
+          * [3.2.7.3. error handling for wrong  syntax in the filtering by the like operator by missed like-by or like-val url params](#3273-error-handling-for-wrong-syntax-in-the-filtering-by-the-like-operator-by-missed-like-by-or-like-val-url-params)
+          * [3.2.7.4. error handling for unexisting like table's attribute](#3274-error-handling-for-unexisting-like-table's-attribute)
 
 
     
@@ -238,18 +247,18 @@ Single call export of the md and pdf documentation files
 
     
 
-### 3.1. list-tables web action
-An http-client could get the list of all the tables of a database to which the issue-tracker has connectivity to ( that is not only the one configured in the application layer )
+### 3.1. select-tables web action
+An http-client could get the select of all the tables of a database to which the issue-tracker has connectivity to ( that is not only the one configured in the application layer )
 
 
-    <<web-host>>:<<web-port>>/<<database>>/list-tables
+    <<web-host>>:<<web-port>>/<<database>>/select-tables
 
 #### 3.1.1. successfull execution
-An http-client could get the list of all the tables of a database to which the issue-tracker has connectivity to
+An http-client could get the select of all the tables of a database to which the issue-tracker has connectivity to
 
 
     // 20180505205212
-    // http://192.168.56.120:3000/dev_issue_tracker/list-tables
+    // http://192.168.56.120:3000/dev_issue_tracker/select-tables
     
     {
       "dat": {
@@ -272,87 +281,92 @@ An http-client could get the list of all the tables of a database to which the i
           "table_schema": "public"
         }
       },
-      "msg": "SELECT tables-list OK ",
-      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/list-tables",
+      "msg": "SELECT tables-select OK ",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select-tables",
       "ret": 200
     }
 
-#### 3.1.2. error handling for failed connect to db in the list-tables web action
+#### 3.1.2. error handling for failed connect to db in the select-tables web action
 If the http-client points to a db to which the app layer does not have a connection ( might be a non-existing one ) the proper response is generated. 
 
 
     // 20180503234141
-    // http://192.168.56.120:3000/non_existent/list/daily_issues
+    // http://192.168.56.120:3000/non_existent/select/daily_issues
     
     {
       "msg": "cannot connect to the non_existent database: FATAL:  database \"non_existent\" does not exist",
-      "req": "GET http://192.168.56.120:3000/non_existent/list/daily_issues",
+      "req": "GET http://192.168.56.120:3000/non_existent/select/daily_issues",
       "ret": 400
     }
 
-### 3.2. list web action
+### 3.2. select web action
 An http-client could get the contents of ANY table of a database to which the issue-tracker has connectivity to ( ie not only the one configured in the application layer but also other databases in the same postgres instance)  by using the following syntax:
 
-    <<web-host>>:<<web-port>>/<<database>>/list/<<table-name>>
+    <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>
 
 #### 3.2.1. successfull execution
 An http-client could get the contents of ANY table of a database to which the issue-tracker has connectivity to by calling the following url:
-&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;database&gt;&gt;/list/&lt;&lt;table-name&gt;&gt;
+&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;database&gt;&gt;/select/&lt;&lt;table-name&gt;&gt;
 
     
 
-#### 3.2.2. error handling for failed connect to db in the list web action
+#### 3.2.2. apply multiple operators on the select properly
+All the operators bellow could be combined and the result set is the one "translated" with the AND operator in the back-end side. 
+
+    
+
+#### 3.2.3. error handling for failed connect to db in the select web action
 If the http-client points to a db to which the app layer does not have a connection ( might be a non-existing one ) the proper response is generated. 
 
 
     // 20180503234141
-    // http://192.168.56.120:3000/non_existent/list/daily_issues
+    // http://192.168.56.120:3000/non_existent/select/daily_issues
     
     {
       "msg": "cannot connect to the non_existent database: FATAL:  database \"non_existent\" does not exist",
-      "req": "GET http://192.168.56.120:3000/non_existent/list/daily_issues",
+      "req": "GET http://192.168.56.120:3000/non_existent/select/daily_issues",
       "ret": 400
     }
 
-#### 3.2.3. error handling for non-existent table in the list-tables web action
+#### 3.2.4. error handling for non-existent table in the select-tables web action
 if a table does not exist a proper error msg containing response is generated.
 
 
     // 20180505205015
-    // http://192.168.56.120:3000/dev_issue_tracker/list/non_existent
+    // http://192.168.56.120:3000/dev_issue_tracker/select/non_existent
     
     {
       "msg": " the table non_existent does not exist in the dev_issue_tracker database ",
-      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/list/non_existent",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/non_existent",
       "ret": 400
     }
 
-#### 3.2.4. filter functionality in list table web action
+#### 3.2.5. filter functionality in select table web action
 The response cold be filtered by ANY attribute with any valid value. 
 
 
     // using the following syntax:
-    <<web-host>>:<<web-port>>/<<database>>/list/<<table-name>>?fltr-by=<<filter-attribute-to-filter-by>>&fltr-val=<<filter-value-to-filter-by>>
+    <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>?fltr-by=<<filter-attribute-to-filter-by>>&fltr-val=<<filter-value-to-filter-by>>
 
-#### 3.2.5. successfull execution
-The response of the list web action could be filtered by using the syntax bellow:
+##### 3.2.5.1. successfull execution
+The response of the select web action could be filtered by using the syntax bellow:
 Those are eventual transated to a where clause in the db select part. 
 
 
 
     // 20180505204531
-    // http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?fltr-by=prio&fltr-val=1
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?fltr-by=prio&fltr-val=1
     
     {
       "dat": {
         "c89d3283-0a9f-4b8d-9dcc-84a63e64276b": {
           "actual_hours": null,
           "category": "issue-tracker-features",
-          "description": "add the web list controller “\r\n - implementation code\r\n - tests \r\n - documentation additions for :\r\n-- requirements\r\n-- userstories\r\n-- tests \r\n-- features and functionalities",
+          "description": "add the web select controller “\r\n - implementation code\r\n - tests \r\n - documentation additions for :\r\n-- requirements\r\n-- userstories\r\n-- tests \r\n-- features and functionalities",
           "guid": "c89d3283-0a9f-4b8d-9dcc-84a63e64276b",
           "id": 180402,
           "level": 2,
-          "name": "add the web list controller",
+          "name": "add the web select controller",
           "owner": "ysg",
           "planned_hours": "3.00",
           "prio": 1,
@@ -366,33 +380,163 @@ Those are eventual transated to a where clause in the db select part.
         }
       },
       "msg": "SELECT OK for table: monthly_issues",
-      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?fltr-by=prio&fltr-val=1",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?fltr-by=prio&fltr-val=1",
       "ret": 200
     }
 
-##### 3.2.5.1. error handling for wrong filtering syntax by missed fltr-by or fltr-va url params
+##### 3.2.5.2. error handling for wrong filtering syntax by missed fltr-by or fltr-va url params
 If the request does not have either one of the url params the following response is produced. 
 
 
     // 20180505204734
-    // http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?fltr-by=prio
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?fltr-by=prio
     
     {
       "msg": "mall-formed url params for filtering - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<filter-value>>",
-      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?fltr-by=prio",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?fltr-by=prio",
       "ret": 400
     }
 
-##### 3.2.5.2. error handling for unexisting filter name
+##### 3.2.5.3. error handling for unexisting filter name
 If the syntax is correct but an unexisting filtering attribute is provided ( that is the table columns and the attriute name do not match ) the following error msg is returned: 
 
 
     // 20180506220030
-    // http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?fltr-by=foo&fltr-val=sdklfj
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?fltr-by=foo&fltr-val=sdklfj
     
     {
       "msg": "the foo column does not exist",
-      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?fltr-by=foo&fltr-val=sdklfj",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?fltr-by=foo&fltr-val=sdklfj",
+      "ret": 400
+    }
+
+#### 3.2.6. pick functionality in select table web action
+Works for both a single colum and a comma separated select of columns. Obeys the following syntax
+
+
+    // using the following syntax:
+    <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>?pick=col1,col2,col3
+
+##### 3.2.6.1. successfull execution
+if the request contains the "pick" url parameter only the picked column values are selected. 
+
+
+    // 20180506230955
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?pick=name,prio
+    
+    {
+      "dat": {
+        "0daa3447-42f5-4792-aca2-bd1cb06e2a78": {
+          "guid": "0daa3447-42f5-4792-aca2-bd1cb06e2a78",
+          "name": "define REST API response structure",
+          "prio": 3
+        },
+        "3c3aff5d-8246-4893-acc4-4853904f1d40": {
+          "guid": "3c3aff5d-8246-4893-acc4-4853904f1d40",
+          "name": "add the pick in url to select in db reader control flow for Select.pm controller",
+          "prio": 3
+
+##### 3.2.6.2. error handling if a picked column does not exist
+if a picked column does not exist the following error is displayed. 
+
+
+    // 20180506230926
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?pick=non_existent_column
+    
+    {
+      "msg": "the non_existent_column column does not exist",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?pick=non_existent_column",
+      "ret": 400
+    }
+      },
+      "msg": "SELECT OK for table: monthly_issues",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?pick=name%2Cprio",
+      "ret": 200
+    }
+
+#### 3.2.7. Use filtering with the like operator in select table web action
+The response cold be likeed by ANY attribute with any valid value. 
+
+
+    // using the following syntax:
+    <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>?like-by=<<like-attribute-to-like-by>>&like-val=<<like-value-to-like-by>>
+
+##### 3.2.7.1. successfull execution for number types types
+The like operator could be used with numbers as well.
+
+    // 20180508191656
+    // http://192.168.56.120:3000/dev_issue_tracker/select/yearly_issues?like-by=prio&like-val=1&pick=name,prio
+    
+    {
+      "dat": {
+        "46533749-1c00-4688-9cdd-1cc276ca40ac": {
+          "guid": "46533749-1c00-4688-9cdd-1cc276ca40ac",
+          "name": "implement upsert in DbWriterPostgres",
+          "prio": 21
+        },  "msg": "SELECT OK for table: monthly_issues",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?like-by=prio&like-val=1",
+      "ret": 200
+    }
+
+##### 3.2.7.2. successfull execution for text types
+The response of the select web action could be likeed by using the syntax bellow:
+Those are eventual transated to a where clause in the db select part. 
+
+
+
+    // 20180505204531
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?like-by=prio&like-val=1
+    
+    {
+      "dat": {
+        "c89d3283-0a9f-4b8d-9dcc-84a63e64276b": {
+          "actual_hours": null,
+          "category": "issue-tracker-features",
+          "description": "add the web select controller “\r\n - implementation code\r\n - tests \r\n - documentation additions for :\r\n-- requirements\r\n-- userstories\r\n-- tests \r\n-- features and functionalities",
+          "guid": "c89d3283-0a9f-4b8d-9dcc-84a63e64276b",
+          "id": 180402,
+          "level": 2,
+          "name": "add the web select controller",
+          "owner": "ysg",
+          "planned_hours": "3.00",
+          "prio": 1,
+          "seq": 1,
+          "start_time": "2018-04-02 18:00",
+          "status": "07-qas",
+          "stop_time": null,
+          "tags": "feature",
+          "type": "feature",
+          "update_time": "2018-05-04 23:18:45.104771"
+        }
+      },
+      "msg": "SELECT OK for table: monthly_issues",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?like-by=prio&like-val=1",
+      "ret": 200
+    }
+
+##### 3.2.7.3. error handling for wrong  syntax in the filtering by the like operator by missed like-by or like-val url params
+If the request does not have either one of the url params the following response is produced. 
+
+
+    // 20180505204734
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?like-by=prio
+    
+    {
+      "msg": "mall-formed url params for likeing - valid syntax is ?like-by=<<attribute>>&like-val=<<like-value>>",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?like-by=prio",
+      "ret": 400
+    }
+
+##### 3.2.7.4. error handling for unexisting like table's attribute
+If the syntax is correct but an unexisting like operator's attribute is provided ( that is the table columns and the attriute name do not match ) the following error msg is returned: 
+
+
+    // 20180506220030
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?like-by=foo&like-val=sdklfj
+    
+    {
+      "msg": "the foo column does not exist",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?like-by=foo&like-val=sdklfj",
       "ret": 400
     }
 
