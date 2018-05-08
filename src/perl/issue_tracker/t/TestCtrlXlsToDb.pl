@@ -34,7 +34,8 @@ my $ProductInstanceDir = $appConfig->{'ProductInstanceDir' } ;
 my $cmd = "$ProductInstanceDir/src/perl/issue_tracker/script/issue_tracker.pl -t daily_issues" ; 
 
 # src: http://perldoc.perl.org/perlop.html#Quote-Like-Operators
-$cmd = "$cmd --do xls-to-db" ; 
+print "this will take at least 10 seconds ... or even more .. be patient ... \n" ; 
+$cmd = "$cmd --do xls-to-db 2>&1 1>/dev/null" ; 
 # my $cmd_out = `$cmd 2>&1 1>/dev/null` ; 
 my $cmd_out = `$cmd` ; 
 $m = " if the xls file is not provided on the cmd line 

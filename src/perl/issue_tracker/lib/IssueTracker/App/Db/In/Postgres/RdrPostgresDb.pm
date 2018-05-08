@@ -49,6 +49,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $ref_like_names    = $objModel->get('select.web-action.like-by' );
       my $ref_like_values   = $objModel->get('select.web-action.like-val' );
 
+      return ( 0 , "" , "")  unless ( defined ( $ref_like_names) ); 
+      return ( 0 , "" , "")  unless ( defined ( $ref_like_values) ); 
+
       if ( @$ref_like_names and @$ref_like_values  ) {
       	# build the dynamic likeing for the the in clause
 			$sql = ' AND ' ; 
@@ -104,6 +107,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       my $ref_filter_names    = $objModel->get('select.web-action.fltr-by' );
       my $ref_filter_values   = $objModel->get('select.web-action.fltr-val' );
+      
+      return ( 0 , "" , "")  unless ( defined ( $ref_filter_names) ); 
+      return ( 0 , "" , "")  unless ( defined ( $ref_filter_values) ); 
 
       if ( @$ref_filter_names and @$ref_filter_values  ) {
       	# build the dynamic filtering for the the in clause
