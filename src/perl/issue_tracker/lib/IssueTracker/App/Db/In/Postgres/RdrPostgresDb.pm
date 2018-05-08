@@ -38,6 +38,62 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       return 0 ; 
    }
 
+   sub doBuildLikeClause {
+
+      my $self = shift ; 
+      my $cols = shift ; 
+		my $sql = '' ; 
+		my $ret = 400 ; 
+		my $msg = ' the following column: %s does not exist ' ; 
+
+      my $ref_like_names    = $objModel->get('select.web-action.like-by' );
+      my $ref_like_values   = $objModel->get('select.web-action.like-val' );
+
+      if ( @$ref_like_names and @$ref_like_values  ) {
+      	# build the dynamic likeing for the the in clause
+			$sql = ' AND ' ; 
+
+         for ( my $i = 0 ; $i < scalar ( @$ref_like_names ) ; $i++ ) {
+				my ( $like_name , $like_value ) = () ; 
+            $like_name = $ref_like_names->["$i"] ;
+            $like_value = $ref_like_values->["$i"] ;
+
+        
+            my $col_exists = $self->doCheckIfColumnExists ( $cols->{'ColumnNames'} , $like_name ) ; 
+      	   return ( 400 , "the $like_name column does not exist" , "") unless ( $col_exists ) ; 
+            
+            # if the like value is a number
+            $like_name = "CAST( $like_name AS TEXT)" if $like_value =~ /\d{1,100}/g ; 
+
+            my @like_values_list = split (',' , $like_value ) ;
+            my $str = '' ;
+            foreach my $item ( @like_values_list ) {
+               $str .= "( $like_name LIKE '%" . $item . "%' ) OR " ;
+            }
+			   for (1..3) { chop ( $str ) } ;
+
+            $sql .= "$str "
+               if ( defined ( $like_value ) and defined ( $like_name ) );
+				$sql .= ' AND ' ; 
+         }
+
+			for (1..4) { chop ( $sql) } ;
+			return ( 0 , "" , $sql ) ; 
+
+      } elsif ( @$ref_like_names or @$ref_like_values )  {
+			# if either the like names or the like values are null than the likeing url is mall-formed
+			$msg = 'mall-formed url params for the like operator - valid syntax is ?like-by=<<attribute>>&like-val=<<like-value>>' ; 
+      	return ( 400 , "$msg" , "") ; 
+		} else {
+			# simply no likeing attributes nor values are provided return 
+			# to proceed with the select 
+      	return ( 0 , "" , "") ;
+		}
+
+   } 
+   #eof sub doBuildLikeClause
+   
+   
    sub doBuildWhereClause {
 
       my $self = shift ; 
@@ -500,7 +556,14 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $str_sql .= $filter_by_attributes . " " if $filter_by_attributes ; 
       
 
-		my $where_clause = '' ; 
+		
+      my $like_clause = '' ; 
+		( $ret , $msg , $like_clause ) = $self->doBuildLikeClause ( $mhsr ) ; 
+		
+      return ( $ret , $msg ) unless $ret == 0 ; 
+		$str_sql .= $like_clause if $like_clause ; 
+		
+      my $where_clause = '' ; 
 		( $ret , $msg , $where_clause ) = $self->doBuildWhereClause ( $mhsr ) ; 
 
 		return ( $ret , $msg ) unless $ret == 0 ; 
