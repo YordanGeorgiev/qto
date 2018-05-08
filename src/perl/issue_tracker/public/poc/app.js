@@ -4,7 +4,7 @@ const vm = new Vue({
     monthly_issues: []
   },
   mounted() {
-    axios.get("/dev_issue_tracker/list/monthly_issues")
+    axios.get("/tst_issue_tracker/select/monthly_issues")
     .then(response => {this.monthly_issues = response.data.dat
 	 })
   }

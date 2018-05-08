@@ -18,13 +18,9 @@ Table of Contents
     
 
 ## 1. What is it ?!
-A tool to manage multiple projects' issues programmatically using txt files, xls files, store them into Postgres db and publish them into Google Sheets with a lot of cool generic per db table functionalities. 
-The full and extensive features and fulctionalities document cold be read from:
-https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-features-and-functionalities.md
+A tool to manage multiple projects' issues programmatically using txt files, xls files, store them into Postgres db and publish them into Google Sheets. 
 
-
-issue tracker objects polygon 
-![The relations between the issue tracker objects ](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/readme/what-is-is.png)    
+    
 
 ## 2. INSTALLATION AND CONFIGURATION
 
