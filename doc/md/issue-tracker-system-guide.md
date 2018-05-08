@@ -13,6 +13,8 @@ Table of Contents
       * [2.1.3. The Input Components](#213-the-input-components)
       * [2.1.4. The Output Components](#214-the-output-components)
       * [2.1.5. The Converter Components](#215-the-converter-components)
+    * [2.2. Multi-instance setup](#22-multi-instance-setup)
+      * [2.2.1. Multi-environment naming convention](#221-multi-environment-naming-convention)
   * [3. BUSINESS LOGIC](#3-business-logic)
     * [3.1. Projects management](#31-projects-management)
     * [3.2. Increase the date for all projects](#32-increase-the-date-for-all-projects)
@@ -76,6 +78,16 @@ The Converters apply usually the business logic for converting the input data fr
 
     
 
+### 2.2. Multi-instance setup
+The multi-instance setup refers to the capability of any installed and setup instance of the issue-tracker application to "know" its version , environment type  - developement , testing and production ) and owner.
+
+    
+
+#### 2.2.1. Multi-environment naming convention
+Each database used by the issue-tracker application has an &lt;&lt;environment abbreviation&gt;&gt; suffix refering to its environment type. Running application layers against different db versions should be supported as much as possible.  
+
+    
+
 ## 3. BUSINESS LOGIC
 
 
@@ -126,7 +138,5 @@ This section provides a generic control flow description for the shell based and
 ### 4.1. Shell control flow
 The shell control flow is based on the control model input output architecture. 
 
-
-issue tracker control flow
-![The generic shell tool control flow](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/devops/shell-action-control-flow-diagram.png)    
+    
 

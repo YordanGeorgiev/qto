@@ -17,9 +17,9 @@ SELECT 'create the "weekly_issues" table'
     , owner          varchar (50) NULL
     , start_time     text NULL
     , stop_time      text NULL
+    , update_time    timestamp DEFAULT NOW()
     , planned_hours  decimal (6,2) NULL
     , actual_hours   decimal (6,2) NULL
-    , update_time    timestamp DEFAULT NOW()
     , CONSTRAINT pk_weekly_issues_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE

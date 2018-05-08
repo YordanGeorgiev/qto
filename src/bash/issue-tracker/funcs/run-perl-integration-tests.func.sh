@@ -7,7 +7,45 @@
 doRunPerlIntegrationTests(){
 
 	doLog "DEBUG START doRunPerlIntegrationTests"
+  
+	doLog "INFO re-create the documentation db"
+   bash src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
 
+
+	doLog "INFO load the documentation db run xls-to-db to mysql"
+   export tables=Tests,ItemController,ItemModel,ItemView,ExportFile,UserStory,Requirement,DevOps,Feature,ReadMe,SystemGuide;
+   export do_truncate_tables=1 ; export rdbms_type=mysql ; export load_model=nested-set ; perl \
+
+   doc_pub_instances_running=$(ps -ef | grep -i doc_pub | wc -l)
+   if [ $doc_pub_instances_running -gt 0 ]; then
+      doLog "INFO generate the pdf and the mysql documentation"
+      bash src/bash/issue-tracker/issue-tracker.sh -a generate-docs
+   fi
+
+   doLog "INFO laod the postgres data"
+   export tables=daily_issues,weekly_issues,monthly_issues,yearly_issues;export do_truncate_tables=1 
+   export rdbms_type=postgres ; export load_model=upsert ; 
+   perl src/perl/issue_tracker/script/issue_tracker.pl --do xls-to-db --tables $tables
+
+   doLog "INFO START test the Select Controller "
+   doLog " <<app-db>>/Select-tables"
+   doLog " <<app-db>>/Select/<<table-name>>"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
+	echo -e "\n\n\n" 
+   
+   doLog "INFO START test the Select Controller filtering: "
+   doLog "INFO S: <<app-db>>/Select/<<table-name>>?fltr-by=<<attribute>>&fltr-val=<<value>>"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
+	echo -e "\n\n\n" 
+   
+   doLog "INFO START test the Select Controller filtering with the like operator: "
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
+	echo -e "\n\n\n" 
+   
+   doLog "INFO START test the Select Controller filtering with the like operator: "
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
+	echo -e "\n\n\n" 
+   
    # Action !!!
    doLog "INFO START Unit testing or the CtrlXlsToDb module" 
    perl src/perl/issue_tracker/t/TestCtrlXlsToDb.pl
