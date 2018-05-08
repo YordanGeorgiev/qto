@@ -48,9 +48,7 @@ sub startup {
   ($ret, $msg) = $self->doInitialize();
   
    # Router
-  my $r = $self->routes;
-
-  $r->get('/')->to('example#welcome');
+   my $r = $self->routes;
 
    # http://host-name:3000/dev_stockit/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
    $r->get('/:db/get/:item/:guid')->to(
@@ -58,16 +56,16 @@ sub startup {
    , action       => 'doGetItem'
    );
    
-   # http://host-name:3000/dev_issue_tracker/list/monthly_issues
-   $r->get('/:db/list/:item')->to(
-     controller   => 'List'
-   , action       => 'doListItems'
+   # http://host-name:3000/dev_issue_tracker/select/monthly_issues
+   $r->get('/:db/select/:item')->to(
+     controller   => 'Select'
+   , action       => 'doSelectItems'
    );
    
-	# http://host-name:3000/dev_issue_tracker/list-tables
-   $r->get('/:db/list-tables')->to(
-     controller   => 'List'
-   , action       => 'doListTables'
+	# http://host-name:3000/dev_issue_tracker/select-tables
+   $r->get('/:db/select-tables')->to(
+     controller   => 'Select'
+   , action       => 'doSelectTables'
    );
    
    # http://host-name:3000/prd_ysg_issues/srch/confs/con

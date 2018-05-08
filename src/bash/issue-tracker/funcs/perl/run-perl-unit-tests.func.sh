@@ -41,16 +41,6 @@ doRunPerlTests(){
    perl src/perl/issue_tracker/t/lib/IssueTracker/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
 	echo -e "\n\n\n" 
 
-   doLog "INFO START Unit test the List Controller "
-   doLog " <<app-db>>/list-tables"
-   doLog " <<app-db>>/list/<<table-name>>"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
-	echo -e "\n\n\n" 
-   
-   doLog "INFO START Unit test the List Controller filtering: "
-   doLog "INFO S: <<app-db>>/list/<<table-name>>?fltr-by=<<attribute>>&fltr-val=<<value>>"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListFilter.pl
-	echo -e "\n\n\n" 
 }
 # eof func doRunPerlTests
 

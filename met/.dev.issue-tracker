@@ -1,4 +1,9 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+# --- 
+src/perl/issue_tracker/public/
+src/perl/issue_tracker/public/poc
+src/perl/issue_tracker/public/poc/list-lable.html
+src/perl/issue_tracker/public/poc/app.js
 # ---
 src/perl/issue_tracker/t/TestIssueTracker.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr
@@ -150,10 +155,12 @@ src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
 src/perl/issue_tracker/lib/IssueTracker/Controller/Example.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Get.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestGet.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListFilter.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/Srch.pm
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/basic.t

@@ -9,7 +9,7 @@ package IssueTracker::App::Utils::OO::SetGetable ;
    use Carp qw /carp cluck croak confess/ ; 
 
    our @EXPORT_OK = qw(get set dumpFields);  # symbols to export on request
-
+   our $module_trace = 0 ; 
 	# -----------------------------------------------------------------------------
 	# return a field's value - aka the "getter"
    # chk: http://perldoc.perl.org/Carp.html
@@ -19,8 +19,10 @@ package IssueTracker::App::Utils::OO::SetGetable ;
 		my $self = shift;
 		my $name = shift;
 
-		print STDERR "\@TRYING to get an undef name" unless ( defined $name ) ; 
-      print STDERR "\@TRYING to get an undefined value" unless ( defined $self->{ $name } ); 
+      if ( $module_trace == 1 ) {
+         print STDERR "\@TRYING to get an undef name" unless ( defined ($name)  ) ; 
+         print STDERR "\@TRYING to get an undefined value" unless ( defined ($self->{ $name })  ); 
+      }
 
 		return $self->{ $name };
 	}    
@@ -35,8 +37,10 @@ package IssueTracker::App::Utils::OO::SetGetable ;
 		my $name  = shift;
 		my $value = shift;
 
-		print STDERR "\@TRYING to set an undef name" unless ( defined $name ) ; 
-      print STDERR "\@TRYING to set an undefined value" unless ( defined $value ) ; 
+      if ( $module_trace == 1 ) {
+         print STDERR "\@TRYING to set an undef name" unless ( defined ($name)  ) ; 
+         print STDERR "\@TRYING to set an undefined value" unless ( defined ( $value )   ) ; 
+      }
 
 		$self->{ "$name" } = $value;
 	}
