@@ -367,8 +367,8 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          for (1..3) { chop ( $sql_str_insrt) } ; 
          $sql_str_insrt	.= ')' ; 
 
-         p $hsr2 ; 
-         p $sql_str_insrt ; 
+         # p $hsr2 ; 
+         # p $sql_str_insrt ; 
 
          my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
 		   $update_time      = $objTimer->GetHumanReadableTime();
@@ -577,7 +577,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
             my %row_h = %$hs_row ; 
             %row_h = map { lc $_ => $row_h{$_} } keys %row_h;
             $hs_row = \%row_h ; 
-            p($hs_row) ; 
+            # debug p($hs_row) ;
 
             foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
 
