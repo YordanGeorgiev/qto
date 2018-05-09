@@ -138,5 +138,7 @@ This section provides a generic control flow description for the shell based and
 ### 4.1. Shell control flow
 The shell control flow is based on the control model input output architecture. 
 
-    
+
+issue tracker control flow
+![The generic shell tool control flow](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/devops/shell-action-control-flow-diagram.png)    
 
