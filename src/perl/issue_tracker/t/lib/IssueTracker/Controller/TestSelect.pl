@@ -17,7 +17,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    my $db_name= $appConfig->{ 'postgres_db_name' } ; 
    # JSON
 
-   $t->get_ok('/' . $db_name . '/elect-tables')
+   $t->get_ok('/' . $db_name . '/select-tables')
       ->status_is(200) 
       ->header_is('Accept-Charset' => 'UTF-8')
       ->header_is('Accept-Language' => 'fi, en')

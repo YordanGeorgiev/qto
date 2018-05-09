@@ -113,7 +113,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
       if ( $load_model eq 'upsert' ) {
          ( $ret , $msg  )        = $objWtrDb->doUpsertTables( \$objModel , \@tables) ; 
-         p ( $objModel->get('hsr3') ) ; 
+         p ( $objModel->get('hsr3') ) if $module_trace == 1 ; 
 
       } 
       elsif ( $load_model eq 'nested-set' ) {

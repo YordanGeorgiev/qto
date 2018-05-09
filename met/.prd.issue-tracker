@@ -161,6 +161,7 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/Srch.pm
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/basic.t

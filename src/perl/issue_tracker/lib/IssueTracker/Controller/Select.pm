@@ -37,6 +37,8 @@ sub doSelectItems {
    $objModel->set('select.web-action.like-by' , $self->every_param('like-by') ) ; 
    $objModel->set('select.web-action.like-val' , $self->every_param('like-val') ) ; 
    $objModel->set('select.web-action.pick' , $self->req->query_params->param('pick') );
+   $objModel->set('select.web-action.asc-o' , $self->req->query_params->param('asc-o') );
+   $objModel->set('select.web-action.desc-o' , $self->req->query_params->param('desc-o') );
 
    my $hsr2 = {};
 

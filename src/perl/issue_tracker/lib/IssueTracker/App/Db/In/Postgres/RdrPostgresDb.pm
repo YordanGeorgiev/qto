@@ -553,6 +553,26 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
          }
       }
+      
+      my $columns_to_order_by_asc = undef ; 
+      if ( defined ( $objModel->get('select.web-action.asc-o') ) ) {
+         $columns_to_order_by_asc = $objModel->get('select.web-action.asc-o'); 
+         my @cols = split (',' , $columns_to_order_by_asc ) ;
+         foreach my $col ( @cols ) { 
+            my $col_exists = $self->doCheckIfColumnExists ( $mhsr->{'ColumnNames'} , $col ) ; 
+      	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
+         }
+      }
+      
+      my $columns_to_order_by_desc = undef ; 
+      if ( defined ( $objModel->get('select.web-action.desc-o') ) ) {
+         $columns_to_order_by_desc = $objModel->get('select.web-action.desc-o'); 
+         my @cols = split (',' , $columns_to_order_by_desc ) ;
+         foreach my $col ( @cols ) { 
+            my $col_exists = $self->doCheckIfColumnExists ( $mhsr->{'ColumnNames'} , $col ) ; 
+      	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
+         }
+      }
 
       $str_sql = 
          " SELECT 
@@ -576,10 +596,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		$str_sql .= $where_clause if $where_clause ; 
 
       # not all items have the prio attribute
-      $str_sql .= "
-         order by prio asc
-         ;
-      " if exists $dmhsr-> { 'prio' } ; 
+      $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
+      $str_sql .= " ORDER BY " . $columns_to_order_by_desc . " " if defined $columns_to_order_by_desc ; 
       
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
