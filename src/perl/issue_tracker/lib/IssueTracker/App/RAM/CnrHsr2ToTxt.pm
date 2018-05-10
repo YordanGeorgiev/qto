@@ -73,10 +73,9 @@ sub doConvertHashRefToStr {
   p($hsr2) if $module_trace == 1;
   my $str_header = '# START ' . uc($term) . ' @%run_time%
    
-## what will I do till the next ' . uc($term) . ':
+## what will I do till the next period 
 #---------------------------
 #';
-  #
 
   my $str_footer = '
 

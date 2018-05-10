@@ -7,7 +7,7 @@ use FindBin;
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 
 my $t = Test::Mojo->new('IssueTracker');
-$t->get_ok('/')->status_is(200) ; 
+#$t->get_ok('/')->status_is(200) ; #chk:it-18050601
 
 my $appConfig = $t->app->get('AppConfig') ; 
 
@@ -17,11 +17,9 @@ my $db_name= $appConfig->{ 'postgres_db_name' } ;
 my @tables = ( 'daily_issues' , 'weekly_issues' , 'monthly_issues' , 'yearly_issues' ) ; 
 my $ua  = $t->ua ; 
 my $res = {} ; #a tmp result json string
-my $hsr2 = {} ; # the tmp hash ref of hash refs
 my $tm = '' ; 
 
-$res = $ua->get('/' . $db_name . '/Select-tables')->result->json ; 
-$hsr2 = $res->{ 'dat' } ; 
+$res = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
 
 # foreach table in the app db in test call db/select/table
 for my $table ( @tables ) {
@@ -38,10 +36,9 @@ for my $table ( @tables ) {
 
 	print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
    $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
-	$hsr2 = $res->{'dat'} ; 
+	my @list = @{$res->{'dat'}} ; 
 
-	foreach my $key ( sort keys %$hsr2 ) {
-		my $row = $hsr2->{$key } ; 
+	foreach my $row ( @list) {
 		$tm = "only prio smaller or equal than 3 are selected for $table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
 		ok ( $row->{'prio'} <= 3, $tm ) ; 
 		$tm = "only prio greater or equal to 1  are selected for $table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
@@ -53,11 +50,10 @@ for my $table ( @tables ) {
 	$url_params = '?fltr-by=status&fltr-val=02-todo' ; 
 	print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
    $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
-	$hsr2 = $res->{'dat'} ; 
+	@list = @{$res->{'dat'}} ; 
 
    # feature-guid: 1f89454a-1801-423d-9784-9477973d05fc
-	foreach my $key ( sort keys %$hsr2 ) {
-		my $row = $hsr2->{$key } ; 
+	foreach my $row ( @list) {
 		$tm = "all the retrieved statuses should be 02-todo for the table: $table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ;
 		ok ( $row->{'status'} eq '02-todo', $tm ) ; 
 	}

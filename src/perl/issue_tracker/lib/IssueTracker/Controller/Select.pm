@@ -5,6 +5,8 @@ use Mojo::Base 'Mojolicious::Controller';
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use Data::Printer ; 
+use Data::Dumper; 
+use Scalar::Util qw /looks_like_number/;
 
 our $module_trace   = 0 ;
 our $appConfig      = {};
@@ -37,27 +39,40 @@ sub doSelectItems {
    $objModel->set('select.web-action.like-by' , $self->every_param('like-by') ) ; 
    $objModel->set('select.web-action.like-val' , $self->every_param('like-val') ) ; 
    $objModel->set('select.web-action.pick' , $self->req->query_params->param('pick') );
-   $objModel->set('select.web-action.asc-o' , $self->req->query_params->param('asc-o') );
-   $objModel->set('select.web-action.desc-o' , $self->req->query_params->param('desc-o') );
-
+   $objModel->set('select.web-action.o' , $self->req->query_params->param('o') );
+   my $order_by = $objModel->get('select.web-action.o') ; 
+   
    my $hsr2 = {};
-
    my $objRdrDbsFactory
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-
    my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    ($ret, $msg) = $objRdrDb->doSelectTableIntoHashRef(\$objModel, $item);
 
    $self->res->headers->accept_charset('UTF-8');
    $self->res->headers->accept_language('fi, en');
 
+
    if ( $ret == 0 ) {
       $hsr2 = $objModel->get('hsr2');
+      my @list = (); # the 
+
+      if ( defined ( $order_by) ) {
+         foreach my $row ( sort { $hsr2->{$a}->{ $order_by } cmp $hsr2->{$b}->{ $order_by } } keys (%$hsr2) ) {
+            push ( @list , $hsr2->{$row} ) ; 
+         }
+      }
+      else {
+         foreach my $key ( keys %$hsr2 ) {
+            push ( @list , $hsr2->{$key} ) ; 
+         }
+
+      }
+
       $self->res->headers->content_type('application/json; charset=utf-8');
       $self->res->code(200);
       $self->render( 'json' =>  { 
            'msg'   => $msg
-         , 'dat'   => $hsr2
+         , 'dat'   => \@list
          , 'ret'   => 200
          , 'req'   => "GET " . $self->req->url->to_abs
       });
@@ -89,6 +104,7 @@ sub doSelectItems {
       ;
    }
 }
+
 
 
 #

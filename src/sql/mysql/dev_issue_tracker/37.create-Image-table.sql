@@ -21,6 +21,7 @@
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8
 	; 
 	/*!40101 SET character_set_client = @saved_cs_client */;
+
 	DROP TRIGGER IF EXISTS `trgOnInsertImageUpdateTime` ;
 	
 	CREATE TRIGGER `trgOnInsertImageUpdateTime` BEFORE INSERT ON  `Image` 

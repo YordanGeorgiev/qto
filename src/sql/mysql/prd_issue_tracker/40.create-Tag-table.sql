@@ -9,7 +9,6 @@
 	 , `SeqId`				decimal 			NOT NULL -- because there must be order !!!
 	 , `LeftRank`			bigint			NOT NULL
 	 , `RightRank`			bigint			NOT NULL
-	 , `LogicalOrder`		varchar(30) 	NOT NULL
 	 , `Name` 				varchar(200) 	NOT NULL
 	 , `Description` 		varchar(4000) 	DEFAULT NULL
 	 

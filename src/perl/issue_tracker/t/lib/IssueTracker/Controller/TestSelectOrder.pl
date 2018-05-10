@@ -17,19 +17,18 @@ my $db_name = $appConfig->{ 'postgres_db_name' } ;
 my @tables = ( 'daily_issues' , 'weekly_issues' , 'monthly_issues' , 'yearly_issues' ) ; 
 my $ua  = $t->ua ; 
 my $res = {} ; #a tmp result json string
-my $hsr2 = {} ; # the tmp hash ref of hash refs
 my $tm = '' ; 
 my $url_params = '' ; 
 
 $res = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
-$hsr2 = $res->{ 'dat' } ; 
+my $hsr2 = $res->{ 'dat' } ; 
 
 # foreach table in the app db in test call db/select/table
 for my $table ( @tables ) {
 
    # feature-guid: 95cdac3a-4a41-4c5b-9ba8-6f8134b0edc9
    print "\n start test a response with only a single column pick" ; 
-   $url_params = "?pick=name" ; 
+   $url_params = "?pick=name&o=name" ; 
    print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
    $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
    ok ( $res->{'ret'} == 200 ) ; 	
@@ -37,7 +36,7 @@ for my $table ( @tables ) {
   
    # feature-guid: 95cdac3a-4a41-4c5b-9ba8-6f8134b0edc9 
    print "\n start test a response with a select column pick" ; 
-   $url_params = "?pick=name,update_time" ; 
+   $url_params = "?pick=name,update_time&o=prio" ; 
    print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
    $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
    ok ( $res->{'ret'} == 200 ) ; 	

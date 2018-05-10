@@ -153,16 +153,12 @@ src/perl/issue_tracker/script/issue_tracker
 src/perl/issue_tracker/lib
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
-src/perl/issue_tracker/lib/IssueTracker/Controller/Example.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/Get.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestGet.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
-src/perl/issue_tracker/lib/IssueTracker/Controller/Srch.pm
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/basic.t
 src/perl/issue_tracker/templates/layouts
