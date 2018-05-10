@@ -1,4 +1,5 @@
 use strict ; use warnings ; 
+
 use Test::More;
 use Test::Mojo;
 use Data::Printer ; 
@@ -15,14 +16,12 @@ my $appConfig = $t->app->get('AppConfig') ;
 # if the product instance id tst -> tst_issue_tracker
 my $db_name = $appConfig->{ 'postgres_db_name' } ; 
 my @tables = ( 'daily_issues' , 'weekly_issues' , 'monthly_issues' , 'yearly_issues' ) ; 
-my $ua  = $t->ua ; 
+my $ua = $t->ua ; 
 my $res = {} ; #a tmp result json string
-my $hsr2 = {} ; # the tmp hash ref of hash refs
 my $tm = '' ; 
 my $url_params = '' ; 
 
 $res = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
-$hsr2 = $res->{ 'dat' } ; 
 
 # foreach table in the app db in test call db/select/table
 for my $table ( @tables ) {

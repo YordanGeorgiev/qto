@@ -83,7 +83,7 @@ mysql_user = usrisgpuben
 mysql_user_pw = secret
 
 # where are the mysql scripts situated
-mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.0.prd.ysg/src/sql/mysql/prd_issue_tracker
+mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.3.7.prd.ysg/src/sql/mysql/prd_issue_tracker
 
 # the mysql db data containing load xls
 load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tracker-en.xlsx

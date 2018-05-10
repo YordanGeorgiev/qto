@@ -17,11 +17,9 @@ my $db_name= $appConfig->{ 'postgres_db_name' } ;
 my @tables = ( 'daily_issues' , 'weekly_issues' , 'monthly_issues' , 'yearly_issues' ) ; 
 my $ua  = $t->ua ; 
 my $res = {} ; #a tmp result json string
-my $hsr2 = {} ; # the tmp hash ref of hash refs
 my $tm = '' ; 
 
 $res = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
-$hsr2 = $res->{ 'dat' } ; 
 
 # foreach table in the app db in test call db/select/table
 for my $table ( @tables ) {
@@ -36,11 +34,12 @@ for my $table ( @tables ) {
 
 	print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
    $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
-	$hsr2 = $res->{'dat'} ; 
+	my @list = @{$res->{'dat'}} ; 
+   print "stop p list \n" ; 
 
    # feature-id: d4592c2e-60a4-4078-b499-743423d66d94
-	foreach my $key ( sort keys %$hsr2 ) {
-		my $row = $hsr2->{$key } ; 
+	foreach my $row ( @list ) {
+      #p $row ; 
 		$tm = 'only rows with status="02-todo" are selected for '. "$table table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
 		ok ( $row->{'status'} eq '02-todo', $tm ) ; 
 	}
@@ -49,11 +48,10 @@ for my $table ( @tables ) {
 	$url_params = '?like-by=category&like-val=issue-tracker' ; 
 	print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
    $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
-	$hsr2 = $res->{'dat'} ; 
+	@list = @{$res->{'dat'}} ; 
 
    # feature-guid: 3c43addf-bc2a-4eed-b4a5-040e9bd9dc75
-	foreach my $key ( sort keys %$hsr2 ) {
-		my $row = $hsr2->{$key } ; 
+	foreach my $row ( @list ) {
 		$tm = "all the retrieved rows of the the table: $table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ;
 		ok ( $row->{'category'} =~ m/issue-tracker/g , $tm ) ; 
 	}
