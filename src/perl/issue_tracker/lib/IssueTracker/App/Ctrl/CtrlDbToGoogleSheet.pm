@@ -63,6 +63,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
       my $ret                 = 1 ; 
       my $msg                 = 'unknown error while loading db issues to xls file' ; 
       my @tables              = ();
+
       my $tables              = $objModel->get( 'ctrl.tables' ) || 'daily_issues' ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
@@ -147,7 +148,7 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
          my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
          my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
 
-         my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
+         my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
          my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" , \$objModel );
       
          ( $ret , $msg  )  = $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table ) ; 
