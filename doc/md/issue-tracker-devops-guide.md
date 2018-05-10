@@ -10,6 +10,7 @@ Table of Contents
     * [1.2. Naming conventions principle](#12-naming-conventions-principle)
     * [1.3. Be user-friendly especially to developers and devops](#13-be-user-friendly-especially-to-developers-and-devops)
     * [1.4. Aim for simplicity](#14-aim-for-simplicity)
+    * [1.5. Do not allow broken windows](#15-do-not-allow-broken-windows)
   * [2. INSTALLATIONS AND CONFIGURATIONS](#2-installations-and-configurations)
     * [2.1. Configure the Ubuntu repositories](#21-configure-the-ubuntu-repositories)
     * [2.2. Add the media keys](#22-add-the-media-keys)
@@ -118,6 +119,11 @@ You cannot achieve user-friendliness for the end-users unless your developers an
 
 ### 1.4. Aim for simplicity
 Things should be as simple as possible, but not simpler - if Einstein said it it makes sense
+
+    
+
+### 1.5. Do not allow broken windows
+A broken windows is any peace of code or documentation which is hanging around not included in the integration tests suite and not matching the most up-to-date standars for work deliverables. Either bring it up to the standard level or get rid of it. 
 
     
 
