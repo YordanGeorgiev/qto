@@ -13,7 +13,7 @@ doRunPerlIntegrationTests(){
 
 
 	doLog "INFO load the documentation db run xls-to-db to mysql"
-   export tables=Tests,ItemController,ItemModel,ItemView,ExportFile,UserStory,Requirement,DevOps,Feature,ReadMe,SystemGuide;
+   export tables=Tests,ItemController,ItemModel,ItemView,ExportFile,UserStory,Requirement,DevOps,Feature,ReadMe,Image,SystemGuide;
    export do_truncate_tables=1 ; export rdbms_type=mysql ; export load_model=nested-set ; perl \
 
    doc_pub_instances_running=$(ps -ef | grep -i doc_pub | wc -l)
