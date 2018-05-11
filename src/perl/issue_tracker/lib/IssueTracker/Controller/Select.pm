@@ -2,11 +2,13 @@ package IssueTracker::Controller::Select;
 use strict ; use warnings ; 
 use Mojo::Base 'Mojolicious::Controller';
 
-use IssueTracker::App::Db::In::RdrDbsFactory;
-use IssueTracker::App::Utils::Logger;
 use Data::Printer ; 
 use Data::Dumper; 
 use Scalar::Util qw /looks_like_number/;
+
+use IssueTracker::App::Db::In::RdrDbsFactory;
+use IssueTracker::App::Utils::Logger;
+use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
 
 our $module_trace   = 0 ;
 our $appConfig      = {};
@@ -39,8 +41,8 @@ sub doSelectItems {
    $objModel->set('select.web-action.like-by' , $self->every_param('like-by') ) ; 
    $objModel->set('select.web-action.like-val' , $self->every_param('like-val') ) ; 
    $objModel->set('select.web-action.pick' , $self->req->query_params->param('pick') );
+   $objModel->set('select.web-action.hide' , $self->req->query_params->param('hide') );
    $objModel->set('select.web-action.o' , $self->req->query_params->param('o') );
-   my $order_by = $objModel->get('select.web-action.o') ; 
    
    my $hsr2 = {};
    my $objRdrDbsFactory
@@ -53,26 +55,17 @@ sub doSelectItems {
 
 
    if ( $ret == 0 ) {
-      $hsr2 = $objModel->get('hsr2');
-      my @list = (); # the 
 
-      if ( defined ( $order_by) ) {
-         foreach my $row ( sort { $hsr2->{$a}->{ $order_by } cmp $hsr2->{$b}->{ $order_by } } keys (%$hsr2) ) {
-            push ( @list , $hsr2->{$row} ) ; 
-         }
-      }
-      else {
-         foreach my $key ( keys %$hsr2 ) {
-            push ( @list , $hsr2->{$key} ) ; 
-         }
-
-      }
-
+      my $list = () ; # an array ref holding the converted hash ref of hash refs 
+      my $objCnrHsr2ToArray = 
+         'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
+      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert();
+      
       $self->res->headers->content_type('application/json; charset=utf-8');
       $self->res->code(200);
       $self->render( 'json' =>  { 
            'msg'   => $msg
-         , 'dat'   => \@list
+         , 'dat'   => $list
          , 'ret'   => 200
          , 'req'   => "GET " . $self->req->url->to_abs
       });

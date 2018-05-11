@@ -8,6 +8,7 @@ src/perl/issue_tracker/public/poc/app.js
 src/perl/issue_tracker/t/TestIssueTracker.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/issue_tracker/t/lib/IssueTracker/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/TestRdrCmdArgs.pl
@@ -159,6 +160,7 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectHide.pl
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/basic.t
 src/perl/issue_tracker/templates/layouts
