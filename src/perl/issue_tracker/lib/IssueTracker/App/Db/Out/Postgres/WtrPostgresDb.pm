@@ -204,6 +204,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
                # $value     =~ s|\\|\\\\|g ;
                $value     =~ s|\'|\\\'|g ;
                $value     =~ s/'/''/g if ( $value ) ; 
+               $value     =~ s|\r\n|\n|g if ( $value ) ; 
             } else {
                $value     = $update_time ; 
             }
@@ -409,6 +410,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
                   # $cell_value =~ s|\\|\\\\|g ; 
                   # replace the ' chars with \'
                   $cell_value 		=~ s|\'|\'\'|g ; 
+                  $cell_value     =~ s|\r\n|\n|g if ( $cell_value ) ; 
                   $data_str .= "'" . "$cell_value" . "' , " ; 
                }
             }
@@ -602,6 +604,8 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
                   # $cell_value =~ s|\\|\\\\|g ; 
                   # replace the ' chars with \'
                   $cell_value 		=~ s|\'|\'\'|g ; 
+                  # clear any possible winblows carriage returns
+                  $cell_value     =~ s|\r\n|\n|g if ( $cell_value ) ; 
                   $data_str .= "'" . "$cell_value" . "' , " ; 
                }
             }
