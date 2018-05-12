@@ -55,6 +55,11 @@ doRunTests(){
 	cd $product_instance_dir
 
    doLogTestRunEntry 'INIT'
+   doLog "INFO actions list file:
+   $product_instance_dir/src/bash/issue-tracker/tests/run-issue-tracker-tests.lst"
+   doLog "INFO running the following actions : "
+   cat $product_instance_dir/src/bash/issue-tracker/tests/run-issue-tracker-tests.lst | grep -v '#'
+   sleep 1
 
 	while read -r action ; do (
 

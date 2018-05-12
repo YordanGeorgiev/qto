@@ -26,29 +26,32 @@ $res = $ua->get('/' . $db_name . '/select-tables')->result->json ;
 # foreach table in the app db in test call db/select/table
 for my $table ( @tables ) {
 
-   # feature-guid: 95cdac3a-4a41-4c5b-9ba8-6f8134b0edc9
+   # feature-guid: 2be978a7-1228-4502-9c5e-1c0bee8d2548
    $url_params = "?pick=name&hide=guid" ; 
    $url = "/$db_name" . '/select/' . $table . $url_params ; 
-   $tm = "start test a response with only a single column pick for : $url" ; 
+   $tm = "start test a response with only a single column hide for : $url" ; 
    $res = $ua->get($url )->result->json ; 
    ok ( $res->{'ret'} == 200 , $tm ) ; 	
   
-#   # feature-guid: 95cdac3a-4a41-4c5b-9ba8-6f8134b0edc9 
-#   print "\n start test a response with a select column pick" ; 
-#   $url_params = "?pick=name,update_time" ; 
-#   print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
-#   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
-#   ok ( $res->{'ret'} == 200 ) ; 	
-#   print "stop  test a response with a Select column pick" ; 
-#  
-#   # feature-guid: fd3e2d4e-99a1-4cd8-8ebe-bb47f9de9caf
-#   print "\n start test a response with an inexisting column pick" ; 
-#   $url_params = "?pick=non_existing_column" ; 
-#   print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
-#   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
-#   ok ( $res->{'msg'} eq "the non_existing_column column does not exist" ) ; 
-#   ok ( $res->{'ret'} == 400 ) ; 	
-#   print "\n start test a response with an inexisting column pick" ; 
+   # feature-guid: 83fa6b81-544a-4d1c-b62b-c2628fbcc172
+   $url_params = "?pick=name,description,prio&hide=guid,prio" ; 
+   $url = "/$db_name" . '/select/' . $table . $url_params ; 
+   $tm = "hide multiple columns as well for : $url" ; 
+   $res = $ua->get($url )->result->json ; 
+   ok ( $res->{'ret'} == 200 , $tm ) ; 	
+ 
+   # feature-guid: be1b150f-c5c7-45a4-9160-a50242ebbc51
+   $tm = "test a non_existent_column - "; 
+   $url_params = "?pick=name,description,prio&hide=guid,prio,non_existent_column" ; 
+   $url = "/$db_name" . '/select/' . $table . $url_params ; 
+   $tm .= "url : $url" ; 
+   $res = $ua->get($url )->result->json ; 
+   ok ( $res->{'ret'} == 400 , $tm ) ; 	
+   $tm = "no data is retrieved for non-existent column to hide - url: $url" ; 
+   ok ( $res->{'dat'} == '' , $tm ) ; 	
+   $tm = "the client is informed for the non-existent column - url: $url" ; 
+   ok ( $res->{'msg'} eq 'the non_existent_column column does not exist' , $tm ) ; 	
+
 } 
 #eof foreach table
 
