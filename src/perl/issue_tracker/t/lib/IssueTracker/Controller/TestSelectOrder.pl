@@ -19,6 +19,7 @@ my $ua  = $t->ua ;
 my $res = {} ; #a tmp result json string
 my $tm = '' ; 
 my $url_params = '' ; 
+my $url = '' ; 
 
 $res = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
 my $hsr2 = $res->{ 'dat' } ; 
@@ -26,30 +27,32 @@ my $hsr2 = $res->{ 'dat' } ;
 # foreach table in the app db in test call db/select/table
 for my $table ( @tables ) {
 
+   
    # feature-guid: 95cdac3a-4a41-4c5b-9ba8-6f8134b0edc9
-   print "\n start test a response with only a single column pick" ; 
+   $tm = "single column pick - " ; 
    $url_params = "?pick=name&o=name" ; 
-   print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
-   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
-   ok ( $res->{'ret'} == 200 ) ; 	
-   print "stop  test a response with only a single column pick" ; 
+   $url = '/' . $db_name . '/select/' . $table . $url_params ; 
+   $tm .= "url: $url " ; 
+   $res = $ua->get( $url )->result->json ; 
+   ok ( $res->{'ret'} == 200 , $tm ) ; 	
   
    # feature-guid: 95cdac3a-4a41-4c5b-9ba8-6f8134b0edc9 
-   print "\n start test a response with a select column pick" ; 
-   $url_params = "?pick=name,update_time&o=prio" ; 
-   print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
-   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
-   ok ( $res->{'ret'} == 200 ) ; 	
-   print "stop  test a response with a Select column pick" ; 
+   $tm = "single column order by - " ; 
+   $url_params = "?pick=name,prio,update_time&o=prio" ; 
+   $url = '/' . $db_name . '/select/' . $table . $url_params ; 
+   $tm .= "url: $url " ; 
+   $res = $ua->get($url)->result->json ; 
+   ok ( $res->{'ret'} == 200 , $tm ) ; 	
   
    # feature-guid: fd3e2d4e-99a1-4cd8-8ebe-bb47f9de9caf
-   print "\n start test a response with an inexisting column pick" ; 
+   $tm = "unexisting column pick - " ; 
    $url_params = "?pick=non_existing_column" ; 
-   print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
-   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
-   ok ( $res->{'msg'} eq "the non_existing_column column does not exist" ) ; 
-   ok ( $res->{'ret'} == 400 ) ; 	
-   print "\n start test a response with an inexisting column pick" ; 
+   $url = '/' . $db_name . '/select/' . $table . $url_params ; 
+   $tm .= "url: $url" ; 
+   $res = $ua->get($url)->result->json ; 
+   ok ( $res->{'msg'} eq "the non_existing_column column does not exist" , $tm ) ; 
+   $tm = "and the response code is 400. \nstop table $table" ; 
+   ok ( $res->{'ret'} == 400 , $tm ) ; 	
 } 
 #eof foreach table
 

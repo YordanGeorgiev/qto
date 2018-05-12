@@ -3,34 +3,32 @@
 
 Table of Contents
 
-  * [1. ISSUES DATA TRANSFORMATION ACTIONS](#1-issues-data-transformation-actions)
-    * [1.1. Run the txt-to-db action](#11-run-the-txt-to-db-action)
-      * [1.1.1. Run the txt-to-db action period handling](#111-run-the-txt-to-db-action-period-handling)
-    * [1.2. Run db-to-xls action against postgres](#12-run-db-to-xls-action-against-postgres)
-    * [1.3. Run the xls-to-db action](#13-run-the-xls-to-db-action)
-      * [1.3.1. Run the xls-to-db action without passing xls file](#131-run-the-xls-to-db-action-without-passing-xls-file)
-      * [1.3.2. Run xls-to-db in nested-set mode against mysql](#132-run-xls-to-db-in-nested-set-mode-against-mysql)
-    * [1.4. db-to-txt action](#14-db-to-txt-action)
-      * [1.4.1. db-to-txt action with pre-defined sorting attribute](#141-db-to-txt-action-with-pre-defined-sorting-attribute)
-    * [1.5. run-pgsql-scripts](#15-run-pgsql-scripts)
-    * [1.6. run-mysql-scripts](#16-run-mysql-scripts)
-    * [1.7. generate-docs](#17-generate-docs)
-  * [2. DEVOPS FEATURES AND FUNCTIONALITIES](#2-devops-features-and-functionalities)
-    * [2.1. Testability](#21-testability)
-      * [2.1.1. Perl syntax check for the whole project ](#211-perl-syntax-check-for-the-whole-project-)
-      * [2.1.2. Testability for unit testing](#212-testability-for-unit-testing)
-      * [2.1.3. Testability for integration testing](#213-testability-for-integration-testing)
-    * [2.2. Logging](#22-logging)
-      * [2.2.1. Bash logging](#221-bash-logging)
-      * [2.2.2. Perl logging](#222-perl-logging)
-    * [2.3. development efficiency increasing actions](#23-development-efficiency-increasing-actions)
-      * [2.3.1. morph-dir action](#231-morph-dir-action)
-      * [2.3.2. work against different projects](#232-work-against-different-projects)
-      * [2.3.3. issue-tracker tool perl code syntax check](#233-issue-tracker-tool-perl-code-syntax-check)
-    * [2.4. Web based routes](#24-web-based-routes)
-      * [2.4.1. single item data fetch in json via web](#241-single-item-data-fetch-in-json-via-web)
-    * [2.5. Documentation related](#25-documentation-related)
-      * [2.5.1. Single call export of the md and pdf documentation files](#251-single-call-export-of-the-md-and-pdf-documentation-files)
+  * [1. DEVOPS FEATURES AND FUNCTIONALITIES](#1-devops-features-and-functionalities)
+    * [1.1. Testability](#11-testability)
+      * [1.1.1. Perl syntax check call](#111-perl-syntax-check-call)
+      * [1.1.2. Unit tests call](#112-unit-tests-call)
+      * [1.1.3. Integration tests call](#113-integration-tests-call)
+      * [1.1.4. Bash tests call](#114-bash-tests-call)
+    * [1.2. Logging](#12-logging)
+      * [1.2.1. Bash logging](#121-bash-logging)
+      * [1.2.2. Perl logging](#122-perl-logging)
+    * [1.3. development efficiency increasing actions](#13-development-efficiency-increasing-actions)
+      * [1.3.1. morph-dir action](#131-morph-dir-action)
+      * [1.3.2. work against different projects](#132-work-against-different-projects)
+      * [1.3.3. issue-tracker tool perl code syntax check](#133-issue-tracker-tool-perl-code-syntax-check)
+      * [1.3.4. Single call export of the md and pdf documentation files](#134-single-call-export-of-the-md-and-pdf-documentation-files)
+  * [2. SHELL BASED ACTIONS](#2-shell-based-actions)
+    * [2.1. The the txt-to-db action](#21-the-the-txt-to-db-action)
+      * [2.1.1. The the txt-to-db action period handling](#211-the-the-txt-to-db-action-period-handling)
+    * [2.2. The db-to-xls action against postgres](#22-the-db-to-xls-action-against-postgres)
+    * [2.3. The xls-to-db action](#23-the-xls-to-db-action)
+      * [2.3.1. The the xls-to-db action without passing xls file](#231-the-the-xls-to-db-action-without-passing-xls-file)
+      * [2.3.2. The xls-to-db action with nested-set mode against mysql](#232-the-xls-to-db-action-with-nested-set-mode-against-mysql)
+    * [2.4. The db-to-txt action](#24-the-db-to-txt-action)
+      * [2.4.1. db-to-txt action with pre-defined sorting attribute](#241-db-to-txt-action-with-pre-defined-sorting-attribute)
+    * [2.5. run-pgsql-scripts](#25-run-pgsql-scripts)
+    * [2.6. run-mysql-scripts](#26-run-mysql-scripts)
+    * [2.7. generate-docs](#27-generate-docs)
   * [3. BACK-END FEATURES AND FUNCTIONALITIES](#3-back-end-features-and-functionalities)
     * [3.1. select-tables web action](#31-select-tables-web-action)
       * [3.1.1. successfull execution](#311-successfull-execution)
@@ -52,18 +50,111 @@ Table of Contents
           * [3.2.7.2. successfull execution for text types](#3272-successfull-execution-for-text-types)
           * [3.2.7.3. error handling for wrong  syntax in the filtering by the like operator by missed like-by or like-val url params](#3273-error-handling-for-wrong-syntax-in-the-filtering-by-the-like-operator-by-missed-like-by-or-like-val-url-params)
           * [3.2.7.4. error handling for unexisting like table's attribute](#3274-error-handling-for-unexisting-like-table's-attribute)
+      * [3.2.8. Use the hide=column name to hide the values of a certain colum from the output](#328-use-the-hide=column-name-to-hide-the-values-of-a-certain-colum-from-the-output)
+          * [3.2.8.1. successfull execution for text types](#3281-successfull-execution-for-text-types)
+          * [3.2.8.2. error handling for unexistent column to hide](#3282-error-handling-for-unexistent-column-to-hide)
 
 
     
 
-## 1. ISSUES DATA TRANSFORMATION ACTIONS
+## 1. DEVOPS FEATURES AND FUNCTIONALITIES
+
+
+    
+
+### 1.1. Testability
+The issue-tracker app has a good and improving all the time test coverage. You can all the tests in the application as follows:
+
+    
+
+#### 1.1.1. Perl syntax check call
+You can check the perl syntax for each perl code file in the whole project by issing the following shell call:
+
+    bash src/bash/issue-tracker/issue-tracker.sh -a check-perl-syntax
+
+#### 1.1.2. Unit tests call
+You can run the unit tests of the application by issuing the following single shell call:
+
+    bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-unit-tests
+
+#### 1.1.3. Integration tests call
+You can run the integration tests of the application by issuing the following single shell call:
+
+    bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-integration-tests
+
+#### 1.1.4. Bash tests call
+You can run all the bash functions in the tool by issuing the following command in the shell. 
+
+    # if you set the previous 2 actions as those to be tested
+    bash src/bash/issue-tracker/test-issue-tracker.sh
+    
+    2018-05-12 18:01:08      START test-issue-tracker test run report
+    
+    result  start-time  stop-time   action-name
+       ok    18:01:09 18:01:19 run-perl-unit-tests
+       ok    18:01:20 18:01:30 run-perl-integration-tests
+    
+    
+    
+    2018-05-12 18:01:30      STOP  test-issue-tracker test run report
+
+### 1.2. Logging
+Logging is implemented as follows:
+
+    
+
+#### 1.2.1. Bash logging
+The issue-tracker.sh bash entry point loggs both to STDOUT and file. You cold easily defined your own log levels. 
+
+    doLog "INFO an info msg"
+    [INFO ] 2018.05.08-21:05:25 EEST [issue-tracker][@host-name] [29667] an info msg:
+
+#### 1.2.2. Perl logging
+The perl logger could be configured to log to file and std outputs. 
+
+    doLog "INFO an info msg"
+    [INFO ] 2018.05.08-21:05:25 EEST [issue-tracker][@host-name] [29667] an info msg:
+
+### 1.3. development efficiency increasing actions
+
+
+    
+
+#### 1.3.1. morph-dir action
+You can recursively search and replace strings in both file and dir paths and their contents ( as soon as they non-binary , txt files ) by issuing the following commands:
+
+    export to_srch=WriterTxtDaily
+    export to_repl=WriterTxtTerm
+    export dir_to_morph=`pwd`
+    bash src/bash/issue-tracker/issue-tracker.sh -a morph-dir
+    fg
+    history | cut -c 8-
+    
+
+#### 1.3.2. work against different projects
+The issue-tracker could be used against many different projects as soon as they have the needed file and dir structure , configuration file and dedicated db in the PostgreSQL. 
+
+    # pre-load the vars of an issue-tracker project
+    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.doc-pub-host.cnf
+
+#### 1.3.3. issue-tracker tool perl code syntax check
+You can check the perl code syntax with the following command:
+
+    bash src/bash/issue-tracker/issue-tracker.sh -a check-perl-syntax
+
+#### 1.3.4. Single call export of the md and pdf documentation files
+Single call export of the md and pdf documentation files
+
+    
+
+## 2. SHELL BASED ACTIONS
 You can load your issues data from different sources into different targets, whenever those sources and targets comply with the syntax and format of the issue tracker. 
 A single call performing the transformation of one issues source data into another taget data instance artifact are called actions. 
 This section contains the description of this feature-set per action.  
 
     
 
-### 1.1. Run the txt-to-db action
+### 2.1. The the txt-to-db action
 You can load you issues from an "issues txt file" , having a specic syntax into a PosgtreSQL issue table, by issueing the shell.
 This call with truncate the issue table from the db and convert all the issues data from the issues txt file into the issue table. 
 
@@ -79,7 +170,7 @@ This call with truncate the issue table from the db and convert all the issues d
     # check the data by :
     psql -d "$db_name" -c 'SELECT issue_id , category , name FROM issue order by name'
 
-#### 1.1.1. Run the txt-to-db action period handling
+#### 2.1.1. The the txt-to-db action period handling
 Issues txt files are stored in a daily folder with the following naming convention:
 &lt;&lt;project&gt;&gt;.&lt;&lt;current_date&gt;&gt;.&lt;&lt;period&gt;&gt;.txt
 The tool knows to correctly fetch the issues files for the configured period ( by export period=weekly ) and copy its data in to the &lt;&lt;period&gt;&gt;_issue table. 
@@ -89,7 +180,7 @@ The tool knows to correctly fetch the issues files for the configured period ( b
     ysg-issues.2017-06-03.weekly.txt
     ysg-issues.2017-06-03.yearly.txt
 
-### 1.2. Run db-to-xls action against postgres
+### 2.2. The db-to-xls action against postgres
 You can unload your already stored ANY xls table with unique id's and load them into a xls file. 
 
     # pre-load the vars of an issue-tracker project
@@ -103,7 +194,7 @@ You can unload your already stored ANY xls table with unique id's and load them 
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-xls
     
 
-### 1.3. Run the xls-to-db action
+### 2.3. The xls-to-db action
 You can load the latest produced xls file ( note as long as your xls sheet headers match the columns in your db table ANY xls is compatible )
 You can control whether or not the loadable table should be truncted by setting the do_truncate_tables environment variable to 1 or 0. 
 
@@ -118,21 +209,17 @@ You can control whether or not the loadable table should be truncted by setting 
     SELECT issue_id , start_time , stop_time , category , name FROM issue order by start_time'
     
 
-#### 1.3.1. Run the xls-to-db action without passing xls file
+#### 2.3.1. The the xls-to-db action without passing xls file
 if you do not provide a xls file the newest xls file from the mix data dir will be used
 
     
 
-#### 1.3.2. Run xls-to-db in nested-set mode against mysql
+#### 2.3.2. The xls-to-db action with nested-set mode against mysql
 You could run the xls-to-db action against mysql or mariadb rdbms so that the issue-tracker will arrange your table to be compatible with the nested-set hierarchy model. 
 
-    export load_model=nested-set
-    export rdbms_type=mysql # or mariadb
-    export tables=Feature,Test
-    bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db -t $tables
-    
+    export tables=Tests,ItemController,ItemModel,ItemView,ExportFile,UserStory,Requirement,DevOps,Feature,ReadMe,SystemGuide,Image,ExportFile; export do_truncate_tables=1 ; export rdbms_type=mysql ; export load_model=nested-set ; perl src/perl/issue_tracker/script/issue_tracker.pl --do xls-to-db --tables $tables
 
-### 1.4. db-to-txt action
+### 2.4. The db-to-txt action
 You can load your already stored in the issue table issues and load them into the same issues txt file
 
     # check the data by :
@@ -146,121 +233,27 @@ You can load your already stored in the issue table issues and load them into th
     psql -d "$db_name" -c '
     SELECT issue_id , start_time , stop_time , category , name FROM issue order by start_time'
 
-#### 1.4.1. db-to-txt action with pre-defined sorting attribute
+#### 2.4.1. db-to-txt action with pre-defined sorting attribute
 You can load your already stored in the issue table issues and load them into the same issues txt file by using a pre-defined sorting attribute. 
 
     export issues_order_by_attribute=start_time
     
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
 
-### 1.5. run-pgsql-scripts
+### 2.5. run-pgsql-scripts
 You can create a preconfigured &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; postgres via a single shell call. The scripts will fail if any of the sql scripts have a syntax error - all the ddl events will be displayed in the STDOUT and stored in the shell log file for later audit
 
     
 
-### 1.6. run-mysql-scripts
+### 2.6. run-mysql-scripts
 You can create a preconfigured &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; in mariadb  via a single shell call. The scripts will fail if any of the sql scripts have a syntax error - all the ddl events will be displayed in the STDOUT and stored in the shell log file for later audit
 
     
 
-### 1.7. generate-docs
-You can generate all the md and pdf docs via single shell call by issuing the following command: 
+### 2.7. generate-docs
+You can generate all the md and pdf docs by if you have a running instance of the isg-pub application accessible via single shell call by issuing the following command: 
 
     bash src/bash/issue-tracker/issue-tracker.sh -a generate-docs
-
-## 2. DEVOPS FEATURES AND FUNCTIONALITIES
-
-
-    
-
-### 2.1. Testability
-The issue-tracker app has a good and improving all the time test coverage. You can all the tests in the application as follows:
-
-    
-
-#### 2.1.1. Perl syntax check for the whole project 
-You can check the perl syntax for each perl code file in the whole project by issing the following shell call:
-
-    bash src/bash/issue-tracker/issue-tracker.sh -a check-perl-syntax
-
-#### 2.1.2. Testability for unit testing
-You can run the unit tests of the application by issuing the following single shell call:
-
-    bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-unit-tests
-
-#### 2.1.3. Testability for integration testing
-You can run the integration tests of the application by issuing the following single shell call:
-
-    bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-integration-tests
-
-### 2.2. Logging
-Logging is implemented as follows:
-
-    
-
-#### 2.2.1. Bash logging
-The issue-tracker.sh bash entry point loggs both to STDOUT and file. You cold easily defined your own log levels. 
-
-    doLog "INFO an info msg"
-    [INFO ] 2018.05.08-21:05:25 EEST [issue-tracker][@host-name] [29667] an info msg:
-
-#### 2.2.2. Perl logging
-The perl logger could be configured to log to file and std outputs. 
-
-    doLog "INFO an info msg"
-    [INFO ] 2018.05.08-21:05:25 EEST [issue-tracker][@host-name] [29667] an info msg:
-
-### 2.3. development efficiency increasing actions
-
-
-    
-
-#### 2.3.1. morph-dir action
-You can recursively search and replace strings in both file and dir paths and their contents ( as soon as they non-binary , txt files ) by issuing the following commands:
-
-    export to_srch=WriterTxtDaily
-    export to_repl=WriterTxtTerm
-    export dir_to_morph=`pwd`
-    bash src/bash/issue-tracker/issue-tracker.sh -a morph-dir
-    fg
-    history | cut -c 8-
-    
-
-#### 2.3.2. work against different projects
-The issue-tracker could be used against many different projects as soon as they have the needed file and dir structure , configuration file and dedicated db in the PostgreSQL. 
-
-    # pre-load the vars of an issue-tracker project
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.doc-pub-host.cnf
-
-#### 2.3.3. issue-tracker tool perl code syntax check
-You can check the perl code syntax with the following command:
-
-    bash src/bash/issue-tracker/issue-tracker.sh -a check-perl-syntax
-
-### 2.4. Web based routes
-
-
-    
-
-#### 2.4.1. single item data fetch in json via web
-You can get the data of a single item in db by guid in json format via the web interface , for example:
-http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
-
-    # run for the loaded items
-    while read -r guid ; do 
-    curl "http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/$guid" ; 
-    done < <(psql -d dev_stockit_issues -t -c "
-    SELECT guid FROM company_eps")
-
-### 2.5. Documentation related
-
-
-    
-
-#### 2.5.1. Single call export of the md and pdf documentation files
-Single call export of the md and pdf documentation files
-
-    
 
 ## 3. BACK-END FEATURES AND FUNCTIONALITIES
 
@@ -557,6 +550,49 @@ If the syntax is correct but an unexisting like operator's attribute is provided
     {
       "msg": "the foo column does not exist",
       "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?like-by=foo&like-val=sdklfj",
+      "ret": 400
+    }
+
+#### 3.2.8. Use the hide=column name to hide the values of a certain colum from the output
+The resp
+
+
+    // using the following syntax:
+    <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>?like-by=<<like-attribute-to-like-by>>&like-val=<<like-value-to-like-by>>
+
+##### 3.2.8.1. successfull execution for text types
+The response of the url query presents all but the hidden attribute values.
+
+
+    // 20180511144541
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?like-by=category&like-val=features&pick=name,prio,start_time,stop_time,category,status&o=stop_time&hide=guid
+    
+    {
+      "dat": [
+        {
+          "category": "issue-tracker-features",
+          "name": "improve integration testing",
+          "prio": 5,
+          "start_time": null,
+          "status": "09-done",
+          "stop_time": null
+        }
+      ],
+      "msg": "",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?like-by=category&like-val=features&pick=name%2Cprio%2Cstart_time%2Cstop_time%2Ccategory%2Cstatus&o=stop_time&hide=guid",
+      "ret": 200
+    }
+
+##### 3.2.8.2. error handling for unexistent column to hide
+If the column which values are requested to be hidden does not exist the proper error message is retrieved. 
+
+
+    // 20180505204734
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?like-by=prio
+    
+    {
+      "msg": "mall-formed url params for likeing - valid syntax is ?like-by=<<attribute>>&like-val=<<like-value>>",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?like-by=prio",
       "ret": 400
     }
 

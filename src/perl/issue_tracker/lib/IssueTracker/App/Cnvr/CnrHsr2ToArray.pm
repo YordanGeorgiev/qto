@@ -24,14 +24,16 @@ our $objModel = {} ;
          if ( defined ( $to_order_by) ) {
             foreach my $key ( sort { $hsr2->{$a}->{ $to_order_by } cmp $hsr2->{$b}->{ $to_order_by } } keys (%$hsr2) ) {
                my $row = $hsr2->{$key} ; 
-               $self->doHideHidables ( $row , $to_hide ) ; 
+               ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
+               return ( $ret , $msg ) unless $ret == 0 ; 
                push ( @list , $row ) ; 
             }
          }
          else {
             foreach my $key ( keys %$hsr2 ) {
                my $row = $hsr2->{$key} ; 
-               $self->doHideHidables ( $row , $to_hide ) ; 
+               ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
+               return ( $ret , $msg ) unless $ret == 0 ; 
                push ( @list , $row ) ; 
             }
          }
@@ -50,14 +52,22 @@ our $objModel = {} ;
       my $self       = shift ; 
       my $row        = shift ; 
       my $to_hide    = shift ; 
+      my $msg        = shift ; 
+
+      my $ret        = 1 ; 
 
       if ( defined ( $to_hide ) ) {
          my @hides = split ( ',' , $to_hide ) ; 
          foreach my $hidable ( @hides ) {
+           unless ( exists $row->{$hidable} ) {
+               $msg = "the $hidable column does not exist" ; 
+            return ( $ret , $msg ) ; 
+           }
            delete $row->{$hidable} ;  
          }
       }
-      return $row ; 
+      $ret = 0 ; 
+      return ( $ret , $msg , $row )  ; 
    }
 
    #

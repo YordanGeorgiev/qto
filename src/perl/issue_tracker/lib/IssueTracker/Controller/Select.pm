@@ -52,21 +52,27 @@ sub doSelectItems {
 
    $self->res->headers->accept_charset('UTF-8');
    $self->res->headers->accept_language('fi, en');
+   $self->res->headers->content_type('application/json; charset=utf-8');
 
 
    if ( $ret == 0 ) {
-
       my $list = () ; # an array ref holding the converted hash ref of hash refs 
+      my $http_code = 200 ; 
+      $msg = "SELECT OK for table: $item" ; 
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
       ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert();
+
+      unless ( $ret == 0 ) {
+         $http_code = 400 ; 
+         $list = '' ;
+      }
       
-      $self->res->headers->content_type('application/json; charset=utf-8');
-      $self->res->code(200);
+      $self->res->code($http_code);
       $self->render( 'json' =>  { 
            'msg'   => $msg
          , 'dat'   => $list
-         , 'ret'   => 200
+         , 'ret'   => $http_code
          , 'req'   => "GET " . $self->req->url->to_abs
       });
    } elsif ( $ret == 400 ) {
@@ -131,23 +137,27 @@ sub doSelectTables {
 
 	my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectTablesList(\$objModel);
-	$hsr2 = $objModel->get('hsr2');
 
 	$self->res->headers->accept_charset('UTF-8');
 	$self->res->headers->accept_language('fi, en');
 	$self->res->headers->content_type('application/json; charset=utf-8');
 
    if ( $ret == 0 ) {
-      $hsr2 = $objModel->get('hsr2');
+
+      my $list = () ; # an array ref holding the converted hash ref of hash refs 
+      my $objCnrHsr2ToArray = 
+         'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
+      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert();
+
       $self->res->headers->content_type('application/json; charset=utf-8');
       $self->res->code(200);
       $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'dat'   => $hsr2 ,
-         'ret'   => 200 , 
-         'req'   => "GET " . $self->req->url->to_abs
-      })
-      ;
+           'msg'   => $msg
+         , 'dat'   => $list
+         , 'ret'   => 200
+         , 'req'   => "GET " . $self->req->url->to_abs
+      });
+
    } elsif ( $ret == 400 ) {
 
       $self->res->code(404);
