@@ -26,7 +26,6 @@ sub doSelectItems {
    my $self        = shift;
    my $item        = $self->stash('item');
    my $db          = $self->stash('db');
-   my $guid        = $self->stash('guid');
    my $rdbms_type  = 'postgres';
 
    $appConfig		= $self->app->get('AppConfig');
