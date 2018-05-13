@@ -1,6 +1,8 @@
 #!/usr/bin/perl
-#
+
 use Mojo::Base -strict;
+use Test::More;
+use Test::Mojo;
 
 BEGIN {
   use Cwd qw (abs_path);
@@ -8,9 +10,6 @@ BEGIN {
 
   $my_inc_path =~ m/^(.*)(\\|\/)(.*?)(\\|\/)(.*)/;
   $my_inc_path = $1;
-
-  print "\$my_inc_path $my_inc_path \n" ;
-  sleep 3 ; 
 
   unless (grep { $_ eq "$my_inc_path" } @INC) {
     push(@INC, "$my_inc_path");
@@ -23,8 +22,6 @@ BEGIN {
   }
 }
 
-use Test::More;
-use Test::Mojo;
 
 
 my $t = Test::Mojo->new('IssueTracker');

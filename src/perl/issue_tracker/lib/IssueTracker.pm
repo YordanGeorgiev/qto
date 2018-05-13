@@ -50,10 +50,10 @@ sub startup {
    # Router
    my $r = $self->routes;
 
-   # http://host-name:3000/dev_stockit/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
-   $r->get('/:db/get/:item/:guid')->to(
-     controller   => 'Get'
-   , action       => 'doGetItem'
+	# http://host-name:3000/dev_issue_tracker/select-tables
+   $r->get('/:db/select-tables')->to(
+     controller   => 'Select'
+   , action       => 'doSelectTables'
    );
    
    # http://host-name:3000/dev_issue_tracker/select/monthly_issues
@@ -62,16 +62,11 @@ sub startup {
    , action       => 'doSelectItems'
    );
    
-	# http://host-name:3000/dev_issue_tracker/select-tables
-   $r->get('/:db/select-tables')->to(
-     controller   => 'Select'
-   , action       => 'doSelectTables'
-   );
    
-   # http://host-name:3000/prd_ysg_issues/srch/confs/con
-   $r->get('/:db/srch/:item/:srch')->to(
-     controller   => 'Srch'
-   , action       => 'doSrchItem'
+   # http://host-name:3000/dev_issue_tracker/select/monthly_issues
+   $r->get('/:db/list/:item')->to(
+     controller   => 'List'
+   , action       => 'doListItems'
    );
 
 }
