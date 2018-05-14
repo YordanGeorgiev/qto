@@ -6,7 +6,14 @@ src/perl/issue_tracker/public/poc/list-lable.html
 src/perl/issue_tracker/public/poc/app.js
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
 src/perl/issue_tracker/templates/pages/list.html.ep
+src/perl/issue_tracker/public/list/app.js
 src/perl/issue_tracker/templates/controls
+# ---
+src/perl/issue_tracker/lib/IssueTracker/App/UI
+src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls
+src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
+src/perl/issue_tracker/lib/IssueTracker/App/UI/Pages/1
 # ---
 src/perl/issue_tracker/t/TestIssueTracker.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr
