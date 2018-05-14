@@ -3,41 +3,39 @@
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-      <title> list <%= " $item " =%> in <%= " $db " =%> </title> 
-<head>
+   <title> list <%= " $item " =%> in <%= " $db " =%> </title> 
+   <link rel="stylesheet" type="text/css" href="../../css/app_list_labels.css" />
+</head>
 <body>
-<div>
-      <%== $vct_list_labels %>
+
+<div id="div_msg"> 
+   <%== $msg %>
 </div>
-<!-- 
-   <div id="app">
-     <ul>
-       <div v-for="monthly_issue in monthly_issues">
-			<div>
-				<span> id : </span> {{ monthly_issue.id }} </br>
-				<span> name : </span> {{ monthly_issue.name }} </br>
-				<span> status : </span> {{ monthly_issue.status }} </br>
-				<span> prio : </span> {{ monthly_issue.prio }} </br>
-				</br></br>
-			</div>
-       </div>
-     </ul>
-   </div>
--->
+
+<div>
+   <%== $vct_list_labels %>
+</div>
 
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 
+   // todo remove axios.get("/<%= $db =%>/select/<%= $item =%>")
    const vm = new Vue({
      el: '#app_list_labels',
      data: {
        <%= $item =%>: []
      },
      mounted() {
-       axios.get("/<%= $db =%>/select/<%= $item =%>")
-       .then(response => {this.<%= $item =%> = response.data.dat
-       })
+        var url_params = {};
+        window.location.search.split('?')[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
+            url_params[decodeURIComponent(key)] = decodeURIComponent(value);
+        });
+        console.log(url_params)
+
+        axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params} )
+        .then(response => {this.<%= $item =%> = response.data.dat
+        })
      }
    });
 

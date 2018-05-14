@@ -28,6 +28,8 @@ sub doSelectItems {
    my $db          = $self->stash('db');
    my $rdbms_type  = 'postgres';
 
+	print "url: " . $self->req->url->to_abs . "\n" ; 
+
    $appConfig		= $self->app->get('AppConfig');
    $objModel       = ${$self->app->get('ObjModel')} ; 
    $objModel->set('postgres_db_name' , $db ) ; 
