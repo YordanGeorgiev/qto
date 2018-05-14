@@ -72,6 +72,8 @@ Table of Contents
     * [9.9. Unit and / or integration test creation](#99-unit-and-/-or-integration-test-creation)
     * [9.10. Implementation ](#910-implementation-)
     * [9.11. Deployment and test to the test environment](#911-deployment-and-test-to-the-test-environment)
+      * [9.11.1. Deployment to the test environment](#9111-deployment-to-the-test-environment)
+      * [9.11.2. Check that all the files in the deployment pacakge are the same as those in the latest commit of the dev git branch. ](#9112-check-that-all-the-files-in-the-deployment-pacakge-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
     * [9.12. Deployment and test to the production environment](#912-deployment-and-test-to-the-production-environment)
     * [9.13. Quality assurance iteration](#913-quality-assurance-iteration)
     * [9.14. DoD check-list walktrough](#914-dod-check-list-walktrough)
@@ -506,6 +508,14 @@ Problems are usually entities which last for longer time period.
 Create the feature branch by using the following naming convention:
  - dev--&lt;&lt;short-feature-title&gt;&gt;
 
+     git branch -a
+    * dev
+    dev--it-18050801-add-order-by-in-select-ctrlr
+    master
+    prd
+    tst
+    remotes/origin/dev
+    remotes/origin/master
     
 
 ### 9.6. Create a test-entry point
@@ -534,15 +544,35 @@ Implement by quick unit test runs. Constantly improve both the code , configurat
     
 
 ### 9.11. Deployment and test to the test environment
-Run the unit and integration tests. 
+Deploy to the test environment. 
 
     # deploy to the tst environment
     bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
     
     # go to the product instance dir of the tst env for this version
     cd ../issue-tracker.<<version>>.tst.<<owner>>
-    # run the unit tests
-    bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-unit-tests
+    # run the integration tests
+    bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-integration-tests
+    
+
+#### 9.11.1. Deployment to the test environment
+Deploy to the test environmen as follows:
+
+    # deploy to the tst environment
+    bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
+    
+    # go to the product instance dir of the tst env for this version
+    cd ../issue-tracker.<<version>>.tst.<<owner>>
+    
+
+#### 9.11.2. Check that all the files in the deployment pacakge are the same as those in the latest commit of the dev git branch. 
+Deploy to the test environmen as follows:
+
+    # deploy to the tst environment
+    bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
+    
+    # go to the product instance dir of the tst env for this version
+    cd ../issue-tracker.<<version>>.tst.<<owner>>
     
 
 ### 9.12. Deployment and test to the production environment

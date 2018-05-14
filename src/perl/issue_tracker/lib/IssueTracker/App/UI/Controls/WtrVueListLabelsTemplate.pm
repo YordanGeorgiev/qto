@@ -10,6 +10,7 @@ package IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ;
 	use Data::Printer ; 
 	use Carp ; 
    use Data::Printer ; 
+   use List::Util 1.33 'any';
 
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Utils::Timer ; 
@@ -23,14 +24,10 @@ package IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ;
 	# -----------------------------------------------------------------------------
    # produce something like this
    #   <div id="app">
-   #     <ul>
    #       <div v-for="monthly_issue in monthly_issues">
-   #			<div>
    #				<span> id : </span> {{ monthly_issue.id }} </br>
    #				<span> name : </span> {{ monthly_issue.name }} </br>
-   #			</div>
    #       </div>
-   #     </ul>
    #   </div>
 	# -----------------------------------------------------------------------------
    sub doBuild {
@@ -39,6 +36,12 @@ package IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ;
       my $hs_headers = $objModel->get('hs_headers');
       my $db         = $objModel->get('postgres_db_name' ) ; 
       my $table      = $objModel->get('table_name');
+      my $to_hide    = $objModel->get('list.web-action.hide');
+      my @hides      = split ( ',' , $to_hide ) if defined ( $to_hide ) ; 
+      
+		my $to_picks   = $objModel->get('list.web-action.pick') ; 
+      my @picks      = split ( ',' , $to_picks ) if defined ( $to_picks ) ; 
+
       my $single_item = $table ; 
       $single_item   =~ s/^(.*)s$/$1/g ; 
 
@@ -46,26 +49,61 @@ package IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ;
         $single_item = "single_" . "$table" ; 
       }
 
+
       my $control = '' ; 
       $control .= 
       '<div id="app_list_labels">
-        <ul>
-          <div v-for="' . $single_item . ' in ' . $table . '">
-   			<li>' ; 
-               foreach my $col_num ( sort ( keys %{$hs_headers} )) {
+          <div id="vfor_cols" v-for="' . $single_item . ' in ' . $table . '">
+   			' ; 
+               foreach my $col_num ( reverse sort ( keys %$hs_headers )) {
                   my $col = $hs_headers->{ $col_num }->{ 'attname' }; 
-                  $control .= '<span> ' . $col . ' : </span> {{ ' . $single_item . '.' . $col . ' }} </br>' ; 
+                  my $to_hide = any { /$col/ } @hides ; 
+						my $to_pick = 1 ; 
+                  $to_pick = any { /$col/ } @picks if defined $to_picks ; 
+					   next unless ( $to_pick ) ; 	
+                  unless ( $to_hide  ) {
+                     	$control .= '<div class="lbl_row">' ; 
+                     	$control .= '<div class="lbl_lft"><b>' . $col . ': </b> </div>' ; 
+								$control .= '<div class="lbl_rgt">{{ ' . $single_item . '.' . $col . ' }} </div>' ; 
+                     	$control .= '</div>';
+						}
+   					$control .= '<div class="div_spacer2"></div>' ; 
                } 
       $control .= '
-   			</li>
           </div>
-        </ul>
       </div>'
    ;
+
 
    return ( 0 , "" , $control ) ; 
    }
 
+   #
+	# -----------------------------------------------------------------------------
+	# hide the attribute's values to hide per row in the hash ref of hash refs 
+	# -----------------------------------------------------------------------------
+   sub doHideHidables {
+
+      my $self       = shift ; 
+      my $row        = shift ; 
+      my $to_hide    = shift ; 
+      my $msg        = shift ; 
+
+      my $ret        = 1 ; 
+
+      if ( defined ( $to_hide ) ) {
+         my @hides = split ( ',' , $to_hide ) ; 
+         foreach my $hidable ( @hides ) {
+           unless ( exists $row->{$hidable} ) {
+               $msg = "the $hidable column does not exist" ; 
+            return ( $ret , $msg ) ; 
+           }
+           delete $row->{$hidable} ;  
+         }
+      }
+      $ret = 0 ; 
+      return ( $ret , $msg , $row )  ; 
+   }
 
    #
 	# -----------------------------------------------------------------------------

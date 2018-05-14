@@ -29,18 +29,29 @@ sub doListItems {
    my $db               = $self->stash('db');
    my $rdbms_type       = 'postgres';
    my $ret              = 1 ; 
-   my $msg              = 'unknown error while listing items !!!' ; 
+   my $msg              = '' ; 
    my $vct_list_labels  = '' ; 
 
+	print "url: " . $self->req->url->to_abs . "\n" ; 
    $appConfig		 = $self->app->get('AppConfig');
    $objModel       = ${$self->app->get('ObjModel')} ; 
 
    $objModel->set('postgres_db_name' , $db ) ; 
    $objModel->set('table_name' , $item ) ; 
   
+   $objModel->set('list.web-action.fltr-by' , $self->every_param('fltr-by') ) ; 
+   $objModel->set('list.web-action.fltr-val' , $self->every_param('fltr-val') ) ; 
+   $objModel->set('list.web-action.like-by' , $self->every_param('like-by') ) ; 
+   $objModel->set('list.web-action.like-val' , $self->every_param('like-val') ) ; 
+   $objModel->set('list.web-action.pick' , $self->req->query_params->param('pick') );
+   $objModel->set('list.web-action.hide' , $self->req->query_params->param('hide') );
+   $objModel->set('list.web-action.o' , $self->req->query_params->param('o') );
+
 	# build the list control 
    ( $ret , $msg , $vct_list_labels )  = $self->doBuildVueControlListLabels( $msg , \$objModel  ) ; 
-   $vct_list_labels = '<div><p>' . $msg . '</p></div>' unless $ret == 0 ; 
+   $vct_list_labels = '' unless $ret == 0 ; 
+   $msg = '<span id="spn_err_msg">' . $msg . '</span>' unless $ret == 0 ; 
+   $msg = '<span id="spn_msg">' . $msg . '</span>' if $ret == 0 ; 
 
    $self->res->headers->accept_charset('UTF-8');
    $self->res->headers->accept_language('fi, en');
@@ -48,6 +59,7 @@ sub doListItems {
    # and render the result
    $self->render(
       template             => 'pages/list'
+    , msg                  => $msg
     , item                 => $item
     , db 						=> $db
     , vct_list_labels      => $vct_list_labels

@@ -33,18 +33,33 @@ doRunPerlIntegrationTests(){
    doLog " <<app-db>>/Select/<<table-name>>"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
 	echo -e "\n\n\n" 
-   
-   doLog "INFO START test the Select Controller filtering: "
-   doLog "INFO S: <<app-db>>/Select/<<table-name>>?fltr-by=<<attribute>>&fltr-val=<<value>>"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
+  
+   doLog "INFO START test the Select Controller filtering with the like operator: "
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
 	echo -e "\n\n\n" 
-   
+
+   doLog "INFO START test the Select Controller with the o=<<order-by>> url param"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
+	echo -e "\n\n\n" 
+
    doLog "INFO START test the Select Controller filtering with the like operator: "
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
 	echo -e "\n\n\n" 
+
+
+   doLog "INFO S: <<app-db>>/Select/<<table-name>>?fltr-by=<<attribute>>&fltr-val=<<value>>"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
+	echo -e "\n\n\n" 
+
+   doLog "INFO START test the Select Controller filtering: "
    
-   doLog "INFO START test the Select Controller filtering with the like operator: "
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
+   
+   doLog "INFO START test the List Controller "
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
+	echo -e "\n\n\n" 
+   
+   doLog "INFO START test the List Controller with the hide url param"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 	echo -e "\n\n\n" 
    
    # Action !!!
