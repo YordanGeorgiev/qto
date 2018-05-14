@@ -323,16 +323,22 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 
 
+   #
+   # -----------------------------------------------------------------------------
+   # get the columns meta data of a table into hash ref of hash refs 
+   # -----------------------------------------------------------------------------
    sub doSelectTablesColumnList {
 
       my $self          = shift ; 
-      my $table         = shift || 'daily_issues' ; 
-
-
+      my $table         = shift || croak ' table provided !!!' ; 
+      
+      if ( defined $objModel->get('postgres_db_name') ) {
+		   $postgres_db_name = $objModel->get('postgres_db_name');
+      }
       my $msg              = q{} ;         
       my $ret              = 1 ;          # this is the return value from this method 
       my $debug_msg        = q{} ; 
-      my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
+      my $mhsr2             = {} ;         # this is meta hash describing the data hash ^^
       my $sth              = {} ;         # this is the statement handle
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
@@ -347,11 +353,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       ;
       " ; 
 
-      # authentication src: http://stackoverflow.com/a/19980156/65706
-      # debug $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
-      # debug $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
-      # debug $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-     
       $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
@@ -360,31 +361,26 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
                , 'pg_utf8_strings'     => 1
       } ) or $msg = DBI->errstr;
       
-      # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
 
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
 
-      $mhsr = $sth->fetchall_hashref( 'attnum' ) ; 
+      $mhsr2 = $sth->fetchall_hashref( 'attnum' ) ; 
       binmode(STDOUT, ':utf8');
-      p( $mhsr ) if $module_trace == 1 ; 
 
       $msg = DBI->errstr ; 
 
       unless ( defined ( $msg ) ) {
          $msg = 'SELECT meta OK for table: ' . "$table" ; 
+         $objModel->set('hs_headers' , $mhsr2 ) ; 
          $ret = 0 ; 
       } else {
          $objLogger->doLogErrorMsg ( $msg ) ; 
       }
 
-      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      
-      return ( $ret , $msg , $mhsr ) ; 	
+      return ( $ret , $msg , $mhsr2 ) ; 	
    }
-   # eof sub doSelectTablesColumnList
-
 
 
    #
