@@ -1,0 +1,23 @@
+
+#app_list_labels {
+   margin: 10%;
+}
+#app_list_labels .lbl_row {
+	width: 100% ; 
+	display: inline-block;
+	margin: 0% 5% 0% 5% ; 
+}
+#app_list_labels .lbl_lft {
+   /*background-color: Red; */
+   float: left;
+   width: 20%;
+}
+
+#app_list_labels .lbl_rgt {
+   /* background-color: Aqua;*/
+	float: left ; 
+   width: 80%;
+}
+#vfor_cols {
+	margin: 3% 0% 0% 0% ; 
+}
