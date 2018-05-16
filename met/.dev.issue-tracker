@@ -7,6 +7,7 @@ src/perl/issue_tracker/public/poc/app.js
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOrderBy.pl
 src/perl/issue_tracker/templates/pages/list.html.ep
 src/perl/issue_tracker/public/list/app.js
 src/perl/issue_tracker/public/css/controls/app_list_labels.css

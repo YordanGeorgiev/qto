@@ -4,6 +4,21 @@ src/perl/issue_tracker/public/
 src/perl/issue_tracker/public/poc
 src/perl/issue_tracker/public/poc/list-lable.html
 src/perl/issue_tracker/public/poc/app.js
+src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOrderBy.pl
+src/perl/issue_tracker/templates/pages/list.html.ep
+src/perl/issue_tracker/public/list/app.js
+src/perl/issue_tracker/public/css/controls/app_list_labels.css
+src/perl/issue_tracker/public/css/site/site.css
+src/perl/issue_tracker/public/css
+src/perl/issue_tracker/templates/controls
+# ---
+src/perl/issue_tracker/lib/IssueTracker/App/UI
+src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls
+src/perl/issue_tracker/lib/IssueTracker/App/UI/Pages/1
 # ---
 src/perl/issue_tracker/t/TestIssueTracker.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr
@@ -163,10 +178,6 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectHide.pl
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/basic.t
-src/perl/issue_tracker/templates/layouts
-src/perl/issue_tracker/templates/layouts/default.html.ep
-src/perl/issue_tracker/templates/example
-src/perl/issue_tracker/templates/example/welcome.html.ep
 cnf
 cnf/hosts
 cnf/hosts/host-name

@@ -22,22 +22,24 @@
 <script>
 
 if ( document.getElementById("spn_msg") ) {
-   const vm = new Vue({
-     el: '#app_list_labels',
+   const vm = new Vue({ el: '#app_list_labels',
      data: {
        <%= $item =%>: []
      },
      mounted() {
-        var url_params = {as: 'labels'} // get the params as obj to pass the to the axios.get
-        window.location.search.split('?')[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
+			var url_params = {as: 'labels'} // get the params as obj to pass the to the axios.get
+			window.location.search.split('?')[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
             url_params[decodeURIComponent(key)] = decodeURIComponent(value);
-        });
+			});
 
-        axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params} )
-        .then(response => {this.<%= $item =%> = response.data.dat
-        })
-
-     }
+			axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params} )
+			.then(response => { this.<%= $item =%> = response.data.dat
+			})
+			.catch(function(error) {
+				document.getElementById("div_msg").innerHTML="<span id=\"spn_err_msg\">" + error.response.data.msg + '</span>'
+         	// console.log(error.response.data);
+    		}) 
+	  }
    });
 }
 
