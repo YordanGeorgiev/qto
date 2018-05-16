@@ -1,23 +1,37 @@
-
 #app_list_labels {
-   margin: 10%;
+   margin: 5% 10% 5% 10%;
 }
+
 #app_list_labels .lbl_row {
 	width: 100% ; 
 	display: inline-block;
-	margin: 0% 5% 0% 5% ; 
 }
+
 #app_list_labels .lbl_lft {
-   /*background-color: Red; */
+   display: block ; 
    float: left;
-   width: 20%;
+   min-width: 20%;
+   /* background-color: Red; */
 }
 
 #app_list_labels .lbl_rgt {
-   /* background-color: Aqua;*/
+   display: block ; 
 	float: left ; 
-   width: 80%;
+   max-width: 80%;
+   /* background-color: Aqua;*/
 }
+
 #vfor_cols {
-	margin: 3% 0% 0% 0% ; 
+	margin: 1% 0% 0% 0% ; 
+   padding: 1%;
+   border: 3px solid #CDCDCD;
+   border-radius: 7px;
+}
+
+#vfor_cols:hover, #vfor_cols:focus {
+   background-color: #F0F8FF ; 
+   box-shadow: 4px 4px rgba(0,0,0,0.6);
+   -moz-box-shadow: 4px 4px 4px rgba(0,0,0,0.6);
+   -webkit-box-shadow: 4px 4px 4px rgba(0,0,0,0.6);
+   -o-box-shadow: 4px 4px 4px rgba(0,0,0,0.6);
 }
