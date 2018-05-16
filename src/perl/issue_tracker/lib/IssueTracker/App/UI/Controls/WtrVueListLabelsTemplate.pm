@@ -63,8 +63,8 @@ package IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ;
 					   next unless ( $to_pick ) ; 	
                   unless ( $to_hide  ) {
                      	$control .= '<div class="lbl_row">' ; 
-                     	$control .= '<div class="lbl_lft"><b>' . $col . ': </b> </div>' ; 
-								$control .= '<div class="lbl_rgt">{{ ' . $single_item . '.' . $col . ' }} </div>' ; 
+                     	$control .= '<div class="lbl_lft" ><b>' . $col . ': </b> </div>' ; 
+								$control .= '<div class="lbl_rgt" tabindex="0">{{ ' . $single_item . '.' . $col . ' }} </div>' ; 
                      	$control .= '</div>';
 						}
    					$control .= '<div class="div_spacer2"></div>' ; 
