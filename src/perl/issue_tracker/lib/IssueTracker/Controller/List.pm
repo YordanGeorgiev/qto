@@ -32,7 +32,7 @@ sub doListItems {
    my $msg              = '' ; 
    my $vct_list_labels  = '' ; 
 
-	print "url: " . $self->req->url->to_abs . "\n" ; 
+	print "List.pm ::: url: " . $self->req->url->to_abs . "\n" ; 
    $appConfig		 = $self->app->get('AppConfig');
    $objModel       = ${$self->app->get('ObjModel')} ; 
 
@@ -52,6 +52,7 @@ sub doListItems {
    $vct_list_labels = '' unless $ret == 0 ; 
    $msg = '<span id="spn_err_msg">' . $msg . '</span>' unless $ret == 0 ; 
    $msg = '<span id="spn_msg">' . $msg . '</span>' if $ret == 0 ; 
+   $self->res->code(400) unless $ret == 0 ; 
 
    $self->res->headers->accept_charset('UTF-8');
    $self->res->headers->accept_language('fi, en');

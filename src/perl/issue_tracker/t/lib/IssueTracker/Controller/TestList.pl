@@ -10,9 +10,22 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    my $tm = '' ; # the test message for each test 
    my $t = Test::Mojo->new('IssueTracker');
    my $appConfig = $t->app->get('AppConfig') ; 
-   
-   my $db_name= $appConfig->{ 'postgres_db_name' } ; 
-   my $url = '/' . $db_name . '/select-tables' ; 
+  
+   $tm = ' when providing a non-existing db the http response code should be 400 ' ; 
+   my $db_name = 'non_existent_db' ; 
+   my $url = '/' . $db_name . '/list/some-table' ; 
+   $t->get_ok($url)
+      ->status_is(400 , $tm )
+   ;
+
+   $tm = ' the error msg should be diplayed in the err_msg label of the page ' ; 
+   my $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
+   my $exp_txt = 'cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
+   ok ( $dom->at('#spn_err_msg')->text eq $exp_txt , $tm ) ; 
+   ; 
+
+   $db_name= $appConfig->{ 'postgres_db_name' } ; 
+   $url = '/' . $db_name . '/select-tables' ; 
 
 	$tm = "for list all the tables from the $db_name db" ; 
    $t->get_ok($url)
@@ -41,6 +54,12 @@ for my $row ( @$list ) {
 	$tm = 'for get the correct title <<table_name>> in <<db_name>>' ; 
 	$t->get_ok($url)->text_is('html head title'
     	=> " list $table_name in $db_name " , $tm );
+   
+   $tm = ' no text should be displayed in the spn_msg label as the user sees the result' ; 
+   my $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
+   my $exp_txt = '' ; 
+   ok ( $dom->at('#spn_msg')->text eq $exp_txt , $tm ) ; 
+   ; 
 
 #   feature-id: ?!
 #   $url = '/' . $db_name . '/select/' . $table_name ; 

@@ -29,7 +29,6 @@ for my $row ( @$list ) {
 	my $url_params = '' ; # 
 	my $url = '' ; 
 
-   if ( defined ( $row->{'prio'} ) ) {
          # test a filter by Select of integers	
          $url_params = '?fltr-by=prio&fltr-val=1,2,3' ; 
          $url = '/' . $db_name . '/select/' . $table . $url_params ; 
@@ -51,7 +50,6 @@ for my $row ( @$list ) {
                ok ( $row->{'prio'} >= 1, $tm ) ; 
          }
    
-   }
 
    if ( defined ( $row->{'status'} ) ) {
       print "test a string filter \n" ; 

@@ -135,6 +135,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 				$sql .= ' AND ' ; 
          }
 
+         print "sql : $sql \n" ; 
+         print "RdrPostgresDb.pm \n" ; 
+
 			for (1..4) { chop ( $sql) } ;
 			return ( 0 , "" , $sql ) ; 
 
@@ -342,6 +345,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $sth              = {} ;         # this is the statement handle
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
+
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
       
       $str_sql = " 
          SELECT attnum, attname, attlen
@@ -352,14 +358,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          ORDER  BY attnum
       ;
       " ; 
-
-      $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
-                 'RaiseError'          => 1
-               , 'ShowErrorStatement'  => 1
-               , 'PrintError'          => 1
-               , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
-      } ) or $msg = DBI->errstr;
       
       $sth = $dbh->prepare($str_sql);  
 
@@ -486,7 +484,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       if ($@) {
          $ret = 2 ; 
-         $msg = "cannot connect to the $postgres_db_name database: " . DBI->errstr ; 
+         $msg = 'cannot connect to the "' . $postgres_db_name . '" database: ' . DBI->errstr ; 
          return ( $ret , $msg , undef ) ; 
       }
 
@@ -584,6 +582,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       # not all items have the prio attribute
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
+
+      print "$str_sql \n" ; 
+      print "RdrPostgresDb.pm\n" ; 
 
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  

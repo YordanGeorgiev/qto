@@ -12,7 +12,7 @@ doMojoMorboStart(){
 	sleep "$sleep_interval"
 
 	# Action !!!
-   bash -c "morbo $product_instance_dir/src/perl/issue_tracker/script/issue_tracker" &
+   bash -c "morbo -w $product_instance_dir/src/perl/issue_tracker $product_instance_dir/src/perl/issue_tracker/script/issue_tracker" &
 	doLog "DEBUG check with netstat "
    # sudo visudoers 
    # ysg ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
