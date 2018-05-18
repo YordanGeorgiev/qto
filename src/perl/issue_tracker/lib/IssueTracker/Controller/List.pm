@@ -15,7 +15,6 @@ our $module_trace   = 0 ;
 our $appConfig      = {};
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgre';
-our $objModel       = {} ; 
 
 
 #
@@ -34,7 +33,7 @@ sub doListItems {
 
 	print "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    $appConfig		 = $self->app->get('AppConfig');
-   $objModel       = ${$self->app->get('ObjModel')} ; 
+   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
 
    $objModel->set('postgres_db_name' , $db ) ; 
    $objModel->set('table_name' , $item ) ; 
@@ -49,6 +48,7 @@ sub doListItems {
 
 	# build the list control 
    ( $ret , $msg , $vct_list_labels )  = $self->doBuildVueControlListLabels( $msg , \$objModel  ) ; 
+
    $msg = '<span id="spn_err_msg">' . $msg . '</span>' unless $ret == 0 ; 
    $msg = '<span id="spn_msg">' . $msg . '</span>' if $ret == 0 ; 
    $self->res->code(400) unless $ret == 0 ; 

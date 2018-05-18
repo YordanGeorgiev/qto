@@ -43,8 +43,8 @@ for my $row ( @$list ) {
 
    $url = '/' . $db_name . '/select/' . $table_name ; 
    my $res = $ua->get('/' . $db_name . '/select/' . $table_name )->result->json ; 
-   $tm .= 'the response msg for the ' . $table_name . "is correct for the url: $url" ; 
-   ok ( $res->{'msg'} eq "SELECT OK for table: $table_name" , $tm) ; 
+   $tm .= 'the response msg for the ' . $table_name . " for the url: $url is empty" ; 
+   ok ( $res->{'msg'} eq "" , $tm) ; 
 
    $tm = 'the return code for the ' . $table_name . ' is correct' ; 
    ok ( $res->{'ret'} == 200 , $tm) ; 

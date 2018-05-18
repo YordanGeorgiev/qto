@@ -61,6 +61,11 @@ sub startup {
      controller   => 'Select'
    , action       => 'doSelectItems'
    );
+   # http://host-name:3000/dev_issue_tracker/select/monthly_issues
+   $r->get('/:db/select-meta/:item')->to(
+     controller   => 'Select'
+   , action       => 'doSelectMeta'
+   );
    
    
    # http://host-name:3000/dev_issue_tracker/select/monthly_issues
@@ -91,12 +96,10 @@ sub doInitialize {
    $objConfigurator  = 'IssueTracker::App::Utils::Configurator'->new( 
          $ConfFile, \$appConfig);
    $objLogger        = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
-   $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
 
    p($appConfig) ; 
    $self->set('AppConfig' , $appConfig );
    $self->set('ObjLogger', $objLogger );
-   $self->set('ObjModel', \$objModel );
 
    $msg = "START MAIN";
    $objLogger->doLogInfoMsg($msg);
