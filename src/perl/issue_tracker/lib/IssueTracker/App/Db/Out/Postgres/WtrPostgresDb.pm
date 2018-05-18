@@ -101,6 +101,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          $str_val_list = '' ; 
       }
       
+      croak ( $str_sql_insert ) ; 
       p ( $str_sql_insert ) if $module_trace == 1 ; 
 
       # proper authentication implementation src:

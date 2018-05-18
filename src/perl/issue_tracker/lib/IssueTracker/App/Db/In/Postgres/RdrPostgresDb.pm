@@ -13,7 +13,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Mdl::Model ; 
 
-   our $module_trace                            = 0 ; 
+   our $module_trace                            = 0 ;  
    our $IsUnitTest                              = 0 ; 
 	our $appConfig 										= {} ; 
 	our $objLogger 										= {} ; 
@@ -339,7 +339,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		   $postgres_db_name = $objModel->get('postgres_db_name');
       }
       my $msg              = q{} ;         
-      my $ret              = 1 ;          # this is the return value from this method 
+      my $ret              = () ;          # this is the return value from this method 
       my $debug_msg        = q{} ; 
       my $mhsr2             = {} ;         # this is meta hash describing the data hash ^^
       my $sth              = {} ;         # this is the statement handle
@@ -359,25 +359,25 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       ;
       " ; 
       
-      $sth = $dbh->prepare($str_sql);  
-
-      $sth->execute()
-            or $objLogger->error ( "$DBI::errstr" ) ;
-
-      $mhsr2 = $sth->fetchall_hashref( 'attnum' ) ; 
-      binmode(STDOUT, ':utf8');
-
-      $msg = DBI->errstr ; 
-
-      unless ( defined ( $msg ) ) {
-         $msg = 'SELECT meta OK for table: ' . "$table" ; 
+      eval { 
+         $sth = $dbh->prepare($str_sql);  
+         $sth->execute() ; 
+      };
+      # chk: https://stackoverflow.com/a/451454/65706 
+      if ( $@ ) { 
+         $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
+         $msg = "error while retrieving the meta data for the $table table" ; 
+         $msg .= "most probably the table does not exist: " ; 
+         $msg .= "$DBI::errstr" ; 
+         $ret = 1 ; 
+         return ( $ret , $msg , "" ) ; 
+      };
+         $mhsr2 = $sth->fetchall_hashref( 'attnum' ) ; 
+         binmode(STDOUT, ':utf8');
          $objModel->set('hs_headers' , $mhsr2 ) ; 
          $ret = 0 ; 
-      } else {
-         $objLogger->doLogErrorMsg ( $msg ) ; 
-      }
+         return ( $ret , $msg , $mhsr2 ) ; 	
 
-      return ( $ret , $msg , $mhsr2 ) ; 	
    }
 
 
@@ -488,7 +488,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          return ( $ret , $msg , undef ) ; 
       }
 
-      $ret = 0 ; $msg = "connect ok" ; 
+      $ret = 0 ; $msg = "" ; 
       return ( $ret , $msg , $dbh ) ; 
    }
 

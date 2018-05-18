@@ -11,7 +11,7 @@ use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
 use IssueTracker::App::UI::WtrUIFactory ; 
 
-our $module_trace   = 0 ;
+our $module_trace   = 0 ; 
 our $appConfig      = {};
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgre';
@@ -32,7 +32,7 @@ sub doListItems {
    my $msg              = '' ; 
    my $vct_list_labels  = '' ; 
 
-	print "List.pm ::: url: " . $self->req->url->to_abs . "\n" ; 
+	print "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    $appConfig		 = $self->app->get('AppConfig');
    $objModel       = ${$self->app->get('ObjModel')} ; 
 
@@ -49,7 +49,6 @@ sub doListItems {
 
 	# build the list control 
    ( $ret , $msg , $vct_list_labels )  = $self->doBuildVueControlListLabels( $msg , \$objModel  ) ; 
-   $vct_list_labels = '' unless $ret == 0 ; 
    $msg = '<span id="spn_err_msg">' . $msg . '</span>' unless $ret == 0 ; 
    $msg = '<span id="spn_msg">' . $msg . '</span>' if $ret == 0 ; 
    $self->res->code(400) unless $ret == 0 ; 
@@ -83,7 +82,7 @@ sub doBuildVueControlListLabels {
    my $table = $objModel->get('table_name'); 
 
    ( $ret , $msg , $mhsr2 ) = $objRdrDb->doSelectTablesColumnList ( $table ) ;
-   return ( $ret , $msg , undef ) unless $ret == 0 ; 
+   return ( $ret , $msg , '' ) unless $ret == 0 ; 
 	
    my $objWtrUIFactory
       = 'IssueTracker::App::UI::WtrUIFactory'->new(\$appConfig, \$objModel );

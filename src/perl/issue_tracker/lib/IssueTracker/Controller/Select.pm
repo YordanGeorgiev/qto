@@ -28,7 +28,7 @@ sub doSelectItems {
    my $db          = $self->stash('db');
    my $rdbms_type  = 'postgres';
 
-	print "Select.pm ::: url: " . $self->req->url->to_abs . "\n" ; 
+	print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
    $appConfig		= $self->app->get('AppConfig');
    $objModel       = ${$self->app->get('ObjModel')} ; 
