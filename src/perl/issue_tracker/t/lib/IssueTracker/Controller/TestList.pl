@@ -10,17 +10,22 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    my $tm = '' ; # the test message for each test 
    my $t = Test::Mojo->new('IssueTracker');
    my $appConfig = $t->app->get('AppConfig') ; 
+   my $ua = {} ;                                # the mojo user agent 
+   my $dom = {} ;                                # the mojo dom parser 
+   my $url = {} ;                                # the url to build for each test 
+   my $exp_txt = {} ;                            # the expected text to check 
+   my $response = {} ; 
   
    $tm = ' when providing a non-existing db the http response code should be 400 ' ; 
    my $db_name = 'non_existent_db' ; 
-   my $url = '/' . $db_name . '/list/some-table' ; 
+   $url = '/' . $db_name . '/list/some-table' ; 
    $t->get_ok($url)
       ->status_is(400 , $tm )
    ;
 
    $tm = ' the error msg should be diplayed in the err_msg label of the page ' ; 
-   my $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
-   my $exp_txt = 'cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
+   $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
+   $exp_txt = 'cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
    ok ( $dom->at('#spn_err_msg')->text eq $exp_txt , $tm ) ; 
    ; 
 
@@ -33,8 +38,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
       ->header_is('Accept-Charset' => 'UTF-8' , $tm ) 
    ;
 
-   my $ua  = $t->ua ; 
-   my $response = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
+   $ua  = $t->ua ; 
+   $response = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
    my $list = $response->{ 'dat' } ; 
 
 # foreach table in the app db in test call db/list/table
@@ -56,21 +61,26 @@ for my $row ( @$list ) {
     	=> " list $table_name in $db_name " , $tm );
    
    $tm = ' no text should be displayed in the spn_msg label as the user sees the result' ; 
-   my $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
-   my $exp_txt = '' ; 
+   $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
+   $exp_txt = '' ; 
    ok ( $dom->at('#spn_msg')->text eq $exp_txt , $tm ) ; 
    ; 
 
-#   feature-id: ?!
-#   $url = '/' . $db_name . '/select/' . $table_name ; 
-#   my $res = $ua->get('/' . $db_name . '/select/' . $table_name )->result->json ; 
-#   $tm .= 'the response msg for the ' . $table_name . "is correct for the url: $url" ; 
-#   ok ( $res->{'msg'} eq "SELECT OK for table: $table_name" , $tm) ; 
-#
-#   $tm = 'the return code for the ' . $table_name . ' is correct' ; 
-#   ok ( $res->{'ret'} == 200 , $tm) ; 
 }
 
+   $tm = 'handle error on non-existent db ' ; 
+	$url = '/non_existent_db/list/some_table&as=labels' ; 
+   $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
+
+   $exp_txt = 'cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
+   ok ( $dom->at('#spn_err_msg')->text eq $exp_txt , $tm ) ; 
+
+   $tm = 'handle error on non-existent table' ; 
+	$url = '/' . $db_name . '/list/non_existent_table?as=labels' ; 
+   $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
+
+   $exp_txt = "the table non_existent_table does not exist in the $db_name database" ; 
+   ok ( $dom->at('#spn_err_msg')->text eq $exp_txt , $tm ) ; 
 
 done_testing();
 

@@ -66,9 +66,9 @@ for my $row ( @$list ) {
    $tm = 'the return code for the ' . $table_name . ' is correct' ; 
    ok ( $res->{'ret'} == 400 , $tm) ; 
    
-   $res = $ua->get('/non_existent_db/select/some_table'  )->result->json ; 
+   $res = $ua->get('/non_existent_db/select/monthly_issues'  )->result->json ; 
    $tm = 'shoud return error for cannot connect to db' ; 
-   my $exp_err_msg = 'cannot connect to the non_existent_db database: FATAL:  database "non_existent_db" does not exist' ; 
+   my $exp_err_msg = 'cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
    ok ( $res->{'msg'} eq $exp_err_msg , $tm ) ; 
 
 
