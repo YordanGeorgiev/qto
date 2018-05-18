@@ -135,8 +135,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 				$sql .= ' AND ' ; 
          }
 
-         print "sql : $sql \n" ; 
-         print "RdrPostgresDb.pm \n" ; 
+         # debug print "sql : $sql \n" ; 
+         # debug print "RdrPostgresDb.pm \n" ; 
 
 			for (1..4) { chop ( $sql) } ;
 			return ( 0 , "" , $sql ) ; 
@@ -197,11 +197,13 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
+      # debug print "$str_sql \n stop RdrPostgresDb.pm" ; 
 
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
 
       $hsr = $sth->fetchall_hashref( 'row_id' ) ; 
+
       $objModel->set('hsr2' , $hsr);
       # p($hsr )  ; 
       binmode(STDOUT, ':utf8');
@@ -214,10 +216,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       } else {
          $objLogger->doLogErrorMsg ( $msg ) ; 
       }
-
-      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      $debug_msg        = 'doSelectTablesList ret ' . $ret ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
 
       $appConfig->{ "$postgres_db_name".'.tables-list'} = $hsr ;
       return ( $ret , $msg , $hsr ) ; 	
@@ -348,31 +346,37 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
-      
-      $str_sql = " 
-         SELECT attnum, attname, attlen
-         FROM   pg_attribute
-         WHERE  attrelid = '" . lc($table) . "'::regclass
-         AND    attnum > 0
-         AND    NOT attisdropped
-         ORDER  BY attnum
-      ;
-      " ; 
-      
+		$str_sql = "
+			SELECT a.attnum, a.attname, a.attlen ,
+					 pg_catalog.format_type(a.atttypid, a.atttypmod),
+					 a.attnotnull 
+			FROM pg_attribute a
+			  JOIN pg_class t on a.attrelid = t.oid
+			  JOIN pg_namespace s on t.relnamespace = s.oid
+			WHERE 1=1
+				AND a.attnum > 0 
+				AND NOT a.attisdropped
+				AND t.relname = '" . lc($table) . "' 
+				AND s.nspname = 'public' 
+			ORDER BY t.relname , a.attnum
+			;
+		" ; 
+      # debug print "SQL: $str_sql \n STOP RdrPostgresDb.pm" ;   
+
+      # chk: https://stackoverflow.com/a/451454/65706 
       eval { 
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ; 
+         $mhsr2 = $sth->fetchall_hashref( 'attnum' ) ; 
       };
-      # chk: https://stackoverflow.com/a/451454/65706 
-      if ( $@ ) { 
-         $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
-         $msg = "error while retrieving the meta data for the $table table" ; 
-         $msg .= "most probably the table does not exist: " ; 
-         $msg .= "$DBI::errstr" ; 
+      if ( $@ or !scalar(%$mhsr2)) { 
+         # $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
+         $msg = "failed to get $table table meta data -  " ; 
+         $msg .= "most probably the table does not exist " ; 
          $ret = 1 ; 
          return ( $ret , $msg , "" ) ; 
       };
-         $mhsr2 = $sth->fetchall_hashref( 'attnum' ) ; 
+
          binmode(STDOUT, ':utf8');
          $objModel->set('hs_headers' , $mhsr2 ) ; 
          $ret = 0 ; 
@@ -583,8 +587,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       # not all items have the prio attribute
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
 
-      print "$str_sql \n" ; 
-      print "RdrPostgresDb.pm\n" ; 
+      # debug print "$str_sql \n" ; 
+      # debug print "RdrPostgresDb.pm\n" ; 
 
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  

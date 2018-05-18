@@ -13,30 +13,36 @@ our $objModel = {} ;
 	# -----------------------------------------------------------------------------
    sub doConvert {
       my $self          = shift ; 
-      my $hsr2          = $objModel->get('hsr2');
-      my $to_order_by   = $objModel->get('select.web-action.o') ; 
+      my $hsr2          = shift ; 
+      my $to_order_by   = $objModel->get('select.web-action.o') || 'attnum' ; 
       my $to_hide       = $objModel->get('select.web-action.hide');
 
       my $msg        = 'unknown error has occurred !!!' ; 
       my $ret        = 1 ;      # assume error from the start  
       my @list       = () ; 
 
-         if ( defined ( $to_order_by) ) {
-            foreach my $key ( sort { $hsr2->{$a}->{ $to_order_by } cmp $hsr2->{$b}->{ $to_order_by } } keys (%$hsr2) ) {
-               my $row = $hsr2->{$key} ; 
-               ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
-               return ( $ret , $msg ) unless $ret == 0 ; 
-               push ( @list , $row ) ; 
-            }
+
+      my $evl_str_sort_data = 'sort { $hsr2->{$a}->{ $to_order_by } cmp $hsr2->{$b}->{ $to_order_by } } keys (%$hsr2) ' ; 
+      my $evl_str_sort_meta = 'keys %$hsr2' ; # as it is just a hash ref of hash refs 
+      my $evl_str_sort_by = $evl_str_sort_data ; 
+      $evl_str_sort_by = $evl_str_sort_meta if $to_order_by eq 'attnum' ; 
+
+      if ( defined ( $to_order_by) ) {
+         foreach my $key (  eval "$evl_str_sort_by" ) {
+            my $row = $hsr2->{$key} ; 
+            ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
+            return ( $ret , $msg ) unless $ret == 0 ; 
+            push ( @list , $row ) ; 
          }
-         else {
-            foreach my $key ( keys %$hsr2 ) {
-               my $row = $hsr2->{$key} ; 
-               ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
-               return ( $ret , $msg ) unless $ret == 0 ; 
-               push ( @list , $row ) ; 
-            }
+      }
+      else {
+         foreach my $key ( keys %$hsr2 ) {
+            my $row = $hsr2->{$key} ; 
+            ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
+            return ( $ret , $msg ) unless $ret == 0 ; 
+            push ( @list , $row ) ; 
          }
+      }
       $ret = 0 ; 
       $msg = "" ; 
       return ( $ret , $msg , \@list ) ; 

@@ -14,7 +14,94 @@ our $module_trace   = 0 ;
 our $appConfig      = {};
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgre';
-our $objModel       = {} ; 
+
+
+#
+# --------------------------------------------------------
+# Select all the rows from db by passed db and table name
+# --------------------------------------------------------
+sub doSelectMeta {
+
+   my $self        = shift;
+   my $item        = $self->stash('item');
+   my $db          = $self->stash('db');
+   my $rdbms_type  = 'postgres';
+
+	print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
+
+   $appConfig		= $self->app->get('AppConfig');
+   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
+   $objModel->set('postgres_db_name' , $db ) ; 
+ 
+   my $ret = 0;
+   my $msg = 'unknown error during Select item';
+
+   my $objRdrDbsFactory
+      = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
+   my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+   ($ret, $msg) = $objRdrDb->doSelectTablesColumnList($item);
+
+   $self->res->headers->accept_charset('UTF-8');
+   $self->res->headers->accept_language('fi, en');
+   $self->res->headers->content_type('application/json; charset=utf-8');
+
+
+   if ( $ret == 0 ) {
+      my $list = () ; # an array ref holding the converted hash ref of hash refs 
+      my $http_code = 200 ; 
+      $msg = "SELECT meta OK for table: $item" ; 
+      my $objCnrHsr2ToArray = 
+         'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
+      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert($objModel->get('hs_headers'));
+
+      unless ( $ret == 0 ) {
+         $http_code = 400 ; 
+         $list = '' ;
+      }
+      
+      $self->res->code($http_code);
+      $self->render( 'json' =>  { 
+           'msg'   => $msg
+         , 'dat'   => $list
+         , 'ret'   => $http_code
+         , 'req'   => "GET " . $self->req->url->to_abs
+      });
+   } elsif ( $ret == 400 ) {
+
+      $self->res->code(400);
+      $self->render( 'json' =>  { 
+         'msg'   => $msg,
+         'ret'   => 400, 
+         'req'   => "GET " . $self->req->url->to_abs
+      });
+   } elsif ( $ret == 2 ) {
+
+      $self->res->code(400);
+      $self->render( 'json' =>  { 
+         'msg'   => $msg,
+         'ret'   => 400, 
+         'req'   => "GET " . $self->req->url->to_abs
+      });
+   } elsif ( $ret == 1 ) {
+      $msg = " the table $item does not exist " ; 
+      $self->res->code(400);
+      $self->render( 'json' =>  { 
+         'msg'   => $msg,
+         'ret'   => 400, 
+         'req'   => "GET " . $self->req->url->to_abs
+      });
+   } else {
+
+      $msg = 'unknown error has occurred' ; 
+      $self->res->code(400);
+      $self->render( 'json' => { 
+         'msg'   => $msg,
+         'ret' => 404, 
+         'req'   => "GET " . $self->req->url->to_abs
+      })
+      ;
+   }
+}
 
 
 #
@@ -31,7 +118,7 @@ sub doSelectItems {
 	print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
    $appConfig		= $self->app->get('AppConfig');
-   $objModel       = ${$self->app->get('ObjModel')} ; 
+   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
  
    my $ret = 0;
@@ -62,7 +149,7 @@ sub doSelectItems {
       $msg = "SELECT OK for table: $item" ; 
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert();
+      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert ($objModel->get('hsr2'));
 
       unless ( $ret == 0 ) {
          $http_code = 400 ; 
@@ -106,7 +193,6 @@ sub doSelectItems {
 }
 
 
-
 #
 # --------------------------------------------------------
 # provide the following json response of the tables Select in the db
@@ -121,13 +207,14 @@ sub doSelectItems {
 # --------------------------------------------------------
 sub doSelectTables {
 
-	my $self        = shift;
-	my $db          = $self->stash('db');
-	my $rdbms_type  = 'postgres';
+	my $self       = shift;
+	my $db         = $self->stash('db');
+	my $rdbms_type = 'postgres';
    my $msg = 'unknown error during select-tables';
 
-	$appConfig		= $self->app->get('AppConfig');
-	$objModel       = ${$self->app->get('ObjModel')} ; 
+	$appConfig	   = $self->app->get('AppConfig');
+   my $objModel   = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
+
 	$objModel->set('postgres_db_name' , $db ) ; 
 
 	my $ret = 0;
@@ -148,7 +235,7 @@ sub doSelectTables {
       my $list = () ; # an array ref holding the converted hash ref of hash refs 
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert();
+      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2'));
 
       $self->res->headers->content_type('application/json; charset=utf-8');
       $self->res->code(200);

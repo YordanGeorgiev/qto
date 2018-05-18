@@ -50,7 +50,7 @@ for my $row ( @$list ) {
    my $tm = '' ; # the test msg 
 
 	$tm = 'for get the correct http status code - 200 , utf-8 and fi,en as langs' ; 
-	$url = '/' . $db_name . '/list/' . $table_name ; 
+	$url = '/' . $db_name . '/list/' . $table_name . '?as=lbls' ; 
 	$t->get_ok( $url )
 		->status_is(200) 
 		 ->header_is('Accept-Charset' => 'UTF-8')
@@ -75,11 +75,12 @@ for my $row ( @$list ) {
    $exp_txt = 'cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
    ok ( $dom->at('#spn_err_msg')->text eq $exp_txt , $tm ) ; 
 
+   $db_name= $appConfig->{ 'postgres_db_name' } ; 
    $tm = 'handle error on non-existent table' ; 
-	$url = '/' . $db_name . '/list/non_existent_table?as=labels' ; 
+	$url = '/' . $db_name . '/list/non_existent_table?as=lbls' ; 
    $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
 
-   $exp_txt = "the table non_existent_table does not exist in the $db_name database" ; 
+   $exp_txt = "failed to get non_existent_table table meta data -  most probably the table does not exist "; 
    ok ( $dom->at('#spn_err_msg')->text eq $exp_txt , $tm ) ; 
 
 done_testing();

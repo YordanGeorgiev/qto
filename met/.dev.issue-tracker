@@ -5,15 +5,25 @@ src/perl/issue_tracker/public/poc
 src/perl/issue_tracker/public/poc/list-lable.html
 src/perl/issue_tracker/public/poc/app.js
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOrderBy.pl
 src/perl/issue_tracker/templates/pages/list.html.ep
-src/perl/issue_tracker/public/list/app.js
 src/perl/issue_tracker/public/css/controls/app_list_labels.css
 src/perl/issue_tracker/public/css/site/site.css
 src/perl/issue_tracker/public/css
 src/perl/issue_tracker/templates/controls
+# ---
+src/perl/issue_tracker/lib/IssueTracker.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller
+src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectHide.pl
 # ---
 src/perl/issue_tracker/lib/IssueTracker/App/UI
 src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm
@@ -23,7 +33,6 @@ src/perl/issue_tracker/lib/IssueTracker/App/UI/Pages/1
 src/perl/issue_tracker/t/TestIssueTracker.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/issue_tracker/t/lib/IssueTracker/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/TestRdrCmdArgs.pl
@@ -119,7 +128,6 @@ src/perl/issue_tracker/lib/IssueTracker/App/Db
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/RdrDbsFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/WtrDbsFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb.pm
@@ -167,15 +175,6 @@ doc/txt/issue-tracker/funcs/mojo-hypnotoad-stop.func.txt
 src/perl/issue_tracker/script
 src/perl/issue_tracker/script/issue_tracker
 src/perl/issue_tracker/lib
-src/perl/issue_tracker/lib/IssueTracker.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller
-src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectHide.pl
 src/perl/issue_tracker/t
 src/perl/issue_tracker/t/basic.t
 cnf
