@@ -1,0 +1,22 @@
+% use utf8;
+<!DOCTYPE html>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <title> list <%= " $item " =%> in <%= " $db " =%> </title> 
+   <link rel="stylesheet" type="text/css" href="../../css/controls/app_list_labels.css" />
+   <link rel="stylesheet" type="text/css" href="../../css/site/site.css" />
+</head>
+<body>
+
+<div id="div_msg"> 
+   <%== $msg %>
+</div>
+
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<%= content %>
+
+</body>
+</html>
