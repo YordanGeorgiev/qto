@@ -1,0 +1,35 @@
+% use utf8;
+% layout 'site';
+
+<div>
+   <%== $vct_list_labels %>
+</div>
+
+<script>
+
+if ( document.getElementById("spn_msg") ) {
+   const vm = new Vue({ el: '#app_list_labels',
+     data: {
+       <%= $item =%>: []
+     },
+     mounted() {
+			var url_params = {} 
+         if( window.location.toString().indexOf("?") != -1) {
+            window.location.search.split('?')[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
+               url_params[decodeURIComponent(key)] = decodeURIComponent(value);
+            });
+         } else {
+            url_params = { as:"lbls" };  // a dymmy for work-around on the have to pass url params to axious
+         }
+
+			axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
+			.then(response => { this.<%= $item =%> = response.data.dat
+			})
+			.catch(function(error) {
+				document.getElementById("div_msg").innerHTML="<span id=\"spn_err_msg\">" + error.response.data.msg + '</span>'
+    		}) 
+	  }
+   });
+}
+
+</script>

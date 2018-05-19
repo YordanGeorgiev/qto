@@ -362,12 +362,13 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 			;
 		" ; 
       # debug print "SQL: $str_sql \n STOP RdrPostgresDb.pm" ;   
-
+      
       # chk: https://stackoverflow.com/a/451454/65706 
       eval { 
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ; 
          $mhsr2 = $sth->fetchall_hashref( 'attnum' ) ; 
+         # debug p $mhsr2 ; 
       };
       if ( $@ or !scalar(%$mhsr2)) { 
          # $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;

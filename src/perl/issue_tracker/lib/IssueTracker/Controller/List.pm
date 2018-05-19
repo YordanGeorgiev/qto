@@ -58,11 +58,11 @@ sub doListItems {
 
    # and render the result
    $self->render(
-      template             => 'pages/list'
-    , msg                  => $msg
-    , item                 => $item
-    , db 						=> $db
-    , vct_list_labels      => $vct_list_labels
+      template          => 'controls/list'
+    , msg               => $msg
+    , item              => $item
+    , db 					=> $db
+    , vct_list_labels   => $vct_list_labels
    ); 
 }
 

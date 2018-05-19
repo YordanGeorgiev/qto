@@ -46,7 +46,9 @@ sub startup {
   $self->plugin('PODRenderer');
 
   ($ret, $msg) = $self->doInitialize();
-  
+ 
+   #$self->defaults(layout => 'site');
+
    # Router
    my $r = $self->routes;
 
