@@ -1,13 +1,11 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # --- 
 src/perl/issue_tracker/public/
-src/perl/issue_tracker/public/poc
-src/perl/issue_tracker/public/poc/list-lable.html
-src/perl/issue_tracker/public/poc/app.js
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClient.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 src/perl/issue_tracker/templates/layouts/site.html.ep
@@ -747,6 +745,10 @@ src/sql/mysql/tst_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/tst_issue_tracker/50.create-ReadMe-table.sql
 src/sql/mysql/tst_issue_tracker/51.create-Tests-table.sql
 src/sql/mysql/tst_issue_tracker/53.create-SystemGuide-table.sql
+# ---
+src/perl/issue_tracker/public/poc
+src/perl/issue_tracker/public/poc/list-lable.html
+src/perl/issue_tracker/public/poc/app.js
 # ---
 doc/txt/issue-tracker/tests/run-perl-integration-tests.test.txt
 doc/txt/issue-tracker/helps/run-perl-integration-tests.help.txt
