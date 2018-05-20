@@ -7,7 +7,11 @@
 doRunPerlIntegrationTests(){
 
 	doLog "DEBUG START doRunPerlIntegrationTests"
-  
+
+	doLog "INFO re-start the issue-tracker app-layer just for sure"
+   bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop 
+   bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
+
 	doLog "INFO re-create the documentation db"
    bash src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
 
@@ -70,6 +74,10 @@ doRunPerlIntegrationTests(){
    doLog "INFO START integration testing - do run all the implemented action tests" 
    perl src/perl/issue_tracker/t/TestIssueTracker.pl
 	echo -e "\n\n\n" 
+
+   doLog "INFO START client side testing"
+   perl -I src/perl/issue_tracker/lib/ \
+   src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClient.pl
 
 	doLog "DEBUG STOP  doRunPerlIntegrationTests"
 }

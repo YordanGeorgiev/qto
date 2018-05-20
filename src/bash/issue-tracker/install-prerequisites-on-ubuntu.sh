@@ -41,6 +41,9 @@ done < <(cat << "EOF"
 EOF
 )
 
+curl -L http://cpanmin.us | perl - --sudo App::cpanminus
+sudo cpanm install JSON
+
 echo installing the nice-to-have pre-requisites
 echo you have 5 seconds to proceed ...
 echo or

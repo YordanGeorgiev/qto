@@ -62,22 +62,39 @@ sub doCheckUbuntuOSPackages {
 sub doCheckRequiredModules {
 
   my @modules = qw(
-    URL::Encode
-    ExtUtils::Installed
-    Carp::Always
-    Data::Printer
-    File::Copy
-    File::Find
-    File::Path
-    Term::Prompt
-    Excel::Writer::XLSX
-    Spreadsheet::ParseExcel
-    Spreadsheet::XLSX
-    Spreadsheet::ParseExcel::FmtJapan
-    Net::Google::DataAPI::Auth::OAuth2
-    Net::Google::Spreadsheets::V4
-    Net::Google::Spreadsheets;
-    Text::CSV_XS
+   URL::Encode
+   ExtUtils::Installed
+   Carp::Always
+   Data::Printer
+   File::Copy
+   File::Find
+   File::Path
+   Term::Prompt
+   Excel::Writer::XLSX
+   Spreadsheet::ParseExcel
+   Spreadsheet::XLSX
+   Spreadsheet::ParseExcel::FmtJapan
+   Net::Google::DataAPI::Auth::OAuth2
+   Net::Google::Spreadsheets::V4
+   Net::Google::Spreadsheets;
+   Text::CSV_XS
+   Module::Build::Tiny
+   Carp::Always
+   URL::Encode
+   Carp::Always
+   Data::Printer
+   File::Copy::Recursive
+   Spreadsheet::ParseExcel
+   Spreadsheet::XLSX
+   JSON
+   Net::Google::DataAPI::Auth::OAuth2
+   Text::CSV_XS
+   Net::Google::Spreadsheets::V4
+   Term::Prompt
+   Net::Google::Spreadsheets
+   Test::Trap
+   DBD::Pg
+   Tie::Hash::DBD'
   );
 
   for (@modules) {
