@@ -38,6 +38,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       return 0 ; 
    }
 
+
    sub doBuildLikeClause {
 
       my $self = shift ; 
@@ -94,10 +95,60 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		}
 
    } 
-   #eof sub doBuildLikeClause
+
+
+   sub doBuildWhereClauseByWith {
+
+      my $self = shift ; 
+      my $mshr = shift ; 
+		my $sql = '' ; 
+		my $ret = 400 ; 
+		my $msg = ' the following column: %s does not exist ' ; 
+
+      my $cols = $objModel->get('select.web-action.with-by') ; 
+      my $ops = $objModel->get('select.web-action.with-op') ; 
+      my $vals = $objModel->get('select.web-action.with-val') ;
+      
+      return ( 0 , "" , "")  unless ( defined ( $cols) ); 
+      return ( 0 , "" , "")  unless ( defined ( $ops ) ); 
+      return ( 0 , "" , "")  unless ( defined ( $vals ) ); 
+
+      if ( @$cols and @$ops  and @$vals) {
+      	# build the dynamic withing for the the in clause
+			$sql = ' AND ' ; 
+
+         for ( my $i = 0 ; $i < scalar ( @$cols ) ; $i++ ) {
+				my ( $col , $op, $val ) = () ; 
+            $col = $cols->["$i"] ;
+            $op = $ops->["$i"] ;
+            $val = $vals->["$i"] ;
+        
+            my $col_exists = $self->doCheckIfColumnExists ( $mshr->{'ColumnNames'} , $col ) ; 
+      	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
+
+				$sql .= " $col $op '$val'" ; 
+
+            print "sql : $sql \n" ; 
+            print "RdrPostgresDb.pm \n" ; 
+
+      	   return ( 0 , "" , $sql) ;
+         }
+
+
+      } elsif ( @$cols or @$vals or @$ops )  {
+			# if either the with names or the with values are null than the withing url is mall-formed
+			$msg = 'mall-formed url params for filtering with - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<with-value>>' ; 
+      	return ( 400 , "$msg" , "") ; 
+		} else {
+			# simply no withing attributes nor values are provided return 
+			# to proceed with the select 
+      	return ( 0 , "" , "") ;
+		}
+
+   } 
+
    
-   
-   sub doBuildWhereClause {
+   sub doBuildWhereClauseByFltr {
 
       my $self = shift ; 
       my $cols = shift ; 
@@ -152,8 +203,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		}
 
    } 
-   #eof sub doBuildWhereClause
-  
 
  
    sub doSelectTablesList {
@@ -545,11 +594,13 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       my $columns_to_select = "*" ; 
       if ( defined ( $objModel->get('select.web-action.pick') ) ) {
-         $columns_to_select = 'guid,' . $objModel->get('select.web-action.pick'); 
-         my @cols = split (',' , $columns_to_select ) ;
+         $columns_to_select = " guid" ;
+         my $lst_columns_to_select = $objModel->get('select.web-action.pick'); 
+         my @cols = split (',' , $lst_columns_to_select ) ;
          foreach my $col ( @cols ) { 
             my $col_exists = $self->doCheckIfColumnExists ( $mhsr->{'ColumnNames'} , $col ) ; 
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
+            $columns_to_select .= " , $col" ; 
          }
       }
       
@@ -579,17 +630,23 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql .= $like_clause if $like_clause ; 
 		
-      my $where_clause = '' ; 
-		( $ret , $msg , $where_clause ) = $self->doBuildWhereClause ( $mhsr ) ; 
+      my $where_clause_fltr = '' ; 
+		( $ret , $msg , $where_clause_fltr ) = $self->doBuildWhereClauseByFltr ( $mhsr ) ; 
 
 		return ( $ret , $msg ) unless $ret == 0 ; 
-		$str_sql .= $where_clause if $where_clause ; 
+		$str_sql .= $where_clause_fltr if $where_clause_fltr ; 
+      
+      my $where_clause_with = '' ; 
+		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $mhsr ) ; 
+
+		return ( $ret , $msg ) unless $ret == 0 ; 
+		$str_sql .= $where_clause_with if $where_clause_with ; 
 
       # not all items have the prio attribute
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
 
-      # debug print "$str_sql \n" ; 
-      # debug print "RdrPostgresDb.pm\n" ; 
+      print "$str_sql \n" ; 
+      print "RdrPostgresDb.pm\n" ; 
 
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
@@ -616,7 +673,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       
       return ( $ret , $msg ) ; 	
    }
-   # eof sub doSelectTableIntoHashRef
+   # eof sub doBuildWhereClauseByFltr
 
 	
    #
