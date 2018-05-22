@@ -103,6 +103,63 @@ sub doSelectMeta {
    }
 }
 
+sub doSetUrlParams {
+   my $self = shift ; 
+   my $objModel = ${ shift @_ } ; 
+
+   my $query_params = $self->req->query_params ; 
+
+   $objModel->set('select.web-action.fltr-by' , $query_params->every_param('fltr-by') ) ; 
+   $query_params->remove('fltr-by') ; 
+   $objModel->set('select.web-action.fltr-val' , $query_params->every_param('fltr-val') ) ; 
+   $query_params->remove('fltr-val') ; 
+   $objModel->set('select.web-action.like-by' , $query_params->every_param('like-by') ) ; 
+   $query_params->remove('like-by') ; 
+   $objModel->set('select.web-action.like-val' , $query_params->every_param('like-val') ) ; 
+   $query_params->remove('like-val') ; 
+   $objModel->set('select.web-action.pick' , $query_params->param('pick') );
+   $query_params->remove('pick') ; 
+   $objModel->set('select.web-action.hide' , $query_params->param('hide') );
+   $query_params->remove('hide') ; 
+   $objModel->set('select.web-action.o' , $query_params->param('o') );
+   $query_params->remove('o') ; 
+   
+ 
+   my ( @with_cols , @with_ops , @with_vals ) = () ; 
+   my $found = 0 ; 
+   foreach my $qp ( @{$query_params->pairs} ) {
+      if ( $qp =~ m/with[-](.*?)/g ) {
+        my $with_col = $qp ; 
+        $with_col =~ s/(with[-])(.*)/$2/g ; 
+        print "with_col: $with_col \n" ; 
+        if ( $with_col =~ m/(.*?)([<>])(.*)/g ) {
+            print "$1 , $2 , $3 \n" ; 
+            push @with_cols , $1 ; 
+            push @with_ops , $2 ; 
+            push @with_vals , $3 ; 
+            $found = 0 ; 
+            next ; 
+        }
+
+        $found = 1 ; 
+        push @with_cols , $with_col ; 
+        next ; 
+      } 
+      
+      if ( $found == 1 ) {
+         $found = 0 ; 
+         push @with_ops , '=' ; 
+         push @with_vals , $qp ; 
+         next ; 
+      }
+   }
+
+   $objModel->set('select.web-action.with-by' , \@with_cols ) ; 
+   $objModel->set('select.web-action.with-op' , \@with_ops ) ; 
+   $objModel->set('select.web-action.with-val' , \@with_vals ) ; 
+   # p $objModel ; 
+}
+
 
 #
 # --------------------------------------------------------
@@ -124,14 +181,8 @@ sub doSelectItems {
    my $ret = 0;
    my $msg = 'unknown error during Select item';
 
-   $objModel->set('select.web-action.fltr-by' , $self->every_param('fltr-by') ) ; 
-   $objModel->set('select.web-action.fltr-val' , $self->every_param('fltr-val') ) ; 
-   $objModel->set('select.web-action.like-by' , $self->every_param('like-by') ) ; 
-   $objModel->set('select.web-action.like-val' , $self->every_param('like-val') ) ; 
-   $objModel->set('select.web-action.pick' , $self->req->query_params->param('pick') );
-   $objModel->set('select.web-action.hide' , $self->req->query_params->param('hide') );
-   $objModel->set('select.web-action.o' , $self->req->query_params->param('o') );
-   
+   $self->doSetUrlParams ( \$objModel ) ; 
+
    my $hsr2 = {};
    my $objRdrDbsFactory
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
