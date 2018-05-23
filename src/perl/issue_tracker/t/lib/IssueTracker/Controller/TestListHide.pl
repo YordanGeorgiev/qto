@@ -44,14 +44,6 @@ for my $row ( @$list ) {
 	$tm = 'for the hide the id attribute , no id: should be present' ; 
 	$t->get_ok($url)->content_unlike('/id:/' , $tm ) ; 
 
-#   feature-id: ?!
-#   $url = '/' . $db_name . '/select/' . $table_name ; 
-#   my $res = $ua->get('/' . $db_name . '/select/' . $table_name )->result->json ; 
-#   $tm .= 'the response msg for the ' . $table_name . "is correct for the url: $url" ; 
-#   ok ( $res->{'msg'} eq "SELECT OK for table: $table_name" , $tm) ; 
-#
-#   $tm = 'the return code for the ' . $table_name . ' is correct' ; 
-#   ok ( $res->{'ret'} == 200 , $tm) ; 
 }
 
 

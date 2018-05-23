@@ -105,9 +105,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		my $ret = 400 ; 
 		my $msg = ' the following column: %s does not exist ' ; 
 
-      my $cols = $objModel->get('select.web-action.with-by') ; 
-      my $ops = $objModel->get('select.web-action.with-op') ; 
-      my $vals = $objModel->get('select.web-action.with-val') ;
+      my $cols = $objModel->get('select.web-action.with-cols') ; 
+      my $ops = $objModel->get('select.web-action.with-ops') ; 
+      my $vals = $objModel->get('select.web-action.with-vals') ;
       
       return ( 0 , "" , "")  unless ( defined ( $cols) ); 
       return ( 0 , "" , "")  unless ( defined ( $ops ) ); 
@@ -127,7 +127,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
 
 				$sql .= " $col $op '$val'" ; 
-
+           
+            # todo:ysg
             print "sql : $sql \n" ; 
             print "RdrPostgresDb.pm \n" ; 
 
@@ -645,8 +646,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       # not all items have the prio attribute
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
 
-      print "$str_sql \n" ; 
-      print "RdrPostgresDb.pm\n" ; 
+      # debug print "$str_sql \n" ; 
+      # debug print "RdrPostgresDb.pm\n" ; 
 
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
