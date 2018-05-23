@@ -103,7 +103,41 @@ sub doSelectMeta {
    }
 }
 
+sub doSetWithUrlParams {
+
+   my $self = shift ; 
+   my $objModel = ${ shift @_ } ; 
+   my $query_params = $self->req->query_params ; 
+   my ( @with_cols , @with_ops , @with_vals ) = () ; 
+
+   my $ops = {
+       'eq' => '='
+     , 'gt' => '>'
+     , 'lt' => '<'
+     , 'ge' => '>='
+     , 'le' => '<='
+   };
+
+   foreach my $with ( @{$query_params->every_param('with')} ) {
+      # todo:ysg 
+      print "with is $with \n" ; 
+      if ( $with =~ m/(.*?)[-](.*?)[-](.*)/g ) {
+         # p ( @with_cols , @with_ops , @with_vals ) ; 
+         push @with_cols , $1 ; 
+         push @with_ops , $ops->{$2} ; 
+         push @with_vals , $3 ; 
+      }
+   }
+
+   $objModel->set('select.web-action.with-cols' , \@with_cols ) ; 
+   $objModel->set('select.web-action.with-ops' , \@with_ops ) ; 
+   $objModel->set('select.web-action.with-vals' , \@with_vals ) ; 
+   $query_params->remove('with') ; 
+}
+
+
 sub doSetUrlParams {
+
    my $self = shift ; 
    my $objModel = ${ shift @_ } ; 
 
@@ -123,41 +157,6 @@ sub doSetUrlParams {
    $query_params->remove('hide') ; 
    $objModel->set('select.web-action.o' , $query_params->param('o') );
    $query_params->remove('o') ; 
-   
- 
-   my ( @with_cols , @with_ops , @with_vals ) = () ; 
-   my $found = 0 ; 
-   foreach my $qp ( @{$query_params->pairs} ) {
-      if ( $qp =~ m/with[-](.*?)/g ) {
-        my $with_col = $qp ; 
-        $with_col =~ s/(with[-])(.*)/$2/g ; 
-        print "with_col: $with_col \n" ; 
-        if ( $with_col =~ m/(.*?)([<>])(.*)/g ) {
-            print "$1 , $2 , $3 \n" ; 
-            push @with_cols , $1 ; 
-            push @with_ops , $2 ; 
-            push @with_vals , $3 ; 
-            $found = 0 ; 
-            next ; 
-        }
-
-        $found = 1 ; 
-        push @with_cols , $with_col ; 
-        next ; 
-      } 
-      
-      if ( $found == 1 ) {
-         $found = 0 ; 
-         push @with_ops , '=' ; 
-         push @with_vals , $qp ; 
-         next ; 
-      }
-   }
-
-   $objModel->set('select.web-action.with-by' , \@with_cols ) ; 
-   $objModel->set('select.web-action.with-op' , \@with_ops ) ; 
-   $objModel->set('select.web-action.with-val' , \@with_vals ) ; 
-   # p $objModel ; 
 }
 
 
@@ -182,6 +181,7 @@ sub doSelectItems {
    my $msg = 'unknown error during Select item';
 
    $self->doSetUrlParams ( \$objModel ) ; 
+   $self->doSetWithUrlParams ( \$objModel ) ; 
 
    my $hsr2 = {};
    my $objRdrDbsFactory

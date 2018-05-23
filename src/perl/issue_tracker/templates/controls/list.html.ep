@@ -19,9 +19,8 @@ if ( document.getElementById("spn_msg") ) {
                url_params[decodeURIComponent(key)] = decodeURIComponent(value);
             });
          } else {
-            url_params = { as:"lbls" };  // a dymmy for work-around on the have to pass url params to axious
+            url_params = { as:"lbls" };  
          }
-
 			axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
 			.then(response => { this.<%= $item =%> = response.data.dat
 			})

@@ -78,6 +78,11 @@ doRunPerlIntegrationTests(){
    doLog "INFO START client side testing"
    perl -I src/perl/issue_tracker/lib/ \
    src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClient.pl
+	echo -e "\n\n\n" 
+
+   doLog "INFO START select with operator testing"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
+	echo -e "\n\n\n" 
 
 	doLog "DEBUG STOP  doRunPerlIntegrationTests"
 }

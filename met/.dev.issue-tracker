@@ -24,6 +24,7 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectHide.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
 # ---
 src/perl/issue_tracker/lib/IssueTracker/App/UI
 src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm
