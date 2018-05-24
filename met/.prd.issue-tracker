@@ -1,16 +1,15 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # --- 
 src/perl/issue_tracker/public/
-src/perl/issue_tracker/public/poc
-src/perl/issue_tracker/public/poc/list-lable.html
-src/perl/issue_tracker/public/poc/app.js
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClient.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
-src/perl/issue_tracker/templates/pages/list.html.ep
+src/perl/issue_tracker/templates/layouts/site.html.ep
+src/perl/issue_tracker/templates/controls/list.html.ep
 src/perl/issue_tracker/public/css/controls/app_list_labels.css
 src/perl/issue_tracker/public/css/site/site.css
 src/perl/issue_tracker/public/css
@@ -25,6 +24,7 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectHide.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
 # ---
 src/perl/issue_tracker/lib/IssueTracker/App/UI
 src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm
@@ -113,7 +113,6 @@ src/perl/issue_tracker/lib/IssueTracker
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrText.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrXls.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrURL.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrTextFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrTextFactory.pm
@@ -235,6 +234,7 @@ src/sql/pgsql/dev_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/dev_issue_tracker/12.create-table-purchases.sql
 src/sql/pgsql/dev_issue_tracker/13.create-table-test_runs.sql
+src/sql/pgsql/dev_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/dev_issue_tracker/99.create-table-test_hierarchy_table.sql
 src/sql/pgsql/tst_issue_tracker
 src/sql/pgsql/tst_issue_tracker/00.create-db.pgsql
@@ -250,6 +250,8 @@ src/sql/pgsql/tst_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/tst_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/tst_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/tst_issue_tracker/12.create-table-purchases.sql
+src/sql/pgsql/tst_issue_tracker/13.create-table-test_runs.sql
+src/sql/pgsql/tst_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/prd_issue_tracker
 src/sql/pgsql/prd_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/prd_issue_tracker/01.create-table-daily_issues.sql
@@ -264,6 +266,8 @@ src/sql/pgsql/prd_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/prd_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/prd_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/prd_issue_tracker/12.create-table-purchases.sql
+src/sql/pgsql/prd_issue_tracker/13.create-table-test_runs.sql
+src/sql/pgsql/prd_issue_tracker/14.create-table-ideas.sql
 #----
 src/bash/issue-tracker/tests/db-to-xls.test.sh
 src/bash/issue-tracker/funcs/db-to-xls.func.sh
@@ -609,7 +613,6 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrPostgresDb/au
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrText/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrURL/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrGoogleSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrText/autosplit.ix
@@ -741,6 +744,10 @@ src/sql/mysql/tst_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/tst_issue_tracker/50.create-ReadMe-table.sql
 src/sql/mysql/tst_issue_tracker/51.create-Tests-table.sql
 src/sql/mysql/tst_issue_tracker/53.create-SystemGuide-table.sql
+# ---
+src/perl/issue_tracker/public/poc
+src/perl/issue_tracker/public/poc/list-lable.html
+src/perl/issue_tracker/public/poc/app.js
 # ---
 doc/txt/issue-tracker/tests/run-perl-integration-tests.test.txt
 doc/txt/issue-tracker/helps/run-perl-integration-tests.help.txt

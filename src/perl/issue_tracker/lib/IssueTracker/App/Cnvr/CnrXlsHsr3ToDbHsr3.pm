@@ -79,25 +79,20 @@ sub doConvert {
             return ( $ret , $msg ) ; 
          }
          else {
-            print 'rid is : ' . $rid . "\n" ; 
-            print 'level is : ' . $level . "\n" ; 
-            print 'prev is : ' . $hsr2->{ $rid-1 }->{$levelh} . "\n" ; 
+            # debug print 'rid is : ' . $rid . "\n" ; 
+            # debug print 'level is : ' . $level . "\n" ; 
+            # debug print 'prev is : ' . $hsr2->{ $rid-1 }->{$levelh} . "\n" ; 
             $msg = 'the ' . $levelh . ' untrapped case for rid ' . "$rid" . "\n" ; 
             carp $msg ; 
             return ( $ret , $msg ) ; 
          }
-         #elsif( $level < $hsr2->{ $rid-1 }->{$levelh} + 2 ) {
-         #   $msg = 'the ' . $levelh .  ' decreased with more than 1 at row id:' . $rid ; 
-         #   carp $msg ; 
-         #   return ( $ret , $msg ) ; 
-         #}
 
       } #eof elsif rid > 1
 
       $row->{ $lfth } = $lft ;  
       $row->{ $rgth } = $rgt ; 
       $hsr2->{ $rid } = $row ; 
-      # $self->doPrintRow  ( $rid , $row ) ; 
+      #debug $self->doPrintRow  ( $rid , $row ) ; 
       $rid++ ;
 
    } #eof foreach key
@@ -192,9 +187,9 @@ sub doPrintRow {
 
    # debug p $rid ; 
    # debug print " stop  rid \n" ; 
-   print "start row: \n" ; 
+   # debug print "start row: \n" ; 
    p $row ; 
-   print "stop  row: \n" ; 
+   # debug print "stop  row: \n" ; 
 
 }
 	# -----------------------------------------------------------------------------

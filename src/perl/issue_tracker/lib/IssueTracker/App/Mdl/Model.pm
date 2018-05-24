@@ -30,12 +30,11 @@ package IssueTracker::App::Mdl::Model ;
       my $self = shift ; 
       my $row  = shift ; 
 
-      p $hsr2 ; 
-      print "STOP addHsr before \n" ; 
+      # debug p $hsr2 ; 
       @{$hsr2}{keys %$row} = values %$row;
-      print "STOP addHsr after \n" ; 
+      # debug print "STOP addHsr after \n" ; 
 
-      p $hsr2 ; 
+      # debug p $hsr2 ; 
    }
 
 
