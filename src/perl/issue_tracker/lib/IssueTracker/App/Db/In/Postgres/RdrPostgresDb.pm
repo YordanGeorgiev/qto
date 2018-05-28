@@ -54,8 +54,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       return ( 0 , "" , "")  unless ( defined ( $ref_like_values) ); 
 
       if ( @$ref_like_names and @$ref_like_values  ) {
-      	# build the dynamic likeing for the the in clause
-			$sql = ' AND ' ; 
+			
+         $sql = ' AND ' ; 
 
          for ( my $i = 0 ; $i < scalar ( @$ref_like_names ) ; $i++ ) {
 				my ( $like_name , $like_value ) = () ; 
@@ -114,8 +114,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       return ( 0 , "" , "")  unless ( defined ( $vals ) ); 
 
       if ( @$cols and @$ops  and @$vals) {
-      	# build the dynamic withing for the the in clause
-			$sql = ' AND ' ; 
+			
+         $sql = ' AND ' ; 
 
          for ( my $i = 0 ; $i < scalar ( @$cols ) ; $i++ ) {
 				my ( $col , $op, $val ) = () ; 
@@ -128,9 +128,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 				$sql .= " $col $op '$val'" ; 
            
-            # todo:ysg
-            print "sql : $sql \n" ; 
-            print "RdrPostgresDb.pm \n" ; 
+            # debug print "sql : $sql \n" ; 
+            # debug print "RdrPostgresDb.pm \n" ; 
 
       	   return ( 0 , "" , $sql) ;
          }
@@ -145,7 +144,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 			# to proceed with the select 
       	return ( 0 , "" , "") ;
 		}
-
    } 
 
    
@@ -270,7 +268,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $appConfig->{ "$postgres_db_name".'.tables-list'} = $hsr ;
       return ( $ret , $msg , $hsr ) ; 	
    }
-   # eof sub doSelectTablesList
 
 
    sub table_exists {
@@ -312,7 +309,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       my $self             = shift ; 
       my $db               = shift ; 
-      my $table            = shift || 'daily_issues' ;  # the table to get the data from  
+      my $table            = shift || croak 'table not passed !!!' ; 
       my $guid             = shift ; 
       
       my $msg              = q{} ;         
@@ -370,8 +367,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       
       return ( $ret , $msg , $hsr ) ; 	
    }
-   # eof sub doSelectItemByGuid
-
 
 
    #
@@ -447,9 +442,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $table            = shift || 'confs' ;  # the table to get the data from  
       my $query_str        = shift || '*' ;  # the table to get the data from  
    
-
-      $objLogger->doLogDebugMsg ( "doSearchConfigurationEntries table: $table " ) ; 
-
       my $msg              = q{} ;         
       my $ret              = 1 ;          # this is the return value from this method 
       my $debug_msg        = q{} ; 
@@ -469,11 +461,11 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
      
       $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
-                 'RaiseError'          => 1
-               , 'ShowErrorStatement'  => 1
-               , 'PrintError'          => 1
-               , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
+              'RaiseError'          => 1
+            , 'ShowErrorStatement'  => 1
+            , 'PrintError'          => 1
+            , 'AutoCommit'          => 1
+            , 'pg_utf8_strings'     => 1
       } ) or $msg = DBI->errstr;
       
       $sth = $dbh->prepare($str_sql);  
@@ -481,17 +473,15 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
 
-
-
 		my @query_output = () ; 
-      # LOOP THROUGH RESULTS
+      
       binmode(STDOUT, ':utf8');
       while ( my $row = $sth->fetchrow_hashref ){
           my %hash = %$row ;
-          #say "UTF8 flag is turned on in the STRING $key" if is_utf8( $hash{$key} );
+          #debug say "UTF8 flag is turned on in the STRING $key" if is_utf8( $hash{$key} );
           push @query_output, $row
-          #if is_utf8( $hash{$key} );
-      } #eof while
+          #debug if is_utf8( $hash{$key} );
+      } 
       
 		$msg = DBI->errstr ; 
 
@@ -502,18 +492,14 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $objLogger->doLogErrorMsg ( $msg ) ; 
       }
 
-      # CLOSE THE DATABASE CONNECTION
       $dbh->disconnect();
       
-		# src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
       $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
 
-      #debug p(@query_output);
       return ( $ret , $msg , \@query_output ) ; 	
    
 	}
-   # eof sub doSearchConfigurationEntries
 
    #
    # -----------------------------------------------------------------------------
@@ -556,7 +542,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       my $self                   = shift ; 
       my $objModel               = ${shift @_ } ; 
-      my $table                  = shift || 'daily_issues' ;  # the table to get the data from  
+      my $table                  = shift || croak 'no table passed !!!' ; 
       my $filter_by_attributes   = shift ; 
       my $ret                    = 1 ; 
       my $msg                    = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
@@ -668,13 +654,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $objLogger->doLogErrorMsg ( $msg ) ; 
       }
 
-      # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
-      # debug $debug_msg        = 'doSelectTableIntoHashRef ret ' . $ret ; 
-      # debug $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-      
       return ( $ret , $msg ) ; 	
    }
-   # eof sub doBuildWhereClauseByFltr
 
 	
    #
@@ -695,7 +676,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $self = $self->doInitialize() ; 
 		return $self;
 	}  
-	#eof const
 	
    #
 	# --------------------------------------------------------
@@ -707,9 +687,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       %$self = (
            appConfig => $appConfig
       );
-
-		# print "PostgreReader::doInitialize appConfig : " . p($appConfig );
-      # sleep 6 ; 
 		
 		$postgres_db_name    = $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}     || 'prd_ysg_issues' ; 
 		$db_host 			   = $ENV{ 'db_host' } || $appConfig->{'db_host'} 		|| 'localhost' ;
@@ -721,7 +698,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       return $self ; 
 	}	
-	#eof sub doInitialize
    
 
 

@@ -4,16 +4,15 @@ src/perl/issue_tracker/public/
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClient.pl
-src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/controls/list.html.ep
 src/perl/issue_tracker/public/css/controls/app_list_labels.css
 src/perl/issue_tracker/public/css/site/site.css
 src/perl/issue_tracker/public/css
-src/perl/issue_tracker/templates/controls
 # ---
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
@@ -25,6 +24,9 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectHide.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
+# --- 
+src/perl/issue_tracker/lib/Mojo/Chrome.pm
+src/perl/issue_tracker/lib/Test/Mojo/Role/Chrome.pm
 # ---
 src/perl/issue_tracker/lib/IssueTracker/App/UI
 src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm
@@ -760,11 +762,10 @@ doc/dot/devops/shell-action-control-flow-diagram.dot
 doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
 # --- the application data
-dat/mix/issues/2018/2018-05
-dat/mix/issues/2018/2018-05/2018-05-19
-dat/mix/issues/2018/2018-05/2018-05-19/issue-tracker.all.20180519_000000.xlsx
-dat/mix/issues/2018/2018-05/2018-05-19/issue-tracker.daily-issues.2018-05-19.txt
-dat/mix/issues/2018/2018-05/2018-05-19/issue-tracker.monthly-issues.2018-05-19.txt
-dat/mix/issues/2018/2018-05/2018-05-19/issue-tracker.test-hierarchy-table.2018-05-19.txt
-dat/mix/issues/2018/2018-05/2018-05-19/issue-tracker.weekly-issues.2018-05-19.txt
-dat/mix/issues/2018/2018-05/2018-05-19/issue-tracker.yearly-issues.2018-05-19.txt
+dat/mix/issues/2018/2018-05/2018-05-28
+dat/mix/issues/2018/2018-05/2018-05-28/issue-tracker.all.20180528_000000.xlsx
+dat/mix/issues/2018/2018-05/2018-05-28/issue-tracker.yearly-issues.2018-05-28.txt
+dat/mix/issues/2018/2018-05/2018-05-28/issue-tracker.test-hierarchy-table.2018-05-28.txt
+dat/mix/issues/2018/2018-05/2018-05-28/issue-tracker.monthly-issues.2018-05-28.txt
+dat/mix/issues/2018/2018-05/2018-05-28/issue-tracker.daily-issues.2018-05-28.txt
+dat/mix/issues/2018/2018-05/2018-05-28/issue-tracker.weekly-issues.2018-05-28.txt
