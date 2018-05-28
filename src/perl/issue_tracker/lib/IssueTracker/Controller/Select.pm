@@ -105,9 +105,9 @@ sub doSelectMeta {
 
 sub doSetWithUrlParams {
 
-   my $self = shift ; 
-   my $objModel = ${ shift @_ } ; 
-   my $query_params = $self->req->query_params ; 
+   my $self          = shift ; 
+   my $objModel      = ${ shift @_ } ; 
+   my $query_params  = $self->req->query_params ; 
    my ( @with_cols , @with_ops , @with_vals ) = () ; 
 
    my $ops = {
@@ -119,10 +119,7 @@ sub doSetWithUrlParams {
    };
 
    foreach my $with ( @{$query_params->every_param('with')} ) {
-      # todo:ysg 
-      print "with is $with \n" ; 
       if ( $with =~ m/(.*?)[-](.*?)[-](.*)/g ) {
-         # p ( @with_cols , @with_ops , @with_vals ) ; 
          push @with_cols , $1 ; 
          push @with_ops , $ops->{$2} ; 
          push @with_vals , $3 ; 
@@ -132,6 +129,7 @@ sub doSetWithUrlParams {
    $objModel->set('select.web-action.with-cols' , \@with_cols ) ; 
    $objModel->set('select.web-action.with-ops' , \@with_ops ) ; 
    $objModel->set('select.web-action.with-vals' , \@with_vals ) ; 
+
    $query_params->remove('with') ; 
 }
 

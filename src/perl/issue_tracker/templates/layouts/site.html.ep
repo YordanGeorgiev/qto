@@ -4,8 +4,8 @@
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
    <title> list <%= " $item " =%> in <%= " $db " =%> </title> 
-   <link rel="stylesheet" type="text/css" href="../../css/controls/app_list_labels.css" />
    <link rel="stylesheet" type="text/css" href="../../css/site/site.css" />
+   <%= content 'header_csss' %>
 </head>
 <body>
 
