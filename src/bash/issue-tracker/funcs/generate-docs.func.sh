@@ -35,6 +35,9 @@ doGenerateDocs(){
    while read -r l ; do \
       t=$(echo $l|cut -d" " -f 1); 
       b=$(echo $l|cut -d" " -f 2); 
+      # echo l is $l
+      # echo cut is "$(echo $l|cut -d" " -f 3-)"
+      # echo n is $n
       n="$doc_root_dir/"$(echo $l|cut -d" " -f 3-);
       echo start $t,$b; 
       url='http://'"$web_host"':'"$web_port"'/export?to=githubmd&db='"$mysql_db_name"
