@@ -17,7 +17,7 @@ doGenerateDocs(){
 	
 	doLog "DEBUG START exporting github md files"
    sql="
-      select ItemModel.TableName , ExportFile.BranchId , CONCAT ( ExportFile.RelativePath ,
+      select ItemModel.TableName , ExportFile.BranchId , CONCAT ( COALESCE(ExportFile.RelativePath, '') ,
       ExportFile.Name) as Name from ExportFile 
       INNER JOIN ItemView on
       ExportFile.ItemViewId = ItemView.ItemViewId 
@@ -27,7 +27,7 @@ doGenerateDocs(){
       ItemView.ItemControllerId = ItemModel.ItemControllerId 
       WHERE 1=1 
       AND ItemView.Type='document' 
-      AND ItemView.doExportToPdf=1 
+      AND ItemView.doExportToMd=1 
       AND ExportFile.Type='md'
    ;" ; 
 
@@ -38,7 +38,9 @@ doGenerateDocs(){
       # echo l is $l
       # echo cut is "$(echo $l|cut -d" " -f 3-)"
       # echo n is $n
-      n="$doc_root_dir/"$(echo $l|cut -d" " -f 3-);
+      r="$(echo $l|cut -d" " -f 3-)"
+      test $r == 'NULL' && r=''
+      n="$doc_root_dir/$r"
       echo start $t,$b; 
       url='http://'"$web_host"':'"$web_port"'/export?to=githubmd&db='"$mysql_db_name"
       url="$url"'&path-id='$b'&item='$t'&order-by=SeqId&filter-by=Level&filter-value=1,2,3,4,5,6'
@@ -48,7 +50,7 @@ doGenerateDocs(){
 
 	doLog "DEBUG START exporting docs as PDF files"
    sql="
-      select ItemModel.TableName , ExportFile.BranchId , CONCAT ( ExportFile.RelativePath ,
+      select ItemModel.TableName , ExportFile.BranchId , CONCAT ( COALESCE(ExportFile.RelativePath, '') ,
       ExportFile.Name) as Name from ExportFile 
       INNER JOIN ItemView on
       ExportFile.ItemViewId = ItemView.ItemViewId 
