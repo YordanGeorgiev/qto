@@ -74,6 +74,12 @@ Fetch the source from git hub as follows:
     
     # fetch the source
     git clone git@github.com:YordanGeorgiev/issue-tracker.git
+    ls -la 
+    
+    # OR 
+    wget https://github.com/YordanGeorgiev/issue-tracker/archive/0.3.8.zip
+    ls -al
+    unzip -o 0.3.8.zip -d .
 
 ### 3.3. run the boot-strap script
 The bootstrap script will interpolate change the git deployment dir to a "product_instance_dir" ( your instance of the issue-tracker, having the same version as this one, but running on a different host with different owner - your )
