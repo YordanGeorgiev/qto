@@ -23,7 +23,7 @@ issue-tracker
   -- act	2017-03-01 - 2017-12-31 achieve simplistic design and ease to use
  - done		2017-09-21 07:00 - 2017-09-21 07:00  add the issue-tracker control flow diagram to the DevOps guide
   -- done	2018-02-14 16:30 - 2018-02-30 19:15 improve the performance of the nested-set mysql xls-to-db action
-  -- done	2018-02-13 16:30 - 2018-02-13 19:15 create separate run-perl-unit-tests and run-perl-integration-tests actions
+  -- done	2018-02-13 16:30 - 2018-02-13 19:15 create separate run-perl-unit-tests and run-integration-tests actions
 
 issue-tracker-maintenance
   -- act	2017-12-31 - 2017-12-31 keep minimalistic maintenance

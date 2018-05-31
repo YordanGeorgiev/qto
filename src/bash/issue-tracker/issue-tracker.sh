@@ -379,8 +379,9 @@ doSetVars(){
 	# while read -r func_file ; do echo "$func_file" ; done < <(find . -name "*func.sh")
 
    # this will be dev , tst, prd
-   env_type=$(echo `basename "$product_instance_dir"`|cut -d'.' -f5)
-	product_version=$(echo `basename "$product_instance_dir"`|cut -d'.' -f2-4)
+   export env_type=$(echo `basename "$product_instance_dir"`|cut -d'.' -f5)
+   export product_owner=$(echo `basename "$product_instance_dir"`|cut -d'.' -f6)
+	export product_version=$(echo `basename "$product_instance_dir"`|cut -d'.' -f2-4)
 	environment_name=$(basename "$product_instance_dir")
 
 	cd ..
@@ -432,19 +433,19 @@ doSetVars(){
 doSetUndefinedShellVarsFromCnfFile(){
 
 	# set a default cnfiguration file
-	cnf_file="$run_unit_bash_dir/$run_unit.cnf"
+	export cnf_file="$run_unit_bash_dir/$run_unit.cnf"
 
 	# however if there is a host dependant cnf file override it
 	test -f "$run_unit_bash_dir/$run_unit.$host_name.cnf" \
-		&& cnf_file="$run_unit_bash_dir/$run_unit.$host_name.cnf"
+		&& export cnf_file="$run_unit_bash_dir/$run_unit.$host_name.cnf"
 	
 	# if we have perl apps they will share the same cnfiguration settings with this one
 	test -f "$product_instance_dir/$run_unit.$host_name.cnf" \
-		&& cnf_file="$product_instance_dir/$run_unit.$host_name.cnf"
+		&& export cnf_file="$product_instance_dir/$run_unit.$host_name.cnf"
    
    # however if there is a host dependant and env-aware cnf file override it
 	test -f "$product_instance_dir/$run_unit.$env_type.$host_name.cnf" \
-		&& cnf_file="$product_instance_dir/$run_unit.$env_type.$host_name.cnf"
+		&& export cnf_file="$product_instance_dir/$run_unit.$env_type.$host_name.cnf"
 
    test -z "${INI_SECTION-}" && INI_SECTION=MainSection
 
