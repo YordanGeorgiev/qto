@@ -71,6 +71,7 @@ sub doReadXlsFileToHsr3 {
     $objLogger->doLogInfoMsg("check worksheet: " . $WorkSheetName) ; 
 
 	 next unless grep( /^$WorkSheetName$/, @tables ) ; 
+
     $flg_found_at_least_one_table++ ; 
     $msg = "read worksheet: " . $WorkSheetName ; 
     $objLogger->doLogInfoMsg( $msg ) ; 

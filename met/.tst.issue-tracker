@@ -762,10 +762,11 @@ doc/dot/devops/shell-action-control-flow-diagram.dot
 doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
 # --- the application data
-dat/mix/issues/2018/2018-05/2018-05-28
-dat/mix/issues/2018/2018-05/2018-05-28/issue-tracker.all.20180528_000000.xlsx
-dat/mix/issues/2018/2018-05/2018-05-28/issue-tracker.yearly-issues.2018-05-28.txt
-dat/mix/issues/2018/2018-05/2018-05-28/issue-tracker.test-hierarchy-table.2018-05-28.txt
-dat/mix/issues/2018/2018-05/2018-05-28/issue-tracker.monthly-issues.2018-05-28.txt
-dat/mix/issues/2018/2018-05/2018-05-28/issue-tracker.daily-issues.2018-05-28.txt
-dat/mix/issues/2018/2018-05/2018-05-28/issue-tracker.weekly-issues.2018-05-28.txt
+dat/mix/issues/2018/2018-05/2018-05-31
+dat/mix/issues/2018/2018-05/2018-05-31/~$issue-tracker.all.20180531_000000.xlsx
+dat/mix/issues/2018/2018-05/2018-05-31/issue-tracker.all.20180531_000000.xlsx
+dat/mix/issues/2018/2018-05/2018-05-31/issue-tracker.daily-issues.2018-05-31.txt
+dat/mix/issues/2018/2018-05/2018-05-31/issue-tracker.monthly-issues.2018-05-31.txt
+dat/mix/issues/2018/2018-05/2018-05-31/issue-tracker.test-hierarchy-table.2018-05-31.txt
+dat/mix/issues/2018/2018-05/2018-05-31/issue-tracker.weekly-issues.2018-05-31.txt
+dat/mix/issues/2018/2018-05/2018-05-31/issue-tracker.yearly-issues.2018-05-31.txt
