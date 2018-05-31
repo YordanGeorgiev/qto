@@ -1,6 +1,6 @@
-# doc/txt/issue-tracker/func/run-perl-integration-tests.func.txt
+# doc/txt/issue-tracker/func/run-integration-tests.func.txt
 
-	doRunPerlIntegrationTests
+	doRunIntegrationTests
 	
 	# Purpose:
 	# ------------------------------------------------------
@@ -16,4 +16,4 @@
    execution with re-directed STDOUT which takes time 
 
 
-# eof file: doc/txt/issue-tracker/func/run-perl-integration-tests.func.txt
+# eof file: doc/txt/issue-tracker/func/run-integration-tests.func.txt

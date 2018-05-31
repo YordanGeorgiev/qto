@@ -751,12 +751,12 @@ src/perl/issue_tracker/public/poc
 src/perl/issue_tracker/public/poc/list-lable.html
 src/perl/issue_tracker/public/poc/app.js
 # ---
-doc/txt/issue-tracker/tests/run-perl-integration-tests.test.txt
-doc/txt/issue-tracker/helps/run-perl-integration-tests.help.txt
-doc/txt/issue-tracker/funcs/run-perl-integration-tests.func.txt
-src/bash/issue-tracker/tests/run-perl-integration-tests.test.sh
-src/bash/issue-tracker/helps/run-perl-integration-tests.help.sh
-src/bash/issue-tracker/funcs/run-perl-integration-tests.func.sh
+src/bash/issue-tracker/funcs/run-integration-tests.func.sh
+doc/txt/issue-tracker/tests/run-integration-tests.test.txt
+doc/txt/issue-tracker/helps/run-integration-tests.help.txt
+doc/txt/issue-tracker/funcs/run-integration-tests.func.txt
+src/bash/issue-tracker/tests/run-integration-tests.test.sh
+src/bash/issue-tracker/helps/run-integration-tests.help.sh
 doc/dot/readme/what-is-issue-tracker.dot
 doc/dot/devops/shell-action-control-flow-diagram.dot
 doc/img/readme/what-is-is.png

@@ -9,8 +9,6 @@ Table of Contents
       * [1.1.2. Attempt for 100% test coverage to achieve reliability](#112-attempt-for-100%-test-coverage-to-achieve-reliability)
     * [1.2. Naming conventions principle](#12-naming-conventions-principle)
     * [1.3. Be user-friendly especially to developers and devops](#13-be-user-friendly-especially-to-developers-and-devops)
-    * [1.4. Aim for simplicity](#14-aim-for-simplicity)
-    * [1.5. Do not allow broken windows](#15-do-not-allow-broken-windows)
   * [2. INSTALLATIONS AND CONFIGURATIONS](#2-installations-and-configurations)
     * [2.1. Configure the Ubuntu repositories](#21-configure-the-ubuntu-repositories)
     * [2.2. Add the media keys](#22-add-the-media-keys)
@@ -32,7 +30,6 @@ Table of Contents
     * [3.2. Application Layer runstate management](#32-application-layer-runstate-management)
       * [3.2.1. start the application layer](#321-start-the-application-layer)
       * [3.2.2. stop the application layer](#322-stop-the-application-layer)
-      * [3.2.3. restart the application layer](#323-restart-the-application-layer)
   * [4. USAGE SCENARIOS](#4-usage-scenarios)
     * [4.1. Shell based actions usage](#41-shell-based-actions-usage)
       * [4.1.1. Run increase-date action](#411-run-increase-date-action)
@@ -48,12 +45,13 @@ Table of Contents
     * [5.2. Root Dirs naming conventions](#52-root-dirs-naming-conventions)
   * [6. SOURCE CODE MANAGEMENT](#6-source-code-management)
     * [6.1. Aim for tracability between userstories, requirements, features and functionalities](#61-aim-for-tracability-between-userstories,-requirements,-features-and-functionalities)
-    * [6.2. Feature development in a feature branch](#62-feature-development-in-a-feature-branch)
-    * [6.3. ALWAYS Start with Unit Test](#63-always-start-with-unit-test)
-    * [6.4. Branch for development - dev](#64-branch-for-development--dev)
-    * [6.5. Testing and integrations in the tst branch](#65-testing-and-integrations-in-the-tst-branch)
-    * [6.6. Quality assurance in the qas branch](#66-quality-assurance-in-the-qas-branch)
-    * [6.7. Production in the prd branch](#67-production-in-the-prd-branch)
+    * [6.2. Zero tollerance for bugs](#62-zero-tollerance-for-bugs)
+    * [6.3. Feature development in a feature branch](#63-feature-development-in-a-feature-branch)
+    * [6.4. ALWAYS Start with Unit Test](#64-always-start-with-unit-test)
+    * [6.5. Branch for development - dev](#65-branch-for-development--dev)
+    * [6.6. Testing and integrations in the tst branch](#66-testing-and-integrations-in-the-tst-branch)
+    * [6.7. Quality assurance in the qas branch](#67-quality-assurance-in-the-qas-branch)
+    * [6.8. Production in the prd branch](#68-production-in-the-prd-branch)
   * [7. SCENARIOS](#7-scenarios)
     * [7.1. A small team project hours tracking scenario](#71-a-small-team-project-hours-tracking-scenario)
   * [8. WAY OF WORKING](#8-way-of-working)
@@ -73,8 +71,6 @@ Table of Contents
     * [9.9. Unit and / or integration test creation](#99-unit-and-/-or-integration-test-creation)
     * [9.10. Implementation ](#910-implementation-)
     * [9.11. Deployment and test to the test environment](#911-deployment-and-test-to-the-test-environment)
-      * [9.11.1. Deployment to the test environment](#9111-deployment-to-the-test-environment)
-      * [9.11.2. Check that all the files in the deployment pacakge are the same as those in the latest commit of the dev git branch. ](#9112-check-that-all-the-files-in-the-deployment-pacakge-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
     * [9.12. Deployment and test to the production environment](#912-deployment-and-test-to-the-production-environment)
     * [9.13. Quality assurance iteration](#913-quality-assurance-iteration)
     * [9.14. DoD check-list walktrough](#914-dod-check-list-walktrough)
@@ -82,6 +78,11 @@ Table of Contents
       * [9.14.2. The related requirement is added in the requirements document](#9142-the-related-requirement-is-added-in-the-requirements-document)
       * [9.14.3. At least 2 times passed unit tests run in each environment instance](#9143-at-least-2-times-passed-unit-tests-run-in-each-environment-instance)
       * [9.14.4. At least 2 times passed integration tests run in each environment instance](#9144-at-least-2-times-passed-integration-tests-run-in-each-environment-instance)
+    * [9.15. Aim for simplicity](#915-aim-for-simplicity)
+    * [9.16. Do not allow broken windows](#916-do-not-allow-broken-windows)
+      * [9.16.1. Deployment to the test environment](#9161-deployment-to-the-test-environment)
+      * [9.16.2. Check that all the files in the deployment pacakge are the same as those in the latest commit of the dev git branch. ](#9162-check-that-all-the-files-in-the-deployment-pacakge-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
+      * [9.16.3. restart the application layer](#9163-restart-the-application-layer)
 
 
     
@@ -117,16 +118,6 @@ All the names used in the code and the configurations MUST BE human readable and
 
 ### 1.3. Be user-friendly especially to developers and devops
 You cannot achieve user-friendliness for the end-users unless your developers and technical personnel are happy while interacting with your artifacts. 
-
-    
-
-### 1.4. Aim for simplicity
-Things should be as simple as possible, but not simpler - if Einstein said it it makes sense - having lost so much time in endless loops of IT complexity - the older we get the more it gets more rational. 
-
-    
-
-### 1.5. Do not allow broken windows
-A broken windows is any peace of code or documentation which is hanging around not included in the integration tests suite and not matching the most up-to-date standars for work deliverables. Either bring it up to the standard level or get rid of it. 
 
     
 
@@ -298,11 +289,6 @@ To stop the application layer in development mode use the morbo command ( debug 
     
     bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop
 
-#### 3.2.3. restart the application layer
-Well just chain the both commands. 
-
-    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop ; bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
-
 ## 4. USAGE SCENARIOS
 
 
@@ -409,33 +395,42 @@ Once the issues are defined and you start working on your own branch which is na
 
     
 
-### 6.2. Feature development in a feature branch
+### 6.2. Zero tollerance for bugs
+As soon as bugs are identified and reproduceable, register them as issues and resolve them with prio 1.
+After resolution, think about the root cause of the bug, the mear fact that the bug occured tells that something in the way of working has to be improved , what ?!
+Bugs are like broken windows the more you have them the faster the value of your building will be down to zero. 
+
+    
+
+### 6.3. Feature development in a feature branch
 You start the development in your own feature branch named : dev--&lt;&lt;issue-id&gt;&gt;-&lt;&lt;short-and-descriptive-name&gt;&gt;.
 
     
 
-### 6.3. ALWAYS Start with Unit Test
-Do not ever never write code without starting firsr the unit test on how-to test the code. Period. This is he only way to avoid braking old functionalities when the application code base grows larger. 
+### 6.4. ALWAYS Start with Unit Test
+Do not ever never write code without starting firsr the unit test on how-to test the code. Period. 
+This is he only way to avoid braking old functionalities when the application code base grows larger. 
 Each time a new bug is found fix it by adding new UnitTest!
 
     
 
-### 6.4. Branch for development - dev
+### 6.5. Branch for development - dev
 No code should be merged into the development branch without broad testing coverage and approval from the owner of the instance - as the owner of the instance is at the end responsible personally for the whole instance. 
 
     
 
-### 6.5. Testing and integrations in the tst branch
+### 6.6. Testing and integrations in the tst branch
 The tst branch is dedicated for testing of all the tests, the deployment, performance testing and configuration changes. Should you need to perform bigger than a small hotfix changes you must branch the tst branch into a separate dev--feature branch and re-run the integration testing and approval all over. 
+At the end all the integration tests should be behind this shell call. 
 
-    
+    export issue_tracker_project=""; bash src/bash/issue-tracker/issue-tracker.sh -a run-integration-tests
 
-### 6.6. Quality assurance in the qas branch
+### 6.7. Quality assurance in the qas branch
 At this phase all the tests with all the expected functionalities should work at once. No small hotfixes are allowed - if a need arrises new branch is created to the tst branch The quality assurance
 
     
 
-### 6.7. Production in the prd branch
+### 6.8. Production in the prd branch
 The prd branch is the one deployed to the production environment. This code is NOT straight merged into the master branch , but after certain time depending on the dynamic of the tool with bugless operation merged. 
 
     
@@ -561,26 +556,6 @@ Deploy to the test environment.
     bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-integration-tests
     
 
-#### 9.11.1. Deployment to the test environment
-Deploy to the test environmen as follows:
-
-    # deploy to the tst environment
-    bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
-    
-    # go to the product instance dir of the tst env for this version
-    cd ../issue-tracker.<<version>>.tst.<<owner>>
-    
-
-#### 9.11.2. Check that all the files in the deployment pacakge are the same as those in the latest commit of the dev git branch. 
-Deploy to the test environmen as follows:
-
-    # deploy to the tst environment
-    bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
-    
-    # go to the product instance dir of the tst env for this version
-    cd ../issue-tracker.<<version>>.tst.<<owner>>
-    
-
 ### 9.12. Deployment and test to the production environment
 Repeat the same to the production environment. As the current version is usually work in progress your stable version will be one level bellow and thanks to the architecture of the tool you could test in the production environment ( as soon as you have proper configuration ) 
 
@@ -615,4 +590,39 @@ At least 2 times passed unit tests run in each environment instance - run the un
 At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. 
 
     
+
+### 9.15. Aim for simplicity
+Things should be as simple as possible, but not simpler - if Einstein said it it makes sense - having lost so much time in endless loops of IT complexity - the older we get the more it gets more rational. 
+
+    
+
+### 9.16. Do not allow broken windows
+A broken windows is any peace of code or documentation which is hanging around not included in the integration tests suite and not matching the most up-to-date standars for work deliverables. Either bring it up to the standard level or get rid of it. 
+
+    
+
+#### 9.16.1. Deployment to the test environment
+Deploy to the test environmen as follows:
+
+    # deploy to the tst environment
+    bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
+    
+    # go to the product instance dir of the tst env for this version
+    cd ../issue-tracker.<<version>>.tst.<<owner>>
+    
+
+#### 9.16.2. Check that all the files in the deployment pacakge are the same as those in the latest commit of the dev git branch. 
+Deploy to the test environmen as follows:
+
+    # deploy to the tst environment
+    bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
+    
+    # go to the product instance dir of the tst env for this version
+    cd ../issue-tracker.<<version>>.tst.<<owner>>
+    
+
+#### 9.16.3. restart the application layer
+Well just chain the both commands. 
+
+    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop ; bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
 

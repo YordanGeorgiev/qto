@@ -1,5 +1,5 @@
 run-perl-unit-tests
-run-perl-integration-tests
+run-integration-tests
 run-mysql-scripts
 mojo-hypnotoad-start
 mojo-hypnotoad-stop

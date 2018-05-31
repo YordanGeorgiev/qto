@@ -1,2 +1,2 @@
 run-perl-unit-tests
-run-perl-integration-tests
+run-integration-tests

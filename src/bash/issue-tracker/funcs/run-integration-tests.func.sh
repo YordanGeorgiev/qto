@@ -1,12 +1,12 @@
-# src/bash/issue-tracker/funcs/run-perl-integration-tests.func.sh
+# src/bash/issue-tracker/funcs/run-integration-tests.func.sh
 
 # v1.0.9
 # ---------------------------------------------------------
-# cat doc/txt/issue-tracker/funcs/run-perl-integration-tests.func.txt
+# cat doc/txt/issue-tracker/funcs/run-integration-tests.func.txt
 # ---------------------------------------------------------
-doRunPerlIntegrationTests(){
+doRunIntegrationTests(){
 
-	doLog "DEBUG START doRunPerlIntegrationTests"
+	doLog "DEBUG START doRunIntegrationTests"
 
 	doLog "INFO re-start the issue-tracker app-layer just for sure"
    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop 
@@ -86,9 +86,8 @@ doRunPerlIntegrationTests(){
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
 	echo -e "\n\n\n" 
 
-	doLog "DEBUG STOP  doRunPerlIntegrationTests"
+	doLog "DEBUG STOP  doRunIntegrationTests"
 }
-# eof func doRunPerlIntegrationTests
 
 
-# eof file: src/bash/issue-tracker/funcs/run-perl-integration-tests.func.sh
+# eof file: src/bash/issue-tracker/funcs/run-integration-tests.func.sh

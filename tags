@@ -341,7 +341,7 @@ doHelpRemovePackage	src/bash/issue-tracker/helps/remove-package.help.sh	7;"	func
 doHelpRemovePackageFiles	src/bash/issue-tracker/helps/remove-package-files.help.sh	7;"	function	language:Sh
 doHelpRestoreTmuxSession	src/bash/issue-tracker/helps/restore-tmux-session.help.sh	7;"	function	language:Sh
 doHelpRunMysqlScripts	src/bash/issue-tracker/helps/run-mysql-scripts.help.sh	7;"	function	language:Sh
-doHelpRunPerlIntegrationTests	src/bash/issue-tracker/helps/run-perl-integration-tests.help.sh	7;"	function	language:Sh
+doHelpRunIntegrationTests	src/bash/issue-tracker/helps/run-integration-tests.help.sh	7;"	function	language:Sh
 doHelpRunPerlTests	src/bash/issue-tracker/helps/perl/run-perl-unit-tests.help.sh	7;"	function	language:Sh
 doHelpRunPgsqlScripts	src/bash/issue-tracker/helps/run-pgsql-scripts.help.sh	7;"	function	language:Sh
 doHelpTmuxCommon	src/bash/issue-tracker/helps/tmux-common.help.sh	7;"	function	language:Sh
@@ -466,7 +466,7 @@ doRunCmdOrExit	src/bash/issue-tracker/test-issue-tracker.sh	236;"	function	langu
 doRunLog	src/bash/issue-tracker/issue-tracker.sh	283;"	function	language:Sh
 doRunLogMsg	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	520;"	subroutine	language:Perl
 doRunMySqlScripts	src/bash/issue-tracker/funcs/run-mysql-scripts.func.sh	7;"	function	language:Sh
-doRunPerlIntegrationTests	src/bash/issue-tracker/funcs/run-perl-integration-tests.func.sh	7;"	function	language:Sh
+doRunIntegrationTests	src/bash/issue-tracker/funcs/run-integration-tests.func.sh	7;"	function	language:Sh
 doRunPerlTests	src/bash/issue-tracker/funcs/perl/run-perl-unit-tests.func.sh	7;"	function	language:Sh
 doRunPgsqlScripts	src/bash/issue-tracker/funcs/run-pgsql-scripts.func.sh	8;"	function	language:Sh
 doRunTests	src/bash/issue-tracker/test-issue-tracker.sh	54;"	function	language:Sh
@@ -577,7 +577,7 @@ doTestRemovePackage	src/bash/issue-tracker/tests/remove-package.test.sh	7;"	func
 doTestRemovePackageFiles	src/bash/issue-tracker/tests/remove-package-files.test.sh	7;"	function	language:Sh
 doTestRestoreTmuxSession	src/bash/issue-tracker/tests/sys/tmux/restore-tmux-session.test.sh	7;"	function	language:Sh
 doTestRunMysqlScripts	src/bash/issue-tracker/tests/run-mysql-scripts.test.sh	7;"	function	language:Sh
-doTestRunPerlIntegrationTests	src/bash/issue-tracker/tests/run-perl-integration-tests.test.sh	7;"	function	language:Sh
+doTestRunIntegrationTests	src/bash/issue-tracker/tests/run-integration-tests.test.sh	7;"	function	language:Sh
 doTestRunPerlTests	src/bash/issue-tracker/tests/perl/run-perl-unit-tests.test.sh	7;"	function	language:Sh
 doTestRunPgsqlScripts	src/bash/issue-tracker/tests/run-pgsql-scripts.test.sh	7;"	function	language:Sh
 doTestSaveTmuxSession	src/bash/issue-tracker/tests/save-tmux-session.test.sh	7;"	function	language:Sh
