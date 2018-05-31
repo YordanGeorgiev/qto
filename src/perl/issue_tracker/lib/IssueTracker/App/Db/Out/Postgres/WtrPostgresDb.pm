@@ -520,9 +520,14 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       foreach my $table ( keys %$hsr3 ) { 
 
          $objLogger->doLogDebugMsg ( "doUpsertTables table: $table" );
+         # load ONLY the tables defined to load
          next unless grep( /^$table$/, @tables ) ; 
 
-         # load ONLY the tables defined to load
+         if ( $objRdrDb->table_exists ( $postgres_db_name , $table ) == 0  ) {
+            $ret = 400 ; 
+            $msg = ' the table ' . $table . ' does not exist in the ' . $postgres_db_name . ' database '  ; 
+            return ( $ret , $msg , undef ) ; 
+         }
 
          ( $ret , $msg , $hs_headers ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
          return  ( $ret , $msg , undef ) unless $ret == 0 ; 
