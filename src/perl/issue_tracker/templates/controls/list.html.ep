@@ -6,7 +6,7 @@
 % end
 
 <div>
-   <%== $vct_list_labels %>
+   <%== $vct_list %>
 </div>
 
 <script>

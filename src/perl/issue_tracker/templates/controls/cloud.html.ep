@@ -1,0 +1,30 @@
+% use utf8;
+% layout 'site';
+
+% content_for header_csss => begin
+   <title>list-jqcloud </title>
+   <link rel="stylesheet" href="../../bower_components/jqcloud2/dist/jqcloud.css">
+% end
+
+
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+
+<script src="../../bower_components/jqcloud2/dist/jqcloud.min.js"></script>
+
+<div id="div_cloud_items">
+<script>
+   <%== $vct_list %>
+
+   $('#div_cloud_items').jQCloud(items, {
+      width: 750,
+      height: 550,
+      steps: 5
+   });
+
+</script>
+</div>
+      
+
