@@ -32,6 +32,10 @@ package IssueTracker::App::UI::WtrUIFactory ;
 		   $package_file     = "IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm" ; 
 		   $objWtrControl    = "IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate" ; 
 		}
+		elsif ( $ui_type eq 'control/list-cloud' ) {
+		   $package_file     = "IssueTracker/App/UI/Controls/WtrJQCloud.pm" ; 
+		   $objWtrControl    = "IssueTracker::App::UI::Controls::WtrJQCloud" ; 
+		}
 		else {
 	      croak "not implemented !!!" ; 	
       }
