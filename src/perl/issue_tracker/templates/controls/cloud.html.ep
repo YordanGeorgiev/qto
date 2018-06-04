@@ -15,16 +15,16 @@
 <script src="../../bower_components/jqcloud2/dist/jqcloud.min.js"></script>
 
 <div id="div_cloud_items">
-<script>
-   <%== $vct_list %>
+   <script>
+      <%== $vct_list %>
 
-   $('#div_cloud_items').jQCloud(items, {
-      width: 750,
-      height: 550,
-      steps: 5
-   });
+      $('#div_cloud_items').jQCloud(items, {
+         width: 550,
+         height: 550,
+         steps: 5
+      });
 
-</script>
+   </script>
 </div>
       
 

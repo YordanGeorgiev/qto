@@ -9,6 +9,7 @@ use Scalar::Util qw /looks_like_number/;
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
+use IssueTracker::App::IO::In::RdrUrlParams ; 
 
 our $module_trace   = 0 ;
 our $appConfig      = {};
@@ -103,88 +104,37 @@ sub doSelectMeta {
    }
 }
 
-sub doSetWithUrlParams {
-
-   my $self          = shift ; 
-   my $objModel      = ${ shift @_ } ; 
-   my $query_params  = $self->req->query_params ; 
-   my ( @with_cols , @with_ops , @with_vals ) = () ; 
-
-   my $ops = {
-       'eq' => '='
-     , 'gt' => '>'
-     , 'lt' => '<'
-     , 'ge' => '>='
-     , 'le' => '<='
-   };
-
-   foreach my $with ( @{$query_params->every_param('with')} ) {
-      if ( $with =~ m/(.*?)[-](.*?)[-](.*)/g ) {
-         push @with_cols , $1 ; 
-         push @with_ops , $ops->{$2} ; 
-         push @with_vals , $3 ; 
-      }
-   }
-
-   $objModel->set('select.web-action.with-cols' , \@with_cols ) ; 
-   $objModel->set('select.web-action.with-ops' , \@with_ops ) ; 
-   $objModel->set('select.web-action.with-vals' , \@with_vals ) ; 
-
-   $query_params->remove('with') ; 
-}
-
-
-sub doSetUrlParams {
-
-   my $self = shift ; 
-   my $objModel = ${ shift @_ } ; 
-
-   my $query_params = $self->req->query_params ; 
-
-   $objModel->set('select.web-action.fltr-by' , $query_params->every_param('fltr-by') ) ; 
-   $query_params->remove('fltr-by') ; 
-   $objModel->set('select.web-action.fltr-val' , $query_params->every_param('fltr-val') ) ; 
-   $query_params->remove('fltr-val') ; 
-   $objModel->set('select.web-action.like-by' , $query_params->every_param('like-by') ) ; 
-   $query_params->remove('like-by') ; 
-   $objModel->set('select.web-action.like-val' , $query_params->every_param('like-val') ) ; 
-   $query_params->remove('like-val') ; 
-   $objModel->set('select.web-action.pick' , $query_params->param('pick') );
-   $query_params->remove('pick') ; 
-   $objModel->set('select.web-action.hide' , $query_params->param('hide') );
-   $query_params->remove('hide') ; 
-   $objModel->set('select.web-action.o' , $query_params->param('o') );
-   $query_params->remove('o') ; 
-}
-
 
 #
 # --------------------------------------------------------
 # Select all the rows from db by passed db and table name
 # --------------------------------------------------------
 sub doSelectItems {
-
-   my $self        = shift;
-   my $item        = $self->stash('item');
-   my $db          = $self->stash('db');
-   my $rdbms_type  = 'postgres';
+   my $self             = shift;
+   my $item             = $self->stash('item');
+   my $db               = $self->stash('db');
+   my $rdbms_type       = 'postgres';
+   my $objRdrUrlParams  = {} ; 
+   my $objRdrDbsFactory = {} ; 
+   my $objRdrDb         = {} ; 
+   my $ret = 0;
+   my $msg = 'unknown error during Select item';
+   my $hsr2 = {};
 
 	print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
    $appConfig		= $self->app->get('AppConfig');
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
- 
-   my $ret = 0;
-   my $msg = 'unknown error during Select item';
 
-   $self->doSetUrlParams ( \$objModel ) ; 
-   $self->doSetWithUrlParams ( \$objModel ) ; 
+   my $query_params = $self->req->query_params ; 
+   $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
+   $objRdrUrlParams->doSetUrlParams(\$objModel, $query_params );
+   $objRdrUrlParams->doSetWithUrlParams(\$objModel, $query_params );
 
-   my $hsr2 = {};
-   my $objRdrDbsFactory
+   $objRdrDbsFactory
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    ($ret, $msg) = $objRdrDb->doSelectTableIntoHashRef(\$objModel, $item);
 
    $self->res->headers->accept_charset('UTF-8');

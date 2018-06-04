@@ -115,8 +115,11 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       if ( @$cols and @$ops  and @$vals) {
 			
-         $sql = ' AND ' ; 
-
+         $sql .= ' AND ' ; 
+         # debug print "from RdrPostgresDb.pm \@$cols @$cols \n" ; 
+         # debug print "from RdrPostgresDb.pm \@$ops @$ops \n" ; 
+         # debug print "from RdrPostgresDb.pm \@$vals @$vals \n" ; 
+         
          for ( my $i = 0 ; $i < scalar ( @$cols ) ; $i++ ) {
 				my ( $col , $op, $val ) = () ; 
             $col = $cols->["$i"] ;
@@ -128,8 +131,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 				$sql .= " $col $op '$val'" ; 
            
-            # debug print "sql : $sql \n" ; 
-            # debug print "RdrPostgresDb.pm \n" ; 
+            print "sql : $sql \n" ; 
+            print "RdrPostgresDb.pm \n" ; 
 
       	   return ( 0 , "" , $sql) ;
          }
@@ -632,8 +635,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       # not all items have the prio attribute
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
 
-      # debug print "$str_sql \n" ; 
-      # debug print "RdrPostgresDb.pm\n" ; 
+      print "$str_sql \n" ; 
+      print "RdrPostgresDb.pm\n" ; 
 
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  

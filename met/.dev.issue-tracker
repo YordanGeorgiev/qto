@@ -6,6 +6,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrJQCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlParams.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClient.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl

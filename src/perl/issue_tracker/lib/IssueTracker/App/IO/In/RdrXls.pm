@@ -35,8 +35,9 @@ sub doReadXlsFileToHsr3 {
   my $objModel     = ${ shift @_ } ; 
 
   my $ret = 1;
-  my $msg = "open the xls_file: $xls_file";
-  $objLogger->doLogDebugMsg($msg);
+  my $msg = "read the following xls_file: $xls_file";
+  $objLogger->doLogInfoMsg($msg);
+  sleep 1 ; 
 
   my $formatter    = Spreadsheet::ParseExcel::FmtJapan->new();
   my $objXlsParser = 'Spreadsheet::ParseExcel'->new();
