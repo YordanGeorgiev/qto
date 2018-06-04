@@ -99,11 +99,11 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
    sub doBuildWhereClauseByWith {
 
-      my $self = shift ; 
-      my $mshr = shift ; 
-		my $sql = '' ; 
-		my $ret = 400 ; 
-		my $msg = ' the following column: %s does not exist ' ; 
+      my $self    = shift ; 
+      my $mshr    = shift ; 
+		my $sql     = '' ; 
+		my $ret     = 400 ; 
+		my $msg     = ' the following column: %s does not exist ' ; 
 
       my $cols = $objModel->get('select.web-action.with-cols') ; 
       my $ops = $objModel->get('select.web-action.with-ops') ; 
@@ -113,14 +113,14 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       return ( 0 , "" , "")  unless ( defined ( $ops ) ); 
       return ( 0 , "" , "")  unless ( defined ( $vals ) ); 
 
-      if ( @$cols and @$ops  and @$vals) {
-			
-         $sql .= ' AND ' ; 
-         # debug print "from RdrPostgresDb.pm \@$cols @$cols \n" ; 
-         # debug print "from RdrPostgresDb.pm \@$ops @$ops \n" ; 
-         # debug print "from RdrPostgresDb.pm \@$vals @$vals \n" ; 
+      # debug print "from RdrPostgresDb.pm 120 \@$cols @$cols \n" ; 
+      # debug print "from RdrPostgresDb.pm \@$ops @$ops \n" ; 
+      # debug print "from RdrPostgresDb.pm \@$vals @$vals \n" ; 
+      #
+      if ( @$cols and @$ops and @$vals) {
          
          for ( my $i = 0 ; $i < scalar ( @$cols ) ; $i++ ) {
+            $sql .= ' AND ' ; 
 				my ( $col , $op, $val ) = () ; 
             $col = $cols->["$i"] ;
             $op = $ops->["$i"] ;
@@ -128,23 +128,18 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
         
             my $col_exists = $self->doCheckIfColumnExists ( $mshr->{'ColumnNames'} , $col ) ; 
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
-
 				$sql .= " $col $op '$val'" ; 
-           
-            print "sql : $sql \n" ; 
-            print "RdrPostgresDb.pm \n" ; 
-
-      	   return ( 0 , "" , $sql) ;
          }
-
-
+         # debug print "from RdrPostgresDb.pm 134 sql : $sql \n" ; 
+      	return ( 0 , "" , $sql) ;
       } elsif ( @$cols or @$vals or @$ops )  {
+
 			# if either the with names or the with values are null than the withing url is mall-formed
 			$msg = 'mall-formed url params for filtering with - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<with-value>>' ; 
       	return ( 400 , "$msg" , "") ; 
 		} else {
-			# simply no withing attributes nor values are provided return 
-			# to proceed with the select 
+
+			# simply no withing attributes nor values are provided return => to proceed with the select 
       	return ( 0 , "" , "") ;
 		}
    } 
@@ -635,8 +630,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       # not all items have the prio attribute
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
 
-      print "$str_sql \n" ; 
-      print "RdrPostgresDb.pm\n" ; 
+      print "from RdrPostgresDb.pm 637 : $str_sql \n" ; 
 
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  

@@ -13,6 +13,8 @@ package IssueTracker::App::IO::In::RdrUrlParams ;
 	use File::Find;
 	use Fcntl qw( :flock );
 	use File::Path ; 
+   use Mojo::Parameters ; 
+   use Data::Printer ; # todo:ysg remove ?! 
 
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ; 
    use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
@@ -24,8 +26,9 @@ sub doSetWithUrlParams {
    my $self          = shift ; 
    my $objModel      = ${ shift @_ } ; 
    my $query_params  = shift ; 
+   p $query_params ; 
+   my $with_params = $query_params->every_param('with') ; 
 
-   # my $query_params  = $self->req->query_params ; 
    my ( @with_cols , @with_ops , @with_vals ) = () ; 
 
    my $ops = {
@@ -36,14 +39,20 @@ sub doSetWithUrlParams {
      , 'le' => '<='
    };
 
-   foreach my $with ( @{$query_params->every_param('with')} ) {
-
+   foreach my $with ( @$with_params ) {
+   print "from RdrUrlParams.pm 39 with: $with \n" ; #todo:ysg
+   
       if ( $with =~ m/(.*?)[-](.*?)[-](.*)/g ) {
          push @with_cols , $1 ; 
          push @with_ops , $ops->{$2} ; 
          push @with_vals , $3 ; 
       }
    }
+
+   # todo:ysg
+   print "from RdrUrlParams.pm 47 \@with_cols : @with_cols \n" ; 
+   print "from RdrUrlParams.pm 47 \@with_ops : @with_ops \n" ; 
+   print "from RdrUrlParams.pm 47 \@with_vals : @with_vals \n" ; 
 
    $objModel->set('select.web-action.with-cols' , \@with_cols ) ; 
    $objModel->set('select.web-action.with-ops' , \@with_ops ) ; 
@@ -74,16 +83,12 @@ sub doSetUrlParams {
    $query_params->remove('o') ; 
 }
 
-   # 
-	# src: http://www.netalive.org/tinkering/serious-perl/#oop_constructors¨
-	# -----------------------------------------------------------------------------
-	sub new {
-		 my $class = shift;    # Class name is in the first parameter
-		 my $self = {};        # Anonymous hash reference holds instance attributes
-		 bless($self, $class); # Say: $self is a $class
-		 return $self;
-	}   
-	#eof const
+sub new {
+    my $class = shift;    # Class name is in the first parameter
+    my $self = {};        # Anonymous hash reference holds instance attributes
+    bless($self, $class); # Say: $self is a $class
+    return $self;
+}   
 
 1;
 
@@ -96,6 +101,7 @@ RdrUrlParams
 
 =head1 SYNOPSIS
 
+
 use IssueTracker::App::IO::In::RdrUrlParams ; 
 my $objRdrUrlParams = {} ; 
 $objRdrUrlParams= 'IssueTracker::App::IO::In::RdrUrlParams'->new();
@@ -105,7 +111,7 @@ $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
 
 =head1 DESCRIPTION
 
-Provide a simplistic OO for reading dirs
+responsible for setting the parsed url params into the objModel
 
 =head2 EXPORT
 
