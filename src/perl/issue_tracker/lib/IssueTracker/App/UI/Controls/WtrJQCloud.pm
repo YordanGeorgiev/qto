@@ -19,8 +19,20 @@ package IssueTracker::App::UI::Controls::WtrJQCloud ;
    our $objModel          = {} ; 
    our $appConfig         = {} ; 
 
-
+#
+# produce the following js array of obj
+#      let items = [
+#         {
+#              text: "john"
+#            , weight: 1
+#         },
+#         {
+#              text: "bob"
+#            , weight: 5
+#         }
+#      ];
    sub doBuild {
+
       my $self =     shift ; 
       my $hs_headers = $objModel->get('hs_headers');
       my $hsr2 		= $objModel->get('hsr2');
@@ -34,38 +46,27 @@ package IssueTracker::App::UI::Controls::WtrJQCloud ;
         $single_item = "single_" . "$table" ; 
       }
 
-#      let items = [
-#         {
-#              text: "john"
-#            , weight: 1
-#         },
-#         {
-#              text: "steve"
-#            , weight: 2.5
-#         },
-#         {
-#              text: "bob"
-#            , weight: 5
-#         }
-#      ];
 
       my $control = 'let items = [ ' ; 
 
-		foreach my $id ( sort { $hsr2->{$a}->{ 'id' } <=> $hsr2->{$b}->{ 'id' } } keys (%$hsr2))  {
-			my $row = $hsr2->{$id} ; 
+		foreach my $key ( keys (%$hsr2))  {
+			my $row = $hsr2->{$key} ; 
          $control .= "\n { \n" ; 
          foreach my $col_num ( reverse sort ( keys %$hs_headers )) {
             my $col = $hs_headers->{ $col_num }->{ 'attname' }; 
 				next unless ( $col eq 'name' or $col eq 'prio' ) ; 
 				if ( $col eq 'name' ) {
-            	$control .= 'text: "' . $row->{'name'} . '"' ;
+					my $text = $row->{'name'} ; 
+					$text =~ s/\"/\\"/g ; 
+            	$control .= 'text: "' . $text . '"' ;
 					next ; 
 				}			
 				if ( $col eq 'prio' ) {
-            	$control .= ', weight:' . $row->{'prio'} ;
+					my $weight = 10-$row->{'prio'} || 1 ; 
+            	$control .= ", weight: $weight"  ; 
 				}			
          } 
-            	$control .= "\n },\n" ; 
+         $control .= "\n },\n" ; 
 		 }	
 		 chomp $control ; chop $control ; 
        $control .= "\n ]; \n" ; 
@@ -81,19 +82,18 @@ package IssueTracker::App::UI::Controls::WtrJQCloud ;
 	# -----------------------------------------------------------------------------
 	sub new {
 
-		my $invocant 			= shift ;    
+		my $invocant 	= shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'missing objModel !!!' ; 
       # might be class or object, but in both cases invocant
-		my $class = ref ( $invocant ) || $invocant ; 
-
-		my $self = {};        # Anonymous hash reference holds instance attributes
+		my $class      = ref ( $invocant ) || $invocant ; 
+		my $self       = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize() ; 
+      $self          = $self->doInitialize() ; 
 
 		return $self;
 	}  
-	#eof const
+	
 	
    #
 	# --------------------------------------------------------
@@ -107,9 +107,8 @@ package IssueTracker::App::UI::Controls::WtrJQCloud ;
       );
       return $self ; 
 	}	
-	#eof sub doInitialize
+	
    
-
 
 1;
 

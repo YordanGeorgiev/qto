@@ -333,7 +333,6 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
 
 
       ( $ret , $msg , $dmhsr ) = $self->doSelectTablesColumnList ( $table ) ; 
-
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
       foreach my $key ( sort ( keys %$dmhsr ) ) {

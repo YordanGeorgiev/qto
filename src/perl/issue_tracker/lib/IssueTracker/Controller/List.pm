@@ -10,6 +10,7 @@ use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
 use IssueTracker::App::UI::WtrUIFactory ; 
+use IssueTracker::App::IO::In::RdrUrlParams ; 
 
 our $module_trace   = 0 ; 
 our $appConfig      = {};
@@ -29,11 +30,11 @@ sub doListItems {
    my $rdbms_type       = 'postgres';
    my $ret              = 1 ; 
    my $msg              = '' ; 
-   my $vct_list  = '' ; 
+   my $vct_list  			= '' ; 
    my $as               = 'lbls' ; 
 
 	print "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
-   $appConfig		 = $self->app->get('AppConfig');
+   $appConfig		 		= $self->app->get('AppConfig');
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
 
    $objModel->set('postgres_db_name' , $db ) ; 
@@ -93,71 +94,75 @@ sub doListItems {
 
 sub doBuildVueControlListCloud {
 
-	my $self          = shift ; 
-	my $msg           = shift ; 
-   my $objModel      = ${ shift @_ } ; 
-   my $ret           = 1 ; 
-   my $control       = '' ; 
+	my $self          		= shift ; 
+	my $msg           		= shift ; 
+   my $objModel      		= ${ shift @_ } ; 
 
-	# get the list of the table columns 
-   my $mhsr2 = {} ;
-   my $hsr2 = {} ;
-   my $objRdrDbsFactory
+   my $ret           		= 1 ; 
+   my $control       		= '' ; 
+   my $mhsr2 					= {} ;
+   my $hsr2 					= {} ;
+   my $objRdrDb 				= {} ; 
+   my $objRdrDbsFactory 	= {} ; 
+   my $table 					= {} ; 
+	my $objCnrHsr2ToArray	= {} ; 
+   my $objWtrUIFactory		= {} ; 
+   my $objUIBuilder 			= {} ; 
+  
+	$objRdrDbsFactory
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
-   my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
-   my $table = $objModel->get('table_name'); 
+   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+   $table = $objModel->get('table_name'); 
 
-   ( $ret , $msg , $mhsr2 ) = $objRdrDb->doSelectTablesColumnList ( $table ) ;
-   return ( $ret , $msg , '' ) unless $ret == 0 ; 
+   my $objRdrUrlParams= 'IssueTracker::App::IO::In::RdrUrlParams'->new();
+   $objRdrUrlParams->doSetUrlParams(\$objModel, $self->req->query_params );
+   $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
+   
+   #$self->doSetUrlParams ( \$objModel ) ; 
+   #$self->doSetWithUrlParams ( \$objModel ) ; 
 
-	my $hsr2 = {};
-   my $objRdrDbsFactory
-      = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+   $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
+   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    ($ret, $msg) = $objRdrDb->doSelectTableIntoHashRef(\$objModel, $table);
 
-	my $objCnrHsr2ToArray =
-	'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ;
-		( $ret , $msg , $hsr2) = $objCnrHsr2ToArray->doConvert ($objModel->get('hsr2'));
+	$objCnrHsr2ToArray = 'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ;
+	( $ret , $msg , $hsr2) = $objCnrHsr2ToArray->doConvert ($objModel->get('hsr2'));
 
-   my $objWtrUIFactory
-      = 'IssueTracker::App::UI::WtrUIFactory'->new(\$appConfig, \$objModel );
-   my $objUIBuilder = $objWtrUIFactory->doInstantiate('control/list-cloud');
+   $objWtrUIFactory = 'IssueTracker::App::UI::WtrUIFactory'->new(\$appConfig, \$objModel );
+   $objUIBuilder = $objWtrUIFactory->doInstantiate('control/list-cloud');
 
    ( $ret , $msg , $control ) = $objUIBuilder->doBuild() ; 
-
-   
    return ( $ret , $msg , $control ) ; 
 }
 
 sub doBuildVueControlListLabels {
 
-	my $self          = shift ; 
-	my $msg           = shift ; 
-   my $objModel      = ${ shift @_ } ; 
-   my $ret           = 1 ; 
-   my $control       = '' ; 
+	my $self          	= shift ; 
+	my $msg           	= shift ; 
+   my $objModel      	= ${ shift @_ } ; 
+   my $ret           	= 1 ; 
+   my $control       	= '' ; 
+   my $mhsr2 				= {};
+   my $objRdrDbsFactory = {} ; 
+   my $objRdrDb 			= {} ; 
+   my $table 				= {} ; 
+   my $objWtrUIFactory 	= {} ; 
+   my $objUIBuilder 		= {} ; 
 
-	# get the list of the table columns 
-   my $mhsr2 = {};
-   my $objRdrDbsFactory
-      = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
-   my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
-   my $table = $objModel->get('table_name'); 
+   $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
+   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+   $table = $objModel->get('table_name'); 
 
    ( $ret , $msg , $mhsr2 ) = $objRdrDb->doSelectTablesColumnList ( $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 	
-   my $objWtrUIFactory
-      = 'IssueTracker::App::UI::WtrUIFactory'->new(\$appConfig, \$objModel );
-   my $objUIBuilder = $objWtrUIFactory->doInstantiate('control/list-labels');
-   # build the list-labels control with it 
+   $objWtrUIFactory = 'IssueTracker::App::UI::WtrUIFactory'->new(\$appConfig, \$objModel );
+   $objUIBuilder = $objWtrUIFactory->doInstantiate('control/list-labels');
+
    ( $ret , $msg , $control ) = $objUIBuilder->doBuild() ; 
    
    return ( $ret , $msg , $control ) ; 
 }
-
-
 
 
 1;
