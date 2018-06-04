@@ -6,7 +6,6 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm	141;"	subroutine	language:Perl
 AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	161;"	subroutine	language:Perl
-AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrURL.pm	192;"	subroutine	language:Perl
 AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrText.pm	175;"	subroutine	language:Perl
 AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrURL.pm	223;"	subroutine	language:Perl
 AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToJson.pm	157;"	subroutine	language:Perl
@@ -16,10 +15,10 @@ AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	155;"	subro
 AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/AutoLoadable.pm	20;"	subroutine	language:Perl
 AUTOLOAD	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Timer.pm	46;"	subroutine	language:Perl
 AutoLoadableChild	src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/AutoLoadableChild.pm	3;"	package	language:Perl
+C	src/perl/issue_tracker/public/bower_components/jquery/dist/jquery.min.js	2;"	function	language:JavaScript
 DEBUG	src/perl/issue_tracker/lib/Mojo/Chrome.pm	20;"	constant	language:Perl
 DESTROY	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm	169;"	subroutine	language:Perl
 DESTROY	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	191;"	subroutine	language:Perl
-DESTROY	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrURL.pm	224;"	subroutine	language:Perl
 DESTROY	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrText.pm	206;"	subroutine	language:Perl
 DESTROY	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrURL.pm	254;"	subroutine	language:Perl
 DESTROY	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToJson.pm	188;"	subroutine	language:Perl
@@ -58,7 +57,7 @@ IssueTracker::App::IO::In::RdrDirs	src/perl/issue_tracker/lib/IssueTracker/App/I
 IssueTracker::App::IO::In::RdrFiles	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrFiles.pm	1;"	package	language:Perl
 IssueTracker::App::IO::In::RdrText	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrText.pm	1;"	package	language:Perl
 IssueTracker::App::IO::In::RdrTextFactory	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrTextFactory.pm	1;"	package	language:Perl
-IssueTracker::App::IO::In::RdrURL	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrURL.pm	1;"	package	language:Perl
+IssueTracker::App::IO::In::RdrUrlParams	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlParams.pm	1;"	package	language:Perl
 IssueTracker::App::IO::In::RdrXls	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrXls.pm	1;"	package	language:Perl
 IssueTracker::App::IO::Out::WtrDirs	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrDirs.pm	1;"	package	language:Perl
 IssueTracker::App::IO::Out::WtrFiles	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrFiles.pm	1;"	package	language:Perl
@@ -70,6 +69,7 @@ IssueTracker::App::IO::Out::WtrXls	src/perl/issue_tracker/lib/IssueTracker/App/I
 IssueTracker::App::Mdl::Model	src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm	2;"	package	language:Perl
 IssueTracker::App::RAM::CnrHsr2ToJson	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToJson.pm	1;"	package	language:Perl
 IssueTracker::App::RAM::CnrHsr2ToTxt	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToTxt.pm	1;"	package	language:Perl
+IssueTracker::App::UI::Controls::WtrJQCloud	src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrJQCloud.pm	1;"	package	language:Perl
 IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate	src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm	1;"	package	language:Perl
 IssueTracker::App::UI::WtrUIFactory	src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm	1;"	package	language:Perl
 IssueTracker::App::Utils::Configurator	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	1;"	package	language:Perl
@@ -84,7 +84,6 @@ MkDir	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	605;"	subrouti
 Mojo::Chrome	src/perl/issue_tracker/lib/Mojo/Chrome.pm	1;"	package	language:Perl
 RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm	157;"	subroutine	language:Perl
 RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	179;"	subroutine	language:Perl
-RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrURL.pm	212;"	subroutine	language:Perl
 RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrText.pm	194;"	subroutine	language:Perl
 RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrURL.pm	242;"	subroutine	language:Perl
 RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToJson.pm	176;"	subroutine	language:Perl
@@ -93,6 +92,7 @@ RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	212;"	
 RunBeforeExit	src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/AutoLoadable.pm	38;"	subroutine	language:Perl
 SetAllIniVarsToEnvironmentVars	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	346;"	subroutine	language:Perl
 SetGetableChild	src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/SetGetableChild.pm	3;"	package	language:Perl
+T	src/perl/issue_tracker/public/bower_components/jquery/dist/jquery.slim.min.js	2;"	function	language:JavaScript
 Test::Mojo::Role::Chrome	src/perl/issue_tracker/lib/Test/Mojo/Role/Chrome.pm	1;"	package	language:Perl
 TestAutoLoadable	src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestAutoLoadable.pl	2;"	package	language:Perl
 TestSetGetable	src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/OO/TestSetGetable.pl	2;"	package	language:Perl
@@ -105,12 +105,22 @@ add_window	doc/txt/issue-tracker/helps/sys/tmux/tmux-common.help.txt	27;"	functi
 add_window	doc/txt/issue-tracker/specs/sys/tmux/tmux-common.spec.txt	27;"	function	language:Sh
 add_window	src/bash/issue-tracker/funcs/sys/tmux/tmux-common.func.sh	27;"	function	language:Sh
 add_window	src/bash/issue-tracker/specs/sys/tmux/tmux-common.spec.sh	27;"	function	language:Sh
-autofit_columns	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrXls.pm	154;"	subroutine	language:Perl
+autofit_columns	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrXls.pm	156;"	subroutine	language:Perl
+b	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js	8;"	function	language:JavaScript
+b	src/perl/issue_tracker/public/bower_components/jquery/dist/jquery.slim.min.js	2;"	function	language:JavaScript
+c	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js	8;"	class	language:JavaScript
+center	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	52;"	property	language:JavaScript	class:jQCloud.DEFAULTS
+center	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js	8;"	property	language:JavaScript	class:c.DEFAULTS
+center	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	32;"	property	language:JavaScript	class:jQCloud.DEFAULTS
 chrome_evaluate_ok	src/perl/issue_tracker/lib/Test/Mojo/Role/Chrome.pm	36;"	subroutine	language:Perl
 chrome_load_ok	src/perl/issue_tracker/lib/Test/Mojo/Role/Chrome.pm	16;"	subroutine	language:Perl
 chrome_result_is	src/perl/issue_tracker/lib/Test/Mojo/Role/Chrome.pm	56;"	subroutine	language:Perl
 chrome_result_like	src/perl/issue_tracker/lib/Test/Mojo/Role/Chrome.pm	68;"	subroutine	language:Perl
+clearTimeouts	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	180;"	method	language:JavaScript	class:jQCloud
+clearTimeouts	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	160;"	method	language:JavaScript	class:jQCloud
 clone	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	91;"	subroutine	language:Perl
+colorGenerator	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	113;"	method	language:JavaScript	class:this
+colorGenerator	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	93;"	method	language:JavaScript	class:this
 confs	src/sql/pgsql/dev_issue_tracker/07.create-table-confs.sql	5;"	table	language:SQL
 confs	src/sql/pgsql/prd_issue_tracker/07.create-table-confs.sql	5;"	table	language:SQL
 confs	src/sql/pgsql/tst_issue_tracker/07.create-table-confs.sql	5;"	table	language:SQL
@@ -144,6 +154,8 @@ confs.update_time	src/sql/pgsql/tst_issue_tracker/07.create-table-confs.sql	15;"
 confs.value	src/sql/pgsql/dev_issue_tracker/07.create-table-confs.sql	12;"	field	language:SQL
 confs.value	src/sql/pgsql/prd_issue_tracker/07.create-table-confs.sql	12;"	field	language:SQL
 confs.value	src/sql/pgsql/tst_issue_tracker/07.create-table-confs.sql	12;"	field	language:SQL
+createTimeout	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	171;"	method	language:JavaScript	class:jQCloud
+createTimeout	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	151;"	method	language:JavaScript	class:jQCloud
 daily_issues	src/sql/pgsql/dev_issue_tracker/01.create-table-daily_issues.sql	5;"	table	language:SQL
 daily_issues	src/sql/pgsql/prd_issue_tracker/01.create-table-daily_issues.sql	5;"	table	language:SQL
 daily_issues	src/sql/pgsql/tst_issue_tracker/01.create-table-daily_issues.sql	5;"	table	language:SQL
@@ -246,18 +258,20 @@ decadally_issues.update_time	src/sql/pgsql/prd_issue_tracker/06.create-table-dec
 decadally_issues.update_time	src/sql/pgsql/tst_issue_tracker/06.create-table-decadally_issues.sql	22;"	field	language:SQL
 detect_chrome_executable	src/perl/issue_tracker/lib/Mojo/Chrome.pm	32;"	subroutine	language:Perl
 doActionToRemove	src/bash/issue-tracker/funcs/action-to-remove.func.sh	7;"	function	language:Sh
-doAddItemWithNoSiblings	src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm	155;"	subroutine	language:Perl
-doAddItemWithSiblings	src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm	113;"	subroutine	language:Perl
+doAddItemWithNoSiblings	src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm	150;"	subroutine	language:Perl
+doAddItemWithSiblings	src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm	108;"	subroutine	language:Perl
 doAppendToFile	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	536;"	subroutine	language:Perl
 doBackupFile	doc/txt/issue-tracker/helps/sys/backup-file.help.txt	9;"	function	language:Sh
 doBackupFile	src/bash/issue-tracker/funcs/sys/backup-file.func.sh	9;"	function	language:Sh
+doBuild	src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrJQCloud.pm	34;"	subroutine	language:Perl
 doBuild	src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm	33;"	subroutine	language:Perl
-doBuildLikeClause	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	41;"	subroutine	language:Perl
+doBuildLikeClause	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	42;"	subroutine	language:Perl
 doBuildMsg	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	417;"	subroutine	language:Perl
 doBuildRunLogMsg	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	455;"	subroutine	language:Perl
-doBuildVueControlListLabels	src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm	69;"	subroutine	language:Perl
-doBuildWhereClauseByFltr	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	156;"	subroutine	language:Perl
-doBuildWhereClauseByWith	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	99;"	subroutine	language:Perl
+doBuildVueControlListCloud	src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm	95;"	subroutine	language:Perl
+doBuildVueControlListLabels	src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm	138;"	subroutine	language:Perl
+doBuildWhereClauseByFltr	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	152;"	subroutine	language:Perl
+doBuildWhereClauseByWith	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	100;"	subroutine	language:Perl
 doBuildXlsFromHashRef	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrXls.pm	32;"	subroutine	language:Perl
 doChangeEnvType	src/bash/issue-tracker/funcs/change-env-type.func.sh	6;"	function	language:Sh
 doChangeVersion	src/bash/issue-tracker/funcs/dev/change-version.func.sh	6;"	function	language:Sh
@@ -272,10 +286,10 @@ doCheckTmuxIsInstalled	src/bash/issue-tracker/funcs/sys/tmux/tmux-common.func.sh
 doCheckUbuntuOSPackages	src/perl/issue_tracker/script/issue_tracker_preq_checker.pl	46;"	subroutine	language:Perl
 doCleanAfterRun	src/bash/issue-tracker/issue-tracker.sh	302;"	function	language:Sh
 doCleanAfterRun	src/bash/issue-tracker/test-issue-tracker.sh	195;"	function	language:Sh
-doClearTheScreen	src/bash/issue-tracker/issue-tracker.sh	522;"	function	language:Sh
+doClearTheScreen	src/bash/issue-tracker/issue-tracker.sh	523;"	function	language:Sh
 doCloneProject	src/bash/issue-tracker/funcs/clone-project.func.sh	7;"	function	language:Sh
 doCloneToApp	src/bash/issue-tracker/funcs/dev/clone-to-app.func.sh	8;"	function	language:Sh
-doConnectToDb	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	526;"	subroutine	language:Perl
+doConnectToDb	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	510;"	subroutine	language:Perl
 doConvert	src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm	14;"	subroutine	language:Perl
 doConvert	src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm	15;"	subroutine	language:Perl
 doConvertHashRefToJsonStr	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToJson.pm	62;"	subroutine	language:Perl
@@ -340,8 +354,8 @@ doHelpRemoveActionFiles	src/bash/issue-tracker/helps/remove-action-files.help.sh
 doHelpRemovePackage	src/bash/issue-tracker/helps/remove-package.help.sh	7;"	function	language:Sh
 doHelpRemovePackageFiles	src/bash/issue-tracker/helps/remove-package-files.help.sh	7;"	function	language:Sh
 doHelpRestoreTmuxSession	src/bash/issue-tracker/helps/restore-tmux-session.help.sh	7;"	function	language:Sh
-doHelpRunMysqlScripts	src/bash/issue-tracker/helps/run-mysql-scripts.help.sh	7;"	function	language:Sh
 doHelpRunIntegrationTests	src/bash/issue-tracker/helps/run-integration-tests.help.sh	7;"	function	language:Sh
+doHelpRunMysqlScripts	src/bash/issue-tracker/helps/run-mysql-scripts.help.sh	7;"	function	language:Sh
 doHelpRunPerlTests	src/bash/issue-tracker/helps/perl/run-perl-unit-tests.help.sh	7;"	function	language:Sh
 doHelpRunPgsqlScripts	src/bash/issue-tracker/helps/run-pgsql-scripts.help.sh	7;"	function	language:Sh
 doHelpTmuxCommon	src/bash/issue-tracker/helps/tmux-common.help.sh	7;"	function	language:Sh
@@ -360,29 +374,29 @@ doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToJson.pm	12
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm	136;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm	122;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	142;"	subroutine	language:Perl
-doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm	163;"	subroutine	language:Perl
+doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm	164;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	207;"	subroutine	language:Perl
-doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm	422;"	subroutine	language:Perl
-doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	706;"	subroutine	language:Perl
+doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm	421;"	subroutine	language:Perl
+doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	685;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/RdrDbsFactory.pm	82;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb.pm	504;"	subroutine	language:Perl
-doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb.pm	703;"	subroutine	language:Perl
+doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb.pm	708;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/WtrDbsFactory.pm	89;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm	117;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrText.pm	368;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrTextFactory.pm	83;"	subroutine	language:Perl
-doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrURL.pm	144;"	subroutine	language:Perl
-doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrXls.pm	173;"	subroutine	language:Perl
+doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrXls.pm	175;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGoogleSheet.pm	244;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrText.pm	98;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrTextFactory.pm	64;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrURL.pm	175;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrXls.pm	185;"	subroutine	language:Perl
-doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm	63;"	subroutine	language:Perl
+doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm	62;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToJson.pm	111;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToTxt.pm	247;"	subroutine	language:Perl
+doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrJQCloud.pm	102;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm	134;"	subroutine	language:Perl
-doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm	71;"	subroutine	language:Perl
+doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm	75;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	73;"	subroutine	language:Perl
 doInitialize	src/perl/issue_tracker/script/issue_tracker.pl	113;"	subroutine	language:Perl
 doInsertSqlHashData	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb.pm	149;"	subroutine	language:Perl
@@ -393,7 +407,7 @@ doInstantiate	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrTextFactory.p
 doInstantiate	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrTextFactory.pm	21;"	subroutine	language:Perl
 doInstantiate	src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm	18;"	subroutine	language:Perl
 doListAllInstalledModules	src/perl/issue_tracker/script/issue_tracker_preq_checker.pl	35;"	subroutine	language:Perl
-doListItems	src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm	24;"	subroutine	language:Perl
+doListItems	src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm	25;"	subroutine	language:Perl
 doLoad	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	62;"	subroutine	language:Perl
 doLog	src/bash/issue-tracker/issue-tracker.sh	256;"	function	language:Sh
 doLog	src/bash/issue-tracker/test-issue-tracker.sh	172;"	function	language:Sh
@@ -416,13 +430,13 @@ doOverWriteConfHolder	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configur
 doParametrize	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	125;"	subroutine	language:Perl
 doParseCmdArgs	src/bash/issue-tracker/issue-tracker.sh	137;"	function	language:Sh
 doParseCnfEnvVars	lib/bash/funcs/parse-cnf-env-vars.sh	11;"	function	language:Sh
-doParseConfFile	src/bash/issue-tracker/issue-tracker.sh	487;"	function	language:Sh
+doParseConfFile	src/bash/issue-tracker/issue-tracker.sh	488;"	function	language:Sh
 doParseConfFile	src/bash/issue-tracker/test-issue-tracker.sh	325;"	function	language:Sh
 doParseIniEnvVars	lib/bash/funcs/parse-cnf-env-vars.sh	52;"	function	language:Sh
 doPrepareHashForPrinting	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToTxt.pm	185;"	subroutine	language:Perl
 doPrintHelp	src/bash/issue-tracker/funcs/man/print-help.func.sh	5;"	function	language:Sh
 doPrintIssuesFile	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrText.pm	65;"	subroutine	language:Perl
-doPrintRow	src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm	188;"	subroutine	language:Perl
+doPrintRow	src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm	183;"	subroutine	language:Perl
 doPrintToFile	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrFiles.pm	29;"	subroutine	language:Perl
 doPrintUsage	src/bash/issue-tracker/funcs/man/print-usage.func.sh	5;"	function	language:Sh
 doRead	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm	29;"	subroutine	language:Perl
@@ -436,7 +450,6 @@ doReadDirGetFilesByExtension	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/R
 doReadFileReturnArrayRef	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrFiles.pm	98;"	subroutine	language:Perl
 doReadFileReturnString	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrFiles.pm	36;"	subroutine	language:Perl
 doReadIssueFile	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrText.pm	290;"	subroutine	language:Perl
-doReadURL	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrURL.pm	62;"	subroutine	language:Perl
 doReadXlsFileToHsr3	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrXls.pm	31;"	subroutine	language:Perl
 doRemoveActionFiles	src/bash/issue-tracker/funcs/remove-action-files.func.sh	11;"	function	language:Sh
 doRemovePackage	doc/txt/issue-tracker/helps/pckg/remove-package.help.txt	8;"	function	language:Sh
@@ -463,10 +476,10 @@ doRunCmdAndLog	src/bash/issue-tracker/issue-tracker.sh	320;"	function	language:S
 doRunCmdAndLog	src/bash/issue-tracker/test-issue-tracker.sh	213;"	function	language:Sh
 doRunCmdOrExit	src/bash/issue-tracker/issue-tracker.sh	343;"	function	language:Sh
 doRunCmdOrExit	src/bash/issue-tracker/test-issue-tracker.sh	236;"	function	language:Sh
+doRunIntegrationTests	src/bash/issue-tracker/funcs/run-integration-tests.func.sh	7;"	function	language:Sh
 doRunLog	src/bash/issue-tracker/issue-tracker.sh	283;"	function	language:Sh
 doRunLogMsg	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	520;"	subroutine	language:Perl
 doRunMySqlScripts	src/bash/issue-tracker/funcs/run-mysql-scripts.func.sh	7;"	function	language:Sh
-doRunIntegrationTests	src/bash/issue-tracker/funcs/run-integration-tests.func.sh	7;"	function	language:Sh
 doRunPerlTests	src/bash/issue-tracker/funcs/perl/run-perl-unit-tests.func.sh	7;"	function	language:Sh
 doRunPgsqlScripts	src/bash/issue-tracker/funcs/run-pgsql-scripts.func.sh	8;"	function	language:Sh
 doRunTests	src/bash/issue-tracker/test-issue-tracker.sh	54;"	function	language:Sh
@@ -479,22 +492,23 @@ doSaveTmuxSession	src/bash/issue-tracker/funcs/save-tmux-session.func.sh	7;"	fun
 doSaveTmuxSession	src/bash/issue-tracker/funcs/sys/tmux/save-tmux-session.func.sh	7;"	function	language:Sh
 doSaveTmuxSession	src/bash/issue-tracker/funcs/sys/tmux/tmux-common.func.sh	12;"	function	language:Sh
 doSearchConfigurationEntries	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm	237;"	subroutine	language:Perl
-doSearchConfigurationEntries	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	447;"	subroutine	language:Perl
+doSearchConfigurationEntries	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	440;"	subroutine	language:Perl
 doSelectItemByGuid	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm	101;"	subroutine	language:Perl
-doSelectItemByGuid	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	315;"	subroutine	language:Perl
-doSelectItems	src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm	158;"	subroutine	language:Perl
-doSelectMeta	src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm	23;"	subroutine	language:Perl
+doSelectItemByGuid	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	310;"	subroutine	language:Perl
+doSelectItems	src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm	112;"	subroutine	language:Perl
+doSelectMeta	src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm	24;"	subroutine	language:Perl
 doSelectTableIntoHashRef	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm	317;"	subroutine	language:Perl
-doSelectTableIntoHashRef	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	559;"	subroutine	language:Perl
-doSelectTables	src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm	248;"	subroutine	language:Perl
+doSelectTableIntoHashRef	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	543;"	subroutine	language:Perl
+doSelectTables	src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm	207;"	subroutine	language:Perl
 doSelectTablesColumnList	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm	163;"	subroutine	language:Perl
-doSelectTablesColumnList	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	385;"	subroutine	language:Perl
+doSelectTablesColumnList	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	378;"	subroutine	language:Perl
 doSelectTablesList	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm	31;"	subroutine	language:Perl
-doSelectTablesList	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	213;"	subroutine	language:Perl
-doSetUndefinedShellVarsFromCnfFile	src/bash/issue-tracker/issue-tracker.sh	432;"	function	language:Sh
-doSetUrlParams	src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm	107;"	subroutine	language:Perl
+doSelectTablesList	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	209;"	subroutine	language:Perl
+doSetUndefinedShellVarsFromCnfFile	src/bash/issue-tracker/issue-tracker.sh	433;"	function	language:Sh
+doSetUrlParams	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlParams.pm	54;"	subroutine	language:Perl
 doSetVars	src/bash/issue-tracker/issue-tracker.sh	373;"	function	language:Sh
 doSetVars	src/bash/issue-tracker/test-issue-tracker.sh	256;"	function	language:Sh
+doSetWithUrlParams	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlParams.pm	22;"	subroutine	language:Perl
 doSpecActionToRemove	src/bash/issue-tracker/specs/action-to-remove.spec.sh	7;"	function	language:Sh
 doSpecBackupFile	src/bash/issue-tracker/specs/sys/backup-file.spec.sh	9;"	function	language:Sh
 doSpecChangeEnvType	src/bash/issue-tracker/specs/change-env-type.spec.sh	7;"	function	language:Sh
@@ -576,8 +590,8 @@ doTestRemovePackage	src/bash/issue-tracker/tests/pckg/remove-package.test.sh	8;"
 doTestRemovePackage	src/bash/issue-tracker/tests/remove-package.test.sh	7;"	function	language:Sh
 doTestRemovePackageFiles	src/bash/issue-tracker/tests/remove-package-files.test.sh	7;"	function	language:Sh
 doTestRestoreTmuxSession	src/bash/issue-tracker/tests/sys/tmux/restore-tmux-session.test.sh	7;"	function	language:Sh
-doTestRunMysqlScripts	src/bash/issue-tracker/tests/run-mysql-scripts.test.sh	7;"	function	language:Sh
 doTestRunIntegrationTests	src/bash/issue-tracker/tests/run-integration-tests.test.sh	7;"	function	language:Sh
+doTestRunMysqlScripts	src/bash/issue-tracker/tests/run-mysql-scripts.test.sh	7;"	function	language:Sh
 doTestRunPerlTests	src/bash/issue-tracker/tests/perl/run-perl-unit-tests.test.sh	7;"	function	language:Sh
 doTestRunPgsqlScripts	src/bash/issue-tracker/tests/run-pgsql-scripts.test.sh	7;"	function	language:Sh
 doTestSaveTmuxSession	src/bash/issue-tracker/tests/save-tmux-session.test.sh	7;"	function	language:Sh
@@ -596,6 +610,10 @@ doUpsertTables	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrPo
 doWriteGSheetFromHashRef	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGoogleSheet.pm	41;"	subroutine	language:Perl
 doXlsToDb	src/bash/issue-tracker/funcs/xls-to-db.func.sh	8;"	function	language:Sh
 doXlsToDb	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	60;"	subroutine	language:Perl
+drawOneWord	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	264;"	method	language:JavaScript	class:jQCloud
+drawOneWord	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	244;"	method	language:JavaScript	class:jQCloud
+drawWordCloud	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	209;"	method	language:JavaScript	class:jQCloud
+drawWordCloud	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	189;"	method	language:JavaScript	class:jQCloud
 dumpFields	src/perl/issue_tracker/lib/IssueTracker.pm	145;"	subroutine	language:Perl
 dumpFields	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	197;"	subroutine	language:Perl
 dumpFields	src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/SetGetable.pm	52;"	subroutine	language:Perl
@@ -604,6 +622,8 @@ dump_tmux_session	doc/txt/issue-tracker/helps/sys/tmux/tmux-common.help.txt	6;"	
 dump_tmux_session	doc/txt/issue-tracker/specs/sys/tmux/tmux-common.spec.txt	6;"	function	language:Sh
 dump_tmux_session	src/bash/issue-tracker/funcs/sys/tmux/tmux-common.func.sh	6;"	function	language:Sh
 dump_tmux_session	src/bash/issue-tracker/specs/sys/tmux/tmux-common.spec.sh	6;"	function	language:Sh
+e	src/perl/issue_tracker/public/bower_components/jquery/dist/jquery.min.js	2;"	function	language:JavaScript
+e	src/perl/issue_tracker/public/bower_components/jquery/dist/jquery.slim.min.js	2;"	function	language:JavaScript
 evaluate	src/perl/issue_tracker/lib/Mojo/Chrome.pm	49;"	subroutine	language:Perl
 filter_file_with_ext	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrDirs.pm	43;"	subroutine	language:Perl
 flushScreen	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	239;"	subroutine	language:Perl
@@ -615,6 +635,13 @@ getConfHolder	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	
 getConfHolderRef	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	453;"	subroutine	language:Perl
 get_function_list	src/bash/issue-tracker/issue-tracker.sh	51;"	function	language:Sh
 get_function_list	src/bash/issue-tracker/test-issue-tracker.sh	34;"	function	language:Sh
+height	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	51;"	property	language:JavaScript	class:jQCloud.DEFAULTS
+height	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js	8;"	property	language:JavaScript	class:c.DEFAULTS
+height	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	31;"	property	language:JavaScript	class:jQCloud.DEFAULTS
+hitTest	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	198;"	method	language:JavaScript	class:jQCloud
+hitTest	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	178;"	method	language:JavaScript	class:jQCloud
+href	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	323;"	property	language:JavaScript	class:word.link
+href	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	303;"	property	language:JavaScript	class:word.link
 ideas	src/sql/pgsql/dev_issue_tracker/14.create-table-ideas.sql	5;"	table	language:SQL
 ideas	src/sql/pgsql/prd_issue_tracker/14.create-table-ideas.sql	5;"	table	language:SQL
 ideas	src/sql/pgsql/tst_issue_tracker/14.create-table-ideas.sql	5;"	table	language:SQL
@@ -648,9 +675,17 @@ ideas.status	src/sql/pgsql/tst_issue_tracker/14.create-table-ideas.sql	10;"	fiel
 ideas.update_time	src/sql/pgsql/dev_issue_tracker/14.create-table-ideas.sql	14;"	field	language:SQL
 ideas.update_time	src/sql/pgsql/prd_issue_tracker/14.create-table-ideas.sql	14;"	field	language:SQL
 ideas.update_time	src/sql/pgsql/tst_issue_tracker/14.create-table-ideas.sql	14;"	field	language:SQL
+initialize	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	67;"	method	language:JavaScript	class:jQCloud
+initialize	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js	8;"	method	language:JavaScript
+initialize	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	47;"	method	language:JavaScript	class:jQCloud
 is_tainted	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm	417;"	subroutine	language:Perl
 issue_tracker	src/perl/issue_tracker/script/issue_tracker.pl	2;"	package	language:Perl
+jQCloud	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	24;"	class	language:JavaScript
+jQCloud	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	4;"	class	language:JavaScript
+last	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js	8;"	property	language:JavaScript	class:b.d
 load_page	src/perl/issue_tracker/lib/Mojo/Chrome.pm	69;"	subroutine	language:Perl
+m	src/perl/issue_tracker/public/bower_components/jquery/dist/jquery.min.js	2;"	function	language:JavaScript
+m	src/perl/issue_tracker/public/bower_components/jquery/dist/jquery.slim.min.js	2;"	function	language:JavaScript
 main	src/bash/issue-tracker/issue-tracker.sh	19;"	function	language:Sh
 main	src/bash/issue-tracker/test-issue-tracker.sh	20;"	function	language:Sh
 main	src/perl/issue_tracker/script/issue_tracker.pl	94;"	subroutine	language:Perl
@@ -709,27 +744,27 @@ monthly_issues.update_time	src/sql/pgsql/dev_issue_tracker/03.create-table-month
 monthly_issues.update_time	src/sql/pgsql/prd_issue_tracker/03.create-table-monthly_issues.sql	22;"	field	language:SQL
 monthly_issues.update_time	src/sql/pgsql/tst_issue_tracker/03.create-table-monthly_issues.sql	22;"	field	language:SQL
 new	src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm	83;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm	203;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm	198;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet.pm	190;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToJson.pm	109;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm	119;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm	105;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm	125;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm	152;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm	153;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	190;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm	401;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	686;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm	400;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	666;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/RdrDbsFactory.pm	62;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb.pm	484;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb.pm	683;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb.pm	688;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/WtrDbsFactory.pm	68;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm	100;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrDirs.pm	68;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrFiles.pm	115;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrText.pm	344;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrTextFactory.pm	63;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrURL.pm	173;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrXls.pm	188;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlParams.pm	76;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrXls.pm	190;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrDirs.pm	59;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrFiles.pm	113;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGoogleSheet.pm	229;"	subroutine	language:Perl
@@ -737,11 +772,12 @@ new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrText.pm	78;"	subroutin
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrTextFactory.pm	45;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrURL.pm	204;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrXls.pm	170;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm	45;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm	44;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToJson.pm	89;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToTxt.pm	225;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrJQCloud.pm	83;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm	114;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm	50;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm	54;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	59;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm	344;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	57;"	subroutine	language:Perl
@@ -753,6 +789,11 @@ new_tmux_session	doc/txt/issue-tracker/helps/sys/tmux/tmux-common.help.txt	32;"	
 new_tmux_session	doc/txt/issue-tracker/specs/sys/tmux/tmux-common.spec.txt	32;"	function	language:Sh
 new_tmux_session	src/bash/issue-tracker/funcs/sys/tmux/tmux-common.func.sh	32;"	function	language:Sh
 new_tmux_session	src/bash/issue-tracker/specs/sys/tmux/tmux-common.spec.sh	32;"	function	language:Sh
+overlapping	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	188;"	method	language:JavaScript	class:jQCloud
+overlapping	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	168;"	method	language:JavaScript	class:jQCloud
+pid	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js	8;"	property	language:JavaScript	class:b.d
+placed_words	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	34;"	property	language:JavaScript	class:jQCloud.data
+placed_words	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	14;"	property	language:JavaScript	class:jQCloud.data
 principles	src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql	5;"	table	language:SQL
 principles	src/sql/pgsql/prd_issue_tracker/11.create-table-principles.sql	5;"	table	language:SQL
 principles	src/sql/pgsql/tst_issue_tracker/11.create-table-principles.sql	5;"	table	language:SQL
@@ -888,9 +929,11 @@ purchases.prio	src/sql/pgsql/tst_issue_tracker/12.create-table-purchases.sql	9;"
 purchases.seq	src/sql/pgsql/dev_issue_tracker/12.create-table-purchases.sql	8;"	field	language:SQL
 purchases.seq	src/sql/pgsql/prd_issue_tracker/12.create-table-purchases.sql	8;"	field	language:SQL
 purchases.seq	src/sql/pgsql/tst_issue_tracker/12.create-table-purchases.sql	8;"	field	language:SQL
+purchases.start_price	src/sql/pgsql/dev_issue_tracker/12.create-table-purchases.sql	15;"	field	language:SQL
 purchases.status	src/sql/pgsql/dev_issue_tracker/12.create-table-purchases.sql	11;"	field	language:SQL
 purchases.status	src/sql/pgsql/prd_issue_tracker/12.create-table-purchases.sql	11;"	field	language:SQL
 purchases.status	src/sql/pgsql/tst_issue_tracker/12.create-table-purchases.sql	11;"	field	language:SQL
+purchases.stop_price	src/sql/pgsql/dev_issue_tracker/12.create-table-purchases.sql	16;"	field	language:SQL
 questions	src/sql/pgsql/dev_issue_tracker/09.create-table-questions.sql	5;"	table	language:SQL
 questions	src/sql/pgsql/prd_issue_tracker/09.create-table-questions.sql	5;"	table	language:SQL
 questions	src/sql/pgsql/tst_issue_tracker/09.create-table-questions.sql	5;"	table	language:SQL
@@ -986,8 +1029,12 @@ session_exists	src/bash/issue-tracker/specs/sys/tmux/tmux-common.spec.sh	22;"	fu
 set	src/perl/issue_tracker/lib/IssueTracker.pm	133;"	subroutine	language:Perl
 set	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	184;"	subroutine	language:Perl
 set	src/perl/issue_tracker/lib/IssueTracker/App/Utils/OO/SetGetable.pm	34;"	subroutine	language:Perl
+sizeGenerator	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	126;"	method	language:JavaScript	class:this
+sizeGenerator	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	143;"	method	language:JavaScript	class:this
+sizeGenerator	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	106;"	method	language:JavaScript	class:this
+sizeGenerator	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	123;"	method	language:JavaScript	class:this
 startup	src/perl/issue_tracker/lib/IssueTracker.pm	39;"	subroutine	language:Perl
-table_exists	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	280;"	subroutine	language:Perl
+table_exists	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	275;"	subroutine	language:Perl
 terminal_size	doc/txt/issue-tracker/helps/sys/tmux/tmux-common.help.txt	18;"	function	language:Sh
 terminal_size	doc/txt/issue-tracker/specs/sys/tmux/tmux-common.spec.txt	18;"	function	language:Sh
 terminal_size	src/bash/issue-tracker/funcs/sys/tmux/tmux-common.func.sh	18;"	function	language:Sh
@@ -1058,6 +1105,8 @@ test_runs.update_time	src/sql/pgsql/dev_issue_tracker/13.create-table-test_runs.
 test_runs.update_time	src/sql/pgsql/prd_issue_tracker/13.create-table-test_runs.sql	23;"	field	language:SQL
 test_runs.update_time	src/sql/pgsql/tst_issue_tracker/13.create-table-test_runs.sql	23;"	field	language:SQL
 trim	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Configurator.pm	418;"	subroutine	language:Perl
+type	src/perl/issue_tracker/public/bower_components/jquery/dist/jquery.min.js	2;"	property	language:JavaScript
+type	src/perl/issue_tracker/public/bower_components/jquery/dist/jquery.slim.min.js	2;"	property	language:JavaScript
 untaint	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm	380;"	subroutine	language:Perl
 weekly_issues	src/sql/pgsql/dev_issue_tracker/02.create-table-weekly_issues.sql	5;"	table	language:SQL
 weekly_issues	src/sql/pgsql/prd_issue_tracker/02.create-table-weekly_issues.sql	5;"	table	language:SQL
@@ -1110,7 +1159,11 @@ weekly_issues.tags	src/sql/pgsql/tst_issue_tracker/02.create-table-weekly_issues
 weekly_issues.update_time	src/sql/pgsql/dev_issue_tracker/02.create-table-weekly_issues.sql	20;"	field	language:SQL
 weekly_issues.update_time	src/sql/pgsql/prd_issue_tracker/02.create-table-weekly_issues.sql	20;"	field	language:SQL
 weekly_issues.update_time	src/sql/pgsql/tst_issue_tracker/02.create-table-weekly_issues.sql	20;"	field	language:SQL
+width	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.js	50;"	property	language:JavaScript	class:jQCloud.DEFAULTS
+width	src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js	8;"	property	language:JavaScript	class:c.DEFAULTS
+width	src/perl/issue_tracker/public/bower_components/jqcloud2/src/jqcloud.js	30;"	property	language:JavaScript	class:jQCloud.DEFAULTS
 wrapp_wanted_call	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrDirs.pm	57;"	subroutine	language:Perl
+x	src/perl/issue_tracker/public/bower_components/jquery/dist/jquery.min.js	2;"	function	language:JavaScript
 yearly_issues	src/sql/pgsql/dev_issue_tracker/04.create-table-yearly_issues.sql	5;"	table	language:SQL
 yearly_issues	src/sql/pgsql/prd_issue_tracker/04.create-table-yearly_issues.sql	5;"	table	language:SQL
 yearly_issues	src/sql/pgsql/tst_issue_tracker/04.create-table-yearly_issues.sql	5;"	table	language:SQL

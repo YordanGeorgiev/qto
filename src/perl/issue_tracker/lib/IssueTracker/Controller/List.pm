@@ -40,10 +40,10 @@ sub doListItems {
    $objModel->set('postgres_db_name' , $db ) ; 
    $objModel->set('table_name' , $item ) ; 
   
-   $objModel->set('list.web-action.fltr-by' , $self->every_param('fltr-by') ) ; 
-   $objModel->set('list.web-action.fltr-val' , $self->every_param('fltr-val') ) ; 
-   $objModel->set('list.web-action.like-by' , $self->every_param('like-by') ) ; 
-   $objModel->set('list.web-action.like-val' , $self->every_param('like-val') ) ; 
+   $objModel->set('list.web-action.fltr-by' , $self->req->query_params->every_param('fltr-by') ) ; 
+   $objModel->set('list.web-action.fltr-val' , $self->req->query_params->every_param('fltr-val') ) ; 
+   $objModel->set('list.web-action.like-by' , $self->req->query_params->every_param('like-by') ) ; 
+   $objModel->set('list.web-action.like-val' , $self->req->query_params->every_param('like-val') ) ; 
    $objModel->set('list.web-action.pick' , $self->req->query_params->param('pick') );
    $objModel->set('list.web-action.hide' , $self->req->query_params->param('hide') );
    $objModel->set('list.web-action.o' , $self->req->query_params->param('o') );
@@ -109,17 +109,13 @@ sub doBuildVueControlListCloud {
    my $objWtrUIFactory		= {} ; 
    my $objUIBuilder 			= {} ; 
   
-	$objRdrDbsFactory
-      = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
+	$objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    $table = $objModel->get('table_name'); 
 
    my $objRdrUrlParams= 'IssueTracker::App::IO::In::RdrUrlParams'->new();
    $objRdrUrlParams->doSetUrlParams(\$objModel, $self->req->query_params );
    $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
-   
-   #$self->doSetUrlParams ( \$objModel ) ; 
-   #$self->doSetWithUrlParams ( \$objModel ) ; 
 
    $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");

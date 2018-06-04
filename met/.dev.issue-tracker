@@ -620,6 +620,7 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrPostgresDb/au
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrText/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrUrlParams/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrGoogleSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrText/autosplit.ix
