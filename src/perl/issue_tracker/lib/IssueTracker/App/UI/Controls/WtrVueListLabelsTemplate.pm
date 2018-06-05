@@ -125,7 +125,6 @@ package IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ;
 
 		return $self;
 	}  
-	#eof const
 	
    #
 	# --------------------------------------------------------

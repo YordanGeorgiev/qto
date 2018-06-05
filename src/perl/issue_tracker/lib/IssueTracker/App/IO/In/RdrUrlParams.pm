@@ -14,7 +14,6 @@ package IssueTracker::App::IO::In::RdrUrlParams ;
 	use Fcntl qw( :flock );
 	use File::Path ; 
    use Mojo::Parameters ; 
-   use Data::Printer ; # todo:ysg remove ?! 
 
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ; 
    use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;

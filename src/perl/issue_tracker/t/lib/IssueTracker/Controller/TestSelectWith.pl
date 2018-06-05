@@ -77,7 +77,7 @@ for my $row ( @$tables ) {
       ;
 
       $res = $ua->get($url)->result->json ; 
-      my $list = $res->{'dat'} ; 
+      $list = $res->{'dat'} ; 
 
       foreach my $row ( @$list) {
          # not all the tables have the prio attribute

@@ -6,15 +6,13 @@ package IssueTracker::App::UI::WtrUIFactory ;
    use Carp ; 
 
    use IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ; 
+   use IssueTracker::App::UI::Controls::WtrJQCloud ; 
 
 	our $appConfig 		= {} ; 
 	our $objModel        = {} ; 
    our $ui_type         = 'pages' ; 
 
-	#
-	# -----------------------------------------------------------------------------
-	# fabricates different WtrDb object 
-	# -----------------------------------------------------------------------------
+
 	sub doInstantiate {
 
 		my $self 			= shift ; 	
@@ -25,10 +23,7 @@ package IssueTracker::App::UI::WtrUIFactory ;
 		my $package_file  = () ; 
 		my $objWtrControl = () ;
 
-		if ( $ui_type eq 'Pages' ) {
-	      croak "not implemented !!!" ; 	
-		}
-		elsif ( $ui_type eq 'control/list-labels' ) {
+		if ( $ui_type eq 'control/list-labels' ) {
 		   $package_file     = "IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm" ; 
 		   $objWtrControl    = "IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate" ; 
 		}
@@ -44,13 +39,8 @@ package IssueTracker::App::UI::WtrUIFactory ;
 
 		return $objWtrControl->new( \$appConfig , \$objModel , @args);
 	}
-	# eof sub doInstantiate
 	
 
-   #
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
 	sub new {
 
 		my $invocant 			= shift ;    
@@ -66,12 +56,8 @@ package IssueTracker::App::UI::WtrUIFactory ;
       $self = $self->doInitialize() ; 
 		return $self;
 	}  
-	#eof const
-	
-   #
-	# --------------------------------------------------------
-	# intializes this object 
-	# --------------------------------------------------------
+
+
    sub doInitialize {
       my $self = shift ; 
 
@@ -81,7 +67,6 @@ package IssueTracker::App::UI::WtrUIFactory ;
 
       return $self ; 
 	}	
-	#eof sub doInitialize
 
 1;
 
