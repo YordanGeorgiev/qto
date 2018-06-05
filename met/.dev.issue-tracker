@@ -17,6 +17,7 @@ src/perl/issue_tracker/public/css/controls/app_list_labels.css
 src/perl/issue_tracker/public/css/site/site.css
 src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.css
 src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.css
+src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js
 src/perl/issue_tracker/public/css
 # ---
 src/perl/issue_tracker/lib/IssueTracker.pm
@@ -609,6 +610,7 @@ doc/txt/issue-tracker/funcs/run-pgsql-scripts.func.txt
 tags
 # ---
 src/perl/issue_tracker/lib/auto/AutoLoadableChild/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrJQCloud/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToXls/autosplit.ix
@@ -771,11 +773,10 @@ doc/dot/devops/shell-action-control-flow-diagram.dot
 doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
 # --- the application data
-dat/mix/issues/2018/2018-05/2018-05-31
-dat/mix/issues/2018/2018-05/2018-05-31/~$issue-tracker.all.20180531_000000.xlsx
-dat/mix/issues/2018/2018-05/2018-05-31/issue-tracker.all.20180531_000000.xlsx
-dat/mix/issues/2018/2018-05/2018-05-31/issue-tracker.daily-issues.2018-05-31.txt
-dat/mix/issues/2018/2018-05/2018-05-31/issue-tracker.monthly-issues.2018-05-31.txt
-dat/mix/issues/2018/2018-05/2018-05-31/issue-tracker.test-hierarchy-table.2018-05-31.txt
-dat/mix/issues/2018/2018-05/2018-05-31/issue-tracker.weekly-issues.2018-05-31.txt
-dat/mix/issues/2018/2018-05/2018-05-31/issue-tracker.yearly-issues.2018-05-31.txt
+dat/mix/issues/2018/2018-06/2018-06-05
+dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.monthly-issues.2018-06-05.txt
+dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.daily-issues.2018-06-05.txt
+dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.weekly-issues.2018-06-05.txt
+dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.all.20180605_000000.xlsx
+dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.yearly-issues.2018-06-05.txt
+dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.test-hierarchy-table.2018-06-05.txt
