@@ -6,11 +6,14 @@ use Data::Printer ;
 use Data::Dumper; 
 use Scalar::Util qw /looks_like_number/;
 
-use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
+use IssueTracker::Controller::PageFactory ; 
+use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
 use IssueTracker::App::UI::WtrUIFactory ; 
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::Controller::ListCloud ; 
+use IssueTracker::Controller::ListLabels ;
 
 our $module_trace   = 0 ; 
 our $appConfig      = {};
@@ -32,6 +35,10 @@ sub doListItems {
    my $msg              = '' ; 
    my $vct_list  			= '' ; 
    my $as               = 'lbls' ; 
+   my $ui_type          = 'page/list-lbls' ; 
+   my $objPageBuilder   = {} ; 
+   my $objPageFactory   = {} ; 
+   my $objRdrUrlParams  = {} ; 
 
 	print "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    $appConfig		 		= $self->app->get('AppConfig');
@@ -48,14 +55,20 @@ sub doListItems {
    $objModel->set('list.web-action.hide' , $self->req->query_params->param('hide') );
    $objModel->set('list.web-action.o' , $self->req->query_params->param('o') );
 
+   my $lables_pages = { 
+         'lbls'   => 'list-labels'
+      ,  'cloud'  => 'list-cloud' 
+   };
    $as = $self->req->query_params->param('as') || $as ; 
-   if ( $as eq 'lbls' ) {
-      ( $ret , $msg , $vct_list )  = $self->doBuildVueControlListLabels( $msg , \$objModel  ) ; 
-   } elsif ( $as eq 'cloud' ) {
-      ( $ret , $msg , $vct_list )  = $self->doBuildVueControlListCloud( $msg , \$objModel  ) ; 
-   } else {
-      ( $ret , $msg , $vct_list )  = $self->doBuildVueControlListLabels( $msg , \$objModel  ) ; 
-   }
+   $ui_type = 'page/' . $lables_pages->{ $as } ; 
+   
+   $objRdrUrlParams= 'IssueTracker::App::IO::In::RdrUrlParams'->new();
+   $objRdrUrlParams->doSetUrlParams(\$objModel, $self->req->query_params );
+   $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
+
+   $objPageFactory               = 'IssueTracker::Controller::PageFactory'->new(\$appConfig, \$objModel );
+   $objPageBuilder               = $objPageFactory->doInstantiate( $ui_type );
+   ( $ret , $msg , $vct_list )   = $objPageBuilder->doBuildListControl( $msg , \$objModel  ) ;
 
    $msg = '<span id="spn_err_msg">' . $msg . '</span>' unless $ret == 0 ; 
    $msg = '<span id="spn_msg">' . $msg . '</span>' if $ret == 0 ; 
@@ -64,100 +77,20 @@ sub doListItems {
    $self->res->headers->accept_charset('UTF-8');
    $self->res->headers->accept_language('fi, en');
 
-   if ( $as eq 'lbls' ) {
-      $self->render(
-         template          => 'controls/list'
-       , msg               => $msg
-       , item              => $item
-       , db 					=> $db
-       , vct_list   			=> $vct_list
-      ); 
-   } elsif ( $as eq 'cloud' ) {
-      $self->render(
-         template          => 'controls/cloud'
-       , msg               => $msg
-       , item              => $item
-       , db 					=> $db
-       , vct_list   			=> $vct_list
-      ); 
-   } else {
-      $self->render(
-         template          => 'controls/list'
-       , msg               => $msg
-       , item              => $item
-       , db 					=> $db
-       , vct_list   			=> $vct_list
-      ); 
-   } 
+   my $as_templates = { 
+         'lbls'   => 'list-labels'
+      ,  'cloud'  => 'list-cloud' 
+   };
 
-}
+   my $template = 'controls/' . $as_templates->{ $as } ; 
+   $self->render(
+      'template'  => $template 
+    , 'msg'       => $msg
+    , 'item'      => $item
+    , 'db' 		   => $db
+    , 'vct_list'  => $vct_list
+   ); 
 
-sub doBuildVueControlListCloud {
-
-	my $self          		= shift ; 
-	my $msg           		= shift ; 
-   my $objModel      		= ${ shift @_ } ; 
-
-   my $ret           		= 1 ; 
-   my $control       		= '' ; 
-   my $mhsr2 					= {} ;
-   my $hsr2 					= {} ;
-   my $objRdrDb 				= {} ; 
-   my $objRdrDbsFactory 	= {} ; 
-   my $table 					= {} ; 
-	my $objCnrHsr2ToArray	= {} ; 
-   my $objWtrUIFactory		= {} ; 
-   my $objUIBuilder 			= {} ; 
-  
-	$objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
-   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
-   $table = $objModel->get('table_name'); 
-
-   my $objRdrUrlParams= 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   $objRdrUrlParams->doSetUrlParams(\$objModel, $self->req->query_params );
-   $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
-
-   $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
-   ($ret, $msg) = $objRdrDb->doSelectTableIntoHashRef(\$objModel, $table);
-
-	$objCnrHsr2ToArray = 'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ;
-	( $ret , $msg , $hsr2) = $objCnrHsr2ToArray->doConvert ($objModel->get('hsr2'));
-
-   $objWtrUIFactory = 'IssueTracker::App::UI::WtrUIFactory'->new(\$appConfig, \$objModel );
-   $objUIBuilder = $objWtrUIFactory->doInstantiate('control/list-cloud');
-
-   ( $ret , $msg , $control ) = $objUIBuilder->doBuild() ; 
-   return ( $ret , $msg , $control ) ; 
-}
-
-sub doBuildVueControlListLabels {
-
-	my $self          	= shift ; 
-	my $msg           	= shift ; 
-   my $objModel      	= ${ shift @_ } ; 
-   my $ret           	= 1 ; 
-   my $control       	= '' ; 
-   my $mhsr2 				= {};
-   my $objRdrDbsFactory = {} ; 
-   my $objRdrDb 			= {} ; 
-   my $table 				= {} ; 
-   my $objWtrUIFactory 	= {} ; 
-   my $objUIBuilder 		= {} ; 
-
-   $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
-   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
-   $table = $objModel->get('table_name'); 
-
-   ( $ret , $msg , $mhsr2 ) = $objRdrDb->doSelectTablesColumnList ( $table ) ;
-   return ( $ret , $msg , '' ) unless $ret == 0 ; 
-	
-   $objWtrUIFactory = 'IssueTracker::App::UI::WtrUIFactory'->new(\$appConfig, \$objModel );
-   $objUIBuilder = $objWtrUIFactory->doInstantiate('control/list-labels');
-
-   ( $ret , $msg , $control ) = $objUIBuilder->doBuild() ; 
-   
-   return ( $ret , $msg , $control ) ; 
 }
 
 

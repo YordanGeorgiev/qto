@@ -630,7 +630,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       # not all items have the prio attribute
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
 
-      print "from RdrPostgresDb.pm 637 : $str_sql \n" ; 
+      # debug print "from RdrPostgresDb.pm 637 : $str_sql \n" ; 
 
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
