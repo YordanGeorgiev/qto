@@ -26,10 +26,9 @@ sub doSetWithUrlParams {
    my $self          = shift ; 
    my $objModel      = ${ shift @_ } ; 
    my $query_params  = shift ; 
-   p $query_params ; 
-   my $with_params = $query_params->every_param('with') ; 
-
-   my ( @with_cols , @with_ops , @with_vals ) = () ; 
+   my $with_params   = {} ; 
+   my $ret           = 1 ; 
+   my $msg           = '' ; 
 
    my $ops = {
        'eq' => '='
@@ -37,29 +36,40 @@ sub doSetWithUrlParams {
      , 'lt' => '<'
      , 'ge' => '>='
      , 'le' => '<='
+     , 'like' => 'like'
    };
 
+   $with_params   = $query_params->every_param('with') ; 
+   return unless $with_params ; 
+
+   my ( @with_cols , @with_ops , @with_vals ) = () ; 
+
    foreach my $with ( @$with_params ) {
-   print "from RdrUrlParams.pm 39 with: $with \n" ; #todo:ysg
    
+      # debug print "from RdrUrlParams.pm 39 with: $with \n" ; 
+
       if ( $with =~ m/(.*?)[-](.*?)[-](.*)/g ) {
          push @with_cols , $1 ; 
-         push @with_ops , $ops->{$2} ; 
-         push @with_vals , $3 ; 
+         if ( $3 =~ m/[%]/g ) {
+            push @with_ops , 'like' ; 
+            push @with_vals , $3 ; 
+         } else {
+            push @with_ops , $ops->{$2} ; 
+            push @with_vals , $3 ; 
+         }
       }
+      # debug print "from RdrUrlParams.pm 47 \@with_cols : @with_cols \n" ; 
+      # debug print "from RdrUrlParams.pm 47 \@with_ops : @with_ops \n" ; 
+      # debug print "from RdrUrlParams.pm 47 \@with_vals : @with_vals \n" ; 
+
+      $objModel->set('select.web-action.with-cols' , \@with_cols ) ; 
+      $objModel->set('select.web-action.with-ops' , \@with_ops ) ; 
+      $objModel->set('select.web-action.with-vals' , \@with_vals ) ; 
+   
+      $query_params->remove('with') ; 
    }
-
-   # todo:ysg
-   print "from RdrUrlParams.pm 47 \@with_cols : @with_cols \n" ; 
-   print "from RdrUrlParams.pm 47 \@with_ops : @with_ops \n" ; 
-   print "from RdrUrlParams.pm 47 \@with_vals : @with_vals \n" ; 
-
-   $objModel->set('select.web-action.with-cols' , \@with_cols ) ; 
-   $objModel->set('select.web-action.with-ops' , \@with_ops ) ; 
-   $objModel->set('select.web-action.with-vals' , \@with_vals ) ; 
-
-   $query_params->remove('with') ; 
 }
+
 
 sub doSetUrlParams {
 
