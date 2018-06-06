@@ -21,7 +21,7 @@ Table of Contents
     * [2.1. List labels page](#21-list-labels-page)
       * [2.1.1. Succesfull execution](#211-succesfull-execution)
       * [2.1.2. Error handling for unexisting db](#212-error-handling-for-unexisting-db)
-      * [2.1.3. Error handling for unexisting db](#213-error-handling-for-unexisting-db)
+      * [2.1.3. Error handling for unexisting table](#213-error-handling-for-unexisting-table)
   * [3. SHELL BASED ACTIONS](#3-shell-based-actions)
     * [3.1. The the txt-to-db action](#31-the-the-txt-to-db-action)
       * [3.1.1. The the txt-to-db action period handling](#311-the-the-txt-to-db-action-period-handling)
@@ -47,7 +47,7 @@ Table of Contents
           * [4.2.5.1. successfull execution](#4251-successfull-execution)
           * [4.2.5.2. error handling for wrong filtering syntax by missed fltr-by or fltr-va url params](#4252-error-handling-for-wrong-filtering-syntax-by-missed-fltr-by-or-fltr-va-url-params)
           * [4.2.5.3. error handling for unexisting filter name](#4253-error-handling-for-unexisting-filter-name)
-      * [4.2.6. pick functionality in select table web action](#426-pick-functionality-in-select-table-web-action)
+      * [4.2.6. Use pick url param functionality in select table web action](#426-use-pick-url-param-functionality-in-select-table-web-action)
           * [4.2.6.1. successfull execution](#4261-successfull-execution)
           * [4.2.6.2. error handling if a picked column does not exist](#4262-error-handling-if-a-picked-column-does-not-exist)
       * [4.2.7. Use filtering with the like operator in select table web action](#427-use-filtering-with-the-like-operator-in-select-table-web-action)
@@ -55,9 +55,12 @@ Table of Contents
           * [4.2.7.2. successfull execution for text types](#4272-successfull-execution-for-text-types)
           * [4.2.7.3. error handling for wrong  syntax in the filtering by the like operator by missed like-by or like-val url params](#4273-error-handling-for-wrong-syntax-in-the-filtering-by-the-like-operator-by-missed-like-by-or-like-val-url-params)
           * [4.2.7.4. error handling for unexisting like table's attribute](#4274-error-handling-for-unexisting-like-table's-attribute)
-      * [4.2.8. the hide operator in the select web action](#428-the-hide-operator-in-the-select-web-action)
-          * [4.2.8.1. successfull execution for text types](#4281-successfull-execution-for-text-types)
-          * [4.2.8.2. error handling for unexistent column to hide](#4282-error-handling-for-unexistent-column-to-hide)
+      * [4.2.8. Functionality to filter by using the "with" url param](#428-functionality-to-filter-by-using-the-"with"-url-param)
+          * [4.2.8.1. Successful path](#4281-successful-path)
+          * [4.2.8.2. Error handling for unexisting column](#4282-error-handling-for-unexisting-column)
+      * [4.2.9. the hide operator in the select web action](#429-the-hide-operator-in-the-select-web-action)
+          * [4.2.9.1. successfull execution for text types](#4291-successfull-execution-for-text-types)
+          * [4.2.9.2. error handling for unexistent column to hide](#4292-error-handling-for-unexistent-column-to-hide)
 
 
     
@@ -158,22 +161,23 @@ Single call export of the md and pdf documentation files
     
 
 ### 2.1. List labels page
-
+The list labels page lists all the rows from any table in the app db in form of "labels" - rectangular forms containing all the selected attributes ( by default all ) and their values. 
 
     
 
 #### 2.1.1. Succesfull execution
-
+You can use the pick=col1,col2,col3 url parameter to select for only desired attributes.
+You could filter the result the same way the filters for the select page work ( see bellow ). 
 
     
 
 #### 2.1.2. Error handling for unexisting db
-
+If the db provided in the url pattern does not exist an error is shown. 
 
     
 
-#### 2.1.3. Error handling for unexisting db
-
+#### 2.1.3. Error handling for unexisting table
+If the table requested does not exist an error is shown. 
 
     
 
@@ -453,7 +457,7 @@ If the syntax is correct but an unexisting filtering attribute is provided ( tha
       "ret": 400
     }
 
-#### 4.2.6. pick functionality in select table web action
+#### 4.2.6. Use pick url param functionality in select table web action
 Works for both a single colum and a comma separated select of columns. Obeys the following syntax
 
 
@@ -583,14 +587,51 @@ If the syntax is correct but an unexisting like operator's attribute is provided
       "ret": 400
     }
 
-#### 4.2.8. the hide operator in the select web action
+#### 4.2.8. Functionality to filter by using the "with" url param
+You can filter the result of the query by using the "with=col-operator-value"
+
+    // 20180605150216
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?as=cloud&with=prio-lt-6&o=prio&pick=name,prio&with=status-eq-02-todo
+    
+    {
+       "dat": [
+          {
+             "guid": "55a06b10-7bbf-4298-a1ee-804bbfd12570",
+             "name": "poc for data-load testing",
+             "prio": 5
+          }
+       ],
+       "msg": "",
+       "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?as=cloud",
+       "ret": 200
+    }
+
+##### 4.2.8.1. Successful path
+The application selects only the rows matching the generated where &lt;&lt;column&gt;&gt; &lt;&lt;operator&gt;&gt; &lt;&lt;value&gt;&gt; , where the operator could be also the like operator ( set also if the value contains the % char ) 
+
+    
+
+##### 4.2.8.2. Error handling for unexisting column
+If the column used does not exist an error is provided as follows:
+
+
+    // 20180605150010
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?as=cloud&with=prio-lt-7&o=prio&pick=name,prio&with=foo-eq-02-todo
+    
+    {
+       "msg": "the foo column does not exist",
+       "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?as=cloud",
+       "ret": 400
+    }
+
+#### 4.2.9. the hide operator in the select web action
 Whenever a hide=&lt;&lt;col-name&gt;&gt; operator is applied the values and the column names of the column to hide are not displayed in the result. Use command to as the separator for listing multiple columns to hide. 
 
 
     // using the following syntax:
     <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>?hide=guid,prio
 
-##### 4.2.8.1. successfull execution for text types
+##### 4.2.9.1. successfull execution for text types
 The response of the url query presents all but the hidden attribute values.
 
 
@@ -613,7 +654,7 @@ The response of the url query presents all but the hidden attribute values.
       "ret": 200
     }
 
-##### 4.2.8.2. error handling for unexistent column to hide
+##### 4.2.9.2. error handling for unexistent column to hide
 If the column which values are requested to be hidden does not exist the proper error message is retrieved. 
 
 

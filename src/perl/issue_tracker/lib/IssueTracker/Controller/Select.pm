@@ -129,7 +129,7 @@ sub doSelectItems {
 
    my $query_params = $self->req->query_params ; 
    $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   $objRdrUrlParams->doSetUrlParams(\$objModel, $query_params );
+   $objRdrUrlParams->doSetSelectUrlParams(\$objModel, $query_params );
    $objRdrUrlParams->doSetWithUrlParams(\$objModel, $query_params );
 
    $objRdrDbsFactory

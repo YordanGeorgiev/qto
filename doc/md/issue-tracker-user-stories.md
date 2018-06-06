@@ -9,8 +9,13 @@ Table of Contents
       * [1.1.2. Remove existing projects](#112-remove-existing-projects)
       * [1.1.3. Update existing projects](#113-update-existing-projects)
       * [1.1.4. Search for existing projects](#114-search-for-existing-projects)
-      * [1.1.5. Switch betweeen projects](#115-switch-betweeen-projects)
-          * [1.1.5.1. Current project visibility](#1151-current-project-visibility)
+      * [1.1.5. Switch between projects](#115-switch-between-projects)
+          * [1.1.5.1. Web UI for switch between projects](#1151-web-ui-for-switch-between-projects)
+          * [1.1.5.2. Current project visibility](#1152-current-project-visibility)
+    * [1.2. Time management](#12-time-management)
+      * [1.2.1. Total planned time tracking](#121-total-planned-time-tracking)
+      * [1.2.2. Total remaining allocated time tracking](#122-total-remaining-allocated-time-tracking)
+      * [1.2.3. Total spent time tracking](#123-total-spent-time-tracking)
   * [2. TEAM MEMBER BIZ PERSPECTIVE](#2-team-member-biz-perspective)
     * [2.1. Issues management](#21-issues-management)
       * [2.1.1. Create new issues](#211-create-new-issues)
@@ -147,19 +152,58 @@ As an team leader
 In order to be able to quickly access existing projects
 I wanto to be able to search the projects. 
 
-#### 1.1.5. Switch betweeen projects
+#### 1.1.5. Switch between projects
     
 
 As a team leader
 In order to manage issues from different projects  
 I wanto to be able to switch between different projects easily and quickly
 
-##### 1.1.5.1. Current project visibility
+##### 1.1.5.1. Web UI for switch between projects
+    
+
+As a team leader
+In order to manage issues from different projects  
+I wanto to be able to switch between different projects easily and quickly
+by simply changing the first token of the url of the app
+
+##### 1.1.5.2. Current project visibility
     
 
 As a team leader
 In order to avoid confusion betweeen different projects 
 I wanto to be able to see the current project name from any interface I am working in quickly and esily
+
+### 1.2. Time management
+    
+
+As an team leader
+In order to be able the maximize the performance of the team for issue-tracker used periods 
+I wanto to be able to manage time efficiently 
+by accessing a simple page containing its value and the period it is related to.
+
+#### 1.2.1. Total planned time tracking
+    
+
+As a team leader 
+In order to see the planned time left for achieving the goals of a period
+I want to be able to have a +-3% approximation of the planned time left for a period
+by accessing a simple page containing its value and the period it is related to
+
+#### 1.2.2. Total remaining allocated time tracking
+    
+
+As a team leader 
+In order to see the remaining time left for achieving the goals of a period
+I want to be able to have a +-3% approximation of the allocated time left for a period
+
+#### 1.2.3. Total spent time tracking
+    
+
+As a team leader 
+In order to see the spent time left for achieving the goals of a period
+I want to be able to have a +-3% approximation of the spent time left for a period
+by accessing a simple page containing its value and the period it is related to
 
 ## 2. TEAM MEMBER BIZ PERSPECTIVE
     

@@ -37,6 +37,17 @@ package IssueTracker::App::Mdl::Model ;
       # debug p $hsr2 ; 
    }
 
+   sub doReplaceTokenInKeys {
+      my $self          = shift ; 
+      my $to_srch       = shift ; 
+      my $to_repl       = shift ; 
+
+		foreach my $key ( keys %$self ) {
+         my $new_key = $key ; 
+         $new_key =~ s/$to_srch/$to_repl/g ; 
+         $self->{ $new_key } = $self->{ $key } ; 
+		}
+   }
 
 	# -----------------------------------------------------------------------------
 	# the constructor 

@@ -5,9 +5,7 @@
    <link rel="stylesheet" type="text/css" href="../../css/controls/app_list_labels.css" />
 % end
 
-<div>
-   <%== $vct_list %>
-</div>
+<%== $list_control %>
 
 <script>
 if ( document.getElementById("spn_msg") ) {
