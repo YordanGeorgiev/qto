@@ -70,7 +70,6 @@ doCheckPerlSyntax(){
 
 	doLog "INFO == STOP  == doCheckPerlSyntax NO Errors !!!"
 }
-#eof func doCheckPerlSyntax 
 
 
 
