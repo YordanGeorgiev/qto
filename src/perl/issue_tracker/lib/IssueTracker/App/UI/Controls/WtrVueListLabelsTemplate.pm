@@ -80,6 +80,7 @@ package IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ;
    return ( 0 , "" , $control ) ; 
    }
 
+
    #
 	# -----------------------------------------------------------------------------
 	# hide the attribute's values to hide per row in the hash ref of hash refs 

@@ -16,7 +16,7 @@
 
 <div id="div_cloud_items">
    <script>
-      <%== $vct_list %>
+      <%== $list_control %>
 
       $('#div_cloud_items').jQCloud(items, {
          width: 550,

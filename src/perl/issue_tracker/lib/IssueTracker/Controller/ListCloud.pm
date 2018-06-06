@@ -4,7 +4,6 @@ use Mojo::Base 'Mojolicious::Controller';
 
 use Data::Printer ; 
 use Data::Dumper; 
-use Scalar::Util qw /looks_like_number/;
 use Carp ; 
 
 use IssueTracker::App::Db::In::RdrDbsFactory;
@@ -19,6 +18,7 @@ our $objLogger      = {} ;
 our $objModel       = {} ; 
 our $rdbms_type     = 'postgres' ; 
 
+
 sub new {
 
    my $invocant 			= shift ;    
@@ -29,6 +29,7 @@ sub new {
    bless( $self, $class );    
    return $self;
 }  
+
 
 sub doBuildListControl {
 
@@ -51,6 +52,8 @@ sub doBuildListControl {
 
 
    $table = $objModel->get('table_name'); 
+   $objModel->doReplaceTokenInKeys('list' , 'select' ); 
+
    $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    ($ret, $msg) = $objRdrDb->doSelectTableIntoHashRef(\$objModel, $table);

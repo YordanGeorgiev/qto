@@ -371,12 +371,13 @@ doRunCmdOrExit(){
 # set the variables from the $0.$host_name.cnf file which has ini like syntax
 #------------------------------------------------------------------------------
 doSetVars(){
+
    cd $run_unit_bash_dir
    for i in {1..3} ; do cd .. ; done ;
    export product_instance_dir=`pwd`;
 	# include all the func files to fetch their funcs 
 	while read -r func_file ; do . "$func_file" ; done < <(find . -name "*func.sh")
-	# while read -r func_file ; do echo "$func_file" ; done < <(find . -name "*func.sh")
+	# debug while read -r func_file ; do echo "$func_file" ; done < <(find . -name "*func.sh")
 
    # this will be dev , tst, prd
    export env_type=$(echo `basename "$product_instance_dir"`|cut -d'.' -f5)
@@ -408,7 +409,6 @@ doSetVars(){
 
 	( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
-
 	doLog "INFO # --------------------------------------"
 	doLog "INFO # -----------------------"
 	doLog "INFO # ===		 START MAIN   === $run_unit"
@@ -416,16 +416,20 @@ doSetVars(){
 	doLog "INFO # --------------------------------------"
    doRunLog 'e880f14d-38f1-4bce-968e-2dc6b0d7e461'
 	
-		exit_code=0
-		doLog "INFO using the following vars:"
-		cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
-		echo -e "$cmd"
+   exit_code=0
+   doLog "INFO using the following vars:"
+   cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
+   echo -e "$cmd"
 
-		# and clear the screen
-		printf "\033[2J";printf "\033[0;0H"
+   # and clear the screen
+   printf "\033[2J";printf "\033[0;0H"
 }
 #eof func doSetVars
 
+
+doClearTheScreen(){
+	printf "\033[2J";printf "\033[0;0H"
+}
 
 #------------------------------------------------------------------------------
 # set vars from the cnf file, but only if they are not pre-set in the calling shell
@@ -519,10 +523,6 @@ doParseConfFile(){
 		
 }
 #eof func doParseConfFile
-
-doClearTheScreen(){
-	printf "\033[2J";printf "\033[0;0H"
-}
 
 # Action !!!
 main "$@"

@@ -19,7 +19,13 @@ Table of Contents
       * [2.4.3. Create the pgsql user ](#243-create-the-pgsql-user-)
       * [2.4.4. add the uuid generation capability enabling extension](#244-add-the-uuid-generation-capability-enabling-extension)
       * [2.4.5. Install the dblink extension as follows](#245-install-the-dblink-extension-as-follows)
-    * [2.5. Install the perl modules ( optional)](#25-install-the-perl-modules-(-optional))
+    * [2.5. Install the perl modules](#25-install-the-perl-modules)
+    * [2.6. Front-End related installations and configurations](#26-front-end-related-installations-and-configurations)
+      * [2.6.1. Install NodeJS on Ubuntu](#261-install-nodejs-on-ubuntu)
+      * [2.6.2. Install npm](#262-install-npm)
+      * [2.6.3. Install web-pack](#263-install-web-pack)
+      * [2.6.4. Install bower](#264-install-bower)
+      * [2.6.5. Install the jcoud](#265-install-the-jcoud)
   * [3. MAINTENANCE AND OPERATIONS](#3-maintenance-and-operations)
     * [3.1. RDBMS Runstate management](#31-rdbms-runstate-management)
       * [3.1.1. To check the status of the postgreSql](#311-to-check-the-status-of-the-postgresql)
@@ -212,7 +218,7 @@ Install the dblink extension as follows
 
     sudo su - postgres  -c "psql template1 -c 'CREATE EXTENSION IF NOT EXISTS \"dblink\";' "
 
-### 2.5. Install the perl modules ( optional)
+### 2.5. Install the perl modules
 Install the perl module by first installing the server development package
 
     
@@ -226,6 +232,41 @@ Install the perl module by first installing the server development package
     sudo perl -MCPAN -e 'install DBD::Pg'
     
     sudo perl -MCPAN -e 'Tie::Hash::DBD'
+
+### 2.6. Front-End related installations and configurations
+
+
+    
+
+#### 2.6.1. Install NodeJS on Ubuntu
+From the following page:
+https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+
+    sudo apt-get install -y build-essential
+    sudo apt-get install -y nodejs
+
+#### 2.6.2. Install npm
+Install npm by issuing the following command:
+
+    sudo apt-get install npm
+
+#### 2.6.3. Install web-pack
+Install webpack globally by issueing the following command:
+
+    sudo npm install -g webpack
+
+#### 2.6.4. Install bower
+Install the bower package globally as follows:
+
+    npm config set prefix /usr/local
+    npm install -g bower
+    sudo npm install -g bower
+    which bower
+
+#### 2.6.5. Install the jcoud
+Install the jcloud as follows
+
+    
 
 ## 3. MAINTENANCE AND OPERATIONS
 

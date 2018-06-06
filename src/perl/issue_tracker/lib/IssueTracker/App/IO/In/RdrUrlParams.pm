@@ -70,7 +70,7 @@ sub doSetWithUrlParams {
 }
 
 
-sub doSetUrlParams {
+sub doSetSelectUrlParams {
 
    my $self = shift ; 
    my $objModel = ${ shift @_ } ; 
@@ -91,6 +91,24 @@ sub doSetUrlParams {
    $objModel->set('select.web-action.o' , $query_params->param('o') );
    $query_params->remove('o') ; 
 }
+
+
+sub doSetListUrlParams {
+
+   my $self = shift ; 
+   my $objModel = ${ shift @_ } ; 
+   my $query_params = shift ; 
+
+   $objModel->set('list.web-action.fltr-by' , $query_params->every_param('fltr-by') ) ; 
+   $objModel->set('list.web-action.fltr-val' , $query_params->every_param('fltr-val') ) ; 
+   $objModel->set('list.web-action.like-by' , $query_params->every_param('like-by') ) ; 
+   $objModel->set('list.web-action.like-val' , $query_params->every_param('like-val') ) ; 
+   $objModel->set('list.web-action.pick' , $query_params->param('pick') );
+   $objModel->set('list.web-action.hide' , $query_params->param('hide') );
+   $objModel->set('list.web-action.o' , $query_params->param('o') );
+
+}
+
 
 sub new {
     my $class = shift;    # Class name is in the first parameter

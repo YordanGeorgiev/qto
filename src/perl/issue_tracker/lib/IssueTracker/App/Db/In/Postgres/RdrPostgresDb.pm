@@ -6,9 +6,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    use AutoLoader ; 
 	use Encode qw( encode_utf8 is_utf8 );
    use POSIX qw(strftime);
+	use Carp ; 
    use DBI ; 
 	use Data::Printer ; 
-	use Carp ; 
 
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Mdl::Model ; 
@@ -27,6 +27,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 
    sub doCheckIfColumnExists {
+
       my $self = shift ; 
       my $cols = shift ; 
       my $col = shift ; 
@@ -147,11 +148,11 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    
    sub doBuildWhereClauseByFltr {
 
-      my $self = shift ; 
-      my $cols = shift ; 
-		my $sql = '' ; 
-		my $ret = 400 ; 
-		my $msg = ' the following column: %s does not exist ' ; 
+      my $self    = shift ; 
+      my $cols    = shift ; 
+		my $sql     = '' ; 
+		my $ret     = 400 ; 
+		my $msg     = ' the following column: %s does not exist ' ; 
 
       my $ref_filter_names    = $objModel->get('select.web-action.fltr-by' );
       my $ref_filter_values   = $objModel->get('select.web-action.fltr-val' );
@@ -160,7 +161,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       return ( 0 , "" , "")  unless ( defined ( $ref_filter_values) ); 
 
       if ( @$ref_filter_names and @$ref_filter_values  ) {
-      	# build the dynamic filtering for the the in clause
+
 			$sql = ' AND ' ; 
 
          for ( my $i = 0 ; $i < scalar ( @$ref_filter_names ) ; $i++ ) {
@@ -183,19 +184,20 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 				$sql .= ' AND ' ; 
          }
 
-         # debug print "sql : $sql \n" ; 
-         # debug print "RdrPostgresDb.pm \n" ; 
+         # debug print "from RdrPostgresDb.pm 186 sql : $sql \n" ; 
 
 			for (1..4) { chop ( $sql) } ;
 			return ( 0 , "" , $sql ) ; 
 
       } elsif ( @$ref_filter_names or @$ref_filter_values )  {
+
 			# if either the filter names or the filter values are null than the filtering url is mall-formed
 			$msg = 'mall-formed url params for filtering - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<filter-value>>' ; 
       	return ( 400 , "$msg" , "") ; 
 		} else {
+
 			# simply no filtering attributes nor values are provided return 
-			# to proceed with the select 
+			# to proceed with the select  ( = not an error !!! ) 
       	return ( 0 , "" , "") ;
 		}
 
@@ -630,9 +632,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       # not all items have the prio attribute
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
 
-      # debug print "from RdrPostgresDb.pm 637 : $str_sql \n" ; 
+      # print "from RdrPostgresDb.pm 637 : $str_sql \n" ; #todo:ysg
 
-      # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
 
       $sth->execute()
@@ -655,29 +656,17 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    }
 
 	
-   #
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
 	sub new {
 
 		my $invocant 			= shift ;    
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-		$objModel      = ${ shift @_ } || print 'objModel not passed in RdrPostgresDb !!!' ; 
-      # p($appConfig ) ; 
-      # might be class or object, but in both cases invocant
-		my $class = ref ( $invocant ) || $invocant ; 
-
-		my $self = {};        # Anonymous hash reference holds instance attributes
-		bless( $self, $class );    # Say: $self is a $class
+		$appConfig     = ${ shift @_ } || croak 'appConfig not passed in RdrPostgresDb !!!' ; 
+		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
+		my $class      = ref ( $invocant ) || $invocant ; 
+		my $self       = {} ; bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize() ; 
 		return $self;
 	}  
 	
-   #
-	# --------------------------------------------------------
-	# intializes this object 
-	# --------------------------------------------------------
    sub doInitialize {
       my $self = shift ; 
 

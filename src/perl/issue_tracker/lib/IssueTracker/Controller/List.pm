@@ -18,7 +18,6 @@ use IssueTracker::Controller::ListLabels ;
 our $module_trace   = 0 ; 
 our $appConfig      = {};
 our $objLogger      = {} ;
-our $rdbms_type     = 'postgre';
 
 
 #
@@ -28,71 +27,115 @@ our $rdbms_type     = 'postgre';
 sub doListItems {
 
    my $self             = shift;
+   
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
-   my $rdbms_type       = 'postgres';
-   my $ret              = 1 ; 
+
    my $msg              = '' ; 
-   my $vct_list  			= '' ; 
-   my $as               = 'lbls' ; 
-   my $ui_type          = 'page/list-lbls' ; 
-   my $objPageBuilder   = {} ; 
-   my $objPageFactory   = {} ; 
-   my $objRdrUrlParams  = {} ; 
+   my $as               = 'lbls' ; # defines the form of the list control 
+   my $list_control     = '' ; 
 
 	print "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
+   $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
+   my $objModel = ${ $self->doSetRequestModelData( $item , $db ) } ; 
+   
+   $self->doSetHtmlHeaders() ;
+   ( $msg , $list_control ) = $self->doBuildListControl ( \$objModel , $as , $msg ) ; 
+   $self->doRenderPageTemplate( $as , $msg , $db , $item , $list_control ) ; 
+}
+
+
+sub doSetRequestModelData {
+
+   my $self             = shift ; 
+   my $item             = shift ; 
+   my $db               = shift ; 
+   
+   my $objRdrUrlParams  = {} ; 
+   my $objModel         = {} ; 
+
    $appConfig		 		= $self->app->get('AppConfig');
-   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
+   $objModel            = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
 
    $objModel->set('postgres_db_name' , $db ) ; 
    $objModel->set('table_name' , $item ) ; 
-  
-   $objModel->set('list.web-action.fltr-by' , $self->req->query_params->every_param('fltr-by') ) ; 
-   $objModel->set('list.web-action.fltr-val' , $self->req->query_params->every_param('fltr-val') ) ; 
-   $objModel->set('list.web-action.like-by' , $self->req->query_params->every_param('like-by') ) ; 
-   $objModel->set('list.web-action.like-val' , $self->req->query_params->every_param('like-val') ) ; 
-   $objModel->set('list.web-action.pick' , $self->req->query_params->param('pick') );
-   $objModel->set('list.web-action.hide' , $self->req->query_params->param('hide') );
-   $objModel->set('list.web-action.o' , $self->req->query_params->param('o') );
+
+   $objRdrUrlParams= 'IssueTracker::App::IO::In::RdrUrlParams'->new();
+   $objRdrUrlParams->doSetListUrlParams(\$objModel, $self->req->query_params );
+   $objRdrUrlParams->doSetSelectUrlParams(\$objModel, $self->req->query_params );
+   $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
+
+   return ( \$objModel ) ; 
+}
+
+
+sub doBuildListControl {
+
+   my $self             = shift ; 
+   my $objModel         = ${ shift @_ } ; 
+   my $as               = shift ; 
+   my $msg              = shift ; 
+
+   my $ui_type          = 'page/list-lbls' ; 
+   my $ret              = 1 ; 
+   my $list_control     = '' ; 
+   my $objPageBuilder   = {} ; 
+   my $objPageFactory   = {} ; 
 
    my $lables_pages = { 
          'lbls'   => 'list-labels'
       ,  'cloud'  => 'list-cloud' 
    };
-   $as = $self->req->query_params->param('as') || $as ; 
    $ui_type = 'page/' . $lables_pages->{ $as } ; 
-   
-   $objRdrUrlParams= 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   $objRdrUrlParams->doSetUrlParams(\$objModel, $self->req->query_params );
-   $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
 
    $objPageFactory               = 'IssueTracker::Controller::PageFactory'->new(\$appConfig, \$objModel );
    $objPageBuilder               = $objPageFactory->doInstantiate( $ui_type );
-   ( $ret , $msg , $vct_list )   = $objPageBuilder->doBuildListControl( $msg , \$objModel  ) ;
+   ( $ret , $msg , $list_control )   = $objPageBuilder->doBuildListControl( $msg , \$objModel  ) ;
 
    $msg = '<span id="spn_err_msg">' . $msg . '</span>' unless $ret == 0 ; 
    $msg = '<span id="spn_msg">' . $msg . '</span>' if $ret == 0 ; 
+
    $self->res->code(400) unless $ret == 0 ; 
+
+   return ( $msg , $list_control ) ; 
+
+}
+
+
+sub doSetHtmlHeaders {
+
+   my $self       = shift ; 
 
    $self->res->headers->accept_charset('UTF-8');
    $self->res->headers->accept_language('fi, en');
+
+}
+
+
+sub doRenderPageTemplate {
+   
+   my $self          = shift ; 
+   my $as            = shift ; 
+   my $msg           = shift ; 
+   my $db            = shift ; 
+   my $item          = shift ; 
+   my $list_control  = shift ; 
 
    my $as_templates = { 
          'lbls'   => 'list-labels'
       ,  'cloud'  => 'list-cloud' 
    };
-
    my $template = 'controls/' . $as_templates->{ $as } ; 
+
    $self->render(
-      'template'  => $template 
-    , 'msg'       => $msg
-    , 'item'      => $item
-    , 'db' 		   => $db
-    , 'vct_list'  => $vct_list
+      'template'        => $template 
+    , 'as'              => $as
+    , 'msg'             => $msg
+    , 'item'            => $item
+    , 'db' 		         => $db
+    , 'list_control'    => $list_control
    ); 
-
 }
-
 
 1;
 

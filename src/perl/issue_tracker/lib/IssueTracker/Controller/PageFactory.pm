@@ -1,9 +1,8 @@
 package IssueTracker::Controller::PageFactory ; 
 
 	use strict; use warnings;
-	
-	use Data::Printer ; 
    use Carp ; 
+	use Data::Printer ; 
 
    use IssueTracker::Controller::ListCloud ; 
    use IssueTracker::Controller::ListLabels ; 
@@ -45,6 +44,7 @@ package IssueTracker::Controller::PageFactory ;
 
 
 	sub new {
+
 		my $invocant 			= shift ;    
 		$appConfig           = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel            = ${ shift @_ } || croak 'missing objModel !!!' ; 

@@ -710,6 +710,7 @@ src/sql/mysql/dev_issue_tracker/08.create-Concepts-table.sql
 src/sql/mysql/dev_issue_tracker/09.create-Test-table.sql
 src/sql/mysql/dev_issue_tracker/11.create-Issues-table.sql
 src/sql/mysql/dev_issue_tracker/15.create-UserStory-table.sql
+src/sql/mysql/dev_issue_tracker/16.create-Concepts-table.sql
 src/sql/mysql/dev_issue_tracker/31.create-CellValue-table.sql
 src/sql/mysql/dev_issue_tracker/37.create-Image-table.sql
 src/sql/mysql/dev_issue_tracker/40.create-Tag-table.sql
