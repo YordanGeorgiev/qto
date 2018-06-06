@@ -15,7 +15,7 @@ use Mojo::IOLoop::Server;
 use Mojo::URL;
 use Mojo::UserAgent;
 use Mojolicious;
-use Scalar::Util ();
+use Scalar::Util();
 
 use constant DEBUG => $ENV{MOJO_CHROME_DEBUG};
 
