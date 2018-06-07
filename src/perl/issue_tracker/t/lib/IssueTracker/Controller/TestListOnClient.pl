@@ -22,6 +22,15 @@ is $chrome->target->scheme, 'https', 'correct scheme';
 is $chrome->target->host, '127.0.0.1', 'correct host';
 is $chrome->target->port, '3000', 'correct port';
 is $chrome->target->to_string, 'https://127.0.0.1:3000', 'correct overall target';
+
+unless ( $ENV{'MOJO_CHROME_EXECUTABLE'} ) {
+   print "you have to set the MOJO_CHROME_EXECUTABLE env var !!! \n" ; 
+   print "export MOJO_CHROME_EXECUTABLE=/usr/bin/chromium-browser \n" ; 
+   done_testing(); exit 1 ; 
+}
+
+
+
 is $chrome->executable, $ENV{'MOJO_CHROME_EXECUTABLE'}, 'executable not set';
 is_deeply $chrome->arguments, ['--headless'], 'default arguments as expected';
 
