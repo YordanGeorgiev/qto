@@ -17,12 +17,23 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/controls/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud.html.ep
-src/perl/issue_tracker/public/css/controls/app_list_labels.css
-src/perl/issue_tracker/public/css/site/site.css
+src/perl/issue_tracker/public/css/screen/controls/jqcloud.css
 src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.css
 src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.css
 src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js
 src/perl/issue_tracker/public/css
+src/perl/issue_tracker/public/css/print
+src/perl/issue_tracker/public/css/print/controls
+src/perl/issue_tracker/public/css/print/controls/app_list_labels.css
+src/perl/issue_tracker/public/css/print/controls/jqcloud.css
+src/perl/issue_tracker/public/css/print/site
+src/perl/issue_tracker/public/css/print/site/site.css
+src/perl/issue_tracker/public/css/screen
+src/perl/issue_tracker/public/css/screen/controls
+src/perl/issue_tracker/public/css/screen/controls/app_list_labels.css
+src/perl/issue_tracker/public/css/screen/controls/jqcloud.css
+src/perl/issue_tracker/public/css/screen/site
+src/perl/issue_tracker/public/css/screen/site/site.css
 # ---
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
