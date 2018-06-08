@@ -85,12 +85,15 @@ sub doBuildListControl {
    my $lables_pages = { 
          'lbls'   => 'list-labels'
       ,  'cloud'  => 'list-cloud' 
+      ,  'table'  => 'list-grid'
    };
    $ui_type = 'page/' . $lables_pages->{ $as } ; 
 
    $objPageFactory               = 'IssueTracker::Controller::PageFactory'->new(\$appConfig, \$objModel );
    $objPageBuilder               = $objPageFactory->doInstantiate( $ui_type );
    ( $ret , $msg , $list_control )   = $objPageBuilder->doBuildListControl( $msg , \$objModel  ) ;
+
+	# print "list_control : $list_control \n" ; #todo:ysg
 
    $msg = '<span id="spn_err_msg">' . $msg . '</span>' unless $ret == 0 ; 
    $msg = '<span id="spn_msg">' . $msg . '</span>' if $ret == 0 ; 
@@ -124,6 +127,7 @@ sub doRenderPageTemplate {
    my $as_templates = { 
          'lbls'   => 'list-labels'
       ,  'cloud'  => 'list-cloud' 
+      ,  'table'  => 'list-grid' 
    };
    my $template = 'controls/' . $as_templates->{ $as } ; 
 

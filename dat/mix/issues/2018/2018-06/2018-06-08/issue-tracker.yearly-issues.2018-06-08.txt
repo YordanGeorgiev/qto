@@ -1,0 +1,72 @@
+# START DAILY @2018.05.10 22:54:47
+   
+## what will I do till the next DAILY:
+#---------------------------
+#
+
+
+csitea;issue-tracker
+  -- act	 complete the CRUDS features for the issue-tracker back-end
+
+issue-tracker-bugs
+  -- act	2017-03-01 - 2017-12-31 keep the amount of bugs on monthly basis to less than 5
+
+issue-tracker
+ - act		2017-09-29 07:00 - 2018-12-31 07:00 manage to keep your contract in Nokia till the end of the 2018 year
+ - wip		2017-06-29 07:00 - 2018-12-31 07:00 create the list labels view ui with vue.js
+ - act		2018-05-06 07:00 - 2018-12-31 07:00 aim to use the issue tracker more on the web interface and less on the xls 
+  -- act	2017-03-01 - 2017-12-31 achieve full compatibility with the IOCM architecture
+ - act		2017-10-03 08:16 add integration tests for all the modules in the app
+ - done		2017-10-03 08:16 implement mysql nested-set load
+ - done		2018-05-02 10:35:53 - 2018-06-30 00:00:00 add the filter-by in url to where in db reader control flow for List.pm controller
+  -- done	2018-02-01 - 2018-02-28 implement xls-to-db for mysql hierarchichal load via the Model
+  -- act	2017-03-01 - 2017-12-31 achieve simplistic design and ease to use
+ - done		2017-09-21 07:00 - 2017-09-21 07:00  add the issue-tracker control flow diagram to the DevOps guide
+  -- done	2018-02-14 16:30 - 2018-02-30 19:15 improve the performance of the nested-set mysql xls-to-db action
+  -- done	2018-02-13 16:30 - 2018-02-13 19:15 create separate run-perl-unit-tests and run-integration-tests actions
+
+issue-tracker-maintenance
+  -- act	2017-12-31 - 2017-12-31 keep minimalistic maintenance
+
+feature
+  -- done	2018-04-02 18:00 add the web list controller
+
+issue-tracker
+  -- todo	2017-06-29 07:00 - 2018-12-31 07:00 create the view doc ui with vue.js
+
+issue-tracker-system
+  -- todo	2017-06-23 - 2017-12-31 add web framework app layer
+  -- act	2017-11-01 - 2017-12-31 scalability: operate more than 15 - 20 projects
+
+issue-tracker-features
+  -- todo	2017-10-01 - 2017-12-31 implement 2 -> 7 -level nesting for all actions
+  -- act	2017-10-01 - 2017-12-31 port all the isg-pub MVP features to the issue-tracker
+  -- eval	2017-10-01 - 2017-12-31 integration with google calendar
+
+issue-tracker,featues,back-end
+ - todo		 implement the copy by id via the back-end api from one table to another
+
+issue-tracker
+ - done		 implement upsert in DbWriterPostgres
+ - done		2018-04-24 21:48:56 - 2018-04-28 23:48:56 create and add the issue-tracker control flow diagram to the System Guide
+ - done		 clone a src issue-tracker daily dir into a tgt issue-tracker project daily dir
+ - done		2017-10-03 08:16 change the issue-tracker setup for code and data accessibility from host and vms
+
+issue-tracker,csitea
+ - done		2018-03-13 - 2018-03-20 add the RdrCmdArgs module , pass objModel troughout
+
+issue-tracker
+ - done		2018-01-19 21:00 - 2018-01-21 21:00 add implementation for the interfaces for the most common methods in the perl code
+ - done		2017-10-03 08:16 port the ysg-guides project to the iss mysql nested-set load
+ - done		2018-04-29 10:21:23 - 2018-04-29 13:21:23 fix nasty bug in Initiator cause by related dir in mojo testing framework
+
+issu
+ - done		2018-03-02 - 2018-03-17 copy the re-factored RdrFiles,RdrDirs, WtrFiles , WtrDirs into issue-handler
+
+issue-tracker
+  -- done	2018-02-01 - 2018-02-28 impelement hsr2 to hierarchical hsr2 converter module
+ 
+
+# STOP  DAILY @2018.05.10 22:54:47
+
+

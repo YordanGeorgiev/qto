@@ -1,28 +1,28 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
-# --- 
-src/perl/issue_tracker/public/
+src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm
+# ---
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrJQCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlParams.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClient.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
+# ---
 src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/controls/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud.html.ep
-src/perl/issue_tracker/public/css/screen/controls/jqcloud.css
-src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.css
-src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.css
-src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js
+src/perl/issue_tracker/templates/controls/list-grid.html.ep
+# ---
 src/perl/issue_tracker/public/css
 src/perl/issue_tracker/public/css/print
+src/perl/issue_tracker/public/css/print/controls/app_list_grid.css
 src/perl/issue_tracker/public/css/print/controls
 src/perl/issue_tracker/public/css/print/controls/app_list_labels.css
 src/perl/issue_tracker/public/css/print/controls/jqcloud.css
@@ -32,6 +32,7 @@ src/perl/issue_tracker/public/css/screen
 src/perl/issue_tracker/public/css/screen/controls
 src/perl/issue_tracker/public/css/screen/controls/app_list_labels.css
 src/perl/issue_tracker/public/css/screen/controls/jqcloud.css
+src/perl/issue_tracker/public/css/screen/controls/app_list_grid.css
 src/perl/issue_tracker/public/css/screen/site
 src/perl/issue_tracker/public/css/screen/site/site.css
 # ---
@@ -71,6 +72,12 @@ src/perl/issue_tracker/t/TestCtrlXlsToDb.pl
 src/perl/issue_tracker/t/TestModel.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm
+# --- 
+src/perl/issue_tracker/public/poc/list-vue-grid
+src/perl/issue_tracker/public/poc/list-vue-grid/list-vue-grid.css
+src/perl/issue_tracker/public/poc/list-vue-grid/app.js
+src/perl/issue_tracker/public/poc/list-vue-grid/list-vue-grid.html
+# ---
 # ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
@@ -727,6 +734,7 @@ src/sql/mysql/dev_issue_tracker/37.create-Image-table.sql
 src/sql/mysql/dev_issue_tracker/40.create-Tag-table.sql
 src/sql/mysql/dev_issue_tracker/41.create-TagMap-table.sql
 src/sql/mysql/dev_issue_tracker/46.create-DevOps-table.sql
+src/sql/mysql/dev_issue_tracker/47.create-Installation-table.sql
 src/sql/mysql/dev_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/dev_issue_tracker/50.create-ReadMe-table.sql
 src/sql/mysql/dev_issue_tracker/51.create-Tests-table.sql
@@ -746,6 +754,7 @@ src/sql/mysql/prd_issue_tracker/37.create-Image-table.sql
 src/sql/mysql/prd_issue_tracker/40.create-Tag-table.sql
 src/sql/mysql/prd_issue_tracker/41.create-TagMap-table.sql
 src/sql/mysql/prd_issue_tracker/46.create-DevOps-table.sql
+src/sql/mysql/prd_issue_tracker/47.create-Installation-table.sql
 src/sql/mysql/prd_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/prd_issue_tracker/50.create-ReadMe-table.sql
 src/sql/mysql/prd_issue_tracker/51.create-Tests-table.sql
@@ -765,6 +774,7 @@ src/sql/mysql/tst_issue_tracker/37.create-Image-table.sql
 src/sql/mysql/tst_issue_tracker/40.create-Tag-table.sql
 src/sql/mysql/tst_issue_tracker/41.create-TagMap-table.sql
 src/sql/mysql/tst_issue_tracker/46.create-DevOps-table.sql
+src/sql/mysql/tst_issue_tracker/47.create-Installation-table.sql
 src/sql/mysql/tst_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/tst_issue_tracker/50.create-ReadMe-table.sql
 src/sql/mysql/tst_issue_tracker/51.create-Tests-table.sql
@@ -795,3 +805,4 @@ dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.weekly-issues.2018-06-05.tx
 dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.all.20180605_000000.xlsx
 dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.yearly-issues.2018-06-05.txt
 dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.test-hierarchy-table.2018-06-05.txt
+dat/etc/postgresql/9.6/main/pg_hba.conf
