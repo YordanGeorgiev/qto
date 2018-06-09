@@ -609,8 +609,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          WHERE 1=1 " ; 
       $str_sql .= $filter_by_attributes . " " if $filter_by_attributes ; 
       
-
-		
       my $like_clause = '' ; 
 		( $ret , $msg , $like_clause ) = $self->doBuildLikeClause ( $mhsr ) ; 
 		
@@ -632,7 +630,12 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       # not all items have the prio attribute
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
 
-      # print "from RdrPostgresDb.pm 637 : $str_sql \n" ; #todo:ysg
+      my $limit = $objModel->get('select.web-action.page-size' ) || 15 ; # the default page size is 15
+      my $offset = ( $objModel->get('select.web-action.page-num' ) -1) || 0 ; # get default page is 1
+      $offset = $limit*$offset ; 
+      $str_sql .= " LIMIT $limit OFFSET $offset " ; 
+
+      print "from RdrPostgresDb.pm 637 : $str_sql \n" ; #todo:ysg
 
       $sth = $dbh->prepare($str_sql);  
 
