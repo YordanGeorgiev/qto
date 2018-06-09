@@ -61,9 +61,10 @@ package IssueTracker::App::UI::Controls::WtrJQCloud ;
             	$control .= 'text: "' . $text . '"' ;
 					next ; 
 				}			
-				if ( $col eq 'prio' ) {
+				if ( $col eq 'prio' or $col eq 'weight') {
+               my $weight = $row->{'weight'} if defined ( $row->{'weight'} ) ; 
                my $prio = $row->{'prio'} || 1 ; 
-					my $weight = 10 - $prio ; 
+					$weight = 10 - $prio unless ( defined ( $row->{'weight'} ));
             	$control .= ", weight: $weight"  ; 
 				}			
          } 
