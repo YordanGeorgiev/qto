@@ -46,7 +46,7 @@ package IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ;
       $single_item   =~ s/^(.*)s$/$1/g ; 
 
       unless ( $table eq "$single_item" . 's' ) {
-        $single_item = "single_" . "$table" ; 
+        $single_item = "single_" . "$table" ; # a really rare case ...
       }
 
 
@@ -55,22 +55,31 @@ package IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ;
       '<div id="app_list_labels">
           <div id="vfor_cols" v-for="' . $single_item . ' in ' . $table . '">
    			' ; 
-               foreach my $col_num ( reverse sort ( keys %$hs_headers )) {
-                  my $col = $hs_headers->{ $col_num }->{ 'attname' }; 
-                  my $to_hide = any { /$col/ } @hides ; 
-						my $to_pick = 1 ; 
-                  $to_pick = any { /$col/ } @picks if defined $to_picks ; 
-					   next unless ( $to_pick ) ; 	
-                  unless ( $to_hide  ) {
-                     	$control .= '<div class="lbl_row">' ; 
-                     	$control .= '<div class="lbl_lft" ><b>' . $col . ': </b> </div>' ; 
-								$control .= '<div class="lbl_rgt" tabindex="0">' ; 
-								$control .= '{{ ' . $single_item . '.' . $col . ' }} ';  
-								$control .= '</div>' ; 
-                     	$control .= '</div>';
-						}
-   					$control .= '<div class="div_spacer2"></div>' ; 
+              unless ( defined $to_picks ) {
+                  foreach my $col_num ( reverse sort ( keys %$hs_headers )) {
+                     my $col = $hs_headers->{ $col_num }->{ 'attname' }; 
+                     my $to_hide = any { /$col/ } @hides ; 
+                     unless ( $to_hide  ) {
+                           $control .= '<div class="lbl_row">' ; 
+                           $control .= '<div class="lbl_lft" ><b>' . $col . ': </b> </div>' ; 
+                           $control .= '<div class="lbl_rgt" tabindex="0">' ; 
+                           $control .= '{{ ' . $single_item . '.' . $col . ' }} ';  
+                           $control .= '</div>' ; 
+                           $control .= '</div>';
+                     }
+                     $control .= '<div class="div_spacer2"></div>' ; 
                } 
+            } else {
+                  foreach my $col ( @picks) {
+                     $control .= '<div class="lbl_row">' ; 
+                     $control .= '<div class="lbl_lft" ><b>' . $col . ': </b> </div>' ; 
+                     $control .= '<div class="lbl_rgt" tabindex="0">' ; 
+                     $control .= '{{ ' . $single_item . '.' . $col . ' }} ';  
+                     $control .= '</div>' ; 
+                     $control .= '</div>';
+                  }
+                  $control .= '<div class="div_spacer2"></div>' ; 
+            }
       $control .= '
           </div>
       </div>'
