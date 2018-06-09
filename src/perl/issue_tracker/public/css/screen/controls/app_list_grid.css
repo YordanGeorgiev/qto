@@ -11,7 +11,7 @@ table {
 }
 
 th {
-	background-color: #2E2EFE ; 
+	background-color: #339aff ; 
 	color: rgba(255,255,255,0.66);
 	cursor: pointer;
 	-webkit-user-select: none;
@@ -30,6 +30,9 @@ th, td {
 }
 
 th.active {
+	color: #fff;
+}
+th:focus {
 	color: #fff;
 }
 

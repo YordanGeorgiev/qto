@@ -6,15 +6,15 @@
    <link rel="stylesheet" media="print"  href="../../css/print/controls/app_list_grid.css" />
 % end
 
-   <div id="app">
+   <div id="app" >
 		<!-- component template -->
 		<script type="text/x-template" id="grid-template">
-		  <table>
+		  <table tabindex="1">
 			 <thead>
 				<tr>
 				  <th v-for="key in columns"
 					 @click="sortBy(key)"
-					 :class="{ active: sortKey == key }">
+					 :class="{ active: sortKey == key }" tabindex="1" v-on:keyup.enter="sortBy(key)">
 					 {{ key }}
 					 <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
 					 </span>
