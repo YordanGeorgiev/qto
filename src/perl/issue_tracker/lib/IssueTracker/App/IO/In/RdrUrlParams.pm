@@ -90,6 +90,8 @@ sub doSetSelectUrlParams {
    $query_params->remove('hide') ; 
    $objModel->set('select.web-action.o' , $query_params->param('o') );
    $query_params->remove('o') ; 
+   $objModel->set('select.web-action.page-size' , $query_params->param('page-size') );
+   $objModel->set('select.web-action.page-num' , $query_params->param('page-num') );
 }
 
 
@@ -106,6 +108,8 @@ sub doSetListUrlParams {
    $objModel->set('list.web-action.pick' , $query_params->param('pick') );
    $objModel->set('list.web-action.hide' , $query_params->param('hide') );
    $objModel->set('list.web-action.o' , $query_params->param('o') );
+   $objModel->set('list.web-action.page-size' , $query_params->param('page-size') );
+   $objModel->set('list.web-action.page-num' , $query_params->param('page-num') );
 
 }
 
