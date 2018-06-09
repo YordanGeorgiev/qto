@@ -34,7 +34,7 @@
 		<div id="demo">
 			<div id="div_frm_srch">
 		  		<form id="frm_search">
-			 		<input id="inp_srch_query" name="query" v-model="searchQuery">
+			 		<input id="inp_srch_query" tabindex="1" name="query" v-model="searchQuery">
 		  		</form>
 			</div>
 		  <demo-grid
