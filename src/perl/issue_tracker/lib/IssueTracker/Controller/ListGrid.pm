@@ -57,22 +57,26 @@ sub doBuildListControl {
    my @picks      = split ( ',' , $to_picks ) if defined ( $to_picks ) ; 
 	
    #debug p $mhsr2 ;  
-   $control = '[' ; 
-   foreach my $id ( sort keys %$mhsr2 ) {
-      my $row = $mhsr2->{ $id } ; 
-      my $col = $row->{ 'attname' } ; 
-      unless ( defined ( $to_picks )) {
-         $control .= "'" . $row->{ 'attname' } . "' , " ; 
-      }
-      else {
-         my $to_pick = 1 ; 
-         $to_pick = any { /$col/ } @picks ; 
-         next unless ( $to_pick ) ; 	
-         $control .= "'" . $row->{ 'attname' } . "' , " ; 
-      }
-   }
-	for (1..3) { chop ( $control ) } ;
-   $control .= ']' ; 
+
+   unless ( defined ( $to_picks )) {
+   	$control = ']' ; # it is just the js array definining the cols
+		foreach my $id ( sort keys %$mhsr2 ) {
+			my $row = $mhsr2->{ $id } ; 
+			my $col = $row->{ 'attname' } ; 
+				$control = "'" . $col . "' , " . $control ; 
+		}
+   	$control = '[' . $control ; 
+	} 
+	else {
+   	$control = '[' ; # it is just the js array definining the cols
+		foreach my $to_pick ( @picks ) {
+			$control .= "'" . $to_pick . "' , " ; 
+         #next unless ( $to_pick ) ; 	
+		}
+		for (1..3) { chop ( $control ) } ;
+   	$control .= ']' ;
+	}
+	print "control is $control \n" ; 
    return ( $ret , $msg , $control ) ; 
 }
 
