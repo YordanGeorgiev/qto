@@ -50,22 +50,25 @@ for my $row ( @$list ) {
    my $tm = '' ; # the test msg 
 
 	$tm = 'for get the correct http status code - 200 , utf-8 and fi,en as langs' ; 
-	$url = '/' . $db_name . '/list/' . $table_name . '?as=lbls' ; 
-	$t->get_ok( $url )
-		->status_is(200) 
-		 ->header_is('Accept-Charset' => 'UTF-8')
-		 ->header_is('Accept-Language' => 'fi, en' , $tm)
-	;
-	$tm = 'for get the correct title <<table_name>> in <<db_name>>' ; 
-	$t->get_ok($url)->text_is('html head title'
-    	=> " list $table_name in $db_name " , $tm );
-   
-   $tm = ' no text should be displayed in the spn_msg label as the user sees the result' ; 
-   $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
-   $exp_txt = '' ; 
-   ok ( $dom->at('#spn_msg')->text eq $exp_txt , $tm ) ; 
-   ; 
-
+  
+   my @output_types = ( 'lbls' , 'table' , 'cloud' ) ;  
+   foreach my $as ( @output_types ) {
+      $url = '/' . $db_name . '/list/' . $table_name . '?as=' . "$as" ; 
+      $t->get_ok( $url )
+         ->status_is(200) 
+          ->header_is('Accept-Charset' => 'UTF-8')
+          ->header_is('Accept-Language' => 'fi, en' , $tm)
+      ;
+      $tm = 'for get the correct title <<table_name>> in <<db_name>>' ; 
+      $t->get_ok($url)->text_is('html head title'
+         => " list $table_name as $as in $db_name " , $tm );
+    
+      $tm = ' no text should be displayed in the spn_msg label as the user sees the result' ; 
+      $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
+      $exp_txt = '' ; 
+      ok ( $dom->at('#spn_msg')->text eq $exp_txt , $tm ) ; 
+      ; 
+   }
 }
 
    $tm = 'handle error on non-existent db ' ; 

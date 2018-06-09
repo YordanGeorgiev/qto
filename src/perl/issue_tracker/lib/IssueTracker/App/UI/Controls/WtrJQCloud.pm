@@ -62,7 +62,8 @@ package IssueTracker::App::UI::Controls::WtrJQCloud ;
 					next ; 
 				}			
 				if ( $col eq 'prio' ) {
-					my $weight = 10-$row->{'prio'} || 1 ; 
+               my $prio = $row->{'prio'} || 1 ; 
+					my $weight = 10 - $prio ; 
             	$control .= ", weight: $weight"  ; 
 				}			
          } 

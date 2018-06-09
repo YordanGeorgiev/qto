@@ -76,7 +76,7 @@ sub doBuildListControl {
 		for (1..3) { chop ( $control ) } ;
    	$control .= ']' ;
 	}
-	print "control is $control \n" ; 
+	# debug print "control is $control \n" ; 
    return ( $ret , $msg , $control ) ; 
 }
 

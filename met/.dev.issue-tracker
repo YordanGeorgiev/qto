@@ -749,6 +749,7 @@ src/sql/mysql/prd_issue_tracker/07.create-Requirement-table.sql
 src/sql/mysql/prd_issue_tracker/09.create-Test-table.sql
 src/sql/mysql/prd_issue_tracker/11.create-Issues-table.sql
 src/sql/mysql/prd_issue_tracker/15.create-UserStory-table.sql
+src/sql/mysql/prd_issue_tracker/16.create-Concepts-table.sql
 src/sql/mysql/prd_issue_tracker/31.create-CellValue-table.sql
 src/sql/mysql/prd_issue_tracker/37.create-Image-table.sql
 src/sql/mysql/prd_issue_tracker/40.create-Tag-table.sql
@@ -769,6 +770,7 @@ src/sql/mysql/tst_issue_tracker/07.create-Requirement-table.sql
 src/sql/mysql/tst_issue_tracker/09.create-Test-table.sql
 src/sql/mysql/tst_issue_tracker/11.create-Issues-table.sql
 src/sql/mysql/tst_issue_tracker/15.create-UserStory-table.sql
+src/sql/mysql/tst_issue_tracker/16.create-Concepts-table.sql
 src/sql/mysql/tst_issue_tracker/31.create-CellValue-table.sql
 src/sql/mysql/tst_issue_tracker/37.create-Image-table.sql
 src/sql/mysql/tst_issue_tracker/40.create-Tag-table.sql
@@ -798,11 +800,19 @@ doc/dot/devops/shell-action-control-flow-diagram.dot
 doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
 # --- the application data
-dat/mix/issues/2018/2018-06/2018-06-05
-dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.monthly-issues.2018-06-05.txt
-dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.daily-issues.2018-06-05.txt
-dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.weekly-issues.2018-06-05.txt
-dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.all.20180605_000000.xlsx
-dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.yearly-issues.2018-06-05.txt
-dat/mix/issues/2018/2018-06/2018-06-05/issue-tracker.test-hierarchy-table.2018-06-05.txt
+dat/mix/issues/2018/2018-06/2018-06-08
+dat/mix/issues/2018/2018-06/2018-06-08/issue-tracker.all.20180608_000000.xlsx
+dat/mix/issues/2018/2018-06/2018-06-08/issue-tracker.daily-issues.2018-06-08.txt
+dat/mix/issues/2018/2018-06/2018-06-08/issue-tracker.monthly-issues.2018-06-08.txt
+dat/mix/issues/2018/2018-06/2018-06-08/issue-tracker.test-hierarchy-table.2018-06-08.txt
+dat/mix/issues/2018/2018-06/2018-06-08/issue-tracker.weekly-issues.2018-06-08.txt
+dat/mix/issues/2018/2018-06/2018-06-08/issue-tracker.yearly-issues.2018-06-08.txt
+dat/mix/issues/2018/2018-06/2018-06-09
+dat/mix/issues/2018/2018-06/2018-06-09/issue-tracker.all.20180609_000000.xlsx
+dat/mix/issues/2018/2018-06/2018-06-09/issue-tracker.daily-issues.2018-06-09.txt
+dat/mix/issues/2018/2018-06/2018-06-09/issue-tracker.monthly-issues.2018-06-09.txt
+dat/mix/issues/2018/2018-06/2018-06-09/issue-tracker.test-hierarchy-table.2018-06-09.txt
+dat/mix/issues/2018/2018-06/2018-06-09/issue-tracker.weekly-issues.2018-06-09.txt
+dat/mix/issues/2018/2018-06/2018-06-09/issue-tracker.yearly-issues.2018-06-09.txt
+# --- 
 dat/etc/postgresql/9.6/main/pg_hba.conf
