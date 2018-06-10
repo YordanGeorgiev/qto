@@ -58,17 +58,17 @@ package IssueTracker::App::UI::Controls::WtrJQCloud ;
 				if ( $col eq 'name' ) {
 					my $text = $row->{'name'} ; 
 					$text =~ s/\"/\\"/g ; 
-            	$control .= 'text: "' . $text . '"' ;
+            	$control .= ' , text: "' . $text . '"' ;
 					next ; 
 				}			
 				if ( $col eq 'prio' or $col eq 'weight') {
                my $weight = $row->{'weight'} if defined ( $row->{'weight'} ) ; 
                my $prio = $row->{'prio'} || 1 ; 
 					$weight = 10 - $prio unless ( defined ( $row->{'weight'} ));
-            	$control .= ", weight: $weight"  ; 
+            	$control .= " weight: $weight "  ; 
 				}			
          } 
-         $control .= "\n },\n" ; 
+         $control .= " },\n" ; 
 		 }	
 		 chomp $control ; chop $control ; 
        $control .= "\n ]; \n" ; 

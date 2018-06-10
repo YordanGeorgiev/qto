@@ -14,11 +14,11 @@ package IssueTracker::App::IO::In::RdrUrlParams ;
 	use Fcntl qw( :flock );
 	use File::Path ; 
    use Mojo::Parameters ; 
+   use Scalar::Util::Numeric qw(isint);
+
 
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ; 
    use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
-
-	my @EXPORT = qw(doReadDirGetFilesByExtension);
 
 sub doSetWithUrlParams {
 
@@ -67,14 +67,19 @@ sub doSetWithUrlParams {
    
       $query_params->remove('with') ; 
    }
+
+   $ret = 0 ; $msg = '' ; 
+   return ( $ret , $msg ) ; 
 }
 
 
 sub doSetSelectUrlParams {
 
-   my $self = shift ; 
-   my $objModel = ${ shift @_ } ; 
-   my $query_params = shift ; 
+   my $self          = shift ; 
+   my $objModel      = ${ shift @_ } ; 
+   my $query_params  = shift ; 
+   my $ret           = 0 ; 
+   my $msg           = '' ; 
 
    $objModel->set('select.web-action.fltr-by' , $query_params->every_param('fltr-by') ) ; 
    $query_params->remove('fltr-by') ; 
@@ -90,16 +95,56 @@ sub doSetSelectUrlParams {
    $query_params->remove('hide') ; 
    $objModel->set('select.web-action.o' , $query_params->param('o') );
    $query_params->remove('o') ; 
+
+   # start page-size
+   my $page_size = $query_params->param('page-size') || 15 ; 
+   print "RdrUrlParams.pm 101 page_size is $page_size \n" ; #todo:ysg
+   $msg = "the page size must a positive number, but page-size of " . $page_size . " was requested !!!" ; 
+   unless ( isint $page_size ) {
+      $ret = 400 ; 
+      return ( $ret , $msg ) ; 
+   }
+   if ( $page_size < 0 ) {
+      $msg = "the page size must a positive number, but page-size of " . $page_size . " was requested !!!" ; 
+      $ret = 400 ; 
+      return ( $ret , $msg ) ; 
+   }
+   $msg = '' ; 
    $objModel->set('select.web-action.page-size' , $query_params->param('page-size') );
+   $query_params->remove('page-size') ; 
+
+   # start page-num
+   my $page_num = $query_params->param('page-num') || 1 ; 
+   $msg = "the page num must a positive number, but page-num of " . $page_num . " was requested !!!" ; 
+   unless ( isint $page_num ) {
+      $ret = 400 ; 
+      return ( $ret , $msg ) ; 
+   }
+   if ( $page_num < 0 ) {
+      $msg = "the page number must a positive number, but page-num of " . $page_num . " was requested !!!" ; 
+      $ret = 400 ; 
+      return ( $ret , $msg ) ; 
+   }
+   $msg = '' ; 
    $objModel->set('select.web-action.page-num' , $query_params->param('page-num') );
+   $query_params->remove('page-num') ; 
+   # stop page-num
+
+   $ret = 0 ; $msg = '' ; 
+   return ( $ret , $msg ) ; 
+
 }
 
 
+   
+
 sub doSetListUrlParams {
 
-   my $self = shift ; 
-   my $objModel = ${ shift @_ } ; 
-   my $query_params = shift ; 
+   my $self          = shift ; 
+   my $objModel      = ${ shift @_ } ; 
+   my $query_params  = shift ; 
+   my $ret           = 1 ; 
+   my $msg           = '' ; 
 
    $objModel->set('list.web-action.fltr-by' , $query_params->every_param('fltr-by') ) ; 
    $objModel->set('list.web-action.fltr-val' , $query_params->every_param('fltr-val') ) ; 
@@ -111,6 +156,8 @@ sub doSetListUrlParams {
    $objModel->set('list.web-action.page-size' , $query_params->param('page-size') );
    $objModel->set('list.web-action.page-num' , $query_params->param('page-num') );
 
+   $ret = 0 ; $msg = '' ; 
+   return ( $ret , $msg ) ; 
 }
 
 
@@ -134,10 +181,11 @@ RdrUrlParams
 
 
 use IssueTracker::App::IO::In::RdrUrlParams ; 
-my $objRdrUrlParams = {} ; 
+
 $objRdrUrlParams= 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-$objRdrUrlParams->doSetUrlParams(\$objModel, $self->req->query_params );
-$objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
+( $ret , $msg ) = $objRdrUrlParams->doSetSelectUrlParams(\$objModel, $self->req->query_params );
+( $ret , $msg ) = $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
+( $ret , $msg ) = $objRdrUrlParams->doSetListUrlParams(\$objModel, $self->req->query_params );
   
 
 =head1 DESCRIPTION

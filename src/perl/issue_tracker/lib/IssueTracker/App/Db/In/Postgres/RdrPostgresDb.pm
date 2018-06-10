@@ -631,11 +631,14 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
 
       my $limit = $objModel->get('select.web-action.page-size' ) || 15 ; # the default page size is 15
-      my $offset = ( $objModel->get('select.web-action.page-num' ) -1) || 0 ; # get default page is 1
+      my $page_num = $objModel->get('select.web-action.page-num' ) || 1 ; 
+      my $offset = ( $page_num -1 ) || 0 ; # get default page is 1
+
       $offset = $limit*$offset ; 
+      $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
 
-      print "from RdrPostgresDb.pm 637 : $str_sql \n" ; #todo:ysg
+      #debug print "from RdrPostgresDb.pm 637 : $str_sql \n" ; #todo:ysg
 
       $sth = $dbh->prepare($str_sql);  
 
