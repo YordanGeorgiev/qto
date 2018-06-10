@@ -68,11 +68,6 @@ doRunIntegrationTests(){
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 	echo -e "\n\n\n" 
    
-   # Action !!!
-   doLog "INFO START Unit testing or the CtrlXlsToDb module" 
-   perl src/perl/issue_tracker/t/TestCtrlXlsToDb.pl
-	echo -e "\n\n\n" 
-
    doLog "INFO START integration testing - do run all the implemented action tests" 
    perl src/perl/issue_tracker/t/TestIssueTracker.pl
 	echo -e "\n\n\n" 
@@ -84,6 +79,10 @@ doRunIntegrationTests(){
 
    doLog "INFO START select with operator testing"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
+	echo -e "\n\n\n" 
+
+   doLog "INFO START testing the list as table page"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListTable.pl
 	echo -e "\n\n\n" 
 
 	doLog "DEBUG STOP  doRunIntegrationTests"

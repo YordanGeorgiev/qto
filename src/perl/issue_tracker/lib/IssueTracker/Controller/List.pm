@@ -22,7 +22,7 @@ our $objLogger      = {} ;
 
 #
 # --------------------------------------------------------
-# Select all the rows from db by passed db and table name
+# list all the items according to the "as" url param output type
 # --------------------------------------------------------
 sub doListItems {
 
@@ -31,17 +31,39 @@ sub doListItems {
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
 
+   my $ret              = 1 ; 
    my $msg              = '' ; 
-   my $as               = 'lbls' ; # defines the form of the list control 
+   my $as               = 'table' ; # defines the form of the list control 
    my $list_control     = '' ; 
+   my $refObjModel      = {} ; 
 
 	print "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
-   my $objModel = ${ $self->doSetRequestModelData( $item , $db ) } ; 
-   
+   ( $ret , $msg , $refObjModel)  = $self->doSetRequestModelData( $item , $db ) ; 
+
+   if ( $ret == 0 ) {
+      ( $ret , $msg , $list_control ) = $self->doBuildListControl ( $msg , $refObjModel , $as  ) ; 
+   } else {
+      $list_control = '' ; 
+   }
    $self->doSetHtmlHeaders() ;
-   ( $msg , $list_control ) = $self->doBuildListControl ( \$objModel , $as , $msg ) ; 
+   $msg = $self->doSetPageMsg ( $ret , $msg ) ; 
    $self->doRenderPageTemplate( $as , $msg , $db , $item , $list_control ) ; 
+}
+
+
+sub doSetPageMsg {
+
+   my $self       = shift ; 
+   my $ret        = shift ; 
+   my $msg        = shift ; 
+
+   $msg = '<span id="spn_err_msg">' . $msg . '</span>' unless $ret == 0 ; 
+   $msg = '<span id="spn_msg">' . $msg . '</span>' if $ret == 0 ; 
+
+   $self->res->code(400) unless $ret == 0 ; 
+
+   return $msg ; 
 }
 
 
@@ -51,6 +73,8 @@ sub doSetRequestModelData {
    my $item             = shift ; 
    my $db               = shift ; 
    
+   my $ret              = 1 ;  
+   my $msg              = '' ; 
    my $objRdrUrlParams  = {} ; 
    my $objModel         = {} ; 
 
@@ -60,21 +84,25 @@ sub doSetRequestModelData {
    $objModel->set('postgres_db_name' , $db ) ; 
    $objModel->set('table_name' , $item ) ; 
 
-   $objRdrUrlParams= 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   $objRdrUrlParams->doSetListUrlParams(\$objModel, $self->req->query_params );
-   $objRdrUrlParams->doSetSelectUrlParams(\$objModel, $self->req->query_params );
-   $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
+   $objRdrUrlParams   = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
+   ( $ret , $msg ) = $objRdrUrlParams->doSetListUrlParams(\$objModel, $self->req->query_params );
+   return ( $ret , $msg ) unless $ret == 0 ; 
 
-   return ( \$objModel ) ; 
+   ( $ret , $msg ) = $objRdrUrlParams->doSetSelectUrlParams(\$objModel, $self->req->query_params );
+   return ( $ret , $msg ) unless $ret == 0 ; 
+
+   ( $ret , $msg ) = $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
+
+   return ( $ret , $msg , \$objModel) ; 
 }
 
 
 sub doBuildListControl {
 
    my $self             = shift ; 
+   my $msg              = shift ; 
    my $objModel         = ${ shift @_ } ; 
    my $as               = shift ; 
-   my $msg              = shift ; 
 
    my $ui_type          = 'page/list-lbls' ; 
    my $ret              = 1 ; 
@@ -89,18 +117,13 @@ sub doBuildListControl {
    };
    $ui_type = 'page/' . $lables_pages->{ $as } ; 
 
-   $objPageFactory               = 'IssueTracker::Controller::PageFactory'->new(\$appConfig, \$objModel );
-   $objPageBuilder               = $objPageFactory->doInstantiate( $ui_type );
-   ( $ret , $msg , $list_control )   = $objPageBuilder->doBuildListControl( $msg , \$objModel  ) ;
+   $objPageFactory                  = 'IssueTracker::Controller::PageFactory'->new(\$appConfig, \$objModel );
+   $objPageBuilder                  = $objPageFactory->doInstantiate( $ui_type );
+   ( $ret , $msg , $list_control )  = $objPageBuilder->doBuildListControl( $msg , \$objModel , $as ) ;
 
 	# print "list_control : $list_control \n" ; #todo:ysg
 
-   $msg = '<span id="spn_err_msg">' . $msg . '</span>' unless $ret == 0 ; 
-   $msg = '<span id="spn_msg">' . $msg . '</span>' if $ret == 0 ; 
-
-   $self->res->code(400) unless $ret == 0 ; 
-
-   return ( $msg , $list_control ) ; 
+   return ( $ret , $msg , $list_control ) ; 
 
 }
 

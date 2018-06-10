@@ -94,7 +94,8 @@ sub doCheckRequiredModules {
    Net::Google::Spreadsheets
    Test::Trap
    DBD::Pg
-   Tie::Hash::DBD'
+   Tie::Hash::DBD
+   Scalar::Util::Numeric
   );
 
   for (@modules) {

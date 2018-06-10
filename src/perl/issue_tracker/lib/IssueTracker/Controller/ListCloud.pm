@@ -50,7 +50,6 @@ sub doBuildListControl {
    my $objRdrUrlParams     = {} ; 
   
 
-
    $table = $objModel->get('table_name'); 
    $objModel->doReplaceTokenInKeys('list' , 'select' ); 
 
