@@ -55,15 +55,17 @@ sub doBuildListControl {
 		
    my $to_picks   = $objModel->get('list.web-action.pick') ; 
    my @picks      = split ( ',' , $to_picks ) if defined ( $to_picks ) ; 
+   my $to_hides   = $objModel->get('list.web-action.hide') ; 
+   my @hides      = split ( ',' , $to_hides ) if defined ( $to_hides ) ; 
 	
    #debug p $mhsr2 ;  
 
    unless ( defined ( $to_picks )) {
    	$control = ']' ; # it is just the js array definining the cols
-		foreach my $id ( sort keys %$mhsr2 ) {
+		foreach my $id ( reverse sort keys %$mhsr2 ) {
 			my $row = $mhsr2->{ $id } ; 
 			my $col = $row->{ 'attname' } ; 
-				$control = "'" . $col . "' , " . $control ; 
+				$control = "'" . $col . "' , " . $control unless (grep /$col/, @hides) ; 
 		}
    	$control = '[' . $control ; 
 	} 
@@ -71,11 +73,11 @@ sub doBuildListControl {
    	$control = '[' ; # it is just the js array definining the cols
 		foreach my $to_pick ( @picks ) {
 			$control .= "'" . $to_pick . "' , " ; 
-         #next unless ( $to_pick ) ; 	
 		}
 		for (1..3) { chop ( $control ) } ;
    	$control .= ']' ;
 	}
+
 	# debug print "control is $control \n" ; 
    return ( $ret , $msg , $control ) ; 
 }

@@ -56,7 +56,7 @@ package IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ;
           <div id="vfor_cols" v-for="' . $single_item . ' in ' . $table . '">
    			' ; 
               unless ( defined $to_picks ) {
-                  foreach my $col_num ( reverse sort ( keys %$hs_headers )) {
+                  foreach my $col_num ( sort ( keys %$hs_headers )) {
                      my $col = $hs_headers->{ $col_num }->{ 'attname' }; 
                      my $to_hide = any { /$col/ } @hides ; 
                      unless ( $to_hide  ) {

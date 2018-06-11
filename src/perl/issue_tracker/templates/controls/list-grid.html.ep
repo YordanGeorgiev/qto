@@ -82,8 +82,12 @@ Vue.component('demo-grid', {
       if (sortKey) {
         data = data.slice().sort(function (a, b) {
           a = a[sortKey]
-          b = b[sortKey]
-          return (a === b ? 0 : a > b ? 1 : -1) * order
+          b = b[sortKey] 
+          if ( (!isNaN(parseFloat(a)) && isFinite(a)) && (!isNaN(parseFloat(b)) && isFinite(b)) ) {
+            return (a-b) * order
+          } else {
+            return (a === b ? 0 : a > b ? 1 : -1) * order
+          }
         })
       }
       return data
