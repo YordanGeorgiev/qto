@@ -38,6 +38,10 @@ package IssueTracker::App::UI::Controls::WtrJQCloud ;
       my $hsr2 		= $objModel->get('hsr2');
       my $db         = $objModel->get('postgres_db_name' ) ; 
       my $table      = $objModel->get('table_name');
+      
+      my $ret        = 1 ; 
+      my $msg        = '' ; 
+
 
       my $single_item = $table ; 
       $single_item   =~ s/^(.*)s$/$1/g ; 
@@ -52,22 +56,22 @@ package IssueTracker::App::UI::Controls::WtrJQCloud ;
 		foreach my $key ( keys (%$hsr2))  {
 			my $row = $hsr2->{$key} ; 
          $control .= "\n { \n" ; 
-         foreach my $col_num ( reverse sort ( keys %$hs_headers )) {
-            my $col = $hs_headers->{ $col_num }->{ 'attname' }; 
-				next unless ( $col eq 'name' or $col eq 'prio' ) ; 
-				if ( $col eq 'name' ) {
-					my $text = $row->{'name'} ; 
-					$text =~ s/\"/\\"/g ; 
-            	$control .= ' , text: "' . $text . '"' ;
-					next ; 
-				}			
-				if ( $col eq 'prio' or $col eq 'weight') {
-               my $weight = $row->{'weight'} if defined ( $row->{'weight'} ) ; 
-               my $prio = $row->{'prio'} || 1 ; 
-					$weight = 10 - $prio unless ( defined ( $row->{'weight'} ));
-            	$control .= " weight: $weight "  ; 
-				}			
-         } 
+
+         unless ( defined ( $row->{'name'} ) ) {
+            $ret = 400 ; 
+            $msg = 'tag cloud requires the name attribute, which was not selected !!!' ; 
+            return ( $ret , $msg , "" ) ;
+         }
+
+         my $text = $row->{'name'} ; 
+         $text =~ s/\"/\\"/g ; 
+         $control .= ' text: "' . $text . '"' ;
+         
+         my $weight = $row->{'weight'} if defined ( $row->{'weight'} ) ; 
+         my $prio = $row->{'prio'} || 1 ; 
+         $weight = 10 - $prio unless ( defined ( $row->{'weight'} ));
+         $control .= ", weight: $weight "  ; 
+
          $control .= " },\n" ; 
 		 }	
 		 chomp $control ; chop $control ; 
