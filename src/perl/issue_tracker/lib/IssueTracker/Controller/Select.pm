@@ -36,6 +36,7 @@ sub doSelectMeta {
  
    my $ret = 0;
    my $msg = 'unknown error during Select item';
+   my $rows_count = 0;
 
    my $objRdrDbsFactory
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
@@ -53,7 +54,7 @@ sub doSelectMeta {
       $msg = "SELECT meta OK for table: $item" ; 
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert($objModel->get('hs_headers'));
+      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert($objModel->get('hs_headers'));
 
       unless ( $ret == 0 ) {
          $http_code = 400 ; 
@@ -66,6 +67,7 @@ sub doSelectMeta {
          , 'dat'   => $list
          , 'ret'   => $http_code
          , 'req'   => "GET " . $self->req->url->to_abs
+         , 'met'   => $rows_count
       });
    } elsif ( $ret == 400 ) {
 
@@ -154,10 +156,11 @@ sub doSelectItems {
    if ( $ret == 0 ) {
       my $list = () ; # an array ref holding the converted hash ref of hash refs 
       my $http_code = 200 ; 
+      my $rows_count = 0 ; 
       $msg = "SELECT OK for table: $item" ; 
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert ($objModel->get('hsr2'));
+      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($objModel->get('hsr2'));
 
       unless ( $ret == 0 ) {
          $http_code = 400 ; 
@@ -169,6 +172,7 @@ sub doSelectItems {
            'msg'   => $msg
          , 'dat'   => $list
          , 'ret'   => $http_code
+         , 'met'   => $rows_count 
          , 'req'   => "GET " . $self->req->url->to_abs
       });
    } elsif ( $ret == 400 ) {

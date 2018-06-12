@@ -21,7 +21,7 @@ our $objModel = {} ;
       my $ret        = 1 ;      # assume error from the start  
       my @list       = () ; 
 
-
+      my $rows_count = 0 ; 
       my $evl_str_sort_data = 'sort { $hsr2->{$a}->{ $to_order_by } cmp $hsr2->{$b}->{ $to_order_by } } keys (%$hsr2) ' ; 
       my $evl_str_sort_meta = 'keys %$hsr2' ; # as it is just a hash ref of hash refs 
       my $evl_str_sort_by = $evl_str_sort_data ; 
@@ -30,6 +30,7 @@ our $objModel = {} ;
       if ( defined ( $to_order_by) ) {
          foreach my $key (  eval "$evl_str_sort_by" ) {
             my $row = $hsr2->{$key} ; 
+            $rows_count = $row->{'rows_count'} ; delete $row->{'rows_count'} ; 
             ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
             return ( $ret , $msg ) unless $ret == 0 ; 
             push ( @list , $row ) ; 
@@ -38,6 +39,8 @@ our $objModel = {} ;
       else {
          foreach my $key ( keys %$hsr2 ) {
             my $row = $hsr2->{$key} ; 
+            $rows_count = $row->{'rows_count'} ; delete $row->{'rows_count'} ; 
+            print "rows_count is $rows_count \n" ; #todo:ysg
             ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
             return ( $ret , $msg ) unless $ret == 0 ; 
             push ( @list , $row ) ; 
@@ -45,7 +48,7 @@ our $objModel = {} ;
       }
       $ret = 0 ; 
       $msg = "" ; 
-      return ( $ret , $msg , \@list ) ; 
+      return ( $ret , $msg , \@list , $rows_count ) ; 
    } 
 
 

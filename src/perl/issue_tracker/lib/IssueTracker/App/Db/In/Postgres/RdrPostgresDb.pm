@@ -581,7 +581,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       my $columns_to_select = "*" ; 
       if ( defined ( $objModel->get('select.web-action.pick') ) ) {
-         $columns_to_select = " guid" ;
+         $columns_to_select = " guid,id" ;
          my $lst_columns_to_select = $objModel->get('select.web-action.pick'); 
          my @cols = split (',' , $lst_columns_to_select ) ;
          foreach my $col ( @cols ) { 
@@ -600,11 +600,10 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
          }
       }
-      
-
-      $str_sql = 
-         " SELECT 
-         $columns_to_select
+     
+      $str_sql = " 
+         SELECT 
+         $columns_to_select , count(*) OVER () as rows_count
          FROM $table 
          WHERE 1=1 " ; 
       $str_sql .= $filter_by_attributes . " " if $filter_by_attributes ; 
@@ -627,8 +626,10 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql .= $where_clause_with if $where_clause_with ; 
 
+
       # not all items have the prio attribute
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
+      $str_sql .= " ORDER BY id " unless defined $columns_to_order_by_asc ; 
 
       my $limit = $objModel->get('select.web-action.page-size' ) || 15 ; # the default page size is 15
       my $page_num = $objModel->get('select.web-action.page-num' ) || 1 ; 
@@ -638,7 +639,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
 
-      #debug print "from RdrPostgresDb.pm 637 : $str_sql \n" ; #todo:ysg
+      print "from RdrPostgresDb.pm 637 : $str_sql \n" ; #todo:ysg
 
       $sth = $dbh->prepare($str_sql);  
 
@@ -647,7 +648,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       $hsr2 = $sth->fetchall_hashref( 'guid' ) ; 
       binmode(STDOUT, ':utf8');
-
       $msg = DBI->errstr ; 
 
       unless ( defined ( $msg ) ) {
