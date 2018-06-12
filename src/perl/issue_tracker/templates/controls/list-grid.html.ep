@@ -7,6 +7,7 @@
 % end
 
    <div id="app" >
+
 		<!-- component template -->
 		<script type="text/x-template" id="grid-template">
 		  <table tabindex="1">
@@ -37,82 +38,103 @@
 			 		<input id="inp_srch_query" tabindex="1" name="query" v-model="searchQuery">
 		  		</form>
 			</div>
+
+<div class="pager-show-inline-block">
+	<div class="pager-bar pager-border pager-round">
+		<a class="pager-bar-item pager-button" href="#">«</a>
+			<a class="pager-bar-item pager-button" v-for="(pgNum, index) in this.pagesCount" >{{ pgNum }}</a>
+		<a class="pager-bar-item pager-button" href="#">»</a>
+	</div>
+</div>
+
 		  <demo-grid
 			 :data="gridData"
 			 :columns="gridColumns"
 			 :filter-key="searchQuery">
 		  </demo-grid>
-		</div>
 
+<div class="pager-show-inline-block">
+	<div class="pager-bar pager-border pager-round">
+		<a class="pager-bar-item pager-button" href="#">«</a>
+			<a class="pager-bar-item pager-button" v-for="(pgNum, index) in this.pagesCount" >{{ pgNum }}</a>
+		<a class="pager-bar-item pager-button" href="#">»</a>
+	</div>
+</div>
+
+		</div>
    </div>
+
 
 <script>
 if ( document.getElementById("spn_msg") ) {
-// register the grid component
-Vue.component('demo-grid', {
-  template: '#grid-template',
-  props: {
-    data: Array,
-    columns: Array,
-    filterKey: String
-  },
-  data: function () {
-    var sortOrders = {}
-    this.columns.forEach(function (key) {
-      sortOrders[key] = 1
-    })
-    return {
-      sortKey: '',
-      sortOrders: sortOrders
-    }
-  },
-  computed: {
-    filteredData: function () {
-      var sortKey = this.sortKey
-      var filterKey = this.filterKey && this.filterKey.toLowerCase()
-      var order = this.sortOrders[sortKey] || 1
-      var data = this.data
-      if (filterKey) {
-        data = data.filter(function (row) {
-          return Object.keys(row).some(function (key) {
-            return String(row[key]).toLowerCase().indexOf(filterKey) > -1
-          })
-        })
-      }
-      if (sortKey) {
-        data = data.slice().sort(function (a, b) {
-          a = a[sortKey]
-          b = b[sortKey] 
-          if ( (!isNaN(parseFloat(a)) && isFinite(a)) && (!isNaN(parseFloat(b)) && isFinite(b)) ) {
-            return (a-b) * order
-          } else {
-            return (a === b ? 0 : a > b ? 1 : -1) * order
-          }
-        })
-      }
-      return data
-    }
-  },
-  filters: {
-    capitalize: function (str) {
-      return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-  },
-  methods: {
-    sortBy: function (key) {
-      this.sortKey = key
-      this.sortOrders[key] = this.sortOrders[key] * -1
-    }
-  }
-})
+   // register the grid component
+   Vue.component('demo-grid', {
+     template: '#grid-template',
+     props: {
+       data: Array,
+       columns: Array,
+       filterKey: String
+     },
+     data: function () {
+       var sortOrders = {}
+       this.columns.forEach(function (key) {
+         sortOrders[key] = 1
+       })
+       return {
+         sortKey: '',
+         sortOrders: sortOrders
+       }
+     },
+     computed: {
+       filteredData: function () {
+         var sortKey = this.sortKey
+         var filterKey = this.filterKey && this.filterKey.toLowerCase()
+         var order = this.sortOrders[sortKey] || 1
+         var data = this.data
+         if (filterKey) {
+           data = data.filter(function (row) {
+             return Object.keys(row).some(function (key) {
+               return String(row[key]).toLowerCase().indexOf(filterKey) > -1
+             })
+           })
+         }
+         if (sortKey) {
+           data = data.slice().sort(function (a, b) {
+             a = a[sortKey]
+             b = b[sortKey] 
+             if ( (!isNaN(parseFloat(a)) && isFinite(a)) && (!isNaN(parseFloat(b)) && isFinite(b)) ) {
+               return (a-b) * order
+             } else {
+               return (a === b ? 0 : a > b ? 1 : -1) * order
+             }
+           })
+         }
+         return data
+       }
+     },
+     filters: {
+       capitalize: function (str) {
+         return str.charAt(0).toUpperCase() + str.slice(1)
+       }
+     },
+     methods: {
+       sortBy: function (key) {
+         this.sortKey = key
+         this.sortOrders[key] = this.sortOrders[key] * -1
+       }
+     }
+   })
+
 
    var demo = new Vue({
      el: '#demo',
      data: {
        searchQuery: '',
        gridColumns: <%== $list_control =%>,
-       //gridColumns: ['name', 'prio','description'],
-       gridData: []
+       gridData: [],
+       pageSize: 15,
+       pageNum: 1,
+       pagesCount: 0
      },
      mounted() {
 			var url_params = {} 
@@ -124,7 +146,10 @@ Vue.component('demo-grid', {
             url_params = { as:"lbls" };  
          }
 			axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
-			.then(response => { this.gridData = response.data.dat
+			.then(response => { 
+				this.gridData = response.data.dat ; 
+				this.pageSize = url_params['page-size'] || 15 ; 
+				this.pagesCount = Math.floor(response.data.met/this.pageSize ) + 1
 			})
 			.catch(function(error) {
 				document.getElementById("div_msg").innerHTML="<span id=\"spn_err_msg\">" + error.response.data.msg + '</span>'
