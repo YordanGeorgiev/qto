@@ -121,8 +121,6 @@ sub doBuildListControl {
    $objPageBuilder                  = $objPageFactory->doInstantiate( $ui_type );
    ( $ret , $msg , $list_control )  = $objPageBuilder->doBuildListControl( $msg , \$objModel , $as ) ;
 
-	# print "list_control : $list_control \n" ; #todo:ysg
-
    return ( $ret , $msg , $list_control ) ; 
 
 }
