@@ -10,7 +10,7 @@
 
 		<!-- component template -->
 		<script type="text/x-template" id="grid-template">
-		  <table tabindex="1">
+		  <table tabindex="1" style="clear:both">
 			 <thead>
 				<tr>
 				  <th v-for="key in columns"
@@ -39,11 +39,10 @@
 		  		</form>
 			</div>
 
-<div class="pager-show-inline-block">
-	<div class="pager-bar pager-border pager-round">
-		<a class="pager-bar-item pager-button" href="#">«</a>
-			<a class="pager-bar-item pager-button" v-for="(pgNum, index) in this.pagesCount" >{{ pgNum }}</a>
-		<a class="pager-bar-item pager-button" href="#">»</a>
+<div style="clear:both">
+	<div class="pgr-bar pgr-border">
+      <a tabindex="1" class="pgr-bar-item pgr-button" v-for="(pgNum, index) in this.pagesCount"
+      v-bind:href="generatePageNum(pgNum)">{{ pgNum }}</a>
 	</div>
 </div>
 
@@ -53,11 +52,10 @@
 			 :filter-key="searchQuery">
 		  </demo-grid>
 
-<div class="pager-show-inline-block">
-	<div class="pager-bar pager-border pager-round">
-		<a class="pager-bar-item pager-button" href="#">«</a>
-			<a class="pager-bar-item pager-button" v-for="(pgNum, index) in this.pagesCount" >{{ pgNum }}</a>
-		<a class="pager-bar-item pager-button" href="#">»</a>
+<div class="pgr-show-inline-block">
+	<div class="pgr-bar pgr-border pgr-round">
+       <a tabindex="1" class="pgr-bar-item pgr-button" v-for="(pgNum, index) in this.pagesCount"
+      v-bind:href="generatePageNum(pgNum)">{{ pgNum }}</a>
 	</div>
 </div>
 
@@ -110,7 +108,7 @@ if ( document.getElementById("spn_msg") ) {
            })
          }
          return data
-       }
+      }
      },
      filters: {
        capitalize: function (str) {
@@ -136,6 +134,17 @@ if ( document.getElementById("spn_msg") ) {
        pageNum: 1,
        pagesCount: 0
      },
+     methods: {
+      generatePageNum: function (pgNum) {
+			var currentUrl = window.location.href ; 
+			if ( currentUrl.indexOf("page-num=") === -1 ) {
+				var newUrl = currentUrl + "&page-num=" + pgNum ; 
+				return newUrl ; 
+			} else {
+         	return currentUrl.replace("page-num=" + this.pageNum , "page-num=" + pgNum) ; 
+			}
+      }
+     },
      mounted() {
 			var url_params = {} 
          if( window.location.toString().indexOf("?") != -1) {
@@ -148,7 +157,8 @@ if ( document.getElementById("spn_msg") ) {
 			axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
 			.then(response => { 
 				this.gridData = response.data.dat ; 
-				this.pageSize = url_params['page-size'] || 15 ; 
+				this.pageSize = url_params['page-size'] || 10 ; 
+				this.pageNum = url_params['page-num'] || 1 ; 
 				this.pagesCount = Math.floor(response.data.met/this.pageSize ) + 1
 			})
 			.catch(function(error) {

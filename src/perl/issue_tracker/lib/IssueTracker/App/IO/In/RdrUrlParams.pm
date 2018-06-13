@@ -97,8 +97,7 @@ sub doSetSelectUrlParams {
    $query_params->remove('o') ; 
 
    # start page-size
-   my $page_size = $query_params->param('page-size') || 15 ; 
-   print "RdrUrlParams.pm 101 page_size is $page_size \n" ; #todo:ysg
+   my $page_size = $query_params->param('page-size') || 10 ; 
    $msg = "the page size must a positive number, but page-size of " . $page_size . " was requested !!!" ; 
    unless ( isint $page_size ) {
       $ret = 400 ; 

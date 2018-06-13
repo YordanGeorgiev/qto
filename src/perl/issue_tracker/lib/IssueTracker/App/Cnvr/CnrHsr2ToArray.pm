@@ -40,7 +40,6 @@ our $objModel = {} ;
          foreach my $key ( keys %$hsr2 ) {
             my $row = $hsr2->{$key} ; 
             $rows_count = $row->{'rows_count'} ; delete $row->{'rows_count'} ; 
-            print "rows_count is $rows_count \n" ; #todo:ysg
             ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
             return ( $ret , $msg ) unless $ret == 0 ; 
             push ( @list , $row ) ; 
