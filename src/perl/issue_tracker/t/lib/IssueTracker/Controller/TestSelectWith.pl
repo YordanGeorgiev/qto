@@ -68,7 +68,7 @@ for my $row ( @$tables ) {
       foreach my $row ( @$list) {
          # not all the tables have the prio attribute
          $tm = "only status=02-todo  are selected for $url: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
-         ok ( $row->{'status'} == '02-todo', $tm ) ; 
+         ok ( $row->{'status'} eq '02-todo', $tm ) ; 
       }
       
       $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio,status&with=status-like-03-%25' ; 
