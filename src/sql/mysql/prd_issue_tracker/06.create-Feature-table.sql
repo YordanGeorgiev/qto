@@ -15,6 +15,7 @@ CREATE TABLE `Feature` (
  , `SrcCode`         varchar(4000) 	NULL
  , `Weight`          smallint DEFAULT NULL
  , `FileType`        varchar(10) DEFAULT NULL
+ , `GUID`            varchar(36) DEFAULT NULL
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
