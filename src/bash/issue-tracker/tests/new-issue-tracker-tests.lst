@@ -1,2 +1,1 @@
-run-perl-unit-tests
-run-integration-tests
+db-to-json

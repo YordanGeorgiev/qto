@@ -264,7 +264,6 @@ src/sql/pgsql/dev_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/dev_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/dev_issue_tracker/12.create-table-purchases.sql
-src/sql/pgsql/dev_issue_tracker/13.create-table-test_runs.sql
 src/sql/pgsql/dev_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/dev_issue_tracker/99.create-table-test_hierarchy_table.sql
@@ -282,7 +281,6 @@ src/sql/pgsql/tst_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/tst_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/tst_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/tst_issue_tracker/12.create-table-purchases.sql
-src/sql/pgsql/tst_issue_tracker/13.create-table-test_runs.sql
 src/sql/pgsql/tst_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/tst_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/prd_issue_tracker
@@ -299,7 +297,6 @@ src/sql/pgsql/prd_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/prd_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/prd_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/prd_issue_tracker/12.create-table-purchases.sql
-src/sql/pgsql/prd_issue_tracker/13.create-table-test_runs.sql
 src/sql/pgsql/prd_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/prd_issue_tracker/50.create-table-tst_paging.sql
 #----
@@ -814,3 +811,12 @@ dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.weekly-issues.2018-06-22.tx
 dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.yearly-issues.2018-06-22.txt
 # --- 
 dat/etc/postgresql/9.6/main/pg_hba.conf
+# ---
+src/bash/issue-tracker/tests/db-to-json.test.sh
+src/bash/issue-tracker/specs/db-to-json.spec.sh
+src/bash/issue-tracker/helps/db-to-json.help.sh
+src/bash/issue-tracker/funcs/db-to-json.func.sh
+doc/txt/issue-tracker/tests/db-to-json.test.txt
+doc/txt/issue-tracker/specs/db-to-json.spec.txt
+doc/txt/issue-tracker/helps/db-to-json.help.txt
+doc/txt/issue-tracker/funcs/db-to-json.func.txt

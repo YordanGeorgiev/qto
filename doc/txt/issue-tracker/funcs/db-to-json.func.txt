@@ -1,0 +1,36 @@
+# doc/txt/issue-tracker/func/db-to-json.func.txt
+
+	doDbToJson
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to export all the postgres tables into json files for backup
+
+	# Prequisites
+	# ------------------------------------------------------
+   the dev web server must be running on the 3000 port 
+
+	# Installation
+	# ------------------------------------------------------
+   # run the ddl scripts
+   bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
+
+
+	# Interdependancies
+	# ------------------------------------------------------
+   the dev web server must be running on the 3000 port 
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doDbToJson used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+   the dev web server must be running on the 3000 port 
+
+
+# eof file: doc/txt/issue-tracker/func/db-to-json.func.txt
