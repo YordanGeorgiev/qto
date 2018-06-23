@@ -37,11 +37,11 @@ sub doReadXlsFileToHsr3 {
   my $ret = 1;
   my $msg = "read the following xls_file: $xls_file";
   $objLogger->doLogInfoMsg($msg);
-  sleep 1 ; 
 
   my $formatter    = Spreadsheet::ParseExcel::FmtJapan->new();
   my $objXlsParser = 'Spreadsheet::ParseExcel'->new();
 
+  # optionally : 
   # my $objWorkbook      = $objXlsParser->Parse( $xls_file , $formatter );
   my $objWorkbook = $objXlsParser->Parse($xls_file);
   my $hsr3 = {};    # this is the data hash ref of hash refs
@@ -129,14 +129,12 @@ sub doReadXlsFileToHsr3 {
 
         $hsRow->{$header} = $token;
         $col_num++;
-      }
+      } #eof for col
 
-      #eof for col
       $hsWorkSheet->{"$row_num"} = $hsRow;
       $row_num++;
 
-    }    
-    #eof foreach row
+    } #eof foreach row
 
     $hsr3->{"$WorkSheetName"} = $hsWorkSheet;
 

@@ -639,10 +639,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
 
-      print "from RdrPostgresDb.pm 637 : $str_sql \n" ; #todo:ysg
+      #debug print "from RdrPostgresDb.pm 637 : $str_sql \n" ; #todo:ysg
 
       $sth = $dbh->prepare($str_sql);  
-
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
 
