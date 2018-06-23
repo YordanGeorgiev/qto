@@ -16,6 +16,13 @@ Table of Contents
       * [1.2.1. Total planned time tracking](#121-total-planned-time-tracking)
       * [1.2.2. Total remaining allocated time tracking](#122-total-remaining-allocated-time-tracking)
       * [1.2.3. Total spent time tracking](#123-total-spent-time-tracking)
+      * [1.2.4. Tracking of issues per period](#124-tracking-of-issues-per-period)
+    * [1.3. Security Management](#13-security-management)
+      * [1.3.1. Users management](#131-users-management)
+      * [1.3.2. Add new users to a project](#132-add-new-users-to-a-project)
+      * [1.3.3. Update existing users in a project](#133-update-existing-users-in-a-project)
+      * [1.3.4. Delete existing users from a project](#134-delete-existing-users-from-a-project)
+      * [1.3.5. Search for users in a project](#135-search-for-users-in-a-project)
   * [2. TEAM MEMBER BIZ PERSPECTIVE](#2-team-member-biz-perspective)
     * [2.1. Issues management](#21-issues-management)
       * [2.1.1. Create new issues](#211-create-new-issues)
@@ -25,12 +32,20 @@ Table of Contents
       * [2.1.5. Track issues progress](#215-track-issues-progress)
       * [2.1.6. Track issues history](#216-track-issues-history)
     * [2.2. Track issues relations](#22-track-issues-relations)
+      * [2.2.1. Generic search for items from a single entity ( table ) ](#221-generic-search-for-items-from-a-single-entity-(-table-)-)
+      * [2.2.2. Generic list for the searched items from a single entity ( table ) ](#222-generic-list-for-the-searched-items-from-a-single-entity-(-table-)-)
+          * [2.2.2.1. Generic list labels for the searched items from a single entity ( table ) ](#2221-generic-list-labels-for-the-searched-items-from-a-single-entity-(-table-)-)
+          * [2.2.2.2. Generic cloud list for the searched items from a single entity ( table ) ](#2222-generic-cloud-list-for-the-searched-items-from-a-single-entity-(-table-)-)
+      * [2.2.3. Generic create capability from UI for new items from a single entity ( table ) ](#223-generic-create-capability-from-ui-for-new-items-from-a-single-entity-(-table-)-)
+      * [2.2.4. Generic edit capability from UI for existing items from a single entity ( table ) ](#224-generic-edit-capability-from-ui-for-existing-items-from-a-single-entity-(-table-)-)
+      * [2.2.5. Generic delete capability from UI for existing items from a single entity ( table ) ](#225-generic-delete-capability-from-ui-for-existing-items-from-a-single-entity-(-table-)-)
     * [2.3. Measure success](#23-measure-success)
     * [2.4. Monitor success](#24-monitor-success)
     * [2.5. Time management](#25-time-management)
       * [2.5.1. time centric planning](#251-time-centric-planning)
       * [2.5.2. time centric reporting](#252-time-centric-reporting)
-    * [2.6. Project's persons issue combinations](#26-project's-persons-issue-combinations)
+    * [2.6. Generic CRUDS for items](#26-generic-cruds-for-items)
+    * [2.7. Project's persons issue combinations](#27-project's-persons-issue-combinations)
   * [3. PROJECT OBSERVER BIZ PERSPECTIVE](#3-project-observer-biz-perspective)
     * [3.1. Projects observation](#31-projects-observation)
     * [3.2. Issues observation](#32-issues-observation)
@@ -87,16 +102,16 @@ load-by-txt-to-db-action)
       * [6.6.2. Issues handling in google sheet format](#662-issues-handling-in-google-sheet-format)
       * [6.6.3. Issues publishing in google calendar format](#663-issues-publishing-in-google-calendar-format)
     * [6.7. Metadata handling](#67-metadata-handling)
-  * [7. UI PERSPECTIVE](#7-ui-perspective)
+  * [7. UI PERSPECTIVE COMMON FOR ALL ROLES](#7-ui-perspective-common-for-all-roles)
     * [7.1. Performance](#71-performance)
       * [7.1.1. Page load times](#711-page-load-times)
     * [7.2. Mobile](#72-mobile)
     * [7.3. Projects switching](#73-projects-switching)
     * [7.4. Time management](#74-time-management)
-      * [7.4.1. copy an issue-tracker instance issue to  a google calendar event](#741-copy-an-issue-tracker-instance-issue-to-a-google-calendar-event)
-    * [7.5. Issues listing](#75-issues-listing)
-      * [7.5.1. automatic issue items sequencing](#751-automatic-issue-items-sequencing)
-      * [7.5.2. issues re-ordering by desired or defaut attribute in list view](#752-issues-re-ordering-by-desired-or-defaut-attribute-in-list-view)
+      * [7.4.1. Copy an issue-tracker instance issue to  a google calendar event](#741-copy-an-issue-tracker-instance-issue-to-a-google-calendar-event)
+    * [7.5. Issues listing in table format](#75-issues-listing-in-table-format)
+      * [7.5.1. Automatic issue items sequencing](#751-automatic-issue-items-sequencing)
+      * [7.5.2. Issues re-ordering by desired or defaut attribute in list view](#752-issues-re-ordering-by-desired-or-defaut-attribute-in-list-view)
       * [7.5.3. issues list default row height](#753-issues-list-default-row-height)
     * [7.6. Issues data transfer between different projects](#76-issues-data-transfer-between-different-projects)
     * [7.7. Issues export to Google calendar](#77-issues-export-to-google-calendar)
@@ -106,6 +121,7 @@ load-by-txt-to-db-action)
       * [7.10.1. Apply publish filter while posting to Google Sheet](#7101-apply-publish-filter-while-posting-to-google-sheet)
   * [8. UI DEVELOPER PERSPECTIVE](#8-ui-developer-perspective)
     * [8.1. Testability](#81-testability)
+    * [8.2. Multiple control paths for single web action entry point](#82-multiple-control-paths-for-single-web-action-entry-point)
     
 
 
@@ -205,12 +221,62 @@ In order to see the spent time left for achieving the goals of a period
 I want to be able to have a +-3% approximation of the spent time left for a period
 by accessing a simple page containing its value and the period it is related to
 
+#### 1.2.4. Tracking of issues per period
+    
+
+As a team leader 
+In order to see the relation of the issues to the daily,weekly,monthly,yearly,quinquennially and decadelly periods 
+I wanto to be able to manage the issues within those periods per period and mother period
+
+### 1.3. Security Management
+    
+
+As an team leader
+In order to keep my business data secure 
+I wanto to be able decide which users to which projects whill have access to
+
+#### 1.3.1. Users management
+    
+
+As an team leader
+In order to keep my business data secure 
+I wanto to be able decide which users to which projects will have access to
+
+#### 1.3.2. Add new users to a project
+    
+
+As an team leader
+In order to be able to add new users into a project
+I wanto to be able to add them via the UI only by their e-mail address. 
+
+#### 1.3.3. Update existing users in a project
+    
+
+As an team leader
+In order to be able to update the existing users from a project
+I wanto to be able to update their details via the UI only by their e-mail address. 
+
+#### 1.3.4. Delete existing users from a project
+    
+
+As an team leader
+In order to be able to delete the existing users from a project
+I wanto to be able to delete their details via the UI only by their e-mail address. 
+
+#### 1.3.5. Search for users in a project
+    
+
+As an team leader
+In order to be able to search the existing users from a project
+I wanto to be able to search their details via the UI only by their e-mail address. 
+
 ## 2. TEAM MEMBER BIZ PERSPECTIVE
     
 
 As a team member
 In order to operate successfully in the project  
-I want to have a nice user experience while using the issue-tracker application.
+I want to have a nice user experience while using the issue-tracker application
+by being able to manage all the items in the application ( issues,questions,problems , etc. ) 
 
 ### 2.1. Issues management
     
@@ -269,6 +335,62 @@ As a team member of a project
 In order to trace the issues relations to userstories, features and tests or any other objects
 I wanto to be able to access the related objects to an issue by means of a link
 
+#### 2.2.1. Generic search for items from a single entity ( table ) 
+    
+
+As a team member
+In order to be able to find all the items from a single entity
+I want to be search for those items from the UI of the application 
+by using a single omnibox UI interface. 
+
+#### 2.2.2. Generic list for the searched items from a single entity ( table ) 
+    
+
+As a team member
+In order to be able to list and review all the items from a single entity
+I want to be able to review the searched items for those items from the UI of the application 
+by using a single label forms like interface
+
+##### 2.2.2.1. Generic list labels for the searched items from a single entity ( table ) 
+    
+
+As a team member
+In order to be able to list and review all the items from a single entity
+I want to be able to review the searched items for those items from the UI of the application 
+by using a single label forms like interface
+
+##### 2.2.2.2. Generic cloud list for the searched items from a single entity ( table ) 
+    
+
+As a team member
+In order to be able to list and review all the items from a single entity
+I want to be able to review the searched items for those items from the UI of the application 
+by using a single tag cloud like interface
+
+#### 2.2.3. Generic create capability from UI for new items from a single entity ( table ) 
+    
+
+As a team member
+In order to be able to create new items from a single entity
+I want to be able to create new items from the UI of the application 
+by using a simple form. 
+
+#### 2.2.4. Generic edit capability from UI for existing items from a single entity ( table ) 
+    
+
+As a team member
+In order to be able to edit existing items from a single entity
+I want to be able to edit those  items from the UI of the application 
+by using a simple form. 
+
+#### 2.2.5. Generic delete capability from UI for existing items from a single entity ( table ) 
+    
+
+As a team member
+In order to be able to delete existing items from a single entity
+I want to be able to edit those  items from the UI of the application 
+by using a simple form. 
+
 ### 2.3. Measure success
     
 
@@ -307,7 +429,14 @@ As an issues-manager
 In order to be able to report the issues data for for a certain term - day,week,month,year,quinquennial or decade
 I wanto to be able to perform all the features of the issue-tracker on that specific day regardless whether it is today , in the past or in the future
 
-### 2.6. Project's persons issue combinations
+### 2.6. Generic CRUDS for items
+    
+
+As a team member
+In order to be able to manage all the items in the application I have access to
+I want to be able to create,update,delete and search for those items from the UI of the application.
+
+### 2.7. Project's persons issue combinations
     
 
 As the project manager  of an issue-tracker project 
@@ -432,7 +561,8 @@ I want to have a nice user experience while using the issue-tracker application.
 As an ITOPS 
 In order to be able to rely on the operations of the tool 
  and manage easily its features and functionalities
-I wanto the easily verify and  test parts or the whole System
+I wanto the easily verify and  test parts or the whole System 
+by issuing a single shell call.
 
 #### 6.1.1. Clarity and breavity of the end to end tests
     
@@ -731,7 +861,7 @@ In order to be able to programatically manage all aspects of my data
 I wanto to have a single entry point to manage the meta data per tables , colums and UI elements
 so that even a table, column or whatever object is not popullated in the meta still there will be default values for it usable by the application
 
-## 7. UI PERSPECTIVE
+## 7. UI PERSPECTIVE COMMON FOR ALL ROLES
     
 
 As an UI user of the issue-tracker application 
@@ -773,26 +903,28 @@ As an issue-tracker ui user
 In order to be prepare for issues such as ( events , tasks ) which have start and stop time
 I wanto to be able to view the issues with the same title, start_time and stop_time in google calendar
 
-#### 7.4.1. copy an issue-tracker instance issue to  a google calendar event
+#### 7.4.1. Copy an issue-tracker instance issue to  a google calendar event
     
 
 As an issue-tracker ui user 
 In order to be able to see my issues time-schedule via phone and browser in a calendar view
 I wanto to be able to copy via the ui an issue as a new google calendar event
 
-### 7.5. Issues listing
+### 7.5. Issues listing in table format
     
 
-As an UI user of the issue-tracker application I want to be able to list the issues stored in it. 
+As an UI user of the issue-tracker application 
+In order to quickly display as much issues as possible
+I want to be able to list the issues per period. 
 
-#### 7.5.1. automatic issue items sequencing
+#### 7.5.1. Automatic issue items sequencing
     
 
 As an UI user of the issue-tracker application 
 In order to save time while arranging all the different issue items
 I want the System to automatically sequence each item in list view by a defaut incremental sequence unless I have specified my own sequence. 
 
-#### 7.5.2. issues re-ordering by desired or defaut attribute in list view
+#### 7.5.2. Issues re-ordering by desired or defaut attribute in list view
     
 
 As a UI user 
@@ -863,4 +995,9 @@ I wanto to have user friendly development experience.
 As the UI Developer
 In order to deliver working ui units 
 I wanto to be able to quickly setup the existing project with minimalistic default set of data.  
+
+### 8.2. Multiple control paths for single web action entry point
+    
+
+_
 
