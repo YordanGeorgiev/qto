@@ -626,10 +626,13 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql .= $where_clause_with if $where_clause_with ; 
 
-
       # not all items have the prio attribute
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
-      $str_sql .= " ORDER BY id " unless defined $columns_to_order_by_asc ; 
+      unless ( defined $columns_to_order_by_asc ) {
+         if ( $self->doCheckIfColumnExists ( $mhsr->{'ColumnNames'} , 'id' ) ) {
+            $str_sql .= " ORDER BY id " ; 
+         }
+      }
 
       my $limit = $objModel->get('select.web-action.page-size' ) || 10 ; # the default page size is 15
       my $page_num = $objModel->get('select.web-action.page-num' ) || 1 ; 
