@@ -65,8 +65,8 @@ for my $row ( @$list ) {
    $t->get_ok( $url )->status_is(400 , $tm ) ; 
 	
    $tm = 'if the page num is not a positive whole number return http 400 ' ; 
-   my $page_size = 15 ; 
-   my $page_num = 'not_even_a_number' ; 
+   $page_size = 15 ; 
+   $page_num = 'not_even_a_number' ; 
    $url = '/' . $db_name . '/list/tst_paging?as=table&page-size=' . $page_size .'&page-num=' . $page_num ; 
    $t->get_ok( $url )->status_is(400 , $tm ) ; 
 

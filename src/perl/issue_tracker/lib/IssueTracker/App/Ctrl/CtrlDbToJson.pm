@@ -130,7 +130,7 @@ package IssueTracker::App::Ctrl::CtrlDbToJson ;
            appConfig => $appConfig
        );
 
-	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 	   = 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
       $objWtrFiles   = 'IssueTracker::App::IO::Out::WtrFiles'->new ( \$appConfig ) ; 
 
       return $self ; 
