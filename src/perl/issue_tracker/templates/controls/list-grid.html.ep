@@ -7,7 +7,6 @@
 % end
 
    <div id="app" >
-
 		<!-- component template -->
 		<script type="text/x-template" id="grid-template">
 		  <table tabindex="1" style="clear:both">
@@ -36,15 +35,13 @@
 			<div id="div_frm_srch">
 		  		<form id="frm_search">
 			 		<input id="inp_srch_query" tabindex="1" name="query" v-model="searchQuery">
+         
+      <div class="pgr-bar pgr-border pgr-round">
+          <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes"
+         v-bind:href="generatePageSize(pgSize)">{{ pgSize }}</a>
+      </div>
 		  		</form>
 			</div>
-
-<div style="clear:both">
-	<div class="pgr-bar pgr-border">
-      <a tabindex="1" class="pgr-bar-item pgr-button" v-for="(pgNum, index) in this.pagesCount"
-      v-bind:href="generatePageNum(pgNum)">{{ pgNum }}</a>
-	</div>
-</div>
 
 		  <demo-grid
 			 :data="gridData"
@@ -52,15 +49,15 @@
 			 :filter-key="searchQuery">
 		  </demo-grid>
 
-<div class="pgr-show-inline-block">
-	<div class="pgr-bar pgr-border pgr-round">
-       <a tabindex="1" class="pgr-bar-item pgr-button" v-for="(pgNum, index) in this.pagesCount"
-      v-bind:href="generatePageNum(pgNum)">{{ pgNum }}</a>
-	</div>
-</div>
+         <div class="pgr-show-inline-block">
+            <div class="pgr-bar pgr-border pgr-round">
+                <a tabindex="1" class="pgr-bar-item pgr-button" v-for="(pgNum, index) in this.pagesCount"
+               v-bind:href="generatePageNum(pgNum)">{{ pgNum }}</a>
+            </div>
+         </div>
 
-		</div>
-   </div>
+               </div>
+            </div>
 
 
 <script>
@@ -132,7 +129,9 @@ if ( document.getElementById("spn_msg") ) {
        gridData: [],
        pageSize: 15,
        pageNum: 1,
-       pagesCount: 0
+       pagesCount: 0,
+       UrlParams:{ as:"lbls" },
+       pageSizes: ['5', '7', '10','15','20','30','50','100']
      },
      methods: {
       generatePageNum: function (pgNum) {
@@ -142,6 +141,17 @@ if ( document.getElementById("spn_msg") ) {
 				return newUrl ; 
 			} else {
          	return currentUrl.replace("page-num=" + this.pageNum , "page-num=" + pgNum) ; 
+			}
+      },
+      generatePageSize: function (pgSize) {
+			var currentUrl = window.location.href ; 
+			if ( currentUrl.indexOf("page-size=") === -1 ) {
+				var newUrl = currentUrl + "&page-size=" + pgSize ; 
+				return newUrl ; 
+			} else {
+         	return currentUrl
+               .replace("page-size=" + this.pageSize , "page-size=" + pgSize) 
+               .replace("page-num=" + this.pageNum , "page-num=1") ; 
 			}
       }
      },
@@ -154,12 +164,17 @@ if ( document.getElementById("spn_msg") ) {
          } else {
             url_params = { as:"lbls" };  
          }
+         this.UrlParams = url_params;
 			axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
 			.then(response => { 
 				this.gridData = response.data.dat ; 
 				this.pageSize = url_params['page-size'] || 10 ; 
 				this.pageNum = url_params['page-num'] || 1 ; 
-				this.pagesCount = Math.floor(response.data.met/this.pageSize ) + 1
+            var totalRSsize = response.data.met ; 
+            var remainder = totalRSsize - (totalRSsize * Math.floor(totalRSsize/this.pageSize))
+            var toAdd = 1 // page-size 4 , total-rs-size 20 => 5 and not 6
+            if ( remainder == 0 ) { toAdd = 0  }
+				this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
 			})
 			.catch(function(error) {
 				document.getElementById("div_msg").innerHTML="<span id=\"spn_err_msg\">" + error.response.data.msg + '</span>'

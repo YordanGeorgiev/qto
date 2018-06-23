@@ -71,5 +71,6 @@ th.active .arrow {
 }
 
 #inp_srch_query {
+   display: inline;
 	width: 35%;
 }

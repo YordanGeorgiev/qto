@@ -31,6 +31,7 @@ sub doSetWithUrlParams {
 
    my $ops = {
        'eq' => '='
+     , 'ne' => '<>'
      , 'gt' => '>'
      , 'lt' => '<'
      , 'ge' => '>='

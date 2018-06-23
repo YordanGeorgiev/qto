@@ -71,7 +71,6 @@ src/perl/issue_tracker/t/TestInitiator.pl
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/TestConfigurator.pl
 src/perl/issue_tracker/t/TestLogger.pl
 src/perl/issue_tracker/t/TestDispatcher.pl
-src/perl/issue_tracker/t/TestCtrlXlsToDb.pl
 src/perl/issue_tracker/t/TestModel.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm

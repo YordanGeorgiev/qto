@@ -18,10 +18,20 @@ Table of Contents
       * [1.3.3. issue-tracker tool perl code syntax check](#133-issue-tracker-tool-perl-code-syntax-check)
       * [1.3.4. Single call export of the md and pdf documentation files](#134-single-call-export-of-the-md-and-pdf-documentation-files)
   * [2. UI FEATURES](#2-ui-features)
-    * [2.1. List labels page](#21-list-labels-page)
+    * [2.1. Common listing features](#21-common-listing-features)
       * [2.1.1. Succesfull execution](#211-succesfull-execution)
       * [2.1.2. Error handling for unexisting db](#212-error-handling-for-unexisting-db)
       * [2.1.3. Error handling for unexisting table](#213-error-handling-for-unexisting-table)
+      * [2.1.4. Error handling for unexisting column](#214-error-handling-for-unexisting-column)
+      * [2.1.5. The "pick" url param](#215-the-"pick"-url-param)
+      * [2.1.6. The "hide" url param](#216-the-"hide"-url-param)
+      * [2.1.7. The "with=col-operator-value" filter](#217-the-"with=col-operator-value"-filter)
+    * [2.2. List labels page](#22-list-labels-page)
+    * [2.3. List as table page](#23-list-as-table-page)
+      * [2.3.1. table sorting](#231-table-sorting)
+      * [2.3.2. table filtering](#232-table-filtering)
+      * [2.3.3. table paging size](#233-table-paging-size)
+      * [2.3.4. table page number](#234-table-page-number)
   * [3. SHELL BASED ACTIONS](#3-shell-based-actions)
     * [3.1. The the txt-to-db action](#31-the-the-txt-to-db-action)
       * [3.1.1. The the txt-to-db action period handling](#311-the-the-txt-to-db-action-period-handling)
@@ -55,7 +65,7 @@ Table of Contents
           * [4.2.7.2. successfull execution for text types](#4272-successfull-execution-for-text-types)
           * [4.2.7.3. error handling for wrong  syntax in the filtering by the like operator by missed like-by or like-val url params](#4273-error-handling-for-wrong-syntax-in-the-filtering-by-the-like-operator-by-missed-like-by-or-like-val-url-params)
           * [4.2.7.4. error handling for unexisting like table's attribute](#4274-error-handling-for-unexisting-like-table's-attribute)
-      * [4.2.8. Functionality to filter by using the "with" url param](#428-functionality-to-filter-by-using-the-"with"-url-param)
+      * [4.2.8. Filtering by using the "with" url param](#428-filtering-by-using-the-"with"-url-param)
           * [4.2.8.1. Successful path](#4281-successful-path)
           * [4.2.8.2. Error handling for unexisting column](#4282-error-handling-for-unexisting-column)
       * [4.2.9. the hide operator in the select web action](#429-the-hide-operator-in-the-select-web-action)
@@ -160,8 +170,8 @@ Single call export of the md and pdf documentation files
 
     
 
-### 2.1. List labels page
-The list labels page lists all the rows from any table in the app db in form of "labels" - rectangular forms containing all the selected attributes ( by default all ) and their values. 
+### 2.1. Common listing features
+This section describes all the common listing related features. 
 
     
 
@@ -178,6 +188,56 @@ If the db provided in the url pattern does not exist an error is shown.
 
 #### 2.1.3. Error handling for unexisting table
 If the table requested does not exist an error is shown. 
+
+    
+
+#### 2.1.4. Error handling for unexisting column
+If the column requested does not exist an error is shown. 
+
+    
+
+#### 2.1.5. The "pick" url param
+You can use the pick=col1,col2,col3 url parameter to select for only desired attributes to be show in the ui control used for listing
+
+    
+
+#### 2.1.6. The "hide" url param
+If you do not specify any attribute to pick, you could hide specific attributes by using the "hide=col1,col2,col3" syntax
+
+    
+
+#### 2.1.7. The "with=col-operator-value" filter
+You can filter the result of the query by using the "with=col-operator-value"
+
+    
+
+### 2.2. List labels page
+The list labels page lists all the rows from any table in the app db in form of "labels" - rectangular forms containing all the selected attributes ( by default all ) and their values. 
+
+    
+
+### 2.3. List as table page
+The list table page lists all the rows from any table in the app db in form of simple ui table , which is sortable by clicking with  .. 
+
+    
+
+#### 2.3.1. table sorting
+The listed table is sortable by clicking on the columns OR by navigating with the tab key on the keyboard on a column and hitting Enter. 
+
+    
+
+#### 2.3.2. table filtering
+You can filter the already presented part of the result set in the page by using the search textbox. This is only an ui type of filtering for the already loaded data. To filter from the db use the where or 
+
+    
+
+#### 2.3.3. table paging size
+You can set the page size of the result set to be fetched from the database by using the "&page-size=&lt;&lt;page-size&gt;&gt;" url parameter. 
+
+    
+
+#### 2.3.4. table page number
+If the result-set requested is larger than the page size you can go to the next page number by using the "&page-num=&lt;&lt;page-num&gt;&gt;" url parameter. 
 
     
 
@@ -587,7 +647,7 @@ If the syntax is correct but an unexisting like operator's attribute is provided
       "ret": 400
     }
 
-#### 4.2.8. Functionality to filter by using the "with" url param
+#### 4.2.8. Filtering by using the "with" url param
 You can filter the result of the query by using the "with=col-operator-value"
 
     // 20180605150216

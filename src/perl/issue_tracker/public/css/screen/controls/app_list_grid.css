@@ -122,12 +122,14 @@ th.active .arrow {
 #div_frm_srch {
 	float: center;
 	padding: 0% 4% 0% 1%;
-	margin: 1% 5% 1% 12%;
+	margin: 1% 5% 1% 7%;
 	clear: none;
 	display: block;
 }
 
 #inp_srch_query {
+   display: inline;
+   float: left;
 	width: 35%;
 }
 
