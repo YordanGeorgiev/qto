@@ -10,8 +10,10 @@ SELECT 'create the "purchases" table'
     , category       varchar (200) NOT NULL
     , status         varchar (200) NOT NULL
     , name           varchar (200) NOT NULL
-    , description    varchar (4000) NOT NULL
+    , description    varchar (4000) NULL
     , owner          varchar (50) NULL
+    , start_price    decimal (6,2) NULL
+    , stop_price     decimal (6,2) NULL
     , CONSTRAINT pk_purchases PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE

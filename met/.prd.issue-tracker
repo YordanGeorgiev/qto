@@ -1,4 +1,10 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+# ---
+src/perl/issue_tracker/templates/layouts/site.html.ep
+src/perl/issue_tracker/templates/controls/list-labels.html.ep
+src/perl/issue_tracker/templates/controls/list-cloud.html.ep
+src/perl/issue_tracker/templates/controls/list-grid.html.ep
+# ---
 src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm
@@ -15,11 +21,6 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListTable.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClient.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
-# ---
-src/perl/issue_tracker/templates/layouts/site.html.ep
-src/perl/issue_tracker/templates/controls/list-labels.html.ep
-src/perl/issue_tracker/templates/controls/list-cloud.html.ep
-src/perl/issue_tracker/templates/controls/list-grid.html.ep
 # ---
 src/perl/issue_tracker/public/css
 src/perl/issue_tracker/public/css/screen
@@ -70,7 +71,6 @@ src/perl/issue_tracker/t/TestInitiator.pl
 src/perl/issue_tracker/t/lib/IssueTracker/App/Utils/TestConfigurator.pl
 src/perl/issue_tracker/t/TestLogger.pl
 src/perl/issue_tracker/t/TestDispatcher.pl
-src/perl/issue_tracker/t/TestCtrlXlsToDb.pl
 src/perl/issue_tracker/t/TestModel.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm
@@ -805,19 +805,12 @@ doc/dot/devops/shell-action-control-flow-diagram.dot
 doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
 # --- the application data
-dat/mix/issues/2018/2018-06/2018-06-08
-dat/mix/issues/2018/2018-06/2018-06-08/issue-tracker.all.20180608_000000.xlsx
-dat/mix/issues/2018/2018-06/2018-06-08/issue-tracker.daily-issues.2018-06-08.txt
-dat/mix/issues/2018/2018-06/2018-06-08/issue-tracker.monthly-issues.2018-06-08.txt
-dat/mix/issues/2018/2018-06/2018-06-08/issue-tracker.test-hierarchy-table.2018-06-08.txt
-dat/mix/issues/2018/2018-06/2018-06-08/issue-tracker.weekly-issues.2018-06-08.txt
-dat/mix/issues/2018/2018-06/2018-06-08/issue-tracker.yearly-issues.2018-06-08.txt
-dat/mix/issues/2018/2018-06/2018-06-09
-dat/mix/issues/2018/2018-06/2018-06-09/issue-tracker.all.20180609_000000.xlsx
-dat/mix/issues/2018/2018-06/2018-06-09/issue-tracker.daily-issues.2018-06-09.txt
-dat/mix/issues/2018/2018-06/2018-06-09/issue-tracker.monthly-issues.2018-06-09.txt
-dat/mix/issues/2018/2018-06/2018-06-09/issue-tracker.test-hierarchy-table.2018-06-09.txt
-dat/mix/issues/2018/2018-06/2018-06-09/issue-tracker.weekly-issues.2018-06-09.txt
-dat/mix/issues/2018/2018-06/2018-06-09/issue-tracker.yearly-issues.2018-06-09.txt
+dat/mix/issues/2018/2018-06/2018-06-22
+dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.all.20180622_000000.xlsx
+dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.daily-issues.2018-06-22.txt
+dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.monthly-issues.2018-06-22.txt
+dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.test-hierarchy-table.2018-06-22.txt
+dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.weekly-issues.2018-06-22.txt
+dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.yearly-issues.2018-06-22.txt
 # --- 
 dat/etc/postgresql/9.6/main/pg_hba.conf

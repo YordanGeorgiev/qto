@@ -7,7 +7,8 @@ SELECT 'create the "yearly_issues" table'
     , id             integer UNIQUE NOT NULL 
     , level          integer NULL
     , seq            integer NULL
-    , prio           integer NULL
+    , prio           integer NOT NULL
+    , weight         integer NOT NULL
     , status         varchar (50) NOT NULL
     , tags           varchar (200)
     , category       varchar (200) NOT NULL
