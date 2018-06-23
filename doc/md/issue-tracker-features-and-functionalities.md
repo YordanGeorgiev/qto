@@ -30,8 +30,8 @@ Table of Contents
     * [2.3. List as table page](#23-list-as-table-page)
       * [2.3.1. table sorting](#231-table-sorting)
       * [2.3.2. table filtering](#232-table-filtering)
-      * [2.3.3. table paging size](#233-table-paging-size)
-      * [2.3.4. table page number](#234-table-page-number)
+      * [2.3.3. set table paging size](#233-set-table-paging-size)
+      * [2.3.4. set table page number](#234-set-table-page-number)
   * [3. SHELL BASED ACTIONS](#3-shell-based-actions)
     * [3.1. The the txt-to-db action](#31-the-the-txt-to-db-action)
       * [3.1.1. The the txt-to-db action period handling](#311-the-the-txt-to-db-action-period-handling)
@@ -231,13 +231,14 @@ You can filter the already presented part of the result set in the page by using
 
     
 
-#### 2.3.3. table paging size
-You can set the page size of the result set to be fetched from the database by using the "&page-size=&lt;&lt;page-size&gt;&gt;" url parameter. 
+#### 2.3.3. set table paging size
+You can set the page size of the result set to be fetched from the database by using the "&page-size=&lt;&lt;page-size&gt;&gt;" url parameter or by clicking on the page sizes links right of the table search box. 
 
     
 
-#### 2.3.4. table page number
+#### 2.3.4. set table page number
 If the result-set requested is larger than the page size you can go to the next page number by using the "&page-num=&lt;&lt;page-num&gt;&gt;" url parameter. 
+You could go to the next page number by clicking on the links after the last row. 
 
     
 
