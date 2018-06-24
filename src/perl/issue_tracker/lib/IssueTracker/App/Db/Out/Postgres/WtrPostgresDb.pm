@@ -321,160 +321,161 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       
       my $dmhsr            = {} ; 
 
-      my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
+      my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel , $self ) ; 
       my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( $rdbms_type );
 
-         $objLogger->doLogDebugMsg ( "doUpsertTable table: $table" );
+      $objLogger->doLogDebugMsg ( "doUpsertTable table: $table" );
 
-         # load ONLY the tables defined to load
+      # load ONLY the tables defined to load
 
-         ( $ret , $msg , $hs_headers ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
-         return  ( $ret , $msg , undef ) unless $ret == 0 ; 
+      ( $ret , $msg , $hs_headers ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
+      return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
+      # debug p($hs_headers ) ; 
+      # print "WtrPostgresDb.pm : $table 336 \n " ; 
 
-         #p($hs_headers ) ; 
-     
-         eval { 
-            $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
-                 'RaiseError'          => 1
-               , 'ShowErrorStatement'  => 1
-               , 'PrintError'          => 1
-               , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
-            } ); 
-         } or $ret = 2  ;
+  
+      eval { 
+         $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
+              'RaiseError'          => 1
+            , 'ShowErrorStatement'  => 1
+            , 'PrintError'          => 1
+            , 'AutoCommit'          => 1
+            , 'pg_utf8_strings'     => 1
+         } ); 
+      } or $ret = 2  ;
+      
+      if ( $ret == 2 ) {
+         $msg = DBI->errstr;
+         $objLogger->doLogErrorMsg ( $msg ) ; 
+         return ( $ret , $msg ) ; 
+      } else {
+         $msg = 'connect OK' ; 
+         $objLogger->doLogDebugMsg ( $msg ) ; 
+      }
+
+      my $sql_str          = '' ; 
+      my $sql_str_insrt    = "INSERT INTO $table " ; 
+      $sql_str_insrt      .= '(' ; 
+
+      foreach my $col_num ( sort ( keys %{$hs_headers} )) {
+         my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
+         # next if $column_name eq 'update_time' ; 
+            # if the xls does not contain the guid's do just insert
+         $sql_str_insrt .= " $column_name " . ' , '  ; 
+      } 
+    
+
+      for (1..3) { chop ( $sql_str_insrt) } ; 
+      $sql_str_insrt	.= ')' ; 
+
+      # p $hsr2 ; 
+      # p $sql_str_insrt ; 
+      # print "WtrPostgresDb.pm $table : 377 \n " ; 
+
+      my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+      $update_time      = $objTimer->GetHumanReadableTime();
+      foreach my $row_num ( sort ( keys %$hsr2) ) { 
+
+         #next if $row_num == 0 ; 
          
-         if ( $ret == 2 ) {
-            $msg = DBI->errstr;
-            $objLogger->doLogErrorMsg ( $msg ) ; 
-            return ( $ret , $msg ) ; 
-         } else {
-            $msg = 'connect OK' ; 
-            $objLogger->doLogDebugMsg ( $msg ) ; 
-         }
+         my $hs_row = $hsr2->{ $row_num } ; 
+         my $data_str = '' ; 
 
-         my $sql_str          = '' ; 
-         my $sql_str_insrt    = "INSERT INTO $table " ; 
-         $sql_str_insrt      .= '(' ; 
+         # because obviously postgre prefers lc in col names by default on Ubuntu
+         my %row_h = %$hs_row ; 
+         %row_h = map { lc $_ => $row_h{$_} } keys %row_h;
+         $hs_row = \%row_h ; 
 
-         foreach my $col_num ( sort ( keys %{$hs_headers} )) {
+         # debug p($hs_row) ; 
+         # print "WtrPostgresDb.pm : $table 394 \n " ; 
+
+         foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
+
             my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
-            # next if $column_name eq 'update_time' ; 
-               # if the xls does not contain the guid's do just insert
-            $sql_str_insrt .= " $column_name " . ' , ' 
-               if exists $hsr2->{ 0 }->{ $column_name } ; 
-         } 
+
+            # if the xls does not have the table column ( ie guid )
+            #next unless exists $hsr2->{ 0 }->{ $column_name } ; 
+
+            my $cell_value = $hs_row ->{ $column_name } ; 
+            $cell_value = $update_time if $column_name eq 'update_time' ; 
+            
+            # if the xls does not contain the guid's do just insert
+            # note that even cells with 1 space are considered for nulls !!!
+            # this is simply because of Shift + arrow works on 1 space
+            if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
+                  or $cell_value eq 'null' or $cell_value eq "'NULL'" 
+                  or $cell_value eq ' ' ) {  
+
+               $cell_value = 'NULL'   ; 
+               $data_str .= "$cell_value" . " , " ; 
+
+            } else { 
+               # $cell_value =~ s|\\|\\\\|g ; 
+               # replace the ' chars with \'
+               $cell_value 		=~ s|\'|\'\'|g ; 
+               $cell_value     =~ s|\r\n|\n|g if ( $cell_value ) ; 
+               $data_str .= "'" . "$cell_value" . "' , " ; 
+            }
+         }
+         #eof foreach col_num
+         
+         # remove the " , " at the end 
+         for (1..3) { chop ( $data_str ) } ; 
+         
+         $sql_str .= $sql_str_insrt ;  
+         $sql_str	.=  " VALUES (" . "$data_str" . ') ' ; 
+
+         # if the xls has guid column do upsert
+         if ( $hs_row->{ 'guid' } ) {
+
+            $sql_str	.=  "\n ON CONFLICT ( guid ) \n" ; 
+            $sql_str	.=  " DO UPDATE SET \n" ; 
+         
+            # how-to upsert: https://stackoverflow.com/a/36799500/65706
+            # INSERT INTO category_gallery (
+            #  category_id, gallery_id, create_date, create_by_user_id
+            #  ) VALUES ($1, $2, $3, $4)
+            #  ON CONFLICT (category_id, gallery_id)
+            #  DO UPDATE SET
+            #    last_modified_date = EXCLUDED.create_date,
+            #    last_modified_by_user_id = EXCLUDED.create_by_user_id ;
+
+            foreach my $col_num ( sort ( keys %{$hs_headers} )) {
+               my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
+               next if $column_name eq 'update_time' ; 
+               # next if $column_name eq 'id' ; # id's are unique !!!
+               $sql_str .= " $column_name " . '= EXCLUDED.' . $column_name . ' , ' ; 
+            } 
+            # remove the " , " at the end 
+            for (1..3) { chop ( $sql_str ) } ; 
+         }
+         $sql_str .= '; ' . "\n" ; 
+
+         # debug print "WtrPostgresDb.pm : 459 \n " ; 
+         # debug print "sql_str $sql_str \n" ; 
+         #sleep 5 ; 
+      } 
+      #eof foreach row
        
 
-         for (1..3) { chop ( $sql_str_insrt) } ; 
-         $sql_str_insrt	.= ')' ; 
+      my $do_trucate_tables = $ENV{ 'do_truncate_tables' } || 0 ; 
+      if ( $do_trucate_tables == 1 ) { 
+         $sql_str = "TRUNCATE TABLE $table ; $sql_str " ; 
+      }
+      $objLogger->doLogDebugMsg ( "sql_str : $sql_str " ) ; 
 
-         # p $hsr2 ; 
-         # p $sql_str_insrt ; 
+      $msg = " DBI upsert error on table: $table: " . $msg  ; $ret = 1 ; 
+      eval { 
+         $rv = $dbh->do($sql_str) ; 
+      } or return ( $ret , $msg ) ; 
 
-         my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
-		   $update_time      = $objTimer->GetHumanReadableTime();
-         foreach my $row_num ( sort ( keys %$hsr2) ) { 
+      if ( $rv == 1 ) { 
+         $msg = "upsert OK for table $table" ;          
+         $objLogger->doLogInfoMsg ( $msg ) ; 
+         $ret = 0 ; 
+      }
 
-            next if $row_num == 0 ; 
-            
-            my $hs_row = $hsr2->{ $row_num } ; 
-            my $data_str = q{} ; 
-
-            # because obviously postgre prefers lc in col names by default on Ubuntu
-            my %row_h = %$hs_row ; 
-            %row_h = map { lc $_ => $row_h{$_} } keys %row_h;
-            $hs_row = \%row_h ; 
-            p($hs_row) ; 
-
-            foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
-
-               my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
-
-               # if the xls does not have the table column ( ie guid )
-               next unless exists $hsr2->{ 0 }->{ $column_name } ; 
-
-               my $cell_value = $hs_row ->{ $column_name } ; 
-               $cell_value = $update_time if $column_name eq 'update_time' ; 
-               
-               # if the xls does not contain the guid's do just insert
-               # note that even cells with 1 space are considered for nulls !!!
-               # this is simply because of Shift + arrow works on 1 space
-               if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
-                     or $cell_value eq 'null' or $cell_value eq "'NULL'" 
-                     or $cell_value eq ' ' ) {  
-
-                  $cell_value = 'NULL'   ; 
-                  $data_str .= "$cell_value" . " , " ; 
-
-               } else { 
-                  # $cell_value =~ s|\\|\\\\|g ; 
-                  # replace the ' chars with \'
-                  $cell_value 		=~ s|\'|\'\'|g ; 
-                  $cell_value     =~ s|\r\n|\n|g if ( $cell_value ) ; 
-                  $data_str .= "'" . "$cell_value" . "' , " ; 
-               }
-            }
-            #eof foreach col_num
-            
-            # remove the " , " at the end 
-            for (1..3) { chop ( $data_str ) } ; 
-            
-            $sql_str .= $sql_str_insrt ;  
-            $sql_str	.=  " VALUES (" . "$data_str" . ') ' ; 
-
-            # if the xls has guid column do upsert
-            if ( $hsr2->{ 'guid' } ) {
-
-               $sql_str	.=  "\n ON CONFLICT ( guid ) \n" ; 
-               $sql_str	.=  " DO UPDATE SET \n" ; 
-            
-               # how-to upsert: https://stackoverflow.com/a/36799500/65706
-               # INSERT INTO category_gallery (
-               #  category_id, gallery_id, create_date, create_by_user_id
-               #  ) VALUES ($1, $2, $3, $4)
-               #  ON CONFLICT (category_id, gallery_id)
-               #  DO UPDATE SET
-               #    last_modified_date = EXCLUDED.create_date,
-               #    last_modified_by_user_id = EXCLUDED.create_by_user_id ;
-
-               foreach my $col_num ( sort ( keys %{$hs_headers} )) {
-                  my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
-                  next if $column_name eq 'update_time' ; 
-                  # next if $column_name eq 'id' ; # id's are unique !!!
-                  $sql_str .= " $column_name " . '= EXCLUDED.' . $column_name . ' , ' ; 
-               } 
-               # remove the " , " at the end 
-               for (1..3) { chop ( $sql_str ) } ; 
-            }
-            $sql_str .= '; ' . "\n" ; 
-
-         } 
-         #eof foreach row
-          
-
-         my $do_trucate_tables = $ENV{ 'do_truncate_tables' } || 0 ; 
-         if ( $do_trucate_tables == 1 ) { 
-            $sql_str = "TRUNCATE TABLE $table ; $sql_str " ; 
-         }
-         $objLogger->doLogDebugMsg ( "sql_str : $sql_str " ) ; 
-
-         # Action !!! 
-         $msg = " DBI upsert error on table: $table: " . $msg  ; $ret = 1 ; 
-         eval { 
-            $rv = $dbh->do($sql_str) ; 
-         } or return ( $ret , $msg ) ; 
-
-
-
-         if ( $rv == 1 ) { 
-            $msg = "upsert OK for table $table" ;          
-            $objLogger->doLogInfoMsg ( $msg ) ; 
-            $ret = 0 ; 
-         }
-
-      #eof foreach table
-		
       $msg = 'upsert OK for all table' ; 
 		return ( $ret , $msg ) ; 
 	}

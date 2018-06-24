@@ -36,7 +36,7 @@
 		  		<form id="frm_search">
 			 		<input id="inp_srch_query" tabindex="1" name="query" v-model="searchQuery">
          
-      <div class="pgr-bar pgr-border pgr-round">
+      <div class="pgr-bar pgr-border pgr-round" style="float:right;">
           <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes"
          v-bind:href="generatePageSize(pgSize)">{{ pgSize }}</a>
       </div>

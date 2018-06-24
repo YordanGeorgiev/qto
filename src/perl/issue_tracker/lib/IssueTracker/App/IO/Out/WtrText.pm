@@ -153,7 +153,7 @@ sub doInitialize {
       . "$nice_date"
       . '.txt';
 
-    $msg = 'issues_file: ' . $issues_file;
+    $msg = 'writing to following file: ' . $issues_file;
     $objLogger->doLogDebugMsg($msg);
     # sleep 3 ; 
     my $ProductInstanceDir = $appConfig->{'ProductInstanceDir'};

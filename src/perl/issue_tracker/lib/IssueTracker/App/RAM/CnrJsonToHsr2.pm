@@ -1,4 +1,4 @@
-package IssueTracker::App::RAM::CnrHsr2ToJson ; 
+package IssueTracker::App::RAM::CnrJsonToHsr2 ; 
 
 	use strict; use warnings; use autodie qw(:all);
    use utf8 ; 
@@ -42,9 +42,9 @@ package IssueTracker::App::RAM::CnrHsr2ToJson ;
 
 	doResolves the product version and base dirs , bootstraps cnfig files if needed
 
-      use IssueTracker::App::RAM::CnrHsr2ToJson ; 
-		my $objCnrHsr2ToJson = 
-			'IssueTracker::App::RAM::CnrHsr2ToJson'->new ( \$appConfig ) ; 
+      use IssueTracker::App::RAM::CnrJsonToHsr2 ; 
+		my $objCnrJsonToHsr2 = 
+			'IssueTracker::App::RAM::CnrJsonToHsr2'->new ( \$appConfig ) ; 
 =cut 
 
 =head1 EXPORT
@@ -59,26 +59,24 @@ package IssueTracker::App::RAM::CnrHsr2ToJson ;
 	START SUBS 
 =cut
 
-   sub doConvertHashRefToJsonStr {
+   sub doConvert {
 
      my $self              = shift;
-     my $objModel        = ${shift @_} ;
-     my $hsr2              = $objModel->get('hsr2');
+     my $objModel          = ${shift @_} ;
+     my $str_json          = $objModel->get('str_items' );
 
-     my $msg
-       = 'unknown error during hash ref of hash references to string conversion !!!';
-     my $ret        = 1;
-     my $str_json = encode_json $hsr2 ;
-     my $str_activity_issues =  
-     # debug p($hsr2) ;
+     my $msg               = 'unknown error during hash ref of hash references to string conversion !!!';
+     my $ret               = 1;
+     my $hsr2              = decode_json $str_json ;
 
-     $objModel->set('str_items' , $str_json );
+     # debug p $hsr2 ; 
+
+     $objModel->set('hsr2', $hsr2 ) ; 
      $msg = " OK for hsr2 to json conversion ";
      $ret = 0;
 
      return ($ret, $msg );
    }
-   # eof sub doConvertHashRefToStr
 
 
 	

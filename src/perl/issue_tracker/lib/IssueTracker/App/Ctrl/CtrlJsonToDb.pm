@@ -1,4 +1,4 @@
-package IssueTracker::App::Ctrl::CtrlDbToJson ; 
+package IssueTracker::App::Ctrl::CtrlJsonToDb ; 
 
 	use strict; use warnings;
 
@@ -14,12 +14,14 @@ package IssueTracker::App::Ctrl::CtrlDbToJson ;
 
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
    use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
+
    use IssueTracker::App::Utils::Logger ; 
-   use IssueTracker::App::Db::In::RdrDbsFactory ; 
-   use IssueTracker::App::IO::Out::WtrTextFactory ; 
+   use IssueTracker::App::Db::Out::WtrDbsFactory ; 
+   use IssueTracker::App::IO::In::RdrTextFactory ; 
    use IssueTracker::App::IO::Out::WtrFiles ;
-   use IssueTracker::App::RAM::CnrHsr2ToJson ; 
+   use IssueTracker::App::RAM::CnrJsonToHsr2 ; 
    use IssueTracker::App::Mdl::Model ; 
+   use IssueTracker::App::IO::In::RdrFiles ; 
 
 	our $module_trace                = 1 ; 
 	our $appConfig						   = {} ; 
@@ -27,12 +29,12 @@ package IssueTracker::App::Ctrl::CtrlDbToJson ;
 	our $objModel                    = {} ; 
    our $objWtrFiles                 = {} ; 
 	our $objFileHandler			      = {} ; 
-   our $rdbms_type                  = 'postgre' ; 
+   our $rdbms_type                  = 'postgres' ; 
 
 =head1 SYNOPSIS
-      my $objCtrlDbToJson = 
-         'IssueTracker::App::Ctrl::CtrlDbToJson'->new ( \$appConfig ) ; 
-      ( $ret , $msg ) = $objCtrlDbToJson->doLoadIssuesFileToDb ( $items_file ) ; 
+      my $objCtrlJsonToDb = 
+         'IssueTracker::App::Ctrl::CtrlJsonToDb'->new ( \$appConfig ) ; 
+      ( $ret , $msg ) = $objCtrlJsonToDb->doLoadIssuesFileToDb ( $items_file ) ; 
 =cut 
 
 =head1 EXPORT
@@ -58,40 +60,38 @@ package IssueTracker::App::Ctrl::CtrlDbToJson ;
 
       my $ret                 = 1 ; 
       my $msg                 = 'unknown error while loading db issues to xls file' ; 
-      my $str_items          = q{} ; 
+      my $str_items           = q{} ; 
+      my $str_file            = q{} ; 
       my $hsr                 = {} ;   # this is the data hash ref of hash reffs 
       my $mhsr                = {} ;   # this is the meta hash describing the data hash ^^
       my @tables              = () ;   # which tables to read from
+      my $objRdrFiles         = {} ; 
       
       my $tables              = $objModel->get( 'ctrl.tables' )  || 'daily_issues' ; 
-      $objModel->set('select.web-action.page-size' , 1000000000) ; #set the maximum size
 	   push ( @tables , split(',',$tables ) ) ; 
 
-      my $filter_by_attributes = $ENV{'filter_by_attributes'} || undef ; 
       my $data_dir = $ENV{"DataDir"} ; 
-      # print "data-dir : $data_dir \n" ; 
-      # sleep 3 ; 
       $data_dir = $appConfig->{"ProductInstanceDir"} . '/dat' unless defined $data_dir ; 
+      my $in_dir = $data_dir . "/json" ; 
+      $objRdrFiles= 'IssueTracker::App::IO::In::RdrFiles'->new();
 
       for my $table ( @tables ) { 
-         my $items_file = $data_dir . "/json/$table" . '.json' ; 
-         my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-         my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" );
 
-         ( $ret , $msg )  = 
-            $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table , $filter_by_attributes ) ; 
-         return ( $ret , $msg ) unless $ret == 0 ; 
-
-         my $objWtrTextFactory = 'IssueTracker::App::IO::Out::WtrTextFactory'->new( \$appConfig , $self ) ; 
-         my $objWtrText 			= $objWtrTextFactory->doInstantiate ( $table );
+         my $items_file = "$in_dir/$table" . '.json' ; 
+         ( $ret , $msg , $str_file ) = $objRdrFiles->doReadFileReturnString ( $items_file , 'utf8' ) ; 
+         $objModel->set('str_items' , $str_file ) ; 
          
-         my $objCnrHsr2ToJson = 
-            'IssueTracker::App::RAM::CnrHsr2ToJson'->new ( \$appConfig ) ; 
-         ( $ret , $msg )  = $objCnrHsr2ToJson->doConvertHashRefToJsonStr( \$objModel ) ; 
+         my $objCnrJsonToHsr2 = 'IssueTracker::App::RAM::CnrJsonToHsr2'->new ( \$appConfig ) ; 
+         ( $ret , $msg )      = $objCnrJsonToHsr2->doConvert( \$objModel ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
 
-         my ( $ret , $msg ) = $objWtrFiles->doPrintToFile ( $items_file , $objModel->get('str_items') , 'utf8' ) ; 
-         return ( $ret , $msg ) if $ret != 0 ;  
+         next if ( keys %{ $objModel->get('hsr2') } == 0 ) ; 
+
+         my $objWtrDbsFactory = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( \$appConfig , \$objModel ) ; 
+         my $objWtrDb 			= $objWtrDbsFactory->doInstantiate ( "$rdbms_type" );
+         
+         ( $ret , $msg )  = $objWtrDb->doUpsertTable( \$objModel , $table ) ; 
+         return ( $ret , $msg ) unless $ret == 0 ; 
       }
          return ( $ret , $msg ) ; 
    } 

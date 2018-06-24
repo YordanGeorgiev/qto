@@ -9,7 +9,6 @@ SELECT 'create the "yearly_issues" table'
     , seq            integer NULL
     , prio           integer NULL
     , status         varchar (50) NOT NULL
-    , tags           varchar (200)
     , category       varchar (200) NOT NULL
     , name           varchar (200) NOT NULL
     , description    varchar (4000)
@@ -19,6 +18,7 @@ SELECT 'create the "yearly_issues" table'
     , stop_time      text NULL
     , planned_hours  decimal (6,2) NULL
     , actual_hours   decimal (6,2) NULL
+    , tags           varchar (200)
     , update_time    timestamp DEFAULT NOW()
     , CONSTRAINT pk_yearly_issues_guid PRIMARY KEY (guid)
     ) WITH (
