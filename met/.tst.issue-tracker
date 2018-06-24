@@ -154,6 +154,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrURL.pm
 src/perl/issue_tracker/lib/IssueTracker/App/RAM
 src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToTxt.pm
 src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToJson.pm
+src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrJsonToHsr2.pm
 src/perl/issue_tracker/lib/IssueTracker/App
 src/perl/issue_tracker/lib/IssueTracker/App/Db
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In
@@ -168,6 +169,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlXlsToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToTxt.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToJson.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlJsonToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlTxtToDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet.pm
@@ -662,9 +664,22 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToJson/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToJson/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate/autosplit.ix
 # ----
+dat/json
+dat/json/confs.json
 dat/json/daily_issues.json
+dat/json/ideas.json
 dat/json/monthly_issues.json
+dat/json/principles.json
+dat/json/problems.json
+dat/json/procurement_items.json
+dat/json/purchases.json
+dat/json/questions.json
+dat/json/quinquennially_issues.json
+dat/json/test_hierarchy_table.json
+dat/json/tst_paging.json
+dat/json/weekly_issues.json
 dat/json/yearly_issues.json
+# ----
 cnf/perl/.perltidyrc
 src/bash/issue-tracker/funcs/gmail-txt-issues.func.sh
 src/bash/issue-tracker/tests/gmail-txt-issues.test.sh
@@ -812,11 +827,9 @@ dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.yearly-issues.2018-06-22.tx
 # --- 
 dat/etc/postgresql/9.6/main/pg_hba.conf
 # ---
-src/bash/issue-tracker/tests/db-to-json.test.sh
-src/bash/issue-tracker/specs/db-to-json.spec.sh
-src/bash/issue-tracker/helps/db-to-json.help.sh
 src/bash/issue-tracker/funcs/db-to-json.func.sh
+src/bash/issue-tracker/tests/db-to-json.test.sh
+src/bash/issue-tracker/helps/db-to-json.help.sh
 doc/txt/issue-tracker/tests/db-to-json.test.txt
-doc/txt/issue-tracker/specs/db-to-json.spec.txt
 doc/txt/issue-tracker/helps/db-to-json.help.txt
 doc/txt/issue-tracker/funcs/db-to-json.func.txt

@@ -70,7 +70,7 @@ package IssueTracker::App::RAM::CnrHsr2ToJson ;
      my $ret        = 1;
      my $str_json = encode_json $hsr2 ;
      my $str_activity_issues =  
-     p($hsr2) ;
+     # debug p($hsr2) ;
 
      $objModel->set('str_items' , $str_json );
      $msg = " OK for hsr2 to json conversion ";

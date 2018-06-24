@@ -64,6 +64,7 @@ package IssueTracker::App::Ctrl::CtrlDbToJson ;
       my @tables              = () ;   # which tables to read from
       
       my $tables              = $objModel->get( 'ctrl.tables' )  || 'daily_issues' ; 
+      $objModel->set('select.web-action.page-size' , 1000000000) ; #set the maximum size
 	   push ( @tables , split(',',$tables ) ) ; 
 
       my $filter_by_attributes = $ENV{'filter_by_attributes'} || undef ; 

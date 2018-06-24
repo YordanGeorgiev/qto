@@ -22,11 +22,11 @@
 
 	# Usage:
 	# ------------------------------------------------------
-	-- todo: how can be the doDbToJson used 
+   bash src/bash/issue-tracker/issue-tracker.sh -a db-to-json
 
 	# Developent
 	# ------------------------------------------------------
-	-- todo: what issues, todos could be pointed for development
+	-- todo: the parametrization of the web port§
 
 	# Caveats:
 	# ------------------------------------------------------
