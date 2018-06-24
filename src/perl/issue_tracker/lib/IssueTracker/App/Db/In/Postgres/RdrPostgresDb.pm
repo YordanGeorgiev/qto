@@ -504,6 +504,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    #
    # -----------------------------------------------------------------------------
    # open the database handle if possible, if not return proper error msgs
+   # ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
    # -----------------------------------------------------------------------------
    sub doConnectToDb {
       my $self = shift ; 
