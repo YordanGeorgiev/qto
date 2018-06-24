@@ -313,7 +313,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
       my $sth              = {} ;    # this is the statement handle
       my $dbh              = {} ;    # this is the database handle
-      my $str_sql          = q{} ;   # this is the sql string to use for the query
+      my $str_sql          = {} ;   # this is the sql string to use for the query
       my $rv               = 0 ;     # apperantly insert ok returns rv = 1 !!! 
       
       my $hs_headers       = {} ; 
@@ -324,35 +324,16 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel , $self ) ; 
       my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( $rdbms_type );
 
-      $objLogger->doLogDebugMsg ( "doUpsertTable table: $table" );
-
-      # load ONLY the tables defined to load
+      $objLogger->doLogDebugMsg ( "upsert start for : $table" );
 
       ( $ret , $msg , $hs_headers ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
       # debug p($hs_headers ) ; 
       # print "WtrPostgresDb.pm : $table 336 \n " ; 
-
   
-      eval { 
-         $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
-              'RaiseError'          => 1
-            , 'ShowErrorStatement'  => 1
-            , 'PrintError'          => 1
-            , 'AutoCommit'          => 1
-            , 'pg_utf8_strings'     => 1
-         } ); 
-      } or $ret = 2  ;
-      
-      if ( $ret == 2 ) {
-         $msg = DBI->errstr;
-         $objLogger->doLogErrorMsg ( $msg ) ; 
-         return ( $ret , $msg ) ; 
-      } else {
-         $msg = 'connect OK' ; 
-         $objLogger->doLogDebugMsg ( $msg ) ; 
-      }
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ;       
 
       my $sql_str          = '' ; 
       my $sql_str_insrt    = "INSERT INTO $table " ; 
@@ -369,16 +350,14 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       for (1..3) { chop ( $sql_str_insrt) } ; 
       $sql_str_insrt	.= ')' ; 
 
-      # p $hsr2 ; 
-      # p $sql_str_insrt ; 
-      # print "WtrPostgresDb.pm $table : 377 \n " ; 
+      # debug p $hsr2 ; 
+      # debug p $sql_str_insrt ; 
+      my $expected_amount_of_inserted_rows = keys %$hsr2; 
 
       my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
       $update_time      = $objTimer->GetHumanReadableTime();
       foreach my $row_num ( sort ( keys %$hsr2) ) { 
 
-         #next if $row_num == 0 ; 
-         
          my $hs_row = $hsr2->{ $row_num } ; 
          my $data_str = '' ; 
 
@@ -388,8 +367,6 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          $hs_row = \%row_h ; 
 
          # debug p($hs_row) ; 
-         # print "WtrPostgresDb.pm : $table 394 \n " ; 
-
          foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
 
             my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
@@ -454,7 +431,6 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
          # debug print "WtrPostgresDb.pm : 459 \n " ; 
          # debug print "sql_str $sql_str \n" ; 
-         #sleep 5 ; 
       } 
       #eof foreach row
        
@@ -463,23 +439,33 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       if ( $do_trucate_tables == 1 ) { 
          $sql_str = "TRUNCATE TABLE $table ; $sql_str " ; 
       }
-      $objLogger->doLogDebugMsg ( "sql_str : $sql_str " ) ; 
+      # debug $objLogger->doLogDebugMsg ( "sql_str : $sql_str " ) ; 
 
       $msg = " DBI upsert error on table: $table: " . $msg  ; $ret = 1 ; 
       eval { 
          $rv = $dbh->do($sql_str) ; 
       } or return ( $ret , $msg ) ; 
 
+      my $actual_amount_of_inserted_rows = undef ; 
       if ( $rv == 1 ) { 
-         $msg = "upsert OK for table $table" ;          
-         $objLogger->doLogInfoMsg ( $msg ) ; 
-         $ret = 0 ; 
+         $str_sql = 'SELECT COUNT(*) FROM ' . $table ; 
+         eval { 
+            $sth = $dbh->prepare($str_sql);  
+            $sth->execute();
+            $actual_amount_of_inserted_rows = $sth->fetchrow_array() ; 
+         } or return ( $ret , $msg ) ; 
+
+         if ( $actual_amount_of_inserted_rows == $expected_amount_of_inserted_rows ) { 
+            $msg = "upsert OK for table $table" ;          
+            $objLogger->doLogInfoMsg ( $msg ) ; 
+            $ret = 0 ; 
+         }
+         return ( $ret , $msg ) unless $ret == 0 ; 
       }
 
       $msg = 'upsert OK for all table' ; 
 		return ( $ret , $msg ) ; 
 	}
-	#eof sub doUpsertTable
 
 	#
 	# -----------------------------------------------------------------------------
@@ -538,25 +524,8 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          #p $hs_headers ;  
          # p $hs_table->{ 0 } ; 
          #debug p($hs_headers ) ; 
-     
-         eval { 
-            $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
-                 'RaiseError'          => 1
-               , 'ShowErrorStatement'  => 1
-               , 'PrintError'          => 1
-               , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
-            } ); 
-         } or $ret = 2  ;
-         
-         if ( $ret == 2 ) {
-            $msg = DBI->errstr;
-            $objLogger->doLogErrorMsg ( $msg ) ; 
-            return ( $ret , $msg ) ; 
-         } else {
-            $msg = 'connect OK' ; 
-            $objLogger->doLogDebugMsg ( $msg ) ; 
-         }
+         ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+         return ( $ret , $msg ) unless $ret == 0 ;       
 
          my $sql_str          = '' ; 
          my $sql_str_insrt    = "INSERT INTO $table " ; 
@@ -662,7 +631,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          # Action !!! 
          $msg = " DBI upsert error on table: $table: " . $msg  ; $ret = 1 ; 
          eval { 
-            $rv = $dbh->do($sql_str) ; 
+            # $rv = $dbh->do($sql_str) ; 
          } or return ( $ret , $msg ) ; 
 
 
@@ -681,6 +650,38 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 	}
 	#eof sub doUpsertTables
 
+   #
+   # -----------------------------------------------------------------------------
+   # open the database handle if possible, if not return proper error msgs
+   # ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+   # -----------------------------------------------------------------------------
+   sub doConnectToDb {
+      my $self = shift ; 
+      my $postgres_db_name = shift ; 
+   
+      my $ret = 1 ; 
+      my $msg = q{} ; 
+      my $dbh = q{} ; 
+
+      eval { 
+         $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
+                    'RaiseError'          => 1
+                  , 'ShowErrorStatement'  => 1
+                  , 'PrintError'          => 1
+                  , 'AutoCommit'          => 1
+                  , 'pg_utf8_strings'     => 1
+         } ) 
+      };
+
+      if ($@) {
+         $ret = 2 ; 
+         $msg = 'cannot connect to the "' . $postgres_db_name . '" database: ' . DBI->errstr ; 
+         return ( $ret , $msg , undef ) ; 
+      }
+
+      $ret = 0 ; $msg = "" ; 
+      return ( $ret , $msg , $dbh ) ; 
+   }
 
    #
 	# -----------------------------------------------------------------------------
