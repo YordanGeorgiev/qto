@@ -631,7 +631,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          # Action !!! 
          $msg = " DBI upsert error on table: $table: " . $msg  ; $ret = 1 ; 
          eval { 
-            # $rv = $dbh->do($sql_str) ; 
+            $rv = $dbh->do($sql_str) ; 
          } or return ( $ret , $msg ) ; 
 
 

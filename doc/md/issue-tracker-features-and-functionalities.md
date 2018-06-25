@@ -44,6 +44,8 @@ Table of Contents
     * [3.5. run-pgsql-scripts](#35-run-pgsql-scripts)
     * [3.6. run-mysql-scripts](#36-run-mysql-scripts)
     * [3.7. generate-docs](#37-generate-docs)
+    * [3.8. The db-to-json shell action](#38-the-db-to-json-shell-action)
+    * [3.9. The json-to-db shell action](#39-the-json-to-db-shell-action)
   * [4. BACK-END FEATURES AND FUNCTIONALITIES](#4-back-end-features-and-functionalities)
     * [4.1. select-tables web action](#41-select-tables-web-action)
       * [4.1.1. successfull execution](#411-successfull-execution)
@@ -349,6 +351,16 @@ You can create a preconfigured &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; in ma
 You can generate all the md and pdf docs by if you have a running instance of the isg-pub application accessible via single shell call by issuing the following command: 
 
     bash src/bash/issue-tracker/issue-tracker.sh -a generate-docs
+
+### 3.8. The db-to-json shell action
+You could make a backup of all your postgres tables data by running the db-to-json shell action as follows:
+
+    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-json --tables $tables
+
+### 3.9. The json-to-db shell action
+You could restore a previously created json files backup ( the json files are stored in the &lt;&lt;ProductInstanceDir&gt;&gt;/dat/json by default by issueing the following oneliner ( you need to have the web server up and running in order to fetch the list of tables too ) 
+
+    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; perl src/perl/issue_tracker/script/issue_tracker.pl --do json-to-db --tables $tables
 
 ## 4. BACK-END FEATURES AND FUNCTIONALITIES
 
