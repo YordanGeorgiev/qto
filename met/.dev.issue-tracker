@@ -1,5 +1,10 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/perl/issue_tracker/public/poc/modal-dialog
+src/perl/issue_tracker/public/poc/modal-dialog/modal-dialog-app.js
+src/perl/issue_tracker/public/poc/modal-dialog/modal-dialog.css
+src/perl/issue_tracker/public/poc/modal-dialog/modal-dialog.html
+# ---
 src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/controls/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud.html.ep
@@ -79,7 +84,6 @@ src/perl/issue_tracker/public/poc/list-vue-grid
 src/perl/issue_tracker/public/poc/list-vue-grid/list-vue-grid.css
 src/perl/issue_tracker/public/poc/list-vue-grid/app.js
 src/perl/issue_tracker/public/poc/list-vue-grid/list-vue-grid.html
-# ---
 # ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
