@@ -12,3 +12,4 @@ src/react/conf-srch/node_modules/**
 **/.DS_Store
 dat/mix/issues/2018/2018-02/2018-02-03/**
 src/perl/issue_tracker/public/bower_components/**
+src/perl/issue_tracker/public/node_modules/**
