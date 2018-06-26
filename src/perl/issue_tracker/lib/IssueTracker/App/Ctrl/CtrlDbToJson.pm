@@ -20,6 +20,7 @@ package IssueTracker::App::Ctrl::CtrlDbToJson ;
    use IssueTracker::App::IO::Out::WtrFiles ;
    use IssueTracker::App::RAM::CnrHsr2ToJson ; 
    use IssueTracker::App::Mdl::Model ; 
+   use IssueTracker::App::Utils::Timer ; 
 
 	our $module_trace                = 1 ; 
 	our $appConfig						   = {} ; 
@@ -67,19 +68,25 @@ package IssueTracker::App::Ctrl::CtrlDbToJson ;
       $objModel->set('select.web-action.page-size' , 1000000000) ; #set the maximum size
 	   push ( @tables , split(',',$tables ) ) ; 
 
-      my $filter_by_attributes = $ENV{'filter_by_attributes'} || undef ; 
-      my $data_dir = $ENV{"DataDir"} ; 
-      # print "data-dir : $data_dir \n" ; 
-      # sleep 3 ; 
-      $data_dir = $appConfig->{"ProductInstanceDir"} . '/dat' unless defined $data_dir ; 
+      my $out_dir = $objModel->get( 'io.out-dir' ) ; 
+
+      # if the xls_file is not defined take the latest one from the mix data dir
+      unless ( defined $out_dir  ) {
+         my $mix_data_dir    = $ENV{'mix_data_dir' } ;  ; 
+         my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+	      my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer-> GetTimeUnits(); 
+         # /vagrant/opt/nokia/musa/dat/mix/issues/2018/2018-06/2018-06-11
+         $out_dir = "$mix_data_dir/$year/$year-$mon/$year-$mon-$mday/json" ; 
+      } 
+
 
       for my $table ( @tables ) { 
-         my $items_file = $data_dir . "/json/$table" . '.json' ; 
+         my $items_file ="$out_dir/$table" . '.json' ; 
          my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
          my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" );
 
          ( $ret , $msg )  = 
-            $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table , $filter_by_attributes ) ; 
+            $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table , undef) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
          my $objWtrTextFactory = 'IssueTracker::App::IO::Out::WtrTextFactory'->new( \$appConfig , $self ) ; 
@@ -89,7 +96,9 @@ package IssueTracker::App::Ctrl::CtrlDbToJson ;
             'IssueTracker::App::RAM::CnrHsr2ToJson'->new ( \$appConfig ) ; 
          ( $ret , $msg )  = $objCnrHsr2ToJson->doConvertHashRefToJsonStr( \$objModel ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
-
+         
+         $msg = 'writing the following file: ' . "\n" . $items_file ; 
+         $objLogger->doLogInfoMsg ( $msg ) ; 
          my ( $ret , $msg ) = $objWtrFiles->doPrintToFile ( $items_file , $objModel->get('str_items') , 'utf8' ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
       }

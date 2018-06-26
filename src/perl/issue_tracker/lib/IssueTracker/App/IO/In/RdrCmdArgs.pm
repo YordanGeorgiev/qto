@@ -60,8 +60,8 @@ package IssueTracker::App::IO::In::RdrCmdArgs ;
       $objModel->set('io.xls-file' , 'undefined' ) if $xls_file eq '' ; 
 
       $objModel->set('io.xls-dir' , $xls_dir ) if defined $xls_dir ; 
-      $objModel->set('io.in-dir' , $in_dir ) if defined $in_dir ; 
-      $objModel->set('io.out-dir' , $out_dir ) if defined $out_dir ; 
+      $objModel->set('io.in-dir' , $in_dir ) if $in_dir ne '' ; 
+      $objModel->set('io.out-dir' , $out_dir ) if $out_dir ne '' ; 
       $objModel->set('io.xls-dir' , 'undefined' ) unless defined $xls_dir ; 
       $objModel->set('ctrl.rdbms-type' , $rdbms_type ) ; 
       $objModel->set('ctrl.period' , $period ) ; 
