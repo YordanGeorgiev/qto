@@ -29,6 +29,7 @@ done < <(cat << "EOF"
 	curl
 	wget
 	libwww-curl-perl
+   libtest-www-selenium-perl
 	postgresql-9.6
 	libdbd-pgsql
 	libxml-atom-perl
@@ -38,8 +39,17 @@ done < <(cat << "EOF"
    tar
    gzip
    graphviz
+   python-selenium chromium-chromedriver
+   python-selenium
+	python-setuptools 
+	python-dev 
+	build-essential
 EOF
 )
+
+# to install selenium
+sudo easy_install pip
+sudo pip install --upgrade selenium
 
 curl -L http://cpanmin.us | perl - --sudo App::cpanminus
 sudo cpanm install JSON

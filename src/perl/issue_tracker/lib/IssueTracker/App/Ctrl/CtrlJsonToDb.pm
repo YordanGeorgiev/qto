@@ -70,10 +70,17 @@ package IssueTracker::App::Ctrl::CtrlJsonToDb ;
       my $tables              = $objModel->get( 'ctrl.tables' )  || 'daily_issues' ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
-      my $data_dir = $ENV{"DataDir"} ; 
-      $data_dir = $appConfig->{"ProductInstanceDir"} . '/dat' unless defined $data_dir ; 
-      my $in_dir = $data_dir . "/json" ; 
+      my $in_dir = $objModel->get('io.in-dir');
       $objRdrFiles= 'IssueTracker::App::IO::In::RdrFiles'->new();
+      
+      # if the xls_file is not defined take the latest one from the mix data dir
+      unless ( defined $in_dir  ) {
+         my $mix_data_dir    = $ENV{'mix_data_dir' } ;  ; 
+         my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+	      my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer-> GetTimeUnits(); 
+         # example: /vagrant/opt/nokia/musa/dat/mix/issues/2018/2018-06/2018-06-11
+         $in_dir = "$mix_data_dir/$year/$year-$mon/$year-$mon-$mday/json" ; 
+      } 
 
       for my $table ( @tables ) { 
 
