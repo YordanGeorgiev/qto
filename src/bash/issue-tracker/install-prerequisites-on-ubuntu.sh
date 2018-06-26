@@ -76,4 +76,18 @@ done < <(cat << "EOF"
 EOF
 )
 
+# cd src/perl/issue_tracker/public
+
+#npm config list
+#npm config edit
+#npm install vue-js-modal --save
+#npm config edit
+#echo $https_proxy
+#npm install vue-js-modal --save
+#npm config ls -l
+#npm config edit
+#npm install vue-js-modal --save
+#npm init
+#npm install vue-js-modal --save
+#npm install vue --save
 # eof file: src/bash/issue-tracker/install-prerequisites-on-ubuntu.sh
