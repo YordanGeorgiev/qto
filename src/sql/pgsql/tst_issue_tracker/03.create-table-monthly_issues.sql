@@ -7,7 +7,8 @@ SELECT 'create the "monthly_issues" table'
     , id             integer UNIQUE NOT NULL 
     , level          integer NULL
     , seq            integer NULL
-    , prio           integer NULL
+    , prio           integer NOT NULL
+    , weight         integer NOT NULL
     , status         varchar (50) NOT NULL
     , category       varchar (200) NOT NULL
     , name           varchar (200) NOT NULL
