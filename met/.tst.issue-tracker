@@ -1,15 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
-src/perl/issue_tracker/public/poc/poc-vue-js-modal
-src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.html
-src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.js
-src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.css
 src/perl/issue_tracker/public/package.json
-# ---
-src/perl/issue_tracker/public/poc/modal-dialog
-src/perl/issue_tracker/public/poc/modal-dialog/modal-dialog-app.js
-src/perl/issue_tracker/public/poc/modal-dialog/modal-dialog.css
-src/perl/issue_tracker/public/poc/modal-dialog/modal-dialog.html
 # ---
 src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/controls/list-labels.html.ep
@@ -88,11 +79,6 @@ src/perl/issue_tracker/t/TestDispatcher.pl
 src/perl/issue_tracker/t/TestModel.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm
-# --- 
-src/perl/issue_tracker/public/poc/list-vue-grid
-src/perl/issue_tracker/public/poc/list-vue-grid/list-vue-grid.css
-src/perl/issue_tracker/public/poc/list-vue-grid/app.js
-src/perl/issue_tracker/public/poc/list-vue-grid/list-vue-grid.html
 # ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
@@ -647,51 +633,6 @@ doc/txt/issue-tracker/helps/run-pgsql-scripts.help.txt
 doc/txt/issue-tracker/funcs/run-pgsql-scripts.func.txt
 tags
 # ---
-src/perl/issue_tracker/lib/auto/AutoLoadableChild/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrJQCloud/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToTxt/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToXls/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlTxtToDb/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlXlsToDb/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/Dispatcher/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/MariaDb/RdrMariaDb/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrPostgresDb/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrText/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrUrlParams/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrXls/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrGoogleSheet/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrText/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrURL/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrXls/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Mdl/Model/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToTxt/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Configurator/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Timer/autosplit.ix
-src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToJson/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToJson/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate/autosplit.ix
-# ----
-dat/json
-dat/json/confs.json
-dat/json/daily_issues.json
-dat/json/ideas.json
-dat/json/monthly_issues.json
-dat/json/principles.json
-dat/json/problems.json
-dat/json/procurement_items.json
-dat/json/purchases.json
-dat/json/questions.json
-dat/json/quinquennially_issues.json
-dat/json/test_hierarchy_table.json
-dat/json/tst_paging.json
-dat/json/weekly_issues.json
-dat/json/yearly_issues.json
 # ----
 cnf/perl/.perltidyrc
 src/bash/issue-tracker/funcs/gmail-txt-issues.func.sh
@@ -739,11 +680,6 @@ doc/md/issue-tracker-system-guide.md
 doc/pdf/issue-tracker-system-guide.pdf
 met/.prd.issue-tracker
 met/.tst.issue-tracker
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrCmdArgs/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrDirs/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrFiles/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrDirs/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrFiles/autosplit.ix
 # ---
 # the mysql ddl scripts
 src/sql/mysql/
@@ -812,13 +748,6 @@ src/sql/mysql/tst_issue_tracker/50.create-ReadMe-table.sql
 src/sql/mysql/tst_issue_tracker/51.create-Tests-table.sql
 src/sql/mysql/tst_issue_tracker/53.create-SystemGuide-table.sql
 # ---
-src/perl/issue_tracker/public/poc
-src/perl/issue_tracker/public/poc/list-jqcloud
-src/perl/issue_tracker/public/poc/list-jqcloud/list-jqcloud.html
-src/perl/issue_tracker/public/poc/list-lable
-src/perl/issue_tracker/public/poc/list-lable/app.js
-src/perl/issue_tracker/public/poc/list-lable/list-lable.html
-# ---
 doc/txt/issue-tracker/tests/run-integration-tests.test.txt
 doc/txt/issue-tracker/helps/run-integration-tests.help.txt
 doc/txt/issue-tracker/funcs/run-integration-tests.func.txt
@@ -857,3 +786,62 @@ dat/mix/issues/2018/2018-06/2018-06-28/json/daily_issues.json
 dat/mix/issues/2018/2018-06/2018-06-28/json/confs.json
 dat/mix/issues/2018/2018-06/2018-06-28/json
 dat/mix/issues/2018/2018-06/2018-06-28
+./src/perl/issue_tracker/lib/auto/AutoLoadableChild/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToJson/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToTxt/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToXls/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlJsonToDb/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlTxtToDb/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlXlsToDb/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/Dispatcher/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/MariaDb/RdrMariaDb/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrPostgresDb/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrCmdArgs/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrDirs/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrFiles/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrText/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrUrlParams/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrXls/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrDirs/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrFiles/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrGoogleSheet/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrText/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrURL/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrXls/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Mdl/Model/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToJson/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToTxt/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrJsonToHsr2/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrJQCloud/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Configurator/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
+./src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Timer/autosplit.ix
+./src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
+# ---
+src/perl/issue_tracker/public/poc/
+src/perl/issue_tracker/public/poc/list-jqcloud
+src/perl/issue_tracker/public/poc/list-jqcloud/list-jqcloud.html
+src/perl/issue_tracker/public/poc/list-lable
+src/perl/issue_tracker/public/poc/list-lable/app.js
+src/perl/issue_tracker/public/poc/list-lable/list-lable.html
+src/perl/issue_tracker/public/poc/list-vue-grid
+src/perl/issue_tracker/public/poc/list-vue-grid/app.js
+src/perl/issue_tracker/public/poc/list-vue-grid/list-vue-grid.css
+src/perl/issue_tracker/public/poc/list-vue-grid/list-vue-grid.html
+src/perl/issue_tracker/public/poc/modal-dialog
+src/perl/issue_tracker/public/poc/modal-dialog/modal-dialog-app.js
+src/perl/issue_tracker/public/poc/modal-dialog/modal-dialog.css
+src/perl/issue_tracker/public/poc/modal-dialog/modal-dialog.html
+src/perl/issue_tracker/public/poc/poc-vue-js-modal
+src/perl/issue_tracker/public/poc/poc-vue-js-modal/dist
+src/perl/issue_tracker/public/poc/poc-vue-js-modal/package.json
+src/perl/issue_tracker/public/poc/poc-vue-js-modal/src
+src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/index.js
+src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.css
+src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.html
+src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.js
