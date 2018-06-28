@@ -1,9 +1,10 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
 src/perl/issue_tracker/public/poc/poc-vue-js-modal
-src/perl/issue_tracker/public/poc/poc-vue-js-modal/vue-js-modal.html
-src/perl/issue_tracker/public/poc/poc-vue-js-modal/vue-js-modal.js
-src/perl/issue_tracker/public/poc/poc-vue-js-modal/vue-js-modal.css
+src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.html
+src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.js
+src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.css
+src/perl/issue_tracker/public/package.json
 # ---
 src/perl/issue_tracker/public/poc/modal-dialog
 src/perl/issue_tracker/public/poc/modal-dialog/modal-dialog-app.js
