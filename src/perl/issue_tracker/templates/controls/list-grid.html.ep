@@ -37,8 +37,11 @@
 			 		<input id="inp_srch_query" tabindex="1" name="query" v-model="searchQuery">
          
       <div class="pgr-bar pgr-border pgr-round" style="float:right;">
-          <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes"
-         v-bind:href="generatePageSize(pgSize)">{{ pgSize }}</a>
+          <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
+				v-bind:href="generatePageSize(pgSize)">
+				<span v-if="pgSize == pageSize" style="background-color:#ddd;"> <strong>{{ pgSize }}</strong> </span>
+				<span v-else="pgSize == pageSize">{{ pgSize }} </span>
+			</a>
       </div>
 		  		</form>
 			</div>
@@ -51,8 +54,11 @@
 
          <div class="pgr-show-inline-block">
             <div class="pgr-bar pgr-border pgr-round">
-                <a tabindex="1" class="pgr-bar-item pgr-button" v-for="(pgNum, index) in this.pagesCount"
-               v-bind:href="generatePageNum(pgNum)">{{ pgNum }}</a>
+               <a tabindex="1" class="pgr-bar-item pgr-button" 
+						v-for="(pgNum, index) in this.pagesCount" v-bind:href="generatePageNum(pgNum)">
+						<span v-if="pgNum == pageNum" style="background-color:#ddd;"> <strong>{{ pgNum }}</strong> </span>
+						<span v-else="pgNum == pageNum"> {{ pgNum }} </span>
+               </a>
             </div>
          </div>
 
