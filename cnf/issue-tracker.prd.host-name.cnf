@@ -8,13 +8,13 @@ issue_tracker_project = issue-tracker
 postgres_db_name   = prd_issue_tracker
 
 # where the scripts to run are situated
-pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.4.3.prd.ysg/src/sql/pgsql/prd_issue_tracker
+pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.4.4.prd.ysg/src/sql/pgsql/prd_issue_tracker
 
 # the root dir for all the project data 
-DataDir = /opt/csitea/issue-tracker/issue-tracker.0.4.3.prd.ysg/dat
+DataDir = /opt/csitea/issue-tracker/issue-tracker.0.4.4.prd.ysg/dat
 
 # where are stored the txt issues files
-mix_data_dir = /opt/csitea/issue-tracker/issue-tracker.0.4.3.prd.ysg/dat/mix/issues
+mix_data_dir = /opt/csitea/issue-tracker/issue-tracker.0.4.4.prd.ysg/dat/mix
 
 # The logging directory 
 LogDir = %ProductInstanceDir%/dat/log
@@ -71,7 +71,7 @@ Emails=yordan.georgiev@gmail.com
 # changed the propmpt
 PS1="$issue_tracker_project \u@\h [\d \t] [\w] $ \n\n "
 
-# v0.4.3
+# v0.4.4
 # on which host the mysql is running
 mysql_host=host-name
  
@@ -89,7 +89,7 @@ mysql_user_pw = secret
 
 
 # where are the mysql scripts situated
-mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.4.3.prd.ysg/src/sql/mysql/prd_issue_tracker
+mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.4.4.prd.ysg/src/sql/mysql/prd_issue_tracker
 
 # the web host where the isg-pub instance residues 
 web_host=host-name
