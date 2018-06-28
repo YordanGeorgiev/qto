@@ -183,11 +183,11 @@ __END__
 
 =head1 NAME
 
-UrlSniper 
+CtrlXlsToDb 
 
 =head1 SYNOPSIS
 
-use UrlSniper  ; 
+use CtrlXlsToDb  ; 
 
 
 =head1 DESCRIPTION

@@ -1,5 +1,6 @@
-run-perl-unit-tests
-run-integration-tests
+db-to-json
+# run-perl-unit-tests
+# run-integration-tests
 # run-mysql-scripts
 #xls-to-db
 # mojo-morbo-start

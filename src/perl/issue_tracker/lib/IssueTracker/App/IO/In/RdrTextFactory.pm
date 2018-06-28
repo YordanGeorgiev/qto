@@ -46,7 +46,7 @@ package IssueTracker::App::IO::In::RdrTextFactory ;
 		}
 
 		my $package_file     	= "IssueTracker/App/IO/In/$RdrText.pm";
-		my $objRdrText   		= "IssueTracker::App::IO::In::$RdrText";
+		my $objRdrText   		   = "IssueTracker::App::IO::In::$RdrText";
 
 		require $package_file;
 

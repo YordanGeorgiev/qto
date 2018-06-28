@@ -30,6 +30,8 @@ package IssueTracker::App::IO::In::RdrCmdArgs ;
       my $self = shift ;   
       my $actions       = q{} ; 
       my $xls_dir       = q{} ; 
+      my $in_dir        = q{} ; 
+      my $out_dir       = q{} ; 
       my $xls_file      = q{} ; 
       my $period        = q{} ; 
       my $tables        = q{} ; 
@@ -41,6 +43,8 @@ package IssueTracker::App::IO::In::RdrCmdArgs ;
        'do=s'          => \$actions,
        'tables=s'      => \$tables ,
        'xls-dir=s'     => \$xls_dir,
+       'in-dir=s'      => \$in_dir,
+       'out-dir=s'     => \$out_dir,
        'xls-file=s'    => \$xls_file,
        'period=s'      => \$period ,
        'rdbms-type=s'  => \$rdbms_type
@@ -56,9 +60,12 @@ package IssueTracker::App::IO::In::RdrCmdArgs ;
       $objModel->set('io.xls-file' , 'undefined' ) if $xls_file eq '' ; 
 
       $objModel->set('io.xls-dir' , $xls_dir ) if defined $xls_dir ; 
+      $objModel->set('io.in-dir' , $in_dir ) if $in_dir ne '' ; 
+      $objModel->set('io.out-dir' , $out_dir ) if $out_dir ne '' ; 
       $objModel->set('io.xls-dir' , 'undefined' ) unless defined $xls_dir ; 
       $objModel->set('ctrl.rdbms-type' , $rdbms_type ) ; 
       $objModel->set('ctrl.period' , $period ) ; 
+   
    }
    # eof sub doRead
 

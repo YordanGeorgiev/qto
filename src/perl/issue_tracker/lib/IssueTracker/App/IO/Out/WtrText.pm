@@ -67,9 +67,11 @@ sub doPrintIssuesFile {
    my $objModel = ${ shift @_ } ; 
    my $str_issues = $objModel->get('str_issues' ) ; 
 
+   my $info_msg = 'printing to the following file: ' . $issues_file ; 
+   $objLogger->doLogInfoMsg ( $info_msg ); 
    my ( $ret , $msg ) = $objWtrFiles->doPrintToFile ( $issues_file , $str_issues , 'utf8' ) ; 
 }
-# eof sub doPrintIssuesFile
+
 
 #
 # -----------------------------------------------------------------------------
@@ -100,8 +102,6 @@ sub doInitialize {
 
    my $msg = '' ; 
    my $ret = 1 ; 
-
-
 
   %$self = (appConfig => $appConfig);
 
@@ -141,8 +141,6 @@ sub doInitialize {
     my $nice_month = "$year" . '-' . "$mon";
     my $nice_date  = "$year" . '-' . "$mon" . '-' . $mday;
 
-    $msg = 'mix_data_dir: ' . $ENV{'mix_data_dir'};
-    $objLogger->doLogDebugMsg($msg);
     $table =~ s/_/-/g ; 
     $issues_file
       = $ENV{'mix_data_dir'}
@@ -153,9 +151,6 @@ sub doInitialize {
       . "$nice_date"
       . '.txt';
 
-    $msg = 'issues_file: ' . $issues_file;
-    $objLogger->doLogDebugMsg($msg);
-    # sleep 3 ; 
     my $ProductInstanceDir = $appConfig->{'ProductInstanceDir'};
     $issues_file = $ProductInstanceDir . "/" . $issues_file
       unless ($issues_file =~ m/^\//g);
@@ -164,7 +159,6 @@ sub doInitialize {
   return $self;
 }
 
-#eof sub doInitialize
 
 =head2
 	# -----------------------------------------------------------------------------

@@ -65,9 +65,9 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
          my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
          my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
 
-         my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
+         my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel  ) ; 
          my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" , \$objModel );
-      
+         $objModel->set('select.web-action.page-size' , 1000000000) ; #set the maximum size
          ( $ret , $msg )  = $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
     
