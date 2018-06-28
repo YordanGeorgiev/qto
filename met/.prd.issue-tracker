@@ -830,14 +830,6 @@ doc/dot/devops/shell-action-control-flow-diagram.dot
 doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
 # --- the application data
-dat/mix/issues/2018/2018-06/2018-06-22
-dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.all.20180622_000000.xlsx
-dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.daily-issues.2018-06-22.txt
-dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.monthly-issues.2018-06-22.txt
-dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.test-hierarchy-table.2018-06-22.txt
-dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.weekly-issues.2018-06-22.txt
-dat/mix/issues/2018/2018-06/2018-06-22/issue-tracker.yearly-issues.2018-06-22.txt
-# --- 
 dat/etc/postgresql/9.6/main/pg_hba.conf
 # ---
 src/bash/issue-tracker/funcs/db-to-json.func.sh
@@ -846,3 +838,22 @@ src/bash/issue-tracker/helps/db-to-json.help.sh
 doc/txt/issue-tracker/tests/db-to-json.test.txt
 doc/txt/issue-tracker/helps/db-to-json.help.txt
 doc/txt/issue-tracker/funcs/db-to-json.func.txt
+dat/mix/issues/2018/2018-06/2018-06-28/xls/issue-tracker.all.20180628_000000.xlsx
+dat/mix/issues/2018/2018-06/2018-06-28/xls
+dat/mix/issues/2018/2018-06/2018-06-28/json/yearly_issues.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/weekly_issues.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/tst_paging.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/test_hierarchy_table.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/quinquennially_issues.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/questions.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/purchases.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/procurement_items.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/problems.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/principles.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/monthly_issues.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/ideas.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/decadally_issues.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/daily_issues.json
+dat/mix/issues/2018/2018-06/2018-06-28/json/confs.json
+dat/mix/issues/2018/2018-06/2018-06-28/json
+dat/mix/issues/2018/2018-06/2018-06-28

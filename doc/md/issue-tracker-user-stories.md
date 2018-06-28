@@ -31,21 +31,28 @@ Table of Contents
       * [2.1.4. Search for existing issues](#214-search-for-existing-issues)
       * [2.1.5. Track issues progress](#215-track-issues-progress)
       * [2.1.6. Track issues history](#216-track-issues-history)
-    * [2.2. Track issues relations](#22-track-issues-relations)
-      * [2.2.1. Generic search for items from a single entity ( table ) ](#221-generic-search-for-items-from-a-single-entity-(-table-)-)
-      * [2.2.2. Generic list for the searched items from a single entity ( table ) ](#222-generic-list-for-the-searched-items-from-a-single-entity-(-table-)-)
-          * [2.2.2.1. Generic list labels for the searched items from a single entity ( table ) ](#2221-generic-list-labels-for-the-searched-items-from-a-single-entity-(-table-)-)
-          * [2.2.2.2. Generic cloud list for the searched items from a single entity ( table ) ](#2222-generic-cloud-list-for-the-searched-items-from-a-single-entity-(-table-)-)
-      * [2.2.3. Generic create capability from UI for new items from a single entity ( table ) ](#223-generic-create-capability-from-ui-for-new-items-from-a-single-entity-(-table-)-)
-      * [2.2.4. Generic edit capability from UI for existing items from a single entity ( table ) ](#224-generic-edit-capability-from-ui-for-existing-items-from-a-single-entity-(-table-)-)
-      * [2.2.5. Generic delete capability from UI for existing items from a single entity ( table ) ](#225-generic-delete-capability-from-ui-for-existing-items-from-a-single-entity-(-table-)-)
-    * [2.3. Measure success](#23-measure-success)
-    * [2.4. Monitor success](#24-monitor-success)
-    * [2.5. Time management](#25-time-management)
-      * [2.5.1. time centric planning](#251-time-centric-planning)
-      * [2.5.2. time centric reporting](#252-time-centric-reporting)
-    * [2.6. Generic CRUDS for items](#26-generic-cruds-for-items)
-    * [2.7. Project's persons issue combinations](#27-project's-persons-issue-combinations)
+    * [2.2. Items management](#22-items-management)
+      * [2.2.1. Create new Items](#221-create-new-items)
+      * [2.2.2. Update existing Items](#222-update-existing-items)
+      * [2.2.3. Remove existing Items](#223-remove-existing-items)
+      * [2.2.4. Search for existing Items](#224-search-for-existing-items)
+      * [2.2.5. Track Items progress](#225-track-items-progress)
+      * [2.2.6. Track Items history](#226-track-items-history)
+    * [2.3. Track issues relations](#23-track-issues-relations)
+      * [2.3.1. Generic search for items from a single entity ( table ) ](#231-generic-search-for-items-from-a-single-entity-(-table-)-)
+      * [2.3.2. Generic list for the searched items from a single entity ( table ) ](#232-generic-list-for-the-searched-items-from-a-single-entity-(-table-)-)
+          * [2.3.2.1. Generic list labels for the searched items from a single entity ( table ) ](#2321-generic-list-labels-for-the-searched-items-from-a-single-entity-(-table-)-)
+          * [2.3.2.2. Generic cloud list for the searched items from a single entity ( table ) ](#2322-generic-cloud-list-for-the-searched-items-from-a-single-entity-(-table-)-)
+      * [2.3.3. Generic create capability from UI for new items from a single entity ( table ) ](#233-generic-create-capability-from-ui-for-new-items-from-a-single-entity-(-table-)-)
+      * [2.3.4. Generic edit capability from UI for existing items from a single entity ( table ) ](#234-generic-edit-capability-from-ui-for-existing-items-from-a-single-entity-(-table-)-)
+      * [2.3.5. Generic delete capability from UI for existing items from a single entity ( table ) ](#235-generic-delete-capability-from-ui-for-existing-items-from-a-single-entity-(-table-)-)
+    * [2.4. Measure success](#24-measure-success)
+    * [2.5. Monitor success](#25-monitor-success)
+    * [2.6. Time management](#26-time-management)
+      * [2.6.1. time centric planning](#261-time-centric-planning)
+      * [2.6.2. time centric reporting](#262-time-centric-reporting)
+    * [2.7. Generic CRUDS for items](#27-generic-cruds-for-items)
+    * [2.8. Project's persons issue combinations](#28-project's-persons-issue-combinations)
   * [3. PROJECT OBSERVER BIZ PERSPECTIVE](#3-project-observer-biz-perspective)
     * [3.1. Projects observation](#31-projects-observation)
     * [3.2. Issues observation](#32-issues-observation)
@@ -113,6 +120,7 @@ load-by-txt-to-db-action)
       * [7.5.1. Automatic issue items sequencing](#751-automatic-issue-items-sequencing)
       * [7.5.2. Issues re-ordering by desired or defaut attribute in list view](#752-issues-re-ordering-by-desired-or-defaut-attribute-in-list-view)
       * [7.5.3. issues list default row height](#753-issues-list-default-row-height)
+      * [7.5.4. Drag and drop columns in table to reorder columns order](#754-drag-and-drop-columns-in-table-to-reorder-columns-order)
     * [7.6. Issues data transfer between different projects](#76-issues-data-transfer-between-different-projects)
     * [7.7. Issues export to Google calendar](#77-issues-export-to-google-calendar)
     * [7.8. Issues import from Google calendar](#78-issues-import-from-google-calendar)
@@ -328,14 +336,64 @@ In order to keep track on what and when was planned on daily basis
 I wanto to be able to keep track what was planned on a project term  - day,week,month,year,quinquennial or decade  
 
 
-### 2.2. Track issues relations
+### 2.2. Items management
+    
+
+As a team member of the issue-tracker
+In order to achieve the best posible efficiency during the work on one or many projects
+I wanto to be able to manage the Items in those projects, where items could be ( problems , questions etc. )
+
+#### 2.2.1. Create new Items
+    
+
+As an team member
+In order to be able to manage multiple Items 
+I wanto to be able to create , update and remove Items.
+
+#### 2.2.2. Update existing Items
+    
+
+As an team member
+In order to be able to manage new Items 
+I wanto to be able to create Items via the issue-tracker
+
+#### 2.2.3. Remove existing Items
+    
+
+As an team member
+In order to be able to stop the work on existing Items
+I wanto to be able to remove Items via the issue-tracker
+
+#### 2.2.4. Search for existing Items
+    
+
+As an team member
+In order to be able to change attributes of the Items I am responsible for
+I wanto to be able to update the Items' data. 
+
+#### 2.2.5. Track Items progress
+    
+
+As an team member
+In order to be able to quickly access existing Items
+I wanto to be able to search the Items. 
+
+#### 2.2.6. Track Items history
+    
+
+As a team member
+In order to keep track on what and when was planned on daily basis
+I wanto to be able to keep track what was planned on a project term  - day,week,month,year,quinquennial or decade  
+
+
+### 2.3. Track issues relations
     
 
 As a team member of a project
 In order to trace the issues relations to userstories, features and tests or any other objects
 I wanto to be able to access the related objects to an issue by means of a link
 
-#### 2.2.1. Generic search for items from a single entity ( table ) 
+#### 2.3.1. Generic search for items from a single entity ( table ) 
     
 
 As a team member
@@ -343,7 +401,7 @@ In order to be able to find all the items from a single entity
 I want to be search for those items from the UI of the application 
 by using a single omnibox UI interface. 
 
-#### 2.2.2. Generic list for the searched items from a single entity ( table ) 
+#### 2.3.2. Generic list for the searched items from a single entity ( table ) 
     
 
 As a team member
@@ -351,7 +409,7 @@ In order to be able to list and review all the items from a single entity
 I want to be able to review the searched items for those items from the UI of the application 
 by using a single label forms like interface
 
-##### 2.2.2.1. Generic list labels for the searched items from a single entity ( table ) 
+##### 2.3.2.1. Generic list labels for the searched items from a single entity ( table ) 
     
 
 As a team member
@@ -359,7 +417,7 @@ In order to be able to list and review all the items from a single entity
 I want to be able to review the searched items for those items from the UI of the application 
 by using a single label forms like interface
 
-##### 2.2.2.2. Generic cloud list for the searched items from a single entity ( table ) 
+##### 2.3.2.2. Generic cloud list for the searched items from a single entity ( table ) 
     
 
 As a team member
@@ -367,7 +425,7 @@ In order to be able to list and review all the items from a single entity
 I want to be able to review the searched items for those items from the UI of the application 
 by using a single tag cloud like interface
 
-#### 2.2.3. Generic create capability from UI for new items from a single entity ( table ) 
+#### 2.3.3. Generic create capability from UI for new items from a single entity ( table ) 
     
 
 As a team member
@@ -375,7 +433,7 @@ In order to be able to create new items from a single entity
 I want to be able to create new items from the UI of the application 
 by using a simple form. 
 
-#### 2.2.4. Generic edit capability from UI for existing items from a single entity ( table ) 
+#### 2.3.4. Generic edit capability from UI for existing items from a single entity ( table ) 
     
 
 As a team member
@@ -383,7 +441,7 @@ In order to be able to edit existing items from a single entity
 I want to be able to edit those  items from the UI of the application 
 by using a simple form. 
 
-#### 2.2.5. Generic delete capability from UI for existing items from a single entity ( table ) 
+#### 2.3.5. Generic delete capability from UI for existing items from a single entity ( table ) 
     
 
 As a team member
@@ -391,28 +449,28 @@ In order to be able to delete existing items from a single entity
 I want to be able to edit those  items from the UI of the application 
 by using a simple form. 
 
-### 2.3. Measure success
+### 2.4. Measure success
     
 
 As a team member
 In order to measure the success of the planned issues 
 I wanto to be able to measure the deliverables of each issue by comparable metrics.
 
-### 2.4. Monitor success
+### 2.5. Monitor success
     
 
 As a team member 
 In order to monitor the success of the planned issues 
 I wanto to be able to monitor the metrics of the issues. 
 
-### 2.5. Time management
+### 2.6. Time management
     
 
 As an issues-manager 
 In order to be prepared for issues such as ( events , tasks ) which have start and stop time
 I wanto to be able to save their start_time and stop_time per issue in every possible interface
 
-#### 2.5.1. time centric planning
+#### 2.6.1. time centric planning
     bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d today
     bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d tomorrow
     
@@ -421,7 +479,7 @@ As an issues-manager
 In order to be able to plan the issues data for a certain term - day,week,month,year,quinquennial or decade
 I wanto to be able to perform all the features of the issue-tracker on that specific period regardless whether it is today , in the past or in the future
 
-#### 2.5.2. time centric reporting
+#### 2.6.2. time centric reporting
     bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d yesterday
     bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d yesterday
 
@@ -429,14 +487,14 @@ As an issues-manager
 In order to be able to report the issues data for for a certain term - day,week,month,year,quinquennial or decade
 I wanto to be able to perform all the features of the issue-tracker on that specific day regardless whether it is today , in the past or in the future
 
-### 2.6. Generic CRUDS for items
+### 2.7. Generic CRUDS for items
     
 
 As a team member
 In order to be able to manage all the items in the application I have access to
 I want to be able to create,update,delete and search for those items from the UI of the application.
 
-### 2.7. Project's persons issue combinations
+### 2.8. Project's persons issue combinations
     
 
 As the project manager  of an issue-tracker project 
@@ -938,6 +996,13 @@ which would correspondingly increase or decrease their attribute to which they a
 As a UI user 
 In order to quickly comprehend the data in the lists  
 I wanto each row of the ui to have a certain minimum height and whenever the data cannot fit into this height to be greater than it
+
+#### 7.5.4. Drag and drop columns in table to reorder columns order
+    
+
+As the UI user of an issue-tracker instance 
+In order to list the attributes of an item in a order significant for the moment
+I want to be able to drag and drop columns in the table so that the System would re-render the table with the new order. 
 
 ### 7.6. Issues data transfer between different projects
     

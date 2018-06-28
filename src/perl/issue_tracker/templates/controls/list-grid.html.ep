@@ -177,8 +177,8 @@ if ( document.getElementById("spn_msg") ) {
 				this.pageSize = url_params['page-size'] || 10 ; 
 				this.pageNum = url_params['page-num'] || 1 ; 
             var totalRSsize = response.data.met ; 
-            var remainder = totalRSsize - (totalRSsize * Math.floor(totalRSsize/this.pageSize))
-            var toAdd = 1 // page-size 4 , total-rs-size 20 => 5 and not 6
+            var remainder = totalRSsize % this.pageSize
+            var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
             if ( remainder == 0 ) { toAdd = 0  }
 				this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
 			})
