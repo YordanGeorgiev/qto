@@ -67,14 +67,14 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
       my $tables              = $objModel->get( 'ctrl.tables' ) || 'daily_issues' ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
-      unless ( $ENV{CLIENT_ID} or $ENV{CLIENT_SECRET} ) {
-         croak "undefined CLIENT_ID and/or CLIENT_SECRET !!!" ; 
+      unless ( defined $ENV{CLIENT_ID} or defined $ENV{CLIENT_SECRET} ) {
          print '
           you could define a google sheets credentials file as follows
           cat ~/.google/.credentials.ysg
           export CLIENT_ID=\'924286520981-fse4rpb9k58k9uj4j7d1q2j0cfro1f00.apps.googleusercontent.com\'
           export CLIENT_SECRET=\'17y0XxEryalDrjCM5rxQc61R\'
           ' ; 
+         croak "undefined CLIENT_ID and/or CLIENT_SECRET !!!" ; 
       }
       my $oauth2 = Net::Google::DataAPI::Auth::OAuth2->new(
           client_id        => $ENV{CLIENT_ID},

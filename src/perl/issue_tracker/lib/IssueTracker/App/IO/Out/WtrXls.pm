@@ -91,8 +91,8 @@ package IssueTracker::App::IO::Out::WtrXls ;
       $objWorksheet->write(0, $nxt_colid-2, 'guid' , $objFormat )  ; 
 
       my $rowid = 0 ; 
-      foreach my $guid ( sort { $hsr2->{$a}->{ 'seq' } <=> $hsr2->{$b}->{ 'seq' } } keys (%$hsr2))  {
-      # foreach my $rowid ( sort ( keys ( %$hsr ) ) ) {
+      #foreach my $guid ( sort { $hsr2->{$a}->{ 'seq' } <=> $hsr2->{$b}->{ 'seq' } } keys (%$hsr2))  {
+      foreach my $guid ( sort ( keys ( %$hsr2 ) ) ) {
 
          my $objFormat        = {} ; 
          # $objFormat->set_autofit();

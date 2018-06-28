@@ -65,6 +65,7 @@ package IssueTracker::App::IO::In::RdrCmdArgs ;
       $objModel->set('io.xls-dir' , 'undefined' ) unless defined $xls_dir ; 
       $objModel->set('ctrl.rdbms-type' , $rdbms_type ) ; 
       $objModel->set('ctrl.period' , $period ) ; 
+   
    }
    # eof sub doRead
 
