@@ -130,6 +130,7 @@ sub doInitialize {
    my $objRdrCmdArgs 	   = 'IssueTracker::App::IO::In::RdrCmdArgs'->new(\$appConfig , \$objModel ) ; 
    $objRdrCmdArgs->doRead();
 
+
    $issue_tracker_project  = $ENV{"issue_tracker_project"};
    $period                 = $ENV{"period"} unless $period;
    $period                 = 'daily' unless $period;

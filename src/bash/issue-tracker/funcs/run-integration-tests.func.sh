@@ -30,7 +30,9 @@ doRunIntegrationTests(){
    bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
 
    doLog "INFO laod the postgres data"
-   export tables=daily_issues,weekly_issues,monthly_issues,yearly_issues;export do_truncate_tables=1 
+   export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables \
+      |jq -r '.|.dat| .[] | .table_name'|perl -nle 's/ /,/g;print'`
+   export do_truncate_tables=1 
    export rdbms_type=postgres ; export load_model=upsert ; 
    perl src/perl/issue_tracker/script/issue_tracker.pl --do xls-to-db --tables $tables
 

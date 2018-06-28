@@ -3,19 +3,22 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
 	use strict; use warnings;
 	
 	use Data::Printer ; 
-	
+   use Carp ; 
+
 
 	our $appConfig 		= {} ; 
 	our $db_type			= 'mariadb' ; 
 	our $objItem			= {} ; 
 	our $objController 	= {} ; 
+	our $objModel        = {} ; 
    our $objLogger       = {} ; 
 
-	# use IssueTracker::App::Db::MariaWtrDb  ; 
    use IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ; 
    use IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ; 
 
    our $rdbms_type  = 'postgres' ; 
+
+
 	#
 	# -----------------------------------------------------------------------------
 	# fabricates different WtrDb object 
@@ -68,8 +71,8 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
 	sub new {
 
 		my $invocant 			= shift ;    
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-      $objController       = shift ; 
+		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' } ; 
+		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
       $rdbms_type          = shift || 'postgres' ; 
 		
       # might be class or object, but in both cases invocant

@@ -16,8 +16,10 @@ doIncreaseDate(){
       export mix_data_dir="$product_instance_dir"/"$mix_data_dir"
 
    # find the latest project_daily_txt_dir
-   latest_proj_daily_txt_dir=$(find "$mix_data_dir" -type d|sort -nr | head -n 1|grep -v tmp)
-   
+   latest_proj_daily_dir=""
+   latest_proj_daily_dir=$(find $mix_data_dir -type d|sort|grep -v json|grep -v xls|sort -nr|head -1)
+   echo "latest_proj_daily_dir: $latest_proj_daily_dir" 
+
 	# debug set -x
    if [[ ${tgt_date+x} && -n $tgt_date ]] ; then
 		
@@ -60,7 +62,7 @@ doIncreaseDate(){
    test -d "$daily_data_dir" && export exit_code=1 && doExit "$error_msg"
 
    todays_tmp_dir=$tmp_dir/$(date "+%Y-%m-%d" -d "$tgt_date")    # becauses of vboxsf !!!
-   cmd="cp -vr $latest_proj_daily_txt_dir $todays_tmp_dir/"
+   cmd="cp -vr $latest_proj_daily_dir $todays_tmp_dir/"
    doRunCmdOrExit "$cmd"
    cd $todays_tmp_dir
 
@@ -79,22 +81,6 @@ doIncreaseDate(){
    done < <(find . -type f -regex ".*\.\(sh\|txt\)")
   
 
-   # foreach xls file
-   while read -r f ; do 
-      proj=$(echo $f|cut -d'.' -f 2); 
-      #debug doLog "DEBUG proj: $proj"
-
-      table=$(echo $f|cut -d'.' -f 3); 
-      #debug doLog "DEBUG table: $table"
-
-      timestamp=$(echo $f|cut -d'.' -f4); 
-      #debug doLog "DEBUG timestamp: $timestamp"
-
-      file_ext=$(echo $f|cut -d'.' -f 5); 
-      # debug doLog "DEBUG file_ext: $file_ext"
-
-      mv "$f" '.'"$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
-   done < <(find . -type f -name "*.xlsx")
 
    # search and replace the daily
    today=$(date +%Y-%m-%d)
@@ -104,6 +90,19 @@ doIncreaseDate(){
    
    rm -f *.bak       # remove any possible bak files
    mv $todays_tmp_dir $daily_data_dir 
+  
+   # foreach xls file
+   while read -r f ; do 
+      file_name="${f##*/}"
+      proj=$(echo $file_name|cut -d'.' -f 1); 
+      table=$(echo $file_name|cut -d'.' -f 2); 
+      timestamp=$(echo $file_name|cut -d'.' -f 3); 
+      # file_name="${f%.*}"
+      # file_name=$(basename -- "$f")
+      file_ext="${f##*.}"
+      doLog "DEBUG" "mv $f" -> "$daily_data_dir/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
+      mv "$f" "$daily_data_dir/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
+   done < <(find $daily_data_dir -type f -name "*.xlsx"| grep -v '/[.]')
 
    msg=" OK for creating the daily project dir:
          $daily_data_dir"

@@ -36,9 +36,12 @@
 		  		<form id="frm_search">
 			 		<input id="inp_srch_query" tabindex="1" name="query" v-model="searchQuery">
          
-      <div class="pgr-bar pgr-border pgr-round">
-          <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes"
-         v-bind:href="generatePageSize(pgSize)">{{ pgSize }}</a>
+      <div class="pgr-bar pgr-border pgr-round" style="float:right;">
+          <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
+				v-bind:href="generatePageSize(pgSize)">
+				<span v-if="pgSize == pageSize" style="background-color:#ddd;"> <strong>{{ pgSize }}</strong> </span>
+				<span v-else="pgSize == pageSize">{{ pgSize }} </span>
+			</a>
       </div>
 		  		</form>
 			</div>
@@ -51,8 +54,11 @@
 
          <div class="pgr-show-inline-block">
             <div class="pgr-bar pgr-border pgr-round">
-                <a tabindex="1" class="pgr-bar-item pgr-button" v-for="(pgNum, index) in this.pagesCount"
-               v-bind:href="generatePageNum(pgNum)">{{ pgNum }}</a>
+               <a tabindex="1" class="pgr-bar-item pgr-button" 
+						v-for="(pgNum, index) in this.pagesCount" v-bind:href="generatePageNum(pgNum)">
+						<span v-if="pgNum == pageNum" style="background-color:#ddd;"> <strong>{{ pgNum }}</strong> </span>
+						<span v-else="pgNum == pageNum"> {{ pgNum }} </span>
+               </a>
             </div>
          </div>
 
@@ -171,8 +177,8 @@ if ( document.getElementById("spn_msg") ) {
 				this.pageSize = url_params['page-size'] || 10 ; 
 				this.pageNum = url_params['page-num'] || 1 ; 
             var totalRSsize = response.data.met ; 
-            var remainder = totalRSsize - (totalRSsize * Math.floor(totalRSsize/this.pageSize))
-            var toAdd = 1 // page-size 4 , total-rs-size 20 => 5 and not 6
+            var remainder = totalRSsize % this.pageSize
+            var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
             if ( remainder == 0 ) { toAdd = 0  }
 				this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
 			})

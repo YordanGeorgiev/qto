@@ -19,6 +19,7 @@ package IssueTracker::App::Ctrl::Dispatcher ;
    use IssueTracker::App::Ctrl::CtrlXlsToDb ; 	
    use IssueTracker::App::Ctrl::CtrlDbToTxt ; 
    use IssueTracker::App::Ctrl::CtrlDbToJson ; 
+   use IssueTracker::App::Ctrl::CtrlJsonToDb ; 
    use IssueTracker::App::Ctrl::CtrlDbToXls ; 
    use IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ; 
 
@@ -111,6 +112,15 @@ package IssueTracker::App::Ctrl::Dispatcher ;
       return ( $ret , $msg ) ; 
    }
 
+   sub doJsonToDb {
+
+      my $self = shift ; 
+      use strict 'refs'; 
+      my $objCtrlJsonToDb = 
+         'IssueTracker::App::Ctrl::CtrlJsonToDb'->new ( \$appConfig , \$objModel) ; 
+      my ( $ret , $msg ) = $objCtrlJsonToDb->doReadAndWrite ( ) ; 
+      return ( $ret , $msg ) ; 
+   }
 
    sub doDbToXls {
       my $self = shift ; 
