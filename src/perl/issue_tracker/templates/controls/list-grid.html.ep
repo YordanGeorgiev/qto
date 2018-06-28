@@ -22,7 +22,7 @@
 				</tr>
 			 </thead>
 			 <tbody>
-				<tr v-for="entry in filteredData">
+				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}">
 				  <td v-for="key in columns">
 					 {{entry[key]}}
 				  </td>
