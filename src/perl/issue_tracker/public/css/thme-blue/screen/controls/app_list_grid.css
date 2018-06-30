@@ -1,0 +1,139 @@
+body {
+	font-family: Helvetica Neue, Arial, sans-serif;
+	font-size: 14px;
+	color: #444;
+   padding: 1% 3% 10% 3%;
+}
+
+/* start grid */
+table {
+	border: 4px solid #F0F8FF ; 
+	border-radius: 9px;
+	background-color: #fff;
+   border-collapse:separate;
+   -moz-border-radius:6px;
+}
+
+th {
+	background-color: #339aff ; 
+	color: rgba(255,255,255,0.66);
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+th, td {
+	min-width: 60px;
+	padding: 10px 20px;
+}
+
+th.active {
+	color: #fff;
+}
+th:focus {
+	color: #fff;
+}
+
+th.active .arrow {
+	opacity: 1;
+}
+
+tr.cls_even {
+	background-color: #f9f9f9;
+}
+tr.cls_odd {
+   background-color: #F0F8FF;
+}
+.arrow {
+	display: inline-block;
+	vertical-align: middle;
+	width: 0;
+	height: 0;
+	margin-left: 5px;
+	opacity: 0.66;
+}
+
+.arrow.asc {
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-bottom: 4px solid #fff;
+}
+
+.arrow.dsc {
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 4px solid #fff;
+}
+
+
+#div_frm_srch {
+	float: center;
+	padding: 0% 4% 0% 1%;
+	margin: 1% 5% 1% 7%;
+	clear: none;
+	display: block;
+}
+
+#inp_srch_query {
+   display: inline;
+   float: left;
+	width: 35%;
+}
+/* stop  grid */
+
+/* start pgr */
+.pgr-btn, .pgr-button {
+    border: none;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.pgr-bar .pgr-button {
+    white-space: normal;
+}
+.pgr-bar .pgr-bar-item {
+    padding: 8px 16px;
+    float: left;
+    width: auto;
+    border: none;
+    display: block;
+    outline: 0;
+}
+a {
+    color: inherit;
+}
+a {
+    background-color: transparent;
+}
+
+a:hover {
+  	text-decoration: underline;
+	font-weight: bold ; 
+}
+
+a:active {
+	color: red ; 
+	background-color: yellow;
+	font-weight: bold ; 
+}
+
+a:focus{
+  color: red ; 
+  background-color: yellow;
+  font-weight: bold ; 
+}
+
+a:visited {
+  color: purple;
+}
+
+/* stop pgr */

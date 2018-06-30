@@ -2,11 +2,11 @@
 % layout 'site';
 
 % content_for header_csss => begin
-   <link rel="stylesheet" type="text/css" href="../../css/screen/controls/app_list_grid.css" />
-   <link rel="stylesheet" media="print"  href="../../css/print/controls/app_list_grid.css" />
+   <link rel="stylesheet" type="text/css" href="../../css/thme-blue/screen/controls/app_list_grid.css" />
+   <link rel="stylesheet" media="print"  href="../../css/thme-blue/print/controls/app_list_grid.css" />
 % end
 
-   <div id="app" >
+   <div id="foo" >
 		<!-- component template -->
 		<script type="text/x-template" id="grid-template">
 		  <table tabindex="1" style="clear:both">
@@ -64,7 +64,6 @@
 
                </div>
             </div>
-
 
 <script>
 if ( document.getElementById("spn_msg") ) {
