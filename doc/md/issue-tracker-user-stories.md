@@ -110,19 +110,19 @@ load-by-txt-to-db-action)
       * [6.6.3. Issues publishing in google calendar format](#663-issues-publishing-in-google-calendar-format)
     * [6.7. Metadata handling](#67-metadata-handling)
   * [7. UI PERSPECTIVE COMMON FOR ALL ROLES](#7-ui-perspective-common-for-all-roles)
-    * [7.1. Performance](#71-performance)
-      * [7.1.1. Page load times](#711-page-load-times)
-    * [7.2. Mobile](#72-mobile)
-    * [7.3. Projects switching](#73-projects-switching)
-    * [7.4. Time management](#74-time-management)
-      * [7.4.1. Copy an issue-tracker instance issue to  a google calendar event](#741-copy-an-issue-tracker-instance-issue-to-a-google-calendar-event)
-    * [7.5. Issues listing in table format](#75-issues-listing-in-table-format)
+    * [7.1. UI Performance](#71-ui-performance)
+      * [7.1.1. UI Page load times](#711-ui-page-load-times)
+    * [7.2. Mobile UI](#72-mobile-ui)
+    * [7.3. UI for Projects switching](#73-ui-for-projects-switching)
+    * [7.4. UI for Time management ](#74-ui-for-time-management-)
+    * [7.5. items listing in table format](#75-items-listing-in-table-format)
       * [7.5.1. Automatic issue items sequencing](#751-automatic-issue-items-sequencing)
-      * [7.5.2. Issues re-ordering by desired or defaut attribute in list view](#752-issues-re-ordering-by-desired-or-defaut-attribute-in-list-view)
-      * [7.5.3. issues list default row height](#753-issues-list-default-row-height)
+      * [7.5.2. items re-ordering by desired or defaut attribute in list view](#752-items-re-ordering-by-desired-or-defaut-attribute-in-list-view)
+      * [7.5.3. items list default row height](#753-items-list-default-row-height)
       * [7.5.4. Drag and drop columns in table to reorder columns order](#754-drag-and-drop-columns-in-table-to-reorder-columns-order)
-    * [7.6. Issues data transfer between different projects](#76-issues-data-transfer-between-different-projects)
+    * [7.6. items data transfer between different projects](#76-items-data-transfer-between-different-projects)
     * [7.7. Issues export to Google calendar](#77-issues-export-to-google-calendar)
+      * [7.7.1. Copy an issue-tracker instance issue to  a google calendar event](#771-copy-an-issue-tracker-instance-issue-to-a-google-calendar-event)
     * [7.8. Issues import from Google calendar](#78-issues-import-from-google-calendar)
     * [7.9. Access issues txt format from email](#79-access-issues-txt-format-from-email)
     * [7.10. Access issues data from Google sheet](#710-access-issues-data-from-google-sheet)
@@ -926,54 +926,47 @@ As an UI user of the issue-tracker application
 In order to manage my issues via the UI successfully  
 I want to have a nice user experience while using the issue-tracker application.
 
-### 7.1. Performance
+### 7.1. UI Performance
     
 
 As an UI user of the issue-tracker application 
 In order to enjoy the usage of the tool and interact efficiently   
 I wanto to to have responsive and quick UI.
 
-#### 7.1.1. Page load times
+#### 7.1.1. UI Page load times
     
 
 As an UI user of the issue-tracker application 
 In order to enjoy the usage of the tool and interact efficiently   
 I wanto to to have a maximum page load time on efficient network less than 0.5 seconds and preferably even 0.3 seconds
 
-### 7.2. Mobile
+### 7.2. Mobile UI
     
 
 As an UI user of the issue-tracker application 
 In order to enjoy to be able to access it quickly on the go
 I wanto to be able to use the same UI on an advanced mobile phones. 
 
-### 7.3. Projects switching
+### 7.3. UI for Projects switching
     
 
 As an issue-tracker ui user 
 In order to be able to quickly swith between projects
 I wanto to be able to access a web page providing autocomplete to preloaded configuration entries for the different projects
 
-### 7.4. Time management
+### 7.4. UI for Time management 
     
 
 As an issue-tracker ui user 
 In order to be prepare for issues such as ( events , tasks ) which have start and stop time
 I wanto to be able to view the issues with the same title, start_time and stop_time in google calendar
 
-#### 7.4.1. Copy an issue-tracker instance issue to  a google calendar event
-    
-
-As an issue-tracker ui user 
-In order to be able to see my issues time-schedule via phone and browser in a calendar view
-I wanto to be able to copy via the ui an issue as a new google calendar event
-
-### 7.5. Issues listing in table format
+### 7.5. items listing in table format
     
 
 As an UI user of the issue-tracker application 
-In order to quickly display as much issues as possible
-I want to be able to list the issues per period. 
+In order to quickly display as much items ( issues,problems, questions, etc. ) as possible
+I want to be able to list the items per period. 
 
 #### 7.5.1. Automatic issue items sequencing
     
@@ -982,15 +975,15 @@ As an UI user of the issue-tracker application
 In order to save time while arranging all the different issue items
 I want the System to automatically sequence each item in list view by a defaut incremental sequence unless I have specified my own sequence. 
 
-#### 7.5.2. Issues re-ordering by desired or defaut attribute in list view
+#### 7.5.2. items re-ordering by desired or defaut attribute in list view
     
 
 As a UI user 
-In order to prioritize and re-arrange to a logical sequence my issues 
-I wanto to be able to drag and drop issues up and down , 
+In order to prioritize and re-arrange to a logical sequence my items 
+I wanto to be able to drag and drop items up and down , 
 which would correspondingly increase or decrease their attribute to which they are currently sorted or ordered by. 
 
-#### 7.5.3. issues list default row height
+#### 7.5.3. items list default row height
     
 
 As a UI user 
@@ -1004,12 +997,12 @@ As the UI user of an issue-tracker instance
 In order to list the attributes of an item in a order significant for the moment
 I want to be able to drag and drop columns in the table so that the System would re-render the table with the new order. 
 
-### 7.6. Issues data transfer between different projects
+### 7.6. items data transfer between different projects
     
 
 As the UI user of an issue-tracker instance 
 In order to save be able to track my personal time usage between different projects and the different interdependancies 
-I want to be able to move issues data from one project to another via the UI
+I want to be able to move items data from one project to another via the UI
 
 ### 7.7. Issues export to Google calendar
     
@@ -1018,6 +1011,13 @@ As the UI user of an issue-tracker instance
 In order to be able to visualize and manage my start- and stop_time having issues better 
 I wanto to be able to export my issues to Google calendar 
 
+
+#### 7.7.1. Copy an issue-tracker instance issue to  a google calendar event
+    
+
+As an issue-tracker ui user 
+In order to be able to see my issues time-schedule via phone and browser in a calendar view
+I wanto to be able to copy via the ui an issue as a new google calendar event
 
 ### 7.8. Issues import from Google calendar
     
