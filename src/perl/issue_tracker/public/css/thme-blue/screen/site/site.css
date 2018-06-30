@@ -1,12 +1,14 @@
    html body div#div_msg {
+      position: absolute;
       display: block ; 
       min-height: 3% ; 
       clear: both; 
       text-align: center ; 
-      /* background-color: Aqua; */
+      background-color: Aqua; 
    }
 
    #spn_err_msg {
+      position: absolute;
       color: #FF0000 ; 
    }
 

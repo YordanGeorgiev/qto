@@ -53,16 +53,18 @@ doIncreaseDate(){
    tgt_days_monthly_data_dir="$tgt_days_monthly_data_dir"/$(date "+%Y-%m" -d "$tgt_date")
    mkdir -p $tgt_days_monthly_data_dir
    export daily_data_dir="$tgt_days_monthly_data_dir"'/'$(date "+%Y-%m-%d" -d "$tgt_date")
- 
+
+
    error_msg="
    nothing can be done - as the daily data dir \$daily_data_dir : 
       $daily_data_dir 
    already exists !!!
-   "
+      "
    test -d "$daily_data_dir" && export exit_code=1 && doExit "$error_msg"
 
    todays_tmp_dir=$tmp_dir/$(date "+%Y-%m-%d" -d "$tgt_date")    # becauses of vboxsf !!!
    cmd="cp -vr $latest_proj_daily_dir $todays_tmp_dir/"
+
    doRunCmdOrExit "$cmd"
    cd $todays_tmp_dir
 

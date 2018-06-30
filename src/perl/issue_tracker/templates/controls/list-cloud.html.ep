@@ -3,8 +3,8 @@
 
 % content_for header_csss => begin
    <title>list-jqcloud </title>
-   <link rel="stylesheet" type="text/css" href="../../css/screen/controls/jqcloud.css" />
-   <link rel="stylesheet" media="print" type="text/css" href="../../css/print/controls/jqcloud.css" />
+   <link rel="stylesheet" type="text/css" href="../../css/thme-blue/screen/controls/jqcloud.css" />
+   <link rel="stylesheet" media="print" type="text/css" href="../../css/thme-blue/print/controls/jqcloud.css" />
 % end
 
 
