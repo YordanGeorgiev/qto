@@ -102,8 +102,9 @@ doIncreaseDate(){
       # file_name="${f%.*}"
       # file_name=$(basename -- "$f")
       file_ext="${f##*.}"
+      mkdir -p "$daily_data_dir/xls"
       doLog "DEBUG" "mv $f" -> "$daily_data_dir/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
-      mv "$f" "$daily_data_dir/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
+      mv "$f" "$daily_data_dir/xls/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
    done < <(find $daily_data_dir -type f -name "*.xlsx"| grep -v '/[.]')
 
    msg=" OK for creating the daily project dir:

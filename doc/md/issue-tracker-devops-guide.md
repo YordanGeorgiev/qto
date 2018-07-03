@@ -3,20 +3,20 @@
 
 Table of Contents
 
-  * [1. GUIDING PRINCIPLE'S](#1-guiding-principle's)
+  * [1. GUIDING PRINCIPES](#1-guiding-principes)
     * [1.1. It should just work](#11-it-should-just-work)
       * [1.1.1. Personal responsibility](#111-personal-responsibility)
       * [1.1.2. Attempt for 100% test coverage to achieve reliability](#112-attempt-for-100%-test-coverage-to-achieve-reliability)
     * [1.2. Naming conventions principle](#12-naming-conventions-principle)
     * [1.3. Be user-friendly especially to developers and devops](#13-be-user-friendly-especially-to-developers-and-devops)
   * [2. MAINTENANCE AND OPERATIONS](#2-maintenance-and-operations)
-    * [2.1. RDBMS Run-state management](#21-rdbms-run-state-management)
+    * [2.1. RDBMS Runstate management](#21-rdbms-runstate-management)
       * [2.1.1. To check the status of the postgreSql](#211-to-check-the-status-of-the-postgresql)
       * [2.1.2. To stop the postgreSql](#212-to-stop-the-postgresql)
       * [2.1.3. To start the postgreSql](#213-to-start-the-postgresql)
       * [2.1.4. to check the port on which it is listening ](#214-to-check-the-port-on-which-it-is-listening-)
       * [2.1.5. Check the postgres status](#215-check-the-postgres-status)
-    * [2.2. Application Layer run-state management](#22-application-layer-run-state-management)
+    * [2.2. Application Layer runstate management](#22-application-layer-runstate-management)
       * [2.2.1. start the application layer](#221-start-the-application-layer)
       * [2.2.2. stop the application layer](#222-stop-the-application-layer)
   * [3. USAGE SCENARIOS](#3-usage-scenarios)
@@ -33,10 +33,10 @@ Table of Contents
     * [4.1. Dirs naming conventions](#41-dirs-naming-conventions)
     * [4.2. Root Dirs naming conventions](#42-root-dirs-naming-conventions)
   * [5. SOURCE CODE MANAGEMENT](#5-source-code-management)
-    * [5.1. Aim for traceability between user-stories, requirements, features and functionalities](#51-aim-for-traceability-between-user-stories,-requirements,-features-and-functionalities)
-    * [5.2. Zero tolerance for bugs](#52-zero-tolerance-for-bugs)
+    * [5.1. Aim for tracability between userstories, requirements, features and functionalities](#51-aim-for-tracability-between-userstories,-requirements,-features-and-functionalities)
+    * [5.2. Zero tollerance for bugs](#52-zero-tollerance-for-bugs)
     * [5.3. Feature development in a feature branch](#53-feature-development-in-a-feature-branch)
-    * [5.4. ALWAYS Start with a test unit creation](#54-always-start-with-a-test-unit-creation)
+    * [5.4. ALWAYS Start with Unit Test](#54-always-start-with-unit-test)
     * [5.5. Branch for development - dev](#55-branch-for-development--dev)
     * [5.6. Testing and integrations in the tst branch](#56-testing-and-integrations-in-the-tst-branch)
     * [5.7. Quality assurance in the qas branch](#57-quality-assurance-in-the-qas-branch)
@@ -50,7 +50,7 @@ Table of Contents
     * [7.4. Documentation](#74-documentation)
   * [8. FEATURE IMPLEMENTATION WORKFLOW](#8-feature-implementation-workflow)
     * [8.1. Issue creation](#81-issue-creation)
-    * [8.2. User-Story creation](#82-user-story-creation)
+    * [8.2. UserStory creation](#82-userstory-creation)
     * [8.3. Requirements creation](#83-requirements-creation)
     * [8.4. Problem registration](#84-problem-registration)
     * [8.5. Feature branch creation](#85-feature-branch-creation)
@@ -62,7 +62,7 @@ Table of Contents
     * [8.11. Deployment and test to the test environment](#811-deployment-and-test-to-the-test-environment)
     * [8.12. Deployment and test to the production environment](#812-deployment-and-test-to-the-production-environment)
     * [8.13. Quality assurance iteration](#813-quality-assurance-iteration)
-    * [8.14. DoD check-list walkthrough](#814-dod-check-list-walkthrough)
+    * [8.14. DoD check-list walktrough](#814-dod-check-list-walktrough)
       * [8.14.1. The feature or functionality current description is added in the docs](#8141-the-feature-or-functionality-current-description-is-added-in-the-docs)
       * [8.14.2. The related requirement is added in the requirements document](#8142-the-related-requirement-is-added-in-the-requirements-document)
       * [8.14.3. At least 2 times passed unit tests run in each environment instance](#8143-at-least-2-times-passed-unit-tests-run-in-each-environment-instance)
@@ -70,15 +70,15 @@ Table of Contents
     * [8.15. Aim for simplicity](#815-aim-for-simplicity)
     * [8.16. Do not allow broken windows](#816-do-not-allow-broken-windows)
       * [8.16.1. Deployment to the test environment](#8161-deployment-to-the-test-environment)
-      * [8.16.2. Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. ](#8162-check-that-all-the-files-in-the-deployment-package-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
+      * [8.16.2. Check that all the files in the deployment pacakge are the same as those in the latest commit of the dev git branch. ](#8162-check-that-all-the-files-in-the-deployment-pacakge-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
       * [8.16.3. restart the application layer](#8163-restart-the-application-layer)
 
 
     
 
-## 1. GUIDING PRINCIPLE'S
+## 1. GUIDING PRINCIPES
 This section might seem too philosophical for a start, yet all the development in the issue-tracker has ATTEMPTED to follow the principles described bellow. If you skip this section now you might later on wander many times why something works and it is implemented as it is ... and not "the right way". 
-Of course you are free to not follow these principles, the less you follow them the smaller the possibility to pull features from your instance(s) - you could even use the existing functionality to create a totally different fork with different name and start developing your own toll with name X - the authors give you the means to do that with this tool ... , but if you want to use and contribute to THIS tool than you better help defined those leading principles and follow them. 
+Of course you are free to not follow these principles, the less you follow them the smaller the possibility to pull features from your instance(s) - you could even use the existing functionality to create a totally different fork with different name and start developing your own toll with name X - the authours give you the means to do that with this tool ... , but if you want to use and contribute to THIS tool than you better help defined those leading principles and follow them. 
 
     
 
@@ -89,19 +89,19 @@ Any instance is the combination of code, configurations, binaries in the System 
     
 
 #### 1.1.1. Personal responsibility
-Any given instance of the issue-tracker should have ONE and only ONE person which is responsible at the end for the functioning of THIS instance - so think carefully before attempting to take ownership for an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instance. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no service level agreement, nor even promise to help. 
+Any givien instance of the issue-tracker should have ONE and only ONE person which is responsible at the end for the funtioning of THIS instance - so think carefully before attempting to take ownership for an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instannce. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no service level agreement, nor even promise to help. 
 
     
 
 #### 1.1.2. Attempt for 100% test coverage to achieve reliability
 The more you increase your test coverage the greater the confidence that the code will work as expected. 
-Do not write a single function without first implementing the testing call for that function - this has been proven really, really difficult, yet the more features are added the less the time wasted in troubleshooting of bugs and un-expected behavior when proper testing is implemented. 
+Do not write a single function without first implementing the testing call for that function - this has been proven really, really difficult, yet the more features are added the less the time wasted in troubleshooting of bugs and un-expected behaviour when proper testing is implemented. 
 Testing ensures the consistency and future expandability of the functionalities. 
 
     
 
 ### 1.2. Naming conventions principle
-All the names used in the code and the configurations MUST BE human readable and expandable - that is name the objects from the greater realm to the smaller - for example &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; , because the concept of operational IT environments ( dev , test , qas , prd ) is broader than the concept of a application databases ... 
+All the names used in the code and the configurations MUST BE human readable and expandable - that is name the objects from the greater realm to the smaller - for example &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; , because the concept of operational IT environments ( dev , tst , qas , prd ) is broader than the concept of a application databases ... 
 
     
 
@@ -115,7 +115,7 @@ You cannot achieve user-friendliness for the end-users unless your developers an
 
     
 
-### 2.1. RDBMS Run-state management
+### 2.1. RDBMS Runstate management
 
 
     
@@ -153,7 +153,7 @@ Check the port to which the postres is running with this command:
     # check on which ports it is runnning
     sudo netstat -plunt |grep postgres
 
-### 2.2. Application Layer run-state management
+### 2.2. Application Layer runstate management
 
 
     
@@ -184,7 +184,7 @@ To stop the application layer in development mode use the morbo command ( debug 
 
 #### 3.1.1. Run increase-date action
 You track the issues of your projects by storing them into xls files in "daily" proj_txt dirs. 
-Each time the day changes by running the increase-date action you will be able to clone the data of the previous date and start working on the current date. 
+Each time the day changes by running the increase-date action you will be able to clone the data of the previous date and start working on the currnent date. 
 
     bash src/bash/issue-tracker/issue-tracker.sh -a increase-date
 
@@ -198,9 +198,9 @@ You should be able to update only non-nullable column by reducing the number of 
     bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db
 
 #### 3.1.3. Run db-to-txt action
-The db-to-txt action converts your db tables into txt files by using "smart" formatting rules. This feature is deprecated and should work only for tables having the same attributes set as the "issues" tables. 
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
+
+    
 
 #### 3.1.4. Load xls issues to db and from db to txt files
 to load xls issues to db and from db to txt files
@@ -237,7 +237,7 @@ Verify the inserted data from the db as follows:
 #### 3.2.1. Run the http://&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;proj-db&gt;&gt;/get/&lt;&lt;table&gt;&gt;/&lt;&lt;guid&gt;&gt; route
 Load a table with guid's.
 Check a single item with your browser, for example:
-http://doc-pub-host:3000/dev_stockit_issues/get/companies/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
+http://doc-pub-host:3000/dev_stockit_issues/get/company_eps/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
 
     # load the items
     while read -r f; do 
@@ -260,7 +260,7 @@ The dir structure should be logical and a person navigating to a dir should almo
 
 ### 4.2. Root Dirs naming conventions
 The root dirs and named as follows:
-bin - contains the produced binaries for the project
+bin - contains the produced binaries for th project
 cnf - for the configuration
 dat - for the data of the app
 lib - for any external libraries used
@@ -273,14 +273,14 @@ The issue-tracker is a derivative of the wrapp tool - this means that developmen
 
     
 
-### 5.1. Aim for traceability between user-stories, requirements, features and functionalities
+### 5.1. Aim for tracability between userstories, requirements, features and functionalities
 Once the issues are defined and you start working on your own branch which is named by the issue-id aim to map one on one each test in your code with each listed requirement in confluence and / or JIRA. 
 
     
 
-### 5.2. Zero tolerance for bugs
-As soon as bugs are identified and reproduceable, register them as issues and resolve them with prior 1.
-After resolution, think about the root cause of the bug, the mear fact that the bug occurred tells that something in the way of working has to be improved , what ?!
+### 5.2. Zero tollerance for bugs
+As soon as bugs are identified and reproduceable, register them as issues and resolve them with prio 1.
+After resolution, think about the root cause of the bug, the mear fact that the bug occured tells that something in the way of working has to be improved , what ?!
 Bugs are like broken windows the more you have them the faster the value of your building will be down to zero. 
 
     
@@ -290,10 +290,10 @@ You start the development in your own feature branch named : dev--&lt;&lt;issue-
 
     
 
-### 5.4. ALWAYS Start with a test unit creation
-Do not ever never write code without starting first the unit test on how-to test the code. Period. 
+### 5.4. ALWAYS Start with Unit Test
+Do not ever never write code without starting firsr the unit test on how-to test the code. Period. 
 This is he only way to avoid braking old functionalities when the application code base grows larger. 
-Each time a new bug is found fix it by adding new Unit Test!
+Each time a new bug is found fix it by adding new UnitTest!
 
     
 
@@ -309,7 +309,7 @@ At the end all the integration tests should be behind this shell call.
     export issue_tracker_project=""; bash src/bash/issue-tracker/issue-tracker.sh -a run-integration-tests
 
 ### 5.7. Quality assurance in the qas branch
-At this phase all the tests with all the expected functionalities should work at once. No small hotfixes are allowed - if a need arises new branch is created to the tst branch The quality assurance
+At this phase all the tests with all the expected functionalities should work at once. No small hotfixes are allowed - if a need arrises new branch is created to the tst branch The quality assurance
 
     
 
@@ -330,18 +330,18 @@ This scenario describes the steps and processes, which could be implemented to a
 
 ## 7. WAY OF WORKING
 This section describes the way of working within a team working on the issue-tracker project. 
-The work on the issue-tracker project is conducted by using the Scrum methodology, thus the Scrum
+The work on the issue-tracker project is conducted by using the Scrum methodology, thus the ScruM
 
     
 
 ### 7.1. Definition of Done
-Each issue must have a tangible artifact. An issue without tangible artifact is a thought thrown in the air.
+Each issue must have a tangible artifact. An issue without tangible artifact is a tought thrown in the air.
 The DoD must be iterated and updated during each Sprint Review. 
 
     
 
 ### 7.2. E-mail communication
-Do not use e-mail communication for code style, testing, developing etc. Issues which could be achieved with the code review interface of the source code management system. 
+Do not use e-mail communiction for code style, testing, developing etc. Issues which could be achieved witht the code review intervace of the source code management system. 
 Before writing an e-mail think first could you find a way to avoid writing it at all. 
 Do not expect answer of your e-mail within 2 hours. 
 Use e-mail when you have to get an written evidence on agreed matters, which might cause later on discussions. 
@@ -365,12 +365,12 @@ As in other places the main principle to follow is "use common sense" , thus try
     
 
 ### 8.1. Issue creation
-Even if you do not have a defined documentation artifact - create a new issue, which could be the start for a an action affecting the run-state, configuration , data , features and functionalities or other aspects of the issue-tracker application. 
+Even if you do not have a defined documentation artifact - create a new issue, which could be the start for a an action affecting the run-state, configuration , data , features and functionalities or other aspects of the issue-tracker appclication. 
 An issue could be a bug, a request for a feature or even simply an undefined combination of problems and solution which could quickly be formalized by defining a new requirement, another issue, feature-request
 
     
 
-### 8.2. User-Story creation
+### 8.2. UserStory creation
 Use the following template while creating the user story:
 As an &lt;&lt;role&gt;&gt;
 In order to &lt;&lt;achieve something&gt;&gt; 
@@ -403,7 +403,7 @@ Create the feature branch by using the following naming convention:
     
 
 ### 8.6. Create a test-entry point
-Even the smallest proof of concept needs a small test-entry point. Start always with the testing and the testing scalability in mind. 
+Even the smallest proof of concept needs a small test-entry point. Start always witht the testing and the testing scalability in mind. 
 
     
 
@@ -449,7 +449,7 @@ This phase might be longer depending on the feature. Some of the features stay i
 
     
 
-### 8.14. DoD check-list walkthrough
+### 8.14. DoD check-list walktrough
 Perform the DoD checklist as follows
 
     
@@ -485,7 +485,7 @@ A broken windows is any peace of code or documentation which is hanging around n
     
 
 #### 8.16.1. Deployment to the test environment
-Deploy to the test environment as follows:
+Deploy to the test environmen as follows:
 
     # deploy to the tst environment
     bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
@@ -494,8 +494,8 @@ Deploy to the test environment as follows:
     cd ../issue-tracker.<<version>>.tst.<<owner>>
     
 
-#### 8.16.2. Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. 
-Deploy to the test environment as follows:
+#### 8.16.2. Check that all the files in the deployment pacakge are the same as those in the latest commit of the dev git branch. 
+Deploy to the test environmen as follows:
 
     # deploy to the tst environment
     bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
