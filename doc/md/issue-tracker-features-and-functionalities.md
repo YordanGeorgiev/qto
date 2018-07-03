@@ -9,6 +9,7 @@ Table of Contents
     * [1.3. Audience](#13-audience)
     * [1.4. Master storage and storage format](#14-master-storage-and-storage-format)
     * [1.5. Version control](#15-version-control)
+    * [1.6. Process](#16-process)
   * [2. UI FEATURES](#2-ui-features)
     * [2.1. Support for different projects](#21-support-for-different-projects)
     * [2.2. Common listing features](#22-common-listing-features)
@@ -33,14 +34,15 @@ Table of Contents
       * [3.1.2. Unit tests call](#312-unit-tests-call)
       * [3.1.3. Integration tests call](#313-integration-tests-call)
       * [3.1.4. Bash tests call](#314-bash-tests-call)
-    * [3.2. Logging](#32-logging)
-      * [3.2.1. Bash logging](#321-bash-logging)
-      * [3.2.2. Perl logging](#322-perl-logging)
-    * [3.3. Development efficiency increasing actions](#33-development-efficiency-increasing-actions)
-      * [3.3.1. Support for different projects](#331-support-for-different-projects)
-      * [3.3.2. The "morph-dir" action](#332-the-"morph-dir"-action)
-      * [3.3.3. Perl code syntax check](#333-perl-code-syntax-check)
-      * [3.3.4. Single call export of the md and pdf documentation files](#334-single-call-export-of-the-md-and-pdf-documentation-files)
+    * [3.2. Documentation](#32-documentation)
+    * [3.3. Logging](#33-logging)
+      * [3.3.1. Bash logging](#331-bash-logging)
+      * [3.3.2. Perl logging](#332-perl-logging)
+    * [3.4. Development efficiency increasing actions](#34-development-efficiency-increasing-actions)
+      * [3.4.1. Support for different projects](#341-support-for-different-projects)
+      * [3.4.2. The "morph-dir" action](#342-the-"morph-dir"-action)
+      * [3.4.3. Perl code syntax check](#343-perl-code-syntax-check)
+      * [3.4.4. Single call export of the md and pdf documentation files](#344-single-call-export-of-the-md-and-pdf-documentation-files)
   * [4. SHELL BASED ACTIONS](#4-shell-based-actions)
     * [4.1. The "run-pgsql-scripts" action](#41-the-"run-pgsql-scripts"-action)
     * [4.2. The "run-mysql-scripts" action](#42-the-"run-mysql-scripts"-action)
@@ -115,7 +117,12 @@ The master storage of this document is the master branch of the issue-tracker re
     
 
 ### 1.5. Version control
-The contents of this document MUST be updated according to the EXISTING features, functionalities and capabilities of the issue-tracker version, in which this document residues, thus should you find inconsistencies in the behavior of the application and the content of this document you should create a bug issue and assign it to the owner of your product instance. 
+The contents of this document MUST be updated according to the EXISTING features, functionalities and capabilities of the issue-tracker version, in which this document residues.
+
+    
+
+### 1.6. Process
+The issue-tracker provides a mean for tracking of this documentation contents to the source code per feature/functionality, thus should you find inconsistencies in the behavior of the application and the content of this document you should create a bug issue and assign it to the owner of your product instance.
 
     
 
@@ -151,7 +158,6 @@ The common listing syntax components are as follows:
 - item is the name of the item which ui controls you want to list ( could be issues,problems,questions, etc.
 - ?&lt;&lt;params&gt;&gt; the additional url parameters used to control the look and behavior of the listing action, should the url params be omitted the full content of the item table with default ui look and behavior are displayed. 
 
-    # an example url could be:
     http://host-name:3000/dev_ysg_issues/list/monthly_issues?as=table&pick=id,status,prio,name,description&page-size=15&page-num=1&o=prio&with=status-ne-09-done
     
 
@@ -285,36 +291,42 @@ You can run all the bash functions in the tool by issuing the following command 
     
     2018-05-12 18:01:30      STOP  test-issue-tracker test run report
 
-### 3.2. Logging
+### 3.2. Documentation
+We consider up-to-date and complete documentation as being integral part of the application, thus each release must have the documentation updated to it's current set of features, functionalities and capabilities. 
+You might argue that the amount of documentation is too big, yet the more you dive into the application the more you will justify it's existence by yourself. 
+
+    
+
+### 3.3. Logging
 Logging is implemented as follows:
 
     
 
-#### 3.2.1. Bash logging
+#### 3.3.1. Bash logging
 The issue-tracker.sh bash entry point loggs both to STDOUT and file. You cold easily defined your own log levels. 
 
     doLog "INFO an info msg"
     [INFO ] 2018.05.08-21:05:25 EEST [issue-tracker][@host-name] [29667] an info msg:
 
-#### 3.2.2. Perl logging
+#### 3.3.2. Perl logging
 The perl logger could be configured to log to file and std outputs. 
 
     doLog "INFO an info msg"
     [INFO ] 2018.05.08-21:05:25 EEST [issue-tracker][@host-name] [29667] an info msg:
 
-### 3.3. Development efficiency increasing actions
+### 3.4. Development efficiency increasing actions
 
 
     
 
-#### 3.3.1. Support for different projects
+#### 3.4.1. Support for different projects
 The issue-tracker could be used against many different projects as soon as they have the needed file and dir structure , configuration file and dedicated db in the PostgreSQL. 
 You could quickly fork a new project out of the issue-tracker instance by copying the 
 
     # pre-load the vars of an issue-tracker project
     doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.doc-pub-host.cnf
 
-#### 3.3.2. The "morph-dir" action
+#### 3.4.2. The "morph-dir" action
 You can recursively search and replace strings in both file and dir paths and their contents ( as soon as they non-binary , txt files ) by issuing the following commands:
 
     export to_srch=WriterTxtDaily
@@ -325,12 +337,12 @@ You can recursively search and replace strings in both file and dir paths and th
     history | cut -c 8-
     
 
-#### 3.3.3. Perl code syntax check
+#### 3.4.3. Perl code syntax check
 You can check the perl code syntax with the following command:
 
     bash src/bash/issue-tracker/issue-tracker.sh -a check-perl-syntax
 
-#### 3.3.4. Single call export of the md and pdf documentation files
+#### 3.4.4. Single call export of the md and pdf documentation files
 Single call export of the md and pdf documentation files
 
     

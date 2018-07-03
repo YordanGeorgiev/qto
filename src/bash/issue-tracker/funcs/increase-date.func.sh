@@ -17,7 +17,7 @@ doIncreaseDate(){
 
    # find the latest project_daily_txt_dir
    latest_proj_daily_dir=""
-   latest_proj_daily_dir=$(find $mix_data_dir -type d|sort|grep -v json|grep -v xls|sort -nr|head -1)
+   latest_proj_daily_dir=$(find $mix_data_dir -type d|sort|grep -v txt|grep -v json|grep -v xls|sort -nr|head -1)
    echo "latest_proj_daily_dir: $latest_proj_daily_dir" 
 
 	# debug set -x
