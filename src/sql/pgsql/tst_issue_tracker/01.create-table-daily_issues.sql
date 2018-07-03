@@ -16,8 +16,8 @@ SELECT 'create the "daily_issues" table'
     , description    varchar (4000)
     , type           varchar (50) NOT NULL DEFAULT 'task'
     , owner          varchar (50) NULL
-    , start_time     text NULL
-    , stop_time      text NULL
+    , start_time     time NOT NULL
+    , stop_time      time NOT NULL
     , planned_hours  decimal (6,2) NULL
     , actual_hours   decimal (6,2) NULL
     , update_time    timestamp DEFAULT NOW() 

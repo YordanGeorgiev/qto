@@ -527,6 +527,7 @@ doc/md/issue-tracker-features-and-functionalities.md
 doc/md/issue-tracker-system-guide.md
 doc/md/issue-tracker-tests.md
 doc/md/issue-tracker-user-stories.md
+doc/md/issue-tracker-installation-and-configuration-guide.md
 doc/pdf
 doc/pdf/issue-tracker-devops-guide.pdf
 doc/pdf/issue-tracker-features-and-functionalities.pdf
@@ -534,6 +535,7 @@ doc/pdf/issue-tracker-readme.pdf
 doc/pdf/issue-tracker-system-guide.pdf
 doc/pdf/issue-tracker-tests.pdf
 doc/pdf/issue-tracker-user-stories.pdf
+doc/pdf/issue-tracker-installation-and-configuration-guide.pdf
 #---
 doc/txt/issue-tracker/funcs/generate-sql.func.txt
 doc/txt/issue-tracker/helps/generate-sql.help.txt
@@ -588,6 +590,7 @@ doc/xls/issue-tracker-devops-guide.xls
 doc/xls/issue-tracker-readme.xls
 doc/xls/issue-tracker-system-guide.xls
 doc/xls/issue-tracker-user-stories.xls
+doc/xls/issue-tracker-installation-and-configuration-guide.xls
 #---
 src/bash/issue-tracker/specs/check-perl-modules-prerequisites.spec.sh
 src/bash/issue-tracker/tests/check-perl-modules-prerequisites.test.sh
@@ -765,25 +768,7 @@ src/bash/issue-tracker/helps/db-to-json.help.sh
 doc/txt/issue-tracker/tests/db-to-json.test.txt
 doc/txt/issue-tracker/helps/db-to-json.help.txt
 doc/txt/issue-tracker/funcs/db-to-json.func.txt
-dat/mix/2018/2018-06/2018-06-29/xls/issue-tracker.all.20180629_000000.xlsx
-dat/mix/2018/2018-06/2018-06-29/xls
-dat/mix/2018/2018-06/2018-06-29/json/yearly_issues.json
-dat/mix/2018/2018-06/2018-06-29/json/weekly_issues.json
-dat/mix/2018/2018-06/2018-06-29/json/tst_paging.json
-dat/mix/2018/2018-06/2018-06-29/json/test_hierarchy_table.json
-dat/mix/2018/2018-06/2018-06-29/json/quinquennially_issues.json
-dat/mix/2018/2018-06/2018-06-29/json/questions.json
-dat/mix/2018/2018-06/2018-06-29/json/purchases.json
-dat/mix/2018/2018-06/2018-06-29/json/procurement_items.json
-dat/mix/2018/2018-06/2018-06-29/json/problems.json
-dat/mix/2018/2018-06/2018-06-29/json/principles.json
-dat/mix/2018/2018-06/2018-06-29/json/monthly_issues.json
-dat/mix/2018/2018-06/2018-06-29/json/ideas.json
-dat/mix/2018/2018-06/2018-06-29/json/decadally_issues.json
-dat/mix/2018/2018-06/2018-06-29/json/daily_issues.json
-dat/mix/2018/2018-06/2018-06-29/json/confs.json
-dat/mix/2018/2018-06/2018-06-29/json
-dat/mix/2018/2018-06/2018-06-29
+# ---
 src/perl/issue_tracker/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToJson/autosplit.ix
@@ -843,3 +828,23 @@ src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/index.js
 src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.css
 src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.html
 src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.js
+# ---
+dat/mix/2018/2018-07/2018-07-03
+dat/mix/2018/2018-07/2018-07-03/xls
+dat/mix/2018/2018-07/2018-07-03/xls/issue-tracker.all.20180703_000000.xlsx
+dat/mix/2018/2018-07/2018-07-03/json
+dat/mix/2018/2018-07/2018-07-03/json/weekly_issues.json
+dat/mix/2018/2018-07/2018-07-03/json/decadally_issues.json
+dat/mix/2018/2018-07/2018-07-03/json/test_hierarchy_table.json
+dat/mix/2018/2018-07/2018-07-03/json/ideas.json
+dat/mix/2018/2018-07/2018-07-03/json/problems.json
+dat/mix/2018/2018-07/2018-07-03/json/questions.json
+dat/mix/2018/2018-07/2018-07-03/json/purchases.json
+dat/mix/2018/2018-07/2018-07-03/json/quinquennially_issues.json
+dat/mix/2018/2018-07/2018-07-03/json/confs.json
+dat/mix/2018/2018-07/2018-07-03/json/tst_paging.json
+dat/mix/2018/2018-07/2018-07-03/json/yearly_issues.json
+dat/mix/2018/2018-07/2018-07-03/json/daily_issues.json
+dat/mix/2018/2018-07/2018-07-03/json/monthly_issues.json
+dat/mix/2018/2018-07/2018-07-03/json/procurement_items.json
+dat/mix/2018/2018-07/2018-07-03/json/principles.json
