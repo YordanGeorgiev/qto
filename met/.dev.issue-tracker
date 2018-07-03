@@ -258,7 +258,6 @@ src/sql/pgsql/dev_issue_tracker/08.create-table-procurement_items.sql
 src/sql/pgsql/dev_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/dev_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql
-src/sql/pgsql/dev_issue_tracker/12.create-table-purchases.sql
 src/sql/pgsql/dev_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/dev_issue_tracker/99.create-table-test_hierarchy_table.sql
@@ -275,7 +274,6 @@ src/sql/pgsql/tst_issue_tracker/08.create-table-procurement_items.sql
 src/sql/pgsql/tst_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/tst_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/tst_issue_tracker/11.create-table-principles.sql
-src/sql/pgsql/tst_issue_tracker/12.create-table-purchases.sql
 src/sql/pgsql/tst_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/tst_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/tst_issue_tracker/99.create-table-test_hierarchy_table.sql
@@ -292,7 +290,6 @@ src/sql/pgsql/prd_issue_tracker/08.create-table-procurement_items.sql
 src/sql/pgsql/prd_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/prd_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/prd_issue_tracker/11.create-table-principles.sql
-src/sql/pgsql/prd_issue_tracker/12.create-table-purchases.sql
 src/sql/pgsql/prd_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/prd_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/prd_issue_tracker/99.create-table-test_hierarchy_table.sql
