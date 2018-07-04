@@ -62,6 +62,7 @@ sub doCheckUbuntuOSPackages {
 sub doCheckRequiredModules {
 
   my @modules = qw(
+   YAML::Tiny
    URL::Encode
    ExtUtils::Installed
    Carp::Always
@@ -96,6 +97,8 @@ sub doCheckRequiredModules {
    DBD::Pg
    Tie::Hash::DBD
    Scalar::Util::Numeric
+   IPC::System::Simple
+   Mojolicious
   );
 
   for (@modules) {
