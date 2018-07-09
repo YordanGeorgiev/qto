@@ -21,14 +21,97 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 	our $objLogger 										= {} ; 
    our $rdbms_type                              = 'postgre' ; 
 
-	our $postgres_db_name                                 = q{} ; 
+	our $postgres_db_name                        = q{} ; 
 	our $db_host 										   = q{} ; 
 	our $db_port 										   = q{} ;
-	our $postgres_db_user 											= q{} ; 
-	our $postgres_db_user_pw	 									= q{} ; 
+	our $postgres_db_user 							   = q{} ; 
+	our $postgres_db_user_pw	 					   = q{} ; 
 	our $web_host 											= q{} ; 
    our @tables                                  = ( 'daily_issues' );
    our $objController                           = () ; 
+
+
+   sub doUpdateItemBySingleCol {
+
+		my $self 				= shift ; 
+      my $objModel       = ${ shift @_ } ; 
+      my $table            = shift ; 
+      my $ret              = 0 ; 
+      my $msg              = '' ; 
+   
+      my $col_name         = $objModel->get('update.web-action.col_name' ) ; 
+      my $id               = $objModel->get('update.web-action.id' ) ; 
+      my $col_value        = $objModel->get('update.web-action.col_value'  ) ; 
+
+      my $dbh              = {} ;         # this is the database handle
+      my $sth              = {} ;         # the statement handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      
+      if ( defined $objModel->get('postgres_db_name') ) {
+		   $postgres_db_name = $objModel->get('postgres_db_name');
+      }
+      
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      $str_sql = " 
+      UPDATE  $table
+         SET $col_name = '$col_value'
+         WHERE id='$id'     
+      ;
+      " ; 
+
+      $sth = $dbh->prepare($str_sql);  
+      print "$str_sql \n stop RdrPostgresDb.pm" ; 
+
+      $sth->execute()
+            or $objLogger->error ( "$DBI::errstr" ) ;
+
+      binmode(STDOUT, ':utf8');
+
+      $msg = DBI->errstr ; 
+
+      unless ( defined ( $msg ) ) {
+         $msg = 'UPDATE OK ' ; 
+         $ret = 0 ; 
+      } else {
+         $objLogger->doLogErrorMsg ( $msg ) ; 
+      }
+
+      return ( $ret , $msg ) ; 
+   }
+   
+   #
+   # -----------------------------------------------------------------------------
+   # open the database handle if possible, if not return proper error msgs
+   # ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+   # -----------------------------------------------------------------------------
+   sub doConnectToDb {
+      my $self = shift ; 
+      my $postgres_db_name = shift ; 
+   
+      my $ret = 1 ; 
+      my $msg = q{} ; 
+      my $dbh = q{} ; 
+
+      eval { 
+         $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
+                    'RaiseError'          => 1
+                  , 'ShowErrorStatement'  => 1
+                  , 'PrintError'          => 1
+                  , 'AutoCommit'          => 1
+                  , 'pg_utf8_strings'     => 1
+         } ) 
+      };
+
+      if ($@) {
+         $ret = 2 ; 
+         $msg = 'cannot connect to the "' . $postgres_db_name . '" database: ' . DBI->errstr ; 
+         return ( $ret , $msg , undef ) ; 
+      }
+
+      $ret = 0 ; $msg = "" ; 
+      return ( $ret , $msg , $dbh ) ; 
+   }
+
 	#
    # ------------------------------------------------------
 	#  input: hash ref of hash refs containing the issues 
@@ -650,38 +733,6 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 	}
 	#eof sub doUpsertTables
 
-   #
-   # -----------------------------------------------------------------------------
-   # open the database handle if possible, if not return proper error msgs
-   # ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
-   # -----------------------------------------------------------------------------
-   sub doConnectToDb {
-      my $self = shift ; 
-      my $postgres_db_name = shift ; 
-   
-      my $ret = 1 ; 
-      my $msg = q{} ; 
-      my $dbh = q{} ; 
-
-      eval { 
-         $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
-                    'RaiseError'          => 1
-                  , 'ShowErrorStatement'  => 1
-                  , 'PrintError'          => 1
-                  , 'AutoCommit'          => 1
-                  , 'pg_utf8_strings'     => 1
-         } ) 
-      };
-
-      if ($@) {
-         $ret = 2 ; 
-         $msg = 'cannot connect to the "' . $postgres_db_name . '" database: ' . DBI->errstr ; 
-         return ( $ret , $msg , undef ) ; 
-      }
-
-      $ret = 0 ; $msg = "" ; 
-      return ( $ret , $msg , $dbh ) ; 
-   }
 
    #
 	# -----------------------------------------------------------------------------

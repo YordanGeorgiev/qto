@@ -20,6 +20,24 @@ package IssueTracker::App::IO::In::RdrUrlParams ;
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ; 
    use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
 
+
+sub doSetUpdateUrlParams {
+
+   my $self          = shift ; 
+   my $objModel      = ${ shift @_ } ; 
+   my $perl_hash     = shift ; 
+   my $ret           = 0 ; 
+   my $msg           = '' ; 
+
+   $objModel->set('update.web-action.col_name' , $perl_hash->{'attribute'} ) ; 
+   $objModel->set('update.web-action.id' , $perl_hash->{'id'} ) ; 
+   $objModel->set('update.web-action.col_value' , $perl_hash->{'cnt'} ) ; 
+   
+   $ret = 0 ; $msg = '' ; 
+   return ( $ret , $msg ) ; 
+
+}
+
 sub doSetWithUrlParams {
 
    my $self          = shift ; 

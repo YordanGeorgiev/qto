@@ -145,25 +145,23 @@ if ( document.getElementById("spn_msg") ) {
          var arr = id.split('-')
          var col = arr[0]
          var dbid = arr[1]
-         console.log ( "new content: " + content ) 
-         console.log ( "column: " + arr[0] )
-         console.log ( "dbid: " + arr[1] )
-         console.log ( "should run: UPDATE monthly_issues set " + col + " = '" + content + "' WHERE id='" + dbid + "'" )
-         console.log ( "/dev_issue_tracker/update/monthly_issues?pick=id" + arr[1] ) 
-
-         /*
-            axios.post('/dev_issue_tracker/update/monthly_issues', {
-                attribute: col,
-                id: dbid
+         console.log ( {
+                attribute: col ,
+                id: dbid , 
+                cnt: content.trim()
+         }) ; 
+        
+         axios.post('/<%= $db =%>/update/<%= $item =%>', {
+            attribute: col ,
+            id: dbid , 
+            cnt: content.trim()
             })
             .then(function (response) {
                console.log(response);
             })
             .catch(function (error) {
                console.log(error);
-             });
-         */
-
+            });
        }
      }
    })

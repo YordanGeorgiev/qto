@@ -63,6 +63,13 @@ sub startup {
      controller   => 'Select'
    , action       => 'doSelectItems'
    );
+   
+# http://host-name:3000/dev_issue_tracker/update/monthly_issues
+   $r->post('/:db/update/:item')->to(
+     controller   => 'Update'
+   , action       => 'doUpdateItemBySingleCol'
+   );
+
    # http://host-name:3000/dev_issue_tracker/select/monthly_issues
    $r->get('/:db/select-meta/:item')->to(
      controller   => 'Select'
