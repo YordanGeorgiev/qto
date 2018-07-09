@@ -104,7 +104,7 @@ sub doBuildListControl {
    my $objModel         = ${ shift @_ } ; 
    my $as               = shift ; 
 
-   my $ui_type          = 'page/list-lbls' ; 
+   my $ui_type          = 'page/list-grid' ; 
    my $ret              = 1 ; 
    my $list_control     = '' ; 
    my $objPageBuilder   = {} ; 

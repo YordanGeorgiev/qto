@@ -135,7 +135,7 @@ if ( document.getElementById("spn_msg") ) {
        pageSize: 15,
        pageNum: 1,
        pagesCount: 0,
-       UrlParams:{ as:"lbls" },
+       UrlParams:{ as:"table" },
        pageSizes: ['5', '7', '10','15','20','30','50','100']
      },
      methods: {
@@ -163,13 +163,18 @@ if ( document.getElementById("spn_msg") ) {
      mounted() {
 			var url_params = {} 
          if( window.location.toString().indexOf("?") != -1) {
-            window.location.search.split('?')[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
+            window.location.search.split('?')[1].replace("pick=","pick=id,")
+               .replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
                url_params[decodeURIComponent(key)] = decodeURIComponent(value);
             });
+           // todo:ysg remove
+           console.log ( url_params )
          } else {
-            url_params = { as:"lbls" };  
+            url_params = { as:"table" };  
          }
          this.UrlParams = url_params;
+         // todo:ysg remove
+         console.log ( url_params )
 			axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
 			.then(response => { 
 				this.gridData = response.data.dat ; 

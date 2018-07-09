@@ -70,9 +70,9 @@ sub doBuildListControl {
    	$control = '[' . $control ; 
 	} 
 	else {
-   	$control = '[' ; # it is just the js array definining the cols
+   	$control = "['id'," ; # it is just the js array definining the cols
 		foreach my $to_pick ( @picks ) {
-			$control .= "'" . $to_pick . "' , " ; 
+			$control .= "'" . $to_pick . "' , " unless ( $to_pick eq 'id' ) ; 
 		}
 		for (1..3) { chop ( $control ) } ;
    	$control .= ']' ;
