@@ -90,7 +90,11 @@ sub doSetSelectUrlParams {
    $query_params->remove('like-by') ; 
    $objModel->set('select.web-action.like-val' , $query_params->every_param('like-val') ) ; 
    $query_params->remove('like-val') ; 
-   $objModel->set('select.web-action.pick' , $query_params->param('pick') );
+   my $picks = $query_params->param('pick') ; 
+   if ( defined ( $picks ) ) {
+      $picks = 'id,' . $picks unless ($picks =~ m/id,/) ;
+   }
+   $objModel->set('select.web-action.pick' , $picks ); 
    $query_params->remove('pick') ; 
    $objModel->set('select.web-action.hide' , $query_params->param('hide') );
    $query_params->remove('hide') ; 

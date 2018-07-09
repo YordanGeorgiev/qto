@@ -1,5 +1,14 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/perl/issue_tracker/public/poc/vue-editable-component
+src/perl/issue_tracker/public/poc/vue-editable-component/vue-editable-component.html
+src/perl/issue_tracker/public/poc/vue-editable-component/app.js
+# ---
+src/perl/issue_tracker/public/poc/list-vue-grid-editable
+src/perl/issue_tracker/public/poc/list-vue-grid-editable/app.js
+src/perl/issue_tracker/public/poc/list-vue-grid-editable/list-vue-grid-editable.css
+src/perl/issue_tracker/public/poc/list-vue-grid-editable/list-vue-grid-editable.html
+# ---
 src/perl/issue_tracker/public/package.json
 # ---
 src/perl/issue_tracker/templates/layouts/site.html.ep

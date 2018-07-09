@@ -1,0 +1,26 @@
+<html>
+<head>
+   <title>list-lable monthly_issues </title>
+</head>
+<body>
+
+<main id="app">
+  <button @click="loadJson">Load JSON data</button>
+  <h1>
+    <editable
+      :content="herobanner.headline"
+		:id="herobanner.id"
+      v-on:update="updateHeadline"
+    >
+    </editable>
+  </h1>
+  <h2>headline: {{herobanner.headline}}</h2>
+  <h2>id: {{herobanner.id}}</h2>
+</main>
+
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
