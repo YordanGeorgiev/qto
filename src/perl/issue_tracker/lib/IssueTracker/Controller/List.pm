@@ -114,6 +114,7 @@ sub doBuildListControl {
          'lbls'   => 'list-labels'
       ,  'cloud'  => 'list-cloud' 
       ,  'table'  => 'list-grid'
+      ,  'etable'  => 'list-egrid'
    };
    $ui_type = 'page/' . $lables_pages->{ $as } ; 
 
@@ -149,6 +150,7 @@ sub doRenderPageTemplate {
          'lbls'   => 'list-labels'
       ,  'cloud'  => 'list-cloud' 
       ,  'table'  => 'list-grid' 
+      ,  'etable' => 'list-egrid' 
    };
    my $template = 'controls/' . $as_templates->{ $as } ; 
 

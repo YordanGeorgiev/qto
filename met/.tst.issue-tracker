@@ -1,17 +1,28 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/perl/issue_tracker/public/poc/vue-editable-component
+src/perl/issue_tracker/public/poc/vue-editable-component/vue-editable-component.html
+src/perl/issue_tracker/public/poc/vue-editable-component/app.js
+# ---
+src/perl/issue_tracker/public/poc/list-vue-grid-editable
+src/perl/issue_tracker/public/poc/list-vue-grid-editable/app.js
+src/perl/issue_tracker/public/poc/list-vue-grid-editable/list-vue-grid-editable.css
+src/perl/issue_tracker/public/poc/list-vue-grid-editable/list-vue-grid-editable.html
+# ---
 src/perl/issue_tracker/public/package.json
 # ---
 src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/controls/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud.html.ep
 src/perl/issue_tracker/templates/controls/list-grid.html.ep
+src/perl/issue_tracker/templates/controls/list-egrid.html.ep
 # ---
 src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/ListEGrid.pm
 # ---
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrJQCloud.pm

@@ -24,7 +24,12 @@
 			 <tbody>
 				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}">
 				  <td v-for="key in columns">
-					 {{entry[key]}}
+                 <div v-if="key === 'id'">
+                     {{entry[key]}}
+                 </div>
+                 <div v-else="key === 'id">
+                     <editable :content="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable>
+                 </div>
 				  </td>
 				</tr>
 			 </tbody>
@@ -67,6 +72,20 @@
 
 <script>
 if ( document.getElementById("spn_msg") ) {
+   // register the editable
+   Vue.component('editable', {
+     template: `
+       <div v-bind:id="id" contenteditable="true" @blur="emitChange">
+         {{ content }}
+       </div>
+     `,
+     props: ['content','id'],
+     methods: {
+       emitChange (ev) {
+         this.$emit('update', ev.target.textContent,ev.target.id)
+       }
+     }
+   })
    // register the grid component
    Vue.component('demo-grid', {
      template: '#grid-template',
@@ -121,6 +140,30 @@ if ( document.getElementById("spn_msg") ) {
        sortBy: function (key) {
          this.sortKey = key
          this.sortOrders[key] = this.sortOrders[key] * -1
+       },
+       updateItem (content,id) {
+         var arr = id.split('-')
+         var col = arr[0]
+         var dbid = arr[1]
+         console.log ( "new content: " + content ) 
+         console.log ( "column: " + arr[0] )
+         console.log ( "dbid: " + arr[1] )
+         console.log ( "should run: UPDATE monthly_issues set " + col + " = '" + content + "' WHERE id='" + dbid + "'" )
+         console.log ( "/dev_issue_tracker/update/monthly_issues?pick=id" + arr[1] ) 
+
+         /*
+            axios.post('/dev_issue_tracker/update/monthly_issues', {
+                attribute: col,
+                id: dbid
+            })
+            .then(function (response) {
+               console.log(response);
+            })
+            .catch(function (error) {
+               console.log(error);
+             });
+         */
+
        }
      }
    })
