@@ -41,17 +41,18 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js
 # ---
 src/perl/issue_tracker/public/css/thme-blue/screen/controls/app_list_grid.css
-src/perl/issue_tracker/public/css/thme-blue/screen/controls/jqcloud.css
-src/perl/issue_tracker/public/css/thme-blue/screen/controls/app_list_labels.css
-src/perl/issue_tracker/public/css/thme-blue/screen/site/site.css
 src/perl/issue_tracker/public/css/thme-blue/print/controls/app_list_grid.css
+src/perl/issue_tracker/public/css/thme-blue/screen/controls/jqcloud.css
 src/perl/issue_tracker/public/css/thme-blue/print/controls/jqcloud.css
+src/perl/issue_tracker/public/css/thme-blue/screen/controls/app_list_labels.css
 src/perl/issue_tracker/public/css/thme-blue/print/controls/app_list_labels.css
+src/perl/issue_tracker/public/css/thme-blue/screen/site/site.css
 src/perl/issue_tracker/public/css/thme-blue/print/site/site.css
 #---
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
 src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/Update.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
@@ -165,6 +166,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Db/In
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/RdrDbsFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
+src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/WtrDbsFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/WtrDbsFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb.pm
