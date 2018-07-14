@@ -60,7 +60,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       " ; 
 
       $sth = $dbh->prepare($str_sql);  
-      print "start RdrPostgresDb.pm : \n $str_sql \n stop RdrPostgresDb.pm" ; 
+      # debug print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
 
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
