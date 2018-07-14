@@ -60,6 +60,7 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectHide.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
 # --- 
 src/perl/issue_tracker/lib/Mojo/Chrome.pm
 src/perl/issue_tracker/lib/Test/Mojo/Role/Chrome.pm
@@ -273,6 +274,7 @@ src/sql/pgsql/dev_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/dev_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
+src/sql/pgsql/dev_issue_tracker/98.create-table-test_update_table.sql
 src/sql/pgsql/dev_issue_tracker/99.create-table-test_hierarchy_table.sql
 src/sql/pgsql/tst_issue_tracker
 src/sql/pgsql/tst_issue_tracker/00.create-db.pgsql
