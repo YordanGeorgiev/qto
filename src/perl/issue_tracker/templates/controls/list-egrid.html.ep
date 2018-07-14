@@ -215,7 +215,12 @@ if ( document.getElementById("spn_msg") ) {
 			.catch(function(error) {
 				document.getElementById("div_msg").innerHTML="<span id=\"spn_err_msg\">" + error.response.data.msg + '</span>'
     		}) 
+
+
 	  }
    });
 }
+      
+      var var_div_msg = document.getElementById('div_msg').style; var_div_msg.opacity = 1; // fade the err msg
+      (function fade(){(var_div_msg.opacity-=.1)<0?var_div_msg.display="none":setTimeout(fade,350)})();
 </script>

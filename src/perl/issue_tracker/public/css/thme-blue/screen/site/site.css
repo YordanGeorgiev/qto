@@ -1,21 +1,24 @@
-   html body div#div_msg {
-      position: absolute;
-      display: block ; 
-      min-height: 3% ; 
-      clear: both; 
-      text-align: center ; 
-      background-color: Aqua; 
-   }
+html body div#div_msg {
+    min-width: 40%; 
+    text-align: center; 
+    border-radius: 2px;
+    padding: 16px; 
+    position: fixed; 
+    z-index: 0; 
+    left: 25%; 
+    bottom: 95%; 
+}
 
-   #spn_err_msg {
-      position: absolute;
-      color: #FF0000 ; 
-   }
+#spn_err_msg {
+	color: #FF0000 ; 
+	background-color: #FFFF00;
+}
 
-   .div_spacer2 {
-      display: block ; 
-      clear: both ; 
-      height: 1% ; 
-      width: 100% ; 
-   }
+.div_spacer2 {
+	display: block ; 
+	clear: both ; 
+	height: 1% ; 
+	width: 100% ; 
+}
    
+
