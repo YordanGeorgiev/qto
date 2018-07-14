@@ -86,6 +86,10 @@ doRunIntegrationTests(){
    doLog "INFO START testing the list as table page"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListTable.pl
 	echo -e "\n\n\n" 
+  
+   doLog "INFO test the update action on the web-action"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
+	echo -e "\n\n\n" 
 
 	doLog "DEBUG STOP  doRunIntegrationTests"
 }
