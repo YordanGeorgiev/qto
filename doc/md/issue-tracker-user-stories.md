@@ -19,10 +19,13 @@ Table of Contents
       * [1.2.4. Tracking of issues per period](#124-tracking-of-issues-per-period)
     * [1.3. Security Management](#13-security-management)
       * [1.3.1. Users management](#131-users-management)
-      * [1.3.2. Add new users to a project](#132-add-new-users-to-a-project)
-      * [1.3.3. Update existing users in a project](#133-update-existing-users-in-a-project)
-      * [1.3.4. Delete existing users from a project](#134-delete-existing-users-from-a-project)
-      * [1.3.5. Search for users in a project](#135-search-for-users-in-a-project)
+          * [1.3.1.1. Add new users to a project](#1311-add-new-users-to-a-project)
+          * [1.3.1.2. Update existing users in a project](#1312-update-existing-users-in-a-project)
+          * [1.3.1.3. Delete existing users from a project](#1313-delete-existing-users-from-a-project)
+          * [1.3.1.4. Search for users in a project](#1314-search-for-users-in-a-project)
+      * [1.3.2. Users access management](#132-users-access-management)
+          * [1.3.2.1. Grant access per project](#1321-grant-access-per-project)
+          * [1.3.2.2. Personal data handling minimization](#1322-personal-data-handling-minimization)
   * [2. TEAM MEMBER BIZ PERSPECTIVE](#2-team-member-biz-perspective)
     * [2.1. Issues management](#21-issues-management)
       * [2.1.1. Create new issues](#211-create-new-issues)
@@ -63,73 +66,90 @@ Table of Contents
     * [4.4. System reliability](#44-system-reliability)
     * [4.5. Ease of use](#45-ease-of-use)
   * [5. ETL AND INTEGRATIONS PERSPECTIVE](#5-etl-and-integrations-perspective)
-    * [5.1. Xls-to-mysql-db hierarchical data load](#51-xls-to-mysql-db-hierarchical-data-load)
-      * [5.1.1. error reporting in xls-to-mysql-db hierarchical data load ](#511-error-reporting-in-xls-to-mysql-db-hierarchical-data-load-)
-    * [5.2. Xls-to-postgres-db hierarchical data load](#52-xls-to-postgres-db-hierarchical-data-load)
-      * [5.2.1. error reporting in xls-to-postgres-db hierarchical data load ](#521-error-reporting-in-xls-to-postgres-db-hierarchical-data-load-)
+    * [5.1. Dabase to json files data load](#51-dabase-to-json-files-data-load)
+    * [5.2. Json files to db data load](#52-json-files-to-db-data-load)
+    * [5.3. Xls-to-mysql-db hierarchical data load](#53-xls-to-mysql-db-hierarchical-data-load)
+      * [5.3.1. error reporting in xls-to-mysql-db hierarchical data load ](#531-error-reporting-in-xls-to-mysql-db-hierarchical-data-load-)
+    * [5.4. Xls-to-postgres-db hierarchical data load](#54-xls-to-postgres-db-hierarchical-data-load)
+      * [5.4.1. error reporting in xls-to-postgres-db hierarchical data load ](#541-error-reporting-in-xls-to-postgres-db-hierarchical-data-load-)
   * [6. DEVOPS PERSPECTIVE](#6-devops-perspective)
     * [6.1. System verifiability and testability](#61-system-verifiability-and-testability)
       * [6.1.1. Clarity and breavity of the end to end tests](#611-clarity-and-breavity-of-the-end-to-end-tests)
       * [6.1.2. Abort end-to-end tests on single test fail](#612-abort-end-to-end-tests-on-single-test-fail)
-      * [6.1.3. Control flow logging](#613-control-flow-logging)
-      * [6.1.4. Single entry point for end to end tests](#614-single-entry-point-for-end-to-end-tests)
-      * [6.1.5. Tool run log to human readable description](#615-tool-run-log-to-human-readable-description)
-      * [6.1.6. Userstories to test case relations](#616-userstories-to-test-case-relations)
-          * [6.1.6.1. UUID tracability for test files and userstories](#6161-uuid-tracability-for-test-files-and-userstories)
-      * [6.1.7. Components start run message print](#617-components-start-run-message-print)
-      * [6.1.8. Tool exit with exit code and exit message](#618-tool-exit-with-exit-code-and-exit-message)
-      * [6.1.9. Execution path tracing by UUID's](#619-execution-path-tracing-by-uuid's)
-    * [6.2. Manage details of issues with a single txt file](#62-manage-details-of-issues-with-a-single-txt-file)
-      * [6.2.1. Issues directories naming conventions](#621-issues-directories-naming-conventions)
-      * [6.2.2. Issues files naming conventions](#622-issues-files-naming-conventions)
-      * [6.2.3. Issues file open](#623-issues-file-open)
-      * [6.2.4. Issues files history](#624-issues-files-history)
-      * [6.2.5. Issues files naming conventions](#625-issues-files-naming-conventions)
-          * [6.2.5.1. Issues files naming conventions for the  project](#6251-issues-files-naming-conventions-for-the-project)
-          * [6.2.5.2. Issues files naming conventions for current date](#6252-issues-files-naming-conventions-for-current-date)
-          * [6.2.5.3. Issues files naming conventions for the time frame](#6253-issues-files-naming-conventions-for-the-time-frame)
-    * [6.3. Issues transformations](#63-issues-transformations)
-      * [6.3.1. 
-Load by txt-to-db action](#631-
+    * [6.2. Logging](#62-logging)
+      * [6.2.1. Control flow logging](#621-control-flow-logging)
+      * [6.2.2. Log entries format configuration](#622-log-entries-format-configuration)
+      * [6.2.3. Single entry point for end to end tests](#623-single-entry-point-for-end-to-end-tests)
+      * [6.2.4. Tool run log to human readable description](#624-tool-run-log-to-human-readable-description)
+    * [6.3. Application's source code and documentation integrity](#63-application's-source-code-and-documentation-integrity)
+      * [6.3.1. Userstories to test case relations](#631-userstories-to-test-case-relations)
+      * [6.3.2. UUID tracability for test files and userstories](#632-uuid-tracability-for-test-files-and-userstories)
+      * [6.3.3. Components start run message print](#633-components-start-run-message-print)
+      * [6.3.4. Tool exit with exit code and exit message](#634-tool-exit-with-exit-code-and-exit-message)
+      * [6.3.5. Execution path tracing by UUID's](#635-execution-path-tracing-by-uuid's)
+      * [6.3.6. Issues directories naming conventions](#636-issues-directories-naming-conventions)
+      * [6.3.7. Issues files naming conventions](#637-issues-files-naming-conventions)
+      * [6.3.8. Issues file open](#638-issues-file-open)
+      * [6.3.9. Issues files history](#639-issues-files-history)
+      * [6.3.10. Issues files naming conventions](#6310-issues-files-naming-conventions)
+          * [6.3.10.1. Issues files naming conventions for the  project](#63101-issues-files-naming-conventions-for-the-project)
+          * [6.3.10.2. Issues files naming conventions for current date](#63102-issues-files-naming-conventions-for-current-date)
+          * [6.3.10.3. Issues files naming conventions for the time frame](#63103-issues-files-naming-conventions-for-the-time-frame)
+    * [6.4. Issues transformations](#64-issues-transformations)
+      * [6.4.1. 
+Load by txt-to-db action](#641-
 load-by-txt-to-db-action)
-          * [6.3.1.1. Load issues file from file system to db](#6311-load-issues-file-from-file-system-to-db)
-      * [6.3.2. Load issues by db-to-xls action](#632-load-issues-by-db-to-xls-action)
-      * [6.3.3. Load issues by xls-to-db action](#633-load-issues-by-xls-to-db-action)
-          * [6.3.3.1. Load issues by xls-to-db action for insert or upset](#6331-load-issues-by-xls-to-db-action-for-insert-or-upset)
-          * [6.3.3.2. Load issues by xls-to-db action by truncating or not the loadable table](#6332-load-issues-by-xls-to-db-action-by-truncating-or-not-the-loadable-table)
-      * [6.3.4. Load issues by db-to-txt](#634-load-issues-by-db-to-txt)
-          * [6.3.4.1. xls-to-db action load sort by issues prio attribute](#6341-xls-to-db-action-load-sort-by-issues-prio-attribute)
-          * [6.3.4.2. db-to-txt action load sort by issues start_time attribute](#6342-db-to-txt-action-load-sort-by-issues-start_time-attribute)
-          * [6.3.4.3. db-to-txt action load sort by issues start_time attribute](#6343-db-to-txt-action-load-sort-by-issues-start_time-attribute)
-      * [6.3.5. Load issues file from db to file system](#635-load-issues-file-from-db-to-file-system)
-    * [6.4. issues file filtering](#64-issues-file-filtering)
-    * [6.5. Single shell call for projects switching](#65-single-shell-call-for-projects-switching)
-    * [6.6. Issues publishing from shell calls](#66-issues-publishing-from-shell-calls)
-      * [6.6.1. Issues publishing in e-mail format](#661-issues-publishing-in-e-mail-format)
-      * [6.6.2. Issues handling in google sheet format](#662-issues-handling-in-google-sheet-format)
-      * [6.6.3. Issues publishing in google calendar format](#663-issues-publishing-in-google-calendar-format)
-    * [6.7. Metadata handling](#67-metadata-handling)
+          * [6.4.1.1. Load issues file from file system to db](#6411-load-issues-file-from-file-system-to-db)
+      * [6.4.2. Load issues by db-to-xls action](#642-load-issues-by-db-to-xls-action)
+      * [6.4.3. Load issues by xls-to-db action](#643-load-issues-by-xls-to-db-action)
+          * [6.4.3.1. Load issues by xls-to-db action for insert or upset](#6431-load-issues-by-xls-to-db-action-for-insert-or-upset)
+          * [6.4.3.2. Load issues by xls-to-db action by truncating or not the loadable table](#6432-load-issues-by-xls-to-db-action-by-truncating-or-not-the-loadable-table)
+      * [6.4.4. Load issues by db-to-txt](#644-load-issues-by-db-to-txt)
+          * [6.4.4.1. xls-to-db action load sort by issues prio attribute](#6441-xls-to-db-action-load-sort-by-issues-prio-attribute)
+          * [6.4.4.2. db-to-txt action load sort by issues start_time attribute](#6442-db-to-txt-action-load-sort-by-issues-start_time-attribute)
+          * [6.4.4.3. db-to-txt action load sort by issues start_time attribute](#6443-db-to-txt-action-load-sort-by-issues-start_time-attribute)
+      * [6.4.5. Load issues file from db to file system](#645-load-issues-file-from-db-to-file-system)
+    * [6.5. issues file filtering](#65-issues-file-filtering)
+    * [6.6. Single shell call for projects switching](#66-single-shell-call-for-projects-switching)
+    * [6.7. Issues publishing from shell calls](#67-issues-publishing-from-shell-calls)
+      * [6.7.1. Issues publishing in e-mail format](#671-issues-publishing-in-e-mail-format)
+      * [6.7.2. Issues handling in google sheet format](#672-issues-handling-in-google-sheet-format)
+      * [6.7.3. Issues publishing in google calendar format](#673-issues-publishing-in-google-calendar-format)
+    * [6.8. Metadata handling](#68-metadata-handling)
   * [7. UI PERSPECTIVE COMMON FOR ALL ROLES](#7-ui-perspective-common-for-all-roles)
     * [7.1. UI Performance](#71-ui-performance)
       * [7.1.1. UI Page load times](#711-ui-page-load-times)
-    * [7.2. Mobile UI](#72-mobile-ui)
-    * [7.3. UI for Projects switching](#73-ui-for-projects-switching)
-    * [7.4. UI for Time management ](#74-ui-for-time-management-)
-    * [7.5. items listing in table format](#75-items-listing-in-table-format)
-      * [7.5.1. Automatic issue items sequencing](#751-automatic-issue-items-sequencing)
-      * [7.5.2. items re-ordering by desired or defaut attribute in list view](#752-items-re-ordering-by-desired-or-defaut-attribute-in-list-view)
-      * [7.5.3. items list default row height](#753-items-list-default-row-height)
-      * [7.5.4. Drag and drop columns in table to reorder columns order](#754-drag-and-drop-columns-in-table-to-reorder-columns-order)
-    * [7.6. items data transfer between different projects](#76-items-data-transfer-between-different-projects)
-    * [7.7. Issues export to Google calendar](#77-issues-export-to-google-calendar)
-      * [7.7.1. Copy an issue-tracker instance issue to  a google calendar event](#771-copy-an-issue-tracker-instance-issue-to-a-google-calendar-event)
-    * [7.8. Issues import from Google calendar](#78-issues-import-from-google-calendar)
-    * [7.9. Access issues txt format from email](#79-access-issues-txt-format-from-email)
-    * [7.10. Access issues data from Google sheet](#710-access-issues-data-from-google-sheet)
-      * [7.10.1. Apply publish filter while posting to Google Sheet](#7101-apply-publish-filter-while-posting-to-google-sheet)
+      * [7.1.2. UI Page parts load times](#712-ui-page-parts-load-times)
+    * [7.2. Items search](#72-items-search)
+      * [7.2.1. Omnibox autocomplete for item-name](#721-omnibox-autocomplete-for-item-name)
+      * [7.2.2. Omnibox autocomplete for with &lt;&lt;atribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;](#722-omnibox-autocomplete-for-with-atribute-name-operator-attribute-value)
+    * [7.3. Items listing](#73-items-listing)
+      * [7.3.1. items listing in table format](#731-items-listing-in-table-format)
+          * [7.3.1.1. Automatic issue items sequencing](#7311-automatic-issue-items-sequencing)
+          * [7.3.1.2. items re-ordering by desired or defaut attribute in list view](#7312-items-re-ordering-by-desired-or-defaut-attribute-in-list-view)
+          * [7.3.1.3. items list default row height](#7313-items-list-default-row-height)
+          * [7.3.1.4. Drag and drop columns in table to reorder columns order](#7314-drag-and-drop-columns-in-table-to-reorder-columns-order)
+          * [7.3.1.5. Columns resizing in table listing](#7315-columns-resizing-in-table-listing)
+    * [7.4. Items editing](#74-items-editing)
+      * [7.4.1. Items editing in list as table view](#741-items-editing-in-list-as-table-view)
+          * [7.4.1.1. Items editing in list as table view in-line](#7411-items-editing-in-list-as-table-view-in-line)
+          * [7.4.1.2. Items editing in list as table view via form](#7412-items-editing-in-list-as-table-view-via-form)
+          * [7.4.1.3. Refresh list on item edit](#7413-refresh-list-on-item-edit)
+    * [7.5. Items creation](#75-items-creation)
+    * [7.6. Items deletion](#76-items-deletion)
+    * [7.7. Mobile UI](#77-mobile-ui)
+    * [7.8. UI for accessing different projects](#78-ui-for-accessing-different-projects)
+    * [7.9. UI for Time management in Google Calendar](#79-ui-for-time-management-in-google-calendar)
+    * [7.10. items data transfer between different projects](#710-items-data-transfer-between-different-projects)
+    * [7.11. Issues export to Google calendar](#711-issues-export-to-google-calendar)
+      * [7.11.1. Copy an issue-tracker instance issue to  a google calendar event](#7111-copy-an-issue-tracker-instance-issue-to-a-google-calendar-event)
+    * [7.12. Issues import from Google calendar](#712-issues-import-from-google-calendar)
+    * [7.13. Access issues txt format from email](#713-access-issues-txt-format-from-email)
+    * [7.14. Access issues data from Google sheet](#714-access-issues-data-from-google-sheet)
+      * [7.14.1. Apply publish filter while posting to Google Sheet](#7141-apply-publish-filter-while-posting-to-google-sheet)
   * [8. UI DEVELOPER PERSPECTIVE](#8-ui-developer-perspective)
     * [8.1. Testability](#81-testability)
-    * [8.2. Multiple control paths for single web action entry point](#82-multiple-control-paths-for-single-web-action-entry-point)
+    * [8.2. Code traceability](#82-code-traceability)
     
 
 
@@ -250,33 +270,54 @@ As an team leader
 In order to keep my business data secure 
 I wanto to be able decide which users to which projects will have access to
 
-#### 1.3.2. Add new users to a project
+##### 1.3.1.1. Add new users to a project
     
 
 As an team leader
 In order to be able to add new users into a project
 I wanto to be able to add them via the UI only by their e-mail address. 
 
-#### 1.3.3. Update existing users in a project
+##### 1.3.1.2. Update existing users in a project
     
 
 As an team leader
 In order to be able to update the existing users from a project
 I wanto to be able to update their details via the UI only by their e-mail address. 
 
-#### 1.3.4. Delete existing users from a project
+##### 1.3.1.3. Delete existing users from a project
     
 
 As an team leader
 In order to be able to delete the existing users from a project
 I wanto to be able to delete their details via the UI only by their e-mail address. 
 
-#### 1.3.5. Search for users in a project
+##### 1.3.1.4. Search for users in a project
     
 
 As an team leader
 In order to be able to search the existing users from a project
 I wanto to be able to search their details via the UI only by their e-mail address. 
+
+#### 1.3.2. Users access management
+    
+
+As a team leader 
+In order provide the persons and programs access to my project
+I want to provide read, write access to the data and execute access ( run DDL's) per table
+
+##### 1.3.2.1. Grant access per project
+    
+
+As a team leader 
+In order to enroll authenticated users into the project I am responsible to 
+I want to be able to grant them with access by only writing their e-mail into a text field and clicking invite button. 
+
+##### 1.3.2.2. Personal data handling minimization
+    
+
+As a team leader 
+In order to avoid legal obligations and complex procedures while handling personal data
+I want to be able to handle the interpersonal exchange of data by collecting ONLY the e-mail of the persons or programs participating in the project
 
 ## 2. TEAM MEMBER BIZ PERSPECTIVE
     
@@ -471,8 +512,6 @@ In order to be prepared for issues such as ( events , tasks ) which have start a
 I wanto to be able to save their start_time and stop_time per issue in every possible interface
 
 #### 2.6.1. time centric planning
-    bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d today
-    bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d tomorrow
     
 
 As an issues-manager 
@@ -480,8 +519,7 @@ In order to be able to plan the issues data for a certain term - day,week,month,
 I wanto to be able to perform all the features of the issue-tracker on that specific period regardless whether it is today , in the past or in the future
 
 #### 2.6.2. time centric reporting
-    bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d yesterday
-    bash src/bash/issue-tracker/issue-tracker.sh -a increase-date -d yesterday
+    
 
 As an issues-manager 
 In order to be able to report the issues data for for a certain term - day,week,month,year,quinquennial or decade
@@ -530,12 +568,11 @@ In order to complete the tasks and activities of my role
 I want to have a nice user experience while using the issue-tracker application.
 
 ### 4.1. System deployability
-    # https://serverfault.com/questions/364452/silent-and-scripted-install-of-cpan-and-perl-modules
-    # https://serverfault.com/a/815650/33346
+    
 
 As the SysAdmin 
-In order to quickly take into use a new product instance of the issue-tracker application running on a separate host accessible via ssh
-I wanto to run a single deploy-host action - which will installl the required OS libraries , Postgres and Perl modules for the operation of the tool silently. 
+In order to be able to provide access to a new database driven application to my organisation
+I wanto to be able to deploy an instance of the issue-tracker application and spawn a new project out of it in less than a hour from a clean Linux host. 
 
 ### 4.2. System performance
     
@@ -572,7 +609,21 @@ As an ETL and integrations specialist
 In order to complete the tasks and activities of my role
 I want to have a nice user experience while using the issue-tracker application.
 
-### 5.1. Xls-to-mysql-db hierarchical data load
+### 5.1. Dabase to json files data load
+    
+
+As the ETL and Integration Specialist 
+In order to be able to quickly move all the project data into a different storage format 
+I wanto to be able to export the project db data into json files - one per table via a single shell call. 
+
+### 5.2. Json files to db data load
+    
+
+As the ETL and Integration Specialist 
+In order to be able to quickly move all the project data from json files into the db tables
+I wanto to be able to import the exported json files ( one per table ) into the database. 
+
+### 5.3. Xls-to-mysql-db hierarchical data load
     
 
 As the Data Integrator
@@ -580,7 +631,7 @@ In order to be efficient while handling the System's hierarchical data
 I want to be able to
 use a single shell call to load all or chosen table(s) to the mysql db 
 
-#### 5.1.1. error reporting in xls-to-mysql-db hierarchical data load 
+#### 5.3.1. error reporting in xls-to-mysql-db hierarchical data load 
     
 
 As the Data Integrator
@@ -589,7 +640,7 @@ I want to be able to see :
  - which table's load failed
  - what was the error in failed to 
 
-### 5.2. Xls-to-postgres-db hierarchical data load
+### 5.4. Xls-to-postgres-db hierarchical data load
     
 
 As the Data Integrator
@@ -597,7 +648,7 @@ In order to be efficient while handling the System's hierarchical data
  I want to be able to
 use a single shell call to load all or chosen table(s) to the postgres db 
 
-#### 5.2.1. error reporting in xls-to-postgres-db hierarchical data load 
+#### 5.4.1. error reporting in xls-to-postgres-db hierarchical data load 
     
 
 As the Data Integrator
@@ -636,77 +687,95 @@ As an ITOPS
 In order to be able to run continuously end-to-end tests and skip for several runs failing teists
 I want to be able to configure the single e2e entry point script to skip certain tests, but report me what was skipped. 
 
-#### 6.1.3. Control flow logging
+### 6.2. Logging
+    
+
+As a Full-Stack Developer
+In order to quickly understand what is hapening in the application
+I wanto to have easy-to-use and highly customizable logging to both file and console.
+
+#### 6.2.1. Control flow logging
     
 
 As a CLI user 
 In order to be able to understand what the issue tracker tool is executing
 I wanto to have configurable logging with stderr, stdout and file output
 
-#### 6.1.4. Single entry point for end to end tests
+#### 6.2.2. Log entries format configuration
+    
+
+As a Full-Stack Developer
+In order to be able to get the msg of any component of the application 
+I want each log entry to content:
+- the type of the entry - log , error, warn , fatal
+- the timestamp of the log entry event 
+- the name of the componet issueing the msg and the line num of the src file 
+- the msg as it was echoed by the application
+
+#### 6.2.3. Single entry point for end to end tests
     
 
 As an DevOps
 In order to be able to verify all the features and functionalities of the tool within the System
 I want to run a single shell call running all the end-to-end test of the application ensuring the prespecified features and functionalities.  
 
-#### 6.1.5. Tool run log to human readable description
+#### 6.2.4. Tool run log to human readable description
     
 
 As a CLI user 
 In order to be able to get a human readable description of the log of the specific run of the tool
 I wanto to be able to translate the recorded uuid's in the execution run log to their respective records
 
-#### 6.1.6. Userstories to test case relations
+### 6.3. Application's source code and documentation integrity
+    
+
+As a Full-Stack Developer
+In order to make easy the entry of other developers to the projects
+I want to be able to point to written documentation for user-stories, issues, features and functionalities, which will be linked to parts of the source code. 
+
+#### 6.3.1. Userstories to test case relations
     
 
 As a Developer 
 In order to ensure the stability and expandability of the application
 I want to be able to run for each implemented userstory a single test
 
-##### 6.1.6.1. UUID tracability for test files and userstories
+#### 6.3.2. UUID tracability for test files and userstories
     
 
 As a Developer 
 In order to identify each userstory to be tested with its according test
 I want to be able to track each userstory or test code entry point file by UUID.
 
-#### 6.1.7. Components start run message print
+#### 6.3.3. Components start run message print
     
 
 As a CLI user 
 In order to know when a component has been started
 I wanto to be able to see the "START &lt;&lt;COMPONENT_NAME&gt;&gt; on either the STDOUT or the log file of the component
 
-#### 6.1.8. Tool exit with exit code and exit message
+#### 6.3.4. Tool exit with exit code and exit message
     
 
 As a CLI user or calling calling automated component
 In order to be able to understand whether or not the execution of the call to the tool was successful or not 
 I wanto to get the exit code from the tool execution and see the exit message
 
-#### 6.1.9. Execution path tracing by UUID's
+#### 6.3.5. Execution path tracing by UUID's
     
 
 As a DevOps operator
 Foreach execution run of the tool
 I want to be able to walk trough the execution path of the tool programatically. 
 
-### 6.2. Manage details of issues with a single txt file
-    
-
-As a CLI user 
-In order to be able quickly to view my issues
-I wanto to be able to update the names , statuses and categories of my daily,weekly,monthly, yearly and decadally issues by simply editing the issues term file
-
-#### 6.2.1. Issues directories naming conventions
+#### 6.3.6. Issues directories naming conventions
     
 
 As a issues manager
 In order to be able to manage lots of issues from different projects stored in plain txt files 
 I wanto to be able to store large quantity of issues txt files by their date on daily, weekly, monthly, yearly and decadally basis
 
-#### 6.2.2. Issues files naming conventions
+#### 6.3.7. Issues files naming conventions
     
 
 As a issues manager
@@ -714,28 +783,28 @@ In order to be able to manage lots of issues from different projects stored in p
 and open them quickly
 I wanto to be able to just type the first letter in a text editor supporting select opened file by typing its first letter and jump to that file
 
-#### 6.2.3. Issues file open
+#### 6.3.8. Issues file open
     
 
 As a CLI user 
 In order to be able quickly to access my issues ( daily , weekly, monthly , yearly )
 I wanto to be able to view my daily issues by simply opening a single txt file
 
-#### 6.2.4. Issues files history
+#### 6.3.9. Issues files history
     
 
 As a CLI user 
 In order to be able quickly to search trough old issues 
 I wanto to be able to access old issues files by their date held in their file names from the file system
 
-#### 6.2.5. Issues files naming conventions
+#### 6.3.10. Issues files naming conventions
     
 
 As a DevOps 
 In order to be able quickly to access and manage programatically issues
 I wanto to be able to quess the file paths of the issues file by their date 
 
-##### 6.2.5.1. Issues files naming conventions for the  project
+##### 6.3.10.1. Issues files naming conventions for the  project
     
 
 As a DevOps 
@@ -743,7 +812,7 @@ In order to be able quickly to switch between different projects
 I wanto to have the project name of the issues file in its name as the first token as follows:
 &lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
 
-##### 6.2.5.2. Issues files naming conventions for current date
+##### 6.3.10.2. Issues files naming conventions for current date
     
 
 As a DevOps 
@@ -751,7 +820,7 @@ In order to be able quickly and programmatically to go back in the history
 I wanto to have the current registration date in the file name and path
 &lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
 
-##### 6.2.5.3. Issues files naming conventions for the time frame
+##### 6.3.10.3. Issues files naming conventions for the time frame
     
 
 As a DevOps 
@@ -759,7 +828,7 @@ In order to be able quickly and programmatically to go back in the history
 I wanto to have the current registration date in the file name and path
 &lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt; ( daily|weekly|monthly|yearly) &gt;&gt;.txt
 
-### 6.3. Issues transformations
+### 6.4. Issues transformations
     
 
 As a cli user of the issue-tracker application 
@@ -771,7 +840,7 @@ db-to-xls - to load a xls file from db table to xls
 xls-to-db - to load a xls file with issues to an issues taable in db
 db-to-txt - to load a txt file from db table 
 
-#### 6.3.1. 
+#### 6.4.1. 
 Load by txt-to-db action
     
 
@@ -779,7 +848,7 @@ As a cli user of the issue-tracker application
 in order to store my issues in structured form to db for further processing
 I want to be able to load any issue file with a single line shell call to a db 
 
-##### 6.3.1.1. Load issues file from file system to db
+##### 6.4.1.1. Load issues file from file system to db
     
 
 As a cli user of the issue-tracker application 
@@ -790,14 +859,14 @@ I want to:
 - and than load any issue file with a single line shell call to a db
 - and optionally specify the period of the issues file ( daily , weekly , monthly , yearly ) with daily as default
 
-#### 6.3.2. Load issues by db-to-xls action
+#### 6.4.2. Load issues by db-to-xls action
     
 
 As a cli user of the issue-tracker application 
 in order to be able to sort and edit my issues in Excel
 I want to be able to unload my issues from one or many tables in the db at once in a single shell call
 
-#### 6.3.3. Load issues by xls-to-db action
+#### 6.4.3. Load issues by xls-to-db action
     
 
 As a cli user of the issue-tracker application 
@@ -805,7 +874,7 @@ in order to store my issues in structured form to db for further processing afte
 I want to be able to load my latest xls file with a single line shell call to a db 
 by choosing the names of the tables to load 
 
-##### 6.3.3.1. Load issues by xls-to-db action for insert or upset
+##### 6.4.3.1. Load issues by xls-to-db action for insert or upset
     
 
 As a cli user of the issue-tracker application 
@@ -813,7 +882,7 @@ in order to insert or upsert my issues in structured form to db for further proc
 I want to be able to load my latest xls file with a single line shell call to a db 
 by choosing the names of the tables to load and specifying upsert by adding the guid column to the xls sheet 
 
-##### 6.3.3.2. Load issues by xls-to-db action by truncating or not the loadable table
+##### 6.4.3.2. Load issues by xls-to-db action by truncating or not the loadable table
     
 
 As a cli user of the issue-tracker application 
@@ -821,7 +890,7 @@ in order to store my issues in structured form to db for further processing afte
 I want to be able to load my latest xls file with a single line shell call to a db 
 by choosing the names of the tables to load 
 
-#### 6.3.4. Load issues by db-to-txt
+#### 6.4.4. Load issues by db-to-txt
     
 
 As a cli user of the issue-tracker application 
@@ -830,7 +899,7 @@ I want to :
 - be able to load the issues for a period from the db to a file
 - by choosing the names of the tables to load
 
-##### 6.3.4.1. xls-to-db action load sort by issues prio attribute
+##### 6.4.4.1. xls-to-db action load sort by issues prio attribute
     
 
 As a cli user of the issue-tracker application 
@@ -840,7 +909,7 @@ I want to :
 - be able to specify the order in the issues txt files lines to be based on the prio attribute 
 by choosing the names of the tables to load
 
-##### 6.3.4.2. db-to-txt action load sort by issues start_time attribute
+##### 6.4.4.2. db-to-txt action load sort by issues start_time attribute
     
 
 As a cli user of the issue-tracker application 
@@ -850,7 +919,7 @@ I want to :
 - be able to specify the order in the issues txt files lines to be based on the start_time attribute ( start_time could be in the following format YYYY-mm-dd HH:MM in start_time or HH:MM  )
 by choosing the names of the tables to load
 
-##### 6.3.4.3. db-to-txt action load sort by issues start_time attribute
+##### 6.4.4.3. db-to-txt action load sort by issues start_time attribute
     
 
 As a cli user of the issue-tracker application 
@@ -859,7 +928,7 @@ in order to view the issues by categories
 I want to :
 - be able to specify the order in the issues txt files lines to be based on the category attribute
 
-#### 6.3.5. Load issues file from db to file system
+#### 6.4.5. Load issues file from db to file system
     
 
 As a cli user of the issue-tracker application 
@@ -868,14 +937,14 @@ I want to :
 - be able to load the issues for a period from the db to a file
 - and optionally specify the period of the issues file ( daily , weekly , monthly , yearly ) with daily as default
 
-### 6.4. issues file filtering
+### 6.5. issues file filtering
     
 
 As a CLI user 
 In order to filter quickly my issues 
 I wanto to be able to show the issues with their categories of only certain status
 
-### 6.5. Single shell call for projects switching
+### 6.6. Single shell call for projects switching
     
 
 As an issues-manager 
@@ -883,35 +952,35 @@ In order to be able to switch between different projects quickly
 I wanto to be able to issue a single shell call for loading a project's configuration
 and run the issue-handler against this pre-loaded configurtion
 
-### 6.6. Issues publishing from shell calls
+### 6.7. Issues publishing from shell calls
     
 
 As a DevOps 
 In order to be able to quickly share the current issues data in tabular format
 I wanto to be able to issue a single shell call for copying the current items data to a medium by specifying the tables to be published
 
-#### 6.6.1. Issues publishing in e-mail format
+#### 6.7.1. Issues publishing in e-mail format
     
 
 As a DevOps 
 In order to be able to quickly share the current issues data in email format
 I wanto to be able to issue a single shell call for copying the current items data to email by specifying the tables to be published
 
-#### 6.6.2. Issues handling in google sheet format
+#### 6.7.2. Issues handling in google sheet format
     
 
 As a DevOps 
 In order to be able to quickly share the current issues data in tabular format
 I wanto to be able to issue a single shell call for copying the current items data to google sheet by specifying the tables to be published
 
-#### 6.6.3. Issues publishing in google calendar format
+#### 6.7.3. Issues publishing in google calendar format
     
 
 As a DevOps 
 In order to be able to quickly share the current issues data in google calendar format
 I wanto to be able to issue a single shell call for copying the current items data to google calenda by specifying the tables to be published for the items having set start_time and stop_time attributes. 
 
-### 6.7. Metadata handling
+### 6.8. Metadata handling
     
 
 As a DevOps 
@@ -938,44 +1007,60 @@ I wanto to to have responsive and quick UI.
 
 As an UI user of the issue-tracker application 
 In order to enjoy the usage of the tool and interact efficiently   
-I wanto to to have a maximum page load time on efficient network less than 0.5 seconds and preferably even 0.3 seconds
+I wanto to to have a maximum page load time on efficient network less than 0.5 seconds and preferably even less than 0.3 seconds
 
-### 7.2. Mobile UI
+#### 7.1.2. UI Page parts load times
     
 
 As an UI user of the issue-tracker application 
-In order to enjoy to be able to access it quickly on the go
-I wanto to be able to use the same UI on an advanced mobile phones. 
+In order to enjoy the usage of the tool and interact efficiently   
+I wanto to to have a maximum page part load time on efficient network less than 0.5 seconds and preferably even less than 0.3 seconds
 
-### 7.3. UI for Projects switching
+### 7.2. Items search
     
 
 As an issue-tracker ui user 
-In order to be able to quickly swith between projects
-I wanto to be able to access a web page providing autocomplete to preloaded configuration entries for the different projects
+In order to be able to search ANY items ( issues, problems, ideas etc. ) 
+I want to have a pop-up search omnibox with dimmed background providing with interactive autocomplete, which would assist me in specifying the search criteria for any item I want to list. 
 
-### 7.4. UI for Time management 
+#### 7.2.1. Omnibox autocomplete for item-name
     
 
 As an issue-tracker ui user 
-In order to be prepare for issues such as ( events , tasks ) which have start and stop time
-I wanto to be able to view the issues with the same title, start_time and stop_time in google calendar
+In order to be able to quickly specify the name of the item I am searching for ( issue,problem,idea etc. )
+I want to be able to use a special natural-language like syntax in the autocomplete when the omnibox appears,
+by having the System displayed the "for:" string and starting providing me autocomplete for the items names in a dropbox list I could choose from. 
 
-### 7.5. items listing in table format
+#### 7.2.2. Omnibox autocomplete for with &lt;&lt;atribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;
+    
+
+As an issue-tracker ui user 
+In order to be able to quickly specify the search criteria to re-strict the already chosen item to search for 
+I want to be able to use a special natural-language like syntax in the autocomplete when the omnibox appears,
+by having the System displayed the "with:type-here-the-attribute op:type-here-operator val:type-here-the-value" string and starting providing me autocomplete for the filtering criteria. 
+
+### 7.3. Items listing
+    
+
+As an issue-tracker ui user 
+In order to be able to quickly see as much items ( issues, problems, ideas etc. ) 
+I want to list the items in a web page according to the filtering criteria I might have specified earlier on … 
+
+#### 7.3.1. items listing in table format
     
 
 As an UI user of the issue-tracker application 
 In order to quickly display as much items ( issues,problems, questions, etc. ) as possible
 I want to be able to list the items per period. 
 
-#### 7.5.1. Automatic issue items sequencing
+##### 7.3.1.1. Automatic issue items sequencing
     
 
 As an UI user of the issue-tracker application 
 In order to save time while arranging all the different issue items
 I want the System to automatically sequence each item in list view by a defaut incremental sequence unless I have specified my own sequence. 
 
-#### 7.5.2. items re-ordering by desired or defaut attribute in list view
+##### 7.3.1.2. items re-ordering by desired or defaut attribute in list view
     
 
 As a UI user 
@@ -983,28 +1068,108 @@ In order to prioritize and re-arrange to a logical sequence my items
 I wanto to be able to drag and drop items up and down , 
 which would correspondingly increase or decrease their attribute to which they are currently sorted or ordered by. 
 
-#### 7.5.3. items list default row height
+##### 7.3.1.3. items list default row height
     
 
 As a UI user 
 In order to quickly comprehend the data in the lists  
 I wanto each row of the ui to have a certain minimum height and whenever the data cannot fit into this height to be greater than it
 
-#### 7.5.4. Drag and drop columns in table to reorder columns order
+##### 7.3.1.4. Drag and drop columns in table to reorder columns order
     
 
 As the UI user of an issue-tracker instance 
 In order to list the attributes of an item in a order significant for the moment
 I want to be able to drag and drop columns in the table so that the System would re-render the table with the new order. 
 
-### 7.6. items data transfer between different projects
+##### 7.3.1.5. Columns resizing in table listing
+    
+
+As the UI user of an issue-tracker instance 
+In order to see better the contents in the table columns 
+I want to be able to resize the columns width ( excel like or by other means ) 
+
+### 7.4. Items editing
+    
+
+As an UI user of the issue-tracker application 
+In order to update the application data via the UI 
+I wanto to be able to edit the data for ANY of the items in the application I have access to. 
+
+#### 7.4.1. Items editing in list as table view
+    
+
+As an UI user of the issue-tracker application 
+In order to be able to quickly edit the data of ANY item I
+I want to be able to quickly navigate to the item to edit and update the data of exactly this item 
+
+##### 7.4.1.1. Items editing in list as table view in-line
+    
+
+As an UI user of the issue-tracker application 
+In order to be able to quickly edit the data of ANY item I
+I want to be able to quickly navigate to the cell of the table of the data I want to edit
+and update the data by clicking with the mouse or navigating with the tab and typing the new data, so that when navigating out of the cell the data will be updated unless the Esc case has been clicked. 
+
+##### 7.4.1.2. Items editing in list as table view via form
+    
+
+As an UI user of the issue-tracker application 
+In order to be able to quickly edit the data of ANY item 
+I want to be able to click on the edit button , fill in the poping-up dialog with the form of the full data of the item and clicking the Save button. 
+
+##### 7.4.1.3. Refresh list on item edit
+    
+
+As an UI user of the issue-tracker application 
+In order to see the updated list after editing it
+I want the System to refresh the list according to the new updated value - that is for example if the order was set to be prio and the prio was updated, the page should be refreshed with the new prio order applied
+
+### 7.5. Items creation
+    
+
+As an UI user of the application 
+I order to create new items in the application 
+I wanto to be able to create them via the UI 
+by clicking "create new button" and filling as few as possible data entries and clicking a Save button for ANY of the items in the application. 
+
+### 7.6. Items deletion
+    
+
+As an UI user of the application 
+I order to delete existing items in the projecg 
+I wanto to be able to delete them via the UI 
+by clicking a "delete " button and confirming the deletion for the item. 
+
+### 7.7. Mobile UI
+    
+
+As an UI user of the issue-tracker application 
+In order to enjoy to be able to access it quickly on the go
+I wanto to be able to use the same UI on an advanced mobile phones. 
+
+### 7.8. UI for accessing different projects
+    
+
+As an issue-tracker ui user 
+In order to be able to quickly switch between projects of the issue-tracker application instance I have access to
+I wanto to be able to access a web page providing autocomplete to preloaded configuration entries for the different projects
+
+### 7.9. UI for Time management in Google Calendar
+    
+
+As an issue-tracker ui user 
+In order to be prepare for issues such as ( events , tasks ) which have start and stop time
+I wanto to be able to view the issues with the same title, start_time and stop_time in google calendar
+
+### 7.10. items data transfer between different projects
     
 
 As the UI user of an issue-tracker instance 
 In order to save be able to track my personal time usage between different projects and the different interdependancies 
 I want to be able to move items data from one project to another via the UI
 
-### 7.7. Issues export to Google calendar
+### 7.11. Issues export to Google calendar
     
 
 As the UI user of an issue-tracker instance 
@@ -1012,35 +1177,35 @@ In order to be able to visualize and manage my start- and stop_time having issue
 I wanto to be able to export my issues to Google calendar 
 
 
-#### 7.7.1. Copy an issue-tracker instance issue to  a google calendar event
+#### 7.11.1. Copy an issue-tracker instance issue to  a google calendar event
     
 
 As an issue-tracker ui user 
 In order to be able to see my issues time-schedule via phone and browser in a calendar view
 I wanto to be able to copy via the ui an issue as a new google calendar event
 
-### 7.8. Issues import from Google calendar
+### 7.12. Issues import from Google calendar
     
 
 As the UI user of an issue-tracker instance 
 In order to be able to visualize and manage my my start- and stop_time having issues better 
 I wanto to be able to import my Google calendar issues into my issue-tracker profile on an issue-tracker instance
 
-### 7.9. Access issues txt format from email
+### 7.13. Access issues txt format from email
     
 
 As a user of the issue tracker tool 
 In order to be able to access and read my issues from a mobile device
 I wanto to be able to send each period txt file from the daily folder via gmail. 
 
-### 7.10. Access issues data from Google sheet
+### 7.14. Access issues data from Google sheet
     
 
 As the biz user  of the issue tracker tool 
 In order to be able to share and edit the data with multiple users authenticated within the Google eco system
 I wanto to be able to access , edit and update the issues data from google sheeet
 
-#### 7.10.1. Apply publish filter while posting to Google Sheet
+#### 7.14.1. Apply publish filter while posting to Google Sheet
     
 
 As the biz user  of the issue tracker tool 
@@ -1059,10 +1224,12 @@ I wanto to have user friendly development experience.
 
 As the UI Developer
 In order to deliver working ui units 
-I wanto to be able to quickly setup the existing project with minimalistic default set of data.  
+I wanto to be able to quickly setup the existing project with minimalistic default set of data
 
-### 8.2. Multiple control paths for single web action entry point
+### 8.2. Code traceability
     
 
-_
+As the UI Developer 
+In order to be able to grasp the inner working of the application
+I want to be able to search by user-story uuid from the source code of the application. 
 

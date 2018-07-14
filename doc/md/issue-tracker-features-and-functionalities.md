@@ -87,6 +87,12 @@ Table of Contents
       * [5.2.9. the hide operator in the select web action](#529-the-hide-operator-in-the-select-web-action)
           * [5.2.9.1. successful execution for text types](#5291-successful-execution-for-text-types)
           * [5.2.9.2. error handling for inexistent column to hide](#5292-error-handling-for-inexistent-column-to-hide)
+    * [5.3. update web-action](#53-update-web-action)
+      * [5.3.1. Successful execution](#531-successful-execution)
+      * [5.3.2. Error handling on non-existing db](#532-error-handling-on-non-existing-db)
+      * [5.3.3. Error handling on non-existing table](#533-error-handling-on-non-existing-table)
+      * [5.3.4. Error handling on non-existing attribute ](#534-error-handling-on-non-existing-attribute-)
+      * [5.3.5. Error handling on wrong data-type](#535-error-handling-on-wrong-data-type)
 
 
     
@@ -169,17 +175,17 @@ You could filter the result the same way the filters for the select page work ( 
     
 
 #### 2.2.3. Error handling for non-existent db
-If the db provided in the url pattern does not exist an error is shown. 
+If the db provided in the url pattern does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out.
 
     
 
 #### 2.2.4. Error handling for non-existent table
-If the table requested does not exist an error is shown. 
+If the table requested does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out.
 
     
 
 #### 2.2.5. Error handling for non-existent column
-If the column requested does not exist an error is shown. 
+If the column requested does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out.
 
     
 
@@ -859,4 +865,36 @@ If the column which values are requested to be hidden does not exist the proper 
       "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?like-by=prio",
       "ret": 400
     }
+
+### 5.3. update web-action
+An http client could update ANY table with a single column name by provinng the column name and the column value
+
+    <<web-host>>:<<web-port>>/<<database>>/update/<<table-name>>
+
+#### 5.3.1. Successful execution
+An http client could update ANY table with a single column name by provinng the column name and the column value
+
+    <<web-host>>:<<web-port>>/<<database>>/update/<<table-name>>
+    // example data
+    {attribute: "description", id: "3", cnt: "the name attr should be updated to updated-name-3"}
+
+#### 5.3.2. Error handling on non-existing db
+If the db provided in the url pattern does not exist an error is shown. 
+
+    
+
+#### 5.3.3. Error handling on non-existing table
+If the table provided in the url pattern does not exist an error is shown. 
+
+    
+
+#### 5.3.4. Error handling on non-existing attribute 
+If the attribute(column) provided in the post data does not exist an error is shown. 
+
+    
+
+#### 5.3.5. Error handling on wrong data-type
+
+
+    
 
