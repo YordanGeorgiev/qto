@@ -27,6 +27,7 @@ th {
 th, td {
 	min-width: 60px;
 	padding: 10px 20px;
+   white-space: pre-line;
 }
 
 th.active {

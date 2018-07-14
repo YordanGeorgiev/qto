@@ -22,6 +22,8 @@ th {
 
 td {
 	background-color: #f9f9f9;
+   white-space: pre-wrap;
+   white-space: pre-line;
 }
 
 th, td {
