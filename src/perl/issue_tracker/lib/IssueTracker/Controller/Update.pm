@@ -22,6 +22,7 @@ our $rdbms_type     = 'postgre';
 # Update all the rows from db by passed db and table name
 # --------------------------------------------------------
 sub doUpdateItemBySingleCol {
+
    my $self             = shift;
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
@@ -67,11 +68,6 @@ sub doUpdateItemBySingleCol {
       my $rows_count = 0 ; 
       $msg = "Update OK for table: $item" ; 
 
-
-      unless ( $ret == 0 ) {
-         $http_code = 400 ; 
-      }
-      
       $self->res->code($http_code);
       $self->render( 'json' =>  { 
            'msg'   => $msg

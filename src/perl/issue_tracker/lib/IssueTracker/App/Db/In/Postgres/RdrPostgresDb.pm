@@ -25,12 +25,37 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 	our $postgres_db_user_pw	 					   = q{} ; 
 	our $web_host 											= q{} ; 
 
+   sub doCheckIfColExists {
+
+      my $self = shift ; 
+      my $table = shift ; 
+      my $col  = shift ; 
+      my $ret  = 1 ; 
+      my $msg = '' ; 
+      my $dmhsr = {} ; 
+
+      ( $ret , $msg , $dmhsr ) = $self->doSelectTablesColumnList ( $table ) ; 
+      return 0 unless $ret == 0 ; 
+
+      my $mhsr = {} ; 
+      foreach my $key ( sort ( keys %$dmhsr ) ) {
+         $mhsr->{'ColumnNames'}-> { $key } = $dmhsr->{ $key } ; 
+      }
+      my $cols = $mhsr->{ 'ColumnNames' } ; 
+
+      foreach my $key ( keys %$cols ) {
+         my $row = $cols->{ $key } ; 
+         return 1 if $row->{ 'attname' } eq $col; 
+      }
+      return 0 ; 
+   }
+
 
    sub doCheckIfColumnExists {
 
       my $self = shift ; 
       my $cols = shift ; 
-      my $col = shift ; 
+      my $col  = shift ; 
 
       foreach my $key1 ( keys %$cols ) {
          my $row = $cols->{ $key1 } ; 

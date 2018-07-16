@@ -52,6 +52,28 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       }
       
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+
+      my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
+      my $objRdrDb 		   = $objRdrDbsFactory->doInstantiate ( 'postgres' );
+
+      if ( $objRdrDb->table_exists ( $postgres_db_name , $table ) == 0  ) {
+         $ret = 400 ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $postgres_db_name . ' database '  ; 
+         return ( $ret , $msg ) ; 
+      }
+
+      if ( $objRdrDb->doCheckIfColExists ( $table , $col_name ) == 0 ) {
+         $ret = 400 ; 
+         $msg = "the $col_name column does not exist" ; 
+         return ( $ret , $msg ) ; 
+      }
+
+      $col_value 		=~ s|\'|\'\'|g ; 
+      # clear any possible winblows carriage returns
+      $col_value     =~ s|\r\n|\n|g if ( $col_value ) ; 
+
       $str_sql = " 
       UPDATE  $table
          SET $col_name = '$col_value'
@@ -60,7 +82,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       " ; 
 
       $sth = $dbh->prepare($str_sql);  
-      # debug print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
+      #debug print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
 
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
@@ -132,7 +154,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $error_msg        = q{} ; 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
-      my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( 'postgre' );
+      my $objRdrDb 		   = $objRdrDbsFactory->doInstantiate ( 'postgre' );
 		
       my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
 		my $update_time      = $objTimer->GetHumanReadableTime();
@@ -604,8 +626,8 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
 
          my $hs_table = $hsr3->{ $table } ; 
-         #p $hs_headers ;  
-         # p $hs_table->{ 0 } ; 
+         #debug p $hs_headers ;  
+         #debug p $hs_table->{ 0 } ; 
          #debug p($hs_headers ) ; 
          ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
          return ( $ret , $msg ) unless $ret == 0 ;       

@@ -8,18 +8,19 @@ use Mojo::UserAgent;
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 
    my $res = {} ; 
+   my $url = {} ; 
    my $tm = '' ; # the test message for each test 
    my $t = Test::Mojo->new('IssueTracker');
    my $appConfig = $t->app->get('AppConfig') ; 
    # if the product instance id tst -> tst_issue_tracker
    my $db_name= $appConfig->{ 'postgres_db_name' } ; 
-   my $url = '/' . $db_name . '/update/test_update_table' ; 
+   $url = '/' . $db_name . '/update/test_update_table' ; 
 
    my $ua  = $t->ua ; 
    # the update by attribute requires the following json format : 
    # the name of the attribute
    # the id which is BY DESIGN a requirement for ANY issue-tracker app table to work ... 
-   # the content
+   # the content should be json format as follows
    $t->post_ok($url => json => {"attribute"=>"name", "id" =>"1", "cnt"=>"name-1-updated"})->status_is(200);
 
    $res = $ua->get('/' . $db_name . '/select/test_update_table?with=id-eq-1' )->result->json ; 
@@ -48,6 +49,29 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    ok ( $res->{'ret'} eq 200 , $tm ) ; 
    # debug p $res ; 
 
+
+   my $exp_err_msg = '' ; 
+   $exp_err_msg = 'cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
+   $url = '/non_existent_db/update/test_update_table' ; 
+   $t->post_ok($url => json => {"attribute"=>"name", "id" =>"1", "cnt"=>"name-1-updated"})
+      ->json_is({"ret" => 400 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . '/non_existent_db/update/test_update_table' , "msg" => "$exp_err_msg"});
+   #p $t->tx ; 
+
+  
+   $exp_err_msg = " the table non_existent_table does not exist in the $db_name database " ; 
+   $url = '/' . $db_name . '/update/non_existent_table' ; 
+   $t->post_ok($url => json => {"attribute"=>"name", "id" =>"1", "cnt"=>"name-1-updated"})
+      ->json_is({"ret" => 400 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . $url , 
+                 "msg" => "$exp_err_msg"});
+
+   $url = '/' . $db_name . '/update/test_update_table' ; 
+   $exp_err_msg = "the non_existent_column column does not exist" ; 
+   $t->post_ok($url => json => {"attribute"=>"non_existent_column", "id" =>"1", "cnt"=>"name-1-updated"})
+      ->json_is({"ret" => 400 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . $url , 
+                 "msg" => "$exp_err_msg"});
+
+   # feature-id: 0a683caa-44ba-4d44-95ee-a22651dc22bd
+   
 done_testing();
 
 # feature-guid: 
