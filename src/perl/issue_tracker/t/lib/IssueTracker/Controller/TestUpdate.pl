@@ -72,6 +72,14 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 
    # feature-id: 0a683caa-44ba-4d44-95ee-a22651dc22bd
    
+$exp_err_msg = 
+'ERROR:  invalid input syntax for integer: "should be integer but string passed"
+LINE 3:          SET seq = \'should be integer but string passed\'
+                           ^ while updating the "seq" attribute value for the following id: 1' ; 
+   $t->post_ok($url => json => {"attribute"=>"seq", "id" =>"1", "cnt"=>"should be integer but string passed"})
+      ->json_is({"ret" => 404 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . $url , 
+                 "msg" => "$exp_err_msg"});
+
 done_testing();
 
 # feature-guid: 
