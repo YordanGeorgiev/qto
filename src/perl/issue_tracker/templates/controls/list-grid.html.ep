@@ -6,7 +6,7 @@
    <link rel="stylesheet" type="text/css" media="print"  href="../../css/thme-blue/print/controls/app_list_grid.css" />
 % end
 
-   <div id="foo" >
+   <div id="div_central_panel" >
 		<!-- component template -->
 		<script type="text/x-template" id="grid-template">
 		  <table tabindex="1" style="clear:both">

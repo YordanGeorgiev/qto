@@ -4,19 +4,19 @@ SELECT 'create the "monthly_issues" table'
 ; 
    CREATE TABLE monthly_issues (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
-    , id             integer UNIQUE NOT NULL 
+    , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , level          integer NULL
     , seq            integer NULL
-    , prio           integer NOT NULL
-    , weight         integer NOT NULL
-    , status         varchar (50) NOT NULL
-    , category       varchar (200) NOT NULL
-    , name           varchar (200) NOT NULL
+    , prio           integer NOT NULL DEFAULT 1
+    , weight         integer NOT NULL DEFAULT 9
+    , status         varchar (50) NOT NULL DEFAULT 'type the status ...'
+    , category       varchar (200) NOT NULL DEFAULT 'type the category ...'
+    , name           varchar (200) NOT NULL DEFAULT 'type the name ...'
     , description    varchar (4000)
     , type           varchar (50) NOT NULL DEFAULT 'task'
     , owner          varchar (50) NULL
-    , start_time     timestamp NOT NULL
-    , stop_time      timestamp NOT NULL
+    , start_time     timestamp NOT NULL DEFAULT NOW()
+    , stop_time      timestamp NOT NULL DEFAULT NOW()
     , planned_hours  decimal (6,2) NULL
     , actual_hours   decimal (6,2) NULL
     , tags           varchar (200)

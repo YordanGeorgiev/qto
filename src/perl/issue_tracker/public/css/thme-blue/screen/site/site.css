@@ -1,11 +1,11 @@
 html body div#div_msg {
-    min-width: 40%; 
+    font-size: 110%;
+    min-width: 90%; 
     text-align: center; 
-    border-radius: 2px;
-    padding: 16px; 
+    border-radius: 5px;
+    padding: 10px; 
     position: fixed; 
     z-index: 0; 
-    left: 25%; 
     bottom: 95%; 
 }
 

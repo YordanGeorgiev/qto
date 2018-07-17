@@ -80,22 +80,22 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          WHERE id='$id'     
       ;
       " ; 
+      eval {
+         $sth = $dbh->prepare($str_sql);  
+         #debug print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
 
-      $sth = $dbh->prepare($str_sql);  
-      #debug print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
-
-      $sth->execute()
-            or $objLogger->error ( "$DBI::errstr" ) ;
+         $sth->execute() or print STDERR "$DBI::errstr" ; 
+      } or $ret = 500 ; # Internal Server error
 
       binmode(STDOUT, ':utf8');
 
-      $msg = DBI->errstr ; 
-
-      unless ( defined ( $msg ) ) {
+      unless ( defined ( $DBI::errstr ) ) {
          $msg = 'UPDATE OK ' ; 
          $ret = 0 ; 
       } else {
-         $objLogger->doLogErrorMsg ( $msg ) ; 
+         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $msg = "$DBI::errstr" ; 
+         $ret = 1 ; 
       }
 
       return ( $ret , $msg ) ; 

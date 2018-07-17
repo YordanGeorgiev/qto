@@ -43,6 +43,7 @@ sub doUpdateItemBySingleCol {
 
    $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
    ( $ret , $msg ) = $objRdrUrlParams->doSetUpdateUrlParams(\$objModel, $perl_hash ) ; 
+   
    if ( $ret != 0 ) {
       $self->res->code(400);
       $self->render( 'json' =>  { 
@@ -62,6 +63,7 @@ sub doUpdateItemBySingleCol {
    $self->res->headers->accept_language('fi, en');
    $self->res->headers->content_type('application/json; charset=utf-8');
 
+   
 
    if ( $ret == 0 ) {
       my $http_code = 200 ; 
@@ -78,26 +80,28 @@ sub doUpdateItemBySingleCol {
 
       $self->res->code(400);
       $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 400, 
-         'req'   => "POST " . $self->req->url->to_abs
+           'msg'   => $msg
+         , 'ret'   => 400
+         , 'req'   => "POST " . $self->req->url->to_abs
       });
    } elsif ( $ret == 2 ) {
 
       $self->res->code(400);
       $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 400, 
-         'req'   => "POST " . $self->req->url->to_abs
+         'msg'   => $msg
+         ,'ret'   => 400
+         ,'req'   => "POST " . $self->req->url->to_abs
       });
    } else {
 
-      $msg = 'unknown error has occurred' ; 
+      my $post_msg = ' while updating the "' . $perl_hash->{'attribute'} . '" attribute value ' ; 
+      $post_msg .= 'for the following id: ' . $perl_hash->{'id'} ; 
+      $msg .= $post_msg ; 
       $self->res->code(400);
       $self->render( 'json' => { 
-         'msg'   => $msg,
-         'ret' => 404, 
-         'req'   => "POST " . $self->req->url->to_abs
+         'msg'   => $msg
+         ,'ret' => 404
+         ,'req'   => "POST " . $self->req->url->to_abs
       })
       ;
    }
