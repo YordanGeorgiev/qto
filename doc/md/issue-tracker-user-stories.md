@@ -1,4 +1,4 @@
-#  ISSUE-TRACKER USERSTORIES AND SCENARIOIS
+#  ISSUE-TRACKER USERSTORIES AND SCENARIOS
 
 
 Table of Contents
@@ -66,7 +66,7 @@ Table of Contents
     * [4.4. System reliability](#44-system-reliability)
     * [4.5. Ease of use](#45-ease-of-use)
   * [5. ETL AND INTEGRATIONS PERSPECTIVE](#5-etl-and-integrations-perspective)
-    * [5.1. Dabase to json files data load](#51-dabase-to-json-files-data-load)
+    * [5.1. Database to json files data load](#51-database-to-json-files-data-load)
     * [5.2. Json files to db data load](#52-json-files-to-db-data-load)
     * [5.3. Xls-to-mysql-db hierarchical data load](#53-xls-to-mysql-db-hierarchical-data-load)
       * [5.3.1. error reporting in xls-to-mysql-db hierarchical data load ](#531-error-reporting-in-xls-to-mysql-db-hierarchical-data-load-)
@@ -74,7 +74,7 @@ Table of Contents
       * [5.4.1. error reporting in xls-to-postgres-db hierarchical data load ](#541-error-reporting-in-xls-to-postgres-db-hierarchical-data-load-)
   * [6. DEVOPS PERSPECTIVE](#6-devops-perspective)
     * [6.1. System verifiability and testability](#61-system-verifiability-and-testability)
-      * [6.1.1. Clarity and breavity of the end to end tests](#611-clarity-and-breavity-of-the-end-to-end-tests)
+      * [6.1.1. Clarity and brevity of the end to end tests](#611-clarity-and-brevity-of-the-end-to-end-tests)
       * [6.1.2. Abort end-to-end tests on single test fail](#612-abort-end-to-end-tests-on-single-test-fail)
     * [6.2. Logging](#62-logging)
       * [6.2.1. Control flow logging](#621-control-flow-logging)
@@ -83,7 +83,7 @@ Table of Contents
       * [6.2.4. Tool run log to human readable description](#624-tool-run-log-to-human-readable-description)
     * [6.3. Application's source code and documentation integrity](#63-application's-source-code-and-documentation-integrity)
       * [6.3.1. Userstories to test case relations](#631-userstories-to-test-case-relations)
-      * [6.3.2. UUID tracability for test files and userstories](#632-uuid-tracability-for-test-files-and-userstories)
+      * [6.3.2. UUID trackability for test files and userstories](#632-uuid-trackability-for-test-files-and-userstories)
       * [6.3.3. Components start run message print](#633-components-start-run-message-print)
       * [6.3.4. Tool exit with exit code and exit message](#634-tool-exit-with-exit-code-and-exit-message)
       * [6.3.5. Execution path tracing by UUID's](#635-execution-path-tracing-by-uuid's)
@@ -131,22 +131,31 @@ load-by-txt-to-db-action)
           * [7.3.1.4. Drag and drop columns in table to reorder columns order](#7314-drag-and-drop-columns-in-table-to-reorder-columns-order)
           * [7.3.1.5. Columns resizing in table listing](#7315-columns-resizing-in-table-listing)
     * [7.4. Items editing](#74-items-editing)
-      * [7.4.1. Items editing in list as table view](#741-items-editing-in-list-as-table-view)
-          * [7.4.1.1. Items editing in list as table view in-line](#7411-items-editing-in-list-as-table-view-in-line)
+      * [7.4.1. Single Cell Items editing in list as table view](#741-single-cell-items-editing-in-list-as-table-view)
+          * [7.4.1.1. Single Cell Items editing in list as table view in-line](#7411-single-cell-items-editing-in-list-as-table-view-in-line)
           * [7.4.1.2. Items editing in list as table view via form](#7412-items-editing-in-list-as-table-view-via-form)
           * [7.4.1.3. Refresh list on item edit](#7413-refresh-list-on-item-edit)
     * [7.5. Items creation](#75-items-creation)
+      * [7.5.1. Items creation inline](#751-items-creation-inline)
+      * [7.5.2. Items creation by form](#752-items-creation-by-form)
     * [7.6. Items deletion](#76-items-deletion)
-    * [7.7. Mobile UI](#77-mobile-ui)
-    * [7.8. UI for accessing different projects](#78-ui-for-accessing-different-projects)
-    * [7.9. UI for Time management in Google Calendar](#79-ui-for-time-management-in-google-calendar)
-    * [7.10. items data transfer between different projects](#710-items-data-transfer-between-different-projects)
-    * [7.11. Issues export to Google calendar](#711-issues-export-to-google-calendar)
-      * [7.11.1. Copy an issue-tracker instance issue to  a google calendar event](#7111-copy-an-issue-tracker-instance-issue-to-a-google-calendar-event)
-    * [7.12. Issues import from Google calendar](#712-issues-import-from-google-calendar)
-    * [7.13. Access issues txt format from email](#713-access-issues-txt-format-from-email)
-    * [7.14. Access issues data from Google sheet](#714-access-issues-data-from-google-sheet)
-      * [7.14.1. Apply publish filter while posting to Google Sheet](#7141-apply-publish-filter-while-posting-to-google-sheet)
+      * [7.6.1. Items deletion inline](#761-items-deletion-inline)
+      * [7.6.2. Items deletion from the edit form](#762-items-deletion-from-the-edit-form)
+    * [7.7. Items export](#77-items-export)
+      * [7.7.1. Items xls export](#771-items-xls-export)
+      * [7.7.2. Issues export to Google calendar](#772-issues-export-to-google-calendar)
+    * [7.8. Items import](#78-items-import)
+      * [7.8.1. Items xls import](#781-items-xls-import)
+    * [7.9. Items move](#79-items-move)
+    * [7.10. Mobile UI](#710-mobile-ui)
+    * [7.11. UI for accessing different projects](#711-ui-for-accessing-different-projects)
+    * [7.12. UI for Time management in Google Calendar](#712-ui-for-time-management-in-google-calendar)
+    * [7.13. items data transfer between different projects](#713-items-data-transfer-between-different-projects)
+      * [7.13.1. Copy an issue-tracker instance issue to  a google calendar event](#7131-copy-an-issue-tracker-instance-issue-to-a-google-calendar-event)
+    * [7.14. Issues import from Google calendar](#714-issues-import-from-google-calendar)
+    * [7.15. Access issues txt format from email](#715-access-issues-txt-format-from-email)
+    * [7.16. Access issues data from Google sheet](#716-access-issues-data-from-google-sheet)
+      * [7.16.1. Apply publish filter while posting to Google Sheet](#7161-apply-publish-filter-while-posting-to-google-sheet)
   * [8. UI DEVELOPER PERSPECTIVE](#8-ui-developer-perspective)
     * [8.1. Testability](#81-testability)
     * [8.2. Code traceability](#82-code-traceability)
@@ -166,42 +175,42 @@ I want to have a nice user experience while using the issue-tracker tool.
 
 As an team leader
 In order to be able to manage multiple projects 
-I wanto to be able to create , update and remove projects.
+I want to  be able to create , update and remove projects.
 
 #### 1.1.1. Create new projects
     
 
 As an team leader
 In order to be able to manage new projects 
-I wanto to be able to create projects via the issue-tracker
+I want to  be able to create projects via the issue-tracker
 
 #### 1.1.2. Remove existing projects
     
 
 As an team leader
 In order to be able to stop the work on existing projects
-I wanto to be able to remove projects via the issue-tracker
+I want to be able to remove projects via the issue-tracker
 
 #### 1.1.3. Update existing projects
     
 
 As an team leader
 In order to be able to change attributes of the projects I am responsible for
-I wanto to be able to update the projects' data. 
+I want to be able to update the projects' data. 
 
 #### 1.1.4. Search for existing projects
     
 
 As an team leader
 In order to be able to quickly access existing projects
-I wanto to be able to search the projects. 
+I want to be able to search the projects. 
 
 #### 1.1.5. Switch between projects
     
 
 As a team leader
 In order to manage issues from different projects  
-I wanto to be able to switch between different projects easily and quickly
+I want to be able to switch between different projects easily and quickly
 
 ##### 1.1.5.1. Web UI for switch between projects
     
@@ -215,8 +224,8 @@ by simply changing the first token of the url of the app
     
 
 As a team leader
-In order to avoid confusion betweeen different projects 
-I wanto to be able to see the current project name from any interface I am working in quickly and esily
+In order to avoid confusion between different projects 
+I wanto to be able to see the current project name from any interface I am working in quickly and easily
 
 ### 1.2. Time management
     
@@ -261,7 +270,7 @@ I wanto to be able to manage the issues within those periods per period and moth
 
 As an team leader
 In order to keep my business data secure 
-I wanto to be able decide which users to which projects whill have access to
+I wanto to be able decide which users to which projects will have access to
 
 #### 1.3.1. Users management
     
@@ -331,7 +340,7 @@ by being able to manage all the items in the application ( issues,questions,prob
     
 
 As a team member of the issue-tracker
-In order to achieve the best posible efficiency during the work on one or many projects
+In order to achieve the best possible efficiency during the work on one or many projects
 I wanto to be able to manage the issues in those projects. 
 
 #### 2.1.1. Create new issues
@@ -509,7 +518,7 @@ I wanto to be able to monitor the metrics of the issues.
 
 As an issues-manager 
 In order to be prepared for issues such as ( events , tasks ) which have start and stop time
-I wanto to be able to save their start_time and stop_time per issue in every possible interface
+I wanto to be able to save their start time and stop time per issue in every possible interface
 
 #### 2.6.1. time centric planning
     
@@ -522,7 +531,7 @@ I wanto to be able to perform all the features of the issue-tracker on that spec
     
 
 As an issues-manager 
-In order to be able to report the issues data for for a certain term - day,week,month,year,quinquennial or decade
+In order to be able to report the issues data for  a certain term - day,week,month,year,quinquennial or decade
 I wanto to be able to perform all the features of the issue-tracker on that specific day regardless whether it is today , in the past or in the future
 
 ### 2.7. Generic CRUDS for items
@@ -571,7 +580,7 @@ I want to have a nice user experience while using the issue-tracker application.
     
 
 As the SysAdmin 
-In order to be able to provide access to a new database driven application to my organisation
+In order to be able to provide access to a new database driven application to my organization
 I wanto to be able to deploy an instance of the issue-tracker application and spawn a new project out of it in less than a hour from a clean Linux host. 
 
 ### 4.2. System performance
@@ -609,7 +618,7 @@ As an ETL and integrations specialist
 In order to complete the tasks and activities of my role
 I want to have a nice user experience while using the issue-tracker application.
 
-### 5.1. Dabase to json files data load
+### 5.1. Database to json files data load
     
 
 As the ETL and Integration Specialist 
@@ -673,25 +682,25 @@ In order to be able to rely on the operations of the tool
 I wanto the easily verify and  test parts or the whole System 
 by issuing a single shell call.
 
-#### 6.1.1. Clarity and breavity of the end to end tests
+#### 6.1.1. Clarity and brevity of the end to end tests
     
 
 As an ITOPS 
 In order to be able to verify all the features and functionalities of the tool within the System
-I want to see the results of each test in 1 fow in the following format:.
+I want to see the results of each test in 1 flow in the following format:.
 
 #### 6.1.2. Abort end-to-end tests on single test fail
     
 
 As an ITOPS 
-In order to be able to run continuously end-to-end tests and skip for several runs failing teists
+In order to be able to run continuously end-to-end tests and skip for several runs failing tests
 I want to be able to configure the single e2e entry point script to skip certain tests, but report me what was skipped. 
 
 ### 6.2. Logging
     
 
 As a Full-Stack Developer
-In order to quickly understand what is hapening in the application
+In order to quickly understand what is happening in the application
 I wanto to have easy-to-use and highly customizable logging to both file and console.
 
 #### 6.2.1. Control flow logging
@@ -709,7 +718,7 @@ In order to be able to get the msg of any component of the application
 I want each log entry to content:
 - the type of the entry - log , error, warn , fatal
 - the timestamp of the log entry event 
-- the name of the componet issueing the msg and the line num of the src file 
+- the name of the component issueing the msg and the line num of the src file 
 - the msg as it was echoed by the application
 
 #### 6.2.3. Single entry point for end to end tests
@@ -738,21 +747,21 @@ I want to be able to point to written documentation for user-stories, issues, fe
 
 As a Developer 
 In order to ensure the stability and expandability of the application
-I want to be able to run for each implemented userstory a single test
+I want to be able to run for each implemented user-story a single test
 
-#### 6.3.2. UUID tracability for test files and userstories
+#### 6.3.2. UUID trackability for test files and userstories
     
 
 As a Developer 
-In order to identify each userstory to be tested with its according test
-I want to be able to track each userstory or test code entry point file by UUID.
+In order to identify each user-story to be tested with its according test
+I want to be able to track each user-story or test code entry point file by UUID.
 
 #### 6.3.3. Components start run message print
     
 
 As a CLI user 
 In order to know when a component has been started
-I wanto to be able to see the "START &lt;&lt;COMPONENT_NAME&gt;&gt; on either the STDOUT or the log file of the component
+I wanto to be able to see the "START &lt;&lt;COMPONENT NAME&gt;&gt; on either the STDOUT or the log file of the component
 
 #### 6.3.4. Tool exit with exit code and exit message
     
@@ -1096,14 +1105,14 @@ As an UI user of the issue-tracker application
 In order to update the application data via the UI 
 I wanto to be able to edit the data for ANY of the items in the application I have access to. 
 
-#### 7.4.1. Items editing in list as table view
+#### 7.4.1. Single Cell Items editing in list as table view
     
 
 As an UI user of the issue-tracker application 
 In order to be able to quickly edit the data of ANY item I
 I want to be able to quickly navigate to the item to edit and update the data of exactly this item 
 
-##### 7.4.1.1. Items editing in list as table view in-line
+##### 7.4.1.1. Single Cell Items editing in list as table view in-line
     
 
 As an UI user of the issue-tracker application 
@@ -1133,43 +1142,64 @@ I order to create new items in the application
 I wanto to be able to create them via the UI 
 by clicking "create new button" and filling as few as possible data entries and clicking a Save button for ANY of the items in the application. 
 
+#### 7.5.1. Items creation inline
+    
+
+As an UI user of the application 
+I order to create new items in the application 
+I wanto to be able to create them via the edit-table listing UI page 
+by clicking jsut "create new button" , 
+when the System will add a new row which will appear automatically in top of the listing sorted by id ( which will be automatically generated based on the timestamp of the creation moment ) 
+
+#### 7.5.2. Items creation by form
+    
+
+As an UI user of the application 
+I order to create new items in the application 
+I wanto to be able to create them via the edit-table listing UI page 
+by clicking jsut "create new button" , 
+when the System will add a new row which will appear automatically in top of the listing and the edit form with the pre-filled "type the &lt;&lt;attribute-name &gt;&gt; will occur ...
+
 ### 7.6. Items deletion
     
 
 As an UI user of the application 
-I order to delete existing items in the projecg 
+I order to delete existing items in the project
 I wanto to be able to delete them via the UI 
-by clicking a "delete " button and confirming the deletion for the item. 
+by clicking a "delete " button and confirming the deletion for the item
 
-### 7.7. Mobile UI
+#### 7.6.1. Items deletion inline
     
 
-As an UI user of the issue-tracker application 
-In order to enjoy to be able to access it quickly on the go
-I wanto to be able to use the same UI on an advanced mobile phones. 
+As an UI user of the application 
+I order to delete existing items in the project
+I wanto to be able to delete them via the UI 
+by clicking a "delete " button and confirming the deletion for the item by clicking on the ok dialog presented by the System.
 
-### 7.8. UI for accessing different projects
+#### 7.6.2. Items deletion from the edit form
     
 
-As an issue-tracker ui user 
-In order to be able to quickly switch between projects of the issue-tracker application instance I have access to
-I wanto to be able to access a web page providing autocomplete to preloaded configuration entries for the different projects
+As an UI user of the application 
+I order to delete existing items in the project
+I wanto to be able to delete them via the UI of the edit form
+by clicking a "delete " button in the form
+and confirming the deletion for the item by clicking on the ok dialog presented by the System.
 
-### 7.9. UI for Time management in Google Calendar
+### 7.7. Items export
     
 
-As an issue-tracker ui user 
-In order to be prepare for issues such as ( events , tasks ) which have start and stop time
-I wanto to be able to view the issues with the same title, start_time and stop_time in google calendar
+As an UI user of the application 
+I order to export the data  of the items in the application 
+I wanto to be able to perform every possible export in the UI from a single button click
 
-### 7.10. items data transfer between different projects
+#### 7.7.1. Items xls export
     
 
-As the UI user of an issue-tracker instance 
-In order to save be able to track my personal time usage between different projects and the different interdependancies 
-I want to be able to move items data from one project to another via the UI
+As an UI user of the application 
+I order to export the data  of the items in the application into xls format
+I wanto to be able to perform the exprot by clicking on an xls icon like button and point to the file path to save to the listed in the UI data
 
-### 7.11. Issues export to Google calendar
+#### 7.7.2. Issues export to Google calendar
     
 
 As the UI user of an issue-tracker instance 
@@ -1177,35 +1207,84 @@ In order to be able to visualize and manage my start- and stop_time having issue
 I wanto to be able to export my issues to Google calendar 
 
 
-#### 7.11.1. Copy an issue-tracker instance issue to  a google calendar event
+### 7.8. Items import
+    
+
+As an UI user of the application 
+I order to import data  of the items in the application 
+I wanto to be able to perform every possible import in the UI from a single button click and pointing to the file path of a file
+
+#### 7.8.1. Items xls import
+    
+
+As an UI user of the application 
+I order to import the data  of the items in the application into xls format
+I wanto to be able to perform the exprot by clicking on an xls icon like button and point to the file path to save to the listed in the UI data
+
+### 7.9. Items move
+    
+
+As an UI user of the application 
+I order to move the items into different tables
+I wanto to be able to move them from a button in the listing page by specifying the target table
+
+### 7.10. Mobile UI
+    
+
+As an UI user of the issue-tracker application 
+In order to enjoy to be able to access it quickly on the go
+I wanto to be able to use the same UI on an advanced mobile phones. 
+
+### 7.11. UI for accessing different projects
+    
+
+As an issue-tracker ui user 
+In order to be able to quickly switch between projects of the issue-tracker application instance I have access to
+I wanto to be able to access a web page providing autocomplete to preloaded configuration entries for the different projects
+
+### 7.12. UI for Time management in Google Calendar
+    
+
+As an issue-tracker ui user 
+In order to be prepare for issues such as ( events , tasks ) which have start and stop time
+I wanto to be able to view the issues with the same title, start_time and stop_time in google calendar
+
+### 7.13. items data transfer between different projects
+    
+
+As the UI user of an issue-tracker instance 
+In order to save be able to track my personal time usage between different projects and the different interdependancies 
+I want to be able to move items data from one project to another via the UI
+
+#### 7.13.1. Copy an issue-tracker instance issue to  a google calendar event
     
 
 As an issue-tracker ui user 
 In order to be able to see my issues time-schedule via phone and browser in a calendar view
 I wanto to be able to copy via the ui an issue as a new google calendar event
 
-### 7.12. Issues import from Google calendar
+### 7.14. Issues import from Google calendar
     
 
 As the UI user of an issue-tracker instance 
 In order to be able to visualize and manage my my start- and stop_time having issues better 
 I wanto to be able to import my Google calendar issues into my issue-tracker profile on an issue-tracker instance
 
-### 7.13. Access issues txt format from email
+### 7.15. Access issues txt format from email
     
 
 As a user of the issue tracker tool 
 In order to be able to access and read my issues from a mobile device
 I wanto to be able to send each period txt file from the daily folder via gmail. 
 
-### 7.14. Access issues data from Google sheet
+### 7.16. Access issues data from Google sheet
     
 
 As the biz user  of the issue tracker tool 
 In order to be able to share and edit the data with multiple users authenticated within the Google eco system
 I wanto to be able to access , edit and update the issues data from google sheeet
 
-#### 7.14.1. Apply publish filter while posting to Google Sheet
+#### 7.16.1. Apply publish filter while posting to Google Sheet
     
 
 As the biz user  of the issue tracker tool 
