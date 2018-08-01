@@ -30,14 +30,13 @@
 			<div id="div_frm_srch">
 		  		<form id="frm_search">
 			 		<input id="inp_srch_query" tabindex="1" name="query" v-model="searchQuery">
-         
-      <div class="pgr-bar pgr-border pgr-round" style="float:right;">
-          <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
-				v-bind:href="generatePageSize(pgSize)">
-				<span v-if="pgSize == pageSize" style="background-color:#ddd;"> <strong>{{ pgSize }}</strong> </span>
-				<span v-else="pgSize == pageSize">{{ pgSize }} </span>
-			</a>
-      </div>
+                  <div class="pgr-bar pgr-border pgr-round" style="float:right;">
+                      <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
+                        v-bind:href="generatePageSize(pgSize)">
+                        <span v-if="pgSize == pageSize" style="background-color:#ddd;"> <strong>{{ pgSize }}</strong> </span>
+                        <span v-else="pgSize == pageSize">{{ pgSize }} </span>
+                     </a>
+                  </div>
 		  		</form>
 			</div>
 
@@ -76,18 +75,22 @@
    }
 
 if ( document.getElementById("spn_msg") ) {
-   // register the editable
+   // register the editable component
    Vue.component('editable', {
-     template: `
-       <div v-bind:id="id" contenteditable="true" @blur="emitChange">{{ content }}</div>
-     `,
+     template: `<div v-bind:id="id" contenteditable="true" @blur="emitChange" 
+               v-on:focus="focused">{{ content }}</div>`,
      props: ['content','id'],
+     data: "",
      methods: {
        emitChange (ev) {
-         this.$emit('update', ev.target.textContent,ev.target.id)
+         this.$emit('update', ev.target.textContent,ev.target.id,this.data)
+       },
+       focused(ev) {
+         this.data = ev.target.textContent.trim();
        }
      }
    })
+
    // register the grid component
    Vue.component('demo-grid', {
      template: '#grid-template',
@@ -143,11 +146,10 @@ if ( document.getElementById("spn_msg") ) {
          this.sortKey = key
          this.sortOrders[key] = this.sortOrders[key] * -1
        },
-       updateItem (content,id) {
+       updateItem (content,id,oldValue) {
          var arr = id.split('-')
          var col = arr[0]
          var dbid = arr[1]
-
          axios.post('/<%= $db =%>/update/<%= $item =%>', {
                attribute: col ,
                id: dbid , 
@@ -155,15 +157,12 @@ if ( document.getElementById("spn_msg") ) {
          })
          .then( 
             response => {
-               // todo: ysg
-               console.log(response);
+               // alles gut - do nothing console.log(response);
             }
          )
          .catch(function (error) {
             setSpnMsgErrorText(error.response.data.msg);
-            //demo.fetchServerSideData();
-            //todo:ysg info-src: https://stackoverflow.com/a/43293037/65706
-            this.$root.fetchServerSideData();
+            document.getElementById(id).innerHTML= oldValue
          });
        }
      }
