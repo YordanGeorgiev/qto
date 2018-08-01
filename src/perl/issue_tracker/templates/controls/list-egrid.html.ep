@@ -148,13 +148,6 @@ if ( document.getElementById("spn_msg") ) {
          var col = arr[0]
          var dbid = arr[1]
 
-         // todo:ysg
-         console.log ( {
-                attribute: col ,
-                id: dbid , 
-                cnt: content.trim()
-         }) ; 
-        
          axios.post('/<%= $db =%>/update/<%= $item =%>', {
                attribute: col ,
                id: dbid , 
@@ -162,12 +155,15 @@ if ( document.getElementById("spn_msg") ) {
          })
          .then( 
             response => {
+               // todo: ysg
                console.log(response);
             }
          )
          .catch(function (error) {
-            console.log(error);
             setSpnMsgErrorText(error.response.data.msg);
+            //demo.fetchServerSideData();
+            //todo:ysg info-src: https://stackoverflow.com/a/43293037/65706
+            this.$root.fetchServerSideData();
          });
        }
      }
@@ -206,9 +202,8 @@ if ( document.getElementById("spn_msg") ) {
                .replace("page-size=" + this.pageSize , "page-size=" + pgSize) 
                .replace("page-num=" + this.pageNum , "page-num=1") ; 
 			}
-      }
-     },
-     mounted() {
+      },
+     fetchServerSideData: function (){
 			var url_params = {} 
          if( window.location.toString().indexOf("?") != -1) {
             window.location.search.split('?')[1].replace("pick=","pick=id,")
@@ -233,10 +228,12 @@ if ( document.getElementById("spn_msg") ) {
 			.catch(function(error) {
             setSpnMsgErrorText(error.response.data.msg);
     		}) 
-
+      }
+     },
+     mounted() {
+       this.fetchServerSideData();
 	  }
    });
 }
-
 
 </script>

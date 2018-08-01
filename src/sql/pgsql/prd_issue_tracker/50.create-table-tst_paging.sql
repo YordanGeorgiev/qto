@@ -4,7 +4,7 @@ SELECT 'create the "tst_paging" table'
 ; 
    CREATE TABLE tst_paging (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
-    , id             integer UNIQUE NOT NULL 
+    , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , prio           integer NOT NULL
     , name           varchar (200) NOT NULL
     , CONSTRAINT pk_tst_paging_guid PRIMARY KEY (guid)

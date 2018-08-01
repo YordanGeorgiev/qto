@@ -4,7 +4,7 @@ SELECT 'create the "quinquennially_issues" table'
 ; 
    CREATE TABLE quinquennially_issues (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
-    , id             integer UNIQUE NOT NULL 
+    , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , level          integer NULL
     , seq            integer NULL
     , prio           integer NOT NULL
