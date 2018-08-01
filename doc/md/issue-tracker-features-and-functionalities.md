@@ -28,6 +28,10 @@ Table of Contents
       * [2.3.3. set table paging size](#233-set-table-paging-size)
       * [2.3.4. set table page number](#234-set-table-page-number)
     * [2.4. List labels page](#24-list-labels-page)
+    * [2.5. List as etable page](#25-list-as-etable-page)
+      * [2.5.1. Single cell Inline-edit](#251-single-cell-inline-edit)
+          * [2.5.1.1. Error handling on db update error](#2511-error-handling-on-db-update-error)
+          * [2.5.1.2. Successful execution](#2512-successful-execution)
   * [3. DEVOPS FEATURES AND FUNCTIONALITIES](#3-devops-features-and-functionalities)
     * [3.1. Testability](#31-testability)
       * [3.1.1. Perl syntax check call](#311-perl-syntax-check-call)
@@ -104,7 +108,7 @@ Table of Contents
 
 ### 1.1. Purpose
 The purpose of this document is to describe all the features, functionalities and capabilities provided by a properly installed, configured and operated instance of the issue-tracker application. 
-This document is the CONTRACT between you the potential or active user of an issue-tracker instance and the product owner of that instance. 
+This document is the CONTRACT between you as the potential, former or active user of an issue-tracker instance and the product owner of that instance. 
 
     
 
@@ -254,6 +258,27 @@ The table control has UI for setting the table page number.
 
 ### 2.4. List labels page
 The list labels page lists all the rows from any table in the app db in form of "labels" - rectangular forms containing all the selected attributes ( by default all ) and their values. 
+
+    
+
+### 2.5. List as etable page
+The list a table page has all the functionalities as the list as "table" page with the following additional features
+
+    
+
+#### 2.5.1. Single cell Inline-edit
+The table can be edited inline so that the data is updated to the database.
+
+    
+
+##### 2.5.1.1. Error handling on db update error
+If any error occurs while updating an error msg is presented crearly with fading effect, which returns the error msg from the database. 
+On unvalid input the data is not updated to the database and the old value in the cell is restored.
+
+    
+
+##### 2.5.1.2. Successful execution
+If the single cell inline-edit is successfull no msg is presented and the data is updated to the database storage.
 
     
 
@@ -894,6 +919,7 @@ If the attribute(column) provided in the post data does not exist an error is sh
     
 
 #### 5.3.5. Error handling on wrong data-type
+Whenever a wrong data type is passed the back-end returns with the 400 http code and provides the error from the database.
 
 
     
