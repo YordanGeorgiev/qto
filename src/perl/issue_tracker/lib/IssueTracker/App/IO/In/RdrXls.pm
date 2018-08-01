@@ -92,7 +92,6 @@ sub doReadXlsFileToHsr3 {
 
       #debug print "row_num:: $row_num \n" ;
       for my $col ($MinCol .. $MaxCol) {
-
         # print "col_num:: $col_num \n" ;
         my $cell       = $worksheet->{'Cells'}[$row][$col];
         my $obj_header = $worksheet->{'Cells'}[0][$col];

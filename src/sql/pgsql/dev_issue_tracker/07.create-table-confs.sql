@@ -4,7 +4,7 @@ SELECT 'create the "confs" table'
 ; 
    CREATE TABLE confs (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
-    , id             integer UNIQUE NOT NULL 
+    , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , seq            integer NULL
     , prio           integer NULL
     , category       varchar (200) NOT NULL

@@ -6,7 +6,7 @@ SELECT 'create the "test_hierarchy_table" table'
 -- src: http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/
    CREATE TABLE test_hierarchy_table (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
-    , id             integer UNIQUE NOT NULL 
+    , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , level          integer NULL
     , seq            integer NULL
     , lft            integer NULL

@@ -4,16 +4,16 @@ SELECT 'create the "questions" table'
 ; 
    CREATE TABLE questions (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
-    , id             integer UNIQUE NOT NULL 
+    , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , level          integer NULL
     , seq            integer NULL
-    , prio           integer NOT NULL
-    , weight         integer NOT NULL
-    , status         varchar (200) NOT NULL
-    , category       varchar (200) NOT NULL
-    , name           varchar (200) NOT NULL
-    , description    varchar (4000) NOT NULL
-    , owner          varchar (50) NULL
+    , prio           integer NOT NULL DEFAULT 1
+    , weight         integer NOT NULL DEFAULT 9
+    , status         varchar (200) NOT NULL DEFAULT '01-eval'
+    , category       varchar (200) NOT NULL DEFAULT 'unknown'
+    , name           varchar (200) NOT NULL DEFAULT 'type the name ...'
+    , description    varchar (4000) NOT NULL DEFAULT 'type the description ... '
+    , owner          varchar (50) NULL 
     , update_time    timestamp DEFAULT NOW()
     , CONSTRAINT pk_questions_guid PRIMARY KEY (guid)
     ) WITH (

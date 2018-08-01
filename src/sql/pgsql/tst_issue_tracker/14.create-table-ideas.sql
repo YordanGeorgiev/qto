@@ -4,14 +4,14 @@ SELECT 'create the "ideas" table'
 ; 
    CREATE TABLE ideas (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
-    , id             integer UNIQUE NOT NULL 
+    , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , seq            integer NULL
     , prio           integer NULL
-    , status         varchar (50) NOT NULL
-    , name           varchar (200) NOT NULL
-    , description    varchar (4000)
-    , owner          varchar (50) NULL
-    , update_time    timestamp DEFAULT NOW()
+    , status         varchar (50) NOT NULL DEFAULT '01-eval'
+    , name           varchar (200) NOT NULL DEFAULT 'type the name ...'
+    , description    varchar (4000) NOT NULL DEFAULT 'type the description ...'
+    , owner          varchar (50) NOT NULL DEFAULT 'unknown' 
+    , update_time    timestamp NOT NULL DEFAULT NOW()
     , CONSTRAINT pk_ideas_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE

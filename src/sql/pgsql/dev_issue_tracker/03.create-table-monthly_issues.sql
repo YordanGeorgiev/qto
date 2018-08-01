@@ -26,7 +26,7 @@ SELECT 'create the "monthly_issues" table'
       OIDS=FALSE
     );
 
-create unique index idx_uniq_id on monthly_issues (id);
+create unique index idx_uniq_monthly_id on monthly_issues (id);
 
 
 SELECT 'show the columns of the just created table'
