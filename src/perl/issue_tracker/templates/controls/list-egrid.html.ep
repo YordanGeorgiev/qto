@@ -71,7 +71,7 @@
 
    function fadeAwayDivMsg(){
       var div_msg_style = document.getElementById('div_msg').style; div_msg_style.opacity = 1; // fade the err msg
-      (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,1050)})();
+      (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,1550)})();
    }
 
 if ( document.getElementById("spn_msg") ) {

@@ -1,0 +1,60 @@
+<html>
+<head>
+   <title>list-lable monthly_issues </title>
+   <link rel="stylesheet" href="../../poc/vue-create-new-button/vue-create-new-button.css">
+
+</head>
+<body>
+   <div id="app">
+		<!-- component template -->
+		<script type="text/x-template" id="grid-template">
+
+
+		  <table>
+			 <thead>
+				<tr>
+				  <th v-for="key in columns"
+					 @click="sortBy(key)"
+					 :class="{ active: sortKey == key }">
+					 {{ key | capitalize }}
+					 <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+					 </span>
+				  </th>
+				</tr>
+			 </thead>
+			 <tbody>
+				<tr v-for="entry in filteredData">
+				  <td v-for="key in columns">
+    <editable
+      :content="entry[key]"
+		:id="key+'-'+entry.id"
+      v-on:update="updateItem"
+    >
+    </editable>
+				  </td>
+				</tr>
+			 </tbody>
+		  </table>
+		</script>
+
+		<!-- demo root element -->
+		<div id="demo">
+		  <form id="search">
+			 Search <input name="query" v-model="searchQuery">
+		  </form>
+		<btn-new></btn-new>
+		  <demo-grid
+			 :data="gridData"
+			 :columns="gridColumns"
+			 :filter-key="searchQuery">
+		  </demo-grid>
+		</div>
+
+   </div>
+
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

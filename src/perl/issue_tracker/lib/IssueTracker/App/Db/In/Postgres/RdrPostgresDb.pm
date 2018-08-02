@@ -150,7 +150,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 				my ( $col , $op, $val ) = () ; 
             $col = $cols->["$i"] ;
             $op = $ops->["$i"] ;
-            $val = $vals->["$i"] ;
+            $val = $vals->["$i"] || "" ; 
         
             my $col_exists = $self->doCheckIfColumnExists ( $mshr->{'ColumnNames'} , $col ) ; 
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
