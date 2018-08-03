@@ -9,7 +9,8 @@
 		<!-- component template -->
 		<script type="text/x-template" id="grid-template">
 
-
+		 <div>
+		  <btn-new v-on:clickedBtnNew="createNewItem"></btn-new>
 		  <table>
 			 <thead>
 				<tr>
@@ -35,6 +36,7 @@
 				</tr>
 			 </tbody>
 		  </table>
+		 </div>
 		</script>
 
 		<!-- demo root element -->
@@ -42,7 +44,8 @@
 		  <form id="search">
 			 Search <input name="query" v-model="searchQuery">
 		  </form>
-		<btn-new></btn-new>
+
+
 		  <demo-grid
 			 :data="gridData"
 			 :columns="gridColumns"

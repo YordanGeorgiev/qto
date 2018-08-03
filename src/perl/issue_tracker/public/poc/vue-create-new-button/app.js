@@ -5,7 +5,17 @@ Vue.component('btn-new', {
       count: 0
     }
   },
-  template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+  methods: {
+      clickedBtnNew() {
+         function pad2(n) { return n < 10 ? '0' + n : n }
+         var date = new Date();
+         var dbid = date.getFullYear().toString().substr(2,3) + pad2(date.getMonth() + 1) + pad2( date.getDate()) + pad2( date.getHours() ) + pad2( date.getMinutes() ) + pad2( date.getSeconds() );
+         console.log ( "clicked with id: " + dbid)
+			this.$emit('clickedBtnNew',dbid)
+
+      }
+  },
+  template: '<button v-on:click="clickedBtnNew()">create new</button>'
 })
 
 
@@ -96,6 +106,19 @@ Vue.component('demo-grid', {
          .catch(function (error) {
             console.log(error);
           });
+
+    },
+    createNewItem (dbid) {
+		console.log ( "from createItem dbid: " + dbid )
+		axios.post('/dev_issue_tracker/create/monthly_issues', {
+			 id: dbid
+		})
+		.then(function (response) {
+			console.log(response);
+		})
+		.catch(function (error) {
+			console.log(error);
+		 });
 
     }
   }
