@@ -58,6 +58,7 @@ src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
 src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Update.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/Create.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
