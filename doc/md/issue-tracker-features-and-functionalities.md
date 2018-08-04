@@ -32,6 +32,9 @@ Table of Contents
       * [2.5.1. Single cell Inline-edit](#251-single-cell-inline-edit)
           * [2.5.1.1. Error handling on db update error](#2511-error-handling-on-db-update-error)
           * [2.5.1.2. Successful execution](#2512-successful-execution)
+      * [2.5.2. New item creation](#252-new-item-creation)
+          * [2.5.2.1. Error handling on db create error](#2521-error-handling-on-db-create-error)
+          * [2.5.2.2. Successful execution](#2522-successful-execution)
   * [3. DEVOPS FEATURES AND FUNCTIONALITIES](#3-devops-features-and-functionalities)
     * [3.1. Testability](#31-testability)
       * [3.1.1. Perl syntax check call](#311-perl-syntax-check-call)
@@ -99,6 +102,12 @@ Table of Contents
       * [4.3.3. Error handling on non-existing table](#433-error-handling-on-non-existing-table)
       * [4.3.4. Error handling on non-existing attribute ](#434-error-handling-on-non-existing-attribute-)
       * [4.3.5. Error handling on wrong data-type](#435-error-handling-on-wrong-data-type)
+    * [4.4. create web-action](#44-create-web-action)
+      * [4.4.1. Successful execution](#441-successful-execution)
+      * [4.4.2. Error handling on non-existing db](#442-error-handling-on-non-existing-db)
+      * [4.4.3. Error handling on non-existing table](#443-error-handling-on-non-existing-table)
+      * [4.4.4. Error handling on non-existing attribute ](#444-error-handling-on-non-existing-attribute-)
+      * [4.4.5. Error handling on wrong data-type](#445-error-handling-on-wrong-data-type)
 
 
     
@@ -281,6 +290,22 @@ On unvalid input the data is not updated to the database and the old value in th
 
 ##### 2.5.1.2. Successful execution
 If the single cell inline-edit is successfull no msg is presented and the data is updated to the database storage.
+
+    
+
+#### 2.5.2. New item creation
+A new item could be added to the table in the ui and thus in the db table by clicking the plus button
+
+    
+
+##### 2.5.2.1. Error handling on db create error
+If any error occurs while the creation an error msg is presented crearly with fading effect, which returns the error msg from the database. 
+On unvalid input the data is not created to the database and nothing is stored. 
+
+    
+
+##### 2.5.2.2. Successful execution
+No msg is presented, but a new row is added to the table and in the database table. 
 
     
 
@@ -944,6 +969,39 @@ If the attribute(column) provided in the post data does not exist an error is sh
     
 
 #### 4.3.5. Error handling on wrong data-type
+Whenever a wrong data type is passed the back-end returns with the 400 http code and provides the error from the database.
+
+
+    
+
+### 4.4. create web-action
+An http client could create  a new row into ANY table by passing a bigint as the id.
+
+    <<web-host>>:<<web-port>>/<<database>>/update/<<table-name>>
+
+#### 4.4.1. Successful execution
+
+
+    <<web-host>>:<<web-port>>/<<database>>/update/<<table-name>>
+    // example data
+    {attribute: "description", id: "3", cnt: "the name attr should be updated to updated-name-3"}
+
+#### 4.4.2. Error handling on non-existing db
+If the db provided in the url pattern does not exist an error is shown. 
+
+    
+
+#### 4.4.3. Error handling on non-existing table
+If the table provided in the url pattern does not exist an error is shown. 
+
+    
+
+#### 4.4.4. Error handling on non-existing attribute 
+If the attribute(column) provided in the post data does not exist an error is shown. 
+
+    
+
+#### 4.4.5. Error handling on wrong data-type
 Whenever a wrong data type is passed the back-end returns with the 400 http code and provides the error from the database.
 
 

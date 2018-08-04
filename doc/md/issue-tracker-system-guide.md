@@ -15,6 +15,9 @@ Table of Contents
       * [2.1.5. The Converter Components](#215-the-converter-components)
     * [2.2. Multi-instance setup](#22-multi-instance-setup)
       * [2.2.1. Multi-environment naming convention](#221-multi-environment-naming-convention)
+    * [2.3. Sofware architecture](#23-sofware-architecture)
+      * [2.3.1. Front-End](#231-front-end)
+      * [2.3.2. Back-End](#232-back-end)
   * [3. BUSINESS LOGIC](#3-business-logic)
     * [3.1. Projects management](#31-projects-management)
     * [3.2. Increase the date for all projects](#32-increase-the-date-for-all-projects)
@@ -85,6 +88,21 @@ The multi-instance setup refers to the capability of any installed and setup ins
 
 #### 2.2.1. Multi-environment naming convention
 Each database used by the issue-tracker application has an &lt;&lt;environment abbreviation&gt;&gt; suffix refering to its environment type. Running application layers against different db versions should be supported as much as possible.  
+
+    
+
+### 2.3. Sofware architecture
+
+
+    
+
+#### 2.3.1. Front-End
+The Mojolicious Web Framework runs on top of a perl instance, which serves the back-end requests and passes back and forth json, as well as the ui Mojo templates dynamically, which combined with the vue template create the generic ui. 
+
+    
+
+#### 2.3.2. Back-End
+The id's of the tables which ARE VISIBLE to the end users ui are big integers, which are formed by the concatenation of the year,month,day,hour,minutes and second in which the row in the table is created. 
 
     
 

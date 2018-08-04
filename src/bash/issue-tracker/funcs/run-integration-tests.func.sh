@@ -90,6 +90,10 @@ doRunIntegrationTests(){
    doLog "INFO test the update action on the web-action"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
 	echo -e "\n\n\n" 
+   
+   doLog "INFO test the create action on the web-action"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
+	echo -e "\n\n\n" 
 
 	doLog "DEBUG STOP  doRunIntegrationTests"
 }

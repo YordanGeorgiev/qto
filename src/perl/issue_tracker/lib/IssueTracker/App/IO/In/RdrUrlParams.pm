@@ -38,6 +38,21 @@ sub doSetUpdateUrlParams {
 
 }
 
+sub doSetCreateUrlParams {
+
+   my $self          = shift ; 
+   my $objModel      = ${ shift @_ } ; 
+   my $perl_hash     = shift ; 
+   my $ret           = 0 ; 
+   my $msg           = '' ; 
+
+   $objModel->set('create.web-action.id' , $perl_hash->{'id'} ) ; 
+   
+   $ret = 0 ; $msg = '' ; 
+   return ( $ret , $msg ) ; 
+
+}
+
 sub doSetWithUrlParams {
 
    my $self          = shift ; 
