@@ -2,8 +2,8 @@
 % layout 'site';
 
 % content_for header_csss => begin
-   <link rel="stylesheet" type="text/css" media="screen" href="../../css/thme-blue/screen/controls/app_list_grid.css" />
-   <link rel="stylesheet" type="text/css" media="print"  href="../../css/thme-blue/print/controls/app_list_grid.css" />
+   <link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/app_list_grid.css" />
+   <link rel="stylesheet" type="text/css" media="print"  href="../../themes/thme-blue/css/print/controls/app_list_grid.css" />
 % end
 
    <div id="div_central_panel" >

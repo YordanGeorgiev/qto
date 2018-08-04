@@ -2,17 +2,17 @@
 % layout 'site';
 
 % content_for header_csss => begin
-   <link rel="stylesheet" type="text/css" media="screen" href="../../css/thme-blue/screen/controls/app_list_grid.css" />
-   <link rel="stylesheet" type="text/css" media="print"  href="../../css/thme-blue/print/controls/app_list_grid.css" />
+   <link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/app_list_grid.css" />
+   <link rel="stylesheet" type="text/css" media="print"  href="../../themes/thme-blue/css/print/controls/app_list_grid.css" />
 % end
 
    <div id="dev_central_panel" >
 		<script type="text/x-template" id="grid-template">
       <div>
-		  <btn-new id="btnNew" v-on:clickedBtnNew="createNewItem"></btn-new></br>
 		  <table id="egrid" tabindex="1" style="clear:both">
 			 <thead>
 				<tr>
+              <th></th>
 				  <th v-for="key in columns"
 					 @click="sortBy(key)"
 					 :class="{ active: sortKey == key }" tabindex="1" v-on:keyup.enter="sortBy(key)">
@@ -23,7 +23,7 @@
 				</tr>
 			 </thead>
 			 <tbody>
-				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'">{{entry[key]}}</div><div v-else><editable :content="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
+				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td> <btn-new id="btnNew" v-on:clickedBtnNew="createNewItem"></btn-new> </td><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'">{{entry[key]}}</div><div v-else><editable :content="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
 			 </tbody>
 		  </table>
       </div>
@@ -108,7 +108,8 @@ if ( document.getElementById("spn_msg") ) {
 
          }
      },
-     template: `<button v-on:click="clickedBtnNew()">create new</button>`
+     template: `<button v-on:click="clickedBtnNew()"><img
+     src="../../themes/thme-blue/img/controls/add-new.png" alt="add a new item"></img></button>`
    })
 
 
