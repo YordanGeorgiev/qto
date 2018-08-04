@@ -42,7 +42,7 @@ sub doCreateBySoleId {
    $objModel->set('postgres_db_name' , $db ) ; 
 
    $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg ) = $objRdrUrlParams->doSetcreateUrlParams(\$objModel, $perl_hash ) ; 
+   ( $ret , $msg ) = $objRdrUrlParams->doSetCreateUrlParams(\$objModel, $perl_hash ) ; 
    
    if ( $ret != 0 ) {
       $self->res->code(400);
@@ -62,8 +62,6 @@ sub doCreateBySoleId {
    $self->res->headers->accept_charset('UTF-8');
    $self->res->headers->accept_language('fi, en');
    $self->res->headers->content_type('application/json; charset=utf-8');
-
-   
 
    if ( $ret == 0 ) {
       my $http_code = 200 ; 
@@ -94,8 +92,8 @@ sub doCreateBySoleId {
       });
    } else {
 
-      my $post_msg = ' while creating the "' . $perl_hash->{'attribute'} . '" attribute value ' ; 
-      $post_msg .= 'for the following id: ' . $perl_hash->{'id'} ; 
+      my $post_msg = ' while creating a new item ' ; 
+      $post_msg .= 'with the following id: ' . $perl_hash->{'id'} ; 
       $msg .= $post_msg ; 
       $self->res->code(400);
       $self->render( 'json' => { 

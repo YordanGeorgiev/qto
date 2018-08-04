@@ -31,6 +31,64 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
    our $objController                           = () ; 
 
 
+   sub doCreateBySoleId {
+
+		my $self 				= shift ; 
+      my $objModel       = ${ shift @_ } ; 
+      my $table            = shift ; 
+      my $ret              = 0 ; 
+      my $msg              = '' ; 
+   
+      my $id               = $objModel->get('create.web-action.id' ) ; 
+
+      my $dbh              = {} ;         # this is the database handle
+      my $sth              = {} ;         # the statement handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      
+      if ( defined $objModel->get('postgres_db_name') ) {
+		   $postgres_db_name = $objModel->get('postgres_db_name');
+      }
+      
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+
+      my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
+      my $objRdrDb 		   = $objRdrDbsFactory->doInstantiate ( 'postgres' );
+
+      if ( $objRdrDb->table_exists ( $postgres_db_name , $table ) == 0  ) {
+         $ret = 400 ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $postgres_db_name . ' database '  ; 
+         return ( $ret , $msg ) ; 
+      }
+
+
+      $str_sql = " 
+      INSERT INTO  $table ( id ) VALUES ( '$id' )
+      ;
+      " ; 
+      eval {
+         $sth = $dbh->prepare($str_sql);  
+         #debug print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
+
+         $sth->execute() or print STDERR "$DBI::errstr" ; 
+      } or $ret = 500 ; # Internal Server error
+
+      binmode(STDOUT, ':utf8');
+
+      unless ( defined ( $DBI::errstr ) ) {
+         $msg = 'CREATE OK ' ; 
+         $ret = 0 ; 
+      } else {
+         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $msg = "$DBI::errstr" ; 
+         $ret = 1 ; 
+      }
+
+      return ( $ret , $msg ) ; 
+   }
+
+
    sub doUpdateItemBySingleCol {
 
 		my $self 				= shift ; 
