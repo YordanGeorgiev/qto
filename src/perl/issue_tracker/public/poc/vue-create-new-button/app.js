@@ -15,10 +15,8 @@ Vue.component('btn-new', {
 
       }
   },
-  template: '<button v-on:click="clickedBtnNew()">create new</button>'
+  template: `<button v-on:click="clickedBtnNew()">create new</button>`
 })
-
-
 
 // register the editable
 Vue.component('editable', {

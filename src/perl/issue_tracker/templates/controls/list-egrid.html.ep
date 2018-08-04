@@ -8,6 +8,8 @@
 
    <div id="dev_central_panel" >
 		<script type="text/x-template" id="grid-template">
+      <div>
+		  <btn-new id="btnNew" v-on:clickedBtnNew="createNewItem"></btn-new></br>
 		  <table id="egrid" tabindex="1" style="clear:both">
 			 <thead>
 				<tr>
@@ -24,6 +26,7 @@
 				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'">{{entry[key]}}</div><div v-else><editable :content="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
 			 </tbody>
 		  </table>
+      </div>
 		</script>
 
 		<div id="demo">
@@ -60,6 +63,19 @@
    </div>
 
 <script>
+   
+   function getUrlParams(){
+      var url_params = {} 
+      if( window.location.toString().indexOf("?") != -1) {
+         window.location.search.split('?')[1].replace("pick=","pick=id,")
+            .replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
+            url_params[decodeURIComponent(key)] = decodeURIComponent(value);
+         });
+      } else {
+         url_params = { as:"etable" };  
+      }
+      return url_params ; 
+   }
 
    function setSpnMsgErrorText(txt){
       document.getElementById("div_msg").innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
@@ -75,7 +91,27 @@
    }
 
 if ( document.getElementById("spn_msg") ) {
-   // register the editable component
+
+   Vue.component('btn-new', {
+     data: function () {
+       return {
+         count: 0
+       }
+     },
+     methods: {
+         clickedBtnNew() {
+            function pad2(n) { return n < 10 ? '0' + n : n }
+            var date = new Date();
+            var dbid = date.getFullYear().toString().substr(2,3) + pad2(date.getMonth() + 1) + pad2( date.getDate()) + pad2( date.getHours() ) + pad2( date.getMinutes() ) + pad2( date.getSeconds() );
+            console.log ( "clicked with id: " + dbid)
+            this.$emit('clickedBtnNew',dbid)
+
+         }
+     },
+     template: `<button v-on:click="clickedBtnNew()">create new</button>`
+   })
+
+
    Vue.component('editable', {
      template: `<div v-bind:id="id" contenteditable="true" @blur="emitChange" 
                v-on:focus="focused">{{ content }}</div>`,
@@ -164,6 +200,18 @@ if ( document.getElementById("spn_msg") ) {
             setSpnMsgErrorText(error.response.data.msg);
             document.getElementById(id).innerHTML= oldValue
          });
+       },
+       createNewItem (dbid) {
+         console.log ( "from createItem dbid: " + dbid )
+         axios.post('/<%= $db =%>/create/<%= $item =%>', {
+             id: dbid
+         })
+         .then(function (response) {
+            console.log(response);
+         })
+         .catch(function (error) {
+            console.log(error);
+          });
        }
      }
    })
@@ -203,15 +251,7 @@ if ( document.getElementById("spn_msg") ) {
 			}
       },
      fetchServerSideData: function (){
-			var url_params = {} 
-         if( window.location.toString().indexOf("?") != -1) {
-            window.location.search.split('?')[1].replace("pick=","pick=id,")
-               .replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
-               url_params[decodeURIComponent(key)] = decodeURIComponent(value);
-            });
-         } else {
-            url_params = { as:"table" };  
-         }
+			var url_params = getUrlParams();
          this.UrlParams = url_params;
 			axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
 			.then(response => { 
