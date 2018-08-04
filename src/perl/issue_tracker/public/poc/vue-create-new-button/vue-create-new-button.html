@@ -26,12 +26,11 @@
 			 <tbody>
 				<tr v-for="entry in filteredData">
 				  <td v-for="key in columns">
-    <editable
-      :content="entry[key]"
-		:id="key+'-'+entry.id"
-      v-on:update="updateItem"
-    >
-    </editable>
+                   <editable
+                     :content="entry[key]"
+                     :id="key+'-'+entry.id"
+                     v-on:update="updateItem"
+                   ></editable>
 				  </td>
 				</tr>
 			 </tbody>

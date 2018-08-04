@@ -64,8 +64,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
 
       $str_sql = " 
-      INSERT INTO  $table ( id ) VALUES ( '$id' )
-      ;
+      INSERT INTO  $table ( id ) VALUES ( '$id' );
       " ; 
       eval {
          $sth = $dbh->prepare($str_sql);  

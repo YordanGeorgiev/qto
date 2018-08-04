@@ -1,5 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
+src/perl/issue_tracker/templates/controls/list-egrid.html.ep
 src/perl/issue_tracker/public/poc/vue-create-new-button/
 src/perl/issue_tracker/public/poc/vue-create-new-button/vue-create-new-button.css
 src/perl/issue_tracker/public/poc/vue-create-new-button/vue-create-new-button.html
@@ -20,7 +21,6 @@ src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/controls/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud.html.ep
 src/perl/issue_tracker/templates/controls/list-grid.html.ep
-src/perl/issue_tracker/templates/controls/list-egrid.html.ep
 # ---
 src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
