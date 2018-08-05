@@ -1,5 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
+src/perl/issue_tracker/public/poc/vuetify/index.html
 src/perl/issue_tracker/templates/controls/list-egrid.html.ep
 src/perl/issue_tracker/public/poc/vue-create-new-button/
 src/perl/issue_tracker/public/poc/vue-create-new-button/vue-create-new-button.css
@@ -45,14 +46,14 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 # ---
 src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js
 # ---
-src/perl/issue_tracker/public/css/thme-blue/screen/controls/app_list_grid.css
-src/perl/issue_tracker/public/css/thme-blue/print/controls/app_list_grid.css
-src/perl/issue_tracker/public/css/thme-blue/screen/controls/jqcloud.css
-src/perl/issue_tracker/public/css/thme-blue/print/controls/jqcloud.css
-src/perl/issue_tracker/public/css/thme-blue/screen/controls/app_list_labels.css
-src/perl/issue_tracker/public/css/thme-blue/print/controls/app_list_labels.css
-src/perl/issue_tracker/public/css/thme-blue/screen/site/site.css
-src/perl/issue_tracker/public/css/thme-blue/print/site/site.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_grid.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/jqcloud.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/site.css
+src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_grid.css
+src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
+src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/jqcloud.css
+src/perl/issue_tracker/public/themes/thme-blue/css/print/site/site.css
 #---
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller

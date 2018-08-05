@@ -1,5 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
+src/perl/issue_tracker/public/poc/vuetify/index.html
+src/perl/issue_tracker/templates/controls/list-egrid.html.ep
 src/perl/issue_tracker/public/poc/vue-create-new-button/
 src/perl/issue_tracker/public/poc/vue-create-new-button/vue-create-new-button.css
 src/perl/issue_tracker/public/poc/vue-create-new-button/vue-create-new-button.html
@@ -20,7 +22,6 @@ src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/controls/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud.html.ep
 src/perl/issue_tracker/templates/controls/list-grid.html.ep
-src/perl/issue_tracker/templates/controls/list-egrid.html.ep
 # ---
 src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
@@ -45,19 +46,20 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 # ---
 src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js
 # ---
-src/perl/issue_tracker/public/css/thme-blue/screen/controls/app_list_grid.css
-src/perl/issue_tracker/public/css/thme-blue/print/controls/app_list_grid.css
-src/perl/issue_tracker/public/css/thme-blue/screen/controls/jqcloud.css
-src/perl/issue_tracker/public/css/thme-blue/print/controls/jqcloud.css
-src/perl/issue_tracker/public/css/thme-blue/screen/controls/app_list_labels.css
-src/perl/issue_tracker/public/css/thme-blue/print/controls/app_list_labels.css
-src/perl/issue_tracker/public/css/thme-blue/screen/site/site.css
-src/perl/issue_tracker/public/css/thme-blue/print/site/site.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_grid.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/jqcloud.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/site.css
+src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_grid.css
+src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
+src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/jqcloud.css
+src/perl/issue_tracker/public/themes/thme-blue/css/print/site/site.css
 #---
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
 src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Update.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/Create.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
@@ -66,6 +68,7 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectHide.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
 # --- 
 src/perl/issue_tracker/lib/Mojo/Chrome.pm
 src/perl/issue_tracker/lib/Test/Mojo/Role/Chrome.pm
@@ -280,6 +283,7 @@ src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/dev_issue_tracker/12.create-table-check_lists.sql
 src/sql/pgsql/dev_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
+src/sql/pgsql/dev_issue_tracker/97.create-table-test_create_table.sql
 src/sql/pgsql/dev_issue_tracker/98.create-table-test_update_table.sql
 src/sql/pgsql/dev_issue_tracker/99.create-table-test_hierarchy_table.sql
 src/sql/pgsql/tst_issue_tracker

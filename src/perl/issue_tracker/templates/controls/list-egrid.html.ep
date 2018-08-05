@@ -8,11 +8,11 @@
 
    <div id="dev_central_panel" >
 		<script type="text/x-template" id="grid-template">
-      <div>
-		  <table id="egrid" tabindex="1" style="clear:both">
+      <div id="div_grid_tmpl">
+      	<btn-new id="btnNew" v-on:clickedBtnNew="createNewItem"></btn-new>
+			<table id="egrid" tabindex="1" style="clear:both">
 			 <thead>
 				<tr>
-              <th></th>
 				  <th v-for="key in columns"
 					 @click="sortBy(key)"
 					 :class="{ active: sortKey == key }" tabindex="1" v-on:keyup.enter="sortBy(key)">
@@ -23,7 +23,7 @@
 				</tr>
 			 </thead>
 			 <tbody>
-				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td> <btn-new id="btnNew" v-on:clickedBtnNew="createNewItem"></btn-new> </td><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'">{{entry[key]}}</div><div v-else><editable :content="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
+				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'">{{entry[key]}}</div><div v-else><editable :content="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
 			 </tbody>
 		  </table>
       </div>
@@ -33,7 +33,7 @@
 			<div id="div_frm_srch">
 		  		<form id="frm_search">
 			 		<input id="inp_srch_query" tabindex="1" name="query" v-model="searchQuery">
-                  <div class="pgr-bar pgr-border pgr-round" style="float:right;">
+                  <div class="pgr-bar pgr-border pgr-round" style="float:right;padding-right:10%">
                       <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
                         v-bind:href="generatePageSize(pgSize)">
                         <span v-if="pgSize == pageSize" style="background-color:#ddd;"> <strong>{{ pgSize }}</strong> </span>
@@ -76,6 +76,37 @@
       }
       return url_params ; 
    }
+     
+	function fetchServerSideData(url_params){
+			return axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
+			.then(response => { 
+				return response.data ; 
+			})
+			.catch(function(error) {
+            setSpnMsgErrorText(error.response.data.msg);
+    		}) 
+   }
+
+	function postNewServerSideId(dbid){
+		return axios.post('/<%= $db =%>/create/<%= $item =%>', {
+			 id: dbid
+		})
+		.then(function (response) { 
+			console.log ( "the response from the postNewServerSideId" )
+			console.log ( "\nSTART-00 response.ret.toString() : " )
+			console.log ( response.ret.toString() )
+			console.log ( "\nSTOP-00  response.ret.toString() : " )
+		})
+		.catch(function (error) {
+			console.log ( "\nSTART-01 error.toString() : " )
+			//	console.log(error.toString());
+			console.log ( "\nSTOP-01  error.toString() : " )
+			if (typeof error !== 'undefined') {
+				setSpnMsgErrorText(error.toString());
+			}
+		});
+	}
+
 
    function setSpnMsgErrorText(txt){
       document.getElementById("div_msg").innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
@@ -92,26 +123,24 @@
 
 if ( document.getElementById("spn_msg") ) {
 
-   Vue.component('btn-new', {
-     data: function () {
-       return {
-         count: 0
-       }
-     },
-     methods: {
-         clickedBtnNew() {
-            function pad2(n) { return n < 10 ? '0' + n : n }
-            var date = new Date();
-            var dbid = date.getFullYear().toString().substr(2,3) + pad2(date.getMonth() + 1) + pad2( date.getDate()) + pad2( date.getHours() ) + pad2( date.getMinutes() ) + pad2( date.getSeconds() );
-            console.log ( "clicked with id: " + dbid)
-            this.$emit('clickedBtnNew',dbid)
-
-         }
-     },
-     template: `<button v-on:click="clickedBtnNew()"><img
-     src="../../themes/thme-blue/img/controls/add-new.png" alt="add a new item"></img></button>`
-   })
-
+	Vue.component('btn-new', {
+	  data: function () {
+		 return {
+			count: 0
+		 }
+	  },
+	  methods: {
+			clickedBtnNew() {
+				function pad2(n) { return n < 10 ? '0' + n : n }
+				var date = new Date();
+				var dbid = date.getFullYear().toString().substr(2,3) + pad2(date.getMonth() + 1) + pad2( date.getDate()) + pad2( date.getHours() ) + pad2( date.getMinutes() ) + pad2( date.getSeconds() );
+				this.$emit('clickedBtnNew',dbid)
+			}
+	  },
+	  template: `<v-btn fab dark color="indigo" v-on:click="clickedBtnNew()">
+				  <v-icon dark>add</v-icon>
+				</v-btn>` 
+	})
 
    Vue.component('editable', {
      template: `<div v-bind:id="id" contenteditable="true" @blur="emitChange" 
@@ -128,7 +157,6 @@ if ( document.getElementById("spn_msg") ) {
      }
    })
 
-   // register the grid component
    Vue.component('demo-grid', {
      template: '#grid-template',
      props: {
@@ -203,18 +231,49 @@ if ( document.getElementById("spn_msg") ) {
          });
        },
        createNewItem (dbid) {
-         console.log ( "from createItem dbid: " + dbid )
-         axios.post('/<%= $db =%>/create/<%= $item =%>', {
-             id: dbid
-         })
-         .then(function (response) {
-            console.log(response);
-         })
-         .catch(function (error) {
-            console.log(error);
-          });
-       }
-     }
+			console.log("clicked createNewItem:" + dbid.toString());
+			postNewServerSideId(dbid)
+			.then ( result => {
+				console.log ( "POST OK")
+				var url_params = getUrlParams();
+				url_params.with = "id-eq-" + dbid ;
+				fetchServerSideData(url_params).then( data => {
+					this.data.push ( data.dat[0] );
+				})
+				.catch(function (error) {
+					console.log ( "POST NOK")
+					console.log(error);
+					//setSpnMsgErrorText(error.toString());
+				});
+			})				
+			.catch(function (error) {
+				console.log ( "\nSTART-2 error.toString() : " )
+				//console.log(error.toString());
+				console.log ( "\nSTOP-2  error.toString() : " )
+				// setSpnMsgErrorText(error.toString());
+			});
+      },
+      generatePageNum: function (pgNum) {
+			var currentUrl = window.location.href ; 
+			if ( currentUrl.indexOf("page-num=") === -1 ) {
+				var newUrl = currentUrl + "&page-num=" + pgNum ; 
+				return newUrl ; 
+			} else {
+         	return currentUrl.replace("page-num=" + this.pageNum , "page-num=" + pgNum) ; 
+			}
+      },
+      generatePageSize: function (pgSize) {
+			var currentUrl = window.location.href ; 
+			if ( currentUrl.indexOf("page-size=") === -1 ) {
+				var newUrl = currentUrl + "&page-size=" + pgSize ; 
+				return newUrl ; 
+			} else {
+         	return currentUrl
+               .replace("page-size=" + this.pageSize , "page-size=" + pgSize) 
+               .replace("page-num=" + this.pageNum , "page-num=1") ; 
+			}
+      }
+	 }
    })
 
 
@@ -251,27 +310,23 @@ if ( document.getElementById("spn_msg") ) {
                .replace("page-num=" + this.pageNum , "page-num=1") ; 
 			}
       },
-     fetchServerSideData: function (){
-			var url_params = getUrlParams();
-         this.UrlParams = url_params;
-			axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
-			.then(response => { 
-				this.gridData = response.data.dat ; 
-				this.pageSize = url_params['page-size'] || 10 ; 
-				this.pageNum = url_params['page-num'] || 1 ; 
-            var totalRSsize = response.data.met ; 
-            var remainder = totalRSsize % this.pageSize
-            var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
-            if ( remainder == 0 ) { toAdd = 0  }
-				this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
-			})
-			.catch(function(error) {
-            setSpnMsgErrorText(error.response.data.msg);
-    		}) 
-      }
      },
      mounted() {
-       this.fetchServerSideData();
+		var url_params = getUrlParams();
+		fetchServerSideData(url_params)
+		.then( data => {
+			this.gridData = data.dat ; 
+			this.pageSize = url_params['page-size'] || 10 ; 
+			this.pageNum = url_params['page-num'] || 1 ; 
+			var totalRSsize = data.met ; 
+			var remainder = totalRSsize % this.pageSize
+			var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
+			if ( remainder == 0 ) { toAdd = 0  }
+			this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
+		})
+		.catch(function(error) {
+			setSpnMsgErrorText(error.response.data.msg);
+		}) 
 	  }
    });
 }
