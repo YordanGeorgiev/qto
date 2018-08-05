@@ -68,19 +68,28 @@ tr.cls_odd {
 	border-top: 4px solid #fff;
 }
 
-
 #div_frm_srch {
+	position:relative;
+	width: 100%;
 	float: center;
-	padding: 0% 4% 0% 1%;
+	padding: 2% 10% 0% 1%;
 	margin: 1% 5% 1% 7%;
-	clear: none;
+	clear: both;
 	display: block;
 }
-
+#frm_srch {
+	display: block;
+}
 #inp_srch_query {
-   display: inline;
-   float: left;
 	width: 35%;
+   border: 2px solid #dadada;
+   border-radius: 5px;
+}
+#inp_srch_query:focus{
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+	 width: 50%;
 }
 /* stop  grid */
 
@@ -138,3 +147,10 @@ a:visited {
 }
 
 /* stop pgr */
+
+#btnNew{
+    position: fixed;
+    left: 1%;
+    top: 7%;
+    color: white;
+}
