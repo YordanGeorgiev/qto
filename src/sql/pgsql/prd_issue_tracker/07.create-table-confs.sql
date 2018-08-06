@@ -12,7 +12,7 @@ SELECT 'create the "confs" table'
     , value          varchar (4000)
     , description    varchar (4000)
     , owner          varchar (50) NULL
-    , update_time    timestamp DEFAULT NOW()
+    , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_confs_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
@@ -29,3 +29,12 @@ SELECT 'show the columns of the just created table'
    AND    NOT attisdropped
    ORDER  BY attnum
    ; 
+
+--The trigger:
+CREATE TRIGGER trg_set_update_time_on_confs BEFORE UPDATE ON confs FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+
+select tgname
+from pg_trigger
+where not tgisinternal
+and tgrelid = 'confs'::regclass;
+

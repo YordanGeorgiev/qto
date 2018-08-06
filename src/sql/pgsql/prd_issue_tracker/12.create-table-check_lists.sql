@@ -29,3 +29,11 @@ SELECT 'show the columns of the just created table'
    AND    NOT attisdropped
    ORDER  BY attnum
    ; 
+
+--The trigger:
+CREATE TRIGGER trg_set_update_time_on_check_lists BEFORE UPDATE ON check_lists FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+
+select tgname
+from pg_trigger
+where not tgisinternal
+and tgrelid = 'check_lists'::regclass;
