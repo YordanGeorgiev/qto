@@ -15,7 +15,7 @@ SELECT 'create the "problems" table'
     , description    varchar (4000) NOT NULL
     , solution_proposal varchar (4000) NULL
     , owner          varchar (50) NULL
-    , update_time    timestamp DEFAULT NOW()
+    , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_problems_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
@@ -32,3 +32,12 @@ SELECT 'show the columns of the just created table'
    AND    NOT attisdropped
    ORDER  BY attnum
    ; 
+
+
+--The trigger:
+CREATE TRIGGER trg_set_update_time_on_problems BEFORE UPDATE ON problems FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+
+select tgname
+from pg_trigger
+where not tgisinternal
+and tgrelid = 'problems'::regclass;

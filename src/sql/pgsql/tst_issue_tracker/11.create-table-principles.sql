@@ -13,7 +13,7 @@ SELECT 'create the "principles" table'
     , category       varchar (200) NOT NULL
     , name           varchar (200) NOT NULL
     , description    varchar (4000) NOT NULL
-    , update_time    timestamp DEFAULT NOW()
+    , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_principles_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
@@ -30,3 +30,11 @@ SELECT 'show the columns of the just created table'
    AND    NOT attisdropped
    ORDER  BY attnum
    ; 
+
+--The trigger:
+CREATE TRIGGER trg_set_update_time_on_principles BEFORE UPDATE ON principles FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+
+select tgname
+from pg_trigger
+where not tgisinternal
+and tgrelid = 'principles'::regclass;

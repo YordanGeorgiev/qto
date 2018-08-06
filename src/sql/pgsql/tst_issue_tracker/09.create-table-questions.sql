@@ -14,7 +14,7 @@ SELECT 'create the "questions" table'
     , name           varchar (200) NOT NULL DEFAULT 'type the name ...'
     , description    varchar (4000) NOT NULL DEFAULT 'type the description ... '
     , owner          varchar (50) NULL 
-    , update_time    timestamp DEFAULT NOW()
+    , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_questions_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
@@ -31,3 +31,12 @@ SELECT 'show the columns of the just created table'
    AND    NOT attisdropped
    ORDER  BY attnum
    ; 
+
+
+--The trigger:
+CREATE TRIGGER trg_set_update_time_on_questions BEFORE UPDATE ON questions FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+
+select tgname
+from pg_trigger
+where not tgisinternal
+and tgrelid = 'questions'::regclass;

@@ -23,7 +23,7 @@
 				</tr>
 			 </thead>
 			 <tbody>
-				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'">{{entry[key]}}</div><div v-else><editable :content="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
+				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" tabindex="1">{{entry[key]}}</div><div v-else><editable tabindex="1" :content="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
 			 </tbody>
 		  </table>
       </div>
@@ -222,11 +222,11 @@ if ( document.getElementById("spn_msg") ) {
          })
          .then( 
             response => {
-               // alles gut - do nothing console.log(response);
+					// alles gut !!! - do nothing
             }
          )
          .catch(function (error) {
-            setSpnMsgErrorText(error.response.data.msg);
+            setSpnMsgErrorText(error.toString());
             document.getElementById(id).innerHTML= oldValue
          });
        },

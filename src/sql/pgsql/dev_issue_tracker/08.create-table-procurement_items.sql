@@ -11,7 +11,7 @@ SELECT 'create the "procurement_items" table'
     , name           varchar (200) NOT NULL
     , start_time     text NULL
     , stop_time      text NULL
-    , update_time    timestamp DEFAULT NOW()
+    , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , owner          varchar (50) NULL
     , CONSTRAINT pk_procurement_items_guid PRIMARY KEY (guid)
     ) WITH (
@@ -29,3 +29,12 @@ SELECT 'show the columns of the just created table'
    AND    NOT attisdropped
    ORDER  BY attnum
    ; 
+
+
+--The trigger:
+CREATE TRIGGER trg_set_update_time_on_procurement_items BEFORE UPDATE ON procurement_items FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+
+select tgname
+from pg_trigger
+where not tgisinternal
+and tgrelid = 'procurement_items'::regclass;
