@@ -90,15 +90,15 @@ sub doCreateBySoleId {
          ,'ret'   => 400
          ,'req'   => "POST " . $self->req->url->to_abs
       });
-   } else {
+   } elsif ( $ret == 409) {
 
       my $post_msg = ' while creating a new item ' ; 
       $post_msg .= 'with the following id: ' . $perl_hash->{'id'} ; 
       $msg .= $post_msg ; 
-      $self->res->code(400);
+      $self->res->code($ret);
       $self->render( 'json' => { 
          'msg'   => $msg
-         ,'ret' => 404
+         ,'ret' => $ret
          ,'req'   => "POST " . $self->req->url->to_abs
       })
       ;

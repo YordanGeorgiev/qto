@@ -81,7 +81,11 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       } else {
          $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
          $msg = "$DBI::errstr" ; 
-         $ret = 1 ; 
+         if ( $msg =~ m/duplicate key value violates unique constraint/ ){
+            $ret = 409 ; 
+         } else {
+            $ret = 400 ; 
+         }
       }
 
       return ( $ret , $msg ) ; 
