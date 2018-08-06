@@ -21,4 +21,12 @@ html body div#div_msg {
 	width: 100% ; 
 }
    
+.cls_cnt_edtble:hover {
+   opacity: 1.2 ;
+   border: 3px solid #CDCDCD;
+   border-radius: 4px;
+}
 
+.cls_cnt_edtble:focus {
+   background-color: white;
+}

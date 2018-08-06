@@ -138,7 +138,7 @@ if ( document.getElementById("spn_msg") ) {
 	})
 
    Vue.component('editable', {
-     template: `<div v-bind:id="id" contenteditable="true" @blur="emitChange" 
+     template: `<div v-bind:id="id" class="cls_cnt_edtble" contenteditable="true" @blur="emitChange" 
                v-on:focus="focused">{{ content }}</div>`,
      props: ['content','id'],
      data: "",

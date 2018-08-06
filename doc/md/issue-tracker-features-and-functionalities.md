@@ -29,12 +29,13 @@ Table of Contents
       * [2.3.4. set table page number](#234-set-table-page-number)
     * [2.4. List labels page](#24-list-labels-page)
     * [2.5. List as etable page](#25-list-as-etable-page)
-      * [2.5.1. Single cell Inline-edit](#251-single-cell-inline-edit)
-          * [2.5.1.1. Error handling on db update error](#2511-error-handling-on-db-update-error)
-          * [2.5.1.2. Successful execution](#2512-successful-execution)
-      * [2.5.2. New item creation](#252-new-item-creation)
-          * [2.5.2.1. Error handling on db create error](#2521-error-handling-on-db-create-error)
+      * [2.5.1. Keyboard usability](#251-keyboard-usability)
+      * [2.5.2. Single cell Inline-edit](#252-single-cell-inline-edit)
+          * [2.5.2.1. Error handling on db update error](#2521-error-handling-on-db-update-error)
           * [2.5.2.2. Successful execution](#2522-successful-execution)
+      * [2.5.3. New item creation](#253-new-item-creation)
+          * [2.5.3.1. Error handling on db create error](#2531-error-handling-on-db-create-error)
+          * [2.5.3.2. Successful execution](#2532-successful-execution)
   * [3. DEVOPS FEATURES AND FUNCTIONALITIES](#3-devops-features-and-functionalities)
     * [3.1. Testability](#31-testability)
       * [3.1.1. Perl syntax check call](#311-perl-syntax-check-call)
@@ -277,35 +278,40 @@ The list a table page has all the functionalities as the list as "table" page wi
 
     
 
-#### 2.5.1. Single cell Inline-edit
+#### 2.5.1. Keyboard usability
+You can quickly traverse the cells of the table via the tab key, which does go over the non-editable items too ( the id's ) , so that you could quickly scroll the table as scrolling when the editable is in focus does not work. 
+
+    
+
+#### 2.5.2. Single cell Inline-edit
 The table can be edited inline so that the data is updated to the database.
 
     
 
-##### 2.5.1.1. Error handling on db update error
+##### 2.5.2.1. Error handling on db update error
 If any error occurs while updating an error msg is presented crearly with fading effect, which returns the error msg from the database. 
 On unvalid input the data is not updated to the database and the old value in the cell is restored.
 
     
 
-##### 2.5.1.2. Successful execution
+##### 2.5.2.2. Successful execution
 If the single cell inline-edit is successfull no msg is presented and the data is updated to the database storage.
 
     
 
-#### 2.5.2. New item creation
-A new item could be added to the table in the ui and thus in the db table by clicking the plus button
+#### 2.5.3. New item creation
+A new item could be added to the table in the ui and thus in the db table by clicking the plus button above the table. 
 
     
 
-##### 2.5.2.1. Error handling on db create error
+##### 2.5.3.1. Error handling on db create error
 If any error occurs while the creation an error msg is presented crearly with fading effect, which returns the error msg from the database. 
 On unvalid input the data is not created to the database and nothing is stored. 
 
     
 
-##### 2.5.2.2. Successful execution
-No msg is presented, but a new row is added to the table and in the database table. 
+##### 2.5.3.2. Successful execution
+After clicking the plus button the System adds the new row into the database table and presents it into the table ui.
 
     
 

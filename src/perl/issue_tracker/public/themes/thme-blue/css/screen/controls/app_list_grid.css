@@ -47,6 +47,20 @@ tr.cls_even {
 tr.cls_odd {
    background-color: #F0F8FF;
 }
+tr:hover {
+   border: 3px solid #CDCDCD;
+   border-radius: 5px;
+   box-shadow: 1px 1px 10px #C0C0C0;
+   -webkit-box-shadow: 1px 1px 10px #C0C0C0;
+   -moz-box-shadow: 1px 1px 10px #C0C0C0;
+}
+tr:selected{
+   border: 3px solid #CDCDCD;
+   border-radius: 5px;
+   box-shadow: 1px 1px 10px #C0C0C0;
+   -webkit-box-shadow: 1px 1px 10px #C0C0C0;
+   -moz-box-shadow: 1px 1px 10px #C0C0C0;
+}
 .arrow {
 	display: inline-block;
 	vertical-align: middle;
