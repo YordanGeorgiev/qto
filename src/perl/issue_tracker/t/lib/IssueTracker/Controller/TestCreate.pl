@@ -57,7 +57,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 DETAIL:  Key (id)=(' . $id . ') already exists. while creating a new item with the following id: ' . $id ;
    $url = '/' . $db_name . '/create/test_create_table' ; 
    $t->post_ok($url => json => {"id"=> $id })
-      ->json_is({"ret" => 404 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . $url , 
+      ->json_is({"ret" => 409 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . $url , 
                  "msg" => "$exp_err_msg"});
     #p $t->ua ; 
 
@@ -65,9 +65,10 @@ DETAIL:  Key (id)=(' . $id . ') already exists. while creating a new item with t
       $exp_err_msg = 
 'ERROR:  invalid input syntax for integer: "string_when_bigint_expected"
 LINE 2: ...   INSERT INTO  test_create_table ( id ) VALUES ( \'string_wh...
-                                                             ^ while creating a new item with the following id: string_when_bigint_expected' ;
+                                                             ^' ; 
+
             $t->post_ok($url => json => {"id"=> 'string_when_bigint_expected' })
-            ->json_is({"ret" => 404 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . $url , 
+            ->json_is({"ret" => 400 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . $url , 
                        "msg" => "$exp_err_msg"});
 
 

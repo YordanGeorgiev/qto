@@ -92,17 +92,12 @@
 			 id: dbid
 		})
 		.then(function (response) { 
-			console.log ( "the response from the postNewServerSideId" )
-			console.log ( "\nSTART-00 response.ret.toString() : " )
-			console.log ( response.ret.toString() )
-			console.log ( "\nSTOP-00  response.ret.toString() : " )
+         return response ;
 		})
 		.catch(function (error) {
-			console.log ( "\nSTART-01 error.toString() : " )
-			//	console.log(error.toString());
-			console.log ( "\nSTOP-01  error.toString() : " )
 			if (typeof error !== 'undefined') {
-				setSpnMsgErrorText(error.toString());
+		     setSpnMsgErrorText(error.toString());
+           return error ;
 			}
 		});
 	}
@@ -234,23 +229,24 @@ if ( document.getElementById("spn_msg") ) {
 			console.log("clicked createNewItem:" + dbid.toString());
 			postNewServerSideId(dbid)
 			.then ( result => {
-				console.log ( "POST OK")
-				var url_params = getUrlParams();
-				url_params.with = "id-eq-" + dbid ;
-				fetchServerSideData(url_params).then( data => {
-					this.data.push ( data.dat[0] );
-				})
-				.catch(function (error) {
-					console.log ( "POST NOK")
-					console.log(error);
-					//setSpnMsgErrorText(error.toString());
-				});
+            if ( result.toString() !== "Error: Request failed with status code 409" ) {
+               var url_params = getUrlParams();
+               url_params.with = "id-eq-" + dbid ;
+               fetchServerSideData(url_params).then( data => {
+                  this.data.push ( data.dat[0] );
+               })
+               .catch(function (error) {
+                  setSpnMsgErrorText(error.toString());
+               });
+            } else {
+               var msg = result.toString(); 
+               msg = msg + ". Somebody was faster than you in the second you clicked !"
+               msg = msg + " Retry once again."
+				   setSpnMsgErrorText( msg ) ;
+            }
 			})				
 			.catch(function (error) {
-				console.log ( "\nSTART-2 error.toString() : " )
-				//console.log(error.toString());
-				console.log ( "\nSTOP-2  error.toString() : " )
-				// setSpnMsgErrorText(error.toString());
+				setSpnMsgErrorText(error.toString());
 			});
       },
       generatePageNum: function (pgNum) {
