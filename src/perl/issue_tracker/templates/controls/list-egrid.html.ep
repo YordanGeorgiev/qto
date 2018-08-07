@@ -23,7 +23,7 @@
 				</tr>
 			 </thead>
 			 <tbody>
-				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" tabindex="1">{{entry[key]}}</div><div v-else><editable tabindex="1" :content="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
+				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" tabindex="1">{{entry[key]}}</div><div v-on:keyup.tab="this.document.execCommand('selectAll',false,null)" v-else><editable tabindex="1" :content="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem" ></editable></div></td></tr>
 			 </tbody>
 		  </table>
       </div>
@@ -234,7 +234,7 @@ if ( document.getElementById("spn_msg") ) {
 			.then ( result => {
             if ( result.toString() !== "Error: Request failed with status code 409" ) {
                var url_params = getUrlParams();
-               url_params.with = "id-eq-" + dbid ;
+               url_params.set("with" , "id-eq-" + dbid );
                fetchServerSideData(url_params).then( data => {
                   this.data.push ( data.dat[0] );
                })
@@ -315,8 +315,8 @@ if ( document.getElementById("spn_msg") ) {
 		fetchServerSideData(url_params)
 		.then( data => {
 			this.gridData = data.dat ; 
-			this.pageSize = url_params['page-size'] || 10 ; 
-			this.pageNum = url_params['page-num'] || 1 ; 
+			this.pageSize = url_params.get('page-size') || 10 ; 
+			this.pageNum = url_params.get('page-num') || 1 ; 
 			var totalRSsize = data.met ; 
 			var remainder = totalRSsize % this.pageSize
 			var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
