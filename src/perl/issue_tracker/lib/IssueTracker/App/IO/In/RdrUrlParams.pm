@@ -15,6 +15,7 @@ package IssueTracker::App::IO::In::RdrUrlParams ;
 	use File::Path ; 
    use Mojo::Parameters ; 
    use Scalar::Util::Numeric qw(isint);
+   use Data::Printer ; 
 
 
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ; 
@@ -79,7 +80,7 @@ sub doSetWithUrlParams {
 
    foreach my $with ( @$with_params ) {
    
-      # debug print "from RdrUrlParams.pm 39 with: $with \n" ; 
+      print "from RdrUrlParams.pm 82 with: $with \n" ; 
 
       if ( $with =~ m/(.*?)[-](.*?)[-](.*)/g ) {
          push @with_cols , $1 ; 
@@ -114,6 +115,11 @@ sub doSetSelectUrlParams {
    my $query_params  = shift ; 
    my $ret           = 0 ; 
    my $msg           = '' ; 
+   
+   # todo:ysg
+   print 'START every_param fltr-val' . "\n" ; 
+   p ($query_params->every_param('fltr-val'));
+   print 'STOP  every_param fltr-val' . "\n" ; 
 
    $objModel->set('select.web-action.fltr-by' , $query_params->every_param('fltr-by') ) ; 
    $query_params->remove('fltr-by') ; 
@@ -185,6 +191,9 @@ sub doSetListUrlParams {
 
    $objModel->set('list.web-action.fltr-by' , $query_params->every_param('fltr-by') ) ; 
    $objModel->set('list.web-action.fltr-val' , $query_params->every_param('fltr-val') ) ; 
+
+
+
    $objModel->set('list.web-action.like-by' , $query_params->every_param('like-by') ) ; 
    $objModel->set('list.web-action.like-val' , $query_params->every_param('like-val') ) ; 
    $objModel->set('list.web-action.pick' , $query_params->param('pick') );

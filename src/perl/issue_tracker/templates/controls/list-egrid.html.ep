@@ -65,18 +65,21 @@
 <script>
    
    function getUrlParams(){
-      var url_params = {} 
+      var url_params = new URLSearchParams();
       if( window.location.toString().indexOf("?") != -1) {
-         window.location.search.split('?')[1].replace("pick=","pick=id,")
+         window.location.search.split('?')[1].split('#')[0].replace("pick=","pick=id,")
             .replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
-            url_params[decodeURIComponent(key)] = decodeURIComponent(value);
+				var attr = decodeURIComponent(key)
+				var val = decodeURIComponent(value)
+				url_params.append(attr,val);
          });
       } else {
-         url_params = { as:"etable" };  
+         url_params = { as:"etable" }; 
       }
       return url_params ; 
    }
-     
+
+ 
 	function fetchServerSideData(url_params){
 			return axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
 			.then(response => { 
