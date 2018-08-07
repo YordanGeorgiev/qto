@@ -2,6 +2,7 @@
 **/*.zip
 **/*.log
 **/*.tdy
+**/*.dmp.sql
 dat/xls/run/*.xlsx
 dat/tests/t*.txt
 dat/issue-tracker/**
