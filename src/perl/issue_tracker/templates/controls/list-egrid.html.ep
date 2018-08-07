@@ -15,7 +15,7 @@
 				<tr>
 				  <th v-for="key in columns"
 					 @click="sortBy(key)"
-					 :class="{ active: sortKey == key }" tabindex="1" v-on:keyup.enter="sortBy(key)">
+					 :class="{ active: sortKey == key }" tabindex="1" v-on:keyup.enter="sortBy(key)" :id="'th-'+key">
 					 {{ key }}
 					 <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
 					 </span>
@@ -67,8 +67,7 @@
    function getUrlParams(){
       var url_params = new URLSearchParams();
       if( window.location.toString().indexOf("?") != -1) {
-         window.location.search.split('?')[1].split('#')[0].replace("pick=","pick=id,")
-            .replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
+         window.location.search.split('?')[1].split('#')[0].replace("pick=","pick=id,").replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
 				var attr = decodeURIComponent(key)
 				var val = decodeURIComponent(value)
 				url_params.append(attr,val);
@@ -209,34 +208,46 @@ if ( document.getElementById("spn_msg") ) {
          this.sortKey = key
          this.sortOrders[key] = this.sortOrders[key] * -1
        },
+       setAscSortBy: function (key) {
+         this.sortKey = key
+         this.sortOrders[key] = 1 ; 
+       },
        updateItem (content,id,oldValue) {
          var arr = id.split('-')
          var col = arr[0]
          var dbid = arr[1]
-			
-         axios.post('/<%= $db =%>/update/<%= $item =%>', {
-               attribute: col ,
-               id: dbid , 
-               cnt: content.trim()
-         })
-         .then( 
-            response => {
-					// alles gut !!! - do nothing
-            }
-         )
-         .catch(function (error) {
-            setSpnMsgErrorText(error.toString());
-            document.getElementById(id).innerHTML= oldValue
-         });
+		
+			if ( !content.trim() ) { 
+				content = "null"
+			}
+				axios.post('/<%= $db =%>/update/<%= $item =%>', {
+						attribute: col ,
+						id: dbid , 
+						cnt: content.trim()
+				})
+				.then( 
+					response => {
+						// alles gut !!! - do nothing
+					}
+				)
+				.catch(function (error) {
+					setSpnMsgErrorText(error.toString());
+					document.getElementById(id).innerHTML= oldValue
+				});
        },
        createNewItem (dbid) {
+			console.log("createNewItem id ::" + dbid.toString())
 			postNewServerSideId(dbid)
 			.then ( result => {
             if ( result.toString() !== "Error: Request failed with status code 409" ) {
                var url_params = getUrlParams();
-               url_params.set("with" , "id-eq-" + dbid );
+					["like-by","like-val","with","fltr-by","fltr-val"].forEach(function(p){url_params.delete(p)})
+					url_params.delete("with"); url_params.append("with" , "id-eq-" + dbid );
+					// todo:ysg how-to print params for (let p of url_params) { console.log(p);}
                fetchServerSideData(url_params).then( data => {
                   this.data.push ( data.dat[0] );
+						if ( this.sortOrders["id"] === -1 ) { this.setAscSortBy("id"); }
+						document.getElementById("th-id").click() ; // simulate click to show the newest at the top 
                })
                .catch(function (error) {
                   setSpnMsgErrorText(error.toString());
@@ -312,6 +323,7 @@ if ( document.getElementById("spn_msg") ) {
      },
      mounted() {
 		var url_params = getUrlParams();
+		console.log(url_params.toString())
 		fetchServerSideData(url_params)
 		.then( data => {
 			this.gridData = data.dat ; 
