@@ -134,10 +134,11 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       $col_value 		=~ s|\'|\'\'|g ; 
       # clear any possible winblows carriage returns
       $col_value     =~ s|\r\n|\n|g if ( $col_value ) ; 
+      $col_value = "'" . $col_value . "'" unless ( $col_value eq 'null' ) ; 
 
       $str_sql = " 
       UPDATE  $table
-         SET $col_name = '$col_value'
+         SET $col_name = $col_value
          WHERE id='$id'     
       ;
       " ; 
