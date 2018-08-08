@@ -64,16 +64,22 @@ sub startup {
    , action       => 'doSelectItems'
    );
    
+   # http://host-name:3000/dev_issue_tracker/create/monthly_issues?id=123
+   $r->post('/:db/create/:item')->to(
+     controller   => 'Create'
+   , action       => 'doCreateBySoleId'
+   );
+   
+   # http://host-name:3000/dev_issue_tracker/delete/monthly_issues?id=123
+   $r->post('/:db/delete/:item')->to(
+     controller   => 'Delete'
+   , action       => 'doDeleteById'
+   );
+   
    # http://host-name:3000/dev_issue_tracker/update/monthly_issues
    $r->post('/:db/update/:item')->to(
      controller   => 'Update'
    , action       => 'doUpdateItemBySingleCol'
-   );
-   
-   # http://host-name:3000/dev_issue_tracker/create/monthly_issues
-   $r->post('/:db/create/:item')->to(
-     controller   => 'Create'
-   , action       => 'doCreateBySoleId'
    );
 
    # http://host-name:3000/dev_issue_tracker/select/monthly_issues

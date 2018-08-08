@@ -98,8 +98,8 @@
 		})
 		.catch(function (error) {
 			if (typeof error !== 'undefined') {
-		     setSpnMsgErrorText(error.toString());
-           return error ;
+			  var errMsg = error.response.data.msg
+           throw new Error(errMsg);
 			}
 		});
 	}
@@ -119,7 +119,7 @@
    }
 
 if ( document.getElementById("spn_msg") ) {
-
+	
 	Vue.component('btn-new', {
 	  data: function () {
 		 return {
@@ -232,7 +232,7 @@ if ( document.getElementById("spn_msg") ) {
 					}
 				)
 				.catch(function (error) {
-					setSpnMsgErrorText(error.toString());
+					setSpnMsgErrorText(error.message);
 					document.getElementById(id).innerHTML= oldValue
 				});
        },
@@ -251,7 +251,7 @@ if ( document.getElementById("spn_msg") ) {
 						document.getElementById("th-id").click() ; // simulate click to show the newest at the top 
                })
                .catch(function (error) {
-                  setSpnMsgErrorText(error.toString());
+                  setSpnMsgErrorText(error.message);
                });
             } else {
                var msg = result.toString(); 
@@ -261,7 +261,7 @@ if ( document.getElementById("spn_msg") ) {
             }
 			})				
 			.catch(function (error) {
-				setSpnMsgErrorText(error.toString());
+				setSpnMsgErrorText(error.message);
 			});
       },
       generatePageNum: function (pgNum) {
@@ -336,6 +336,7 @@ if ( document.getElementById("spn_msg") ) {
 			})
 			.catch(function(error) {
 				setSpnMsgErrorText(error.response.data.msg);
+				throw new Error('error.toString'); 
 			}) 
 	  	}
      },
