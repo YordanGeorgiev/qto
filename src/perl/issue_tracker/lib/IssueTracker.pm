@@ -73,7 +73,7 @@ sub startup {
    # http://host-name:3000/dev_issue_tracker/delete/monthly_issues?id=123
    $r->post('/:db/delete/:item')->to(
      controller   => 'Delete'
-   , action       => 'doDeleteById'
+   , action       => 'doDeleteItemById'
    );
    
    # http://host-name:3000/dev_issue_tracker/update/monthly_issues
