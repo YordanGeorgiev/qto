@@ -31,7 +31,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
    our $objController                           = () ; 
    
 
-   sub doDeleteById {
+   sub doDeleteItemById {
 
 		my $self 				= shift ; 
       my $objModel       = ${ shift @_ } ; 

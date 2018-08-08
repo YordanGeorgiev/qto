@@ -62,6 +62,10 @@ sub doSetDeleteUrlParams {
    my $msg           = '' ; 
 
    $objModel->set('delete.web-action.id' , $perl_hash->{'id'} ) ; 
+
+   print "todo:ysg \n" ; 
+   print "from RdrUrlParams \n" ; 
+   p $perl_hash->{'id'} ; 
    
    $ret = 0 ; $msg = '' ; 
    return ( $ret , $msg ) ; 

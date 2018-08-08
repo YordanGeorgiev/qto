@@ -12,7 +12,7 @@
       	<btn-new id="btnNew" v-on:clickedBtnNew="createNewItem"></btn-new>
 			<table id="egrid" tabindex="1" style="clear:both">
 			 <thead>
-				<tr>
+				<tr><th></th>
 				  <th v-for="key in columns"
 					 @click="sortBy(key)"
 					 :class="{ active: sortKey == key }" tabindex="1" v-on:keyup.enter="sortBy(key)" :id="'th-'+key">
@@ -23,16 +23,16 @@
 				</tr>
 			 </thead>
 			 <tbody>
-				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" tabindex="1">{{entry[key]}}</div><div v-on:keyup.tab="this.document.execCommand('selectAll',false,null)" v-else><editable tabindex="1" :content="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem" ></editable></div></td></tr>
+				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td tabindex="-1"><btn-del :id="'btn-del-'+entry['id']" v-on:clickedBtnDelete="deleteItem"></btn-del></td><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" tabindex="1">{{entry[key]}}</div><div v-on:keyup.tab="this.document.execCommand('selectAll',false,null)" v-else><editable tabindex="1" :content="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem" ></editable></div></td></tr>
 			 </tbody>
 		  </table>
       </div>
 		</script>
 
-		<div id="demo">
+		<div id="demo" tabindex="-1">
 			<div id="div_frm_srch">
 		  		<form id="frm_search">
-			 		<input id="inp_srch_query" tabindex="1" name="query" v-model="searchQuery">
+			 		<input id="inp_srch_query" tabindex="1" name="query" v-model="searchQuery"/>
                   <div class="pgr-bar pgr-border pgr-round" style="float:right;padding-right:10%">
                       <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
                         v-bind:href="generatePageSize(pgSize)">
@@ -120,6 +120,21 @@
 
 if ( document.getElementById("spn_msg") ) {
 	
+	Vue.component('btn-del', {
+	  data: function () {
+		 return {
+			count: 0
+		 }
+	  },
+	  methods: {
+       clickedDelete: function(ev) {
+			console.log ( "clickedDelete id clicked " + ev.currentTarget.id.toString())
+         this.$emit('clickedBtnDelete', ev.currentTarget.id)
+       }
+	  },
+	  template: `<v-btn flat icon color="indigo" v-on:click="clickedDelete($event)"><v-icon dark>delete</v-icon></v-btn>` 
+	})
+
 	Vue.component('btn-new', {
 	  data: function () {
 		 return {
@@ -138,6 +153,7 @@ if ( document.getElementById("spn_msg") ) {
 				  <v-icon dark>add</v-icon>
 				</v-btn>` 
 	})
+
 
    Vue.component('editable', {
      template: `<div v-bind:id="id" class="cls_cnt_edtble" contenteditable="true" @blur="emitChange" 
@@ -211,6 +227,25 @@ if ( document.getElementById("spn_msg") ) {
        setAscSortBy: function (key) {
          this.sortKey = key
          this.sortOrders[key] = 1 ; 
+       },
+       deleteItem (id) {
+         var arr = id.split('-')
+         var dbid = arr[2]
+			
+			console.log ( " the id is : " + id.toString() ) 	
+				axios.post('/<%= $db =%>/delete/<%= $item =%>', {
+						id: dbid 
+				})
+				.then( 
+					response => {
+						console.log( "should remove the row with id:" + dbid ) 
+						// remove the row !!
+						// bad practice .... this.$parent.fetchServerSideDataToUI()
+					}
+				)
+				.catch(function (error) {
+					setSpnMsgErrorText(error.message);
+				});
        },
        updateItem (content,id,oldValue) {
          var arr = id.split('-')
