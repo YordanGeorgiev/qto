@@ -21,6 +21,20 @@ package IssueTracker::App::IO::In::RdrUrlParams ;
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ; 
    use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
 
+sub doSetCreateUrlParams {
+
+   my $self          = shift ; 
+   my $objModel      = ${ shift @_ } ; 
+   my $perl_hash     = shift ; 
+   my $ret           = 0 ; 
+   my $msg           = '' ; 
+
+   $objModel->set('create.web-action.id' , $perl_hash->{'id'} ) ; 
+   
+   $ret = 0 ; $msg = '' ; 
+   return ( $ret , $msg ) ; 
+
+}
 
 sub doSetUpdateUrlParams {
 
@@ -39,7 +53,7 @@ sub doSetUpdateUrlParams {
 
 }
 
-sub doSetCreateUrlParams {
+sub doSetDeleteUrlParams {
 
    my $self          = shift ; 
    my $objModel      = ${ shift @_ } ; 
@@ -47,7 +61,7 @@ sub doSetCreateUrlParams {
    my $ret           = 0 ; 
    my $msg           = '' ; 
 
-   $objModel->set('create.web-action.id' , $perl_hash->{'id'} ) ; 
+   $objModel->set('delete.web-action.id' , $perl_hash->{'id'} ) ; 
    
    $ret = 0 ; $msg = '' ; 
    return ( $ret , $msg ) ; 

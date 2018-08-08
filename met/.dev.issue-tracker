@@ -57,9 +57,10 @@ src/perl/issue_tracker/public/themes/thme-blue/css/print/site/site.css
 #---
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
-src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/Update.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Create.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/Update.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/Delete.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
@@ -67,8 +68,9 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectHide.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestDelete.pl
 # --- 
 src/perl/issue_tracker/lib/Mojo/Chrome.pm
 src/perl/issue_tracker/lib/Test/Mojo/Role/Chrome.pm
