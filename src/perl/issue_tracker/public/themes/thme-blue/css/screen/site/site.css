@@ -1,6 +1,13 @@
+html, body {
+    max-width: 100%; 
+    overflow-x: hidden;
+}
+
 html body div#div_msg {
     font-size: 110%;
     min-width: 90%; 
+    max-width: 98%; 
+    overflow-x: hidden;
     text-align: center; 
     border-radius: 5px;
     padding: 10px; 

@@ -132,7 +132,7 @@ if ( document.getElementById("spn_msg") ) {
          this.$emit('clickedBtnDelete', ev.currentTarget.id)
        }
 	  },
-	  template: `<v-btn flat icon color="indigo" v-on:click="clickedDelete($event)"><v-icon dark>delete</v-icon></v-btn>` 
+	  template: `<v-btn flat icon color="grey" v-on:click="clickedDelete($event)"><v-icon dark>delete</v-icon></v-btn>` 
 	})
 
 	Vue.component('btn-new', {
@@ -188,6 +188,14 @@ if ( document.getElementById("spn_msg") ) {
        }
      },
      computed: {
+  		arrData: {
+    		get: function () {
+      		return this.data
+    		},
+    		set: function (newValue) {
+      		this.data = newValue
+    		}
+  		},
        filteredData: function () {
          var sortKey = this.sortKey
          var filterKey = this.filterKey && this.filterKey.toLowerCase()
@@ -228,25 +236,9 @@ if ( document.getElementById("spn_msg") ) {
          this.sortKey = key
          this.sortOrders[key] = 1 ; 
        },
-       deleteItem (id) {
-         var arr = id.split('-')
-         var dbid = arr[2]
-			
-			console.log ( " the id is : " + id.toString() ) 	
-				axios.post('/<%= $db =%>/delete/<%= $item =%>', {
-						id: dbid 
-				})
-				.then( 
-					response => {
-						console.log( "should remove the row with id:" + dbid ) 
-						// remove the row !!
-						// bad practice .... this.$parent.fetchServerSideDataToUI()
-					}
-				)
-				.catch(function (error) {
-					setSpnMsgErrorText(error.message);
-				});
-       },
+		 deleteItem(id){
+       	this.$parent.deleteItem(id);
+		 },
        updateItem (content,id,oldValue) {
          var arr = id.split('-')
          var col = arr[0]
@@ -373,7 +365,29 @@ if ( document.getElementById("spn_msg") ) {
 				setSpnMsgErrorText(error.response.data.msg);
 				throw new Error('error.toString'); 
 			}) 
-	  	}
+	  	},
+       deleteItem (id) {
+         var arr = id.split('-')
+         var dbid = arr[2]
+			
+			console.log ( " the id is : " + id.toString() ) 	
+				axios.post('/<%= $db =%>/delete/<%= $item =%>', {
+						id: dbid 
+				})
+				.then( 
+					response => {
+						this.fetchServerSideDataToUI()
+						console.log( "should remove the row with id:" + dbid ) 
+						//this.gridData = this.gridData.filter(function( obj ) {
+						//	 return obj.id !== id;
+						//});
+						// remove the row !!
+					}
+				)
+				.catch(function (error) {
+					setSpnMsgErrorText(error.message);
+				});
+       }
      },
      mounted() {
 		this.fetchServerSideDataToUI();
