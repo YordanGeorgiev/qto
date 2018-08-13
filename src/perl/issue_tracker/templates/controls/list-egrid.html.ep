@@ -157,7 +157,7 @@ if ( document.getElementById("spn_msg") ) {
 
    Vue.component('editable', {
      template: `<div v-bind:id="id" class="cls_cnt_edtble" contenteditable="true" @blur="emitChange" 
-               v-on:focus="focused">{{ content }}</div>`,
+               v-on:focus="focused" v-on:keyup.esc="revertChange()">{{ content }}</div>`,
      props: {
 		content: {
 			twoWay: true 
@@ -180,6 +180,10 @@ if ( document.getElementById("spn_msg") ) {
        , emitChange (ev) {
 			this.$emit('update', ev.target.innerText,ev.target.id,this.data)
 			this.$forceUpdate();
+       }
+       , revertChange() {
+			this.$el.setAttribute('contenteditable', 'false')	
+     		this.$el.innerText = this.data ; 
        }
      }
    })
