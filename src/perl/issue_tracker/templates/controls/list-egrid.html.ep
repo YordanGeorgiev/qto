@@ -23,13 +23,13 @@
 				</tr>
 			 </thead>
 			 <tbody>
-				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td tabindex="-1"><btn-del :id="'btn-del-'+entry['id']" v-on:clickedBtnDelete="deleteItem"></btn-del></td><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" tabindex="1">{{entry[key]}}</div><div v-on:keyup.tab="this.document.execCommand('selectAll',false,null)" v-else><editable tabindex="1" :content="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem" ></editable></div></td></tr>
+				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td tabindex="-1"><btn-del :id="'btn-del-'+entry['id']" v-on:clickedBtnDelete="deleteItem"></btn-del></td><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" tabindex="1">{{entry[key]}}</div><div v-on:keyup.tab="this.document.execCommand('selectAll',false,null)" v-else><editable tabindex="1" :content.sync="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
 			 </tbody>
 		  </table>
       </div>
 		</script>
 
-		<div id="demo" tabindex="-1">
+		<div id="cruds-grid" tabindex="-1">
 			<div id="div_frm_srch">
 		  		<form id="frm_search">
 			 		<input id="inp_srch_query" tabindex="1" name="query" v-model="searchQuery"/>
@@ -43,11 +43,11 @@
 		  		</form>
 			</div>
 
-		  <demo-grid
-			 :data="gridData"
+		  <cruds-grid-sf
+			 :data.sync="gridData"
 			 :columns="gridColumns"
 			 :filter-key="searchQuery">
-		  </demo-grid>
+		  </cruds-grid-sf>
 
          <div class="pgr-show-inline-block">
             <div class="pgr-bar pgr-border pgr-round">
@@ -158,24 +158,38 @@ if ( document.getElementById("spn_msg") ) {
    Vue.component('editable', {
      template: `<div v-bind:id="id" class="cls_cnt_edtble" contenteditable="true" @blur="emitChange" 
                v-on:focus="focused">{{ content }}</div>`,
-     props: ['content','id'],
+     props: {
+		content: {
+			twoWay: true 
+		}
+		,id: {}
+	  },
      data: "",
+     watch: {
+        content: function () {
+            this.$el.innerText = this.content;
+        }
+     },
+     mounted() {
+     		this.$el.innerText = this.content;
+     },
      methods: {
-       emitChange (ev) {
-         this.$emit('update', ev.target.innerText,ev.target.id,this.data)
-       },
        focused(ev) {
          this.data = ev.target.textContent;
+       }
+       , emitChange (ev) {
+			this.$emit('update', ev.target.innerText,ev.target.id,this.data)
+			this.$forceUpdate();
        }
      }
    })
 
-   Vue.component('demo-grid', {
+   Vue.component('cruds-grid-sf', {
      template: '#grid-template',
      props: {
-       data: Array,
-       columns: Array,
-       filterKey: String
+       data: {type: Array, twoWay: true}
+       , columns: Array
+       , filterKey: String
      },
      data: function () {
        var sortOrders = {}
@@ -187,41 +201,38 @@ if ( document.getElementById("spn_msg") ) {
          sortOrders: sortOrders
        }
      },
-     computed: {
-  		arrData: {
-    		get: function () {
-      		return this.data
-    		},
-    		set: function (newValue) {
-      		this.data = newValue
-    		}
-  		},
-       filteredData: function () {
-         var sortKey = this.sortKey
-         var filterKey = this.filterKey && this.filterKey.toLowerCase()
-         var order = this.sortOrders[sortKey] || 1
-         var data = this.data
-         if (filterKey) {
-           data = data.filter(function (row) {
-             return Object.keys(row).some(function (key) {
-               return String(row[key]).toLowerCase().indexOf(filterKey) > -1
-             })
-           })
-         }
-         if (sortKey) {
-           data = data.slice().sort(function (a, b) {
-             a = a[sortKey]
-             b = b[sortKey] 
-             if ( (!isNaN(parseFloat(a)) && isFinite(a)) && (!isNaN(parseFloat(b)) && isFinite(b)) ) {
-               return (a-b) * order
-             } else {
-               return (a === b ? 0 : a > b ? 1 : -1) * order
-             }
-           })
-         }
-         return data
-      }
-     },
+	  computed: {
+		 filteredData: {		
+			 get: function () {
+				var sortKey = this.sortKey
+				var filterKey = this.filterKey && this.filterKey.toLowerCase()
+				var order = this.sortOrders[sortKey] || 1
+				var data = this.data
+				if (filterKey) {
+				  data = data.filter(function (row) {
+					 return Object.keys(row).some(function (key) {
+						return String(row[key]).toLowerCase().indexOf(filterKey) > -1
+					 })
+				  })
+				}
+				if (sortKey) {
+				  data = data.slice().sort(function (a, b) {
+					 a = a[sortKey]
+					 b = b[sortKey] 
+					 if ( (!isNaN(parseFloat(a)) && isFinite(a)) && (!isNaN(parseFloat(b)) && isFinite(b)) ) {
+						return (a-b) * order
+					 } else {
+						return (a === b ? 0 : a > b ? 1 : -1) * order
+					 }
+				  })
+				}
+				return data
+			},
+			set: function(data) {
+				this.data = data
+			}
+		}
+	  },
      filters: {
        capitalize: function (str) {
          return str.charAt(0).toUpperCase() + str.slice(1)
@@ -229,6 +240,7 @@ if ( document.getElementById("spn_msg") ) {
      },
      methods: {
        sortBy: function (key) {
+			//this.$parent.fetchServerSideDataToUI();
          this.sortKey = key
          this.sortOrders[key] = this.sortOrders[key] * -1
        },
@@ -240,57 +252,12 @@ if ( document.getElementById("spn_msg") ) {
        	this.$parent.deleteItem(id);
 		 },
        updateItem (content,id,oldValue) {
-         var arr = id.split('-')
-         var col = arr[0]
-         var dbid = arr[1]
-		
-			if ( !content.trim() ) { 
-				content = "null"
-			}
-				axios.post('/<%= $db =%>/update/<%= $item =%>', {
-						attribute: col ,
-						id: dbid , 
-						cnt: content.trim()
-				})
-				.then( 
-					response => {
-						// alles gut !!! - do nothing
-						// bad practice .... this.$parent.fetchServerSideDataToUI()
-					}
-				)
-				.catch(function (error) {
-					setSpnMsgErrorText(error.message);
-					document.getElementById(id).innerHTML= oldValue
-				});
+			this.$parent.updateItem(content,id,oldValue);
+         var col = id.split('-')[0] 
        },
-       createNewItem (dbid) {
-			console.log("createNewItem id ::" + dbid.toString())
-			postNewServerSideId(dbid)
-			.then ( result => {
-            if ( result.toString() !== "Error: Request failed with status code 409" ) {
-               var url_params = getUrlParams();
-					["like-by","like-val","with","fltr-by","fltr-val"].forEach(function(p){url_params.delete(p)})
-					url_params.delete("with"); url_params.append("with" , "id-eq-" + dbid );
-					// todo:ysg how-to print params for (let p of url_params) { console.log(p);}
-               fetchServerSideData(url_params).then( data => {
-                  this.data.push ( data.dat[0] );
-						if ( this.sortOrders["id"] === -1 ) { this.setAscSortBy("id"); }
-						document.getElementById("th-id").click() ; // simulate click to show the newest at the top 
-               })
-               .catch(function (error) {
-                  setSpnMsgErrorText(error.message);
-               });
-            } else {
-               var msg = result.toString(); 
-               msg = msg + ". Somebody was faster than you in the second you clicked !"
-               msg = msg + " Retry once again."
-				   setSpnMsgErrorText( msg ) ;
-            }
-			})				
-			.catch(function (error) {
-				setSpnMsgErrorText(error.message);
-			});
-      },
+       createNewItem (content,id,oldValue) {
+			this.$parent.createNewItem(content,id,oldValue);
+       },
       generatePageNum: function (pgNum) {
 			var currentUrl = window.location.href ; 
 			if ( currentUrl.indexOf("page-num=") === -1 ) {
@@ -315,8 +282,8 @@ if ( document.getElementById("spn_msg") ) {
    })
 
 
-   var demo = new Vue({
-     el: '#demo',
+   var gruds_crid = new Vue({
+     el: '#cruds-grid',
      data: {
        searchQuery: '',
        gridColumns: <%== $list_control =%>,
@@ -360,12 +327,63 @@ if ( document.getElementById("spn_msg") ) {
 				var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
 				if ( remainder == 0 ) { toAdd = 0  }
 				this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
+				//this.$children.map(obj=>obj.$forceUpdate());
 			})
 			.catch(function(error) {
 				setSpnMsgErrorText(error.response.data.msg);
 				throw new Error('error.toString'); 
 			}) 
 	  	},
+       createNewItem (dbid) {
+			postNewServerSideId(dbid)
+			.then ( result => {
+            if ( result.toString() !== "Error: Request failed with status code 409" ) {
+               var url_params = getUrlParams();
+					["like-by","like-val","with","fltr-by","fltr-val"].forEach(function(p){url_params.delete(p)})
+					url_params.delete("with"); url_params.append("with" , "id-eq-" + dbid );
+               fetchServerSideData(url_params).then( data => {
+                  this.$children[0].data.push ( data.dat[0] );
+						if ( this.$children[0].sortOrders["id"] === -1 ) { this.$children[0].setAscSortBy("id"); }
+						document.getElementById("th-id").click() ; // simulate click to show the newest at the top 
+               })
+               .catch(function (error) {
+                  setSpnMsgErrorText(error.message);
+               });
+            } else {
+               var msg = result.toString(); 
+               msg = msg + ". Somebody was faster than you in the second you clicked !"
+               msg = msg + " Retry once again."
+				   setSpnMsgErrorText( msg ) ;
+            }
+			})				
+			.catch(function (error) {
+				setSpnMsgErrorText(error.message);
+			});
+      },
+      updateItem (content,id,oldValue) {
+         var arr = id.split('-')
+         var col = arr[0]
+         var dbid = arr[1]
+		
+			if ( !content.trim() ) { 
+				content = "null"
+			}
+			axios.post('/<%= $db =%>/update/<%= $item =%>', {
+					attribute: col ,
+					id: dbid , 
+					cnt: content.trim()
+			})
+			.then( 
+				response => {
+               objIndex = this.gridData.findIndex(obj => obj.id == dbid);
+               this.gridData[objIndex][col] = content;
+				}
+			)
+			.catch(function (error) {
+				setSpnMsgErrorText(error.message);
+				document.getElementById(id).innerHTML= oldValue
+			});
+       },
        deleteItem (id) {
          var arr = id.split('-')
          var dbid = arr[2]
@@ -376,12 +394,8 @@ if ( document.getElementById("spn_msg") ) {
 				})
 				.then( 
 					response => {
+						// question: why it does not work client-side only ?!
 						this.fetchServerSideDataToUI()
-						console.log( "should remove the row with id:" + dbid ) 
-						//this.gridData = this.gridData.filter(function( obj ) {
-						//	 return obj.id !== id;
-						//});
-						// remove the row !!
 					}
 				)
 				.catch(function (error) {
