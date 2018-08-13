@@ -31,8 +31,8 @@
 
 		<div id="cruds-grid" tabindex="-1">
 			<div id="div_frm_srch">
-		  		<form id="frm_search">
-			 		<input id="inp_srch_query" tabindex="1" name="query" v-model="searchQuery"/>
+		  		<form id="frm_search" v-on:submit.prevent>
+			 		<input id="inp_srch_query" tabindex="1" v-model="searchQuery" v-on:keydown.13="trapOnEnterDown($event)"/>
                   <div class="pgr-bar pgr-border pgr-round" style="float:right;padding-right:10%">
                       <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
                         v-bind:href="generatePageSize(pgSize)">
@@ -247,22 +247,22 @@ if ( document.getElementById("spn_msg") ) {
 			//this.$parent.fetchServerSideDataToUI();
          this.sortKey = key
          this.sortOrders[key] = this.sortOrders[key] * -1
-       },
-       setAscSortBy: function (key) {
+       }
+       , setAscSortBy: function (key) {
          this.sortKey = key
          this.sortOrders[key] = 1 ; 
-       },
-		 deleteItem(id){
+       }
+		 , deleteItem(id){
        	this.$parent.deleteItem(id);
-		 },
-       updateItem (content,id,oldValue) {
+		 }
+       , updateItem (content,id,oldValue) {
 			this.$parent.updateItem(content,id,oldValue);
          var col = id.split('-')[0] 
-       },
-       createNewItem (content,id,oldValue) {
+       }
+       , createNewItem (content,id,oldValue) {
 			this.$parent.createNewItem(content,id,oldValue);
-       },
-      generatePageNum: function (pgNum) {
+       }
+      , generatePageNum: function (pgNum) {
 			var currentUrl = window.location.href ; 
 			if ( currentUrl.indexOf("page-num=") === -1 ) {
 				var newUrl = currentUrl + "&page-num=" + pgNum ; 
@@ -270,8 +270,8 @@ if ( document.getElementById("spn_msg") ) {
 			} else {
          	return currentUrl.replace("page-num=" + this.pageNum , "page-num=" + pgNum) ; 
 			}
-      },
-      generatePageSize: function (pgSize) {
+      }
+      , generatePageSize: function (pgSize) {
 			var currentUrl = window.location.href ; 
 			if ( currentUrl.indexOf("page-size=") === -1 ) {
 				var newUrl = currentUrl + "&page-size=" + pgSize ; 
@@ -307,8 +307,8 @@ if ( document.getElementById("spn_msg") ) {
 			} else {
          	return currentUrl.replace("page-num=" + this.pageNum , "page-num=" + pgNum) ; 
 			}
-      },
-      generatePageSize: function (pgSize) {
+      }
+      , generatePageSize: function (pgSize) {
 			var currentUrl = window.location.href ; 
 			if ( currentUrl.indexOf("page-size=") === -1 ) {
 				var newUrl = currentUrl + "&page-size=" + pgSize ; 
@@ -318,8 +318,8 @@ if ( document.getElementById("spn_msg") ) {
                .replace("page-size=" + this.pageSize , "page-size=" + pgSize) 
                .replace("page-num=" + this.pageNum , "page-num=1") ; 
 			}
-     },
-     fetchServerSideDataToUI: function() {
+     }
+     , fetchServerSideDataToUI: function() {
 			var url_params = getUrlParams();
 			fetchServerSideData(url_params)
 			.then( data => {
@@ -337,8 +337,8 @@ if ( document.getElementById("spn_msg") ) {
 				setSpnMsgErrorText(error.response.data.msg);
 				throw new Error('error.toString'); 
 			}) 
-	  	},
-       createNewItem (dbid) {
+	  	}
+      , createNewItem (dbid) {
 			postNewServerSideId(dbid)
 			.then ( result => {
             if ( result.toString() !== "Error: Request failed with status code 409" ) {
@@ -363,8 +363,8 @@ if ( document.getElementById("spn_msg") ) {
 			.catch(function (error) {
 				setSpnMsgErrorText(error.message);
 			});
-      },
-      updateItem (content,id,oldValue) {
+      }
+      , updateItem (content,id,oldValue) {
          var arr = id.split('-')
          var col = arr[0]
          var dbid = arr[1]
@@ -387,8 +387,8 @@ if ( document.getElementById("spn_msg") ) {
 				setSpnMsgErrorText(error.message);
 				document.getElementById(id).innerHTML= oldValue
 			});
-       },
-       deleteItem (id) {
+       }
+       , deleteItem (id) {
          var arr = id.split('-')
          var dbid = arr[2]
 			
@@ -406,8 +406,13 @@ if ( document.getElementById("spn_msg") ) {
 					setSpnMsgErrorText(error.message);
 				});
        }
-     },
-     mounted() {
+		, trapOnEnterDown(event){
+			console.log("prevent default")
+        if (event) event.preventDefault();
+        if (event) event.stopPropagation();
+    	}
+     }
+     , mounted() {
 		this.fetchServerSideDataToUI();
 	  }
    });
