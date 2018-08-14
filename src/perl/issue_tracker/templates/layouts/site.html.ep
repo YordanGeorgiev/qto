@@ -12,6 +12,7 @@
    <%= content 'header_csss' %>
 </head>
 <body>
+<div id="div_app_name"><span><%= "$db " =%></span></div>
 	<div id="div_msg"> <%== $msg %></div>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
