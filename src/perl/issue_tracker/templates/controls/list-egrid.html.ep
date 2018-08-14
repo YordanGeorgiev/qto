@@ -32,7 +32,7 @@
 		<div id="cruds-grid" tabindex="-1">
 			<div id="div_frm_srch">
 		  		<form id="frm_search" v-on:submit.prevent>
-			 		<input id="inp_srch_query" tabindex="1" v-model="searchQuery" v-on:keydown.13="trapOnEnterDown($event)"/>
+			 		<input id="inp_quick_srch" tabindex="1" v-model="searchQuery" v-on:keydown.13="trapOnEnterDown($event)"/>
                   <div class="pgr-bar pgr-border pgr-round" style="float:right;padding-right:10%">
                       <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
                         v-bind:href="generatePageSize(pgSize)">
