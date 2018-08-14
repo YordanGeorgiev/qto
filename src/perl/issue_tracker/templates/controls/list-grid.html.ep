@@ -34,7 +34,7 @@
 		<div id="demo">
 			<div id="div_frm_srch">
 		  		<form id="frm_search">
-			 		<input id="inp_srch_query" tabindex="1" name="query" v-model="searchQuery">
+			 		<input id="inp_quick_srch" tabindex="1" name="query" v-model="searchQuery">
          
       <div class="pgr-bar pgr-border pgr-round" style="float:right;">
           <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 

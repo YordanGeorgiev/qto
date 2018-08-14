@@ -107,16 +107,21 @@ tr:selected{
 #frm_srch {
 	display: block;
 }
-#inp_srch_query {
+#inp_quick_srch {
 	width: 35%;
    border: 2px solid #dadada;
    border-radius: 5px;
+   padding: 1px 3px; 
+   line-height: 18px; 
 }
-#inp_srch_query:focus{
-    outline: none;
-    border-color: #9ecaed;
-    box-shadow: 0 0 10px #9ecaed;
-	 width: 50%;
+
+#inp_quick_srch:focus{
+   outline: none;
+   border-color: #9ecaed;
+   box-shadow: 0 0 10px #9ecaed;
+	width: 48%;
+   padding: 2px 4px; 
+   line-height: 22px; 
 }
 /* stop  grid */
 
