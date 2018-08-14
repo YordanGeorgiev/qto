@@ -182,7 +182,6 @@ if ( document.getElementById("spn_msg") ) {
 			this.$forceUpdate();
        }
        , revertChange() {
-			this.$el.setAttribute('contenteditable', 'false')	
      		this.$el.innerText = this.data ; 
        }
      }
