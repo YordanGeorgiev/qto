@@ -128,7 +128,6 @@ if ( document.getElementById("spn_msg") ) {
 	  },
 	  methods: {
        clickedDelete: function(ev) {
-			console.log ( "clickedDelete id clicked " + ev.currentTarget.id.toString())
          this.$emit('clickedBtnDelete', ev.currentTarget.id)
        }
 	  },
@@ -388,25 +387,23 @@ if ( document.getElementById("spn_msg") ) {
 			});
        }
        , deleteItem (id) {
-         var arr = id.split('-')
-         var dbid = arr[2]
-			
-			console.log ( " the id is : " + id.toString() ) 	
-				axios.post('/<%= $db =%>/delete/<%= $item =%>', {
-						id: dbid 
-				})
-				.then( 
-					response => {
-						// question: why it does not work client-side only ?!
-						this.fetchServerSideDataToUI()
-					}
-				)
-				.catch(function (error) {
-					setSpnMsgErrorText(error.message);
-				});
+            var arr = id.split('-')
+            var dbid = arr[2]
+            
+            axios.post('/<%= $db =%>/delete/<%= $item =%>', {
+                  id: dbid 
+            })
+            .then( 
+               response => {
+                  // question: why it does not work client-side only ?!
+                  this.fetchServerSideDataToUI()
+               }
+            )
+            .catch(function (error) {
+               setSpnMsgErrorText(error.message);
+            });
        }
 		, trapOnEnterDown(event){
-			console.log("prevent default")
         if (event) event.preventDefault();
         if (event) event.stopPropagation();
     	}
