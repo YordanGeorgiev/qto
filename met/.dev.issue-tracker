@@ -286,6 +286,7 @@ src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/dev_issue_tracker/12.create-table-check_lists.sql
 src/sql/pgsql/dev_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
+src/sql/pgsql/dev_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/dev_issue_tracker/97.create-table-test_create_table.sql
 src/sql/pgsql/dev_issue_tracker/98.create-table-test_update_table.sql
 src/sql/pgsql/dev_issue_tracker/99.create-table-test_hierarchy_table.sql
@@ -323,6 +324,7 @@ src/sql/pgsql/prd_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/prd_issue_tracker/99.create-table-test_hierarchy_table.sql
 src/sql/pgsql/scripts/check-postgres-tables-permissions.sql
 src/sql/pgsql/scripts/copy-items-from-one-table-to-another.sql
+src/sql/pgsql/scripts/list-table-columns.sql
 #----
 src/bash/issue-tracker/tests/db-to-xls.test.sh
 src/bash/issue-tracker/funcs/db-to-xls.func.sh

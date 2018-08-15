@@ -8,7 +8,7 @@
 
    <div id="dev_central_panel" >
 		<script type="text/x-template" id="grid-template">
-      <div id="div_grid_tmpl">
+      <div id="div_grid_tmpl" style="overflow-x: auto;">
       	<btn-new id="btnNew" v-on:clickedBtnNew="createNewItem"></btn-new>
 			<table id="egrid" tabindex="1" style="clear:both">
 			 <thead>
@@ -167,11 +167,19 @@ if ( document.getElementById("spn_msg") ) {
      data: "",
      watch: {
         content: function () {
-            this.$el.innerText = this.content;
+        this.content === 'null' ? this.$el.innerText = "" : this.$el.innerText = this.content;
+        /* todo:ysg
+            if ( this.content === 'null' ) {
+               this.$el.innerText = "";
+            } else {
+               this.$el.innerText = this.content;
+            }
+        */
         }
      },
      mounted() {
-     		this.$el.innerText = this.content;
+     	   // todo:ysg this.$el.innerText = this.content;
+        this.content === 'null' ? this.$el.innerText = "" : this.$el.innerText = this.content;
      },
      methods: {
        focused(ev) {
