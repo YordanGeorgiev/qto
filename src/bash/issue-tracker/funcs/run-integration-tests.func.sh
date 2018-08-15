@@ -6,11 +6,19 @@
 # ---------------------------------------------------------
 doRunIntegrationTests(){
 
-	doLog "DEBUG START doRunIntegrationTests"
+	doLog "DEBUG START doRunIntegrationTests @run-integration-tests.func.sh"
 
 	doLog "INFO re-start the issue-tracker app-layer just for sure"
    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop 
    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
+
+   doLog "INFO make a backup of the current db"
+   mkdir -p $mix_data_dir/sql/pgsql/dbdumps/; 
+   pg_dump  --column-inserts --data-only $postgres_db_name \
+      > $mix_data_dir/sql/pgsql/dbdumps/$postgres_db_name/$postgres_db_name.`date"+%Y%m%d_%H%M%S"`.insrt.dmp.sql
+   ls -1 $mix_data_dir/sql/pgsql/dbdumps/$postgres_db_name/* | sort -nr
+   last_db_backup_file=$(ls -1 $mix_data_dir/sql/pgsql/dbdumps/$postgres_db_name/* | sort -nr|head -n 1)
+	doLog "INFO created the following postgres db backup : $last_db_backup_file" 
 
 	doLog "INFO re-create the documentation db"
    bash src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
@@ -35,6 +43,10 @@ doRunIntegrationTests(){
    export do_truncate_tables=1 
    export rdbms_type=postgres ; export load_model=upsert ; 
    perl src/perl/issue_tracker/script/issue_tracker.pl --do xls-to-db --tables $tables
+	
+   doLog "INFO re-create the $env_type db once again for the db dump restore"
+   bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
+   psql -d $postgres_db_name < "$last_db_backup_file"
 
    doLog "INFO START test the Select Controller "
    doLog " $postgres_db_name/Select-tables"

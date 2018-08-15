@@ -7,15 +7,15 @@ SELECT 'create the "problems" table'
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , level          integer NULL
     , seq            integer NULL
-    , prio           integer NOT NULL
-    , weight         integer NOT NULL
-    , status         varchar (200) NOT NULL
-    , category       varchar (200) NOT NULL
-    , name           varchar (200) NOT NULL
-    , description    varchar (4000) NOT NULL
+    , prio           integer NOT NULL DEFAULT 1
+    , weight         integer NOT NULL DEFAULT 9
+    , status         varchar (200) NOT NULL DEFAULT 'status ...'
+    , category       varchar (200) NOT NULL DEFAULT 'category ...'
+    , name           varchar (200) NOT NULL DEFAULT 'name ...'
+    , description    varchar (4000) NOT NULL DEFAULT 'desc ...'
     , solution_proposal varchar (4000) NULL
-    , owner          varchar (50) NULL
-    , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
+    , owner          varchar (50) NOT NULL DEFAULT 'none'
+    , update_time    timestamp NOT NULL DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_problems_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
