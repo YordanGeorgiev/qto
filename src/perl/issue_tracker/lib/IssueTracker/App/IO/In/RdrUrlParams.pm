@@ -63,10 +63,6 @@ sub doSetDeleteUrlParams {
 
    $objModel->set('delete.web-action.id' , $perl_hash->{'id'} ) ; 
 
-   print "todo:ysg \n" ; 
-   print "from RdrUrlParams \n" ; 
-   p $perl_hash->{'id'} ; 
-   
    $ret = 0 ; $msg = '' ; 
    return ( $ret , $msg ) ; 
 
@@ -134,10 +130,7 @@ sub doSetSelectUrlParams {
    my $ret           = 0 ; 
    my $msg           = '' ; 
    
-   # todo:ysg
-   print 'START every_param fltr-val' . "\n" ; 
    p ($query_params->every_param('fltr-val'));
-   print 'STOP  every_param fltr-val' . "\n" ; 
 
    $objModel->set('select.web-action.fltr-by' , $query_params->every_param('fltr-by') ) ; 
    $query_params->remove('fltr-by') ; 
