@@ -98,7 +98,7 @@ sub doSetWithUrlParams {
 
    foreach my $with ( @$with_params ) {
    
-      print "from RdrUrlParams.pm 82 with: $with \n" ; 
+      # debug print "from RdrUrlParams.pm 82 with: $with \n" ; 
 
       if ( $with =~ m/(.*?)[-](.*?)[-](.*)/g ) {
          push @with_cols , $1 ; 
