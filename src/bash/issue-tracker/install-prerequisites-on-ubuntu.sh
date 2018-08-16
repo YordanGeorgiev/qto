@@ -44,8 +44,12 @@ done < <(cat << "EOF"
 	python-setuptools 
 	python-dev 
 	build-essential
+   gpgsm
 EOF
 )
+
+# this one is for the gpgsm binary
+sudo apt-mark auto gpgsm
 
 # to install selenium
 sudo easy_install pip

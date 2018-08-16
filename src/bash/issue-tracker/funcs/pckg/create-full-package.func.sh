@@ -40,6 +40,7 @@ doCreateFullPackage(){
 	timestamp=`date "+%Y%m%d_%H%M%S"`
 	# the last token of the include_file with . token separator - thus no points in names
 	zip_file_name=$(echo $include_file | rev | cut -d'.' -f 1 | rev)
+   test $zip_file_name != $run_unit && zip_file_name="$zip_file_name"'--'"$issue_tracker_project"
 	zip_file_name="$zip_file_name.$product_version.$tgt_env_type.$timestamp.$host_name.zip"
 	zip_file="$product_dir/$zip_file_name"
 	mkdir -p $product_instance_dir/dat/$run_unit/tmp
@@ -68,6 +69,22 @@ doCreateFullPackage(){
 	   rm -fv $zip_file
       export exit_code=1 ;  doExit "$msg" ; 
       exit 1
+   fi
+  
+   # backup the project data dir if not running on the product itself ...
+   test -d $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d") || doIncreaseDate
+   mkdir -p $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/; 
+   pg_dump  --column-inserts --data-only $postgres_db_name  > \
+   $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/$postgres_db_name.`date "+%Y%m%d_%H%M%S"`.insrt.dmp.sql 
+   ls -1 $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/* | sort -nr
+   # and zip the project data dir
+   if [ ! $run_unit == $issue_tracker_project ]; then
+      cd $mix_data_dir
+      for i in {1..3} ; do cd .. ; done ;
+      zip -r $zip_file $issue_tracker_project/dat/mix/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
+	   cd $org_base_dir
+   else 
+      zip -r $zip_file $org_name/$run_unit/$environment_name/dat/mix/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
    fi
 
    msg="created the following full development package:"
