@@ -18,7 +18,6 @@ doRunIntegrationTests(){
    ls -1 $daily_data_dir/sql/$postgres_db_name/* | sort -nr
    last_db_backup_file=$(ls -1 $daily_data_dir/sql/$postgres_db_name/* | sort -nr|head -n 1)
 	doLog "INFO created the following postgres db backup : $last_db_backup_file" 
-	doLog "INFO re-create the documentation db"
    bash src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
 
 	doLog "INFO load the documentation db run xls-to-db to mysql"
