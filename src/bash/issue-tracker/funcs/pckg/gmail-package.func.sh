@@ -6,6 +6,14 @@ doGmailPackage(){
 	
 	mutt --help >/dev/null 2>&1 ||
 	{ doLog "ERROR. mutt is not installed or not in PATH. Aborting." >&2; exit 1; }
+  
+   if [ -z "$Emails" ]; then
+      msg="Emails to set mail to not set !!! you need to export Emails=list-of-emails-to-send-mail-to-comma-delimited" ;
+      export exit_code=1 ;  
+      doExit "$msg";
+      exit 1 ;
+   fi
+
 	# zip_file=$(ls -r1 "$product_dir"/*.zip | head -1)
 	zip_file=$(cat $product_instance_dir/dat/$run_unit/tmp/zip_file)
    test -z "${zip_file+x}" && zip_file=$(ls -r1 "$product_instance_dir"/*.zip | head -1)
