@@ -106,6 +106,8 @@ doIncreaseDate(){
       rm -v "$daily_data_dir/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
    done < <(find $daily_data_dir -type f -name "*.xlsx"| grep -v '/[.~]')
 
+   doBackupPostgresDb
+
    msg=" OK for creating the daily project dir:
          $daily_data_dir"
    doLog "INFO ""$msg"
