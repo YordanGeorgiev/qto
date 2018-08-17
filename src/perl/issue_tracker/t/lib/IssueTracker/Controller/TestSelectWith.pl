@@ -28,29 +28,31 @@ for my $row ( @$tables ) {
    $url = '/' . $db_name . '/select-meta/' . $table ; 
    my $meta_res = $ua->get($url)->result->json ; 
    my $list_meta = $meta_res->{'dat'} ; 
-   
+   my @with_or_where = ( 'with' , 'where' ); 
    # not all tables contain the prio attribute to test by , thus run only for those having it
-   foreach my $prio_have_row ( @$list_meta )  {
-      next unless $prio_have_row->{'attname'} eq 'prio'  ;
-      # test a filter by Select of integers	
-      $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio&with=prio-le-3&with=prio-ge-1' ; 
-      $t->get_ok($url )
-         ->status_is(200) 
-         ->header_is('Accept-Charset' => 'UTF-8')
-         ->header_is('Accept-Language' => 'fi, en')
-      ;
+   foreach my $with_where ( @with_or_where )  {
+      foreach my $prio_have_row ( @$list_meta )  {
+         next unless $prio_have_row->{'attname'} eq 'prio'  ;
+         # test a filter by Select of integers	
+         $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio&' . "$with_where" . '=prio-le-3&' . "$with_where" . '=prio-ge-1' ; 
+         $t->get_ok($url )
+            ->status_is(200) 
+            ->header_is('Accept-Charset' => 'UTF-8')
+            ->header_is('Accept-Language' => 'fi, en')
+         ;
 
-      $res = $ua->get($url)->result->json ; 
-      my $list = $res->{'dat'} ; 
+         $res = $ua->get($url)->result->json ; 
+         my $list = $res->{'dat'} ; 
 
-      foreach my $row ( @$list) {
-         # not all the tables have the prio attribute
-         $tm = "only prio <= 3 are selected for $url: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
-         ok ( $row->{'prio'} <= 3, $tm ) ; 
-         $tm = "only prio >= 1  are selected for $url: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
-         ok ( $row->{'prio'} >= 1, $tm ) ; 
-      }
-   } 
+         foreach my $row ( @$list) {
+            # not all the tables have the prio attribute
+            $tm = "only prio <= 3 are selected for $url: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
+            ok ( $row->{'prio'} <= 3, $tm ) ; 
+            $tm = "only prio >= 1  are selected for $url: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
+            ok ( $row->{'prio'} >= 1, $tm ) ; 
+         }
+      } 
+   }
    #eof for each prio
    
    
