@@ -1,10 +1,5 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
-src/bash/issue-tracker/funcs/backup-postgres-db.func.sh
-src/bash/issue-tracker/tests/backup-postgres-db.test.sh
-doc/txt/issue-tracker/funcs/backup-postgres-db.func.txt
-doc/txt/issue-tracker/tests/backup-postgres-db.test.txt
-# ---
 src/perl/issue_tracker/public/poc/vuetify/index.html
 src/perl/issue_tracker/templates/controls/list-egrid.html.ep
 src/perl/issue_tracker/public/poc/vue-create-new-button/
@@ -885,3 +880,9 @@ dat/mix/2018/2018-08/2018-08-16/xls/issue-tracker.all.20180816_000000.xlsx
 # ---
 src/bash/issue-tracker/scripts/history.sh
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/add-new.png
+# ---
+src/bash/issue-tracker/funcs/backup-postgres-db.func.sh
+src/bash/issue-tracker/tests/backup-postgres-db.test.sh
+doc/txt/issue-tracker/funcs/backup-postgres-db.func.txt
+doc/txt/issue-tracker/tests/backup-postgres-db.test.txt
+# ---
