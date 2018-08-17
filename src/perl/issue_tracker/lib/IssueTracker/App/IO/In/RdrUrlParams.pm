@@ -88,6 +88,9 @@ sub doSetWithUrlParams {
    };
 
    $with_params   = $query_params->every_param('with') ; 
+   # or where because of the sql gurus around there ...
+   $with_params   = $query_params->every_param('where') if ( @$with_params < 1 ) ;
+
    return unless $with_params ; 
 
    my ( @with_cols , @with_ops , @with_vals ) = () ; 
@@ -115,6 +118,7 @@ sub doSetWithUrlParams {
       $objModel->set('select.web-action.with-vals' , \@with_vals ) ; 
    
       $query_params->remove('with') ; 
+      $query_params->remove('where') ; 
    }
 
    $ret = 0 ; $msg = '' ; 
@@ -130,7 +134,7 @@ sub doSetSelectUrlParams {
    my $ret           = 0 ; 
    my $msg           = '' ; 
    
-   p ($query_params->every_param('fltr-val'));
+   # p ($query_params->every_param('fltr-val'));
 
    $objModel->set('select.web-action.fltr-by' , $query_params->every_param('fltr-by') ) ; 
    $query_params->remove('fltr-by') ; 
