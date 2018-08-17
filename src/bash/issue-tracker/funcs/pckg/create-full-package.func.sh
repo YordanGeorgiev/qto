@@ -73,10 +73,6 @@ doCreateFullPackage(){
   
    # backup the project data dir if not running on the product itself ...
    test -d $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d") || doIncreaseDate
-   mkdir -p $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/; 
-   pg_dump  --column-inserts --data-only $postgres_db_name  > \
-   $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/$postgres_db_name.`date "+%Y%m%d_%H%M%S"`.insrt.dmp.sql 
-   ls -1 $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/* | sort -nr
    # and zip the project data dir
    if [ ! $run_unit == $issue_tracker_project ]; then
       cd $mix_data_dir

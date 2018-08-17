@@ -1,4 +1,5 @@
-db-to-json
+backup-postgres-db
+# db-to-json
 # run-perl-unit-tests
 # run-integration-tests
 # run-mysql-scripts
