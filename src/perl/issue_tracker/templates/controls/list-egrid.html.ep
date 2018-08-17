@@ -23,7 +23,7 @@
 				</tr>
 			 </thead>
 			 <tbody>
-				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td tabindex="-1"><btn-del :id="'btn-del-'+entry['id']" v-on:clickedBtnDelete="deleteItem"></btn-del></td><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" tabindex="1">{{entry[key]}}</div><div v-on:keyup.tab="this.document.execCommand('selectAll',false,null)" v-else><editable tabindex="1" :content.sync="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
+				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td><btn-del :id="'btn-del-'+entry['id']" v-on:clickedBtnDelete="deleteItem"></btn-del></td><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" tabindex="1">{{entry[key]}}</div><div v-on:keyup.tab="this.document.execCommand('selectAll',false,null)" v-else><editable tabindex="1" :content.sync="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
 			 </tbody>
 		  </table>
       </div>
@@ -131,7 +131,7 @@ if ( document.getElementById("spn_msg") ) {
          this.$emit('clickedBtnDelete', ev.currentTarget.id)
        }
 	  },
-	  template: `<v-btn flat icon color="grey" v-on:click="clickedDelete($event)"><v-icon dark>delete</v-icon></v-btn>` 
+	  template: `<v-btn href="#" flat icon color="grey" v-on:click="clickedDelete($event)"><v-icon dark>delete</v-icon></v-btn>` 
 	})
 
 	Vue.component('btn-new', {

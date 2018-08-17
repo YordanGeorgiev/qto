@@ -498,7 +498,6 @@ doc/txt/issue-tracker/tests/change-version.test.txt
 src/bash/issue-tracker/funcs/dev/change-version.func.sh
 src/bash/issue-tracker/helps/change-version.help.sh
 src/bash/issue-tracker/specs/change-version.spec.sh
-src/bash/issue-tracker/tests/change-version.test.sh
 #---
 doc/txt/issue-tracker/specs/change-env-type.spec.txt
 doc/txt/issue-tracker/helps/change-env-type.help.txt
