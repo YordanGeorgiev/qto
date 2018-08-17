@@ -5,15 +5,15 @@ Table of Contents
 
   * [1. WHY](#1-why)
   * [2. WHAT ](#2-what-)
-  * [3. INSTALLATION AND CONFIGURATION](#3-installation-and-configuration)
-    * [3.1. Prerequisites](#31-prerequisites)
-    * [3.2. Fetch the source](#32-fetch-the-source)
-    * [3.3. run the boot-strap script](#33-run-the-boot-strap-script)
-    * [3.4. Apply the db and issue create scripts](#34-apply-the-db-and-issue-create-scripts)
-    * [3.5. Install the required Perl modules](#35-install-the-required-perl-modules)
-    * [3.6. Start hacking](#36-start-hacking)
-  * [4. ADDITIONAL DOCS](#4-additional-docs)
-  * [5. AND FINALLY THE PROJECT STATUS](#5-and-finally-the-project-status)
+  * [3. DEMO ](#3-demo-)
+  * [4. INSTALLATION AND CONFIGURATION](#4-installation-and-configuration)
+    * [4.1. Prerequisites](#41-prerequisites)
+    * [4.2. Fetch the source](#42-fetch-the-source)
+    * [4.3. run the boot-strap script](#43-run-the-boot-strap-script)
+    * [4.4. Apply the db and issue create scripts](#44-apply-the-db-and-issue-create-scripts)
+    * [4.5. Install the required Perl modules](#45-install-the-required-perl-modules)
+  * [5. ADDITIONAL DOCS](#5-additional-docs)
+  * [6. ACKNOWLEDGEMENTS](#6-acknowledgements)
 
 
     
@@ -37,12 +37,21 @@ https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker
 
     
 
-## 3. INSTALLATION AND CONFIGURATION
-This section is the starting point for deploying a fully working instance of the issue-tracker. The installation has been automated as much as possible and the docs have been updated each time when the setup has been changed, so following up the instructions and implementing step by step top to bottom should bring you to a fully functional instance and if there are clear inconsistencies or anything blocking you your feedback will be highly appreciated !
+## 3. DEMO 
+You can check the following running instance of the tool:
 
     
 
-### 3.1. Prerequisites
+## 4. INSTALLATION AND CONFIGURATION
+You could either try quickly to execute the instructions bellow this section or 
+follow the installation instructions from the Installation and Configuration Guide in the docs/md dir:
+
+https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-installation-and-configuration-guide.md
+
+
+    
+
+### 4.1. Prerequisites
 The must have binaries are:
  bash, perl, zip,postgres 9.6
 
@@ -67,7 +76,7 @@ https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker
     
     sudo apt-get upgrade
 
-### 3.2. Fetch the source
+### 4.2. Fetch the source
 Fetch the source from git hub as follows:
 
     # got to a dir you have write permissions , for example:
@@ -83,7 +92,7 @@ Fetch the source from git hub as follows:
     ls -al
     unzip -o 0.4.4.zip -d .
 
-### 3.3. run the boot-strap script
+### 4.3. run the boot-strap script
 The bootstrap script will interpolate change the git deployment dir to a "product_instance_dir" ( your instance of the issue-tracker, having the same version as this one, but running on a different host with different owner - your )
 
     # defiine the latest and greates product_version
@@ -99,7 +108,7 @@ The bootstrap script will interpolate change the git deployment dir to a "produc
     cd /opt/csitea/issue-tracker/issue-tracker.$product_version.dev.$USER
     
 
-### 3.4. Apply the db and issue create scripts
+### 4.4. Apply the db and issue create scripts
 If you do not have the PostgreSQL ( v9.5 &gt; ) with current Linux user configured role installed check the instructions in the installations and configurations section of the DevOps guide:
 https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-devops-guide.md#1-installations-and-configurations
 If you do have it , apply the db and issue create scripts as follows:
@@ -107,7 +116,7 @@ If you do have it , apply the db and issue create scripts as follows:
     # apply the postgre sql scripts
     bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
 
-### 3.5. Install the required Perl modules
+### 4.5. Install the required Perl modules
 Just run the prerequisites checker script which will provide you with instruction you could just copy paste.
 
     sudo perl src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
@@ -115,26 +124,39 @@ Just run the prerequisites checker script which will provide you with instructio
     # after installing all the modules check the perl syntax of the whole project:
     bash src/bash/issue-tracker/issue-tracker.sh -a check-perl-syntax
 
-### 3.6. Start hacking
-Start usage:
-
-    doParseIniEnvVars cnf/issue-tracker-issues.dev.doc-pub-host.cnf
-    
-    # run all the uncommented out test actions listed in the 
-    # src/bash/issue-tracker/tests/run-issue-tracker-tests.lst file
-    
-    bash src/bash/issue-tracker/test-issue-tracker.sh
-
-## 4. ADDITIONAL DOCS
+## 5. ADDITIONAL DOCS
 Additional docs could be found in the doc/md dir. 
 A good starting point could be the "features doc:" : 
-https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-features-and-functionalities.md d
+
+https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-features-and-functionalities.md
+
+The user-stories doc :
+https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-user-stories.md
+
+
+The Requirements document contains the requirements for the application:
+
+https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-requirements.md
+
+The SystemGuide contains the description of the existing issue-tracker System and it's architecture:
+
+https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-system-guide.md
+
+The DevOps Guide contains the instructions for the devops operators:
+https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-devops-guide.md
 
     
 
-## 5. AND FINALLY THE PROJECT STATUS
-The issue tracker project status could be tracked by the issue-tracker data stored in the following gsheet:
-https://docs.google.com/spreadsheets/d/e/2PACX-1vQ3ijqJkY03mDXiaT3mcvr96NkgRnsONSAHyBGwnukuRezhHTaAZsUxOcoQ6fHfZmcHXP2KpD6kfCPR/pubhtml
+## 6. ACKNOWLEDGEMENTS
+This project would not have been possible without the work of the communities of the people working on the following frameworks/languages/OS listed in now particular order. 
+
+ - Mojolicious
+ - Vue 
+ - Perl
+ - GNU Linux
+
+Deep gratitudes and thanks for all those people !
+This application aims to contain the best practices of our former collegues and collaborators and co-travellers in life, which also deserve special thanks for their support and contributions 
 
     
 
