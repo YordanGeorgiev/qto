@@ -30,12 +30,15 @@ Table of Contents
     * [2.4. List labels page](#24-list-labels-page)
     * [2.5. List as etable page](#25-list-as-etable-page)
       * [2.5.1. Keyboard usability](#251-keyboard-usability)
-      * [2.5.2. Single cell Inline-edit](#252-single-cell-inline-edit)
-          * [2.5.2.1. Error handling on db update error](#2521-error-handling-on-db-update-error)
-          * [2.5.2.2. Successful execution](#2522-successful-execution)
-      * [2.5.3. New item creation](#253-new-item-creation)
-          * [2.5.3.1. Error handling on db create error](#2531-error-handling-on-db-create-error)
-          * [2.5.3.2. Successful execution](#2532-successful-execution)
+      * [2.5.2. New item creation ( CREATE )](#252-new-item-creation-(-create-))
+          * [2.5.2.1. Successful execution](#2521-successful-execution)
+          * [2.5.2.2. Error handling on db create error](#2522-error-handling-on-db-create-error)
+      * [2.5.3. Single cell Inline-edit ( UPDATE )](#253-single-cell-inline-edit-(-update-))
+          * [2.5.3.1. Successful execution](#2531-successful-execution)
+          * [2.5.3.2. Error handling on db update error](#2532-error-handling-on-db-update-error)
+      * [2.5.4. Item deletion ( DELETE )](#254-item-deletion-(-delete-))
+          * [2.5.4.1. Successful execution](#2541-successful-execution)
+          * [2.5.4.2. Error handling on db update error](#2542-error-handling-on-db-update-error)
   * [3. DEVOPS FEATURES AND FUNCTIONALITIES](#3-devops-features-and-functionalities)
     * [3.1. Testability](#31-testability)
       * [3.1.1. Perl syntax check call](#311-perl-syntax-check-call)
@@ -54,61 +57,67 @@ Table of Contents
       * [3.4.2. The "morph-dir" action](#342-the-"morph-dir"-action)
       * [3.4.3. Perl code syntax check](#343-perl-code-syntax-check)
       * [3.4.4. Single call export of the md and pdf documentation files](#344-single-call-export-of-the-md-and-pdf-documentation-files)
-    * [3.5. SHELL BASED ACTIONS](#35-shell-based-actions)
-      * [3.5.1. The "run-pgsql-scripts" action](#351-the-"run-pgsql-scripts"-action)
-      * [3.5.2. The "run-mysql-scripts" action](#352-the-"run-mysql-scripts"-action)
-          * [3.5.2.1. The "txt-to-db" action period handling](#3521-the-"txt-to-db"-action-period-handling)
-      * [3.5.3. The "txt-to-db" action](#353-the-"txt-to-db"-action)
-      * [3.5.4. The "db-to-xls" action against postgres](#354-the-"db-to-xls"-action-against-postgres)
-      * [3.5.5. The "xls-to-db" action](#355-the-"xls-to-db"-action)
-          * [3.5.5.1. The "xls-to-db" action without passing xls file](#3551-the-"xls-to-db"-action-without-passing-xls-file)
-          * [3.5.5.2. The "xls-to-db" action with nested-set mode against mysql](#3552-the-"xls-to-db"-action-with-nested-set-mode-against-mysql)
-      * [3.5.6. The "db-to-txt" action](#356-the-"db-to-txt"-action)
-      * [3.5.7. The "db-to-txt" action with pre-defined sorting attribute](#357-the-"db-to-txt"-action-with-pre-defined-sorting-attribute)
-      * [3.5.8. The db-to-json shell action](#358-the-db-to-json-shell-action)
-      * [3.5.9. The json-to-db shell action](#359-the-json-to-db-shell-action)
-      * [3.5.10. restart the morbo development server](#3510-restart-the-morbo-development-server)
-      * [3.5.11. restart the hypnotoad production server](#3511-restart-the-hypnotoad-production-server)
-      * [3.5.12. Enforced daily backups by "increase-date" action](#3512-enforced-daily-backups-by-"increase-date"-action)
-  * [4. BACK-END FEATURES AND FUNCTIONALITIES](#4-back-end-features-and-functionalities)
-    * [4.1. select-tables web action](#41-select-tables-web-action)
-      * [4.1.1. successful execution](#411-successful-execution)
-      * [4.1.2. error handling for failed connect to db in the select-tables web action](#412-error-handling-for-failed-connect-to-db-in-the-select-tables-web-action)
-    * [4.2. select web action](#42-select-web-action)
-      * [4.2.1. successful execution](#421-successful-execution)
-      * [4.2.2. apply multiple operators on the select properly](#422-apply-multiple-operators-on-the-select-properly)
-      * [4.2.3. error handling for failed connect to db in the select web action](#423-error-handling-for-failed-connect-to-db-in-the-select-web-action)
-      * [4.2.4. error handling for non-existent table in the select-tables web action](#424-error-handling-for-non-existent-table-in-the-select-tables-web-action)
-      * [4.2.5. filter functionality in select table web action](#425-filter-functionality-in-select-table-web-action)
-          * [4.2.5.1. successful execution](#4251-successful-execution)
-          * [4.2.5.2. error handling for wrong filtering syntax by missed fltr-by or fltr-va url params](#4252-error-handling-for-wrong-filtering-syntax-by-missed-fltr-by-or-fltr-va-url-params)
-          * [4.2.5.3. error handling for non-existent filter name](#4253-error-handling-for-non-existent-filter-name)
-      * [4.2.6. Use pick url param functionality in select table web action](#426-use-pick-url-param-functionality-in-select-table-web-action)
-          * [4.2.6.1. successful execution](#4261-successful-execution)
-          * [4.2.6.2. error handling if a picked column does not exist](#4262-error-handling-if-a-picked-column-does-not-exist)
-      * [4.2.7. Use filtering with the like operator in select table web action](#427-use-filtering-with-the-like-operator-in-select-table-web-action)
-          * [4.2.7.1. successful execution for number types](#4271-successful-execution-for-number-types)
-          * [4.2.7.2. successful execution for text types](#4272-successful-execution-for-text-types)
-          * [4.2.7.3. error handling for wrong  syntax in the filtering by the like operator by missed like-by or like-val url params](#4273-error-handling-for-wrong-syntax-in-the-filtering-by-the-like-operator-by-missed-like-by-or-like-val-url-params)
-          * [4.2.7.4. error handling for non-existent like table's attribute](#4274-error-handling-for-non-existent-like-table's-attribute)
-      * [4.2.8. Filtering by using the "with" url param](#428-filtering-by-using-the-"with"-url-param)
-          * [4.2.8.1. Successful execution](#4281-successful-execution)
-          * [4.2.8.2. Error handling for non-existent column](#4282-error-handling-for-non-existent-column)
-      * [4.2.9. the hide operator in the select web action](#429-the-hide-operator-in-the-select-web-action)
-          * [4.2.9.1. successful execution for text types](#4291-successful-execution-for-text-types)
-          * [4.2.9.2. error handling for inexistent column to hide](#4292-error-handling-for-inexistent-column-to-hide)
-    * [4.3. update web-action](#43-update-web-action)
-      * [4.3.1. Successful execution](#431-successful-execution)
-      * [4.3.2. Error handling on non-existing db](#432-error-handling-on-non-existing-db)
-      * [4.3.3. Error handling on non-existing table](#433-error-handling-on-non-existing-table)
-      * [4.3.4. Error handling on non-existing attribute ](#434-error-handling-on-non-existing-attribute-)
-      * [4.3.5. Error handling on wrong data-type](#435-error-handling-on-wrong-data-type)
-    * [4.4. create web-action](#44-create-web-action)
-      * [4.4.1. Successful execution](#441-successful-execution)
-      * [4.4.2. Error handling on non-existing db](#442-error-handling-on-non-existing-db)
-      * [4.4.3. Error handling on non-existing table](#443-error-handling-on-non-existing-table)
-      * [4.4.4. Error handling on non-existing attribute ](#444-error-handling-on-non-existing-attribute-)
-      * [4.4.5. Error handling on wrong data-type](#445-error-handling-on-wrong-data-type)
+  * [4. SYSADMIN FEATURES AND FUNCTIONALITIES](#4-sysadmin-features-and-functionalities)
+    * [4.1. Enforced daily backups by "increase-date" action](#41-enforced-daily-backups-by-"increase-date"-action)
+    * [4.2. Postgres db backup](#42-postgres-db-backup)
+    * [4.3. The "run-pgsql-scripts" action](#43-the-"run-pgsql-scripts"-action)
+    * [4.4. The "run-mysql-scripts" action](#44-the-"run-mysql-scripts"-action)
+      * [4.4.1. The "txt-to-db" action period handling ( deprecated)](#441-the-"txt-to-db"-action-period-handling-(-deprecated))
+      * [4.4.2. The "txt-to-db" action ( deprecated)](#442-the-"txt-to-db"-action-(-deprecated))
+      * [4.4.3. The "db-to-txt" action ( deprecated ) ](#443-the-"db-to-txt"-action-(-deprecated-)-)
+      * [4.4.4. The "db-to-txt" action with pre-defined sorting attribute ( deprecated )](#444-the-"db-to-txt"-action-with-pre-defined-sorting-attribute-(-deprecated-))
+      * [4.4.5. restart the morbo development server](#445-restart-the-morbo-development-server)
+      * [4.4.6. restart the hypnotoad production server](#446-restart-the-hypnotoad-production-server)
+  * [5. ETL / DATA INTEGRATION FEATURES AND FUNCTIONALITIES](#5-etl-/-data-integration-features-and-functionalities)
+    * [5.1. The "db-to-xls" action against postgres](#51-the-"db-to-xls"-action-against-postgres)
+    * [5.2. The "xls-to-db" action](#52-the-"xls-to-db"-action)
+      * [5.2.1. The "xls-to-db" action without passing xls file](#521-the-"xls-to-db"-action-without-passing-xls-file)
+      * [5.2.2. The "xls-to-db" action with nested-set mode against mysql](#522-the-"xls-to-db"-action-with-nested-set-mode-against-mysql)
+    * [5.3. The db-to-json shell action](#53-the-db-to-json-shell-action)
+    * [5.4. The json-to-db shell action](#54-the-json-to-db-shell-action)
+  * [6. BACK-END API FUNCTIONALITIES](#6-back-end-api-functionalities)
+    * [6.1. create web-action](#61-create-web-action)
+      * [6.1.1. Successful execution](#611-successful-execution)
+      * [6.1.2. Error handling on non-existing db](#612-error-handling-on-non-existing-db)
+      * [6.1.3. Error handling on non-existing table](#613-error-handling-on-non-existing-table)
+      * [6.1.4. Error handling on non-existing attribute ](#614-error-handling-on-non-existing-attribute-)
+      * [6.1.5. Error handling on wrong data-type](#615-error-handling-on-wrong-data-type)
+    * [6.2. update web-action](#62-update-web-action)
+      * [6.2.1. Successful execution](#621-successful-execution)
+      * [6.2.2. Error handling on non-existing db](#622-error-handling-on-non-existing-db)
+      * [6.2.3. Error handling on non-existing table](#623-error-handling-on-non-existing-table)
+      * [6.2.4. Error handling on non-existing attribute ](#624-error-handling-on-non-existing-attribute-)
+      * [6.2.5. Error handling on wrong data-type](#625-error-handling-on-wrong-data-type)
+    * [6.3. delete web action](#63-delete-web-action)
+      * [6.3.1. Successful execution](#631-successful-execution)
+      * [6.3.2. Error handling on non-existing db](#632-error-handling-on-non-existing-db)
+      * [6.3.3. Error handling on non-existing table](#633-error-handling-on-non-existing-table)
+    * [6.4. select web action](#64-select-web-action)
+      * [6.4.1. successful execution](#641-successful-execution)
+      * [6.4.2. apply multiple operators on the select properly](#642-apply-multiple-operators-on-the-select-properly)
+      * [6.4.3. error handling for failed connect to db in the select web action](#643-error-handling-for-failed-connect-to-db-in-the-select-web-action)
+      * [6.4.4. error handling for non-existent table in the select-tables web action](#644-error-handling-for-non-existent-table-in-the-select-tables-web-action)
+      * [6.4.5. filter functionality in select table web action](#645-filter-functionality-in-select-table-web-action)
+          * [6.4.5.1. successful execution](#6451-successful-execution)
+          * [6.4.5.2. error handling for wrong filtering syntax by missed fltr-by or fltr-va url params](#6452-error-handling-for-wrong-filtering-syntax-by-missed-fltr-by-or-fltr-va-url-params)
+          * [6.4.5.3. error handling for non-existent filter name](#6453-error-handling-for-non-existent-filter-name)
+      * [6.4.6. Use pick url param functionality in select table web action](#646-use-pick-url-param-functionality-in-select-table-web-action)
+          * [6.4.6.1. successful execution](#6461-successful-execution)
+          * [6.4.6.2. error handling if a picked column does not exist](#6462-error-handling-if-a-picked-column-does-not-exist)
+      * [6.4.7. Use filtering with the like operator in select table web action](#647-use-filtering-with-the-like-operator-in-select-table-web-action)
+          * [6.4.7.1. successful execution for number types](#6471-successful-execution-for-number-types)
+          * [6.4.7.2. successful execution for text types](#6472-successful-execution-for-text-types)
+          * [6.4.7.3. error handling for wrong  syntax in the filtering by the like operator by missed like-by or like-val url params](#6473-error-handling-for-wrong-syntax-in-the-filtering-by-the-like-operator-by-missed-like-by-or-like-val-url-params)
+          * [6.4.7.4. error handling for non-existent like table's attribute](#6474-error-handling-for-non-existent-like-table's-attribute)
+      * [6.4.8. Filtering by using the "with" url param](#648-filtering-by-using-the-"with"-url-param)
+          * [6.4.8.1. Successful execution](#6481-successful-execution)
+          * [6.4.8.2. Error handling for non-existent column](#6482-error-handling-for-non-existent-column)
+      * [6.4.9. the hide operator in the select web action](#649-the-hide-operator-in-the-select-web-action)
+          * [6.4.9.1. successful execution for text types](#6491-successful-execution-for-text-types)
+          * [6.4.9.2. error handling for inexistent column to hide](#6492-error-handling-for-inexistent-column-to-hide)
+    * [6.5. select-tables web action](#65-select-tables-web-action)
+      * [6.5.1. successful execution](#651-successful-execution)
+      * [6.5.2. error handling for failed connect to db in the select-tables web action](#652-error-handling-for-failed-connect-to-db-in-the-select-tables-web-action)
 
 
     
@@ -283,35 +292,52 @@ You can quickly traverse the cells of the table via the tab key, which does go o
 
     
 
-#### 2.5.2. Single cell Inline-edit
-The table can be edited inline so that the data is updated to the database.
-
-    
-
-##### 2.5.2.1. Error handling on db update error
-If any error occurs while updating an error msg is presented crearly with fading effect, which returns the error msg from the database. 
-On unvalid input the data is not updated to the database and the old value in the cell is restored.
-
-    
-
-##### 2.5.2.2. Successful execution
-If the single cell inline-edit is successfull no msg is presented and the data is updated to the database storage.
-
-    
-
-#### 2.5.3. New item creation
+#### 2.5.2. New item creation ( CREATE )
 A new item could be added to the table in the ui and thus in the db table by clicking the plus button above the table. 
 
     
 
-##### 2.5.3.1. Error handling on db create error
+##### 2.5.2.1. Successful execution
+After clicking the plus button the System adds the new row into the database table and presents it into the table ui AS THE FIRST ROW to emphasise the created row - that is the existing sort of the table is changed to the id column.
+
+    
+
+##### 2.5.2.2. Error handling on db create error
 If any error occurs while the creation an error msg is presented crearly with fading effect, which returns the error msg from the database. 
 On unvalid input the data is not created to the database and nothing is stored. 
 
     
 
-##### 2.5.3.2. Successful execution
-After clicking the plus button the System adds the new row into the database table and presents it into the table ui.
+#### 2.5.3. Single cell Inline-edit ( UPDATE )
+The table can be edited inline so that the data is updated to the database.
+
+    
+
+##### 2.5.3.1. Successful execution
+If the single cell inline-edit is successfull no msg is presented and the data is updated to the database storage.
+If the updated cell was part of the currently sorted column the ui is automatically adjusted to the new sort order ( for example if a numeric sort was applied and the cell had value of 9 with 1..9 range and the smallest to greatest was currently active if the new update is 1 the item will appear in the top of the listing.
+
+    
+
+##### 2.5.3.2. Error handling on db update error
+If any error occurs while updating an error msg is presented crearly with fading effect, which returns the error msg from the database. 
+On unvalid input the data is not updated to the database and the old value in the cell is restored.
+
+    
+
+#### 2.5.4. Item deletion ( DELETE )
+The table can be edited inline so that the data is updated to the database.
+
+    
+
+##### 2.5.4.1. Successful execution
+If the deletion is successfull the item is removed both from the ui and from the database. 
+
+    
+
+##### 2.5.4.2. Error handling on db update error
+If any error occurs while deleting the item an error msg is presented crearly with fading effect, which returns the error msg from the database. 
+On unvalid input the data is not updated to the database and the old value in the cell is restored.
 
     
 
@@ -440,10 +466,8 @@ Single call export of the md and pdf documentation files
 
     
 
-### 3.5. SHELL BASED ACTIONS
-In this section the "actions" are simply shell calls using the -a &lt;&lt;action-name&gt;&gt; command line options. 
-Before issueing any shell-action call, a project variables must be pre-loaded 
-You run the actions from the product instance dir as follows:
+## 4. SYSADMIN FEATURES AND FUNCTIONALITIES
+The term feature usually denotes an UI usability, but as the sysadmins of the issue-tracker system must be technical people acustomed to the black screen in this context feature simplies means a well memorizable shell call to perform a single action on the System they must operate. 
 
     # pre-load the project variables
     doParseCnfEnvVars cnf/issue-tracker.dev.host-name.cnf
@@ -451,17 +475,39 @@ You run the actions from the product instance dir as follows:
     # run the run-integration-tests
     bash src/bash/issue-tracker/issue-tracker.sh -a run-integration-tests
 
-#### 3.5.1. The "run-pgsql-scripts" action
+### 4.1. Enforced daily backups by "increase-date" action
+The concept of daily backups in in-build in the functionalities of the issue-tracker application for all the projects data - that is you cannot operate the application without having daily backups, as every day a new workign daily dir having the current day daily backup will be created!
+The "increase-date" action copies the content of the latest daily data dir ( build by concatating the mix_data_dir and the latest date string) with the current date in the file path. 
+This IS the defacto way of making backup of the data ( including db dumps ) on daily basis, which could be quite easily made really robust for Unix admins with couple of cron scripts and symlinks ... 
+The increase-date behaves for different projects in the same way, except of course using a different daily data dir root. 
+
+    # load the env vars for a different proj: 
+    clear; doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf
+    
+    # make backup of the latest daily dir
+    bash src/bash/issue-tracker/issue-tracker.sh -a increase-date
+
+### 4.2. Postgres db backup
+You can backup any project database by using the following calls:
+
+    # pre-load the project variables
+    doParseCnfEnvVars cnf/issue-tracker.dev.host-name.cnf
+    # replace the second strin to the full path of the project file if needed 
+    
+    # backup the postgres db of the project 
+    bash src/bash/issue-tracker/issue-tracker.sh -a backup-postgres-db
+
+### 4.3. The "run-pgsql-scripts" action
 You can create a preconfigured &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; postgres via a single shell call. The scripts will fail if any of the sql scripts have a syntax error - all the ddl events will be displayed in the STDOUT and stored in the shell log file for later audit.
 
     bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
 
-#### 3.5.2. The "run-mysql-scripts" action
+### 4.4. The "run-mysql-scripts" action
 You can create a preconfigured &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; in mariadb  via a single shell call. The scripts will fail if any of the sql scripts have a syntax error - all the ddl events will be displayed in the STDOUT and stored in the shell log file for later audit
 
     
 
-##### 3.5.2.1. The "txt-to-db" action period handling
+#### 4.4.1. The "txt-to-db" action period handling ( deprecated)
 Issues txt files are stored in a daily folder with the following naming convention:
 &lt;&lt;project&gt;&gt;.&lt;&lt;current_date&gt;&gt;.&lt;&lt;period&gt;&gt;.txt
 The tool knows to correctly fetch the issues files for the configured period ( by export period=weekly ) and copy its data in to the &lt;&lt;period&gt;&gt;_issue table. 
@@ -471,7 +517,7 @@ The tool knows to correctly fetch the issues files for the configured period ( b
     ysg-issues.2017-06-03.weekly.txt
     ysg-issues.2017-06-03.yearly.txt
 
-#### 3.5.3. The "txt-to-db" action
+#### 4.4.2. The "txt-to-db" action ( deprecated)
 You can load you issues from an "issues txt file" , having a specific syntax into a PosgtreSQL issue table, by issueing the shell.
 This call with truncate the issue table from the db and convert all the issues data from the issues txt file into the issue table. 
 
@@ -487,37 +533,7 @@ This call with truncate the issue table from the db and convert all the issues d
     # check the data by :
     psql -d "$db_name" -c 'SELECT issue_id , category , name FROM issue order by name'
 
-#### 3.5.4. The "db-to-xls" action against postgres
-You can unload your already stored ANY xls table with unique id's and load them into a xls file. 
-
-    # pre-load the vars of an issue-tracker project
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.doc-pub-host.cnf
-    
-    
-    # check the data by :
-    psql -d "$db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
-    
-    # run the db-to-xls action
-    bash src/bash/issue-tracker/issue-tracker.sh -a db-to-xls
-    
-
-#### 3.5.5. The "xls-to-db" action
-You can load the latest produced xls file ( note as long as your xls sheet headers match the columns in your db table ANY xls is compatible )
-You can control whether or not the loadable table should be truncated by setting the do_truncate_tables environment variable to 1 or 0. 
-
-    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; export load_model=upsert ; perl src/perl/issue_tracker/script/issue_tracker.pl --tables $tables --do xls-to-db
-
-##### 3.5.5.1. The "xls-to-db" action without passing xls file
-if you do not provide a xls file the newest xls file from the mix data dir will be used
-
-    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; export load_model=upsert ; perl src/perl/issue_tracker/script/issue_tracker.pl --tables $tables --do xls-to-db
-
-##### 3.5.5.2. The "xls-to-db" action with nested-set mode against mysql
-You could run the xls-to-db action against mysql or mariadb rdbms so that the issue-tracker will arrange your table to be compatible with the nested-set hierarchy model. 
-
-    export tables=Tests,ItemController,ItemModel,ItemView,ExportFile,UserStory,Requirement,DevOps,Feature,ReadMe,SystemGuide,Image,ExportFile; export do_truncate_tables=1 ; export rdbms_type=mysql ; export load_model=nested-set ; perl src/perl/issue_tracker/script/issue_tracker.pl --do xls-to-db --tables $tables
-
-#### 3.5.6. The "db-to-txt" action
+#### 4.4.3. The "db-to-txt" action ( deprecated ) 
 You can load your already stored in the issue table issues and load them into the same issues txt file
 
     # check the data by :
@@ -531,118 +547,178 @@ You can load your already stored in the issue table issues and load them into th
     psql -d "$db_name" -c '
     SELECT issue_id , start_time , stop_time , category , name FROM issue order by start_time'
 
-#### 3.5.7. The "db-to-txt" action with pre-defined sorting attribute
+#### 4.4.4. The "db-to-txt" action with pre-defined sorting attribute ( deprecated )
 You can load your already stored in the issue table issues and load them into the same issues txt file by using a pre-defined sorting attribute. 
 
     export issues_order_by_attribute=start_time
     
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
 
-#### 3.5.8. The db-to-json shell action
-You could make a backup of all your postgres tables data by running the db-to-json shell action as follows:
-
-    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-json --tables $tables
-
-#### 3.5.9. The json-to-db shell action
-You could restore a previously created json files backup ( the json files are stored in the &lt;&lt;ProductInstanceDir&gt;&gt;/dat/json by default by issueing the following oneliner ( you need to have the web server up and running in order to fetch the list of tables too ) 
-
-    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; perl src/perl/issue_tracker/script/issue_tracker.pl --do json-to-db --tables $tables
-
-#### 3.5.10. restart the morbo development server
+#### 4.4.5. restart the morbo development server
 You could restart the development morbo server by issuing the following syntax:
 
     bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop ; bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
 
-#### 3.5.11. restart the hypnotoad production server
+#### 4.4.6. restart the hypnotoad production server
 You could restart the production hypnotoad server by issuing the following syntax:
 
     bash src/bash/issue-tracker/issue-tracker.sh -a mojo-hypnotoad-stop ; bash src/bash/issue-tracker/issue-tracker.sh -a mojo-hypnotoad-start
 
-#### 3.5.12. Enforced daily backups by "increase-date" action
-The "increase-date" action copies the content of the latest daily data dir ( build by concatating the mix_data_dir and the latest date string) with the current date in the file path. 
-This IS the defacto way of making backup of the data on daily basis, which could be quite easily made really robust for Unix admins with couple of cron scripts and symlinks ... 
-The increase-date behaves for different projects in the same way, except of course using a different daily data dir root. 
-
-    # load the env vars for a different proj: 
-    clear; doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf
-    
-    # make backup of the latest daily dir
-    bash src/bash/issue-tracker/issue-tracker.sh -a increase-date
-
-## 4. BACK-END FEATURES AND FUNCTIONALITIES
+## 5. ETL / DATA INTEGRATION FEATURES AND FUNCTIONALITIES
 
 
     
 
-### 4.1. select-tables web action
-An http-client could get the select of all the tables of a database to which the issue-tracker has connectivity to ( that is not only the one configured in the application layer )
+### 5.1. The "db-to-xls" action against postgres
+You can unload your already stored ANY xls table with unique id's and load them into a xls file. 
 
-
-    <<web-host>>:<<web-port>>/<<database>>/select-tables
-
-#### 4.1.1. successful execution
-An http-client could get the select of all the tables of a database to which the issue-tracker has connectivity to
-
-
-    // 20180505205212
-    // http://192.168.56.120:3000/dev_issue_tracker/select-tables
+    # pre-load the vars of an issue-tracker project
+    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.doc-pub-host.cnf
     
-    {
-      "dat": {
-        "1": {
-          "row_id": "1",
-          "table_catalog": "dev_issue_tracker",
-          "table_name": "confs",
-          "table_schema": "public"
-        },
-        "2": {
-          "row_id": "2",
-          "table_catalog": "dev_issue_tracker",
-          "table_name": "daily_issues",
-          "table_schema": "public"
-        },
-        "3": {
-          "row_id": "3",
-          "table_catalog": "dev_issue_tracker",
-          "table_name": "decadally_issues",
-          "table_schema": "public"
-        }
-      },
-      "msg": "SELECT tables-select OK ",
-      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select-tables",
-      "ret": 200
-    }
-
-#### 4.1.2. error handling for failed connect to db in the select-tables web action
-If the http-client points to a db to which the app layer does not have a connection ( might be a non-existing one ) the proper response is generated. 
-
-
-    // 20180503234141
-    // http://192.168.56.120:3000/non_existent/select/daily_issues
     
-    {
-      "msg": "cannot connect to the non_existent database: FATAL:  database \"non_existent\" does not exist",
-      "req": "GET http://192.168.56.120:3000/non_existent/select/daily_issues",
-      "ret": 400
-    }
+    # check the data by :
+    psql -d "$db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
+    
+    # run the db-to-xls action
+    bash src/bash/issue-tracker/issue-tracker.sh -a db-to-xls
+    
 
-### 4.2. select web action
+### 5.2. The "xls-to-db" action
+You can load the latest produced xls file ( note as long as your xls sheet headers match the columns in your db table ANY xls is compatible )
+You can control whether or not the loadable table should be truncated by setting the do_truncate_tables environment variable to 1 or 0. 
+
+    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; export load_model=upsert ; perl src/perl/issue_tracker/script/issue_tracker.pl --tables $tables --do xls-to-db
+
+#### 5.2.1. The "xls-to-db" action without passing xls file
+if you do not provide a xls file the newest xls file from the mix data dir will be used
+
+    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; export load_model=upsert ; perl src/perl/issue_tracker/script/issue_tracker.pl --tables $tables --do xls-to-db
+
+#### 5.2.2. The "xls-to-db" action with nested-set mode against mysql
+You could run the xls-to-db action against mysql or mariadb rdbms so that the issue-tracker will arrange your table to be compatible with the nested-set hierarchy model. 
+
+    export tables=Tests,ItemController,ItemModel,ItemView,ExportFile,UserStory,Requirement,DevOps,Feature,ReadMe,SystemGuide,Image,ExportFile; export do_truncate_tables=1 ; export rdbms_type=mysql ; export load_model=nested-set ; perl src/perl/issue_tracker/script/issue_tracker.pl --do xls-to-db --tables $tables
+
+### 5.3. The db-to-json shell action
+You could make a backup of all your postgres tables data by running the db-to-json shell action as follows:
+
+    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-json --tables $tables
+
+### 5.4. The json-to-db shell action
+You could restore a previously created json files backup ( the json files are stored in the &lt;&lt;ProductInstanceDir&gt;&gt;/dat/json by default by issueing the following oneliner ( you need to have the web server up and running in order to fetch the list of tables too ) 
+
+    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; perl src/perl/issue_tracker/script/issue_tracker.pl --do json-to-db --tables $tables
+
+## 6. BACK-END API FUNCTIONALITIES
+
+
+    
+
+### 6.1. create web-action
+An http client could create  a new row into ANY table by passing a bigint as the id.
+
+    <<web-host>>:<<web-port>>/<<database>>/create/<<table-name>>
+
+#### 6.1.1. Successful execution
+After 200 http returned code a new item is created in the database. Note that all non-null columns in the database MUST have default values, otherwise this call will always fail. This limitation is by design for now.
+
+    <<web-host>>:<<web-port>>/<<database>>/create/<<table-name>>
+    // example data
+    { id: "3"}
+
+#### 6.1.2. Error handling on non-existing db
+If the db provided in the url pattern does not exist an error is shown. 
+
+    
+
+#### 6.1.3. Error handling on non-existing table
+If the table provided in the url pattern does not exist an error is shown. 
+
+    
+
+#### 6.1.4. Error handling on non-existing attribute 
+If the attribute(column) provided in the post data does not exist an error is shown. 
+
+    
+
+#### 6.1.5. Error handling on wrong data-type
+Whenever a wrong data type is passed the back-end returns with the 400 http code and provides the error from the database.
+
+
+    
+
+### 6.2. update web-action
+An http client could update ANY table with a single column name by provinng the column name and the column value
+
+    <<web-host>>:<<web-port>>/<<database>>/update/<<table-name>>
+
+#### 6.2.1. Successful execution
+An http client could update ANY table with a single column name by provinng the column name and the column value
+
+    <<web-host>>:<<web-port>>/<<database>>/update/<<table-name>>
+    // example data
+    {attribute: "description", id: "3", cnt: "the name attr should be updated to updated-name-3"}
+
+#### 6.2.2. Error handling on non-existing db
+If the db provided in the url pattern does not exist an error is shown. 
+
+    
+
+#### 6.2.3. Error handling on non-existing table
+If the table provided in the url pattern does not exist an error is shown. 
+
+    
+
+#### 6.2.4. Error handling on non-existing attribute 
+If the attribute(column) provided in the post data does not exist an error is shown. 
+
+    
+
+#### 6.2.5. Error handling on wrong data-type
+Whenever a wrong data type is passed the back-end returns with the 400 http code and provides the error from the database.
+
+
+    
+
+### 6.3. delete web action
+An http client could create  a new row into ANY table by passing a bigint as the id.
+
+    <<web-host>>:<<web-port>>/<<database>>/update/<<table-name>>
+
+#### 6.3.1. Successful execution
+Once the post call is executed the item is deleted from the db.
+
+    <<web-host>>:<<web-port>>/<<database>>/update/<<table-name>>
+    // example data
+    {attribute: "description", id: "3", cnt: "the name attr should be updated to updated-name-3"}
+
+#### 6.3.2. Error handling on non-existing db
+If the db provided in the url pattern does not exist an error is shown. 
+
+    
+
+#### 6.3.3. Error handling on non-existing table
+If the table provided in the url pattern does not exist an error is shown. 
+
+    
+
+### 6.4. select web action
 An http-client could get the contents of ANY table of a database to which the issue-tracker has connectivity to ( ie not only the one configured in the application layer but also other databases in the same postgres instance)  by using the following syntax:
 
     <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>
 
-#### 4.2.1. successful execution
+#### 6.4.1. successful execution
 An http-client could get the contents of ANY table of a database to which the issue-tracker has connectivity to by calling the following url:
 &lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;database&gt;&gt;/select/&lt;&lt;table-name&gt;&gt;
 
     
 
-#### 4.2.2. apply multiple operators on the select properly
+#### 6.4.2. apply multiple operators on the select properly
 All the operators bellow could be combined and the result set is the one "translated" with the AND operator in the back-end side. 
 
     
 
-#### 4.2.3. error handling for failed connect to db in the select web action
+#### 6.4.3. error handling for failed connect to db in the select web action
 If the http-client points to a db to which the app layer does not have a connection ( might be a non-existing one ) the proper response is generated. 
 
 
@@ -655,7 +731,7 @@ If the http-client points to a db to which the app layer does not have a connect
       "ret": 400
     }
 
-#### 4.2.4. error handling for non-existent table in the select-tables web action
+#### 6.4.4. error handling for non-existent table in the select-tables web action
 if a table does not exist a proper error msg containing response is generated.
 
 
@@ -668,14 +744,14 @@ if a table does not exist a proper error msg containing response is generated.
       "ret": 400
     }
 
-#### 4.2.5. filter functionality in select table web action
+#### 6.4.5. filter functionality in select table web action
 The response cold be filtered by ANY attribute with any valid value. 
 
 
     // using the following syntax:
     <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>?fltr-by=<<filter-attribute-to-filter-by>>&fltr-val=<<filter-value-to-filter-by>>
 
-##### 4.2.5.1. successful execution
+##### 6.4.5.1. successful execution
 The response of the select web action could be filtered by using the syntax bellow:
 Those are eventual transated to a where clause in the db select part. 
 
@@ -711,7 +787,7 @@ Those are eventual transated to a where clause in the db select part.
       "ret": 200
     }
 
-##### 4.2.5.2. error handling for wrong filtering syntax by missed fltr-by or fltr-va url params
+##### 6.4.5.2. error handling for wrong filtering syntax by missed fltr-by or fltr-va url params
 If the request does not have either one of the url params the following response is produced. 
 
 
@@ -724,7 +800,7 @@ If the request does not have either one of the url params the following response
       "ret": 400
     }
 
-##### 4.2.5.3. error handling for non-existent filter name
+##### 6.4.5.3. error handling for non-existent filter name
 If the syntax is correct but an non-existent filtering attribute is provided ( that is the table columns and the attribute name do not match ) the following error msg is returned: 
 
 
@@ -737,14 +813,14 @@ If the syntax is correct but an non-existent filtering attribute is provided ( t
       "ret": 400
     }
 
-#### 4.2.6. Use pick url param functionality in select table web action
+#### 6.4.6. Use pick url param functionality in select table web action
 Works for both a single colum and a comma separated select of columns. Obeys the following syntax:
 
 
     // using the following syntax:
     <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>?pick=col1,col2,col3
 
-##### 4.2.6.1. successful execution
+##### 6.4.6.1. successful execution
 if the request contains the "pick" url parameter only the picked column values are selected. 
 
 
@@ -763,7 +839,7 @@ if the request contains the "pick" url parameter only the picked column values a
           "name": "add the pick in url to select in db reader control flow for Select.pm controller",
           "prio": 3
 
-##### 4.2.6.2. error handling if a picked column does not exist
+##### 6.4.6.2. error handling if a picked column does not exist
 if a picked column does not exist the following error is displayed. 
 
 
@@ -781,14 +857,14 @@ if a picked column does not exist the following error is displayed.
       "ret": 200
     }
 
-#### 4.2.7. Use filtering with the like operator in select table web action
+#### 6.4.7. Use filtering with the like operator in select table web action
 The response cold be liked by ANY attribute with any valid value. 
 
 
     // using the following syntax:
     <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>?like-by=<<like-attribute-to-like-by>>&like-val=<<like-value-to-like-by>>
 
-##### 4.2.7.1. successful execution for number types
+##### 6.4.7.1. successful execution for number types
 The like operator could be used with numbers as well.
 
     // 20180508191656
@@ -805,7 +881,7 @@ The like operator could be used with numbers as well.
       "ret": 200
     }
 
-##### 4.2.7.2. successful execution for text types
+##### 6.4.7.2. successful execution for text types
 The response of the select web action could be likeed by using the syntax bellow:
 Those are eventual transated to a where clause in the db select part. 
 
@@ -841,7 +917,7 @@ Those are eventual transated to a where clause in the db select part.
       "ret": 200
     }
 
-##### 4.2.7.3. error handling for wrong  syntax in the filtering by the like operator by missed like-by or like-val url params
+##### 6.4.7.3. error handling for wrong  syntax in the filtering by the like operator by missed like-by or like-val url params
 If the request does not have either one of the url params the following response is produced. 
 
 
@@ -854,7 +930,7 @@ If the request does not have either one of the url params the following response
       "ret": 400
     }
 
-##### 4.2.7.4. error handling for non-existent like table's attribute
+##### 6.4.7.4. error handling for non-existent like table's attribute
 If the syntax is correct but an non-existent like operator's attribute is provided ( that is the table columns and the attriute name do not match ) the following error msg is returned: 
 
 
@@ -867,7 +943,7 @@ If the syntax is correct but an non-existent like operator's attribute is provid
       "ret": 400
     }
 
-#### 4.2.8. Filtering by using the "with" url param
+#### 6.4.8. Filtering by using the "with" url param
 You can filter the result of the query by using the "with=col-operator-value"
 
     // 20180605150216
@@ -886,12 +962,12 @@ You can filter the result of the query by using the "with=col-operator-value"
        "ret": 200
     }
 
-##### 4.2.8.1. Successful execution
+##### 6.4.8.1. Successful execution
 The application selects only the rows matching the generated where &lt;&lt;column&gt;&gt; &lt;&lt;operator&gt;&gt; &lt;&lt;value&gt;&gt; , where the operator could be also the like operator ( set also if the value contains the % char ) 
 
     
 
-##### 4.2.8.2. Error handling for non-existent column
+##### 6.4.8.2. Error handling for non-existent column
 If the column used does not exist an error is provided as follows:
 
 
@@ -904,14 +980,14 @@ If the column used does not exist an error is provided as follows:
        "ret": 400
     }
 
-#### 4.2.9. the hide operator in the select web action
+#### 6.4.9. the hide operator in the select web action
 Whenever a hide=&lt;&lt;col-name&gt;&gt; operator is applied the values and the column names of the column to hide are not displayed in the result. Use command to as the separator for listing multiple columns to hide. 
 
 
     // using the following syntax:
     <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>?hide=guid,prio
 
-##### 4.2.9.1. successful execution for text types
+##### 6.4.9.1. successful execution for text types
 The response of the url query presents all but the hidden attribute values.
 
 
@@ -934,7 +1010,7 @@ The response of the url query presents all but the hidden attribute values.
       "ret": 200
     }
 
-##### 4.2.9.2. error handling for inexistent column to hide
+##### 6.4.9.2. error handling for inexistent column to hide
 If the column which values are requested to be hidden does not exist the proper error message is retrieved. 
 
 
@@ -947,69 +1023,55 @@ If the column which values are requested to be hidden does not exist the proper 
       "ret": 400
     }
 
-### 4.3. update web-action
-An http client could update ANY table with a single column name by provinng the column name and the column value
+### 6.5. select-tables web action
+An http-client could get the select of all the tables of a database to which the issue-tracker has connectivity to ( that is not only the one configured in the application layer )
 
-    <<web-host>>:<<web-port>>/<<database>>/update/<<table-name>>
 
-#### 4.3.1. Successful execution
-An http client could update ANY table with a single column name by provinng the column name and the column value
+    <<web-host>>:<<web-port>>/<<database>>/select-tables
 
-    <<web-host>>:<<web-port>>/<<database>>/update/<<table-name>>
-    // example data
-    {attribute: "description", id: "3", cnt: "the name attr should be updated to updated-name-3"}
+#### 6.5.1. successful execution
+An http-client could get the select of all the tables of a database to which the issue-tracker has connectivity to
 
-#### 4.3.2. Error handling on non-existing db
-If the db provided in the url pattern does not exist an error is shown. 
 
+    // 20180505205212
+    // http://192.168.56.120:3000/dev_issue_tracker/select-tables
     
+    {
+      "dat": {
+        "1": {
+          "row_id": "1",
+          "table_catalog": "dev_issue_tracker",
+          "table_name": "confs",
+          "table_schema": "public"
+        },
+        "2": {
+          "row_id": "2",
+          "table_catalog": "dev_issue_tracker",
+          "table_name": "daily_issues",
+          "table_schema": "public"
+        },
+        "3": {
+          "row_id": "3",
+          "table_catalog": "dev_issue_tracker",
+          "table_name": "decadally_issues",
+          "table_schema": "public"
+        }
+      },
+      "msg": "SELECT tables-select OK ",
+      "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select-tables",
+      "ret": 200
+    }
 
-#### 4.3.3. Error handling on non-existing table
-If the table provided in the url pattern does not exist an error is shown. 
+#### 6.5.2. error handling for failed connect to db in the select-tables web action
+If the http-client points to a db to which the app layer does not have a connection ( might be a non-existing one ) the proper response is generated. 
 
+
+    // 20180503234141
+    // http://192.168.56.120:3000/non_existent/select/daily_issues
     
-
-#### 4.3.4. Error handling on non-existing attribute 
-If the attribute(column) provided in the post data does not exist an error is shown. 
-
-    
-
-#### 4.3.5. Error handling on wrong data-type
-Whenever a wrong data type is passed the back-end returns with the 400 http code and provides the error from the database.
-
-
-    
-
-### 4.4. create web-action
-An http client could create  a new row into ANY table by passing a bigint as the id.
-
-    <<web-host>>:<<web-port>>/<<database>>/update/<<table-name>>
-
-#### 4.4.1. Successful execution
-
-
-    <<web-host>>:<<web-port>>/<<database>>/update/<<table-name>>
-    // example data
-    {attribute: "description", id: "3", cnt: "the name attr should be updated to updated-name-3"}
-
-#### 4.4.2. Error handling on non-existing db
-If the db provided in the url pattern does not exist an error is shown. 
-
-    
-
-#### 4.4.3. Error handling on non-existing table
-If the table provided in the url pattern does not exist an error is shown. 
-
-    
-
-#### 4.4.4. Error handling on non-existing attribute 
-If the attribute(column) provided in the post data does not exist an error is shown. 
-
-    
-
-#### 4.4.5. Error handling on wrong data-type
-Whenever a wrong data type is passed the back-end returns with the 400 http code and provides the error from the database.
-
-
-    
+    {
+      "msg": "cannot connect to the non_existent database: FATAL:  database \"non_existent\" does not exist",
+      "req": "GET http://192.168.56.120:3000/non_existent/select/daily_issues",
+      "ret": 400
+    }
 
