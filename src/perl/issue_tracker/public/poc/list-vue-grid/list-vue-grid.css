@@ -30,7 +30,10 @@ th, td {
 }
 
 th.active {
-  color: #fff;
+   color: #fffb00;
+   font-weight: bold;
+   font-style: oblique;
+   background-color: rgba(5, 136, 230, 0.45);
 }
 
 th.active .arrow {

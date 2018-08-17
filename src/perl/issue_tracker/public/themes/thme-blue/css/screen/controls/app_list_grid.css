@@ -94,12 +94,20 @@ table th, td {
    word-wrap: break-word;
 }
 
-
 th.active {
-	color: #fff;
+   color: #FFFFE0; 
+   font-weight: bold;
+   background-color: rgba(5, 136, 230, 0.45);
+   border-color: #C0C0C0;
+   border-width: 4px;
 }
+
 th:focus {
-	color: #fff;
+   color: #FFFFE0; 
+   font-weight: bold;
+   background-color: rgba(5, 136, 230, 0.45);
+   border-color: #C0C0C0;
+   border-width: 4px;
 }
 
 
