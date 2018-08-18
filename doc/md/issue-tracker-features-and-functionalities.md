@@ -262,6 +262,7 @@ The listed table is sortable by clicking on the columns OR by navigating with th
 
 #### 2.3.2. table filtering
 You can filter the already presented part of the result set in the page by using the search textbox. This is only an ui type of filtering for the already loaded data. This type of filtering is different compared to the url parameters filtering by using the with url param syntax and it filters the already fetched from the db data-set, whereas the with=&lt;&lt;attribute&gt;&gt;&lt;&lt;operator&gt;&gt;&lt;&lt;value&gt;&gt; filtering does filter on the database side.
+You could focus the quick search textbox by pressing the forward slash on your keyboard. 
 
     
 

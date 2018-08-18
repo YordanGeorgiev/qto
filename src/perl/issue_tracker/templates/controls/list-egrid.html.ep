@@ -33,15 +33,16 @@
 			<div id="div_frm_srch">
 		  		<form id="frm_search" v-on:submit.prevent>
 			 		<input id="inp_quick_srch" tabindex="1" v-model="searchQuery" v-on:keydown.13="trapOnEnterDown($event)"/>
-                  <div class="pgr-bar pgr-border pgr-round" style="float:right;padding-right:10%">
-                      <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
-                        v-bind:href="generatePageSize(pgSize)">
-                        <span v-if="pgSize == pageSize" style="background-color:#ddd;"> <strong>{{ pgSize }}</strong> </span>
-                        <span v-else="pgSize == pageSize">{{ pgSize }} </span>
-                     </a>
-                  </div>
+            <div class="pgr-bar pgr-border pgr-round" style="clear: both;float: right;padding-right: 10%;">
+               <a tabindex="1" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" 
+						v-for="(pgNum, index) in this.pagesCount" v-bind:href="generatePageNum(pgNum)">
+						<span v-if="pgNum == pageNum" style="background-color:#ddd;"> <strong>{{ pgNum }}</strong> </span>
+						<span v-else="pgNum == pageNum"> {{ pgNum }} </span>
+               </a>
+            </div>
 		  		</form>
 			</div>
+
 
 		  <cruds-grid-sf
 			 :data.sync="gridData"
@@ -50,13 +51,13 @@
 		  </cruds-grid-sf>
 
          <div class="pgr-show-inline-block">
-            <div class="pgr-bar pgr-border pgr-round">
-               <a tabindex="1" class="pgr-bar-item pgr-button" 
-						v-for="(pgNum, index) in this.pagesCount" v-bind:href="generatePageNum(pgNum)">
-						<span v-if="pgNum == pageNum" style="background-color:#ddd;"> <strong>{{ pgNum }}</strong> </span>
-						<span v-else="pgNum == pageNum"> {{ pgNum }} </span>
-               </a>
-            </div>
+                  <div class="pgr-bar pgr-border pgr-round" style="float:left;padding-right:20%">
+                      <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
+                        v-bind:href="generatePageSize(pgSize)">
+                        <span v-if="pgSize == pageSize" style="background-color:#ddd;"> <strong>{{ pgSize }}</strong> </span>
+                        <span v-else="pgSize == pageSize">{{ pgSize }} </span>
+                     </a>
+                  </div>
          </div>
 
       </div>
@@ -342,11 +343,13 @@ if ( document.getElementById("spn_msg") ) {
             if ( result.toString() !== "Error: Request failed with status code 409" ) {
                var url_params = getUrlParams();
 					["like-by","like-val","with","fltr-by","fltr-val"].forEach(function(p){url_params.delete(p)})
-					url_params.delete("with"); url_params.append("with" , "id-eq-" + dbid );
+					url_params.append("with" , "id-eq-" + dbid );
+
                fetchServerSideData(url_params).then( data => {
-                  this.$children[0].data.push ( data.dat[0] );
+                  this.gridData.push ( data.dat[0] );
 						if ( this.$children[0].sortOrders["id"] === -1 ) { this.$children[0].setAscSortBy("id"); }
 						document.getElementById("th-id").click() ; // simulate click to show the newest at the top 
+						//document.getElementById("lnk-pgNum-1").click() ; 
                })
                .catch(function (error) {
                   setSpnMsgErrorText(error.message);
@@ -414,7 +417,18 @@ if ( document.getElementById("spn_msg") ) {
 			// on forward slash focus the quick search input textbox 
 			window.addEventListener('keyup', function(event) {
 				if (event.keyCode == 55 ) { 
-					document.getElementById("inp_quick_srch").focus();
+               var focusedElement = document.activeElement;
+               if ( typeof focusedElement !== "undefined" ) {
+                  if ( typeof focusedElement.getAttribute("contenteditable") === "undefined" ) {
+                  } else {
+                     if ( focusedElement.getAttribute("class") == "cls_cnt_edtble") {
+                     } else {
+                        document.getElementById("inp_quick_srch").focus();
+                     }
+                  }
+             } else {
+                  document.getElementById("inp_quick_srch").focus();
+             }
 				}
 			});
 	  }

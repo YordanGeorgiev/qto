@@ -163,7 +163,7 @@ th:focus {
     float: left;
     width: auto;
     border: none;
-    display: block;
+    display: inline;
     outline: 0;
 }
 a {
