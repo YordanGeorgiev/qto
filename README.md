@@ -5,15 +5,15 @@ Table of Contents
 
   * [1. WHY](#1-why)
   * [2. WHAT ](#2-what-)
-  * [3. DEMO ](#3-demo-)
-  * [4. INSTALLATION AND CONFIGURATION](#4-installation-and-configuration)
-    * [4.1. Prerequisites](#41-prerequisites)
-    * [4.2. Fetch the source](#42-fetch-the-source)
-    * [4.3. run the boot-strap script](#43-run-the-boot-strap-script)
-    * [4.4. Apply the db and issue create scripts](#44-apply-the-db-and-issue-create-scripts)
-    * [4.5. Install the required Perl modules](#45-install-the-required-perl-modules)
-  * [5. ADDITIONAL DOCS](#5-additional-docs)
-  * [6. ACKNOWLEDGEMENTS](#6-acknowledgements)
+  * [3. USAGE SCENARIO](#3-usage-scenario)
+    * [3.1. Assumption and prerequisites](#31-assumption-and-prerequisites)
+    * [3.2. Proposed capabilities](#32-proposed-capabilities)
+    * [3.3. Bonus offer](#33-bonus-offer)
+  * [4. DEMO ](#4-demo-)
+  * [5. INSTALLATION AND CONFIGURATION](#5-installation-and-configuration)
+  * [6. ADDITIONAL DOCS](#6-additional-docs)
+  * [7. ACKNOWLEDGEMENTS](#7-acknowledgements)
+  * [8. LICENSE](#8-license)
 
 
     
@@ -37,12 +37,42 @@ https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker
 
     
 
-## 3. DEMO 
+## 3. USAGE SCENARIO
+We have stumbled into real life problem in a telco company's ETL works, which could have been solved even with the current version of the tool, which is FAR from ready as the current number 0.4.7 indicates … 
+
+    
+
+### 3.1. Assumption and prerequisites
+Namely, if your organisation:
+- has secured intranet access to a Linux box 
+- full trust to the persons having http access for CRUD operations exists ( as no authentication is yet implemented )
+- there is a need to load MANY tables into a postgres db 
+- the API of having bigint id , and uid as PK is acceptable
+
+    
+
+### 3.2. Proposed capabilities
+You could:
+-  deploy an instance of the issue-tracker
+-  provide access to the non-technical person via http for CRUD operations
+-  provide them with initial links to grasp the "semi-sql" syntax
+-  quickly define LOTS of tables DDL by using the existing examples and just changing the columns
+ - load initial data via xls ( less than 10k rows per shee should be ok ) 
+
+    
+
+### 3.3. Bonus offer
+We could provide you will free assistance for the deployment of the first instance in your organisation, although we consider the existing documentation good enough to deploy the application only by following the instructions.
+In the real IT life however the mealage always varies, hence this last "bonus offer".
+
+    
+
+## 4. DEMO 
 You can check the following running instance of the tool:
 
     
 
-## 4. INSTALLATION AND CONFIGURATION
+## 5. INSTALLATION AND CONFIGURATION
 You could either try quickly to execute the instructions bellow this section or 
 follow the installation instructions from the Installation and Configuration Guide in the docs/md dir:
 
@@ -51,80 +81,7 @@ https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker
 
     
 
-### 4.1. Prerequisites
-The must have binaries are:
- bash, perl, zip,postgres 9.6
-
-The nice to have are:
- tmux, vim ,ctags
-
-The examples are for Ubuntu - use your OS package manager …
-
-If you do not have postgres than you would have to follow the longer installation instructions :
-https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-devops-guide.md#1-installations-and-configurations
-
-    # use your OS package manager … if you are not on Ubuntu 
-    
-    sudo apt-get autoclean
-    sudo apt-get install --only-upgrade bash
-    
-    sudo apt-get install -y perl
-    
-    # optionally 
-    sudo apt-get install -y excuberant-ctags
-    sudo apt-get install -y 7z
-    
-    sudo apt-get upgrade
-
-### 4.2. Fetch the source
-Fetch the source from git hub as follows:
-
-    # got to a dir you have write permissions , for example:
-    mkdir -p ~/opt/csitea/; cd ~/opt/csitea/
-    
-    # fetch the source
-    git clone https://github.com/YordanGeorgiev/issue-tracker.git
-    # checkit
-    ls -la 
-    
-    # OR 
-    wget https://github.com/YordanGeorgiev/issue-tracker/archive/0.4.4.zip
-    ls -al
-    unzip -o 0.4.4.zip -d .
-
-### 4.3. run the boot-strap script
-The bootstrap script will interpolate change the git deployment dir to a "product_instance_dir" ( your instance of the issue-tracker, having the same version as this one, but running on a different host with different owner - your )
-
-    # defiine the latest and greates product_version
-    export product_version=$(cd issue-tracker;git tag|sort -nr| head -n 1;cd ..)
-    
-    # check it 
-    echo $product_version
-    
-    # run the bootstrap script : 
-    bash issue-tracker/src/bash/issue-tracker/bootstrap-issue-tracker.sh
-    
-    # now go to your product instance dir ( yes this is official term ), note it is a DEV environment
-    cd /opt/csitea/issue-tracker/issue-tracker.$product_version.dev.$USER
-    
-
-### 4.4. Apply the db and issue create scripts
-If you do not have the PostgreSQL ( v9.5 &gt; ) with current Linux user configured role installed check the instructions in the installations and configurations section of the DevOps guide:
-https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-devops-guide.md#1-installations-and-configurations
-If you do have it , apply the db and issue create scripts as follows:
-
-    # apply the postgre sql scripts
-    bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
-
-### 4.5. Install the required Perl modules
-Just run the prerequisites checker script which will provide you with instruction you could just copy paste.
-
-    sudo perl src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
-    
-    # after installing all the modules check the perl syntax of the whole project:
-    bash src/bash/issue-tracker/issue-tracker.sh -a check-perl-syntax
-
-## 5. ADDITIONAL DOCS
+## 6. ADDITIONAL DOCS
 Additional docs could be found in the doc/md dir. 
 A good starting point could be the "features doc:" : 
 
@@ -147,7 +104,7 @@ https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker
 
     
 
-## 6. ACKNOWLEDGEMENTS
+## 7. ACKNOWLEDGEMENTS
 This project would not have been possible without the work of the communities of the people working on the following frameworks/languages/OS listed in now particular order. 
 
  - Mojolicious
@@ -155,8 +112,18 @@ This project would not have been possible without the work of the communities of
  - Perl
  - GNU Linux
 
-Deep gratitudes and thanks for all those people !
-This application aims to contain the best practices of our former collegues and collaborators and co-travellers in life, which also deserve special thanks for their support and contributions 
+Deep gratitude's and thanks for all those people !
+This application aims to contain the best practices of our former colleagues and collaborators and co-travelers in life, which also deserve huge thanks for their support and contributions !
+
+    
+
+## 8. LICENSE
+All the trademarks mentioned in the documentation and in the source code belong to their owners. 
+This application uses the Perl Artistic license, check the license.txt file or the following link :
+https://dev.perl.org/licenses/artistic.html
+
+Should any trademark attribution be missing, mistaken or erroneous, please contact us as soon as possible for rectification.
+
 
     
 
