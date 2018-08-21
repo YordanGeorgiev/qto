@@ -17,7 +17,7 @@ doIncreaseDate(){
 
    # find the latest project_daily_txt_dir
    latest_proj_daily_dir=""
-   latest_proj_daily_dir=$(find $mix_data_dir -type d|sort|grep -v txt|grep -v json|grep -v xls|sort -nr|head -1)
+   latest_proj_daily_dir=$(find $mix_data_dir -type d -maxdepth 3|grep -v txt|grep -v json|grep -v xls|sort -nr|head -1)
    echo "latest_proj_daily_dir: $latest_proj_daily_dir" 
 
 	# debug set -x
@@ -89,7 +89,8 @@ doIncreaseDate(){
    
    rm -f *.bak       # remove any possible bak files
    mv $todays_tmp_dir $daily_data_dir 
-  
+ 
+   set -x 
    # foreach xls file
    while read -r f ; do 
       file_name="${f##*/}"
@@ -104,7 +105,7 @@ doIncreaseDate(){
       mv "$f" "$daily_data_dir/xls/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
       # and I just don't know where this one comes from, but it is fake !!!
       rm -v "$daily_data_dir/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
-   done < <(find $daily_data_dir -type f -name "*.xlsx"| grep -v '/[.~]')
+   done < <(find $mix_daily_data_dir -type f -name "*.xlsx"| grep -v '/[.~]')
 
    doBackupPostgresDb
 
