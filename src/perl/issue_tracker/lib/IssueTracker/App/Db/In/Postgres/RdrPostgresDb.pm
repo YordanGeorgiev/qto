@@ -664,10 +664,10 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		$str_sql .= $where_clause_with if $where_clause_with ; 
 
       # not all items have the prio attribute
-      $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
-      $str_sql .= " ORDER BY " . $columns_to_order_by_desc . " " if defined $columns_to_order_by_desc ; 
+      $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " ASC " if defined $columns_to_order_by_asc ; 
+      $str_sql .= " ORDER BY " . $columns_to_order_by_desc . " DESC " if defined $columns_to_order_by_desc ; 
 
-      my $limit = $objModel->get('select.web-action.page-size' ) || 10 ; # the default page size is 15
+      my $limit = $objModel->get('select.web-action.page-size' ) || 5 ; 
       my $page_num = $objModel->get('select.web-action.page-num' ) || 1 ; 
       my $offset = ( $page_num -1 ) || 0 ; # get default page is 1
 
@@ -675,7 +675,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
 
-      # debug print "from RdrPostgresDb.pm 671 : $str_sql \n" ; 
+      print "from RdrPostgresDb.pm 678 : $str_sql \n" ; 
 
       $sth = $dbh->prepare($str_sql);  
       $sth->execute()
