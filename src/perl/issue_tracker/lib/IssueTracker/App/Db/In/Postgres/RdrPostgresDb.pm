@@ -619,9 +619,19 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       }
       
       my $columns_to_order_by_asc = undef ; 
-      if ( defined ( $objModel->get('select.web-action.o') ) ) {
-         $columns_to_order_by_asc = $objModel->get('select.web-action.o'); 
+      if ( defined ( $objModel->get('select.web-action.oa') ) ) {
+         $columns_to_order_by_asc = $objModel->get('select.web-action.oa'); 
          my @cols = split (',' , $columns_to_order_by_asc ) ;
+         foreach my $col ( @cols ) { 
+            my $col_exists = $self->doCheckIfColumnExists ( $mhsr->{'ColumnNames'} , $col ) ; 
+      	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
+         }
+      }
+      
+      my $columns_to_order_by_desc = undef ; 
+      if ( defined ( $objModel->get('select.web-action.od') ) ) {
+         $columns_to_order_by_desc = $objModel->get('select.web-action.od'); 
+         my @cols = split (',' , $columns_to_order_by_desc ) ;
          foreach my $col ( @cols ) { 
             my $col_exists = $self->doCheckIfColumnExists ( $mhsr->{'ColumnNames'} , $col ) ; 
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
@@ -655,11 +665,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       # not all items have the prio attribute
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " " if defined $columns_to_order_by_asc ; 
-      unless ( defined $columns_to_order_by_asc ) {
-         if ( $self->doCheckIfColumnExists ( $mhsr->{'ColumnNames'} , 'id' ) ) {
-            $str_sql .= " ORDER BY id " ; 
-         }
-      }
+      $str_sql .= " ORDER BY " . $columns_to_order_by_desc . " " if defined $columns_to_order_by_desc ; 
 
       my $limit = $objModel->get('select.web-action.page-size' ) || 10 ; # the default page size is 15
       my $page_num = $objModel->get('select.web-action.page-num' ) || 1 ; 

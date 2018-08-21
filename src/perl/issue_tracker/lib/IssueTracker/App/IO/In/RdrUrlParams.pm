@@ -152,8 +152,10 @@ sub doSetSelectUrlParams {
    $query_params->remove('pick') ; 
    $objModel->set('select.web-action.hide' , $query_params->param('hide') );
    $query_params->remove('hide') ; 
-   $objModel->set('select.web-action.o' , $query_params->param('o') );
-   $query_params->remove('o') ; 
+   $objModel->set('select.web-action.oa' , $query_params->param('oa') );
+   $query_params->remove('oa') ; 
+   $objModel->set('select.web-action.od' , $query_params->param('od') );
+   $query_params->remove('od') ; 
 
    # start page-size
    my $page_size = $query_params->param('page-size') || 10 ; 
@@ -213,7 +215,10 @@ sub doSetListUrlParams {
    $objModel->set('list.web-action.like-val' , $query_params->every_param('like-val') ) ; 
    $objModel->set('list.web-action.pick' , $query_params->param('pick') );
    $objModel->set('list.web-action.hide' , $query_params->param('hide') );
-   $objModel->set('list.web-action.o' , $query_params->param('o') );
+   $objModel->set('select.web-action.oa' , $query_params->param('oa') );
+   $query_params->remove('oa') ; 
+   $objModel->set('select.web-action.od' , $query_params->param('od') );
+   $query_params->remove('od') ; 
    $objModel->set('list.web-action.page-size' , $query_params->param('page-size') );
    $objModel->set('list.web-action.page-num' , $query_params->param('page-num') );
 
