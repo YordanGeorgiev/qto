@@ -46,13 +46,13 @@
 		  </cruds-grid-sf>
 
          <div class="pgr-show-inline-block">
-                  <div class="pgr-bar pgr-border pgr-round" style="float:left;padding-right:20%">
-                      <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
-                        v-bind:href="generatePageSize(pgSize)">
-                        <span v-if="pgSize == pageSize" style="background-color:#ddd;"> <strong>{{ pgSize }}</strong> </span>
-                        <span v-else="pgSize == pageSize">{{ pgSize }} </span>
-                     </a>
-                  </div>
+            <div class="pgr-bar pgr-border pgr-round" style="float:left;padding-right:20%">
+                <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
+                  v-bind:href="generatePageSize(pgSize)">
+                  <span v-if="pgSize == pageSize" style="background-color:#ddd;"> <strong>{{ pgSize }}</strong> </span>
+                  <span v-else="pgSize == pageSize">{{ pgSize }} </span>
+               </a>
+            </div>
          </div>
 
       </div>
@@ -63,10 +63,11 @@
    function getGlobalUrlParams(){
       var url_params = new URLSearchParams();
       if( window.location.toString().indexOf("?") != -1) {
-         window.location.search.split('?')[1].split('#')[0].replace("pick=","pick=id,").replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
-				var attr = decodeURIComponent(key)
-				var val = decodeURIComponent(value)
-				url_params.append(attr,val);
+         window.location.search.split('?')[1].split('#')[0].replace("pick=","pick=id,").replace(/([^=&]+)=([^&]*)/g, 
+            function(m, key, value) {
+               var attr = decodeURIComponent(key)
+               var val = decodeURIComponent(value)
+               url_params.append(attr,val);
          });
       } else {
          url_params = { as:"etable" }; 
@@ -297,13 +298,14 @@ if ( document.getElementById("spn_msg") ) {
        pageSizes: ['5', '7', '10','15','20','30','50','100']
 		},
      	methods: {
-         getUrlParams: function getGlobalUrlParams(){
+         getUrlParams: function (){
             var url_params = new URLSearchParams();
             if( window.location.toString().indexOf("?") != -1) {
-               window.location.search.split('?')[1].split('#')[0].replace("pick=","pick=id,").replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
-                  var attr = decodeURIComponent(key)
-                  var val = decodeURIComponent(value)
-                  url_params.append(attr,val);
+               window.location.search.split('?')[1].split('#')[0].replace("pick=","pick=id,").replace(/([^=&]+)=([^&]*)/g, 
+                  function(m, key, value) {
+                     var attr = decodeURIComponent(key)
+                     var val = decodeURIComponent(value)
+                     url_params.append(attr,val);
                });
             } else {
                url_params = { as:"etable" }; 
@@ -334,7 +336,6 @@ if ( document.getElementById("spn_msg") ) {
          if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
 			fetchServerSideData(url_params)
 			.then( data => {
-            console.log(data); // todo:ysg
 				this.gridData = data.dat ; 
 				this.pageSize = url_params.get('page-size') || 7 ; 
 				this.pageNum = url_params.get('page-num') || 1 ; 
@@ -347,9 +348,6 @@ if ( document.getElementById("spn_msg") ) {
             var oa = url_params.get("oa")
             var od = url_params.get("od")
 
-            console.log ( "oa: " + oa ) ;
-            console.log ( "od: " + od ) ;
-
             if ( oa !== null ) {
                this.$children[0].setAscSortBy( oa ) ; 
             } else if ( od !== null ) {
@@ -360,9 +358,9 @@ if ( document.getElementById("spn_msg") ) {
 			})
 			.catch(function(error) {
              // todo:ysg 
-             console.log ( error ) ;
-				// setSpnMsgErrorText(error.response.data.msg);
-				// throw new Error(error.toString); 
+            console.log ( error ) ;
+				setSpnMsgErrorText(error.response.data.msg);
+				throw new Error(error.toString); 
 			}) 
 	  	}
       , createNewItem (dbid) {
@@ -407,7 +405,10 @@ if ( document.getElementById("spn_msg") ) {
 				}
 			)
 			.catch(function (error) {
-				setSpnMsgErrorText(error.message);
+            if (typeof error !== 'undefined') {
+              var errMsg = error.response.data.msg
+				  setSpnMsgErrorText(errMsg);
+            }
 				document.getElementById(id).innerHTML= oldValue
 			});
        }
