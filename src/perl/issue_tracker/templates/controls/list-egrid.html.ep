@@ -13,14 +13,9 @@
 			<table id="egrid" tabindex="1" style="clear:both">
 			 <thead>
 				<tr><th></th>
-				  <th v-for="key in columns"
-					 @click="sortBy(key)"
-					 :class="{ active: sortKey == key }" tabindex="1" v-on:keyup.enter="sortBy(key)" :id="'th-'+key">
-					 {{ key }}
-					 <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
-					 </span>
-				  </th>
-				</tr>
+				  <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }" tabindex="1" 
+              v-on:keyup.enter="sortBy(key)" :id="'th-'+key">{{ key }}<span class="arrow"
+              :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span></th></tr>
 			 </thead>
 			 <tbody>
 				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td><btn-del :id="'btn-del-'+entry['id']" v-on:clickedBtnDelete="deleteItem"></btn-del></td><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" tabindex="1">{{entry[key]}}</div><div v-on:keyup.tab="this.document.execCommand('selectAll',false,null)" v-else><editable tabindex="1" :content.sync="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
@@ -65,7 +60,7 @@
 
 <script>
    
-   function getUrlParams(){
+   function getGlobalUrlParams(){
       var url_params = new URLSearchParams();
       if( window.location.toString().indexOf("?") != -1) {
          window.location.search.split('?')[1].split('#')[0].replace("pick=","pick=id,").replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
@@ -81,11 +76,15 @@
 
  
 	function fetchServerSideData(url_params){
+         if ( typeof url_params === "undefined" ) { url_params = getGlobalUrlParams()  }
+
 			return axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
 			.then(response => { 
+            console.log ( response ) ; 
 				return response.data ; 
 			})
 			.catch(function(error) {
+            console.log ( error ) ; 
             setSpnMsgErrorText(error.response.data.msg);
     		}) 
    }
@@ -136,11 +135,7 @@ if ( document.getElementById("spn_msg") ) {
 	})
 
 	Vue.component('btn-new', {
-	  data: function () {
-		 return {
-			count: 0
-		 }
-	  },
+	  data: "",
 	  methods: {
 			clickedBtnNew() {
 				function pad2(n) { return n < 10 ? '0' + n : n }
@@ -243,13 +238,17 @@ if ( document.getElementById("spn_msg") ) {
      },
      methods: {
        sortBy: function (key) {
-			//this.$parent.fetchServerSideDataToUI();
          this.sortKey = key
          this.sortOrders[key] = this.sortOrders[key] * -1
+         console.log ( this.sortOrders[key] )
        }
        , setAscSortBy: function (key) {
          this.sortKey = key
          this.sortOrders[key] = 1 ; 
+       }
+       , setDescSortBy: function (key) {
+         this.sortKey = key
+         this.sortOrders[key] = -1 ;
        }
 		 , deleteItem(id){
        	this.$parent.deleteItem(id);
@@ -298,6 +297,19 @@ if ( document.getElementById("spn_msg") ) {
        pageSizes: ['5', '7', '10','15','20','30','50','100']
 		},
      	methods: {
+         getUrlParams: function getGlobalUrlParams(){
+            var url_params = new URLSearchParams();
+            if( window.location.toString().indexOf("?") != -1) {
+               window.location.search.split('?')[1].split('#')[0].replace("pick=","pick=id,").replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
+                  var attr = decodeURIComponent(key)
+                  var val = decodeURIComponent(value)
+                  url_params.append(attr,val);
+               });
+            } else {
+               url_params = { as:"etable" }; 
+            }
+            return url_params ; 
+         },
       	generatePageNum: function (pgNum) {
 				var currentUrl = window.location.href ; 
 				if ( currentUrl.indexOf("page-num=") === -1 ) {
@@ -318,42 +330,52 @@ if ( document.getElementById("spn_msg") ) {
                .replace("page-num=" + this.pageNum , "page-num=1") ; 
 			}
      }
-     , fetchServerSideDataToUI: function() {
-			var url_params = getUrlParams();
+     , fetchServerSideDataToUI: function(url_params) {
+         if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
 			fetchServerSideData(url_params)
 			.then( data => {
+            console.log(data); // todo:ysg
 				this.gridData = data.dat ; 
-				this.pageSize = url_params.get('page-size') || 10 ; 
+				this.pageSize = url_params.get('page-size') || 7 ; 
 				this.pageNum = url_params.get('page-num') || 1 ; 
 				var totalRSsize = data.met ; 
 				var remainder = totalRSsize % this.pageSize
 				var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
 				if ( remainder == 0 ) { toAdd = 0  }
 				this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
-				//this.$children.map(obj=>obj.$forceUpdate());
+
+            var oa = url_params.get("oa")
+            var od = url_params.get("od")
+
+            console.log ( "oa: " + oa ) ;
+            console.log ( "od: " + od ) ;
+
+            if ( oa !== null ) {
+               this.$children[0].setAscSortBy( oa ) ; 
+            } else if ( od !== null ) {
+               this.$children[0].setDescSortBy( od ) ; 
+            } else {
+               this.$children[0].setAscSortBy("id")
+            }
 			})
 			.catch(function(error) {
-				setSpnMsgErrorText(error.response.data.msg);
-				throw new Error('error.toString'); 
+             // todo:ysg 
+             console.log ( error ) ;
+				// setSpnMsgErrorText(error.response.data.msg);
+				// throw new Error(error.toString); 
 			}) 
 	  	}
       , createNewItem (dbid) {
 			postNewServerSideId(dbid)
 			.then ( result => {
             if ( result.toString() !== "Error: Request failed with status code 409" ) {
-               var url_params = getUrlParams();
-					["like-by","like-val","with","fltr-by","fltr-val"].forEach(function(p){url_params.delete(p)})
-					url_params.append("with" , "id-eq-" + dbid );
-
-               fetchServerSideData(url_params).then( data => {
-                  this.gridData.push ( data.dat[0] );
-						if ( this.$children[0].sortOrders["id"] === -1 ) { this.$children[0].setAscSortBy("id"); }
-						document.getElementById("th-id").click() ; // simulate click to show the newest at the top 
-						//document.getElementById("lnk-pgNum-1").click() ; 
-               })
-               .catch(function (error) {
-                  setSpnMsgErrorText(error.message);
-               });
+               var url_params = this.getUrlParams();
+					url_params.delete("page-num") ; 
+               url_params.delete("page-size") ; 
+					url_params.delete("od"); 
+               url_params.delete("oa");
+					url_params.set("od" , "id");
+               this.fetchServerSideDataToUI(url_params);
             } else {
                var msg = result.toString(); 
                msg = msg + ". Somebody was faster than you in the second you clicked !"
@@ -398,11 +420,30 @@ if ( document.getElementById("spn_msg") ) {
             })
             .then( 
                response => {
-                  // question: why it does not work client-side only ?!
-                  this.fetchServerSideDataToUI()
+                  var url_params = this.getUrlParams();
+                  if ( typeof this.$children[0].pageSize !== "undefined" ) {
+                     url_params.delete("page-size") ; 
+                     url_params.set("page-size", this.$children[0].PageSize ) ;
+                  }
+                  if ( typeof this.$children[0].pageNum !== "undefined" ) {
+					      url_params.delete("page-num") ; 
+                     url_params.set("page-num", this.$children[0].pageNum ) ;
+                  }
+                  if ( typeof this.$children[0].sortKey !== "undefined" ) {
+                     var key = this.$children[0].sortKey ; 
+					      url_params.delete("oa") ; 
+					      url_params.delete("od") ; 
+                     if ( this.$children[0].sortOrders[key] === 1 ) {
+                        url_params.set("oa", this.$children[0].sortKey ) ;
+                     } else {
+                        url_params.set("od", this.$children[0].sortKey ) ;
+                     }
+                  }
+                  this.fetchServerSideDataToUI(url_params);
                }
             )
             .catch(function (error) {
+               console.log(error)
                setSpnMsgErrorText(error.message);
             });
        }
@@ -412,7 +453,7 @@ if ( document.getElementById("spn_msg") ) {
     	}
      }
      , mounted() {
-		this.fetchServerSideDataToUI();
+	      this.fetchServerSideDataToUI();
 
 			// on forward slash focus the quick search input textbox 
 			window.addEventListener('keyup', function(event) {
