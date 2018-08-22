@@ -7,7 +7,6 @@
 doBackupPostgresDb(){
 
 	doLog "DEBUG START doBackupPostgresDb"
-	
 	# Action !!!
    mkdir -p $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/; 
    pg_dump  --column-inserts --data-only $postgres_db_name  > \
