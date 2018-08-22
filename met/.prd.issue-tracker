@@ -891,3 +891,5 @@ dat/mix/2018/2018-08/2018-08-22/xls/issue-tracker.all.20180818_000000.xlsx
 dat/mix/2018/2018-08/2018-08-22/sql
 dat/mix/2018/2018-08/2018-08-22/sql/dev_issue_tracker
 dat/mix/2018/2018-08/2018-08-22/sql/dev_issue_tracker/dev_issue_tracker.20180822_101107.insrt.dmp.sql
+dat/mix/2018/2018-08/2018-08-22/json/daily_issues.json
+license.txt

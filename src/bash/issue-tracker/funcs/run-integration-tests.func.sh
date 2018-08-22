@@ -13,11 +13,9 @@ doRunIntegrationTests(){
    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
    daily_data_dir=$mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
    doLog "INFO make a backup of the current db"
-   pg_dump  --column-inserts --data-only $postgres_db_name  > \
-   $daily_data_dir/sql/$postgres_db_name/$postgres_db_name.`date "+%Y%m%d_%H%M%S"`.insrt.dump.sql
-   ls -1 $daily_data_dir/sql/$postgres_db_name/* | sort -nr
-   last_db_backup_file=$(ls -1 $daily_data_dir/sql/$postgres_db_name/* | sort -nr|head -n 1)
-	doLog "INFO created the following postgres db backup : $last_db_backup_file" 
+   bash src/bash/issue-tracker/issue-tracker.sh -a backup-postgres-db
+
+   # re-create the mysql documentation db
    bash src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
 
 	doLog "INFO load the documentation db run xls-to-db to mysql"
