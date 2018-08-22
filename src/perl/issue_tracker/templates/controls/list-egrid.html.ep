@@ -9,7 +9,7 @@
    <div id="dev_central_panel" >
 		<script type="text/x-template" id="grid-template">
       <div id="div_grid_tmpl" style="overflow-x: auto;">
-      	<btn-new id="btnNew" v-on:clickedBtnNew="createNewItem"></btn-new>
+      	<btn-new id="btnNew" v-on:clickedBtnNew="createNewItem" ></btn-new>
 			<table id="egrid" tabindex="1" style="clear:both">
 			 <thead>
 				<tr><th></th>
@@ -27,7 +27,7 @@
 		<div id="cruds-grid" tabindex="-1">
 			<div id="div_frm_srch">
 		  		<form id="frm_search" v-on:submit.prevent>
-			 		<input id="inp_quick_srch" tabindex="1" v-model="searchQuery" v-on:keydown.13="trapOnEnterDown($event)"/>
+			 		<input id="inp_quick_srch" tabindex="1" v-model="searchQuery" v-on:blur="inpQuickSrchCH" v-on:input="inpQuickSrchCH" v-on:focus="inpQuickSrchCH" v-on:keydown.13="trapOnEnterDown($event)"/>
             <div class="pgr-bar pgr-border pgr-round" style="clear: both;float: right;padding-right: 10%;">
                <a tabindex="1" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" 
 						v-for="(pgNum, index) in this.pagesCount" v-bind:href="generatePageNum(pgNum)">
@@ -215,7 +215,7 @@ if ( document.getElementById("spn_msg") ) {
          var col = id.split('-')[0] 
        }
        , createNewItem (content,id,oldValue) {
-			this.$parent.createNewItem(content,id,oldValue);
+            this.$parent.createNewItem(content,id,oldValue);
        }
       , generatePageNum: function (pgNum) {
 			var currentUrl = window.location.href ; 
@@ -254,7 +254,20 @@ if ( document.getElementById("spn_msg") ) {
        pageSizes: ['5', '7', '10','15','20','30','50','100']
 		},
      	methods: {
-         getUrlParams: function (){
+         inpQuickSrchCH: function(event) {
+           if ( event ) {
+               if ( document.getElementById("inp_quick_srch").value !== "" ) {
+                  document.getElementById("btnNew").setAttribute( 
+                     "class" , "v-btn v-btn--floating theme--dark silver");
+                  console.log ( "should disable" ) ; 
+               } else {
+                  document.getElementById("btnNew").setAttribute( 
+                     "class" , "v-btn v-btn--floating theme--dark indigo");
+                  console.log ( "should enable " ) ; 
+               }
+           } 
+         }
+         , getUrlParams: function (){
             var url_params = new URLSearchParams();
             if( window.location.toString().indexOf("?") != -1) {
                window.location.search.split('?')[1].split('#')[0].replace("pick=","pick=id,").replace(/([^=&]+)=([^&]*)/g, 
