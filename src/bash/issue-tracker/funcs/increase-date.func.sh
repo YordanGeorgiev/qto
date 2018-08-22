@@ -90,7 +90,6 @@ doIncreaseDate(){
    rm -f *.bak       # remove any possible bak files
    mv $todays_tmp_dir $daily_data_dir 
  
-   set -x 
    # foreach xls file
    while read -r f ; do 
       file_name="${f##*/}"
