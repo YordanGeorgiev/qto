@@ -10,6 +10,7 @@ use IssueTracker::App::Utils::Initiator ;
 use IssueTracker::App::Utils::Logger ; 
 use IssueTracker::App::Utils::Configurator ; 
 use IssueTracker::App::Ctrl::Dispatcher ; 
+use IssueTracker::App::Utils::Timer ; 
 
 my $m = 'the issue-tracker calling shell needs always a set of pre-defined env vars,
 thus you need to define your issue tracker project by :
@@ -45,8 +46,13 @@ print "running :\n $cmd \n" ; # and Action !!!
 # $cmd_out = `$cmd 2>&1 1>/dev/null` ; 
 $cmd_out = `$cmd` ; 
 ok ( $?  == 0  , $m ); 
-
-my $exp_file               = "$DataDir/json/daily_issues.json" ; 
+# dat/mix/2018/2018-08/2018-08-23/json/daily_issues.json
+my $mix_data_dir    = $ENV{'mix_data_dir' } ;  ;
+my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{'TimeFormat' } );
+my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
+# /vagrant/opt/nokia/musa/dat/mix/issues/2018/2018-06/2018-06-11
+my $out_dir = "$mix_data_dir/$year/$year-$mon/$year-$mon-$mday/json" ;
+my $exp_file               = "$out_dir/daily_issues.json" ; 
 unlink $exp_file if ( -f $exp_file ) ; 
 
 $cmd = 
