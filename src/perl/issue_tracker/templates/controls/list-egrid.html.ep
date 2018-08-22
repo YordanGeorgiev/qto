@@ -259,11 +259,9 @@ if ( document.getElementById("spn_msg") ) {
                if ( document.getElementById("inp_quick_srch").value !== "" ) {
                   document.getElementById("btnNew").setAttribute( 
                      "class" , "v-btn v-btn--floating theme--dark silver");
-                  console.log ( "should disable" ) ; 
                } else {
                   document.getElementById("btnNew").setAttribute( 
                      "class" , "v-btn v-btn--floating theme--dark indigo");
-                  console.log ( "should enable " ) ; 
                }
            } 
          }
@@ -386,9 +384,8 @@ if ( document.getElementById("spn_msg") ) {
             var col = arr[0]
             var dbid = arr[1]
          
-            if ( !content.trim() ) { 
-               content = "null"
-            }
+            if ( !content.trim() ) { content = "null" }
+
             axios.post('/<%= $db =%>/update/<%= $item =%>', {
                   attribute: col ,
                   id: dbid , 
@@ -397,6 +394,7 @@ if ( document.getElementById("spn_msg") ) {
             .then( 
                response => {
                   objIndex = this.gridData.findIndex(obj => obj.id == dbid);
+                  this.$children[0].data[objIndex][col] = content;
                   this.gridData[objIndex][col] = content;
                }
             )
@@ -454,9 +452,8 @@ if ( document.getElementById("spn_msg") ) {
      }
      , mounted() {
 	      this.fetchServerSideDataToUI();
-         console.log ( "mounted called");
-
-			// on forward slash focus the quick search input textbox 
+			
+         // on forward slash focus the quick search input textbox 
 			window.addEventListener('keyup', function(event) {
 				if (event.keyCode == 55 ) { 
                var focusedElement = document.activeElement;
