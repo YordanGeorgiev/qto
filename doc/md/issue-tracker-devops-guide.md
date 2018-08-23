@@ -7,18 +7,20 @@ Table of Contents
     * [1.1. It should just work](#11-it-should-just-work)
       * [1.1.1. Personal responsibility](#111-personal-responsibility)
       * [1.1.2. Attempt for 100% test coverage to achieve reliability](#112-attempt-for-100%-test-coverage-to-achieve-reliability)
-    * [1.2. Naming conventions principle](#12-naming-conventions-principle)
-    * [1.3. Be user-friendly especially to developers and devops](#13-be-user-friendly-especially-to-developers-and-devops)
+    * [1.2. Naming conventions](#12-naming-conventions)
+    * [1.3. Be user-friendly to all](#13-be-user-friendly-to-all)
   * [2. MAINTENANCE AND OPERATIONS](#2-maintenance-and-operations)
-    * [2.1. RDBMS Run-state management](#21-rdbms-run-state-management)
-      * [2.1.1. To check the status of the postgreSql](#211-to-check-the-status-of-the-postgresql)
-      * [2.1.2. To stop the postgreSql](#212-to-stop-the-postgresql)
-      * [2.1.3. To start the postgreSql](#213-to-start-the-postgresql)
-      * [2.1.4. to check the port on which it is listening ](#214-to-check-the-port-on-which-it-is-listening-)
-      * [2.1.5. Check the postgres status](#215-check-the-postgres-status)
-    * [2.2. Application Layer run-state management](#22-application-layer-run-state-management)
-      * [2.2.1. start the application layer](#221-start-the-application-layer)
-      * [2.2.2. stop the application layer](#222-stop-the-application-layer)
+    * [2.1. Aim for simplicity](#21-aim-for-simplicity)
+    * [2.2. Do not allow broken windows](#22-do-not-allow-broken-windows)
+    * [2.3. RDBMS Run-state management](#23-rdbms-run-state-management)
+      * [2.3.1. To check the status of the postgreSql](#231-to-check-the-status-of-the-postgresql)
+      * [2.3.2. To stop the postgreSql](#232-to-stop-the-postgresql)
+      * [2.3.3. To start the postgreSql](#233-to-start-the-postgresql)
+      * [2.3.4. to check the port on which it is listening ](#234-to-check-the-port-on-which-it-is-listening-)
+      * [2.3.5. Check the postgres status](#235-check-the-postgres-status)
+    * [2.4. Application Layer run-state management](#24-application-layer-run-state-management)
+      * [2.4.1. start the application layer](#241-start-the-application-layer)
+      * [2.4.2. stop the application layer](#242-stop-the-application-layer)
   * [3. BACKUP AND RESTORE](#3-backup-and-restore)
     * [3.1. Backup a database](#31-backup-a-database)
     * [3.2. Restore a database](#32-restore-a-database)
@@ -70,11 +72,9 @@ Table of Contents
       * [9.14.2. The related requirement is added in the requirements document](#9142-the-related-requirement-is-added-in-the-requirements-document)
       * [9.14.3. At least 2 times passed unit tests run in each environment instance](#9143-at-least-2-times-passed-unit-tests-run-in-each-environment-instance)
       * [9.14.4. At least 2 times passed integration tests run in each environment instance](#9144-at-least-2-times-passed-integration-tests-run-in-each-environment-instance)
-    * [9.15. Aim for simplicity](#915-aim-for-simplicity)
-    * [9.16. Do not allow broken windows](#916-do-not-allow-broken-windows)
-      * [9.16.1. Deployment to the test environment](#9161-deployment-to-the-test-environment)
-      * [9.16.2. Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. ](#9162-check-that-all-the-files-in-the-deployment-package-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
-      * [9.16.3. restart the application layer](#9163-restart-the-application-layer)
+      * [9.14.5. Deployment to the test environment](#9145-deployment-to-the-test-environment)
+      * [9.14.6. Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. ](#9146-check-that-all-the-files-in-the-deployment-package-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
+      * [9.14.7. restart the application layer](#9147-restart-the-application-layer)
 
 
     
@@ -103,13 +103,13 @@ Testing ensures the consistency and future expandability of the functionalities.
 
     
 
-### 1.2. Naming conventions principle
+### 1.2. Naming conventions
 All the names used in the code and the configurations MUST BE human readable and expandable - that is name the objects from the greater realm to the smaller - for example &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; , because the concept of operational IT environments ( dev , test , qas , prd ) is broader than the concept of a application databases ... 
 
     
 
-### 1.3. Be user-friendly especially to developers and devops
-You cannot achieve user-friendliness for the end-users unless your developers and technical personnel are happy while interacting with your artifacts. 
+### 1.3. Be user-friendly to all
+Especially to technical personnel, as you cannot achieve user-friendliness for the end-users unless your developers and technical personnel are happy while interacting with your artifacts. 
 
     
 
@@ -118,33 +118,43 @@ You cannot achieve user-friendliness for the end-users unless your developers an
 
     
 
-### 2.1. RDBMS Run-state management
+### 2.1. Aim for simplicity
+Things should be as simple as possible, but not simpler - if Einstein said it it makes sense - having lost so much time in endless loops of IT complexity - the older we get the more it gets more rational. 
+
+    
+
+### 2.2. Do not allow broken windows
+A broken windows is any peace of code or documentation which is hanging around not included in the integration tests suite and not matching the most up-to-date standars for work deliverables. Either bring it up to the standard level or get rid of it. 
+
+    
+
+### 2.3. RDBMS Run-state management
 
 
     
 
-#### 2.1.1. To check the status of the postgreSql
+#### 2.3.1. To check the status of the postgreSql
 To check the status of the postgreSql issue:
 
     sudo /etc/init.d/postgresql status
 
-#### 2.1.2. To stop the postgreSql
+#### 2.3.2. To stop the postgreSql
 To stop the postgreSql issues:
 
     sudo /etc/init.d/postgresql stop
 
-#### 2.1.3. To start the postgreSql
+#### 2.3.3. To start the postgreSql
 To start the postgreSql issues:
 
     sudo /etc/init.d/postgresql start
 
-#### 2.1.4. to check the port on which it is listening 
+#### 2.3.4. to check the port on which it is listening 
 To check the port on which it is listening issue:
 
     sudo netstat -tulntp | grep -i postgres
     # tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      8095/postgres
 
-#### 2.1.5. Check the postgres status
+#### 2.3.5. Check the postgres status
 Check the postgres status.
 Check the port to which the postres is running with this command:
 
@@ -156,19 +166,19 @@ Check the port to which the postres is running with this command:
     # check on which ports it is runnning
     sudo netstat -plunt |grep postgres
 
-### 2.2. Application Layer run-state management
+### 2.4. Application Layer run-state management
 
 
     
 
-#### 2.2.1. start the application layer
+#### 2.4.1. start the application layer
 To start the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern 
 
     bash src/bash/issue-tracker/issue-tracker.sh -a mojo-hypnotoad-start
     
     bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
 
-#### 2.2.2. stop the application layer
+#### 2.4.2. stop the application layer
 To stop the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern 
 
     bash src/bash/issue-tracker/issue-tracker.sh -a mojo-hypnotoad-stop
@@ -501,17 +511,7 @@ At least 2 times passed unit tests run in each environment instance - run the un
 
     
 
-### 9.15. Aim for simplicity
-Things should be as simple as possible, but not simpler - if Einstein said it it makes sense - having lost so much time in endless loops of IT complexity - the older we get the more it gets more rational. 
-
-    
-
-### 9.16. Do not allow broken windows
-A broken windows is any peace of code or documentation which is hanging around not included in the integration tests suite and not matching the most up-to-date standars for work deliverables. Either bring it up to the standard level or get rid of it. 
-
-    
-
-#### 9.16.1. Deployment to the test environment
+#### 9.14.5. Deployment to the test environment
 Deploy to the test environment as follows:
 
     # deploy to the tst environment
@@ -521,7 +521,7 @@ Deploy to the test environment as follows:
     cd ../issue-tracker.<<version>>.tst.<<owner>>
     
 
-#### 9.16.2. Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. 
+#### 9.14.6. Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. 
 Deploy to the test environment as follows:
 
     # deploy to the tst environment
@@ -531,7 +531,7 @@ Deploy to the test environment as follows:
     cd ../issue-tracker.<<version>>.tst.<<owner>>
     
 
-#### 9.16.3. restart the application layer
+#### 9.14.7. restart the application layer
 Well just chain the both commands. 
 
     bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop ; bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
