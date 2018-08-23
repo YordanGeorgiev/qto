@@ -105,7 +105,7 @@ https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker
     
 
 ## 7. ACKNOWLEDGEMENTS
-This project would not have been possible without the work of the communities of the people working on the following frameworks/languages/OS listed in now particular order. 
+This project would not have been possible without the work of the communities of the people working on the following frameworks/languages/OS listed in no particular order. 
 
  - Mojolicious
  - Vue 
