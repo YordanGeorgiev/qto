@@ -93,7 +93,6 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
 
    sub doCreateBySoleId {
-
 		my $self 				= shift ; 
       my $objModel       = ${ shift @_ } ; 
       my $table            = shift ; 
@@ -123,22 +122,27 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          return ( $ret , $msg ) ; 
       }
 
-
-      $str_sql = " 
-      INSERT INTO  $table ( id ) VALUES ( '$id' );
-      " ; 
-      eval {
-         $sth = $dbh->prepare($str_sql);  
-         #debug print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
-
-         $sth->execute() or print STDERR "$DBI::errstr" ; 
-      } or $ret = 500 ; # Internal Server error
+      # this basically restricts the application from creating no more than 100 new items per
+      # minute IF there are ongoing requests, which FOR NOW should suffice ...
+      for ( my $trialNum = 0 ; $trialNum < 100 ; $trialNum++ ) { 
+         $id = $id + $trialNum ; 
+         $str_sql = " 
+         INSERT INTO  $table ( id ) VALUES ( '$id' );
+         " ; 
+         eval {
+            $sth = $dbh->prepare($str_sql);  
+            #debug print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
+            $sth->execute() ;
+            last ; 
+         } or next ; 
+      } 
 
       binmode(STDOUT, ':utf8');
 
       unless ( defined ( $DBI::errstr ) ) {
          $msg = 'CREATE OK ' ; 
          $ret = 0 ; 
+         return ( $ret , $msg ) ; 
       } else {
          $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
          $msg = "$DBI::errstr" ; 
@@ -148,7 +152,6 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
             $ret = 400 ; 
          }
       }
-
       return ( $ret , $msg ) ; 
    }
 
