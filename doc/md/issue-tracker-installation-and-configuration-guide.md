@@ -195,17 +195,14 @@ You will need the git binary to fetch the issue-tracker source - you could alter
 Fetch the source from git hub as follows:
 
     # got to a dir you have write permissions , for example:
-    mkdir -p ~/opt/csitea/; cd ~/opt/csitea/
+    mkdir -p ~/opt/; cd ~/opt/
     
     # fetch the source
     git clone https://github.com/YordanGeorgiev/issue-tracker.git
+    
     # checkit
     ls -la 
     
-    # OR 
-    wget https://github.com/YordanGeorgiev/issue-tracker/archive/0.4.4.zip
-    ls -al
-    unzip -o 0.4.4.zip -d .
 
 ### 3.8. run the boot-strap script
 The bootstrap script will interpolate change the git deployment dir to a "product_instance_dir" ( your instance of the issue-tracker, having the same version as this one, but running on a different host with different owner - your )
@@ -218,15 +215,12 @@ The bootstrap script will interpolate change the git deployment dir to a "produc
     
     # run the bootstrap script : 
     bash issue-tracker/src/bash/issue-tracker/bootstrap-issue-tracker.sh
-    
-    # now go to your product instance dir ( yes this is official term ), note it is a DEV environment
-    cd /opt/csitea/issue-tracker/issue-tracker.$product_version.dev.$USER
 
 ### 3.9. Install the OS libs listed in the prereq sh script
 The "prereq"script contains the listing of the binaries to be installed. Run the script. 
 
     # go to your product instance dir - 
-    cd /opt/csitea/issue-tracker/issue-tracker.$product_version.dev.$USER
+    cd ~/opt/csitea/issue-tracker/issue-tracker.$product_version.dev.$USER
     sudo bash src/bash/issue-tracker/install-prerequisites-on-ubuntu.sh
 
 ### 3.10. Install the Perl modules listed in the preq pl scriipt
