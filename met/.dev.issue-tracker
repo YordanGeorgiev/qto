@@ -870,13 +870,6 @@ src/sql/pgsql/prd_issue_tracker/98.create-table-test_update_table.sql
 src/sql/pgsql/tst_issue_tracker/12.create-table-check_lists.sql
 src/sql/pgsql/tst_issue_tracker/98.create-table-test_update_table.sql
 # ---
-dat/mix/2018/2018-08/2018-08-16
-dat/mix/2018/2018-08/2018-08-16/sql
-dat/mix/2018/2018-08/2018-08-16/sql/dev_issue_tracker
-dat/mix/2018/2018-08/2018-08-16/sql/dev_issue_tracker/dev_issue_tracker.20180816_225011.insrt.dmp.sql
-dat/mix/2018/2018-08/2018-08-16/xls
-dat/mix/2018/2018-08/2018-08-16/xls/issue-tracker.all.20180816_000000.xlsx
-# ---
 src/bash/issue-tracker/scripts/history.sh
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/add-new.png
 # ---
@@ -885,11 +878,13 @@ src/bash/issue-tracker/tests/backup-postgres-db.test.sh
 doc/txt/issue-tracker/funcs/backup-postgres-db.func.txt
 doc/txt/issue-tracker/tests/backup-postgres-db.test.txt
 # ---
-dat/mix/2018/2018-08/2018-08-22/
-dat/mix/2018/2018-08/2018-08-22/xls
-dat/mix/2018/2018-08/2018-08-22/xls/issue-tracker.all.20180818_000000.xlsx
-dat/mix/2018/2018-08/2018-08-22/sql
-dat/mix/2018/2018-08/2018-08-22/sql/dev_issue_tracker
-dat/mix/2018/2018-08/2018-08-22/sql/dev_issue_tracker/dev_issue_tracker.20180822_101107.insrt.dmp.sql
-dat/mix/2018/2018-08/2018-08-22/json/daily_issues.json
 license.txt
+# ---
+dat/mix/2018/2018-08/2018-08-24
+dat/mix/2018/2018-08/2018-08-24/json
+dat/mix/2018/2018-08/2018-08-24/json/daily_issues.json
+dat/mix/2018/2018-08/2018-08-24/sql
+dat/mix/2018/2018-08/2018-08-24/sql/dev_issue_tracker
+dat/mix/2018/2018-08/2018-08-24/sql/dev_issue_tracker/dev_issue_tracker.20180824_091817.insrt.dmp.sql
+dat/mix/2018/2018-08/2018-08-24/xls
+dat/mix/2018/2018-08/2018-08-24/xls/issue-tracker.all.20180824_000000.xlsx
