@@ -206,15 +206,15 @@ if ( document.getElementById("spn_msg") ) {
          this.sortKey = key
          this.sortOrders[key] = -1 ;
        }
-		 , deleteItem(id){
+		 , deleteItem: function (id){
        	this.$parent.deleteItem(id);
 		 }
-       , updateItem (content,id,oldValue) {
+       , updateItem: function (content,id,oldValue) {
 			this.$parent.updateItem(content,id,oldValue);
          var col = id.split('-')[0] 
        }
-       , createNewItem (content,id,oldValue) {
-            this.$parent.createNewItem(content,id,oldValue);
+       , createNewItem: function (id) {
+            this.$parent.createNewItem(id);
        }
 	 }
    })
@@ -334,7 +334,7 @@ if ( document.getElementById("spn_msg") ) {
                }
             });
          }
-         , createNewItem (dbid) {
+         , createNewItem: function (dbid) {
             this.postNewServerSideId(dbid)
             .then ( result => {
                if ( result.toString() !== "Error: Request failed with status code 409" ) {
@@ -355,11 +355,11 @@ if ( document.getElementById("spn_msg") ) {
                }
             })				
             .catch(function (error) {
-               setSpnMsgErrorText(error.message);
+                  setSpnMsgErrorText(error.message);
             });
 
          }
-         , updateItem (content,id,oldValue) {
+         , updateItem: function (content,id,oldValue) {
             var arr = id.split('-')
             var col = arr[0]
             var dbid = arr[1]
