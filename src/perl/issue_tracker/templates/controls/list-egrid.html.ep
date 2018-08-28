@@ -316,7 +316,8 @@ if ( document.getElementById("spn_msg") ) {
             .catch(function(error) {
                if (typeof error !== 'undefined') {
                  var errMsg = error.toString() 
-                 setSpnMsgErrorText(errMsg);
+                 console.log(errMsg)
+                 //setSpnMsgErrorText(errMsg);
                }
             }) 
 	  	   }
