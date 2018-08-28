@@ -666,6 +666,12 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       # not all items have the prio attribute
       $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " ASC " if defined $columns_to_order_by_asc ; 
       $str_sql .= " ORDER BY " . $columns_to_order_by_desc . " DESC " if defined $columns_to_order_by_desc ; 
+      
+      if ( $str_sql =~ m/ ORDER BY /g ) {
+         $str_sql .= ", id ASC " unless ( $str_sql =~ m/ORDER BY id / );
+      } else {
+         $str_sql .= " ORDER BY id ASC " ;
+      }
 
       my $limit = $objModel->get('select.web-action.page-size' ) || 5 ; 
       my $page_num = $objModel->get('select.web-action.page-num' ) || 1 ; 
@@ -674,7 +680,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = $limit*$offset ; 
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
-
+      
       # debug print "from RdrPostgresDb.pm 678 : $str_sql \n" ; 
 
       $sth = $dbh->prepare($str_sql);  
