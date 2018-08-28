@@ -1,6 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
 src/perl/issue_tracker/public/poc/vuetify/index.html
+src/perl/issue_tracker/templates/controls/list-print-table.html.ep
 src/perl/issue_tracker/templates/controls/list-egrid.html.ep
 src/perl/issue_tracker/public/poc/vue-create-new-button/
 src/perl/issue_tracker/public/poc/vue-create-new-button/vue-create-new-button.css
@@ -29,6 +30,7 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListEGrid.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/ListPrintTable.pm
 # ---
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrJQCloud.pm
@@ -563,6 +565,7 @@ doc/md/issue-tracker-system-guide.md
 doc/md/issue-tracker-requirements.md
 doc/md/issue-tracker-user-stories.md
 doc/md/issue-tracker-installation-and-configuration-guide.md
+doc/md/issue-tracker-concepts.md
 doc/pdf
 doc/pdf/issue-tracker-devops-guide.pdf
 doc/pdf/issue-tracker-features-and-functionalities.pdf
@@ -572,6 +575,7 @@ doc/pdf/issue-tracker-tests.pdf
 doc/pdf/issue-tracker-user-stories.pdf
 doc/pdf/issue-tracker-installation-and-configuration-guide.pdf
 doc/pdf/issue-tracker-requirements.pdf
+doc/pdf/issue-tracker-concepts.pdf
 #---
 doc/txt/issue-tracker/funcs/generate-sql.func.txt
 doc/txt/issue-tracker/helps/generate-sql.help.txt
@@ -628,6 +632,7 @@ doc/xls/issue-tracker-system-guide.xls
 doc/xls/issue-tracker-user-stories.xls
 doc/xls/issue-tracker-installation-and-configuration-guide.xls
 doc/xls/issue-tracker-requirements.xls
+doc/xls/issue-tracker-concepts.xls
 #---
 src/bash/issue-tracker/specs/check-perl-modules-prerequisites.spec.sh
 src/bash/issue-tracker/tests/check-perl-modules-prerequisites.test.sh
@@ -740,6 +745,7 @@ src/sql/mysql/dev_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/dev_issue_tracker/50.create-ReadMe-table.sql
 src/sql/mysql/dev_issue_tracker/51.create-Tests-table.sql
 src/sql/mysql/dev_issue_tracker/53.create-SystemGuide-table.sql
+src/sql/mysql/dev_issue_tracker/54.create-Concept-table.sql
 src/sql/mysql/prd_issue_tracker
 src/sql/mysql/prd_issue_tracker/00.create-db.mysql
 src/sql/mysql/prd_issue_tracker/01.create-ItemController-table.sql
@@ -762,6 +768,7 @@ src/sql/mysql/prd_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/prd_issue_tracker/50.create-ReadMe-table.sql
 src/sql/mysql/prd_issue_tracker/51.create-Tests-table.sql
 src/sql/mysql/prd_issue_tracker/53.create-SystemGuide-table.sql
+src/sql/mysql/prd_issue_tracker/54.create-Concept-table.sql
 src/sql/mysql/tst_issue_tracker
 src/sql/mysql/tst_issue_tracker/00.create-db.mysql
 src/sql/mysql/tst_issue_tracker/01.create-ItemController-table.sql
@@ -784,13 +791,14 @@ src/sql/mysql/tst_issue_tracker/48.create-ExportFile-table.sql
 src/sql/mysql/tst_issue_tracker/50.create-ReadMe-table.sql
 src/sql/mysql/tst_issue_tracker/51.create-Tests-table.sql
 src/sql/mysql/tst_issue_tracker/53.create-SystemGuide-table.sql
+src/sql/mysql/tst_issue_tracker/54.create-Concept-table.sql
 # ---
+src/bash/issue-tracker/funcs/run-integration-tests.func.sh
+src/bash/issue-tracker/tests/run-integration-tests.test.sh
+src/bash/issue-tracker/helps/run-integration-tests.help.sh
 doc/txt/issue-tracker/tests/run-integration-tests.test.txt
 doc/txt/issue-tracker/helps/run-integration-tests.help.txt
 doc/txt/issue-tracker/funcs/run-integration-tests.func.txt
-src/bash/issue-tracker/tests/run-integration-tests.test.sh
-src/bash/issue-tracker/helps/run-integration-tests.help.sh
-src/bash/issue-tracker/funcs/run-integration-tests.func.sh
 doc/dot/readme/what-is-issue-tracker.dot
 doc/dot/devops/shell-action-control-flow-diagram.dot
 doc/img/readme/what-is-is.png
@@ -870,13 +878,6 @@ src/sql/pgsql/prd_issue_tracker/98.create-table-test_update_table.sql
 src/sql/pgsql/tst_issue_tracker/12.create-table-check_lists.sql
 src/sql/pgsql/tst_issue_tracker/98.create-table-test_update_table.sql
 # ---
-dat/mix/2018/2018-08/2018-08-16
-dat/mix/2018/2018-08/2018-08-16/sql
-dat/mix/2018/2018-08/2018-08-16/sql/dev_issue_tracker
-dat/mix/2018/2018-08/2018-08-16/sql/dev_issue_tracker/dev_issue_tracker.20180816_225011.insrt.dmp.sql
-dat/mix/2018/2018-08/2018-08-16/xls
-dat/mix/2018/2018-08/2018-08-16/xls/issue-tracker.all.20180816_000000.xlsx
-# ---
 src/bash/issue-tracker/scripts/history.sh
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/add-new.png
 # ---
@@ -885,11 +886,13 @@ src/bash/issue-tracker/tests/backup-postgres-db.test.sh
 doc/txt/issue-tracker/funcs/backup-postgres-db.func.txt
 doc/txt/issue-tracker/tests/backup-postgres-db.test.txt
 # ---
-dat/mix/2018/2018-08/2018-08-22/
-dat/mix/2018/2018-08/2018-08-22/xls
-dat/mix/2018/2018-08/2018-08-22/xls/issue-tracker.all.20180818_000000.xlsx
-dat/mix/2018/2018-08/2018-08-22/sql
-dat/mix/2018/2018-08/2018-08-22/sql/dev_issue_tracker
-dat/mix/2018/2018-08/2018-08-22/sql/dev_issue_tracker/dev_issue_tracker.20180822_101107.insrt.dmp.sql
-dat/mix/2018/2018-08/2018-08-22/json/daily_issues.json
 license.txt
+# ---
+dat/mix/2018/2018-08/2018-08-27
+dat/mix/2018/2018-08/2018-08-27/xls
+dat/mix/2018/2018-08/2018-08-27/xls/issue-tracker.all.20180827_000000.xlsx
+dat/mix/2018/2018-08/2018-08-27/json
+dat/mix/2018/2018-08/2018-08-27/json/daily_issues.json
+dat/mix/2018/2018-08/2018-08-27/sql
+dat/mix/2018/2018-08/2018-08-27/sql/dev_issue_tracker
+dat/mix/2018/2018-08/2018-08-27/sql/dev_issue_tracker/dev_issue_tracker.20180827_150119.insrt.dmp.sql

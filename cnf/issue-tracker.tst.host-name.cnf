@@ -1,4 +1,4 @@
-# file: cnf/issue-tracker.host-name.cnf
+s# file: cnf/issue-tracker.host-name.cnf
 [MainSection]
 
 # multiple projects support
@@ -103,6 +103,9 @@ web_port=5001
 load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tracker-en.xlsx
 
 PS1='issue-tracker-tst \u@\h [\d \t] [\w] $ \n\n '
+
+# on which port the mojo should listen
+mojo_morbo_port=3002
 
 # the last entry is always ignored - this is a bug in the cnf parser 
 foo=bar

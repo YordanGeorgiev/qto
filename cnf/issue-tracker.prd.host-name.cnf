@@ -103,6 +103,9 @@ load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tra
 
 PS1='issue-tracker-prd \u@\h [\d \t] [\w] $ \n\n '
 
+# on which port the mojo should listen
+mojo_morbo_port=3003
+
 # the last entry is always ignored - this is a bug in the cnf parser 
 foo=bar
 

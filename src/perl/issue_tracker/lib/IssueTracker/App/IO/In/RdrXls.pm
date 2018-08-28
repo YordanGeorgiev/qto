@@ -64,7 +64,7 @@ sub doReadXlsFileToHsr3 {
   } 
 
   my $flg_found_at_least_one_table = 0 ; 
-  $msg = "did not any of the tables:  " . "@tables" ; 
+  $msg = "did not find any of the tables:  " . "@tables" ; 
   foreach my $worksheet (@{$objWorkbook->{Worksheet}}) {
 
     my $hsWorkSheet   = {};

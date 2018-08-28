@@ -381,7 +381,7 @@ doSetVars(){
    # do_print_debug_msgs=0
    # stop set default vars
    # set -x
-	test -z "${issue_tracker_project:-}" && doParseConfFile
+	# test -z "${issue_tracker_project:-}" && doParseConfFile
 	#test -z "${issue_tracker_project:-}" || doSetUndefinedShellVarsFromCnfFile
    # sleep 20
 
