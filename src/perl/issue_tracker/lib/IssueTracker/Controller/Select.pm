@@ -143,6 +143,16 @@ sub doSelectItems {
    } 
 
    ( $ret , $msg ) = $objRdrUrlParams->doSetWithUrlParams(\$objModel, $query_params );
+   if ( $ret != 0 ) {
+      $self->res->code(400);
+      $self->render( 'json' =>  { 
+         'msg'   => $msg,
+         'ret'   => 400, 
+         'req'   => "GET " . $self->req->url->to_abs
+      });
+      return ; 
+   } 
+
    $objRdrDbsFactory
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
