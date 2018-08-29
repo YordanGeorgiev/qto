@@ -13,9 +13,12 @@ Table of Contents
   * [3. BUSINESS LOGIC](#3-business-logic)
     * [3.1. Projects management](#31-projects-management)
     * [3.2. Increase the date for all projects](#32-increase-the-date-for-all-projects)
-    * [3.3. Categories](#33-categories)
-      * [3.3.1. Issues / Issue items / items](#331-issues-/-issue-items-/-items)
-      * [3.3.2. to search for the project daily file](#332-to-search-for-the-project-daily-file)
+    * [3.3. Issues / Issue items / items](#33-issues-/-issue-items-/-items)
+      * [3.3.1. Categories](#331-categories)
+      * [3.3.2. Issues status](#332-issues-status)
+      * [3.3.3. Issues management via time intervals](#333-issues-management-via-time-intervals)
+    * [3.4. Problems](#34-problems)
+    * [3.5. Questions](#35-questions)
 
 
     
@@ -77,35 +80,58 @@ You can manage multiple projects with the issue-tracker tool. Each project has i
 As the tool is backwards compatible you could have differrrent instances of the issue-tracker projects with different versions ( and set of features ) operatiing against differrent project ( each one in its own version).
 You must pre-set the configuration variables of an issue-tracker project each time you start working on a project from the shell
 
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/isg-pub/isg-pub.issue-tracker.doc-pub-host.conf
+    
 
 ### 3.2. Increase the date for all projects
 to increase the date for all the projects at once use the following oneliner.
 
-    while read -r f ; do doParseIniEnvVars $f ; bash src/bash/issue-tracker/issue-tracker.sh -a increase-date ; done < <(find doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/ -type f)
+    
 
-### 3.3. Categories
-Each issue item could be categorized under one and only one category. One category might have 1 or more issues. 
-The categories could contain letters ,numbers, dashes
-
-    Examples:
-    organisation-it
-    organisation-it-operations
-
-#### 3.3.1. Issues / Issue items / items
+### 3.3. Issues / Issue items / items
 Issue item is the shortest possible description of task , activity , note or anything requiring distinguishable and prerferable measurable action or producing verfifiable outcome.
 Issues could be of different types - tasks, activities, notes etc. 
 
-    Examples:
-    go get the milk
-    do the homework
-    procurement e-mail discussion follow-up
+    
 
-#### 3.3.2. to search for the project daily file
-to search for the project daily file run the following liner first to start the dev server of the react mini-app.
-Than point your broser at the following url:
-http://doc-pub-host:3307/
-( Hardcoded for now … ) 
+#### 3.3.1. Categories
+Each issue item could be categorized under one and only one category. One category might have 1 or more issues. 
+The categories could contain letters ,numbers, dashes
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
+    
+
+#### 3.3.2. Issues status
+You could define whatever statuses you like. As issue-tracker has been built to develop itself ( how sarcastic could that be ;o), that is for tracing the progress of a software project the following "default" statuses have been used: 
+01-eval - for evaluate the issue
+02-todo - for decided to do the issue
+03-wip - for the issue is being in work in progress mode
+04-diss - for discard the issue
+05-tst - for the issue is being in testing like mode
+06-onhold - for the issue is being kept onhold for the time period
+07-qas - for the issue is being quality assured 
+09-done - for the issue is being done / completed. 
+
+    
+
+#### 3.3.3. Issues management via time intervals
+The issues are basically organised into the following periods:
+ - daily
+ - weekly
+ - monthly
+ - yearly
+ - quinquennially
+ - decadally
+
+So that in the end of each previous time period you could go trough the issues of that period and transfer up and down in the time scale. 
+
+    
+
+### 3.4. Problems
+Sometimes during the workings of your project you encounter problems, which are complex enough not to allows the definition of an issue. In those cases it would be more rational to just register the problem, discuss it or review it later on, and define the issue as soon as the problem domain is understood and even possible issue solution could be proposed
+
+    
+
+### 3.5. Questions
+Sometimes during the workings of your project you might be simply asking questions, which are complex enough not to allows the definition of an issue. In those cases it would be more rational to just register the question, discuss it or review it later on, and define the issue(s) addressing this question later on. 
+
+    
 
