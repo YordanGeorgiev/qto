@@ -11,6 +11,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    my $appConfig = $t->app->get('AppConfig') ; 
    # if the product instance id tst -> tst_issue_tracker
    my $db_name= $appConfig->{ 'postgres_db_name' } ; 
+	$t->get_ok('/' . $db_name . '/select-databases')->status_is(200) ; 
+
    my $url = '/' . $db_name . '/select-tables' ; 
 
 
@@ -31,6 +33,8 @@ for my $row ( @$list ) {
    my $table_name = $row->{'table_name'} ; 
    my $url = '' ; 
    my $tm = '' ; # the test msg 
+
+
 
    # feature-guid: 1d270227-0959-488f-83d3-0397221385a0
 	$t->get_ok('/' . $db_name . '/select/' . $table_name)

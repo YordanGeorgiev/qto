@@ -251,15 +251,14 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       $str_sql = " 
       SELECT  
-           table_catalog 
-         , table_schema 
+           ROW_NUMBER () OVER (ORDER BY table_name) as row_id
          , table_name 
-         , ROW_NUMBER () OVER (ORDER BY table_name) as row_id
+         , table_schema 
       FROM information_schema.tables  
       WHERE 1=1 
       AND table_type = 'BASE TABLE' 
       AND table_schema = 'public' 
-      ORDER BY table_type, table_name
+      ORDER BY table_name
       ;
       " ; 
 
@@ -276,9 +275,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
             or $objLogger->error ( "$DBI::errstr" ) ;
 
       $hsr = $sth->fetchall_hashref( 'row_id' ) ; 
-
+      
       $objModel->set('hsr2' , $hsr);
-      # p($hsr )  ; 
       binmode(STDOUT, ':utf8');
 
       $msg = DBI->errstr ; 
@@ -291,6 +289,59 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       }
 
       $appConfig->{ "$postgres_db_name".'.tables-list'} = $hsr ;
+      return ( $ret , $msg , $hsr ) ; 	
+   }
+
+   sub doSelectDatabasesList {
+
+      my $self             = shift ; 
+      my $objModel         = ${shift @_ } ; 
+
+      my $msg              = q{} ;         
+      my $ret              = 1 ;          # this is the return value from this method 
+      my $debug_msg        = q{} ; 
+      my $hsr              = {} ;         # this is meta hash describing the data hash ^^
+      my $sth              = {} ;         # this is the statement handle
+      my $dbh              = {} ;         # this is the database handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      
+      if ( defined $objModel->get('postgres_db_name') ) {
+		   $postgres_db_name = $objModel->get('postgres_db_name');
+      }
+      
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+      $str_sql = " 
+         select ROW_NUMBER () OVER (ORDER BY datname ) as row_id, datname from pg_database;
+      " ; 
+
+      # authentication src: http://stackoverflow.com/a/19980156/65706
+      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
+      # $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      
+      $sth = $dbh->prepare($str_sql);  
+
+      $sth->execute()
+            or $objLogger->error ( "$DBI::errstr" ) ;
+
+      $hsr = $sth->fetchall_hashref( 'row_id' ) ; 
+
+      $objModel->set('hsr2' , $hsr);
+
+      binmode(STDOUT, ':utf8');
+
+      $msg = DBI->errstr ; 
+
+      unless ( defined ( $msg ) ) {
+         $msg = 'SELECT databases-list OK ' ; 
+         $ret = 0 ; 
+      } else {
+         $objLogger->doLogErrorMsg ( $msg ) ; 
+      }
+
+      $appConfig->{ "databases-list"} = $hsr ;
       return ( $ret , $msg , $hsr ) ; 	
    }
 
