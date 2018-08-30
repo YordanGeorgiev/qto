@@ -44,7 +44,7 @@ Table of Contents
       * [2.5.5. Item deletion ( DELETE )](#255-item-deletion-(-delete-))
           * [2.5.5.1. Successful execution](#2551-successful-execution)
           * [2.5.5.2. Error handling on delete error](#2552-error-handling-on-delete-error)
-    * [2.6. List as priont-table page](#26-list-as-priont-table-page)
+    * [2.6. List as print-table page](#26-list-as-print-table-page)
   * [3. DEVOPS FEATURES AND FUNCTIONALITIES](#3-devops-features-and-functionalities)
     * [3.1. Testability](#31-testability)
       * [3.1.1. Perl syntax check call](#311-perl-syntax-check-call)
@@ -54,7 +54,7 @@ Table of Contents
     * [3.2. Documentation](#32-documentation)
       * [3.2.1. Single shell call documentation generation - the generate-docs shell action](#321-single-shell-call-documentation-generation--the-generate-docs-shell-action)
       * [3.2.2. Full documentation set](#322-full-documentation-set)
-      * [3.2.3. Documenation's file formats](#323-documenation's-file-formats)
+      * [3.2.3. Documentation's file formats](#323-documentation's-file-formats)
     * [3.3. Logging](#33-logging)
       * [3.3.1. Bash logging](#331-bash-logging)
       * [3.3.2. Perl logging](#332-perl-logging)
@@ -242,7 +242,7 @@ http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/
 
 #### 2.2.7. The "hide" url param
 If you do not specify any attribute to pick, you could hide specific attributes by using the "hide=col1,col2,col3" syntax.
-http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=etable&hide=guid,description
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=established=guid,description
 
     
 
@@ -313,7 +313,7 @@ http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/
 #### 2.3.2. table quick filtering
 You can filter the already presented part of the result set in the page by using the search textbox. This is only an ui type of filtering for the already loaded data. This type of filtering is different compared to the url parameters filtering by using the with url param syntax and it filters the already fetched from the db data-set, whereas the with=&lt;&lt;attribute&gt;&gt;&lt;&lt;operator&gt;&gt;&lt;&lt;value&gt;&gt; filtering does filter on the database side.
 You could focus the quick search textbox by pressing the forward slash on your keyboard. 
-The quick search box works instanteniously, thus hitting enter is not needed. 
+The quick search box works instantaneously, thus hitting enter is not needed. 
 
     
 
@@ -325,7 +325,7 @@ You can set the page size of the result set to be fetched from the database by u
 #### 2.3.4. paging - setting the table's page number
 If the result-set requested is larger than the page size you can go to the next page number by using the "&page-num=&lt;&lt;page-num&gt;&gt;" url parameter. 
 You could go to the next page number by clicking on the links just bellow the quick search textbox. The table control has UI for setting the table page number. 
-You could quickly use the / char shortcut to focus to the quick search box and from there use the tab to quickly naviagate to the desired page number. 
+You could quickly use the / char shortcut to focus to the quick search box and from there use the tab to quickly navigate to the desired page number. 
 
     
 
@@ -370,14 +370,14 @@ A new item could be added to the table in the ui and thus in the db table by cli
     
 
 ##### 2.5.3.1. Successful execution
-After clicking the plus button the System adds the new row into the database table and presents it into the table ui AS THE FIRST ROW to emphasise the created row - that is the existing sort of the table is changed to the id column.
-This behaviour is not obvious if you have at the time of pressing the add-new button a valid search in the quick search box as the result set will most probably not show your new item as the filter is ongoing, this is rather bug, which for now is handled with the dimming of the add new button during an active search in the quick search box. 
+After clicking the plus button the System adds the new row into the database table and presents it into the table ui AS THE FIRST ROW to emphasize the created row - that is the existing sort of the table is changed to the id column.
+This behavior is not obvious if you have at the time of pressing the add-new button a valid search in the quick search box as the result set will most probably not show your new item as the filter is ongoing, this is rather bug, which for now is handled with the dimming of the add new button during an active search in the quick search box. 
 
     
 
 ##### 2.5.3.2. Error handling on db create error
-If any error occurs while the creation an error msg is presented crearly with fading effect, which returns the error msg from the database. 
-On unvalid input the data is not created to the database and nothing is stored. 
+If any error occurs while the creation an error msg is presented clearly with fading effect, which returns the error msg from the database. 
+On invalid input the data is not created to the database and nothing is stored. 
 
     
 
@@ -387,19 +387,19 @@ The table can be edited inline so that the data is updated to the database. Whit
     
 
 ##### 2.5.4.1. Successful execution
-If the single cell inline-edit is successfull no msg is presented and the data is updated to the database storage.
+If the single cell inline-edit is successful no msg is presented and the data is updated to the database storage.
 If the updated cell was part of the currently sorted column the ui is automatically adjusted to the new sort order ( for example if a numeric sort was applied and the cell had value of 9 with 1..9 range and the smallest to greatest was currently active if the new update is 1 the item will appear in the top of the listing.
 
     
 
 ##### 2.5.4.2. Error handling on db update error
-If any error occurs while updating an error msg is presented crearly with fading effect, which returns the error msg from the database. 
-On unvalid input the data is not updated to the database and the old value in the cell is restored.
+If any error occurs while updating an error msg is presented clearly with fading effect, which returns the error msg from the database. 
+On invalid input the data is not updated to the database and the old value in the cell is restored.
 
     
 
 ##### 2.5.4.3. Nulls handling
-Nulls handling is somewhat problematic in ui. For now the behaviour by convention is to leave a nullable record in the database as null, whether the cell of the ui table is left empty ( white space chars are also considered empty)
+Nulls handling is somewhat problematic in ui. For now the behavior by convention is to leave a nullable record in the database as null, whether the cell of the ui table is left empty ( white space chars are also considered empty)
 
     
 
@@ -409,18 +409,18 @@ You could delete items by clicking the delete button in the beginning of every i
     
 
 ##### 2.5.5.1. Successful execution
-If the deletion is successfull the item is removed both from the ui and from the database. 
+If the deletion is successful the item is removed both from the ui and from the database. 
 
     
 
 ##### 2.5.5.2. Error handling on delete error
-If any error occurs while deleting the item an error msg is presented crearly with fading effect, which returns the error msg from the database. 
-On unvalid input the data is not updated to the database and the old value in the cell is restored.
+If any error occurs while deleting the item an error msg is presented clearly with fading effect, which returns the error msg from the database. 
+On invalid input the data is not updated to the database and the old value in the cell is restored.
 
     
 
-### 2.6. List as priont-table page
-The list as print-table page is aiemed at producing quickly refined result-set from the database for a furhter copy paste or even print to paper. 
+### 2.6. List as print-table page
+The list as print-table page is aimed at producing quickly refined result-set from the database for a further copy paste or even print to paper. 
 It has all the functionalities as the list as "table" page, without the filtering from the quick search box and without the ui for the pager and page-sizer -the url params for paging and page-sizing work, however. All the url params work as in the etable listing page. 
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=print-table&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
 
@@ -489,13 +489,13 @@ Every instance of the isssue-tracker application comes with up-to-date documenta
 
     find doc/md
 
-#### 3.2.3. Documenation's file formats
+#### 3.2.3. Documentation's file formats
 The documentation set of the application is available at least in the following file formats:
  - md - ( the master documentation format )
  - pdf - for distribution
 
 The following formats MIGHT be also optionally available :
- - xls ( exctracts from the isg-pub database ) 
+ - xls ( extracts from the isg-pub database ) 
  - sql ( dumps from the isg-pub database ) 
  - json ( extracts from the isg-pub database )  
 
@@ -552,7 +552,7 @@ Single call export of the md and pdf documentation files
     
 
 ## 4. SYSADMIN FEATURES AND FUNCTIONALITIES
-The term feature usually denotes an UI usability, but as the sysadmins of the issue-tracker system must be technical people acustomed to the black screen in this context feature simplies means a well memorizable shell call to perform a single action on the System they must operate. 
+The term feature usually denotes an UI usability, but as the sysadmins of the issue-tracker system must be technical people accustomed to the black screen in this context feature simply means a well memorizable shell call to perform a single action on the System they must operate. 
 
     # pre-load the project variables
     doParseCnfEnvVars cnf/issue-tracker.dev.host-name.cnf
@@ -561,8 +561,8 @@ The term feature usually denotes an UI usability, but as the sysadmins of the is
     bash src/bash/issue-tracker/issue-tracker.sh -a run-integration-tests
 
 ### 4.1. Enforced daily backups by "increase-date" action
-The concept of daily backups in in-build in the functionalities of the issue-tracker application for all the projects data - that is you cannot operate the application without having daily backups, as every day a new workign daily dir having the current day daily backup will be created!
-The "increase-date" action copies the content of the latest daily data dir ( build by concatating the mix_data_dir and the latest date string) with the current date in the file path. 
+The concept of daily backups in in-build in the functionalities of the issue-tracker application for all the projects data - that is you cannot operate the application without having daily backups, as every day a new working daily dir having the current day daily backup will be created!
+The "increase-date" action copies the content of the latest daily data dir ( build by concentrating the mix_data_dir and the latest date string) with the current date in the file path. 
 This IS the defacto way of making backup of the data ( including db dumps ) on daily basis, which could be quite easily made really robust for Unix admins with couple of cron scripts and symlinks ... 
 The increase-date behaves for different projects in the same way, except of course using a different daily data dir root. 
 
