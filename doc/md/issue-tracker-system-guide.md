@@ -45,7 +45,7 @@ Any givien instance of the issue-tracker should have ONE and only ONE person whi
     
 
 ### 2.1. IOCM architecture definition
-The Input-Output Control Model architecture is and application architecture providing the highest possible abstraction for allmost any software artifact, by dividing its components based on their abstract responsibilites, such as Input, Output , Control and Model. 
+The Input-Output Control Model architecture is and application architecture providing the highest possible abstraction for allmost any software artifact, by dividing its components based on their abstract responsibilities, such as Input, Output , Control and Model. 
 
     
 
