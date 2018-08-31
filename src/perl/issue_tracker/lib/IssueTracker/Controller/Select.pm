@@ -143,6 +143,16 @@ sub doSelectItems {
    } 
 
    ( $ret , $msg ) = $objRdrUrlParams->doSetWithUrlParams(\$objModel, $query_params );
+   if ( $ret != 0 ) {
+      $self->res->code(400);
+      $self->render( 'json' =>  { 
+         'msg'   => $msg,
+         'ret'   => 400, 
+         'req'   => "GET " . $self->req->url->to_abs
+      });
+      return ; 
+   } 
+
    $objRdrDbsFactory
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
@@ -245,9 +255,10 @@ sub doSelectTables {
    if ( $ret == 0 ) {
 
       my $list = () ; # an array ref holding the converted hash ref of hash refs 
+      $objModel->set('select.web-action.o', 'row_id' );
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2'));
+      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2') , '>' );
 
       $self->res->headers->content_type('application/json; charset=utf-8');
       $self->res->code(200);
@@ -288,6 +299,77 @@ sub doSelectTables {
 
 }
 
+sub doSelectDatabases {
+
+	my $self       = shift;
+	my $db         = $self->stash('db');
+	my $rdbms_type = 'postgres';
+   my $msg = 'unknown error during select-databases';
+
+	$appConfig	   = $self->app->get('AppConfig');
+   my $objModel   = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
+
+	$objModel->set('postgres_db_name' , 'postgres' ) ; 
+
+	my $ret = 0;
+	my $hsr2 = {};
+
+	my $objRdrDbsFactory
+			= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
+
+	my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+	($ret, $msg) = $objRdrDb->doSelectDatabasesList(\$objModel);
+
+	$self->res->headers->accept_charset('UTF-8');
+	$self->res->headers->accept_language('fi, en');
+	$self->res->headers->content_type('application/json; charset=utf-8');
+
+   if ( $ret == 0 ) {
+
+      my $list = () ; # an array ref holding the converted hash ref of hash refs 
+      $objModel->set('select.web-action.o', 'row_id' );
+      my $objCnrHsr2ToArray = 
+         'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
+      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2'),'>');
+
+      $self->res->headers->content_type('application/json; charset=utf-8');
+      $self->res->code(200);
+      $self->render( 'json' =>  { 
+           'msg'   => $msg
+         , 'dat'   => $list
+         , 'ret'   => 200
+         , 'req'   => "GET " . $self->req->url->to_abs
+      });
+
+   } elsif ( $ret == 400 ) {
+
+      $self->res->code(404);
+      $self->render( 'json' =>  { 
+         'msg'   => $msg,
+         'ret'   => 404, 
+         'req'   => "GET " . $self->req->url->to_abs
+      })
+      ;
+   } elsif ( $ret == 2 ) {
+
+      $self->res->code(400);
+      $self->render( 'json' =>  { 
+         'msg'   => $msg,
+         'ret'   => 400, 
+         'req'   => "GET " . $self->req->url->to_abs
+      });
+   } else {
+
+      $self->res->code(404);
+      $msg = 'unknown error has occurred' ; 
+      $self->render( 'json' => { 
+         'msg'   => $msg,
+         'ret'   => 404, 
+      })
+      ;
+   }
+
+}
 
 1;
 

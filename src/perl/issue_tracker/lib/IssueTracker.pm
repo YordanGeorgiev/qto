@@ -51,6 +51,12 @@ sub startup {
 
    # Router
    my $r = $self->routes;
+	
+   # http://host-name:3000/dev_issue_tracker/select-databases
+   $r->get('/:db/select-databases')->to(
+     controller   => 'Select'
+   , action       => 'doSelectDatabases'
+   );
 
 	# http://host-name:3000/dev_issue_tracker/select-tables
    $r->get('/:db/select-tables')->to(

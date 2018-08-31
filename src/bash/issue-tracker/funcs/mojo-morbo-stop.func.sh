@@ -9,7 +9,7 @@ doMojoMorboStop(){
 	doLog "DEBUG START doMojoMorboStop"
 	
 	#cat doc/txt/issue-tracker/funcs/mojo-morbo-stop.func.txt
-	
+   test -z "${morbo_port:-}" && export morbo_port=3001
 	sleep "$sleep_interval"
 
 	# Action !!!
@@ -19,7 +19,7 @@ doMojoMorboStop(){
       doLog "INFO sending SIGTERM to pid: $p in:"
       doLog "INFO $l:"
       kill -15 $p ; 
-   done < <(ps -ef| grep -i 'issue_tracker' | grep -v 'grep')
+   done < <(ps -ef| grep -i 'issue_tracker' | grep "$morbo_port"| grep -v 'grep')
 
    doLog "DEBUG STOP  doMojoMorboStop"
 }

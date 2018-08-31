@@ -8,7 +8,7 @@ Table of Contents
   * [3. USAGE SCENARIO](#3-usage-scenario)
     * [3.1. Assumption and prerequisites](#31-assumption-and-prerequisites)
     * [3.2. Proposed capabilities](#32-proposed-capabilities)
-    * [3.3. Bonus offer](#33-bonus-offer)
+    * [3.3. Installation assistance](#33-installation-assistance)
   * [4. DEMO ](#4-demo-)
   * [5. INSTALLATION AND CONFIGURATION](#5-installation-and-configuration)
   * [6. ADDITIONAL DOCS](#6-additional-docs)
@@ -29,21 +29,23 @@ issue tracker objects polygon
 ![The relations between the issue tracker objects ](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/readme/what-is-is.png)    
 
 ## 2. WHAT 
-An application to manage multiple projects' issues, store them in postgres db, present them into dynamic web pages, write them to txt files, xls files, and publish them into Google Sheets with a lot of cool functionalities. 
+An application to manage multiple projects' issues, store them in postgres db, present them into dynamic web pages, write them into xls files, and publish them into Google Sheets with a lot of cool functionalities. 
 The full and extensive features and functionalities document cold be read from:
 https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-features-and-functionalities.md
-And moreover this application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture and the Input-Output Controller Model architecture ( more about this in the DevOps guide:
+
+This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture and the Input-Output Controller Model architecture ( more about this in the DevOps guide:
 https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-features-and-functionalities.md
 
     
 
 ## 3. USAGE SCENARIO
-We have stumbled into real life problem in a telco company's ETL works, which could have been solved even with the current version of the tool, which is FAR from ready as the current number 0.4.7 indicates … 
+We have stumbled into real life problem in the ETL works of a Scandinavian big telco company, which could have been solved even with the current version of the tool, which is FAR from ready as the current number 0.4.8 indicates … 
 
     
 
 ### 3.1. Assumption and prerequisites
 Namely, if your organisation:
+- has the need to constantly update comparably small hierarchy tables
 - has secured intranet access to a Linux box 
 - full trust to the persons having http access for CRUD operations exists ( as no authentication is yet implemented )
 - there is a need to load MANY tables into a postgres db 
@@ -61,14 +63,16 @@ You could:
 
     
 
-### 3.3. Bonus offer
-We could provide you will free assistance for the deployment of the first instance in your organisation, although we consider the existing documentation good enough to deploy the application only by following the instructions.
+### 3.3. Installation assistance
+We could provide you with free assistance for the deployment of the first instance in your organization, even we consider the existing documentation good enough to deploy the application only by following the instructions in the Installation Guide:
+https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-installation-and-configuration-guide.md
 In the real IT life however the mealage always varies, hence this last "bonus offer".
 
     
 
 ## 4. DEMO 
 You can check the following running instance of the tool:
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/monthly_issues?as=table&pick=id,status,prio,name,weight,start_time,stop_time&page-size=10&page-num=1
 
     
 
@@ -78,11 +82,14 @@ follow the installation instructions from the Installation and Configuration Gui
 
 https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-installation-and-configuration-guide.md
 
-
     
 
 ## 6. ADDITIONAL DOCS
 Additional docs could be found in the doc/md dir. 
+https://github.com/YordanGeorgiev/issue-tracker/tree/master/doc/md
+and in pdf format in the doc/pdf dir:
+https://github.com/YordanGeorgiev/issue-tracker/tree/master/doc/pdf
+
 A good starting point could be the "features doc:" : 
 
 https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-features-and-functionalities.md
@@ -105,7 +112,7 @@ https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker
     
 
 ## 7. ACKNOWLEDGEMENTS
-This project would not have been possible without the work of the communities of the people working on the following frameworks/languages/OS listed in now particular order. 
+This project would not have been possible without the work of the communities of the people working on the following frameworks/languages/OS listed in no particular order. 
 
  - Mojolicious
  - Vue 

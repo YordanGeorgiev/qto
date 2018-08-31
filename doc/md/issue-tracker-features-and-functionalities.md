@@ -21,24 +21,30 @@ Table of Contents
       * [2.2.6. The "pick" url param](#226-the-"pick"-url-param)
       * [2.2.7. The "hide" url param](#227-the-"hide"-url-param)
       * [2.2.8. The "with=col-operator-value" filter](#228-the-"with=col-operator-value"-filter)
-      * [2.2.9. Filtering with "like"](#229-filtering-with-"like")
+      * [2.2.9. The "where=col-operator-value" filter](#229-the-"where=col-operator-value"-filter)
+      * [2.2.10. Filtering with "like"](#2210-filtering-with-"like")
     * [2.3. List as table page](#23-list-as-table-page)
       * [2.3.1. table sorting](#231-table-sorting)
-      * [2.3.2. table filtering](#232-table-filtering)
+      * [2.3.2. table quick filtering](#232-table-quick-filtering)
       * [2.3.3. set table paging size](#233-set-table-paging-size)
-      * [2.3.4. set table page number](#234-set-table-page-number)
+      * [2.3.4. paging - setting the table's page number](#234-paging--setting-the-table's-page-number)
     * [2.4. List labels page](#24-list-labels-page)
     * [2.5. List as etable page](#25-list-as-etable-page)
-      * [2.5.1. Keyboard usability](#251-keyboard-usability)
-      * [2.5.2. New item creation ( CREATE )](#252-new-item-creation-(-create-))
-          * [2.5.2.1. Successful execution](#2521-successful-execution)
-          * [2.5.2.2. Error handling on db create error](#2522-error-handling-on-db-create-error)
-      * [2.5.3. Single cell Inline-edit ( UPDATE )](#253-single-cell-inline-edit-(-update-))
+      * [2.5.1. table sorting](#251-table-sorting)
+      * [2.5.2. Keyboard usability](#252-keyboard-usability)
+          * [2.5.2.1. Focus the quick search box](#2521-focus-the-quick-search-box)
+          * [2.5.2.2. Undo the edit on a cell](#2522-undo-the-edit-on-a-cell)
+      * [2.5.3. New item creation ( CREATE )](#253-new-item-creation-(-create-))
           * [2.5.3.1. Successful execution](#2531-successful-execution)
-          * [2.5.3.2. Error handling on db update error](#2532-error-handling-on-db-update-error)
-      * [2.5.4. Item deletion ( DELETE )](#254-item-deletion-(-delete-))
+          * [2.5.3.2. Error handling on db create error](#2532-error-handling-on-db-create-error)
+      * [2.5.4. Single cell Inline-edit ( UPDATE )](#254-single-cell-inline-edit-(-update-))
           * [2.5.4.1. Successful execution](#2541-successful-execution)
           * [2.5.4.2. Error handling on db update error](#2542-error-handling-on-db-update-error)
+          * [2.5.4.3. Nulls handling](#2543-nulls-handling)
+      * [2.5.5. Item deletion ( DELETE )](#255-item-deletion-(-delete-))
+          * [2.5.5.1. Successful execution](#2551-successful-execution)
+          * [2.5.5.2. Error handling on delete error](#2552-error-handling-on-delete-error)
+    * [2.6. List as print-table page](#26-list-as-print-table-page)
   * [3. DEVOPS FEATURES AND FUNCTIONALITIES](#3-devops-features-and-functionalities)
     * [3.1. Testability](#31-testability)
       * [3.1.1. Perl syntax check call](#311-perl-syntax-check-call)
@@ -48,7 +54,7 @@ Table of Contents
     * [3.2. Documentation](#32-documentation)
       * [3.2.1. Single shell call documentation generation - the generate-docs shell action](#321-single-shell-call-documentation-generation--the-generate-docs-shell-action)
       * [3.2.2. Full documentation set](#322-full-documentation-set)
-      * [3.2.3. Documenation's file formats](#323-documenation's-file-formats)
+      * [3.2.3. Documentation's file formats](#323-documentation's-file-formats)
     * [3.3. Logging](#33-logging)
       * [3.3.1. Bash logging](#331-bash-logging)
       * [3.3.2. Perl logging](#332-perl-logging)
@@ -88,6 +94,7 @@ Table of Contents
       * [6.2.3. Error handling on non-existing table](#623-error-handling-on-non-existing-table)
       * [6.2.4. Error handling on non-existing attribute ](#624-error-handling-on-non-existing-attribute-)
       * [6.2.5. Error handling on wrong data-type](#625-error-handling-on-wrong-data-type)
+      * [6.2.6. Automatic upate_time attribute update](#626-automatic-upate_time-attribute-update)
     * [6.3. delete web action](#63-delete-web-action)
       * [6.3.1. Successful execution](#631-successful-execution)
       * [6.3.2. Error handling on non-existing db](#632-error-handling-on-non-existing-db)
@@ -165,6 +172,14 @@ This section describes the User Interface ( UI ) features of the issue-tracker a
 
 ### 2.1. Support for different projects
 You could access multiple projects by accessing their project databases as the first URI path component provided that the web server has tcp access to those databases. 
+The following 2 different databases are actually the tst and dev databases of the issue-tracker, but of course the database names could be any valid other database names:
+
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/dev_issue_tracker/list/yearly_issues?as=table&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
+
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/tst_issue_tracker/list/yearly_issues?as=table&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
+
+Note the upper left corner of the page contains the name of your current project database. 
+
 
     # access the issue-tracker's project development database
     http://host-name:3000/dev_issue_tracker/list/monthly_issues
@@ -200,32 +215,42 @@ You could filter the result the same way the filters for the select page work ( 
     
 
 #### 2.2.3. Error handling for non-existent db
-If the db provided in the url pattern does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out.
+If the db provided in the url pattern does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out. Example url:
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/non_existent/list/yearly_issues?as=table&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
 #### 2.2.4. Error handling for non-existent table
-If the table requested does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out.
+If the table requested does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out. Example:
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/non_existent_table?as=table&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
 #### 2.2.5. Error handling for non-existent column
 If the column requested does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out.
+Example:
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=table&pick=NON_EXISTENT,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
 #### 2.2.6. The "pick" url param
-You can use the pick=col1,col2,col3 url parameter to select for only desired attributes to be show in the ui control used for listing
+You can use the pick=col1,col2,col3 url parameter to select for only desired attributes to be show in the ui control used for listing.
+The following url demonstrates this syntax:
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=table&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
 #### 2.2.7. The "hide" url param
-If you do not specify any attribute to pick, you could hide specific attributes by using the "hide=col1,col2,col3" syntax
+If you do not specify any attribute to pick, you could hide specific attributes by using the "hide=col1,col2,col3" syntax.
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=established=guid,description
 
     
 
 #### 2.2.8. The "with=col-operator-value" filter
-You can filter the result of the query by using the "with=col-operator-value". The following examples demonstrates, which operators are supported
+You can filter the result of the query by using the "with=col-operator-value". The following examples demonstrates, which operators are supported.
+An error message is shown if you do not use existing operator. 
+The following url demonstrates this syntax:
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=table&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1&where=status-eq-09-done
 
     with=status-eq-09-done
     list all the items having the attribute "status" equal to the "09-done" string
@@ -244,8 +269,31 @@ You can filter the result of the query by using the "with=col-operator-value". T
     
     
 
-#### 2.2.9. Filtering with "like"
+#### 2.2.9. The "where=col-operator-value" filter
+You can filter the result of the query by using the "where=col-operator-value", which works exactly as the with operator, thus the following examples demonstrates, which operators are supported.
+An error message is shown if you do not use existing operator. 
+
+    with=status-eq-09-done
+    list all the items having the attribute "status" equal to the "09-done" string
+    
+    with=prio-lt-7
+    list all the items having the attribute prio smaller than the number 7
+    
+    this is the list of all the operators supported
+           'eq' => '='
+         , 'ne' => '<>'
+         , 'gt' => '>'
+         , 'lt' => '<'
+         , 'ge' => '>='
+         , 'le' => '<='
+         , 'like' => 'like'
+    
+    
+
+#### 2.2.10. Filtering with "like"
 The filtering with the like operator translates to the SQL "like" operator- the "like-by=&lt;&lt;attr&gt;&gt;&like-val=&lt;&lt;val&gt;&gt; filtering, where &lt;&lt;attr&gt;&gt; stands for the name of the attribute to use the like operator. 
+Example:
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=table&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
 
     # this example url will list all the monthly_issues items having the "bug" string in their "name" attribute:
     http://host-name:3000/dev_issue_tracker/list/monthly_issues?as=table&like-by=name&like-val=bug
@@ -257,12 +305,15 @@ The list table page lists all the rows from any table in the app db in form of s
 
 #### 2.3.1. table sorting
 The listed table is sortable by clicking on the columns OR by navigating with the tab key on the keyboard on a column and hitting Enter. 
+The sorted column is visually shown as the active one on page load:
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=table&oa=prio&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
-#### 2.3.2. table filtering
+#### 2.3.2. table quick filtering
 You can filter the already presented part of the result set in the page by using the search textbox. This is only an ui type of filtering for the already loaded data. This type of filtering is different compared to the url parameters filtering by using the with url param syntax and it filters the already fetched from the db data-set, whereas the with=&lt;&lt;attribute&gt;&gt;&lt;&lt;operator&gt;&gt;&lt;&lt;value&gt;&gt; filtering does filter on the database side.
 You could focus the quick search textbox by pressing the forward slash on your keyboard. 
+The quick search box works instantaneously, thus hitting enter is not needed. 
 
     
 
@@ -271,15 +322,17 @@ You can set the page size of the result set to be fetched from the database by u
 
     
 
-#### 2.3.4. set table page number
+#### 2.3.4. paging - setting the table's page number
 If the result-set requested is larger than the page size you can go to the next page number by using the "&page-num=&lt;&lt;page-num&gt;&gt;" url parameter. 
-You could go to the next page number by clicking on the links after the last row. 
-The table control has UI for setting the table page number. 
+You could go to the next page number by clicking on the links just bellow the quick search textbox. The table control has UI for setting the table page number. 
+You could quickly use the / char shortcut to focus to the quick search box and from there use the tab to quickly navigate to the desired page number. 
 
     
 
 ### 2.4. List labels page
 The list labels page lists all the rows from any table in the app db in form of "labels" - rectangular forms containing all the selected attributes ( by default all ) and their values. 
+Note that only the as=lbls url change triggers the different view of the same data:
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=lbls&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
 
     
 
@@ -288,57 +341,88 @@ The list a table page has all the functionalities as the list as "table" page wi
 
     
 
-#### 2.5.1. Keyboard usability
+#### 2.5.1. table sorting
+The listed table is sortable by clicking on the columns OR by navigating with the tab key on the keyboard on a column and hitting Enter. 
+The sorted column is visually shown as the active one on page load:
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=etable&oa=prio&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1&where=status-eq-09-done
+
+    
+
+#### 2.5.2. Keyboard usability
 You can quickly traverse the cells of the table via the tab key, which does go over the non-editable items too ( the id's ) , so that you could quickly scroll the table as scrolling when the editable is in focus does not work. 
+The whole table is easily scrollable whenever the cursor is on non-editable part of the table ( the id's column ) and whenever the last rows must be edited the page is scrolled so that the rows are situated in the middle and not the bottom of the screen. 
 
     
 
-#### 2.5.2. New item creation ( CREATE )
-A new item could be added to the table in the ui and thus in the db table by clicking the plus button above the table. 
+##### 2.5.2.1. Focus the quick search box
+You could focus the quick search by typing / IF you are not editing a cell. Thus the paging on the next cell is quite handy - as you could easily jump onto the quick search and with couple of tabs navigate to the next page. 
 
     
 
-##### 2.5.2.1. Successful execution
-After clicking the plus button the System adds the new row into the database table and presents it into the table ui AS THE FIRST ROW to emphasise the created row - that is the existing sort of the table is changed to the id column.
+##### 2.5.2.2. Undo the edit on a cell
+If you were on a cell and types some text without leaving it, but you change your mind you could simply press the Esc key, which will restore the original content of the cell and you could proceed by tab to the next cell. 
 
     
 
-##### 2.5.2.2. Error handling on db create error
-If any error occurs while the creation an error msg is presented crearly with fading effect, which returns the error msg from the database. 
-On unvalid input the data is not created to the database and nothing is stored. 
-
-    
-
-#### 2.5.3. Single cell Inline-edit ( UPDATE )
-The table can be edited inline so that the data is updated to the database.
+#### 2.5.3. New item creation ( CREATE )
+A new item could be added to the table in the ui and thus in the db table by clicking the plus button above the table ( which uses the google material design ui ). The new button has a fixed positon, thus available during scrolling as well from the same position. 
 
     
 
 ##### 2.5.3.1. Successful execution
-If the single cell inline-edit is successfull no msg is presented and the data is updated to the database storage.
-If the updated cell was part of the currently sorted column the ui is automatically adjusted to the new sort order ( for example if a numeric sort was applied and the cell had value of 9 with 1..9 range and the smallest to greatest was currently active if the new update is 1 the item will appear in the top of the listing.
+After clicking the plus button the System adds the new row into the database table and presents it into the table ui AS THE FIRST ROW to emphasize the created row - that is the existing sort of the table is changed to the id column.
+This behavior is not obvious if you have at the time of pressing the add-new button a valid search in the quick search box as the result set will most probably not show your new item as the filter is ongoing, this is rather bug, which for now is handled with the dimming of the add new button during an active search in the quick search box. 
 
     
 
-##### 2.5.3.2. Error handling on db update error
-If any error occurs while updating an error msg is presented crearly with fading effect, which returns the error msg from the database. 
-On unvalid input the data is not updated to the database and the old value in the cell is restored.
+##### 2.5.3.2. Error handling on db create error
+If any error occurs while the creation an error msg is presented clearly with fading effect, which returns the error msg from the database. 
+On invalid input the data is not created to the database and nothing is stored. 
 
     
 
-#### 2.5.4. Item deletion ( DELETE )
-The table can be edited inline so that the data is updated to the database.
+#### 2.5.4. Single cell Inline-edit ( UPDATE )
+The table can be edited inline so that the data is updated to the database. White space in the cells is preserved. 
 
     
 
 ##### 2.5.4.1. Successful execution
-If the deletion is successfull the item is removed both from the ui and from the database. 
+If the single cell inline-edit is successful no msg is presented and the data is updated to the database storage.
+If the updated cell was part of the currently sorted column the ui is automatically adjusted to the new sort order ( for example if a numeric sort was applied and the cell had value of 9 with 1..9 range and the smallest to greatest was currently active if the new update is 1 the item will appear in the top of the listing.
 
     
 
 ##### 2.5.4.2. Error handling on db update error
-If any error occurs while deleting the item an error msg is presented crearly with fading effect, which returns the error msg from the database. 
-On unvalid input the data is not updated to the database and the old value in the cell is restored.
+If any error occurs while updating an error msg is presented clearly with fading effect, which returns the error msg from the database. 
+On invalid input the data is not updated to the database and the old value in the cell is restored.
+
+    
+
+##### 2.5.4.3. Nulls handling
+Nulls handling is somewhat problematic in ui. For now the behavior by convention is to leave a nullable record in the database as null, whether the cell of the ui table is left empty ( white space chars are also considered empty)
+
+    
+
+#### 2.5.5. Item deletion ( DELETE )
+You could delete items by clicking the delete button in the beginning of every item. 
+
+    
+
+##### 2.5.5.1. Successful execution
+If the deletion is successful the item is removed both from the ui and from the database. 
+
+    
+
+##### 2.5.5.2. Error handling on delete error
+If any error occurs while deleting the item an error msg is presented clearly with fading effect, which returns the error msg from the database. 
+On invalid input the data is not updated to the database and the old value in the cell is restored.
+
+    
+
+### 2.6. List as print-table page
+The list as print-table page is aimed at producing quickly refined result-set from the database for a further copy paste or even print to paper. 
+It has all the functionalities as the list as "table" page, without the filtering from the quick search box and without the ui for the pager and page-sizer -the url params for paging and page-sizing work, however. All the url params work as in the etable listing page. 
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=print-table&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
 
     
 
@@ -363,9 +447,9 @@ You can run the unit tests of the application by issuing the following single sh
     bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-unit-tests
 
 #### 3.1.3. Integration tests call
-You can run the integration tests of the application by issuing the following single shell call:
+You can run the integration tests of the application by issuing the following single shell call ( note that the integration tests will not start if you do not have pre-loaded the needed shell env vars for your project you want to operate on ). 
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-integration-tests
+    bash src/bash/issue-tracker/issue-tracker.sh -a run-integration-tests
 
 #### 3.1.4. Bash tests call
 You can run all the bash functions in the tool by issuing the following command in the shell. 
@@ -405,13 +489,13 @@ Every instance of the isssue-tracker application comes with up-to-date documenta
 
     find doc/md
 
-#### 3.2.3. Documenation's file formats
+#### 3.2.3. Documentation's file formats
 The documentation set of the application is available at least in the following file formats:
  - md - ( the master documentation format )
  - pdf - for distribution
 
 The following formats MIGHT be also optionally available :
- - xls ( exctracts from the isg-pub database ) 
+ - xls ( extracts from the isg-pub database ) 
  - sql ( dumps from the isg-pub database ) 
  - json ( extracts from the isg-pub database )  
 
@@ -468,7 +552,7 @@ Single call export of the md and pdf documentation files
     
 
 ## 4. SYSADMIN FEATURES AND FUNCTIONALITIES
-The term feature usually denotes an UI usability, but as the sysadmins of the issue-tracker system must be technical people acustomed to the black screen in this context feature simplies means a well memorizable shell call to perform a single action on the System they must operate. 
+The term feature usually denotes an UI usability, but as the sysadmins of the issue-tracker system must be technical people accustomed to the black screen in this context feature simply means a well memorizable shell call to perform a single action on the System they must operate. 
 
     # pre-load the project variables
     doParseCnfEnvVars cnf/issue-tracker.dev.host-name.cnf
@@ -477,8 +561,8 @@ The term feature usually denotes an UI usability, but as the sysadmins of the is
     bash src/bash/issue-tracker/issue-tracker.sh -a run-integration-tests
 
 ### 4.1. Enforced daily backups by "increase-date" action
-The concept of daily backups in in-build in the functionalities of the issue-tracker application for all the projects data - that is you cannot operate the application without having daily backups, as every day a new workign daily dir having the current day daily backup will be created!
-The "increase-date" action copies the content of the latest daily data dir ( build by concatating the mix_data_dir and the latest date string) with the current date in the file path. 
+The concept of daily backups in in-build in the functionalities of the issue-tracker application for all the projects data - that is you cannot operate the application without having daily backups, as every day a new working daily dir having the current day daily backup will be created!
+The "increase-date" action copies the content of the latest daily data dir ( build by concentrating the mix_data_dir and the latest date string) with the current date in the file path. 
 This IS the defacto way of making backup of the data ( including db dumps ) on daily basis, which could be quite easily made really robust for Unix admins with couple of cron scripts and symlinks ... 
 The increase-date behaves for different projects in the same way, except of course using a different daily data dir root. 
 
@@ -556,7 +640,7 @@ You can load your already stored in the issue table issues and load them into th
     bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
 
 #### 4.4.5. restart the morbo development server
-You could restart the development morbo server by issuing the following syntax:
+You could restart the development morbo server by issuing the following syntax ( Note that each environment type starts within the pre-configured mojo_morbo_port if configured to do so):
 
     bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop ; bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
 
@@ -678,6 +762,11 @@ If the attribute(column) provided in the post data does not exist an error is sh
 #### 6.2.5. Error handling on wrong data-type
 Whenever a wrong data type is passed the back-end returns with the 400 http code and provides the error from the database.
 
+
+    
+
+#### 6.2.6. Automatic upate_time attribute update
+Any item having the update_time attribute will get its value automatically based on the update time of the transaction. 
 
     
 

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set +x
+curr_branch=$(git rev-parse --abbrev-ref HEAD)
+
+test "$curr_branch" = 'dev' && echo 'ARE YOU SURE !!! PUSHING TO dev !!!!'
+test "$curr_branch" = 'dev' && sleep 5
+test "$curr_branch" = 'tst' && echo 'ARE YOU SURE !!! PUSHING TO tst !!!!'
+test "$curr_branch" = 'tst' && sleep 5
+test "$curr_branch" = 'prd' && echo 'ARE YOU SURE !!! PUSHING TO prd !!!!'
+test "$curr_branch" = 'prd' && sleep 5
+test "$curr_branch" = 'master' && echo 'ARE YOU SURE !!! PUSHING TO master !!!!'
+test "$curr_branch" = 'master' && sleep 5
+
+echo "checking for own todo left-overs ... ""$(grep -ri 'todo:ysg' . | grep -v 'pre-commit' | wc -l)"" found."
+grep -rnHi 'todo:ysg' . | grep -v 'pre-commit'
+
+exit $(grep -ri 'todo:ysg' . | grep -v 'pre-commit' | wc -l)

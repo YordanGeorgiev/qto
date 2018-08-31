@@ -122,7 +122,7 @@ load-by-txt-to-db-action)
       * [7.1.2. UI Page parts load times](#712-ui-page-parts-load-times)
     * [7.2. Items search](#72-items-search)
       * [7.2.1. Omnibox autocomplete for item-name](#721-omnibox-autocomplete-for-item-name)
-      * [7.2.2. Omnibox autocomplete for with &lt;&lt;atribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;](#722-omnibox-autocomplete-for-with-atribute-name-operator-attribute-value)
+      * [7.2.2. Omnibox autocomplete for with &lt;&lt;attribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;](#722-omnibox-autocomplete-for-with-attribute-name-operator-attribute-value)
     * [7.3. Items listing](#73-items-listing)
       * [7.3.1. items listing in table format](#731-items-listing-in-table-format)
           * [7.3.1.1. Automatic issue items sequencing](#7311-automatic-issue-items-sequencing)
@@ -766,7 +766,7 @@ I wanto to be able to see the "START &lt;&lt;COMPONENT NAME&gt;&gt; on either th
 #### 6.3.4. Tool exit with exit code and exit message
     
 
-As a CLI user or calling calling automated component
+As a CLI user or calling  automated component
 In order to be able to understand whether or not the execution of the call to the tool was successful or not 
 I wanto to get the exit code from the tool execution and see the exit message
 
@@ -775,7 +775,7 @@ I wanto to get the exit code from the tool execution and see the exit message
 
 As a DevOps operator
 Foreach execution run of the tool
-I want to be able to walk trough the execution path of the tool programatically. 
+I want to be able to walk trough the execution path of the tool programmatically. 
 
 #### 6.3.6. Issues directories naming conventions
     
@@ -810,7 +810,7 @@ I wanto to be able to access old issues files by their date held in their file n
     
 
 As a DevOps 
-In order to be able quickly to access and manage programatically issues
+In order to be able quickly to access and manage programmatically issues
 I wanto to be able to quess the file paths of the issues file by their date 
 
 ##### 6.3.10.1. Issues files naming conventions for the  project
@@ -1009,21 +1009,21 @@ I want to have a nice user experience while using the issue-tracker application.
 
 As an UI user of the issue-tracker application 
 In order to enjoy the usage of the tool and interact efficiently   
-I wanto to to have responsive and quick UI.
+I wanto to  have responsive and quick UI.
 
 #### 7.1.1. UI Page load times
     
 
 As an UI user of the issue-tracker application 
 In order to enjoy the usage of the tool and interact efficiently   
-I wanto to to have a maximum page load time on efficient network less than 0.5 seconds and preferably even less than 0.3 seconds
+I wanto to  have a maximum page load time on efficient network less than 0.5 seconds and preferably even less than 0.3 seconds
 
 #### 7.1.2. UI Page parts load times
     
 
 As an UI user of the issue-tracker application 
 In order to enjoy the usage of the tool and interact efficiently   
-I wanto to to have a maximum page part load time on efficient network less than 0.5 seconds and preferably even less than 0.3 seconds
+I wanto to  have a maximum page part load time on efficient network less than 0.5 seconds and preferably even less than 0.3 seconds
 
 ### 7.2. Items search
     
@@ -1040,7 +1040,7 @@ In order to be able to quickly specify the name of the item I am searching for (
 I want to be able to use a special natural-language like syntax in the autocomplete when the omnibox appears,
 by having the System displayed the "for:" string and starting providing me autocomplete for the items names in a dropbox list I could choose from. 
 
-#### 7.2.2. Omnibox autocomplete for with &lt;&lt;atribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;
+#### 7.2.2. Omnibox autocomplete for with &lt;&lt;attribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;
     
 
 As an issue-tracker ui user 
@@ -1267,7 +1267,7 @@ I wanto to be able to copy via the ui an issue as a new google calendar event
     
 
 As the UI user of an issue-tracker instance 
-In order to be able to visualize and manage my my start- and stop_time having issues better 
+In order to be able to visualize and manage my  start- and stop_time having issues better 
 I wanto to be able to import my Google calendar issues into my issue-tracker profile on an issue-tracker instance
 
 ### 7.15. Access issues txt format from email

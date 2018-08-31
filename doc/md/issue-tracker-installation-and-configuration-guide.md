@@ -53,14 +53,6 @@ Table of Contents
     * [6.2. Install npm](#62-install-npm)
     * [6.3. Install web-pack](#63-install-web-pack)
     * [6.4. Install bower](#64-install-bower)
-  * [7. PHPPGADMIN INSTALLATION AND CONFIGURATION ( OPTIONAL )](#7-phppgadmin-installation-and-configuration-(-optional-))
-    * [7.1. Install Apache](#71-install-apache)
-    * [7.2. Configure Apache](#72-configure-apache)
-    * [7.3. Install and configure php](#73-install-and-configure-php)
-    * [7.4. Clone the phppgadmin project](#74-clone-the-phppgadmin-project)
-    * [7.5. Enable pg_hba file](#75-enable-pg_hba-file)
-    * [7.6. Copy the phppgadmin dist conf file](#76-copy-the-phppgadmin-dist-conf-file)
-    * [7.7. Test the connection](#77-test-the-connection)
 
 
     
@@ -129,7 +121,7 @@ Choose the type of instance - I am using t2.micro, which is supposed to be free 
 
 #### 2.1.2. Open ports 
 In the AWS menu click Services - EC2. Click on the left on the security groups. If you configured an explicit security group, select it by clicking on the check box next to it, if you did not that click on the check box to the default security group created something like "launch-wizard-1 created 2018-07-03T14:39:25.644+03:00", where the latest string is the time when you launched the instance. 
-Click on Actions - edit inbound rules - open the 3000 and 8080 tcp ports ( the default ones used by the mojo and hypnotoad mojolicious web servers) 
+Click on Actions - edit inbound rules - open the 3000 and 8080 tcp ports ( the default ones used by the mojo and hypnotoad malicious web servers) 
 
     
 
@@ -203,17 +195,14 @@ You will need the git binary to fetch the issue-tracker source - you could alter
 Fetch the source from git hub as follows:
 
     # got to a dir you have write permissions , for example:
-    mkdir -p ~/opt/csitea/; cd ~/opt/csitea/
+    mkdir -p ~/opt/; cd ~/opt/
     
     # fetch the source
     git clone https://github.com/YordanGeorgiev/issue-tracker.git
+    
     # checkit
     ls -la 
     
-    # OR 
-    wget https://github.com/YordanGeorgiev/issue-tracker/archive/0.4.4.zip
-    ls -al
-    unzip -o 0.4.4.zip -d .
 
 ### 3.8. run the boot-strap script
 The bootstrap script will interpolate change the git deployment dir to a "product_instance_dir" ( your instance of the issue-tracker, having the same version as this one, but running on a different host with different owner - your )
@@ -226,15 +215,12 @@ The bootstrap script will interpolate change the git deployment dir to a "produc
     
     # run the bootstrap script : 
     bash issue-tracker/src/bash/issue-tracker/bootstrap-issue-tracker.sh
-    
-    # now go to your product instance dir ( yes this is official term ), note it is a DEV environment
-    cd /opt/csitea/issue-tracker/issue-tracker.$product_version.dev.$USER
 
 ### 3.9. Install the OS libs listed in the prereq sh script
 The "prereq"script contains the listing of the binaries to be installed. Run the script. 
 
     # go to your product instance dir - 
-    cd /opt/csitea/issue-tracker/issue-tracker.$product_version.dev.$USER
+    cd ~/opt/csitea/issue-tracker/issue-tracker.$product_version.dev.$USER
     sudo bash src/bash/issue-tracker/install-prerequisites-on-ubuntu.sh
 
 ### 3.10. Install the Perl modules listed in the preq pl scriipt
@@ -430,66 +416,4 @@ Install the bower package globally as follows:
     npm install -g bower
     sudo npm install -g bower
     which bower
-
-## 7. PHPPGADMIN INSTALLATION AND CONFIGURATION ( OPTIONAL )
-
-
-    
-
-### 7.1. Install Apache
-Install the apache binaries as follows:
-
-    # update first your package manager
-    sudo apt update
-    # install apache
-    sudo apt install -y apache2 apache2-utils
-    systemctl status apache2
-    sudo systemctl enable apache2
-    apache2 -v
-    sudo chown www-data:www-data /var/www/html/ -R
-
-### 7.2. Configure Apache
-Configure apache as follows:
-
-    systemctl status apache2
-    sudo systemctl enable apache2
-    apache2 -v
-    sudo chown ysg:ysg /var/www/html/ -R
-
-### 7.3. Install and configure php
-Install and configure php as follows:
-
-    sudo apt install php7.1 libapache2-mod-php7.1 php7.1-mysql php-common php7.1-cli php7.1-common php7.1-json php7.1-opcache php7.1-readline
-    sudo a2enmod php7.1
-    sudo apt-get install -y php-pgsql
-    sudo systemctl restart apache2
-    php --version
-    sudo vim /var/www/html/info.php
-
-### 7.4. Clone the phppgadmin project
-Clone the phppgadmin project with git as follows:
-
-    git clone git://github.com/phppgadmin/phppgadmin.git
-    sudo chown ysg:ysg /var/www/html/ -R
-
-### 7.5. Enable pg_hba file
-Edit the pg_hba.conf file to allow TCP/IP connections from the phppg application layer. 
-
-    # check the following example: 
-    dat/etc/postgresql/9.6/main/pg_hba.conf
-
-### 7.6. Copy the phppgadmin dist conf file
-As follows:
-
-    cd /var/www/html/phppgadmin/
-    sudo cp -v conf/config.inc.php-dist conf/config.inc.php
-    
-    sudo systemctl restart apache2
-
-### 7.7. Test the connection
-Navigate to the following url:
-http://192.168.56.120/phppgadmin/
-Use the credentials of the ysg ( your postgres user ) 
-
-    
 

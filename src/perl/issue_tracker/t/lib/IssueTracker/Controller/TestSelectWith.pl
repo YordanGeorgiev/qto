@@ -37,8 +37,6 @@ for my $row ( @$tables ) {
          $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio&' . "$with_where" . '=prio-le-3&' . "$with_where" . '=prio-ge-1' ; 
          $t->get_ok($url )
             ->status_is(200) 
-            ->header_is('Accept-Charset' => 'UTF-8')
-            ->header_is('Accept-Language' => 'fi, en')
          ;
 
          $res = $ua->get($url)->result->json ; 
@@ -51,6 +49,11 @@ for my $row ( @$tables ) {
             $tm = "only prio >= 1  are selected for $url: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
             ok ( $row->{'prio'} >= 1, $tm ) ; 
          }
+         
+         $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio&' . "$with_where" . '=prio-WRONG_OPERATOR-3';
+         $t->get_ok($url )
+            ->status_is(400) 
+         ;
       } 
    }
    #eof for each prio
@@ -60,8 +63,7 @@ for my $row ( @$tables ) {
    foreach my $status_have_row ( @$list_meta )  {
       next unless $status_have_row->{'attname'} eq 'status'  ;
       $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio,status&with=status-eq-02-todo' ; 
-      $t->get_ok($url )->status_is(200)->header_is('Accept-Charset' => 'UTF-8')
-      ->header_is('Accept-Language' => 'fi, en')
+      $t->get_ok($url )->status_is(200) ; 
       ;
 
       $res = $ua->get($url)->result->json ; 
@@ -74,9 +76,7 @@ for my $row ( @$tables ) {
       }
       
       $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio,status&with=status-like-03-%25' ; 
-      $t->get_ok($url )->status_is(200)->header_is('Accept-Charset' => 'UTF-8')
-      ->header_is('Accept-Language' => 'fi, en')
-      ;
+      $t->get_ok($url )->status_is(200) ; 
 
       $res = $ua->get($url)->result->json ; 
       $list = $res->{'dat'} ; 

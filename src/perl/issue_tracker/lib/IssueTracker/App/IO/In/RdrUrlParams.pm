@@ -105,10 +105,18 @@ sub doSetWithUrlParams {
             push @with_ops , 'like' ; 
             push @with_vals , $3 ; 
          } else {
+            unless ( exists ( $${ops{$2}}) ) {
+               $msg = " error for undefined operator \"$2\" in url syntax. Use one of the following : " ; 
+               $msg .= join("," , keys %$ops);
+               $msg .= " a valid syntax could be : with=prio-eq-1 " ; 
+               $ret = 400 ; 
+               return ( $ret , $msg ) ; 
+            }
             push @with_ops , $ops->{$2} ; 
             push @with_vals , $3 ; 
          }
       }
+
       # debug print "from RdrUrlParams.pm 47 \@with_cols : @with_cols \n" ; 
       # debug print "from RdrUrlParams.pm 47 \@with_ops : @with_ops \n" ; 
       # debug print "from RdrUrlParams.pm 47 \@with_vals : @with_vals \n" ; 
