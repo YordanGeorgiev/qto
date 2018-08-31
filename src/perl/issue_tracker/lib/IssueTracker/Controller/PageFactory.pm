@@ -8,6 +8,7 @@ package IssueTracker::Controller::PageFactory ;
    use IssueTracker::Controller::ListLabels ; 
    use IssueTracker::Controller::ListGrid ; 
    use IssueTracker::Controller::ListEGrid ; 
+   use IssueTracker::Controller::ListPrintTable ; 
 
 	our $appConfig 		= {} ; 
 	our $objModel        = {} ; 
@@ -42,6 +43,10 @@ package IssueTracker::Controller::PageFactory ;
 		elsif ( $ui_type eq 'page/list-egrid' ) {
 		   $package_file     = "IssueTracker/Controller/ListEGrid.pm" ; 
 		   $objWtrControl    = "IssueTracker::Controller::ListEGrid" ; 
+		}
+		elsif ( $ui_type eq 'page/list-print-table' ) {
+		   $package_file     = "IssueTracker/Controller/ListPrintTable.pm" ; 
+		   $objWtrControl    = "IssueTracker::Controller::ListPrintTable" ; 
 		}
 		else {
 	      croak "ui_type : $ui_type is not implemented !!!" ; 	

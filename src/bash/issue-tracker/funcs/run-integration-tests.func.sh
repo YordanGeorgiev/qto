@@ -8,7 +8,13 @@ doRunIntegrationTests(){
 
 	doLog "DEBUG START doRunIntegrationTests @run-integration-tests.func.sh"
 
+
 	doLog "INFO re-start the issue-tracker app-layer just for sure"
+   test -z "${issue_tracker_project:-}" && \
+      doExit 10 "FATAL ERROR running $action without defined issue-tracker project environment vars
+      !!! Run : source lib/bash/funcs/parse-cnf-env-vars.sh ; doParseCnfEnvVars
+      cnf/issue-tracker.dev.host-name.cnf"
+
    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop 
    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
    daily_data_dir=$mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
@@ -19,7 +25,8 @@ doRunIntegrationTests(){
    bash src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
 
 	doLog "INFO load the documentation db run xls-to-db to mysql"
-   export tables=ItemController,ItemModel,ItemView,ExportFile,Installation,UserStory,Requirement,DevOps,Feature,ReadMe,Image,SystemGuide;
+   export
+   tables=ItemController,ItemModel,ItemView,ExportFile,Installation,UserStory,Requirement,DevOps,Feature,ReadMe,Image,SystemGuide,Concepts;
    export do_truncate_tables=1 ; export rdbms_type=mysql ; export load_model=nested-set
    perl src/perl/issue_tracker/script/issue_tracker.pl --do xls-to-db --tables $tables
 
@@ -33,7 +40,7 @@ doRunIntegrationTests(){
    bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
 
    doLog "INFO laod the postgres data"
-   export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables \
+   export tables=`curl -s -k http://$web_host:$mojo_morbo_port/$postgres_db_name/select-tables \
       |jq -r '.|.dat| .[] | .table_name'|perl -nle 's/ /,/g;print'`
    export do_truncate_tables=1 
    export rdbms_type=postgres ; export load_model=upsert ; 
@@ -44,8 +51,8 @@ doRunIntegrationTests(){
    psql -d $postgres_db_name < "$last_db_backup_file"
 
    doLog "INFO START test the Select Controller "
-   doLog " $postgres_db_name/Select-tables"
-   doLog " $postgres_db_name/Select/<<table-name>>"
+   doLog " $postgres_db_name/select-tables"
+   doLog " $postgres_db_name/select/<<table-name>>"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
 	echo -e "\n\n\n" 
   

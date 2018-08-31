@@ -44,7 +44,7 @@ Table of Contents
     * [8.2. Clarity on errors](#82-clarity-on-errors)
   * [9. DOCUMENTATION](#9-documentation)
     * [9.1. Documentation completeness](#91-documentation-completeness)
-    * [9.2. Documentation and code base syncronisation](#92-documentation-and-code-base-syncronisation)
+    * [9.2. Documentation and code base synchronization](#92-documentation-and-code-base-synchronization)
     * [9.3. Full backup to the cloud in less than 5 minutes](#93-full-backup-to-the-cloud-in-less-than-5-minutes)
 
 
@@ -171,12 +171,12 @@ Crashing in normally configured and operating environment must not be tollerated
     
 
 ### 4.2. Zero tollerance towards bugs
-All bugs and inconsitencies must be delt with top priority bypassing new features implementation. 
+All bugs and inconsistencies must be delt with top priority bypassing new features implementation. 
 
     
 
 ### 4.3. Daily backups
-Daily backups should be show-stopper for the normal operation of the application - that is if an instance is to be considered as normally operating , the daily backups should be performed automatically as indespesible part of the functioning of the application. 
+Daily backups should be show-stopper for the normal operation of the application - that is if an instance is to be considered as normally operating , the daily backups should be performed automatically as indispensable part of the functioning of the application. 
 
     # add the following one-liner in the cron-scheduled script
     # load the proj env vars
@@ -245,7 +245,7 @@ The application layers should support as much as possible cross running between 
     
 
 ### 8.1. CRUDs
-The System must provide the needed UI interfaces to Create , Update , Delete and Search items in the system for the users having the priveledges for those actions
+The System must provide the needed UI interfaces to Create , Update , Delete and Search items in the system for the users having the privileges for those actions
 Any modelled item in the database must be capable for:
  - create 
  - update
@@ -265,7 +265,7 @@ The System should not show ok messages , but only error messages, yet the UI sho
     
 
 ### 8.2. Clarity on errors
-The UI must present every error in a clear and consice way, so that the end-user would understand that an error has occured, however no msgs should be displayed when the data is saved properly. 
+The UI must present every error in a clear and concise way, so that the end-user would understand that an error has occured, however no msgs should be displayed when the data is saved properly. 
 
     
 
@@ -286,7 +286,7 @@ in at least the md and pdf file formats.
 
     
 
-### 9.2. Documentation and code base syncronisation
+### 9.2. Documentation and code base synchronization
 Each running instance MUST have its required documentation set up-to-date. No undocumented or hidden features are allowed. Should any be missing or misreported a new issue must be created to correct those with top priority. 
 
     

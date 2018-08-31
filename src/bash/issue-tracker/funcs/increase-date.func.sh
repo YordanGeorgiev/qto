@@ -89,7 +89,12 @@ doIncreaseDate(){
    
    rm -f *.bak       # remove any possible bak files
    mv $todays_tmp_dir $daily_data_dir 
- 
+  
+   export daily_data_dir=$mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
+  
+   # remove all the tmp xls files
+   rm -v "$daily_data_dir/xls/"'/~'*.xlsx
+
    # foreach xls file
    while read -r f ; do 
       file_name="${f##*/}"
@@ -101,10 +106,10 @@ doIncreaseDate(){
       file_ext="${f##*.}"
       mkdir -p "$daily_data_dir/xls"
       doLog "DEBUG" "mv $f" -> "$daily_data_dir/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
-      mv "$f" "$daily_data_dir/xls/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
       # and I just don't know where this one comes from, but it is fake !!!
       rm -v "$daily_data_dir/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
-   done < <(find $mix_daily_data_dir -type f -name "*.xlsx"| grep -v '/[.~]')
+      mv "$f" "$daily_data_dir/xls/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
+   done < <(find $daily_data_dir/xls -type f -name "*.xlsx")
 
    doBackupPostgresDb
 

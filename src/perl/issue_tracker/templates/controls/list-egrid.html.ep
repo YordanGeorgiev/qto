@@ -32,7 +32,7 @@
                <a tabindex="1" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" 
 						v-for="(pgNum, index) in this.pagesCount" v-bind:href="generatePageNum(pgNum)">
 						<span v-if="pgNum == pageNum" style="background-color:#ddd;"> <strong>{{ pgNum }}</strong> </span>
-						<span v-else="pgNum == pageNum"> {{ pgNum }} </span>
+						<span v-else="pgNum == pageNum">{{ pgNum }}</span>
                </a>
             </div>
 		  		</form>
@@ -50,7 +50,7 @@
                 <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
                   v-bind:href="generatePageSize(pgSize)">
                   <span v-if="pgSize == pageSize" style="background-color:#ddd;"> <strong>{{ pgSize }}</strong> </span>
-                  <span v-else="pgSize == pageSize">{{ pgSize }} </span>
+                  <span v-else="pgSize == pageSize">{{ pgSize }}</span>
                </a>
             </div>
          </div>
@@ -60,7 +60,6 @@
 
 <script>
    
-
 
 
    function setSpnMsgErrorText(txt){
@@ -89,7 +88,7 @@ if ( document.getElementById("spn_msg") ) {
          this.$emit('clickedBtnDelete', ev.currentTarget.id)
        }
 	  },
-	  template: `<v-btn href="#" flat icon color="grey" v-on:click="clickedDelete($event)"><v-icon dark>delete</v-icon></v-btn>` 
+	  template: `<v-btn href="javascript:void(0);" flat icon color="grey" v-on:click="clickedDelete($event)"><v-icon dark>delete</v-icon></v-btn>` 
 	})
 
 	Vue.component('btn-new', {
@@ -207,36 +206,16 @@ if ( document.getElementById("spn_msg") ) {
          this.sortKey = key
          this.sortOrders[key] = -1 ;
        }
-		 , deleteItem(id){
+		 , deleteItem: function (id){
        	this.$parent.deleteItem(id);
 		 }
-       , updateItem (content,id,oldValue) {
+       , updateItem: function (content,id,oldValue) {
 			this.$parent.updateItem(content,id,oldValue);
          var col = id.split('-')[0] 
        }
-       , createNewItem (content,id,oldValue) {
-            this.$parent.createNewItem(content,id,oldValue);
+       , createNewItem: function (id) {
+            this.$parent.createNewItem(id);
        }
-      , generatePageNum: function (pgNum) {
-			var currentUrl = window.location.href ; 
-			if ( currentUrl.indexOf("page-num=") === -1 ) {
-				var newUrl = currentUrl + "&page-num=" + pgNum ; 
-				return newUrl ; 
-			} else {
-         	return currentUrl.replace("page-num=" + this.pageNum , "page-num=" + pgNum) ; 
-			}
-      }
-      , generatePageSize: function (pgSize) {
-			var currentUrl = window.location.href ; 
-			if ( currentUrl.indexOf("page-size=") === -1 ) {
-				var newUrl = currentUrl + "&page-size=" + pgSize ; 
-				return newUrls.replace(/#$/, "");
-			} else {
-         	return currentUrl
-               .replace("page-size=" + this.pageSize , "page-size=" + pgSize) 
-               .replace("page-num=" + this.pageNum , "page-num=1") ; 
-			}
-      }
 	 }
    })
 
@@ -296,7 +275,7 @@ if ( document.getElementById("spn_msg") ) {
 					var newUrl = currentUrl + "&page-num=" + pgNum ; 
 					return newUrl ; 
 				} else {
-					return currentUrl.replace("page-num=" + this.pageNum , "page-num=" + pgNum) ; 
+					return currentUrl.replace("page-num=" + this.pageNum , "page-num=" + pgNum);
 				}
       	}
          , generatePageSize: function (pgSize) {
@@ -307,7 +286,7 @@ if ( document.getElementById("spn_msg") ) {
             } else {
                return currentUrl
                   .replace("page-size=" + this.pageSize , "page-size=" + pgSize) 
-                  .replace("page-num=" + this.pageNum , "page-num=1") ; 
+                  .replace("page-num=" + this.pageNum , "page-num=1");
             }
          }
          , fetchServerSideDataToUI: function(url_params) {
@@ -337,7 +316,8 @@ if ( document.getElementById("spn_msg") ) {
             .catch(function(error) {
                if (typeof error !== 'undefined') {
                  var errMsg = error.toString() 
-                 setSpnMsgErrorText(errMsg);
+                 console.log(errMsg)
+                 //setSpnMsgErrorText(errMsg);
                }
             }) 
 	  	   }
@@ -355,7 +335,7 @@ if ( document.getElementById("spn_msg") ) {
                }
             });
          }
-         , createNewItem (dbid) {
+         , createNewItem: function (dbid) {
             this.postNewServerSideId(dbid)
             .then ( result => {
                if ( result.toString() !== "Error: Request failed with status code 409" ) {
@@ -376,10 +356,11 @@ if ( document.getElementById("spn_msg") ) {
                }
             })				
             .catch(function (error) {
-               setSpnMsgErrorText(error.message);
+                  setSpnMsgErrorText(error.message);
             });
+
          }
-         , updateItem (content,id,oldValue) {
+         , updateItem: function (content,id,oldValue) {
             var arr = id.split('-')
             var col = arr[0]
             var dbid = arr[1]
@@ -429,9 +410,9 @@ if ( document.getElementById("spn_msg") ) {
                         url_params.delete("oa") ; 
                         url_params.delete("od") ; 
                         if ( this.$children[0].sortOrders[key] === 1 ) {
-                           url_params.set("oa", this.$children[0].sortKey ) ;
+                           url_params.set("oa", this.$children[0].sortKey.trim()) ;
                         } else {
-                           url_params.set("od", this.$children[0].sortKey ) ;
+                           url_params.set("od", this.$children[0].sortKey.trim() ) ;
                         }
                      }
                      url_params.delete("page-num") ; 

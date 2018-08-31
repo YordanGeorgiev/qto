@@ -12,8 +12,11 @@ our $objModel = {} ;
 	# convert from hash ref of hash refs to an array and return the array ref
 	# -----------------------------------------------------------------------------
    sub doConvert {
+
       my $self          = shift ; 
       my $hsr2          = shift ; 
+      my $order_op      = shift || 'cmp' ; 
+
       my $to_order_by   = $objModel->get('select.web-action.o') || 'attnum' ; 
       my $to_hide       = $objModel->get('select.web-action.hide');
 
@@ -22,22 +25,13 @@ our $objModel = {} ;
       my @list       = () ; 
 
       my $rows_count = 0 ; 
-      my $evl_str_sort_data = 'sort { $hsr2->{$a}->{ $to_order_by } cmp $hsr2->{$b}->{ $to_order_by } } keys (%$hsr2) ' ; 
+      my $evl_str_sort_data = 'sort { $hsr2->{$a}->{ $to_order_by } ' . "$order_op" . ' $hsr2->{$b}->{ $to_order_by } } keys (%$hsr2) ' ; 
       my $evl_str_sort_meta = 'keys %$hsr2' ; # as it is just a hash ref of hash refs 
       my $evl_str_sort_by = $evl_str_sort_data ; 
       $evl_str_sort_by = $evl_str_sort_meta if $to_order_by eq 'attnum' ; 
 
       if ( defined ( $to_order_by) ) {
          foreach my $key (  eval "$evl_str_sort_by" ) {
-            my $row = $hsr2->{$key} ; 
-            $rows_count = $row->{'rows_count'} ; delete $row->{'rows_count'} ; 
-            ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-            push ( @list , $row ) ; 
-         }
-      }
-      else {
-         foreach my $key ( keys %$hsr2 ) {
             my $row = $hsr2->{$key} ; 
             $rows_count = $row->{'rows_count'} ; delete $row->{'rows_count'} ; 
             ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
