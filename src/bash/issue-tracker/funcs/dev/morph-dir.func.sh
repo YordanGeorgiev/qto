@@ -1,4 +1,4 @@
-# v1.0.7
+# v0.4.9
 #------------------------------------------------------------------------------
 # Purpose: 
 # to search for a string and replace it with another recursively in a dir
