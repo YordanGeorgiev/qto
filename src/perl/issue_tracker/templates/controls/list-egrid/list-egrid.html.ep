@@ -59,9 +59,6 @@
    </div>
 
 <script>
-   
-
-
    function setSpnMsgErrorText(txt){
       document.getElementById("div_msg").innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
       document.getElementById("div_msg").style.display="inline";
@@ -77,147 +74,10 @@
 
 if ( document.getElementById("spn_msg") ) {
 	
-	Vue.component('btn-del', {
-	  data: function () {
-		 return {
-			count: 0
-		 }
-	  },
-	  methods: {
-       clickedDelete: function(ev) {
-         this.$emit('clickedBtnDelete', ev.currentTarget.id)
-       }
-	  },
-	  template: `<v-btn href="javascript:void(0);" flat icon color="grey" v-on:click="clickedDelete($event)"><v-icon dark>delete</v-icon></v-btn>` 
-	})
-
-	Vue.component('btn-new', {
-	  data: "",
-	  methods: {
-			clickedBtnNew() {
-				function pad2(n) { return n < 10 ? '0' + n : n }
-				var date = new Date();
-				var dbid = date.getFullYear().toString().substr(2,3) + pad2(date.getMonth() + 1) + pad2( date.getDate()) + pad2( date.getHours() ) + pad2( date.getMinutes() ) + pad2( date.getSeconds() );
-				this.$emit('clickedBtnNew',dbid)
-			}
-	  },
-	  template: `<v-btn fab dark color="indigo" v-on:click="clickedBtnNew()">
-				  <v-icon dark>add</v-icon>
-				</v-btn>` 
-	})
-
-
-   Vue.component('editable', {
-     template: `<div v-bind:id="id" class="cls_cnt_edtble" contenteditable="true" @blur="emitChange" 
-               v-on:focus="focused" v-on:keyup.esc="revertChange()">{{ content }}</div>`,
-     props: {
-		content: {
-			twoWay: true 
-		}
-		,id: {}
-	  },
-     data: "",
-     watch: {
-        content: function () {
-        this.content === 'null' ? this.$el.innerText = "" : this.$el.innerText = this.content;
-        }
-     },
-     mounted() {
-        this.content === 'null' ? this.$el.innerText = "" : this.$el.innerText = this.content;
-     },
-     methods: {
-       focused(ev) {
-         this.data = ev.target.textContent;
-       }
-       , emitChange (ev) {
-			this.$emit('update', ev.target.innerText,ev.target.id,this.data)
-			this.$forceUpdate();
-       }
-       , revertChange() {
-     		this.$el.innerText = this.data ; 
-       }
-     }
-   })
-
-   Vue.component('cruds-grid-sf', {
-     template: '#grid-template',
-     props: {
-       data: {type: Array, twoWay: true}
-       , columns: Array
-       , filterKey: String
-     },
-     data: function () {
-       var sortOrders = {}
-       this.columns.forEach(function (key) {
-         sortOrders[key] = 1
-       })
-       return {
-         sortKey: '',
-         sortOrders: sortOrders
-       }
-     },
-	  computed: {
-		 filteredData: {		
-			 get: function () {
-				var sortKey = this.sortKey
-				var filterKey = this.filterKey && this.filterKey.toLowerCase()
-				var order = this.sortOrders[sortKey] || 1
-				var data = this.data
-				if (filterKey) {
-				  data = data.filter(function (row) {
-					 return Object.keys(row).some(function (key) {
-						return String(row[key]).toLowerCase().indexOf(filterKey) > -1
-					 })
-				  })
-				}
-				if (sortKey) {
-				  data = data.slice().sort(function (a, b) {
-					 a = a[sortKey]
-					 b = b[sortKey] 
-					 if ( (!isNaN(parseFloat(a)) && isFinite(a)) && (!isNaN(parseFloat(b)) && isFinite(b)) ) {
-						return (a-b) * order
-					 } else {
-						return (a === b ? 0 : a > b ? 1 : -1) * order
-					 }
-				  })
-				}
-				return data
-			},
-			set: function(data) {
-				this.data = data
-			}
-		}
-	  },
-     filters: {
-       capitalize: function (str) {
-         return str.charAt(0).toUpperCase() + str.slice(1)
-       }
-     },
-     methods: {
-       sortBy: function (key) {
-         this.sortKey = key
-         this.sortOrders[key] = this.sortOrders[key] * -1
-       }
-       , setAscSortBy: function (key) {
-         this.sortKey = key
-         this.sortOrders[key] = 1 ; 
-       }
-       , setDescSortBy: function (key) {
-         this.sortKey = key
-         this.sortOrders[key] = -1 ;
-       }
-		 , deleteItem: function (id){
-       	this.$parent.deleteItem(id);
-		 }
-       , updateItem: function (content,id,oldValue) {
-			this.$parent.updateItem(content,id,oldValue);
-         var col = id.split('-')[0] 
-       }
-       , createNewItem: function (id) {
-            this.$parent.createNewItem(id);
-       }
-	 }
-   })
+%= include 'controls/list-egrid/btn-del'
+%= include 'controls/list-egrid/btn-new'
+%= include 'controls/list-egrid/editable'
+%= include 'controls/list-egrid/cruds-grid-sf'
 
 
    var gruds_crid = new Vue({

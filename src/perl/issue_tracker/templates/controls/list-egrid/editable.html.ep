@@ -1,0 +1,31 @@
+   Vue.component('editable', {
+     template: `<div v-bind:id="id" class="cls_cnt_edtble" contenteditable="true" @blur="emitChange" 
+               v-on:focus="focused" v-on:keyup.esc="revertChange()">{{ content }}</div>`,
+     props: {
+		content: {
+			twoWay: true 
+		}
+		,id: {}
+	  },
+     data: "",
+     watch: {
+        content: function () {
+        this.content === 'null' ? this.$el.innerText = "" : this.$el.innerText = this.content;
+        }
+     },
+     mounted() {
+        this.content === 'null' ? this.$el.innerText = "" : this.$el.innerText = this.content;
+     },
+     methods: {
+       focused(ev) {
+         this.data = ev.target.textContent;
+       }
+       , emitChange (ev) {
+			this.$emit('update', ev.target.innerText,ev.target.id,this.data)
+			this.$forceUpdate();
+       }
+       , revertChange() {
+     		this.$el.innerText = this.data ; 
+       }
+     }
+   })

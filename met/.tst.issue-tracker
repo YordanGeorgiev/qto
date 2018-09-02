@@ -1,34 +1,20 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
-src/perl/issue_tracker/lib/IssueTracker/Controller/Query.pm
-src/perl/issue_tracker/public/poc/autocomplete
-src/perl/issue_tracker/public/poc/autocomplete/app.js
-src/perl/issue_tracker/public/poc/autocomplete/autocomplete.css
-src/perl/issue_tracker/public/poc/autocomplete/autocomplete.html
-# ---
-src/perl/issue_tracker/public/poc/vuetify/index.html
-src/perl/issue_tracker/templates/controls/list-print-table.html.ep
-src/perl/issue_tracker/templates/controls/list-egrid.html.ep
-src/perl/issue_tracker/public/poc/vue-create-new-button/
-src/perl/issue_tracker/public/poc/vue-create-new-button/vue-create-new-button.css
-src/perl/issue_tracker/public/poc/vue-create-new-button/vue-create-new-button.html
-src/perl/issue_tracker/public/poc/vue-create-new-button/app.js
-# ---
-src/perl/issue_tracker/public/poc/vue-editable-component
-src/perl/issue_tracker/public/poc/vue-editable-component/vue-editable-component.html
-src/perl/issue_tracker/public/poc/vue-editable-component/app.js
-# ---
-src/perl/issue_tracker/public/poc/list-vue-grid-editable
-src/perl/issue_tracker/public/poc/list-vue-grid-editable/app.js
-src/perl/issue_tracker/public/poc/list-vue-grid-editable/list-vue-grid-editable.css
-src/perl/issue_tracker/public/poc/list-vue-grid-editable/list-vue-grid-editable.html
-# ---
-src/perl/issue_tracker/public/package.json
 # ---
 src/perl/issue_tracker/templates/layouts/site.html.ep
-src/perl/issue_tracker/templates/controls/list-labels.html.ep
-src/perl/issue_tracker/templates/controls/list-cloud.html.ep
-src/perl/issue_tracker/templates/controls/list-grid.html.ep
+src/perl/issue_tracker/templates/controls/list-egrid/list-egrid.html.ep
+src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
+src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
+src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
+# ---
+src/perl/issue_tracker/lib/IssueTracker/Controller/Query.pm
+src/perl/issue_tracker/public/poc/autocomplete
+src/perl/issue_tracker/public/poc/autocomplete/searchbox-autocomplete.css
+src/perl/issue_tracker/public/poc/autocomplete/div-searchbox.js
+src/perl/issue_tracker/public/poc/autocomplete/autocomplete.html
+# ---
+src/perl/issue_tracker/public/package.json
 # ---
 src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
@@ -52,11 +38,10 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCTestMojoRoleSelenium.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCSeleniumBrowser.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 # ---
-src/perl/issue_tracker/public/bower_components/jqcloud2/dist/jqcloud.min.js
-# ---
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/jqcloud.css
+src/perl/issue_tracker/public/js/controls/jqcloud/jqcloud.min.js
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/site.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
@@ -894,6 +879,21 @@ doc/txt/issue-tracker/tests/backup-postgres-db.test.txt
 # ---
 src/bash/issue-tracker/scripts/pre-push
 license.txt
+# ---
+src/perl/issue_tracker/public/poc/vue-editable-component
+src/perl/issue_tracker/public/poc/vue-editable-component/vue-editable-component.html
+src/perl/issue_tracker/public/poc/vue-editable-component/app.js
+# ---
+src/perl/issue_tracker/public/poc/vuetify/index.html
+src/perl/issue_tracker/public/poc/vue-create-new-button/
+src/perl/issue_tracker/public/poc/vue-create-new-button/vue-create-new-button.css
+src/perl/issue_tracker/public/poc/vue-create-new-button/vue-create-new-button.html
+src/perl/issue_tracker/public/poc/vue-create-new-button/app.js
+# ---
+src/perl/issue_tracker/public/poc/list-vue-grid-editable
+src/perl/issue_tracker/public/poc/list-vue-grid-editable/app.js
+src/perl/issue_tracker/public/poc/list-vue-grid-editable/list-vue-grid-editable.css
+src/perl/issue_tracker/public/poc/list-vue-grid-editable/list-vue-grid-editable.html
 # ---
 dat/mix/2018/2018-09/2018-09-03
 dat/mix/2018/2018-09/2018-09-03/json
