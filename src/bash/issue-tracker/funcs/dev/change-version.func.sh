@@ -1,7 +1,7 @@
-# v1.0.7 
+# v0.4.9
 #------------------------------------------------------------------------------
 # increase or decrease the version of the product
-# bash src/bash/lp_nettilaskuri/lp_nettilaskuri.sh -a to-ver=0.0.5
+# bash src/bash/tool/tool.sh -a to-ver=1.1.0
 #------------------------------------------------------------------------------
 doChangeVersion(){
 
@@ -24,16 +24,19 @@ doChangeVersion(){
 	unzip -o $zip_file -d $tgt_product_instance_dir
 	cp -v $zip_file $tgt_product_instance_dir
 
+   # change the current version str to tgt-version in the configuration dir 
+   export to_srch=$product_version
+   export to_repl=$tgt_version
+   export dir_to_morph=$tgt_product_instance_dir/cnf
+   doMorphDir # :fin morph-dir.func.sh
+
 	# ensure that all the files in the target product version dir are indentical to the current ones
 	while read -r file ; do (
 		doLog "DEBUG comparing src file: $file"
 		doLog "DEBUG to tgt file: $tgt_product_instance_dir/$file"
-		#cmd='diff "'"$product_instance_dir/$file"'" "'"$tgt_product_instance_dir/$file"'"'
 		test -f "$product_instance_dir/$file" \
 			&& diff "$product_instance_dir/$file" "$tgt_product_instance_dir/$file"
 		[[ $? != 0 ]] && exit $?
-		#test -f "$product_instance_dir/$file" && doRunCmdOrExit $cmd
-		
 	);
 	done < <(cat $include_file)
 
