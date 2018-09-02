@@ -154,7 +154,7 @@ sub doRenderPageTemplate {
       ,  'etable' => 'list-egrid' 
       ,  'print-table' => 'list-print-table' 
    };
-   my $template = 'controls/' . $as_templates->{ $as } ; 
+   my $template = 'controls/' . $as_templates->{ $as } . '/' . $as_templates->{ $as } ; 
 
    $self->render(
       'template'        => $template 
