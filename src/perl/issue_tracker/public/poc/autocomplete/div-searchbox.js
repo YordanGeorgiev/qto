@@ -39,53 +39,67 @@ var Searchbox = {
   },
   methods: {
    onChange() {
-      
       if ( !this.searchQuery.startsWith('in: ' ) ) {
          return ; 
       }
-      // Let's warn the parent that a change was made
       this.$emit("input", this.searchQuery.replace('in: ' , ''));
+
       // Is the data given by an outside ajax request?
       if (this.isAsync) {
       	this.isLoading = true;
          this.filterResults();
       } else {
-        // Let's search our flat array
-        this.filterResults();
-        this.isOpen = true;
+         this.filterResults();
+         this.isOpen = true;
       }
     } 
     , filterResults() {
-      this.results = this.dblist.filter(item => {
+         this.results = this.dblist.filter(item => {
          var toSrch = this.searchQuery.toLowerCase().replace('in: ' , '')
-        return item.toLowerCase().indexOf(toSrch) > -1;
+         return item.toLowerCase().indexOf(toSrch) > -1;
       });
     }
     , setResult(result) {
-      this.searchQuery = result;
-      this.isOpen = false;
-      window.alert("should redirect to the following url: <<url>>");
+         if ( typeof result !== 'undefined' ) {
+            if ( result === 'in: undefined' ) {
+               this.searchQuery = 'in: '
+            } else {
+               this.searchQuery = result;
+            }
+         }
+         else {
+            this.searchQuery = 'in: '
+         }
+         this.isOpen = false;
     }
     , onArrowDown(evt) {
-      if (this.arrowCounter < this.results.length) {
-        this.arrowCounter = this.arrowCounter + 1;
-      }
+         if (this.arrowCounter < this.results.length) {
+            this.arrowCounter = this.arrowCounter + 1;
+         }
     } 
     , onArrowUp() {
-      if (this.arrowCounter > 0) {
-        this.arrowCounter = this.arrowCounter - 1;
-      }
+         if (this.arrowCounter > 0) {
+            this.arrowCounter = this.arrowCounter - 1;
+         }
+    }
+    , onArrowRight(e) {
+         this.isOpen = false;
+         this.setResult("in: " + this.results[this.arrowCounter])
+    }
+    , onArrowLeft(e) {
+         this.isOpen = false;
+         this.setResult("in: " + this.results[this.arrowCounter])
     }
     , onEnter() {
-      this.searchQuery = 'in: ' + this.results[this.arrowCounter];
-      this.isOpen = false;
-      this.arrowCounter = -1;
+         this.isOpen = false;
+         this.setResult("in: " + this.results[this.arrowCounter])
+         window.alert("should I stay or should I go");
     }
-    , handleClickOutside(evt) {
-      if (!this.$el.contains(evt.target)) {
-        this.isOpen = false;
-        this.arrowCounter = -1;
-      }
+    , handleClickOutside(e) {
+         if (!this.$el.contains(e.target)) {
+            this.isOpen = false;
+            this.arrowCounter = -1;
+         }
     }
   }
   , watch: {
@@ -117,7 +131,7 @@ new Vue({
       }
   }
   , methods: {
-	fetchSSData: function (url_params) {
+	fetchSSData: function (url_params) { // only data logic here !!!
 		if ( typeof url_params === "undefined" ) { url_params = { as:"etable" } }
 
       return axios.get(("/dev_issue_tracker/select-databases") , { params: url_params } )
@@ -125,18 +139,31 @@ new Vue({
          return response.data.dat.map(obj => obj.datname);
       })
       .catch(function(error) {
-         // todo:ysg
-         console.log ( error.toString );
+         console.error ( error.toString );
          return error ; 
       })
 	 }
+  , fetchSSDataUI: function (url_params) { // only UI logic here !!!
+      var self = this
+      return this.fetchSSData()
+      .then( response => {
+         if ( response.toString().startsWith('Error') ) {  // NOK 
+            self.pdblist = [] ; 
+            window.alert(response.toString()) ; 
+         }
+         else {                                             // OK 
+            self.pdblist = response ; 
+         }
+      })
+      .catch(function(error) {                              // NOK
+         self.pdblist = [] ; 
+         window.alert(error.toString()) ; 
+      })
+   }
   }
   , mounted() {
-      var self = this
-      this.fetchSSData().then( data => {
-         self.pdblist = data ; 
-      })
+      this.fetchSSDataUI() ; 
       document.addEventListener("click", this.handleClickOutside);
-  },
+  }
 });
 
