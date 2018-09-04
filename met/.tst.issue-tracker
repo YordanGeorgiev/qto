@@ -1,18 +1,21 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
-# -- 
-# ---
-src/perl/issue_tracker/templates/layouts/site.html.ep
-src/perl/issue_tracker/templates/controls/list-egrid/list-egrid.html.ep
-src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
-src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep
-src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
-src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
 # ---
 src/perl/issue_tracker/lib/IssueTracker/Controller/Query.pm
 src/perl/issue_tracker/public/poc/autocomplete
 src/perl/issue_tracker/public/poc/autocomplete/searchbox-autocomplete.css
 src/perl/issue_tracker/public/poc/autocomplete/div-searchbox.js
 src/perl/issue_tracker/public/poc/autocomplete/autocomplete.html
+# ---
+src/perl/issue_tracker/templates/controls/list-egrid/list-egrid.html.ep
+src/perl/issue_tracker/templates/controls/list-egrid/btn-new.html.ep
+src/perl/issue_tracker/templates/controls/list-egrid/btn-del.html.ep
+src/perl/issue_tracker/templates/controls/list-egrid/editable.html.ep
+src/perl/issue_tracker/templates/controls/list-egrid/cruds-grid-sf.html.ep
+src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
+src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
+src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
+src/perl/issue_tracker/templates/layouts/site.html.ep
 # ---
 src/perl/issue_tracker/public/package.json
 # ---
