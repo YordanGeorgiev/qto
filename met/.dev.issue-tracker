@@ -5,7 +5,18 @@ src/perl/issue_tracker/public/poc/autocomplete
 src/perl/issue_tracker/public/poc/autocomplete/searchbox-autocomplete.css
 src/perl/issue_tracker/public/poc/autocomplete/div-searchbox.js
 src/perl/issue_tracker/public/poc/autocomplete/autocomplete.html
+
 # ---
+src/perl/issue_tracker/templates/controls/list-grid
+src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-grid.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/table.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
+src/perl/issue_tracker/templates/controls/list-grid/xt/search-box.xt.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/div-search-box.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/search-box.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/global-msg.js.html.ep
+# --
 src/perl/issue_tracker/templates/controls/list-egrid/list-egrid.html.ep
 src/perl/issue_tracker/templates/controls/list-egrid/btn-new.html.ep
 src/perl/issue_tracker/templates/controls/list-egrid/btn-del.html.ep
@@ -13,7 +24,7 @@ src/perl/issue_tracker/templates/controls/list-egrid/editable.html.ep
 src/perl/issue_tracker/templates/controls/list-egrid/cruds-grid-sf.html.ep
 src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep
-src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
+src/perl/issue_tracker/templates/controls/list-rgrid/list-rgrid.html.ep
 src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
 src/perl/issue_tracker/templates/layouts/site.html.ep
 # ---
@@ -23,8 +34,9 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/ListReadOnlyGrid.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/ListEditableGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/ListEGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListPrintTable.pm
 # ---
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
@@ -41,12 +53,12 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCTestMojoRoleSelenium.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCSeleniumBrowser.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 # ---
-src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_grid.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-egrid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/jqcloud.css
 src/perl/issue_tracker/public/js/controls/jqcloud/jqcloud.min.js
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/site.css
-src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_grid.css
+src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/list-egrid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/jqcloud.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/site/site.css

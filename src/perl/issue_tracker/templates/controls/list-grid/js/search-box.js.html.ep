@@ -1,0 +1,126 @@
+var Searchbox = {
+  name: "searchbox",
+  template: "#searchbox",
+  props: {
+    dblist: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    isAsync: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  }
+  , model: {
+	  prop: 'dblist',
+	  event: 'dblistChange'
+	},
+	computed: {
+		dblistLocal: {
+			get: function() {
+				return this.dblist
+			},
+			set: function(value) {
+				dblist = value ; 
+				this.$emit('dblistChange', value)
+			}
+		}
+	}
+  , data() {
+    return {
+      isOpen: false,
+      results: [],
+      searchQuery: "",
+      isLoading: false,
+      arrowCounter: 0
+    };
+  },
+  methods: {
+   onChange() {
+      if ( !this.searchQuery.startsWith('in: ' ) ) {
+         return ; 
+      }
+      this.$emit("input", this.searchQuery.replace('in: ' , ''));
+
+      // Is the data given by an outside ajax request?
+      if (this.isAsync) {
+      	this.isLoading = true;
+         this.filterResults();
+      } else {
+         this.filterResults();
+         this.isOpen = true;
+      }
+    } 
+    , filterResults() {
+         this.results = this.dblist.filter(item => {
+         var toSrch = this.searchQuery.toLowerCase().replace('in: ' , '')
+         return item.toLowerCase().indexOf(toSrch) > -1;
+      });
+    }
+    , setResult(result) {
+         if ( typeof result !== 'undefined' ) {
+            if ( result === 'in: undefined' ) {
+               this.searchQuery = 'in: '
+            } else {
+               this.searchQuery = result;
+            }
+         }
+         else {
+            this.searchQuery = 'in: '
+         }
+         this.isOpen = false;
+    }
+    , onArrowDown(evt) {
+         if (this.arrowCounter < this.results.length) {
+            this.arrowCounter = this.arrowCounter + 1;
+         }
+    } 
+    , onArrowUp() {
+         if (this.arrowCounter > 0) {
+            this.arrowCounter = this.arrowCounter - 1;
+         }
+    }
+    , onArrowRight(e) {
+         this.isOpen = false;
+         this.setResult("in: " + this.results[this.arrowCounter])
+    }
+    , onArrowLeft(e) {
+         this.isOpen = false;
+         this.setResult("in: " + this.results[this.arrowCounter])
+    }
+    , onEnter() {
+         this.isOpen = false;
+         this.setResult("in: " + this.results[this.arrowCounter])
+         //window.alert("should I stay or should I go");
+         axios.get((window.location.pathname).replace("/dev_issue_tracker/" , "/prd_issue_tracker/") , { params: url_params } )
+         .then(response => { 
+            return response.data ; 
+         })
+         .catch(function(error) {
+            return error.response.data.msg ; 
+         }) 
+    }
+    , handleClickOutside(e) {
+         if (!this.$el.contains(e.target)) {
+            this.isOpen = false;
+            this.arrowCounter = -1;
+         }
+    }
+  }
+  , watch: {
+    dblist: function(val, oldValue) {
+      if (val.length !== oldValue.length) {  // actually compare them
+        this.results = val;
+        this.isLoading = false;
+      }
+    }
+  }
+  , mounted() {
+    document.addEventListener("click", this.handleClickOutside);
+  }
+  , destroyed() {
+    document.removeEventListener("click", this.handleClickOutside);
+  }
+};

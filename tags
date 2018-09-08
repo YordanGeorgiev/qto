@@ -85,8 +85,8 @@ IssueTracker::Controller::Create	src/perl/issue_tracker/lib/IssueTracker/Control
 IssueTracker::Controller::Delete	src/perl/issue_tracker/lib/IssueTracker/Controller/Delete.pm	1;"	package	language:Perl
 IssueTracker::Controller::List	src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm	1;"	package	language:Perl
 IssueTracker::Controller::ListCloud	src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm	1;"	package	language:Perl
-IssueTracker::Controller::ListEGrid	src/perl/issue_tracker/lib/IssueTracker/Controller/ListEGrid.pm	1;"	package	language:Perl
-IssueTracker::Controller::ListGrid	src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm	1;"	package	language:Perl
+IssueTracker::Controller::ListEditableGrid	src/perl/issue_tracker/lib/IssueTracker/Controller/ListEditableGrid.pm	1;"	package	language:Perl
+IssueTracker::Controller::ListReadOnlyGrid	src/perl/issue_tracker/lib/IssueTracker/Controller/ListReadOnlyGrid.pm	1;"	package	language:Perl
 IssueTracker::Controller::ListLabels	src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm	1;"	package	language:Perl
 IssueTracker::Controller::ListPrintTable	src/perl/issue_tracker/lib/IssueTracker/Controller/ListPrintTable.pm	1;"	package	language:Perl
 IssueTracker::Controller::PageFactory	src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm	1;"	package	language:Perl
@@ -316,8 +316,8 @@ doBuild	src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabels
 doBuildLikeClause	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	68;"	subroutine	language:Perl
 doBuildListControl	src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm	100;"	subroutine	language:Perl
 doBuildListControl	src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm	34;"	subroutine	language:Perl
-doBuildListControl	src/perl/issue_tracker/lib/IssueTracker/Controller/ListEGrid.pm	35;"	subroutine	language:Perl
-doBuildListControl	src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm	35;"	subroutine	language:Perl
+doBuildListControl	src/perl/issue_tracker/lib/IssueTracker/Controller/ListEditableGrid.pm	35;"	subroutine	language:Perl
+doBuildListControl	src/perl/issue_tracker/lib/IssueTracker/Controller/ListReadOnlyGrid.pm	35;"	subroutine	language:Perl
 doBuildListControl	src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm	34;"	subroutine	language:Perl
 doBuildListControl	src/perl/issue_tracker/lib/IssueTracker/Controller/ListPrintTable.pm	35;"	subroutine	language:Perl
 doBuildMsg	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	417;"	subroutine	language:Perl
@@ -852,8 +852,8 @@ new	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Initiator.pm	344;"	subrout
 new	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	57;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Timer.pm	28;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm	22;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/Controller/ListEGrid.pm	23;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm	23;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/Controller/ListEditableGrid.pm	23;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/Controller/ListReadOnlyGrid.pm	23;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm	22;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/Controller/ListPrintTable.pm	23;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm	61;"	subroutine	language:Perl
