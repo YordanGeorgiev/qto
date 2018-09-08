@@ -1,0 +1,14 @@
+<script type="text/x-template" id="searchbox">
+  <div class="autocomplete">
+    <input id="inp_srch_box" type="text" v-model="searchQuery" @input="onChange" 
+    @keyup.down="onArrowDown" @keyup.up="onArrowUp" @keyup.right ="onArrowRight" @keyup.left="onArrowLeft" @keyup.enter="onEnter" />
+    <ul id="searchbox-results" v-show="isOpen && results.length > 0" class="autocomplete-results">
+      <li class="loading" v-if="isLoading">
+        Loading ...
+      </li>
+      <li v-else v-for="(result, i) in results" :key="i" @click="setResult('in: ' + result)" class="autocomplete-result" :class="{ 'is-active': i === arrowCounter }">
+        {{ result }}
+      </li>
+    </ul>
+  </div>
+</script>

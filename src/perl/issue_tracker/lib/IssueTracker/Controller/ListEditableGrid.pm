@@ -1,4 +1,4 @@
-package IssueTracker::Controller::ListEGrid ; 
+package IssueTracker::Controller::ListEditableGrid ; 
 use strict ; use warnings ; 
 
 use Data::Printer ; 

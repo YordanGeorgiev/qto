@@ -6,13 +6,13 @@ package IssueTracker::Controller::PageFactory ;
 
    use IssueTracker::Controller::ListCloud ; 
    use IssueTracker::Controller::ListLabels ; 
-   use IssueTracker::Controller::ListGrid ; 
-   use IssueTracker::Controller::ListEGrid ; 
+   use IssueTracker::Controller::ListReadOnlyGrid ; 
+   use IssueTracker::Controller::ListEditableGrid ; 
    use IssueTracker::Controller::ListPrintTable ; 
 
 	our $appConfig 		= {} ; 
 	our $objModel        = {} ; 
-   our $ui_type         = 'page/list-grid' ; 
+   our $ui_type         = 'page/list-rgrid' ; 
 
 
 	sub doInstantiate {
@@ -36,13 +36,17 @@ package IssueTracker::Controller::PageFactory ;
 		   $package_file     = "IssueTracker/Controller/ListLabels.pm" ; 
 		   $objWtrControl    = "IssueTracker::Controller::ListLabels" ; 
 		}
+		elsif ( $ui_type eq 'page/list-rgrid' ) {
+		   $package_file     = "IssueTracker/Controller/ListReadOnlyGrid.pm" ; 
+		   $objWtrControl    = "IssueTracker::Controller::ListReadOnlyGrid" ; 
+		}
+		elsif ( $ui_type eq 'page/list-egrid' ) {
+		   $package_file     = "IssueTracker/Controller/ListEditableGrid.pm" ; 
+		   $objWtrControl    = "IssueTracker::Controller::ListEditableGrid" ; 
+		}
 		elsif ( $ui_type eq 'page/list-grid' ) {
 		   $package_file     = "IssueTracker/Controller/ListGrid.pm" ; 
 		   $objWtrControl    = "IssueTracker::Controller::ListGrid" ; 
-		}
-		elsif ( $ui_type eq 'page/list-egrid' ) {
-		   $package_file     = "IssueTracker/Controller/ListEGrid.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListEGrid" ; 
 		}
 		elsif ( $ui_type eq 'page/list-print-table' ) {
 		   $package_file     = "IssueTracker/Controller/ListPrintTable.pm" ; 

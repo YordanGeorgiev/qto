@@ -104,7 +104,7 @@ sub doBuildListControl {
    my $objModel         = ${ shift @_ } ; 
    my $as               = shift ; 
 
-   my $ui_type          = 'page/list-grid' ; 
+   my $ui_type          = 'page/list-egrid' ; 
    my $ret              = 1 ; 
    my $list_control     = '' ; 
    my $objPageBuilder   = {} ; 
@@ -113,7 +113,8 @@ sub doBuildListControl {
    my $lables_pages = { 
          'lbls'   => 'list-labels'
       ,  'cloud'  => 'list-cloud' 
-      ,  'table'  => 'list-grid'
+      ,  'grid'  => 'list-grid'
+      ,  'table'  => 'list-rgrid'
       ,  'etable'  => 'list-egrid'
       ,  'print-table'  => 'list-print-table'
    };
@@ -141,7 +142,7 @@ sub doSetHtmlHeaders {
 sub doRenderPageTemplate {
    
    my $self          = shift ; 
-   my $as            = shift ; 
+   my $as            = shift || 'grid' ; 
    my $msg           = shift ; 
    my $db            = shift ; 
    my $item          = shift ; 
@@ -150,11 +151,14 @@ sub doRenderPageTemplate {
    my $as_templates = { 
          'lbls'   => 'list-labels'
       ,  'cloud'  => 'list-cloud' 
-      ,  'table'  => 'list-grid' 
+      ,  'table'  => 'list-rgrid' 
+      ,  'grid'   => 'list-grid' 
       ,  'etable' => 'list-egrid' 
       ,  'print-table' => 'list-print-table' 
    };
-   my $template = 'controls/' . $as_templates->{ $as } . '/' . $as_templates->{ $as } ; 
+  
+   my $template_name = $as_templates->{ $as } || 'list-grid' ; 
+   my $template = 'controls/' . $template_name . '/' . $template_name ; 
 
    $self->render(
       'template'        => $template 
