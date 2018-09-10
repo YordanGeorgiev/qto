@@ -15,7 +15,7 @@ var Searchbox = {
   }
   , model: {
 	  prop: 'dblist',
-	  event: 'dblistChange'
+	  event: 'dbListChange'
 	},
 	computed: {
 		dblistLocal: {
@@ -24,51 +24,49 @@ var Searchbox = {
 			},
 			set: function(value) {
 				dblist = value ; 
-				this.$emit('dblistChange', value)
+				this.$emit('dbListChange', value)
 			}
 		}
 	}
   , data() {
     return {
-      isOpen: false,
-      results: [],
-      searchQuery: "",
-      isLoading: false,
-      arrowCounter: 0
+      isOpen: false
+      , results: []
+      , globalSrch: ""
+      , isLoading: false
+      , arrowCounter: 0
     };
   },
   methods: {
    onChange() {
-      if ( !this.searchQuery.startsWith(':in ' ) ) {
-         return ; 
-      }
-      this.$emit("input", this.searchQuery.replace(':in ' , ''));
-
-      // Is the data given by an outside ajax request?
-      if (this.isAsync) {
-      	this.isLoading = true;
-         this.filterResults();
-      } else {
-         this.filterResults();
-         this.isOpen = true;
+      var globalSrch = this.globalSrch.replace(':in ' , '') ; 
+      bus.$emit('searchBoxInputChanged', globalSrch );
+      if ( this.globalSrch.startsWith(':in ' ) ) {
+         if (this.isAsync) {
+            this.isLoading = true;
+            this.filterResults();
+         } else {
+            this.filterResults();
+            this.isOpen = true;
+         }
       }
     } 
     , filterResults() {
          this.results = this.dblist.filter(item => {
-         var toSrch = this.searchQuery.toLowerCase().replace(':in ' , '')
+         var toSrch = this.globalSrch.toLowerCase().replace(':in ' , '')
          return item.toLowerCase().indexOf(toSrch) > -1;
       });
     }
     , setResult(result) {
          if ( typeof result !== 'undefined' ) {
             if ( result === ':in undefined' ) {
-               this.searchQuery = ':in '
+               this.globalSrch = ':in '
             } else {
-               this.searchQuery = result;
+               this.globalSrch = result;
             }
          }
          else {
-            this.searchQuery = ':in '
+            this.globalSrch = ':in '
          }
          this.isOpen = false;
     }

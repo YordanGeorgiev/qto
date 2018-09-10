@@ -1,7 +1,8 @@
 	<script type="text/x-template" id="grid-template">
-      <div id="div_grid_tmpl" style="overflow-x: auto;">
-      	<btn-new id="btnNew" v-on:clickedBtnNew="createNewItem" ></btn-new>
-			<table id="grid" tabindex="1" style="clear:both">
+      <div id="div_grid_tmpl" style="overflow-x: auto;" >
+         <div_search_box id="div_search_box" />
+         <btn-new id="btnNew" v-on:clickedBtnNew="createNewItem" ></btn-new>
+			<table id="grid" tabindex="1" style="clear:both" >
 			 <thead>
 				<tr><th></th>
 				  <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }" tabindex="1" 

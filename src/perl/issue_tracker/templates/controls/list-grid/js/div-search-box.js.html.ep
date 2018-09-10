@@ -1,26 +1,19 @@
-new Vue({
-  el: "#div_search_box",
-  name: "srchboxContainer",
+Vue.component('div_search_box', {
+  name: "div_search_box",
   components: {
     searchbox: Searchbox
   },
   data() {
       return {
          pdblist: []
+         , globalSrch: ""
       }
   }
   , methods: {
-    onSubmit(e){
-      var form = e.target ; 
-      var formAction = '/'
-      var srchQuery = this.children[1].searchQuery ; 
-      console.log(this)
-      form.submit(action)
-    }
-  , fetchSSData: function (url_params) { // only data logic here !!!
+  fetchSSData: function (url_params) { // only data logic here !!!
 		if ( typeof url_params === "undefined" ) { url_params = { as:"etable" } }
 
-      return axios.get(("/dev_issue_tracker/select-databases") , { params: url_params } )
+      return axios.get(("/prd_issue_tracker/select-databases") , { params: url_params } )
       .then(response => {
          return response.data.dat.map(obj => obj.datname);
       })
@@ -63,6 +56,7 @@ new Vue({
          }
       }
   }
+  , template: ` <searchbox :dblist="pdblist" />`
   , mounted() {
       this.fetchSSDataUI() ; 
       // start on forward slash focus the quick search input textbox 

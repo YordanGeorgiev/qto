@@ -1,7 +1,7 @@
    var gruds_crid = new Vue({
      el: '#cruds-grid',
      data: {
-       searchQuery: '',
+       globalSrch: '',
        gridColumns: <%== $list_control =%>,
        gridData: [],
        pageSize: 15,
@@ -9,9 +9,14 @@
        pagesCount: 0,
        UrlParams:{ as:"table" },
        pageSizes: ['5', '7', '10','15','20','30','50','100']
+         , searchInputChanged: ""
 		},
      	methods: {
-         inpQuickSrchCH: function(event) {
+        onSearchBoxInputChanged: function(quickSrch) {
+            // console.log("from onSearchBoxInputChanged: quickSrch" + quickSrch.toString());         
+            this.globalSrch = quickSrch ; 
+        } 
+      , inpQuickSrchCH: function(event) {
            if ( event ) {
                if ( document.getElementById("inp_quick_srch").value !== "" ) {
                   document.getElementById("btnNew").setAttribute( 
@@ -135,7 +140,6 @@
             })				
             .catch(function (error) {
                   setSpnMsgErrorText(error.message);
-                  // setSpnMsgErrorText(error.response.data.msg);
             });
 
          }
@@ -205,12 +209,9 @@
                   setSpnMsgErrorText(error.message);
                });
           }
-		, trapOnEnterDown(event){
-        if (event) event.preventDefault();
-        if (event) event.stopPropagation();
-    	}
      }
      , mounted() {
 	      this.fetchServerSideDataToUI();
+         bus.$on('searchBoxInputChanged',this.onSearchBoxInputChanged)
 	  }
    });
