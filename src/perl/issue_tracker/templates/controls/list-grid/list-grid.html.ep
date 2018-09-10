@@ -9,9 +9,7 @@
 
    <div id="dev_central_panel" >
       <div id="div_search_box">
-         <form id='frm_search' v-on:submit="onSubmit(this)" method="get" autocomplete="off">
             <searchbox :dblist="pdblist" />
-         </form>
       </div>
    </div>
 
