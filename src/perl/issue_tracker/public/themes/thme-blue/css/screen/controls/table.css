@@ -1,12 +1,11 @@
 #div_grid_tmpl {
+   padding-top: 1% ; 
    max-width: 100%;
+   clear: both; 
 }
 
 table {
-   margin-top: 3% ; 
-   clear: both; 
    table-layout:fixed;
-   max-width: 100%;
 	border: 4px solid #F0F8FF ; 
 	border-radius: 9px;
 	background-color: #fff;
@@ -71,7 +70,8 @@ tr:selected{
    -webkit-box-shadow: 1px 1px 10px #C0C0C0;
    -moz-box-shadow: 1px 1px 10px #C0C0C0;
 }
-table th, td {
+
+th, td {
 	min-width: 20px;
    max-width: 500px; /* why percentages do not work here !!! */
 	padding: 10px 10px;

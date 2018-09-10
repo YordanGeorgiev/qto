@@ -15,9 +15,6 @@
 
 
    <div id="dev_central_panel" >
-      <div id="div_search_box">
-            <searchbox :dblist="pdblist" />
-      </div>
 
      <div id="cruds-grid" tabindex="-1">
          <div id="div_pager">
@@ -30,7 +27,7 @@
             </div>
          </div>
 
-         <cruds-grid-sf :data.sync="gridData" :columns="gridColumns" :filter-key="searchQuery"></cruds-grid-sf>
+         <cruds-grid-sf :data.sync="gridData" :columns="gridColumns" :filter-key="globalSrch"></cruds-grid-sf>
 
          <div id="div_page_sizer">
             <div class="pgr-show-inline-block">
@@ -49,6 +46,7 @@
 
 
 <script id="all">
+   var bus=new Vue({});
    %= include 'controls/list-grid/js/global-msg.js'
 
  if ( document.getElementById("spn_msg") ) {

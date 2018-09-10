@@ -1,8 +1,7 @@
 #div_pager {
-   position: relative ; 
-   clear: both ; 
-   margin-left: -20%;
-   float: right;
+   float: left ; 
+   padding-left: 60% ; 
+   padding-top: 1% ; 
 }
 .pgr-btn, .pgr-button {
     border: none;

@@ -5,7 +5,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 0% ; 
+  margin-top: -3% ; 
   margin-left: 13%;
   clear; both; 
   width: 42%;
@@ -19,11 +19,19 @@
    line-height: 18px; 
 }
 
-#inp_srch_box: focus{
+#inp_srch_box:focus{
+   width: 60%;
    outline: none;
    border-color: #9ecaed;
    box-shadow: 0 0 0px #9ecaed;
-   width: 50%;
+   padding: 2px 4px; 
+   line-height: 22px; 
+}
+#inp_srch_box:hover {
+   width: 60%;
+   outline: none;
+   border-color: #9ecaed;
+   box-shadow: 0 0 0px #9ecaed;
    padding: 2px 4px; 
    line-height: 22px; 
 }
