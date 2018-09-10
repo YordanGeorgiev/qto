@@ -4,41 +4,62 @@
 % content_for header_csss => begin
    <link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/list-grid.css" />
    <link rel="stylesheet" type="text/css" media="screen"  href="../../themes/thme-blue/css/screen/controls/table.css" />
+   <link rel="stylesheet" type="text/css" media="screen"  href="../../themes/thme-blue/css/screen/controls/pager.css" />
    <link rel="stylesheet" type="text/css" media="screen"  href="../../themes/thme-blue/css/screen/controls/searchbox.css" />
 % end
+
+
+
+   %= include 'controls/list-grid/xt/search-box.xt'
+   %= include 'controls/list-grid/xt/grid.xt'
+
 
    <div id="dev_central_panel" >
       <div id="div_search_box">
             <searchbox :dblist="pdblist" />
       </div>
+
+     <div id="cruds-grid" tabindex="-1">
+         <div id="div_pager">
+            <div class="pgr-bar pgr-border pgr-round" >
+               <a tabindex="1" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" 
+                  v-for="(pgNum, index) in this.pagesCount" v-bind:href="generatePageNum(pgNum)">
+                  <span v-if="pgNum == pageNum" style="background-color:#ddd;"> <strong>{{ pgNum }}</strong> </span>
+                  <span v-else="pgNum == pageNum">{{ pgNum }}</span>
+               </a>
+            </div>
+         </div>
+
+         <cruds-grid-sf :data.sync="gridData" :columns="gridColumns" :filter-key="searchQuery"></cruds-grid-sf>
+
+         <div id="div_page_sizer">
+            <div class="pgr-show-inline-block">
+               <div class="pgr-bar pgr-border pgr-round">
+                  <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
+                     v-bind:href="generatePageSize(pgSize)">
+                     <span v-if="pgSize == pageSize" style="background-color:#ddd;"> <strong>{{ pgSize }}</strong> </span>
+                     <span v-else="pgSize == pageSize">{{ pgSize }}</span>
+                  </a>
+               </div>
+            </div>
+         </div>
+     </div>
+
    </div>
 
-   <div id="div_table" style="clear:both; padding-top: 10%;">
-      <table id="egrid" tabindex="1" ><thead><tr><th></th> <th tabindex="1" id="th-id" class="">id<span class="arrow asc"></span></th><th tabindex="1" id="th-category" class="">category<span class="arrow asc"></span></th><th tabindex="1" id="th-status" class="">status<span class="arrow asc"></span></th><th tabindex="1" id="th-prio" class="active">prio<span class="arrow asc"></span></th><th tabindex="1" id="th-weight" class="">weight<span class="arrow asc"></span></th><th tabindex="1" id="th-name" class="">name<span class="arrow asc"></span></th><th tabindex="1" id="th-description" class="">description<span class="arrow asc"></span></th></tr> </thead> 
-      <tbody><tr class="cls_odd"><td><a href="javascript:void(0);" class="v-btn v-btn--flat v-btn--icon theme--light grey--text" id="btn-del-180907143644"><div class="v-btn__content"><i aria-hidden="true" class="v-icon material-icons theme--dark">delete</i></div></a></td><td><div tabindex="1">180907143644</div></td><td><div><div id="category-180907143644" contenteditable="true" class="cls_cnt_edtble" tabindex="1">refactor</div></div></td><td><div><div id="status-180907143644" contenteditable="true" class="cls_cnt_edtble" tabindex="1">03-wip</div></div></td><td><div><div id="prio-180907143644" contenteditable="true" class="cls_cnt_edtble" tabindex="1">1</div></div></td><td><div><div id="weight-180907143644" contenteditable="true" class="cls_cnt_edtble" tabindex="1">9</div></div></td><td><div><div id="name-180907143644" contenteditable="true" class="cls_cnt_edtble" tabindex="1">create entirely new page</div></div></td><td><div><div id="description-180907143644" contenteditable="true" class="cls_cnt_edtble" tabindex="1">The whole gridding concepts needs refactoring, because of the lessons learned while implementing vue in the beginning - use the factory to create an as=grid page, which will be the final editable grid with the omibox</div></div></td></tr>
-</div>
-   <div>
-   %= include 'controls/list-grid/xt/search-box.xt'
 
-<script id="global-msg">
+<script id="all">
    %= include 'controls/list-grid/js/global-msg.js'
-// if ( document.getElementById("spn_msg") ) {
-</script>
-<script id="srchbox">
-   %= include 'controls/list-grid/js/search-box.js'
-// }
-</script>
-<script id="div-search-box">
-   %= include 'controls/list-grid/js/div-search-box.js'
+
+ if ( document.getElementById("spn_msg") ) {
+      %= include 'controls/list-grid/js/btn-del.js'
+      %= include 'controls/list-grid/js/btn-new.js'
+      %= include 'controls/list-grid/js/editable.js'
+      %= include 'controls/list-grid/js/search-box.js'
+      %= include 'controls/list-grid/js/div-search-box.js'
+      %= include 'controls/list-grid/js/cruds-grid-sf.js'
+      %= include 'controls/list-grid/js/cruds-grid.js'
+ }
+
 </script>
 
-   <!--
-      <p> fix me when ready 
-      
-       <%= $msg =%>
-       <%= $as =%>
-       <%= $db =%>/create/<%= $item =%>
-       <p><%== $list_control =%></p>
-       </p>
-   </div>
-  -->

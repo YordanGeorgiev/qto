@@ -1,6 +1,12 @@
+#div_grid_tmpl {
+   max-width: 100%;
+}
+
 table {
+   margin-top: 3% ; 
+   clear: both; 
    table-layout:fixed;
-   max-width: 90%;
+   max-width: 100%;
 	border: 4px solid #F0F8FF ; 
 	border-radius: 9px;
 	background-color: #fff;
@@ -101,4 +107,11 @@ th:focus {
 }
 #frm_srch {
 	display: block;
+}
+
+#btnNew{
+    position: fixed;
+    left: 1%;
+    top: 7%;
+    color: white;
 }
