@@ -1,12 +1,5 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
-src/perl/issue_tracker/lib/IssueTracker/Controller/Query.pm
-src/perl/issue_tracker/public/poc/autocomplete
-src/perl/issue_tracker/public/poc/autocomplete/searchbox-autocomplete.css
-src/perl/issue_tracker/public/poc/autocomplete/div-searchbox.js
-src/perl/issue_tracker/public/poc/autocomplete/autocomplete.html
-
-# ---
 src/perl/issue_tracker/templates/controls/list-grid
 src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-grid.css
@@ -29,6 +22,12 @@ src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html
 src/perl/issue_tracker/templates/layouts/site.html.ep
 # ---
 src/perl/issue_tracker/public/package.json
+# ---
+src/perl/issue_tracker/lib/IssueTracker/Controller/Query.pm
+src/perl/issue_tracker/public/poc/autocomplete
+src/perl/issue_tracker/public/poc/autocomplete/searchbox-autocomplete.css
+src/perl/issue_tracker/public/poc/autocomplete/div-searchbox.js
+src/perl/issue_tracker/public/poc/autocomplete/autocomplete.html
 # ---
 src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
