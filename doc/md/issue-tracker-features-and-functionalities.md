@@ -12,6 +12,8 @@ Table of Contents
     * [1.6. Process](#16-process)
   * [2. UI FEATURES](#2-ui-features)
     * [2.1. Support for different projects](#21-support-for-different-projects)
+      * [2.1.1. Change projects via url](#211-change-projects-via-url)
+      * [2.1.2. Change projects by the :in operator](#212-change-projects-by-the-in-operator)
     * [2.2. Common listing features](#22-common-listing-features)
       * [2.2.1. Listing url syntax](#221-listing-url-syntax)
       * [2.2.2. Successful execution](#222-successful-execution)
@@ -172,6 +174,10 @@ This section describes the User Interface ( UI ) features of the issue-tracker a
 
 ### 2.1. Support for different projects
 You could access multiple projects by accessing their project databases as the first URI path component provided that the web server has tcp access to those databases. 
+
+    
+
+#### 2.1.1. Change projects via url
 The following 2 different databases are actually the tst and dev databases of the issue-tracker, but of course the database names could be any valid other database names:
 
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/dev_issue_tracker/list/yearly_issues?as=table&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
@@ -179,7 +185,6 @@ http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/dev_issue_tracker/
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/tst_issue_tracker/list/yearly_issues?as=table&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
 Note the upper left corner of the page contains the name of your current project database. 
-
 
     # access the issue-tracker's project development database
     http://host-name:3000/dev_issue_tracker/list/monthly_issues
@@ -189,6 +194,11 @@ Note the upper left corner of the page contains the name of your current project
     
     # access the aspark-starter project production database
     http://host-name:3000/prd_aspark_starter/list/monthly_issues
+
+#### 2.1.2. Change projects by the :in operator
+If you type the ":in &lt;&lt;database-name&gt;&gt;" you will get a drop down which will list the databases , to which your instance has access to, by chosing the database from the list and hitting enter you will be redirected to the same url by on the different database.
+
+    
 
 ### 2.2. Common listing features
 This section describes all the common listing related features. In the context of the issue-tracker's parley the "listing" is the ui list of control/(s) you get by using the following URL format:

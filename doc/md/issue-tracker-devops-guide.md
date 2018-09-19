@@ -75,6 +75,11 @@ Table of Contents
       * [9.14.5. Deployment to the test environment](#9145-deployment-to-the-test-environment)
       * [9.14.6. Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. ](#9146-check-that-all-the-files-in-the-deployment-package-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
       * [9.14.7. restart the application layer](#9147-restart-the-application-layer)
+  * [10. SYSTEM ADMINISTRATION AND MAINTENANCE OPERATIONS](#10-system-administration-and-maintenance-operations)
+    * [10.1. Known issues and workarounds](#101-known-issues-and-workarounds)
+    * [10.2. Morbo is stuck](#102-morbo-is-stuck)
+      * [10.2.1. Probable root cause](#1021-probable-root-cause)
+      * [10.2.2. Known solution and workaround](#1022-known-solution-and-workaround)
 
 
     
@@ -195,8 +200,7 @@ You backup a database with the following one-liner. Noe
 
     # obs you have to have the shell vars pre-loaded !!!
     # clear; doParseCnfEnvVars <<path-to-cnf-file>>
-    
-    mkdir -p $mix_data_dir/sql/pgsql/dbdumps/; pg_dump  --column-inserts --data-only $postgres_db_name -U ysg > $mix_data_dir/sql/pgsql/dbdumps/$postgres_db_name/$postgres_db_name.`date "+%Y%m%d_%H%M%S"`.insrt.dmp.sql ; ls -1 $mix_data_dir/sql/pgsql/dbdumps/$postgres_db_name/* | sort -nr
+    bash src/bash/issue-tracker/issue-tracker.sh -a backup-postgres-db
 
 ### 3.2. Restore a database
 You restore a database by first running the pgsql scripts of the project database and than restoring the insert data 
@@ -535,4 +539,50 @@ Deploy to the test environment as follows:
 Well just chain the both commands. 
 
     bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop ; bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
+
+## 10. SYSTEM ADMINISTRATION AND MAINTENANCE OPERATIONS
+
+
+    
+
+### 10.1. Known issues and workarounds
+
+
+    
+
+### 10.2. Morbo is stuck
+This one occurs quite often , especially when the application layer is restarted, but the server not 
+
+    # the error msg is 
+     [INFO ] 2018.09.14-10:23:14 EEST [issue-tracker][@host-name] [4426] running action :: mojo-morbo-start:doMojoMorboStart
+    (Not all processes could be identified, non-owned process info
+     will not be shown, you would have to be root to see it all.)
+    tcp        0      0 0.0.0.0:3001            0.0.0.0:*               LISTEN      6034/issue_tracker
+    tcp        0      0 0.0.0.0:3002            0.0.0.0:*               LISTEN      7626/issue_tracker
+    Can't create listen socket: Address already in use at /usr/local/share/perl/5.26.0/Mojo/IOLoop.pm line 130.
+     [INFO ] 2018.09.14-10:23:16 EEST [issue-tracker][@host-name] [4426] STOP FOR issue-tracker RUN with:
+     [INFO ] 2018.09.14-10:23:16 EEST [issue-tracker][@host-name] [4426] STOP FOR issue-tracker RUN: 0 0 # = STOP MAIN = issue-tracker
+    issue-tracker-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/issue-tracker/issue-tracker.0.4.9.dev.ysg] $
+
+#### 10.2.1. Probable root cause
+This one occurs quite often , especially when the application layer is restarted, but the server not 
+
+    # the error msg is 
+     [INFO ] 2018.09.14-10:23:14 EEST [issue-tracker][@host-name] [4426] running action :: mojo-morbo-start:doMojoMorboStart
+    (Not all processes could be identified, non-owned process info
+     will not be shown, you would have to be root to see it all.)
+    tcp        0      0 0.0.0.0:3001            0.0.0.0:*               LISTEN      6034/issue_tracker
+    tcp        0      0 0.0.0.0:3002            0.0.0.0:*               LISTEN      7626/issue_tracker
+    Can't create listen socket: Address already in use at /usr/local/share/perl/5.26.0/Mojo/IOLoop.pm line 130.
+     [INFO ] 2018.09.14-10:23:16 EEST [issue-tracker][@host-name] [4426] STOP FOR issue-tracker RUN with:
+     [INFO ] 2018.09.14-10:23:16 EEST [issue-tracker][@host-name] [4426] STOP FOR issue-tracker RUN: 0 0 # = STOP MAIN = issue-tracker
+    issue-tracker-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/issue-tracker/issue-tracker.0.4.9.dev.ysg] $
+
+#### 10.2.2. Known solution and workaround
+List the running perl processes which run the morbo and kill the instances
+
+    ps -ef | grep -i perl
+    
+    # be carefull what to kill 
+    kill -9 <<proc-I-know-is-the-one-to-kill>>
 
