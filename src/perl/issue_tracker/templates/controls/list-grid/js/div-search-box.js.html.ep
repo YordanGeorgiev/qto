@@ -5,13 +5,14 @@ Vue.component('div_search_box', {
   },
   data() {
       return {
-         pdblist: []
+           pdblist: []
+         , ptblist: []
          , globalSrch: ""
       }
   }
   , methods: {
-  fetchSSData: function (url_params) { // only data logic here !!!
-		if ( typeof url_params === "undefined" ) { url_params = { as:"etable" } }
+  fetchSSDataForDbs: function (url_params) { // only data logic here !!!
+		if ( typeof url_params === "undefined" ) { url_params = { as:"grid" } }
 
       return axios.get(("/prd_issue_tracker/select-databases") , { params: url_params } )
       .then(response => {
@@ -22,9 +23,9 @@ Vue.component('div_search_box', {
          return error ; 
       })
 	 }
-  , fetchSSDataUI: function (url_params) { // only UI logic here !!!
+  , fetchSSDataForDbsUI: function (url_params) { // only UI logic here !!!
       var self = this
-      return this.fetchSSData()
+      return this.fetchSSDataForDbs()
       .then( response => {
          if ( response.toString().startsWith('Error') ) {  // NOK 
             self.pdblist = [] ; 
@@ -36,6 +37,35 @@ Vue.component('div_search_box', {
       })
       .catch(function(error) {                              // NOK
          self.pdblist = [] ; 
+         window.alert(error.toString()) ; 
+      })
+   }
+  , fetchSSDataForTables: function (url_params) { // only data logic here !!!
+		if ( typeof url_params === "undefined" ) { url_params = { as:"grid" } }
+
+      return axios.get(("/<%== $db =%>/select-tables") , { params: url_params } )
+      .then(response => {
+         return response.data.dat.map(obj => obj.table_name);
+      })
+      .catch(function(error) {
+         console.error ( error.toString );
+         return error ; 
+      })
+	 }
+  , fetchSSDataForTablesUI: function (url_params) { // only UI logic here !!!
+      var self = this
+      return this.fetchSSDataForTables()
+      .then( response => {
+         if ( response.toString().startsWith('Error') ) {  // NOK 
+            self.ptblist = [] ; 
+            window.alert(response.toString()) ; 
+         }
+         else {                                             // OK 
+            self.ptblist = response ; 
+         }
+      })
+      .catch(function(error) {                              // NOK
+         self.ptblist = [] ; 
          window.alert(error.toString()) ; 
       })
    }
@@ -56,9 +86,10 @@ Vue.component('div_search_box', {
          }
       }
   }
-  , template: ` <searchbox :dblist="pdblist" />`
+  , template: ` <searchbox :dblist="pdblist" :tblist="ptblist" />`
   , mounted() {
-      this.fetchSSDataUI() ; 
+      this.fetchSSDataForDbsUI() ; 
+      this.fetchSSDataForTablesUI() ; 
       // start on forward slash focus the quick search input textbox 
       window.addEventListener('keyup', function(event) {
          if (event.keyCode == 55 ) { 

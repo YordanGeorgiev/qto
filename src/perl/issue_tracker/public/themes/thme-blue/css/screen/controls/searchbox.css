@@ -20,7 +20,7 @@
 }
 
 #inp_srch_box:focus{
-   width: 60%;
+   width: 80%;
    outline: none;
    border-color: #9ecaed;
    box-shadow: 0 0 0px #9ecaed;
@@ -28,7 +28,7 @@
    line-height: 22px; 
 }
 #inp_srch_box:hover {
-   width: 60%;
+   width: 80%;
    outline: none;
    border-color: #9ecaed;
    box-shadow: 0 0 0px #9ecaed;

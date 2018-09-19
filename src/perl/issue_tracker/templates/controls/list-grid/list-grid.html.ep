@@ -8,8 +8,6 @@
    <link rel="stylesheet" type="text/css" media="screen"  href="../../themes/thme-blue/css/screen/controls/searchbox.css" />
 % end
 
-
-
    %= include 'controls/list-grid/xt/search-box.xt'
    %= include 'controls/list-grid/xt/grid.xt'
 
