@@ -21,7 +21,7 @@ ok ( defined ( $objSetGetableChild ) , "$m" );
 
 
 $m = 'a child obj can set a value' ; 
-my $val_to_set = 'foobar' ; 
+my $val_to_set = 'something' ; 
 $objSetGetableChild->set('val_to_set' , $val_to_set );
 my $val_to_chk = $objSetGetableChild->get('val_to_set');
 ok ( $val_to_chk eq $val_to_set , "$m" );
