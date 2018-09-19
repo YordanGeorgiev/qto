@@ -1,4 +1,4 @@
--- DROP TABLE IF EXISTS principles ; 
+DROP TABLE IF EXISTS principles ; 
 
 SELECT 'create the "principles" table'
 ; 
@@ -9,11 +9,11 @@ SELECT 'create the "principles" table'
     , seq            integer NULL
     , prio           integer NULL
     , weight         integer NULL
-    , tags           varchar (4000) NOT NULL
     , category       varchar (200) NOT NULL
     , name           varchar (200) NOT NULL
     , description    varchar (4000) NOT NULL
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
+    , tags           varchar (4000) NULL
     , CONSTRAINT pk_principles_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE

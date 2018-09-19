@@ -124,6 +124,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
       # this basically restricts the application from creating no more than 100 new items per
       # minute IF there are ongoing requests, which FOR NOW should suffice ...
+      no warnings 'exiting' ; 
       for ( my $trialNum = 0 ; $trialNum < 100 ; $trialNum++ ) { 
          $id = $id + $trialNum ; 
          $str_sql = " 
@@ -131,11 +132,12 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          " ; 
          eval {
             $sth = $dbh->prepare($str_sql);  
-            #debug print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
+            # debug print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
             $sth->execute() ;
             last ; 
          } or next ; 
       } 
+      use warnings 'exiting' ; 
 
       binmode(STDOUT, ':utf8');
 

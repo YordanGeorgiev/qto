@@ -104,7 +104,7 @@ __END__
    # create the child
    my $objSetGetableChild = 'SetGetableChild'->new();
 
-   my $val_to_set = 'foobar' ; 
+   my $val_to_set = 'something' ; 
    $objSetGetableChild->set('val_to_set' , $val_to_set );
    my $val_to_chk = $objSetGetableChild->get('val_to_set');
 

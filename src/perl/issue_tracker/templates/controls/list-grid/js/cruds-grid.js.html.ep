@@ -73,36 +73,52 @@
             }
          }
          , fetchServerSideDataToUI: function(url_params) {
+
             if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
-            this.fetchServerSideData(url_params)
-            .then( data => {
-               this.gridData = data.dat ; 
-               this.pageSize = url_params.get('page-size') || 5 ; 
-               this.pageNum = url_params.get('page-num') || 1 ; 
-               var totalRSsize = data.met ; 
-               var remainder = totalRSsize % this.pageSize
-               var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
-               if ( remainder == 0 ) { toAdd = 0  }
-               this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
+               this.fetchServerSideData(url_params)
+               .then( data => {
+                  var dataType = ( typeof data)
+                  if ( dataType === 'string' ) {
+                     var msg = data 
+                     console.error(msg)
+                     setSpnMsgErrorText(msg)
+                  } else if ( dataType === 'undefined' ) {
+                     var msg = 'unexpected error occurred while fetching data !!!'
+                     console.error(msg)
+                     setSpnMsgErrorText(msg)
+                  } else {
+                     this.gridData = data.dat ; 
+                     this.pageSize = url_params.get('page-size') || 5 ; 
+                     this.pageNum = url_params.get('page-num') || 1 ; 
+                     var totalRSsize = data.met ; 
+                     var remainder = totalRSsize % this.pageSize
+                     var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
+                     if ( remainder == 0 ) { toAdd = 0  }
+                     this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
 
-               var oa = url_params.get("oa")
-               var od = url_params.get("od")
+                     var oa = url_params.get("oa")
+                     var od = url_params.get("od")
 
-               if ( oa !== null ) {
-                  this.$children[0].setAscSortBy( oa ) ; 
-               } else if ( od !== null ) {
-                  this.$children[0].setDescSortBy( od ) ; 
-               } else {
-                  this.$children[0].setAscSortBy("id")
-               }
-            })
-            .catch(function(error) {
-               if (typeof error !== 'undefined') {
-                 var errMsg = error.toString() 
-                 console.log(errMsg)
-                 setSpnMsgErrorText(errMsg);
-               }
-            }) 
+                     if ( oa !== null ) {
+                        this.$children[0].setAscSortBy( oa ) ; 
+                     } else if ( od !== null ) {
+                        this.$children[0].setDescSortBy( od ) ; 
+                     } else {
+                        this.$children[0].setAscSortBy("id")
+                     }
+                  }
+               })
+               .catch(function(error) {
+                  if (typeof error !== 'undefined') {
+                    var errMsg = error.toString() 
+                    setSpnMsgErrorText(errMsg);
+                    console.error(errMsg)
+                  } else {
+                    var msg = 'unexpected error occurred while fetching data !!!'
+                    setSpnMsgErrorText(msg)
+                    console.error(errMsg)
+                  }
+               }) 
 	  	   }
 	      , postNewServerSideId: function (dbid){
             return axios.post('/<%= $db =%>/create/<%= $item =%>', {
