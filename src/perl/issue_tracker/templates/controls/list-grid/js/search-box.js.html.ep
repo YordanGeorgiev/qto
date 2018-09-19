@@ -7,6 +7,11 @@ var Searchbox = {
       required: false,
       default: () => []
     },
+    tblist: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
     isAsync: {
       type: Boolean,
       required: false,
@@ -15,22 +20,12 @@ var Searchbox = {
   }
   , model: {
 	  prop: 'dblist',
-	  event: 'dbListChange'
-	},
-	computed: {
-		dblistLocal: {
-			get: function() {
-				return this.dblist
-			},
-			set: function(value) {
-				dblist = value ; 
-				this.$emit('dbListChange', value)
-			}
-		}
+	  prop: 'tblist',
+	  event: 'dblistChange'
 	}
   , data() {
     return {
-      isOpen: false
+        isOpen: false
       , results: []
       , globalSrch: ""
       , isLoading: false
@@ -39,60 +34,108 @@ var Searchbox = {
   },
   methods: {
    onChange() {
-      var globalSrch = this.globalSrch.replace(':in ' , '') ; 
+      var globalSrch = this.globalSrch.replace(':in ' , '').replace(':for ' , '')
       bus.$emit('searchBoxInputChanged', globalSrch );
-      if ( this.globalSrch.startsWith(':in ' ) ) {
+      var tokens = this.globalSrch.split(" ")
+      var lastWord = tokens[tokens.length - 1]
+      var secondLastWord = tokens[tokens.length - 2]
+      if ( lastWord === ':in' || secondLastWord === ':in' || lastWord === ':for' || secondLastWord === ':for') { 
          if (this.isAsync) {
             this.isLoading = true;
             this.filterResults();
          } else {
-            this.filterResults();
             this.isOpen = true;
+            this.filterResults();
+            this.filterResults();
          }
       }
     } 
     , filterResults() {
-         this.results = this.dblist.filter(item => {
-         var toSrch = this.globalSrch.toLowerCase().replace(':in ' , '')
-         return item.toLowerCase().indexOf(toSrch) > -1;
-      });
+         var tokens = this.globalSrch.split(" ")
+         var lastWord = tokens[tokens.length - 1]
+         var secondLastWord = tokens[tokens.length - 2]
+         if ( lastWord === ':in' || secondLastWord === ':in' ) { 
+            this.results = this.dblist
+               .filter(item => {
+                  var toSrch = lastWord.toLowerCase().replace(':in' , '')
+                  if ( toSrch === '' ) {
+                     return item ; 
+                  } else {
+                     return item.toLowerCase().indexOf(toSrch) > -1;
+                  }
+               })
+         }
+         else if ( lastWord === ':for' || secondLastWord === ':for' ) { 
+            this.results = this.tblist
+               .filter(item => {
+                  var toSrch = lastWord.toLowerCase().replace(':for' , '')
+                  if ( toSrch === '' ) {
+                     return item ; 
+                  } else {
+                     return item.toLowerCase().indexOf(toSrch) > -1;
+                  }
+               })
+         }
+      
     }
     , setResult(result) {
-         if ( typeof result !== 'undefined' ) {
-            if ( result === ':in undefined' ) {
-               this.globalSrch = ':in '
-            } else {
-               this.globalSrch = result;
-            }
-         }
-         else {
-            this.globalSrch = ':in '
-         }
-         this.isOpen = false;
+         this.globalSrch = this.globalSrch + " " + result
+    }
+    , setDropDownResult(result) {
+         this.globalSrch = this.globalSrch.substring(0, this.globalSrch.lastIndexOf(" "));
+         this.globalSrch = this.globalSrch + " " + result
     }
     , onArrowDown(evt) {
-         if (this.arrowCounter < this.results.length) {
+         if ( this.arrowCounter === this.results.length - 1 ) {
+            this.setDropDownResult( this.results[this.results.length - 1]) ; return ;
+         }
+         else if ( this.arrowCounter < this.results.length && this.arrowCounter > -1) {
             this.arrowCounter = this.arrowCounter + 1;
+            this.setDropDownResult(this.results[this.arrowCounter]); return
+         } else {
+            this.setDropDownResult(this.results[this.results.length -1]) ; return;
          }
     } 
     , onArrowUp() {
-         if (this.arrowCounter > 0) {
+         if ( this.arrowCounter === 0 ) {
+            this.setDropDownResult( this.results[0]); return;
+         }
+         else if ( this.arrowCounter < this.results.length && this.arrowCounter > -1) {
             this.arrowCounter = this.arrowCounter - 1;
+            this.setDropDownResult(this.results[this.arrowCounter]) ; return ;
+         } else {
+            this.setDropDownResult( this.results[0]) ; return ; 
          }
     }
     , onArrowRight(e) {
          this.isOpen = false;
-         this.setResult(":in " + this.results[this.arrowCounter])
+         this.setDropDownResult(this.results[this.arrowCounter])
     }
     , onArrowLeft(e) {
          this.isOpen = false;
-         this.setResult(":in " + this.results[this.arrowCounter])
+         this.setDropDownResult( this.results[this.arrowCounter])
     }
     , onEnter() {
+         if ( this.isOpen == true ) {
+            this.setDropDownResult(this.results[this.arrowCounter])
+            this.isOpen = false
+            return
+         }
          this.isOpen = false;
-         var regx = /[/]{1}[a-zA-Z0-9_]+[/]{1}list/gi; // match the db
-         var new_db = this.results[this.arrowCounter].toString() // redirect to the new db url
-         window.location.href = (window.location.toString()).replace(regx , "/" + new_db + "/list")  ; 
+         var newUri = window.location.toString()
+         var newDb = this.globalSrch.replace(/^(.*?):in\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
+         if ( newDb != this.globalSrch ) {
+           newUri = newUri.replace(/[/]{1}[a-zA-Z0-9_]+[/]{1}list/gi , "/" + newDb + "/list") 
+         } 
+         console.log("newDb: " + newDb)
+         var newTable = this.globalSrch.replace(/^(.*?\s*):for\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
+         if ( newTable != this.globalSrch ) {
+           newUri = newUri.replace(/[/]{1}list[/]{1}[a-zA-Z0-9_]+[?]/gi , "/list/" + newTable + '?') 
+         }
+         console.log("newTable: " + newTable )
+         console.log ( "should redirect to: " )
+         console.log ( "url: " + newUri )
+         window.location.href = newUri // and redirect !!!
     }
     , handleClickOutside(e) {
          if (!this.$el.contains(e.target)) {
@@ -104,6 +147,12 @@ var Searchbox = {
   , watch: {
     dblist: function(val, oldValue) {
       if (val.length !== oldValue.length) {  // actually compare them
+        this.results = val;
+        this.isLoading = false;
+      }
+    }
+    , tblist: function(val, oldValue) {
+      if (val.length !== oldValue.length) {  
         this.results = val;
         this.isLoading = false;
       }
