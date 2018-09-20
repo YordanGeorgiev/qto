@@ -120,11 +120,11 @@ var Searchbox = {
     }
     , onEnter() {
          if ( this.isOpen == true ) {
-            var indx = this.arrowCounter
-            if ( typeof indx != 'undefined') {
-               this.setDropDownResult(this.results[this.arrowCounter])
-            } else {
+            var indx = Number(this.arrowCounter)
+            if ( typeof indx === 'undefined' || this.results.length === 1 ) {
                this.setDropDownResult(this.results[0])
+            } else {
+               this.setDropDownResult(this.results[this.arrowCounter])
             }
             this.isOpen = false
             return
