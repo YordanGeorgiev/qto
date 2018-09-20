@@ -14,23 +14,23 @@
 
    <div id="dev_central_panel" >
 
-     <div id="cruds-grid" tabindex="-1">
+     <div id="cruds-grid" tabindex="2">
          <div id="div_pager">
             <div class="pgr-bar pgr-border pgr-round" >
 					<span v-for="(pgNum, index) in this.pagesCount">	
 						<span v-if="(pgNum < Number(pageNum)+7) && (pgNum > Number(pageNum)-5)">
-							<a tabindex="1" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" v-bind:href="generatePageNum(pgNum)">
+							<a tabindex="2" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" v-bind:href="generatePageNum(pgNum)">
 								<span v-if="pgNum == pageNum" style="background-color:#ddd;"> <strong>{{pgNum}}</strong> </span>
 								<span v-else="pgNum == pageNum">{{pgNum}}</span>
 							</a>
 						</span>
 						<span v-else-if="pgNum == Number(pageNum)+7">
-							<a tabindex="1" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" v-bind:href="generatePageNum(pgNum)">
+							<a tabindex="2" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" v-bind:href="generatePageNum(pgNum)">
 								<span>&gt;&gt</span>
 							</a>
 						</span>
 						<span v-else-if="pgNum == Number(pageNum)-5">
-							<a tabindex="1" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" v-bind:href="generatePageNum(pgNum)">
+							<a tabindex="2" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" v-bind:href="generatePageNum(pgNum)">
 								<span>&lt;&lt</span>
 							</a>
 						</span>

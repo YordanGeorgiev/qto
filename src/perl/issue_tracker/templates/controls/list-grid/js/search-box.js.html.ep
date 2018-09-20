@@ -46,7 +46,6 @@ var Searchbox = {
          } else {
             this.isOpen = true;
             this.filterResults();
-            this.filterResults();
          }
       }
     } 
@@ -57,22 +56,22 @@ var Searchbox = {
          if ( lastWord === ':in' || secondLastWord === ':in' ) { 
             this.results = this.dblist
                .filter(item => {
-                  var toSrch = lastWord.toLowerCase().replace(':in' , '')
-                  if ( toSrch === '' ) {
+                  var to_srch = lastWord.toLowerCase().replace(':in' , '')
+                  if ( to_srch === '' ) {
                      return item ; 
                   } else {
-                     return item.toLowerCase().indexOf(toSrch) > -1;
+                     return item.toLowerCase().indexOf(to_srch) > -1;
                   }
                })
          }
          else if ( lastWord === ':for' || secondLastWord === ':for' ) { 
             this.results = this.tblist
                .filter(item => {
-                  var toSrch = lastWord.toLowerCase().replace(':for' , '')
-                  if ( toSrch === '' ) {
+                  var to_srch = lastWord.toLowerCase().replace(':for' , '')
+                  if ( to_srch === '' ) {
                      return item ; 
                   } else {
-                     return item.toLowerCase().indexOf(toSrch) > -1;
+                     return item.toLowerCase().indexOf(to_srch) > -1;
                   }
                })
          }
@@ -109,7 +108,11 @@ var Searchbox = {
     }
     , onArrowRight(e) {
          this.isOpen = false;
-         this.setDropDownResult(this.results[this.arrowCounter])
+         if ( typeof indx != 'undefined') {
+            this.setDropDownResult(this.results[this.arrowCounter])
+         } else {
+            this.setDropDownResult(this.results[0])
+         }
     }
     , onArrowLeft(e) {
          this.isOpen = false;
@@ -117,7 +120,12 @@ var Searchbox = {
     }
     , onEnter() {
          if ( this.isOpen == true ) {
-            this.setDropDownResult(this.results[this.arrowCounter])
+            var indx = this.arrowCounter
+            if ( typeof indx != 'undefined') {
+               this.setDropDownResult(this.results[this.arrowCounter])
+            } else {
+               this.setDropDownResult(this.results[0])
+            }
             this.isOpen = false
             return
          }
