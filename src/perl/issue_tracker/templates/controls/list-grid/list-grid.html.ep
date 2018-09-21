@@ -14,7 +14,7 @@
 
    <div id="dev_central_panel" >
 
-     <div id="cruds-grid" tabindex="2">
+     <div id="cruds-grid">
          <div id="div_pager">
             <div class="pgr-bar pgr-border pgr-round" >
 					<span v-for="(pgNum, index) in this.pagesCount">	
