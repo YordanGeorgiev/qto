@@ -113,5 +113,18 @@ th:focus {
     position: fixed;
     left: 1%;
     top: 7%;
-    color: white;
+    color: white ;
+}
+#btnNew:hover{
+    position: fixed;
+    left: 1%;
+    top: 7%;
+    color: yellow ;
+}
+#btnNew:focus{
+    position: fixed;
+    left: 1%;
+    top: 7%;
+    color: yellow ;
+
 }
