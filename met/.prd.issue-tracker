@@ -1,16 +1,23 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
-src/perl/issue_tracker/lib/IssueTracker/Controller/Query.pm
-src/perl/issue_tracker/public/poc/autocomplete
-src/perl/issue_tracker/public/poc/autocomplete/searchbox-autocomplete.css
-src/perl/issue_tracker/public/poc/autocomplete/div-searchbox.js
-src/perl/issue_tracker/public/poc/autocomplete/autocomplete.html
-# ---
-src/perl/issue_tracker/templates/controls/list-egrid/list-egrid.html.ep
-src/perl/issue_tracker/templates/controls/list-egrid/btn-new.html.ep
-src/perl/issue_tracker/templates/controls/list-egrid/btn-del.html.ep
-src/perl/issue_tracker/templates/controls/list-egrid/editable.html.ep
-src/perl/issue_tracker/templates/controls/list-egrid/cruds-grid-sf.html.ep
+src/perl/issue_tracker/templates/controls/list-grid
+src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-grid.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/table.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/pager.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
+src/perl/issue_tracker/templates/controls/list-grid/xt/search-box.xt.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/xt/grid.xt.html.ep
+# --
+src/perl/issue_tracker/templates/controls/list-grid/js/div-search-box.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/search-box.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/global-msg.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/btn-del.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/btn-new.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/editable.js.html.ep
+# --
 src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep
 src/perl/issue_tracker/templates/controls/list-rgrid/list-rgrid.html.ep
@@ -18,6 +25,12 @@ src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html
 src/perl/issue_tracker/templates/layouts/site.html.ep
 # ---
 src/perl/issue_tracker/public/package.json
+# ---
+src/perl/issue_tracker/lib/IssueTracker/Controller/Query.pm
+src/perl/issue_tracker/public/poc/autocomplete
+src/perl/issue_tracker/public/poc/autocomplete/searchbox-autocomplete.css
+src/perl/issue_tracker/public/poc/autocomplete/div-searchbox.js
+src/perl/issue_tracker/public/poc/autocomplete/autocomplete.html
 # ---
 src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
@@ -283,6 +296,7 @@ src/sql/pgsql/dev_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/dev_issue_tracker/12.create-table-check_lists.sql
 src/sql/pgsql/dev_issue_tracker/14.create-table-ideas.sql
+src/sql/pgsql/dev_issue_tracker/15.create-table-skills.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/dev_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/dev_issue_tracker/97.create-table-test_create_table.sql

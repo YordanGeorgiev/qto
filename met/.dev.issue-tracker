@@ -18,11 +18,6 @@ src/perl/issue_tracker/templates/controls/list-grid/js/btn-del.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/btn-new.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/editable.js.html.ep
 # --
-src/perl/issue_tracker/templates/controls/list-egrid/list-egrid.html.ep
-src/perl/issue_tracker/templates/controls/list-egrid/btn-new.html.ep
-src/perl/issue_tracker/templates/controls/list-egrid/btn-del.html.ep
-src/perl/issue_tracker/templates/controls/list-egrid/editable.html.ep
-src/perl/issue_tracker/templates/controls/list-egrid/cruds-grid-sf.html.ep
 src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep
 src/perl/issue_tracker/templates/controls/list-rgrid/list-rgrid.html.ep
