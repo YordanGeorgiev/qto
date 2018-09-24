@@ -6,7 +6,7 @@
       <li class="loading" v-if="isLoading">
         Loading ...
       </li>
-      <li v-else v-for="(result, i) in results" :key="i" @click="setResult('in: ' + result)" 
+      <li v-else v-for="(result, i) in results" :key="i" @click="setDropDownResult(result)" 
          class="autocomplete-result" :class="{ 'is-active': i === arrowCounter }">
         {{ result }}
       </li>

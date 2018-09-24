@@ -34,7 +34,7 @@ var Searchbox = {
   },
   methods: {
    onChange() {
-      var globalSrch = this.globalSrch.replace(':in ' , '').replace(':for ' , '')
+      var globalSrch = this.globalSrch.replace(':in ' , '').replace(':for ' , '').replace(':pick','')
       bus.$emit('searchBoxInputChanged', globalSrch );
       var tokens = this.globalSrch.split(" ")
       var lastWord = tokens[tokens.length - 1]
@@ -79,7 +79,7 @@ var Searchbox = {
       
     }
     , setResult(result) {
-         this.globalSrch = this.globalSrch + " " + result
+         this.globalSrch = result
     }
     , setDropDownResult(result) {
          this.globalSrch = this.globalSrch.substring(0, this.globalSrch.lastIndexOf(" "));
@@ -108,27 +108,20 @@ var Searchbox = {
          }
     }
     , onArrowRight(e) {
-         this.isOpen = false;
-         if ( typeof indx != 'undefined') {
-            this.setDropDownResult(this.results[this.arrowCounter])
-         } else {
-            this.setDropDownResult(this.results[0])
-         }
+         var indx = (typeof x === 'undefined') ? 0 : this.arrowCounter;
+         this.setDropDownResult(this.results[indx])
+         this.isOpen = false; 
     }
     , onArrowLeft(e) {
-         this.isOpen = false;
-         this.setDropDownResult( this.results[this.arrowCounter])
+         var indx = (typeof x === 'undefined') ? 0 : this.arrowCounter;
+         this.setDropDownResult(this.results[indx])
+         this.isOpen = false; 
     }
     , onEnter() {
          if ( this.isOpen == true ) {
-            var indx = Number(this.arrowCounter)
-            if ( typeof indx === 'undefined' || this.results.length === 1 ) {
-               this.setDropDownResult(this.results[0])
-            } else {
-               this.setDropDownResult(this.results[this.arrowCounter])
-            }
-            this.isOpen = false
-            return
+            var indx = (typeof x === 'undefined') ? 0 : x;
+            this.setDropDownResult(this.results[indx])
+            this.isOpen = false ; return ; 
          }
          this.isOpen = false;
          var newUri = window.location.toString()
