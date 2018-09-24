@@ -7,7 +7,6 @@ package IssueTracker::Controller::PageFactory ;
    use IssueTracker::Controller::ListCloud ; 
    use IssueTracker::Controller::ListLabels ; 
    use IssueTracker::Controller::ListReadOnlyGrid ; 
-   use IssueTracker::Controller::ListEditableGrid ; 
    use IssueTracker::Controller::ListPrintTable ; 
 
 	our $appConfig 		= {} ; 
@@ -39,10 +38,6 @@ package IssueTracker::Controller::PageFactory ;
 		elsif ( $ui_type eq 'page/list-rgrid' ) {
 		   $package_file     = "IssueTracker/Controller/ListReadOnlyGrid.pm" ; 
 		   $objWtrControl    = "IssueTracker::Controller::ListReadOnlyGrid" ; 
-		}
-		elsif ( $ui_type eq 'page/list-egrid' ) {
-		   $package_file     = "IssueTracker/Controller/ListEditableGrid.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListEditableGrid" ; 
 		}
 		elsif ( $ui_type eq 'page/list-grid' ) {
 		   $package_file     = "IssueTracker/Controller/ListGrid.pm" ; 

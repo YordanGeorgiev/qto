@@ -104,7 +104,7 @@ sub doBuildListControl {
    my $objModel         = ${ shift @_ } ; 
    my $as               = shift ; 
 
-   my $ui_type          = 'page/list-egrid' ; 
+   my $ui_type          = 'page/list-grid' ; 
    my $ret              = 1 ; 
    my $list_control     = '' ; 
    my $objPageBuilder   = {} ; 
@@ -115,7 +115,6 @@ sub doBuildListControl {
       ,  'cloud'  => 'list-cloud' 
       ,  'grid'  => 'list-grid'
       ,  'table'  => 'list-rgrid'
-      ,  'etable'  => 'list-egrid'
       ,  'print-table'  => 'list-print-table'
    };
    $ui_type = 'page/' . $lables_pages->{ $as } ; 
@@ -153,7 +152,6 @@ sub doRenderPageTemplate {
       ,  'cloud'  => 'list-cloud' 
       ,  'table'  => 'list-rgrid' 
       ,  'grid'   => 'list-grid' 
-      ,  'etable' => 'list-egrid' 
       ,  'print-table' => 'list-print-table' 
    };
   
