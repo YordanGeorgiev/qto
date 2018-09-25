@@ -21,6 +21,7 @@ Table of Contents
     * [2.4. Application Layer run-state management](#24-application-layer-run-state-management)
       * [2.4.1. start the application layer](#241-start-the-application-layer)
       * [2.4.2. stop the application layer](#242-stop-the-application-layer)
+      * [2.4.3. Restart OS network service](#243-restart-os-network-service)
   * [3. BACKUP AND RESTORE](#3-backup-and-restore)
     * [3.1. Backup a database](#31-backup-a-database)
     * [3.2. Restore a database](#32-restore-a-database)
@@ -189,6 +190,11 @@ To stop the application layer in development mode use the morbo command ( debug 
     bash src/bash/issue-tracker/issue-tracker.sh -a mojo-hypnotoad-stop
     
     bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop
+
+#### 2.4.3. Restart OS network service
+Sometimes you might just need to restart the whole network service on Ubuntu:
+
+    sudo /etc/init.d/networking restart
 
 ## 3. BACKUP AND RESTORE
 

@@ -47,7 +47,7 @@ This document is part of the Issue-Tracker application documentation-set, which 
  - Installation Guide - a guide for installation of the application
  - Features and Functionalities - description of the current features and functionalities
 
-All the documents should be updated and redistributed in combination of the current version of the appilication and should be found under the following directories:
+All the documents should be updated and redistributed in combination of the current version of the application and should be found under the following directories:
 doc/md
 doc/pdf
 doc/xls
