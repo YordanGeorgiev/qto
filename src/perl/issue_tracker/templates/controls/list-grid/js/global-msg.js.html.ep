@@ -10,3 +10,4 @@
       var div_msg_style = document.getElementById('div_msg').style; div_msg_style.opacity = 1; 
       (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,1550)})();
    }
+

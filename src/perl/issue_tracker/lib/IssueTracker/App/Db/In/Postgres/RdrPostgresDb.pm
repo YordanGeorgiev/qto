@@ -734,23 +734,23 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       
       # debug print "from RdrPostgresDb.pm 678 : $str_sql \n" ; 
 
-      $sth = $dbh->prepare($str_sql);  
-      $sth->execute()
-            or $objLogger->error ( "$DBI::errstr" ) ;
-
-      $hsr2 = $sth->fetchall_hashref( 'guid' ) ; 
-      binmode(STDOUT, ':utf8');
-      $msg = DBI->errstr ; 
-
-      unless ( defined ( $msg ) ) {
-         $msg = 'SELECT OK for table: ' . "$table" ; 
-         $objModel->set('hsr2' , $hsr2 ); 
-         $ret = 0 ; 
-      } else {
-         $objLogger->doLogErrorMsg ( $msg ) ; 
-      }
+      eval { 
+         $sth = $dbh->prepare($str_sql);  
+         $sth->execute() or $msg = DBI->errstr ; 
+         $hsr2 = $sth->fetchall_hashref( 'guid' ) ; 
+         $objModel->set('hsr2' , $hsr2 );
+      };
+      if ( $@ or !scalar(%$hsr2)) { 
+         my $tmsg = $@ ; 
+         $objLogger->doLogErrorMsg ( "$msg" ) ;
+         $msg = "failed to get $table table data :: $tmsg" ; 
+         $ret = 400 ; 
+         return ( $ret , $msg , "" ) ; 
+      };
 
       return ( $ret , $msg ) ; 	
+      binmode(STDOUT, ':utf8');
+
    }
 
 	
