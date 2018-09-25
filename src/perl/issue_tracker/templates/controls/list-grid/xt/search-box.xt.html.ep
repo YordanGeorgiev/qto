@@ -1,7 +1,7 @@
 <script type="text/x-template" id="searchbox">
   <div class="autocomplete">
     <input id="inp_srch_box" tabindex="1" type="text" v-model="globalSrch" @input="onChange" 
-    @keyup.esc="isOpen=false" @keyup.down="onArrowDown" @keyup.up="onArrowUp" @keyup.right ="onArrowRight" @keyup.left="onArrowLeft" @keyup.enter="onEnter" />
+    @keyup.esc="isOpen=false" @keyup.down="onArrowDown" @keyup.up="onArrowUp" @keyup.right ="onArrowRight" @keyup.left="onArrowLeft" @keyup.enter="onEnter" @blur="isOpen=false"/>
     <ul id="searchbox-results" v-show="isOpen && results.length > 0" class="autocomplete-results">
       <li class="loading" v-if="isLoading">
         Loading ...

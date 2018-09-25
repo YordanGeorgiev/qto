@@ -78,8 +78,8 @@
                .then( data => {
                   var dataType = ( typeof data)
                   if ( dataType === 'string' ) {
-                     var msg = data 
-                     console.error(msg)
+                     var msg = data.split('::')[0] ; //show only the human readable part
+                     console.error(data) // but log in the console the devs part as well ...
                      setSpnMsgErrorText(msg)
                   } else if ( dataType === 'undefined' ) {
                      var msg = 'unexpected error occurred while fetching data !!!'
