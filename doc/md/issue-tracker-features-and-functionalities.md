@@ -13,7 +13,8 @@ Table of Contents
   * [2. UI FEATURES](#2-ui-features)
     * [2.1. Support for different projects](#21-support-for-different-projects)
       * [2.1.1. Change projects via url](#211-change-projects-via-url)
-      * [2.1.2. Change projects by the :in operator](#212-change-projects-by-the-in-operator)
+      * [2.1.2. Switch projects by the :in operator in the search-box](#212-switch-projects-by-the-in-operator-in-the-search-box)
+      * [2.1.3. Switch items by using the :for operator in the search-box](#213-switch-items-by-using-the-for-operator-in-the-search-box)
     * [2.2. Common listing features](#22-common-listing-features)
       * [2.2.1. Listing url syntax](#221-listing-url-syntax)
       * [2.2.2. Successful execution](#222-successful-execution)
@@ -34,8 +35,9 @@ Table of Contents
     * [2.5. List as etable page](#25-list-as-etable-page)
       * [2.5.1. table sorting](#251-table-sorting)
       * [2.5.2. Keyboard usability](#252-keyboard-usability)
-          * [2.5.2.1. Focus the quick search box](#2521-focus-the-quick-search-box)
-          * [2.5.2.2. Undo the edit on a cell](#2522-undo-the-edit-on-a-cell)
+          * [2.5.2.1. Navigability of the list page with the keyboard](#2521-navigability-of-the-list-page-with-the-keyboard)
+          * [2.5.2.2. Focus the quick search box](#2522-focus-the-quick-search-box)
+          * [2.5.2.3. Undo the edit on a cell](#2523-undo-the-edit-on-a-cell)
       * [2.5.3. New item creation ( CREATE )](#253-new-item-creation-(-create-))
           * [2.5.3.1. Successful execution](#2531-successful-execution)
           * [2.5.3.2. Error handling on db create error](#2532-error-handling-on-db-create-error)
@@ -195,8 +197,14 @@ Note the upper left corner of the page contains the name of your current project
     # access the aspark-starter project production database
     http://host-name:3000/prd_aspark_starter/list/monthly_issues
 
-#### 2.1.2. Change projects by the :in operator
+#### 2.1.2. Switch projects by the :in operator in the search-box
 If you type the ":in &lt;&lt;database-name&gt;&gt;" you will get a drop down which will list the databases , to which your instance has access to, by chosing the database from the list and hitting enter you will be redirected to the same url by on the different database.
+
+    
+
+#### 2.1.3. Switch items by using the :for operator in the search-box
+If you type the ":in &lt;&lt;item-name&gt;&gt;" you will get a drop down which will list the items , to which your instance has access to, by chosing the item from the list and hitting enter you will be redirected to the same url by on the different database.
+You can combine both the ":in &lt;&lt;db&gt;&gt;" and ":for &lt;&lt;item&gt;&gt;" operators at once. 
 
     
 
@@ -335,6 +343,7 @@ You can set the page size of the result set to be fetched from the database by u
 #### 2.3.4. paging - setting the table's page number
 If the result-set requested is larger than the page size you can go to the next page number by using the "&page-num=&lt;&lt;page-num&gt;&gt;" url parameter. 
 You could go to the next page number by clicking on the links just bellow the quick search textbox. The table control has UI for setting the table page number. 
+The pager shows 10 pages at a "pager page" so getting to the end of hundreds of pages ( depending of course on your page size ) is comparably easy. 
 You could quickly use the / char shortcut to focus to the quick search box and from there use the tab to quickly navigate to the desired page number. 
 
     
@@ -364,12 +373,17 @@ The whole table is easily scrollable whenever the cursor is on non-editable part
 
     
 
-##### 2.5.2.1. Focus the quick search box
+##### 2.5.2.1. Navigability of the list page with the keyboard
+The order of the list-as-grid page has been arranged so that the ui user cuold cycly trough the whole table with the tab easily. 
+
+    
+
+##### 2.5.2.2. Focus the quick search box
 You could focus the quick search by typing / IF you are not editing a cell. Thus the paging on the next cell is quite handy - as you could easily jump onto the quick search and with couple of tabs navigate to the next page. 
 
     
 
-##### 2.5.2.2. Undo the edit on a cell
+##### 2.5.2.3. Undo the edit on a cell
 If you were on a cell and types some text without leaving it, but you change your mind you could simply press the Esc key, which will restore the original content of the cell and you could proceed by tab to the next cell. 
 
     

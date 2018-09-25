@@ -120,9 +120,10 @@ load-by-txt-to-db-action)
     * [7.1. UI Performance](#71-ui-performance)
       * [7.1.1. UI Page load times](#711-ui-page-load-times)
       * [7.1.2. UI Page parts load times](#712-ui-page-parts-load-times)
-    * [7.2. Items search](#72-items-search)
-      * [7.2.1. Omnibox autocomplete for item-name](#721-omnibox-autocomplete-for-item-name)
-      * [7.2.2. Omnibox autocomplete for with &lt;&lt;attribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;](#722-omnibox-autocomplete-for-with-attribute-name-operator-attribute-value)
+    * [7.2. SEARCH](#72-search)
+      * [7.2.1. SearchBox autocomplete for changing the project ( databases ) ](#721-searchbox-autocomplete-for-changing-the-project-(-databases-)-)
+      * [7.2.2. SearchBox autocomplete for item-name](#722-searchbox-autocomplete-for-item-name)
+      * [7.2.3. SearchBox autocomplete for with &lt;&lt;attribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;](#723-searchbox-autocomplete-for-with-attribute-name-operator-attribute-value)
     * [7.3. Items listing](#73-items-listing)
       * [7.3.1. items listing in table format](#731-items-listing-in-table-format)
           * [7.3.1.1. Automatic issue items sequencing](#7311-automatic-issue-items-sequencing)
@@ -449,7 +450,7 @@ I wanto to be able to access the related objects to an issue by means of a link
 As a team member
 In order to be able to find all the items from a single entity
 I want to be search for those items from the UI of the application 
-by using a single omnibox UI interface. 
+by using a single SearchBox UI interface. 
 
 #### 2.3.2. Generic list for the searched items from a single entity ( table ) 
     
@@ -1025,27 +1026,34 @@ As an UI user of the issue-tracker application
 In order to enjoy the usage of the tool and interact efficiently   
 I wanto to  have a maximum page part load time on efficient network less than 0.5 seconds and preferably even less than 0.3 seconds
 
-### 7.2. Items search
+### 7.2. SEARCH
     
 
 As an issue-tracker ui user 
 In order to be able to search ANY items ( issues, problems, ideas etc. ) 
-I want to have a pop-up search omnibox with dimmed background providing with interactive autocomplete, which would assist me in specifying the search criteria for any item I want to list. 
+I want to have a pop-up search SearchBox with dimmed background providing with interactive autocomplete, which would assist me in specifying the search criteria for any item I want to list. 
 
-#### 7.2.1. Omnibox autocomplete for item-name
+#### 7.2.1. SearchBox autocomplete for changing the project ( databases ) 
+    
+
+As an issue-tracker ui user 
+In order to be able to quickly switch between projects of the issue-tracker application instance I have access to
+I wanto to be able to start typing with the ":in" operator and the System to autocomplete a dropdown of databases my instance has access to. 
+
+#### 7.2.2. SearchBox autocomplete for item-name
     
 
 As an issue-tracker ui user 
 In order to be able to quickly specify the name of the item I am searching for ( issue,problem,idea etc. )
-I want to be able to use a special natural-language like syntax in the autocomplete when the omnibox appears,
-by having the System displayed the "for:" string and starting providing me autocomplete for the items names in a dropbox list I could choose from. 
+I want to be able to use a special natural-language like syntax in the autocomplete when the SearchBox appears,
+by having the System displayed the ":for" string and starting providing me autocomplete for the items names in a dropbox list I could choose from. 
 
-#### 7.2.2. Omnibox autocomplete for with &lt;&lt;attribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;
+#### 7.2.3. SearchBox autocomplete for with &lt;&lt;attribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;
     
 
 As an issue-tracker ui user 
 In order to be able to quickly specify the search criteria to re-strict the already chosen item to search for 
-I want to be able to use a special natural-language like syntax in the autocomplete when the omnibox appears,
+I want to be able to use a special natural-language like syntax in the autocomplete when the SearchBox appears,
 by having the System displayed the "with:type-here-the-attribute op:type-here-operator val:type-here-the-value" string and starting providing me autocomplete for the filtering criteria. 
 
 ### 7.3. Items listing
