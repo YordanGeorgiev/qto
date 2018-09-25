@@ -37,7 +37,6 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListReadOnlyGrid.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/ListEditableGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListPrintTable.pm
 # ---
