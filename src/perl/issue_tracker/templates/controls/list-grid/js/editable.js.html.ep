@@ -3,14 +3,14 @@
                v-on:focus="focused" v-on:keyup.esc="revertChange()">{{ content }}</div>`,
      props: {
 		content: {
-			twoWay: true 
+			twoWay: true
 		}
-		,id: {}
+		, id: {}
 	  },
-     data: "",
+     oldData: "",
      watch: {
         content: function () {
-        this.content === 'null' ? this.$el.innerText = "" : this.$el.innerText = this.content;
+            this.content === 'null' ? this.$el.innerText = "" : this.$el.innerText = this.content;
         }
      },
      mounted() {
@@ -18,14 +18,14 @@
      },
      methods: {
        focused(ev) {
-         this.data = ev.target.textContent;
+         this.oldData = ev.target.textContent;
        }
        , emitChange (ev) {
-			this.$emit('update', ev.target.innerText,ev.target.id,this.data)
-			this.$forceUpdate();
+			  this.$emit('update', ev.target.innerText,ev.target.id,this.oldData)
+			  //this.$forceUpdate(); //it-180925092952 !!!
        }
        , revertChange() {
-     		this.$el.innerText = this.data ; 
+     		  this.$el.innerText = this.oldData ; 
        }
      }
    })
