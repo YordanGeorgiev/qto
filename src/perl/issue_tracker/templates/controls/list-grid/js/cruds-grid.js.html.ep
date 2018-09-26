@@ -49,6 +49,7 @@
 
             return axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
             .then(response => { 
+               //todo:ysg
                return response.data ; 
             })
             .catch(function(error) {
@@ -81,13 +82,12 @@
 
             this.fetchServerSideData(url_params)
             .then( data => {
-               var dataType = ( typeof data)
-               if ( dataType === 'string' ) {
-                  setSpnMsgErrorText(msg)
-               } else if ( dataType === 'undefined' ) {
+               var dataType = (typeof data)
+               if ( dataType === 'undefined' ) {
                   var msg = 'unexpected error occurred while fetching data !!!'
-                  console.error(msg)
-                  setSpnMsgErrorText(msg)
+                  setSpnMsgErrorText(data)
+               } else if ( dataType === 'string' ) {
+                  setSpnMsgErrorText(data)
                } else {
                   this.gridData = data.dat ; 
                   var totalRSsize = data.met ; 
@@ -113,11 +113,9 @@
                if (typeof error !== 'undefined') {
                  var errMsg = error.toString() 
                  setSpnMsgErrorText(errMsg);
-                 console.error(errMsg)
                } else {
                  var msg = 'unexpected error occurred while fetching data !!!'
                  setSpnMsgErrorText(msg)
-                 console.error(errMsg)
                }
             }) 
 	  	   }
@@ -146,7 +144,6 @@
                         url_params.delete(kv[0].toString()) ; 
                      }
                   }
-                  for(var kv of url_params.entries()) { console.log ( kv[0]+ '='+ kv[1] + '&') }
                   url_params.set("od" , "id");
                   url_params.set("page-size" , this.pageSize);
                   url_params.set("page-num" , 1);
@@ -162,6 +159,7 @@
                }
             })				
             .catch(function (error) {
+                  setSpnMsgErrorText(error.toString());
                   setSpnMsgErrorText(error.message);
             });
 
