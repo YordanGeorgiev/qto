@@ -1,6 +1,9 @@
    function setSpnMsgErrorText(txt){
       if ( typeof txt != 'undefined' ) {
-         txt = txt.split('::',txt)[0]
+         if ( txt.indexOf('::') !== -1 ) {
+            txt = txt.split('::',txt)[0]; //by convention human-redable-msg::technical-msg
+         }
+         console.error(txt);
       } else {
          txt = 'unknown error occurred !!!';
       }
