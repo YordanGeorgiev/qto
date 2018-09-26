@@ -11,7 +11,7 @@ use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
 use IssueTracker::App::IO::In::RdrUrlParams ; 
 
-our $module_trace   = 0 ;
+my $module_trace    = 0 ;
 our $appConfig      = {};
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgre';
@@ -31,6 +31,8 @@ sub doSelectItems {
    my $ret              = 0;
    my $msg              = 'unknown error during Select item';
    my $hsr2             = {};
+   my $http_code        = 200 ; 
+   my $rows_count       = 0 ; 
 
 	print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
@@ -71,21 +73,24 @@ sub doSelectItems {
    $self->res->headers->accept_language('fi, en');
    $self->res->headers->content_type('application/json; charset=utf-8');
 
+   unless ( $ret == 0 ) {
+      $http_code = $ret ; 
+   }
 
    if ( $ret == 0 ) {
       my $list = () ; # an array ref holding the converted hash ref of hash refs 
-      my $http_code = 200 ; 
-      my $rows_count = 0 ; 
+      $rows_count = 0 ; 
+      $http_code = 200 ; 
       $msg = "SELECT OK for table: $item" ; 
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
       ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($objModel->get('hsr2'));
 
       unless ( $ret == 0 ) {
-         $http_code = 400 ; 
          $list = '' ;
+         $http_code = $ret ; 
       }
-      
+       
       $self->res->code($http_code);
       $self->render( 'json' =>  { 
            'msg'   => $msg
@@ -94,33 +99,16 @@ sub doSelectItems {
          , 'met'   => $rows_count 
          , 'req'   => "GET " . $self->req->url->to_abs
       });
-   } elsif ( $ret == 400 ) {
-
-      $self->res->code(400);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 400, 
-         'req'   => "GET " . $self->req->url->to_abs
-      });
-   } elsif ( $ret == 2 ) {
-
-      $self->res->code(400);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 400, 
-         'req'   => "GET " . $self->req->url->to_abs
-      });
    } else {
-
-      $msg = 'unknown error has occurred' ; 
-      $self->res->code(400);
-      $self->render( 'json' => { 
-         'msg'   => $msg,
-         'ret' => 404, 
-         'req'   => "GET " . $self->req->url->to_abs
-      })
-      ;
-   }
+      $rows_count = 0 ; 
+      $self->res->code($http_code);
+      $self->render( 'json' =>  { 
+           'msg'   => $msg
+         , 'ret'   => 400
+         , 'met'   => $rows_count
+         , 'req'   => "GET " . $self->req->url->to_abs
+      });
+   } 
 }
 
 
@@ -214,6 +202,7 @@ sub doSelectDatabases {
 	my $db         = $self->stash('db');
 	my $rdbms_type = 'postgres';
    my $msg = 'unknown error during select-databases';
+   my $http_code  = 200 ; 
 
 	$appConfig	   = $self->app->get('AppConfig');
    my $objModel   = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
@@ -250,12 +239,12 @@ sub doSelectDatabases {
          , 'req'   => "GET " . $self->req->url->to_abs
       });
 
-   } elsif ( $ret == 400 ) {
-
-      $self->res->code(404);
+   } elsif ( $ret == 400 or $ret == 404) {
+      $http_code = $ret ; 
+      $self->res->code($http_code);
       $self->render( 'json' =>  { 
          'msg'   => $msg,
-         'ret'   => 404, 
+         'ret'   => $http_code , 
          'req'   => "GET " . $self->req->url->to_abs
       })
       ;
@@ -305,6 +294,11 @@ sub doSelectMeta {
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    ($ret, $msg) = $objRdrDb->doSelectTablesColumnList($item);
+   
+   # todo:ysg 
+   print "ret: $ret , msg: $msg \n" ; 
+   print "Select.pm" ; 
+
 
    $self->res->headers->accept_charset('UTF-8');
    $self->res->headers->accept_language('fi, en');
@@ -332,12 +326,12 @@ sub doSelectMeta {
          , 'req'   => "GET " . $self->req->url->to_abs
          , 'met'   => $rows_count
       });
-   } elsif ( $ret == 400 ) {
+   } elsif ( $ret == 400 or $ret == 404 ) {
 
-      $self->res->code(400);
+      $self->res->code($ret);
       $self->render( 'json' =>  { 
          'msg'   => $msg,
-         'ret'   => 400, 
+         'ret'   => $ret , 
          'req'   => "GET " . $self->req->url->to_abs
       });
    } elsif ( $ret == 2 ) {
