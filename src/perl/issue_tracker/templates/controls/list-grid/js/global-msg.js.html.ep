@@ -1,9 +1,15 @@
    function setSpnMsgErrorText(txt){
+      if ( typeof txt != 'undefined' ) {
+         txt = txt.split('::',txt)[0]
+      } else {
+         txt = 'unknown error occurred !!!';
+      }
       document.getElementById("div_msg").innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
       document.getElementById("div_msg").style.display="inline";
       document.getElementById("div_msg").style['box-shadow'] = "0 0 10px red";   
       document.getElementById("div_msg").style['background-color'] = "#FFFF00";   
       fadeAwayDivMsg();
+      
    }
 
    function fadeAwayDivMsg(){

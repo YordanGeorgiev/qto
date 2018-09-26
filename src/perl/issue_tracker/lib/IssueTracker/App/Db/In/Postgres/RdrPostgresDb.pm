@@ -713,16 +713,24 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 		return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql .= $where_clause_with if $where_clause_with ; 
-
-      # not all items have the prio attribute
-      $str_sql .= " ORDER BY " . $columns_to_order_by_asc . " ASC " if defined $columns_to_order_by_asc ; 
-      $str_sql .= " ORDER BY " . $columns_to_order_by_desc . " DESC " if defined $columns_to_order_by_desc ; 
-      
-      if ( $str_sql =~ m/ ORDER BY /g ) {
-         $str_sql .= ", id ASC " unless ( $str_sql =~ m/ORDER BY id / );
-      } else {
-         $str_sql .= " ORDER BY id ASC " ;
+      my $order_by = 'ORDER BY' ; 
+      if ( defined $columns_to_order_by_asc ) {
+         $str_sql .= " $order_by " ; 
+         foreach my $col ( split /,/ , $columns_to_order_by_asc ){
+            $str_sql .= " $col," ; 
+         }
+         chop($str_sql); $str_sql .= " ASC" ; 
       }
+      $order_by = ' , ' if ( $str_sql =~ m/ORDER BY/g ) ; 
+      if ( defined $columns_to_order_by_desc ) {
+         $str_sql .= " $order_by " ; 
+         foreach my $col ( split /,/ , $columns_to_order_by_desc ){
+            $str_sql .= "$col," ; 
+         }
+         chop($str_sql); $str_sql .= " DESC " ; 
+      }
+
+      #$str_sql .= " ORDER BY id ASC " unless ( $str_sql =~ m/ORDER BY/mgi ); 
 
       my $limit = $objModel->get('select.web-action.page-size' ) || 5 ; 
       my $page_num = $objModel->get('select.web-action.page-num' ) || 1 ; 
@@ -734,17 +742,25 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       
       # debug print "from RdrPostgresDb.pm 678 : $str_sql \n" ; 
 
+      $ret = 0 ; 
       eval { 
+         $msg = "" ; 
          $sth = $dbh->prepare($str_sql);  
-         $sth->execute() or $msg = DBI->errstr ; 
-         $hsr2 = $sth->fetchall_hashref( 'guid' ) ; 
+         $sth->execute() or $ret = 400 ; 
+         # :jump it-180919115859 
+         $msg = DBI->errstr if $ret  == 400 ; 
+         die "$msg" unless $ret == 0 ; 
+         $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
+         $msg = DBI->errstr if $ret  == 400 ; 
+         die "$msg" unless $ret == 0 ; 
+         $msg = ' no data found !!! ' unless ( keys %{$hsr2}) ; 
+         $ret = 404  unless ( keys %{$hsr2}) ; # no data http code
          $objModel->set('hsr2' , $hsr2 );
       };
       if ( $@ or !scalar(%$hsr2)) { 
-         my $tmsg = $@ ; 
+         my $tmsg = "$@" ; 
          $objLogger->doLogErrorMsg ( "$msg" ) ;
          $msg = "failed to get $table table data :: $tmsg" ; 
-         $ret = 400 ; 
          return ( $ret , $msg , "" ) ; 
       };
 

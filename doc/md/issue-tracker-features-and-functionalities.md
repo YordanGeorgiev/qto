@@ -389,7 +389,9 @@ If you were on a cell and types some text without leaving it, but you change you
     
 
 #### 2.5.3. New item creation ( CREATE )
-A new item could be added to the table in the ui and thus in the db table by clicking the plus button above the table ( which uses the google material design ui ). The new button has a fixed positon, thus available during scrolling as well from the same position. 
+A new item could be added to the table in the ui and thus in the db table by clicking the plus button above the table ( which uses the google material design ui ). 
+The new button has a fixed positon, thus available during scrolling as well from the same position. 
+The new button changes it's appears when focused via the keyboard, and can be pressed when in focus by hitting enter with the keyboard. 
 
     
 

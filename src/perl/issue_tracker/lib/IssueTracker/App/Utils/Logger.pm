@@ -272,9 +272,8 @@ if you don't export anything, such as for a purely object-oriented module.
 	# -----------------------------------------------------------------------------
 	sub doLogErrorMsg {
 		my $self = shift;
-      my $msg  = q{} ;   
+      my $msg  = "null error msg passed" ; 
       
-      $msg = "null info msg passed" unless @_ ;  
 		$msg = "@_" if @_ ; 
 
 		my $msgType = '[ERROR]';

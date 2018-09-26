@@ -65,6 +65,7 @@ Table of Contents
     * [4.3. System stability](#43-system-stability)
     * [4.4. System reliability](#44-system-reliability)
     * [4.5. Ease of use](#45-ease-of-use)
+    * [4.6. Security](#46-security)
   * [5. ETL AND INTEGRATIONS PERSPECTIVE](#5-etl-and-integrations-perspective)
     * [5.1. Database to json files data load](#51-database-to-json-files-data-load)
     * [5.2. Json files to db data load](#52-json-files-to-db-data-load)
@@ -271,14 +272,14 @@ I wanto to be able to manage the issues within those periods per period and moth
 
 As an team leader
 In order to keep my business data secure 
-I wanto to be able decide which users to which projects will have access to
+I wanto to be able decide which users to which projects will have access to the data my issue-tracker application has access to. 
 
 #### 1.3.1. Users management
     
 
 As an team leader
 In order to keep my business data secure 
-I wanto to be able decide which users to which projects will have access to
+I wanto to be able decide which users to which projects will 
 
 ##### 1.3.1.1. Add new users to a project
     
@@ -611,6 +612,13 @@ I wanto the System containing the issue-tracker application to perform its funct
 As the SysAdmin
 In order to be efficient and decrease the amount of errors
 I wanto to generally perform any command the system within the sysadmin scope via clean and memorable oneliners 
+
+### 4.6. Security
+    
+
+As the SysAdmin
+In order to be able to provide the best possible security level of operation for the Issue-tracker instance I am responisble for
+I want to have pre-defined and clear set of tasks and activities to perform related to the security. 
 
 ## 5. ETL AND INTEGRATIONS PERSPECTIVE
     

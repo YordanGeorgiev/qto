@@ -42,10 +42,15 @@ Table of Contents
       * [8.1.1. Execution time](#811-execution-time)
       * [8.1.2. Visual indication](#812-visual-indication)
     * [8.2. Clarity on errors](#82-clarity-on-errors)
-  * [9. DOCUMENTATION](#9-documentation)
-    * [9.1. Documentation completeness](#91-documentation-completeness)
-    * [9.2. Documentation and code base synchronization](#92-documentation-and-code-base-synchronization)
-    * [9.3. Full backup to the cloud in less than 5 minutes](#93-full-backup-to-the-cloud-in-less-than-5-minutes)
+  * [9. SECURITY](#9-security)
+    * [9.1. Authentication](#91-authentication)
+      * [9.1.1. Native authentication](#911-native-authentication)
+      * [9.1.2. Web SSO authentication](#912-web-sso-authentication)
+    * [9.2. Authrorisation](#92-authrorisation)
+  * [10. DOCUMENTATION](#10-documentation)
+    * [10.1. Documentation completeness](#101-documentation-completeness)
+    * [10.2. Documentation and code base synchronization](#102-documentation-and-code-base-synchronization)
+    * [10.3. Full backup to the cloud in less than 5 minutes](#103-full-backup-to-the-cloud-in-less-than-5-minutes)
 
 
     
@@ -269,12 +274,37 @@ The UI must present every error in a clear and concise way, so that the end-user
 
     
 
-## 9. DOCUMENTATION
+## 9. SECURITY
+An well operated instance of the issue-tracker application should have security corresponding to the data sensitivity it is operating on. 
+
+    
+
+### 9.1. Authentication
+Users should by authenticated via a standard implementation of web tokens. 
+
+    
+
+#### 9.1.1. Native authentication
+The issue-tracker should support native web tokens based authentication, by using as login a valid user e-mail and password, stored in the issue-tracker database. 
+
+    
+
+#### 9.1.2. Web SSO authentication
+The issue-tracker should support authorization
+
+    
+
+### 9.2. Authrorisation
+The SysAdmin of any instance should be able to add users to the issue-tracker instance. 
+
+    
+
+## 10. DOCUMENTATION
 
 
     
 
-### 9.1. Documentation completeness
+### 10.1. Documentation completeness
 Each running instance MUST have the following documentation set :
  - Features and Functionalities doc
  - DevOps Guide
@@ -286,12 +316,12 @@ in at least the md and pdf file formats.
 
     
 
-### 9.2. Documentation and code base synchronization
+### 10.2. Documentation and code base synchronization
 Each running instance MUST have its required documentation set up-to-date. No undocumented or hidden features are allowed. Should any be missing or misreported a new issue must be created to correct those with top priority. 
 
     
 
-### 9.3. Full backup to the cloud in less than 5 minutes
+### 10.3. Full backup to the cloud in less than 5 minutes
 A gull backup of sotware,configuration and data for the issue-tracker and/or another project database should be doable in less than 5 minutes. The backup should be easily searchable from the cloud as well. 
 
     

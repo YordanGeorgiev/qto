@@ -37,7 +37,6 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListReadOnlyGrid.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/ListEditableGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListPrintTable.pm
 # ---
@@ -290,7 +289,6 @@ src/sql/pgsql/dev_issue_tracker/04.create-table-yearly_issues.sql
 src/sql/pgsql/dev_issue_tracker/05.create-table-quinquennially_issues.sql
 src/sql/pgsql/dev_issue_tracker/06.create-table-decadally_issues.sql
 src/sql/pgsql/dev_issue_tracker/07.create-table-confs.sql
-src/sql/pgsql/dev_issue_tracker/08.create-table-procurement_items.sql
 src/sql/pgsql/dev_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/dev_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql
@@ -312,7 +310,6 @@ src/sql/pgsql/tst_issue_tracker/04.create-table-yearly_issues.sql
 src/sql/pgsql/tst_issue_tracker/05.create-table-quinquennially_issues.sql
 src/sql/pgsql/tst_issue_tracker/06.create-table-decadally_issues.sql
 src/sql/pgsql/tst_issue_tracker/07.create-table-confs.sql
-src/sql/pgsql/tst_issue_tracker/08.create-table-procurement_items.sql
 src/sql/pgsql/tst_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/tst_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/tst_issue_tracker/11.create-table-principles.sql
@@ -332,7 +329,6 @@ src/sql/pgsql/prd_issue_tracker/04.create-table-yearly_issues.sql
 src/sql/pgsql/prd_issue_tracker/05.create-table-quinquennially_issues.sql
 src/sql/pgsql/prd_issue_tracker/06.create-table-decadally_issues.sql
 src/sql/pgsql/prd_issue_tracker/07.create-table-confs.sql
-src/sql/pgsql/prd_issue_tracker/08.create-table-procurement_items.sql
 src/sql/pgsql/prd_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/prd_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/prd_issue_tracker/11.create-table-principles.sql

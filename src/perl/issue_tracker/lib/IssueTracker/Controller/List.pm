@@ -33,7 +33,7 @@ sub doListItems {
 
    my $ret              = 1 ; 
    my $msg              = '' ; 
-   my $as               = 'table' ; # defines the form of the list control 
+   my $as               = 'grid' ; # defines the form of the list control 
    my $list_control     = '' ; 
    my $refObjModel      = {} ; 
 
@@ -58,8 +58,12 @@ sub doSetPageMsg {
    my $ret        = shift ; 
    my $msg        = shift ; 
 
-   $msg = '<span id="spn_err_msg">' . $msg . '</span>' unless $ret == 0 ; 
-   $msg = '<span id="spn_msg">' . $msg . '</span>' if $ret == 0 ; 
+   unless ( $ret == 0 ) {
+      $msg = (split '::' , $msg)[0] ; 
+      $msg = '<span id="spn_err_msg">' . $msg . '</span>' ; 
+   } else {
+      $msg = '<span id="spn_msg">' . $msg . '</span>' ; 
+   }
 
    $self->res->code(400) unless $ret == 0 ; 
 
