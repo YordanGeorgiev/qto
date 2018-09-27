@@ -56,7 +56,7 @@ our $objModel = {} ;
       my $to_hide    = shift ; 
       my $msg        = shift ; 
 
-      my $ret        = 1 ; 
+      my $ret        = 404 ; 
 
       if ( defined ( $to_hide ) ) {
          my @hides = split ( ',' , $to_hide ) ; 

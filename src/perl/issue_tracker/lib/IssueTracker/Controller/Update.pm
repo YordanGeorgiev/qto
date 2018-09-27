@@ -68,7 +68,7 @@ sub doUpdateItemBySingleCol {
    if ( $ret == 0 ) {
       my $http_code = 200 ; 
       my $rows_count = 0 ; 
-      $msg = "Update OK for table: $item" ; 
+      $msg = '' ; 
 
       $self->res->code($http_code);
       $self->render( 'json' =>  { 
@@ -77,7 +77,7 @@ sub doUpdateItemBySingleCol {
          , 'req'   => "POST " . $self->req->url->to_abs
       });
    } elsif ( $ret == 400 ) {
-
+      $msg = 'update failed :: ' . $msg ; 
       $self->res->code(400);
       $self->render( 'json' =>  { 
            'msg'   => $msg
@@ -86,9 +86,10 @@ sub doUpdateItemBySingleCol {
       });
    } elsif ( $ret == 2 ) {
 
+      $msg = 'update failed :: ' . $msg ; 
       $self->res->code(400);
       $self->render( 'json' =>  { 
-         'msg'   => $msg
+          'msg'   => $msg
          ,'ret'   => 400
          ,'req'   => "POST " . $self->req->url->to_abs
       });
@@ -97,6 +98,7 @@ sub doUpdateItemBySingleCol {
       my $post_msg = ' while updating the "' . $perl_hash->{'attribute'} . '" attribute value ' ; 
       $post_msg .= 'for the following id: ' . $perl_hash->{'id'} ; 
       $msg .= $post_msg ; 
+      $msg = ' the update failed ! :: ' . $msg ; 
       $self->res->code(400);
       $self->render( 'json' => { 
          'msg'   => $msg

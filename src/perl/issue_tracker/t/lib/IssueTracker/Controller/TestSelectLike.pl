@@ -14,7 +14,7 @@ my $appConfig = $t->app->get('AppConfig') ;
 # if the product instance id dev -> dev_issue_tracker
 # if the product instance id tst -> tst_issue_tracker
 my $db_name= $appConfig->{ 'postgres_db_name' } ; 
-my @tables = ( 'daily_issues' , 'weekly_issues' , 'monthly_issues' , 'yearly_issues' ) ; 
+my @tables = ( 'monthly_issues' , 'yearly_issues' ) ; 
 my $ua  = $t->ua ; 
 my $res = {} ; #a tmp result json string
 my $tm = '' ; 
@@ -39,13 +39,13 @@ for my $table ( @tables ) {
 
    # feature-id: d4592c2e-60a4-4078-b499-743423d66d94
 	foreach my $row ( @list ) {
-      #p $row ; 
+      p $row ; 
 		$tm = 'only rows with status="02-todo" are selected for '. "$table table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
 		ok ( $row->{'status'} eq '02-todo', $tm ) ; 
 	}
 
 	print "test a string like \n" ; 
-	$url_params = '?like-by=category&like-val=issue-tracker' ; 
+	$url_params = '?like-by=category&like-val=feature' ; 
 	print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
    $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
 	@list = @{$res->{'dat'}} ; 

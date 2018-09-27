@@ -753,14 +753,17 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
          $msg = DBI->errstr if $ret  == 400 ; 
          die "$msg" unless $ret == 0 ; 
-         $msg = ' no data found !!! ' unless ( keys %{$hsr2}) ; 
-         $ret = 404  unless ( keys %{$hsr2}) ; # no data http code
          $objModel->set('hsr2' , $hsr2 );
+         unless ( keys %{$hsr2}) {
+            $msg = ' no data for this search request !!! ' ;
+            $ret = 404 ;
+            die "$msg" unless $ret == 0 ; 
+         }
       };
       if ( $@ or !scalar(%$hsr2)) { 
          my $tmsg = "$@" ; 
          $objLogger->doLogErrorMsg ( "$msg" ) ;
-         $msg = "failed to get $table table data :: $tmsg" ; 
+         $msg = "failed to get $table table data :: $tmsg" unless $ret == 404 ; 
          return ( $ret , $msg , "" ) ; 
       };
 

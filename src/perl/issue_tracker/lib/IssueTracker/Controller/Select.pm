@@ -48,6 +48,7 @@ sub doSelectItems {
       $self->render( 'json' =>  { 
          'msg'   => $msg,
          'ret'   => 400, 
+         'met'   => 0,
          'req'   => "GET " . $self->req->url->to_abs
       });
       return ; 
@@ -59,6 +60,7 @@ sub doSelectItems {
       $self->render( 'json' =>  { 
          'msg'   => $msg,
          'ret'   => 400, 
+         'met'   => 0,
          'req'   => "GET " . $self->req->url->to_abs
       });
       return ; 
@@ -149,15 +151,18 @@ sub doSelectTables {
 	$self->res->headers->accept_language('fi, en');
 	$self->res->headers->content_type('application/json; charset=utf-8');
 
+   my $list = () ; # an array ref holding the converted hash ref of hash refs 
+
    if ( $ret == 0 ) {
 
-      my $list = () ; # an array ref holding the converted hash ref of hash refs 
       $objModel->set('select.web-action.o', 'row_id' );
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
       ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2') , '>' );
+   }
 
       $self->res->headers->content_type('application/json; charset=utf-8');
+   if ( $ret == 0 ) {
       $self->res->code(200);
       $self->render( 'json' =>  { 
            'msg'   => $msg
@@ -165,7 +170,6 @@ sub doSelectTables {
          , 'ret'   => 200
          , 'req'   => "GET " . $self->req->url->to_abs
       });
-
    } elsif ( $ret == 400 ) {
 
       $self->res->code(404);
