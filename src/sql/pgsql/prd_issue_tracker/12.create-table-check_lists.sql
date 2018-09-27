@@ -11,6 +11,7 @@ SELECT 'create the "check_lists" table'
     , category       varchar (200) NOT NULL DEFAULT 'type the category ...'
     , name           varchar (200) NOT NULL DEFAULT 'type the name ...'
     , description    varchar (4000)
+    , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_check_lists_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
@@ -30,8 +31,6 @@ SELECT 'show the columns of the just created table'
    ORDER  BY attnum
    ; 
 
---The trigger:
-CREATE TRIGGER trg_set_update_time_on_check_lists BEFORE UPDATE ON check_lists FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
 select tgname
 from pg_trigger

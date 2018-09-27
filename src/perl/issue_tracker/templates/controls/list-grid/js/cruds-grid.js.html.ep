@@ -168,6 +168,7 @@
             var arr = id.split('-')
             var col = arr[0]
             var dbid = arr[1]
+            var ret = 1
          
             if ( !content.trim() ) { content = "null" }
 
@@ -178,6 +179,7 @@
             })
             .then( 
                response => {
+                  document.getElementById(id).innerHTML= content
                   newCntIndx = this.gridData.findIndex(obj => obj.id == dbid);
                   this.gridData[newCntIndx][col] = content; // it-180920075303 !!!
                   oldCntIndx = this.gridData.findIndex(obj => obj[col] == oldValue);
@@ -185,11 +187,11 @@
                }
             )
             .catch(function (error) {
+               document.getElementById(id).innerHTML= oldValue
                if (typeof error !== 'undefined') {
                  var errMsg = error.response.data.msg
                  setSpnMsgErrorText(errMsg);
                }
-               document.getElementById(id).innerHTML= oldValue
             });
           }
           , deleteItem (id) {

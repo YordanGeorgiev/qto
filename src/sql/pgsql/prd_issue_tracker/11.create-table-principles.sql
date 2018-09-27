@@ -5,8 +5,6 @@ SELECT 'create the "principles" table'
    CREATE TABLE principles (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , level          integer NULL
-    , seq            integer NULL
     , prio           integer NULL
     , weight         integer NULL
     , category       varchar (200) NOT NULL
