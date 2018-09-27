@@ -21,8 +21,8 @@
          this.oldData = ev.target.textContent;
        }
        , emitChange (ev) {
-			  this.$emit('update', ev.target.innerText,ev.target.id,this.oldData)
-			  //this.$forceUpdate(); //it-180925092952 !!!
+			  this.$emit('update', ev.target.innerText,ev.target.id,this.oldData) // parent's job !!!
+           //ev.preventDefault() //it-180925092952 !!!
        }
        , revertChange() {
      		  this.$el.innerText = this.oldData ; 
