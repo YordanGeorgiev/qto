@@ -182,8 +182,8 @@
                   document.getElementById(id).innerHTML= content
                   newCntIndx = this.gridData.findIndex(obj => obj.id == dbid);
                   this.gridData[newCntIndx][col] = content; // it-180920075303 !!!
-                  oldCntIndx = this.gridData.findIndex(obj => obj[col] == oldValue);
-                  this.gridData[oldCntIndx][col] = oldValue; // it-180920075303 !!!
+                  // oldCntIndx = this.gridData.findIndex(obj => obj[col] == oldValue);
+                  // this.gridData[oldCntIndx][col] = oldValue; // it-180920075303 !!!
                }
             )
             .catch(function (error) {
