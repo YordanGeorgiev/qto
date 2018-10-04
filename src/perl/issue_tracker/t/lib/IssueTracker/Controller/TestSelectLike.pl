@@ -40,8 +40,8 @@ for my $table ( @tables ) {
    # feature-id: d4592c2e-60a4-4078-b499-743423d66d94
 	foreach my $row ( @list ) {
       p $row ; 
-		$tm = 'only rows with status="02-todo" are selected for '. "$table table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
-		ok ( $row->{'status'} eq '02-todo', $tm ) ; 
+		$tm = 'only rows with status="02-todo%" are selected for '. "$table table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
+		ok ( $row->{'status'} =~ m/02-todo/g, $tm ) ; 
 	}
 
 	print "test a string like \n" ; 
@@ -53,7 +53,7 @@ for my $table ( @tables ) {
    # feature-guid: 3c43addf-bc2a-4eed-b4a5-040e9bd9dc75
 	foreach my $row ( @list ) {
 		$tm = "all the retrieved rows of the the table: $table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ;
-		ok ( $row->{'category'} =~ m/issue-tracker/g , $tm ) ; 
+		ok ( $row->{'category'} =~ m/feature/g , $tm ) ; 
 	}
 #
 # feature-guid: dfd70012-bc52-4c8a-860f-a760d77f50ad

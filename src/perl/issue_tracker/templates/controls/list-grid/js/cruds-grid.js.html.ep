@@ -49,7 +49,6 @@
 
             return axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
             .then(response => { 
-               //todo:ysg
                return response.data ; 
             })
             .catch(function(error) {

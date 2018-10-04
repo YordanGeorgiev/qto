@@ -97,11 +97,11 @@ sub doSetWithUrlParams {
 
    foreach my $with ( @$with_params ) {
    
-      # debug print "from RdrUrlParams.pm 82 with: $with \n" ; 
 
       if ( $with =~ m/(.*?)[-](.*?)[-](.*)/g ) {
          push @with_cols , $1 ; 
-         if ( $3 =~ m/[%]/g ) {
+         #if ( $3 =~ m/(.*?)%(.*?)/g ) { perl bug ?! each second is different ??? ...
+         if ( index($3, '%') != -1 ) {
             push @with_ops , 'like' ; 
             push @with_vals , $3 ; 
          } else {

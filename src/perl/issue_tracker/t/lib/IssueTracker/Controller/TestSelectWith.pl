@@ -69,22 +69,24 @@ for my $row ( @$tables ) {
       $res = $ua->get($url)->result->json ; 
       my $list = $res->{'dat'} ; 
 
-      foreach my $row ( @$list) {
-         # not all the tables have the prio attribute
-         $tm = "only status=02-todo  are selected for $url: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
-         ok ( $row->{'status'} eq '02-todo', $tm ) ; 
+      if ( $list ) {
+         foreach my $row ( @$list) {
+            # not all the tables have the prio attribute
+            $tm = "only status=02-todo  are selected for $url: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
+            ok ( $row->{'status'} eq '02-todo', $tm ) ; 
+         }
       }
       
-      $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio,status&with=status-like-03-%25' ; 
-      $t->get_ok($url )->status_is(200) ; 
+      $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio,status&with=status-like-0%25' ; 
+      $t->get_ok($url )->status_is(200) ;
 
       $res = $ua->get($url)->result->json ; 
       $list = $res->{'dat'} ; 
 
       foreach my $row ( @$list) {
          # not all the tables have the prio attribute
-         $tm = "test for like - only status starting with 03  are selected for $url: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
-         ok ( $row->{'status'} =~ '03', $tm ) ; 
+         $tm = "test for like - only status starting with 0  are selected for $url: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
+         ok ( $row->{'status'} =~ '0', $tm ) ; 
       }
    } #eof for each status
 } 
