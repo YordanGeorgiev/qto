@@ -69,10 +69,12 @@ for my $row ( @$tables ) {
       $res = $ua->get($url)->result->json ; 
       my $list = $res->{'dat'} ; 
 
-      foreach my $row ( @$list) {
-         # not all the tables have the prio attribute
-         $tm = "only status=02-todo  are selected for $url: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
-         ok ( $row->{'status'} eq '02-todo', $tm ) ; 
+      if ( $list ) {
+         foreach my $row ( @$list) {
+            # not all the tables have the prio attribute
+            $tm = "only status=02-todo  are selected for $url: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
+            ok ( $row->{'status'} eq '02-todo', $tm ) ; 
+         }
       }
       
       $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio,status&with=status-like-0%25' ; 
