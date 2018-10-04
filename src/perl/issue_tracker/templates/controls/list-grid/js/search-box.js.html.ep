@@ -87,24 +87,24 @@ var Searchbox = {
     }
     , onArrowDown(evt) {
          if ( this.arrowCounter === this.results.length - 1 ) {
-            this.setDropDownResult( this.results[this.results.length - 1]) ; return ;
+            this.setDropDownResult( this.results[this.results.length - 1]) ; 
          }
          else if ( this.arrowCounter < this.results.length && this.arrowCounter > -1) {
             this.arrowCounter = this.arrowCounter + 1;
-            this.setDropDownResult(this.results[this.arrowCounter]); return
+            this.setDropDownResult(this.results[this.arrowCounter]);
          } else {
-            this.setDropDownResult(this.results[this.results.length -1]) ; return;
+            this.setDropDownResult(this.results[this.results.length -1]) ; 
          }
     } 
     , onArrowUp() {
          if ( this.arrowCounter === 0 ) {
-            this.setDropDownResult( this.results[0]); return;
+            this.setDropDownResult( this.results[0]); 
          }
          else if ( this.arrowCounter < this.results.length && this.arrowCounter > -1) {
             this.arrowCounter = this.arrowCounter - 1;
-            this.setDropDownResult(this.results[this.arrowCounter]) ; return ;
+            this.setDropDownResult(this.results[this.arrowCounter]) ; 
          } else {
-            this.setDropDownResult( this.results[0]) ; return ; 
+            this.setDropDownResult( this.results[0]) ; 
          }
     }
     , onArrowRight(e) {
