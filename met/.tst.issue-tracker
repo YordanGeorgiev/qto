@@ -923,6 +923,8 @@ dat/mix/2018/2018-10/2018-10-04/json/daily_issues.json
 dat/mix/2018/2018-10/2018-10-04/sql
 dat/mix/2018/2018-10/2018-10-04/sql/dev_issue_tracker
 dat/mix/2018/2018-10/2018-10-04/sql/dev_issue_tracker/dev_issue_tracker.20181004_154940.insrt.dmp.sql
+dat/mix/2018/2018-10/2018-10-04/sql/tst_issue_tracker/tst_issue_tracker.20181004_182856.insrt.dmp.sql
+dat/mix/2018/2018-10/2018-10-04/sql/prd_issue_tracker/prd_issue_tracker.20181004_182856.insrt.dmp.sql
 dat/mix/2018/2018-10/2018-10-04/xls
 dat/mix/2018/2018-10/2018-10-04/xls/issue-tracker.all.20181004_000000.xlsx
 doc/txt/issue-tracker/funcs/start-selenium.func.txt
