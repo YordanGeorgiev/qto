@@ -51,21 +51,21 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 
 
    my $exp_err_msg = '' ; 
-   $exp_err_msg = 'cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
+   $exp_err_msg = 'update failed :: cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
    $url = '/non_existent_db/update/test_update_table' ; 
    $t->post_ok($url => json => {"attribute"=>"name", "id" =>"1", "cnt"=>"name-1-updated"})
       ->json_is({"ret" => 400 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . '/non_existent_db/update/test_update_table' , "msg" => "$exp_err_msg"});
    #p $t->tx ; 
 
   
-   $exp_err_msg = " the table non_existent_table does not exist in the $db_name database " ; 
+   $exp_err_msg = "update failed ::  the table non_existent_table does not exist in the $db_name database " ; 
    $url = '/' . $db_name . '/update/non_existent_table' ; 
    $t->post_ok($url => json => {"attribute"=>"name", "id" =>"1", "cnt"=>"name-1-updated"})
       ->json_is({"ret" => 400 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . $url , 
                  "msg" => "$exp_err_msg"});
 
    $url = '/' . $db_name . '/update/test_update_table' ; 
-   $exp_err_msg = "the non_existent_column column does not exist" ; 
+   $exp_err_msg = "update failed :: the non_existent_column column does not exist" ; 
    $t->post_ok($url => json => {"attribute"=>"non_existent_column", "id" =>"1", "cnt"=>"name-1-updated"})
       ->json_is({"ret" => 400 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . $url , 
                  "msg" => "$exp_err_msg"});
@@ -73,7 +73,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    # feature-id: 0a683caa-44ba-4d44-95ee-a22651dc22bd
    
 $exp_err_msg = 
-'ERROR:  invalid input syntax for integer: "should be integer but string passed"
+' the update failed ! :: ERROR:  invalid input syntax for integer: "should be integer but string passed"
 LINE 3:          SET seq = \'should be integer but string passed\'
                            ^ while updating the "seq" attribute value for the following id: 1' ; 
    $t->post_ok($url => json => {"attribute"=>"seq", "id" =>"1", "cnt"=>"should be integer but string passed"})
