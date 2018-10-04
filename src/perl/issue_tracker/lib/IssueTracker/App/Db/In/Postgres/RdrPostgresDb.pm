@@ -740,7 +740,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
       
-      # debug print "from RdrPostgresDb.pm 678 : $str_sql \n" ; 
+      # print "from RdrPostgresDb.pm 743 : $str_sql \n" ; 
 
       $ret = 0 ; 
       eval { 

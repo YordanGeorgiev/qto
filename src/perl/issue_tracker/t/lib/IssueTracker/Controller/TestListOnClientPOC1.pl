@@ -54,6 +54,8 @@ is_deeply $chrome->arguments, ['--headless'], 'no explicit headless with executa
 $chrome = Mojo::Chrome->new->catch(sub{ warn pop });
 my $url = 'https://news.google.com/news/?ned=us&hl=en';
 
+#my $url = 'http://192.168.56.120:3001/dev_issue_tracker/list/monthly_issues?as=grid&pick=id,category,prio,status,name,weight,update_time,description&page-num=1&oa=prio&page-size=100' ; 
+
 Mojo::IOLoop->delay(
  sub { $chrome->load_page($url, shift->begin) },
  sub {
@@ -64,14 +66,21 @@ Mojo::IOLoop->delay(
 	  var headings = document.querySelectorAll(sel);
 	  [].slice.call(headings).map((link)=>{return link.innerText});
 ' ; 
+# noop !!!
+my $str_js = <<'EOF';
+var sel='//*[@id="grid"]/tbody/tr[*]/td[*]/div';
+var headings = document.querySelectorAll(sel);
+return headings ; 
+EOF
 
 	my $res = $chrome->evaluate($str_js , $delay->begin);
-	#p $res ; 
+	p $res ; 
  },
  sub {
 	my ($delay, $err, $result) = @_;
 	die Mojo::Util::dumper $err if $err;
-	say for @$result;
+	#say for @$result;
+   p $result ; 
  }
 )->catch(sub{ warn pop })->wait;
 

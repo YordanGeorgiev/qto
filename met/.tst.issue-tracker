@@ -48,7 +48,8 @@ src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlParams.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListTable.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClient.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClientPOC1.pl
+src/perl/issue_tracker/t/lib/IssueTracker/TestClientSidePOC1.t
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCSelenium.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCTestMojoRoleSelenium.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCSeleniumBrowser.pl

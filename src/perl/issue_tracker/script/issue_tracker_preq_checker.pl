@@ -99,6 +99,7 @@ sub doCheckRequiredModules {
    Scalar::Util::Numeric
    IPC::System::Simple
    Mojolicious
+   Selenium::Remote::Driver
   );
 
   for (@modules) {
