@@ -41,7 +41,7 @@ for my $row ( @$list ) {
 
 	$tm = 'for get the correct http status code - 200 , utf-8 and fi,en as langs' ; 
   
-   my @output_types = ( 'grid' ) ;   # only the table output type supports page sizing
+   my @output_types = ( 'table' ) ;   # only the table output type supports page sizing
    my @page_sizes = ( 5,10,15,30 ) ;  # only the table output type supports page sizing
    my @page_nums = ( 1,2,3  ) ;        # only the table output type supports page sizing
    foreach my $as ( @output_types ) {
@@ -61,13 +61,13 @@ for my $row ( @$list ) {
 	$tm = 'if the page size is not a positive whole number return http 400 ' ; 
    my $page_size = 'not_even_a_number' ; 
    my $page_num = 1 ; 
-   $url = '/' . $db_name . '/list/tst_paging?as=grid&page-size=' . $page_size .'&page-num=' . $page_num ; 
+   $url = '/' . $db_name . '/list/tst_paging?as=table&page-size=' . $page_size .'&page-num=' . $page_num ; 
    $t->get_ok( $url )->status_is(400 , $tm ) ; 
 	
    $tm = 'if the page num is not a positive whole number return http 400 ' ; 
    $page_size = 15 ; 
    $page_num = 'not_even_a_number' ; 
-   $url = '/' . $db_name . '/list/tst_paging?as=grid&page-size=' . $page_size .'&page-num=' . $page_num ; 
+   $url = '/' . $db_name . '/list/tst_paging?as=table&page-size=' . $page_size .'&page-num=' . $page_num ; 
    $t->get_ok( $url )->status_is(400 , $tm ) ; 
 
 done_testing();
