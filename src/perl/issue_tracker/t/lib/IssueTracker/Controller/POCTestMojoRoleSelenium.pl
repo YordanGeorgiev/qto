@@ -7,8 +7,12 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 
 use Mojo::Base -strict;
 use Test::Mojo ; 
+use Test::More ; 
 
 $ENV{MOJO_SELENIUM_DRIVER} ||= 'Selenium::Chrome';
+#$ENV{MOJO_SELENIUM_DRIVER} ||= 'Selenium::Remote::Driver&browser_name=chromium&port=4444' ; 
+#$ENV{MOJO_SELENIUM_DRIVER} ||= 'Selenium::Remote::Driver' ; 
+$ENV{'TEST_SELENIUM'} = 1 ;
 
 
 my $t = Test::Mojo->with_roles("+Selenium")->new("IssueTracker")->setup_or_skip_all;

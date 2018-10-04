@@ -33,7 +33,7 @@ our $objModel = {} ;
       if ( defined ( $to_order_by) ) {
          foreach my $key (  eval "$evl_str_sort_by" ) {
             my $row = $hsr2->{$key} ; 
-            $rows_count = $row->{'rows_count'} ; delete $row->{'rows_count'} ; 
+            $rows_count = $row->{'rows_count'} if ( exists $row->{'rows_count'} ); delete $row->{'rows_count'} ; 
             ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
             return ( $ret , $msg ) unless $ret == 0 ; 
             push ( @list , $row ) ; 

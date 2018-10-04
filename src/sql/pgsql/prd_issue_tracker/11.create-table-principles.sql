@@ -7,9 +7,9 @@ SELECT 'create the "principles" table'
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , prio           integer NULL
     , weight         integer NULL
-    , category       varchar (200) NOT NULL
-    , name           varchar (200) NOT NULL
-    , description    varchar (4000) NOT NULL
+    , category       varchar (200) NOT NULL DEFAULT 'category ...'
+    , name           varchar (200) NOT NULL DEFAULT 'name ...'
+    , description    varchar (4000) NULL
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , tags           varchar (4000) NULL
     , CONSTRAINT pk_principles_guid PRIMARY KEY (guid)

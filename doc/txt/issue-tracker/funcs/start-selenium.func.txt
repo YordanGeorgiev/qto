@@ -1,0 +1,39 @@
+# doc/txt/issue-tracker/func/start-selenium.func.txt
+
+	doStartSelenium
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to start the selenium stand-alone server in the background
+
+	# Prequisites
+	# ------------------------------------------------------
+	selenium-server-standalone-3.13.0.jar
+
+
+	# Installation
+	# ------------------------------------------------------
+	wget https://selenium-release.storage.googleapis.com/3.13/selenium-server-standalone-3.13.0.jar
+   mv -v selenium-server-standalone-3.13.0.jar /usr/lib/selenium-server-standalone.jar
+
+	# Interdependancies
+	# ------------------------------------------------------
+   you must ssh -X username@host
+
+	# Usage:
+	# ------------------------------------------------------
+	bash $0 -a start-selenium
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: a stop func ?
+   -- the removing of the lock files is manual ... 
+   -- the checking of the processes already runnnign is manual ... 
+
+	# Caveats:
+	# ------------------------------------------------------
+   -- the removing of the lock files is manual ... 
+   -- the checking of the processes already runnnign is manual ... 
+
+
+# eof file: doc/txt/issue-tracker/func/start-selenium.func.txt

@@ -4,7 +4,7 @@
        globalSrch: '',
        gridColumns: <%== $list_control =%>,
        gridData: [],
-       pageSize: 15,
+       pageSize: 5,
        pageNum: 1,
        pagesCount: 0,
        UrlParams:{ as:"table" },
@@ -91,12 +91,12 @@
                } else {
                   this.gridData = data.dat ; 
                   var totalRSsize = data.met ; 
+                  this.pageSize = (typeof url_params.get('page-size') === 'undefined') ? 5 : url_params.get('page-size');
+                  this.pageNum = (typeof url_params.get('page-num') === 'undefined') ? 1 : url_params.get('page-num');
                   var remainder = totalRSsize % this.pageSize
                   var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
                   if ( remainder == 0 ) { toAdd = 0  }
                   this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
-                  this.pageSize = (typeof url_params.get('page-size') === 'undefined') ? 5 : url_params.get('page-size');
-                  this.pageNum = (typeof url_params.get('page-num') === 'undefined') ? 1 : url_params.get('page-num');
                   var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa') ;
 
                   if ( oa !== null ) {
@@ -170,7 +170,7 @@
             var dbid = arr[1]
             var ret = 1
          
-            if ( !content.trim() ) { content = "null" }
+            if ( content.trim() === "" ) { content = "null" } //empty cell is treated as null
 
             axios.post('/<%= $db =%>/update/<%= $item =%>', {
                   attribute: col ,

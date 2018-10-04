@@ -32,7 +32,7 @@ my @uas;
 print "perform 500 asyncronous $url GET requests \n" ; 
 # for 550 the following error occurs:
 # Mojo::Reactor::EV: Timer failed: Handle is closed at /usr/local/share/perl/5.26.0/Mojo/IOLoop/Client.pm line 180.
-for (0 .. 500) {
+for (0 .. 550) {
   # debug print "get $url run-". "$_" . "\n" ; 
   push @uas, my $ua = $t->ua ;
   $ua->get($url => $d->begin);

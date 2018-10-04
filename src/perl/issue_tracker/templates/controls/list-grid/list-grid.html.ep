@@ -19,18 +19,22 @@
             <div class="pgr-bar pgr-border pgr-round" >
 					<span v-for="(pgNum, index) in this.pagesCount">	
                   <span v-if="pgNum == Math.floor(pageNum/10)*10">
-                     <a tabindex="2" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" v-bind:href="generatePageNum(pgNum-1)">
+                     <a tabindex="2" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" 
+                        v-bind:href="generatePageNum(pgNum-1)">
                         <span> &lt;&lt;</span>
                      </a>
                   </span>
                   <span v-if="pgNum > Math.floor(pageNum/10)*10-1 && pgNum < Math.floor(pageNum/10)*10+11">
-                     <a tabindex="2" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" v-bind:href="generatePageNum(pgNum)">
-                        <span v-if="pgNum == pageNum" style="background-color:#ddd;"> <strong>{{pgNum}}</strong> </span>
+                     <a tabindex="2" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" 
+                        v-bind:href="generatePageNum(pgNum)">
+                        <span v-if="pgNum == pageNum" style="background-color:#ddd;"> 
+                           <strong>{{pgNum}}</strong> </span>
                         <span v-else="pgNum == pageNum">{{pgNum}}</span>
                      </a>
                   </span>
                   <span v-if="pgNum == Math.floor(pageNum/10)*10+11">
-                     <a tabindex="2" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" v-bind:href="generatePageNum(pgNum+1)">
+                     <a tabindex="2" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" 
+                        v-bind:href="generatePageNum(pgNum+1)">
                         <span> &gt;&gt;</span>
                      </a>
                   </span>
