@@ -46,7 +46,7 @@ for my $table ( @tables ) {
    $url = "/$db_name" . '/select/' . $table . $url_params ; 
    $tm .= "url : $url" ; 
    $res = $ua->get($url )->result->json ; 
-   ok ( $res->{'ret'} == 400 , $tm ) ; 	
+   ok ( $res->{'ret'} == 404 , $tm ) ; 	
    $tm = "no data is retrieved for non-existent column to hide - url: $url" ; 
    ok ( $res->{'dat'} == '' , $tm ) ; 	
    $tm = "the client is informed for the non-existent column - url: $url" ; 

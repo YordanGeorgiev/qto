@@ -70,6 +70,10 @@ sub doSelectItems {
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    ($ret, $msg) = $objRdrDb->doSelectTableIntoHashRef(\$objModel, $item);
+   
+   # debug print "Select.pm \n" ; 
+   # debug print "ret: $ret , msg: $msg \n" ; 
+   # debug print "Select.pm \n" ; 
 
    $self->res->headers->accept_charset('UTF-8');
    $self->res->headers->accept_language('fi, en');
@@ -101,6 +105,15 @@ sub doSelectItems {
          , 'met'   => $rows_count 
          , 'req'   => "GET " . $self->req->url->to_abs
       });
+   } elsif ( $ret == 404 ) {
+
+      $self->res->code(404);
+      $self->render( 'json' =>  { 
+           'msg'   => $msg
+         , 'dat'   => ''
+         , 'ret'   => 404 
+         , 'req'   => "GET " . $self->req->url->to_abs
+      })
    } else {
       $rows_count = 0 ; 
       $self->res->code($http_code);
@@ -147,6 +160,7 @@ sub doSelectTables {
 	my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectTablesList(\$objModel);
 
+
 	$self->res->headers->accept_charset('UTF-8');
 	$self->res->headers->accept_language('fi, en');
 	$self->res->headers->content_type('application/json; charset=utf-8');
@@ -170,7 +184,7 @@ sub doSelectTables {
          , 'ret'   => 200
          , 'req'   => "GET " . $self->req->url->to_abs
       });
-   } elsif ( $ret == 400 ) {
+   } elsif ( $ret == 404 ) {
 
       $self->res->code(404);
       $self->render( 'json' =>  { 
@@ -299,9 +313,6 @@ sub doSelectMeta {
    my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    ($ret, $msg) = $objRdrDb->doSelectTablesColumnList($item);
    
-   # todo:ysg 
-   print "ret: $ret , msg: $msg \n" ; 
-   print "Select.pm" ; 
 
 
    $self->res->headers->accept_charset('UTF-8');

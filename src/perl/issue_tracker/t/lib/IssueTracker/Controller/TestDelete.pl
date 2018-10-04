@@ -23,40 +23,29 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    # the content should be json format as follows
    $t->post_ok($url => json => {"attribute"=>"name", "id" =>"1", "cnt"=>"name-1-deleted"})->status_is(200);
 
-   $res = $ua->get('/' . $db_name . '/select/test_delete_table?with=id-eq-1' )->result->json ; 
-   $tm = 'the name-1 was deleted' ; 
-   #debug p $res ; 
-   # debug p $res->{'dat'} ; 
-   
-   no warnings 'uninitialized' ; 
-   ok ( @{$res->{'dat'}} == () , $tm ) ; 
-   use warnings 'uninitialized' ; 
-   
-   $tm = 'the ret var from the response should be the same as the http code => 200'; 
-   ok ( $res->{'ret'} eq 200 , $tm ) ; 
+   $url = '/' . $db_name . '/select/test_delete_table?with=id-eq-1' ; 
+   $res = $ua->get($url)->result->json ; 
+   $tm = 'the name-1 was deleted , no data could be retrieved for the id with value 1' ; 
   
-
+   ok ( $res->{'ret'} == '404', $tm ) ; 
+   
+  
+   $url = '/' . $db_name . '/delete/test_delete_table' ; 
    $t->post_ok($url => json => {"attribute"=>"name", "id" =>"3", "cnt"=>"name-3-deleted"})->status_is(200);
-   $res = $ua->get('/' . $db_name . '/select/test_delete_table?with=id-eq-3' )->result->json ; 
+   $url = '/' . $db_name . '/select/test_delete_table?with=id-eq-3' ; 
+   $res = $ua->get($url )->result->json ; 
    $tm = 'the name-3 was deleted' ; 
-   #debug p $res ; 
-   #debug p $res->{'dat'} ; 
-   
-   no warnings 'uninitialized' ; 
-   ok ( @{$res->{'dat'}} == () , $tm ) ; 
-   use warnings 'uninitialized' ; 
-   
-   $tm = 'the ret var from the response should be the same as the http code => 200'; 
-   ok ( $res->{'ret'} eq 200 , $tm ) ; 
-   
-   $res = $ua->get('/' . $db_name . '/select/test_delete_table?with=id-eq-2' )->result->json ; 
+   ok ( $res->{'ret'} == '404', $tm ) ; 
+   ok ( $res->{'dat'} eq "" , $tm ) ; 
+
+   $url = '/' . $db_name . '/select/test_delete_table?with=id-eq-2' ; 
+   $res = $ua->get( $url )->result->json ; 
    
    $tm = 'the name-2 should NOT be deleted' ; 
    ok ( $res->{'dat'}[0]->{'name'} eq 'name-2' , $tm ) ; 
    
    $tm = 'the ret var from the response should be the same as the http code => 200'; 
    ok ( $res->{'ret'} eq 200 , $tm ) ; 
-   # debug p $res ; 
 
 
    my $exp_err_msg = '' ; 
@@ -85,5 +74,5 @@ LINE 2:       DELETE FROM test_delete_table WHERE id = \'a\'
                  "msg" => "$exp_err_msg"});
 
 done_testing();
-
-# feature-guid: 
+#
+## feature-guid: 
