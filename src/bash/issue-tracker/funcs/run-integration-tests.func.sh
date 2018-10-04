@@ -48,6 +48,7 @@ doRunIntegrationTests(){
 	
    doLog "INFO re-create the $env_type db once again for the db dump restore"
    bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
+   last_db_backup_file=$(find  -name $postgres_db_name*.sql | sort -n | tail -n 1)
    psql -d $postgres_db_name < "$last_db_backup_file"
 
    doLog "INFO START test the Select Controller "
