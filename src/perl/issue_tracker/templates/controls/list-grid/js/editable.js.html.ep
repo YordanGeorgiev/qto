@@ -10,11 +10,19 @@
      oldData: "",
      watch: {
         content: function () {
-            this.content === 'null' ? this.$el.innerText = "" : this.$el.innerText = this.content;
+            this.$el.innerText = "" ? this.content === 'null' : this.$el.innerText = this.content;
+            this.$el.innerText = "" ? this.content === null : this.$el.innerText = this.content;
+            this.$el.innerText = "" ? typeof(content) === 'undefined'  : this.$el.innerText = this.content;
+            console.log (' whatched called ');
+            if ( typeof this.content === 'udefined' || this.content === 'null' ) {
+               this.$el.innerText = ""
+            }
         }
      },
      mounted() {
         this.content === 'null' ? this.$el.innerText = "" : this.$el.innerText = this.content;
+        // todo:ysg
+        console.log("mounted called");
      },
      methods: {
        focused(ev) {
@@ -22,6 +30,11 @@
        }
        , emitChange (ev) {
 			  this.$emit('update', ev.target.innerText,ev.target.id,this.oldData) // parent's job !!!
+            // todo:ysg
+            console.log("emitChange called");
+            console.log ( 'this.$el.innerText' + this.$el.innerText ) ;
+            console.log ( 'this.content : ' + this.content ) 
+            // this.$el.innerText = "" ? this.content === 'null' : this.$el.innerText = this.content;
            //ev.preventDefault() //it-180925092952 !!!
        }
        , revertChange() {

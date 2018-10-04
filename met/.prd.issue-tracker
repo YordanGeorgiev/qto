@@ -50,7 +50,7 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListTable.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClientPOC1.pl
 src/perl/issue_tracker/t/lib/IssueTracker/TestClientSidePOC1.t
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCSelenium.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListBySelenium.t
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCTestMojoRoleSelenium.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCSeleniumBrowser.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
@@ -918,3 +918,5 @@ dat/mix/2018/2018-09/2018-09-03/sql/dev_issue_tracker
 dat/mix/2018/2018-09/2018-09-03/sql/dev_issue_tracker/dev_issue_tracker.20180903_112503.insrt.dmp.sql
 dat/mix/2018/2018-09/2018-09-03/xls
 dat/mix/2018/2018-09/2018-09-03/xls/issue-tracker.all.20180903_000000.xlsx
+doc/txt/issue-tracker/funcs/start-selenium.func.txt
+src/bash/issue-tracker/funcs/start-selenium.func.sh
