@@ -8,7 +8,6 @@ doRunIntegrationTests(){
 
 	doLog "DEBUG START doRunIntegrationTests @run-integration-tests.func.sh"
 
-
 	doLog "INFO re-start the issue-tracker app-layer just for sure"
    test -z "${issue_tracker_project:-}" && \
       doExit 10 "FATAL ERROR running $action without defined issue-tracker project environment vars
@@ -48,6 +47,8 @@ doRunIntegrationTests(){
 	
    doLog "INFO re-create the $env_type db once again for the db dump restore"
    bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
+   dat_sql_dir=`find $product_instance_dir/dat -name $postgres_db_name |sort -n |head -n 1`
+   last_db_backup_file=$(find  $dat_sql_dir -name $postgres_db_name*.sql | sort -n | tail -n 1)
    psql -d $postgres_db_name < "$last_db_backup_file"
 
    doLog "INFO START test the Select Controller "
@@ -68,8 +69,7 @@ doRunIntegrationTests(){
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
 	echo -e "\n\n\n" 
 
-
-   doLog "INFO S: $postgres_db_name/Select/<<table-name>>?fltr-by=<<attribute>>&fltr-val=<<value>>"
+   doLog "INFO $postgres_db_name/select/<<table-name>>?fltr-by=<<attribute>>&fltr-val=<<value>>"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
 	echo -e "\n\n\n" 
 
@@ -97,16 +97,20 @@ doRunIntegrationTests(){
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
 	echo -e "\n\n\n" 
 
-   doLog "INFO START testing the list as table page"
+   doLog "INFO START testing the LIST as grid page"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListTable.pl
 	echo -e "\n\n\n" 
   
-   doLog "INFO test the update action on the web-action"
+   doLog "INFO test the UPDATE web-action "
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
 	echo -e "\n\n\n" 
    
-   doLog "INFO test the create action on the web-action"
+   doLog "INFO test the CREATE web-action "
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
+	echo -e "\n\n\n" 
+
+   doLog "INFO test the DELETE web-action"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestDelete.pl
 	echo -e "\n\n\n" 
 
 	doLog "DEBUG STOP  doRunIntegrationTests"
