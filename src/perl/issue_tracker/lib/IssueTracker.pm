@@ -44,6 +44,7 @@ sub startup {
 
   # Documentation browser under "/perldoc"
   $self->plugin('PODRenderer');
+  $self->plugin('BasicAuthPlus');
 
   ($ret, $msg) = $self->doInitialize();
  
@@ -123,6 +124,8 @@ sub doInitialize {
    $objConfigurator  = 'IssueTracker::App::Utils::Configurator'->new( 
          $ConfFile, \$appConfig);
    $objLogger        = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
+
+	$appConfig->{'proj_instance_dir'} = $appConfig->{'ProductInstanceDir'} unless ( exists $appConfig->{'proj_instance_dir'} );
 
    p($appConfig) ; 
    $self->set('AppConfig' , $appConfig );
