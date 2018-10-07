@@ -62,7 +62,6 @@ sub doCheckUbuntuOSPackages {
 sub doCheckRequiredModules {
 
   my @modules = qw(
-   YAML::Tiny
    URL::Encode
    ExtUtils::Installed
    Carp::Always
@@ -100,6 +99,7 @@ sub doCheckRequiredModules {
    IPC::System::Simple
    Mojolicious
    Selenium::Remote::Driver
+   Mojolicious::Plugin::BasicAuthPlus
   );
 
   for (@modules) {

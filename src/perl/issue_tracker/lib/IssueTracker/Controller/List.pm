@@ -117,7 +117,7 @@ sub doBuildListControl {
    my $lables_pages = { 
          'lbls'   => 'list-labels'
       ,  'cloud'  => 'list-cloud' 
-      ,  'grid'  => 'list-grid'
+      ,  'grid'   => 'list-grid'
       ,  'table'  => 'list-rgrid'
       ,  'print-table'  => 'list-print-table'
    };
@@ -169,7 +169,27 @@ sub doRenderPageTemplate {
     , 'item'            => $item
     , 'db' 		         => $db
     , 'list_control'    => $list_control
-   ); 
+	) if $self->isAuthenticated($db) ; 
+
+}
+
+
+sub isAuthenticated {
+
+	my $self = shift ; 
+	my $db = shift ; 
+
+	my $htpasswd_file = $appConfig->{ 'proj_instance_dir'} . '/cnf/passwd/.' . $db . '.htpasswd' ; 
+	return 1 unless -f $htpasswd_file ;  # open by default !!! ( temporary till v0.5.1 )
+
+	return 1 if $self->basic_auth(
+     $db => {
+         'path' => $appConfig->{ 'proj_instance_dir'} . '/cnf/sec/passwd/.' . $db . '.htpasswd'
+      }
+   );
+
+	return 0  ; 
+	
 }
 
 1;
