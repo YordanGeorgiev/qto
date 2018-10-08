@@ -917,17 +917,4 @@ src/perl/issue_tracker/public/js/lib/vuetify.js
 src/perl/issue_tracker/t/lib/IssueTracker/TestClientSidePOC2.t
 src/perl/issue_tracker/t/lib/IssueTracker/TestSeleniumSetup.t
 # ---
-doc/txt/issue-tracker/funcs/start-selenium.func.txt
-src/bash/issue-tracker/funcs/start-selenium.func.sh
-dat/mix/2018/2018-10/2018-10-07
-dat/mix/2018/2018-10/2018-10-07/json
-dat/mix/2018/2018-10/2018-10-07/json/daily_issues.json
-dat/mix/2018/2018-10/2018-10-07/sql
-dat/mix/2018/2018-10/2018-10-07/sql/dev_issue_tracker
-dat/mix/2018/2018-10/2018-10-07/sql/dev_issue_tracker/dev_issue_tracker.20181007_220235.insrt.dmp.sql
-dat/mix/2018/2018-10/2018-10-07/sql/prd_issue_tracker
-dat/mix/2018/2018-10/2018-10-07/sql/prd_issue_tracker/prd_issue_tracker.20181007_220235.insrt.dmp.sql
-dat/mix/2018/2018-10/2018-10-07/sql/tst_issue_tracker
-dat/mix/2018/2018-10/2018-10-07/sql/tst_issue_tracker/tst_issue_tracker.20181007_220235.insrt.dmp.sql
-dat/mix/2018/2018-10/2018-10-07/xls
-dat/mix/2018/2018-10/2018-10-07/xls/issue-tracker.all.20181007_000000.xlsx
+src/perl/issue_tracker/log/1
