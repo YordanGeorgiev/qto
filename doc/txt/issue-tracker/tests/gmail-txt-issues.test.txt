@@ -1,9 +1,0 @@
-# doc/txt/issue-tracker/test/gmail-txt-issues.test.txt
-
-	doTestGmailTxtIssues
-	
-	# Purpose:
-	# ------------------------------------------------------
-   to test the gmail-txt-issues action
-
-# eof file: doc/txt/issue-tracker/test/gmail-txt-issues.test.txt
