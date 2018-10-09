@@ -8,6 +8,13 @@ doRunIntegrationTests(){
 
 	doLog "DEBUG START doRunIntegrationTests @run-integration-tests.func.sh"
 
+   cd "$product_instance_dir/src/perl/issue-tracker/lib/js"
+	doLog "update the libs - to catch new version errors !!!"
+	doLog "no integration tests run = no running instance !!!"
+   wget "https://unpkg.com/vue"
+   wget "https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"
+   wget "https://unpkg.com/axios/dist/axios.min.js"
+   cd $product_instance_dir 
 
 	doLog "INFO re-start the issue-tracker app-layer just for sure"
    test -z "${issue_tracker_project:-}" && \
