@@ -14,9 +14,9 @@
 <body>
 <div id="div_app_name"><span><%= "$db " =%></span></div>
 	<div id="div_msg"> <%== $msg %></div>
-<script src="https://unpkg.com/vue"></script>
-<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="../../lib/js/vue"></script>
+<script src="../../lib/js/vuetify.js"></script>
+<script src="../../lib/js/axios.min.js"></script>
    <%= content %>
 </body>
 </html>
