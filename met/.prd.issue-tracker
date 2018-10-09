@@ -295,8 +295,10 @@ src/sql/pgsql/dev_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/dev_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/dev_issue_tracker/12.create-table-check_lists.sql
+src/sql/pgsql/dev_issue_tracker/13.create-table-requirements.sql
 src/sql/pgsql/dev_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/dev_issue_tracker/15.create-table-skills.sql
+src/sql/pgsql/dev_issue_tracker/16.create-table-userstories.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/dev_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/dev_issue_tracker/97.create-table-test_create_table.sql
@@ -315,7 +317,11 @@ src/sql/pgsql/tst_issue_tracker/07.create-table-confs.sql
 src/sql/pgsql/tst_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/tst_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/tst_issue_tracker/11.create-table-principles.sql
+src/sql/pgsql/tst_issue_tracker/12.create-table-check_lists.sql
+src/sql/pgsql/tst_issue_tracker/13.create-table-requirements.sql
 src/sql/pgsql/tst_issue_tracker/14.create-table-ideas.sql
+src/sql/pgsql/tst_issue_tracker/15.create-table-skills.sql
+src/sql/pgsql/tst_issue_tracker/16.create-table-userstories.sql
 src/sql/pgsql/tst_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/tst_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/tst_issue_tracker/97.create-table-test_create_table.sql
@@ -334,7 +340,11 @@ src/sql/pgsql/prd_issue_tracker/07.create-table-confs.sql
 src/sql/pgsql/prd_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/prd_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/prd_issue_tracker/11.create-table-principles.sql
+src/sql/pgsql/prd_issue_tracker/12.create-table-check_lists.sql
+src/sql/pgsql/prd_issue_tracker/13.create-table-requirements.sql
 src/sql/pgsql/prd_issue_tracker/14.create-table-ideas.sql
+src/sql/pgsql/prd_issue_tracker/15.create-table-skills.sql
+src/sql/pgsql/prd_issue_tracker/16.create-table-userstories.sql
 src/sql/pgsql/prd_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/prd_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/prd_issue_tracker/97.create-table-test_create_table.sql
