@@ -1,6 +1,6 @@
    Vue.component('editable', {
-     template: `<div v-bind:id="id" class="cls_cnt_edtble" contenteditable="true" @blur="emitChange" 
-               v-on:focus="focused" v-on:keyup.esc="revertChange()">{{ content }}</div>`,
+     template: `<textarea v-bind:id="id" class="cls_cnt_edtble" @blur="emitChange" v-bind:title="content"
+               v-on:focus="focused" v-bind:style="'width: ' + calcWidth() + 'px'" v-on:keyup.esc="revertChange()">{{ (typeof content != 'undefined' && content != 'null' && content != null) ? content : '' }}</textarea>`,
      props: {
 		content: {
 			twoWay: true
@@ -10,29 +10,44 @@
      oldData: "",
      watch: {
         content: function () {
-            this.$el.innerText = "" ? this.content === 'null' : this.$el.innerText = this.content;
-            this.$el.innerText = "" ? this.content === null : this.$el.innerText = this.content;
-            this.$el.innerText = "" ? typeof(content) === 'undefined'  : this.$el.innerText = this.content;
-            console.log (' whatched called ');
-            if ( typeof this.content === 'udefined' || this.content === 'null' ) {
-               this.$el.innerText = ""
-            }
         }
-     },
-     mounted() {
-        this.content === 'null' ? this.$el.innerText = "" : this.$el.innerText = this.content;
+     }
+     , computed: {
+    }
+     , mounted() {
      },
      methods: {
-       focused(ev) {
-         this.oldData = ev.target.textContent;
+       displayEmptyCellIfNullOrUndefined() {
+            if ( typeof this.content == "undefined" || this.content === 'null' || this.content == null) {
+               this.$el.innerText = " "
+               console.log ( "here" )
+            }
+       }
+      , focused(ev) {
+         this.oldData = ev.target.value
        }
        , emitChange (ev) {
-			  this.$emit('update', ev.target.innerText,ev.target.id,this.oldData) // parent's job !!!
-           // ev.preventDefault() //it-180925092952 !!!
-           // this.$el.innerText = "" ? this.content === 'null' : this.$el.innerText = this.content;
+           var modifiedContent = ev.target.value
+			  this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
+           if ( typeof ev.target.value == "undefined" || ev.target.value == 'null' || ev.target.value == null) {
+               console.log ( "here2" )
+               ev.target.value = " "
+           }
        }
        , revertChange() {
      		  this.$el.innerText = this.oldData ; 
+           this.displayEmptyCellIfNullOrUndefined()
        }
-     }
+       , calcWidth() {
+            var width = 0
+            if ( typeof this.content != undefined && this.content != null) {
+               width = this.content.toString().length
+               if ( width < 10 ) {
+                  return width*7 + 8
+               } else {
+                  return width*3 + 6
+               }
+            }
+     		}
+		}
    })
