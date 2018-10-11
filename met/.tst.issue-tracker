@@ -59,12 +59,11 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-egrid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/jqcloud.css
-src/perl/issue_tracker/public/js/controls/jqcloud/jqcloud.min.js
+src/perl/issue_tracker/public/lib/js/controls/jqcloud/jqcloud.min.js
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/site.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/list-egrid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/jqcloud.css
-src/perl/issue_tracker/public/themes/thme-blue/css/print/site/site.css
 #---
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
@@ -300,6 +299,8 @@ src/sql/pgsql/dev_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/dev_issue_tracker/15.create-table-skills.sql
 src/sql/pgsql/dev_issue_tracker/16.create-table-userstories.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
+src/sql/pgsql/dev_issue_tracker/94.create-table-test_item.sql
+src/sql/pgsql/dev_issue_tracker/95.create-table-test_item_hierarchy.sql
 src/sql/pgsql/dev_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/dev_issue_tracker/97.create-table-test_create_table.sql
 src/sql/pgsql/dev_issue_tracker/98.create-table-test_update_table.sql
@@ -323,6 +324,8 @@ src/sql/pgsql/tst_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/tst_issue_tracker/15.create-table-skills.sql
 src/sql/pgsql/tst_issue_tracker/16.create-table-userstories.sql
 src/sql/pgsql/tst_issue_tracker/50.create-table-tst_paging.sql
+src/sql/pgsql/tst_issue_tracker/94.create-table-test_item.sql
+src/sql/pgsql/tst_issue_tracker/95.create-table-test_item_hierarchy.sql
 src/sql/pgsql/tst_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/tst_issue_tracker/97.create-table-test_create_table.sql
 src/sql/pgsql/tst_issue_tracker/98.create-table-test_update_table.sql
@@ -353,6 +356,7 @@ src/sql/pgsql/prd_issue_tracker/99.create-table-test_hierarchy_table.sql
 src/sql/pgsql/scripts/check-postgres-tables-permissions.sql
 src/sql/pgsql/scripts/copy-items-from-one-table-to-another.sql
 src/sql/pgsql/scripts/list-table-columns.sql
+src/sql/pgsql/scripts/upsert_item_trigger.sql
 #----
 src/bash/issue-tracker/tests/db-to-xls.test.sh
 src/bash/issue-tracker/funcs/db-to-xls.func.sh
@@ -921,9 +925,9 @@ src/perl/issue_tracker/public/poc/list-vue-grid-editable/app.js
 src/perl/issue_tracker/public/poc/list-vue-grid-editable/list-vue-grid-editable.css
 src/perl/issue_tracker/public/poc/list-vue-grid-editable/list-vue-grid-editable.html
 # ---
-src/perl/issue_tracker/public/js/lib/axios.min.js
-src/perl/issue_tracker/public/js/lib/vue
-src/perl/issue_tracker/public/js/lib/vuetify.js
+src/perl/issue_tracker/public/lib/js/axios.min.js
+src/perl/issue_tracker/public/lib/js/vue
+src/perl/issue_tracker/public/lib/js/vuetify.js
 src/perl/issue_tracker/t/lib/IssueTracker/TestClientSidePOC2.t
 src/perl/issue_tracker/t/lib/IssueTracker/TestSeleniumSetup.t
 # ---
