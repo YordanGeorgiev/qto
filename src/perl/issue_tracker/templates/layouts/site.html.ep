@@ -5,10 +5,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
   <title> list <%= " $item " =%>  <%= "as $as in " =%> <%= "$db " =%> </title> 
-  <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/site.css" />
-  <link rel="stylesheet" media="print" href="../../themes/thme-blue/css/print/site/site.css" />
   <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/site.css" />
    <%= content 'header_csss' %>
 </head>
 <body>

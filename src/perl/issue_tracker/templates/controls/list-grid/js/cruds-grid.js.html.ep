@@ -173,11 +173,14 @@
             var ret = 1
          
             if ( content.trim() === "" ) { content = "null" } //empty cell is treated as null
-
+            
+            console.log ( "updateItem: start , content: " + content ) ; 
+            console.log ( "updateItem: start , oldValue: " + oldValue ) ; 
+            console.log ( "updateItem: start , content new lines: " + content.split(/\r\n|\r|\n/).length ) ; 
             axios.post('/<%= $db =%>/update/<%= $item =%>', {
                   attribute: col ,
                   id: dbid , 
-                  cnt: content.trim()
+                  cnt: content
             })
             .then( 
                response => {
@@ -189,8 +192,8 @@
                }
             )
             .catch(function (error) {
-               document.getElementById(id).innerHTML= oldValue
-               if (typeof error !== 'undefined') {
+               document.getElementById(id).innerHTML = oldValue
+               if (typeof error !== undefined ) {
                  var errMsg = error.response.data.msg
                  setSpnMsgErrorText(errMsg);
                }
@@ -210,7 +213,7 @@
                         url_params.delete("page-size") ; 
                         url_params.set("page-size", this.$children[0].PageSize ) ;
                      }
-                     if ( typeof this.$children[0].pageNum !== "undefined" ) {
+                     if ( typeof this.$children[0].pageNum !== undefined ) {
                         url_params.delete("page-num") ; 
                         url_params.set("page-num", this.$children[0].pageNum ) ;
                      }
