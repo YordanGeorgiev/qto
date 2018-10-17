@@ -24,6 +24,7 @@ my $tm = '' ;
 
 $res = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
 my $list = $res->{'dat'} ; 
+my @tables_to_check = ( 'monthly_issues' , 'yearly_issues' ) ; 
 
    
 
@@ -31,6 +32,7 @@ my $list = $res->{'dat'} ;
 for my $row ( @$list ) {
 
    my $table = $row->{'table_name'} ; 
+   next unless ( grep( /^$table$/, @tables_to_check ) ) ;
 	my $url_params = '' ; # 
 	my $url = '' ; 
 
