@@ -6,16 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
   <title> list <%= " $item " =%>  <%= "as $as in " =%> <%= "$db " =%> </title> 
   <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vuetify/1.2.9/vuetify.min.css" />
   <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/site.css" />
    <%= content 'header_csss' %>
 </head>
 <body>
 <div id="div_app_name"><span><%= "$db " =%></span></div>
 	<div id="div_msg"> <%== $msg %></div>
-<script src="../../lib/js/vue"></script>
-<script src="../../lib/js/vuetify.js"></script>
-<script src="../../lib/js/axios.min.js"></script>
+<script src="https://unpkg.com/vue"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
    <%= content %>
 </body>
 </html>
