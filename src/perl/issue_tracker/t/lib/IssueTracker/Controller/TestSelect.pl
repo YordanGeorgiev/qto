@@ -1,8 +1,11 @@
 use strict ; use warnings ; 
 use Test::More;
+use Test::Most ; 
 use Test::Mojo;
 use Data::Printer ; 
 use FindBin;
+
+die_on_fail;
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 
@@ -31,6 +34,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 for my $row ( @$list ) {
 
    my $table_name = $row->{'table_name'} ; 
+   next if $table_name =~ m/test_/g ; # skipping the testing tables
    my $url = '' ; 
    my $tm = '' ; # the test msg 
 

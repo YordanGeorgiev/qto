@@ -129,14 +129,10 @@ var Searchbox = {
          if ( newDb != this.globalSrch ) {
            newUri = newUri.replace(/[/]{1}[a-zA-Z0-9_]+[/]{1}list/gi , "/" + newDb + "/list") 
          } 
-         console.log("newDb: " + newDb)
          var newTable = this.globalSrch.replace(/^(.*?\s*):for\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
          if ( newTable != this.globalSrch ) {
            newUri = newUri.replace(/[/]{1}list[/]{1}[a-zA-Z0-9_]+[?]/gi , "/list/" + newTable + '?') 
          }
-         console.log("newTable: " + newTable )
-         console.log ( "should redirect to: " )
-         console.log ( "url: " + newUri )
          window.location.href = newUri // and redirect !!!
     }
     , handleClickOutside(e) {

@@ -1,8 +1,11 @@
 use strict ; use warnings ; 
 use Test::More;
+use Test::Most ; 
 use Test::Mojo;
 use Data::Printer ; 
 use FindBin;
+
+die_on_fail ; 
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 
