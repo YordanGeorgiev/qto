@@ -937,6 +937,7 @@ src/perl/issue_tracker/log/1
 >>>>>>> 4243085d... it-181008183922 fix failing regression tests
 doc/txt/issue-tracker/funcs/start-selenium.func.txt
 src/bash/issue-tracker/funcs/start-selenium.func.sh
+<<<<<<< HEAD
 dat/mix/2018/2018-10/2018-10-07
 dat/mix/2018/2018-10/2018-10-07/json
 dat/mix/2018/2018-10/2018-10-07/json/daily_issues.json
@@ -955,3 +956,12 @@ dat/mix/2018/2018-10/2018-10-07/xls
 dat/mix/2018/2018-10/2018-10-07/xls/issue-tracker.all.20181007_000000.xlsx
 dat/mix/2018/2018-10/2018-10-09/sql/dev_issue_tracker/dev_issue_tracker.20181009_153334.insrt.dmp.sql
 >>>>>>> 4243085d... it-181008183922 fix failing regression tests
+=======
+dat/mix/2018/2018-10/2018-10-17/
+dat/mix/2018/2018-10/2018-10-17/json
+dat/mix/2018/2018-10/2018-10-17/json/daily_issues.json
+dat/mix/2018/2018-10/2018-10-17/sql
+dat/mix/2018/2018-10/2018-10-17/sql/dev_issue_tracker
+dat/mix/2018/2018-10/2018-10-17/sql/dev_issue_tracker/dev_issue_tracker.20181017_214312.insrt.dmp.sql
+dat/mix/2018/2018-10/2018-10-17/xls/issue-tracker.all.20181017_000000.xlsx
+>>>>>>> 0ddd055d... it-181017214639 restrict the amount of tables in the select tests
