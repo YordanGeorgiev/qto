@@ -93,6 +93,8 @@ sub doCheckRequiredModules {
    Term::Prompt
    Net::Google::Spreadsheets
    Test::Trap
+   Test::More
+   Test::Most
    DBD::Pg
    Tie::Hash::DBD
    Scalar::Util::Numeric

@@ -1,26 +1,31 @@
    Vue.component('editable', {
-     template: `<textarea v-bind:id="id" class="cls_cnt_edtble" @blur="emitChange" v-bind:title="content"
-               v-on:focus="focused" v-bind:style="'width: ' + calcWidth() + 'px'" v-on:keyup.esc="revertChange()">{{ (typeof content != 'undefined' && content != 'null' && content != null) ? content : '' }}</textarea>`,
+     template: `<textarea v-bind:id="id" class="cls_cnt_edtble" @blur="emitChange" v-bind:title="content" v-model="cnt"
+               v-on:focus="focused" v-bind:style="'width: ' + calcWidth() + 'em'" v-on:keyup.esc="revertChange()">{{ content }}</textarea>`,
      props: {
-		content: {
-			twoWay: true
-		}
-		, id: {}
-	  },
-     oldData: "",
-     watch: {
-        content: function () {
-        }
-     }
+		   id: {}
+         , cnt: {
+            twoWay: true
+            , default: ""
+         }
+	  }
+     , data() {
+         return {
+            cntz: ""
+            , content: this.cnt
+         }
+	  }
+     , oldData: ""
      , computed: {
     }
      , mounted() {
+         this.content = this.cnt
+         this.displayEmptyCellIfNullOrUndefined()
      },
      methods: {
        displayEmptyCellIfNullOrUndefined() {
             if ( typeof this.content == "undefined" || this.content === 'null' || this.content == null) {
                this.$el.innerText = " "
-               console.log ( "here" )
+               this.content = " "
             }
        }
       , focused(ev) {
@@ -29,10 +34,7 @@
        , emitChange (ev) {
            var modifiedContent = ev.target.value
 			  this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
-           if ( typeof ev.target.value == "undefined" || ev.target.value == 'null' || ev.target.value == null) {
-               console.log ( "here2" )
-               ev.target.value = " "
-           }
+           this.displayEmptyCellIfNullOrUndefined()
        }
        , revertChange() {
      		  this.$el.innerText = this.oldData ; 
@@ -42,11 +44,21 @@
             var width = 0
             if ( typeof this.content != undefined && this.content != null) {
                width = this.content.toString().length
-               if ( width < 10 ) {
-                  return width*7 + 8
-               } else {
-                  return width*3 + 6
+               if ( width < 5 ) {
+                  return width 
+               } else if ( width > 4 && width < 16 ) {
+                  return 7
+               } else if ( width > 15 && width < 35 ) {
+                  return 9
+               } else if ( width > 34 && width < 60 ) {
+                  return 13
+               } else if ( width > 59 && width < 90 ) {
+                  return 17
+               } else  {
+                  return 26
                }
+            } else {
+                  return 3
             }
      		}
 		}

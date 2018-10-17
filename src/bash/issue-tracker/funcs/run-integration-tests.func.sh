@@ -7,13 +7,6 @@
 doRunIntegrationTests(){
 
 	doLog "DEBUG START doRunIntegrationTests @run-integration-tests.func.sh"
-
-   cd "$product_instance_dir/src/perl/issue-tracker/lib/js"
-	doLog "update the libs - to catch new version errors !!!"
-	doLog "no integration tests run = no running instance !!!"
-   wget "https://unpkg.com/vue"
-   wget "https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"
-   wget "https://unpkg.com/axios/dist/axios.min.js"
    cd $product_instance_dir 
 
 	doLog "INFO re-start the issue-tracker app-layer just for sure"
@@ -23,7 +16,9 @@ doRunIntegrationTests(){
       cnf/issue-tracker.dev.host-name.cnf"
 
    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop 
+   test $? -ne 0 && return
    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
+   test $? -ne 0 && return
    daily_data_dir=$mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
    doLog "INFO make a backup of the current db"
    bash src/bash/issue-tracker/issue-tracker.sh -a backup-postgres-db
@@ -52,66 +47,77 @@ doRunIntegrationTests(){
    export do_truncate_tables=1 
    export rdbms_type=postgres ; export load_model=upsert ; 
    perl src/perl/issue_tracker/script/issue_tracker.pl --do xls-to-db --tables $tables
+   test $? -ne 0 && return
 	
    doLog "INFO re-create the $env_type db once again for the db dump restore"
    bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
    last_db_backup_file=$(find  -name $postgres_db_name*.sql | sort -n | tail -n 1)
    psql -d $postgres_db_name < "$last_db_backup_file"
+   test $? -ne 0 && return
 
    doLog "INFO START test the Select Controller "
    doLog " $postgres_db_name/select-tables"
    doLog " $postgres_db_name/select/<<table-name>>"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
+   test $? -ne 0 && return
 	echo -e "\n\n\n" 
   
    doLog "INFO START test the Select Controller filtering with the like operator: "
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
+   test $? -ne 0 && return
 	echo -e "\n\n\n" 
 
    doLog "INFO START test the Select Controller with the o=<<order-by>> url param"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
+   test $? -ne 0 && return
 	echo -e "\n\n\n" 
 
    doLog "INFO START test the Select Controller filtering with the like operator: "
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
-	echo -e "\n\n\n" 
-
-
-   doLog "INFO S: $postgres_db_name/Select/<<table-name>>?fltr-by=<<attribute>>&fltr-val=<<value>>"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
+   test $? -ne 0 && return
 	echo -e "\n\n\n" 
 
    doLog "INFO START test the Select Controller filtering: "
-   
+   doLog "INFO S: $postgres_db_name/Select/<<table-name>>?fltr-by=<<attribute>>&fltr-val=<<value>>"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
+   test $? -ne 0 && return
+	echo -e "\n\n\n" 
    
    doLog "INFO START test the List Controller "
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
+   test $? -ne 0 && return
 	echo -e "\n\n\n" 
    
    doLog "INFO START test the List Controller with the hide url param"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
+   test $? -ne 0 && return
 	echo -e "\n\n\n" 
    
    doLog "INFO START integration testing - do run all the implemented action tests" 
    perl src/perl/issue_tracker/t/TestIssueTracker.pl
+   test $? -ne 0 && return
 	echo -e "\n\n\n" 
 
    doLog "INFO TODO: implement proper client side testing"
 
    doLog "INFO START select with operator testing"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
+   test $? -ne 0 && return
 	echo -e "\n\n\n" 
 
    doLog "INFO START testing the list as table page"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListTable.pl
+   test $? -ne 0 && return
 	echo -e "\n\n\n" 
   
    doLog "INFO test the update action on the web-action"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
+   test $? -ne 0 && return
 	echo -e "\n\n\n" 
    
    doLog "INFO test the create action on the web-action"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
+   test $? -ne 0 && return
 	echo -e "\n\n\n" 
 
 	doLog "DEBUG STOP  doRunIntegrationTests"
