@@ -1,5 +1,9 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/perl/issue_tracker/templates/controls/list-grid/xt/grid.xt.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/editable.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid
 src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-grid.css
@@ -8,16 +12,12 @@ src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/pager.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/page-sizer.png
 src/perl/issue_tracker/templates/controls/list-grid/xt/search-box.xt.html.ep
-src/perl/issue_tracker/templates/controls/list-grid/xt/grid.xt.html.ep
 # --
 src/perl/issue_tracker/templates/controls/list-grid/js/div-search-box.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/search-box.js.html.ep
-src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid.js.html.ep
-src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/global-msg.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/btn-del.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/btn-new.js.html.ep
-src/perl/issue_tracker/templates/controls/list-grid/js/editable.js.html.ep
 # --
 src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep

@@ -1,9 +1,12 @@
 use strict ; use warnings ; 
 use Test::More;
 use Test::Mojo;
+use Test::Most ; 
 use Data::Printer ; 
 use FindBin;
 use Mojo::UserAgent;
+
+die_on_fail ; 
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 

@@ -43,7 +43,7 @@
             if ( url_params.has("page-size") === false) { url_params.append("page-size" , 5); }
             if ( url_params.has("page-num") === false) { url_params.append("page-num" , 1); }
             
-            //debug for(var pair of url_params.entries()) { console.log(pair[0]+ '->'+ pair[1]); }
+            //debug for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
             return url_params ; 
          }
 	      , fetchServerSideData: function (url_params){
@@ -174,9 +174,6 @@
          
             if ( content.trim() === "" ) { content = "null" } //empty cell is treated as null
             
-            console.log ( "updateItem: start , content: " + content ) ; 
-            console.log ( "updateItem: start , oldValue: " + oldValue ) ; 
-            console.log ( "updateItem: start , content new lines: " + content.split(/\r\n|\r|\n/).length ) ; 
             axios.post('/<%= $db =%>/update/<%= $item =%>', {
                   attribute: col ,
                   id: dbid , 
@@ -186,13 +183,11 @@
                response => {
                   document.getElementById(id).innerHTML= content
                   newCntIndx = this.gridData.findIndex(obj => obj.id == dbid);
-                  this.gridData[newCntIndx][col] = content; // it-180920075303 !!!
-                  // oldCntIndx = this.gridData.findIndex(obj => obj[col] == oldValue);
-                  // this.gridData[oldCntIndx][col] = oldValue; // it-180920075303 !!!
+                  this.gridData[newCntIndx][col] = content; // it-180920075303 , it-181011195040 !!!
                }
             )
             .catch(function (error) {
-               document.getElementById(id).innerHTML = oldValue
+               document.getElementById(id).value= oldValue
                if (typeof error !== undefined ) {
                  var errMsg = error.response.data.msg
                  setSpnMsgErrorText(errMsg);

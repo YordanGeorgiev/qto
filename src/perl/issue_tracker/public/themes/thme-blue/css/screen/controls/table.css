@@ -5,6 +5,7 @@
 }
 table {
 	table-layout: fixed; 
+   max-width: 100% ; 
 	border: 4px solid #F0F8FF ; 
 	border-radius: 9px;
 	background-color: #fff;
