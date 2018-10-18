@@ -3,9 +3,9 @@
 
 % content_for header_csss => begin
    <link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/list-grid.css" />
-   <link rel="stylesheet" type="text/css" media="screen"  href="../../themes/thme-blue/css/screen/controls/table.css" />
    <link rel="stylesheet" type="text/css" media="screen"  href="../../themes/thme-blue/css/screen/controls/pager.css" />
    <link rel="stylesheet" type="text/css" media="screen"  href="../../themes/thme-blue/css/screen/controls/searchbox.css" />
+   <link rel="stylesheet" type="text/css" media="screen"  href="../../themes/thme-blue/css/screen/controls/table.css" />
 % end
 
    %= include 'controls/list-grid/xt/search-box.xt'

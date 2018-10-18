@@ -16,3 +16,4 @@ src/perl/issue_tracker/public/bower_components/**
 src/perl/issue_tracker/public/node_modules/**
 src/perl/issue_tracker/public/poc/poc-vue-js-modal/node_modules/**
 **/*..htpasswd
+src/perl/issue_tracker/public/lib/js/**
