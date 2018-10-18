@@ -51,13 +51,13 @@ for my $row ( @$list ) {
 
 	$tm = 'for get the correct http status code - 200 , utf-8 and fi,en as langs' ; 
   
-   my @output_types = ( 'lbls' , 'table' , 'cloud' ) ;  
+   my @output_types = ( 'cloud' ) ;  
    foreach my $as ( @output_types ) {
       $url = '/' . $db_name . '/list/' . $table_name . '?as=' . "$as" ; 
       $t->get_ok( $url )
          ->status_is(200) 
           ->header_is('Accept-Charset' => 'UTF-8')
-          ->header_is('Accept-Language' => 'fi, en' , $tm)
+          ->content_like(qr{id="div_cloud_items"})
       ;
       $tm = 'for get the correct title <<table_name>> in <<db_name>>' ; 
       $t->get_ok($url)->text_is('html head title'
