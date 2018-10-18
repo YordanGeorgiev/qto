@@ -1,5 +1,12 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/perl/issue_tracker/templates/controls/list-grid/js/div-search-box.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/search-box.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/xt/search-box.xt.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/xt/grid.xt.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/editable.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid
 src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-grid.css
@@ -7,20 +14,14 @@ src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/table.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/pager.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/page-sizer.png
-src/perl/issue_tracker/templates/controls/list-grid/xt/search-box.xt.html.ep
-src/perl/issue_tracker/templates/controls/list-grid/xt/grid.xt.html.ep
 # --
-src/perl/issue_tracker/templates/controls/list-grid/js/div-search-box.js.html.ep
-src/perl/issue_tracker/templates/controls/list-grid/js/search-box.js.html.ep
-src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid.js.html.ep
-src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/global-msg.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/btn-del.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/btn-new.js.html.ep
-src/perl/issue_tracker/templates/controls/list-grid/js/editable.js.html.ep
 # --
 src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep
+src/perl/issue_tracker/public/lib/js/controls/jqcloud/jqcloud.min.js
 src/perl/issue_tracker/templates/controls/list-rgrid/list-rgrid.html.ep
 src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
 src/perl/issue_tracker/templates/layouts/site.html.ep
@@ -59,12 +60,10 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-egrid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/jqcloud.css
-src/perl/issue_tracker/public/js/controls/jqcloud/jqcloud.min.js
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/site.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/list-egrid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/jqcloud.css
-src/perl/issue_tracker/public/themes/thme-blue/css/print/site/site.css
 #---
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
@@ -295,9 +294,13 @@ src/sql/pgsql/dev_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/dev_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/dev_issue_tracker/12.create-table-check_lists.sql
+src/sql/pgsql/dev_issue_tracker/13.create-table-requirements.sql
 src/sql/pgsql/dev_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/dev_issue_tracker/15.create-table-skills.sql
+src/sql/pgsql/dev_issue_tracker/16.create-table-userstories.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
+src/sql/pgsql/dev_issue_tracker/94.create-table-test_item.sql
+src/sql/pgsql/dev_issue_tracker/95.create-table-test_item_hierarchy.sql
 src/sql/pgsql/dev_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/dev_issue_tracker/97.create-table-test_create_table.sql
 src/sql/pgsql/dev_issue_tracker/98.create-table-test_update_table.sql
@@ -315,8 +318,14 @@ src/sql/pgsql/tst_issue_tracker/07.create-table-confs.sql
 src/sql/pgsql/tst_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/tst_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/tst_issue_tracker/11.create-table-principles.sql
+src/sql/pgsql/tst_issue_tracker/12.create-table-check_lists.sql
+src/sql/pgsql/tst_issue_tracker/13.create-table-requirements.sql
 src/sql/pgsql/tst_issue_tracker/14.create-table-ideas.sql
+src/sql/pgsql/tst_issue_tracker/15.create-table-skills.sql
+src/sql/pgsql/tst_issue_tracker/16.create-table-userstories.sql
 src/sql/pgsql/tst_issue_tracker/50.create-table-tst_paging.sql
+src/sql/pgsql/tst_issue_tracker/94.create-table-test_item.sql
+src/sql/pgsql/tst_issue_tracker/95.create-table-test_item_hierarchy.sql
 src/sql/pgsql/tst_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/tst_issue_tracker/97.create-table-test_create_table.sql
 src/sql/pgsql/tst_issue_tracker/98.create-table-test_update_table.sql
@@ -334,7 +343,11 @@ src/sql/pgsql/prd_issue_tracker/07.create-table-confs.sql
 src/sql/pgsql/prd_issue_tracker/09.create-table-questions.sql
 src/sql/pgsql/prd_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/prd_issue_tracker/11.create-table-principles.sql
+src/sql/pgsql/prd_issue_tracker/12.create-table-check_lists.sql
+src/sql/pgsql/prd_issue_tracker/13.create-table-requirements.sql
 src/sql/pgsql/prd_issue_tracker/14.create-table-ideas.sql
+src/sql/pgsql/prd_issue_tracker/15.create-table-skills.sql
+src/sql/pgsql/prd_issue_tracker/16.create-table-userstories.sql
 src/sql/pgsql/prd_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/prd_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/prd_issue_tracker/97.create-table-test_create_table.sql
@@ -343,6 +356,7 @@ src/sql/pgsql/prd_issue_tracker/99.create-table-test_hierarchy_table.sql
 src/sql/pgsql/scripts/check-postgres-tables-permissions.sql
 src/sql/pgsql/scripts/copy-items-from-one-table-to-another.sql
 src/sql/pgsql/scripts/list-table-columns.sql
+src/sql/pgsql/scripts/upsert_item_trigger.sql
 #----
 src/bash/issue-tracker/tests/db-to-xls.test.sh
 src/bash/issue-tracker/funcs/db-to-xls.func.sh
@@ -911,23 +925,22 @@ src/perl/issue_tracker/public/poc/list-vue-grid-editable/app.js
 src/perl/issue_tracker/public/poc/list-vue-grid-editable/list-vue-grid-editable.css
 src/perl/issue_tracker/public/poc/list-vue-grid-editable/list-vue-grid-editable.html
 # ---
-src/perl/issue_tracker/public/js/lib/axios.min.js
-src/perl/issue_tracker/public/js/lib/vue
-src/perl/issue_tracker/public/js/lib/vuetify.js
+src/perl/issue_tracker/public/lib/js/axios.min.js
+src/perl/issue_tracker/public/lib/js/vue
+src/perl/issue_tracker/public/lib/js/vuetify.js
 src/perl/issue_tracker/t/lib/IssueTracker/TestClientSidePOC2.t
 src/perl/issue_tracker/t/lib/IssueTracker/TestSeleniumSetup.t
 # ---
+src/perl/issue_tracker/log/1
 doc/txt/issue-tracker/funcs/start-selenium.func.txt
 src/bash/issue-tracker/funcs/start-selenium.func.sh
-dat/mix/2018/2018-10/2018-10-07
-dat/mix/2018/2018-10/2018-10-07/json
-dat/mix/2018/2018-10/2018-10-07/json/daily_issues.json
-dat/mix/2018/2018-10/2018-10-07/sql
-dat/mix/2018/2018-10/2018-10-07/sql/dev_issue_tracker
-dat/mix/2018/2018-10/2018-10-07/sql/dev_issue_tracker/dev_issue_tracker.20181007_220235.insrt.dmp.sql
-dat/mix/2018/2018-10/2018-10-07/sql/prd_issue_tracker
-dat/mix/2018/2018-10/2018-10-07/sql/prd_issue_tracker/prd_issue_tracker.20181007_220235.insrt.dmp.sql
-dat/mix/2018/2018-10/2018-10-07/sql/tst_issue_tracker
-dat/mix/2018/2018-10/2018-10-07/sql/tst_issue_tracker/tst_issue_tracker.20181007_220235.insrt.dmp.sql
-dat/mix/2018/2018-10/2018-10-07/xls
-dat/mix/2018/2018-10/2018-10-07/xls/issue-tracker.all.20181007_000000.xlsx
+dat/mix/2018/2018-10/2018-10-18/
+dat/mix/2018/2018-10/2018-10-18/json
+dat/mix/2018/2018-10/2018-10-18/json/daily_issues.json
+dat/mix/2018/2018-10/2018-10-18/sql
+dat/mix/2018/2018-10/2018-10-18/sql/dev_issue_tracker
+dat/mix/2018/2018-10/2018-10-18/sql/dev_issue_tracker/dev_issue_tracker.20181018_092011.insrt.dmp.sql
+dat/mix/2018/2018-10/2018-10-18/sql/tst_issue_tracker
+dat/mix/2018/2018-10/2018-10-18/sql/tst_issue_tracker/tst_issue_tracker.20181018_091845.insrt.dmp.sql
+dat/mix/2018/2018-10/2018-10-18/xls
+dat/mix/2018/2018-10/2018-10-18/xls/issue-tracker.all.20181018_000000.xlsx
