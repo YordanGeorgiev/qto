@@ -88,8 +88,8 @@ Vue.component('div_search_box', {
   }
   , template: ` <searchbox :dblist="pdblist" :tblist="ptblist" />`
   , mounted() {
-      this.fetchSSDataForDbsUI() ; 
-      this.fetchSSDataForTablesUI() ; 
+      // this.fetchSSDataForDbsUI() ; 
+      // this.fetchSSDataForTablesUI() ; 
       // start on forward slash focus the quick search input textbox 
       window.addEventListener('keyup', function(event) {
          if (event.keyCode == 55 ) { 
