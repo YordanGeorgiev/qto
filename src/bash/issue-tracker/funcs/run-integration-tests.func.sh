@@ -105,8 +105,8 @@ doRunIntegrationTests(){
    test $? -ne 0 && return
 	echo -e "\n\n\n" 
 
-   doLog "INFO START testing the list as table page"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListTable.pl
+   doLog "INFO START testing the list as <<output-type>> page"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListAsOutputType.pl
    test $? -ne 0 && return
 	echo -e "\n\n\n" 
   
