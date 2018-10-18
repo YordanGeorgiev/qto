@@ -68,8 +68,6 @@ PrintTraceMsgs =                 1
 google_spread_sheet_id = 1p4YwuSB3GtQ0i5ginn4Vc95t09w1WNWJra2yUH1aL0Y
 
 Emails=yordan.georgiev@gmail.com
-# changed the propmpt
-PS1="$issue_tracker_project \u@\h [\d \t] [\w] $ \n\n "
 
 # v0.3.0
 # on which host the mysql is running
@@ -87,7 +85,6 @@ mysql_user = usrisgpuben
 # the pw of the mysql user
 mysql_user_pw = secret
 
-
 # where are the mysql scripts situated
 mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.5.1.dev.ysg/src/sql/mysql/dev_issue_tracker
 
@@ -102,10 +99,10 @@ web_port=5001
 # load_xls=/opt/csitea/issue-tracker/issue-tracker.0.3.0.dev.ysg/doc/xls/issue-tracker-en.xlsx
 load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tracker-en.xlsx
 
-PS1='issue-tracker-dev \u@\h [\d \t] [\w] $ \n\n '
-
 # on which port the mojo should listen
 mojo_morbo_port=3001
+
+#PS1="$issue_tracker_project \u@\h [\d \t] [\w] $ \n\n "
 
 # the last entry is always ignored - this is a bug in the cnf parser 
 foo=bar
