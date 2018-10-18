@@ -939,6 +939,7 @@ doc/txt/issue-tracker/funcs/start-selenium.func.txt
 src/bash/issue-tracker/funcs/start-selenium.func.sh
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 dat/mix/2018/2018-10/2018-10-07
 dat/mix/2018/2018-10/2018-10-07/json
 dat/mix/2018/2018-10/2018-10-07/json/daily_issues.json
@@ -967,6 +968,8 @@ dat/mix/2018/2018-10/2018-10-17/sql/dev_issue_tracker/dev_issue_tracker.20181017
 dat/mix/2018/2018-10/2018-10-17/xls/issue-tracker.all.20181017_000000.xlsx
 >>>>>>> 0ddd055d... it-181017214639 restrict the amount of tables in the select tests
 =======
+=======
+>>>>>>> f72769e2... it-181018080737 kill procs occupying wanted app instance ports with mojo-morbo-start and doMojoMorboStop
 dat/mix/2018/2018-10/2018-10-18/
 dat/mix/2018/2018-10/2018-10-18/json
 dat/mix/2018/2018-10/2018-10-18/json/daily_issues.json
@@ -977,4 +980,7 @@ dat/mix/2018/2018-10/2018-10-18/sql/tst_issue_tracker
 dat/mix/2018/2018-10/2018-10-18/sql/tst_issue_tracker/tst_issue_tracker.20181018_091845.insrt.dmp.sql
 dat/mix/2018/2018-10/2018-10-18/xls
 dat/mix/2018/2018-10/2018-10-18/xls/issue-tracker.all.20181018_000000.xlsx
+<<<<<<< HEAD
 >>>>>>> 6c89482a... it-181018080737 kill procs occupying wanted app instance ports with mojo-morbo-start and doMojoMorboStop
+=======
+>>>>>>> f72769e2... it-181018080737 kill procs occupying wanted app instance ports with mojo-morbo-start and doMojoMorboStop
