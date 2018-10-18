@@ -117,6 +117,11 @@ doRunIntegrationTests(){
 >>>>>>> f72769e2... it-181018080737 kill procs occupying wanted app instance ports with mojo-morbo-start and doMojoMorboStop
    test $? -ne 0 && return
 	echo -e "\n\n\n" 
+   
+   doLog "INFO test the create action on the web-action"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
+   test $? -ne 0 && return
+	echo -e "\n\n\n" 
   
    doLog "INFO test the update action on the web-action"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
