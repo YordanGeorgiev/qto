@@ -1,27 +1,22 @@
 #div_grid_tmpl {
-   padding-top: 1% ; 
-   max-width: 100%;
-   clear: both; 
+	padding-top: 1% ; 
+	max-width: 100%;
+	clear: both; 
 }
-
 table {
-   table-layout:fixed;
+	table-layout: fixed; 
+   max-width: 100% ; 
 	border: 4px solid #F0F8FF ; 
 	border-radius: 9px;
 	background-color: #fff;
-   border-collapse:separate;
-   -moz-border-radius:9px;
+	border-collapse:separate;
 }
 th {
 	background-color: #339aff ; 
 	color: rgba(255,255,255,0.66);
 	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 }
-
 .arrow {
 	display: inline-block;
 	vertical-align: middle;
@@ -30,13 +25,11 @@ th {
 	margin-left: 5px;
 	opacity: 0.66;
 }
-
 .arrow.asc {
 	border-left: 4px solid transparent;
 	border-right: 4px solid transparent;
 	border-bottom: 4px solid #fff;
 }
-
 .arrow.dsc {
 	border-left: 4px solid transparent;
 	border-right: 4px solid transparent;
@@ -47,55 +40,75 @@ th.active .arrow {
 }
 
 tr {
-   height: 1em;
+	height: 1em;
 }
 
 tr.cls_even {
 	background-color: #f9f9f9;
 }
 tr.cls_odd {
-   background-color: #F0F8FF;
+	background-color: #F0F8FF;
 }
 tr:hover {
-   border: 3px solid #CDCDCD;
-   border-radius: 5px;
-   box-shadow: 1px 1px 10px #C0C0C0;
-   -webkit-box-shadow: 1px 1px 10px #C0C0C0;
-   -moz-box-shadow: 1px 1px 10px #C0C0C0;
+	border: 3px solid #CDCDCD;
+	border-radius: 5px;
+	box-shadow: 1px 1px 10px #C0C0C0;
+	-webkit-box-shadow: 1px 1px 10px #C0C0C0;
+	-moz-box-shadow: 1px 1px 10px #C0C0C0;
 }
 tr:selected{
-   border: 3px solid #CDCDCD;
-   border-radius: 5px;
-   box-shadow: 1px 1px 10px #C0C0C0;
-   -webkit-box-shadow: 1px 1px 10px #C0C0C0;
-   -moz-box-shadow: 1px 1px 10px #C0C0C0;
+	border: 3px solid #CDCDCD;
+	border-radius: 5px;
+	box-shadow: 1px 1px 10px #C0C0C0;
+	-webkit-box-shadow: 1px 1px 10px #C0C0C0;
+	-moz-box-shadow: 1px 1px 10px #C0C0C0;
+	resize: both; 
+	overflow: auto;
 }
 
 th, td {
+	resize: both; 
 	min-width: 20px;
-   max-width: 500px; /* why percentages do not work here !!! */
+	max-width: 500px; /* why percentages do not work here !!! */
 	padding: 10px 10px;
-   white-space: pre-line;
-   word-wrap: break-word;
+	white-space:pre-wrap;
+}
+.cls_cnt_edtble {
+	min-width: 20px;
+	max-width: 500px; /* why percentages do not work here !!! */
+	resize: both;
+	padding: 2px;
+	white-space:pre-wrap;
+}
+textarea {
+	resize: horizontal ; 
+	padding: 0;
+	white-space:pre-wrap;
+}
+.cls_cnt_edtble:hover {
+	opacity: 1.2 ;
+	border: 3px solid #CDCDCD;
+	border-radius: 4px;
+	white-space:pre-wrap;
 }
 
+.cls_cnt_edtble:focus {
+	background-color: #FFFFE0;
+}
 th.active {
-   color: #FFFFE0; 
-   font-weight: bold;
-   background-color: rgba(5, 136, 230, 0.45);
-   border-color: #C0C0C0;
-   border-width: 4px;
+	color: #FFFFE0; 
+	font-weight: bold;
+	background-color: rgba(5, 136, 230, 0.45);
+	border-color: #C0C0C0;
+	border-width: 4px;
 }
-
 th:focus {
-   color: #FFFFE0; 
-   font-weight: bold;
-   background-color: rgba(5, 136, 230, 0.45);
-   border-color: #C0C0C0;
-   border-width: 4px;
+	color: #FFFFE0; 
+	font-weight: bold;
+	background-color: rgba(5, 136, 230, 0.45);
+	border-color: #C0C0C0;
+	border-width: 4px;
 }
-
-
 #div_frm_srch {
 	position:relative;
 	width: 100%;
@@ -108,23 +121,21 @@ th:focus {
 #frm_srch {
 	display: block;
 }
-
 #btnNew{
-    position: fixed;
-    left: 1%;
-    top: 7%;
-    color: white ;
+	 position: fixed;
+	 left: 1%;
+	 top: 7%;
+	 color: white ;
 }
 #btnNew:hover{
-    position: fixed;
-    left: 1%;
-    top: 7%;
-    color: yellow ;
+	 position: fixed;
+	 left: 1%;
+	 top: 7%;
+	 color: yellow ;
 }
 #btnNew:focus{
-    position: fixed;
-    left: 1%;
-    top: 7%;
-    color: yellow ;
-
+	 position: fixed;
+	 left: 1%;
+	 top: 7%;
+	 color: yellow ;
 }
