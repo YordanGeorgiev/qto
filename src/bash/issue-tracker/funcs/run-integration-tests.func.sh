@@ -83,8 +83,8 @@ doRunIntegrationTests(){
    test $? -ne 0 && return
 	echo -e "\n\n\n" 
    
-   doLog "INFO START test the List Controller "
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
+   doLog "INFO START test the List as Cloud "
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListCloud.pl
    test $? -ne 0 && return
 	echo -e "\n\n\n" 
    
@@ -109,14 +109,19 @@ doRunIntegrationTests(){
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListAsOutputType.pl
    test $? -ne 0 && return
 	echo -e "\n\n\n" 
+   
+   doLog "INFO test the create action on the web-action"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
+   test $? -ne 0 && return
+	echo -e "\n\n\n" 
   
    doLog "INFO test the update action on the web-action"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
    test $? -ne 0 && return
 	echo -e "\n\n\n" 
    
-   doLog "INFO test the create action on the web-action"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
+   doLog "INFO test the delete action on the web-action"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestDelete.pl
    test $? -ne 0 && return
 	echo -e "\n\n\n" 
 
