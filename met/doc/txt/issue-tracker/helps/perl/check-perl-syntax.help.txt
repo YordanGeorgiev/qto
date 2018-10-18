@@ -1,0 +1,37 @@
+# doc/txt/issue-tracker/check-perl-syntax/check-perl-syntax.help.txt
+
+	doHelpCheckPerlSyntax
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doHelpCheckPerlSyntax function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doHelpCheckPerlSyntax function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doHelpCheckPerlSyntax function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doHelpCheckPerlSyntax function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doHelpCheckPerlSyntax used 
+
+	# Development
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doHelpCheckPerlSyntax functions
+
+
+
+# eof file: doc/txt/issue-tracker/check-perl-syntax/check-perl-syntax.help.txt

@@ -1,0 +1,41 @@
+# doc/txt/issue-tracker/remove-action-files/remove-action-files.spec.txt
+
+	doSpecRemoveActionFiles
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to provide a quick oneliner for removing specified action files
+
+	# Prequisites
+	# ------------------------------------------------------
+	perl , bash
+
+	# Installation
+	# ------------------------------------------------------
+	install perl , bash 
+
+	# Interdependancies
+	# ------------------------------------------------------
+	you need to specify the action files to be removed in the : 
+	src/bash/issue-tracker/tests/rem-issue-tracker-actions.lst
+	list file
+	echo create-full-7z-package >> src/bash/issue-tracker/tests/rem-issue-tracker-actions.lst
+
+	# Usage:
+	# ------------------------------------------------------
+	bash src/bash/issue-tracker/issue-tracker.sh -a remove-action-files
+
+
+	# Issues
+	# ------------------------------------------------------
+	console output ?!:
+	bash: line 1: src/bash/issue-tracker/funcs/action-to-remove.func.sh: No such file or directory
+
+	# Caveats:
+	# ------------------------------------------------------
+	of course your actions to be removed should not overlap with 
+	actions you do not want to remove , since we use grep ... 
+
+
+
+# eof file: doc/txt/issue-tracker/remove-action-files/remove-action-files.spec.txt

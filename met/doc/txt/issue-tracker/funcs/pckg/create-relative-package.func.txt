@@ -1,0 +1,38 @@
+# doc/txt/issue-tracker/create-relative-package/create-relative-package.func.txt
+
+	doCreateRelativePackage
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to create a relative zip package with the files specified
+   in the includd file
+
+	# Prequisites
+	# ------------------------------------------------------
+   gnu bash , zip , unzip , perl the include file to use, issue-tracker core
+
+	# Installation
+	# ------------------------------------------------------
+   install the gnu bash , zip , perl , unzip binaries
+
+	# Interdependancies
+	# ------------------------------------------------------
+   gnu bash , zip , unzip , perl the include file to use , issue-tracker core
+
+	# Usage:
+	# ------------------------------------------------------
+
+   # creates the relative package with the current env include file in met/.<<env>>.issue-tracker
+   bash src/bash/issue-tracker/issue-tracker.sh -a create-relative-package -i
+
+   # creates the relative package with different include file
+   bash src/bash/issue-tracker/issue-tracker.sh -a create-relative-package -i met/.tmp.issue-tracker	
+
+	# Developent
+	# ------------------------------------------------------
+
+	# Caveats:
+	# ------------------------------------------------------
+
+
+# eof file: doc/txt/issue-tracker/create-relative-package/create-relative-package.func.txt

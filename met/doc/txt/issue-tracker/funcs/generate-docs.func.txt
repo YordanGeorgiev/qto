@@ -1,0 +1,47 @@
+# doc/txt/issue-tracker/func/generate-docs.func.txt
+
+	doGenerateDocs
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to generate the following types of docs for the tool:
+   - github syntax md files
+   - pdf files
+   - xls files containign the export of the tables
+
+	# Prequisites
+	# ------------------------------------------------------
+	installed and configured mariadb server and client
+   deployed and operational access to isg-pub instance
+
+	# Installation
+	# ------------------------------------------------------
+   check the Installation section of the isg-pub documentation 
+
+	# Interdependancies
+	# ------------------------------------------------------
+   - running isg-pub instance
+   - deployed and populated isg-pub mysql database
+   - proper mysql related configuration in the cnf files
+   - mariadb user with access to the database 
+   - wkhtmltopdf configured on the isg-pub instance server 
+      for the pdf export
+
+	# Usage:
+	# ------------------------------------------------------
+   - create the documentation db with the run-mysql-scripts
+      action
+   - start the isg-pub instance	
+   - populate the mysql doc db from the isg-pub instance	
+
+	# Developent
+	# ------------------------------------------------------
+   -- ensure the new vars introduced are available in all projects 
+         configuration files
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- if the isg-pub instance is not running 
+
+
+# eof file: doc/txt/issue-tracker/func/generate-docs.func.txt
