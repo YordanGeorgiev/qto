@@ -21,6 +21,7 @@ src/perl/issue_tracker/templates/controls/list-grid/js/btn-new.js.html.ep
 # --
 src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep
+src/perl/issue_tracker/public/lib/js/controls/jqcloud/jqcloud.min.js
 src/perl/issue_tracker/templates/controls/list-rgrid/list-rgrid.html.ep
 src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
 src/perl/issue_tracker/templates/layouts/site.html.ep
@@ -59,7 +60,6 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-egrid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/jqcloud.css
-src/perl/issue_tracker/public/lib/js/controls/jqcloud/jqcloud.min.js
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/site.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/list-egrid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
@@ -934,10 +934,13 @@ src/perl/issue_tracker/t/lib/IssueTracker/TestSeleniumSetup.t
 src/perl/issue_tracker/log/1
 doc/txt/issue-tracker/funcs/start-selenium.func.txt
 src/bash/issue-tracker/funcs/start-selenium.func.sh
-dat/mix/2018/2018-10/2018-10-17/
-dat/mix/2018/2018-10/2018-10-17/json
-dat/mix/2018/2018-10/2018-10-17/json/daily_issues.json
-dat/mix/2018/2018-10/2018-10-17/sql
-dat/mix/2018/2018-10/2018-10-17/sql/dev_issue_tracker
-dat/mix/2018/2018-10/2018-10-17/sql/dev_issue_tracker/dev_issue_tracker.20181017_214312.insrt.dmp.sql
-dat/mix/2018/2018-10/2018-10-17/xls/issue-tracker.all.20181017_000000.xlsx
+dat/mix/2018/2018-10/2018-10-18/
+dat/mix/2018/2018-10/2018-10-18/json
+dat/mix/2018/2018-10/2018-10-18/json/daily_issues.json
+dat/mix/2018/2018-10/2018-10-18/sql
+dat/mix/2018/2018-10/2018-10-18/sql/dev_issue_tracker
+dat/mix/2018/2018-10/2018-10-18/sql/dev_issue_tracker/dev_issue_tracker.20181018_092011.insrt.dmp.sql
+dat/mix/2018/2018-10/2018-10-18/sql/tst_issue_tracker
+dat/mix/2018/2018-10/2018-10-18/sql/tst_issue_tracker/tst_issue_tracker.20181018_091845.insrt.dmp.sql
+dat/mix/2018/2018-10/2018-10-18/xls
+dat/mix/2018/2018-10/2018-10-18/xls/issue-tracker.all.20181018_000000.xlsx
