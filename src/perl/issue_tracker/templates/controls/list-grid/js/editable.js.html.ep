@@ -1,38 +1,65 @@
    Vue.component('editable', {
-     template: `<div v-bind:id="id" class="cls_cnt_edtble" contenteditable="true" @blur="emitChange" 
-               v-on:focus="focused" v-on:keyup.esc="revertChange()">{{ content }}</div>`,
+     template: `<textarea v-bind:id="id" class="cls_cnt_edtble" @blur="emitChange" v-bind:title="content" v-model="cnt"
+               v-on:focus="focused" v-bind:style="'width: ' + calcWidth() + 'em'" v-on:keyup.esc="revertChange()">{{ content }}</textarea>`,
      props: {
-		content: {
-			twoWay: true
-		}
-		, id: {}
-	  },
-     oldData: "",
-     watch: {
-        content: function () {
-            this.$el.innerText = "" ? this.content === 'null' : this.$el.innerText = this.content;
-            this.$el.innerText = "" ? this.content === null : this.$el.innerText = this.content;
-            this.$el.innerText = "" ? typeof(content) === 'undefined'  : this.$el.innerText = this.content;
-            console.log (' whatched called ');
-            if ( typeof this.content === 'udefined' || this.content === 'null' ) {
-               this.$el.innerText = ""
-            }
-        }
-     },
-     mounted() {
-        this.content === 'null' ? this.$el.innerText = "" : this.$el.innerText = this.content;
+		   id: {}
+         , cnt: {
+            twoWay: true
+            , default: ""
+         }
+	  }
+     , data() {
+         return {
+            cntz: ""
+            , content: this.cnt
+         }
+	  }
+     , oldData: ""
+     , computed: {
+    }
+     , mounted() {
+         this.content = this.cnt
+         this.displayEmptyCellIfNullOrUndefined()
      },
      methods: {
-       focused(ev) {
-         this.oldData = ev.target.textContent;
+       displayEmptyCellIfNullOrUndefined() {
+            if ( typeof this.content == "undefined" || this.content === 'null' || this.content == null) {
+               this.$el.innerText = " "
+               this.content = " "
+            }
+       }
+      , focused(ev) {
+         this.oldData = ev.target.value
        }
        , emitChange (ev) {
-			  this.$emit('update', ev.target.innerText,ev.target.id,this.oldData) // parent's job !!!
-           // ev.preventDefault() //it-180925092952 !!!
-           // this.$el.innerText = "" ? this.content === 'null' : this.$el.innerText = this.content;
+           var modifiedContent = ev.target.value
+			  this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
+           this.displayEmptyCellIfNullOrUndefined()
        }
        , revertChange() {
      		  this.$el.innerText = this.oldData ; 
+           this.displayEmptyCellIfNullOrUndefined()
        }
-     }
+       , calcWidth() {
+            var width = 0
+            if ( typeof this.content != undefined && this.content != null) {
+               width = this.content.toString().length
+               if ( width < 5 ) {
+                  return width 
+               } else if ( width > 4 && width < 16 ) {
+                  return 7
+               } else if ( width > 15 && width < 35 ) {
+                  return 9
+               } else if ( width > 34 && width < 60 ) {
+                  return 13
+               } else if ( width > 59 && width < 90 ) {
+                  return 17
+               } else  {
+                  return 26
+               }
+            } else {
+                  return 3
+            }
+     		}
+		}
    })

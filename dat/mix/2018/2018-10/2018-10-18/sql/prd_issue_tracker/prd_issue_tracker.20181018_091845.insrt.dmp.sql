@@ -19,6 +19,7 @@ SET row_security = off;
 -- Data for Name: check_lists; Type: TABLE DATA; Schema: public; Owner: ysg
 --
 
+INSERT INTO public.check_lists (guid, id, seq, prio, status, category, name, description, update_time) VALUES ('7aed5ade-c47e-4454-9854-1908d38c5634', 181017212250, NULL, 1, '02-todo', 'cat', 'name', 'desc', '2018-10-17 21:22:50');
 INSERT INTO public.check_lists (guid, id, seq, prio, status, category, name, description, update_time) VALUES ('ee4b8303-435f-467e-8b28-fab1175805df', 180801162744, 1, 5, '02-todo', 'before-merge-into-develop', 'The feature or functionality current description is added in the Features doc', 'The feature or functionality current description is added in the Features and Functionalities document. ', '2018-09-26 22:22:19');
 INSERT INTO public.check_lists (guid, id, seq, prio, status, category, name, description, update_time) VALUES ('472418b5-5d46-4d4b-b29e-f650220d5027', 180801162753, 7, 5, '02-todo', 'before-merge-into-develop', 'Deployment to the test environment', 'Deploy to the test environment as follows:', '2018-09-26 22:22:19');
 INSERT INTO public.check_lists (guid, id, seq, prio, status, category, name, description, update_time) VALUES ('c03526e5-75e9-4485-9a3c-f1db28eb490c', 180801162754, 8, 5, '02-todo', 'before-merge-into-develop', 'Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. ', 'Deploy to the test environment as follows:', '2018-09-26 22:22:19');
@@ -59,16 +60,17 @@ INSERT INTO public.confs (guid, id, seq, prio, category, name, value, descriptio
 -- Data for Name: daily_issues; Type: TABLE DATA; Schema: public; Owner: ysg
 --
 
-INSERT INTO public.daily_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('6b2de98d-ec0d-4cbb-93cc-a331d0f2df9a', 1806011310, 1, 1, 2, 7, '03-wip', 'issue-tracker-docs', 'issues walktrough and user-stories doc update', 'As follows:
+INSERT INTO public.daily_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('f130d526-49c9-4ad5-b9f9-70d27b2f9d62', 1806011310, 1, 1, 2, 7, '03-wip', 'issue-tracker-docs', 'issues walktrough and user-stories doc update', 'As follows:
  - close the monthly period
 - move the done issues to the yearly period
- - move the dissed issues to the yearly period', 'docs', 'ysg', '2018-10-31 20:00:00', '2018-10-31 20:00:00', 2.00, 3.00, 'issue-tracker', '2018-10-04 21:31:27');
+ - move the dissed issues to the yearly period', 'docs', 'ysg', '2018-10-31 20:00:00', '2018-10-31 20:00:00', 2.00, 3.00, 'issue-tracker', '2018-10-17 22:33:36');
 
 
 --
 -- Data for Name: decadally_issues; Type: TABLE DATA; Schema: public; Owner: ysg
 --
 
+INSERT INTO public.decadally_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('c941aed6-f74e-42e5-bc81-874ecc311175', 181017212604, NULL, NULL, 1, 9, '02-todo', 'cat', 'name', 'desc', 'task', 'ysg', '2018-10-17 21:26:04', '2018-10-17 21:26:04', NULL, NULL, NULL, '2018-10-17 21:26:37');
 INSERT INTO public.decadally_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('a276d737-5a69-4897-912e-4a8877b67ca7', 180817105624, NULL, NULL, 1, 9, '03-act', 'cat', 'up-and-running aws instance', 'up-and-running aws instance', 'task', 'unknown', '2018-07-15 00:00:00', '2020-01-01 00:00:00', NULL, NULL, NULL, '2018-10-04 19:08:07');
 INSERT INTO public.decadally_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('8c482ac4-2097-4ccf-89ea-141e54c2bcef', 181004190758, NULL, NULL, 1, 9, '02-todo', 'cat', 'everything is bright and shine', NULL, 'task', 'unknown', '2018-10-04 19:07:58', '2018-10-04 19:07:58', NULL, NULL, NULL, '2018-10-04 19:10:42');
 
@@ -89,38 +91,134 @@ INSERT INTO public.ideas (guid, id, seq, prio, status, name, description, owner,
 -- Data for Name: monthly_issues; Type: TABLE DATA; Schema: public; Owner: ysg
 --
 
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('b293825f-8152-49e8-9ef2-bbf084ee3bd4', 180920104140, NULL, NULL, 5, 9, '02-todo', 'feature', 'add the json backup to the increase-date action', 'The "increase-date" action should take a json backup as well ... 
-Because it will provide a double daily backup of the data', 'task', 'unknown', '2018-09-20 10:26:43', '2018-09-20 10:26:43', NULL, NULL, NULL, '2018-09-25 10:13:09');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('47110ae8-3166-4e52-9caa-153f4d92ac0a', 180925152741, NULL, NULL, 5, 9, '01-eval', 'feature-ui', 'universal item search', 'Scenario: 
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('2bfa5d36-40e8-4e7f-8be6-0fc8a0ff2772', 180914111431, NULL, NULL, 5, 9, '03-flow', 'bug-feature', 'stuck morbo server', 'Whenever the morbo server is stuck, one has to kill manually the instances of the perl as the socket is occuped ...
+To be resolved as soon as it occurs', 'task', 'ysg', '2018-09-14 10:59:37', '2018-09-14 10:59:37', NULL, NULL, NULL, '2018-10-17 16:25:07');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('c2a20c3d-142b-49e4-8a35-8d58a7fab235', 181017181925, NULL, NULL, 3, 9, '09-done', 'feature', 'replace the content editable with textarea', 'This feature improves dramatically the usability of the grid: 
+ - the columns and rows are re-sizable 
+ - the columns and rows get a default size
+ - the default size is adjustable programatically', 'task', 'ysg', '2018-10-17 18:19:25', '2018-10-17 18:19:25', NULL, NULL, NULL, '2018-10-17 18:21:05');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('b293825f-8152-49e8-9ef2-bbf084ee3bd4', 180920104140, NULL, NULL, 9, 9, '02-todo', 'feature', 'add the json backup to the increase-date action', 'The "increase-date" action should take a json backup as well ... 
+Because it will provide a double daily backup of the data', 'task', 'ysg', '2018-09-20 10:26:43', '2018-09-20 10:26:43', NULL, NULL, NULL, '2018-10-17 16:16:22');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('92b5e4c0-ada9-4e76-afba-d7ea6c116693', 181005075514, NULL, NULL, 9, 9, '09-done', 'capability', 'achieve capability to deploy 3 instances in the cloud for 1h', 'The deployment of v0.4.9 took 1h as follows:
+ - ssh to cloud srvr
+ - git clone latest version
+ - adjust configuration files ( manual ) 
+ - for dev,tst,prod
+ -- stop old instance
+ -- recreate db 
+ -- load data 
+-- start new instance
+Prd instance downtime - 10 min', 'task', 'ysg', '2018-10-05 07:55:14', '2018-10-05 07:55:14', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('7a5be76d-8f3b-44d2-b494-3effdaea78e6', 181017183758, NULL, NULL, 9, 9, '09-done', 'feature', 'asyncronous load for page and db lists', 'Improve performance changing the loading of the tables list and databases list on page load to be on search inbox <<operator>> added', 'task', 'ysg', '2018-10-17 18:37:58', '2018-10-17 18:37:58', NULL, NULL, NULL, '2018-10-17 18:58:03');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('480930f1-e28b-408b-b2bf-3754b3000792', 180926224041, NULL, NULL, 6, 9, '09-done', 'bug', 'on unexistent columns hide , met should be 0°', 'In the following url the met should be 0 , but is null: 
+
+http://192.168.56.120:3001/dev_issue_tracker/select/monthly_issues?pick=name,description,prio&hide=guid,prio,non_existent_column', 'task', 'ysg', '2018-09-26 22:40:37', '2018-09-26 22:40:37', NULL, NULL, NULL, '2018-10-17 18:17:18');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('4fb9343f-8385-49a7-b92e-1f346359b7a3', 181005095415, NULL, NULL, 6, 9, '09-done', 'setup', 'copy the cnf files to the loal conf_repo_dir', 'As too much time is used in adjusting those remotes AND for backup and better configuration management', 'task', 'ysg', '2018-10-05 09:50:01', '2018-10-05 09:50:01', NULL, NULL, NULL, '2018-10-17 17:17:10');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('40b10070-5c25-4966-9c82-e82905d5f288', 181004231103, NULL, NULL, 1, 9, '09-done', 'bug', 'change as=etable to as=grid in master', 'In the documentation as the links in the features docs are dead', 'task', 'ysg', '2018-10-04 23:11:03', '2018-10-04 23:11:03', NULL, NULL, NULL, '2018-10-17 17:46:07');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('5ed88231-4de2-4a6a-a8fe-4ca50719fe38', 181008183922, NULL, NULL, 9, 9, '09-done', 'bug', 'fix ALL the failing regression tests', 'As their amount has start going up ...
+ - ok - for remove the hide ie', 'task', 'ysg', '2018-10-08 18:20:52', '2018-10-08 18:20:52', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('6b43660d-7378-4ea3-a1a1-3413866c6458', 181005092909, NULL, NULL, 6, 9, '09-done', 'setup', 'start v0.5.0', 'Create new v0.5.0 local instances as follows: 
+ - run the to-ver action
+ - check the configuration files for the new ver 
+ - change the tmux session file
+ - merge master into dev, add 0.5.0 tag', 'task', 'ysg', '2018-10-05 09:25:00', '2018-10-05 09:25:00', NULL, NULL, NULL, '2018-10-17 16:36:36');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('881e685c-5a2b-40d9-b566-6bb451b9f6f3', 181005095108, NULL, NULL, 6, 9, '09-done', 'feature', 'add the configuration repo dir', 'Add the notion for configuration repository directory: 
+- add the reload-conf shell action, which will reload the current instance configuration shell variables by name and version from the conf_repo_dir', 'task', 'ysg', '2018-10-05 09:46:54', '2018-10-05 09:46:54', NULL, NULL, NULL, '2018-10-17 17:08:07');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('591dbdee-0c89-41a2-b73b-134abbf9f51e', 181012104823, NULL, NULL, 4, 9, '07-qas', 'bug', 'on update fail no old value', 'When the update fails the old value is not returned, but rather and empty cell is set, which is MISLEADING ...
+
+', 'task', 'ysg', '2018-10-12 10:48:06', '2018-10-12 10:48:06', NULL, NULL, NULL, '2018-10-17 18:52:08');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('dd534f01-54ff-44e5-9617-1a0bfb1f87e9', 181005114324, NULL, NULL, 0, 9, '09-done', 'bug', 'base url fails to retrieve data', 'The 
+http://192.168.56.120:3001/dev_issue_tracker/list/principles?as=grid
+page is empty
+Root cause: bug in setting deefault params: 
+fix: if ( url_params.has("page-size") === false) { url_params.append("page-size" , 5); }
+source:  https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/entries', 'task', 'ysg', '2018-10-05 11:43:19', '2018-10-05 11:43:19', NULL, NULL, NULL, '2018-10-17 18:01:32');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('324755df-a7aa-4e2c-a3d9-5da4aa20ee2c', 180925230044, NULL, NULL, 6, 8, '02-todo', 'docs', 'functional requirements update', 'Update the functional requirements: 
+ - what is the maximum amount of rows per table which should be supported
+ - how-many users at once should be supported', 'task', 'ysg', '2018-09-25 23:00:45', '2018-09-25 23:00:45', NULL, NULL, NULL, '2018-10-17 18:09:06');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('5c2c4c48-8ac7-48d3-ac65-a81e6d99d54e', 180927110017, NULL, NULL, 4, 9, '03-act', 'bug', 'null string on update', 'when a cell if left blank the null string appears on update.
+This one breaks heavily the 181011195040 bug !!!', 'task', 'ysg', '2018-09-27 11:00:17', '2018-09-27 11:00:17', NULL, NULL, NULL, '2018-10-17 18:12:49');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('780168d7-405e-4883-b6e0-7b355e162752', 180919115859, NULL, NULL, 3, 9, '03-wip', 'bug', 'the back-end select action does not return properly on wrong sql syntax error', 'When the query generated has wrong sql syntax : 
+for example: 
+l 
+that is both the oa and od url params are available ... 
+"unknown error" is shown ... while a more descriptive error with the sql syntax should be shown ...', 'task', 'ysg', '2018-09-19 11:58:55', '2018-09-19 11:58:55', NULL, NULL, NULL, '2018-10-17 18:30:39');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('19c2966a-f433-4079-aafe-659bec039b0b', 181017185647, NULL, NULL, 1, 9, '02-todo', 'feature', 'speed-up the loading of the css files', 'As they take half of the load time and not so much css is out there yet !!!
+
+ - add asyncrounous loading
+ - add css ', 'task', 'unknown', '2018-10-17 18:56:47', '2018-10-17 18:56:47', NULL, NULL, NULL, '2018-10-17 18:58:06');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('f2d724ea-b257-45a5-be07-fed8fd8087d8', 181001221108, NULL, NULL, 0, 9, '09-done', 'testing', 'install and setup the the chrome-driver', 'Install and setup the chrome-driver and run the most simple example:
+https://tecadmin.net/setup-selenium-chromedriver-on-ubuntu/', 'task', 'ysg', '2018-10-01 22:10:58', '2018-10-01 22:10:58', NULL, NULL, NULL, '2018-10-17 18:00:41');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('87fbf6d7-2ec7-4767-bcdd-eeefc433eb05', 180815133836, 1, NULL, 6, 9, '01-eval', 'feature', 'improve load testing for the select web action _', 'add load testing for the select web action
+
+Perform asyncrously requests to examine the amount of asyncrounous calls the application "breaks"', 'task', 'ysg', '2018-08-15 13:38:36', '2018-08-15 13:38:36', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('34072102-26e1-4995-8aab-496c0cbdc363', 180926103938, NULL, NULL, 6, 9, '02-todo', 'docs', 'update way of working section', 'Update the System Guide with the way of working section: 
+ - requirements should have explicitly written deadline', 'task', 'ysg', '2018-09-26 10:39:38', '2018-09-26 10:39:38', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('47110ae8-3166-4e52-9caa-153f4d92ac0a', 180925152741, NULL, NULL, 6, 9, '01-eval', 'feature-ui', 'universal item search', 'Scenario: 
 the user types any text without operators in the search box 
 The System
 - redirects to an url with removed search url params
 - uses a new txt-srch='' the actual query'' 
 -  builds a dynamic search with all the text attributes of the CURRENT item 
-- lists the table', 'task', 'unknown', '2018-09-25 15:26:59', '2018-09-25 15:26:59', NULL, NULL, NULL, '2018-10-03 12:48:38');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('2bfa5d36-40e8-4e7f-8be6-0fc8a0ff2772', 180914111431, NULL, NULL, 5, 9, '03-flow', 'bug-feature', 'stuck morbo server', 'Whenever the morbo server is stuck, one has to kill manually the instances of the perl as the socket is occuped ...
-To be resolved as soon as it occurs', 'task', 'unknown', '2018-09-14 10:59:37', '2018-09-14 10:59:37', NULL, NULL, NULL, '2018-10-01 15:18:46');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('d703d532-267d-429f-9075-a6a8be824a9d', 180926113604, NULL, NULL, 4, 9, '02-todo', 'docs', 'add the ReleaseNotes document', 'The ReleaseNotes should contain all the releases with the following info per release:
- - release intro 
- - performance and stability (refactoring)
- - api changes - changes of behaviours
- - known issues', 'task', 'unknown', '2018-09-26 11:26:44', '2018-09-26 11:26:44', NULL, NULL, NULL, '2018-10-03 12:45:51');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('f2d724ea-b257-45a5-be07-fed8fd8087d8', 181001221108, NULL, NULL, 5, 9, '09-done', 'testing', 'install and setup the the chrome-driver', 'Install and setup the chrome-driver and run the most simple example:
-https://tecadmin.net/setup-selenium-chromedriver-on-ubuntu/', 'task', 'unknown', '2018-10-01 22:10:58', '2018-10-01 22:10:58', NULL, NULL, NULL, '2018-10-03 12:48:36');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('780168d7-405e-4883-b6e0-7b355e162752', 180919115859, NULL, NULL, 5, 9, '03-wip', 'bug', 'the back-end select action does not return properly on wrong sql syntax error', 'When the query generated has wrong sql syntax : 
-for example: 
-l 
-that is both the oa and od url params are available ... 
-"unknown error" is shown ... while a more descriptive error with the sql syntax should be shown ...', 'task', 'unknown', '2018-09-19 11:58:55', '2018-09-19 11:58:55', NULL, NULL, NULL, '2018-10-01 15:18:54');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('324755df-a7aa-4e2c-a3d9-5da4aa20ee2c', 180925230044, NULL, NULL, 6, 8, '02-todo', 'docs', 'functional requirements update', 'Update the functional requirements: 
- - what is the maximum amount of rows per table which should be supported
- - how-many users at once should be supported', 'task', 'unknown', '2018-09-25 23:00:45', '2018-09-25 23:00:45', NULL, NULL, NULL, '2018-10-01 15:20:42');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('87fbf6d7-2ec7-4767-bcdd-eeefc433eb05', 180815133836, 1, NULL, 6, 9, '01-eval', 'feature', 'improve load testing for the select web action _', 'add load testing for the select web action
+- lists the table', 'task', 'ysg', '2018-09-25 15:26:59', '2018-09-25 15:26:59', NULL, NULL, NULL, '2018-10-17 16:17:01');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('665f009d-3b27-4e70-ac00-f77b716fb3d4', 180921091603, NULL, NULL, 6, 9, '01-eval', 'feature', 'add icon for the page-sizer', 'fix the table position on paging
 
-Perform asyncrously requests to examine the amount of asyncrounous calls the application "breaks"', 'task', 'unknown', '2018-08-15 13:38:36', '2018-08-15 13:38:36', NULL, NULL, NULL, '2018-10-03 12:48:46');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('34072102-26e1-4995-8aab-496c0cbdc363', 180926103938, NULL, NULL, 6, 9, '02-todo', 'docs', 'update way of working section', 'Update the System Guide with the way of working section: 
- - requirements should have explicitly written deadline', 'task', 'unknown', '2018-09-26 10:39:38', '2018-09-26 10:39:38', NULL, NULL, NULL, '2018-10-03 12:48:48');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('12f6689a-fa8e-4024-a693-9d1e5cd5dffc', 180517213501, 1, NULL, 5, 2, '02-todo', 'feature', 'implement client-side testing', 'or should there be simply redirect ... 
+The table goes up and down annoyingly when the next page is clicked ... 
+The table should be fixed according to the columns row', 'task', 'ysg', '2018-09-21 09:15:59', '2018-09-21 09:15:59', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('43929f18-b1d1-43ee-921d-13f49133a291', 180921091752, NULL, NULL, 9, 9, '01-eval', 'feature-ui', 'add icon for the pager', 'The pager on the top is kind of strange - new users would know what is it all about ...
+
+https://www.storyblocks.com/stock-image/page-pdf-glyph-icon-bdigvdpe7uzj6gmsu0c', 'task', 'ysg', '2018-09-21 09:17:48', '2018-09-21 09:17:48', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('9787f4e0-dcbd-4678-8152-1716a42b173e', 181004144853, NULL, NULL, 6, 9, '09-done', 'deploy', 'deploy v0.4.9', 'deploy 0.4.9 although there are still open bugs ... as there have been 4 weeks without a deployment', 'task', 'ysg', '2018-10-04 14:48:54', '2018-10-04 14:48:54', NULL, NULL, NULL, '2018-10-17 17:21:51');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('7da90c90-7b9e-42c6-9915-4959f359c195', 181001102952, NULL, NULL, 9, 9, '09-done', 'bug', 'fix pager broken for 2 pages', 'If there are 2 pages the pager is broken
+
+The SELECT does not report the number of pages correctly : 
+Check : 
+http://192.168.56.120:3001/dev_issue_tracker/select/weekly_issues?as=grid&pick=id,category,prio,status,name,weight,description&od=id&page-size=15&page-num=1', 'task', 'ysg', '2018-10-01 10:11:57', '2018-10-01 10:11:57', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('698320a1-7b6f-47c7-a44e-19218ba2bab5', 181002103341, NULL, NULL, 9, 9, '09-done', 'bug', 'dropdown keyboard navigation', 'the scroll down to the search-box dropdown does not work with the keyboard', 'task', 'ysg', '2018-10-02 10:15:57', '2018-10-02 10:15:57', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('2220ffb6-88dd-4882-b7e6-c607873e64a3', 181004135232, NULL, NULL, 6, 9, '09-done', 'setup', 'poc for Selenium::Remote::Driver setup', 'Selenium::Remote::Driver setup and call via a simple script', 'task', 'ysg', '2018-10-04 13:52:32', '2018-10-04 13:52:32', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('8fe8ad4c-fb37-481a-8a3b-9264e2bcfcc6', 181012103713, NULL, NULL, 6, 9, '02-todo', 'feature', 'async load of db and tables list', 'add asyncronous load of the databases'' list and the tables list AFTER typging the ":in" or ":for" operator', 'task', 'ysg', '2018-10-12 10:36:54', '2018-10-12 10:36:54', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('958cbf01-6115-49f7-b535-e79d395e2cd6', 181009151205, NULL, NULL, 9, 9, '09-done', 'feature', 'default db backup', 'add the backing up of the current instance database in the backup-postgres-db shell action if the shell vars were not pre-loaded that is by default ...', 'task', 'ysg', '2018-10-09 15:12:06', '2018-10-09 15:12:06', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('c9ec0d30-0f18-4094-b748-80c6bb6c0eaa', 181002113222, NULL, NULL, 9, 9, '09-done', 'feature', 'add basic auth', 'configure basic auth in the amzn instance IF there is a real biz need arrises:
+ - confguration change - add the proj_instance_dir concept
+ - security change add the htpasswd file per project if neeedd
+ - binaries change - add the BasicAuthPlus module
+Lessons learned: If something could go wrong it will go wrong , and even it if cannot go wrong something else will go wrong ...', 'task', 'ysg', '2018-10-02 11:14:40', '2018-10-02 11:14:40', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('d4740701-7593-442c-9b3c-7a642d575cef', 181009105544, NULL, NULL, 9, 9, '02-todo', 'setup', 'add the /opt/csitea symlnk in ec2 env', 'export link_path=/opt/csiteaexport 
+tgt_path=/home/usr_it/opt/csiteamkdir -p `dirname $link_path`unlink $link_pathln -s "$tgt_path" "$link_path"ls -la $link_path; # add both for /opt and /v', 'task', 'ysg', '2018-10-09 10:55:38', '2018-10-09 10:55:38', NULL, NULL, NULL, '2018-10-17 15:30:24');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('f859746b-e3e8-431e-a4c6-1537375f8c19', 180920102952, NULL, NULL, 6, 9, '02-todo', 'feature', 'add the capability of displaying warnings at the bottom right of the page', 'Whenever the System, "considers" an erroneus request it should provide a better answer by argumenting itself via a warning at the bottom right of the page. For example: 
+The user has requested page <<great-page-number>> which does not contain any data ... The system should present the warning that the page <<great-page-number>> does not contain any data, displaying the page number 1 warning msg.', 'task', 'ysg', '2018-09-20 10:14:54', '2018-09-20 10:14:54', NULL, NULL, NULL, '2018-10-17 16:43:18');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('cac69e18-0777-4adf-a7fd-c485fa364d21', 180921085537, NULL, NULL, 9, 9, '01-eval', 'feature', 'add asyncrounous load of the select columns', 'The use case should be as follows:
+ - the user requests the page
+ - the System loads the list of dbs and tables on page load
+ - WHEN the user types the :pick or :select operator 
+ - the system loads the lists of the current item attributes and displays it into the autocomplete', 'task', 'ysg', '2018-09-21 08:55:32', '2018-09-21 08:55:32', NULL, NULL, NULL, '2018-10-17 15:29:41');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('5a234ead-76ed-4dfc-9768-0dc5ddb12ae6', 180925220009, NULL, NULL, 6, 9, '01-eval', 'docs', 'add login sequence diagram', 'Create and store for future maintenance a login authentication sequence diagram', 'task', 'ysg', '2018-09-25 22:00:07', '2018-09-25 22:00:07', NULL, NULL, NULL, '2018-10-17 18:08:58');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('cd42cd73-38b7-400f-a30d-ac47735e328f', 181011103249, NULL, NULL, 4, 9, '09-done', 'feature', 'add the capability to adjust the column widths ', '
+The default width of the columns is calculated from the actuall cell content size , but :
+The capability can be achieved by dragging the size of the textareas, which is supported by most of the modern browsers: 
+- chrome
+- safari 
+- firefox
+
+- set default widths by em units - add logic for short , middle and long cols', 'task', 'ysg', '2018-10-11 10:32:49', '2018-10-11 10:32:49', NULL, NULL, NULL, '2018-10-17 18:02:19');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('0b2ee6b1-2f94-43de-8933-ed5223c67fd9', 181003125316, NULL, NULL, 9, 9, '06-onhold', 'feature', 'achieve capability to write client side tests', 'Obtain the capability to write selenium web driver UI automation scripts on the mac:  - install node - ok  - install atom - ok - install the chrome-driver - done - run js script get response in perl - foo- todo', 'task', 'ysg', '2018-10-03 12:53:16', '2018-10-03 12:53:16', NULL, NULL, NULL, '2018-10-17 15:31:00');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('2a515908-c7b2-4fcc-894b-4c34ff1dfc27', 180921152541, NULL, NULL, 5, 9, '01-eval', 'functionality', 'add the back-end action for select table columns', 'This has been done - aka this issue is duplicate: 
+
+
+Prerequisite for the :pick operator in the search-box:
+180921085537
+
+
+
+http://192.168.56.120:3001/dev_issue_tracker/list/monthly_issues?as=lbls&pick=id,category,status,prio,weight,name,description&page-size=5&page-num=1&oa=prio&with=id-eq-180921085537', 'task', 'ysg', '2018-09-21 15:25:39', '2018-09-21 15:25:39', NULL, NULL, NULL, '2018-10-17 18:01:39');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('a4f6934a-ee5a-4a71-87c9-5984c1c1a9e1', 181011195040, NULL, NULL, 5, 9, '07-qas', 'bug', 'freaky duplication on edited row', 'THIS IS THE MOST IMPORTANT ONE !!!
+SINCE IT CHANGES THE DATA !!!!
+
+ - sort by prio
+ - F5 to refresh
+ - click on prio twice to ensure sorting works
+ -  ', 'task', 'ysg', '2018-10-11 19:50:40', '2018-10-11 19:50:40', NULL, NULL, NULL, '2018-10-17 18:30:12');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('12f6689a-fa8e-4024-a693-9d1e5cd5dffc', 180517213501, 1, NULL, 3, 2, '02-todo', 'bug-feature', 'pager should re-drow based on the current sort', 'or should there be simply redirect ... 
 
 The pager should re-drow based on the current sort. Scenario: 
 - get url with o=update_time , pg-size=100
@@ -131,40 +229,84 @@ Expected behavour
 - still the last updated one is shown as the top row
 
 Actual behavour
-- the first updated one is shown', 'goal', 'ysg', '2018-06-01 00:00:00', '2018-07-30 00:00:00', 50.00, 5.00, 'feature', '2018-09-27 10:02:35');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('665f009d-3b27-4e70-ac00-f77b716fb3d4', 180921091603, NULL, NULL, 6, 9, '01-eval', 'feature', 'add icon for the page-sizer', 'fix the table position on paging
+- the first updated one is shown', 'goal', 'ysg', '2018-06-01 00:00:00', '2018-07-30 00:00:00', 50.00, 5.00, 'feature', '2018-10-17 18:30:22');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('7648e5da-2310-4826-b65b-81c19a15d5d9', 181011111738, NULL, NULL, 6, 9, '02-todo', 'setup', 'client-side UI automation testing for JS events', 'Deploy the "textarea release" - v0.5.1 to the amzn ec2 cloud, as follows: 
 
-The table goes up and down annoyingly when the next page is clicked ... 
-The table should be fixed according to the columns row', 'task', 'unknown', '2018-09-21 09:15:59', '2018-09-21 09:15:59', NULL, NULL, NULL, '2018-10-02 10:21:44');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('43929f18-b1d1-43ee-921d-13f49133a291', 180921091752, NULL, NULL, 9, 9, '01-eval', 'feature-ui', 'add icon for the pager', 'The pager on the top is kind of strange - new users would know what is it all about ...
+ - deploy from zip package
+ - prepare configuration files 
+ - ensure no errors with cnf apply
+ - start and stop the dev,tst,prd mojo instances
+ - leave the tst mojo instance up-and-running
+ - start and stop the hypnotoad instance
 
-https://www.storyblocks.com/stock-image/page-pdf-glyph-icon-bdigvdpe7uzj6gmsu0c', 'task', 'unknown', '2018-09-21 09:17:48', '2018-09-21 09:17:48', NULL, NULL, NULL, '2018-10-03 12:49:19');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('480930f1-e28b-408b-b2bf-3754b3000792', 180926224041, NULL, NULL, 5, 5, '02-todo', 'bug', 'on unexistent columns hide , met should be 0°', 'In the following url the met should be 0 , but is null: 
+', 'task', 'ysg', '2018-10-11 11:17:38', '2018-10-11 11:17:38', NULL, NULL, NULL, '2018-10-17 17:46:04');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('d703d532-267d-429f-9075-a6a8be824a9d', 180926113604, NULL, NULL, 7, 9, '01-eval', 'docs', 'add the ReleaseNotes document', 'The ReleaseNotes should contain all the releases with the following info per release:
+ - release intro 
+ - performance and stability (refactoring)
+ - api changes - changes of behaviours
+ - known issues', 'task', 'ysg', '2018-09-26 11:26:44', '2018-09-26 11:26:44', NULL, NULL, NULL, '2018-10-17 18:10:36');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('efa98faa-af81-4bea-97dc-969b4c79e825', 181003124555, NULL, NULL, 9, 9, '09-done', 'feature-bug', 'change content editable to textarea for html entities display', 'Add the capability to display any text regardless of the html rendering for example: 
+- rendering anything which has html tags - <<var>>
+- rendering html code - forexample table
+<table> 
+</table>
 
-http://192.168.56.120:3001/dev_issue_tracker/select/monthly_issues?pick=name,description,prio&hide=guid,prio,non_existent_column', 'task', 'unknown', '2018-09-26 22:40:37', '2018-09-26 22:40:37', NULL, NULL, NULL, '2018-10-03 12:45:48');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('cac69e18-0777-4adf-a7fd-c485fa364d21', 180921085537, NULL, NULL, 4, 9, '01-eval', 'feature', 'add asyncrounous load of the select columns', 'The use case should be as follows:
- - the user requests the page
- - the System loads the list of dbs and tables on page load
- - WHEN the user types the :pick or :select operator 
- - the system loads the lists of the current item attributes and displays it into the autocomplete', 'task', 'unknown', '2018-09-21 08:55:32', '2018-09-21 08:55:32', NULL, NULL, NULL, '2018-10-02 10:21:49');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('2a515908-c7b2-4fcc-894b-4c34ff1dfc27', 180921152541, NULL, NULL, 5, 9, '01-eval', 'functionality', 'add the back-end action for select table columns', 'This has been done - aka this issue is duplicate: 
+This was achieved by replacing the content editable div with a textarea ...
+And naturally a lot of other features and capabilities were gained "for free" ... such as resizing of the columns and rows ... tooltips etc. ', 'task', 'ysg', '2018-10-03 12:45:55', '2018-10-03 12:45:55', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('dfae179c-06f1-4573-89bd-bf275f22ce8b', 181009195756, NULL, NULL, 9, 9, '09-done', 'feature', 'add the requirements and userstories tables ddls', 'add the requirements and userstories tables ddls
+and ensure the paths are the sam', 'task', 'ysg', '2018-10-09 19:57:50', '2018-10-09 19:57:50', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('3a83bebb-7e57-4955-a744-df64f8fec4f0', 1805301624, 1, 4, 9, 4, '04-diss', 'issue-tracker', 'issue_tracker.pl.log appearance in product instance dir', 'Occurs when one runs the "run-integration-tests" action', 'bug', 'ysg', '2018-05-29 20:53:00', '2018-06-30 00:00:00', 0.00, 0.10, 'bugs', '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('f6ff9b86-6626-4dea-bcbf-10e18d7240d5', 181011111445, NULL, NULL, 9, 9, '09-done', 'feature', 'Add a defualt size of the html table rows', 'Gained "for free" when changing the content editable to textarea ... 
+', 'task', 'ysg', '2018-10-11 11:14:45', '2018-10-11 11:14:45', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('fc63b409-6273-48c7-b528-8de6244434fd', 181011111042, NULL, NULL, 6, 9, '02-todo', 'feature', 'freaky duplication on description', 'As follows: 
 
+ - add the test_item table 
+ - add the test_item_hierarchy table 
+ - add the 
+', 'task', 'ysg', '2018-10-11 11:10:42', '2018-10-11 11:10:42', NULL, NULL, NULL, '2018-10-17 14:51:52');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('59ee1acf-fdb1-40a6-85ac-1221e687834f', 181011111334, NULL, NULL, 6, 1, '02-todo', 'bug', 'rollback js and css libs local fetch', 'Roll back the fetching of the js and css libs locally ... 
+Related to it-181002103808', 'task', 'ysg', '2018-10-11 11:13:34', '2018-10-11 11:13:34', NULL, NULL, NULL, '2018-10-17 18:15:55');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('d1831d21-c0f0-428e-aee3-c7346e82e3f2', 1805172135, 1, 10, 4, 9, '02-todo', 'feature', 'client-side UI automation testing for JS events', 'By using the Mojo::Chrome module:Should be able to capture JS events:Vue induced changes on the page.', 'goal', 'ysg', '2018-06-01 00:00:00', '2018-07-30 00:00:00', 50.00, 5.00, 'feature', '2018-10-17 18:10:25');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('de2eec9b-2335-4552-9780-f29a3f7d00d5', 181002103808, NULL, NULL, 6, 9, '04-diss', 'refactor', 'move all external dependencies to be locally hosted', 'This "DECREASES" performance in the amnz ec2 prod substantially => no go !!!
 
-Prerequisite for the :pick operator in the search-box:
-180921085537
+Must be rolled back with a separate issue ...
+A more clever mechanism must be figured out ... later on ... 
 
+move all external dependencies to be locally hosted. This should improve sudden network
+ latencies', 'task', 'ysg', '2018-10-02 10:20:24', '2018-10-02 10:20:24', NULL, NULL, NULL, '2018-10-17 18:02:47');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('006f6640-27ad-413a-bee9-b2576db67bde', 181009205519, NULL, NULL, 8, 9, '06-onhold', 'feature', 'initial hierarchical docs modelling', 'The item and item_hierarchy combined will server as the storage mechanism for the doc_itemA doc_item has logical and consistent hierarchy
 
-
-http://192.168.56.120:3001/dev_issue_tracker/list/monthly_issues?as=lbls&pick=id,category,status,prio,weight,name,description&page-size=5&page-num=1&oa=prio&with=id-eq-180921085537', 'task', 'unknown', '2018-09-21 15:25:39', '2018-09-21 15:25:39', NULL, NULL, NULL, '2018-10-02 10:21:39');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('f859746b-e3e8-431e-a4c6-1537375f8c19', 180920102952, NULL, NULL, 3, 9, '02-todo', 'feature', 'add the capability of displaying warnings at the bottom right of the page', 'Whenever the System, "considers" an erroneus request it should provide a better answer by argumenting itself via a warning at the bottom right of the page. For example: 
-The user has requested page <<great-page-number>> which does not contain any data ... The system should present the warning that the page <<great-page-number>> does not contain any data, displaying the page number 1 warning msg.', 'task', 'unknown', '2018-09-20 10:14:54', '2018-09-20 10:14:54', NULL, NULL, NULL, '2018-10-01 15:17:36');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('5a234ead-76ed-4dfc-9768-0dc5ddb12ae6', 180925220009, NULL, NULL, 4, 9, '02-todo', 'docs', 'add login sequence diagram', 'Create and store for future maintenance a login authentication sequence diagram', 'task', 'unknown', '2018-09-25 22:00:07', '2018-09-25 22:00:07', NULL, NULL, NULL, '2018-10-01 15:18:44');
-INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('0be434f5-1066-43dd-be7e-053de08c5447', 1806060841, 1, 6, 1, 6, '02-todo', 'testing', 'poc for client side testing for all the client side functionalities', 'Evaluate:
+- one
+- two', 'task', 'ysg', '2018-10-09 20:55:15', '2018-10-09 20:55:15', NULL, NULL, NULL, '2018-10-17 16:05:41');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('0be434f5-1066-43dd-be7e-053de08c5447', 1806060841, 1, 6, 5, 6, '02-todo', 'testing', 'poc for client side testing for all the client side functionalities', 'Evaluate:
 - pure selenium 
 - https://github.com/jhthorsen/test-mojo-role-selenium
 poc for client side testing for all the client side functionalities
 
-Might be too time-consuming', 'feature', 'ysg', '2018-05-25 20:53:00', '2018-06-30 00:00:00', 10.00, 7.00, 'feature', '2018-10-01 21:24:26');
+Might be too time-consuming', 'feature', 'ysg', '2018-05-25 20:53:00', '2018-06-30 00:00:00', 10.00, 7.00, 'feature', '2018-10-17 18:07:19');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('313bbbef-f9c3-48d9-940d-96bc2e92f1c8', 181010214611, NULL, NULL, 9, 9, '09-done', 'refactoring', 'rollback js and css libs local fetch', 'Simply because it slows performance and increases complexity !!! ', 'task', 'ysg', '2018-10-10 21:46:11', '2018-10-10 21:46:11', NULL, NULL, NULL, '2018-10-17 18:30:05');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('55fa01b2-8343-4ffe-95ec-b3e3b17573be', 181009150405, NULL, NULL, 6, 9, '09-done', 'bug', 'fix mix_data_dir bug', 'backup-postgres-db.func.sh: line 11: mix_data_dir: unbound variable', 'task', 'ysg', '2018-10-09 15:04:05', '2018-10-09 15:04:05', NULL, NULL, NULL, '2018-10-17 17:06:51');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('13079a57-1954-4efb-a8f5-f5badaea6496', 181008184250, NULL, NULL, 2, 9, '09-done', 'setup', 'refactor configuration repo dir structure', 'The configuration repo must comply with: 
+ - /var/<<orgname>>/<<tool>>
+
+naming convention
+ - one liner for packing
+ - one liner for unpacking 
+ - one liner for creation
+', 'task', 'ysg', '2018-10-08 18:24:21', '2018-10-08 18:24:21', NULL, NULL, NULL, '2018-10-17 17:32:36');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('5145e9f7-dcab-4570-a731-5139ea5eb366', 180927085853, NULL, NULL, 7, 5, '09-done', 'bug', 'the create new works only on the second click', 'The new redirect has evoked the bug ...
+But ONLY in some conditions ?!
+Hard to reproduce', 'task', 'ysg', '2018-09-27 08:58:53', '2018-09-27 08:58:53', NULL, NULL, NULL, '2018-10-17 18:17:26');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('e8f0a841-f199-45d8-a47a-8cd275e6c634', 180925092952, NULL, NULL, 9, 9, '03-act', 'bug', 'textarea component duplicates', 'When the currently sorted column is updated and the grid should redrow based on the new updated value the content editable updates both the same cell which WAS the one to be updated And the correct one which is after the sort', 'task', 'ysg', '2018-09-25 09:29:52', '2018-09-25 09:29:52', NULL, NULL, NULL, '2018-10-17 16:18:24');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('c6dcd926-1c4d-4a38-a86c-d8d7a69c6e2a', 181017214639, NULL, NULL, 9, 9, '09-done', 'tests', 'restrict the amount of tables in the select tests', 'restrict the amount of tables in the select tests to prevent data related errors', 'task', 'unknown', '2018-10-17 21:46:31', '2018-10-17 21:46:31', NULL, NULL, NULL, '2018-10-17 21:47:44');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('0b51b8b3-9f37-48e6-ba57-61b256ed4915', 181018080737, NULL, NULL, 9, 9, '09-done', 'bug-feature', 'add send SIGTERM for procs occupying wanted app instance ports with mojo-morbo-start', 'add send SIGTERM for procs occupying wanted app instance ports with mojo-morbo-start
+To notice: 
+ - the scripts stops ANY running instance occupying the starting desired confgirued mojo morbo port instance , not only on the current one, but other versions , or env types as well ( dev,tst , prd ) 
+- add check of such instances exists and exit with the proper msg if they don''t to avoid confusion
+- improve on-screen logging 
+- remove the PS1 env var ( also from cnf repo )', 'task', 'unknown', '2018-10-18 08:07:29', '2018-10-18 08:07:29', NULL, NULL, NULL, '2018-10-18 09:18:20');
+INSERT INTO public.monthly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('c78830ab-e68f-4f6f-9c0c-1c71743cf991', 181017223954, NULL, NULL, 2, 9, '09-done', 'bug', 'fix jqcloud.js absence', 'fix jqcloud.js absence
+- it was not detected because there was no test !!!', 'task', 'unknown', '2018-10-17 22:39:54', '2018-10-17 22:39:54', NULL, NULL, NULL, '2018-10-18 08:09:34');
 
 
 --
@@ -276,6 +418,22 @@ INSERT INTO public.quinquennially_issues (guid, id, level, seq, prio, weight, st
 
 
 --
+-- Data for Name: requirements; Type: TABLE DATA; Schema: public; Owner: ysg
+--
+
+INSERT INTO public.requirements (guid, id, prio, weight, status, category, name, description, owner, tags, update_time) VALUES ('d48ada00-2d80-485b-a48e-01bd4fd0ac79', 181009200617, 1, 9, '02-todo', 'code', 'name', 'An hitem update MUST re-arrange 
+An h<<item>> has the following attributes: 
+ - id
+ - guid
+ - seq
+ - left_rank
+ - right_rank
+
+Should the sequence attribute be change ... all the other hitems should be re-arranged with their left_rank and right_rank respectively accordingly', 'unknown', NULL, '2018-10-17 11:38:18');
+INSERT INTO public.requirements (guid, id, prio, weight, status, category, name, description, owner, tags, update_time) VALUES ('258f1610-aba9-41d7-999b-59c0f20ed480', 181017113913, 1, 9, '02-todo', 'type the category ...', 'type the name ...', NULL, 'unknown', NULL, '2018-10-17 11:39:13');
+
+
+--
 -- Data for Name: skills; Type: TABLE DATA; Schema: public; Owner: ysg
 --
 
@@ -286,16 +444,24 @@ INSERT INTO public.skills (guid, id, seq, prio, name, description, update_time) 
 -- Data for Name: test_create_table; Type: TABLE DATA; Schema: public; Owner: ysg
 --
 
+INSERT INTO public.test_create_table (guid, id, name, description) VALUES ('7bc1a18a-a75d-40a1-b3e3-536c2ac0360b', 20180909161024, 'type the name ...', 'type the description ...');
 INSERT INTO public.test_create_table (guid, id, name, description) VALUES ('5e586c62-8c06-4f62-bc69-b4efd54cf659', 20180106170815, 'type the name ...', 'type the description ...');
 INSERT INTO public.test_create_table (guid, id, name, description) VALUES ('deba6e27-caf6-4395-9258-a86a4021b47c', 20180904191018, 'type the name ...', 'type the description ...');
 INSERT INTO public.test_create_table (guid, id, name, description) VALUES ('e6b10dfe-bdcc-4737-a88a-a2481c85b476', 20183104211041, 'type the name ...', 'type the description ...');
+INSERT INTO public.test_create_table (guid, id, name, description) VALUES ('115dc1dd-fd57-4fd5-967d-0c38cebd2848', 20182909151036, 'type the name ...', 'type the description ...');
+INSERT INTO public.test_create_table (guid, id, name, description) VALUES ('4e933baa-d205-44af-8cfd-f9281131d2a7', 20183209151055, 'type the name ...', 'type the description ...');
+INSERT INTO public.test_create_table (guid, id, name, description) VALUES ('c51577bd-2691-48d4-bb19-471bd1bb1269', 20184117111000, 'type the name ...', 'type the description ...');
+INSERT INTO public.test_create_table (guid, id, name, description) VALUES ('4aa23824-9750-4d78-b1f5-d4366b08fb89', 20184517211052, 'type the name ...', 'type the description ...');
+INSERT INTO public.test_create_table (guid, id, name, description) VALUES ('163c2d6e-dfd3-483a-8a8b-3e9e4790f2fc', 20183317221045, 'type the name ...', 'type the description ...');
 
 
 --
 -- Data for Name: test_delete_table; Type: TABLE DATA; Schema: public; Owner: ysg
 --
 
-INSERT INTO public.test_delete_table (guid, id, seq, name, description) VALUES ('b5e8e4fb-9d25-4b96-bcc3-41608057a363', 2, 2, 'name-2', 'the name attr should NOT be deleted');
+INSERT INTO public.test_delete_table (guid, id, seq, name, description) VALUES ('a7d12088-6a49-4cb7-8b1e-6aeae964cb43', 1, 1, 'name-1', 'the name should be deleted to deleted-name-1');
+INSERT INTO public.test_delete_table (guid, id, seq, name, description) VALUES ('ba70f3b8-beaf-49d0-8f4c-63f48ea17692', 2, 2, 'name-2', 'the name attr should NOT be deleted');
+INSERT INTO public.test_delete_table (guid, id, seq, name, description) VALUES ('95d534f3-9cc2-4877-ac50-7d7108b0886e', 3, 3, 'name-3', 'the name attr should be deleted to deleted-name-3');
 
 
 --
@@ -310,12 +476,25 @@ INSERT INTO public.test_hierarchy_table (guid, id, level, seq, lft, rgt, name, d
 
 
 --
+-- Data for Name: test_item; Type: TABLE DATA; Schema: public; Owner: ysg
+--
+
+INSERT INTO public.test_item (guid, id, name, description, update_time) VALUES ('b1469f2a-243b-4d03-a93f-af28ea3c7342', 181009213610, 'name-01', 'desc-01', '2018-10-09 21:36:16');
+
+
+--
+-- Data for Name: test_item_hierarchy; Type: TABLE DATA; Schema: public; Owner: ysg
+--
+
+
+
+--
 -- Data for Name: test_update_table; Type: TABLE DATA; Schema: public; Owner: ysg
 --
 
-INSERT INTO public.test_update_table (guid, id, seq, name, description) VALUES ('6a025dfa-ed68-4932-9b73-0718b2dd10a7', 2, 2, 'name-2', 'the name attr should NOT be updated');
-INSERT INTO public.test_update_table (guid, id, seq, name, description) VALUES ('cd3b3321-757e-4557-ba49-23b0ecdda2af', 1, 1, 'name-1-updated', 'the name should be updated to updated-name-1');
-INSERT INTO public.test_update_table (guid, id, seq, name, description) VALUES ('bd316363-de83-4726-907c-dea6f1f42bd9', 3, 3, 'name-3-updated', 'the name attr should be updated to updated-name-3');
+INSERT INTO public.test_update_table (guid, id, seq, name, description) VALUES ('50332496-86d3-4c4d-9988-0c141a49231b', 2, 2, 'name-2', 'the name attr should NOT be updated');
+INSERT INTO public.test_update_table (guid, id, seq, name, description) VALUES ('b5e29707-ebd1-4b19-8090-632de2cc5d00', 1, 1, 'name-1-updated', 'the name should be updated to updated-name-1');
+INSERT INTO public.test_update_table (guid, id, seq, name, description) VALUES ('9049c7bd-f927-4795-9ce8-75e0b3ba6f35', 3, 3, 'name-3-updated', 'the name attr should be updated to updated-name-3');
 
 
 --
@@ -357,71 +536,24 @@ INSERT INTO public.tst_paging (guid, id, prio, name) VALUES ('c0e7ffd4-0db6-4563
 
 
 --
+-- Data for Name: userstories; Type: TABLE DATA; Schema: public; Owner: ysg
+--
+
+INSERT INTO public.userstories (guid, id, prio, weight, status, category, name, description, owner, tags, update_time) VALUES ('621e6449-5a5f-4301-9050-f0c8cabd1bad', 181017112616, 1, 9, 'type the status ...', 'type the category ...', 'type the name ...', NULL, 'unknown', NULL, '2018-10-17 11:26:50');
+INSERT INTO public.userstories (guid, id, prio, weight, status, category, name, description, owner, tags, update_time) VALUES ('43cf73cf-20dd-420a-818e-18440e43ddf3', 181017113954, 1, 9, '02-todo', 'type the category ...', 'type the name ...', NULL, 'unknown', NULL, '2018-10-17 11:39:54');
+
+
+--
 -- Data for Name: weekly_issues; Type: TABLE DATA; Schema: public; Owner: ysg
 --
 
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('5145e9f7-dcab-4570-a731-5139ea5eb366', 180927085853, NULL, NULL, 7, 5, '03-flow', 'bug', 'the create new works only on the second click', 'The new redirect has evoked the bug ...
-But ONLY in some conditions ?!
-Hard to reproduce', 'task', 'unknown', '2018-09-27 08:58:53', '2018-09-27 08:58:53', NULL, NULL, NULL, '2018-10-04 18:25:20');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('e8f0a841-f199-45d8-a47a-8cd275e6c634', 180925092952, NULL, NULL, 5, 9, '03-act', 'bug', 'content-editable update duplicates values on sorted column', 'When the currently sorted column is updated and the grid should redrow based on the new updated value the content editable updates both the same cell which WAS the one to be updated And the correct one which is after the sort', 'task', 'unknown', '2018-09-25 09:29:52', '2018-09-25 09:29:52', NULL, NULL, NULL, '2018-10-03 12:51:05');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('7da90c90-7b9e-42c6-9915-4959f359c195', 181001102952, NULL, NULL, 9, 9, '09-done', 'bug', 'fix pager broken for 2 pages', 'If there are 2 pages the pager is broken
-
-The SELECT does not report the number of pages correctly : 
-Check : 
-http://192.168.56.120:3001/dev_issue_tracker/select/weekly_issues?as=grid&pick=id,category,prio,status,name,weight,description&od=id&page-size=15&page-num=1', 'task', 'unknown', '2018-10-01 10:11:57', '2018-10-01 10:11:57', NULL, NULL, NULL, '2018-10-04 18:25:44');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('de2eec9b-2335-4552-9780-f29a3f7d00d5', 181002103808, NULL, NULL, 5, 9, '03-act', 'refactor', 'move all external dependencies to be locally hosted', 'move all external dependencies to be locally hosted. This should improve sudden network latencies', 'task', 'unknown', '2018-10-02 10:20:24', '2018-10-02 10:20:24', NULL, NULL, NULL, '2018-10-04 18:25:00');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('698320a1-7b6f-47c7-a44e-19218ba2bab5', 181002103341, NULL, NULL, 9, 9, '09-done', 'bug', 'dropdown keyboard navigation', 'the scroll down to the search-box dropdown does not work with the keyboard', 'task', 'unknown', '2018-10-02 10:15:57', '2018-10-02 10:15:57', NULL, NULL, NULL, '2018-10-04 18:25:23');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('2220ffb6-88dd-4882-b7e6-c607873e64a3', 181004135232, NULL, NULL, 6, 9, '09-done', 'setup', 'poc for Selenium::Remote::Driver setup', 'Selenium::Remote::Driver setup and call via a simple script', 'task', 'unknown', '2018-10-04 13:52:32', '2018-10-04 13:52:32', NULL, NULL, NULL, '2018-10-04 18:25:17');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('5c2c4c48-8ac7-48d3-ac65-a81e6d99d54e', 180927110017, NULL, NULL, 4, 9, '06-onhold', 'bug', 'when a cell if left blank the null string appears on update', 'when a cell if left blank the null string appears on update', 'task', 'unknown', '2018-09-27 11:00:17', '2018-09-27 11:00:17', NULL, NULL, NULL, '2018-10-04 18:24:52');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('efa98faa-af81-4bea-97dc-969b4c79e825', 181003124555, NULL, NULL, 3, 9, '03-act', 'bug', 'html entities display', 'html entities shuch as greater than and less than chas cannot  be displayed as cell content in the list/item?as=grid page', 'task', 'unknown', '2018-10-03 12:45:55', '2018-10-03 12:45:55', NULL, NULL, NULL, '2018-10-05 09:25:00');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('4b2a52cd-c4b9-4248-8665-9dc0df6e9f63', 180803093321, 1, 10, 5, 3, '03-act', 'feature', 'add and automate as much as possible the deployment of a new released version to the cloud as part of the release process', 'add and automate as much as possible the deployment of a new released version to the cloud as part of the release process', 'task', 'ysg', '2018-09-01 12:00:00', '2018-09-30 12:00:00', 10.00, 0.10, 'setup,feature', '2018-10-05 10:52:58');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('9787f4e0-dcbd-4678-8152-1716a42b173e', 181004144853, NULL, NULL, 5, 9, '09-done', 'deploy', 'deploy v0.4.9', 'deploy 0.4.9 although there are still open bugs ... as there have been 4 weeks without a deployment', 'task', 'unknown', '2018-10-04 14:48:54', '2018-10-04 14:48:54', NULL, NULL, NULL, '2018-10-05 09:24:49');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('92b5e4c0-ada9-4e76-afba-d7ea6c116693', 181005075514, NULL, NULL, 9, 9, '09-done', 'capability', 'achieve capability to deploy 3 instances in the cloud for 1h', 'The deployment of v0.4.9 took 1h as follows:
- - ssh to cloud srvr
- - git clone latest version
- - adjust configuration files ( manual ) 
- - for dev,tst,prod
- -- stop old instance
- -- recreate db 
- -- load data 
--- start new instance
-Prd instance downtime - 10 min', 'task', 'unknown', '2018-10-05 07:55:14', '2018-10-05 07:55:14', NULL, NULL, NULL, '2018-10-05 07:59:34');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('0b2ee6b1-2f94-43de-8933-ed5223c67fd9', 181003125316, NULL, NULL, 4, 9, '06-onhold', 'feature', 'achieve capability to write', 'Obtain the capability to write selenium web driver UI automation scripts on the mac: 
- - install node - ok 
- - install atom - ok
- - install the chrome-driver - todo', 'task', 'unknown', '2018-10-03 12:53:16', '2018-10-03 12:53:16', NULL, NULL, NULL, '2018-10-05 09:35:17');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('c9ec0d30-0f18-4094-b748-80c6bb6c0eaa', 181002113222, NULL, NULL, 1, 9, '07-qas', 'feature', 'add basic auth', 'configure basic auth in the amzn instance IF there is a real biz need arrises:
- - confguration change - add the proj_instance_dir concept
- - security change add the htpasswd file per project if neeedd
- - binaries change - add the BasicAuthPlus module', 'task', 'unknown', '2018-10-02 11:14:40', '2018-10-02 11:14:40', NULL, NULL, NULL, '2018-10-07 22:01:33');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('4fb9343f-8385-49a7-b92e-1f346359b7a3', 181005095415, NULL, NULL, 5, 9, '09-done', 'setup', 'copy the cnf files to the loal conf_repo_dir', 'As too much time is used in adjusting those remotes AND for backup and better configuration management', 'task', 'unknown', '2018-10-05 09:50:01', '2018-10-05 09:50:01', NULL, NULL, NULL, '2018-10-05 11:43:55');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('d1831d21-c0f0-428e-aee3-c7346e82e3f2', 1805172135, 1, 10, 4, 9, '06-onhold', 'feature', 'client-side UI automation testing for JS events', 'By using the Mojo::Chrome module:
-Should be able to capture JS events:
-Vue induced changes on the page.', 'goal', 'ysg', '2018-06-01 00:00:00', '2018-07-30 00:00:00', 50.00, 5.00, 'feature', '2018-10-05 10:52:56');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('40b10070-5c25-4966-9c82-e82905d5f288', 181004231103, NULL, NULL, 5, 9, '09-done', 'bug', 'change as=etable to as=grid in master', 'In the documentation as the links in the features docs are dead', 'task', 'unknown', '2018-10-04 23:11:03', '2018-10-04 23:11:03', NULL, NULL, NULL, '2018-10-05 09:24:52');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('3a83bebb-7e57-4955-a744-df64f8fec4f0', 1805301624, 1, 4, 9, 4, '03-flow', 'issue-tracker', 'fix bug for the issue_tracker.pl.log appearance in product instance dir', 'Occurs when one runs the "run-integration-tests" action', 'bug', 'ysg', '2018-05-29 20:53:00', '2018-06-30 00:00:00', 0.00, 0.10, 'bugs', '2018-10-05 10:52:57');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('6b43660d-7378-4ea3-a1a1-3413866c6458', 181005092909, NULL, NULL, 3, 9, '09-done', 'setup', 'start v0.5.0', 'Create new v0.5.0 local instances as follows: 
- - run the to-ver action
- - check the configuration files for the new ver 
- - change the tmux session file
- - merge master into dev, add 0.5.0 tag', 'task', 'unknown', '2018-10-05 09:25:00', '2018-10-05 09:25:00', NULL, NULL, NULL, '2018-10-05 11:44:14');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('881e685c-5a2b-40d9-b566-6bb451b9f6f3', 181005095108, NULL, NULL, 5, 9, '09-done', 'feature', 'add the configuration repo dir', 'Add the notion for configuration repository directory: 
-- add the reload-conf shell action, which will reload the current instance configuration shell variables by name and version from the conf_repo_dir', 'task', 'unknown', '2018-10-05 09:46:54', '2018-10-05 09:46:54', NULL, NULL, NULL, '2018-10-05 11:44:01');
-INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('dd534f01-54ff-44e5-9617-1a0bfb1f87e9', 181005114324, NULL, NULL, 1, 9, '02-todo', 'bug', 'base url fails to retrieve data', 'The http://192.168.56.120:3001/dev_issue_tracker/list/principles?as=grid
-page is empty', 'task', 'unknown', '2018-10-05 11:43:19', '2018-10-05 11:43:19', NULL, NULL, NULL, '2018-10-05 11:43:45');
+INSERT INTO public.weekly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('1695266b-e29e-4d90-846c-5ba1ffabb80b', 181017213013, NULL, NULL, 1, 9, '02-todo', 'cat', 'name', 'desc', 'tpe', 'ysg', '2018-10-17 21:30:13', '2018-10-17 21:30:13', NULL, NULL, NULL, '2018-10-17 21:30:35');
 
 
 --
 -- Data for Name: yearly_issues; Type: TABLE DATA; Schema: public; Owner: ysg
 --
 
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('78d22cd6-864c-4219-ab1e-d29fc8b63e6a', 1806011256, 1, 10, 7, 5, '01-eval', 'feature', 'implement a time report web ui page', 'The time report web ui page will :
-- fetch the daily,weekly,monthly and yearly hours
-- get the allocated hours per time period
-- calculate the registered actual hours to the went-by hours of the start of the period
-- calculate the diff between the actual and passed-by hours
-- accessible from the list/table-name/?as=table url
-- should be able t osort the data', 'feature', 'ysg', '2018-12-01 00:00:00', '2018-12-31 07:00:00', 20.00, 0.10, NULL, '2018-09-25 15:25:10');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('fd9688b9-f859-4c67-b6ba-a98d003f932e', 180920102836, NULL, NULL, 7, 7, '01-eval', 'feature', 'show 1 page if page x did not contain data', 'Add the "page <<GreatPage>>" did not return any data showing page 1 feature by displaying the warning at the bottom of the page', 'task', 'unknown', '2018-09-20 10:13:39', '2018-09-20 10:13:39', NULL, NULL, NULL, '2018-09-20 11:03:13');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('bd557f0d-bf6c-4cf1-8c59-f33fe273f25d', 180817194442, NULL, NULL, 6, 9, '01-eval', 'feature-backend', 'backend post call to move the issues with specific attribute name and like value to another table', 'create a backend post call to move the issues with specific attribute name and like value to another table something like: 
 
@@ -432,9 +564,6 @@ Add only db restore , increase date from deployed version', 'task', 'unknown', '
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('8de84df4-24a6-4322-8d76-d8b2b4662868', 180806125535, 2, NULL, 5, 9, '09-done', 'feature-ui-keyboard', 'add key press listener to focus on the quick search input', 'probably related to the structure of the page 
 add key press listener to focus on the quick search input
 Pressing / should activate the quick search input', 'task', 'ysg', '2018-08-06 12:55:35.853206', '2018-08-06 12:55:35.853206', 3.00, 1.10, NULL, '2018-09-19 13:32:10');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('a3f604b7-d422-49e7-ab4e-50dcafcf44d3', 180925215439, NULL, NULL, 1, 9, '02-todo', 'docs', 'create security component diagram', 'Create and add to docs the security compoent diagram:
- - list the main compoents and their responsibilities
- - list the security subjects', 'task', 'unknown', '2018-09-25 21:54:37', '2018-09-25 21:54:37', NULL, NULL, NULL, '2018-09-25 21:57:08');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('c5fc532a-4c4a-4dcc-aa8a-1f2d8c4f8d5a', 1806231403, 3, 5, 9, 1, '09-done', 'feature', 'add a visual indication for the active page SIZE in the list tables view', 'Well, good enough for now ... Later one ... probably would need more stylingAs currently it is not exactly clear which page is the current one … The less experience is the user the more urgent this feature is …', 'feature', 'ysg', '2018-05-25 20:53:00', '2018-06-30 00:00:00', 2.00, 0.10, 'feature', '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('e3a3ff71-3133-4258-87a1-104ee13e2007', 180806125916, 1, NULL, 5, 1, '09-done', 'bug', 'the inline-cell update removes the new lines from the cell', 'the inline-cell update removes the new lines from the cell 
 
@@ -463,16 +592,6 @@ INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, ca
  - supports different sub-dirs - xls,json,txt', 'feature', 'ysg', '2018-06-28 20:53:00', '2018-06-30 00:00:00', 1.00, 2.00, 'bug,feature-root-cause', '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('4939f666-8b0a-4450-9bb2-56537e74f60d', 1806231402, 3, 5, 7, 2, '09-done', 'feature', 'add a visual indication for the active page number in the list tables view', 'Well, good enough for now ... Later one ... probably would need more styling ... As currently it is not exactly clear which page is the current one … The less experience is the user the more urgent this feature is …', 'feature', 'ysg', '2018-05-25 20:53:00', '2018-06-30 00:00:00', 0.10, 0.10, 'feature', '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('4a564c84-dd69-46ad-90fe-e1640efaba9c', 1807031419, 1, 5, 9, 9, '09-done', 'setup', 'deploy demo instance to aws', 'Iterate the installation documentation.', 'task', 'ysg', '2018-07-04 04:06:05', '2018-07-04 23:06:05', 3.00, 3.00, 'setup', '2018-09-02 00:39:46');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('557c34d8-e2f0-4b8a-958d-ca972eaa24be', 180920103551, NULL, NULL, 4, 9, '02-todo', 'feature', 'add actions on selected items', 'add the capability to perform actions on selected items. 
-The user performs a search , selects all the checkboxes in the left of the list ( gmail like ) , types <> for example: 
-:do move selected to <> would move the selected items to the <> table', 'task', 'unknown', '2018-09-20 10:20:53', '2018-09-20 10:20:53', NULL, NULL, NULL, '2018-10-01 14:26:32');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('428b55bd-8ef4-4f30-9c7f-5fe29057dad9', 180803161926, 1, NULL, 5, 6, '02-todo', 'feature', 'implement a new hierarchy model', 'implement a new hierarchy model by using the seq into a separate items_hierarchy table , which will have the following attributes:
-id - the FK pointing to the items id 
-seq - the sequence in the hierarchy 
-item_nam e- the name of the item''s table to refer to 
-( all those should comprise an unique PK ) 
-
-Change in the hierarchy would mean changing the seq number - those not all issues will be hierarchical, but those which are could be seen in an hierarchy UI !!!', 'task', 'ysg', '2018-10-01 20:53:00', '2018-12-31 20:53:00', 30.00, 0.10, 'hierarchy', '2018-09-19 13:32:12');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('70830eb8-5029-4ad3-8438-ec6f225613ee', 1806071735, 1, 5, 9, 1, '09-done', 'setup', 'achieve capability to export to pdf list-cloud and list-lbls pages via chrome UI', 'Could be done only via the Chrome UI', 'capability', 'ysg', '2018-06-04 21:00:00', '2018-06-04 22:30:00', 1.00, 2.00, ' setup', '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('7ceb5f7a-e803-43ad-a3a9-eb3b7de1f2e2', 1805082200, 1, 10, 9, 1, '09-done', 'feature', 'improve integration testing', 'add the mysql db creation and population, add the documentation generation', 'feature', 'ysg', '2018-05-12 20:00:00', '2018-05-12 21:00:00', 2.00, 2.00, NULL, '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('33fe6333-ed41-4af7-9169-ab353eac431b', 180806163114, NULL, NULL, 5, 9, '09-done', 'feature', 'keyboard scrolling', 'add keyboard scrolling via the selectability of the id''s
@@ -484,6 +603,10 @@ INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, ca
 - create test table
 - ok default page size - 15
 - ok for default page num - 1', 'task', 'ysg', '2018-06-08 21:30:00', '2018-10-30 00:00:00', 20.00, 10.00, 'architecture', '2018-09-21 09:01:50');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('a3f604b7-d422-49e7-ab4e-50dcafcf44d3', 180925215439, NULL, NULL, 5, 9, '02-todo', 'docs', 'create security component diagram', 'Create and add to docs the security compoent diagram:
+ - list the main compoents and their responsibilities
+ - list the security subjects', 'task', 'unknown', '2018-09-25 21:54:37', '2018-09-25 21:54:37', NULL, NULL, NULL, '2018-10-10 21:04:25');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('557c34d8-e2f0-4b8a-958d-ca972eaa24be', 180920103551, NULL, NULL, 4, 1, '02-todo', 'feature', 'add actions on selected items', 'add the capability to perform actions on selected items. The user performs a search , selects all the checkboxes in the left of the list ( gmail like ) , types <> for example: :do move selected to <> would move the selected items to the table <<test>>', 'task', 'unknown', '2018-09-20 10:20:53', '2018-09-20 10:20:53', NULL, NULL, NULL, '2018-10-10 21:28:21');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('169f00ae-3217-462b-94b2-b1b811a281c8', 1804290100, 1, 10, 5, 5, '09-done', ' docs', 'fix nasty bug in Initiator cause by related dir in mojo testing framework', 'Or add the ability to resolve the dir structure of any perl script using the Initiator - obs has to be called only once ... 
 fix nasty bug in Initiator cause by related dir in mojo testing framework.
 The root cause - the Initiator used $0 while it should have used __FILE__. See :
@@ -520,8 +643,6 @@ INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, ca
 it works BUT , the order is really freaky !!!
 
 This is part of a larger problem .... how-to design the table so that the cursor will move with the same direction as components have been drown visually on the screen ...', 'task', 'unknown', '2018-08-17 16:41:54', '2018-08-17 16:41:54', NULL, NULL, NULL, '2018-09-19 13:34:36');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('b33291c0-9311-4c64-815c-31dde6ee6779', 180806213141, 1, NULL, 3, 7, '02-move', 'feature', 'add Excel like moving with the keys also move and down with the cursor keys', 'add Excel like moving with the keys also move and down with the cursor keys', 'task', 'unknown', '2018-08-06 21:31:40', '2018-08-06 21:31:40', NULL, NULL, NULL, '2018-10-01 14:25:54');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('8356cac1-3223-431a-b001-507c753ae738', 180920105012, NULL, NULL, 3, 9, '02-todo', 'feature', 'adjustable default column length ...', 'Add the capability of setting default column length in the metadata, as well as presenting <<too-long-content-with-dots-at-the-end>> ... and the capability to display on hover the whole content of the cell', 'task', 'unknown', '2018-09-20 10:35:07', '2018-09-20 10:35:07', NULL, NULL, NULL, '2018-10-01 14:30:10');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('d2da9c89-3711-44be-a52f-4abe463794f3', 1805110500, 1, 10, 9, 1, '09-done', 'feature', 'add the like-by and like-val in url to implement the like operator for filtering', 'add the like-by and like-val in url to implement the like operator for filtering', 'feature-implementation', 'ysg', '2018-05-10 20:53:00', '2018-05-30 00:00:00', 5.00, 3.00, NULL, '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('be547364-3ed7-43f2-a92f-0df3e6fbddc4', 1805110201, 1, 10, 5, 5, '09-done', 'feature', 'create the plain list labels view ui  with vue.js', 'Create a simple list labels view interface which will use the list web action: 
  - evaluete both server and client side html generation and compare performance', 'feature', 'ysg', '2018-05-10 20:53:00', '2018-12-31 07:00:00', 0.10, 0.10, 'feature', '2018-09-02 00:39:46');
@@ -529,16 +650,9 @@ INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, ca
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('e3ea4cd4-1ef6-4f1e-ba15-f7d0c5636369', 1806062255, 1, 5, 5, 5, '09-done', 'setup', 'add the phppgadmin to the configurtion setup', 'Installed and documented the installation - this starts the solution of the crashing xls problem which is a blocker. ', 'setup', 'ysg', '2018-06-08 14:00:00', '2018-06-08 16:00:00', 0.00, 2.00, ' setup', '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('59ac746a-b143-426e-8b69-10d142ce9282', 1804260100, 1, 10, 4, 6, '09-done', ' docs', 'add the issue-tracker control flow diagram to the DevOps guide', 'And move it to the System Guide , which seems to be a more logical place
 Add it to the devops guide', 'task', 'ysg', '2017-09-21 07:00:00', '2017-09-21 07:00:00', 2.00, 0.10, 'docs', '2018-09-02 00:39:46');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('71477531-2a74-453b-9d79-c87a43713767', 180813230115, NULL, NULL, 3, 9, '02-todo', 'feature', 'table rows height default by "30"', 'For month
-Probably not worth wasting time as of now ... 
-Set the min-height however .... which brings some uniformity ...
-and show the full content on hover and on edit
-This will make the paging much more smoother and will prevent the jumping of the table back and forth', 'task', 'unknown', '2018-08-13 22:44:27', '2018-08-13 22:44:27', NULL, NULL, NULL, '2018-09-25 15:13:43');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('98e6b6fb-e165-41b6-afc8-74d86d18eec6', 180517213101, 1, NULL, 5, 9, '04-diss', 'load-testing', 'add load testing to the update back-end web action', 'By simply instantiating ASYNCRONOUSLY 
-2,4,16,32,64,128,256,512,1024 ajax calls at once non-blocking-wise .
-Chk the following info src: 
-https://mojolicious.io/blog/2017/12/09/day-9-the-best-way-to-test/
-http://blogs.perl.org/users/chase_whitener/2016/01/mock-testing-web-services-with-mojo.html', 'goal', 'ysg', '2018-06-01 00:00:00', '2018-07-30 00:00:00', 50.00, 2.00, 'feature', '2018-09-02 00:39:46');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('a90bef98-6b5e-4c4f-99fa-790c4f296e8c', 1805312157, 1, 10, 9, 1, '09-done', ' bugs', 'fix bug with non-informance of missing db table on xls-to-db', 'when the xls sheet exists but the table not now the app quites', 'bug', 'ysg', '2018-05-10 20:53:00', '2018-05-30 09:54:00', 1.00, 1.00, NULL, '2018-09-02 00:39:46');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('b33291c0-9311-4c64-815c-31dde6ee6779', 180806213141, 1, NULL, 3, 7, '02-move', 'feature', 'add Excel like moving with the keys also move and down with the cursor keys', 'add Excel like moving with the keys also move and down with the cursor keys', 'task', 'unknown', '2018-08-06 21:31:40', '2018-08-06 21:31:40', NULL, NULL, NULL, '2018-10-10 21:18:21');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('8356cac1-3223-431a-b001-507c753ae738', 180920105012, NULL, NULL, 3, 9, '02-todo', 'feature', 'adjustable default column length ...', 'Add the capability of setting default column length in the metadata, as well as presenting <<too-long-content-with-dots-at-the-end>> ... and the capability to display on hover the whole content of the cell', 'task', 'unknown', '2018-09-20 10:35:07', '2018-09-20 10:35:07', NULL, NULL, NULL, '2018-10-10 21:28:33');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('c021ba38-1796-4570-9b10-a8eb87e8aa78', 180822210340, NULL, NULL, 6, 4, '02-todo', 'feature-ui', 'add undelete function', 'As an UI user I would like to revoke a deleted item', 'task', 'unknown', '2018-11-01 00:00:00', '2018-08-22 21:03:37', NULL, NULL, NULL, '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('9eebb184-acc9-4555-bb25-2eada3d66f12', 180817194210, NULL, NULL, 9, 9, '04-diss', 'functionality', 'daily issues trigger / stored procedure', 'creates daily trigger / stored procedure to move the daily 09-done and 04-diss status pocessing issues to the weekly_issues table', 'task', 'unknown', '2018-08-17 19:33:32', '2018-08-17 19:33:32', NULL, NULL, NULL, '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('d7ec6aeb-ca1f-4f87-b2c2-2970c55d1f5d', 180813222648, NULL, NULL, 9, 9, '04-diss', 'feature-ui', 'add a dropdown for the grid pager /', 'add the grid page component , which would be vuetify select at the botom
@@ -587,6 +701,7 @@ http://mistic100.github.io/jQCloud/demo.html
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('f98d0280-a3b7-4632-aaab-feba8f0eed56', 1805161614, 2, 10, 9, 1, '09-done', 'feature', 'add the like-by url param for the list web control ', 'add the like-by url param for the list web control 
  - ok path
  - nok path', 'feature-implementation', 'ysg', '2017-05-14 07:00:00', '2017-06-29 07:00:00', 5.00, 2.00, NULL, '2018-09-02 00:39:46');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('acde0b8d-f8ea-428e-a1de-f8537f7d2d3c', 1805070100, 1, 10, 9, 1, '09-done', 'feature', 'add the error halding for non-existent db in List.pm controller', 'add the error halding for non-existent db in List.pm controller', 'feature-implementation-implementation', 'ysg', '2018-05-02 10:35:00', '2018-06-30 00:00:01', 0.10, 0.25, NULL, '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('fabe5107-ebcf-4ebe-869c-dc5e86e160f6', 1805050100, 1, 10, 9, 1, '09-done', 'feature', 'add the filter-by in url to where in db reader control flow for List.pm controller', 'add the filter-by in url to where in db reader control flow for List.pm controller: 
  - ok for ok case
  - add nok for col does not exist', 'feature-implementation-implementation', 'ysg', '2018-05-02 10:35:00', '2018-06-30 00:00:00', 7.00, 6.00, NULL, '2018-09-02 00:39:46');
@@ -599,13 +714,11 @@ INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, ca
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('0151024d-acca-4557-a6ea-9b7f6fbe07e8', 180818112727, NULL, NULL, 8, 7, '02-todo', 'bug-feature-ui', 'clear display on error "table does not exist"', 'On "table does not exist" error the page-sizer and the pager vue code is shown ... 
 
 Nothing should be displayed - not even the quick search , but only the error message', 'task', 'unknown', '2018-08-18 11:20:42', '2018-08-18 11:20:42', NULL, NULL, NULL, '2018-09-26 13:25:58');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('ebedd47d-831e-4dda-a34d-aa15e9dc18b5', 180806102235, 1, NULL, 5, 9, '02-todo', 'feature', 'add 3D effect on the table cells', 'add 3D effect on the table cells.', 'task', 'ysg', '2018-08-07 00:00:00', '2018-08-07 00:00:00', NULL, NULL, NULL, '2018-09-25 15:13:22');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('ed426826-27f6-4442-bc36-7e85261d1f62', 1805282138, 1, 10, 9, 5, '01-eval', 'feature', 'add export to txt from web ui', 'add export to txt from web ui', 'feature-implementation', 'ysg', '2018-01-01 00:00:00', '2018-12-30 00:00:00', 4.00, 0.10, NULL, '2018-09-25 15:25:12');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('9bb1568f-e3fb-4830-9668-8759bc1e82eb', 180807153721, 3, NULL, 7, 3, '01-eval', 'feature', 'add push update to the table on db update', 'add push update to the table on db update
 
 This one is hard !!!
 It would require websockets ... as well as somekind of trigger which "knows" what is the last selected "area" of table check that area and push to the client the info to refresh !!!!', 'task', 'unknown', '2018-08-07 15:37:21', '2018-08-07 15:37:21', NULL, NULL, NULL, '2018-09-25 15:25:11');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('2576cfcb-ec09-4907-9344-344e9ea553bd', 1805160700, 2, 10, 7, 5, '01-eval', 'feature', 'add the feature for the validation of the spent time', 'design the validation of the available time and the spent time = registered time', 'task', 'ysg', '2017-08-06 00:00:00', '2017-08-07 00:00:00', 15.00, 0.10, NULL, '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('ea3aaf3c-ef88-4faf-9727-fac91782f71a', 1805091300, 2, 10, 6, 4, '02-todo', 'feature', 'create the view doc ui with vue.js', 'Create a simple list labels view interface which will use the list web action: 
 - evaluete both server and client side html generation and compare performance', 'feature', 'ysg', '2018-05-12 20:00:00', '2018-12-31 07:00:00', 0.10, 0.10, NULL, '2018-09-25 15:19:33');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('f4f24c13-415e-4f75-b28c-a795cc074268', 1805282137, 1, 10, 9, 1, '04-diss', 'feature', 'add export to xls from web ui', 'add export to xls from web ui', 'feature-implementation', 'ysg', '2018-01-01 00:00:00', '2018-12-30 00:00:00', 4.00, 0.10, NULL, '2018-09-02 00:39:46');
@@ -665,10 +778,6 @@ replaced with select all on tab with the keboard ... 
 
 
 as the click is usually "I wanto to click in a specific part of the text"', 'feature', 'ysg', '2018-07-20 00:00:00', '2018-07-30 00:00:00', 50.00, 8.00, 'feature,CRUD', '2018-09-02 00:39:46');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('fab8075d-d6c3-4ef7-af0f-81c246e834f2', 180816103139, NULL, NULL, 4, 9, '02-todo', 'docs-design', 'design the projects dashboard / projects hub concept', 'As a single user must have access to different projects + the authentication should be at the end both on : 
-
- - issue-tracker app-layer instance 
- - issue-tracker project-db instance', 'task', 'unknown', '2018-08-16 10:31:39', '2018-08-16 10:31:39', NULL, NULL, NULL, '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('ee61ab80-f648-4d9a-99fe-0f7c785c2c1c', 180815110339, NULL, NULL, 5, 9, '01-eval', 'feature-ui', 'add vue calendar page', 'For example from the following GitHub project: 
 https://github.com/richardtallent/vue-simple-calendar', 'task', 'unknown', '2018-08-15 10:51:51', '2018-08-15 10:51:51', NULL, NULL, NULL, '2018-09-25 15:18:54');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('82940b36-3aea-4d5e-8d34-312c3921561e', 1807031421, 1, 6, 9, 5, '09-done', 'setup', 'update installation instructions with aws deployment', 'update the aws instructions with aws deployment', 'task', 'ysg', '2018-07-04 04:06:05', '2018-07-04 23:06:05', 2.00, 2.00, 'setup', '2018-09-02 00:39:46');
@@ -678,7 +787,6 @@ INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, ca
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('88848c01-3925-4dce-a474-0aa35cfdd88e', 1805152200, 2, 10, 9, 1, '09-done', 'feature', 'add the pick url param for the list web control', 'add the pick url param for the list web control', 'feature-implementation', 'ysg', '2018-05-14 07:00:00', '2018-06-29 07:00:00', 5.00, 2.00, NULL, '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('f03e0d83-f1ba-4ca2-9c4b-3a4ee570dff5', 1806081610, 1, 10, 5, 5, '02-todo', 'feature', 'add omnibox poc page with web service for projects search', 'To be moved to the next month. 
 add omnibox poc page with web service for projects search. The end goal should be pop-up omnibox which will present the results on enter lepton like...', 'poc-feature', 'ysg', '2018-08-01 00:00:00', '2018-08-31 00:00:00', 3.00, 2.50, NULL, '2018-10-01 14:24:58');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('4ec67678-7532-4b72-b07d-38cfb13e834e', 1805221029, 1, 10, 4, 6, '04-diss', 'feature', 'add form order in url params', 'The ability to order the form elements from the url ... By using the pick order and not a separate fo= ...', 'feature', 'ysg', '2018-01-01 00:00:00', '2018-12-30 00:00:00', 3.00, 0.10, 'feature', '2018-10-01 14:27:12');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('1d2744a6-2fcd-46a5-b121-78387616c316', 1805141000, 1, 10, 9, 1, '01-eval', 'docs', 'create user manual', 'create the user manual document, which will contain ONLY business rules and logic as well as non-devops related content.', 'docs-addition', 'ysg', '2018-05-25 20:53:00', '2018-05-30 00:00:00', 0.50, 0.50, NULL, '2018-10-01 14:34:53');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('13cd0a4c-2ce6-4683-8c40-e54615116494', 1807170130, 1, 10, 9, 1, '09-done', 'bug-refactoring', 'separate the error msg', 'There is run-logging which is not used anymore - to remove', 'bug', 'ysg', '2018-07-17 00:00:00', '2018-07-30 00:00:00', 50.00, 8.00, 'feature,CRUD', '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('6550ea01-532d-498b-8926-dc1c45f37823', 1806062254, 1, 5, 9, 9, '04-diss-move-to-yearlies', 'setup', 'add the create-table-backups shell action', 'Disgard - could use the json-to-db shell action to achieve the same , or quick pgsql one-liner ad-hoc ... 
@@ -707,13 +815,12 @@ INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, ca
 -- tests 
 -- features and functionalities', 'feature', 'ysg', '2018-04-02 18:00:00', '2018-05-02 18:00:00', 3.00, 0.10, 'feature', '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('a5764fdb-213c-488f-925d-af7f9aae440b', 1806302301, 1, 5, 5, 5, '09-done', 'feature', 'add support for multiple css themes', 'Just move the directory structure of the css''s one level bellow … ', 'refactor', 'ysg', '2018-06-26 10:00:00', '2018-06-29 11:00:00', 1.00, 0.20, 'feature', '2018-09-02 00:39:46');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('8a127f15-a399-452a-a530-ff64ae8f9f26', 1807101030, 2, 4, 5, 5, '02-todo', 'feature', 'add the UPDATE for the CRUD table via the vue-js-modal form', 'As an UI user of the issue-tracker application 
-In order to be able to quickly edit the data of ANY item 
-I want to be able to click on the edit button , fill in the poping-up dialog with the form of the full data of the item and clicking the Save button.', 'feature', 'ysg', '2018-07-03 00:00:00', '2018-07-30 00:00:00', 50.00, 8.00, 'feature,CRUD', '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('6fd72ccb-ea9f-4bbb-924d-4cb598760a6b', 1806241429, 1, 1, 3, 5, '09-done', 'feature', 'add poc for vue modal dialog page', 'The modal dialog will be used for the CRUD functionality from the list table view and for the search … 
 Seems too primitive - for example does not have the close by pressing escape', 'task', 'ysg', '2018-06-24 00:00:00', '2018-06-30 00:00:00', 3.00, 0.70, 'feature', '2018-09-22 11:28:30');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('a90bef98-6b5e-4c4f-99fa-790c4f296e8c', 1805312157, 1, 10, 9, 1, '09-done', ' bugs', 'fix bug with non-informance of missing db table on xls-to-db', 'when the xls sheet exists but the table not now the app quites', 'bug', 'ysg', '2018-05-10 20:53:00', '2018-05-30 09:54:00', 1.00, 1.00, NULL, '2018-09-02 00:39:46');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('acde0b8d-f8ea-428e-a1de-f8537f7d2d3c', 1805070100, 1, 10, 9, 1, '09-done', 'feature', 'add the error halding for non-existent db in List.pm controller', 'add the error halding for non-existent db in List.pm controller', 'feature-implementation-implementation', 'ysg', '2018-05-02 10:35:00', '2018-06-30 00:00:01', 0.10, 0.25, NULL, '2018-09-02 00:39:46');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('fab8075d-d6c3-4ef7-af0f-81c246e834f2', 180816103139, NULL, NULL, 4, 9, '02-todo', 'docs-design', 'design the projects dashboard / projects hub concept', 'As a single user must have access to different projects + the authentication should be at the end both on :  - issue-tracker app-layer instance  - issue-tracker project-db instance
+
+sdflkj', 'task', 'unknown', '2018-08-16 10:31:39', '2018-08-16 10:31:39', NULL, NULL, NULL, '2018-10-10 21:20:39');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('4ec67678-7532-4b72-b07d-38cfb13e834e', 1805221029, 1, 10, 4, 6, '04-diss', 'feature', 'add form order in url params', 'The ability to order the form elements from the url ... By using the pick order and not a separate fo= ...', 'feature', 'ysg', '2018-01-01 00:00:00', '2018-12-30 00:00:00', 3.00, 0.10, 'feature', '2018-10-10 21:28:30');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('ae963e98-c5fc-40fe-b832-850d0b2a4bf2', 1805111000, 1, 10, 9, 1, '09-done', 'setup', 'add the pre-loading of the env shell configuration files', 'the run-integration tests should pre-load the configuration file of the current instance in order to match the full environment as it is run usually. 
 Solution : 
 The call has to be changed to : 
@@ -758,25 +865,13 @@ INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, ca
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('b6d9005a-525d-4288-88d8-9fb561f5f105', 1805301337, 1, 10, 6, 4, '09-done', 'bug', 'fix the NULL.md generated in generate-docs action', 'Due to the non availability of the relative path', 'bug', 'ysg', '2018-05-28 20:53:00', '2018-05-30 00:00:00', 2.00, 3.00, NULL, '2018-09-21 09:01:51');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('c0761c85-dc6e-4683-b9b0-a207bad5628d', 180802130101, 1, 4, 6, 2, '09-done', 'feature', 'add the delete back-end web action', 'delete the delete.pm action and integrate within the existing integration tests', 'task', 'ysg', '2018-08-02 10:56:49', '2018-06-30 07:00:00', 0.10, 0.10, ' feature', '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('e75d84ad-abb9-4b23-9b73-a2e1c39fc2a8', 180824081033, NULL, NULL, 5, 9, '09-done', 'docs', 'add Concepts document', 'Add the concepts to the mysql doc app', 'task', 'unknown', '2018-08-24 07:57:37', '2018-08-24 07:57:37', NULL, NULL, NULL, '2018-09-02 00:39:46');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('872773cb-d638-442a-ac25-8115bf632a7f', 180807161151, 1, NULL, 4, 9, '02-todo', 'design-concepts-docs', 'define copy and move operations of items', 'The thing is that those are much more complex than it seems and thus they first be designed and defined and AFTER that implement
-
-For example: 
- - "same table item copy action"  ( newid and new guid must be created ) 
- - "different table item copy action" 
- - "different database , same table item copy action"
- - "different database , different table item copy action"', 'task', 'unknown', '2018-08-07 16:11:51', '2018-08-07 16:11:51', NULL, NULL, NULL, '2018-09-02 00:39:46');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('617f7bb7-d380-4c48-aa86-eddf6c00dd8c', 180802130001, 2, 3, 5, 7, '09-done', 'feature', 'add the create back-end web action', 'Create the create.pm action and integrate within the existing integration tests', 'task', 'ysg', '2018-08-02 10:56:49', '2018-06-30 07:00:00', 0.10, 0.10, ' feature', '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('9b5f133b-71a8-48c7-a4aa-d1536f09e707', 180802130102, 2, 5, 9, 1, '09-done', 'feature', 'add the delete vue button component poc', 'Add a poc page with a custom vue button component demonstrating the following:
  - ok ability to instantiate multiple independant instances of the button
  - ok - ability to assign different id''s to the buttons
  - todo - ability to present dialog box with ok and cancel after the clicking of the button
  - ok - ability to perform an AJAX call after pressing the button 
  - ok ability to remove the row', 'task', 'ysg', '2018-08-02 10:56:49', '2018-06-30 07:00:00', 0.10, 0.10, ' feature', '2018-09-02 00:39:46');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('fe1eeae3-5fb4-46df-b1de-6b62d9229be6', 180807153751, 1, NULL, 9, 6, '01-eval', 'bug-feature', 'add resizing of the columns', 'Probably some kind of listener , which would change the As the current UI does not support a form for the performing of the insert , but the insert straight away inserts a default value , the clicking of the insert button always succeeds ( as the default values are provided by the database ) 
-
-This one might be added once the meta-data handling has been implemented as well ... 
-
-aka it might be blocked by the meta-data retrieval issue ...
-td and th ''s padding', 'task', 'unknown', '2018-08-07 15:37:51', '2018-08-07 15:37:51', NULL, NULL, NULL, '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('20f646a7-c322-40f1-b0bf-777fff8f3e5e', 1805110400, 2, 10, 6, 1, '01-eval', 'feature', 'improve the select-tables web action', 'Add the following:
 - list of views
 - ability to specify order by table name and/or creation date 
@@ -855,7 +950,6 @@ INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, ca
  - remove the page-numberer+code
  - remove the CRUD methods
  - keep the styling', 'bug', 'ysg', '2018-07-04 04:06:05', '2018-10-31 12:00:00', 5.00, 0.50, 'bugs', '2018-09-02 00:39:46');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('617f7bb7-d380-4c48-aa86-eddf6c00dd8c', 180802130001, 2, 3, 5, 7, '09-done', 'feature', 'add the create back-end web action', 'Create the create.pm action and integrate within the existing integration tests', 'task', 'ysg', '2018-08-02 10:56:49', '2018-06-30 07:00:00', 0.10, 0.10, ' feature', '2018-09-02 00:39:46');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('2c73d462-6f0e-4fa4-b339-d10d24e1fc87', 180806170653, NULL, NULL, 7, 8, '09-done', 'bug', 'the chaining of the "with" url params does not work', 'The chaining of "with" url params does not work , or it has not been implemented f probably implementation fold. For example the following query:  list all the early bug issues, which are not-done. http://192.168.56.120:3000/dev_issue_tracker/list/monthly_issues?as=etable&pick=id,category,status,prio,weight,name,description&where=category-eq-bug&where=status-ne-09-done
 
 the fix for the url_params fixed this one as well .. .', 'task', 'ysg', '2018-08-06 17:01:56', '2018-08-06 17:01:56', 2.00, 0.10, NULL, '2018-09-02 00:39:46');
@@ -867,7 +961,6 @@ Add scroll till the top when the table ends ...
 Add more space in the page 
 
 Related to the', 'task', 'unknown', '2018-08-06 21:22:13', '2018-08-06 21:22:13', 3.00, 0.30, NULL, '2018-09-02 00:39:46');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('bdcef54c-dda3-4c6a-861b-e17b73d8e9e3', 1807101028, 2, 5, 5, 8, '02-todo', 'feature', 'add the CREATE for the CRUD table via a vue-js-modal form', 'via a vue-js-modal form', 'feature', 'ysg', '2018-07-03 00:00:00', '2018-07-30 00:00:00', 50.00, 8.00, 'feature,CRUD', '2018-10-01 14:24:59');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('eea2a2c4-4476-478e-8580-34a46b451ee4', 180830103358, NULL, NULL, 6, 9, '02-todo', 'feature-ui', 'query title label', 'No time for this one this month ...
 Build a human readable query title with the same font and style as the existing app_db label', 'task', 'unknown', '2018-08-30 10:16:32', '2018-08-30 10:16:32', NULL, NULL, NULL, '2018-10-01 14:33:24');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('006dcf0b-d15b-4532-b867-4146e686c995', 180802130002, 2, 2, 9, 7, '09-done', 'feature', 'add the create vue button component poc', 'Add a poc page with a custom vue button component demonstrating the following:
@@ -1086,9 +1179,6 @@ INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, ca
  - performance and stability (refactoring)
  - api changes - changes of behaviours
  - known issues', 'task', 'unknown', '2018-09-26 11:26:44', '2018-09-26 11:26:44', NULL, NULL, NULL, '2018-09-27 10:11:38');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('2bfa5d36-40e8-4e7f-8be6-0fc8a0ff2772', 180914111431, NULL, NULL, 5, 9, '03-flow', 'bug-feature', 'stuck morbo server', 'Whenever the morbo server is stuck, one has to kill manually the instances of the perl as the socket is occuped ...
-To be resolved as soon as it occurs', 'task', 'unknown', '2018-09-14 10:59:37', '2018-09-14 10:59:37', NULL, NULL, NULL, '2018-09-27 10:12:42');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('4b2a52cd-c4b9-4248-8665-9dc0df6e9f63', 180803093321, 1, 10, 5, 3, '03-act', 'feature', 'add and automate as much as possible the deployment of a new released version to the cloud as part of the release process', 'add and automate as much as possible the deployment of a new released version to the cloud as part of the release process', 'task', 'ysg', '2018-09-01 12:00:00', '2018-09-30 12:00:00', 10.00, 0.10, 'setup,feature', '2018-10-01 11:40:29');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('3a7f158b-806a-40f6-a307-56df4cdfa842', 180920104520, NULL, NULL, 4, 9, '09-done', 'feature', 'onEnter for :for should pick the upper most item in the drop down list', 'On click enter should select the upper most item of the list in the :for EVEN if the list has not been selected ...', 'task', 'unknown', '2018-09-20 10:30:16', '2018-09-20 10:30:16', NULL, NULL, NULL, '2018-10-01 15:10:26');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('d4e20248-a559-441f-87f4-0f89cdaa18a6', 180914105643, NULL, NULL, 5, 9, '09-done', 'refactor', 'avoid the warning for exiting last', 'when detecting the bug for the failing column :
 https://stackoverflow.com/a/44310352/65706', 'task', 'unknown', '2018-09-14 10:41:48', '2018-09-14 10:41:48', NULL, NULL, NULL, '2018-10-01 15:10:26');
@@ -1110,18 +1200,6 @@ INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, ca
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('324755df-a7aa-4e2c-a3d9-5da4aa20ee2c', 180925230044, NULL, NULL, 9, 8, '02-todo', 'docs', 'functional requirements update', 'Update the functional requirements: 
  - what is the maximum amount of rows per table which should be supported
  - how-many users at once should be supported', 'task', 'unknown', '2018-09-25 23:00:45', '2018-09-25 23:00:45', NULL, NULL, NULL, '2018-09-27 10:11:50');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('12f6689a-fa8e-4024-a693-9d1e5cd5dffc', 180517213501, 1, NULL, 5, 2, '02-todo', 'feature', 'implement client-side testing', 'or should there be simply redirect ... 
-
-The pager should re-drow based on the current sort. Scenario: 
-- get url with o=update_time , pg-size=100
--  click on sort ascending - the last update time is shown
-- click on page-size = 5
-
-Expected behavour
-- still the last updated one is shown as the top row
-
-Actual behavour
-- the first updated one is shown', 'goal', 'ysg', '2018-06-01 00:00:00', '2018-07-30 00:00:00', 50.00, 5.00, 'feature', '2018-09-27 10:02:35');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('2a515908-c7b2-4fcc-894b-4c34ff1dfc27', 180921152541, NULL, NULL, 5, 9, '04-diss', 'functionality', 'add the back-end action for select table columns', 'This has been done - aka this issue is duplicate: 
 
 
@@ -1144,6 +1222,7 @@ l 
 that is both the oa and od url params are available ... 
 "unknown error" is shown ... while a more descriptive error with the sql syntax should be shown ...', 'task', 'unknown', '2018-09-19 11:58:55', '2018-09-19 11:58:55', NULL, NULL, NULL, '2018-10-01 14:29:16');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('cdaf325f-3ebb-4e4f-ab7c-69f5eee68a45', 180911203222, NULL, NULL, 9, 9, '09-done', 'feature-ui', 'add the onEscPressed event handler for the db dropdown', 'add the onEscPressed event handler', 'task', 'unknown', '2018-09-11 20:32:20', '2018-09-11 20:32:20', NULL, NULL, NULL, '2018-10-01 15:10:26');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('4b2a52cd-c4b9-4248-8665-9dc0df6e9f63', 180803093321, 1, 10, 5, 3, '03-act', 'feature', 'add and automate as much as possible the deployment of a new released version to the cloud as part of the release process', 'add and automate as much as possible the deployment of a new released version to the cloud as part of the release process', 'task', 'ysg', '2018-09-01 12:00:00', '2018-09-30 12:00:00', 10.00, 0.10, 'setup,feature', '2018-10-10 20:57:09');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('3f2a34f3-bc1b-4b15-99a1-d71995b958f5', 180926181042, NULL, NULL, 6, 9, '09-done', 'bug-feature', 'pick un-existent col name results in wrong error', 'Re-factor setErrorMsg function
 The wrong error msg appears after picking un-existent attribute:
 
@@ -1158,7 +1237,6 @@ Probably all the node_modules must be installed globally, because there is depen
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('fe3ca692-b9e2-409a-bc77-a246b31ac7d2', 1807162248, 1, 5, 7, 4, '02-move', 'feature', 'add the clone with new id html row for table for CREATE', 'chk the following answer:
 - wip add the default values for all the non-null columns
 - wip create the front-end call by (new Date()).toISOString().replace(/-/g,"").replace(/T/g,"").replace(/:/g,"").slice(2,14)', 'feature', 'ysg', '2018-07-03 00:00:00', '2018-07-30 00:00:00', 50.00, 8.00, 'feature,CRUD', '2018-10-01 14:25:01');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('f3951bd2-0bb8-49bc-b680-b99ee8a670c2', 1805111200, 1, 10, 4, 6, '02-todo', 'feature', 'add the select-update form page', 'To test the update action and to start avoiding using the xls', 'activity', 'ysg', '2018-05-30 07:00:00', '2018-06-30 07:00:00', 0.10, 0.10, ' feature', '2018-10-01 14:26:54');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('a44dda06-f709-4ed6-8ef1-c08def3fedbc', 1805111400, 1, 10, 4, 6, '04-diss', 'feature', 'create the select-create form page', 'To test the create action and to start avoiding using the xls', 'activity', 'ysg', '2018-05-30 07:00:00', '2018-06-30 07:00:00', 0.10, 0.10, ' feature', '2018-10-01 14:27:11');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('403c1135-5279-47b7-8f37-3783bacd1142', 180920075214, NULL, NULL, 5, 9, '09-done', 'feature-bug', 'fix the pager''s pager', 'Should be human and not machine readable : 
  The cases are : 
@@ -1182,7 +1260,6 @@ INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, ca
 - whenever the user types the list is filtered by the string typed
 - on hitting enter the user is redirected to the chosen database', 'task', 'unknown', '2018-09-03 11:27:48', '2018-09-03 11:27:48', NULL, NULL, NULL, '2018-10-01 15:10:26');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('d2ef5ff1-14c5-49e2-82c3-743e2bf65123', 180919115535, NULL, NULL, 4, 7, '09-done', 'feature', 'add the :in<<db-name>> syntax for redirect into the same page', 'When a db is fully normalized and the foreign keys are set , a dropbox must be added to select from the human readable valuesCould be implemented first with the status table ... Implement with smart meta data handling ... no table hooks ..', 'task', 'unknown', '2018-09-19 11:55:30', '2018-09-19 11:55:30', NULL, NULL, NULL, '2018-10-01 15:10:26');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('4ce7ef59-d47b-43aa-a162-15b28a02c711', 180925102821, NULL, NULL, 8, 9, '09-done', 'docs', 'functional requirements update', 'The :for operator has to be updated', 'task', 'unknown', '2018-09-25 10:28:21', '2018-09-25 10:28:21', NULL, NULL, NULL, '2018-10-01 15:10:26');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('75b0a34b-30dd-4122-9ea6-4cf0d9d0cd67', 180821205727, NULL, NULL, 5, 6, '09-done', 'bug', 'clear the content of the quick-search input on new item adding', 'Solution: add a redirect with clearing of the filtering url params.
 
 clear the filtering when new item is added
@@ -1194,6 +1271,7 @@ add the item: operator which will run the same query which is currently but on t
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('269866fd-6fa6-48ef-bfca-26c69dfb335a', 180914105804, NULL, NULL, 6, 9, '09-done', 'bug', 'fix the bug for un-existing attribute not shown when requested', 'for example request the principles page by requesting the status attribute as well ... 
 
 Probably the real feature should be just to issue a warning of the bottom of the page stating, that showing the query without the ''<<unexistent-attribute>>'' as it does not exist in the <<item>>', 'task', 'unknown', '2018-09-14 10:43:09', '2018-09-14 10:43:09', NULL, NULL, NULL, '2018-10-01 15:10:26');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('4ce7ef59-d47b-43aa-a162-15b28a02c711', 180925102821, NULL, NULL, 8, 9, '09-done', 'docs', 'functional requirements update', 'The :for operator has to be updated', 'task', 'unknown', '2018-09-25 10:28:21', '2018-09-25 10:28:21', NULL, NULL, NULL, '2018-10-09 15:00:27');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('793cc854-22dd-4c7a-9a9a-442e6ce3147a', 180828100245, NULL, NULL, 5, 4, '09-done', 'bug', 'addNew with filter url params', 'Solution: add a redirect with clearing of the filtering url params.
 if one has a filter in the global search when clicking create new , the filter stays and the new items are not shown . Scenario: 
  - have a global search with=status-eq-09-done
@@ -1209,33 +1287,61 @@ INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, ca
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('8b938410-fd24-400a-b690-a056c0a8840f', 181001113115, NULL, NULL, 5, 9, '09-done', 'bug', 'pager sets wrong page numbers', 'Because the page sizer line of code was moved 3 lines bellow ...', 'task', 'unknown', '2018-10-01 11:31:15', '2018-10-01 11:31:15', NULL, NULL, NULL, '2018-10-01 15:10:26');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('be969ff3-eaf5-44ba-8e7e-9f4ac1f578af', 180927095249, NULL, NULL, 9, 9, '09-done', 'feature', 'add the capability to display user-friendly non-technical errors and log technical errors', 'By using the hacky wackly '' :: '' string separator where the $1 is the human-readable part and the $2 is the nerd readable part of the msg which will be console.errorred in the browser, but not shown on the page', 'task', 'unknown', '2018-09-27 09:52:49', '2018-09-27 09:52:49', NULL, NULL, NULL, '2018-10-01 15:10:26');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('25f94c2d-1ec6-4c4a-8de5-7889b2365c43', 180928142720, NULL, NULL, 7, 9, '09-done', 'bug', 'the principles table did not comply with the item api', 'It basically did not have default value in the DDL for the nullable attributes', 'task', 'unknown', '2018-09-28 14:27:20', '2018-09-28 14:27:20', NULL, NULL, NULL, '2018-10-01 15:10:26');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('a4a93c85-dea7-4f87-b91d-bef897f814b6', 181002111017, NULL, NULL, 3, 9, '02-todo', 'bug', 'content editable and update cannot handle html entities', 'The html table cannot handle content with html entities: 
-example greater than and smaller than are presented directly', 'task', 'unknown', '2018-10-02 10:52:33', '2018-10-02 10:52:33', NULL, NULL, NULL, '2018-10-02 10:54:26');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('f3951bd2-0bb8-49bc-b680-b99ee8a670c2', 1805111200, 1, 10, 4, 6, '02-todo', 'feature', 'add the select-update form page', 'To test the update action and to start avoiding using the xls', 'activity', 'ysg', '2018-05-30 07:00:00', '2018-06-30 07:00:00', 0.10, 0.10, ' feature', '2018-10-10 21:02:30');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('aebb44b0-2d4b-4b6d-855e-204a39986c4c', 181005081114, NULL, NULL, 5, 9, '03-act', 'capability', 'achieve capability for 5 min deployment', 'achieve capability for 5 min deployment to the cloud', 'task', 'unknown', '2018-10-05 08:08:14', '2018-12-30 22:00:00', NULL, NULL, NULL, '2018-10-05 08:48:27');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('953b7bd6-d373-45e5-9223-094d1f82cea5', 181005085048, NULL, NULL, 5, 9, '02-todo', 'major-release', 'release v0.6.0', 'Major release containing: 
- - secure native authentication via JWT
- - simplistic basic auth IF NEEDED
- - users, roles , item-level privilege granularity
- - SSO via JWT via OpenId ( at least Google )
- - 45 min deployment with 8 min downtime per instance', 'task', 'unknown', '2018-10-30 22:00:00', '2019-03-01 22:00:00', NULL, NULL, NULL, '2018-10-05 09:16:58');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('d0c526a8-75e8-45ad-8824-875cb3405975', 181005085509, NULL, NULL, 8, 9, '02-todo', 'major-release', 'release v0.7.0', 'Major release containing: 
- - view/item?as=doc with CRUD 
- - 95% scenario to tests coverage ( including ui )    
- - 35 min deployment with 7 min downtime per instance', 'task', 'unknown', '2019-03-01 22:00:00', '2019-06-01 22:00:00', NULL, NULL, NULL, '2018-10-05 09:17:02');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('8c959f2c-6db0-433d-815f-ba49208ab1d7', 181005084525, NULL, NULL, 2, 9, '03-act', 'major-release', 'release v0.5.0', 'Major release should have:
- - stable and reliable crud grid with paging and filtering
- - search-box with autocomplete for dbs,tables and cols
-  - ui and back-end covering test suite
-  - 1h deployment time with 10 min per instance', 'task', 'unknown', '2018-06-01 12:00:00', '2018-10-30 22:00:00', NULL, NULL, NULL, '2018-10-05 09:16:52');
-INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('daf1a325-594e-4212-af0f-2ea42e022278', 181005090038, NULL, NULL, 9, 9, '02-todo', 'major-release', 'release v0.8.0', 'Major release containing: 
- - universal global txt search on items level
- - 25 min deployment with 6 min downtime per instance
- - global per role-level visibility menu
- - personal links save', 'task', 'unknown', '2019-06-01 22:00:00', '2019-09-01 22:00:00', NULL, NULL, NULL, '2018-10-05 09:17:09');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('2576cfcb-ec09-4907-9344-344e9ea553bd', 1805160700, 2, 10, 7, 5, '01-eval', 'feature', 'add the feature for the validation of the spent time', 'design the validation of the available time and the spent time = registered time', 'task', 'ysg', '2017-08-06 00:00:00', '2017-08-07 00:00:00', 15.00, 0.10, NULL, '2018-10-09 15:00:23');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('78d22cd6-864c-4219-ab1e-d29fc8b63e6a', 1806011256, 1, 10, 7, 5, '01-eval', 'feature', 'implement a time report web ui page_', 'The time report web ui page will :
+- fetch the daily,weekly,monthly and yearly hours
+- get the allocated hours per time period
+- calculate the registered actual hours to the went-by hours of the start of the period
+- calculate the diff between the actual and passed-by hours
+- accessible from the list/table-name/?as=table url
+- should be able t osort the data', 'feature', 'ysg', '2018-12-01 00:00:00', '2018-12-31 07:00:00', 20.00, 0.10, NULL, '2018-10-09 15:00:27');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('dc91451d-460f-4092-9f6b-ae85e5ed0699', 180802105623, 1, NULL, 9, 9, '09-done', 'release', 'release v0.4.6', 'Couple of small fixes in the integration tests ... 
 release v0.4.6 should be considered "transitional" release as it contains only the update of the CRUDS feature, although there is some need for refactoring and additional testing the "create " and "delete" features must be added asap to avoid wasting time with additional tools and Excel. 
 Also this should be the first release to be released to the cloud as well.', 'task', 'ysg', '2018-08-02 10:56:49', '2018-08-05 22:56:49', 3.00, 0.00, 'release', '2018-10-05 09:16:55');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('d0c526a8-75e8-45ad-8824-875cb3405975', 181005085509, NULL, NULL, 8, 9, '02-todo', 'major-release', 'release v0.7.0', 'Major release containing: 
+ - view/item?as=doc with CRUD 
+ - 95% scenario to tests coverage ( including ui )    
+ - 35 min deployment with 7 min downtime per instance', 'task', 'unknown', '2019-03-01 22:00:00', '2019-06-01 22:00:00', NULL, NULL, NULL, '2018-10-09 15:00:30');
 INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('13b33dd8-ad91-4183-82c6-598f71355535', 180807172028, NULL, NULL, 9, 9, '09-done', 'release', 'release v0.4.7', 'The version 0.4.7 will introduce the CRUDs feature ( with a small s , because basically the s would stand for search via the url parameters syntax and not via a real search UI)', 'task', 'unknown', '2018-08-07 17:20:28', '2018-08-07 17:20:28', NULL, NULL, NULL, '2018-10-05 09:16:55');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('8c959f2c-6db0-433d-815f-ba49208ab1d7', 181005084525, NULL, NULL, 1, 9, '03-act', 'major-release', 'release v0.5.0', 'Major release should have: - stable and reliable crud grid with paging and filtering - search-box with autocomplete for dbs,tables and cols  - ui and back-end covering test suite  - 1h deployment time with 10 min per instancerow-2row-3', 'task', 'unknown', '2018-06-01 12:00:00', '2018-10-30 22:00:00', NULL, NULL, NULL, '2018-10-10 21:22:50');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('2bfa5d36-40e8-4e7f-8be6-0fc8a0ff2772', 180914111431, NULL, NULL, 5, 9, '03-flow', 'bug-feature', 'stuck morbo server', 'Whenever the morbo server is stuck, one has to kill manually the instances of the perl as the socket is occuped ...To be resolved as soon as it occurs', 'task', 'unknown', '2018-09-14 10:59:37', '2018-09-14 10:59:37', NULL, NULL, NULL, '2018-10-10 18:39:00');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('428b55bd-8ef4-4f30-9c7f-5fe29057dad9', 180803161926, 1, NULL, 5, 6, '02-todo', 'feature', 'implement a new hierarchy model', 'implement a new hierarchy model by using the seq into a separate items_hierarchy table , which will have the following attributes:
+id - the FK pointing to the items id 
+seq - the sequence in the hierarchy 
+item_nam e- the name of the item''s table to refer to 
+( all those should comprise an unique PK ) 
+
+Change in the hierarchy would mean changing the seq number - those not all issues will be hierarchical, but those which are could be seen in an hierarchy UI !!!', 'task', 'ysg', '2018-10-01 20:53:00', '2018-12-31 20:53:00', 30.00, 0.10, 'hierarchy', '2018-10-10 20:56:06');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('daf1a325-594e-4212-af0f-2ea42e022278', 181005090038, NULL, NULL, 9, 9, '02-todo', 'major-release', 'release v0.8.0', 'Major release containing:  - universal global txt search on items level - 25 min deployment with 6 min downtime per instance - global per role-level visibility menu - personal links save', 'task', 'unknown', '2019-06-01 22:00:00', '2019-09-01 22:00:00', NULL, NULL, NULL, '2018-10-11 09:06:04');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('8a127f15-a399-452a-a530-ff64ae8f9f26', 1807101030, 2, 4, 5, 5, '02-todo', 'feature', 'add the UPDATE for the CRUD table via the vue-js-modal form', 'As an UI user of the issue-tracker application 
+In order to be able to quickly edit the data of ANY item 
+I want to be able to click on the edit button , fill in the poping-up dialog with the form of the full data of the item and clicking the Save button.', 'feature', 'ysg', '2018-07-03 00:00:00', '2018-07-30 00:00:00', 50.00, 8.00, 'feature,CRUD', '2018-10-10 19:41:04');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('ebedd47d-831e-4dda-a34d-aa15e9dc18b5', 180806102235, 1, NULL, 5, 9, '02-todo', 'feature', 'add 3D effect on the table cells', 'add 3D effect on the table cells.', 'task', 'ysg', '2018-08-07 00:00:00', '2018-08-07 00:00:00', NULL, NULL, NULL, '2018-10-10 20:35:50');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('12f6689a-fa8e-4024-a693-9d1e5cd5dffc', 180517213501, 1, NULL, 5, 2, '02-todo', 'feature', 'implement client-side testing', 'or should there be simply redirect ... The pager should re-drow based on the current sort. Scenario: - get url with o=update_time , pg-size=100-  click on sort ascending - the last update time is shown- click on page-size = 5Expected behavour- still the last updated one is shown as the top rowActual behavour- the first updated one is shown', 'goal', 'ysg', '2018-06-01 00:00:00', '2018-07-30 00:00:00', 50.00, 5.00, 'feature', '2018-10-10 20:37:23');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('98e6b6fb-e165-41b6-afc8-74d86d18eec6', 180517213101, 1, NULL, 5, 9, '04-diss', 'load-testing', 'add load testing to the update back-end web action', 'By simply instantiating ASYNCRONOUSLY 2,4,16,32,64,128,256,512,1024 ajax calls at once non-blocking-wise .Chk the following info src: https://mojolicious.io/blog/2017/12/09/day-9-the-best-way-to-test/http://blogs.perl.org/users/chase_whitener/2016/01/mock-testing-web-services-with-mojo.html', 'goal', 'ysg', '2018-06-01 00:00:00', '2018-07-30 00:00:00', 50.00, 2.00, 'feature', '2018-10-10 21:00:52');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('bdcef54c-dda3-4c6a-861b-e17b73d8e9e3', 1807101028, 2, 5, 5, 8, '02-todo', 'feature', 'add the CREATE for the CRUD table via a vue-js-modal form', 'via a vue-js-modal form', 'feature', 'ysg', '2018-07-03 00:00:00', '2018-07-30 00:00:00', 50.00, 8.00, 'feature,CRUD', '2018-10-10 21:01:04');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('953b7bd6-d373-45e5-9223-094d1f82cea5', 181005085048, NULL, NULL, 5, 9, '02-todo', 'major-release', 'release v0.6.0', 'Major release containing:  - secure native authentication via JWT - simplistic basic auth IF NEEDED - users, roles , item-level privilege granularity - SSO via JWT via OpenId ( at least Google ) - 45 min deployment with 8 min downtime per instance', 'task', 'unknown', '2018-10-30 22:00:00', '2019-03-01 22:00:00', NULL, NULL, NULL, '2018-10-10 21:02:36');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('872773cb-d638-442a-ac25-8115bf632a7f', 180807161151, 1, NULL, 4, 9, '02-todo', 'design-concepts-docs', 'define copy and move operations of items', 'The thing is that those are much more complex than it seems and thus they first be designed and defined and AFTER that implement
+
+For example: 
+ - "same table item copy action"  ( newid and new guid must be created ) 
+ - "different table item copy action" 
+ - "different database , same table item copy action"
+ - "different database , different table item copy action"', 'task', 'unknown', '2018-08-07 16:11:51', '2018-08-07 16:11:51', NULL, NULL, NULL, '2018-10-10 21:15:39');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('a4a93c85-dea7-4f87-b91d-bef897f814b6', 181002111017, NULL, NULL, 3, 9, '02-todo', 'bug', 'content editable and update cannot handle html entities', 'The html table cannot handle content with html entities: example greater than and smaller than are presented directly
+
+
+<<pituus>>', 'task', 'unknown', '2018-10-02 10:52:33', '2018-10-02 10:52:33', NULL, NULL, NULL, '2018-10-10 21:24:29');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('71477531-2a74-453b-9d79-c87a43713767', 180813230115, NULL, NULL, 3, 9, '09-done-to-weekly', 'feature', 'table rows height default by "30"', 'update: 2018-10-11 11:00 
+Achieved by changing the content editable div to text area and a simple title attribute interpolated with vue. 
+
+For monthProbably not worth wasting time as of now ... Set the min-height however .... which brings some uniformity ...and show the full content on hover and on editThis will make the paging much more smoother and will prevent the jumping of the table back and forth', 'task', 'unknown', '2018-08-13 22:44:27', '2018-08-13 22:44:27', NULL, NULL, NULL, '2018-10-11 10:31:21');
+INSERT INTO public.yearly_issues (guid, id, level, seq, prio, weight, status, category, name, description, type, owner, start_time, stop_time, planned_hours, actual_hours, tags, update_time) VALUES ('fe1eeae3-5fb4-46df-b1de-6b62d9229be6', 180807153751, 1, NULL, 9, 6, '01-eval', 'bug-feature', 'add resizing of the columns', 'update: 2018-10-11 11:00 
+Achieved by changing the content editable div to text area and a simple title attribute interpolated with vue. 
+
+For monthProbably not worth wasting time as of now ... Set the min-height however .... which brings some uniformity ...and show the full content on hover and on editThis will make the paging much more smoother and will prevent the jumping of the table back and forth', 'task', 'unknown', '2018-08-07 15:37:51', '2018-08-07 15:37:51', NULL, NULL, NULL, '2018-10-11 10:31:48');
 
 
 --
