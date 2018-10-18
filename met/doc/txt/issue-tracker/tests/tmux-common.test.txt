@@ -1,0 +1,37 @@
+# doc/txt/issue-tracker/tmux-common/tmux-common.test.txt
+
+	doTestTmuxCommon
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doTestTmuxCommon function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doTestTmuxCommon function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doTestTmuxCommon function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doTestTmuxCommon function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doTestTmuxCommon used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doTestTmuxCommon functions
+
+
+
+# eof file: doc/txt/issue-tracker/tmux-common/tmux-common.test.txt

@@ -1,0 +1,19 @@
+# doc/txt/issue-tracker/test/mojo-hypnotoad-stop.test.txt
+
+	doTestMojoHypnotoadStop
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to test mojo-hypnotoad-stop action
+
+	# Usage:
+	# ------------------------------------------------------
+   bash src/bash/issue-tracker/test-issue-tracker.sh
+
+
+	# Caveats:
+	# ------------------------------------------------------
+	none
+
+
+# eof file: doc/txt/issue-tracker/test/mojo-hypnotoad-stop.test.txt
