@@ -942,5 +942,8 @@ dat/mix/2018/2018-10/2018-10-18/sql/dev_issue_tracker
 dat/mix/2018/2018-10/2018-10-18/sql/dev_issue_tracker/dev_issue_tracker.20181018_092011.insrt.dmp.sql
 dat/mix/2018/2018-10/2018-10-18/sql/tst_issue_tracker
 dat/mix/2018/2018-10/2018-10-18/sql/tst_issue_tracker/tst_issue_tracker.20181018_091845.insrt.dmp.sql
+dat/mix/2018/2018-10/2018-10-18/sql/prd_issue_tracker
+dat/mix/2018/2018-10/2018-10-18/sql/prd_issue_tracker/prd_issue_tracker.20181018_091845.insrt.dmp.sql
 dat/mix/2018/2018-10/2018-10-18/xls
 dat/mix/2018/2018-10/2018-10-18/xls/issue-tracker.all.20181018_000000.xlsx
+
