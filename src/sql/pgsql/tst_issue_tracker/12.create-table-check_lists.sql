@@ -31,7 +31,6 @@ SELECT 'show the columns of the just created table'
    ORDER  BY attnum
    ; 
 
---The trigger:
 
 select tgname
 from pg_trigger

@@ -55,6 +55,8 @@ var Searchbox = {
          var lastWord = tokens[tokens.length - 1]
          var secondLastWord = tokens[tokens.length - 2]
          if ( lastWord === ':in' || secondLastWord === ':in' ) { 
+            this.results = []
+            this.$parent.fetchSSDataForDbsUI() ; 
             this.results = this.dblist
                .filter(item => {
                   var to_srch = lastWord.toLowerCase().replace(':in' , '')
@@ -66,6 +68,8 @@ var Searchbox = {
                })
          }
          else if ( lastWord === ':for' || secondLastWord === ':for' ) { 
+            this.results = []
+            this.$parent.fetchSSDataForTablesUI() ; 
             this.results = this.tblist
                .filter(item => {
                   var to_srch = lastWord.toLowerCase().replace(':for' , '')
@@ -129,14 +133,10 @@ var Searchbox = {
          if ( newDb != this.globalSrch ) {
            newUri = newUri.replace(/[/]{1}[a-zA-Z0-9_]+[/]{1}list/gi , "/" + newDb + "/list") 
          } 
-         console.log("newDb: " + newDb)
          var newTable = this.globalSrch.replace(/^(.*?\s*):for\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
          if ( newTable != this.globalSrch ) {
            newUri = newUri.replace(/[/]{1}list[/]{1}[a-zA-Z0-9_]+[?]/gi , "/list/" + newTable + '?') 
          }
-         console.log("newTable: " + newTable )
-         console.log ( "should redirect to: " )
-         console.log ( "url: " + newUri )
          window.location.href = newUri // and redirect !!!
     }
     , handleClickOutside(e) {

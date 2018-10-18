@@ -3,7 +3,6 @@
          if ( txt.indexOf(' :: ') !== -1 ) {
             console.error ( txt )
             txt = txt.split(/ :: /)[0]
-            console.log ( "txt-02 : " + txt )
          }
          console.error(txt);
       } else {

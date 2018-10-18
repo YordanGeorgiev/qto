@@ -1,9 +1,12 @@
 use strict ; use warnings ; 
 
 use Test::More;
+use Test::Most ; 
 use Test::Mojo;
 use Data::Printer ; 
 use FindBin;
+
+die_on_fail;
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 
@@ -40,9 +43,6 @@ for my $row ( @$list ) {
 	;
 	$tm = 'for the hide the guid attribute , no guid: should be present' ; 
 	$t->get_ok($url)->content_unlike('/guid:/' , $tm ) ; 
-
-	$tm = 'for the hide the id attribute , no id: should be present' ; 
-	$t->get_ok($url)->content_unlike('/id:/' , $tm ) ; 
 
 }
 

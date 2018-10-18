@@ -1,8 +1,11 @@
 use strict ; use warnings ; 
 use Test::More;
+use Test::Most ; 
 use Test::Mojo;
 use Data::Printer ; 
 use FindBin;
+
+die_on_fail;
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 
@@ -26,11 +29,15 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    my $ua  = $t->ua ; 
    my $response = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
    my $list = $response->{ 'dat' } ; 
+   my @tables_to_check = ( 'monthly_issues' , 'yearly_issues' ) ; 
 
 # foreach table in the app db in test call db/select/table
 for my $row ( @$list ) {
 
    my $table_name = $row->{'table_name'} ; 
+   next if $table_name =~ m/test_/g ; # skipping the testing tables
+   next unless ( grep( /^$table_name$/, @tables_to_check ) ) ;
+
    my $url = '' ; 
    my $tm = '' ; # the test msg 
 
