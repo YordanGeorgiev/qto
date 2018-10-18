@@ -68,8 +68,6 @@ PrintTraceMsgs =                 1
 google_spread_sheet_id = 1p4YwuSB3GtQ0i5ginn4Vc95t09w1WNWJra2yUH1aL0Y
 
 Emails=yordan.georgiev@gmail.com
-# changed the propmpt
-PS1="$issue_tracker_project \u@\h [\d \t] [\w] $ \n\n "
 
 # v0.5.1
 # on which host the mysql is running
@@ -99,8 +97,6 @@ web_port=5001
 # the mysql db data containing load xls
 # after 
 load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tracker-en.xlsx
-
-PS1='issue-tracker-prd \u@\h [\d \t] [\w] $ \n\n '
 
 mojo_morbo_port=3003
 
