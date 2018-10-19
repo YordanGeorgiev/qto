@@ -2,19 +2,29 @@
 
 # v1.0.9
 # ---------------------------------------------------------
-# todo: add doMojoHypnotoadStop comments ...
+# cat doc/txt/issue-tracker/funcs/mojo-hypnotoad-stop.func.txt
 # ---------------------------------------------------------
 doMojoHypnotoadStop(){
 
+   should_exit=${1:-}
+   test -z "${should_exit:-}" && should_exit=1
+   test -z "${mojo_hypnotoad_port:-}" && export mojo_hypnotoad_port=8080
+   found=0
+
+	doLog "INFO mojo_hypnotoad_port: $mojo_hypnotoad_port"
 	doLog "DEBUG START doMojoHypnotoadStop"
 	
-	# cat doc/txt/issue-tracker/funcs/mojo-hypnotoad-stop.func.txt
-	
-	sleep "$sleep_interval"
-	# Action !!!
-   cd src/perl/issue_tracker/script/
-   hypnotoad  -s issue_tracker &
-   cd $procuct_instance_dir
+   while read -r child_of_1_pid; do 
+      while read -r listening_on_port_pid; do 
+         while read -r pid_to_kill; do 
+            echo killing the following pid_to_kill  $pid_to_kill; 
+            kill -9 $pid_to_kill
+            found=1
+         done < <(ps -ef | grep $child_of_1_pid|grep issue_tracker|grep -v grep|awk '{print $2}'); 
+      echo listening_on_port_pid: $listening_on_port_pid
+      done < <(lsof -i:${mojo_hypnotoad_port:-} -t|grep $child_of_1_pid)
+   echo child_of_1_pid : $child_of_1_pid
+   done < <(pgrep -P 1); 
 
 	doLog "DEBUG STOP  doMojoHypnotoadStop"
 }

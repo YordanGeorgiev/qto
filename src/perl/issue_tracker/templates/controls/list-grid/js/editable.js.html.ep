@@ -1,5 +1,5 @@
    Vue.component('editable', {
-     template: `<textarea v-bind:id="id" class="cls_cnt_edtble" @blur="emitChange" v-bind:title="content" v-model="cnt"
+     template: `<textarea v-bind:id="id" class="cls_cnt_edtble" @blur="onBlur" v-bind:title="content" v-model="cnt"
                v-on:focus="focused" v-bind:style="'width: ' + calcWidth() + 'em'" v-on:keyup.esc="revertChange()">{{ content }}</textarea>`,
      props: {
 		   id: {}
@@ -31,13 +31,13 @@
       , focused(ev) {
          this.oldData = ev.target.value
        }
-       , emitChange (ev) {
+       , onBlur(ev) {
            var modifiedContent = ev.target.value
 			  this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
            this.displayEmptyCellIfNullOrUndefined()
        }
        , revertChange() {
-     		  this.$el.innerText = this.oldData ; 
+     		  this.$el.value = this.oldData ; 
            this.displayEmptyCellIfNullOrUndefined()
        }
        , calcWidth() {
@@ -60,6 +60,22 @@
             } else {
                   return 3
             }
+			
      		}
 		}
    })
+			/*
+        , onClick(ev){
+			  var el = this.$el
+			  setTimeout(function(){
+				 el.style.cssText = 'width: 100%;height:auto; padding:0';
+			  },0);
+			}
+        , autosize(ev){
+			  var el = this.$el
+			  setTimeout(function(){
+				 el.style.cssText = 'width: 100%;height:auto; padding:0';
+				 el.style.cssText = 'height:' + el.scrollHeight + 'px';
+			  },0);
+			}
+			*/
