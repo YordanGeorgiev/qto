@@ -14,6 +14,7 @@ use IssueTracker::App::Cnvr::CnrHsr2ToArray ;
 use IssueTracker::App::UI::WtrUIFactory ; 
 use IssueTracker::Controller::ListCloud ; 
 use IssueTracker::Controller::ListLabels ;
+use IssueTracker::App::Utils::Timer ; 
 
 our $module_trace   = 0 ; 
 our $appConfig      = {};
@@ -151,6 +152,7 @@ sub doRenderPageTemplate {
    my $item          = shift ; 
    my $list_control  = shift ; 
 
+   
    my $as_templates = { 
          'lbls'   => 'list-labels'
       ,  'cloud'  => 'list-cloud' 
@@ -162,34 +164,39 @@ sub doRenderPageTemplate {
    my $template_name = $as_templates->{ $as } || 'list-grid' ; 
    my $template = 'controls/' . $template_name . '/' . $template_name ; 
 
+   my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+   my $page_load_time = $objTimer->GetHumanReadableTime();
+
    $self->render(
       'template'        => $template 
     , 'as'              => $as
     , 'msg'             => $msg
     , 'item'            => $item
     , 'db' 		         => $db
+    , 'ProductType' 		=> $appConfig->{'ProductType'}
+    , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
+    , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
+    , 'page_load_time'    => $page_load_time
     , 'list_control'    => $list_control
 	) if $self->isAuthenticated($db) ; 
 
 }
 
-
 sub isAuthenticated {
 
-	my $self = shift ; 
-	my $db = shift ; 
+        my $self = shift ;
+        my $db = shift ;
 
-	my $htpasswd_file = $appConfig->{ 'proj_instance_dir'} . '/cnf/passwd/.' . $db . '.htpasswd' ; 
-	return 1 unless -f $htpasswd_file ;  # open by default !!! ( temporary till v0.5.1 )
-
-	return 1 if $self->basic_auth(
+        my $htpasswd_file = $appConfig->{ 'ProductInstanceDir'} . '/cnf/sec/passwd/' . $db . '.htpasswd' ;
+        return 1 unless -f $htpasswd_file ;  # open by default !!! ( temporary till v0.5.1 )
+        return 1 if $self->basic_auth(
      $db => {
-         'path' => $appConfig->{ 'proj_instance_dir'} . '/cnf/sec/passwd/.' . $db . '.htpasswd'
+         'path' => $htpasswd_file
       }
    );
 
-	return 0  ; 
-	
+        return 0  ;
+
 }
 
 1;
