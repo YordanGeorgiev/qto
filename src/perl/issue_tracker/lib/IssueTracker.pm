@@ -45,6 +45,7 @@ sub startup {
   # Documentation browser under "/perldoc"
   $self->plugin('PODRenderer');
   $self->plugin('BasicAuthPlus');
+  $self->sessions->default_expiration(86400); # set expiry to 1 day
 
   ($ret, $msg) = $self->doInitialize();
  
@@ -114,6 +115,7 @@ sub doInitialize {
    $objInitiator = 'IssueTracker::App::Utils::Initiator'->new();
    $appConfig    = $objInitiator->get('AppConfig');
 
+
    my $ConfFile = q{} ; 
    if ( defined $ENV->{ 'conf_file' } ) {
       $ConfFile = $ENV->{ 'conf_file' } ; 
@@ -126,6 +128,8 @@ sub doInitialize {
    $objLogger        = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
 
 	$appConfig->{'proj_instance_dir'} = $appConfig->{'ProductInstanceDir'} unless ( exists $appConfig->{'proj_instance_dir'} );
+   my $currentShortHash = `git rev-parse --short HEAD` ; chomp($currentShortHash);
+   $appConfig->{ 'ShortCommitHash' } = $currentShortHash || "" ; 
 
    p($appConfig) ; 
    $self->set('AppConfig' , $appConfig );
@@ -137,12 +141,11 @@ sub doInitialize {
    $ret = 0;
    return ($ret, $msg);
 }
-# eof sub doInialize
+# eof sub doInitialize
 
 
 # -----------------------------------------------------------------------------
 # return a field's value - aka the "getter"
-# chk: http://perldoc.perl.org/Carp.html
 # -----------------------------------------------------------------------------
 sub get {
 
@@ -168,7 +171,7 @@ sub set {
 # eof sub set
 
 # -----------------------------------------------------------------------------
-# return the fields of this obj instance
+# return the fields of this obj instance. Perl vs. Java - check mate !!!
 # -----------------------------------------------------------------------------
 sub dumpFields {
    my $self      = shift;
