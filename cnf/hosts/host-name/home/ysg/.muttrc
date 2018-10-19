@@ -54,5 +54,5 @@ set ssl_force_tls=yes
 # VersionHistory
 # 
 # 1.0.2 -- 2016-07-15 19:25:01 -- a generic 
-# 1.0.1 -- 20.5.17-22 10:22:54 -- google help help
-# 1.0.0 -- 20.5.17-22 10:22:54 -- ysg 
+# 1.0.1 -- 20.5.27-22 10:22:54 -- google help help
+# 1.0.0 -- 20.5.27-22 10:22:54 -- ysg 
