@@ -48,8 +48,8 @@ src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlParams.pm
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestList.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListTable.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListCloud.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListAsOutputType.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClientPOC1.pl
 src/perl/issue_tracker/t/lib/IssueTracker/TestClientSidePOC1.t
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListBySelenium.t
@@ -944,3 +944,4 @@ dat/mix/2018/2018-10/2018-10-18/sql/tst_issue_tracker
 dat/mix/2018/2018-10/2018-10-18/sql/tst_issue_tracker/tst_issue_tracker.20181018_091845.insrt.dmp.sql
 dat/mix/2018/2018-10/2018-10-18/xls
 dat/mix/2018/2018-10/2018-10-18/xls/issue-tracker.all.20181018_000000.xlsx
+cnf/sec/passwd/1
