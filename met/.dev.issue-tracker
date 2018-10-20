@@ -1,5 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/templates/controls/list-grid/js/div-search-box.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/search-box.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/xt/search-box.xt.html.ep
@@ -65,7 +66,6 @@ src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/list-egrid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/jqcloud.css
 #---
-src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller
 src/perl/issue_tracker/lib/IssueTracker/Controller/Create.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Update.pm
@@ -709,15 +709,6 @@ doc/pdf/issue-tracker-features-and-functionalities.pdf
 doc/pdf/issue-tracker-readme.pdf
 doc/xls/issue-tracker-features-and-functionalities.xls
 doc/xls/issue-tracker-readme.xls
-#---
-src/bash/issue-tracker/specs/curl-test-get-item.spec.sh
-src/bash/issue-tracker/tests/curl-test-get-item.test.sh
-src/bash/issue-tracker/funcs/curl-test-get-item.func.sh
-src/bash/issue-tracker/helps/curl-test-get-item.help.sh
-doc/txt/issue-tracker/tests/curl-test-get-item.test.txt
-doc/txt/issue-tracker/specs/curl-test-get-item.spec.txt
-doc/txt/issue-tracker/helps/curl-test-get-item.help.txt
-doc/txt/issue-tracker/funcs/curl-test-get-item.func.txt
 # ---
 src/bash/issue-tracker/funcs/mojo-morbo-start.func.sh
 src/bash/issue-tracker/tests/mojo-morbo-start.test.sh

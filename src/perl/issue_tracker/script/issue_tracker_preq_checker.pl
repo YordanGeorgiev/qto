@@ -102,6 +102,7 @@ sub doCheckRequiredModules {
    Mojolicious
    Selenium::Remote::Driver
    Mojolicious::Plugin::BasicAuthPlus
+   Mojolicious::Plugin::AssetPack
   );
 
   for (@modules) {

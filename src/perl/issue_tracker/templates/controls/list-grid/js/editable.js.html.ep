@@ -15,10 +15,7 @@
          }
 	  }
      , oldData: ""
-     , computed: {
-    }
      , mounted() {
-         console.log ( "mounted" )
          this.content = this.cnt
          this.displayEmptyCellIfNullOrUndefined()
          this.$el.style.width = this.calcWidth() + "px"
@@ -32,13 +29,11 @@
             }
        }
       , focused(ev) {
-            console.log ( "focused" )
 				var el = ev.target
             this.oldData = ev.target.value
             el.style.width = this.getColMaxWidth(el).toString() + 'px'
        }
        , onBlur(ev) {
-            console.log ( "onBlur")
 				var el = ev.target
 				var modifiedContent = ev.target.value
 				this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
@@ -51,7 +46,6 @@
            this.displayEmptyCellIfNullOrUndefined()
        }
        , onClick(ev){
-            console.log ( "onClick" )
 				var el = ev.target
 				setTimeout(function(){
 				if ( typeof el.value != undefined && el.value != null && el.value.toString().length > 59) {
@@ -65,19 +59,15 @@
        , getColMaxWidth(el) {
             var col = el.id.split('-')[0]
             var textareaList = document.querySelectorAll(".cls_cnt_edtble");
-            console.log ( Array.prototype.slice.call(textareaList).filter(elm => elm.id.startsWith(col)) )
             var columnWidthsFiltered = Array.prototype.slice.call(textareaList).filter(elm => elm.id.startsWith(col))
             var widths = columnWidthsFiltered.map( elm => Number(elm.style.width.slice(0,-2)) )
-            console.log ( widths ) 
             var maxWidth = widths.sort(function(a, b) { return b - a })[0]
             return maxWidth
          }
        , calcWidth() {
-            console.log ("calcWidth")
             var width = 20
             if ( typeof this.content != undefined && this.content != null) {
                width = this.content.toString().length
-               console.log ("width: " + width)
                if ( width < 5 ) {
                   return 20
                } else if ( width > 4 && width < 16 ) {
