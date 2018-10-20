@@ -46,6 +46,7 @@ sub startup {
   $self->plugin('PODRenderer');
   $self->plugin('BasicAuthPlus');
   $self->sessions->default_expiration(86400); # set expiry to 1 day
+  $self->plugin('AssetPack') ; 
 
   ($ret, $msg) = $self->doInitialize();
  
