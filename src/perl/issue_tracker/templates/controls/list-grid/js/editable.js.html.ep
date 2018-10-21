@@ -1,6 +1,6 @@
    Vue.component('editable', {
-     template: `<textarea v-bind:id="id" class="cls_cnt_edtble" @blur="emitChange" v-bind:title="content" v-model="cnt"
-               v-on:focus="focused" v-bind:style="'width: ' + calcWidth() + 'em'" v-on:keyup.esc="revertChange()">{{ content }}</textarea>`,
+     template: `<textarea v-bind:id="id" class="cls_cnt_edtble" @blur="onBlur" v-bind:title="content" v-model="cnt"
+               v-on:focus="focused" v-on:click="onClick" v-on:keyup.tab="this.document.execCommand('selectAll',false,null);" v-on:keyup.esc="revertChange">{{ content }}</textarea>`,
      props: {
 		   id: {}
          , cnt: {
@@ -15,50 +15,74 @@
          }
 	  }
      , oldData: ""
-     , computed: {
-    }
      , mounted() {
          this.content = this.cnt
          this.displayEmptyCellIfNullOrUndefined()
+         this.$el.style.width = this.calcWidth() + "px"
      },
      methods: {
        displayEmptyCellIfNullOrUndefined() {
             if ( typeof this.content == "undefined" || this.content === 'null' || this.content == null) {
                this.$el.innerText = " "
+               this.$el.value = " "
                this.content = " "
             }
        }
       , focused(ev) {
-         this.oldData = ev.target.value
+				var el = ev.target
+            this.oldData = ev.target.value
+            el.style.width = this.getColMaxWidth(el).toString() + 'px'
        }
-       , emitChange (ev) {
-           var modifiedContent = ev.target.value
-			  this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
-           this.displayEmptyCellIfNullOrUndefined()
+       , onBlur(ev) {
+				var el = ev.target
+				var modifiedContent = ev.target.value
+				this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
+				this.displayEmptyCellIfNullOrUndefined()
+				el.rows = "2" // the default
+            el.style.width = this.getColMaxWidth(el).toString() + 'px'
        }
        , revertChange() {
-     		  this.$el.innerText = this.oldData ; 
+     		  this.$el.value = this.oldData ; 
            this.displayEmptyCellIfNullOrUndefined()
        }
+       , onClick(ev){
+				var el = ev.target
+				setTimeout(function(){
+				if ( typeof el.value != undefined && el.value != null && el.value.toString().length > 59) {
+					el.style.zIndex = "1001"  
+					el.rows = "7"
+				}
+            
+			  },0);
+           el.style.width = this.getColMaxWidth(el).toString() + 'px'
+			}
+       , getColMaxWidth(el) {
+            var col = el.id.split('-')[0]
+            var textareaList = document.querySelectorAll(".cls_cnt_edtble");
+            var columnWidthsFiltered = Array.prototype.slice.call(textareaList).filter(elm => elm.id.startsWith(col))
+            var widths = columnWidthsFiltered.map( elm => Number(elm.style.width.slice(0,-2)) )
+            var maxWidth = widths.sort(function(a, b) { return b - a })[0]
+            return maxWidth
+         }
        , calcWidth() {
-            var width = 0
+            var width = 20
             if ( typeof this.content != undefined && this.content != null) {
                width = this.content.toString().length
                if ( width < 5 ) {
-                  return width 
+                  return 20
                } else if ( width > 4 && width < 16 ) {
-                  return 7
+                  return 60
                } else if ( width > 15 && width < 35 ) {
-                  return 9
+                  return 150
                } else if ( width > 34 && width < 60 ) {
-                  return 13
+                  return 260
                } else if ( width > 59 && width < 90 ) {
-                  return 17
+                  return 360
                } else  {
-                  return 26
+                  return 480
                }
             } else {
-                  return 3
+                  return 20
             }
      		}
 		}
