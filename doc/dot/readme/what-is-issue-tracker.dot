@@ -1,0 +1,26 @@
+graph {
+
+node[style=filled,color=cornflowerblue,fontcolor=white, fontsize=14];
+edge[color=maroon,dir="both",arrowsize=.6];
+
+    requirements -- features;
+    requirements -- problems;
+    requirements -- userstories ;
+    userstories -- features;
+    userstories -- problems;
+    features -- problems;
+    problems -- tests; // problems are proved by tests
+    userstories -- tests; // userstories are proved by tests
+    features -- tests ; // features are proved by tests
+    people -- issues; // people work on issues
+    people -- features; // people work on features
+    people -- tests ; // people work on tests
+    people -- problems ; // people produce problems
+    people -- requirements; // people produce requirements
+    people -- userstories ;     // people produce userstories
+    issues -- userstories; //issues are produced from userstories
+    issues -- tests ; //issues are verified by tests
+    issues -- requirements; // issues answer requirements
+    issues -- problems ; // issues produce problems
+    issues -- features; // issues produces features
+}

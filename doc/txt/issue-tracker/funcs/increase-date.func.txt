@@ -1,0 +1,35 @@
+# doc/txt/issue-tracker/increase-date/increase-date.func.txt
+
+	doIncreaseDate
+	
+	# Purpose:
+	# ------------------------------------------------------
+	increase the latest project issues txt daily to today's one
+
+	# Prequisites
+	# ------------------------------------------------------
+	defined issues tracker project with txt daily dir
+
+	# Installation
+	# ------------------------------------------------------
+   configuration files for the issues tracker dir
+
+	# Interdependancies
+	# ------------------------------------------------------
+   the project issues txt dir from the previous / yearlier date
+
+	# Usage:
+	# ------------------------------------------------------
+	$0 -a increase-date
+
+	# Developent
+	# ------------------------------------------------------
+   - more testing 	
+
+	# Caveats:
+	# ------------------------------------------------------
+	none known so far
+
+
+
+# eof file: doc/txt/issue-tracker/increase-date/increase-date.func.txt

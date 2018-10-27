@@ -1,0 +1,10 @@
+# doc/txt/issue-tracker/spec/gmail-txt-issues.spec.txt
+
+	doSpecGmailTxtIssues
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to present the specs of the gmail-txt-issues action
+
+
+# eof file: doc/txt/issue-tracker/spec/gmail-txt-issues.spec.txt

@@ -1,0 +1,10 @@
+# doc/txt/issue-tracker/help/run-integration-tests.help.txt
+
+	doHelpRunIntegrationTests
+
+	# Usage:
+	# ------------------------------------------------------
+   bash src/bash/issue-tracker/issue-tracker.sh -a run-integration-tests
+
+
+# eof file: doc/txt/issue-tracker/help/run-integration-tests.help.txt

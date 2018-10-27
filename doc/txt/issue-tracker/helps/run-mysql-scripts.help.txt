@@ -1,0 +1,36 @@
+# doc/txt/issue-tracker/help/run-mysql-scripts.help.txt
+
+	doHelpRunMysqlScripts
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doHelpRunMysqlScripts function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doHelpRunMysqlScripts function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doHelpRunMysqlScripts function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doHelpRunMysqlScripts function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doHelpRunMysqlScripts used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doHelpRunMysqlScripts functions
+
+
+# eof file: doc/txt/issue-tracker/help/run-mysql-scripts.help.txt

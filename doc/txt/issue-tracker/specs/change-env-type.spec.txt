@@ -1,0 +1,37 @@
+# doc/txt/issue-tracker/change-env-type/change-env-type.spec.txt
+
+	doSpecChangeEnvType
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doSpecChangeEnvType function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doSpecChangeEnvType function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doSpecChangeEnvType function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doSpecChangeEnvType function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doSpecChangeEnvType used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doSpecChangeEnvType functions
+
+
+
+# eof file: doc/txt/issue-tracker/change-env-type/change-env-type.spec.txt
