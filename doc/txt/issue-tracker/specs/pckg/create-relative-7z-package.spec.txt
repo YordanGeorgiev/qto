@@ -1,0 +1,42 @@
+# doc/txt/issue-tracker/create-relative-7z-package/create-relative-7z-package.spec.txt
+
+	doSpecCreateRelative7zPackage
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to create a 7z file with all the files specified in the 
+	met/.<<env_type>>.issue-tracker with their relative file paths 
+	except for the file paths matching the Perl pattern specified 
+	by the # perl_ignore_file_pattern=<<the Perl regex used to ignore files>>
+	so that the user could deploy the product by :
+	mkdir -p <<target_product_instance_dir>>
+	7z x -o <<zip_file>> -d <<target_product_instance_dir>>	
+
+	# Prequisites
+	# ------------------------------------------------------
+	7z installed on the system , a preset password
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doSpecCreateRelative7zPackage function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doSpecCreateRelative7zPackage function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doSpecCreateRelative7zPackage used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doSpecCreateRelative7zPackage functions
+
+
+# eof file: doc/txt/issue-tracker/create-relative-7z-package/create-relative-7z-package.spec.txt

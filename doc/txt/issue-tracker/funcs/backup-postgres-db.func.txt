@@ -1,0 +1,38 @@
+# doc/txt/issue-tracker/func/backup-postgres-db.func.txt
+
+	doBackupPostgresDb
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to create a backup of the current proje postgres database 
+   into a dump file
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- postgres instance up and running
+   -- project shell vars pre-loaded 
+   -- 
+
+	# Installation
+	# ------------------------------------------------------
+   -- postgres 
+   -- proj db populated 
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- postgres , proj db
+
+	# Usage:
+	# ------------------------------------------------------
+   bash src/bash/issue-tracker/issue-tracker.sh -a backup-postgres-db
+
+	# Developent
+	# ------------------------------------------------------
+   - none 
+
+	# Caveats:
+	# ------------------------------------------------------
+	- none so far
+
+
+# eof file: doc/txt/issue-tracker/func/backup-postgres-db.func.txt

@@ -1,0 +1,35 @@
+# doc/txt/issue-tracker/db-to-xls/db-to-xls.help.txt
+
+	doHelpDbToXls
+	
+	# Purpose:
+	# ------------------------------------------------------
+	wrapper func to implement the db-to-xls action
+
+	# Prequisites
+	# ------------------------------------------------------
+	the db issue table populated 
+   a dir structure for the xls file
+
+	# Installation
+	# ------------------------------------------------------
+
+	# Interdependancies
+	# ------------------------------------------------------
+	the postgres db , account to query the db
+
+	# Usage:
+	# ------------------------------------------------------
+	$0 -a db-to-xls
+
+	# Developent
+	# ------------------------------------------------------
+	
+
+	# Caveats:
+	# ------------------------------------------------------
+	none known so far
+
+
+
+# eof file: doc/txt/issue-tracker/db-to-xls/db-to-xls.help.txt

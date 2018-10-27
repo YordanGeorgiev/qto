@@ -1,0 +1,22 @@
+# doc/txt/issue-tracker/test/backup-postgres-db.test.txt
+
+	doTestBackupPostgresDb
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to test the functionality of the backup-postgres-db action
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doTestBackupPostgresDb used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doTestBackupPostgresDb functions
+
+
+# eof file: doc/txt/issue-tracker/test/backup-postgres-db.test.txt
