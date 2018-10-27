@@ -1,6 +1,0 @@
-# doc/txt/issue-tracker/help/gmail-txt-issues.help.txt
-
-	doHelpGmailTxtIssues
-
-
-# eof file: doc/txt/issue-tracker/help/gmail-txt-issues.help.txt
