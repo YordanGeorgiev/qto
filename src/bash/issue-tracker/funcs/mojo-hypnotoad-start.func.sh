@@ -6,19 +6,16 @@
 # ---------------------------------------------------------
 doMojoHypnotoadStart(){
 
-        doLog "DEBUG START doMojoHypnotoadStart"
-
+   doLog "DEBUG START doMojoHypnotoadStart"
+   doMojoHypnotoadStop
 
    export MOJO_MODE="$env_type"
    test -z "$MOJO_MODE" && export MOJO_MODE='prd'
 
+   # Action !!!
+   hypnotoad  $product_instance_dir/src/perl/issue_tracker  &
 
-        # Action !!!
-   cd src/perl/issue_tracker/script
-   hypnotoad  issue_tracker  &
-   cd $product_instance_dir
-
-        doLog "DEBUG STOP  doMojoHypnotoadStart"
+   doLog "DEBUG STOP  doMojoHypnotoadStart"
 }
 # eof func doMojoHypnotoadStart
 
