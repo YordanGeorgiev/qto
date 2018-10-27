@@ -107,14 +107,6 @@ doRunIntegrationTests(){
 
    doLog "INFO START testing the list as <<output-type>> page"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListAsOutputType.pl
-<<<<<<< HEAD
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-   
-   doLog "INFO test the create action on the web-action"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
-=======
->>>>>>> f72769e2... it-181018080737 kill procs occupying wanted app instance ports with mojo-morbo-start and doMojoMorboStop
    test $? -ne 0 && return
 	echo -e "\n\n\n" 
    
