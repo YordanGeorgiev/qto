@@ -1,9 +1,0 @@
-# doc/txt/issue-tracker/func/mojo-hypnotoad-stop.func.txt
-
-	doMojoHypnotoadStop
-	
-	# Purpose:
-	# ------------------------------------------------------
-	to stop all running instances of the issue_tracker mojo app
-
-# eof file: doc/txt/issue-tracker/func/mojo-hypnotoad-stop.func.txt
