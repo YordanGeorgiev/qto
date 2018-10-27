@@ -1,0 +1,37 @@
+# doc/txt/issue-tracker/action-to-remove/action-to-remove.help.txt
+
+	doHelpActionToRemove
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doHelpActionToRemove function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doHelpActionToRemove function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doHelpActionToRemove function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doHelpActionToRemove function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doHelpActionToRemove used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doHelpActionToRemove functions
+
+
+
+# eof file: doc/txt/issue-tracker/action-to-remove/action-to-remove.help.txt

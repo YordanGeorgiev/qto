@@ -1,0 +1,25 @@
+<html>
+<head>
+   <title>list-lable monthly_issues </title>
+</head>
+<body>
+   <div id="app">
+     <ul>
+       <div v-for="monthly_issue in monthly_issues">
+			<div>
+				<span> id : </span> {{ monthly_issue.id }} </br>
+				<span> name : </span> {{ monthly_issue.name }} </br>
+				<span> status : </span> {{ monthly_issue.status }} </br>
+				<span> prio : </span> {{ monthly_issue.prio }} </br>
+				</br></br>
+			</div>
+       </div>
+     </ul>
+   </div>
+
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

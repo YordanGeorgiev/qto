@@ -1,0 +1,50 @@
+# doc/txt/issue-tracker/run-pgsql-scripts/run-pgsql-scripts.func.txt
+
+	doRunPgsqlScripts
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to run all the pgsql scripts under the dir:
+   sfw/sql/pgsql/<<db-name>> 
+   by logging the output of the scripts to a log file
+   by exitting the whole bash script on the first sql error
+
+	# Prequisites
+	# ------------------------------------------------------
+   gnu bash, perl, issue-tracker core funcs, postgres
+   <<db-name>> is configured in the conf file
+
+	# Installation & Configuration
+	# ------------------------------------------------------
+   gnu bash, perl, issue-tracker core funcs, postgres
+   the shell user should be created in postgres as follows:
+   create user ysg ;
+
+   # grant him the priviledges
+   grant all privileges on database postgres to ysg ;
+
+   # grant him the privilege to create db's 
+   ALTER USER ysg CREATEDB;
+
+	# Interdependancies
+	# ------------------------------------------------------
+   gnu bash, perl, issue-tracker core funcs, postgres
+   <<db-name>> is configured in the conf file
+   the shell user pre-configured 
+
+	# Usage:
+	# ------------------------------------------------------
+	bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
+
+	# Developent
+	# ------------------------------------------------------
+
+	# Caveats:
+	# ------------------------------------------------------
+	the db is ALWAYS DROPPED AND RECREATED !!!!
+   src/sql/pgsql/dev_pgsql_runner/00.create-db.pgsql
+   
+   Note also the dev , tst , prd databases
+
+
+# eof file: doc/txt/issue-tracker/run-pgsql-scripts/run-pgsql-scripts.func.txt

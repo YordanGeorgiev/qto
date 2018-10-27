@@ -1,0 +1,102 @@
+# file: ~/.bash_funcs.`hostname -s`
+# ---
+# docs at the end ... 
+#
+
+#
+# ---------------------------------------------------------
+# call by: doParseIniEnvVars sfw/sh/isg-pub/isg-pub.mini-nz.ysg-host-name.conf
+#; file: mini-nz.sh.hostname.conf docs at the end 
+# [MainSection]
+#; the name of the project 
+#project=mini-nz
+#;
+#; the alias of the project - used for the logical html link and the db names
+#; eof file: mini-nz.sh.hostname.conf
+#proj_alias=mini_nz
+# ---------------------------------------------------------
+doParseIniEnvVars(){
+   ini_file=$1;shift 1;
+   #debug ok   echo ini_file:: $ini_file
+   #debug ok   sleep 2
+   test -z "$ini_file" && ini_file="$component_dir/$component_name.$host_name.conf"
+   test -f "$ini_file" || \
+		cp -v $component_dir/$component_name.host_name.conf \
+            $component_dir/$component_name.$host_name.conf
+   eval `sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
+      -e 's/;.*$//' \
+      -e 's/#.*$//' \
+      -e 's/[[:space:]]*$//' \
+      -e 's/^[[:space:]]*//' \
+      -e "s/^\(.*\)=\([^\"']*\)$/export \1=\"\2\"/" \
+      < $ini_file \
+      | sed -n -e "/^\[MainSection\]/,/^\s*\[/{/^[^;].*\=.*/p;}"`
+}
+#eof func doParseIniEnvVars
+
+#
+# ---------------------------------------------------------
+# call by: doParseCnfEnvVars cnf/ysg-issues.prd.doc-pub-host.cnf
+#proj_alias=mini_nz
+# ---------------------------------------------------------
+doParseCnfEnvVars(){
+
+   cnf_file=$1;shift 1;
+   test -z "$cnf_file" && echo " you should set the cnf_file !!!"
+	
+   INI_SECTION=MainSection
+
+	eval `sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
+		-e 's/#.*$//' \
+		-e 's/[[:space:]]*$//' \
+		-e 's/^[[:space:]]*//' \
+		-e "s/^\(.*\)=\([^\"']*\)$/export \1=\"\2\"/" \
+		< $cnf_file \
+		| sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
+}
+
+doSetUndefinedShellVarsFromCnfFile(){
+
+   cnf_file=$1;shift 1;
+   test -z "$cnf_file" && echo "You need to pass cnf_file as 1st cmd arg to this func !!!"
+
+   vars_to_set=`sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
+      -e 's/;.*$//' \
+      -e 's/[[:space:]]*$//' \
+      -e 's/^[[:space:]]*//' \
+      -e "s/^\(.*\)=\([^\"']*\)$/test -z \"\$\1\" \&\& export \1=\"\2\"/" \
+      < $cnf_file \
+      | sed -n -e "/^\[MainSection\]/,/^\s*\[/{/^[^;].*\=.*/p;}"`
+
+   while IFS=' ' read -r var_to_set
+   do
+      echo "running: $var_to_set"
+      eval "$var_to_set"
+   done < "$vars_to_set"
+}
+#eof func doSetShellVarsFromCnfFile
+
+
+
+#
+#----------------------------------------------------------
+# Purpose:
+# do not mess with .bashrc, but simply include functions to
+# the shell sessions of the current user
+#
+#----------------------------------------------------------
+# Prerequisites: bash
+#
+#----------------------------------------------------------
+#
+#
+# VersionHistory:
+#------------------------------------------------------------------------------
+# export version=1.0.2
+#
+# 1.0.2 --- 2016-11-11 09:52:45 -- syste file size and lines override ...
+# 1.0.1 --- 2016-08-24 09:35:13 -- added docs - put into version system 
+# 1.0.0 --- 2016-08-01 22:04:33 -- initial version during host install
+#----------------------------------------------------------
+#
+#eof file: ~/.bash_funcs.`hostname -s`
