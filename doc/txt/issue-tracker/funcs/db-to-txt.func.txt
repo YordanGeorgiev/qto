@@ -1,0 +1,25 @@
+# doc/txt/issue-tracker/funcs/db-to-txt.func.txt
+
+	action: db-to-txt , function: doDbToTxt
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to convert the data from the issue table in the postgre db
+   to the issues file for the set period
+
+	# Prequisites
+	# ------------------------------------------------------
+	db setup , data in the issue table
+   the proj txt dir
+
+
+	# Usage:
+	# ------------------------------------------------------
+	bash $0 -a db-to-txt
+
+	# Caveats:
+	# ------------------------------------------------------
+	none known so far
+
+
+# eof file: doc/txt/issue-tracker/funcs/db-to-txt.func.txt
