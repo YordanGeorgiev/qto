@@ -1,5 +1,4 @@
 use strict ; use warnings ; 
-use Test::More;
 use Test::Most ; 
 use Test::Mojo;
 use Data::Printer ; 
