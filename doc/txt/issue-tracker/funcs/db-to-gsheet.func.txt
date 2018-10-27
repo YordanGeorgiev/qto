@@ -1,0 +1,36 @@
+# doc/txt/issue-tracker/func/db-to-gsheet.func.txt
+
+	doDbToGsheet
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doDbToGsheet function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doDbToGsheet function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doDbToGsheet function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doDbToGsheet function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doDbToGsheet used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doDbToGsheet functions
+
+
+# eof file: doc/txt/issue-tracker/func/db-to-gsheet.func.txt

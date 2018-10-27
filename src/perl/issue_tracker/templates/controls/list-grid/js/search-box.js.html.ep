@@ -1,0 +1,237 @@
+var Searchbox = {
+  name: "searchbox",
+  template: "#searchbox",
+  props: {
+    dblist: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    tblist: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    collist: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    isAsync: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  }
+  , model: {
+	  prop: 'dblist',
+	  prop: 'tblist',
+	  prop: 'collist',
+	  prop: 'operators',
+	  event: 'dblistChange'
+	}
+  , data() {
+    return {
+        isOpen: false
+      , results: []
+      , globalSrch: ""
+      , isLoading: false
+      , arrowCounter: 0
+      , operators: [':in', ':for', ':order-by',':desc-by']
+    };
+  },
+  methods: {
+   onChange() {
+      var globalSrch = this.globalSrch.replace(':in ' , '').replace(':for ' , '').replace(':pick','')
+      bus.$emit('searchBoxInputChanged', globalSrch );
+      var tokens = this.globalSrch.split(" ")
+      var lastWord = tokens[tokens.length - 1]
+      var secondLastWord = tokens[tokens.length - 2]
+      // if ( lastWord === ':in' || secondLastWord === ':in' || lastWord === ':for' || secondLastWord === ':for') { 
+      if ( this.operators.includes( lastWord ) || this.operators.includes ( secondLastWord ) ) { 
+         if (this.isAsync) {
+            this.isLoading = true;
+            this.filterResults();
+         } else {
+            this.isOpen = true;
+            this.filterResults();
+         }
+      }
+    } 
+    , filterResults() {
+         this.ArrowCounter = 0
+         var tokens = this.globalSrch.split(" ")
+         var lastWord = tokens[tokens.length - 1]
+         var secondLastWord = tokens[tokens.length - 2]
+         if ( lastWord === ':in' || secondLastWord === ':in' ) { 
+            this.results = []
+            this.$parent.fetchSSDataForDbsUI() ; 
+            this.results = this.dblist
+               .filter(item => {
+                  var to_srch = lastWord.toLowerCase().replace(':in' , '')
+                  if ( to_srch === '' ) {
+                     return item ; 
+                  } else {
+                     return item.toLowerCase().indexOf(to_srch) > -1;
+                  }
+               })
+         }
+         else if ( lastWord === ':for' || secondLastWord === ':for' ) { 
+            this.results = []
+            this.$parent.fetchSSDataForTablesUI() ; 
+            this.results = this.tblist
+               .filter(item => {
+                  var to_srch = lastWord.toLowerCase().replace(':for' , '')
+                  if ( to_srch === '' ) {
+                     return item ; 
+                  } else {
+                     return item.toLowerCase().indexOf(to_srch) > -1;
+                  }
+               })
+         }
+         else if ( lastWord === ':order-by' || secondLastWord === ':order-by'  ) { 
+            this.results = []
+            this.$parent.fetchSSDataForColsUI() ; 
+            this.results = this.collist
+               .filter(item => {
+                  var to_srch = lastWord.toLowerCase().replace(':order-by' , '')
+                  if ( to_srch === '' ) {
+                     return item ; 
+                  } else {
+                     return item.toLowerCase().indexOf(to_srch) > -1;
+                  }
+               })
+         }
+         else if ( lastWord === ':desc-by' || secondLastWord === ':desc-by' ) { 
+            this.results = []
+            this.$parent.fetchSSDataForColsUI() ; 
+            this.results = this.collist
+               .filter(item => {
+                  var to_srch = lastWord.toLowerCase().replace(':desc-by' , '')
+                  if ( to_srch === '' ) {
+                     return item ; 
+                  } else {
+                     return item.toLowerCase().indexOf(to_srch) > -1;
+                  }
+               })
+         }
+    }
+    , setResult(result) {
+         this.globalSrch = result
+    }
+    , setDropDownResultOnHover(result) {
+         this.globalSrch = this.globalSrch.substring(0, this.globalSrch.lastIndexOf(" "));
+         this.globalSrch = this.globalSrch + " " + result
+    }
+    , setDropDownResult(result) {
+            this.globalSrch = this.globalSrch.substring(0, this.globalSrch.lastIndexOf(" "));
+            this.globalSrch = this.globalSrch + " " + result
+    }
+    , onArrowDown(evt) {
+         if ( this.arrowCounter === this.results.length - 1 ) {
+            this.setDropDownResult( this.results[this.results.length - 1]) ; 
+         }
+         else if ( this.arrowCounter < this.results.length && this.arrowCounter > -1) {
+            this.arrowCounter = this.arrowCounter + 1;
+            this.setDropDownResult(this.results[this.arrowCounter]);
+         } else {
+            this.setDropDownResult(this.results[this.results.length -1]) ; 
+         }
+    } 
+    , onArrowUp() {
+         if ( this.arrowCounter === 0 ) {
+            this.setDropDownResult( this.results[0]); 
+         }
+         else if ( this.arrowCounter < this.results.length && this.arrowCounter > -1) {
+            this.arrowCounter = this.arrowCounter - 1;
+            this.setDropDownResult(this.results[this.arrowCounter]) ; 
+         } else {
+            this.setDropDownResult( this.results[0]) ; 
+         }
+    }
+    , onArrowRight(e) {
+         var indx = (typeof x === 'undefined') ? 0 : this.arrowCounter;
+         this.setDropDownResult(this.results[indx])
+         this.isOpen = false; 
+    }
+    , onArrowLeft(e) {
+         var indx = (typeof x === 'undefined') ? 0 : this.arrowCounter;
+         this.setDropDownResult(this.results[indx])
+         this.isOpen = false; 
+    }
+    , onEnter() {
+         if ( this.isOpen == true ) {
+            var indx = (typeof this.results[indx] === 'undefined') ? 0 : this.results[indx];
+            var tokens = this.globalSrch.split(" ")
+            var lastWord = tokens[tokens.length - 1]
+            var secondLastWord = tokens[tokens.length - 2]
+            if ( lastWord != this.results[indx] && secondLastWord != this.results[indx] ) {
+               this.setDropDownResult(this.results[indx])
+               this.isOpen = false ; this.results = [] ; return ; 
+            } else {
+               this.isOpen = false ; this.results = [] ; return ; 
+            }
+         }
+         this.isOpen = false;
+         var newUri = window.location.toString()
+         var newDb = this.globalSrch.replace(/^(.*?):in\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
+         if ( newDb != this.globalSrch ) {
+           newUri = newUri.replace(/[/]{1}[a-zA-Z0-9_]+[/]{1}list/gi , "/" + newDb + "/list") 
+           newUri = newUri.replace(/&page-num=([0-9]+)/gi , "&page-num=1") 
+         } 
+         var newTable = this.globalSrch.replace(/^(.*?\s*):for\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
+         if ( newTable != this.globalSrch ) {
+           newUri = newUri.replace(/[/]{1}list[/]{1}[a-zA-Z0-9_]+[?]/gi , "/list/" + newTable + '?') 
+           newUri = newUri.replace(/&page-num=([0-9]+)/gi , "&page-num=1") 
+         }
+         var newAttrToSortBy = this.globalSrch.replace(/^(.*?\s*):order-by\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
+         if ( newAttrToSortBy != this.globalSrch ) {
+           newUri = newUri.replace(/&oa=([a-zA-Z0-9_]+)/gi , "&oa=" + newAttrToSortBy ) 
+           newUri = newUri.replace(/&od=([a-zA-Z0-9_]+)/gi , "" )
+           if ( newUri.indexOf ( "&oa=" + newAttrToSortBy ) == -1 ) { newUri = newUri + "&oa=" + newAttrToSortBy }
+           newUri = newUri.replace(/&page-num=([0-9]+)/gi , "&page-num=1") 
+         }
+         var newAttrToSortBy = this.globalSrch.replace(/^(.*?\s*):desc-by\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
+         if ( newAttrToSortBy != this.globalSrch ) {
+           newUri = newUri.replace(/&oa=([a-zA-Z0-9_]+)/gi , "" ) 
+           newUri = newUri.replace(/&od=([a-zA-Z0-9_]+)/gi , "&od=" + newAttrToSortBy ) 
+           newUri = newUri.replace(/&page-num=([0-9]+)/gi , "&page-num=1") 
+           if ( newUri.indexOf ( "&od=" + newAttrToSortBy ) == -1 ) { newUri = newUri + "&od=" + newAttrToSortBy }
+         }
+
+         window.location.href = newUri // and redirect !!!
+    }
+    , handleClickOutside(e) {
+         if (!this.$el.contains(e.target)) {
+            this.isOpen = false;
+            this.arrowCounter = -1;
+         }
+    }
+  }
+  , watch: {
+    dblist: function(val, oldValue) {
+      if (val.length !== oldValue.length) {  // actually compare them
+        this.results = val;
+        this.isLoading = false;
+      }
+    }
+    , tblist: function(val, oldValue) {
+      if (val.length !== oldValue.length) {  
+        this.results = val;
+        this.isLoading = false;
+      }
+    }
+    , collist: function(val, oldValue) {
+      if (val.length !== oldValue.length) {  
+        this.results = val;
+        this.isLoading = false;
+      }
+    }
+  }
+  , mounted() {
+    document.addEventListener("click", this.handleClickOutside);
+  }
+  , destroyed() {
+    document.removeEventListener("click", this.handleClickOutside);
+  }
+};

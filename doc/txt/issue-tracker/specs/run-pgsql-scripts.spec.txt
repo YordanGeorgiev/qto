@@ -1,0 +1,38 @@
+# doc/txt/issue-tracker/run-pgsql-scripts/run-pgsql-scripts.spec.txt
+
+	doSpecRunPgsqlScripts
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to show the specs for the run-pgsql-scripts action
+
+	# Prequisites
+	# ------------------------------------------------------
+	gnu bash, perl, issue-tracker core funcs , postgre 
+
+	# Installation
+	# ------------------------------------------------------
+	gnu bash, perl, issue-tracker core funcs , postgre 
+
+	# Interdependancies
+	# ------------------------------------------------------
+   pgsql scripts in the sfw/sql/pgsql/db-name/
+   dir   
+
+	# Usage:
+	# ------------------------------------------------------
+   the usage should be: 
+   bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts 
+	
+
+	# Developent
+	# ------------------------------------------------------
+
+
+	# Caveats:
+	# ------------------------------------------------------
+   none so far
+
+
+
+# eof file: doc/txt/issue-tracker/run-pgsql-scripts/run-pgsql-scripts.spec.txt

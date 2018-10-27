@@ -1,0 +1,15 @@
+	Vue.component('btn-del', {
+       name: 'btn-del'
+	  , data: function () {
+		 return {
+			count: 0
+		 }
+	  }
+	  , methods: {
+       clickedDelete: function(ev) {
+         this.$emit('clickedBtnDelete', ev.currentTarget.id)
+       }
+	  }
+	  , template: `<v-btn href="javascript:void(0);" flat icon color="grey" v-on:click="clickedDelete($event)"><v-icon dark>delete</v-icon></v-btn>` 
+	})
+

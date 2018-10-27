@@ -1,0 +1,38 @@
+# doc/txt/issue-tracker/generate-sql/generate-sql.help.txt
+
+	doHelpGenerateSQL
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to generate sql scripts out of *.SQL templates
+
+	# Prequisites
+	# ------------------------------------------------------
+   bash , perl , *.SQL file with %vars% notation in the 
+   src/sql/mssql/run dir
+
+	# Installation
+	# ------------------------------------------------------
+   unzip -o <<zip_pacckage>> -d <<dir-to-deploy>> 
+
+	# Interdependancies
+	# ------------------------------------------------------
+   there should be a lst file in the dat/lst/mssql/list.lst
+
+	# Usage:
+	# ------------------------------------------------------
+   1. fill in the lst file 
+   2. enssure you have a template 
+   3. Action !!!
+   bash src/bash/issue-tracker/issue-tracker.sh -a generate-sql
+    
+
+	# Developent
+	# ------------------------------------------------------
+   
+	# Caveats:
+	# ------------------------------------------------------
+   none found so far ... 
+
+
+# eof file: doc/txt/issue-tracker/generate-sql/generate-sql.help.txt

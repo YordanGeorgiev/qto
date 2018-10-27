@@ -1,0 +1,38 @@
+# file: doc/txt/issue-tracker/helps/pckg/create-full-package.help.txt
+
+	# Purpose:
+	# ------------------------------------------------------
+	creates a full zip package
+	this will create the full package into your production version dir: $product_dir
+	if you have cnfigured the network_backup_dir in cnf file it will be also copied 
+	to it -> $network_backup_dir
+	You must specify the files to be be included in the full package from the met/issue-tracker.dev 
+	file
+
+	# Prequisites and installations
+	# ------------------------------------------------------
+	zip , perl , bash , xargs
+
+	# Interdependancies
+	# ------------------------------------------------------
+	you might specify different file paths containing file 
+	as follows: 
+	bash src/bash/issue-tracker/issue-tracker.sh -a create-full-package -i met/.deploy
+
+	# Usage:
+	# ------------------------------------------------------
+	bash src/bash/issue-tracker/issue-tracker.sh -a create-full-package
+	bash src/bash/issue-tracker/issue-tracker.sh -a create-full-package -i met/.prd.issue-tracker
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: clear up console output
+	-- better error handling when I file is not found 	
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- if you do not file physically a file specified in the 
+		relative file paths include file you might 
+
+
+# eof file: doc/txt/issue-tracker/helps/pckg/create-full-package.help.txt
