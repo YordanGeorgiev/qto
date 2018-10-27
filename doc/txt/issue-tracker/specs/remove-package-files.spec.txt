@@ -1,0 +1,37 @@
+# doc/txt/issue-tracker/remove-package-files/remove-package-files.spec.txt
+
+	doSpecRemovePackageFiles
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doSpecRemovePackageFiles function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doSpecRemovePackageFiles function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doSpecRemovePackageFiles function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doSpecRemovePackageFiles function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doSpecRemovePackageFiles used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doSpecRemovePackageFiles functions
+
+
+
+# eof file: doc/txt/issue-tracker/remove-package-files/remove-package-files.spec.txt

@@ -1,0 +1,18 @@
+# file: src/bash/issue-tracker/issue-tracker.host-name.cnf
+[MainSection]
+
+#use simple var_name=var_value syntax 
+
+#the name of this application 
+app_name=issue-tracker
+
+# to whom to send e-mails - use space as delimiter
+Emails=first_name.last_name@gmail.com
+
+# this way each environment will se its respective db 
+db="$env_type"_"$app_name"
+
+# where to place the backups of the 
+network_backup_dir=/vagrant/csitea/issue-tracker/dat/zip
+
+#eof file: src/bash/issue-tracker/issue-tracker.set-your-host.cnf

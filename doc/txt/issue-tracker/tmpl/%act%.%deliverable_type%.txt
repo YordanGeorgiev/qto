@@ -1,0 +1,36 @@
+# doc/txt/issue-tracker/%deliverable_type%/%act%.%deliverable_type%.txt
+
+	%full_func%
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the %full_func% function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the %full_func% function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		%full_func% function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		%full_func% function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the %full_func% used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the %full_func% functions
+
+
+# eof file: doc/txt/issue-tracker/%deliverable_type%/%act%.%deliverable_type%.txt
