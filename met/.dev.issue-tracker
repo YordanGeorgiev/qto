@@ -1035,6 +1035,5 @@ dat/host/var/csitea/cnf/projects/issue-tracker/our-proj.prd.host-name.cnf
 dat/host/var/csitea/cnf/projects/issue-tracker/our-proj.tst.host-name.cnf
 dat/mix/2018/2018-10/2018-10-27/.DS_Store
 dat/mix/2018/2018-10/2018-10-27/json/daily_issues.json
-dat/mix/2018/2018-10/2018-10-27/sql/dev_issue_tracker/dev_issue_tracker.20181027_085314.insrt.dmp.sql
 dat/mix/2018/2018-10/2018-10-27/sql/dev_issue_tracker/dev_issue_tracker.20181027_093329.insrt.dmp.sql
 dat/mix/2018/2018-10/2018-10-27/xls/issue-tracker.all.20181027_000000.xlsx
