@@ -133,9 +133,11 @@ var Searchbox = {
          }
          else if ( this.arrowCounter < this.results.length && this.arrowCounter > -1) {
             this.arrowCounter = this.arrowCounter + 1;
-            this.setDropDownResult(this.results[this.arrowCounter]);
+            this.setDropDownResultOnHover(this.results[this.arrowCounter]);
+            //this.setDropDownResult(this.results[this.arrowCounter]);
          } else {
-            this.setDropDownResult(this.results[this.results.length -1]) ; 
+            // this.setDropDownResult(this.results[this.results.length -1]) ; 
+            this.setDropDownResultOnHover(this.results[this.arrowCounter]);
          }
     } 
     , onArrowUp() {

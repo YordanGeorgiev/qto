@@ -1033,7 +1033,12 @@ dat/host/var/csitea/cnf/projects/issue-tracker
 dat/host/var/csitea/cnf/projects/issue-tracker/our-proj.dev.host-name.cnf
 dat/host/var/csitea/cnf/projects/issue-tracker/our-proj.prd.host-name.cnf
 dat/host/var/csitea/cnf/projects/issue-tracker/our-proj.tst.host-name.cnf
-dat/mix/2018/2018-10/2018-10-27/.DS_Store
-dat/mix/2018/2018-10/2018-10-27/json/daily_issues.json
-dat/mix/2018/2018-10/2018-10-27/sql/dev_issue_tracker/dev_issue_tracker.20181027_093329.insrt.dmp.sql
-dat/mix/2018/2018-10/2018-10-27/xls/issue-tracker.all.20181027_000000.xlsx
+dat/mix/2018/2018-10/2018-10-29/
+dat/mix/2018/2018-10/2018-10-29/.DS_Store
+dat/mix/2018/2018-10/2018-10-29/json
+dat/mix/2018/2018-10/2018-10-29/json/daily_issues.json
+dat/mix/2018/2018-10/2018-10-29/sql
+dat/mix/2018/2018-10/2018-10-29/sql/dev_issue_tracker
+dat/mix/2018/2018-10/2018-10-29/sql/dev_issue_tracker/dev_issue_tracker.20181029_161613.insrt.dmp.sql
+dat/mix/2018/2018-10/2018-10-29/xls
+dat/mix/2018/2018-10/2018-10-29/xls/issue-tracker.all.20181029_000000.xlsx
