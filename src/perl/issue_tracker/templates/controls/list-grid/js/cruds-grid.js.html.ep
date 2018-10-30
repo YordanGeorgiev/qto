@@ -40,7 +40,7 @@
             
             if ( url_params.has("od") === false) { url_params.append("od" , "id"); }
             if ( url_params.has("as") === false) { url_params.append("as" , "grid"); }
-            if ( url_params.has("page-size") === false) { url_params.append("page-size" , 5); }
+            if ( url_params.has("page-size") === false) { url_params.append("page-size" , 7); }
             if ( url_params.has("page-num") === false) { url_params.append("page-num" , 1); }
             
             //debug for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
