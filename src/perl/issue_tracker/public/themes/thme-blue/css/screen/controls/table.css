@@ -72,6 +72,19 @@ th, td {
 	padding: 10px 10px;
 	white-space:pre-wrap;
 }
+
+#grid tbody tr td:nth-child(1){ 
+   width: 8px ; 
+	padding: 4px 4px;
+}
+
+#grid tbody tr td:nth-child(2){ 
+   width: 8px ; 
+   display: inline-block;
+   overflow: hidden;
+	padding: 0px 10px 10px 10px;
+}
+
 .cls_cnt_edtble {
 	padding: 2px;
 	white-space:pre-wrap;
