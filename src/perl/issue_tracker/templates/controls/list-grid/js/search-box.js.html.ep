@@ -120,6 +120,9 @@ var Searchbox = {
          this.globalSrch = result
     }
     , setDropDownResultOnHover(result) {
+         if ( typeof result == undefined ) {
+            result = this.results[0]= this.results[0]
+         }
          this.globalSrch = this.globalSrch.substring(0, this.globalSrch.lastIndexOf(" "));
          this.globalSrch = this.globalSrch + " " + result
     }
