@@ -10,7 +10,7 @@
               :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span></th></tr>
 			 </thead>
 			 <tbody>
-				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td><btn-del :id="'btn-del-'+entry['id']" v-on:clickedBtnDelete="deleteItem" tabindex="3"></btn-del></td><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" tabindex="3">{{entry[key]}}</div><div v-else><editable tabindex="3" :content.sync="entry[key]" v-bind:cnt.sync="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
+				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td><btn-del :id="'btn-del-'+entry['id']" v-on:clickedBtnDelete="deleteItem" tabindex="3"></btn-del></td><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" :title="entry[key]" tabindex="3">{{entry[key]}}</div><div v-else><editable tabindex="3" :content.sync="entry[key]" v-bind:cnt.sync="entry[key]" :id="key+'-'+entry.id" v-on:update="updateItem"></editable></div></td></tr>
 			 </tbody>
 		  </table>
       </div>

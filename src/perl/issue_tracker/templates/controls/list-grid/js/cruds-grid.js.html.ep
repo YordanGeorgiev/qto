@@ -40,7 +40,7 @@
             
             if ( url_params.has("od") === false) { url_params.append("od" , "id"); }
             if ( url_params.has("as") === false) { url_params.append("as" , "grid"); }
-            if ( url_params.has("page-size") === false) { url_params.append("page-size" , 5); }
+            if ( url_params.has("page-size") === false) { url_params.append("page-size" , 7); }
             if ( url_params.has("page-num") === false) { url_params.append("page-num" , 1); }
             
             //debug for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
@@ -58,118 +58,117 @@
             }) 
          }
          , generatePageNum: function (pgNum) {
-				var currentUrl = window.location.href ; 
-				if ( currentUrl.indexOf("page-num=") === -1 ) {
-					var newUrl = currentUrl + "&page-num=" + pgNum ; 
-					return newUrl ; 
-				} else {
-					return currentUrl.replace("page-num=" + this.pageNum , "page-num=" + pgNum);
-				}
+               var currUrl = window.location.href ; 
+               if ( currUrl.indexOf("?") === -1 ) { currUrl = currUrl + '?' }
+               if ( currUrl.indexOf("page-num=") === -1 ) {
+                  return currUrl + "&page-num=" + pgNum ;
+               } else {
+                  return currUrl.replace("page-num=" + this.pageNum , "page-num=" + pgNum);
+               }
       	}
          , generatePageSize: function (pgSize) {
-            var currentUrl = window.location.href ; 
-            if ( typeof pgSize === 'undefined' ) { pgSize = 5 }
-            if ( currentUrl.indexOf("page-size=") === -1 ) {
-               var newUrl = currentUrl + "&page-size=" + pgSize ; 
-               return newUrl ; 
-            } else {
-               return currentUrl
-                  .replace("page-size=" + this.pageSize , "page-size=" + pgSize) 
-                  .replace("page-num=" + this.pageNum , "page-num=1");
-            }
+               var currUrl = window.location.href ; 
+               if ( typeof pgSize === 'undefined' ) { pgSize = 7 }
+               if ( currUrl.indexOf("page-size=") === -1 ) {
+                  return currUrl + "&page-size=" + pgSize ; 
+               } else {
+                  return currUrl
+                     .replace("page-size=" + this.pageSize , "page-size=" + pgSize) 
+                     .replace("page-num=" + this.pageNum , "page-num=1");
+               }
          }
          , fetchServerSideDataToUI: function(url_params) {
 
-            if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
+               if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
 
-            this.fetchServerSideData(url_params)
-            .then( data => {
-               var dataType = (typeof data)
-               if ( dataType === 'undefined' ) {
-                  var msg = 'unexpected error occurred while fetching data !!!'
-                  setSpnMsgErrorText(data)
-               } else if ( dataType === 'string' ) {
-                  setSpnMsgErrorText(data)
-               } else {
-                  this.gridData = data.dat ; 
-                  var totalRSsize = data.met ; 
-                  this.pageSize = url_params.get('page-size');
-                  this.pageNum = url_params.get('page-num');
-                  var remainder = totalRSsize % this.pageSize
-                  var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
-                  if ( remainder == 0 ) { toAdd = 0  }
-                  this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
-                  var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa') ;
-
-                  if ( oa !== null ) {
-                     this.$children[0].setAscSortBy( oa ) ; 
-                  } else if ( typeof url_params.get("od") != 'undefined' ) {
-                     var od = url_params.get("od")
-                     this.$children[0].setDescSortBy( od ) ; 
+               this.fetchServerSideData(url_params)
+               .then( data => {
+                  var dataType = (typeof data)
+                  if ( dataType === 'undefined' ) {
+                     var msg = 'unexpected error occurred while fetching data !!!'
+                     setSpnMsgErrorText(data)
+                  } else if ( dataType === 'string' ) {
+                     setSpnMsgErrorText(data)
                   } else {
-                     this.$children[0].setAscSortBy("id")
-                  }
-               }
-            })
-            .catch(function(error) {
-               if (typeof error !== 'undefined') {
-                 var errMsg = error.toString() 
-                 setSpnMsgErrorText(errMsg);
-               } else {
-                 var msg = 'unexpected error occurred while fetching data !!!'
-                 setSpnMsgErrorText(msg)
-               }
-            }) 
-	  	   }
-	      , postNewServerSideId: function (dbid){
-            return axios.post('/<%= $db =%>/create/<%= $item =%>', {
-             id: dbid
-            })
-            .then(function (response) { 
-               return response ;
-            })
-            .catch(function (error) {
-               if (typeof error !== 'undefined') {
-                 var errMsg = error.response.data.msg
-                 throw new Error(errMsg);
-               }
-            });
-         }
-         , createNewItem: function (dbid) {
-            this.postNewServerSideId(dbid)
-            .then ( result => {
-               if ( result.toString() !== "Error: Request failed with status code 409" ) {
-                  var url_params = this.getUrlParams();
-                  var deletables = ["page-num", "page-size", "od", "oa", "with", "like-by", "like-val"];
-                  for(var kv of url_params.entries()) { 
-                     if ( deletables.indexOf(kv[0]) != -1 ) {
-                        url_params.delete(String(kv[0])) ; 
+                     this.gridData = data.dat ; 
+                     var totalRSsize = data.met ; 
+                     this.pageSize = url_params.get('page-size');
+                     this.pageNum = url_params.get('page-num');
+                     var remainder = totalRSsize % this.pageSize
+                     var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
+                     if ( remainder == 0 ) { toAdd = 0  }
+                     this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
+                     var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa') ;
+
+                     if ( oa !== null ) {
+                        this.$children[0].setAscSortBy( oa ) ; 
+                     } else if ( typeof url_params.get("od") != 'undefined' ) {
+                        var od = url_params.get("od")
+                        this.$children[0].setDescSortBy( od ) ; 
+                     } else {
+                        this.$children[0].setAscSortBy("id")
                      }
                   }
-                  url_params.set("od" , "id");
-                  url_params.set("page-size" , "7");
-                  url_params.set("page-num" , 1);
-                  this.fetchServerSideDataToUI(url_params); 
-                  var queryStr = ""
-                  for(var kv of url_params.entries()) { queryStr = queryStr + kv[0]+ '='+ kv[1] + '&'; }
-                  var newUri = window.location.href.split('?')[0] + '?' + queryStr.slice(0, - 1)
-                  newUri = newUri.replace(/&oa=([a-zA-Z_]+)/gi , "") 
-                  newUri = newUri.replace(/&od=([a-zA-Z_]+)/gi , "") 
-                  newUri = newUri.replace(/&with=([a-zA-Z_]+)/gi , "") 
-                  newUri = newUri.replace(/&like-by=([a-zA-Z_]+)/gi , "") 
-                  newUri = newUri.replace(/&like-val=([a-zA-Z_]+)/gi , "") 
-                  window.location.href = newUri
-               } else {
-                  var msg = result.toString(); 
-                  msg = msg + ". Somebody was faster than you in the second you clicked !"
-                  msg = msg + " Retry once again."
-                  setSpnMsgErrorText( msg ) ;
-               }
-            })				
-            .catch(function (error) {
-                  setSpnMsgErrorText(error.toString());
-                  setSpnMsgErrorText(error.message);
-            });
+               })
+               .catch(function(error) {
+                  if (typeof error !== 'undefined') {
+                    var errMsg = error.toString() 
+                    setSpnMsgErrorText(errMsg);
+                  } else {
+                    var msg = 'unexpected error occurred while fetching data !!!'
+                    setSpnMsgErrorText(msg)
+                  }
+               }) 
+	  	   }
+	      , postNewServerSideId: function (dbid){
+               return axios.post('/<%= $db =%>/create/<%= $item =%>', {
+                id: dbid
+               })
+               .then(function (response) { 
+                  return response ;
+               })
+               .catch(function (error) {
+                  if (typeof error !== 'undefined') {
+                    var errMsg = error.response.data.msg
+                    throw new Error(errMsg);
+                  }
+               });
+         }
+         , createNewItem: function (dbid) {
+               this.postNewServerSideId(dbid)
+               .then ( result => {
+                  if ( result.toString() !== "Error: Request failed with status code 409" ) {
+                     var url_params = this.getUrlParams();
+                     var deletables = ["page-num", "page-size", "od", "oa", "with", "like-by", "like-val"];
+                     for(var kv of url_params.entries()) { 
+                        if ( deletables.indexOf(kv[0]) != -1 ) {
+                           url_params.delete(String(kv[0])) ; 
+                        }
+                     }
+                     url_params.set("od" , "id");
+                     url_params.set("page-size" , "7");
+                     url_params.set("page-num" , 1);
+                     this.fetchServerSideDataToUI(url_params); 
+                     var queryStr = ""
+                     for(var kv of url_params.entries()) { queryStr = queryStr + kv[0]+ '='+ kv[1] + '&'; }
+                     var newUri = window.location.href.split('?')[0] + '?' + queryStr.slice(0, - 1)
+                     newUri = newUri.replace(/&oa=([a-zA-Z_]+)/gi , "") 
+                     newUri = newUri.replace(/&od=([a-zA-Z_]+)/gi , "") 
+                     newUri = newUri.replace(/&with=([a-zA-Z_]+)/gi , "") 
+                     newUri = newUri.replace(/&like-by=([a-zA-Z_]+)/gi , "") 
+                     newUri = newUri.replace(/&like-val=([a-zA-Z_]+)/gi , "") 
+                     window.location.href = newUri
+                  } else {
+                     var msg = result.toString(); 
+                     msg = msg + ". Somebody was faster than you in the second you clicked !"
+                     msg = msg + " Retry once again."
+                     setSpnMsgErrorText( msg ) ;
+                  }
+               })				
+               .catch(function (error) {
+                     setSpnMsgErrorText(error.toString());
+                     setSpnMsgErrorText(error.message);
+               });
 
          }
          , updateItem: function (content,id,oldValue) {

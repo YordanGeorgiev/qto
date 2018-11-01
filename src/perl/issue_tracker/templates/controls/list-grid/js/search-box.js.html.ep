@@ -120,6 +120,9 @@ var Searchbox = {
          this.globalSrch = result
     }
     , setDropDownResultOnHover(result) {
+         if ( typeof result == undefined ) {
+            result = this.results[0]= this.results[0]
+         }
          this.globalSrch = this.globalSrch.substring(0, this.globalSrch.lastIndexOf(" "));
          this.globalSrch = this.globalSrch + " " + result
     }
@@ -133,9 +136,11 @@ var Searchbox = {
          }
          else if ( this.arrowCounter < this.results.length && this.arrowCounter > -1) {
             this.arrowCounter = this.arrowCounter + 1;
-            this.setDropDownResult(this.results[this.arrowCounter]);
+            this.setDropDownResultOnHover(this.results[this.arrowCounter]);
+            //this.setDropDownResult(this.results[this.arrowCounter]);
          } else {
-            this.setDropDownResult(this.results[this.results.length -1]) ; 
+            // this.setDropDownResult(this.results[this.results.length -1]) ; 
+            this.setDropDownResultOnHover(this.results[this.arrowCounter]);
          }
     } 
     , onArrowUp() {
