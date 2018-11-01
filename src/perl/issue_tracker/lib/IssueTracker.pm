@@ -46,10 +46,10 @@ sub startup {
    $self->doRegisterPlugins() ; 
 
    $self->doSessions() ; 
+   
+   $self->doLoadAppConfig();
 
    $self->doSetHooks() ; 
-
-   $self->doLoadAppConfig();
 
    $self->doSetRoutes();
 
@@ -126,14 +126,7 @@ sub doRegisterPlugins {
 sub doSetHooks {
   
    my $self = shift ; 
-  
-   # hook-01
-   $self->hook( 'before_dispatch' => sub {
-      my $c = shift;
-      $c->res->headers->cache_control('max-age=604800, no-cache');
-   });
 
-   # hook-02 - conditional
 	my $before_render_debug = 0 ; 
    if ( $before_render_debug == 1 ) {
       $self->hook ( 'before_render' => sub {
@@ -142,6 +135,52 @@ sub doSetHooks {
          p ( $c->req->url->to_abs . '?' . $c->req->url->query ) ; 
       });
    }
+
+   $self->hook(after_dispatch => sub {
+       my $c = shift;
+
+       # Was the response dynamic?
+       return if $c->res->headers->header('Expires');
+
+       # if so, try to prevent caching
+       $c->res->headers->header(
+           "Expires" => Mojo::Date->new(time-365*86400)
+       );
+       $c->res->headers->header(
+           "Cache-Control" => "max-age=1, no-cache"
+       );
+   });
+
+
+   $self->hook( 'before_dispatch' => sub {
+      my $c = shift;
+      $c->res->headers->cache_control('max-age=604800, no-cache');
+   });
+
+
+   $self->hook( 'after_static' => sub {
+       my $c = shift;
+       my $code = $c->res->code;
+       my $type = $c->res->headers->content_type;
+
+       print $c->req->url->to_abs . "\n" ;
+
+       $c->res->headers->remove('Cache-Control');
+       $c->res->headers->remove('Set-Cookie');
+
+       # resolve an expiry date
+       my $e = Mojo::Date->new(time+600);
+       if ($type) {
+           if ($type =~ /javascript/) {
+               $e = Mojo::Date->new(time+300);
+           }
+           elsif ($type =~ /^text\/css/ || $type =~ /^image\//) {
+               $e = Mojo::Date->new(time+3600);
+               $c->res->headers->cache_control('max-age=604800, only-if-cached'); 
+           }
+       }
+       $c->res->headers->header(Expires => $e);
+   });
 }
 
 #

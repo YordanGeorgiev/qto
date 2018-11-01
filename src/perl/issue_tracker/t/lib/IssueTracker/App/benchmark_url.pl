@@ -27,6 +27,7 @@ use IssueTracker::App::Utils::Timer ;
    my $objTimerId       = {} ;
    $objTimerId          = 'IssueTracker::App::Utils::Timer'->new( 'YYYYMMDDhhmmss' );
    my $id = $objTimerId->GetHumanReadableTime(); 
+   $id = substr( $id , 2) ; 
    # create the new entry to get the id
 
    my $objTimer         = {} ;

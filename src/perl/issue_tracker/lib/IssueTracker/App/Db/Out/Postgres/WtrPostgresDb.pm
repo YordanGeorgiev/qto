@@ -249,6 +249,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
                   , 'PrintError'          => 1
                   , 'AutoCommit'          => 1
                   , 'pg_utf8_strings'     => 1
+                  , 'InactiveDestroy'     => 1
          } ) 
       };
 
