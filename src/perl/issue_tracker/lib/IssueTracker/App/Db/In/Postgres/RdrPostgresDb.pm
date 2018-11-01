@@ -821,7 +821,7 @@ ORDER BY rowid
 
       #$str_sql .= " ORDER BY id ASC " unless ( $str_sql =~ m/ORDER BY/mgi ); 
 
-      my $limit = $objModel->get('select.web-action.page-size' ) || 5 ; 
+      my $limit = $objModel->get('select.web-action.page-size' ) || 7 ; 
       my $page_num = $objModel->get('select.web-action.page-num' ) || 1 ; 
       my $offset = ( $page_num -1 ) || 0 ; # get default page is 1
 

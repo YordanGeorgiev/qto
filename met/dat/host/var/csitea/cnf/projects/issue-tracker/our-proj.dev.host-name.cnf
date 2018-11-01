@@ -88,7 +88,7 @@ web_host=host-name
 web_port=5001
 
 # where are the mysql scripts situated
-mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.5.0.dev.ysg/src/sql/mysql/dev_issue_tracker
+mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.5.3.dev.ysg/src/sql/mysql/dev_issue_tracker
 
 # the id from the url of the google spread sheet
 # google_spread_sheet_id=1kj4ii1Q2gDhRSuctuHMJYhWkxxbDQQWgMMAOr8zVky0
