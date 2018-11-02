@@ -19,9 +19,10 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
    our $IsUnitTest                              = 0 ; 
 	our $appConfig 										= {} ; 
 	our $objLogger 										= {} ; 
-   our $rdbms_type                              = 'postgre' ; 
+	our $objModel                                = {} ; 
+   our $rdbms_type                              = 'postgres' ; 
 
-	our $postgres_db_name                        = q{} ; 
+	our $db                        = q{} ; 
 	our $db_host 										   = q{} ; 
 	our $db_port 										   = q{} ;
 	our $postgres_db_user 							   = q{} ; 
@@ -46,19 +47,19 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $str_sql          = q{} ;        # this is the sql string to use for the query
       
       if ( defined $objModel->get('postgres_db_name') ) {
-		   $postgres_db_name = $objModel->get('postgres_db_name');
+		   $db = $objModel->get('postgres_db_name');
       }
       
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
       my $objRdrDb 		   = $objRdrDbsFactory->doInstantiate ( 'postgres' );
 
-      if ( $objRdrDb->table_exists ( $postgres_db_name , $table ) == 0  ) {
+      if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
          $ret = 400 ; 
-         $msg = ' the table ' . $table . ' does not exist in the ' . $postgres_db_name . ' database '  ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
          return ( $ret , $msg ) ; 
       }
 
@@ -93,6 +94,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
 
    sub doCreateBySoleId {
+   
 		my $self 				= shift ; 
       my $objModel       = ${ shift @_ } ; 
       my $table            = shift ; 
@@ -106,19 +108,19 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $str_sql          = q{} ;        # this is the sql string to use for the query
       
       if ( defined $objModel->get('postgres_db_name') ) {
-		   $postgres_db_name = $objModel->get('postgres_db_name');
+		   $db = $objModel->get('postgres_db_name');
       }
       
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
       my $objRdrDb 		   = $objRdrDbsFactory->doInstantiate ( 'postgres' );
 
-      if ( $objRdrDb->table_exists ( $postgres_db_name , $table ) == 0  ) {
+      if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
          $ret = 400 ; 
-         $msg = ' the table ' . $table . ' does not exist in the ' . $postgres_db_name . ' database '  ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
          return ( $ret , $msg ) ; 
       }
 
@@ -161,7 +163,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
    sub doUpdateItemBySingleCol {
 
 		my $self 				= shift ; 
-      my $objModel       = ${ shift @_ } ; 
+      my $objModel         = ${ shift @_ } ; 
       my $table            = shift ; 
       my $ret              = 0 ; 
       my $msg              = '' ; 
@@ -175,23 +177,23 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $str_sql          = q{} ;        # this is the sql string to use for the query
       
       if ( defined $objModel->get('postgres_db_name') ) {
-		   $postgres_db_name = $objModel->get('postgres_db_name');
+		   $db = $objModel->get('postgres_db_name');
       }
       
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
       my $objRdrDb 		   = $objRdrDbsFactory->doInstantiate ( 'postgres' );
 
-      if ( $objRdrDb->table_exists ( $postgres_db_name , $table ) == 0  ) {
+      if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
          $ret = 400 ; 
-         $msg = ' the table ' . $table . ' does not exist in the ' . $postgres_db_name . ' database '  ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
          return ( $ret , $msg ) ; 
       }
 
-      if ( $objRdrDb->doCheckIfColExists ( $table , $col_name ) == 0 ) {
+      if ( $objModel->doChkIfColumnExists( $db , $table , $col_name ) == 0 ) {
          $ret = 400 ; 
          $msg = "the $col_name column does not exist" ; 
          return ( $ret , $msg ) ; 
@@ -232,30 +234,29 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
    #
    # -----------------------------------------------------------------------------
    # open the database handle if possible, if not return proper error msgs
-   # ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+   # ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
    # -----------------------------------------------------------------------------
    sub doConnectToDb {
       my $self = shift ; 
-      my $postgres_db_name = shift ; 
+      my $db = shift ; 
    
       my $ret = 1 ; 
       my $msg = q{} ; 
       my $dbh = q{} ; 
 
       eval { 
-         $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
+         $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
                     'RaiseError'          => 1
                   , 'ShowErrorStatement'  => 1
                   , 'PrintError'          => 1
                   , 'AutoCommit'          => 1
                   , 'pg_utf8_strings'     => 1
-                  , 'InactiveDestroy'     => 1
          } ) 
       };
 
       if ($@) {
          $ret = 2 ; 
-         $msg = 'cannot connect to the "' . $postgres_db_name . '" database: ' . DBI->errstr ; 
+         $msg = 'cannot connect to the "' . $db . '" database: ' . DBI->errstr ; 
          return ( $ret , $msg , undef ) ; 
       }
 
@@ -342,7 +343,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       # http://stackoverflow.com/a/19980156/65706
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
-      my $dbh = DBI->connect("DBI:Pg:dbname=$postgres_db_name", "", "" , {
+      my $dbh = DBI->connect("DBI:Pg:dbname=$db", "", "" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
@@ -467,13 +468,13 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
       # proper authentication implementation src:
       # http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n postgres_db_name: $db \n db_host: $db_host " ; 
       $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
 
 
       eval {
-         $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
+         $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
@@ -519,7 +520,6 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       
       return ( $ret , $msg ) ; 	
 	}
-	#eof sub doInsertSqlHashData
 
 
 	#
@@ -566,7 +566,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       # debug p($hs_headers ) ; 
       # print "WtrPostgresDb.pm : $table 336 \n " ; 
   
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ;       
 
       my $sql_str          = '' ; 
@@ -744,9 +744,9 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          # load ONLY the tables defined to load
          next unless grep( /^$table$/, @tables ) ; 
 
-         if ( $objRdrDb->table_exists ( $postgres_db_name , $table ) == 0  ) {
+         if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
             $ret = 400 ; 
-            $msg = ' the table ' . $table . ' does not exist in the ' . $postgres_db_name . ' database '  ; 
+            $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
             return ( $ret , $msg , undef ) ; 
          }
 
@@ -758,7 +758,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          #debug p $hs_headers ;  
          #debug p $hs_table->{ 0 } ; 
          #debug p($hs_headers ) ; 
-         ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+         ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
          return ( $ret , $msg ) unless $ret == 0 ;       
 
          my $sql_str          = '' ; 
@@ -832,15 +832,6 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
                $sql_str	.=  "\n ON CONFLICT ( guid ) \n" ; 
                $sql_str	.=  " DO UPDATE SET \n" ; 
-            
-               # how-to upsert: https://stackoverflow.com/a/36799500/65706
-               # INSERT INTO category_gallery (
-               #  category_id, gallery_id, create_date, create_by_user_id
-               #  ) VALUES ($1, $2, $3, $4)
-               #  ON CONFLICT (category_id, gallery_id)
-               #  DO UPDATE SET
-               #    last_modified_date = EXCLUDED.create_date,
-               #    last_modified_by_user_id = EXCLUDED.create_by_user_id ;
 
                foreach my $col_num ( sort ( keys %{$hs_headers} )) {
                   my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
@@ -882,7 +873,6 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       $msg = 'upsert OK for all tables' ; 
 		return ( $ret , $msg ) ; 
 	}
-	#eof sub doUpsertTables
 
 
    #
@@ -891,20 +881,19 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 	# -----------------------------------------------------------------------------
 	sub new {
 
-		my $invocant 			= shift ;    
+		my $invocant 	= shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$objModel      = ${ shift @_ } || croak 'objModel not passed in WtrPostgresDb !!!' ; 
       $objController = shift ;  
-      # might be class or object, but in both cases invocant
-		my $class = ref ( $invocant ) || $invocant ; 
-
-		my $self = {};        # Anonymous hash reference holds instance attributes
+		my $class      = ref ( $invocant ) || $invocant ; 
+		my $self       = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize() ; 
 
 		return $self;
 	}  
-	#eof const
-	
+
+
    #
 	# --------------------------------------------------------
 	# intializes this object 
@@ -916,10 +905,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
            appConfig => $appConfig
       );
 
-		# print "PostgreWriter::doInitialize appConfig : " . p($appConfig );
-      # sleep 6 ; 
-		
-		$postgres_db_name 			= $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}        || 'prd_pgsql_runner' ; 
+		$db 			               = $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}        || 'prd_pgsql_runner' ; 
 		$db_host 			         = $ENV{ 'db_host' } || $appConfig->{'db_host'} 		|| 'localhost' ;
 		$db_port 			         = $ENV{ 'db_port' } || $appConfig->{'db_port'} 		|| '13306' ; 
 		$postgres_db_user 			= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'ysg' ; 
@@ -929,7 +915,6 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
       return $self ; 
 	}	
-	#eof sub doInitialize
    
 
 

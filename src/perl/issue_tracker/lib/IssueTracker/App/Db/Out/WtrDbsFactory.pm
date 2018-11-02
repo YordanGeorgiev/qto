@@ -7,7 +7,7 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
 
 
 	our $appConfig 		= {} ; 
-	our $db_type			= 'mariadb' ; 
+	our $db_type			= 'postgres' ; 
 	our $objItem			= {} ; 
 	our $objController 	= {} ; 
 	our $objModel        = {} ; 
@@ -16,7 +16,6 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
    use IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ; 
    use IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ; 
 
-   our $rdbms_type  = 'postgres' ; 
 
 
 	#
@@ -59,9 +58,8 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
 
 		require $package_file;
 
-		return $objWtrDb->new( \$appConfig , @args);
+		return $objWtrDb->new( \$appConfig , \$objModel , @args);
 	}
-	# eof sub doInstantiate
 	
 
    #
@@ -71,9 +69,9 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
 	sub new {
 
 		my $invocant 			= shift ;    
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' } ; 
-		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
-      $rdbms_type          = shift || 'postgres' ; 
+		$appConfig           = ${ shift @_ } || { 'foo' => 'bar' } ; 
+		$objModel            = ${ shift @_ } || croak 'objModel not passed !!!' ; 
+      $db_type             = shift || 'postgres' ; 
 		
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 

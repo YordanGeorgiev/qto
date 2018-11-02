@@ -69,7 +69,6 @@ google_spread_sheet_id = 1p4YwuSB3GtQ0i5ginn4Vc95t09w1WNWJra2yUH1aL0Y
 
 Emails=yordan.georgiev@gmail.com
 
-# v0.5.3
 # on which host the mysql is running
 mysql_host=host-name
  
@@ -95,7 +94,6 @@ web_host=host-name
 web_port=5001
 
 # the mysql db data containing load xls
-# after 
 load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tracker-en.xlsx
 
 mojo_morbo_port=3003

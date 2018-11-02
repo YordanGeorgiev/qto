@@ -1,6 +1,6 @@
 #div_pager {
    float: left ; 
-   padding-left: 50% ; 
+   padding-left: 45% ; 
    padding-top: 1% ; 
 }
 .pgr-btn, .pgr-button {
@@ -35,20 +35,44 @@ a {
 }
 
 a:hover {
-  	text-decoration: underline;
-	font-weight: bold ; 
+   color: red ; 
+   background-color: yellow;
+   font-weight: bold ; 
+   border-top-left-radius: 45%;
+   border-top-right-radius: 45%;
+   border-bottom-left-radius: 45%;
+   border-bottom-right-radius: 45%;
+	border: 1px solid #CDCDCD;
+	box-shadow: 2px 2px 10px #C0C0C0;
+	-webkit-box-shadow: 2px 2px 10px #C0C0C0;
+	-moz-box-shadow: 2px 2px 10px #C0C0C0;
 }
 
 a:active {
 	color: red ; 
 	background-color: yellow;
-	font-weight: bold ; 
+	font-weight: 800;
+   border-top-left-radius: 45%;
+   border-top-right-radius: 45%;
+   border-bottom-left-radius: 45%;
+   border-bottom-right-radius: 45%;
+	box-shadow: 2px 2px 10px #C0C0C0;
+	-webkit-box-shadow: 2px 2px 10px #C0C0C0;
+	-moz-box-shadow: 2px 2px 10px #C0C0C0;
 }
 
 a:focus{
-  color: red ; 
-  background-color: yellow;
-  font-weight: bold ; 
+   color: red ; 
+   background-color: yellow;
+	font-weight: 800;
+   border-top-left-radius: 45%;
+   border-top-right-radius: 45%;
+   border-bottom-left-radius: 45%;
+   border-bottom-right-radius: 45%;
+	border: 1px solid #CDCDCD;
+	box-shadow: 2px 2px 10px #C0C0C0;
+	-webkit-box-shadow: 2px 2px 10px #C0C0C0;
+	-moz-box-shadow: 2px 2px 10px #C0C0C0;
 }
 
 a:visited {

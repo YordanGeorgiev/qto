@@ -35,7 +35,6 @@ our $objLogger      = {} ;
 sub doListItems {
 
    my $self             = shift;
-   
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
 
@@ -43,6 +42,11 @@ sub doListItems {
       $self->render('text' => 'Refresh your page to login ');
       return ; 
    } 
+
+   # chk: it-181101180808
+   $self->SUPER::doReloadProjectDbMetaData($db) unless $appConfig->{ "$db" . '.meta' } ; 
+
+
 
    my $ret              = 1 ; 
    my $msg              = '' ; 
@@ -59,7 +63,8 @@ sub doListItems {
    } else {
       $list_control = '' ; 
    }
-   $self->doSetHtmlHeaders() ;
+
+   # $self->doSetHtmlHeaders() ; # uncomment and implement if per list web action headers needed !!!
    $msg = $self->doSetPageMsg ( $ret , $msg ) ; 
    $self->doRenderPageTemplate( $as , $msg , $db , $item , $list_control ) ; 
 }
@@ -109,7 +114,6 @@ sub doSetRequestModelData {
    return ( $ret , $msg ) unless $ret == 0 ; 
 
    ( $ret , $msg ) = $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
-
    return ( $ret , $msg , \$objModel) ; 
 }
 
@@ -145,40 +149,31 @@ sub doBuildListControl {
 }
 
 
-sub doSetHtmlHeaders {
-
-   my $self       = shift ; 
-
-   $self->res->headers->accept_charset('UTF-8');
-   $self->res->headers->accept_language('fi, en');
-   # 604800
-
-}
 
 
 sub doRenderPageTemplate {
    
-   my $self          = shift ; 
-   my $as            = shift || 'grid' ; 
-   my $msg           = shift ; 
-   my $db            = shift ; 
-   my $item          = shift ; 
-   my $list_control  = shift ; 
+   my $self             = shift ; 
+   my $as               = shift || 'grid' ; 
+   my $msg              = shift ; 
+   my $db               = shift ; 
+   my $item             = shift ; 
+   my $list_control     = shift ; 
 
    
    my $as_templates = { 
-         'lbls'   => 'list-labels'
-      ,  'cloud'  => 'list-cloud' 
-      ,  'table'  => 'list-rgrid' 
-      ,  'grid'   => 'list-grid' 
-      ,  'print-table' => 'list-print-table' 
+         'lbls'         => 'list-labels'
+      ,  'cloud'        => 'list-cloud' 
+      ,  'table'        => 'list-rgrid' 
+      ,  'grid'         => 'list-grid' 
+      ,  'print-table'  => 'list-print-table' 
    };
   
-   my $template_name = $as_templates->{ $as } || 'list-grid' ; 
-   my $template = 'controls/' . $template_name . '/' . $template_name ; 
+   my $template_name    = $as_templates->{ $as } || 'list-grid' ; 
+   my $template         = 'controls/' . $template_name . '/' . $template_name ; 
 
    my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
-   my $page_load_time = $objTimer->GetHumanReadableTime();
+   my $page_load_time   = $objTimer->GetHumanReadableTime();
 
    $self->render(
       'template'        => $template 
@@ -189,7 +184,7 @@ sub doRenderPageTemplate {
     , 'ProductType' 		=> $appConfig->{'ProductType'}
     , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
     , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
-    , 'page_load_time'    => $page_load_time
+    , 'page_load_time'  => $page_load_time
     , 'list_control'    => $list_control
 	) if $self->isAuthenticated($db) ; 
 
@@ -197,8 +192,8 @@ sub doRenderPageTemplate {
 
 sub isAuthenticated {
 
-        my $self = shift ;
-        my $db = shift ;
+        my $self        = shift ;
+        my $db          = shift ;
 
         my $htpasswd_file = $appConfig->{ 'ProductInstanceDir'} . '/cnf/sec/passwd/' . $db . '.htpasswd' ;
         return 1 unless -f $htpasswd_file ;  # open by default !!! ( temporary till v0.5.1 )

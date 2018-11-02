@@ -1,6 +1,6 @@
 html, body {
-	 max-width: 100%; 
-	 overflow-x: hidden;
+	max-width: 100%; 
+	overflow-x: hidden;
 }
 #div_app_name {
 	position: fixed; 

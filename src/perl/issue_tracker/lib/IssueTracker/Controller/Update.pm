@@ -1,6 +1,13 @@
 package IssueTracker::Controller::Update ; 
 use strict ; use warnings ; 
-use Mojo::Base 'Mojolicious::Controller';
+
+require Exporter;
+our @ISA = qw(Exporter Mojo::Base IssueTracker::Controller::BaseController);
+our $AUTOLOAD =();
+our $ModuleDebug = 0 ; 
+use AutoLoader;
+
+use parent qw(IssueTracker::Controller::BaseController);
 
 use Data::Printer ; 
 use Data::Dumper; 
@@ -30,19 +37,27 @@ sub doUpdateItemBySingleCol {
    my $objRdrUrlParams  = {} ; 
    my $objWtrDbsFactory = {} ; 
    my $objWtrDb         = {} ; 
-   my $ret = 0;
-   my $msg = 'unknown error during Update item';
-   my $hsr2 = {};
+   my $ret              = 0;
+   my $msg              = 'unknown error during Update item';
+   my $hsr2             = {};
 
-   my $json = $self->req->body;
-   my $perl_hash = decode_json($json) ; 
+   my $json             = $self->req->body;
+   my $perl_hash        = decode_json($json) ; 
 
-   $appConfig		= $self->app->get('AppConfig');
+   $appConfig		      = $self->app->get('AppConfig');
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
+   
+   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
+      $self->render('text' => 'Refresh your page to login ');
+      return ; 
+   } 
+   
+   # chk: it-181101180808
+   $self->SUPER::doReloadProjectDbMetaData($db) unless $appConfig->{ "$db" . '.meta' } ; 
 
-   $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg ) = $objRdrUrlParams->doSetUpdateUrlParams(\$objModel, $perl_hash ) ; 
+   $objRdrUrlParams     = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
+   ( $ret , $msg )      = $objRdrUrlParams->doSetUpdateUrlParams(\$objModel, $perl_hash ) ; 
    
    if ( $ret != 0 ) {
       $self->res->code(400);
