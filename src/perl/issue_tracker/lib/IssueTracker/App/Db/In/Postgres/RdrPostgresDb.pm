@@ -132,8 +132,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
 				$sql .= " $col $op '$val'" ; 
          }
-			# todo:ysg
-         print "from RdrPostgresDb.pm 134 sql : $sql \n" ; 
       	return ( 0 , "" , $sql) ;
       } elsif ( @$cols or @$vals or @$ops )  {
 
