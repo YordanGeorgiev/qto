@@ -36,6 +36,9 @@ sub doSelectItems {
       $self->render('text' => 'Refresh your page to login ');
       return ; 
    } 
+   
+   # chk: it-181101180808
+   $self->SUPER::doReloadProjectDbMetaData($db) unless $appConfig->{ "$db" . '.meta' } ; 
 
    my $rdbms_type       = 'postgres';
    my $objRdrUrlParams  = {} ; 

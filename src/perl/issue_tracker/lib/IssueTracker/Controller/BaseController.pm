@@ -19,7 +19,6 @@ sub doReloadProjectDbMetaData {
 
    my $self                = shift ;
    my $db                  = shift ;
-   print "doReloadProjectDbMetaData called !!! \n" ; 
 
    $appConfig		 		   = $self->app->get('AppConfig');
    my $objRdrDbsFactory    = {} ; 
@@ -35,7 +34,8 @@ sub doReloadProjectDbMetaData {
    $objRdrDbsFactory       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig, \$objModel );
    $objRdrDb               = $objRdrDbsFactory->doInstantiate( $rdbms_type );
    ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMetaData( $db ) ; 
-   # debug p $msr2 ; 
+
+   $appConfig->{ "$db" . '.meta' } = $msr2 ; # chk: it-181101180808
 
    return ( $ret , $msg , $msr2 ) ; 
 }

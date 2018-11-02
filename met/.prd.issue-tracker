@@ -30,8 +30,6 @@ src/perl/issue_tracker/templates/controls/list-rgrid/list-rgrid.html.ep
 src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
 src/perl/issue_tracker/templates/layouts/site.html.ep
 # ---
-src/perl/issue_tracker/public/package.json
-# ---
 src/perl/issue_tracker/public/poc/autocomplete
 src/perl/issue_tracker/public/poc/autocomplete/searchbox-autocomplete.css
 src/perl/issue_tracker/public/poc/autocomplete/div-searchbox.js
@@ -866,7 +864,7 @@ src/sql/pgsql/tst_issue_tracker/12.create-table-check_lists.sql
 src/sql/pgsql/tst_issue_tracker/98.create-table-test_update_table.sql
 # ---
 src/bash/issue-tracker/scripts/history.sh
-src/perl/issue_tracker/public/themes/thme-blue/img/controls/add-new.png
+src/perl/issue_tracker/public/themes/thme-blue/img/controls/trash-bin.png
 # ---
 src/bash/issue-tracker/funcs/backup-postgres-db.func.sh
 src/bash/issue-tracker/tests/backup-postgres-db.test.sh
@@ -898,6 +896,7 @@ src/perl/issue_tracker/t/lib/IssueTracker/TestClientSidePOC2.t
 src/perl/issue_tracker/t/lib/IssueTracker/TestSeleniumSetup.t
 # ---
 src/perl/issue_tracker/lib/auto/AutoLoadableChild/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Update/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToJson/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToTxt/autosplit.ix
@@ -1035,6 +1034,5 @@ dat/host/var/csitea/cnf/projects/issue-tracker/our-proj.prd.host-name.cnf
 dat/host/var/csitea/cnf/projects/issue-tracker/our-proj.tst.host-name.cnf
 dat/mix/2018/2018-10/2018-10-27/.DS_Store
 dat/mix/2018/2018-10/2018-10-27/json/daily_issues.json
-dat/mix/2018/2018-10/2018-10-27/sql/dev_issue_tracker/dev_issue_tracker.20181027_085314.insrt.dmp.sql
-dat/mix/2018/2018-10/2018-10-27/sql/dev_issue_tracker/dev_issue_tracker.20181027_093329.insrt.dmp.sql
 dat/mix/2018/2018-10/2018-10-27/xls/issue-tracker.all.20181027_000000.xlsx
+dat/mix/2018/2018-11/2018-11-02/sql/dev_issue_tracker/dev_issue_tracker.20181102_184017.insrt.dmp.sql

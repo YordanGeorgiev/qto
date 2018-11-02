@@ -8,7 +8,5 @@
 				this.$emit('clickedBtnNew',dbid)
 			}
 	  },
-	  template: ` <v-btn fab dark color="indigo" v-on:click="clickedBtnNew()">
-				         <v-icon dark>add</v-icon>
-				     </v-btn> ` 
+	  template: ` <button v-on:click="clickedBtnNew()"> + </button> ` 
 	})

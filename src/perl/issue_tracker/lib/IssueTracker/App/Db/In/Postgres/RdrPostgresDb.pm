@@ -18,7 +18,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 	our $appConfig 										= {} ; 
 	our $objLogger 										= {} ; 
 	our $objModel                                = {} ; 
-	our $postgres_db_name                        = q{} ; 
+	our $db                        					= q{} ; 
 	our $db_host 										   = q{} ; 
 	our $db_port 										   = q{} ;
 	our $postgres_db_user 							   = q{} ; 
@@ -37,53 +37,15 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    }
 
 
-   sub doCheckIfColExists {
-
-      my $self = shift ; 
-      my $table = shift ; 
-      my $col  = shift ; 
-      my $ret  = 1 ; 
-      my $msg = '' ; 
-      my $dmhsr = {} ; 
-
-      ( $ret , $msg , $dmhsr ) = $self->doSelectTablesColumnList ( $table ) ; 
-      return 0 unless $ret == 0 ; 
-
-      my $mhsr = {} ; 
-      foreach my $key ( sort ( keys %$dmhsr ) ) {
-         $mhsr->{'ColumnNames'}-> { $key } = $dmhsr->{ $key } ; 
-      }
-      my $cols = $mhsr->{ 'ColumnNames' } ; 
-
-      foreach my $key ( keys %$cols ) {
-         my $row = $cols->{ $key } ; 
-         return 1 if $row->{ 'attname' } eq $col; 
-      }
-      return 0 ; 
-   }
-
-
-   sub doCheckIfColumnExists {
-
-      my $self = shift ; 
-      my $cols = shift ; 
-      my $col  = shift ; 
-
-      foreach my $key1 ( keys %$cols ) {
-         my $row = $cols->{ $key1 } ; 
-         return 1 if $row->{ 'attname' } eq $col; 
-      }
-      return 0 ; 
-   }
-
-
    sub doBuildLikeClause {
 
-      my $self = shift ; 
-      my $cols = shift ; 
-		my $sql = '' ; 
-		my $ret = 400 ; 
-		my $msg = ' the following column: %s does not exist ' ; 
+      my $self    = shift ; 
+      my $db      = shift ; 
+      my $table   = shift ; 
+
+		my $sql     = '' ; 
+		my $ret     = 400 ; 
+		my $msg     = ' the following column: %s does not exist ' ; 
 
       my $ref_like_names    = $objModel->get('select.web-action.like-by' );
       my $ref_like_values   = $objModel->get('select.web-action.like-val' );
@@ -101,7 +63,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
             $like_value = $ref_like_values->["$i"] ;
 
         
-            my $col_exists = $self->doCheckIfColumnExists ( $cols->{'ColumnNames'} , $like_name ) ; 
+            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $like_name ) ; 
       	   return ( 400 , "the $like_name column does not exist" , "") unless ( $col_exists ) ; 
             
             # if the like value is a number
@@ -138,7 +100,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    sub doBuildWhereClauseByWith {
 
       my $self    = shift ; 
-      my $mshr    = shift ; 
+      my $db      = shift ; 
+      my $table   = shift ; 
+
 		my $sql     = '' ; 
 		my $ret     = 400 ; 
 		my $msg     = ' the following column: %s does not exist ' ; 
@@ -164,11 +128,12 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
             $op = $ops->["$i"] ;
             $val = $vals->["$i"] || "" ; 
         
-            my $col_exists = $self->doCheckIfColumnExists ( $mshr->{'ColumnNames'} , $col ) ; 
+            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col ) ; 
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
 				$sql .= " $col $op '$val'" ; 
          }
-         # debug print "from RdrPostgresDb.pm 134 sql : $sql \n" ; 
+			# todo:ysg
+         print "from RdrPostgresDb.pm 134 sql : $sql \n" ; 
       	return ( 0 , "" , $sql) ;
       } elsif ( @$cols or @$vals or @$ops )  {
 
@@ -186,7 +151,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    sub doBuildWhereClauseByFltr {
 
       my $self    = shift ; 
-      my $cols    = shift ; 
+      my $db      = shift ; 
+      my $table   = shift ; 
+
 		my $sql     = '' ; 
 		my $ret     = 400 ; 
 		my $msg     = ' the following column: %s does not exist ' ; 
@@ -206,7 +173,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
             $filter_name = $ref_filter_names->["$i"] ;
             $filter_value = $ref_filter_values->["$i"] ;
         
-            my $col_exists = $self->doCheckIfColumnExists ( $cols->{'ColumnNames'} , $filter_name ) ; 
+            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $filter_name ) ; 
       	   return ( 400 , "the $filter_name column does not exist" , "") unless ( $col_exists ) ; 
 
             my @filter_values_list = split (',' , $filter_value ) ;
@@ -255,10 +222,10 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $str_sql          = q{} ;        # this is the sql string to use for the query
       
       if ( defined $objModel->get('postgres_db_name') ) {
-		   $postgres_db_name = $objModel->get('postgres_db_name');
+		   $db = $objModel->get('postgres_db_name');
       }
       
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
       $str_sql = " 
@@ -275,7 +242,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       " ; 
 
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n postgres_db_name: $db \n db_host: $db_host " ; 
       $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
       # $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
@@ -300,7 +267,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $objLogger->doLogErrorMsg ( $msg ) ; 
       }
 
-      $appConfig->{ "$postgres_db_name".'.tables-list'} = $hsr ;
+      $appConfig->{ "$db".'.tables-list'} = $hsr ;
       return ( $ret , $msg , $hsr ) ; 	
    }
 
@@ -318,10 +285,10 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $str_sql          = q{} ;        # this is the sql string to use for the query
       
       if ( defined $objModel->get('postgres_db_name') ) {
-		   $postgres_db_name = $objModel->get('postgres_db_name');
+		   $db = $objModel->get('postgres_db_name');
       }
       
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
       $str_sql = " 
@@ -329,7 +296,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       " ; 
 
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n postgres_db_name: $db \n db_host: $db_host " ; 
       $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
       # $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
@@ -418,7 +385,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       " ; 
 
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $postgres_db_name \n db_host: $db_host " ; 
+      $debug_msg .= "\n postgres_db_name: $db \n db_host: $db_host " ; 
       $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
@@ -466,7 +433,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    sub doLoadProjDbMetaData {
 
       my $self                   = shift ; 
-      my $postgres_db_name       = shift ; 
+      my $db       = shift ; 
       
       my $msg              = q{} ;         
       my $ret              = () ;          # this is the return value from this method 
@@ -476,42 +443,42 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
 
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 		$str_sql = "
-SELECT DISTINCT
-    ROW_NUMBER () OVER (ORDER BY pgc.relname , a.attnum) as rowid , 
-    pgc.relname as table_name ,
-    a.attnum as attnum,
-    a.attname as name,
-    format_type(a.atttypid, a.atttypmod) as data_type,
-    a.attnotnull as not_null, 
-    com.description as comment,
-    coalesce(i.indisprimary,false) as is_primary_key,
-    def.adsrc as default
-FROM pg_attribute a 
-JOIN pg_class pgc ON pgc.oid = a.attrelid
-LEFT JOIN pg_index i ON 
-    (pgc.oid = i.indrelid AND i.indkey[0] = a.attnum)
-LEFT JOIN pg_description com on 
-    (pgc.oid = com.objoid AND a.attnum = com.objsubid)
-LEFT JOIN pg_attrdef def ON 
-    (a.attrelid = def.adrelid AND a.attnum = def.adnum)
-LEFT JOIN pg_catalog.pg_namespace n ON n.oid = pgc.relnamespace
+         SELECT DISTINCT
+             ROW_NUMBER () OVER (ORDER BY pgc.relname , a.attnum) as rowid , 
+             pgc.relname as table_name ,
+             a.attnum as attribute_number,
+             a.attname as attribute_name,
+             format_type(a.atttypid, a.atttypmod) as data_type,
+             a.attnotnull as not_null, 
+             com.description as comment,
+             coalesce(i.indisprimary,false) as is_primary_key,
+             def.adsrc as default_value
+         FROM pg_attribute a 
+         JOIN pg_class pgc ON pgc.oid = a.attrelid
+         LEFT JOIN pg_index i ON 
+             (pgc.oid = i.indrelid AND i.indkey[0] = a.attnum)
+         LEFT JOIN pg_description com on 
+             (pgc.oid = com.objoid AND a.attnum = com.objsubid)
+         LEFT JOIN pg_attrdef def ON 
+             (a.attrelid = def.adrelid AND a.attnum = def.adnum)
+         LEFT JOIN pg_catalog.pg_namespace n ON n.oid = pgc.relnamespace
 
-WHERE 1=1 
-   AND pgc.relkind IN ('r','')
-    AND n.nspname <> 'pg_catalog'
-    AND n.nspname <> 'information_schema'
-    AND n.nspname !~ '^pg_toast'
+         WHERE 1=1 
+            AND pgc.relkind IN ('r','')
+             AND n.nspname <> 'pg_catalog'
+             AND n.nspname <> 'information_schema'
+             AND n.nspname !~ '^pg_toast'
 
-AND a.attnum > 0 AND pgc.oid = a.attrelid
-AND pg_table_is_visible(pgc.oid)
-AND NOT a.attisdropped
-ORDER BY rowid
-;      
-" ; 
+         AND a.attnum > 0 AND pgc.oid = a.attrelid
+         AND pg_table_is_visible(pgc.oid)
+         AND NOT a.attisdropped
+         ORDER BY rowid
+         ;      
+         " ; 
       # debug print "SQL: $str_sql \n STOP RdrPostgresDb.pm" ;   
       
       eval { 
@@ -522,7 +489,7 @@ ORDER BY rowid
       };
       if ( $@ or !scalar(%$mhsr2)) { 
          # $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
-         $msg = " failed to get the project database: " . $postgres_db_name . " meta data ! " ; 
+         $msg = " failed to get the project database: " . $db . " meta data ! " ; 
          $msg .= $DBI::errstr ; 
          $ret = 1 ; 
          return ( $ret , $msg , undef ) ; 
@@ -530,6 +497,7 @@ ORDER BY rowid
 
          binmode(STDOUT, ':utf8');
          $ret = 0 ; 
+         $dbh->disconnect();
          return ( $ret , $msg , $mhsr2 ) ; 	
    }
 
@@ -544,7 +512,7 @@ ORDER BY rowid
       my $table         = shift || croak ' table provided !!!' ; 
       
       if ( defined $objModel->get('postgres_db_name') ) {
-		   $postgres_db_name = $objModel->get('postgres_db_name');
+		   $db = $objModel->get('postgres_db_name');
       }
       my $msg              = q{} ;         
       my $ret              = () ;          # this is the return value from this method 
@@ -554,7 +522,7 @@ ORDER BY rowid
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
 
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql = "
 			SELECT a.attnum, a.attname, a.attlen ,
@@ -604,7 +572,7 @@ ORDER BY rowid
    sub doSearchConfigurationEntries {
 
       my $self             = shift ; 
-      my $postgres_db_name          = shift || 'ysg_issues' ; # the default db
+      my $db          = shift || 'ysg_issues' ; # the default db
       my $table            = shift || 'confs' ;  # the table to get the data from  
       my $query_str        = shift || '*' ;  # the table to get the data from  
    
@@ -626,7 +594,7 @@ ORDER BY rowid
       " ; 
 
      
-      $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
+      $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
               'RaiseError'          => 1
             , 'ShowErrorStatement'  => 1
             , 'PrintError'          => 1
@@ -670,18 +638,18 @@ ORDER BY rowid
    #
    # -----------------------------------------------------------------------------
    # open the database handle if possible, if not return proper error msgs
-   # ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+   # ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
    # -----------------------------------------------------------------------------
    sub doConnectToDb {
       my $self = shift ; 
-      my $postgres_db_name = shift ; 
+      my $db = shift ; 
    
       my $ret = 1 ; 
       my $msg = q{} ; 
       my $dbh = q{} ; 
 
       eval { 
-         $dbh = DBI->connect("dbi:Pg:dbname=$postgres_db_name", "", "" , {
+         $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
                     'RaiseError'          => 1
                   , 'ShowErrorStatement'  => 1
                   , 'PrintError'          => 1
@@ -692,7 +660,7 @@ ORDER BY rowid
 
       if ($@) {
          $ret = 2 ; 
-         $msg = 'cannot connect to the "' . $postgres_db_name . '" database: ' . DBI->errstr ; 
+         $msg = 'cannot connect to the "' . $db . '" database: ' . DBI->errstr ; 
          return ( $ret , $msg , undef ) ; 
       }
 
@@ -716,35 +684,24 @@ ORDER BY rowid
       my $dbh              = {} ;         # this is the database handle
 
       if ( defined $objModel->get('postgres_db_name') ) {
-		   $postgres_db_name = $objModel->get('postgres_db_name');
+		   $db = $objModel->get('postgres_db_name');
       }
      
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $postgres_db_name ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
-      if ( $self->table_exists ( $postgres_db_name , $table ) == 0  ) {
+      if ( $self->table_exists ( $db , $table ) == 0  ) {
          $ret = 400 ; 
-         $msg = ' the table ' . $table . ' does not exist in the ' . $postgres_db_name . ' database '  ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
          return ( $ret , $msg ) ; 
       }
 
       my $debug_msg        = q{} ; 
       my $hsr2             = {} ;         # this is hash ref of hash refs to populate with
-      my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
-      my $dmhsr            = {} ;        # this is meta hash describing the data hash ^^
       my $sth              = {} ;         # this is the statement handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
 
-
-      ( $ret , $msg , $dmhsr ) = $self->doSelectTablesColumnList ( $table ) ; 
-
-      return  ( $ret , $msg , undef ) unless $ret == 0 ; 
-
-      foreach my $key ( sort ( keys %$dmhsr ) ) {
-         $mhsr->{'ColumnNames'}-> { $key } = $dmhsr->{ $key } ; 
-      }
       
-      $objModel->set('hsr_meta' , $mhsr );
 
       my $columns_to_select = "*" ; 
       if ( defined ( $objModel->get('select.web-action.pick') ) ) {
@@ -752,7 +709,7 @@ ORDER BY rowid
          my $lst_columns_to_select = $objModel->get('select.web-action.pick'); 
          my @cols = split (',' , $lst_columns_to_select ) ;
          foreach my $col ( @cols ) { 
-            my $col_exists = $self->doCheckIfColumnExists ( $mhsr->{'ColumnNames'} , $col ) ; 
+            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col );
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
             $columns_to_select .= " , $col" ; 
          }
@@ -763,7 +720,7 @@ ORDER BY rowid
          $columns_to_order_by_asc = $objModel->get('select.web-action.oa'); 
          my @cols = split (',' , $columns_to_order_by_asc ) ;
          foreach my $col ( @cols ) { 
-            my $col_exists = $self->doCheckIfColumnExists ( $mhsr->{'ColumnNames'} , $col ) ; 
+            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col ); 
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
          }
       }
@@ -773,7 +730,7 @@ ORDER BY rowid
          $columns_to_order_by_desc = $objModel->get('select.web-action.od'); 
          my @cols = split (',' , $columns_to_order_by_desc ) ;
          foreach my $col ( @cols ) { 
-            my $col_exists = $self->doCheckIfColumnExists ( $mhsr->{'ColumnNames'} , $col ) ; 
+            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col ) ; 
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
          }
       }
@@ -786,19 +743,19 @@ ORDER BY rowid
       $str_sql .= $filter_by_attributes . " " if $filter_by_attributes ; 
       
       my $like_clause = '' ; 
-		( $ret , $msg , $like_clause ) = $self->doBuildLikeClause ( $mhsr ) ; 
+		( $ret , $msg , $like_clause ) = $self->doBuildLikeClause ( $db , $table  ) ; 
 		
       return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql .= $like_clause if $like_clause ; 
 		
       my $where_clause_fltr = '' ; 
-		( $ret , $msg , $where_clause_fltr ) = $self->doBuildWhereClauseByFltr ( $mhsr ) ; 
+		( $ret , $msg , $where_clause_fltr ) = $self->doBuildWhereClauseByFltr ( $db , $table ) ; 
 
 		return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql .= $where_clause_fltr if $where_clause_fltr ; 
       
       my $where_clause_with = '' ; 
-		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $mhsr ) ; 
+		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table ) ; 
 
 		return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql .= $where_clause_with if $where_clause_with ; 
@@ -856,6 +813,7 @@ ORDER BY rowid
          return ( $ret , $msg , "" ) ; 
       };
 
+      $dbh->disconnect();
       return ( $ret , $msg ) ; 	
       binmode(STDOUT, ':utf8');
 
@@ -880,7 +838,7 @@ ORDER BY rowid
            appConfig => $appConfig
       );
 		
-		$postgres_db_name    = $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}     || 'prd_ysg_issues' ; 
+		$db                  = $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}     || 'prd_ysg_issues' ; 
 		$db_host 			   = $ENV{ 'db_host' } || $appConfig->{'db_host'} 		|| 'localhost' ;
 		$db_port 			   = $ENV{ 'db_port' } || $appConfig->{'db_port'} 		|| '13306' ; 
 		$postgres_db_user 	= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'ysg' ; 

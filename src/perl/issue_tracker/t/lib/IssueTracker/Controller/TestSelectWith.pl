@@ -39,6 +39,7 @@ for my $row ( @$tables ) {
          next unless $prio_have_row->{'attname'} eq 'prio'  ;
          # test a filter by Select of integers	
          $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio&' . "$with_where" . '=prio-le-3&' . "$with_where" . '=prio-ge-1' ; 
+         print "url: $url \n" ; 
          $t->get_ok($url )
             ->status_is(200) 
          ;

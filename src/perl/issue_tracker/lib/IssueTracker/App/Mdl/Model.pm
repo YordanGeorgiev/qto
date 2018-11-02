@@ -20,6 +20,23 @@ package IssueTracker::App::Mdl::Model ;
    our $hsr2            = {} ; # this is the hash ref of hash refs 
    our $mhsr2           = {} ; # and this is the meta hash ref of hash refs 
    our $objLogger       = {} ; 
+  
+
+   sub doChkIfColumnExists {
+
+      my $self       = shift ; 
+      my $db         = shift ; 
+      my $table      = shift ; 
+      my $col        = shift ; 
+   
+      my $cols = $appConfig->{ "$db" . '.meta' } ; 
+      foreach my $key ( keys %$cols ) {
+         my $row = $cols->{ $key } ; 
+         next unless $table eq $row->{ 'table_name' } ; 
+         return 1 if $row->{ 'attribute_name' } eq $col; 
+      }
+      return 0 ; 
+   }
 
    # 
 	# -----------------------------------------------------------------------------

@@ -18,7 +18,7 @@ use File::Basename qw< basename >;
 use Carp qw< carp croak confess cluck >;
 use Encode qw< encode decode >;
 use Unicode::Normalize qw< NFD NFC >;
-
+use IO::Compress::Gzip 'gzip' ;
 
 # use own modules ...
 use IssueTracker::App::Utils::Initiator;
@@ -127,19 +127,21 @@ sub doSetHooks {
   
    my $self = shift ; 
 
-	my $before_render_debug = 0 ; 
-   if ( $before_render_debug == 1 ) {
-      $self->hook ( 'before_render' => sub {
-         my ($c, $args) = @_;
-         p $c ; 
-         p ( $c->req->url->to_abs . '?' . $c->req->url->query ) ; 
-      });
-   }
+#  # comment out to debug 
+#	my $before_render_debug = 0 ; 
+#   if ( $before_render_debug == 1 ) {
+#      $self->hook ( 'before_render' => sub {
+#         my ($c, $args) = @_;
+#         p $c ; 
+#         p ( $c->req->url->to_abs . '?' . $c->req->url->query ) ; 
+#      });
+#   }
+
 
    $self->hook(after_dispatch => sub {
        my $c = shift;
 
-       # Was the response dynamic?
+       # was the response dynamic?
        return if $c->res->headers->header('Expires');
 
        # if so, try to prevent caching
@@ -155,6 +157,8 @@ sub doSetHooks {
    $self->hook( 'before_dispatch' => sub {
       my $c = shift;
       $c->res->headers->cache_control('max-age=604800, no-cache');
+      $c->res->headers->accept_charset('UTF-8');
+      $c->res->headers->accept_language('fi, en');
    });
 
 
@@ -162,8 +166,6 @@ sub doSetHooks {
        my $c = shift;
        my $code = $c->res->code;
        my $type = $c->res->headers->content_type;
-
-       print $c->req->url->to_abs . "\n" ;
 
        $c->res->headers->remove('Cache-Control');
        $c->res->headers->remove('Set-Cookie');
@@ -181,7 +183,27 @@ sub doSetHooks {
        }
        $c->res->headers->header(Expires => $e);
    });
+
+
+	$self->hook( 'after_render' => sub {
+	  my ($c, $output, $format) = @_;
+
+	  # Check if "gzip => 1" has been set in the stash
+	  # return unless $c->stash->{gzip};
+
+	  # Check if user agent accepts gzip compression
+	  return unless ($c->req->headers->accept_encoding // '') =~ /gzip/i;
+	  $c->res->headers->append( 'Vary' => 'Accept-Encoding');
+
+	  # Compress content with gzip
+	  $c->res->headers->content_encoding('gzip');
+	  gzip $output, \my $compressed;
+	  $$output = $compressed;
+	});
+
+
 }
+
 
 #
 # -----------------------------------------------------------------------------

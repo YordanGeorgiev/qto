@@ -5,6 +5,7 @@ SELECT 'create the "benchmarks" table'
    CREATE TABLE benchmarks (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
+    , git_hash       char (8) NULL DEFAULT ''
     , name           varchar (200) NOT NULL DEFAULT 'name ...'
     , url            varchar (4000) NOT NULL DEFAULT 'url ...'
     , start_time     timestamp NOT NULL DEFAULT DATE_TRUNC('second', NOW())
