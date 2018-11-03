@@ -1,18 +1,22 @@
 
 #div_search_box {
   position: absolute ; 
+  margin-top: -3% ; 
+  margin-left: 5%;
+  margin-bottom: 2% ; 
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: -3% ; 
-  margin-left: 10%;
-  clear; both; 
   width: 35%;
 }
 
+input[type="text"] {
+   font-size:14px;
+} 
+
 #inp_srch_box {
    min-width: 41%;
+   font-size: 15px;
    border: 2px solid #dadada;
    border-radius: 5px;
    padding: 1px 3px; 
@@ -47,7 +51,7 @@
   border: 1px solid #eeeeee;
   height: auto;
   overflow: auto;
-  width: 100%;
+  width: 80%;
   background-color: white;
   min-width: 41%;
 }
