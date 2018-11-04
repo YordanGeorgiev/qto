@@ -28,12 +28,52 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    sub doGlobalSrchIntoHashRef {
 
       my $self = shift ; 
-      my $qry  = shift ; 
+      my $qry  = $objModel->get('query.web-action.for');
       
       my $ret = 1 ; 
       my $msg = 'unknown error has occured during global search ' ; 
+      my $dbh = {} ; 
+      my $sth = {} ; 
+      my $hsr2 = {} ; 
 
-      return ( $ret , $msg ) ; 
+
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+      my $str_sql = 'SELECT * FROM monthly_issues ' ; 
+      ## get the global meta 
+      ## for each table 
+      ## build union with name and desc
+
+      $ret = 0 ; 
+      eval { 
+         $msg = "" ; 
+         $sth = $dbh->prepare($str_sql);  
+         $sth->execute() or $ret = 400 ; 
+         $msg = DBI->errstr if $ret  == 400 ; 
+         die "$msg" unless $ret == 0 ; 
+         $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
+         $msg = DBI->errstr if $ret  == 400 ; 
+         die "$msg" unless $ret == 0 ; 
+         $objModel->set('hsr2' , $hsr2 );
+         unless ( keys %{$hsr2}) {
+            $msg = ' no data for this search request !!! ' ;
+            $ret = 404 ;
+            die "$msg" unless $ret == 0 ; 
+         }
+      };
+      if ( $@ or !scalar(%$hsr2)) { 
+         my $tmsg = "$@" ; 
+         $objLogger->doLogErrorMsg ( "$msg" ) ;
+         $msg = "failed to get data :: $tmsg" unless $ret == 404 ; 
+         return ( $ret , $msg , "" ) ; 
+      };
+
+      $dbh->disconnect();
+      binmode(STDOUT, ':utf8');
+
+      $ret = 0 ; 
+      return ( $ret , $msg , $hsr2 ) ; 
    }
 
 

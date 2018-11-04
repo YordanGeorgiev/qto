@@ -86,60 +86,29 @@ sub doGlobalTxtSrch {
    $objRdrDbsFactory
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
-  #($ret, $msg) = $objRdrDb->doGlobalSrchIntoHashRef(\$objModel, $item);
+   ($ret, $msg , $hsr2 ) = $objRdrDb->doGlobalSrchIntoHashRef(\$objModel);
+   if ( $ret != 0 ) {
+      $self->res->code(200);
+      $self->render( 'json' =>  { 
+         'msg'   => $msg,
+         'dat'   => $hsr2 , 
+         'ret'   => 0, 
+         'met'   => 0, # todo:ysg
+         'req'   => "GET " . $self->req->url->to_abs
+      });
+      return ; 
+   } else {
+      $self->res->code(400);
+      $self->render( 'json' =>  { 
+         'msg'   => $msg,
+         'ret'   => 0, 
+         'met'   => 0, # todo:ysg
+         'req'   => "GET " . $self->req->url->to_abs
+      });
+      return ; 
 
-   $self->render("text"=> 'done !!!' ) ;   
-   return ; 
-#
-#   $self->res->headers->accept_charset('UTF-8');
-#   $self->res->headers->accept_language('fi, en');
-#   $self->res->headers->content_type('application/json; charset=utf-8');
-#
-#   unless ( $ret == 0 ) {
-#      $http_code = $ret ; 
-#   }
-#
-#   if ( $ret == 0 ) {
-#      my $list = () ; # an array ref holding the converted hash ref of hash refs 
-#      $rows_count = 0 ; 
-#      $http_code = 200 ; 
-#      $msg = "SELECT OK for table: $item" ; 
-#      my $objCnrHsr2ToArray = 
-#         'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-#      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($objModel->get('hsr2'));
-#
-#      unless ( $ret == 0 ) {
-#         $list = '' ;
-#         $http_code = $ret ; 
-#      }
-#       
-#      $self->res->code($http_code);
-#      $self->render( 'json' =>  { 
-#           'msg'   => $msg
-#         , 'dat'   => $list
-#         , 'ret'   => $http_code
-#         , 'met'   => $rows_count 
-#         , 'req'   => "GET " . $self->req->url->to_abs
-#      });
-#   } elsif ( $ret == 404 ) {
-#
-#      $self->res->code(404);
-#      $self->render( 'json' =>  { 
-#           'msg'   => $msg
-#         , 'dat'   => ''
-#         , 'ret'   => 404 
-#         , 'req'   => "GET " . $self->req->url->to_abs
-#      })
-#   } else {
-#      $rows_count = 0 ; 
-#      $self->res->code($http_code);
-#      $self->render( 'json' =>  { 
-#           'msg'   => $msg
-#         , 'ret'   => 400
-#         , 'met'   => $rows_count
-#         , 'req'   => "GET " . $self->req->url->to_abs
-#      });
-#   } 
+   }
+
 }
 
 
