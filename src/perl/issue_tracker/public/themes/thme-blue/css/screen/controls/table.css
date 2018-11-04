@@ -151,6 +151,7 @@ th:focus {
    border-bottom-color: rgb(63, 81, 181);
    border-bottom-left-radius: 50%;
    border-bottom-right-radius: 50%;
+	border: 3px solid #CDCDCD;
    border-bottom-style: none;
    border-left-color: rgb(63, 81, 181);
    border-left-style: none;
@@ -187,10 +188,42 @@ th:focus {
 #btnNew:hover {
    position: fixed;
    color: yellow ;
+	font-weight: 800;
+   border-top-left-radius: 50%;
+   border-top-right-radius: 50%;
+   border-bottom-left-radius: 50%;
+   border-bottom-right-radius: 50%;
+	border: 3px solid #CDCDCD;
+	box-shadow: 3px 3px 10px #C0C0C0;
+	-webkit-box-shadow: 3px 3px 10px #C0C0C0;
+	-moz-box-shadow: 3px 3px 10px #C0C0C0;
 }
-#btnNew:focus{
+
+#btnNew:focus {
    position: fixed;
    color: yellow ;
+	font-weight: 900;
+   border-top-left-radius: 50%;
+   border-top-right-radius: 50%;
+   border-bottom-left-radius: 50%;
+   border-bottom-right-radius: 50%;
+	border: 3px solid #CDCDCD;
+	box-shadow: 3px 3px 10px #C0C0C0;
+	-webkit-box-shadow: 3px 3px 10px #C0C0C0;
+	-moz-box-shadow: 3px 3px 10px #C0C0C0;
+}
+#btnNew:active {
+   position: fixed;
+   color: yellow ;
+	font-weight: 900 ;
+   border-top-left-radius: 50%;
+   border-top-right-radius: 50%;
+   border-bottom-left-radius: 50%;
+   border-bottom-right-radius: 50%;
+	border: 4px solid #CDCDCD;
+	box-shadow: 4px 4px 10px #C0C0C0;
+	-webkit-box-shadow: 4px 4px 10px #C0C0C0;
+	-moz-box-shadow: 4px 4px 10px #C0C0C0;
 }
 .cls_but_delete {
 	background-color: transparent;
