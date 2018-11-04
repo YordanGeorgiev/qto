@@ -44,8 +44,9 @@ input[type="text"] {
 }
 
 .autocomplete-results {
-  opacity: 1; 
   position: relative;
+  z-index:100;
+  opacity: 1; 
   padding: 5px;
   margin: 0;
   border: 1px solid #eeeeee;
@@ -59,6 +60,7 @@ input[type="text"] {
 .autocomplete-result {
   opacity: 1; 
   list-style: none;
+  z-index:100;
   text-align: left;
   padding: 4px 2px;
   cursor: pointer;

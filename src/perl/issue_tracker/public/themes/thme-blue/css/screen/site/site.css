@@ -14,16 +14,17 @@ html, body {
 }
 .app_name_tooltip .app_name_tooltiptext {
    visibility: hidden ; 
-   position: relative;
+   position: absolute; 
    z-index: 10;
-   left: 3%;
+   top: 0%;
+   left: 12%;
    margin-right: 10px ; 
-   width: 70px;
+   width: 60px;
    background-color: grey ; 
    color: #fff;
    text-align: right;
-   border-radius: 4px;
-   padding: 10px ;
+   border-radius: 6px;
+   padding: 2px 10px 2px 10px ;
 }
 
 .app_name_tooltip:hover .app_name_tooltiptext {
