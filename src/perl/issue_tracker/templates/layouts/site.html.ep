@@ -9,13 +9,14 @@
    <%= content 'header_csss' %>
 </head>
 <body>
-<div id="div_app_name"><span><a title='
-   <%= " $db \n" =%> 
-   <%= " $ProductVersion " =%>
-   <%= " $ProductType " =%>
-   <%= " $ShortCommitHash \n" =%>
-   <%= " $page_load_time \n" =%>
-' ><%= " $db " =%></a> </span></div>
+<div class="app_name_tooltip"> <%= "$db" =%>
+   <div class="app_name_tooltiptext">
+      <%= " $ProductVersion " =%>
+      <%= " $ProductType " =%>
+      <%= " $ShortCommitHash " =%>
+      <%= " $page_load_time " =%>
+   </div>
+</div>
 	<div id="div_msg"> <%== $msg %></div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
