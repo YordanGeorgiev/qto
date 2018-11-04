@@ -20,12 +20,30 @@
     white-space: normal;
 }
 .pgr-bar .pgr-bar-item {
-    padding: 8px 16px;
-    float: left;
-    width: auto;
-    border: none;
-    display: inline;
-    outline: 0;
+   padding: 8px 16px;
+   float: left;
+   width: auto;
+   border: none;
+   display: inline;
+   outline: 0;
+}
+.actv {
+   padding: 0px 6px 2px 6px;
+   float: left;
+   width: auto;
+   border: none;
+   display: inline;
+   outline: 0;
+   background-color: #C0C0C0;
+   font-weight: bold ; 
+   border-top-left-radius: 45%;
+   border-top-right-radius: 45%;
+   border-bottom-left-radius: 45%;
+   border-bottom-right-radius: 45%;
+   border: 1px solid #CDCDCD;
+   box-shadow: 2px 2px 10px #C0C0C0;
+   -webkit-box-shadow: 2px 2px 10px #C0C0C0;
+   -moz-box-shadow: 2px 2px 10px #C0C0C0;
 }
 a {
     color: inherit;
