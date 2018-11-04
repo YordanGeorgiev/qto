@@ -1,15 +1,35 @@
 html, body {
-	max-width: 100%; 
-	overflow-x: hidden;
+   overflow-x: hidden;
+   max-width: 100%; 
 }
-#div_app_name {
-	position: fixed; 
-	z-index: 0; 
-	left: 1%;
-	top: 0%;
-	color: #C0C0C0; 
-	font-weight: bold;
+.app_name_tooltip {
+   color: #C0C0C0;
+   font-size: 80%;
+   position: fixed; 
+   z-index: 10; 
+   left: 2%;
+   top: 1%;
+   font-weight: 600;
+   display: inline-block;
 }
+.app_name_tooltip .app_name_tooltiptext {
+   visibility: hidden ; 
+   position: relative;
+   z-index: 10;
+   left: 3%;
+   margin-right: 10px ; 
+   width: 70px;
+   background-color: grey ; 
+   color: #fff;
+   text-align: right;
+   border-radius: 4px;
+   padding: 10px ;
+}
+
+.app_name_tooltip:hover .app_name_tooltiptext {
+    visibility: visible;
+}
+
 html body div#div_msg {
 	 font-size: 110%;
 	 min-width: 90%; 
