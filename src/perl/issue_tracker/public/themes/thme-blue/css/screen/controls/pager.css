@@ -1,4 +1,5 @@
 #div_pager {
+   z-index: 1;
    float: left ; 
    padding-left: 43% ; 
    padding-top: 1% ; 
@@ -98,6 +99,7 @@ a:visited {
 }
 
 #div_page_sizer {
+   z-index: 1;
    position: relative ; 
    clear: both ; 
    margin-left: 2%;
