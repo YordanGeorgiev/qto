@@ -96,7 +96,7 @@ doRunActions(){
 				
 		test "$action" == 'to-dev'									&& doChangeEnvType 'dev'
 		test "$action" == 'to-tst'									&& doChangeEnvType 'tst'
-		test "$action" == 'to-git'									&& doChangeEnvType 'git'
+		test "$action" == 'to-src'									&& doChangeEnvType 'src'
 		test "$action" == 'to-qas'									&& doChangeEnvType 'qas'
 		test "$action" == 'to-prd'									&& doChangeEnvType 'prd'
 		[[ $action == to-ver=* ]]									&& doChangeVersion $action
