@@ -36,14 +36,26 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $sth = {} ; 
       my $hsr2 = {} ; 
 
-
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
-      my $str_sql = 'SELECT * FROM monthly_issues ' ; 
-      ## get the global meta 
-      ## for each table 
-      ## build union with name and desc
+      # debug p $appConfig->{ $db . '.meta' }  ; 
+
+      $objModel->doSetDbTablesList($db ) unless exists $appConfig->{"$db" . '.meta.tables-list'} ; 
+      my @tables = @{ $appConfig->{"$db" . '.meta.tables-list'} } ; 
+      my $str_sql = 'SELECT guid as guid, id as id, item as item, name as name, description as description' ; 
+      $str_sql .= ', count(*) OVER () as rows_count FROM ( ' ;
+      foreach my $table ( @tables ) {
+         if ( $objModel->doChkIfColumnExists ( $db , $table , 'name' ) == 1
+               && $objModel->doChkIfColumnExists ( $db , $table , 'description' ) == 1 ) {
+
+            $str_sql .= " SELECT guid ,id , '" . "$table" . "' as item, name , description FROM $table \n" ; 
+            $str_sql .= " WHERE 1 = 1 AND ( name like '%" . "$qry" . "%' or description like '%" . "$qry" . "%') UNION ALL \n" ; 
+         }
+      }
+	   for (1..11) { chop ( $str_sql ) } ;
+      $str_sql .= ' ) a ;' ; 
+      # debug print $str_sql ;  
 
       $ret = 0 ; 
       eval { 

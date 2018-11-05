@@ -1,7 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
 src/perl/issue_tracker/t/lib/IssueTracker/App/benchmark_url.pl
-src/perl/issue_tracker/lib/IssueTracker/Controller/Query.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
 src/perl/issue_tracker/lib/IssueTracker.pm
@@ -68,6 +67,7 @@ src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_label
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/jqcloud.css
 #---
 src/perl/issue_tracker/lib/IssueTracker/Controller
+src/perl/issue_tracker/lib/IssueTracker/Controller/Query.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Create.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Update.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Delete.pm

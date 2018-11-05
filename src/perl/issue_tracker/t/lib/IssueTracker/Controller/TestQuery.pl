@@ -15,14 +15,28 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    my $db_name= $appConfig->{ 'postgres_db_name' } ; 
    my $url = '/' . $db_name . '/query?for=' ; 
 
+   $tm = "not at all for query param specified "; 
    print "testing the following url: $url \n" ; 
-   $t->get_ok($url)
-      ->status_is(400) 
-   ;
+   ok ( $t->get_ok($url)->status_is(400) , $tm ) ;
+  
+   $tm = 'not at all for query param specified ' ; 
+   $url = '/' . $db_name . '/query' ; 
+   ok ( $t->get_ok($url)->status_is(400) , $tm ) ;
+
+   $tm = 'some foo query param is specified ' ; 
+   $url = '/' . $db_name . '/query?for=meta-data' ; 
+   ok ( $t->get_ok($url)->status_is(200) , $tm ) ;
 
    my $ua  = $t->ua ; 
-   #my $response = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
-   #my $list = $response->{ 'dat' } ; 
+   $tm = 'an array of values is returned with valid query which sure will have hits ... ' ; 
+   my $response = $ua->get($url)->result->json ; 
+   my $list = $response->{ 'dat' } ; 
+   ok (ref($list) eq 'ARRAY' , $tm) ; 
+   
+   $tm = 'a hash ref  is returned for the meta data with valid query which sure will have hits ... ' ; 
+   $response = $ua->get($url)->result->json ; 
+   my $mshr2 = $response->{ 'met' } ; 
+   ok (ref($mshr2) eq 'HASH' , $tm) ; 
 
 done_testing();
 

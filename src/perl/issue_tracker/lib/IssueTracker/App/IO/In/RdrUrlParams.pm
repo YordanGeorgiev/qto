@@ -142,21 +142,19 @@ sub doSetQueryGlobalTxtSrchParams {
    my $controller    = lc ( $Controller ) ; 
    my $ret           = 0 ; 
    my $msg           = '' ; 
-  
    my $qry           = $query_params->param('for') ; 
-   $objModel->set($controller . '.web-action.for' , $qry );
-   $query_params->remove('for') ; 
 
-   unless ( defined $qry ) {
-      $msg = "nothing to search for the for url parameter is undefined" ; 
+   if ( !defined ( $qry ) or $qry eq "" ) {
+      $msg = "nothing to search for, the for url parameter is undefined the query route" ; 
       $ret = 400 ; 
-      return ( $ret , $msg ) ; 
+   } else {
+      $objModel->set($controller . '.web-action.for' , $qry );
+      $query_params->remove('for') ; 
+      $ret = 0 ; 
    }
-
-   $ret = 0 ; $msg = '' ; 
    return ( $ret , $msg ) ; 
-
 }
+
 
 sub doSetSelectUrlParams {
 
