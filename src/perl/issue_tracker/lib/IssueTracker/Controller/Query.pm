@@ -64,12 +64,10 @@ sub doGlobalTxtSrch {
 
 	# print "Query.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
-   $appConfig		= $self->app->get('AppConfig');
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
 
    my $query_params = $self->req->query_params ; 
-
    $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
    ( $ret , $msg ) = $objRdrUrlParams->doSetQueryGlobalTxtSrchParams(\$objModel, $query_params , 'Query' );
    if ( $ret != 0 ) {
@@ -77,7 +75,7 @@ sub doGlobalTxtSrch {
       $self->render( 'json' =>  { 
          'msg'   => $msg,
          'ret'   => 400, 
-         'met'   => 0,
+         'met'   => '',
          'req'   => "GET " . $self->req->url->to_abs
       });
       return ; 
@@ -87,13 +85,18 @@ sub doGlobalTxtSrch {
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    ($ret, $msg , $hsr2 ) = $objRdrDb->doGlobalSrchIntoHashRef(\$objModel);
-   if ( $ret != 0 ) {
+   if ( $ret == 0 ) {
+      my $list = ();
+      my $objCnrHsr2ToArray = 
+         'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
+      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 ) ;
       $self->res->code(200);
       $self->render( 'json' =>  { 
          'msg'   => $msg,
-         'dat'   => $hsr2 , 
+         'dat'   => $list,
+         'met'   => $msr2,
          'ret'   => 0, 
-         'met'   => 0, # todo:ysg
+         'cnt'   => $rows_count ,
          'req'   => "GET " . $self->req->url->to_abs
       });
       return ; 

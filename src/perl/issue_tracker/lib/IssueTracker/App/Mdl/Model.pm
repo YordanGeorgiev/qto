@@ -37,6 +37,23 @@ package IssueTracker::App::Mdl::Model ;
       }
       return 0 ; 
    }
+   
+   sub doSetDbTablesList {
+
+      my $self       = shift ; 
+      my $db         = shift ; 
+      my %tables     = () ;
+      my @tbls       = () ;
+   
+      my $cols = $appConfig->{ "$db" . '.meta' } ; 
+      foreach my $key ( keys %$cols ) {
+         my $row = $cols->{ $key } ; 
+         my $table = $row->{ 'table_name' } ; 
+         $tables{ $table } = $table ; 
+      }
+      @tbls = keys %tables ; 
+      $appConfig->{"$db" . '.meta.tables-list'} = \@tbls ; 
+   }
 
    # 
 	# -----------------------------------------------------------------------------
