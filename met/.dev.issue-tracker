@@ -72,8 +72,10 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/Create.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Update.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Delete.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/Search.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestQuery.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSearch.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/LoadTestSelect.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
@@ -930,6 +932,7 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Timer/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/List/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Query/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Search/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Select/autosplit.ix
 src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
 # --

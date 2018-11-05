@@ -14,11 +14,11 @@ use IssueTracker::App::Cnvr::CnrHsr2ToArray ;
 use IssueTracker::App::UI::WtrUIFactory ; 
 use IssueTracker::App::IO::In::RdrUrlParams ; 
 
-our $module_trace   = 0 ; 
-our $appConfig      = {};
-our $objLogger      = {} ;
-our $objModel       = {} ; 
-our $rdbms_type     = 'postgres' ; 
+our $module_trace    = 0 ; 
+our $appConfig       = {};
+our $objLogger       = {} ;
+our $objModel        = {} ; 
+our $rdbms_type      = 'postgres' ; 
 
 sub new {
 
@@ -37,20 +37,21 @@ sub doBuildListControl {
 	my $self          	= shift ; 
 	my $msg           	= shift ; 
    my $objModel      	= ${ shift @_ } ; 
+	my $db               = shift ; 
+	my $table            = shift ; 
+
    my $ret           	= 1 ; 
    my $control       	= '' ; 
    my $mhsr2 				= {};
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb 			= {} ; 
-   my $table 				= {} ; 
    my $objWtrUIFactory 	= {} ; 
    my $objUIBuilder 		= {} ; 
 
    $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
-   $table = $objModel->get('table_name'); 
 
-   ( $ret , $msg , $mhsr2 ) = $objRdrDb->doSelectTablesColumnList ( $table ) ;
+   ( $ret , $msg , $mhsr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 		
    my $to_picks   = $objModel->get('list.web-action.pick') ; 

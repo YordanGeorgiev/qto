@@ -597,7 +597,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ; 
          $mhsr2 = $sth->fetchall_hashref( 'attnum' ) ; 
-         # debug p $mhsr2 ; 
+         # todo:ysg
+         p $mhsr2 ; 
       };
       if ( $@ or !scalar(%$mhsr2)) { 
          # $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;

@@ -74,8 +74,8 @@ th, td {
 }
 
 #grid tbody tr td:nth-child(1){ 
-   width: 8px ; 
-	padding: 4px 4px;
+   width: 24px;
+   padding: 2px ; 
 }
 
 #grid tbody tr td:nth-child(2){ 
@@ -103,8 +103,7 @@ textarea {
 }
 .cls_cnt_edtble:hover {
 	opacity: 1.2 ;
-	border: 3px solid #CDCDCD;
-	border-radius: 4px;
+	background-color: #FFFFE0;
 	white-space:pre-wrap;
 }
 
@@ -227,9 +226,12 @@ th:focus {
 }
 .cls_but_delete {
 	background-color: transparent;
-   padding: 5px;
-   margin: 5px;
-   border-style: none ; 
+	border: 2px solid transparent ; 
+	border-radius: 3px;
+   border-top-left-radius: 45%;
+   border-top-right-radius: 45%;
+   border-bottom-left-radius: 45%;
+   border-bottom-right-radius: 45%;
 }
 .cls_but_delete:hover {
    background-color: #D3D3D3;
@@ -238,10 +240,10 @@ th:focus {
 	box-shadow: 1px 1px 10px #C0C0C0;
 	-webkit-box-shadow: 1px 1px 10px #C0C0C0;
 	-moz-box-shadow: 1px 1px 10px #C0C0C0;
-   border-top-left-radius: 50%;
-   border-top-right-radius: 50%;
-   border-bottom-left-radius: 50%;
-   border-bottom-right-radius: 50%;
+   border-top-left-radius: 45%;
+   border-top-right-radius: 45%;
+   border-bottom-left-radius: 45%;
+   border-bottom-right-radius: 45%;
 }
 .cls_but_delete:focus {
    background-color: #D3D3D3;

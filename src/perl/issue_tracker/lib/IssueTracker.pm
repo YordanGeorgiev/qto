@@ -20,7 +20,6 @@ use Encode qw< encode decode >;
 use Unicode::Normalize qw< NFD NFC >;
 use IO::Compress::Gzip 'gzip' ;
 
-# use own modules ...
 use IssueTracker::App::Utils::Initiator;
 use IssueTracker::App::Utils::Configurator;
 use IssueTracker::App::Utils::Logger;
@@ -225,10 +224,16 @@ sub doSetRoutes {
    my $self = shift ; 
    my $r = $self->routes;
 	
+   # http://host-name:3001/dev_issue_tracker/Search/monthly_issues
+   $r->get('/:db/search')->to(
+     controller   => 'Search'
+   , action       => 'doSearchItems'
+   );
+
    # http://host-name:3001/dev_issue_tracker/query?for=<<global-txt-srch>>
    $r->get('/:db/query')->to(
      controller   => 'Query'
-   , action       => 'doGlobalTxtSrch'
+   , action       => 'doQueryItems'
    );
 	
    # http://host-name:3001/dev_issue_tracker/select-databases

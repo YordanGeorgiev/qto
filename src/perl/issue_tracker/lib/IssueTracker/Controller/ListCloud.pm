@@ -36,6 +36,8 @@ sub doBuildListControl {
 	my $self          		= shift ; 
 	my $msg           		= shift ; 
    my $objModel      		= ${ shift @_ } ; 
+	my $db                  = shift ; 
+	my $table               = shift ; 
 
    my $ret           		= 1 ; 
    my $control       		= '' ; 
@@ -43,14 +45,11 @@ sub doBuildListControl {
    my $hsr2 					= {} ;
    my $objRdrDb 				= {} ; 
    my $objRdrDbsFactory 	= {} ; 
-   my $table 					= {} ; 
 	my $objCnrHsr2ToArray	= {} ; 
    my $objWtrUIFactory		= {} ; 
    my $objUIBuilder 			= {} ; 
    my $objRdrUrlParams     = {} ; 
   
-
-   $table = $objModel->get('table_name'); 
    $objModel->doReplaceTokenInKeys('list' , 'select' ); 
 
    $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );

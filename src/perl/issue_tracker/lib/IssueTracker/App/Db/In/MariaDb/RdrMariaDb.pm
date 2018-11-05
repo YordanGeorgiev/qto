@@ -30,12 +30,12 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
    
    sub doSelectTablesList {
 
-      my $self          = shift ; 
+      my $self             = shift ; 
 
       my $msg              = q{} ;         
       my $ret              = 1 ;          # this is the return value from this method 
       my $debug_msg        = q{} ; 
-      my $hsr             = {} ;         # this is meta hash describing the data hash ^^
+      my $hsr              = {} ;         # this is meta hash describing the data hash ^^
       my $sth              = {} ;         # this is the statement handle
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
@@ -317,7 +317,7 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
    sub doSelectTableIntoHashRef {
 
       my $self                   = shift ; 
-      my $objModel             = ${shift @_ } ; 
+      my $objModel               = ${shift @_ } ; 
       my $table                  = shift || 'daily_issues' ;  # the table to get the data from  
       my $filter_by_attributes   = shift ; 
    
@@ -326,14 +326,14 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       my $debug_msg        = q{} ; 
       my $hsr2             = {} ;         # this is hash ref of hash refs to populate with
       my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
-      my $dmhsr            = {} ;        # this is meta hash describing the data hash ^^
+      my $dmhsr            = {} ;         # this is meta hash describing the data hash ^^
       my $sth              = {} ;         # this is the statement handle
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
 
 
-      ( $ret , $msg , $dmhsr ) = $self->doSelectTablesColumnList ( $table ) ; 
-      return  ( $ret , $msg , undef ) unless $ret == 0 ; 
+      ( $ret , $msg , $mhsr ) = $objModel->doGetTablesColumnList ( $appConfig , $mysql_db_name , $table ) ;
+      return ( $ret , $msg , undef ) unless $ret == 0 ; 
 
       foreach my $key ( sort ( keys %$dmhsr ) ) {
          $mhsr->{'ColumnNames'}-> { $key } = $dmhsr->{ $key } ; 
