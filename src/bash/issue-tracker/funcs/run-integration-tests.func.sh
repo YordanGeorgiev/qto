@@ -125,6 +125,16 @@ doRunIntegrationTests(){
    test $? -ne 0 && return
 	echo -e "\n\n\n" 
 
+   doLog "INFO test the query action on the web-action"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestQuery.pl
+   test $? -ne 0 && return
+	echo -e "\n\n\n" 
+
+   doLog "INFO test the search action on the web-action"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSearch.pl
+   test $? -ne 0 && return
+	echo -e "\n\n\n" 
+
 	doLog "DEBUG STOP  doRunIntegrationTests"
 }
 

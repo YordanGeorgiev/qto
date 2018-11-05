@@ -37,12 +37,14 @@ sub doBuildListControl {
 	my $self          	= shift ; 
 	my $msg           	= shift ; 
    my $objModel      	= ${ shift @_ } ; 
+	my $db               = shift ; 
+	my $table            = shift ; 
+
    my $ret           	= 1 ; 
    my $control       	= '' ; 
    my $mhsr2 				= {};
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb 			= {} ; 
-   my $table 				= {} ; 
    my $objWtrUIFactory 	= {} ; 
    my $objUIBuilder 		= {} ; 
 
@@ -50,7 +52,8 @@ sub doBuildListControl {
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    $table = $objModel->get('table_name'); 
 
-   ( $ret , $msg , $mhsr2 ) = $objRdrDb->doSelectTablesColumnList ( $table ) ;
+   ( $ret , $msg , $mhsr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
+   # ( $ret , $msg , $mhsr2 ) = $objRdrDb->doSelectTablesColumnList ( $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 		
    my $to_picks   = $objModel->get('list.web-action.pick') ; 
@@ -78,7 +81,8 @@ sub doBuildListControl {
    	$control .= ']' ;
 	}
 
-	# debug print "control is $control \n" ; 
+   # todo:ysg
+	print "control is $control \n" ; 
    return ( $ret , $msg , $control ) ; 
 }
 

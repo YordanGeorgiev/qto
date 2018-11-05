@@ -1,17 +1,13 @@
 package IssueTracker::Controller::Select;
 use strict ; use warnings ; 
 
-require Exporter;
-our @ISA = qw(Exporter Mojo::Base IssueTracker::Controller::BaseController);
+require Exporter; our @ISA = qw(Exporter Mojo::Base IssueTracker::Controller::BaseController);
 our $AUTOLOAD =();
-our $ModuleDebug = 0 ; 
 use AutoLoader;
-
 use parent qw(IssueTracker::Controller::BaseController);
 
 use Data::Printer ; 
 use Data::Dumper; 
-use Scalar::Util qw /looks_like_number/;
 
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
@@ -29,17 +25,9 @@ our $rdbms_type     = 'postgre';
 # --------------------------------------------------------
 sub doSelectItems {
    my $self             = shift;
-   my $item             = $self->stash('item');
    my $db               = $self->stash('db');
-
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login ');
-      return ; 
-   } 
+   my $item             = $self->stash('item');
    
-   # chk: it-181101180808
-   $self->SUPER::doReloadProjectDbMetaData($db) unless $appConfig->{ "$db" . '.meta' } ; 
-
    my $rdbms_type       = 'postgres';
    my $objRdrUrlParams  = {} ; 
    my $objRdrDbsFactory = {} ; 
@@ -47,12 +35,32 @@ sub doSelectItems {
    my $ret              = 0;
    my $msg              = 'unknown error during Select item';
    my $hsr2             = {};
+   my $msr2             = {};
    my $http_code        = 200 ; 
    my $rows_count       = 0 ; 
 
-	print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
+   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
+      $self->render('text' => 'Refresh your page to login ');
+      return ; 
+   } 
+   
+   # chk: it-181101180808
+   $appConfig		 		= $self->app->get('AppConfig');
+   unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
+      
+      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
+      unless ( $ret == 0 ) { 
+         $self->render('text' => $msg ) unless $ret == 0 ; 
+         return ; 
+      }
+      else { 
+         $appConfig->{ $db . '.meta' } = $msr2 ; 
+      }
+   } 
 
-   $appConfig		= $self->app->get('AppConfig');
+
+	# debug print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
+
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
 
@@ -85,7 +93,10 @@ sub doSelectItems {
    $objRdrDbsFactory
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+
+
    ($ret, $msg) = $objRdrDb->doSelectTableIntoHashRef(\$objModel, $item);
+
    
    # debug print "Select.pm \n" ; 
    # debug print "ret: $ret , msg: $msg \n" ; 
@@ -310,11 +321,13 @@ sub doSelectDatabases {
 sub doSelectMeta {
 
    my $self        = shift;
-   my $item        = $self->stash('item');
+   my $table       = $self->stash('item');
    my $db          = $self->stash('db');
+   my $mhsr2       = {} ;
+   my $msr2        = {} ;
    my $rdbms_type  = 'postgres';
 
-	print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
+	# print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
    $appConfig		= $self->app->get('AppConfig');
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
@@ -323,26 +336,34 @@ sub doSelectMeta {
    my $ret = 0;
    my $msg = 'unknown error during Select item';
    my $rows_count = 0;
-
-   my $objRdrDbsFactory
-      = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
-   ($ret, $msg) = $objRdrDb->doSelectTablesColumnList($item);
    
-
-
-   $self->res->headers->accept_charset('UTF-8');
-   $self->res->headers->accept_language('fi, en');
-   $self->res->headers->content_type('application/json; charset=utf-8');
-
+   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
+      $self->render('text' => 'Refresh your page to login ');
+      return ; 
+   } 
+   
+   # chk: it-181101180808
+   $appConfig		 		= $self->app->get('AppConfig');
+   unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
+      
+      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
+      unless ( $ret == 0 ) { 
+         $self->render('text' => $msg ) unless $ret == 0 ; 
+         return ; 
+      }
+      else { 
+         $appConfig->{ $db . '.meta' } = $msr2 ; 
+      }
+   } 
+   ( $ret , $msg , $mhsr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
 
    if ( $ret == 0 ) {
       my $list = () ; # an array ref holding the converted hash ref of hash refs 
       my $http_code = 200 ; 
-      $msg = "SELECT meta OK for table: $item" ; 
+      $msg = "SELECT meta OK for table: $table " ; 
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert($objModel->get('hs_headers'));
+      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert($mhsr2);
 
       unless ( $ret == 0 ) {
          $http_code = 400 ; 
@@ -374,7 +395,7 @@ sub doSelectMeta {
          'req'   => "GET " . $self->req->url->to_abs
       });
    } elsif ( $ret == 1 ) {
-      $msg = " the table $item does not exist " ; 
+      $msg = " the table $table does not exist " ; 
       $self->res->code(400);
       $self->render( 'json' =>  { 
          'msg'   => $msg,
@@ -393,6 +414,8 @@ sub doSelectMeta {
       ;
    }
 }
+
+
 1;
 
 __END__

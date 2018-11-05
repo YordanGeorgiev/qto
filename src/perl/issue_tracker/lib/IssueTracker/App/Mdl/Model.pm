@@ -20,14 +20,38 @@ package IssueTracker::App::Mdl::Model ;
    our $hsr2            = {} ; # this is the hash ref of hash refs 
    our $mhsr2           = {} ; # and this is the meta hash ref of hash refs 
    our $objLogger       = {} ; 
-  
+
+
+   sub doGetTablesColumnList {
+      my $self          = shift ; 
+      my $appConfig     = shift ; 
+      my $db            = shift ; 
+      my $table         = shift ; 
+      my $mhr2          = {} ; 
+      my $c             = 1 ; 
+      my $ret           = 1 ; 
+      my $msg           = 'error while doGetTablesColumnList' ; 
+      my $cols = $appConfig->{ "$db" . '.meta' } ; 
+
+
+      foreach my $key ( keys %$cols ) {
+         my $row = $cols->{ $key } ; 
+         next unless $table eq $row->{ 'table_name' } ; 
+         $mhr2->{ $c } = $row ;
+      }
+      
+      $ret = 0 ; 
+      $msg = '' ; 
+      return ( $ret , $msg , $mhr2 );  
+
+   }
 
    sub doChkIfColumnExists {
 
-      my $self       = shift ; 
-      my $db         = shift ; 
-      my $table      = shift ; 
-      my $col        = shift ; 
+      my $self          = shift ; 
+      my $db            = shift ; 
+      my $table         = shift ; 
+      my $col           = shift ; 
    
       my $cols = $appConfig->{ "$db" . '.meta' } ; 
       foreach my $key ( keys %$cols ) {

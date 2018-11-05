@@ -27,7 +27,7 @@ our $rdbms_type     = 'postgres';
 # --------------------------------------------------------
 # Select all the rows from db by passed db and table name
 # --------------------------------------------------------
-sub doGlobalTxtSrch {
+sub doQueryItems {
 
    my $self             = shift;
    

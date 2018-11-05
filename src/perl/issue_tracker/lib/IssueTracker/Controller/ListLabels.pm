@@ -36,20 +36,17 @@ sub doBuildListControl {
 	my $self          	= shift ; 
 	my $msg           	= shift ; 
    my $objModel      	= ${ shift @_ } ; 
+	my $db               = shift ; 
+	my $table            = shift ; 
    my $ret           	= 1 ; 
    my $control       	= '' ; 
    my $mhsr2 				= {};
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb 			= {} ; 
-   my $table 				= {} ; 
    my $objWtrUIFactory 	= {} ; 
    my $objUIBuilder 		= {} ; 
 
-   $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
-   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
-   $table = $objModel->get('table_name'); 
-
-   ( $ret , $msg , $mhsr2 ) = $objRdrDb->doSelectTablesColumnList ( $table ) ;
+   ( $ret , $msg , $mhsr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 	
    $objWtrUIFactory = 'IssueTracker::App::UI::WtrUIFactory'->new(\$appConfig, \$objModel );

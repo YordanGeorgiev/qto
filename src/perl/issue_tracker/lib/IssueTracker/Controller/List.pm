@@ -35,22 +35,31 @@ our $objLogger      = {} ;
 sub doListItems {
 
    my $self             = shift;
-   my $item             = $self->stash('item');
    my $db               = $self->stash('db');
+   my $item             = $self->stash('item');
+   my $msr2             = {} ; 
+   my $ret              = 1 ; 
+   my $msg              = '' ; 
 
    unless ( $self->SUPER::isAuthorized($db) == 1 ) {
       $self->render('text' => 'Refresh your page to login ');
       return ; 
    } 
 
-   # chk: it-181101180808
-   $self->SUPER::doReloadProjectDbMetaData($db) unless $appConfig->{ "$db" . '.meta' } ; 
-
-
-
-   my $ret              = 1 ; 
-   my $msg              = '' ; 
-   my $as               = 'grid' ; # defines the form of the list control 
+   $appConfig		 		= $self->app->get('AppConfig');
+   unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
+      
+      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
+      unless ( $ret == 0 ) { 
+         $self->render('text' => $msg ) unless $ret == 0 ; 
+         return ; 
+      }
+      else { 
+         $appConfig->{ $db . '.meta' } = $msr2 ; 
+      }
+   } 
+ 
+   my $as               = 'grid' ; # the default form of the list control 
    my $list_control     = '' ; 
    my $refObjModel      = {} ; 
 
@@ -59,7 +68,7 @@ sub doListItems {
    ( $ret , $msg , $refObjModel)  = $self->doSetRequestModelData( $item , $db ) ; 
 
    if ( $ret == 0 ) {
-      ( $ret , $msg , $list_control ) = $self->doBuildListControl ( $msg , $refObjModel , $as  ) ; 
+      ( $ret , $msg , $list_control ) = $self->doBuildListControl ( $msg , $refObjModel , $db , $item , $as  ) ; 
    } else {
       $list_control = '' ; 
    }
@@ -123,6 +132,8 @@ sub doBuildListControl {
    my $self             = shift ; 
    my $msg              = shift ; 
    my $objModel         = ${ shift @_ } ; 
+   my $db               = shift ; 
+   my $table            = shift ; 
    my $as               = shift ; 
 
    my $ui_type          = 'page/list-grid' ; 
@@ -142,7 +153,7 @@ sub doBuildListControl {
 
    $objPageFactory                  = 'IssueTracker::Controller::PageFactory'->new(\$appConfig, \$objModel );
    $objPageBuilder                  = $objPageFactory->doInstantiate( $ui_type );
-   ( $ret , $msg , $list_control )  = $objPageBuilder->doBuildListControl( $msg , \$objModel , $as ) ;
+   ( $ret , $msg , $list_control )  = $objPageBuilder->doBuildListControl( $msg , \$objModel , $db , $table , $as ) ;
 
    return ( $ret , $msg , $list_control ) ; 
 
@@ -186,26 +197,11 @@ sub doRenderPageTemplate {
     , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
     , 'page_load_time'  => $page_load_time
     , 'list_control'    => $list_control
-	) if $self->isAuthenticated($db) ; 
+	) ; 
 
+   return ; 
 }
 
-sub isAuthenticated {
-
-        my $self        = shift ;
-        my $db          = shift ;
-
-        my $htpasswd_file = $appConfig->{ 'ProductInstanceDir'} . '/cnf/sec/passwd/' . $db . '.htpasswd' ;
-        return 1 unless -f $htpasswd_file ;  # open by default !!! ( temporary till v0.5.1 )
-        return 1 if $self->basic_auth(
-     $db => {
-         'path' => $htpasswd_file
-      }
-   );
-
-        return 0  ;
-
-}
 
 1;
 

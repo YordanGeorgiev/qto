@@ -16,7 +16,6 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    my $url = '/' . $db_name . '/query?for=' ; 
 
    $tm = "not at all for query param specified "; 
-   print "testing the following url: $url \n" ; 
    ok ( $t->get_ok($url)->status_is(400) , $tm ) ;
   
    $tm = 'not at all for query param specified ' ; 
@@ -39,4 +38,3 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    ok (ref($mshr2) eq 'HASH' , $tm) ; 
 
 done_testing();
-
