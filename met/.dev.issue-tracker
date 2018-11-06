@@ -11,6 +11,7 @@ src/perl/issue_tracker/templates/controls/list-grid/xt/search-box.xt.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/xt/grid.xt.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/xt/grid.xt.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/editable.js.html.ep
+src/perl/issue_tracker/templates/controls/srch-grid/js/linkable.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid.js.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/js/search-grid.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep

@@ -28,6 +28,10 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    sub doGlobalSrchIntoHashRef {
 
       my $self = shift ; 
+		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
+      if ( defined $objModel->get('postgres_db_name') ) {
+		   $db = $objModel->get('postgres_db_name');
+      }
       my $qry  = $objModel->get('query.web-action.for');
       
       my $ret = 1 ; 
@@ -55,7 +59,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       }
 	   for (1..11) { chop ( $str_sql ) } ;
       $str_sql .= ' ) a ' ; 
-      # debug print $str_sql ;  
       my $limit = $objModel->get('query.web-action.page-size' ) || 7 ; 
       my $page_num = $objModel->get('query.web-action.page-num' ) || 1 ; 
       my $offset = ( $page_num -1 ) || 0 ; # get default page is 1
@@ -63,6 +66,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = $limit*$offset ; 
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset ;" ; 
+      
+      print $str_sql ;  
 
       $ret = 0 ; 
       eval { 
@@ -114,7 +119,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       if ( @$ref_like_names and @$ref_like_values  ) {
 			
-         $sql = ' AND ' ; 
+         $sql = ' AND (' ; 
 
          for ( my $i = 0 ; $i < scalar ( @$ref_like_names ) ; $i++ ) {
 				my ( $like_name , $like_value ) = () ; 
@@ -131,16 +136,18 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
             my @like_values_list = split (',' , $like_value ) ;
             my $str = '' ;
             foreach my $item ( @like_values_list ) {
-               $str .= "( $like_name LIKE '%" . $item . "%' ) OR " ;
+               $str .= " $like_name LIKE '%" . $item . "%' OR " ;
             }
-			   for (1..3) { chop ( $str ) } ;
 
-            $sql .= "$str "
-               if ( defined ( $like_value ) and defined ( $like_name ) );
-				$sql .= ' AND ' ; 
+            if ( defined ( $like_value ) and defined ( $like_name ) ) {
+               $sql .= "$str "
+            } else {
+			      for (1..3) { chop ( $str ) } ;
+            }
          }
+			for (1..4) { chop ( $sql ) } ;
+		   $sql .= ') ' ; 
 
-			for (1..4) { chop ( $sql) } ;
 			return ( 0 , "" , $sql ) ; 
 
       } elsif ( @$ref_like_names or @$ref_like_values )  {
@@ -843,8 +850,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = $limit*$offset ; 
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
-     
-      # debug  print "from RdrPostgresDb.pm 743 : $str_sql \n" ; 
+    
+      # todo: ysg
+      print "from RdrPostgresDb.pm 743 : $str_sql \n" ; 
 
       $ret = 0 ; 
       eval { 

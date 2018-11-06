@@ -172,6 +172,7 @@ var Searchbox = {
             this.isOpen = false;
             return ; 
          }
+         var tableReplaced = 0 ; 
          var newUri = window.location.toString()
          var newDb = this.globalSrch.replace(/^(.*?):in\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
          if ( newDb != this.globalSrch ) {
@@ -182,6 +183,7 @@ var Searchbox = {
          if ( newTable != this.globalSrch ) {
            newUri = newUri.replace(/[/]{1}list[/]{1}[a-zA-Z0-9_]+[?]/gi , "/list/" + newTable + '?') 
            newUri = newUri.replace(/&page-num=([0-9]+)/gi , "&page-num=1") 
+           tableReplaced = 1 ; 
          }
          var newAttrToSortBy = this.globalSrch.replace(/^(.*?\s*):order-by\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
          if ( newAttrToSortBy != this.globalSrch ) {
@@ -189,6 +191,7 @@ var Searchbox = {
            newUri = newUri.replace(/&od=([a-zA-Z0-9_]+)/gi , "" )
            if ( newUri.indexOf ( "&oa=" + newAttrToSortBy ) == -1 ) { newUri = newUri + "&oa=" + newAttrToSortBy }
            newUri = newUri.replace(/&page-num=([0-9]+)/gi , "&page-num=1") 
+           tableReplaced = 1 ; 
          }
          var newAttrToSortBy = this.globalSrch.replace(/^(.*?\s*):desc-by\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
          if ( newAttrToSortBy != this.globalSrch ) {
@@ -196,8 +199,14 @@ var Searchbox = {
            newUri = newUri.replace(/&od=([a-zA-Z0-9_]+)/gi , "&od=" + newAttrToSortBy ) 
            newUri = newUri.replace(/&page-num=([0-9]+)/gi , "&page-num=1") 
            if ( newUri.indexOf ( "&od=" + newAttrToSortBy ) == -1 ) { newUri = newUri + "&od=" + newAttrToSortBy }
+           tableReplaced = 1 ; 
          }
-
+         if ( tableReplaced == 0 ) {
+            newUri = window.location.pathname 
+            newUri = newUri.replace(/[/]{1}[a-z]*[/]{1}[a-zA-Z0-9_]+[?]/gi , "/search") 
+            newUri = newUri + '?as=grid&'
+            newUri = newUri + 'for=' + this.globalSrch + '&page-size=7&page-num=1' ; 
+         }
          window.location.href = newUri // and redirect !!!
     }
     , handleClickOutside(e) {

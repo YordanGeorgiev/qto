@@ -74,19 +74,6 @@ th, td {
 	white-space:pre-wrap;
 }
 
-.cls_cnt_edtble {
-	padding: 2px;
-	white-space:pre-wrap;
-}
-.cls_cnt_edtble:hover {
-	opacity: 1.2 ;
-	background-color: #FFFFE0;
-	white-space:pre-wrap;
-}
-
-.cls_cnt_edtble:focus {
-	background-color: #FFFFE0;
-}
 th.active {
 	color: #FFFFE0; 
 	font-weight: bold;

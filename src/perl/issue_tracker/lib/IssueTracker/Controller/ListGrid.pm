@@ -81,8 +81,6 @@ sub doBuildListControl {
    	$control .= ']' ;
 	}
 
-   # todo:ysg
-	print "control is $control \n" ; 
    return ( $ret , $msg , $control ) ; 
 }
 

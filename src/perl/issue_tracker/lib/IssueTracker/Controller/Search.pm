@@ -62,7 +62,11 @@ sub doSearchItems {
       }
    } 
 
+   # todo: ysg 
+   p $appConfig->{ $db . '.meta' } ; 
+
    $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
+   $objModel->set('postgres_db_name' , $db ) ; 
    
    my $query_params = $self->req->query_params ; 
    $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
