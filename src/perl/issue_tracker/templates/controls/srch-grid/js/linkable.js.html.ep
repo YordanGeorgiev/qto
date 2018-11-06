@@ -1,0 +1,40 @@
+   Vue.component('linkable', {
+     template: `<div v-bind:id="id" class="cls_cnt_lnkble" @blur="onBlur" v-html="linkOrNot" v-model="cnt">{{ linkOrNot }}</div>`,
+     props: {
+		   id: {}
+         , cnt: {
+            twoWay: true
+            , default: ""
+         }
+         , for: {}
+	  }
+     , computed: {
+         linkOrNot: function() {
+            if ( this.id.startsWith ( 'item')) {
+               var newUri = window.location.pathname.replace('/search' , '/list/' + this.cnt )
+               newUri = newUri + '?as=grid&pick=name,description&like-by=name&like-val=' + this.$parent.$parent.urlParamFor
+               newUri = newUri + '&like-by=description&like-val=' + this.$parent.$parent.urlParamFor
+               return '<a tabindex="3" href="' + newUri + '" class="interlnk">' + this.cnt + '</a>'
+            } else {
+               return this.cnt
+            }
+         }
+       }
+     , model: {
+        prop: 'cnt'
+      }
+     , data() {
+         return {
+            content: this.cnt
+         }
+	  }
+     , mounted() {
+         this.content = this.cnt
+     },
+     methods: {
+       onBlur(ev) {
+				var el = ev.target
+            console.log ( "onBlur called")
+       }
+		}
+   })

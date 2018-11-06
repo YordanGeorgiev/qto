@@ -5,6 +5,7 @@
        gridColumns: <%== $srch_control =%>,
        gridData: [],
        pageSize: 7,
+       urlParamFor: "" ,
        pageNum: 1,
        pagesCount: 0,
        UrlParams:{ as:"grid" },
@@ -35,7 +36,7 @@
             if ( url_params.has("page-size") === false) { url_params.append("page-size" , 7); }
             if ( url_params.has("page-num") === false) { url_params.append("page-num" , 1); }
             
-            for(var pair of url_params.entries()) { console.log(pair[0]+ '->'+ pair[1]); }
+            // debug for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
             return url_params ; 
          }
 	      , fetchServerSideData: function (url_params){
@@ -88,6 +89,7 @@
                      var totalRSsize = data.cnt ; 
                      this.pageSize = url_params.get('page-size');
                      this.pageNum = url_params.get('page-num');
+                     this.urlParamFor = url_params.get('for');
                      var remainder = totalRSsize % this.pageSize
                      var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
                      if ( remainder == 0 ) { toAdd = 0  }

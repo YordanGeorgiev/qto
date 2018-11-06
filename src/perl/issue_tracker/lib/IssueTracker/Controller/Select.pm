@@ -354,9 +354,8 @@ sub doSelectMeta {
          $appConfig->{ $db . '.meta' } = $msr2 ; 
       }
    } 
-   # todo:ysg 
-   p $appConfig->{ $db . '.meta' } ; 
-
+   
+   # debug p $appConfig->{ $db . '.meta' } ; 
    ( $ret , $msg , $msr2 , $cnt ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
 
    if ( $ret == 0 ) {

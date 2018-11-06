@@ -1,7 +1,7 @@
    Vue.component('cruds-grid-sf', {
      template: '#grid-template',
      props: {
-       data: {type: Array, twoWay: true}
+       data: { type: Array, twoWay: true}
        , columns: Array
        , filterKey: String
      },

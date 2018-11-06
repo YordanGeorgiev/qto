@@ -105,7 +105,7 @@ sub doQueryItems {
       $self->render( 'json' =>  { 
          'msg'   => $msg,
          'ret'   => 0, 
-         'met'   => 0, # todo:ysg
+         'met'   => "", 
          'req'   => "GET " . $self->req->url->to_abs
       });
       return ; 
