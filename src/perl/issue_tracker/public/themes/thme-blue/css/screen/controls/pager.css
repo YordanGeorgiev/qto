@@ -3,6 +3,7 @@
    float: left ; 
    padding-left: 43% ; 
    padding-top: 1% ; 
+   font-size: 80% ;
 }
 .pgr-btn, .pgr-button {
     border: none;
@@ -104,4 +105,5 @@ a:visited {
    clear: both ; 
    margin-left: 2%;
    float: left ; 
+   font-size: 80% ;
 }

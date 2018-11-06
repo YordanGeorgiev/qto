@@ -1,15 +1,16 @@
 html, body {
    overflow-x: hidden;
    max-width: 100%; 
+   font-family: Helvetica Neue, Arial, sans-serif;
 }
 .app_name_tooltip {
    color: #C0C0C0;
-   font-size: 80%;
+   font-size: 75%;
    position: fixed; 
    z-index: 10; 
    left: 2%;
    top: 1%;
-   font-weight: 600;
+   font-weight: 500;
    display: inline-block;
 }
 .app_name_tooltip .app_name_tooltiptext {
