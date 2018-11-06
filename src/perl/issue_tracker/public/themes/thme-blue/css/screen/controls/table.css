@@ -16,6 +16,7 @@ th {
 	color: rgba(255,255,255,0.66);
 	cursor: pointer;
 	user-select: none;
+   font-size: 90% ;
 }
 .arrow {
 	display: inline-block;
@@ -73,33 +74,9 @@ th, td {
 	white-space:pre-wrap;
 }
 
-#grid tbody tr td:nth-child(1){ 
-   width: 24px;
-   padding: 2px ; 
-}
-
-#grid tbody tr td:nth-child(2){ 
-   width: 8px ; 
-   display: inline-block;
-   overflow: hidden;
-}
-
 .cls_cnt_edtble {
 	padding: 2px;
 	white-space:pre-wrap;
-}
-textarea {
-	min-width: 10px;
-	max-width: 500px; /* why percentages do not work here !!! */
-	resize: both; 
-   overflow: visible ; 
-	padding: 0;
-	white-space:pre-wrap;
-   box-sizing: border-box;
-   background-color: transparent;
-   border-style: none;
-   color: inherit;
-   font-size: 14px ; 
 }
 .cls_cnt_edtble:hover {
 	opacity: 1.2 ;

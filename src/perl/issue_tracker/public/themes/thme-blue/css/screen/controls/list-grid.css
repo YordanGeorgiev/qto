@@ -134,5 +134,25 @@ body {
    border-bottom-right-radius: 50%;
 	-moz-box-shadow: 2px 2px 10px #C0C0C0;
 }
+textarea {
+	min-width: 10px;
+	max-width: 500px; /* why percentages do not work here !!! */
+	resize: both; 
+   overflow: visible ; 
+   box-sizing: border-box;
+   background-color: transparent;
+   border-style: none;
+   color: inherit;
+   font-size: 14px ; 
+}
 
+#grid tbody tr td:nth-child(1){ 
+   width: 24px;
+   padding: 2px ; 
+}
 
+#grid tbody tr td:nth-child(2){ 
+   width: 8px ; 
+   display: inline-block;
+   overflow: hidden;
+}

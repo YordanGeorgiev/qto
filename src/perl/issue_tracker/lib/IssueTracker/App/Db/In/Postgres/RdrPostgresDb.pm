@@ -54,8 +54,15 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          }
       }
 	   for (1..11) { chop ( $str_sql ) } ;
-      $str_sql .= ' ) a ;' ; 
+      $str_sql .= ' ) a ' ; 
       # debug print $str_sql ;  
+      my $limit = $objModel->get('query.web-action.page-size' ) || 7 ; 
+      my $page_num = $objModel->get('query.web-action.page-num' ) || 1 ; 
+      my $offset = ( $page_num -1 ) || 0 ; # get default page is 1
+
+      $offset = $limit*$offset ; 
+      $offset = 0 if ( $offset < 0 ) ; 
+      $str_sql .= " LIMIT $limit OFFSET $offset ;" ; 
 
       $ret = 0 ; 
       eval { 

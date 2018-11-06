@@ -1,0 +1,122 @@
+   var search_grid = new Vue({
+     el: '#search-grid',
+     data: {
+       globalSrch: '',
+       gridColumns: <%== $srch_control =%>,
+       gridData: [],
+       pageSize: 7,
+       pageNum: 1,
+       pagesCount: 0,
+       UrlParams:{ as:"grid" },
+       pageSizes: ['5', '7', '10','15','20','30','50','100']
+         , searchInputChanged: ""
+		},
+     	methods: {
+        onSearchBoxInputChanged: function(quickSrch) {
+            this.globalSrch = quickSrch ; 
+        } 
+      , inpQuickSrchCH: function(event) {
+            console.log ( "todo: implement inpQuickSrchCH")
+         }
+      , getUrlParams: function (){
+            var url_params = new URLSearchParams();
+            if( window.location.toString().indexOf("?") != -1) {
+               var href_part = window.location.search.split('?')[1].split('#')[0]
+               href_part.replace("pick=","pick=id,").replace('id,id','id').replace(/([^=&]+)=([^&]*)/g, 
+                  function(m, key, value) {
+                     var attr = decodeURIComponent(key)
+                     var val = decodeURIComponent(value)
+                     url_params.append(attr,val);
+               });
+            } 
+            
+            if ( url_params.has("od") === false) { url_params.append("od" , "id"); }
+            if ( url_params.has("as") === false) { url_params.append("as" , "grid"); }
+            if ( url_params.has("page-size") === false) { url_params.append("page-size" , 7); }
+            if ( url_params.has("page-num") === false) { url_params.append("page-num" , 1); }
+            
+            for(var pair of url_params.entries()) { console.log(pair[0]+ '->'+ pair[1]); }
+            return url_params ; 
+         }
+	      , fetchServerSideData: function (url_params){
+            if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
+
+            return axios.get((window.location.pathname).replace("/search" , "/query") , { params: url_params } )
+            .then(response => { 
+               return response.data ; 
+            })
+            .catch(function(error) {
+               console.error(error);
+               return error.response.data.msg ; 
+            }) 
+         }
+         , generatePageNum: function (pgNum) {
+               var currUrl = window.location.href ; 
+               if ( currUrl.indexOf("?") === -1 ) { currUrl = currUrl + '?' }
+               if ( currUrl.indexOf("page-num=") === -1 ) {
+                  return currUrl + "&page-num=" + pgNum ;
+               } else {
+                  return currUrl.replace("page-num=" + this.pageNum , "page-num=" + pgNum);
+               }
+      	}
+         , generatePageSize: function (pgSize) {
+               var currUrl = window.location.href ; 
+               if ( typeof pgSize === 'undefined' ) { pgSize = 7 }
+               if ( currUrl.indexOf("page-size=") === -1 ) {
+                  return currUrl + "&page-size=" + pgSize ; 
+               } else {
+                  return currUrl
+                     .replace("page-size=" + this.pageSize , "page-size=" + pgSize) 
+                     .replace("page-num=" + this.pageNum , "page-num=1");
+               }
+         }
+         , fetchServerSideDataToUI: function(url_params) {
+
+               if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
+
+               this.fetchServerSideData(url_params)
+               .then( data => {
+                  var dataType = (typeof data)
+                  if ( dataType === 'undefined' ) {
+                     var msg = 'unexpected error occurred while fetching data !!!'
+                     setSpnMsgErrorText(data)
+                  } else if ( dataType === 'string' ) {
+                     setSpnMsgErrorText(data)
+                  } else {
+                     this.gridData = data.dat ; 
+                     console.log ( data.cnt ) ; 
+                     var totalRSsize = data.cnt ; 
+                     this.pageSize = url_params.get('page-size');
+                     this.pageNum = url_params.get('page-num');
+                     var remainder = totalRSsize % this.pageSize
+                     var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
+                     if ( remainder == 0 ) { toAdd = 0  }
+                     this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
+                     var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa') ;
+
+                     if ( oa !== null ) {
+                        this.$children[0].setAscSortBy( oa ) ; 
+                     } else if ( typeof url_params.get("od") != 'undefined' ) {
+                        var od = url_params.get("od")
+                        this.$children[0].setDescSortBy( od ) ; 
+                     } else {
+                        this.$children[0].setAscSortBy("id")
+                     }
+                  }
+               })
+               .catch(function(error) {
+                  if (typeof error !== 'undefined') {
+                    var errMsg = error.toString() 
+                    setSpnMsgErrorText(errMsg);
+                  } else {
+                    var msg = 'unexpected error occurred while fetching data !!!'
+                    setSpnMsgErrorText(msg)
+                  }
+               }) 
+	  	   }
+     }
+     , mounted() {
+	      this.fetchServerSideDataToUI();
+         bus.$on('searchBoxInputChanged',this.onSearchBoxInputChanged)
+	  }
+   });

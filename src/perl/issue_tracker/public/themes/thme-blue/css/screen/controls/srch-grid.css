@@ -1,0 +1,33 @@
+#grid tbody tr td:nth-child(1){ 
+   width: 30px;
+}
+#grid tbody tr td:nth-child(2){ 
+   width: 70px;
+}
+#grid tbody tr td:nth-child(3){ 
+   width: 250px;
+}
+#grid tbody tr td:nth-child(4){ 
+   width: 500px;
+}
+tr {
+   line-height: 37px;
+}
+td.div {
+   overflow: hidden ; 
+}
+
+.cls_cnt_edtble {
+	min-width: 10px;
+	max-width: 500px; /* why percentages do not work here !!! */
+   width: 100%; 
+	resize: both; 
+   box-sizing: border-box;
+   background-color: transparent;
+   border-style: none;
+   color: inherit;
+   font-size: 14px ; 
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+}
