@@ -13,10 +13,12 @@ use Data::Printer ;
 use Data::Dumper; 
 use Scalar::Util qw /looks_like_number/;
 
+use IssueTracker::Controller::PageFactory ; 
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
 use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::Utils::Timer ; 
 
 my $module_trace    = 0 ;
 our $appConfig      = {};
@@ -39,12 +41,15 @@ sub doSearchItems {
    my $msr2             = {};
    my $http_code        = 200 ; 
    my $rows_count       = 0 ; 
+   my $as               = 'srch-grid' ; 
+   my $srch_control     = 'srch-grid' ; 
    
    unless ( $self->SUPER::isAuthorized($db) == 1 ) {
       $self->render('text' => 'Refresh your page to login ');
       return ; 
    } 
    
+   $appConfig		 		= $self->app->get('AppConfig');
    unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
       
       ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
@@ -57,26 +62,122 @@ sub doSearchItems {
       }
    } 
 
-	# print "Search.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
-
    $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
-   $objModel->set('postgres_db_name' , $db ) ; 
-
+   
    my $query_params = $self->req->query_params ; 
    $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg ) = $objRdrUrlParams->doSetQueryGlobalTxtSrchParams(\$objModel, $query_params , 'Query' );
-   if ( $ret != 0 ) {
-      $self->res->code(400);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 400, 
-         'met'   => '',
-         'req'   => "GET " . $self->req->url->to_abs
-      });
+   ( $ret , $msg ) = $objRdrUrlParams->doSetQueryGlobalTxtSrchParams(\$objModel, $query_params , 'Search' );
+
+   unless ( $ret == 0 ) {
+   
+      my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+      my $page_load_time   = $objTimer->GetHumanReadableTime();
+  
+      $self->render(
+         'template'        => 'controls/srch-grid/srch-grid'
+       , 'as'              => 'grid'
+       , 'item'            => 'search'
+       , 'msg'             => 'msg'
+       , 'db' 		         => $db
+       , 'ProductType' 		=> $appConfig->{'ProductType'}
+       , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
+       , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
+       , 'page_load_time'  => $page_load_time
+       , 'srch_control'    => 'srch_conrol'
+      ) ; 
       return ; 
-   } 
+   }  else {
+      # do render without the table 
+      $as = $self->req->query_params->param('as') || $as ; # decide which type of Search page to build
+      ( $ret , $msg , $srch_control ) = $self->doBuildSearchControl ( \$objModel , $msg , $db , $as  ) ; 
+      
+      #$msg = $self->doSetPageMsg ( $ret , $msg ) ; 
+      $self->doRenderPageTemplate( \$objModel , $msg , $db , $srch_control , $as) ; 
+   }
 
 }
+
+sub doBuildSearchControl {
+
+   my $self             = shift ; 
+   my $objModel         = ${ shift @_ } ; 
+   my $msg              = shift ; 
+   my $db               = shift ; 
+   my $as               = shift || 'grid' ; 
+
+   my $ui_type          = 'page/srch-grid' ; 
+   my $ret              = 1 ; 
+   my $srch_control     = '' ; 
+   my $objPageBuilder   = {} ; 
+   my $objPageFactory   = {} ; 
+
+   my $lables_pages = { 
+        'grid'   => 'srch-grid'
+#      ,  'lbls'   => 'srch-labels'
+#      ,  'cloud'  => 'srch-cloud' 
+#      ,  'print-table'  => 'srch-print-table'
+   };
+   $ui_type = 'page/' . $lables_pages->{ $as } ; 
+  
+
+   $objPageFactory                  = 'IssueTracker::Controller::PageFactory'->new(\$appConfig, \$objModel );
+   $objPageBuilder                  = $objPageFactory->doInstantiate( $ui_type );
+   ( $ret , $msg , $srch_control )  = $objPageBuilder->doBuildSearchControl( $msg , $db  , $as ) ;
+
+   return ( $ret , $msg , $srch_control ) ; 
+
+}
+
+
+
+sub doRenderPageTemplate {
+   
+   my $self             = shift ; 
+   my $objModel         = ${ shift @_ } ; 
+   my $msg              = shift ; 
+   my $db               = shift ; 
+   my $srch_control     = shift ; 
+   my $as               = shift || 'grid' ; 
+
+   
+   my $as_templates = { 
+        'grid'          => 'srch-grid' 
+#      ,  'lbls'        => 'srch-labels'
+#      ,  'cloud'       => 'srch-cloud' 
+#      ,  'table'       => 'srch-rgrid' 
+#      ,  'print-table' => 'srch-print-table' 
+   };
+  
+   my $template_name    = $as_templates->{ $as } || 'srch-grid' ; 
+   my $template         = 'controls/' . $template_name . '/' . $template_name ; 
+
+   my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+   my $page_load_time   = $objTimer->GetHumanReadableTime();
+
+   # todo: ysg
+   print "template: $template \n" ; 
+   print "as: $as \n" ; 
+   print "msg: $msg \n" ; 
+   print "db: $db \n" ; 
+   print "srch_control: $srch_control \n" ; 
+   
+   $self->render(
+      'template'        => $template 
+    , 'as'              => $as
+    , 'item'            => 'search'
+    , 'msg'             => $msg
+    , 'db' 		         => $db
+    , 'ProductType' 		=> $appConfig->{'ProductType'}
+    , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
+    , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
+    , 'page_load_time'  => $page_load_time
+    , 'srch_control'    => $srch_control
+	) ; 
+
+   return ; 
+}
+
+
 
 1;
 

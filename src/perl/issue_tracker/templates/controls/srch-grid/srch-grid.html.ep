@@ -2,7 +2,6 @@
 % layout 'site';
 
 % content_for header_csss => begin
-  <title> list <%= " $item " =%>  <%= "as $as in " =%> <%= "$db " =%> </title> 
    <link rel="stylesheet" type="text/css" media="screen"  
       href="../../themes/thme-blue/css/screen/controls/pager.css?v=<%= $ProductVersion =%>" />
    <link rel="stylesheet" type="text/css" media="screen"  
@@ -10,15 +9,15 @@
    <link rel="stylesheet" type="text/css" media="screen"  
       href="../../themes/thme-blue/css/screen/controls/table.css?v=<%= $ProductVersion =%>" />
    <link rel="stylesheet" type="text/css" media="screen" 
-      href="../../themes/thme-blue/css/screen/controls/list-grid.css?v=<%= $ProductVersion =%>" />
+      href="../../themes/thme-blue/css/screen/controls/srch-grid.css?v=<%= $ProductVersion =%>" />
 % end
 
    %= include 'controls/list-grid/xt/search-box.xt'
-   %= include 'controls/list-grid/xt/grid.xt'
+   %= include 'controls/srch-grid/xt/grid.xt'
 
    <div id="dev_central_panel" >
 
-     <div id="cruds-grid">
+     <div id="search-grid">
          <div id="div_pager">
             <div class="pgr-bar pgr-border pgr-round" >
 					<span v-for="(pgNum, index) in this.pagesCount">	
@@ -46,7 +45,7 @@
             </div>
          </div>
 
-         <cruds-grid-sf :data.sync="gridData" :columns="gridColumns" :filter-key="globalSrch"></cruds-grid-sf>
+         <search-grid-sf :data.sync="gridData" :columns="gridColumns" :filter-key="globalSrch"></search-grid-sf>
 
          <div id="div_page_sizer">
             <div class="pgr-show-inline-block">
@@ -67,16 +66,10 @@
 <script id="all">
    var bus=new Vue({});
    %= include 'controls/list-grid/js/global-msg.js'
-
- if ( document.getElementById("spn_msg") ) {
-      %= include 'controls/list-grid/js/btn-del.js'
-      %= include 'controls/list-grid/js/btn-new.js'
-      %= include 'controls/list-grid/js/editable.js'
-      %= include 'controls/list-grid/js/search-box.js'
-      %= include 'controls/list-grid/js/div-search-box.js'
-      %= include 'controls/list-grid/js/cruds-grid-sf.js'
-      %= include 'controls/list-grid/js/cruds-grid.js'
- }
+   %= include 'controls/list-grid/js/search-box.js'
+   %= include 'controls/list-grid/js/div-search-box.js'
+   %= include 'controls/srch-grid/js/search-grid-sf.js'
+   %= include 'controls/srch-grid/js/search-grid.js'
 
 </script>
 

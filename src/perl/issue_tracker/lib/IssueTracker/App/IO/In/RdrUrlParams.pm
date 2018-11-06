@@ -145,13 +145,45 @@ sub doSetQueryGlobalTxtSrchParams {
    my $qry           = $query_params->param('for') ; 
 
    if ( !defined ( $qry ) or $qry eq "" ) {
-      $msg = "nothing to search for, the for url parameter is undefined the query route" ; 
+      $msg = "nothing to search for, the for url parameter is undefined the $controller route" ; 
       $ret = 400 ; 
    } else {
       $objModel->set($controller . '.web-action.for' , $qry );
       $query_params->remove('for') ; 
       $ret = 0 ; 
    }
+   # start page-size
+   my $page_size = $query_params->param('page-size') || 7 ; 
+   $msg = "the page size must a positive number, but page-size of " . $page_size . " was requested !!!" ; 
+   unless ( isint $page_size ) {
+      $ret = 400 ; 
+      return ( $ret , $msg ) ; 
+   }
+   if ( $page_size < 0 ) {
+      $msg = "the page size must a positive number, but page-size of " . $page_size . " was requested !!!" ; 
+      $ret = 400 ; 
+      return ( $ret , $msg ) ; 
+   }
+   $msg = '' ; 
+   $objModel->set('query.web-action.page-size' , $query_params->param('page-size') );
+   $query_params->remove('page-size') ; 
+
+   # start page-num
+   my $page_num = $query_params->param('page-num') || 1 ; 
+   $msg = "the page num must a positive number, but page-num of " . $page_num . " was requested !!!" ; 
+   unless ( isint $page_num ) {
+      $ret = 400 ; 
+      return ( $ret , $msg ) ; 
+   }
+   if ( $page_num < 0 ) {
+      $msg = "the page number must a positive number, but page-num of " . $page_num . " was requested !!!" ; 
+      $ret = 400 ; 
+      return ( $ret , $msg ) ; 
+   }
+   $msg = '' ; 
+   $objModel->set('query.web-action.page-num' , $query_params->param('page-num') );
+   $query_params->remove('page-num') ; 
+   # stop page-num
    return ( $ret , $msg ) ; 
 }
 
@@ -188,7 +220,7 @@ sub doSetSelectUrlParams {
    $query_params->remove('od') ; 
 
    # start page-size
-   my $page_size = $query_params->param('page-size') || 10 ; 
+   my $page_size = $query_params->param('page-size') || 7 ; 
    $msg = "the page size must a positive number, but page-size of " . $page_size . " was requested !!!" ; 
    unless ( isint $page_size ) {
       $ret = 400 ; 

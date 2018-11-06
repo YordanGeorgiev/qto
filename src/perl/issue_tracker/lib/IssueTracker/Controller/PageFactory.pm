@@ -5,13 +5,15 @@ package IssueTracker::Controller::PageFactory ;
 	use Data::Printer ; 
 
    use IssueTracker::Controller::ListCloud ; 
+   use IssueTracker::Controller::ListGrid ; 
+   use IssueTracker::Controller::SearchGrid ; 
    use IssueTracker::Controller::ListLabels ; 
    use IssueTracker::Controller::ListReadOnlyGrid ; 
    use IssueTracker::Controller::ListPrintTable ; 
 
 	our $appConfig 		= {} ; 
 	our $objModel        = {} ; 
-   our $ui_type         = 'page/list-rgrid' ; 
+   our $ui_type         = 'page/list-grid' ; 
 
 
 	sub doInstantiate {
@@ -46,6 +48,10 @@ package IssueTracker::Controller::PageFactory ;
 		elsif ( $ui_type eq 'page/list-print-table' ) {
 		   $package_file     = "IssueTracker/Controller/ListPrintTable.pm" ; 
 		   $objWtrControl    = "IssueTracker::Controller::ListPrintTable" ; 
+		}
+		elsif ( $ui_type eq 'page/srch-grid' ) {
+		   $package_file     = "IssueTracker/Controller/SearchGrid.pm" ; 
+		   $objWtrControl    = "IssueTracker::Controller::SearchGrid" ; 
 		}
 		else {
 	      croak "ui_type : $ui_type is not implemented !!!" ; 	
