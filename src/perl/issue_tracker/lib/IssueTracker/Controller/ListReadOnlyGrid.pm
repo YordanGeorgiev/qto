@@ -37,9 +37,10 @@ sub doBuildListControl {
 	my $self          	= shift ; 
 	my $msg           	= shift ; 
    my $objModel      	= ${ shift @_ } ; 
+   my $db               = shift ; 
    my $ret           	= 1 ; 
    my $control       	= '' ; 
-   my $mhsr2 				= {};
+   my $msr2 				= {};
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb 			= {} ; 
    my $table 				= {} ; 
@@ -50,7 +51,7 @@ sub doBuildListControl {
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    $table = $objModel->get('table_name'); 
 
-   ( $ret , $msg , $mhsr2 ) = $objRdrDb->doSelectTablesColumnList ( $table ) ;
+   ( $ret , $msg , $msr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 		
    my $to_picks   = $objModel->get('list.web-action.pick') ; 
@@ -58,13 +59,13 @@ sub doBuildListControl {
    my $to_hides   = $objModel->get('list.web-action.hide') ; 
    my @hides      = split ( ',' , $to_hides ) if defined ( $to_hides ) ; 
 	
-   #debug p $mhsr2 ;  
+   #debug p $msr2 ;  
 
    unless ( defined ( $to_picks )) {
    	$control = ']' ; # it is just the js array definining the cols
-		foreach my $id ( reverse sort keys %$mhsr2 ) {
-			my $row = $mhsr2->{ $id } ; 
-			my $col = $row->{ 'attname' } ; 
+		foreach my $id ( reverse sort keys %$msr2 ) {
+			my $row = $msr2->{ $id } ; 
+			my $col = $row->{ 'attribute_name' } ; 
 				$control = "'" . $col . "' , " . $control unless (grep /$col/, @hides) ; 
 		}
    	$control = '[' . $control ; 

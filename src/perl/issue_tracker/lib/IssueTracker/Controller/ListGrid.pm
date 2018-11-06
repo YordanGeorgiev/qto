@@ -67,7 +67,7 @@ sub doBuildListControl {
    	$control = ']' ; # it is just the js array definining the cols
 		foreach my $id ( reverse sort keys %$mhsr2 ) {
 			my $row = $mhsr2->{ $id } ; 
-			my $col = $row->{ 'attname' } ; 
+			my $col = $row->{ 'attribute_name' } ; 
 				$control = "'" . $col . "' , " . $control unless (grep /$col/, @hides) ; 
 		}
    	$control = '[' . $control ; 

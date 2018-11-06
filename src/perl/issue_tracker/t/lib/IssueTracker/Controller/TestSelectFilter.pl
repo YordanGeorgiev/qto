@@ -41,7 +41,7 @@ for my $row ( @$list ) {
    
    # not all tables contain the prio attribute to test by , thus run only for those having it
    foreach my $prio_have_row ( @$list_meta )  {
-         next unless $prio_have_row->{'attname'} eq 'prio'  ;
+         next unless $prio_have_row->{'attribute_name'} eq 'prio'  ;
          # test a filter by Select of integers	
          $url_params = '?fltr-by=prio&fltr-val=1,2,3' ; 
          $url = '/' . $db_name . '/select/' . $table . $url_params ; 

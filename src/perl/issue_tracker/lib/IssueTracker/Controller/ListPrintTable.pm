@@ -48,9 +48,6 @@ sub doBuildListControl {
    my $objWtrUIFactory 	= {} ; 
    my $objUIBuilder 		= {} ; 
 
-   $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
-   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
-
    ( $ret , $msg , $mhsr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 		
@@ -62,10 +59,10 @@ sub doBuildListControl {
    #debug p $mhsr2 ;  
 
    unless ( defined ( $to_picks )) {
-   	$control = ']' ; # it is just the js array definining the cols
+   	$control = ']' ; # it is just the js array definining the cols ... i.e. less is more !!!
 		foreach my $id ( reverse sort keys %$mhsr2 ) {
 			my $row = $mhsr2->{ $id } ; 
-			my $col = $row->{ 'attname' } ; 
+			my $col = $row->{ 'attribute_name' } ; 
 				$control = "'" . $col . "' , " . $control unless (grep /$col/, @hides) ; 
 		}
    	$control = '[' . $control ; 

@@ -75,7 +75,7 @@ Vue.component('div_search_box', {
 
       return axios.get(("/<%== $db =%>/select-meta/<%== $item =%>") , { params: url_params } )
       .then(response => {
-         return response.data.dat.map(obj => obj.attname);
+         return response.data.dat.map(obj => obj.attribute_name);
       })
       .catch(function(error) {
          console.error ( error.toString );
