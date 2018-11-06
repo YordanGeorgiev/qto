@@ -321,9 +321,8 @@ sub doSelectDatabases {
 sub doSelectMeta {
 
    my $self        = shift;
-   my $table       = $self->stash('item');
    my $db          = $self->stash('db');
-   my $mhsr2       = {} ;
+   my $table       = $self->stash('item');
    my $msr2        = {} ;
    my $rdbms_type  = 'postgres';
 
@@ -331,9 +330,9 @@ sub doSelectMeta {
 
    $appConfig		= $self->app->get('AppConfig');
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
-   $objModel->set('postgres_db_name' , $db ) ; 
  
    my $ret = 0;
+   my $cnt = 0;
    my $msg = 'unknown error during Select item';
    my $rows_count = 0;
    
@@ -355,7 +354,10 @@ sub doSelectMeta {
          $appConfig->{ $db . '.meta' } = $msr2 ; 
       }
    } 
-   ( $ret , $msg , $mhsr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
+   # todo:ysg 
+   p $appConfig->{ $db . '.meta' } ; 
+
+   ( $ret , $msg , $msr2 , $cnt ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
 
    if ( $ret == 0 ) {
       my $list = () ; # an array ref holding the converted hash ref of hash refs 
@@ -363,7 +365,7 @@ sub doSelectMeta {
       $msg = "SELECT meta OK for table: $table " ; 
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert($mhsr2);
+      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert($msr2);
 
       unless ( $ret == 0 ) {
          $http_code = 400 ; 
@@ -376,7 +378,7 @@ sub doSelectMeta {
          , 'dat'   => $list
          , 'ret'   => $http_code
          , 'req'   => "GET " . $self->req->url->to_abs
-         , 'met'   => $rows_count
+         , 'cnt'   => $cnt
       });
    } elsif ( $ret == 400 or $ret == 404 ) {
 
@@ -385,6 +387,7 @@ sub doSelectMeta {
          'msg'   => $msg,
          'ret'   => $ret , 
          'req'   => "GET " . $self->req->url->to_abs
+         , 'cnt'   => $cnt
       });
    } elsif ( $ret == 2 ) {
 
@@ -393,6 +396,7 @@ sub doSelectMeta {
          'msg'   => $msg,
          'ret'   => 400, 
          'req'   => "GET " . $self->req->url->to_abs
+         , 'cnt'   => $cnt
       });
    } elsif ( $ret == 1 ) {
       $msg = " the table $table does not exist " ; 
@@ -401,6 +405,7 @@ sub doSelectMeta {
          'msg'   => $msg,
          'ret'   => 400, 
          'req'   => "GET " . $self->req->url->to_abs
+         , 'cnt'   => $cnt
       });
    } else {
 
@@ -410,6 +415,7 @@ sub doSelectMeta {
          'msg'   => $msg,
          'ret' => 404, 
          'req'   => "GET " . $self->req->url->to_abs
+         , 'cnt'   => $cnt
       })
       ;
    }

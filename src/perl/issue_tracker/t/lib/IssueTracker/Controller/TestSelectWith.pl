@@ -36,7 +36,7 @@ for my $row ( @$tables ) {
    # not all tables contain the prio attribute to test by , thus run only for those having it
    foreach my $with_where ( @with_or_where )  {
       foreach my $prio_have_row ( @$list_meta )  {
-         next unless $prio_have_row->{'attname'} eq 'prio'  ;
+         next unless $prio_have_row->{'attribute_name'} eq 'prio'  ;
          # test a filter by Select of integers	
          $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio&' . "$with_where" . '=prio-le-3&' . "$with_where" . '=prio-ge-1' ; 
          print "url: $url \n" ; 
@@ -66,7 +66,7 @@ for my $row ( @$tables ) {
    
    # not all tables contain the prio attribute to test by , thus run only for those having it
    foreach my $status_have_row ( @$list_meta )  {
-      next unless $status_have_row->{'attname'} eq 'status'  ;
+      next unless $status_have_row->{'attribute_name'} eq 'status'  ;
       $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio,status&with=status-eq-02-todo' ; 
       $t->get_ok($url )->status_is(200) ; 
       ;

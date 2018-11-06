@@ -1,14 +1,13 @@
 use strict ; use warnings ; 
 package IssueTracker::App::Mdl::Model ; 
 
-	my $VERSION = '1.1.0';    #doc at the end
+	my $VERSION = '1.2.0';    
 
 	require Exporter;
 	our @ISA = qw(Exporter IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::AutoLoadable) ;
 	our $AUTOLOAD =();
 	our $ModuleDebug = 0 ; 
 	use AutoLoader;
-
 
 	use Carp qw /cluck confess shortmess croak carp/ ; 
    use Data::Printer ; 
@@ -17,20 +16,22 @@ package IssueTracker::App::Mdl::Model ;
    use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
 
    our $appConfig       = {} ; 
-   our $hsr2            = {} ; # this is the hash ref of hash refs 
-   our $mhsr2           = {} ; # and this is the meta hash ref of hash refs 
+   our $hsr2            = {} ; # the data - a hash ref of hash refs 
+   our $msr2            = {} ; # the metadata - ditto
    our $objLogger       = {} ; 
 
 
    sub doGetTablesColumnList {
+
       my $self          = shift ; 
       my $appConfig     = shift ; 
       my $db            = shift ; 
       my $table         = shift ; 
+
       my $mhr2          = {} ; 
-      my $c             = 1 ; 
+      my $c             = 0 ; 
       my $ret           = 1 ; 
-      my $msg           = 'error while doGetTablesColumnList' ; 
+      my $msg           = "error in the filtering of the $table table's columns in model" ; 
       my $cols = $appConfig->{ "$db" . '.meta' } ; 
 
 
@@ -38,13 +39,14 @@ package IssueTracker::App::Mdl::Model ;
          my $row = $cols->{ $key } ; 
          next unless $table eq $row->{ 'table_name' } ; 
          $mhr2->{ $c } = $row ;
+         $c++ ; 
       }
       
       $ret = 0 ; 
       $msg = '' ; 
-      return ( $ret , $msg , $mhr2 );  
-
+      return ( $ret , $msg , $mhr2 , $c);  
    }
+
 
    sub doChkIfColumnExists {
 
@@ -61,7 +63,8 @@ package IssueTracker::App::Mdl::Model ;
       }
       return 0 ; 
    }
-   
+  
+
    sub doSetDbTablesList {
 
       my $self       = shift ; 
@@ -79,22 +82,6 @@ package IssueTracker::App::Mdl::Model ;
       $appConfig->{"$db" . '.meta.tables-list'} = \@tbls ; 
    }
 
-   # 
-	# -----------------------------------------------------------------------------
-	# merge a hash ref to the model's hash ref
-   # src: https://stackoverflow.com/a/1242125/65706
-	# -----------------------------------------------------------------------------
-   sub addHsr {
-      my $self = shift ; 
-      my $row  = shift ; 
-
-      # debug p $hsr2 ; 
-      @{$hsr2}{keys %$row} = values %$row;
-      # debug print "STOP addHsr after \n" ; 
-
-      # debug p $hsr2 ; 
-   }
-
    sub doReplaceTokenInKeys {
       my $self          = shift ; 
       my $to_srch       = shift ; 
@@ -107,41 +94,34 @@ package IssueTracker::App::Mdl::Model ;
 		}
    }
 
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
+
 	sub new {
 
-		my $class      = shift;    # Class name is in the first parameter
+		my $class      = shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-		my $hsr2          = shift @_  || $hsr2 ; 
-		$mhsr2          = shift @_  || $mhsr2 ; 
+		my $hsr2       = shift @_  || $hsr2 ; 
+		$msr2         = shift @_  || $msr2 ; 
 
-		my $self = {};        # Anonymous hash reference holds instance attributes
-		bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize() ; 
+		my $self       = {}; bless( $self, $class );    
+      $self          = $self->doInitialize() ; 
 		return $self;
 	}  
-	#eof const
 	
-   #
-	# --------------------------------------------------------
-	# intializes this object 
-	# --------------------------------------------------------
+   
    sub doInitialize {
+
       my $self = shift ; 
 
       %$self = (
              appConfig => $appConfig
            , hsr2 => $hsr2
-           , mhsr2 => $mhsr2
+           , msr2 => $msr2
       );
 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
 
       return $self ; 
 	}	
-	#eof sub doInitialize
 
 
 
@@ -160,18 +140,15 @@ use Model ;
 
 
 =head1 DESCRIPTION
-the main model of the application : 
-passed between the readers, writers and the converters
-basically perl hash ref of hash refs with specific MUST-HAVE keys - uuid or id
+The main model of the application - passed between the readers, writers and the converters 
+for the lifetime of a single web or shell action. 
+The model is not a stash !!!
 
 =head2 EXPORT
 
 
 =head1 SEE ALSO
 
-perldoc perlvars
-
-No mailing list for this module
 
 
 =head1 AUTHOR
