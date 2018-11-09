@@ -96,9 +96,10 @@ doRunActions(){
 				
 		test "$action" == 'to-dev'									&& doChangeEnvType 'dev'
 		test "$action" == 'to-tst'									&& doChangeEnvType 'tst'
-		test "$action" == 'to-src'									&& doChangeEnvType 'src'
+		test "$action" == 'to-stg'									&& doChangeEnvType 'stg'
 		test "$action" == 'to-qas'									&& doChangeEnvType 'qas'
 		test "$action" == 'to-prd'									&& doChangeEnvType 'prd'
+		test "$action" == 'to-src'									&& doChangeEnvType 'src'
 		[[ $action == to-ver=* ]]									&& doChangeVersion $action
 		[[ $action == to-app=* ]]									&& doCloneToApp $action
 	);
