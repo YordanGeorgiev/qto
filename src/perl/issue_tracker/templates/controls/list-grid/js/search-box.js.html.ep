@@ -165,11 +165,11 @@ var Searchbox = {
          this.isOpen = false; 
     }
     , setDropDownResult(result) {
-            if ( typeof result == undefined ) {
-               result = this.results[0]
-            }
-            this.globalSrch = this.globalSrch.substring(0, this.globalSrch.lastIndexOf(" "));
-            this.globalSrch = this.globalSrch + " " + result
+         if ( typeof result == undefined ) {
+            result = this.results[0]
+         }
+         this.globalSrch = this.globalSrch.substring(0, this.globalSrch.lastIndexOf(" "));
+         this.globalSrch = this.globalSrch + " " + result
     }
     , onEnter() {
          if ( this.isOpen == true ) {
@@ -178,28 +178,71 @@ var Searchbox = {
             this.isOpen = false;
             return ; 
          }
-         var gs = this.globalSrch.trim()
+         var gs = String(this.globalSrch).trim()
+         if ( gs === "" ) { return } 
          var tokens = gs.trim().split(" ")
          var lastWord = tokens[tokens.length - 1]
          if ( lastWord === "undefined" ) { return ; }
-         var tableReplaced = 0 ; 
-         var newUri = window.location.toString()
-         var forUrlParam = undefined ; 
-         if ( gs.indexOf(":to") !== -1 ) {
+
+         var tableSpecified = 0 ; 
+         var uri = window.location.toString()
+         const url = document.createElement('a')
+         url.setAttribute('href', window.location.toString())
+
+         var db = uri.split("/")[3]
+
+         if ( String(gs).indexOf(':to ') !== -1 ) {
             var newDb = gs.replace(/^(.*?):to\s+([a-zA-Z0-9_]+)($|\s)(.*)/gi, '$2')
             if ( typeof newDb !== "undefined" ) {
-               var oldDb = newUri.split("/")[3]
-               console.log ( "oldDb : " + oldDb )
-               newUri = newUri.replace(oldDb,newDb);
-               forUrlParam = gs.replace(/^(.*?):to\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$3').trim()
-               gs = gs.replace(":to ", "").replace(newDb,"")
-               console.log ( "newDb: " + newDb ) 
-               console.log ( "gs: " + gs) 
-            } 
+               uri = uri.replace(db,newDb);
+               db = newDb  
+               gs = gs.replace(":to ", "").replace(newDb,"").trim
+               uri = this.buildLike ( uri , gs)
+            } else {
+               return
+            }
          }
 
-         console.log ( "newUri: " + newUri ) 
-         window.location.href = newUri // and redirect !!!
+         if ( String(gs).indexOf(':in ') !== -1 ) {
+            var newTable = gs.replace(/^(.*?\s*):in\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
+            if ( typeof newTable !== "undefined" ) {
+               uri = url.protocol + "//" + url.hostname + ':' + url.port + '/' 
+               uri = uri + db + '/list/' + newTable + url.search
+               gs = gs.replace(":in ", "").replace( newTable,"").trim()
+               uri = this.buildLike ( uri , gs)
+            } else {
+               return 
+            }
+            tableSpecified = 1 ; 
+         }
+         
+         if ( tableSpecified == 0 ) {
+            uri = uri.replace(/&page-num=([0-9]+)/gi , "") 
+            uri = uri + '&page-num=1'
+            uri = uri.replace(/&page-size=([0-9]+)/gi , "") 
+            uri = uri + '&page-size=7'
+            if ( gs.length > 0 ) {
+               uri = url.protocol + "//" + url.hostname + ':' + url.port + '/' 
+               uri = uri + db + '/search' + url.search
+               uri = uri.replace(/&for=([a-zA-Z0-9_%]+)/gi , "" ) 
+               uri = uri.replace(/&with=([a-zA-Z_%]+)/gi , "") 
+               uri = uri.replace(/&like-by=([a-zA-Z_%]+)/gi , "") 
+               uri = uri.replace(/&like-val=([a-zA-Z_%]+)/gi , "") 
+               uri = uri + '&for=' + gs
+            }
+         }
+         window.location.href = uri // and redirect !!!
+    } 
+    , buildLike(uri,pFor) {
+         if ( pFor.length > 0) {
+            uri = uri.replace(/&with=([a-zA-Z_%]+)/gi , "") 
+            uri = uri.replace(/&like-by=([a-zA-Z_%]+)/gi , "") 
+            uri = uri.replace(/&like-val=([a-zA-Z_%]+)/gi , "") 
+            uri = uri.replace(/&for=([a-zA-Z0-9_%]+)/gi , "" ) 
+            uri = uri + '&like-by=name&like-val=' + pFor
+            uri = uri + '&like-by=description&like-val=' + pFor
+         } 
+         return uri
     }
     , handleClickOutside(e) {
          if (!this.$el.contains(e.target)) {
