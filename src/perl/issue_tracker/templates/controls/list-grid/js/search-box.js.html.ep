@@ -28,6 +28,7 @@ var Searchbox = {
 	  prop: 'tblist',
 	  prop: 'collist',
 	  prop: 'operators',
+	  prop: 'theFirstItem',
 	  event: 'dblistChange'
 	}
   , data() {
@@ -37,12 +38,16 @@ var Searchbox = {
       , globalSrch: ""
       , isLoading: false
       , arrowCounter: 0
-      , operators: [':in', ':for', ':order-by',':desc-by']
+      , operators: [':to', ':in', ':order-by',':desc-by']
     };
   },
   methods: {
    onChange() {
-      var globalSrch = this.globalSrch.replace(':in ' , '').replace(':for ' , '').replace(':pick','')
+      var globalSrch = this.globalSrch.replace(':to ' , '').replace(':in ' , '').replace(':pick','')
+      if ( this.globalSrch.slice(" ") ){
+         this.isLoading = false
+         this.isOpen = false
+      }
       bus.$emit('searchBoxInputChanged', globalSrch );
       var tokens = this.globalSrch.split(" ")
       var lastWord = tokens[tokens.length - 1]
@@ -62,12 +67,13 @@ var Searchbox = {
          var tokens = this.globalSrch.split(" ")
          var lastWord = tokens[tokens.length - 1]
          var secondLastWord = tokens[tokens.length - 2]
-         if ( lastWord === ':in' || secondLastWord === ':in' ) { 
+         if ( lastWord === ':to' || secondLastWord === ':to' ) { 
             this.results = []
             this.$parent.fetchSSDataForDbsUI() ; 
             this.results = this.dblist
+            
                .filter(item => {
-                  var to_srch = lastWord.toLowerCase().replace(':in' , '')
+                  var to_srch = lastWord.toLowerCase().replace(':to' , '')
                   if ( to_srch === '' ) {
                      return item ; 
                   } else {
@@ -75,12 +81,12 @@ var Searchbox = {
                   }
                })
          }
-         else if ( lastWord === ':for' || secondLastWord === ':for' ) { 
+         else if ( lastWord === ':in' || secondLastWord === ':in' ) { 
             this.results = []
             this.$parent.fetchSSDataForTablesUI() ; 
             this.results = this.tblist
                .filter(item => {
-                  var to_srch = lastWord.toLowerCase().replace(':for' , '')
+                  var to_srch = lastWord.toLowerCase().replace(':in' , '')
                   if ( to_srch === '' ) {
                      return item ; 
                   } else {
@@ -172,41 +178,27 @@ var Searchbox = {
             this.isOpen = false;
             return ; 
          }
+         var gs = this.globalSrch.trim()
+         var tokens = gs.trim().split(" ")
+         var lastWord = tokens[tokens.length - 1]
+         if ( lastWord === "undefined" ) { return ; }
          var tableReplaced = 0 ; 
          var newUri = window.location.toString()
-         var newDb = this.globalSrch.replace(/^(.*?):in\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
-         if ( newDb != this.globalSrch ) {
-           newUri = newUri.replace(/[/]{1}[a-zA-Z0-9_]+[/]{1}list/gi , "/" + newDb + "/list") 
-           newUri = newUri.replace(/&page-num=([0-9]+)/gi , "&page-num=1") 
-         } 
-         var newTable = this.globalSrch.replace(/^(.*?\s*):for\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
-         if ( newTable != this.globalSrch ) {
-           newUri = newUri.replace(/[/]{1}list[/]{1}[a-zA-Z0-9_]+[?]/gi , "/list/" + newTable + '?') 
-           newUri = newUri.replace(/&page-num=([0-9]+)/gi , "&page-num=1") 
-           tableReplaced = 1 ; 
+         var forUrlParam = undefined ; 
+         if ( gs.indexOf(":to") !== -1 ) {
+            var newDb = gs.replace(/^(.*?):to\s+([a-zA-Z0-9_]+)($|\s)(.*)/gi, '$2')
+            if ( typeof newDb !== "undefined" ) {
+               var oldDb = newUri.split("/")[3]
+               console.log ( "oldDb : " + oldDb )
+               newUri = newUri.replace(oldDb,newDb);
+               forUrlParam = gs.replace(/^(.*?):to\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$3').trim()
+               gs = gs.replace(":to ", "").replace(newDb,"")
+               console.log ( "newDb: " + newDb ) 
+               console.log ( "gs: " + gs) 
+            } 
          }
-         var newAttrToSortBy = this.globalSrch.replace(/^(.*?\s*):order-by\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
-         if ( newAttrToSortBy != this.globalSrch ) {
-           newUri = newUri.replace(/&oa=([a-zA-Z0-9_]+)/gi , "&oa=" + newAttrToSortBy ) 
-           newUri = newUri.replace(/&od=([a-zA-Z0-9_]+)/gi , "" )
-           if ( newUri.indexOf ( "&oa=" + newAttrToSortBy ) == -1 ) { newUri = newUri + "&oa=" + newAttrToSortBy }
-           newUri = newUri.replace(/&page-num=([0-9]+)/gi , "&page-num=1") 
-           tableReplaced = 1 ; 
-         }
-         var newAttrToSortBy = this.globalSrch.replace(/^(.*?\s*):desc-by\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
-         if ( newAttrToSortBy != this.globalSrch ) {
-           newUri = newUri.replace(/&oa=([a-zA-Z0-9_]+)/gi , "" ) 
-           newUri = newUri.replace(/&od=([a-zA-Z0-9_]+)/gi , "&od=" + newAttrToSortBy ) 
-           newUri = newUri.replace(/&page-num=([0-9]+)/gi , "&page-num=1") 
-           if ( newUri.indexOf ( "&od=" + newAttrToSortBy ) == -1 ) { newUri = newUri + "&od=" + newAttrToSortBy }
-           tableReplaced = 1 ; 
-         }
-         if ( tableReplaced == 0 ) {
-            newUri = window.location.pathname 
-            newUri = newUri.replace(/[/]{1}[a-z]*[/]{1}[a-zA-Z0-9_]+[?]/gi , "/search") 
-            newUri = newUri + '?as=grid&'
-            newUri = newUri + 'for=' + this.globalSrch + '&page-size=7&page-num=1' ; 
-         }
+
+         console.log ( "newUri: " + newUri ) 
          window.location.href = newUri // and redirect !!!
     }
     , handleClickOutside(e) {
