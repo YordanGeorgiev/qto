@@ -285,6 +285,10 @@ sub doSetRoutes {
    , action       => 'doListItems'
    );
 
+   $r->any('*')->to(
+     controller   => 'Search'
+   , action       => 'doSearchItems'
+   );
 }
 
 # -----------------------------------------------------------------------------

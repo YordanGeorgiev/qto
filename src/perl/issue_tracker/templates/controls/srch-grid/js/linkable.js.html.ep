@@ -34,7 +34,6 @@
      methods: {
        onBlur(ev) {
 				var el = ev.target
-            console.log ( "onBlur called")
        }
 		}
    })

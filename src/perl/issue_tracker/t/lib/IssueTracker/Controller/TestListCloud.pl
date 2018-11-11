@@ -24,9 +24,9 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    ;
 
    $tm = ' the error msg should be diplayed in the err_msg label of the page ' ; 
-   $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
+   # $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
    $exp_txt = 'cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
-   ok ( $dom->at('#spn_err_msg')->text eq $exp_txt , $tm ) ; 
+   ok ( $t->ua->get($url)->result->body eq $exp_txt , $tm ) ; 
    ; 
 
    $db_name= $appConfig->{ 'postgres_db_name' } ; 

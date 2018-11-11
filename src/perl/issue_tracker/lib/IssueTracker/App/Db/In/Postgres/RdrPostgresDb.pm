@@ -496,8 +496,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    # -----------------------------------------------------------------------------
    sub doLoadProjDbMetaData {
 
-      my $self                   = shift ; 
-      my $db       = shift ; 
+      my $self             = shift ; 
+      my $db               = shift ; 
       
       my $msg              = q{} ;         
       my $ret              = () ;          # this is the return value from this method 

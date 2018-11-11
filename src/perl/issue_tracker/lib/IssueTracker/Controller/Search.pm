@@ -41,7 +41,7 @@ sub doSearchItems {
    my $msr2             = {};
    my $http_code        = 200 ; 
    my $rows_count       = 0 ; 
-   my $as               = 'srch-grid' ; 
+   my $as               = 'grid' ; 
    my $srch_control     = 'srch-grid' ; 
    
    unless ( $self->SUPER::isAuthorized($db) == 1 ) {
@@ -61,9 +61,6 @@ sub doSearchItems {
          $appConfig->{ $db . '.meta' } = $msr2 ; 
       }
    } 
-
-   # todo: ysg 
-   p $appConfig->{ $db . '.meta' } ; 
 
    $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
@@ -116,11 +113,12 @@ sub doBuildSearchControl {
    my $objPageFactory   = {} ; 
 
    my $lables_pages = { 
-        'grid'   => 'srch-grid'
+          'grid'   => 'srch-grid'
 #      ,  'lbls'   => 'srch-labels'
 #      ,  'cloud'  => 'srch-cloud' 
 #      ,  'print-table'  => 'srch-print-table'
    };
+
    $ui_type = 'page/' . $lables_pages->{ $as } ; 
   
 
@@ -158,9 +156,6 @@ sub doRenderPageTemplate {
    my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
 
-   # todo:ysg
-   print "srch_control: $srch_control \n" ; 
-   
    $self->render(
       'template'        => $template 
     , 'as'              => $as
