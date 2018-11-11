@@ -51,7 +51,8 @@ sub doListItems {
       
       ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
       unless ( $ret == 0 ) { 
-         $self->render('text' => $msg ) unless $ret == 0 ; 
+         $self->res->code(400) ; 
+         $self->render('text' => $msg ) ; 
          return ; 
       }
       else { 
@@ -63,7 +64,7 @@ sub doListItems {
    my $list_control     = '' ; 
    my $refObjModel      = {} ; 
 
-	print "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
+	# debug print "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
    ( $ret , $msg , $refObjModel)  = $self->doSetRequestModelData( $item , $db ) ; 
 

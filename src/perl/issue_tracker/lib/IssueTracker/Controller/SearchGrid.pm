@@ -14,7 +14,6 @@ use IssueTracker::App::UI::WtrUIFactory ;
 our $module_trace   = 0 ; 
 our $appConfig      = {};
 our $objModel       = {} ; 
-our $rdbms_type     = 'postgres' ; 
 
 
 sub doBuildSearchControl {
@@ -32,7 +31,7 @@ sub doBuildSearchControl {
 
 sub new {
    my $invocant 			= shift ;    
-   $appConfig           = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+   $appConfig           = ${ shift @_ } || croak 'missing appConfig !!!' ; 
    $objModel            = ${ shift @_ } || croak 'missing objModel !!!' ; 
    my $class            = ref ( $invocant ) || $invocant ; 
    my $self             = {}; bless( $self, $class );    
