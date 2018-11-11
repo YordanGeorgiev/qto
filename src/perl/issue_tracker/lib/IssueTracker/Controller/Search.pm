@@ -67,7 +67,7 @@ sub doSearchItems {
    
    my $query_params = $self->req->query_params ; 
    $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg ) = $objRdrUrlParams->doSetQueryGlobalTxtSrchParams(\$objModel, $query_params , 'Search' );
+   ( $ret , $msg ) = $objRdrUrlParams->doSetQueryUrlParams(\$objModel, $query_params , 'Search' );
 
    if ( ! defined ($self->req->query_params ) or $ret != 0 ) {
    

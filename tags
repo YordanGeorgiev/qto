@@ -601,7 +601,7 @@ doSetDeleteUrlParams	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlPar
 doSetHooks	src/perl/issue_tracker/lib/IssueTracker.pm	125;"	subroutine	language:Perl
 doSetListUrlParams	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlParams.pm	231;"	subroutine	language:Perl
 doSetPageMsg	src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm	82;"	subroutine	language:Perl
-doSetQueryGlobalTxtSrchParams	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlParams.pm	136;"	subroutine	language:Perl
+doSetQueryUrlParams	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlParams.pm	136;"	subroutine	language:Perl
 doSetRequestModelData	src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm	101;"	subroutine	language:Perl
 doSetRoutes	src/perl/issue_tracker/lib/IssueTracker.pm	222;"	subroutine	language:Perl
 doSetSelectUrlParams	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlParams.pm	159;"	subroutine	language:Perl
