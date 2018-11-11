@@ -72,7 +72,7 @@ sub doSearchItems {
    $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
    ( $ret , $msg ) = $objRdrUrlParams->doSetQueryGlobalTxtSrchParams(\$objModel, $query_params , 'Search' );
 
-   unless ( $ret == 0 ) {
+   if ( ! defined ($self->req->query_params ) or $ret != 0 ) {
    
       my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
       my $page_load_time   = $objTimer->GetHumanReadableTime();
@@ -81,13 +81,13 @@ sub doSearchItems {
          'template'        => 'controls/srch-grid/srch-grid'
        , 'as'              => 'grid'
        , 'item'            => 'search'
-       , 'msg'             => 'msg'
+       , 'msg'             => ''
        , 'db' 		         => $db
        , 'ProductType' 		=> $appConfig->{'ProductType'}
        , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
        , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
        , 'page_load_time'  => $page_load_time
-       , 'srch_control'    => 'srch_conrol'
+       , 'srch_control'    => "['name']" 
       ) ; 
       return ; 
    }  else {
@@ -158,11 +158,7 @@ sub doRenderPageTemplate {
    my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
 
-   # todo: ysg
-   print "template: $template \n" ; 
-   print "as: $as \n" ; 
-   print "msg: $msg \n" ; 
-   print "db: $db \n" ; 
+   # todo:ysg
    print "srch_control: $srch_control \n" ; 
    
    $self->render(

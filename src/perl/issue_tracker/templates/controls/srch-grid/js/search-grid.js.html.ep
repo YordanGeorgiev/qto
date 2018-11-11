@@ -42,8 +42,20 @@
 	      , fetchServerSideData: function (url_params){
             if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
 
+            // todo:ysg
+            console.log( this.gridColumns )
+            if ( this.gridColumns.length === 1 ) {
+              var promise = new Promise(function(resolve, reject) {
+                  var arrNoData = { "dat": [{"name": "init"}], "cnt": "1", 'msg':''}
+                  resolve(arrNoData);
+              });
+              return promise;
+            }
+
             return axios.get((window.location.pathname).replace("/search" , "/query") , { params: url_params } )
             .then(response => { 
+               // todo:ysg
+               console.log ( response.data )
                return response.data ; 
             })
             .catch(function(error) {
@@ -84,8 +96,19 @@
                   } else if ( dataType === 'string' ) {
                      setSpnMsgErrorText(data)
                   } else {
+                     console.log ( data.dat[0] )
+                     if ( data.dat[0].name === 'init' ) {
+                        console.log ( "init")
+                        document.getElementById('grid').style['display'] = 'none' ;
+                        document.getElementById('div_pager').style['display'] = 'none' ;
+                        document.getElementById('div_page_sizer').style['display'] = 'none' ;
+                        document.getElementById('inp_srch_box').style['margin-top'] = '10%' ;
+                     }
                      this.gridData = data.dat ; 
+
+                     // todo:ysg
                      console.log ( data.cnt ) ; 
+                     console.log ( data.dat ) ; 
                      var totalRSsize = data.cnt ; 
                      this.pageSize = url_params.get('page-size');
                      this.pageNum = url_params.get('page-num');

@@ -67,7 +67,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset ;" ; 
       
-      print $str_sql ;  
+      # debug print $str_sql ;  
 
       $ret = 0 ; 
       eval { 
@@ -581,7 +581,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $msg              = q{} ;         
       my $ret              = () ;          # this is the return value from this method 
       my $debug_msg        = q{} ; 
-      my $mhsr2             = {} ;         # this is meta hash describing the data hash ^^
+      my $mhsr2            = {} ;         # this is meta hash describing the data hash ^^
       my $sth              = {} ;         # this is the statement handle
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
@@ -603,16 +603,12 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 			ORDER BY t.relname , a.attnum
 			;
 		" ; 
-      # debug 
-      # print "SQL: $str_sql \n STOP RdrPostgresDb.pm" ;   
-      
+      # debug print "SQL: $str_sql \n STOP RdrPostgresDb.pm" ;   
       # chk: https://stackoverflow.com/a/451454/65706 
       eval { 
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ; 
          $mhsr2 = $sth->fetchall_hashref( 'attnum' ) ; 
-         # todo:ysg
-         p $mhsr2 ; 
       };
       if ( $@ or !scalar(%$mhsr2)) { 
          # $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
@@ -851,8 +847,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
     
-      # todo: ysg
-      print "from RdrPostgresDb.pm 743 : $str_sql \n" ; 
+      # print "from RdrPostgresDb.pm 743 : $str_sql \n" ; 
 
       $ret = 0 ; 
       eval { 

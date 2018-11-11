@@ -48,6 +48,9 @@ var Searchbox = {
          this.isLoading = false
          this.isOpen = false
       }
+      if ( this.globalSrch.length < 4 ) {
+         return
+      }
       bus.$emit('searchBoxInputChanged', globalSrch );
       var tokens = this.globalSrch.split(" ")
       var lastWord = tokens[tokens.length - 1]
@@ -208,6 +211,7 @@ var Searchbox = {
             if ( typeof newTable !== "undefined" ) {
                uri = url.protocol + "//" + url.hostname + ':' + url.port + '/' 
                uri = uri + db + '/list/' + newTable + url.search
+               if ( uri.indexOf('?') == -1 ) { uri = uri + '?as=grid' }
                gs = gs.replace(":in ", "").replace( newTable,"").trim()
                uri = this.buildLike ( uri , gs)
             } else {
@@ -216,6 +220,7 @@ var Searchbox = {
             tableSpecified = 1 ; 
          }
          
+
          if ( tableSpecified == 0 ) {
             uri = uri.replace(/&page-num=([0-9]+)/gi , "") 
             uri = uri + '&page-num=1'
@@ -224,6 +229,7 @@ var Searchbox = {
             if ( gs.length > 0 ) {
                uri = url.protocol + "//" + url.hostname + ':' + url.port + '/' 
                uri = uri + db + '/search' + url.search
+               if ( uri.indexOf('?') == -1 ) { uri = uri + '?as=grid' }
                uri = uri.replace(/&for=([a-zA-Z0-9_%]+)/gi , "" ) 
                uri = uri.replace(/&with=([a-zA-Z_%]+)/gi , "") 
                uri = uri.replace(/&like-by=([a-zA-Z_%]+)/gi , "") 
