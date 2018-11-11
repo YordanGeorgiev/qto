@@ -69,7 +69,7 @@ sub doQueryItems {
 
    my $query_params = $self->req->query_params ; 
    $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg ) = $objRdrUrlParams->doSetQueryGlobalTxtSrchParams(\$objModel, $query_params , 'Query' );
+   ( $ret , $msg ) = $objRdrUrlParams->doSetQueryUrlParams(\$objModel, $query_params , 'Query' );
    if ( $ret != 0 ) {
       $self->res->code(400);
       $self->render( 'json' =>  { 
