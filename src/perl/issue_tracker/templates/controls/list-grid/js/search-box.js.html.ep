@@ -66,7 +66,7 @@ var Searchbox = {
       }
     } 
     , filterResults() {
-         this.ArrowCounter = 0
+         this.arrowCounter = 0
          var tokens = this.globalSrch.split(" ")
          var lastWord = tokens[tokens.length - 1]
          var secondLastWord = tokens[tokens.length - 2]
