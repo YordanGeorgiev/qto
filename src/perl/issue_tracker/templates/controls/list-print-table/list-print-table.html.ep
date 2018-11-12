@@ -35,15 +35,15 @@
    
 
 
-   function setSpnMsgErrorText(txt){
+   function setMsgVisuals(txt){
       document.getElementById("div_msg").innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
       document.getElementById("div_msg").style.display="inline";
       document.getElementById("div_msg").style['box-shadow'] = "0 0 10px red";   
       document.getElementById("div_msg").style['background-color'] = "#FFFF00";   
-      fadeAwayDivMsg();
+      fadeAwayDiv();
    }
 
-   function fadeAwayDivMsg(){
+   function fadeAwayDiv(){
       var div_msg_style = document.getElementById('div_msg').style; div_msg_style.opacity = 1; // fade the err msg
       (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,1550)})();
    }
@@ -155,7 +155,7 @@ if ( document.getElementById("spn_msg") ) {
                return response.data ; 
             })
             .catch(function(error) {
-               setSpnMsgErrorText(error.response.data.msg);
+               setMsgVisuals(error.response.data.msg);
             }) 
          }
          , fetchServerSideDataToUI: function(url_params) {
@@ -185,7 +185,7 @@ if ( document.getElementById("spn_msg") ) {
             .catch(function(error) {
                if (typeof error !== 'undefined') {
                  var errMsg = error.toString() 
-                 setSpnMsgErrorText(errMsg);
+                 setMsgVisuals(errMsg);
                }
             }) 
 	  	   }

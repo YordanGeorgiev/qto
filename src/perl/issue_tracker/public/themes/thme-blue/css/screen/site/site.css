@@ -33,18 +33,38 @@ html, body {
 }
 
 html body div#div_msg {
-	 font-size: 110%;
-	 min-width: 90%; 
-	 max-width: 98%; 
+	 position: absolute; 
+    top: 2%; 
+	 bottom: 94%; 
+    left: 15%;
+	 z-index: 0; 
+	 padding: 10px; 
+	 font-size: 103%;
+	 min-width: 50%; 
+	 max-width: 70%; 
 	 overflow-x: hidden;
 	 text-align: center; 
 	 border-radius: 5px;
-	 padding: 10px; 
-	 position: fixed; 
-	 z-index: 0; 
-	 bottom: 95%; 
 }
 #spn_err_msg {
+	color: #FF0000 ; 
+	background-color: #FFFF00;
+}
+html body div#div_notice {
+    position: absolute;
+    top: 94%; 
+	 bottom: 2%; 
+    left: 15%;
+	 z-index: 0; 
+	 padding: 10px; 
+	 font-size: 80%;
+	 min-width: 70%; 
+	 max-width: 80%; 
+	 overflow-x: hidden;
+	 text-align: center; 
+	 border-radius: 5px;
+}
+#spn_notice {
 	color: #FF0000 ; 
 	background-color: #FFFF00;
 }

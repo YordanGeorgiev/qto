@@ -7,6 +7,7 @@ src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/srch-grid.html.ep
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/templates/controls/list-grid/js/div-search-box.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/global-msg.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/search-box.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/xt/search-box.xt.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/xt/grid.xt.html.ep
@@ -25,7 +26,6 @@ src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/page-sizer.png
 # --
-src/perl/issue_tracker/templates/controls/list-grid/js/global-msg.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/btn-del.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/btn-new.js.html.ep
 # --

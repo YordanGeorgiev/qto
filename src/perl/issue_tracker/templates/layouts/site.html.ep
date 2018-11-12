@@ -28,5 +28,6 @@
 
    <%= content 'js_scripts' %>
 </script>
+	<div id="div_notice"> <span> <%== $notice %> </span></div>
 </body>
 </html>
