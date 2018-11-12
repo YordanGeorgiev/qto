@@ -2,6 +2,7 @@
 # ---
 src/perl/issue_tracker/t/lib/IssueTracker/App/benchmark_url.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
+src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/srch-grid.html.ep
 src/perl/issue_tracker/lib/IssueTracker.pm
@@ -33,7 +34,6 @@ src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep
 src/perl/issue_tracker/public/lib/js/controls/jqcloud/jqcloud.min.js
 src/perl/issue_tracker/templates/controls/list-rgrid/list-rgrid.html.ep
 src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
-src/perl/issue_tracker/templates/layouts/site.html.ep
 # ---
 src/perl/issue_tracker/public/poc/autocomplete
 src/perl/issue_tracker/public/poc/autocomplete/searchbox-autocomplete.css

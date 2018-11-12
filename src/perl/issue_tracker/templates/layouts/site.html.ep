@@ -20,5 +20,13 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
    <%= content %>
+<script id="all">
+   var bus=new Vue({});
+   %= include 'controls/list-grid/js/global-msg.js'
+   %= include 'controls/list-grid/js/search-box.js'
+   %= include 'controls/list-grid/js/div-search-box.js'
+
+   <%= content 'js_scripts' %>
+</script>
 </body>
 </html>

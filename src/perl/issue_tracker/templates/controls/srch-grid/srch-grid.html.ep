@@ -63,14 +63,8 @@
    </div>
 
 
-<script id="all">
-   var bus=new Vue({});
-   %= include 'controls/list-grid/js/global-msg.js'
+% content_for js_scripts => begin
    %= include 'controls/srch-grid/js/linkable.js'
-   %= include 'controls/list-grid/js/search-box.js'
-   %= include 'controls/list-grid/js/div-search-box.js'
    %= include 'controls/srch-grid/js/search-grid-sf.js'
    %= include 'controls/srch-grid/js/search-grid.js'
-
-</script>
-
+% end
