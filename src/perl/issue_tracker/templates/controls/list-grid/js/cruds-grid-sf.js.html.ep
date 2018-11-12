@@ -54,26 +54,32 @@
      },
      methods: {
        sortBy: function (key) {
-         this.sortKey = key
-         this.sortOrders[key] = this.sortOrders[key] * -1
+            this.sortKey = key
+            this.sortOrders[key] = this.sortOrders[key] * -1
        }
        , setAscSortBy: function (key) {
-         this.sortKey = key
-         this.sortOrders[key] = 1 ; 
+            this.sortKey = key
+            this.sortOrders[key] = 1 ; 
        }
        , setDescSortBy: function (key) {
-         this.sortKey = key
-         this.sortOrders[key] = -1 ;
+            this.sortKey = key
+            this.sortOrders[key] = -1 ;
        }
 		 , deleteItem: function (id){
-       	this.$parent.deleteItem(id);
+       	   this.$parent.deleteItem(id);
 		 }
        , updateItem: function (content,id,oldValue) {
-			this.$parent.updateItem(content,id,oldValue);
-         var col = id.split('-')[0] 
+            this.$parent.updateItem(content,id,oldValue);
+            var col = id.split('-')[0] 
        }
        , createNewItem: function (id) {
             this.$parent.createNewItem(id);
+       }
+		 , goToNextPage: function (id){
+       	   this.$parent.goToNextPage(id);
+       }
+		 , goToPrevPage: function (id){
+       	   this.$parent.goToPrevPage(id);
        }
 	 }
    })

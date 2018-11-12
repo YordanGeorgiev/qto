@@ -94,41 +94,6 @@ body {
 	-webkit-box-shadow: 4px 4px 10px #C0C0C0;
 	-moz-box-shadow: 4px 4px 10px #C0C0C0;
 }
-.cls_but_delete {
-	background-color: transparent;
-	border: 2px solid transparent ; 
-	border-radius: 3px;
-   border-top-left-radius: 45%;
-   border-top-right-radius: 45%;
-   border-bottom-left-radius: 45%;
-   border-bottom-right-radius: 45%;
-}
-.cls_but_delete:hover {
-   background-color: #D3D3D3;
-	border: 2px solid #CDCDCD;
-	border-radius: 3px;
-	box-shadow: 1px 1px 10px #C0C0C0;
-	-webkit-box-shadow: 1px 1px 10px #C0C0C0;
-	-moz-box-shadow: 1px 1px 10px #C0C0C0;
-   border-top-left-radius: 45%;
-   border-top-right-radius: 45%;
-   border-bottom-left-radius: 45%;
-   border-bottom-right-radius: 45%;
-}
-.cls_but_delete:focus {
-   background-color: #D3D3D3;
-   background-color: #D3D3D3;
-	border: 2px solid #CDCDCD;
-	border-radius: 3px;
-   padding: 5px;
-	box-shadow: 2px 2px 10px #C0C0C0;
-	-webkit-box-shadow: 2px 2px 10px #C0C0C0;
-   border-top-left-radius: 50%;
-   border-top-right-radius: 50%;
-   border-bottom-left-radius: 50%;
-   border-bottom-right-radius: 50%;
-	-moz-box-shadow: 2px 2px 10px #C0C0C0;
-}
 textarea {
 	min-width: 10px;
 	max-width: 500px; /* why percentages do not work here !!! */

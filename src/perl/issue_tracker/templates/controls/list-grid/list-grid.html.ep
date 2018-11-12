@@ -19,32 +19,6 @@
    <div id="dev_central_panel" >
 
      <div id="cruds-grid">
-         <div id="div_pager">
-            <div class="pgr-bar pgr-border pgr-round" >
-					<span v-for="(pgNum, index) in this.pagesCount">	
-                  <span v-if="pgNum == Math.floor(pageNum/10)*10">
-                     <a tabindex="2" :id="'lnk-pgNum-' + pgNum" class="pgr-bar-item pgr-button" 
-                        v-bind:href="generatePageNum(pgNum-1)">
-                        <span> &lt;&lt;</span>
-                     </a>
-                  </span>
-                  <span v-if="pgNum > Math.floor(pageNum/10)*10-1 && pgNum < Math.floor(pageNum/10)*10+11">
-                     <a tabindex="2" :id="'lnk-pgNum-' + pgNum" class="pgr-bar pgr-bar-item" 
-                        v-bind:href="generatePageNum(pgNum)">
-                        <span v-if="pgNum == pageNum" class="actv"> 
-                           <strong>{{pgNum}}</strong> </span>
-                        <span v-else="pgNum == pageNum">{{pgNum}}</span>
-                     </a>
-                  </span>
-                  <span v-if="pgNum == Math.floor(pageNum/10)*10+11">
-                     <a tabindex="2" :id="'lnk-pgNum-' + pgNum" class="pgr-bar pgr-bar-item" 
-                        v-bind:href="generatePageNum(pgNum+1)">
-                        <span> &gt;&gt;</span>
-                     </a>
-                  </span>
-               </span>
-            </div>
-         </div>
 
          <cruds-grid-sf :data.sync="gridData" :columns="gridColumns" :filter-key="globalSrch"></cruds-grid-sf>
 
@@ -68,6 +42,8 @@
     if ( document.getElementById("spn_msg") ) {
 
          %= include 'controls/list-grid/js/btn-del.js'
+         %= include 'controls/list-grid/js/btn-play-prev.js'
+         %= include 'controls/list-grid/js/btn-play-next.js'
          %= include 'controls/list-grid/js/btn-new.js'
          %= include 'controls/list-grid/js/editable.js'
          %= include 'controls/list-grid/js/cruds-grid-sf.js'

@@ -25,8 +25,10 @@ src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/page-sizer.png
+src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-next.png
 # --
 src/perl/issue_tracker/templates/controls/list-grid/js/btn-del.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/btn-play-next.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/btn-new.js.html.ep
 # --
 src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep

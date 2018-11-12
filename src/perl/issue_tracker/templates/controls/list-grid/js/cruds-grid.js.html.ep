@@ -57,22 +57,13 @@
                return error.response.data.msg ; 
             }) 
          }
-         , generatePageNum: function (pgNum) {
-               var currUrl = window.location.href ; 
-               if ( currUrl.indexOf("?") === -1 ) { currUrl = currUrl + '?' }
-               if ( currUrl.indexOf("page-num=") === -1 ) {
-                  return currUrl + "&page-num=" + pgNum ;
-               } else {
-                  return currUrl.replace("page-num=" + this.pageNum , "page-num=" + pgNum);
-               }
-      	}
          , generatePageSize: function (pgSize) {
-               var currUrl = window.location.href ; 
+               var curi = window.location.href ; 
                if ( typeof pgSize === 'undefined' ) { pgSize = 7 }
-               if ( currUrl.indexOf("page-size=") === -1 ) {
-                  return currUrl + "&page-size=" + pgSize ; 
+               if ( curi.indexOf("page-size=") === -1 ) {
+                  return curi + "&page-size=" + pgSize ; 
                } else {
-                  return currUrl
+                  return curi
                      .replace("page-size=" + this.pageSize , "page-size=" + pgSize) 
                      .replace("page-num=" + this.pageNum , "page-num=1");
                }
@@ -242,6 +233,30 @@
                   setMsgVisuals(error.message);
                });
           }
+         , goToNextPage: function (id) {
+               var uri = window.location.href 
+               if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
+               if ( uri.indexOf("page-num=") === -1 ) {
+                  uri = uri + "&page-num=1"
+               } else {
+                  var newPageNum = Number(this.pageNum)+1
+                  if ( newPageNum > this.pagesCount ) { newPageNum = this.pagesCount }
+                  uri = uri.replace("page-num=" + this.pageNum, "page-num=" + String(newPageNum))
+               }
+               window.location.href = uri 
+         }
+         , goToPrevPage: function (id) {
+               var uri = window.location.href 
+               if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
+               if ( uri.indexOf("page-num=") === -1 ) {
+                  uri = uri + "&page-num=1"
+               } else {
+                  var newPageNum = Number(this.pageNum)-1
+                  if ( newPageNum < 1 ) { newPageNum = 1 }
+                  uri = uri.replace("page-num=" + this.pageNum, "page-num=" + String(newPageNum))
+               }
+               window.location.href = uri 
+         }
      }
      , mounted() {
 	      this.fetchServerSideDataToUI();

@@ -1,0 +1,9 @@
+	Vue.component('btn-play-next', {
+       name: 'btn-play-next'
+	  , methods: {
+       clickedBtnPlayNext: function(ev) {
+         this.$emit('clickedBtnPlayNext', ev.currentTarget.id)
+       }
+	  }
+	  , template: `<button type="submit" href="javascript:void(0);" v-on:click="clickedBtnPlayNext($event)" class="cls_img_but"><img src="../../themes/thme-blue/img/controls/play-next.png" /></button>` 
+	})

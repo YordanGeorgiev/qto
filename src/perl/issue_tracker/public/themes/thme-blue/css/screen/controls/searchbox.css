@@ -1,6 +1,7 @@
 #div_search_box {
+  display: block; 
   position: absolute ; 
-  margin-top: -3% ; 
+  margin-top: 0% ; 
   margin-left: 5%;
   margin-bottom: 2% ; 
   -webkit-font-smoothing: antialiased;

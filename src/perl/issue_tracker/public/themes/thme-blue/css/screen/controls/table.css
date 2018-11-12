@@ -2,6 +2,7 @@
 	padding-top: 1% ; 
 	max-width: 100%;
 	clear: both; 
+   display: block;
 }
 table {
 	table-layout: fixed; 
@@ -10,6 +11,7 @@ table {
 	border-radius: 9px;
 	background-color: #fff;
 	border-collapse:separate;
+   margin-top: 1%;
 }
 th {
 	background-color: #339aff ; 
@@ -87,4 +89,51 @@ th:focus {
 	background-color: rgba(5, 136, 230, 0.45);
 	border-color: #C0C0C0;
 	border-width: 4px;
+}
+.cls_img_but {
+	background-color: transparent;
+	border: 2px solid transparent ; 
+	border-radius: 3px;
+   border-top-left-radius: 45%;
+   border-top-right-radius: 45%;
+   border-bottom-left-radius: 45%;
+   border-bottom-right-radius: 45%;
+   margin: 3px;
+}
+.cls_img_but:hover {
+   background-color: #D3D3D3;
+	border: 2px solid #CDCDCD;
+	border-radius: 3px;
+	box-shadow: 1px 1px 10px #C0C0C0;
+	-webkit-box-shadow: 1px 1px 10px #C0C0C0;
+	-moz-box-shadow: 1px 1px 10px #C0C0C0;
+   border-top-left-radius: 45%;
+   border-top-right-radius: 45%;
+   border-bottom-left-radius: 45%;
+   border-bottom-right-radius: 45%;
+   margin: 3px;
+}
+.cls_img_but:focus {
+   background-color: #D3D3D3;
+	border: 2px solid #CDCDCD;
+	border-radius: 3px;
+	box-shadow: 1px 1px 10px #C0C0C0;
+	-webkit-box-shadow: 1px 1px 10px #C0C0C0;
+	-moz-box-shadow: 1px 1px 10px #C0C0C0;
+   border-top-left-radius: 45%;
+   border-top-right-radius: 45%;
+   border-bottom-left-radius: 45%;
+   border-bottom-right-radius: 45%;
+   margin: 3px;
+}
+#btnPlayNext {
+   float:right;
+   margin-right: 30%;
+   position: relative ;
+   clear: none;
+}
+#btnPlayPrev {
+   float:right;
+   position: relative ;
+   clear: none;
 }

@@ -65,6 +65,12 @@
          this.sortKey = key
          this.sortOrders[key] = -1 ;
        }
+		 , goToNextPage: function (id){
+       	   this.$parent.goToNextPage(id);
+       }
+		 , goToPrevPage: function (id){
+       	   this.$parent.goToPrevPage(id);
+       }
 	 }
    })
 
