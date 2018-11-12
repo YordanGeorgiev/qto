@@ -42,8 +42,10 @@
     if ( document.getElementById("spn_msg") ) {
 
          %= include 'controls/list-grid/js/btn-del.js'
+         %= include 'controls/list-grid/js/btn-play-prev-10.js'
          %= include 'controls/list-grid/js/btn-play-prev.js'
          %= include 'controls/list-grid/js/btn-play-next.js'
+         %= include 'controls/list-grid/js/btn-play-next-10.js'
          %= include 'controls/list-grid/js/btn-new.js'
          %= include 'controls/list-grid/js/editable.js'
          %= include 'controls/list-grid/js/cruds-grid-sf.js'
