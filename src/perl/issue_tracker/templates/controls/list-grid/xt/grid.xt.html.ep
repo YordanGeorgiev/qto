@@ -2,6 +2,8 @@
       <div id="div_grid_tmpl" style="overflow-x: auto;" >
          <div_search_box id="div_search_box" />
          <btn-new tabindex="2" id="btnNew" v-on:clickedBtnNew="createNewItem" ></btn-new>
+         <btn-play-next id="btnPlayNext" v-on:clickedBtnPlayNext="goToNextPage" tabindex="3"></btn-play-next>
+         <btn-play-prev id="btnPlayPrev" v-on:clickedBtnPlayPrev="goToPrevPage" tabindex="3"></btn-play-prev>
 			<table id="grid" style="clear:both" >
 			 <thead>
 				<tr><th></th>

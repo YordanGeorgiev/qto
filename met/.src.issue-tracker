@@ -25,8 +25,10 @@ src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/page-sizer.png
+src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-next.png
 # --
 src/perl/issue_tracker/templates/controls/list-grid/js/btn-del.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/btn-play-next.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/btn-new.js.html.ep
 # --
 src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
@@ -982,3 +984,10 @@ dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/sql/prd_our_proj
 dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/sql/tst_our_proj
 dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/xls
 dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/xls/our-proj.all.20181024_000000.xlsx
+dat/mix/2018/2018-11/2018-11-12
+dat/mix/2018/2018-11/2018-11-12/sql
+dat/mix/2018/2018-11/2018-11-12/sql/dev_issue_tracker
+dat/mix/2018/2018-11/2018-11-12/sql/dev_issue_tracker/dev_issue_tracker.20181112_145425.insrt.dmp.sql
+dat/mix/2018/2018-11/2018-11-12/sql/prd_issue_tracker
+dat/mix/2018/2018-11/2018-11-12/xls
+dat/mix/2018/2018-11/2018-11-12/xls/issue-tracker.all.20181112_000000.xlsx

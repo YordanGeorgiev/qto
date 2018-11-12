@@ -10,6 +10,6 @@
          this.$emit('clickedBtnDelete', ev.currentTarget.id)
        }
 	  }
-	  , template: `<button type="submit" href="javascript:void(0);" class="cls_but_delete" v-on:click="clickedDelete($event)"><img src="../../themes/thme-blue/img/controls/trash-bin.png" /></button>` 
+	  , template: `<button type="submit" href="javascript:void(0);" class="cls_img_but" v-on:click="clickedDelete($event)"><img src="../../themes/thme-blue/img/controls/trash-bin.png" /></button>` 
 	})
 

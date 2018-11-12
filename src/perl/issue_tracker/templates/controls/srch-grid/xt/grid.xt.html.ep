@@ -1,6 +1,8 @@
 	<script type="text/x-template" id="grid-template">
       <div id="div_grid_tmpl" style="overflow-x: auto;" >
          <div_search_box id="div_search_box" />
+         <btn-play-next id="btnPlayNext" v-on:clickedBtnPlayNext="goToNextPage" tabindex="3"></btn-play-next>
+         <btn-play-prev id="btnPlayPrev" v-on:clickedBtnPlayPrev="goToPrevPage" tabindex="3"></btn-play-prev>
 			<table id="grid" style="clear:both" >
 			 <thead>
 				<tr> <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }" tabindex="3" v-on:keyup.enter="sortBy(key)" :id="'th-'+key">{{ key }}<span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span></th></tr>
