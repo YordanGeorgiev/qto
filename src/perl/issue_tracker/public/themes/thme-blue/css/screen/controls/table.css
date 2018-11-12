@@ -126,14 +126,34 @@ th:focus {
    border-bottom-right-radius: 45%;
    margin: 3px;
 }
-#btnPlayNext {
+#btnPlayPrev10 {
    float:right;
-   margin-right: 30%;
    position: relative ;
    clear: none;
 }
 #btnPlayPrev {
    float:right;
+   position: relative ;
+   clear: none;
+}
+#page_counter{
+   float:right;
+   position: relative ;
+   clear: none;
+   font-size: 80% ;
+   color: #a4a9c4 ;
+   margin-left: 1%;
+   margin-right: 1%;
+   margin-top:1%;
+}
+#btnPlayNext {
+   float:right;
+   position: relative ;
+   clear: none;
+}
+#btnPlayNext10 {
+   float:right;
+   margin-right: 30%;
    position: relative ;
    clear: none;
 }

@@ -75,11 +75,17 @@
        , createNewItem: function (id) {
             this.$parent.createNewItem(id);
        }
-		 , goToNextPage: function (id){
-       	   this.$parent.goToNextPage(id);
+		 , goToPrevPage10: function (id){
+       	   this.$parent.goToPrevPage10(id);
        }
 		 , goToPrevPage: function (id){
        	   this.$parent.goToPrevPage(id);
+       }
+		 , goToNextPage: function (id){
+       	   this.$parent.goToNextPage(id);
+       }
+		 , goToNextPage10: function (id){
+       	   this.$parent.goToNextPage10(id);
        }
 	 }
    })

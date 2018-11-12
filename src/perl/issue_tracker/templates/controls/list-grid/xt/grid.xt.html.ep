@@ -2,8 +2,11 @@
       <div id="div_grid_tmpl" style="overflow-x: auto;" >
          <div_search_box id="div_search_box" />
          <btn-new tabindex="2" id="btnNew" v-on:clickedBtnNew="createNewItem" ></btn-new>
+         <btn-play-next-10 id="btnPlayNext10" v-on:clickedBtnPlayNext10="goToNextPage10" tabindex="3"></btn-play-next-10>
          <btn-play-next id="btnPlayNext" v-on:clickedBtnPlayNext="goToNextPage" tabindex="3"></btn-play-next>
+         <div id="page_counter"><span v-for> {{this.$parent.pageNum}} / {{this.$parent.pagesCount }}</span></div>
          <btn-play-prev id="btnPlayPrev" v-on:clickedBtnPlayPrev="goToPrevPage" tabindex="3"></btn-play-prev>
+         <btn-play-prev-10 id="btnPlayPrev10" v-on:clickedBtnPlayPrev10="goToPrevPage10" tabindex="3"></btn-play-prev-10>
 			<table id="grid" style="clear:both" >
 			 <thead>
 				<tr><th></th>
