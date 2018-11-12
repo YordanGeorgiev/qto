@@ -48,10 +48,10 @@ var Searchbox = {
          this.isLoading = false
          this.isOpen = false
       }
+      bus.$emit('searchBoxInputChanged', globalSrch );
       if ( this.globalSrch.length < 4 ) {
          return
       }
-      bus.$emit('searchBoxInputChanged', globalSrch );
       var tokens = this.globalSrch.split(" ")
       var lastWord = tokens[tokens.length - 1]
       var secondLastWord = tokens[tokens.length - 2]
