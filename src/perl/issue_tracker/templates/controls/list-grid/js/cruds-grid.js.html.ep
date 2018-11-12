@@ -86,9 +86,9 @@
                   var dataType = (typeof data)
                   if ( dataType === 'undefined' ) {
                      var msg = 'unexpected error occurred while fetching data !!!'
-                     setSpnMsgErrorText(data)
+                     setMsgVisuals(data)
                   } else if ( dataType === 'string' ) {
-                     setSpnMsgErrorText(data)
+                     setMsgVisuals(data)
                   } else {
                      this.gridData = data.dat ; 
                      var totalRSsize = data.met ; 
@@ -113,11 +113,11 @@
                .catch(function(error) {
                   if (typeof error !== 'undefined') {
                     var errMsg = error.toString() 
-                    setSpnMsgErrorText(errMsg);
+                    setMsgVisuals(errMsg);
                   } else {
                     var msg = 'unexpected error occurred while fetching data !!!'
-                    setSpnMsgErrorText(msg)
-                  }
+                    setMsgVisuals(msg)
+                  } 
                }) 
 	  	   }
 	      , postNewServerSideId: function (dbid){
@@ -162,12 +162,12 @@
                      var msg = result.toString(); 
                      msg = msg + ". Somebody was faster than you in the second you clicked !"
                      msg = msg + " Retry once again."
-                     setSpnMsgErrorText( msg ) ;
+                     setMsgVisuals( msg ) ;
                   }
                })				
                .catch(function (error) {
-                     setSpnMsgErrorText(error.toString());
-                     setSpnMsgErrorText(error.message);
+                     setMsgVisuals(error.toString());
+                     setMsgVisuals(error.message);
                });
 
          }
@@ -195,7 +195,7 @@
                document.getElementById(id).value= oldValue
                if (typeof error !== undefined ) {
                  var errMsg = error.response.data.msg
-                 setSpnMsgErrorText(errMsg);
+                 setMsgVisuals(errMsg);
                }
             });
           }
@@ -239,7 +239,7 @@
                   }
                )
                .catch(function (error) {
-                  setSpnMsgErrorText(error.message);
+                  setMsgVisuals(error.message);
                });
           }
      }

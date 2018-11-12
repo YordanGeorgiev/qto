@@ -1,4 +1,28 @@
-   function setSpnMsgErrorText(txt){
+   function setMsgVisuals(txt,eid,msgType){
+      if ( typeof eid === 'undefined') { eid ='div_msg' }
+      if ( typeof msgType === 'undefined') { msgType ='Error' }
+      var txt = stripTechMsgPart(txt)
+      paintError(eid)
+      window['paint' + msgType](eid,txt);
+      hideControlsOnError()
+      fadeAwayDiv(eid);
+   }
+
+   function paintError(eid,txt){
+      document.getElementById(eid).innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
+      document.getElementById(eid).style.display="inline";
+      document.getElementById(eid).style['box-shadow'] = "0 0 10px red";   
+      document.getElementById(eid).style['background-color'] = "#FFFF00";   
+   }
+
+   function paintWarning(eid,txt){
+      document.getElementById(eid).innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
+      document.getElementById(eid).style.display='inline';
+      document.getElementById(eid).style['box-shadow'] = '0 0 10px red';   
+      document.getElementById(eid).style['background-color'] = '#FFFF00';   
+   }
+
+   function stripTechMsgPart(txt) {
       if ( typeof txt != 'undefined' ) {
          if ( txt.indexOf(' :: ') !== -1 ) {
             console.error ( txt )
@@ -8,16 +32,20 @@
       } else {
          txt = 'unknown error occurred !!!';
       }
-      document.getElementById("div_msg").innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
-      document.getElementById("div_msg").style.display="inline";
-      document.getElementById("div_msg").style['box-shadow'] = "0 0 10px red";   
-      document.getElementById("div_msg").style['background-color'] = "#FFFF00";   
-      fadeAwayDivMsg();
-      
+      return txt
    }
 
-   function fadeAwayDivMsg(){
-      var div_msg_style = document.getElementById('div_msg').style; div_msg_style.opacity = 1; 
-      (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,1550)})();
+   function fadeAwayDiv(toFade) {
+      if ( typeof toFade === 'undefined') { toFade='div_msg' }
+      var div_msg_style = document.getElementById(toFade).style; div_msg_style.opacity = 1; 
+      (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,750)})();
    }
 
+   function hideControlsOnError() {
+     document.getElementById('grid').style['display'] = 'none' ;
+     document.getElementById('div_pager').style['display'] = 'none' ;
+     document.getElementById('div_page_sizer').style['display'] = 'none' ;
+     document.getElementById('inp_srch_box').style['margin-top'] = '10%' ;
+     var btnNew  = document.getElementById('btnNew')
+     if ( typeof btnNew !== 'undefined' ) { btnNew.style['display'] = 'none' }
+   }

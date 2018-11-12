@@ -38,12 +38,12 @@ var Searchbox = {
       , globalSrch: ""
       , isLoading: false
       , arrowCounter: 0
-      , operators: [':to', ':in', ':order-by',':desc-by']
+      , operators: [':to', ':in']
     };
   },
   methods: {
    onChange() {
-      var globalSrch = this.globalSrch.replace(':to ' , '').replace(':in ' , '').replace(':pick','')
+      var globalSrch = this.globalSrch.replace(':to ' , '').replace(':in ' , '')
       if ( this.globalSrch.slice(" ") ){
          this.isLoading = false
          this.isOpen = false

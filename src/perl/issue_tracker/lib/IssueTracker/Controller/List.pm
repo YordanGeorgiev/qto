@@ -66,6 +66,7 @@ sub doListItems {
 
 	# debug print "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
+   
    ( $ret , $msg , $refObjModel)  = $self->doSetRequestModelData( $item , $db ) ; 
 
    if ( $ret == 0 ) {
@@ -150,6 +151,7 @@ sub doBuildListControl {
       ,  'table'  => 'list-rgrid'
       ,  'print-table'  => 'list-print-table'
    };
+
    $ui_type = 'page/' . $lables_pages->{ $as } ; 
 
    $objPageFactory                  = 'IssueTracker::Controller::PageFactory'->new(\$appConfig, \$objModel );
@@ -171,6 +173,7 @@ sub doRenderPageTemplate {
    my $db               = shift ; 
    my $item             = shift ; 
    my $list_control     = shift ; 
+   my $notice           = 'todo:ysg' ;
 
    
    my $as_templates = { 
@@ -198,6 +201,7 @@ sub doRenderPageTemplate {
     , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
     , 'page_load_time'  => $page_load_time
     , 'list_control'    => $list_control
+    , 'notice'          => $notice
 	) ; 
 
    return ; 

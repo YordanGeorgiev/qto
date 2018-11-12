@@ -85,9 +85,9 @@
                   var dataType = (typeof data)
                   if ( dataType === 'undefined' ) {
                      var msg = 'unexpected error occurred while fetching data !!!'
-                     setSpnMsgErrorText(data)
+                     setMsgVisuals(data)
                   } else if ( dataType === 'string' ) {
-                     setSpnMsgErrorText(data)
+                     setMsgVisuals(data)
                   } else {
                      if ( data.dat[0].name === 'init' ) {
                         document.getElementById('grid').style['display'] = 'none' ;
@@ -120,10 +120,10 @@
                .catch(function(error) {
                   if (typeof error !== 'undefined') {
                     var errMsg = error.toString() 
-                    setSpnMsgErrorText(errMsg);
+                    setMsgVisuals(errMsg);
                   } else {
                     var msg = 'unexpected error occurred while fetching data !!!'
-                    setSpnMsgErrorText(msg)
+                    setMsgVisuals(msg)
                   }
                }) 
 	  	   }

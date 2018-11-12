@@ -43,6 +43,7 @@ sub doSearchItems {
    my $rows_count       = 0 ; 
    my $as               = 'grid' ; 
    my $srch_control     = 'srch-grid' ; 
+   my $notice           = '' ; 
    
    unless ( $self->SUPER::isAuthorized($db) == 1 ) {
       $self->render('text' => 'Refresh your page to login ');
@@ -85,6 +86,7 @@ sub doSearchItems {
        , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
        , 'page_load_time'  => $page_load_time
        , 'srch_control'    => "['name']" 
+       , 'notice'          => $notice
       ) ; 
       return ; 
    }  else {
@@ -140,6 +142,7 @@ sub doRenderPageTemplate {
    my $db               = shift ; 
    my $srch_control     = shift ; 
    my $as               = shift || 'grid' ; 
+   my $notice           = '' ; 
 
    
    my $as_templates = { 
@@ -167,6 +170,7 @@ sub doRenderPageTemplate {
     , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
     , 'page_load_time'  => $page_load_time
     , 'srch_control'    => $srch_control
+    , 'notice'          => $notice
 	) ; 
 
    return ; 
