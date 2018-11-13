@@ -23,12 +23,11 @@
    }
 
    function stripTechMsgPart(txt) {
-      if ( typeof txt != 'undefined' ) {
+      if ( typeof txt != 'undefined' && txt != null ) {
          if ( txt.indexOf(' :: ') !== -1 ) {
             console.error ( txt )
             txt = txt.split(/ :: /)[0]
          }
-         console.error(txt);
       } else {
          txt = 'unknown error occurred !!!';
       }
@@ -36,16 +35,16 @@
    }
 
    function fadeAwayDiv(toFade) {
-      if ( typeof toFade === 'undefined') { toFade='div_msg' }
+      if ( typeof toFade === 'undefined' && toFade != null ) { toFade='div_msg' }
       var div_msg_style = document.getElementById(toFade).style; div_msg_style.opacity = 1; 
       (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,750)})();
    }
 
    function hideControlsOnError() {
      document.getElementById('grid').style['display'] = 'none' ;
-     document.getElementById('div_pager').style['display'] = 'none' ;
+     document.getElementById('pager').style['display'] = 'none' ;
      document.getElementById('div_page_sizer').style['display'] = 'none' ;
      document.getElementById('inp_srch_box').style['margin-top'] = '10%' ;
      var btnNew  = document.getElementById('btnNew')
-     if ( typeof btnNew !== 'undefined' ) { btnNew.style['display'] = 'none' }
+     if ( typeof(btnNew) !== "undefined" && btnNew != null ) { btnNew.style['display'] = 'none' }
    }
