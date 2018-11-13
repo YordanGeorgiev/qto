@@ -22,6 +22,7 @@ our $rdbms_type     = 'postgre';
 #
 # --------------------------------------------------------
 # Select all the rows from db by passed db and table name
+# src: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 # --------------------------------------------------------
 sub doSelectItems {
    my $self             = shift;
