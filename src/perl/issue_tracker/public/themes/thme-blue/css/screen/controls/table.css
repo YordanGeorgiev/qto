@@ -157,3 +157,6 @@ th:focus {
    position: relative ;
    clear: none;
 }
+#but_srch {
+   margin-left: 1%;
+}

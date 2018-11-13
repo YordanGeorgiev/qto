@@ -1,25 +1,33 @@
    function setMsgVisuals(txt,eid,msgType){
-      if ( typeof eid === 'undefined') { eid ='div_msg' }
-      if ( typeof msgType === 'undefined') { msgType ='Error' }
+      if ( typeof eid === "undefined" ) { eid ='div_msg' }
+      if ( typeof msgType === "undefined" ) { msgType ='Error' }
       var txt = stripTechMsgPart(txt)
       paintError(eid)
       window['paint' + msgType](eid,txt);
       hideControlsOnError()
       fadeAwayDiv(eid);
    }
+   function setStyleProp ( eid,pname,pval) {
+     var el = document.getElementById(eid)
+     if ( typeof el != "undefined" && el != null ) {
+         el.style[pname] = pval
+     }
+   }
 
    function paintError(eid,txt){
+      document.getElementById(eid).innerHTML=""
       document.getElementById(eid).innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
-      document.getElementById(eid).style.display="inline";
-      document.getElementById(eid).style['box-shadow'] = "0 0 10px red";   
-      document.getElementById(eid).style['background-color'] = "#FFFF00";   
+      setStyleProp(eid,'display','inline')
+      setStyleProp(eid,'box-shadow','0 0 10px red')
+      setStyleProp(eid,'background-color','#FFFF00')
    }
 
    function paintWarning(eid,txt){
+      document.getElementById(eid).innerHTML=""
       document.getElementById(eid).innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
-      document.getElementById(eid).style.display='inline';
-      document.getElementById(eid).style['box-shadow'] = '0 0 10px red';   
-      document.getElementById(eid).style['background-color'] = '#FFFF00';   
+      setStyleProp(eid,'display','inline')
+      setStyleProp(eid,'box-shadow','0 0 10px red')
+      setStyleProp(eid,'background-color','#FFFF00')
    }
 
    function stripTechMsgPart(txt) {
@@ -39,12 +47,10 @@
       var div_msg_style = document.getElementById(toFade).style; div_msg_style.opacity = 1; 
       (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,750)})();
    }
-
    function hideControlsOnError() {
-     document.getElementById('grid').style['display'] = 'none' ;
-     document.getElementById('pager').style['display'] = 'none' ;
-     document.getElementById('div_page_sizer').style['display'] = 'none' ;
-     document.getElementById('inp_srch_box').style['margin-top'] = '10%' ;
-     var btnNew  = document.getElementById('btnNew')
-     if ( typeof(btnNew) !== "undefined" && btnNew != null ) { btnNew.style['display'] = 'none' }
+     setStyleProp('grid','display','none')
+     setStyleProp('pager','display','none')
+     setStyleProp('div_page_sizer','display','none')
+     setStyleProp('inp_srch_box','margin-top','10%')
+     setStyleProp('btnNew','display','none')
    }

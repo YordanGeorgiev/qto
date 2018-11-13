@@ -81,10 +81,7 @@
                      setMsgVisuals(data)
                   } else {
                      if ( data.dat[0].name === 'init' ) {
-                        document.getElementById('grid').style['display'] = 'none' ;
-                        document.getElementById('div_pager').style['display'] = 'none' ;
-                        document.getElementById('div_page_sizer').style['display'] = 'none' ;
-                        document.getElementById('inp_srch_box').style['margin-top'] = '10%' ;
+                        hideControlsOnError()
                      }
                      this.gridData = data.dat ; 
 
