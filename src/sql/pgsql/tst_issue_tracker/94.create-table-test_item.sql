@@ -5,7 +5,7 @@ SELECT 'create the "test_item" table'
    CREATE TABLE test_item (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , name           varchar (200) NOT NULL DEFAULT 'name ...'
+    , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_test_item_guid PRIMARY KEY (guid)

@@ -36,6 +36,8 @@ sub doSelectItems {
    my $msg              = 'unknown error during Select item';
    my $hsr2             = {};
    my $msr2             = {};
+   my $mhr2             = {}; # the meta-data of the this item
+   my $mc               = {}; # the meta-counter of the meta-data
    my $http_code        = 200 ; 
    my $rows_count       = 0 ; 
 
@@ -44,7 +46,6 @@ sub doSelectItems {
       return ; 
    } 
    
-   # chk: it-181101180808
    $appConfig		 		= $self->app->get('AppConfig');
    unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
       
@@ -72,7 +73,8 @@ sub doSelectItems {
       $self->render( 'json' =>  { 
          'msg'   => $msg,
          'ret'   => 400, 
-         'met'   => 0,
+         'met'   => "",
+         'cnt'   => 0,
          'req'   => "GET " . $self->req->url->to_abs
       });
       return ; 
@@ -84,7 +86,8 @@ sub doSelectItems {
       $self->render( 'json' =>  { 
          'msg'   => $msg,
          'ret'   => 400, 
-         'met'   => 0,
+         'met'   => "",
+         'cnt'   => 0,
          'req'   => "GET " . $self->req->url->to_abs
       });
       return ; 
@@ -101,10 +104,6 @@ sub doSelectItems {
    # debug print "Select.pm \n" ; 
    # debug print "ret: $ret , msg: $msg \n" ; 
    # debug print "Select.pm \n" ; 
-
-   $self->res->headers->accept_charset('UTF-8');
-   $self->res->headers->accept_language('fi, en');
-   $self->res->headers->content_type('application/json; charset=utf-8');
 
    unless ( $ret == 0 ) {
       $http_code = $ret ; 
@@ -124,12 +123,14 @@ sub doSelectItems {
          $http_code = $ret ; 
       }
        
+      ( $ret , $msg , $mhr2 , $mc) = $objModel->doGetTablesColumnList($appConfig,$db,$item);
       $self->res->code($http_code);
       $self->render( 'json' =>  { 
            'msg'   => $msg
          , 'dat'   => $list
          , 'ret'   => $http_code
-         , 'met'   => $rows_count 
+         , 'met'   => $mhr2
+         , 'cnt'   => $rows_count 
          , 'req'   => "GET " . $self->req->url->to_abs
       });
    } elsif ( $ret == 404 ) {

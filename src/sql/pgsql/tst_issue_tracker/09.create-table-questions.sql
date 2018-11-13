@@ -9,11 +9,11 @@ SELECT 'create the "questions" table'
     , seq            integer NULL
     , prio           integer NOT NULL DEFAULT 1
     , weight         integer NOT NULL DEFAULT 9
-    , status         varchar (200) NOT NULL DEFAULT '01-eval'
-    , category       varchar (200) NOT NULL DEFAULT 'unknown'
-    , name           varchar (200) NOT NULL DEFAULT 'name ...'
+    , status         varchar (20) NOT NULL DEFAULT '01-eval'
+    , category       varchar (20) NOT NULL DEFAULT 'unknown'
+    , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000) NOT NULL DEFAULT 'description ... '
-    , owner          varchar (50) NULL 
+    , owner          varchar (20) NULL 
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_questions_guid PRIMARY KEY (guid)
     ) WITH (
