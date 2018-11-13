@@ -76,14 +76,8 @@
                if ( (meta[prop])["attribute_name"] !== col ) {
                   continue ;
                } else {
-                  // console.log("prop: " + String(prop))
-                  // console.log("attribute_name: ")
-                  // console.log((meta[prop])["attribute_name"])
-                  // console.log ( "col: " + col )
-                  // console.log((meta[prop])["char_max_length"])
-                  // console.log ( (meta[prop])["data_type"])
                   if ( (meta[prop])["data_type"].indexOf("char") === -1) {
-                     maxWidth = this.getColumnMaxWidth(el)
+                     maxWidth = this.calcWidth()
                   } else {
                      maxWidth = this.calcVarCharWidth(Number((meta[prop])["char_max_length"]),col)         
                   }
