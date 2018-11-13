@@ -18,18 +18,26 @@ src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid.js.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/js/search-grid.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/js/search-grid-sf.js.html.ep
+# --
 src/perl/issue_tracker/templates/controls/list-grid
+src/perl/issue_tracker/templates/controls/list-grid/js/btn-del.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/btn-play-prev-10.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/btn-play-prev.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/btn-play-next.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/btn-play-next-10.js.html.ep
+src/perl/issue_tracker/templates/controls/list-grid/js/btn-new.js.html.ep
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/table.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/pager.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/page-sizer.png
+src/perl/issue_tracker/public/themes/thme-blue/img/controls/srch.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-next.png
-# --
-src/perl/issue_tracker/templates/controls/list-grid/js/btn-del.js.html.ep
-src/perl/issue_tracker/templates/controls/list-grid/js/btn-play-next.js.html.ep
-src/perl/issue_tracker/templates/controls/list-grid/js/btn-new.js.html.ep
+src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-next-10.png
+src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-prev.png
+src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-prev-10.png
+src/perl/issue_tracker/public/themes/thme-blue/img/controls/trash-bin.png
 # --
 src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep

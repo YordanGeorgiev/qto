@@ -1,0 +1,26 @@
+graph {
+
+node[style=filled,color=cornflowerblue,fontcolor=white, fontsize=8];
+edge[color=maroon,dir="both",arrowsize=.3];
+
+    bin -- src;
+    bin -- data;
+    bin -- conf ;
+    conf -- src;
+    conf -- data;
+    src -- data;
+    data -- hw; 
+    conf -- hw; 
+    src -- hw ; 
+    people -- infra; 
+    people -- src; 
+    people -- hw ; 
+    people -- data ; 
+    people -- bin; 
+    people -- conf ;     
+    infra -- conf; 
+    infra -- hw ; 
+    infra -- bin; 
+    infra -- data ; 
+    infra -- src; 
+}
