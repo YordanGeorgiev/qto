@@ -19,7 +19,8 @@
      , mounted() {
          this.content = this.cnt
          this.displayEmptyCellIfNullOrUndefined()
-         this.$el.style.width = this.calcWidth() + "px"
+         //console.log(this.$el.id)
+         this.$el.style.width = this.getColMaxWidth(this.$el) + "px"
      },
      methods: {
        displayEmptyCellIfNullOrUndefined() {
@@ -57,12 +58,38 @@
 			  },0);
            el.style.width = this.getColMaxWidth(el).toString() + 'px'
 			}
-       , getColMaxWidth(el) {
+       , getColumnMaxWidth(el) {
             var col = el.id.split('-')[0]
             var textareaList = document.querySelectorAll(".cls_cnt_edtble");
             var columnWidthsFiltered = Array.prototype.slice.call(textareaList).filter(elm => elm.id.startsWith(col))
             var widths = columnWidthsFiltered.map( elm => Number(elm.style.width.slice(0,-2)) )
             var maxWidth = widths.sort(function(a, b) { return b - a })[0]
+            return maxWidth
+         }
+       , getColMaxWidth(el) {
+            var col = el.id.split('-')[0]
+            var meta = this.$parent.$parent.gridMetaData
+            for (var prop in this.$parent.$parent.gridMetaData) {
+               if (!this.$parent.$parent.gridMetaData.hasOwnProperty(prop)) {
+                 continue;
+               }
+               if ( (meta[prop])["attribute_name"] !== col ) {
+                  continue ;
+               } else {
+                  // console.log("prop: " + String(prop))
+                  // console.log("attribute_name: ")
+                  // console.log((meta[prop])["attribute_name"])
+                  // console.log ( "col: " + col )
+                  // console.log((meta[prop])["char_max_length"])
+                  // console.log ( (meta[prop])["data_type"])
+                  if ( (meta[prop])["data_type"].indexOf("char") === -1) {
+                     maxWidth = this.getColumnMaxWidth(el)
+                  } else {
+                     maxWidth = this.calcVarCharWidth(Number((meta[prop])["char_max_length"]),col)         
+                  }
+               }
+            }
+
             return maxWidth
          }
        , calcWidth() {
@@ -86,6 +113,29 @@
                }
             } else {
                   return 20
+            }
+     		}
+       , calcVarCharWidth(width,col) {
+            console.log ( "col:" + String(col))
+            console.log ( "calcVarCharWidth: " + String(width))
+            if ( typeof width !== "undefined" ) {
+               if ( width < 3 ) {
+                  return 30
+               } else if ( width > 2  && width < 7 ) {
+                  return 40
+               } else if ( width > 6 && width < 16 ) {
+                  return 60
+               } else if ( width > 15 && width < 35 ) {
+                  return 60
+               } else if ( width > 34 && width < 105) {
+                  return 240
+               } else if ( width > 104 && width < 205 ) {
+                  return 300
+               } else  {
+                  return 460
+               }
+            } else {
+               return 20
             }
      		}
 		}

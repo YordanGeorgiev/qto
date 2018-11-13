@@ -7,8 +7,8 @@ SELECT 'create the "ideas" table'
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , seq            integer NULL
     , prio           integer NULL
-    , status         varchar (50) NOT NULL DEFAULT '01-eval'
-    , name           varchar (200) NOT NULL DEFAULT 'name ...'
+    , status         varchar (20) NOT NULL DEFAULT '01-eval'
+    , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000) NOT NULL DEFAULT 'description ...'
     , owner          varchar (50) NOT NULL DEFAULT 'unknown' 
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())

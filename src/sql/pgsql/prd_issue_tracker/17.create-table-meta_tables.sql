@@ -7,7 +7,7 @@ SELECT 'create the "meta_tables" table'
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , prio           integer NOT NULL DEFAULT 1
     , name           varchar (200) NOT NULL DEFAULT 'name ...'
-    , description    varchar (4000) NULL
+    , description    varchar (4000)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_meta_tables_guid PRIMARY KEY (guid)
     ) WITH (

@@ -9,12 +9,12 @@ SELECT 'create the "decadally_issues" table'
     , seq            integer NULL
     , prio           integer NOT NULL DEFAULT 1
     , weight         integer NOT NULL DEFAULT 9
-    , status         varchar (50) NOT NULL DEFAULT 'status ...'
-    , category       varchar (200) NOT NULL DEFAULT 'category ...'
-    , name           varchar (200) NOT NULL DEFAULT 'name ...'
+    , status         varchar (20) NOT NULL DEFAULT 'status ...'
+    , category       varchar (20) NOT NULL DEFAULT 'category ...'
+    , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
-    , type           varchar (50) NOT NULL DEFAULT 'task'
-    , owner          varchar (50) NOT NULL DEFAULT 'unknown'
+    , type           varchar (30) NOT NULL DEFAULT 'task'
+    , owner          varchar (20) NOT NULL DEFAULT 'unknown'
     , start_time     timestamp NOT NULL DEFAULT DATE_TRUNC('second', NOW())
     , stop_time      timestamp NOT NULL DEFAULT DATE_TRUNC('second', NOW())
     , planned_hours  decimal (6,2) NULL

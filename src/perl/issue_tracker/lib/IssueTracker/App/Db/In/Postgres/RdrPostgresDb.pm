@@ -517,6 +517,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
              a.attnum as attribute_number,
              a.attname as attribute_name,
              format_type(a.atttypid, a.atttypmod) as data_type,
+             a.atttypmod as char_max_length,
              a.attnotnull as not_null, 
              com.description as comment,
              coalesce(i.indisprimary,false) as is_primary_key,

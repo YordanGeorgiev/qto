@@ -4,6 +4,7 @@
        globalSrch: '',
        gridColumns: <%== $list_control =%>,
        gridData: [],
+       gridMetaData: {},
        pageSize: 7,
        pageNum: 1,
        pagesCount: 0,
@@ -81,8 +82,18 @@
                   } else if ( dataType === 'string' ) {
                      setMsgVisuals(data)
                   } else {
-                     this.gridData = data.dat ; 
-                     var totalRSsize = data.met ; 
+                     this.gridData = data.dat
+                     this.gridMetaData = data.met
+                     // for (var prop in this.gridMetaData) {
+                     //   if (!data.met.hasOwnProperty(prop)) {
+                     //     continue;
+                     //   }
+                     // console.log("prop: " + String(prop))
+                     // console.log("attribute_name: ")
+                     // console.log((data.met[prop])["attribute_name"])
+                     // console.log((data.met[prop])["char_max_length"])
+                     // }
+                     var totalRSsize = data.cnt ; 
                      this.pageSize = url_params.get('page-size');
                      this.pageNum = url_params.get('page-num');
                      var remainder = totalRSsize % this.pageSize

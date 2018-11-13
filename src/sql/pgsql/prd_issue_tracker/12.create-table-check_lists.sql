@@ -7,9 +7,9 @@ SELECT 'create the "check_lists" table'
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , seq            integer NULL
     , prio           integer NOT NULL DEFAULT 1
-    , status         varchar (50) NOT NULL DEFAULT 'status ...'
-    , category       varchar (200) NOT NULL DEFAULT 'category ...'
-    , name           varchar (200) NOT NULL DEFAULT 'name ...'
+    , status         varchar (20) NOT NULL DEFAULT 'status ...'
+    , category       varchar (30) NOT NULL DEFAULT 'category ...'
+    , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_check_lists_guid PRIMARY KEY (guid)

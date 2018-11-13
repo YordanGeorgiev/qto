@@ -4,6 +4,7 @@
        globalSrch: '',
        gridColumns: <%== $srch_control =%>,
        gridData: [],
+       gridMetaData: {},
        pageSize: 7,
        urlParamFor: "" ,
        pageNum: 1,
@@ -84,7 +85,6 @@
                         hideControlsOnError()
                      }
                      this.gridData = data.dat ; 
-
                      var totalRSsize = data.cnt ; 
                      this.pageSize = url_params.get('page-size');
                      this.pageNum = url_params.get('page-num');

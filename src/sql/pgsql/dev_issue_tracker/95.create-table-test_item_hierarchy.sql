@@ -6,10 +6,8 @@ SELECT 'create the "test_item_hierarchy" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , fuid           UUID NOT NULL 
-    , level          integer NULL
-    , seq            integer NOT NULL DEFAULT 1
-    , lft            integer NULL
-    , rgt            integer NULL
+    , name           varchar (200) NOT NULL DEFAULT 'name ...'
+    , description    varchar (4000)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_test_item_hierarchy_guid PRIMARY KEY (guid)
     ) WITH (

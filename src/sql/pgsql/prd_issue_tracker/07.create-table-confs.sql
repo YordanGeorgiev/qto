@@ -7,7 +7,7 @@ SELECT 'create the "confs" table'
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , seq            integer NULL
     , prio           integer NULL
-    , category       varchar (200) NOT NULL
+    , category       varchar (30) NOT NULL
     , name           varchar (200) NOT NULL
     , value          varchar (4000)
     , description    varchar (4000)

@@ -7,7 +7,7 @@ SELECT 'create the "skills" table'
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , seq            integer NULL
     , prio           integer NULL
-    , name           varchar (200) NOT NULL DEFAULT 'name ...'
+    , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000) NOT NULL DEFAULT 'description ...'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_skills_guid PRIMARY KEY (guid)
