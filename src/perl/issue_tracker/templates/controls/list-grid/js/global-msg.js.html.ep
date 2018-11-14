@@ -24,10 +24,10 @@
 
    function paintWarning(eid,txt){
       document.getElementById(eid).innerHTML=""
-      document.getElementById(eid).innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
+      document.getElementById(eid).innerHTML="<span id=\"spn_warr_msg\">" + txt + '</span>';
       setStyleProp(eid,'display','inline')
-      setStyleProp(eid,'box-shadow','0 0 10px red')
-      setStyleProp(eid,'background-color','#FFFF00')
+      setStyleProp(eid,'box-shadow','0 0 10px #80838A')
+      setStyleProp(eid,'background-color','#CEC9D7')
    }
 
    function stripTechMsgPart(txt) {
