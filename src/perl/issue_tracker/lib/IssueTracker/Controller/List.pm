@@ -173,7 +173,7 @@ sub doRenderPageTemplate {
    my $db               = shift ; 
    my $item             = shift ; 
    my $list_control     = shift ; 
-   my $notice           = 'todo:ysg' ;
+   my $notice           = '' ;
 
    
    my $as_templates = { 
