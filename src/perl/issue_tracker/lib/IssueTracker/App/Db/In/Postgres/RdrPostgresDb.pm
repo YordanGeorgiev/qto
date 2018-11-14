@@ -80,13 +80,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $msg = DBI->errstr if $ret  == 400 ; 
          die "$msg" unless $ret == 0 ; 
          $objModel->set('hsr2' , $hsr2 );
-         unless ( keys %{$hsr2}) {
-            $msg = ' no data for this search request !!! ' ;
-            $ret = 404 ;
-            die "$msg" unless $ret == 0 ; 
-         }
       };
-      if ( $@ or !scalar(%$hsr2)) { 
+      if ( $@ ) { 
          my $tmsg = "$@" ; 
          $objLogger->doLogErrorMsg ( "$msg" ) ;
          $msg = "failed to get data :: $tmsg" unless $ret == 404 ; 
@@ -95,6 +90,12 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       $dbh->disconnect();
       binmode(STDOUT, ':utf8');
+
+      unless ( keys %{$hsr2}) {
+         $msg = ' no data for this search request !!! ' ;
+         $ret = 204 ;
+         return ( $ret , $msg , undef ) ; 
+      }
 
       $ret = 0 ; 
       return ( $ret , $msg , $hsr2 ) ; 
@@ -743,7 +744,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $filter_by_attributes   = shift ; 
       my $ret                    = 1 ; 
       my $msg                    = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
-      my $dbh              = {} ;         # this is the database handle
+      my $dbh                    = {} ;         # this is the database handle
 
       if ( defined $objModel->get('postgres_db_name') ) {
 		   $db = $objModel->get('postgres_db_name');
@@ -862,13 +863,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $msg = DBI->errstr if $ret  == 400 ; 
          die "$msg" unless $ret == 0 ; 
          $objModel->set('hsr2' , $hsr2 );
-         unless ( keys %{$hsr2}) {
-            $msg = ' no data for this search request !!! ' ;
-            $ret = 404 ;
-            die "$msg" unless $ret == 0 ; 
-         }
+         $objModel->set($db . '.dat.' . $table , $hsr2 ); # wip: 181114145604
       };
-      if ( $@ or !scalar(%$hsr2)) { 
+      if ( $@ ) { 
          my $tmsg = "$@" ; 
          $objLogger->doLogErrorMsg ( "$msg" ) ;
          $msg = "failed to get $table table data :: $tmsg" unless $ret == 404 ; 
@@ -876,6 +873,11 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       };
 
       $dbh->disconnect();
+         unless ( keys %{$hsr2}) {
+            $msg = ' no data for this search request !!! ' ;
+            $objLogger->doLogWarningMsg ( $msg ) ; 
+            $ret = 204 ;
+         }
       return ( $ret , $msg ) ; 	
       binmode(STDOUT, ':utf8');
 

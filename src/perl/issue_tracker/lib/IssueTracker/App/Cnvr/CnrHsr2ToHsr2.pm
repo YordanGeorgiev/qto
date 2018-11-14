@@ -54,8 +54,7 @@ our $objModel = {} ;
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 
-		my $self = {};        # Anonymous hash reference holds instance attributes
-		bless( $self, $class );    # Say: $self is a $class
+		my $self = {}; bless( $self, $class );    # Say: $self is a $class
 		return $self;
 	}  
   

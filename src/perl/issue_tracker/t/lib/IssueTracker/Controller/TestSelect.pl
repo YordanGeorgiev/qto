@@ -93,9 +93,9 @@ for my $row ( @$list ) {
    $url = '/' . $db_name . '/select/tst_paging?as=table&page-size=' . $page_size .'&page-num=' . $page_num ; 
    $t->get_ok( $url )->status_is(400 , $tm ) ; 
 
-   $tm = 'if there is no data 404 should be returned' ; 
-   $url = '/' . $db_name . '/select/monthly_issues?as=grid&with=prio-eq-100' ; 
-   $t->get_ok( $url )->status_is(404 , $tm ) ; 
+   $tm = 'if there is no data 204 should be returned' ; 
+   $url = '/' . $db_name . '/select/monthly_issues?as=grid&with=prio-eq-1000000' ; 
+   $t->get_ok( $url )->status_is(204 , $tm ) ; 
 
 done_testing();
 

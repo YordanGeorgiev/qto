@@ -27,11 +27,11 @@ package IssueTracker::App::Mdl::Model ;
       my $appConfig     = shift ; 
       my $db            = shift ; 
       my $table         = shift ; 
+      my $msg           = shift || 'error in the ' . $db . '.' . $table . ' model ';
 
       my $mhr2          = {} ; 
       my $c             = 0 ; 
       my $ret           = 1 ; 
-      my $msg           = "error in the filtering of the $table table's columns in model" ; 
       my $cols = $appConfig->{ "$db" . '.meta' } ; 
 
 

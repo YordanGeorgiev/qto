@@ -120,10 +120,19 @@ sub doSelectItems {
       ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($objModel->get('hsr2'));
 
       unless ( $ret == 0 ) {
-         $list = '' ;
          $http_code = $ret ; 
+         print "msg: $msg \n" ; 
+         $self->res->code(404);
+         $self->render( 'json' =>  { 
+              'ret'   => 404 
+            , 'req'   => "GET " . $self->req->url->to_abs
+            , 'msg'   => $msg
+            , 'dat'   => ''
+         }) ; 
+         return ;
       }
-       
+      
+
       ( $ret , $msg , $mhr2 , $mc) = $objModel->doGetTablesColumnList($appConfig,$db,$item);
       $self->res->code($http_code);
       $self->render( 'json' =>  { 
