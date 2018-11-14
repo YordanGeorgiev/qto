@@ -35,6 +35,7 @@ our $objModel = {} ;
             my $row = $hsr2->{$key} ; 
             $rows_count = $row->{'rows_count'} if ( exists $row->{'rows_count'} ); delete $row->{'rows_count'} ; 
             ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
+            p $row ; 
             return ( $ret , $msg ) unless $ret == 0 ; 
             push ( @list , $row ) ; 
          }

@@ -36,5 +36,9 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    $response = $ua->get($url)->result->json ; 
    my $mshr2 = $response->{ 'met' } ; 
    ok (ref($mshr2) eq 'HASH' , $tm) ; 
+   
+   $tm = 'some foo query param is specified ' ; 
+   $url = '/' . $db_name . '/query?for=чичковитечервенотиквеничета' ; 
+   ok ( $t->get_ok($url)->status_is(204) , $tm ) ;
 
 done_testing();

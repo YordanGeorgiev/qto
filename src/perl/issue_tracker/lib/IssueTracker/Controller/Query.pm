@@ -100,6 +100,15 @@ sub doQueryItems {
          'req'   => "GET " . $self->req->url->to_abs
       });
       return ; 
+   } elsif ( $ret == 204 ) {
+      $self->res->code(204);
+      $self->render( 'json' =>  { 
+         'msg'   => $msg,
+         'ret'   => 204, 
+         'met'   => "", 
+         'req'   => "GET " . $self->req->url->to_abs
+      });
+      return ; 
    } else {
       $self->res->code(400);
       $self->render( 'json' =>  { 
