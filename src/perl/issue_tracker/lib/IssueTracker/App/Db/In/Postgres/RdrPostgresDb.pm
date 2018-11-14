@@ -772,6 +772,16 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          }
       }
       
+      if ( defined ( $objModel->get('select.web-action.hide') ) ) {
+         $columns_to_select = " guid,id" ;
+         my $lst_columns_to_hide = $objModel->get('select.web-action.hide'); 
+         my @cols = split (',' , $lst_columns_to_hide ) ;
+         foreach my $col ( @cols ) { 
+            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col );
+      	   return ( 404 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
+         }
+      }
+
       my $columns_to_order_by_asc = undef ; 
       if ( defined ( $objModel->get('select.web-action.oa') ) ) {
          $columns_to_order_by_asc = $objModel->get('select.web-action.oa'); 
