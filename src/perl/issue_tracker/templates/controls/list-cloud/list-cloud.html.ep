@@ -2,9 +2,9 @@
 % layout 'site';
 
 % content_for header_csss => begin
-   <title>list-jqcloud </title>
-   <link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/jqcloud.css">
-   <link rel="stylesheet" type="text/css" media="print" href="../../themes/thme-blue/css/print/controls/jqcloud.css">
+  <title> list <%= " $item " =%>  <%= "as $as in " =%> <%= "$db " =%> </title> 
+  <link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/jqcloud.css">
+  <link rel="stylesheet" type="text/css" media="print" href="../../themes/thme-blue/css/print/controls/jqcloud.css">
 % end
 
 

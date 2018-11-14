@@ -24,28 +24,35 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    # the name of the attribute
    # the id which is BY DESIGN a requirement for ANY issue-tracker app table to work ... 
    # the content should be json format as follows
-   $t->post_ok($url => json => {"attribute"=>"name", "id" =>"1", "cnt"=>"name-1-deleted"})->status_is(200);
+   $tm = 'can create the item to delete ' ; 
+   ok ( $t->post_ok($url => json => {"attribute"=>"name", "id" =>"1", "cnt"=>"name-1-deleted"})->status_is(200) , $tm );
 
    $url = '/' . $db_name . '/select/test_delete_table?with=id-eq-1' ; 
-   $res = $ua->get($url)->result->json ; 
    $tm = 'the name-1 was deleted , no data could be retrieved for the id with value 1' ; 
-  
-   ok ( $res->{'ret'} == '404', $tm ) ; 
+   ok ( $t->get_ok($url )->status_is(204) , $tm ) ;
    
   
    $url = '/' . $db_name . '/delete/test_delete_table' ; 
    $t->post_ok($url => json => {"attribute"=>"name", "id" =>"3", "cnt"=>"name-3-deleted"})->status_is(200);
    $url = '/' . $db_name . '/select/test_delete_table?with=id-eq-3' ; 
-   $res = $ua->get($url )->result->json ; 
-   $tm = 'the name-3 was deleted' ; 
-   ok ( $res->{'ret'} == '404', $tm ) ; 
-   ok ( $res->{'dat'} eq "" , $tm ) ; 
-
-   $url = '/' . $db_name . '/select/test_delete_table?with=id-eq-2' ; 
-   $res = $ua->get( $url )->result->json ; 
+   $tm = 'no data could be fetched with this id' ; 
+   ok ( $t->get_ok($url )->status_is(204) , $tm ) ;
    
-   $tm = 'the name-2 should NOT be deleted' ; 
-   ok ( $res->{'dat'}[0]->{'name'} eq 'name-2' , $tm ) ; 
+   my $objTimer = {} ;
+   # the create back-end web action requires the following json format : 
+   # the id which is BY DESIGN a requirement for ANY issue-tracker app table to work ... 
+   # the content should be json format as follows
+
+   $objTimer               = 'IssueTracker::App::Utils::Timer'->new( 'YYYYmmDDhhMMss' );
+   my $id = $objTimer->GetHumanReadableTime();
+   $url = '/' . $db_name . '/create/test_delete_table' ; 
+   $t->post_ok($url => json => {"id" =>$id})->status_is(200);
+
+   $url = '/' . $db_name . '/select/test_delete_table?with=id-eq-' . $id ; 
+   $res = $ua->get($url)->result->json ; 
+   
+   $tm = 'the default name should NOT be deleted' ; 
+   ok ( $res->{'dat'}[0]->{'name'} eq 'name ...' , $tm ) ; 
    
    $tm = 'the ret var from the response should be the same as the http code => 200'; 
    ok ( $res->{'ret'} eq 200 , $tm ) ; 

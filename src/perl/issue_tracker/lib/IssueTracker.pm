@@ -285,10 +285,10 @@ sub doSetRoutes {
    , action       => 'doListItems'
    );
 
-   $r->any('/:db/*')->to(
-     controller   => 'Search'
-   , action       => 'doSearchItems'
-   );
+   #$r->any('/:db/*')->to(
+   #  controller   => 'Search'
+   #, action       => 'doSearchItems'
+   #);
 }
 
 # -----------------------------------------------------------------------------

@@ -59,7 +59,7 @@ sub doQueryItems {
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
    my $hsr2             = {};
-   my $http_code        = 200 ; 
+   my $http_code        = 400 ;
    my $rows_count       = 0 ; 
 
 	# print "Query.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
@@ -71,56 +71,26 @@ sub doQueryItems {
    $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
    ( $ret , $msg ) = $objRdrUrlParams->doSetQueryUrlParams(\$objModel, $query_params , 'Query' );
    if ( $ret != 0 ) {
-      $self->res->code(400);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 400, 
-         'met'   => '',
-         'req'   => "GET " . $self->req->url->to_abs
-      });
+      $self->SUPER::doRenderJson(400,$msg,'GET','','0','');
       return ; 
    } 
 
-   $objRdrDbsFactory
-      = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
+   $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    ($ret, $msg , $hsr2 ) = $objRdrDb->doGlobalSrchIntoHashRef(\$objModel);
+
    if ( $ret == 0 ) {
       my $list = ();
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
       ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 ) ;
-      $self->res->code(200);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'dat'   => $list,
-         'met'   => $msr2,
-         'ret'   => 0, 
-         'cnt'   => $rows_count ,
-         'req'   => "GET " . $self->req->url->to_abs
-      });
-      return ; 
+
+      $self->SUPER::doRenderJson(200,$msg,'GET',$msr2,$rows_count,$list);
    } elsif ( $ret == 204 ) {
-      $self->res->code(204);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 204, 
-         'met'   => "", 
-         'req'   => "GET " . $self->req->url->to_abs
-      });
-      return ; 
+      $self->SUPER::doRenderJson(204,$msg,'GET','','0','');
    } else {
-      $self->res->code(400);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 0, 
-         'met'   => "", 
-         'req'   => "GET " . $self->req->url->to_abs
-      });
-      return ; 
-
+      $self->SUPER::doRenderJson(400,$msg,'GET','','0','');
    }
-
 }
 
 
