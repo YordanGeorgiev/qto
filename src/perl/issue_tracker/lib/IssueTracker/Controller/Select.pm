@@ -28,19 +28,20 @@ sub doSelectItems {
    my $self             = shift;
    my $db               = $self->stash('db');
    my $item             = $self->stash('item');
-   
+   my $http_method      = 'GET' ;  
    my $rdbms_type       = 'postgres';
    my $objRdrUrlParams  = {} ; 
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
    my $ret              = 0;
+   my $dat              = '' ; 
    my $msg              = 'unknown error during Select item';
    my $hsr2             = {};
    my $msr2             = {};
-   my $mhr2             = {}; # the meta-data of the this item
+   my $met              = {}; # the meta-data of the this item
    my $mc               = {}; # the meta-counter of the meta-data
    my $http_code        = 200 ; 
-   my $rows_count       = 0 ; 
+   my $cnt       = 0 ; 
 
    unless ( $self->SUPER::isAuthorized($db) == 1 ) {
       $self->render('text' => 'Refresh your page to login ');
@@ -60,9 +61,7 @@ sub doSelectItems {
       }
    } 
 
-
 	# debug print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
-
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
 
@@ -70,27 +69,15 @@ sub doSelectItems {
    $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
    ( $ret , $msg ) = $objRdrUrlParams->doSetSelectUrlParams(\$objModel, $query_params );
    if ( $ret != 0 ) {
-      $self->res->code(400);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 400, 
-         'met'   => "",
-         'cnt'   => 0,
-         'req'   => "GET " . $self->req->url->to_abs
-      });
+      $http_code = 400 ; 
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
       return ; 
    } 
 
    ( $ret , $msg ) = $objRdrUrlParams->doSetWithUrlParams(\$objModel, $query_params );
    if ( $ret != 0 ) {
-      $self->res->code(400);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 400, 
-         'met'   => "",
-         'cnt'   => 0,
-         'req'   => "GET " . $self->req->url->to_abs
-      });
+      $http_code = 400 ; 
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
       return ; 
    } 
 
@@ -98,8 +85,7 @@ sub doSelectItems {
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
 
-
-   ($ret, $msg) = $objRdrDb->doSelectTableIntoHashRef(\$objModel, $item);
+   ($ret, $msg,$hsr2) = $objRdrDb->doSelectTableIntoHashRef(\$objModel, $item);
 
    
    # debug print "Select.pm \n" ; 
@@ -111,56 +97,30 @@ sub doSelectItems {
    }
 
    if ( $ret == 0 ) {
-      my $list = () ; # an array ref holding the converted hash ref of hash refs 
-      $rows_count = 0 ; 
+      $cnt = 0 ; 
       $http_code = 200 ; 
       $msg = "SELECT OK for table: $item" ; 
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($objModel->get('hsr2'));
+      ( $ret , $msg , $dat , $cnt ) = $objCnrHsr2ToArray->doConvert ($hsr2);
 
       unless ( $ret == 0 ) {
-         $http_code = $ret ; 
-         print "msg: $msg \n" ; 
-         $self->res->code(404);
-         $self->render( 'json' =>  { 
-              'ret'   => 404 
-            , 'req'   => "GET " . $self->req->url->to_abs
-            , 'msg'   => $msg
-            , 'dat'   => ''
-         }) ; 
-         return ;
+         $http_code = 404 ; 
+         ( $ret , $msg , $met , $mc) = $objModel->doGetTablesColumnList($appConfig,$db,$item);
       }
       
-
-      ( $ret , $msg , $mhr2 , $mc) = $objModel->doGetTablesColumnList($appConfig,$db,$item);
-      $self->res->code($http_code);
-      $self->render( 'json' =>  { 
-           'msg'   => $msg
-         , 'dat'   => $list
-         , 'ret'   => $http_code
-         , 'met'   => $mhr2
-         , 'cnt'   => $rows_count 
-         , 'req'   => "GET " . $self->req->url->to_abs
-      });
+      ( $ret , $msg , $met , $mc) = $objModel->doGetTablesColumnList($appConfig,$db,$item);
+      $http_code = 200 ; 
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 404 ) {
-
-      $self->res->code(404);
-      $self->render( 'json' =>  { 
-           'msg'   => $msg
-         , 'dat'   => ''
-         , 'ret'   => 404 
-         , 'req'   => "GET " . $self->req->url->to_abs
-      })
+      $http_code = 404 ; 
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+   } elsif ( $ret == 204 ) {
+      $http_code = 204 ; 
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
    } else {
-      $rows_count = 0 ; 
-      $self->res->code($http_code);
-      $self->render( 'json' =>  { 
-           'msg'   => $msg
-         , 'ret'   => 400
-         , 'met'   => $rows_count
-         , 'req'   => "GET " . $self->req->url->to_abs
-      });
+      $http_code = 400 ; 
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
    } 
 }
 
@@ -203,14 +163,14 @@ sub doSelectTables {
 	$self->res->headers->accept_language('fi, en');
 	$self->res->headers->content_type('application/json; charset=utf-8');
 
-   my $list = () ; # an array ref holding the converted hash ref of hash refs 
+   my $dat = () ; # an array ref holding the converted hash ref of hash refs 
 
    if ( $ret == 0 ) {
 
       $objModel->set('select.web-action.o', 'row_id' );
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2') , '>' );
+      ( $ret , $msg , $dat ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2') , '>' );
    }
 
       $self->res->headers->content_type('application/json; charset=utf-8');
@@ -218,7 +178,7 @@ sub doSelectTables {
       $self->res->code(200);
       $self->render( 'json' =>  { 
            'msg'   => $msg
-         , 'dat'   => $list
+         , 'dat'   => $dat
          , 'ret'   => 200
          , 'req'   => "GET " . $self->req->url->to_abs
       });
@@ -254,11 +214,15 @@ sub doSelectTables {
 
 sub doSelectDatabases {
 
-	my $self       = shift;
-	my $db         = $self->stash('db');
-	my $rdbms_type = 'postgres';
-   my $msg = 'unknown error during select-databases';
-   my $http_code  = 200 ; 
+	my $self          = shift;
+	my $db            = $self->stash('db');
+	my $rdbms_type    = 'postgres';
+   my $msg           = 'unknown error during select-databases';
+   my $http_code     = 200 ; 
+   my $http_method   = 'GET' ; 
+   my $met           = '' ; 
+   my $dat           = '' ; 
+   my $cnt           = 0 ; 
 
 	$appConfig	   = $self->app->get('AppConfig');
    my $objModel   = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
@@ -274,53 +238,23 @@ sub doSelectDatabases {
 	my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectDatabasesList(\$objModel);
 
-	$self->res->headers->accept_charset('UTF-8');
-	$self->res->headers->accept_language('fi, en');
-	$self->res->headers->content_type('application/json; charset=utf-8');
-
    if ( $ret == 0 ) {
 
-      my $list = () ; # an array ref holding the converted hash ref of hash refs 
+      my $dat = () ; # an array ref holding the converted hash ref of hash refs 
       $objModel->set('select.web-action.o', 'row_id' );
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-      ( $ret , $msg , $list ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2'),'>');
-
-      $self->res->headers->content_type('application/json; charset=utf-8');
-      $self->res->code(200);
-      $self->render( 'json' =>  { 
-           'msg'   => $msg
-         , 'dat'   => $list
-         , 'ret'   => 200
-         , 'req'   => "GET " . $self->req->url->to_abs
-      });
-
+      ( $ret , $msg , $dat ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2'),'>');
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 400 or $ret == 404) {
       $http_code = $ret ; 
-      $self->res->code($http_code);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => $http_code , 
-         'req'   => "GET " . $self->req->url->to_abs
-      })
-      ;
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 2 ) {
-
-      $self->res->code(400);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 400, 
-         'req'   => "GET " . $self->req->url->to_abs
-      });
+      $http_code = 400 ; 
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
    } else {
-
-      $self->res->code(404);
-      $msg = 'unknown error has occurred' ; 
-      $self->render( 'json' => { 
-         'msg'   => $msg,
-         'ret'   => 404, 
-      })
-      ;
+      $http_code = 404 ; 
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
    }
 
 }
@@ -334,18 +268,19 @@ sub doSelectMeta {
    my $self        = shift;
    my $db          = $self->stash('db');
    my $table       = $self->stash('item');
-   my $msr2        = {} ;
+   my $ret         = 0;
+   my $msg         = 'unknown error during Select item';
+   my $met         = '' ; 
    my $rdbms_type  = 'postgres';
+   my $http_method = 'GET';
+   my $http_code   = '400';
+   my $dat         = '' ; 
+   my $cnt         = 0;
 
 	# print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
    $appConfig		= $self->app->get('AppConfig');
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
- 
-   my $ret = 0;
-   my $cnt = 0;
-   my $msg = 'unknown error during Select item';
-   my $rows_count = 0;
    
    unless ( $self->SUPER::isAuthorized($db) == 1 ) {
       $self->render('text' => 'Refresh your page to login ');
@@ -356,78 +291,46 @@ sub doSelectMeta {
    $appConfig		 		= $self->app->get('AppConfig');
    unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
       
-      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
+      ( $ret , $msg , $met ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
       unless ( $ret == 0 ) { 
          $self->render('text' => $msg ) unless $ret == 0 ; 
          return ; 
       }
       else { 
-         $appConfig->{ $db . '.meta' } = $msr2 ; 
+         $appConfig->{ $db . '.meta' } = $met ; 
       }
    } 
    
    # debug p $appConfig->{ $db . '.meta' } ; 
-   ( $ret , $msg , $msr2 , $cnt ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
+   ( $ret , $msg , $met , $cnt ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
 
    if ( $ret == 0 ) {
-      my $list = () ; # an array ref holding the converted hash ref of hash refs 
+      my $dat = () ; # an array ref holding the converted hash ref of hash refs 
       my $http_code = 200 ; 
       $msg = "SELECT meta OK for table: $table " ; 
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert($msr2);
+      ( $ret , $msg , $dat , $cnt ) = $objCnrHsr2ToArray->doConvert($met);
 
       unless ( $ret == 0 ) {
-         $http_code = 400 ; 
-         $list = '' ;
+         $http_code = 400 ; $dat = '' ; $cnt = 0 ; 
       }
-      
-      $self->res->code($http_code);
-      $self->render( 'json' =>  { 
-           'msg'   => $msg
-         , 'dat'   => $list
-         , 'ret'   => $http_code
-         , 'req'   => "GET " . $self->req->url->to_abs
-         , 'cnt'   => $cnt
-      });
+      my $met = $met ; 
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 400 or $ret == 404 ) {
-
-      $self->res->code($ret);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => $ret , 
-         'req'   => "GET " . $self->req->url->to_abs
-         , 'cnt'   => $cnt
-      });
+      $http_code = 400 ; 
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 2 ) {
-
-      $self->res->code(400);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 400, 
-         'req'   => "GET " . $self->req->url->to_abs
-         , 'cnt'   => $cnt
-      });
+      $http_code = 400 ; 
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 1 ) {
+      $http_code = 400 ; 
       $msg = " the table $table does not exist " ; 
-      $self->res->code(400);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 400, 
-         'req'   => "GET " . $self->req->url->to_abs
-         , 'cnt'   => $cnt
-      });
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
    } else {
-
+      $http_code = 400 ; 
       $msg = 'unknown error has occurred' ; 
-      $self->res->code(400);
-      $self->render( 'json' => { 
-         'msg'   => $msg,
-         'ret' => 404, 
-         'req'   => "GET " . $self->req->url->to_abs
-         , 'cnt'   => $cnt
-      })
-      ;
+      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
    }
 }
 

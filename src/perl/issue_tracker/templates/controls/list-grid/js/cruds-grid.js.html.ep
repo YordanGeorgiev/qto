@@ -95,6 +95,10 @@
                      // console.log((data.met[prop])["char_max_length"])
                      // }
                      var totalRSsize = data.cnt ; 
+                     console.log ( "start data.cnt: ")
+                     console.log ( data.cnt)
+                     console.log ( "stop  data.cnt: ")
+
                      this.pageSize = url_params.get('page-size');
                      this.pageNum = url_params.get('page-num');
                      var remainder = totalRSsize % this.pageSize

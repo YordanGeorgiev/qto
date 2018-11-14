@@ -332,7 +332,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $objLogger->doLogErrorMsg ( $msg ) ; 
       }
 
-      $appConfig->{ "$db".'.tables-list'} = $hsr ;
       return ( $ret , $msg , $hsr ) ; 	
    }
 
@@ -401,14 +400,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $hsr2 = {} ; 
       my $msg  = () ; 
 
-      unless ( defined ( $appConfig->{"$db" . '.tables-list'} ) ) {
-         ($ret, $msg) = $self->doSelectTablesList(\$objModel);
-         return 0 unless $ret == 0 ; 
-         $hsr2 = $objModel->get('hsr2');
-         return $table_exists unless $ret == 0 ; 
-      } 
+      ($ret, $msg, $hsr2) = $self->doSelectTablesList(\$objModel);
+      return $table_exists unless $ret == 0 ; 
 
-      $hsr2 = $appConfig->{"$db" . '.tables-list'} ; 
 
       for my $key ( keys %$hsr2 ) {
          my $table_name = $hsr2->{ $key }->{'table_name'} ; 
@@ -878,8 +872,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
             $objLogger->doLogWarningMsg ( $msg ) ; 
             $ret = 204 ;
          }
-      return ( $ret , $msg ) ; 	
       binmode(STDOUT, ':utf8');
+      return ( $ret , $msg , $hsr2 ) ; 	
 
    }
 
