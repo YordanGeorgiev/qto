@@ -13,6 +13,9 @@ table {
 	border-collapse:separate;
    margin-top: 1%;
 }
+#grid {
+   clear: both ; 
+}
 th {
 	background-color: #339aff ; 
 	color: rgba(255,255,255,0.66);

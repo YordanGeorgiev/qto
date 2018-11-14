@@ -9,7 +9,7 @@
          <btn-play-prev id="btnPlayPrev" v-on:clickedBtnPlayPrev="goToPrevPage" tabindex="3"></btn-play-prev>
          <btn-play-prev-10 id="btnPlayPrev10" v-on:clickedBtnPlayPrev10="goToPrevPage10" tabindex="3"></btn-play-prev-10>
          </div>
-			<table id="grid" style="clear:both" >
+			<table id="grid">
 			 <thead>
 				<tr><th></th>
 				  <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }" tabindex="3" 

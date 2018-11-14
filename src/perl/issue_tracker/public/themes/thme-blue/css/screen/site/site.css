@@ -50,6 +50,10 @@ html body div#div_msg {
 	color: #FF0000 ; 
 	background-color: #FFFF00;
 }
+#spn_warr_msg {
+	color: #817693; 
+	background-color: #E5DCF3;
+}
 html body div#div_notice {
     position: absolute;
     top: 94%; 
@@ -66,7 +70,6 @@ html body div#div_notice {
 }
 #spn_notice {
 	color: #FF0000 ; 
-	background-color: #FFFF00;
 }
 .div_spacer2 {
 	display: block ; 
