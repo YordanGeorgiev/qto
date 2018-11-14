@@ -80,6 +80,7 @@
                      var msg = 'unexpected error occurred while fetching data !!!'
                      setMsgVisuals(data)
                   } else if ( dataType === 'string' ) {
+                     console.log ( data ) 
                      setMsgVisuals(data)
                   } else {
                      this.gridData = data.dat

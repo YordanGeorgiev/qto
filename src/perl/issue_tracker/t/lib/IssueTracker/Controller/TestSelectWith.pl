@@ -69,7 +69,6 @@ for my $row ( @$tables ) {
       next unless $status_have_row->{'attribute_name'} eq 'status'  ;
       $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio,status&with=status-eq-02-todo' ; 
       $t->get_ok($url )->status_is(200) ; 
-      ;
 
       $res = $ua->get($url)->result->json ; 
       my $list = $res->{'dat'} ; 
@@ -93,7 +92,12 @@ for my $row ( @$tables ) {
          $tm = "test for like - only status starting with 0  are selected for $url: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
          ok ( $row->{'status'} =~ '0', $tm ) ; 
       }
-   } #eof for each status
+      
+      $url = '/' . $db_name . '/select/' . $table . '?pick=name,prio,status&with=status-eq-1000' ; 
+      $tm = "if no data is received the 204 http code 'No Content' is returned" ;
+      ok ( $t->get_ok($url )->status_is(204) , $tm )
+   } 
+   #eof for each status
 } 
 #eof foreach table
 
