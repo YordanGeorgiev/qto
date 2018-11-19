@@ -33,28 +33,18 @@
             if ( url_params.has("as") === false) { url_params.append("as" , "grid"); }
             if ( url_params.has("page-size") === false) { url_params.append("page-size" , 7); }
             if ( url_params.has("page-num") === false) { url_params.append("page-num" , 1); }
-            
             // debug for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
             return url_params ; 
          }
 	      , fetchServerSideData: function (url_params){
             if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
-
-            if ( this.gridColumns.length === 1 ) {
-              var promise = new Promise(function(resolve, reject) {
-                  var arrNoData = { "dat": [{"name": "init"}], "cnt": "1", 'msg':''}
-                  resolve(arrNoData);
-              });
-              return promise;
-            }
-
             return axios.get((window.location.pathname).replace("/search" , "/query") , { params: url_params } )
             .then(response => { 
-               return response.data ; 
+               return response ; 
             })
             .catch(function(error) {
-               console.error(error);
-               return error.response.data.msg ; 
+               console.log ( error ) 
+               return error.response;
             }) 
          }
          , generatePageSize: function (pgSize) {
@@ -73,47 +63,58 @@
                if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
 
                this.fetchServerSideData(url_params)
-               .then( data => {
-                  var dataType = (typeof data)
-                  if ( dataType === 'undefined' ) {
-                     var msg = 'unexpected error occurred while fetching data !!!'
-                     setMsgVisuals(data)
-                  } else if ( dataType === 'string' ) {
-                     setMsgVisuals(data)
+               .then( response => {
+                  if ( response.status === 204 ) {
+                     var warningMsg = response.statusText
+                     setMsgVisuals(warningMsg,'div_notice','Warning');
+                     return ;
+                  } else if ( response.status === 404 || response.status === 400) {
+                     var errorMsg = response.statusText + ": " + response.data.msg
+                     setMsgVisuals(errorMsg,'div_msg','Error');
+                     return ;
                   } else {
-                     if ( data.dat[0].name === 'init' ) {
-                        hideControlsOnError()
-                     }
-                     this.gridData = data.dat ; 
-                     var totalRSsize = data.cnt ; 
-                     this.pageSize = url_params.get('page-size');
-                     this.pageNum = url_params.get('page-num');
-                     this.urlParamFor = url_params.get('for');
-                     var remainder = totalRSsize % this.pageSize
-                     var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
-                     if ( remainder == 0 ) { toAdd = 0  }
-                     this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
-                     var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa') ;
-
-                     if ( oa !== null ) {
-                        this.$children[0].setAscSortBy( oa ) ; 
-                     } else if ( typeof url_params.get("od") != 'undefined' ) {
-                        var od = url_params.get("od")
-                        this.$children[0].setDescSortBy( od ) ; 
+                     var data = response.data
+                     var dataType = (typeof data)
+                     if ( dataType === 'undefined' ) {
+                        var msg = 'unexpected error occurred while fetching data !!!'
+                        setMsgVisuals(data)
+                     } else if ( dataType === 'string' ) {
+                        setMsgVisuals(data)
                      } else {
-                        this.$children[0].setAscSortBy("id")
+                        if ( data.dat[0].name === 'init' ) {
+                           hideControlsOnError()
+                        }
+                        this.gridData = data.dat ; 
+                        var totalRSsize = data.cnt ; 
+                        this.pageSize = url_params.get('page-size');
+                        this.pageNum = url_params.get('page-num');
+                        this.urlParamFor = url_params.get('for');
+                        var remainder = totalRSsize % this.pageSize
+                        var toAdd = 1 // example: page-size 10 , total-rs-size 30 => 3 and not 4
+                        if ( remainder == 0 ) { toAdd = 0  }
+                        this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
+                        var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa') ;
+
+                        if ( oa !== null ) {
+                           this.$children[0].setAscSortBy( oa ) ; 
+                        } else if ( typeof url_params.get("od") != 'undefined' ) {
+                           var od = url_params.get("od")
+                           this.$children[0].setDescSortBy( od ) ; 
+                        } else {
+                           this.$children[0].setAscSortBy("id")
+                        }
                      }
                   }
                })
-               .catch(function(error) {
-                  if (typeof error !== 'undefined') {
-                    var errMsg = error.toString() 
-                    setMsgVisuals(errMsg);
-                  } else {
-                    var msg = 'unexpected error occurred while fetching data !!!'
-                    setMsgVisuals(msg)
-                  }
-               }) 
+            .catch(function(error) {
+               if (typeof error !== 'undefined') {
+                 var errMsg = error.toString() 
+                 setMsgVisuals(errMsg);
+               } else {
+                 var msg = 'unknown error while fetching grid data for search occured !'
+                 setMsgVisuals(msg,'div_msg','Error');
+               } 
+            }) 
 	  	   }
          , goToNextPage: function (id) {
                var uri = window.location.href 
