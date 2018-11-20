@@ -35,20 +35,16 @@ package IssueTracker::App::IO::Out::WtrXls ;
       my $self             = shift ; 
       my $objModel         = ${shift @_ } ;   
       my $table            = shift ; 
-      my $msg              = q{} ; 
-      my $hsr2              = $objModel->get('hsr2') ; 
-      my $hsr_meta         = $objModel->get('hsr_meta'  ); 
-
-      # p $hsr_meta ; 
-      #  sleep 10 ; 
-
+      my $hsr2             = shift ; 
+      my $msr2             = shift ; 
+      my $omsr2            = {} ; 
+      my $msg              = ''  ; 
 
       my $objTimer = 'IssueTracker::App::Utils::Timer'->new() ; 
 	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
       my $nice_month  = "$year" . '-' . "$mon" ; 
       my $nice_datetime  = "$year" ."$mon". "$mday" . '_' . "$hour" . "$min" . "$sec" ; 
       my $nice_date  = "$year" . '-' . "$mon" . '-' . "$mday" ; 
-
 
       my $xls_file_name       = $ENV{'issue_tracker_project'} . '.' . $table . '.' . $nice_datetime ; 
       my $xls_dir = $appConfig->{ 'xls_dir' } || $ENV{'mix_data_dir'} . "/$year/$nice_month/$nice_date" ; 
@@ -58,106 +54,69 @@ package IssueTracker::App::IO::Out::WtrXls ;
       $msg = 'START writing the xls file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
       $msg = $xls_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
  
-      # Create a new Excel workbook
       my $objWorkbook      = 'Excel::Writer::XLSX'->new( $xls_file );
-      my $sheet_name       = $xls_file_name ; 
-      $sheet_name          = $table ; 
+      my $sheet_name       = $table ; 
       my $objWorksheet     = $objWorkbook->add_worksheet( $sheet_name );
 
-
-      # print the headers  
-      my $nxt_colid = 1 ; 
-      # the format tof the title row
+      my $nxt_col_id = 1 ; 
       my $objFormat     =  $objWorkbook->add_format(
          'color' => 'black'
        , 'font'  => 'Lucida Console'
        , 'bold'  => '1'
       );
+      
+      my $col_id = 0 ; 
+      foreach my $mid ( sort ( keys (  %$msr2 ) ) ) {
+         my $row = $msr2->{ $mid } ; 
+         my $col_name         = $row->{ 'attribute_name' } ; 
+         my $attr_num         = $row->{ 'attribute_number' } ; 
+         $omsr2->{ $attr_num } = {} ; 
+         $omsr2->{ $attr_num }->{'attribute_name'} = $col_name ;
+         $omsr2->{ $attr_num }->{'attribute_number'} = $attr_num ;
+      }
 
-      foreach my $colid ( sort ( keys (  %{$hsr_meta->{ 'ColumnNames'}} ) ) ) {
-
-         my $col_name      = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ; 
-         my $col_lenth     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attlen' } ; 
-         $objWorksheet->write(0, $colid-2, $col_name , $objFormat )  unless $colid == 1 ; 
-
-         # set the initial widh of the column as the width of the title column
-         $hsr_meta->{'ColumnWidths'}->{ $colid } = $col_lenth ; 
-         $hsr_meta->{ 'ColumnWidths' }->{ $colid } = 60 if $col_lenth > 60 ; 
-         $nxt_colid++ ; 
+      foreach my $col_id ( sort ( keys (  %$omsr2 ) ) ) {
+         my $row        = $omsr2->{ $col_id } ; 
+         my $col_name   = $row->{ 'attribute_name' } ; 
+         $objWorksheet->write(0, $col_id-1, $col_name , $objFormat )  ; 
       }
      
-      # put the guid at the end
-      $hsr_meta->{'ColumnNames'}->{ $nxt_colid }->{ 'attname' } = 'guid' ;  
-      $hsr_meta->{ 'ColumnWidths' }->{ $nxt_colid } = 43 ; 
-      $objWorksheet->write(0, $nxt_colid-2, 'guid' , $objFormat )  ; 
-
-      my $rowid = 0 ; 
-      #foreach my $guid ( sort { $hsr2->{$a}->{ 'seq' } <=> $hsr2->{$b}->{ 'seq' } } keys (%$hsr2))  {
-      foreach my $guid ( sort ( keys ( %$hsr2 ) ) ) {
-
+      my $row_id = 0 ; 
+      foreach my $guid ( keys ( %$hsr2 ) ) {
          my $objFormat        = {} ; 
-         # $objFormat->set_autofit();
-         # alternate colors
-         if ( $rowid % 2 == 1 ) {
-            $objFormat = $objWorkbook->add_format(
-                'font'  => 'Lucida Console'
-            );
+         # set alternating rows
+         if ( $row_id % 2 == 1 ) {
+            $objFormat = $objWorkbook->add_format( 'font'  => 'Lucida Console' );
             $objFormat->set_bg_color('silver') ; 
          }
          else {
-            $objFormat = $objWorkbook->add_format(
-                'font'  => 'Lucida Console'
-            );
+            $objFormat = $objWorkbook->add_format( 'font'  => 'Lucida Console' );
             $objFormat->set_bg_color('white') ; 
          }
-          
          $objFormat->set_text_wrap();
-
-         my $hsr_row = $hsr2->{ "$guid" } ; 
-
-         $rowid = $rowid+1 ; 
-
-
-         foreach my $colid ( sort ( keys ( %{$hsr_meta->{'ColumnNames'}} ) ) ) {
-            next if $colid == 1 ; # put the guid at the end
-            my $col_name     = $hsr_meta->{'ColumnNames'}->{ $colid }->{ 'attname' } ;
-       
-            my $cell_length = length ( $hsr_row->{ $col_name } ) || 10 ; 
-            #define the max width 
-            if ( $hsr_meta->{ 'ColumnWidths' }->{ $colid } < $cell_length ) {
-               $hsr_meta->{ 'ColumnWidths' }->{ $colid } = $cell_length ;
+         my $row = $hsr2->{ "$guid" } ; 
+         # p $row ; 
+         $row_id++ ; 
+         foreach my $col_id ( sort ( keys ( %$omsr2 ) ) ) {
+            my $mrow             = $omsr2->{ $col_id } ; 
+            my $col_name         = $mrow->{ 'attribute_name' }  ;
+            # debug p( $row );
+            # debug p $row->{ $col_name } ; 
+            if ( !defined ( $row )  or !defined ( $row->{ $col_name } ) or $row->{ $col_name } eq 'NULL' ) {
+               $row->{ $col_name } = '' ; 
             }
-
-            $hsr_meta->{ 'ColumnWidths' }->{ $colid } = 60
-               if $hsr_meta->{ 'ColumnWidths' }->{ $colid } > 60 ;
-
-
-
-            unless ( 
-                  defined ( $hsr_row ) 
-               or defined ( $hsr_row->{ $col_name } ) 
-               or $hsr_row->{ $col_name } ne 'NULL' ) {
-                  # p( $hsr_row );
-                  $hsr_row->{ $col_name } = '' ; 
-            }
-
-            # to adjust the columns width debug as follows:
-            # debug print "$col_name width is " . $hsr_meta->{ 'ColumnWidths' }->{ $colid } . "\n" ; 
-
-            # $objWorksheet->set_column($colid, $colid, $hsr_meta->{ 'ColumnWidths' }->{ $colid } );
-            $objWorksheet->set_column($colid, $colid-2, $hsr_meta->{ $colid } );
-            $objWorksheet->write($rowid, $colid-2, $hsr_row->{ $col_name } , $objFormat )  ; 
-         }
-         
+            $objWorksheet->write($row_id, $col_id-1, $row->{ "$col_name" } , $objFormat )  ; 
+         } 
+         #eof foreach col
       } 
       #eof foreach row 
-     
      
       $msg = 'STOP writing the xls file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
       $msg = $xls_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
       
-      $rowid++ ; 
+      $row_id++ ; 
       return 0 if -f $xls_file ; 
+      return 1 ; 
    }
    #eof sub doBuildXlsFromHashRef
 
