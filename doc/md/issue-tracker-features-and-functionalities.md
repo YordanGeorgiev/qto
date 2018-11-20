@@ -13,10 +13,8 @@ Table of Contents
   * [2. UI FEATURES](#2-ui-features)
     * [2.1. Support for different projects](#21-support-for-different-projects)
       * [2.1.1. Change projects via url](#211-change-projects-via-url)
-      * [2.1.2. Switch projects by the :in operator in the search-box](#212-switch-projects-by-the-in-operator-in-the-search-box)
+      * [2.1.2. Switch projects by the :to operator in the search-box](#212-switch-projects-by-the-to-operator-in-the-search-box)
       * [2.1.3. Switch items by using the :for operator in the search-box](#213-switch-items-by-using-the-for-operator-in-the-search-box)
-      * [2.1.4. Order items ascending by using the :order-by &lt;&lt;attribute-name&gt;&gt; syntax](#214-order-items-ascending-by-using-the-order-by-attribute-name-syntax)
-      * [2.1.5. Order items descending by using the :desc-by &lt;&lt;attribute-name&gt;&gt; syntax](#215-order-items-descending-by-using-the-desc-by-attribute-name-syntax)
     * [2.2. Common listing features](#22-common-listing-features)
       * [2.2.1. Listing url syntax](#221-listing-url-syntax)
       * [2.2.2. Successful execution](#222-successful-execution)
@@ -133,6 +131,10 @@ Table of Contents
     * [6.5. select-tables web action](#65-select-tables-web-action)
       * [6.5.1. successful execution](#651-successful-execution)
       * [6.5.2. error handling for failed connect to db in the select-tables web action](#652-error-handling-for-failed-connect-to-db-in-the-select-tables-web-action)
+    * [6.6. Query web action](#66-query-web-action)
+      * [6.6.1. successful execution](#661-successful-execution)
+      * [6.6.2. error handling on non-provided for operator](#662-error-handling-on-non-provided-for-operator)
+      * [6.6.3. error handling for empty for url parameter](#663-error-handling-for-empty-for-url-parameter)
   * [7. SECURITY FEATURES AND FUNCTIONALITIES](#7-security-features-and-functionalities)
     * [7.1. Fully open mode](#71-fully-open-mode)
     * [7.2. Basic authentication mode](#72-basic-authentication-mode)
@@ -204,24 +206,14 @@ Note the upper left corner of the page contains the name of your current project
     # access the aspark-starter project production database
     http://host-name:3000/prd_aspark_starter/list/monthly_issues
 
-#### 2.1.2. Switch projects by the :in operator in the search-box
-If you type the ":in &lt;&lt;database-name&gt;&gt;" you will get a drop down which will list the databases , to which your instance has access to, by chosing the database from the list and hitting enter you will be redirected to the same url by on the different database.
+#### 2.1.2. Switch projects by the :to operator in the search-box
+If you type the ":to &lt;&lt;database-name&gt;&gt;" you will get a drop down which will list the projects databases , to which your instance has access to, by chosing the database from the list and hitting enter you will be redirected to the same url by on the different database.
 
     
 
 #### 2.1.3. Switch items by using the :for operator in the search-box
 If you type the ":in &lt;&lt;item-name&gt;&gt;" you will get a drop down which will list the items , to which your instance has access to, by chosing the item from the list and hitting enter you will be redirected to the same url by on the different database.
 You can combine both the ":in &lt;&lt;db&gt;&gt;" and ":for &lt;&lt;item&gt;&gt;" operators at once. 
-
-    
-
-#### 2.1.4. Order items ascending by using the :order-by &lt;&lt;attribute-name&gt;&gt; syntax
-If you type in the search box :order-by a dropdown will appear containing the list of the attributes of this item , by choosing one ( either with the mouse or with the keyboard ) and hitting enter the search result will be arranged orderred ascendingly by the attribute you specified after the :order-by operator
-
-    
-
-#### 2.1.5. Order items descending by using the :desc-by &lt;&lt;attribute-name&gt;&gt; syntax
-If you type in the search box :desc-by a dropdown will appear containing the list of the attributes of this item , by choosing one ( either with the mouse or with the keyboard ) and hitting enter the search result will be arranged orderred descingly by the attribute you specified after the :desc-by operator
 
     
 
@@ -1215,6 +1207,70 @@ An http-client could get the select of all the tables of a database to which the
 #### 6.5.2. error handling for failed connect to db in the select-tables web action
 If the http-client points to a db to which the app layer does not have a connection ( might be a non-existing one ) the proper response is generated. 
 
+
+    // 20180503234141
+    // http://192.168.56.120:3000/non_existent/select/daily_issues
+    
+    {
+      "msg": "cannot connect to the non_existent database: FATAL:  database \"non_existent\" does not exist",
+      "req": "GET http://192.168.56.120:3000/non_existent/select/daily_issues",
+      "ret": 400
+    }
+
+### 6.6. Query web action
+An http-client could query the name and description attributes for all the tables having those attributes by a keyword , which is translated to the sql like clause.
+
+    <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>
+
+#### 6.6.1. successful execution
+An http-client could get the contents of ANY table of a database to which the issue-tracker has connectivity to by calling the following url:
+&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;database&gt;&gt;/query?for=&lt;&lt;phrase-to-srch-for&gt;&gt;
+For example: 
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/dev_issue_tracker/query?for=meta-data
+
+    // 20181105161448
+    // http://192.168.56.120:3001/dev_issue_tracker/query?for=meta-data
+    
+    {
+       "dat": [
+          {
+             "description": "The meta-data could be added to the met , as the data is set in the dat of the json ...\nBecause this will also enable the display of the warning msgs capability",
+             "guid": "4deaead1-721e-4bee-93ce-22d7e01dd511",
+             "id": 180806103105,
+             "item": "monthly_issues",
+             "name": "add fetching of the meta-data in the select web-action"
+          },
+          {
+             "description": "Basically a good calendar control should be pretty easy to be integrated ... , but it would require \"infra\" for fetching the meta-data as well ...",
+             "guid": "bf2206c2-0b12-415f-90a0-d008b0d6913a",
+             "id": 180806102543,
+             "item": "yearly_issues",
+             "name": "add vue calendar on the dates "
+          }
+       ],
+       "met": 0,
+       "msg": "",
+       "req": "GET http://192.168.56.120:3001/dev_issue_tracker/query",
+       "ret": 0
+    }
+
+#### 6.6.2. error handling on non-provided for operator
+If the for operator is not provided an error is returned:
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/dev_issue_tracker/query
+
+    // 20181105161651
+    // http://192.168.56.120:3001/dev_issue_tracker/query
+    
+    {
+       "met": "",
+       "msg": "nothing to search for, the for url parameter is undefined the query route",
+       "req": "GET http://192.168.56.120:3001/dev_issue_tracker/query",
+       "ret": 400
+    }
+
+#### 6.6.3. error handling for empty for url parameter
+If the for url parameter is empty  is not provided an error is returned:
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/dev_issue_tracker/query?for=
 
     // 20180503234141
     // http://192.168.56.120:3000/non_existent/select/daily_issues
