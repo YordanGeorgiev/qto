@@ -57,22 +57,29 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
       my $msg                 = 'unknown error while loading db issues to xls file' ; 
       my @tables              = ();
       my $tables              = $objModel->get( 'ctrl.tables' ) || 'daily_issues' ; 
+      my $hsr2                = {} ;      # this is the data hash ref of hash reffs 
+      my $msr2                = {} ;      # this is the meta hash describing the data hash ^^
+      my $amsr2               = {} ;      # this is the meta hash describing the data hash ^^
+      
+      my $db                  = $appConfig->{ 'postgres_db_name' } ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
+      my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel  ) ; 
+      my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" , \$objModel );
+      ($ret, $msg , $amsr2 )   = $objRdrDb->doLoadProjDbMetaData( $appConfig->{ 'postgres_db_name' } ) ;
+      return ( $ret , $msg ) unless $ret == 0 ; 
+      $appConfig->{ "$db" . '.meta' } = $amsr2 ;
+         
+      $objModel->set('select.web-action.page-size' , 1000000000) ; #set the maximum size
 
       for my $table ( @tables ) { 
-
-         my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
-         my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
-
-         my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel  ) ; 
-         my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" , \$objModel );
-         $objModel->set('select.web-action.page-size' , 1000000000) ; #set the maximum size
-         ( $ret , $msg )  = $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table ) ; 
+         ( $ret , $msg , $msr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
          return ( $ret , $msg ) unless $ret == 0 ; 
-    
+         ( $ret , $msg , $hsr2)  = $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table ) ; 
+         return ( $ret , $msg ) unless $ret == 0 ; 
+
          my $objWtrXls    = 'IssueTracker::App::IO::Out::WtrXls'->new( \$appConfig ) ;
-         $ret = $objWtrXls->doBuildXlsFromHashRef ( \$objModel , $table ) ;
+         $ret = $objWtrXls->doBuildXlsFromHashRef ( \$objModel , $table , $hsr2 , $msr2) ;
          return ( $ret , $msg ) unless $ret == 0 ; 
       }
 
