@@ -22,14 +22,17 @@ Table of Contents
 Why ?! Yet.  Another. App ?!
 
 Because work should be inspiring and not overwhelming people. 
-Because even good intentions without proper commitment, allocation and resourcing and most importantly a mean for tracking advancement of an endeavor in open way reflecting with the reality, might end-up making people less happy, when in fact a really simple solution could be applied for any bigger challenge requiring progress tracking and people communication and coordination... And tons of other reasons we all having been in project disasters know about ... Still here ?! Let's move on !
+Because even good intentions without proper commitment, allocation and resourcing and most importantly, a mean for tracking advancement of an endeavor in open way reflecting the reality, might end-up making people less happy, when in fact a really simple solution could be applied for any bigger challenge requiring progress tracking, communication and coordination ... 
+And tons of other reasons we all having been in project disasters know about ... Still here ?! Let's move on !
 
 
 issue tracker objects polygon 
 ![The relations between the issue tracker objects ](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/readme/what-is-is.png)    
 
 ## 2. WHAT 
-An application to manage multiple projects' issues, store them in postgres db, present them into dynamic web pages, write them into xls files, and publish them into Google Sheets with a lot of cool functionalities. 
+A generic postgres CRUDs ( s stands for search ) web based app for managing multiple databases from the same web application layer by means of simpliest possible UI and/or shell tools for xls export , Google sheets writes etc. 
+An included example application is the "issue-tracker application", which is used to manage multiple projects' issues, including itself ;o)
+
 The full and extensive features and functionalities document cold be read from:
 https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-features-and-functionalities.md
 
@@ -39,29 +42,30 @@ https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker
     
 
 ## 3. USAGE SCENARIO
-We have stumbled into real life problem in the ETL works of a Scandinavian big telco company, which could have been solved even with the current version of the tool, which is FAR from ready as the current number 0.4.8 indicates … 
+We have stumbled into real life problem in the ETL integrations of a big Scandinavian telco, which could have been solved even with the current version of the tool, although the versioning starts with the mighty zero ...
 
     
 
 ### 3.1. Assumption and prerequisites
-Namely, if your organisation:
-- has the need to constantly update comparably small hierarchy tables
+Your organisation:
+- has the need to constantly update comparably small ( less than 10k rows) hierarchy tables
 - has secured intranet access to a Linux box 
-- full trust to the persons having http access for CRUD operations exists ( as no authentication is yet implemented )
-- there is a need to load MANY tables into a postgres db 
-- the API of having bigint id , and uid as PK is acceptable
+- has full trust to the persons in the org having http access for CRUD operations, as only basic auth over http exists
+- has the a need to load MANY tables into a postgres db, which might be changing constantly DDL wise
+- the API of having bigint id and uid as PK as well as default vals for nullable cols is acceptable
 
     
 
 ### 3.2. Proposed capabilities
 You could:
--  deploy an instance of the issue-tracker
+-  deploy an instance of the issue-tracker, bare metal/docker install should take no more than 2h
+-  demo the simple search feature ( working only with name and description cols , but you could ddl hack-it)
 -  provide access to the non-technical person via http for CRUD operations
 -  provide them with initial links to grasp the "semi-sql" syntax
 -  quickly define LOTS of tables DDL by using the existing examples and just changing the columns
- - load initial data via xls ( less than 10k rows per shee should be ok ) 
+ - load initial data via xls ( less than 10k rows per sheet should be ok ) 
 
-    
+
 
 ### 3.3. Installation assistance
 We could provide you with free assistance for the deployment of the first instance in your organization, even we consider the existing documentation good enough to deploy the application only by following the instructions in the Installation Guide:
@@ -72,11 +76,10 @@ In the real IT life however the mealage always varies, hence this last "bonus of
 
 ## 4. DEMO 
 You can check the following running instance of the tool:
-http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/monthly_issues?as=table&pick=id,status,prio,name,weight,start_time,stop_time&page-size=10&page-num=1
-
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=7&page-num=1
     
 
-## 5. INSTALLATION AND CONFIGURATION
+## 5. INSTALLATION AND CONFIGURATION 
 You could either try quickly to execute the instructions bellow this section or 
 follow the installation instructions from the Installation and Configuration Guide in the docs/md dir:
 
@@ -112,14 +115,15 @@ https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker
     
 
 ## 7. ACKNOWLEDGEMENTS
-This project would not have been possible without the work of the communities of the people working on the following frameworks/languages/OS listed in no particular order. 
+This project would not have been possible without the work of the people working on the following frameworks/languages/OS communities listed in no particular order. 
 
- - Mojolicious
- - Vue 
  - Perl
+ - Mojolicious
  - GNU Linux
+ - Vue 
 
-Deep gratitude's and thanks for all those people !
+
+Deep gratitudes and thanks to all those people !
 This application aims to contain the best practices of our former colleagues and collaborators and co-travelers in life, which also deserve huge thanks for their support and contributions !
 
     
