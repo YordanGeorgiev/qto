@@ -47,13 +47,14 @@ sub doBuildListControl {
    my $objRdrDb 			= {} ; 
    my $objWtrUIFactory 	= {} ; 
    my $objUIBuilder 		= {} ; 
+   my $cols             = () ; 
 
    $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    $table = $objModel->get('table_name'); 
 
-   ( $ret , $msg , $mhsr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
-   # ( $ret , $msg , $mhsr2 ) = $objRdrDb->doSelectTablesColumnList ( $table ) ;
+   #( $ret , $msg , $mhsr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;
+   ( $ret , $msg , $cols) = $objModel->doGetTableColumnList( $appConfig , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 		
    my $to_picks   = $objModel->get('list.web-action.pick') ; 
@@ -61,16 +62,11 @@ sub doBuildListControl {
    my $to_hides   = $objModel->get('list.web-action.hide') ; 
    my @hides      = split ( ',' , $to_hides ) if defined ( $to_hides ) ; 
 	
-   #debug p $mhsr2 ;  
-
    unless ( defined ( $to_picks )) {
-   	$control = ']' ; # it is just the js array definining the cols
-		foreach my $id ( reverse sort keys %$mhsr2 ) {
-			my $row = $mhsr2->{ $id } ; 
-			my $col = $row->{ 'attribute_name' } ; 
-				$control = "'" . $col . "' , " . $control unless (grep /$col/, @hides) ; 
+		foreach my $col ( @$cols ) {
+		  $control = $control . ",'" . $col . "'" unless (grep /$col/, @hides) ; 
 		}
-   	$control = '[' . $control ; 
+   	$control = "['id'," . substr($control, 1) . ']' ; 
 	} 
 	else {
    	$control = "['id'," ; # it is just the js array definining the cols

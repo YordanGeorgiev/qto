@@ -516,7 +516,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
              a.attnotnull as not_null, 
              com.description as comment,
              coalesce(i.indisprimary,false) as is_primary_key,
-             def.adsrc as default_value
+             def.adsrc as default_value,
+             meta_columns.skip_in_list as skip_in_list
          FROM pg_attribute a 
          JOIN pg_class pgc ON pgc.oid = a.attrelid
          LEFT JOIN pg_index i ON 
@@ -758,11 +759,16 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $debug_msg        = q{} ; 
       my $hsr2             = {} ;         # this is hash ref of hash refs to populate with
       my $sth              = {} ;         # this is the statement handle
+      my $cols             = () ;         # the array ref of columns
       my $str_sql          = q{} ;        # this is the sql string to use for the query
 
-      
 
-      my $columns_to_select = "*" ; 
+      ( $ret , $msg , $cols ) = $objModel->doGetTableColumnList ( $appConfig , $db , $table ) ; 
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
+      # old my $columns_to_select = "*" ; # $objModel->doChkIfColumnExists ( $db , $table , $col );
+      my $columns_to_select = 'guid,id,' . join(',' , reverse @$cols) ; 
+      # debug print "columns_to_select: $columns_to_select \n" ; 
+
       if ( defined ( $objModel->get('select.web-action.pick') ) ) {
          $columns_to_select = " guid,id" ;
          my $lst_columns_to_select = $objModel->get('select.web-action.pick'); 

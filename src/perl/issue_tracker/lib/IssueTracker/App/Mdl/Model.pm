@@ -21,7 +21,7 @@ package IssueTracker::App::Mdl::Model ;
    our $objLogger       = {} ; 
 
 
-   sub doGetTablesColumnList {
+   sub doGetTableMeta {
 
       my $self          = shift ; 
       my $appConfig     = shift ; 
@@ -45,6 +45,36 @@ package IssueTracker::App::Mdl::Model ;
       $ret = 0 ; 
       $msg = '' ; 
       return ( $ret , $msg , $mhr2 , $c);  
+   }
+   
+   sub doGetTableColumnList {
+
+      my $self          = shift ; 
+      my $appConfig     = shift ; 
+      my $db            = shift ; 
+      my $table         = shift ; 
+      my $msg           = shift || 'error in the ' . $db . '.' . $table . ' model ';
+
+      my $mhr2          = {} ; 
+      my @cols          = () ; 
+      my $ret           = 1 ; 
+      my $to_order_by   = 'attribute_number' ; 
+
+      ( $ret , $msg , $mhr2 ) = $self->doGetTableMeta ( $appConfig , $db , $table );
+      return ( $ret , $msg , undef ) unless $ret == 0 ; 
+      #debug p $mhr2 ; 
+      foreach my $key ( sort { $mhr2->{$a}->{ $to_order_by } <=> $mhr2->{$b}->{ $to_order_by } } keys %$mhr2 ) {
+         my $row = $mhr2->{ $key } ; 
+         next if ( defined $row->{ 'skip_in_list'} && $row->{ 'skip_in_list'} == 1 ) ; 
+         next if ( $row->{ 'attribute_name' } eq 'guid' or $row->{ 'attribute_name' } eq 'id' );
+         push ( @cols , $row->{ 'attribute_name' } );
+      }
+      # debug print "START Model.pm : \@cols : "  ;
+      # debug foreach my $col ( @cols ) { print "col: $col \n"; } ;  
+      # debug print "STOP  Model.pm : \@cols : "  ;
+      $ret = 0 ; 
+      $msg = '' ; 
+      return ( $ret , $msg , \@cols);  
    }
 
 

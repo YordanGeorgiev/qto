@@ -48,7 +48,7 @@ sub doBuildListControl {
    my $objWtrUIFactory 	= {} ; 
    my $objUIBuilder 		= {} ; 
 
-   ( $ret , $msg , $mhsr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
+   ( $ret , $msg , $mhsr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 		
    my $to_picks   = $objModel->get('list.web-action.pick') ; 

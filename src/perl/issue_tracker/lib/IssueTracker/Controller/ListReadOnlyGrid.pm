@@ -51,7 +51,7 @@ sub doBuildListControl {
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    $table = $objModel->get('table_name'); 
 
-   ( $ret , $msg , $msr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
+   ( $ret , $msg , $msr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 		
    my $to_picks   = $objModel->get('list.web-action.pick') ; 

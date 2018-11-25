@@ -6,9 +6,10 @@ SELECT 'create the "meta_columns" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , prio           integer NOT NULL DEFAULT 1
-    , table_name     varchar (100) NOT NULL DEFAULT 'name ...'
+    , table_name     varchar (100) NOT NULL DEFAULT 'table name ...'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
+    , skip_in_list   boolean null default false
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_meta_columns_guid PRIMARY KEY (guid)
     ) WITH (
@@ -38,3 +39,5 @@ from pg_trigger
 where not tgisinternal
 and tgrelid = 'meta_columns'::regclass;
 
+
+insert into meta_columns ( table_name , name ) values ( 'monthly_issues','name');
