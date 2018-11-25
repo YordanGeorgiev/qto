@@ -272,7 +272,11 @@ sub doSetRoutes {
    , action       => 'doUpdateItemBySingleCol'
    );
 
-   # http://host-name:3001/dev_issue_tracker/select/monthly_issues
+   $r->get('/:db/select-meta')->to(
+     controller   => 'Select'
+   , action       => 'doSelectMeta'
+   );
+
    $r->get('/:db/select-meta/:item')->to(
      controller   => 'Select'
    , action       => 'doSelectMeta'

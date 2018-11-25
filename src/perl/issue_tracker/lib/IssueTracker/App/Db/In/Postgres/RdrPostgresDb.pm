@@ -526,6 +526,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          LEFT JOIN pg_attrdef def ON 
              (a.attrelid = def.adrelid AND a.attnum = def.adnum)
          LEFT JOIN pg_catalog.pg_namespace n ON n.oid = pgc.relnamespace
+         LEFT JOIN meta_columns ON 
+            ( meta_columns.name = a.attname AND meta_columns.table_name = pgc.relname ) 
 
          WHERE 1=1 
             AND pgc.relkind IN ('r','')
