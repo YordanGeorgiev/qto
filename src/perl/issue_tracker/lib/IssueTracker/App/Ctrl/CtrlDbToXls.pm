@@ -73,7 +73,7 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
       $objModel->set('select.web-action.page-size' , 1000000000) ; #set the maximum size
 
       for my $table ( @tables ) { 
-         ( $ret , $msg , $msr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
+         ( $ret , $msg , $msr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;
          return ( $ret , $msg ) unless $ret == 0 ; 
          ( $ret , $msg , $hsr2)  = $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 

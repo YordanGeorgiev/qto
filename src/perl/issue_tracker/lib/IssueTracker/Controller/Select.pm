@@ -106,10 +106,10 @@ sub doSelectItems {
 
       unless ( $ret == 0 ) {
          $http_code = 404 ; 
-         ( $ret , $msg , $met , $mc) = $objModel->doGetTablesColumnList($appConfig,$db,$item);
+         ( $ret , $msg , $met , $mc) = $objModel->doGetTableMeta($appConfig,$db,$item);
       }
       
-      ( $ret , $msg , $met , $mc) = $objModel->doGetTablesColumnList($appConfig,$db,$item);
+      ( $ret , $msg , $met , $mc) = $objModel->doGetTableMeta($appConfig,$db,$item);
       $http_code = 200 ; 
       $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 404 ) {
@@ -303,7 +303,7 @@ sub doSelectMeta {
    
    # debug p $appConfig->{ $db . '.meta' } ; 
    if ( defined $table ) {
-      ( $ret , $msg , $met , $cnt ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) 
+      ( $ret , $msg , $met , $cnt ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) 
    }
 
    if ( $ret == 0 ) {

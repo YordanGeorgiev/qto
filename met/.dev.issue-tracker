@@ -154,7 +154,6 @@ doc/txt/issue-tracker/tests/run-mysql-scripts.test.txt
 src/bash/issue-tracker/helps/run-mysql-scripts.help.sh
 src/bash/issue-tracker/specs/run-mysql-scripts.spec.sh
 # --
-# ---
 src/bash/issue-tracker/bootstrap-issue-tracker.sh
 src/bash/issue-tracker/issue-tracker.sh
 src/bash/issue-tracker/test-issue-tracker.sh

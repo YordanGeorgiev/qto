@@ -353,10 +353,6 @@ if you don't export anything, such as for a purely object-oriented module.
 	# eof sub doLogInfoMsg
 
 
-	#
-	# -----------------------------------------------------------------------------
-	# todo: add global trace_level setting
-	# -----------------------------------------------------------------------------
 	sub doLogTraceMsg {
 
 		my $self    = shift;

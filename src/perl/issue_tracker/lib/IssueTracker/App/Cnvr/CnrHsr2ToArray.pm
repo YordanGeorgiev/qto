@@ -17,7 +17,7 @@ our $objModel = {} ;
       my $hsr2          = shift ; 
       my $order_op      = shift || 'cmp' ; 
 
-      my $to_order_by   = $objModel->get('select.web-action.o') || 'attnum' ; 
+      my $to_order_by   = $objModel->get('select.web-action.o') || 'attribute_number' ; 
       my $to_hide       = $objModel->get('select.web-action.hide');
 
       my $msg        = 'unknown error has occurred !!!' ; 
@@ -29,6 +29,7 @@ our $objModel = {} ;
       my $evl_str_sort_meta = 'keys %$hsr2' ; # as it is just a hash ref of hash refs 
       my $evl_str_sort_by = $evl_str_sort_data ; 
       $evl_str_sort_by = $evl_str_sort_meta if $to_order_by eq 'attnum' ; 
+      $evl_str_sort_by = $evl_str_sort_meta if $to_order_by eq 'attribute_number' ; 
 
       if ( defined ( $to_order_by) ) {
          foreach my $key (  eval "$evl_str_sort_by" ) {
