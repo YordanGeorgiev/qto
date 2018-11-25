@@ -267,7 +267,7 @@ sub doSelectMeta {
 
    my $self        = shift;
    my $db          = $self->stash('db');
-   my $table       = $self->stash('item');
+   my $table       = $self->stash('item') || undef ; 
    my $ret         = 0;
    my $msg         = 'unknown error during Select item';
    my $met         = '' ; 
@@ -302,7 +302,9 @@ sub doSelectMeta {
    } 
    
    # debug p $appConfig->{ $db . '.meta' } ; 
-   ( $ret , $msg , $met , $cnt ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
+   if ( defined $table ) {
+      ( $ret , $msg , $met , $cnt ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) 
+   }
 
    if ( $ret == 0 ) {
       my $dat = () ; # an array ref holding the converted hash ref of hash refs 
