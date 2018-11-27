@@ -15,4 +15,6 @@ test "$curr_branch" = 'master' && sleep 5
 echo "checking for own todo left-overs ... ""$(grep -ri 'todo:ysg' . | grep -v 'pre-commit' | wc -l)"" found."
 grep -rnHi 'todo:ysg' . | grep -v 'pre-commit'
 
-exit $(grep -ri 'todo:ysg' . | grep -v 'pre-commit' | wc -l)
+echo "you have 
+
+# exit $(grep -ri 'todo:ysg' . | grep -v 'pre-commit' | wc -l)

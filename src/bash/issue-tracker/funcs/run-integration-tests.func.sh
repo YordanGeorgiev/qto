@@ -27,8 +27,7 @@ doRunIntegrationTests(){
    bash src/bash/issue-tracker/issue-tracker.sh -a run-mysql-scripts
 
 	doLog "INFO load the documentation db run xls-to-db to mysql"
-   export
-   tables=ItemController,ItemModel,ItemView,ExportFile,Installation,UserStory,Requirement,DevOps,Feature,ReadMe,Image,SystemGuide,Concepts;
+   export tables=ItemController,ItemModel,ItemView,ExportFile,Installation,UserStory,Requirement,DevOps,Feature,ReadMe,Image,SystemGuide,Concepts;
    export do_truncate_tables=1 ; export rdbms_type=mysql ; export load_model=nested-set
    perl src/perl/issue_tracker/script/issue_tracker.pl --do xls-to-db --tables $tables
 
