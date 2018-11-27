@@ -101,7 +101,8 @@ sub doCheckRequiredModules {
    Mojolicious
    Selenium::Remote::Driver
    Mojolicious::Plugin::BasicAuthPlus
-   Mojolicious::Plugin::StaticCache 
+   Mojolicious::Plugin::StaticCache
+   Mojolicious::Plugin::RenderFile
    Time::HiRes
   );
 
