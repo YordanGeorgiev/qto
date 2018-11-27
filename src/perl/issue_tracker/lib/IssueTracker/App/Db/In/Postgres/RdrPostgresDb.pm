@@ -529,7 +529,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          LEFT JOIN pg_catalog.pg_namespace n ON n.oid = pgc.relnamespace
          LEFT JOIN meta_columns ON 
             ( meta_columns.name = a.attname AND meta_columns.table_name = pgc.relname ) 
-
          WHERE 1=1 
             AND pgc.relkind IN ('r','')
              AND n.nspname <> 'pg_catalog'
@@ -542,7 +541,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          ORDER BY rowid
          ;      
          " ; 
-      # debug print "SQL: $str_sql \n STOP RdrPostgresDb.pm" ;   
+      # debug print "RdrPostgresDb.pm :: doLoadProjDbMetaData $str_sql \n STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
       
       eval { 
          $sth = $dbh->prepare($str_sql);  
@@ -551,7 +550,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          # debug p $mhsr2 ; 
       };
       if ( $@ or !scalar(%$mhsr2)) { 
-         # $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
+         $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
          $msg = " failed to get the project database: " . $db . " meta data ! " ; 
          $msg .= $DBI::errstr ; 
          $ret = 1 ; 
