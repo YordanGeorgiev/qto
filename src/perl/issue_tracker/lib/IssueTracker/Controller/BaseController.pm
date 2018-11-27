@@ -36,6 +36,7 @@ sub doReloadProjectDbMetaData {
    ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMetaData( $db ) ; 
 
    $appConfig->{ "$db" . '.meta' } = $msr2 ; # chk: it-181101180808
+   $self->app->set('AppConfig', $appConfig );
 
    return ( $ret , $msg , $msr2 ) ; 
 }

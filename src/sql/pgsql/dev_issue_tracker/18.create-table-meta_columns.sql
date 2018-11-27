@@ -12,6 +12,7 @@ SELECT 'create the "meta_columns" table'
     , skip_in_list   boolean null default false
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_meta_columns_guid PRIMARY KEY (guid)
+    , CONSTRAINT uc_table_column unique (table_name, name)
     ) WITH (
       OIDS=FALSE
     );

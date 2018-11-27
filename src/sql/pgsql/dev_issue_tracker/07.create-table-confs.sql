@@ -1,4 +1,4 @@
--- DROP TABLE IF EXISTS confs ; 
+DROP TABLE IF EXISTS confs ; 
 
 SELECT 'create the "confs" table'
 ; 
@@ -7,11 +7,10 @@ SELECT 'create the "confs" table'
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , seq            integer NULL
     , prio           integer NULL
-    , category       varchar (30) NOT NULL
-    , name           varchar (200) NOT NULL
-    , value          varchar (4000)
-    , description    varchar (4000)
-    , owner          varchar (50) NULL
+    , category       varchar (30) NOT NULL DEFAULT 'category ...'
+    , name           varchar (200) NOT NULL DEFAULT 'name ...'
+    , value          varchar (200)
+    , description    varchar (400)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_confs_guid PRIMARY KEY (guid)
     ) WITH (

@@ -52,8 +52,6 @@
 
             return axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
             .then(response => { 
-               // console.log ( response )
-               // console.log ( "stop response ")
                return response ; 
             })
             .catch(function(error) {
@@ -181,8 +179,7 @@
             var col = arr[0]
             var dbid = arr[1]
             var ret = 1
-         
-            if ( content.trim() === "" ) { content = "null" } //empty cell is treated as null
+            content = ( content == "" ? "null" : content ) //empty cell is treated as null
             
             axios.post('/<%= $db =%>/update/<%= $item =%>', {
                   attribute: col ,
@@ -191,15 +188,16 @@
             })
             .then( 
                response => {
-                  document.getElementById(id).innerHTML= content
+                  content = ( content == "null" ? "" : content )
                   newCntIndx = this.gridData.findIndex(obj => obj.id == dbid);
                   this.gridData[newCntIndx][col] = content; // it-180920075303 , it-181011195040 !!!
                }
             )
             .catch(function (error) {
-               document.getElementById(id).value= oldValue
+               document.getElementById(id).value = (oldValue == "null" ? "" : oldValue)
                if (typeof error !== undefined ) {
                  var errMsg = error.response.data.msg
+                 console.error ( error.response.data.msg )
                  setMsgVisuals(errMsg);
                }
             });
