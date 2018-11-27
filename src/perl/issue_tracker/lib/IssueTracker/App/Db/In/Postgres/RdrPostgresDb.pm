@@ -547,7 +547,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ; 
          $mhsr2 = $sth->fetchall_hashref( 'rowid' ) ; 
+         # debug print "RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;
          # debug p $mhsr2 ; 
+         # debug print "STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
       };
       if ( $@ or !scalar(%$mhsr2)) { 
          $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
