@@ -156,7 +156,7 @@ doParseCmdArgs(){
          doPrintHelp
          ;;
       t)
-         export tables="$OPTARG "
+         export tables="$OPTARG"
          ;;
       \?)
          doExit 2 "Invalid option: -$OPTARG"
