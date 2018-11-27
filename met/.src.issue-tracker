@@ -51,6 +51,7 @@ src/perl/issue_tracker/public/poc/autocomplete/div-searchbox.js
 src/perl/issue_tracker/public/poc/autocomplete/autocomplete.html
 # ---
 src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/Export.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm
@@ -128,6 +129,7 @@ src/perl/issue_tracker/t/TestDispatcher.pl
 src/perl/issue_tracker/t/TestModel.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrEnv.pm
 # ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
@@ -387,6 +389,7 @@ src/sql/pgsql/prd_issue_tracker/95.create-table-test_item_hierarchy.sql
 src/sql/pgsql/scripts/check-postgres-tables-permissions.sql
 src/sql/pgsql/scripts/copy-items-from-one-table-to-another.sql
 src/sql/pgsql/scripts/list-table-columns.sql
+src/sql/pgsql/scripts/list-table-cols.sh
 src/sql/pgsql/scripts/upsert_item_trigger.sql
 #----
 src/bash/issue-tracker/tests/db-to-xls.test.sh
@@ -889,6 +892,7 @@ src/bash/issue-tracker/scripts/history.sh
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/trash-bin.png
 # ---
 src/bash/issue-tracker/funcs/backup-postgres-db.func.sh
+src/bash/issue-tracker/funcs/backup-postgres-table.func.sh
 src/bash/issue-tracker/tests/backup-postgres-db.test.sh
 doc/txt/issue-tracker/funcs/backup-postgres-db.func.txt
 doc/txt/issue-tracker/tests/backup-postgres-db.test.txt
@@ -952,6 +956,7 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Timer/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/List/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Export/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Query/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Search/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Select/autosplit.ix
@@ -1003,3 +1008,4 @@ dat/mix/2018/2018-11/2018-11-27/sql/dev_issue_tracker
 dat/mix/2018/2018-11/2018-11-27/sql/dev_issue_tracker/dev_issue_tracker.20181127_045136.insrt.dmp.sql
 dat/mix/2018/2018-11/2018-11-27/xls
 dat/mix/2018/2018-11/2018-11-27/xls/issue-tracker.all.20181127_000000.xlsx
+src/perl/issue_tracker/public/dat/tmp/xls/1

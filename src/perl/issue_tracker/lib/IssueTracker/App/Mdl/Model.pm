@@ -34,7 +34,6 @@ package IssueTracker::App::Mdl::Model ;
       my $ret           = 1 ; 
       my $cols = $appConfig->{ "$db" . '.meta' } ; 
 
-
       foreach my $key ( keys %$cols ) {
          my $row = $cols->{ $key } ; 
          next unless $table eq $row->{ 'table_name' } ; 

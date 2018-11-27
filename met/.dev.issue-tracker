@@ -129,6 +129,7 @@ src/perl/issue_tracker/t/TestDispatcher.pl
 src/perl/issue_tracker/t/TestModel.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrEnv.pm
 # ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
@@ -955,6 +956,7 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Timer/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/List/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Export/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Query/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Search/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Select/autosplit.ix
@@ -1006,3 +1008,4 @@ dat/mix/2018/2018-11/2018-11-27/sql/dev_issue_tracker
 dat/mix/2018/2018-11/2018-11-27/sql/dev_issue_tracker/dev_issue_tracker.20181127_045136.insrt.dmp.sql
 dat/mix/2018/2018-11/2018-11-27/xls
 dat/mix/2018/2018-11/2018-11-27/xls/issue-tracker.all.20181127_000000.xlsx
+src/perl/issue_tracker/public/dat/tmp/xls/1

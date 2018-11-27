@@ -40,16 +40,22 @@ package IssueTracker::App::IO::Out::WtrXls ;
       my $omsr2            = {} ; 
       my $msg              = ''  ; 
 
+      my $db = ( defined($objModel->get('postgres_db_name')) ? $objModel->get('postgres_db_name') : 'dev_issue_tracker' );
       my $objTimer = 'IssueTracker::App::Utils::Timer'->new() ; 
 	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
       my $nice_month  = "$year" . '-' . "$mon" ; 
       my $nice_datetime  = "$year" ."$mon". "$mday" . '_' . "$hour" . "$min" . "$sec" ; 
       my $nice_date  = "$year" . '-' . "$mon" . '-' . "$mday" ; 
 
-      my $xls_file_name       = $ENV{'issue_tracker_project'} . '.' . $table . '.' . $nice_datetime ; 
+      my $xls_file_name       = $db. '.' . $table . '.' . $nice_datetime ; 
       my $xls_dir = $appConfig->{ 'xls_dir' } || $ENV{'mix_data_dir'} . "/$year/$nice_month/$nice_date" ; 
       $objWtrDirs->doMkDir ( "$xls_dir" ) ; 
-      my $xls_file         = "$xls_dir/$xls_file_name" . '.xlsx' ; 
+      my $xls_file         = '' ;
+      $xls_file         = "$xls_dir/$xls_file_name" . '.xlsx' unless ( defined $objModel->get('controller'));
+      if ( defined $objModel->get('controller')) {
+         $xls_file         .= $appConfig->{'ProductInstanceDir'} ;
+         $xls_file         .= '/src/perl/issue_tracker/public/dat/tmp/xls/' . $xls_file_name . '.xlsx' ;
+      }
 
       $msg = 'START writing the xls file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
       $msg = $xls_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
@@ -110,13 +116,16 @@ package IssueTracker::App::IO::Out::WtrXls ;
          #eof foreach col
       } 
       #eof foreach row 
-     
+
+      $objWorkbook->close();
+      # The Excel file in now in $str. Remember to binmode() the output
+      #filehandle before printing it.
+      binmode STDOUT;
       $msg = 'STOP writing the xls file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
       $msg = $xls_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
       
-      $row_id++ ; 
-      return 0 if -f $xls_file ; 
-      return 1 ; 
+      return ( 0 , '' , $xls_file ) if -f $xls_file ; 
+      return (1 , $msg , undef ) unless -f $xls_file ; 
    }
    #eof sub doBuildXlsFromHashRef
 

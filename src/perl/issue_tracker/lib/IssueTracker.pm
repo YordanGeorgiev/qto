@@ -116,6 +116,7 @@ sub doRegisterPlugins {
    
    $self->plugin('PODRenderer');
    $self->plugin('BasicAuthPlus');
+   $self->plugin('RenderFile');
 }
 
 #
@@ -287,6 +288,12 @@ sub doSetRoutes {
    $r->get('/:db/list/:item')->to(
      controller   => 'List'
    , action       => 'doListItems'
+   );
+
+   # http://host-name:3001/dev_issue_tracker/export/monthly_issues?as=xls
+   $r->get('/:db/export/:item')->to(
+     controller   => 'Export'
+   , action       => 'doExportItems'
    );
 
    $r->any('/:db/*')->to(
