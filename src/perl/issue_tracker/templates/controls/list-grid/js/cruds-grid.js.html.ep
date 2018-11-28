@@ -61,6 +61,7 @@
          }
          , generatePageSize: function (pgSize) {
                var curi = window.location.href ; 
+               if ( curi.indexOf("?") === -1 ) { curi = curi + '?' }
                if ( typeof pgSize === 'undefined' ) { pgSize = 7 }
                if ( curi.indexOf("page-size=") === -1 ) {
                   return curi + "&page-size=" + pgSize ; 
