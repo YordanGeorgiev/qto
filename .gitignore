@@ -20,3 +20,4 @@ src/perl/issue_tracker/public/lib/js/**
 **/*.crt
 **/*.key
 src/perl/issue_tracker/public/dat/tmp/**
+dat/tmp/**
