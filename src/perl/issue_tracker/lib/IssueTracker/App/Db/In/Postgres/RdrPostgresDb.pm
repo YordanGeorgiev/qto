@@ -507,17 +507,18 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 		$str_sql = "
          SELECT DISTINCT
-             ROW_NUMBER () OVER (ORDER BY pgc.relname , a.attnum) as rowid , 
-             pgc.relname as table_name ,
-             a.attnum as attribute_number,
-             a.attname as attribute_name,
-             format_type(a.atttypid, a.atttypmod) as data_type,
-             a.atttypmod as char_max_length,
-             a.attnotnull as not_null, 
-             com.description as comment,
-             coalesce(i.indisprimary,false) as is_primary_key,
-             def.adsrc as default_value,
-             meta_columns.skip_in_list as skip_in_list
+             ROW_NUMBER () OVER (ORDER BY pgc.relname , a.attnum) as rowid
+             , pgc.relname as table_name 
+             , a.attnum as attribute_number
+             , a.attname as attribute_name
+             , format_type(a.atttypid, a.atttypmod) as data_type
+             , a.atttypmod as char_max_length
+             , a.attnotnull as not_null
+             , com.description as comment
+             , coalesce(i.indisprimary,false) as is_primary_key
+             , def.adsrc as default_value
+             , meta_columns.skip_in_list as skip_in_list
+             , meta_columns.width as width
          FROM pg_attribute a 
          JOIN pg_class pgc ON pgc.oid = a.attrelid
          LEFT JOIN pg_index i ON 

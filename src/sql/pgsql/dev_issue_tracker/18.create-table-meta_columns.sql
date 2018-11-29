@@ -1,4 +1,4 @@
--- DROP TABLE IF EXISTS meta_columns ; 
+DROP TABLE IF EXISTS meta_columns ; 
 
 SELECT 'create the "meta_columns" table'
 ; 
@@ -10,6 +10,7 @@ SELECT 'create the "meta_columns" table'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
     , skip_in_list   boolean null default false
+    , width          integer NULL DEFAULT null
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_meta_columns_guid PRIMARY KEY (guid)
     , CONSTRAINT uc_table_column unique (table_name, name)
@@ -32,7 +33,6 @@ SELECT 'show the columns of the just created table'
    ORDER  BY attnum
    ; 
 
---The trigger:
 CREATE TRIGGER trg_set_update_time_on_meta_columns BEFORE UPDATE ON meta_columns FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
 select tgname
@@ -40,5 +40,3 @@ from pg_trigger
 where not tgisinternal
 and tgrelid = 'meta_columns'::regclass;
 
-
-insert into meta_columns ( table_name , name ) values ( 'monthly_issues','name');
