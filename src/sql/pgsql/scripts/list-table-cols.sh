@@ -20,6 +20,18 @@ EOF
 )
 echo -e "\n\n"
 
+# generate col1, col2, col3 ...
+while read -r c; do test -z "$c" || echo  , $c  | perl -ne 's/\n//gm;print' ; \
+   done < <(cat << EOF | psql -t -q -d $postgres_db_name -v table_name="${table_name:-}"
+SELECT column_name
+FROM information_schema.columns
+WHERE 1=1
+AND table_schema = 'public'
+AND table_name   =:'table_name'  ;
+EOF
+)
+echo -e "\n\n"
+
 # generate t.col1, t.col2, t.col3 ...
 while read -r c; do test -z "$c" || echo  , $table_name.$c  | perl -ne 's/\n//gm;print' ; \
    done < <(cat << EOF | psql -t -q -d $postgres_db_name -v table_name="${table_name:-}"
