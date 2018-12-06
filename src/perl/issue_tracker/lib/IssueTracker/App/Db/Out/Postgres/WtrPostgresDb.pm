@@ -274,7 +274,6 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 		my $self 				= shift ; 
 		my $hsr2 			   = shift ; 	# the hash ref of hash refs  aka hs r on power 2
       my $table            = shift ; 
-      my $term             = shift || 'daily' ; 
 
       my $ret              = 1 ; 
       my $msg              = 'unknown error while sql insert ' ; 		
@@ -535,6 +534,9 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $table            = shift ;
 		my $hsr2 		      = $objModel->get( 'hsr2' ) ; 
 
+      # todo:ysg 
+      p $hsr2 ; 
+
       binmode(STDIN,  ':utf8');
       binmode(STDOUT, ':utf8');
       binmode(STDERR, ':utf8');
@@ -591,6 +593,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
       $update_time      = $objTimer->GetHumanReadableTime();
       foreach my $row_num ( sort ( keys %$hsr2) ) { 
+         next if $row_num == 0 ; 
 
          my $hs_row = $hsr2->{ $row_num } ; 
          my $data_str = '' ; 
@@ -601,10 +604,11 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          $hs_row = \%row_h ; 
 
          # debug p($hs_row) ; 
+         # p $hs_headers ; 
+
          foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
 
             my $column_name = $hs_headers->{ $col_num }->{ 'attname' }; 
-
             # if the xls does not have the table column ( ie guid )
             #next unless exists $hsr2->{ 0 }->{ $column_name } ; 
 
@@ -663,8 +667,10 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          }
          $sql_str .= '; ' . "\n" ; 
 
-         # debug print "WtrPostgresDb.pm : 459 \n " ; 
-         # debug print "sql_str $sql_str \n" ; 
+         # debug 
+         print "WtrPostgresDb.pm : 669 \n " ; 
+         # debug 
+         print "sql_str $sql_str \n" ; 
       } 
       #eof foreach row
        
@@ -687,9 +693,12 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
             $sth = $dbh->prepare($str_sql);  
             $sth->execute();
             $actual_amount_of_inserted_rows = $sth->fetchrow_array() ; 
+            print "\actual_amount_of_inserted_rows: $actual_amount_of_inserted_rows \n" ; 
+            print "expected_amount_of_inserted_rows: $expected_amount_of_inserted_rows \n" ; 
+            sleep 2 ; 
          } or return ( $ret , $msg ) ; 
 
-         if ( $actual_amount_of_inserted_rows == $expected_amount_of_inserted_rows ) { 
+         if ( $actual_amount_of_inserted_rows == $expected_amount_of_inserted_rows - 1) { 
             $msg = "upsert OK for table $table" ;          
             $objLogger->doLogInfoMsg ( $msg ) ; 
             $ret = 0 ; 
@@ -700,6 +709,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       $msg = 'upsert OK for all table' ; 
 		return ( $ret , $msg ) ; 
 	}
+
 
 	#
 	# -----------------------------------------------------------------------------

@@ -7,8 +7,8 @@ SELECT 'create the "userstories" table'
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , level          integer NULL
     , seq            integer NULL
-    , lft_rnk        bigint  NULL
-    , rgt_rnk        bigint  NULL
+    , lft            bigint  NULL
+    , rgt            bigint  NULL
     , status         varchar (20) NOT NULL DEFAULT 'status ...'
     , prio           integer NOT NULL DEFAULT 1
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
