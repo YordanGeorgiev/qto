@@ -323,6 +323,7 @@ src/sql/pgsql/dev_issue_tracker/16.create-table-userstories.sql
 src/sql/pgsql/dev_issue_tracker/17.create-table-meta_tables.sql
 src/sql/pgsql/dev_issue_tracker/18.create-table-meta_columns.sql
 src/sql/pgsql/dev_issue_tracker/19.create-table-naming_conventions.sql
+src/sql/pgsql/dev_issue_tracker/20.create-table-goals.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/dev_issue_tracker/93.create-table-benchmarks.sql
 src/sql/pgsql/dev_issue_tracker/94.create-table-test_item.sql
@@ -923,6 +924,7 @@ src/perl/issue_tracker/t/lib/IssueTracker/TestClientSidePOC2.t
 src/perl/issue_tracker/t/lib/IssueTracker/TestSeleniumSetup.t
 # ---
 src/perl/issue_tracker/lib/auto/AutoLoadableChild/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrEnv/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Update/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToJson/autosplit.ix
@@ -1005,10 +1007,10 @@ dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/sql/tst_our_proj
 dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/xls
 dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/xls/our-proj.all.20181024_000000.xlsx
 dat/tmp/1
-dat/mix/2018/2018-11/2018-11-27/
-dat/mix/2018/2018-11/2018-11-27/sql
-dat/mix/2018/2018-11/2018-11-27/sql/dev_issue_tracker
-dat/mix/2018/2018-11/2018-11-27/sql/dev_issue_tracker/dev_issue_tracker.20181127_045136.insrt.dmp.sql
-dat/mix/2018/2018-11/2018-11-27/xls
-dat/mix/2018/2018-11/2018-11-27/xls/issue-tracker.all.20181127_000000.xlsx
-src/perl/issue_tracker/public/dat/tmp/xls/1
+dat/mix/2018/2018-12/2018-12-04
+dat/mix/2018/2018-12/2018-12-04/sql
+dat/mix/2018/2018-12/2018-12-04/sql/dev_issue_tracker
+dat/mix/2018/2018-12/2018-12-04/sql/dev_issue_tracker/dev_issue_tracker.20181204_151101.insrt.dmp.sql
+dat/mix/2018/2018-12/2018-12-04/sql/dev_issue_tracker/meta_columns.data.sql
+dat/mix/2018/2018-12/2018-12-04/xls
+dat/mix/2018/2018-12/2018-12-04/xls/issue-tracker.all.20181204_000000.xlsx

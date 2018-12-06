@@ -211,7 +211,7 @@ var Searchbox = {
             if ( typeof newTable !== "undefined" ) {
                uri = url.protocol + "//" + url.hostname + ':' + url.port + '/' 
                uri = uri + db + '/list/' + newTable + url.search
-               if ( uri.indexOf('?') == -1 ) { uri = uri + '?as=grid' }
+               uri = ( uri.indexOf('?') == -1 ) ? uri + '?as=grid' : uri
                gs = gs.replace(":in ", "").replace( newTable,"").trim()
                uri = this.buildLike ( uri , gs)
             } else {
@@ -222,6 +222,7 @@ var Searchbox = {
          
 
          if ( tableSpecified == 0 ) {
+            uri = ( uri.indexOf('?') == -1 ) ? uri + '?as=grid' : uri
             uri = uri.replace(/&page-num=([0-9]+)/gi , "") 
             uri = uri + '&page-num=1'
             uri = uri.replace(/&page-size=([0-9]+)/gi , "") 
@@ -229,7 +230,7 @@ var Searchbox = {
             if ( gs.length > 0 ) {
                uri = url.protocol + "//" + url.hostname + ':' + url.port + '/' 
                uri = uri + db + '/search' + url.search
-               if ( uri.indexOf('?') == -1 ) { uri = uri + '?as=grid' }
+               uri = ( uri.indexOf('?') == -1 ) ? uri + '?as=grid' : uri
                uri = uri.replace(/&for=([a-zA-Z0-9_%]+)/gi , "" ) 
                uri = uri.replace(/&with=([a-zA-Z_%\-0-9]+)/gi , "") 
                uri = uri.replace(/&like-by=([a-zA-Z_%]+)/gi , "") 
