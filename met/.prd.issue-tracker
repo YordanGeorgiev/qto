@@ -324,6 +324,7 @@ src/sql/pgsql/dev_issue_tracker/17.create-table-meta_tables.sql
 src/sql/pgsql/dev_issue_tracker/18.create-table-meta_columns.sql
 src/sql/pgsql/dev_issue_tracker/19.create-table-naming_conventions.sql
 src/sql/pgsql/dev_issue_tracker/20.create-table-goals.sql
+src/sql/pgsql/dev_issue_tracker/21.create-table-devops_guide.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/dev_issue_tracker/93.create-table-benchmarks.sql
 src/sql/pgsql/dev_issue_tracker/94.create-table-test_item.sql
@@ -1007,10 +1008,10 @@ dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/sql/tst_our_proj
 dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/xls
 dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/xls/our-proj.all.20181024_000000.xlsx
 dat/tmp/1
-dat/mix/2018/2018-12/2018-12-04
-dat/mix/2018/2018-12/2018-12-04/sql
-dat/mix/2018/2018-12/2018-12-04/sql/dev_issue_tracker
-dat/mix/2018/2018-12/2018-12-04/sql/dev_issue_tracker/dev_issue_tracker.20181204_151101.insrt.dmp.sql
-dat/mix/2018/2018-12/2018-12-04/sql/dev_issue_tracker/meta_columns.data.sql
-dat/mix/2018/2018-12/2018-12-04/xls
-dat/mix/2018/2018-12/2018-12-04/xls/issue-tracker.all.20181204_000000.xlsx
+dat/mix/2018/2018-12/2018-12-07/
+dat/mix/2018/2018-12/2018-12-07/.DS_Store
+dat/mix/2018/2018-12/2018-12-07/sql
+dat/mix/2018/2018-12/2018-12-07/sql/dev_issue_tracker
+dat/mix/2018/2018-12/2018-12-07/sql/dev_issue_tracker/dev_issue_tracker.20181207_152633.insrt.dmp.sql
+dat/mix/2018/2018-12/2018-12-07/xls
+dat/mix/2018/2018-12/2018-12-07/xls/issue-tracker.all.20181207_000000.xlsx
