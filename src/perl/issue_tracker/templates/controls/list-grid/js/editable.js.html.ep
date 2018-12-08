@@ -19,7 +19,6 @@
      , mounted() {
          this.content = this.cnt
          this.displayEmptyCellIfNullOrUndefined()
-         //console.log(this.$el.id)
          this.$el.style.width = this.getColMaxWidth(this.$el) + "px"
      },
      methods: {
