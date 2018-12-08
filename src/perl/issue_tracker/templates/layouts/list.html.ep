@@ -5,21 +5,16 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
   <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/site.css?v=<%= $ProductVersion =%>" />
-   <%= content 'header_csss' %>
+  <%= content 'cnt_header_css' %>
 </head>
 <body>
-<div class="app_name_tooltip"> <%= "$db" =%>
-   <div class="app_name_tooltiptext">
-      <%= " $ProductVersion " =%>
-      <%= " $ProductType " =%>
-      <%= " $ShortCommitHash " =%>
-      <%= " $page_load_time " =%>
-   </div>
-</div>
+   %= include 'controls/site/app_name_tooltip'
 	<div id="div_msg"> <%== $msg %></div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-   <%= content %>
+
+   <%= content 'cnt_body_controls' %>
+
 <script id="all">
    var bus=new Vue({});
    %= include 'controls/list-grid/js/global-msg.js'

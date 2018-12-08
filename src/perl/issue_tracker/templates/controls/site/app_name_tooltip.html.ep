@@ -1,0 +1,8 @@
+<div class="app_name_tooltip"> <%= "$db" =%>
+   <div class="app_name_tooltiptext">
+      <%= " $ProductVersion " =%>
+      <%= " $ProductType " =%>
+      <%= " $ShortCommitHash " =%>
+      <%= " $page_load_time " =%>
+   </div>
+</div>

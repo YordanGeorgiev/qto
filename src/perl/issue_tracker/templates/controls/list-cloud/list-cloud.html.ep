@@ -1,12 +1,13 @@
 % use utf8;
 % layout 'list';
 
-% content_for header_csss => begin
+% content_for cnt_header_css => begin
   <title> list <%= " $item " =%>  <%= "as $as in " =%> <%= "$db " =%> </title> 
   <link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/jqcloud.css">
   <link rel="stylesheet" type="text/css" media="print" href="../../themes/thme-blue/css/print/controls/jqcloud.css">
 % end
 
+% content_for cnt_body_controls => begin
 
 <script
   src="https://code.jquery.com/jquery-2.2.4.min.js"
@@ -27,5 +28,4 @@
 
    </script>
 </div>
-      
-
+% end
