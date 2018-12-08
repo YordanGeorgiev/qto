@@ -3,6 +3,7 @@
 src/perl/issue_tracker/t/lib/IssueTracker/App/benchmark_url.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/layouts/site.html.ep
+src/perl/issue_tracker/templates/layouts/list.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/srch-grid.html.ep
 src/perl/issue_tracker/lib/IssueTracker.pm
@@ -60,7 +61,7 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/SearchGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListPrintTable.pm
 # ---
-src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
+src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrListLabels.pm
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrJQCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToHsr2.pm
@@ -951,7 +952,7 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToJson/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrJsonToHsr2/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrJQCloud/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrListLabels/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Configurator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix

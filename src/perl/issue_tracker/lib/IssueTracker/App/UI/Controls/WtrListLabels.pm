@@ -1,4 +1,4 @@
-package IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ; 
+package IssueTracker::App::UI::Controls::WtrListLabels ; 
 
    use strict ; use warnings ; use utf8 ; 
 
@@ -38,9 +38,21 @@ package IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ;
       my $table      = $objModel->get('table_name');
       my $to_hide    = $objModel->get('list.web-action.hide');
       my @hides      = split ( ',' , $to_hide ) if defined ( $to_hide ) ; 
-      
+      my @picks      = () ;  
+      my $cols       = {}  ;
+      my $ret        = 1 ; 
+      my $msg        = 'unknown error occured in list labels !'; 
+
+
 		my $to_picks   = $objModel->get('list.web-action.pick') ; 
-      my @picks      = split ( ',' , $to_picks ) if defined ( $to_picks ) ; 
+      
+      if ( defined ( $to_picks ) ) {
+         @picks      = split ( ',' , $to_picks ); 
+      } else {
+         ( $ret , $msg , $cols) = $objModel->doGetTableColumnList( $appConfig , $db , $table ) ;
+         return ( $ret , $msg , '' ) unless $ret == 0 ; 
+         @picks      = @$cols ;
+      }
 
       my $single_item = $table ; 
       $single_item   =~ s/^(.*)s$/$1/g ; 
@@ -55,31 +67,15 @@ package IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ;
       '<div id="app_list_labels">
           <div id="vfor_cols" v-for="' . $single_item . ' in ' . $table . '">
    			' ; 
-              unless ( defined $to_picks ) {
-                  foreach my $col_num ( sort ( keys %$hs_headers )) {
-                     my $col = $hs_headers->{ $col_num }->{ 'attname' }; 
-                     my $to_hide = any { /$col/ } @hides ; 
-                     unless ( $to_hide  ) {
-                           $control .= '<div class="lbl_row">' ; 
-                           $control .= '<div class="lbl_lft" ><b>' . $col . ': </b> </div>' ; 
-                           $control .= '<div class="lbl_rgt" tabindex="0">' ; 
-                           $control .= '{{ ' . $single_item . '.' . $col . ' }} ';  
-                           $control .= '</div>' ; 
-                           $control .= '</div>';
-                     }
-                     $control .= '<div class="div_spacer2"></div>' ; 
-               } 
-            } else {
-                  foreach my $col ( @picks) {
-                     $control .= '<div class="lbl_row">' ; 
-                     $control .= '<div class="lbl_lft" ><b>' . $col . ': </b> </div>' ; 
-                     $control .= '<div class="lbl_rgt" tabindex="0">' ; 
-                     $control .= '{{ ' . $single_item . '.' . $col . ' }} ';  
-                     $control .= '</div>' ; 
-                     $control .= '</div>';
-                  }
-                  $control .= '<div class="div_spacer2"></div>' ; 
+            foreach my $col ( @picks) {
+               $control .= '<div class="lbl_row">' ; 
+               $control .= '<div class="lbl_lft" ><b>' . $col . ': </b> </div>' ; 
+               $control .= '<div class="lbl_rgt" tabindex="0">' ; 
+               $control .= '{{ ' . $single_item . '.' . $col . ' }} ';  
+               $control .= '</div>' ; 
+               $control .= '</div>';
             }
+            $control .= '<div class="div_spacer2"></div>' ; 
       $control .= '
           </div>
       </div>'

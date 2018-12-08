@@ -60,7 +60,7 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/SearchGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListPrintTable.pm
 # ---
-src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
+src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrListLabels.pm
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrJQCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToHsr2.pm
@@ -956,7 +956,7 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToJson/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrJsonToHsr2/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrJQCloud/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrListLabels/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Configurator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
