@@ -295,6 +295,12 @@ sub doSetRoutes {
      controller   => 'Export'
    , action       => 'doExportItems'
    );
+   
+   # http://host-name:3001/dev_issue_tracker/select/monthly_issues
+   $r->get('/:db/view/:item')->to(
+     controller   => 'View'
+   , action       => 'doViewItems'
+   );
 
    $r->any('/:db/*')->to(
      controller   => 'Search'
