@@ -8,7 +8,6 @@ package IssueTracker::Controller::PageFactory ;
    use IssueTracker::Controller::ListGrid ; 
    use IssueTracker::Controller::SearchGrid ; 
    use IssueTracker::Controller::ListLabels ; 
-   use IssueTracker::Controller::ListReadOnlyGrid ; 
    use IssueTracker::Controller::ListPrintTable ; 
 
 	our $appConfig 		= {} ; 
@@ -36,10 +35,6 @@ package IssueTracker::Controller::PageFactory ;
 		elsif ( $ui_type eq 'page/list-labels' ) {
 		   $package_file     = "IssueTracker/Controller/ListLabels.pm" ; 
 		   $objWtrControl    = "IssueTracker::Controller::ListLabels" ; 
-		}
-		elsif ( $ui_type eq 'page/list-rgrid' ) {
-		   $package_file     = "IssueTracker/Controller/ListReadOnlyGrid.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListReadOnlyGrid" ; 
 		}
 		elsif ( $ui_type eq 'page/list-grid' ) {
 		   $package_file     = "IssueTracker/Controller/ListGrid.pm" ; 
