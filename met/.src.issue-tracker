@@ -3,6 +3,11 @@
 src/perl/issue_tracker/t/lib/IssueTracker/App/benchmark_url.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/layouts/site.html.ep
+src/perl/issue_tracker/templates/web-actions/view.html.ep
+src/perl/issue_tracker/templates/pages/view-doc.html.ep
+src/perl/issue_tracker/lib/IssueTracker/Controller/View.pm
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestView.t
+src/perl/issue_tracker/templates/layouts/list.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/srch-grid.html.ep
 src/perl/issue_tracker/lib/IssueTracker.pm
@@ -42,7 +47,6 @@ src/perl/issue_tracker/public/themes/thme-blue/img/controls/trash-bin.png
 src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep
 src/perl/issue_tracker/public/lib/js/controls/jqcloud/jqcloud.min.js
-src/perl/issue_tracker/templates/controls/list-rgrid/list-rgrid.html.ep
 src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
 # ---
 src/perl/issue_tracker/public/poc/autocomplete
@@ -55,7 +59,6 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/Export.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/ListReadOnlyGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/SearchGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListPrintTable.pm
@@ -76,11 +79,9 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCTestMojoRoleSelenium.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCSeleniumBrowser.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
 # ---
-src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-rgrid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/jqcloud.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/site.css
-src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/list-rgrid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/jqcloud.css
 #---
@@ -328,11 +329,10 @@ src/sql/pgsql/dev_issue_tracker/21.create-table-devops_guide.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/dev_issue_tracker/93.create-table-benchmarks.sql
 src/sql/pgsql/dev_issue_tracker/94.create-table-test_item.sql
-src/sql/pgsql/dev_issue_tracker/95.create-table-test_item_hierarchy.sql
+src/sql/pgsql/dev_issue_tracker/95.create-table-test_hierarchy_table.sql
 src/sql/pgsql/dev_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/dev_issue_tracker/97.create-table-test_create_table.sql
 src/sql/pgsql/dev_issue_tracker/98.create-table-test_update_table.sql
-src/sql/pgsql/dev_issue_tracker/99.create-table-test_hierarchy_table.sql
 src/sql/pgsql/tst_issue_tracker
 src/sql/pgsql/tst_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/tst_issue_tracker/00.functions.sql
@@ -357,11 +357,9 @@ src/sql/pgsql/tst_issue_tracker/19.create-table-naming_conventions.sql
 src/sql/pgsql/tst_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/tst_issue_tracker/93.create-table-benchmarks.sql
 src/sql/pgsql/tst_issue_tracker/94.create-table-test_item.sql
-src/sql/pgsql/tst_issue_tracker/95.create-table-test_item_hierarchy.sql
 src/sql/pgsql/tst_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/tst_issue_tracker/97.create-table-test_create_table.sql
 src/sql/pgsql/tst_issue_tracker/98.create-table-test_update_table.sql
-src/sql/pgsql/tst_issue_tracker/99.create-table-test_hierarchy_table.sql
 src/sql/pgsql/prd_issue_tracker
 src/sql/pgsql/prd_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/prd_issue_tracker/00.functions.sql
@@ -385,12 +383,10 @@ src/sql/pgsql/prd_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/prd_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/prd_issue_tracker/97.create-table-test_create_table.sql
 src/sql/pgsql/prd_issue_tracker/98.create-table-test_update_table.sql
-src/sql/pgsql/prd_issue_tracker/99.create-table-test_hierarchy_table.sql
 src/sql/pgsql/prd_issue_tracker/18.create-table-meta_columns.sql
 src/sql/pgsql/prd_issue_tracker/19.create-table-naming_conventions.sql
 src/sql/pgsql/prd_issue_tracker/93.create-table-benchmarks.sql
 src/sql/pgsql/prd_issue_tracker/94.create-table-test_item.sql
-src/sql/pgsql/prd_issue_tracker/95.create-table-test_item_hierarchy.sql
 src/sql/pgsql/scripts/check-postgres-tables-permissions.sql
 src/sql/pgsql/scripts/copy-items-from-one-table-to-another.sql
 src/sql/pgsql/scripts/list-table-columns.sql
@@ -966,6 +962,7 @@ src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Export/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Query/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Search/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Select/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/View/autosplit.ix
 src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
 # --
 src/perl/issue_tracker/log/1

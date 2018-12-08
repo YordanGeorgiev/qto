@@ -22,31 +22,31 @@ package IssueTracker::Controller::PageFactory ;
 		my @args 			   = ( @_ ) ; 
 
 		my $package_file     = () ; 
-		my $objWtrControl    = () ;
+		my $objPageController    = () ;
 
 		if ( $ui_type eq 'page/list-labels' ) {
 		   $package_file     = "IssueTracker/Controller/ListLabels.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListLabels" ; 
+		   $objPageController    = "IssueTracker::Controller::ListLabels" ; 
 		}
 		elsif ( $ui_type eq 'page/list-cloud' ) {
 		   $package_file     = "IssueTracker/Controller/ListCloud.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListCloud" ; 
+		   $objPageController    = "IssueTracker::Controller::ListCloud" ; 
 		}
 		elsif ( $ui_type eq 'page/list-labels' ) {
 		   $package_file     = "IssueTracker/Controller/ListLabels.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListLabels" ; 
+		   $objPageController    = "IssueTracker::Controller::ListLabels" ; 
 		}
 		elsif ( $ui_type eq 'page/list-grid' ) {
 		   $package_file     = "IssueTracker/Controller/ListGrid.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListGrid" ; 
+		   $objPageController    = "IssueTracker::Controller::ListGrid" ; 
 		}
 		elsif ( $ui_type eq 'page/list-print-table' ) {
 		   $package_file     = "IssueTracker/Controller/ListPrintTable.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListPrintTable" ; 
+		   $objPageController    = "IssueTracker::Controller::ListPrintTable" ; 
 		}
 		elsif ( $ui_type eq 'page/srch-grid' ) {
 		   $package_file     = "IssueTracker/Controller/SearchGrid.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::SearchGrid" ; 
+		   $objPageController    = "IssueTracker::Controller::SearchGrid" ; 
 		}
 		else {
 	      croak "ui_type : $ui_type is not implemented !!!" ; 	
@@ -54,7 +54,7 @@ package IssueTracker::Controller::PageFactory ;
 
 		require $package_file;
 
-		return $objWtrControl->new( \$appConfig , \$objModel , @args);
+		return $objPageController->new( \$appConfig , \$objModel , @args);
 	}
 
 
