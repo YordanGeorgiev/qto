@@ -148,7 +148,6 @@ sub doBuildListControl {
          'lbls'   => 'list-labels'
       ,  'cloud'  => 'list-cloud' 
       ,  'grid'   => 'list-grid'
-      ,  'table'  => 'list-rgrid'
       ,  'print-table'  => 'list-print-table'
    };
 
@@ -179,7 +178,6 @@ sub doRenderPageTemplate {
    my $as_templates = { 
          'lbls'         => 'list-labels'
       ,  'cloud'        => 'list-cloud' 
-      ,  'table'        => 'list-rgrid' 
       ,  'grid'         => 'list-grid' 
       ,  'print-table'  => 'list-print-table' 
    };
