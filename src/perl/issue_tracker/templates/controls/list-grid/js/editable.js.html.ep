@@ -77,10 +77,8 @@
                   continue ;
                } else {
                   if ( typeof ((meta[prop])["width"]) != "undefined" && (meta[prop])["width"] != null ) {
-                        // todo:ysg
                         maxWidth = this.calcVarCharWidth(Number((meta[prop])["width"]),col)         
                   } else {
-                        // todo:ysg
                      if ( (meta[prop])["data_type"].indexOf("char") === -1) {
                         maxWidth = this.calcWidth()
                      } else {

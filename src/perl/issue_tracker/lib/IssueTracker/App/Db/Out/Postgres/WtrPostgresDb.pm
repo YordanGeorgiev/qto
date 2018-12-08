@@ -534,9 +534,6 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $table            = shift ;
 		my $hsr2 		      = $objModel->get( 'hsr2' ) ; 
 
-      # todo:ysg 
-      p $hsr2 ; 
-
       binmode(STDIN,  ':utf8');
       binmode(STDOUT, ':utf8');
       binmode(STDERR, ':utf8');

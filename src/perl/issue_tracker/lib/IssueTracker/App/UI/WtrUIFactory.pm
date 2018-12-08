@@ -5,7 +5,7 @@ package IssueTracker::App::UI::WtrUIFactory ;
 	use Data::Printer ; 
    use Carp ; 
 
-   use IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate ; 
+   use IssueTracker::App::UI::Controls::WtrListLabels ; 
    use IssueTracker::App::UI::Controls::WtrJQCloud ; 
 
 	our $appConfig 		= {} ; 
@@ -24,8 +24,8 @@ package IssueTracker::App::UI::WtrUIFactory ;
 		my $objWtrControl = () ;
 
 		if ( $ui_type eq 'control/list-labels' ) {
-		   $package_file     = "IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm" ; 
-		   $objWtrControl    = "IssueTracker::App::UI::Controls::WtrVueListLabelsTemplate" ; 
+		   $package_file     = "IssueTracker/App/UI/Controls/WtrListLabels.pm" ; 
+		   $objWtrControl    = "IssueTracker::App::UI::Controls::WtrListLabels" ; 
 		}
 		elsif ( $ui_type eq 'control/list-cloud' ) {
 		   $package_file     = "IssueTracker/App/UI/Controls/WtrJQCloud.pm" ; 

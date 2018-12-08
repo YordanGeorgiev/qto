@@ -1,5 +1,5 @@
 % use utf8;
-% layout 'site';
+% layout 'list';
 
 % content_for header_csss => begin
    <link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/list-rgrid.css" />
