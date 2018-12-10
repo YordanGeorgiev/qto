@@ -255,6 +255,12 @@ sub doSetRoutes {
    , action       => 'doSelectItems'
    );
    
+   # http://host-name:3001/dev_issue_tracker/select/monthly_issues
+   $r->get('/:db/hselect/:item')->to(
+     controller   => 'HSelect'
+   , action       => 'doHSelectItems'
+   );
+   
    # http://host-name:3001/dev_issue_tracker/create/monthly_issues?id=123
    $r->post('/:db/create/:item')->to(
      controller   => 'Create'

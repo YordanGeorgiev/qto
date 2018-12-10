@@ -57,6 +57,7 @@ sub isAuthorized {
       }
    );
 
+   $self->render('text' => 'Refresh your page to login ');
    return 0  ;
 
 }

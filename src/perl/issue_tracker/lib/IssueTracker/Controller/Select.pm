@@ -9,8 +9,8 @@ use parent qw(IssueTracker::Controller::BaseController);
 use Data::Printer ; 
 use Data::Dumper; 
 
-use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
+use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
 use IssueTracker::App::IO::In::CnrUrlParams ; 
 
@@ -29,7 +29,6 @@ sub doSelectItems {
    my $db               = $self->stash('db');
    my $item             = $self->stash('item');
    my $http_method      = 'GET' ;  
-   my $rdbms_type       = 'postgres';
    my $objCnrUrlParams  = {} ; 
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
@@ -41,12 +40,9 @@ sub doSelectItems {
    my $met              = {}; # the meta-data of the this item
    my $mc               = {}; # the meta-counter of the meta-data
    my $http_code        = 200 ; 
-   my $cnt       = 0 ; 
+   my $cnt              = 0 ; 
 
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login ');
-      return ; 
-   } 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
    
    $appConfig		 		= $self->app->get('AppConfig');
    unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
@@ -86,11 +82,6 @@ sub doSelectItems {
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
 
    ($ret, $msg,$hsr2) = $objRdrDb->doSelectTableIntoHashRef(\$objModel, $item);
-
-   
-   # debug print "Select.pm \n" ; 
-   # debug print "ret: $ret , msg: $msg \n" ; 
-   # debug print "Select.pm \n" ; 
 
    unless ( $ret == 0 ) {
       $http_code = $ret ; 
@@ -148,6 +139,7 @@ sub doSelectTables {
    my $objModel   = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
 
 	$objModel->set('postgres_db_name' , $db ) ; 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
 
 	my $ret = 0;
 	my $hsr2 = {};
@@ -212,6 +204,7 @@ sub doSelectTables {
 
 }
 
+
 sub doSelectDatabases {
 
 	my $self          = shift;
@@ -228,6 +221,8 @@ sub doSelectDatabases {
    my $objModel   = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
 
 	$objModel->set('postgres_db_name' , 'postgres' ) ; 
+
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
 
 	my $ret = 0;
 	my $hsr2 = {};
@@ -282,10 +277,7 @@ sub doSelectMeta {
    $appConfig		= $self->app->get('AppConfig');
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login ');
-      return ; 
-   } 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
    
    # chk: it-181101180808
    $appConfig		 		= $self->app->get('AppConfig');
