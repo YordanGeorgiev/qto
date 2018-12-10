@@ -17,7 +17,7 @@ use IssueTracker::Controller::PageFactory ;
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlParams ; 
 use IssueTracker::App::Utils::Timer ; 
 
 my $module_trace    = 0 ;
@@ -32,7 +32,7 @@ sub doSearchItems {
    my $db               = $self->stash('db');
    
    my $objModel         = {} ;
-   my $objRdrUrlParams  = {} ; 
+   my $objCnrUrlParams  = {} ; 
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
    my $ret              = 0;
@@ -67,8 +67,8 @@ sub doSearchItems {
    $objModel->set('postgres_db_name' , $db ) ; 
    
    my $query_params = $self->req->query_params ; 
-   $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg ) = $objRdrUrlParams->doSetQueryUrlParams(\$objModel, $query_params , 'Search' );
+   $objCnrUrlParams = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
+   ( $ret , $msg ) = $objCnrUrlParams->doSetQueryUrlParams(\$objModel, $query_params , 'Search' );
 
    if ( ! defined ($self->req->query_params ) or $ret != 0 ) {
    

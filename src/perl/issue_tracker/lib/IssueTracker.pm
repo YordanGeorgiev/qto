@@ -283,7 +283,6 @@ sub doSetRoutes {
    , action       => 'doSelectMeta'
    );
    
-   
    # http://host-name:3001/dev_issue_tracker/select/monthly_issues
    $r->get('/:db/list/:item')->to(
      controller   => 'List'

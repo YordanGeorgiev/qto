@@ -15,7 +15,7 @@ use Mojolicious::Plugin::RenderFile ;
 use Carp qw /cluck confess shortmess croak carp/ ;
 
 use IssueTracker::App::Utils::Logger;
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlParams ; 
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Timer ; 
 use IssueTracker::App::IO::Out::WtrXls ; 
@@ -97,7 +97,7 @@ sub doSetRequestModelData {
    my $table            = $item or croak " item not specified !!!" ; 
    my $ret              = 1 ;  
    my $msg              = '' ; 
-   my $objRdrUrlParams  = {} ; 
+   my $objCnrUrlParams  = {} ; 
    my $objModel         = {} ; 
 
    $appConfig		 		= $self->app->get('AppConfig');
@@ -106,11 +106,11 @@ sub doSetRequestModelData {
    $objModel->set('postgres_db_name' , $db ) ; 
    $objModel->set('table_name' , $item ) ; 
 
-   $objRdrUrlParams   = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg ) = $objRdrUrlParams->doSetSelectUrlParams(\$objModel, $self->req->query_params );
+   $objCnrUrlParams   = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
+   ( $ret , $msg ) = $objCnrUrlParams->doSetSelectUrlParams(\$objModel, $self->req->query_params );
    return ( $ret , $msg ) unless $ret == 0 ; 
 
-   ( $ret , $msg ) = $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
    return ( $ret , $msg , \$objModel) ;
 
 }

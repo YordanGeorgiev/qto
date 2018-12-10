@@ -1,4 +1,4 @@
-package IssueTracker::App::IO::In::RdrUrlParams ; 
+package IssueTracker::App::IO::In::CnrUrlParams ; 
 	use strict; use warnings; use diagnostics ; 
 
 	my $VERSION = '1.0.0';
@@ -117,9 +117,9 @@ sub doSetWithUrlParams {
          }
       }
 
-      # debug print "from RdrUrlParams.pm 47 \@with_cols : @with_cols \n" ; 
-      # debug print "from RdrUrlParams.pm 47 \@with_ops : @with_ops \n" ; 
-      # debug print "from RdrUrlParams.pm 47 \@with_vals : @with_vals \n" ; 
+      # debug print "from CnrUrlParams.pm 47 \@with_cols : @with_cols \n" ; 
+      # debug print "from CnrUrlParams.pm 47 \@with_ops : @with_ops \n" ; 
+      # debug print "from CnrUrlParams.pm 47 \@with_vals : @with_vals \n" ; 
 
       $objModel->set('select.web-action.with-cols' , \@with_cols ) ; 
       $objModel->set('select.web-action.with-ops' , \@with_ops ) ; 
@@ -302,17 +302,17 @@ __END__
 
 =head1 NAME
 
-RdrUrlParams
+CnrUrlParams
 
 =head1 SYNOPSIS
 
 
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlParams ; 
 
-$objRdrUrlParams= 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-( $ret , $msg ) = $objRdrUrlParams->doSetSelectUrlParams(\$objModel, $self->req->query_params );
-( $ret , $msg ) = $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
-( $ret , $msg ) = $objRdrUrlParams->doSetListUrlParams(\$objModel, $self->req->query_params );
+$objCnrUrlParams= 'IssueTracker::App::IO::In::CnrUrlParams'->new();
+( $ret , $msg ) = $objCnrUrlParams->doSetSelectUrlParams(\$objModel, $self->req->query_params );
+( $ret , $msg ) = $objCnrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
+( $ret , $msg ) = $objCnrUrlParams->doSetListUrlParams(\$objModel, $self->req->query_params );
   
 
 =head1 DESCRIPTION
