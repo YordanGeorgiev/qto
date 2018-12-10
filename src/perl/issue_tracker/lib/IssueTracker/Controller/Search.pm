@@ -46,20 +46,9 @@ sub doSearchItems {
    my $notice           = '' ; 
    
    return unless ( $self->SUPER::isAuthorized($db) == 1 ); 
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
    
    $appConfig		 		= $self->app->get('AppConfig');
-   unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
-      
-      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
-      unless ( $ret == 0 ) { 
-         $self->render('text' => $msg ) unless $ret == 0 ; 
-         return ; 
-      }
-      else { 
-         $appConfig->{ $db . '.meta' } = $msr2 ; 
-      }
-   } 
-
    $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
    
