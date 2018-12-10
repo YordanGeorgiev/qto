@@ -41,10 +41,7 @@ sub doListItems {
    my $ret              = 1 ; 
    my $msg              = '' ; 
 
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login ');
-      return ; 
-   } 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
 
    $appConfig		 		= $self->app->get('AppConfig');
    unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {

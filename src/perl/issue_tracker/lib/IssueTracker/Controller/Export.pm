@@ -44,10 +44,7 @@ sub doExportItems {
    my $rdbms_type       = 'postgres' ; 
    my $xls_file         = '' ; 
 
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login ');
-      return ; 
-   } 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 ); 
 
    $appConfig		 		= $self->app->get('AppConfig');
    unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {

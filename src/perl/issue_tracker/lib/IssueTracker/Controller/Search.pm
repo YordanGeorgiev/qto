@@ -45,10 +45,7 @@ sub doSearchItems {
    my $srch_control     = 'srch-grid' ; 
    my $notice           = '' ; 
    
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login ');
-      return ; 
-   } 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 ); 
    
    $appConfig		 		= $self->app->get('AppConfig');
    unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {

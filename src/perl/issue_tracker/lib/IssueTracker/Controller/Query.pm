@@ -36,11 +36,7 @@ sub doQueryItems {
    my $msg              = 'unknown error during global text search ';
    my $msr2             = {} ; 
    
-   
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login '); # inform the user
-      return ; 
-   } 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
    
    $appConfig		 		= $self->app->get('AppConfig');
    unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {

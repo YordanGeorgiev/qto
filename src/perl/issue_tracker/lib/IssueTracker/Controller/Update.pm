@@ -48,10 +48,7 @@ sub doUpdateItemBySingleCol {
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
    
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login ');
-      return ; 
-   } 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
    
    # chk: it-181101180808
    $self->SUPER::doReloadProjectDbMetaData($db) unless $appConfig->{ "$db" . '.meta' } ; 
