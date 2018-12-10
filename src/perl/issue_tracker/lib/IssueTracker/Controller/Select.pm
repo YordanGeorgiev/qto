@@ -36,26 +36,15 @@ sub doSelectItems {
    my $dat              = '' ; 
    my $msg              = 'unknown error during Select item';
    my $hsr2             = {};
-   my $msr2             = {};
    my $met              = {}; # the meta-data of the this item
    my $mc               = {}; # the meta-counter of the meta-data
    my $http_code        = 200 ; 
    my $cnt              = 0 ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
+
    $appConfig		 		= $self->app->get('AppConfig');
-   unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
-      
-      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
-      unless ( $ret == 0 ) { 
-         $self->render('text' => $msg ) unless $ret == 0 ; 
-         return ; 
-      }
-      else { 
-         $appConfig->{ $db . '.meta' } = $msr2 ; 
-      }
-   } 
 
 	# debug print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
@@ -140,6 +129,7 @@ sub doSelectTables {
 
 	$objModel->set('postgres_db_name' , $db ) ; 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
 
 	my $ret = 0;
 	my $hsr2 = {};
@@ -223,6 +213,7 @@ sub doSelectDatabases {
 	$objModel->set('postgres_db_name' , 'postgres' ) ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
 
 	my $ret = 0;
 	my $hsr2 = {};
@@ -278,6 +269,7 @@ sub doSelectMeta {
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
    
    # chk: it-181101180808
    $appConfig		 		= $self->app->get('AppConfig');

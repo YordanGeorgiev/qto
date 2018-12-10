@@ -1,7 +1,10 @@
 package IssueTracker::Controller::Delete ; 
 
 use strict ; use warnings ; 
-use Mojo::Base 'Mojolicious::Controller';
+require Exporter; our @ISA = qw(Exporter Mojo::Base IssueTracker::Controller::BaseController);
+our $AUTOLOAD =();
+use AutoLoader;
+use parent qw(IssueTracker::Controller::BaseController);
 
 use Data::Printer ; 
 use Data::Dumper; 
@@ -34,6 +37,9 @@ sub doDeleteItemById {
    my $ret = 0;
    my $msg = 'unknown error during Delete item';
    my $hsr2 = {};
+   
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
 
    my $json = $self->req->body;
    my $perl_hash = decode_json($json) ; 

@@ -14,13 +14,15 @@ use IssueTracker::App::Mdl::Model ;
 use IssueTracker::App::Db::In::RdrDbsFactory ; 
 use IssueTracker::App::Cnvr::CnrHsr2ToHsr2 ; 
 
-
-sub doReloadProjectDbMetaData {
+sub doReloadProjDbMetaData {
 
    my $self                = shift ;
    my $db                  = shift ;
 
    $appConfig		 		   = $self->app->get('AppConfig');
+
+   return if ( exists ( $appConfig->{ $db . '.meta' } )); 
+
    my $objRdrDbsFactory    = {} ; 
    my $objRdrDb            = {} ; 
    my $msr2                = {} ; 
@@ -37,8 +39,7 @@ sub doReloadProjectDbMetaData {
 
    $appConfig->{ "$db" . '.meta' } = $msr2 ; # chk: it-181101180808
    $self->app->set('AppConfig', $appConfig );
-
-   return ( $ret , $msg , $msr2 ) ; 
+   $self->render('text' => $msg ) unless $ret == 0 ; 
 }
 
 
