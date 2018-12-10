@@ -9,7 +9,7 @@ use Mojo::Base 'Mojolicious::Controller';
 use List::Util 1.33 'any';
 
 use IssueTracker::App::Utils::Logger;
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlParams ; 
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
 use IssueTracker::App::UI::WtrUIFactory ; 

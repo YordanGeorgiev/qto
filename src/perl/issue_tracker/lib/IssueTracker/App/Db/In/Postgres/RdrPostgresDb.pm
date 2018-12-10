@@ -899,8 +899,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 	
 	sub new {
-
-		my $invocant 			= shift ;    
+		my $invocant   = shift ;    
 		$appConfig     = ${ shift @_ } || croak 'appConfig not passed in RdrPostgresDb !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
