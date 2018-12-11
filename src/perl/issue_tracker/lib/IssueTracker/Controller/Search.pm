@@ -69,7 +69,7 @@ sub doSearchItems {
        , 'db' 		         => $db
        , 'ProductType' 		=> $appConfig->{'ProductType'}
        , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
-       , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
+       , 'GitShortHash' => $appConfig->{'GitShortHash'}
        , 'page_load_time'  => $page_load_time
        , 'srch_control'    => "['name']" 
        , 'notice'          => $notice
@@ -153,7 +153,7 @@ sub doRenderPageTemplate {
     , 'db' 		         => $db
     , 'ProductType' 		=> $appConfig->{'ProductType'}
     , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
-    , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
+    , 'GitShortHash' => $appConfig->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'srch_control'    => $srch_control
     , 'notice'          => $notice

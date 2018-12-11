@@ -2,7 +2,7 @@
    <div class="app_name_tooltiptext">
       <%= " $ProductVersion " =%>
       <%= " $ProductType " =%>
-      <%= " $ShortCommitHash " =%>
+      <%= " $GitShortHash " =%>
       <%= " $page_load_time " =%>
    </div>
 </div>
