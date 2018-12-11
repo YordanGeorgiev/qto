@@ -358,11 +358,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $str_sql = " 
          select ROW_NUMBER () OVER (ORDER BY datname ) as row_id, datname from pg_database;
       " ; 
-
-      # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $db \n db_host: $db_host " ; 
-      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
-      # $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
       $sth = $dbh->prepare($str_sql);  
 
@@ -385,6 +380,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       }
 
       $appConfig->{ "databases-list"} = $hsr ;
+
       return ( $ret , $msg , $hsr ) ; 	
    }
 
@@ -553,7 +549,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          # debug print "STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
       };
       if ( $@ or !scalar(%$mhsr2)) { 
-         $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
          $msg = " failed to get the project database: " . $db . " meta data ! " ; 
          $msg .= $DBI::errstr ; 
          $ret = 1 ; 
@@ -721,8 +716,19 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       };
 
       if ($@) {
-         $ret = 2 ; 
+         $ret = 400 ; 
          $msg = 'cannot connect to the "' . $db . '" database: ' . DBI->errstr ; 
+         # todo:ysg check if database exists in the current instance
+         $objModel->set('postgres_db_name' , 'postgres') ; 
+         my ($ret1, $msg1,$hsr2) = $self->doSelectDatabasesList(\$objModel);
+         foreach my $key ( keys %$hsr2 ) {
+            my $row = $hsr2->{$key} ; 
+            if ( $row->{ 'datname' } eq $db ) {
+               $ret = 404 ; 
+               $msg = 'cannot connect to the "' . $db . '" database: the db is unaccessible' . DBI->errstr ; 
+               return ( $ret , $msg , undef ) ; 
+            }
+         }
          return ( $ret , $msg , undef ) ; 
       }
 
