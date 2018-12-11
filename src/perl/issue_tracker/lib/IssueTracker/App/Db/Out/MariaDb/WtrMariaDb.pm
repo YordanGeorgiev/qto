@@ -55,7 +55,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
       my $error_msg        = q{} ; 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel) ; 
-      my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( $rdbms_type );
+      my $objRdrDb 		= $objRdrDbsFactory->doInit ( $rdbms_type );
 		
       my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
 		my $UpdateTime      = $objTimer->GetHumanReadableTime();
@@ -184,7 +184,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
       my $UpdateTime      = q{} ; 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-      my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( $rdbms_type );
+      my $objRdrDb 		= $objRdrDbsFactory->doInit ( $rdbms_type );
       ( $ret , $msg , $dmhsr ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
@@ -323,7 +323,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
       my $dmhsr            = {} ; 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-      my $objRdrDb 		= $objRdrDbsFactory->doInstantiate ( $rdbms_type );
+      my $objRdrDb 		= $objRdrDbsFactory->doInit ( $rdbms_type );
 
       $objLogger->doLogDebugMsg ( "MariaDb doUpsertTable table: $table" );
 

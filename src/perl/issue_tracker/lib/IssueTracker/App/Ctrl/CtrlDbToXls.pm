@@ -63,7 +63,7 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 	   push ( @tables , split(',',$tables ) ) ; 
 
       my $objRdrDbsFactory       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel  ) ; 
-      my $objRdrDb 			      = $objRdrDbsFactory->doInstantiate ( "$rdbms_type" , \$objModel );
+      my $objRdrDb 			      = $objRdrDbsFactory->doInit ( "$rdbms_type" , \$objModel );
       ($ret, $msg , $amsr2 )     = $objRdrDb->doLoadProjDbMetaData( $db );
       return ( $ret , $msg ) unless $ret == 0 ; 
       $appConfig->{ "$db" . '.meta' } = $amsr2 ;
@@ -73,7 +73,7 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
       for my $table ( @tables ) { 
          ( $ret , $msg , $msr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;
          return ( $ret , $msg ) unless $ret == 0 ; 
-         ( $ret , $msg , $hsr2)  = $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table ) ; 
+         ( $ret , $msg , $hsr2)  = $objRdrDb->doSelect( \$objModel , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
          my $objWtrXls    = 'IssueTracker::App::IO::Out::WtrXls'->new( \$appConfig ) ;
          ($ret , $msg , $xls_file ) = $objWtrXls->doBuildXlsFromHashRef ( \$objModel , $table , $hsr2 , $msr2) ;

@@ -242,7 +242,7 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       my $query_str        = shift || '*' ;  # the table to get the data from  
    
 
-      $objLogger->doLogDebugMsg ( "doSelectTableIntoHashRef table: $table " ) ; 
+      $objLogger->doLogDebugMsg ( "doSelect table: $table " ) ; 
 
       my $msg              = q{} ;         
       my $ret              = 1 ;          # this is the return value from this method 

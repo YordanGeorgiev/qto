@@ -255,7 +255,7 @@ sub doSetRoutes {
    , action       => 'doSelectItems'
    );
    
-   # http://host-name:3001/dev_issue_tracker/select/monthly_issues
+   # http://host-name:3001/dev_issue_tracker/select/monthly_issues/1
    $r->get('/:db/hselect/:item')->to(
      controller   => 'HSelect'
    , action       => 'doHSelectItems'

@@ -140,6 +140,14 @@ doRunUnitTests(){
    doLog "INFO STOP  $test_script"
 	echo -e "\n\n\n" 
 
+   test_script='src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelect.t'
+   doLog "INFO test the search action on the web-action"
+   doLog "INFO START $test_script"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelect.t
+   test $? -ne 0 && return
+   doLog "INFO STOP  $test_script"
+	echo -e "\n\n\n" 
+
 	doLog "DEBUG STOP  doRunUnitTests"
 }
 

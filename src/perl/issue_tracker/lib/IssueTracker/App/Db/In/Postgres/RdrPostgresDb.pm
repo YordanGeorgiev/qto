@@ -12,6 +12,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Mdl::Model ; 
+   use IssueTracker::App::Db::In::Postgres::MojoPgWrapper ; 
 
    our $module_trace                            = 0 ;  
    our $IsUnitTest                              = 0 ; 
@@ -430,33 +431,18 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
 
-
-      $str_sql = 
-         " SELECT 
-         * FROM $table 
+      $str_sql = " SELECT * FROM $table 
          WHERE 1=1
          AND guid = '" . $guid . "'
          ;
       " ; 
 
-      # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $db \n db_host: $db_host " ; 
-      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-     
-
-      $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
-                 'RaiseError'          => 1
-               , 'ShowErrorStatement'  => 1
-               , 'PrintError'          => 1
-               , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
-      } ) or $msg = DBI->errstr;
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
       
       $sth = $dbh->prepare($str_sql);  
 
-      $sth->execute()
-            or $objLogger->error ( "$DBI::errstr" ) ;
+      $sth->execute() or $objLogger->error ( "$DBI::errstr" ) ;
 
       $hsr = $sth->fetchall_hashref( 'guid' ) ; 
       binmode(STDOUT, ':utf8');
@@ -472,9 +458,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $objLogger->doLogErrorMsg ( $msg ) ; 
       }
 
-      $debug_msg        = ' ret ' . $ret ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-      
       return ( $ret , $msg , $hsr ) ; 	
    }
 
@@ -741,7 +724,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    # -----------------------------------------------------------------------------
    # get ALL the table data into hash ref of hash refs 
    # -----------------------------------------------------------------------------
-   sub doSelectTableIntoHashRef {
+   sub doSelect {
 
       my $self                   = shift ; 
       my $objModel               = ${shift @_ } ; 
@@ -910,7 +893,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
 		my $self       = {} ; bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize() ; 
+      $self          = $self->doInitialize() ; 
 		return $self;
 	}  
 	
@@ -933,6 +916,65 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 	}	
    
 
+	sub doInitPg {
+      
+     	my $self 			= shift ;  
+		my $pg            = {} ; 
+
+		$ENV{'DBI_TRACE'} = 1 ; 
+      $ENV{'DBI_TRACE'} = 15 ; 
+      $ENV{'DBI_TRACE'} ='SQL' ; 
+      
+		$pg = 'IssueTracker::App::Db::In::Postgres::MojoPgWrapper'->new (\$appConfig, \$objModel ) ; 
+      $pg = $pg->options( {
+              'RaiseError'          => 1
+            , 'ShowErrorStatement'  => 1
+            , 'PrintError'          => 1
+            , 'AutoCommit'          => 1
+            , 'pg_utf8_strings'     => 1
+         } );
+		return $pg ; 
+	}
+
+   sub doHSelectBranch {
+
+      my $self          = shift ; 
+      my $table         = shift || croak 'no table passed !!!' ; 
+      my $seq           = shift || 1 ; 
+   
+      my $rv            = 1  ;
+      my $msg           = 'unknown error occured in RdrPostgresDb::doHSelectBranch' ; 
+      my $pg            = {} ; 
+      my $sql           = {} ; 
+      my $hsr2          = {} ; 
+
+		$pg = $self->doInitPg();
+
+      eval {
+			$sql = " 
+				SELECT * FROM ( 
+               SELECT node.* FROM $table AS node, $table AS parent 
+               WHERE 1=1 AND node.lft 
+               BETWEEN parent.lft AND parent.rgt
+               AND parent.seq = '" . $seq . "')  AS dyn_sql 
+				WHERE 1=1
+				ORDER BY seq
+			" ; 
+         $hsr2 = $pg->db->query("$sql")->hashes ; 
+			# debug p $sql ; 
+         # debug p $hsr2 ; 
+      };
+      if ( $@ ) {
+         $rv               = 404 ; 
+         $msg              = DBI->errstr ; 
+         $objLogger->doLogErrorMsg ( $msg ) ;
+         return ( $rv , $msg ) ; 
+      }
+
+      $rv               = 200 ; 
+      $msg              = '' ; 
+      return ( $rv , $msg , $hsr2 ) ; 
+   }
 
 1;
 

@@ -74,7 +74,7 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
 
       foreach my $table ( @tables ) {
          my $objRdrTextFactory    = 'IssueTracker::App::IO::In::RdrTextFactory'->new( \$appConfig , $self ) ; 
-         my $objRdrText 			   = $objRdrTextFactory->doInstantiate ( $table ); 
+         my $objRdrText 			   = $objRdrTextFactory->doInit ( $table ); 
          my ( $ret , $msg , $str_issues_file ) 
                                     = $objRdrText->doReadIssueFile ( $table ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
@@ -88,7 +88,7 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
 
          p($hsr) if $module_trace == 1 ; 
          my $objWtrDbsFactory    = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( \$appConfig , $self ) ; 
-         my $objWtrDb 			   = $objWtrDbsFactory->doInstantiate ( "$rdbms_type" );
+         my $objWtrDb 			   = $objWtrDbsFactory->doInit ( "$rdbms_type" );
          
          ( $ret , $msg )            = $objWtrDb->doInsertSqlHashData ( $hsr , $table ) ; 
 

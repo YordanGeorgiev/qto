@@ -66,7 +66,7 @@ sub doUpdateItemBySingleCol {
 
    $objWtrDbsFactory
       = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
-   $objWtrDb = $objWtrDbsFactory->doInstantiate("$rdbms_type");
+   $objWtrDb = $objWtrDbsFactory->doInit("$rdbms_type");
    ($ret, $msg) = $objWtrDb->doUpdateItemBySingleCol(\$objModel, $item);
 
    $self->res->headers->accept_charset('UTF-8');

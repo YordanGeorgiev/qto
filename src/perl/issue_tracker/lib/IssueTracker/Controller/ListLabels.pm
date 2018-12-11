@@ -50,7 +50,7 @@ sub doBuildListControl {
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 	
    $objWtrUIFactory = 'IssueTracker::App::UI::WtrUIFactory'->new(\$appConfig, \$objModel );
-   $objUIBuilder = $objWtrUIFactory->doInstantiate('control/list-labels');
+   $objUIBuilder = $objWtrUIFactory->doInit('control/list-labels');
 
    ( $ret , $msg , $control ) = $objUIBuilder->doBuild() ; 
    
