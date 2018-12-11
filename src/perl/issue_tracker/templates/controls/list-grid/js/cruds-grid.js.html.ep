@@ -156,11 +156,11 @@
                   var queryStr = ""
                   for(var kv of url_params.entries()) { queryStr = queryStr + kv[0]+ '='+ kv[1] + '&'; }
                   var newUri = window.location.href.split('?')[0] + '?' + queryStr.slice(0, - 1)
-                  newUri = newUri.replace(/&oa=([1-9a-zA-Z_\-]+)/gi , "") 
-                  newUri = newUri.replace(/&od=([1-9a-zA-Z_\-]+)/gi , "") 
-                  newUri = newUri.replace(/&with=([1-9a-zA-Z_\-]+)/gi , "") 
-                  newUri = newUri.replace(/&like-by=([1-9a-zA-Z_\-]+)/gi , "") 
-                  newUri = newUri.replace(/&like-val=([1-9a-zA-Z_\-]+)/gi , "") 
+                  newUri = newUri.replace(/&oa=([0-9a-zA-Z_\-]+)/gi , "") 
+                  newUri = newUri.replace(/&od=([0-9a-zA-Z_\-]+)/gi , "") 
+                  newUri = newUri.replace(/&with=([0-9a-zA-Z_\-]+)/gi , "") 
+                  newUri = newUri.replace(/&like-by=([0-9a-zA-Z_\-]+)/gi , "") 
+                  newUri = newUri.replace(/&like-val=([0-9a-zA-Z_\-]+)/gi , "") 
                   window.location.href = newUri
                } else {
                   var msg = result.toString(); 

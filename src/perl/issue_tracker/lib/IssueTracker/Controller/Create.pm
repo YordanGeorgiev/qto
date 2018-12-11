@@ -1,6 +1,10 @@
 package IssueTracker::Controller::Create ; 
 use strict ; use warnings ; 
-use Mojo::Base 'Mojolicious::Controller';
+
+require Exporter; our @ISA = qw(Exporter Mojo::Base IssueTracker::Controller::BaseController);
+our $AUTOLOAD =();
+use AutoLoader;
+use parent qw(IssueTracker::Controller::BaseController);
 
 use Data::Printer ; 
 use Data::Dumper; 
@@ -17,7 +21,7 @@ our $appConfig      = {};
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgre';
 
-
+#
 # --------------------------------------------------------
 # create all the rows from db by passed db and table name
 # --------------------------------------------------------
@@ -30,12 +34,15 @@ sub doCreateBySoleId {
    my $objCnrUrlParams  = {} ; 
    my $objWtrDbsFactory = {} ; 
    my $objWtrDb         = {} ; 
-   my $ret = 0;
-   my $msg = 'unknown error during create item';
-   my $hsr2 = {};
+   my $ret              = 0;
+   my $msg              = 'unknown error during create item';
+   my $hsr2             = {};
 
    my $json = $self->req->body;
    my $perl_hash = decode_json($json) ; 
+
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
 
    $appConfig		= $self->app->get('AppConfig');
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
@@ -55,7 +62,7 @@ sub doCreateBySoleId {
    } 
 
    $objWtrDbsFactory
-      = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
+         = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
    $objWtrDb = $objWtrDbsFactory->doInstantiate("$rdbms_type");
    ($ret, $msg) = $objWtrDb->doCreateBySoleId(\$objModel, $item);
 
@@ -111,4 +118,3 @@ sub doCreateBySoleId {
 
 __END__
 
-# feature-guid: 
