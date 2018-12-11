@@ -63,7 +63,7 @@ sub doListItems {
 
    # $self->doSetHtmlHeaders() ; # uncomment and implement if per list web action headers needed !!!
    $msg = $self->doSetPageMsg ( $ret , $msg ) ; 
-   $self->doRenderPageTemplate( $as , $msg , $db , $item , $list_control ) ; 
+   $self->doRenderPageTemplate( $ret , $msg , $as, $db , $item , $list_control ) ; 
 }
 
 
@@ -80,7 +80,6 @@ sub doSetPageMsg {
       $msg = '<span id="spn_msg">' . $msg . '</span>' ; 
    }
 
-   $self->res->code($ret) unless $ret == 0 ; 
    return $msg ; 
 }
 
@@ -152,14 +151,20 @@ sub doBuildListControl {
 sub doRenderPageTemplate {
    
    my $self             = shift ; 
-   my $as               = shift || 'grid' ; 
+   my $ret              = shift ; 
    my $msg              = shift ; 
+   my $as               = shift || 'grid' ; 
    my $db               = shift ; 
    my $item             = shift ; 
    my $list_control     = shift ; 
    my $notice           = '' ;
 
-   
+   unless ( $ret == 0 ) {
+      $self->res->code($ret) unless $ret == 0 ; 
+   } else {
+      $self->res->code(200) ; 
+   }
+
    my $as_templates = { 
          'lbls'         => 'list-labels'
       ,  'cloud'        => 'list-cloud' 

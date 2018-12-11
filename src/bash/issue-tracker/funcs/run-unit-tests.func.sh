@@ -8,8 +8,11 @@ doRunUnitTests(){
 
 	doLog "DEBUG START doRunUnitTests"
 
-   # ysg:todo move to the run-data-load-tests shell action
-   # src/perl/issue_tracker/t/lib/IssueTracker/Controller/LoadTestSelect.pl
+# ysg:todo move to the run-data-load-tests shell action
+# src/perl/issue_tracker/t/lib/IssueTracker/Controller/LoadTestSelect.pl
+# those are in onhold status because of the required setup needed ...
+# src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClientPOC1.pl
+# src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListBySelenium.t
 	
    doLog "INFO START test the Select Controller "
    doLog " $postgres_db_name/select-tables"

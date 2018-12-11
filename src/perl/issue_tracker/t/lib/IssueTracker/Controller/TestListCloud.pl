@@ -21,19 +21,18 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    $tm = ' when providing a non-existing db the http response code should be 400 ' ; 
    my $db_name = 'non_existent_db' ; 
    $url = '/' . $db_name . '/list/some-table?as=cloud' ; 
-   $t->get_ok($url)->status_is(400 , $tm )
-   ;
+   $t->get_ok($url)->status_is(400 , $tm ) ;
 
    $url = '/non_existent_db/list/monthly_issues?as=cloud' ; 
    $tm = ' the error msg should be diplayed in the err_msg label of the page ' ; 
    ok ( $t->get_ok($url)->content_type_is('text/html;charset=UTF-8') , $tm ) ; 
-    $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
-    $exp_txt = 'cannot connect to the "non_existent_db"' ; 
-    #p $dom ; 
-#   $t->ua->get(
-#      $url => sub {
-#      my ($ua, $tx) = @_;
-#      p $tx->result->body
+   $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
+   $exp_txt = 'cannot connect to the "non_existent_db"' ; 
+   #p $dom ; 
+#  $t->ua->get(
+#     $url => sub {
+#     my ($ua, $tx) = @_;
+#     p $tx->result->body
 #   });
 #   Mojo::IOLoop->start unless Mojo::IOLoop->is_running;
    ok ( $t->get_ok($url)->status_is(400)->content_like(qr/$exp_txt/) , $tm ) ; 
