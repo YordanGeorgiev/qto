@@ -43,20 +43,8 @@ sub doListItems {
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMetaData( $db ) ;
-
+   
    $appConfig		 		= $self->app->get('AppConfig');
-   unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
-      
-      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
-      unless ( $ret == 0 ) { 
-         $self->res->code(400) ; 
-         $self->render('text' => $msg ) ; 
-         return ; 
-      }
-      else { 
-         $appConfig->{ $db . '.meta' } = $msr2 ; 
-      }
-   } 
  
    my $as               = 'grid' ; # the default form of the list control 
    my $list_control     = '' ; 
@@ -92,8 +80,7 @@ sub doSetPageMsg {
       $msg = '<span id="spn_msg">' . $msg . '</span>' ; 
    }
 
-   $self->res->code(400) unless $ret == 0 ; 
-
+   $self->res->code($ret) unless $ret == 0 ; 
    return $msg ; 
 }
 
@@ -194,7 +181,7 @@ sub doRenderPageTemplate {
     , 'db' 		         => $db
     , 'ProductType' 		=> $appConfig->{'ProductType'}
     , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
-    , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
+    , 'GitShortHash' => $appConfig->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'list_control'    => $list_control
     , 'notice'          => $notice

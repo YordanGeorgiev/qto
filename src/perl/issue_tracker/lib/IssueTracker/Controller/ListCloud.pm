@@ -55,6 +55,7 @@ sub doBuildListControl {
    $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
    ($ret, $msg) = $objRdrDb->doSelectTableIntoHashRef(\$objModel, $table);
+   return ( $ret , $msg , '' ) unless $ret == 0 ; 
 
 	$objCnrHsr2ToArray = 'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ;
 	( $ret , $msg , $hsr2) = $objCnrHsr2ToArray->doConvert ($objModel->get('hsr2'));

@@ -41,15 +41,16 @@ for my $row ( @$list ) {
 
 	$tm = 'for get the correct http status code - 200 , utf-8 and fi,en as langs' ; 
   
-   my @output_types = ( 'grid' , 'table' , 'cloud' ) ;   # only the table output type supports page sizing
+   my @output_types = ( 'grid' , 'print-table' , 'cloud' ) ;   # only the table output type supports page sizing
    my @page_sizes = ( 5,10,15,30 ) ;  # only the table output type supports page sizing
    my @page_nums = ( 1,2,3  ) ;        # only the table output type supports page sizing
    foreach my $as ( @output_types ) {
       foreach my $page_size ( @page_sizes ) {
          foreach my $page_num ( @page_nums ) {
+            print "url is $url \n" ; 
             $url = '/' . $db_name . '/list/' . $table_name . '?as=' . "$as" . '&page-size=' . $page_size .'&page-num=' . $page_num ; 
             $t->get_ok( $url )
-               ->status_is(200) 
+               ->status_isnt(400) 
                 ->header_is('Accept-Charset' => 'UTF-8')
                 ->header_is('Accept-Language' => 'fi, en' , $tm)
             ;

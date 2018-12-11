@@ -82,7 +82,7 @@ sub doLoadAppConfig {
 
 	$appConfig->{'proj_instance_dir'} = $appConfig->{'ProductInstanceDir'} unless ( exists $appConfig->{'proj_instance_dir'} );
    my $currentShortHash = `git rev-parse --short HEAD` ; chomp($currentShortHash);
-   $appConfig->{ 'ShortCommitHash' } = $currentShortHash || "" ; 
+   $appConfig->{ 'GitShortHash' } = $currentShortHash || "" ; 
 
    p($appConfig) ; 
    $self->set('AppConfig' , $appConfig );
