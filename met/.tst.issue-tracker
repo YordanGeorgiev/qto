@@ -1,9 +1,4 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
-# ---
-src/bash/issue-tracker/funcs/run-unit-tests.func.sh
-src/bash/issue-tracker/tests/run-unit-tests.test.sh
-doc/txt/issue-tracker/funcs/run-unit-tests.func.txt
-# ---
 src/perl/issue_tracker/t/lib/IssueTracker/App/benchmark_url.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/layouts/site.html.ep
@@ -1009,6 +1004,16 @@ dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/sql/tst_our_proj
 dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/xls
 dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/xls/our-proj.all.20181024_000000.xlsx
 dat/tmp/1
+# ---
+src/bash/issue-tracker/funcs/run-data-load-tests.func.sh
+src/bash/issue-tracker/tests/run-data-load-tests.test.sh
+src/bash/issue-tracker/helps/run-data-load-tests.help.sh
+doc/txt/issue-tracker/funcs/run-data-load-tests.func.txt
+# ---
+src/bash/issue-tracker/funcs/run-unit-tests.func.sh
+src/bash/issue-tracker/tests/run-unit-tests.test.sh
+doc/txt/issue-tracker/funcs/run-unit-tests.func.txt
+# ---
 dat/mix/2018/2018-12/2018-12-07/
 dat/mix/2018/2018-12/2018-12-07/.DS_Store
 dat/mix/2018/2018-12/2018-12-07/sql
