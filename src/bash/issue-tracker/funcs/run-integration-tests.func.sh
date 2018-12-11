@@ -51,83 +51,9 @@ doRunIntegrationTests(){
    psql -d $postgres_db_name < "$last_db_backup_file"
    test $? -ne 0 && return
 
-   doLog "INFO START test the Select Controller "
-   doLog " $postgres_db_name/select-tables"
-   doLog " $postgres_db_name/select/<<table-name>>"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-  
-   doLog "INFO START test the Select Controller filtering with the like operator: "
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectPick.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-
-   doLog "INFO START test the Select Controller with the o=<<order-by>> url param"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectOrder.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-
-   doLog "INFO START test the Select Controller filtering with the like operator: "
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectLike.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-
-   doLog "INFO START test the Select Controller filtering: "
-   doLog "INFO S: $postgres_db_name/Select/<<table-name>>?fltr-by=<<attribute>>&fltr-val=<<value>>"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectFilter.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-   
-   doLog "INFO START test the List as Cloud "
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListCloud.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-   
-   doLog "INFO START test the List Controller with the hide url param"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
    
    doLog "INFO START integration testing - do run all the implemented action tests" 
    perl src/perl/issue_tracker/t/TestIssueTracker.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-
-   doLog "INFO TODO: implement proper client side testing"
-
-   doLog "INFO START select with operator testing"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-
-   doLog "INFO START testing the list as <<output-type>> page"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListAsOutputType.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-   
-   doLog "INFO test the create action on the web-action"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-  
-   doLog "INFO test the update action on the web-action"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-   
-   doLog "INFO test the delete action on the web-action"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestDelete.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-
-   doLog "INFO test the query action on the web-action"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestQuery.pl
-   test $? -ne 0 && return
-	echo -e "\n\n\n" 
-
-   doLog "INFO test the search action on the web-action"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSearch.pl
    test $? -ne 0 && return
 	echo -e "\n\n\n" 
 

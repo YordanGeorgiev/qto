@@ -1,5 +1,9 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # ---
+src/bash/issue-tracker/funcs/run-unit-tests.func.sh
+src/bash/issue-tracker/tests/run-unit-tests.test.sh
+doc/txt/issue-tracker/funcs/run-unit-tests.func.txt
+# ---
 src/perl/issue_tracker/t/lib/IssueTracker/App/benchmark_url.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/layouts/site.html.ep
@@ -844,7 +848,6 @@ src/sql/mysql/tst_issue_tracker/54.create-Concept-table.sql
 src/bash/issue-tracker/funcs/run-integration-tests.func.sh
 src/bash/issue-tracker/tests/run-integration-tests.test.sh
 src/bash/issue-tracker/helps/run-integration-tests.help.sh
-doc/txt/issue-tracker/tests/run-integration-tests.test.txt
 doc/txt/issue-tracker/helps/run-integration-tests.help.txt
 doc/txt/issue-tracker/funcs/run-integration-tests.func.txt
 doc/dot/readme/what-is-issue-tracker.dot

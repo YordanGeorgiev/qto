@@ -1,9 +1,6 @@
 # src/bash/issue-tracker/funcs/run-integration-tests.test.sh
 
 # v1.3.0
-# ---------------------------------------------------------
-# cat doc/txt/issue-tracker/tests/run-integration-tests.test.txt
-# ---------------------------------------------------------
 doTestRunIntegrationTests(){
 
 	doLog "DEBUG START doTestRunIntegrationTests"
