@@ -15,7 +15,7 @@ package IssueTracker::Controller::PageFactory ;
    our $ui_type         = 'page/list-grid' ; 
 
 
-	sub doInstantiate {
+	sub doInit {
 
 		my $self 			   = shift ; 	
 		my $ui_type			   = shift // $ui_type ; 

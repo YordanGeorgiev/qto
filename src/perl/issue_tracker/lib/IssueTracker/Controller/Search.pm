@@ -11,7 +11,6 @@ use parent qw(IssueTracker::Controller::BaseController);
 
 use Data::Printer ; 
 use Data::Dumper; 
-use Scalar::Util qw /looks_like_number/;
 
 use IssueTracker::Controller::PageFactory ; 
 use IssueTracker::App::Db::In::RdrDbsFactory;
@@ -111,7 +110,7 @@ sub doBuildSearchControl {
   
 
    $objPageFactory                  = 'IssueTracker::Controller::PageFactory'->new(\$appConfig, \$objModel );
-   $objPageBuilder                  = $objPageFactory->doInstantiate( $ui_type );
+   $objPageBuilder                  = $objPageFactory->doInit( $ui_type );
    ( $ret , $msg , $srch_control )  = $objPageBuilder->doBuildSearchControl( $msg , $db  , $as ) ;
 
    return ( $ret , $msg , $srch_control ) ; 

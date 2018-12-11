@@ -34,7 +34,7 @@ sub doReloadProjDbMetaData {
    $objModel->set('postgres_db_name' , $db ) ; 
     
    $objRdrDbsFactory       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig, \$objModel );
-   $objRdrDb               = $objRdrDbsFactory->doInstantiate( $rdbms_type );
+   $objRdrDb               = $objRdrDbsFactory->doInit( $rdbms_type );
    ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMetaData( $db ) ; 
 
    $appConfig->{ "$db" . '.meta' } = $msr2 ; # chk: it-181101180808
@@ -63,18 +63,19 @@ sub isAuthorized {
 
 }
 
+
 # 
-# call-by : $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+# call-by : $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
 #
-sub doRenderJson {
+sub doRenderJSON {
 
    my $self          = shift ; 
    my $http_code     = shift ; 
    my $msg           = shift ; 
    my $http_method   = shift || 'GET' ; 
-   my $met           = shift ; 
-   my $cnt           = shift ; 
-   my $dat           = shift ; 
+   my $met           = shift ; # the meta data
+   my $cnt           = shift ; # the count of the data
+   my $dat           = shift ; # the data 
    my $req           = "$http_method " . $self->req->url->to_abs ; 
 
    $self->res->headers->content_type('application/json; charset=utf-8');

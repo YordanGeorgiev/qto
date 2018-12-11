@@ -65,11 +65,11 @@ sub doExportItems {
 #   $as = $self->req->query_params->param('as') || $as ; # decide which type of Export page to build
 #   
    $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
-   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+   $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
    
    ( $ret , $msg , $msr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;
    return ( $ret , $msg ) unless $ret == 0 ; 
-   ( $ret , $msg , $hsr2)  = $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table ) ; 
+   ( $ret , $msg , $hsr2)  = $objRdrDb->doSelect( \$objModel , $table ) ; 
    return ( $ret , $msg ) unless $ret == 0 ; 
    $objModel->set('controller' , 'export');
 

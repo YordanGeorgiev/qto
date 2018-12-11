@@ -13,7 +13,7 @@ package IssueTracker::App::UI::WtrUIFactory ;
    our $ui_type         = 'pages' ; 
 
 
-	sub doInstantiate {
+	sub doInit {
 
 		my $self 			= shift ; 	
 		my $ui_type			= shift // $ui_type ; # the default is control

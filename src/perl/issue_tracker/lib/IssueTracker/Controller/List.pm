@@ -138,7 +138,7 @@ sub doBuildListControl {
    $ui_type = 'page/' . $lables_pages->{ $as } ; 
 
    $objPageFactory                  = 'IssueTracker::Controller::PageFactory'->new(\$appConfig, \$objModel );
-   $objPageBuilder                  = $objPageFactory->doInstantiate( $ui_type );
+   $objPageBuilder                  = $objPageFactory->doInit( $ui_type );
    ( $ret , $msg , $list_control )  = $objPageBuilder->doBuildListControl( $msg , \$objModel , $db , $table , $as ) ;
 
    return ( $ret , $msg , $list_control ) ; 

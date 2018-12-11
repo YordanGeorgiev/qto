@@ -22,7 +22,7 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
 	# -----------------------------------------------------------------------------
 	# fabricates different WtrDb object 
 	# -----------------------------------------------------------------------------
-	sub doInstantiate {
+	sub doInit {
 
 		my $self 			= shift ; 	
 		my $db_type			= shift // $db_type ; # the default is mysql

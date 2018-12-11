@@ -68,12 +68,12 @@ sub doQueryItems {
    $objCnrUrlParams = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
    ( $ret , $msg ) = $objCnrUrlParams->doSetQueryUrlParams(\$objModel, $query_params , 'Query' );
    if ( $ret != 0 ) {
-      $self->SUPER::doRenderJson(400,$msg,'GET','','0','');
+      $self->SUPER::doRenderJSON(400,$msg,'GET','','0','');
       return ; 
    } 
 
    $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+   $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
    ($ret, $msg , $hsr2 ) = $objRdrDb->doGlobalSrchIntoHashRef(\$objModel);
 
    if ( $ret == 0 ) {
@@ -82,11 +82,11 @@ sub doQueryItems {
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
       ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 ) ;
 
-      $self->SUPER::doRenderJson(200,$msg,'GET',$msr2,$rows_count,$list);
+      $self->SUPER::doRenderJSON(200,$msg,'GET',$msr2,$rows_count,$list);
    } elsif ( $ret == 204 ) {
-      $self->SUPER::doRenderJson(204,$msg,'GET','','0','');
+      $self->SUPER::doRenderJSON(204,$msg,'GET','','0','');
    } else {
-      $self->SUPER::doRenderJson(400,$msg,'GET','','0','');
+      $self->SUPER::doRenderJSON(400,$msg,'GET','','0','');
    }
 }
 

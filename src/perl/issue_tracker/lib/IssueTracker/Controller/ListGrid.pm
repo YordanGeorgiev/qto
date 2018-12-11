@@ -50,7 +50,7 @@ sub doBuildListControl {
    my $cols             = () ; 
 
    $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
-   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+   $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
    $table = $objModel->get('table_name'); 
 
    #( $ret , $msg , $mhsr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;

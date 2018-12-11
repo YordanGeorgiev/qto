@@ -99,6 +99,7 @@ sub doCheckRequiredModules {
    Scalar::Util::Numeric
    IPC::System::Simple
    Mojolicious
+   Mojo::Pg
    Selenium::Remote::Driver
    Mojolicious::Plugin::BasicAuthPlus
    Mojolicious::Plugin::StaticCache

@@ -19,7 +19,7 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
 	# -----------------------------------------------------------------------------
 	# fabricates different RdrDb object 
 	# -----------------------------------------------------------------------------
-	sub doInstantiate {
+	sub doInit {
 
 		my $self 			= shift ; 	
 		my $rdbms_type	   = shift // $rdbms_type ; # the default is postgres
@@ -52,7 +52,7 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
 		require $package_file;
 		return $objRdrDb->new( \$appConfig , \$objModel , @args);
 	}
-	# eof sub doInstantiate
+	# eof sub doInit
 	
 
    #

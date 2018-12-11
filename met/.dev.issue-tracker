@@ -59,6 +59,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrJQCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToHsr2.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/MojoPgWrapper.pm
 src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/CnrUrlParams.pm
 # ---
@@ -83,6 +84,7 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/Update.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Delete.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/HSelect.pm
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelect.t
 src/perl/issue_tracker/lib/IssueTracker/Controller/Search.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestQuery.pl
@@ -931,8 +933,12 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlJsonToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlTxtToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlXlsToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/Dispatcher/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Create/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Delete/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/MojoPgWrapper/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/MariaDb/RdrMariaDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrPostgresDb/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/MojoPgWrapper/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrCmdArgs/autosplit.ix

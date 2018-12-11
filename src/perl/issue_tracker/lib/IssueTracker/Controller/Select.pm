@@ -55,22 +55,22 @@ sub doSelectItems {
    ( $ret , $msg ) = $objCnrUrlParams->doSetSelectUrlParams(\$objModel, $query_params );
    if ( $ret != 0 ) {
       $http_code = 400 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
       return ; 
    } 
 
    ( $ret , $msg ) = $objCnrUrlParams->doSetWithUrlParams(\$objModel, $query_params );
    if ( $ret != 0 ) {
       $http_code = 400 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
       return ; 
    } 
 
    $objRdrDbsFactory
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+   $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
 
-   ($ret, $msg,$hsr2) = $objRdrDb->doSelectTableIntoHashRef(\$objModel, $item);
+   ($ret, $msg,$hsr2) = $objRdrDb->doSelect(\$objModel, $item);
 
    unless ( $ret == 0 ) {
       $http_code = $ret ; 
@@ -91,16 +91,16 @@ sub doSelectItems {
       
       ( $ret , $msg , $met , $mc) = $objModel->doGetTableMeta($appConfig,$db,$item);
       $http_code = 200 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 404 ) {
       $http_code = 404 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 204 ) {
       $http_code = 204 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } else {
       $http_code = 400 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } 
 }
 
@@ -137,7 +137,7 @@ sub doSelectTables {
 	my $objRdrDbsFactory
 			= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
 
-	my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+	my $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectTablesList(\$objModel);
 
 
@@ -221,7 +221,7 @@ sub doSelectDatabases {
 	my $objRdrDbsFactory
 			= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
 
-	my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+	my $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectDatabasesList(\$objModel);
 
    if ( $ret == 0 ) {
@@ -231,16 +231,16 @@ sub doSelectDatabases {
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
       ( $ret , $msg , $dat ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2'),'>');
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 400 or $ret == 404) {
       $http_code = $ret ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 2 ) {
       $http_code = 400 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } else {
       $http_code = 404 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    }
 
 }
@@ -302,21 +302,21 @@ sub doSelectMeta {
          $http_code = 400 ; $dat = '' ; $cnt = 0 ; 
       }
       my $met = $met ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 400 or $ret == 404 ) {
       $http_code = 400 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 2 ) {
       $http_code = 400 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 1 ) {
       $http_code = 400 ; 
       $msg = " the table $table does not exist " ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } else {
       $http_code = 400 ; 
       $msg = 'unknown error has occurred' ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    }
 }
 

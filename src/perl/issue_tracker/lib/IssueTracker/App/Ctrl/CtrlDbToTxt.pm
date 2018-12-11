@@ -72,14 +72,14 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       for my $table ( @tables ) { 
          my $issues_file = ();  
          my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-         my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" );
+         my $objRdrDb 			= $objRdrDbsFactory->doInit ( "$rdbms_type" );
 
          ( $ret , $msg )  = 
-            $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table , $filter_by_attributes ) ; 
+            $objRdrDb->doSelect( \$objModel , $table , $filter_by_attributes ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
          my $objWtrTextFactory = 'IssueTracker::App::IO::Out::WtrTextFactory'->new( \$appConfig , $self ) ; 
-         my $objWtrText 			= $objWtrTextFactory->doInstantiate ( $table );
+         my $objWtrText 			= $objWtrTextFactory->doInit ( $table );
          
          my $objCnrHsr2ToTxt = 
             'IssueTracker::App::RAM::CnrHsr2ToTxt'->new ( \$appConfig ) ; 
