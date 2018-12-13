@@ -155,13 +155,13 @@
                   this.fetchServerSideDataToUI(url_params); 
                   var queryStr = ""
                   for(var kv of url_params.entries()) { queryStr = queryStr + kv[0]+ '='+ kv[1] + '&'; }
-                  var newUri = window.location.href.split('?')[0] + '?' + queryStr.slice(0, - 1)
-                  newUri = newUri.replace(/&oa=([0-9a-zA-Z_\-]+)/gi , "") 
-                  newUri = newUri.replace(/&od=([0-9a-zA-Z_\-]+)/gi , "") 
-                  newUri = newUri.replace(/&with=([0-9a-zA-Z_\-]+)/gi , "") 
-                  newUri = newUri.replace(/&like-by=([0-9a-zA-Z_\-]+)/gi , "") 
-                  newUri = newUri.replace(/&like-val=([0-9a-zA-Z_\-]+)/gi , "") 
-                  window.location.href = newUri
+                  var uri = window.location.href.split('?')[0] + '?' + queryStr.slice(0, - 1)
+                  uri = uri.replace(/[&]{0,1}oa=([0-9a-zA-Z_\-]+)/gi , "") 
+                  uri = uri.replace(/[&]{0,1}od=([0-9a-zA-Z_\-]+)/gi , "") 
+                  uri = uri.replace(/[&]{0,1}with=([0-9a-zA-Z_\-]+)/gi , "") 
+                  uri = uri.replace(/[&]{0,1}like-by=([0-9a-zA-Z_\-]+)/gi , "") 
+                  uri = uri.replace(/[&]{0,1}like-val=([0-9a-zA-Z_\-]+)/gi , "") 
+                  window.location.href = uri // and redirect !!!
                } else {
                   var msg = result.toString(); 
                   msg = msg + ". Somebody was faster than you in the second you clicked !"
