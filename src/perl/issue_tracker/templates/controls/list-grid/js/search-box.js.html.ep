@@ -211,7 +211,7 @@ var Searchbox = {
             if ( typeof newTable !== "undefined" ) {
                uri = url.protocol + "//" + url.hostname + ':' + url.port + '/' 
                uri = uri + db + '/list/' + newTable + url.search
-               uri = ( uri.indexOf('?') == -1 ) ? uri + '?as=grid' : uri
+               uri = ( uri.indexOf('?') == -1 ) ? uri + '?' : uri
                gs = gs.replace(":in ", "").replace( newTable,"").trim()
                uri = this.buildLike ( uri , gs)
             } else {
@@ -222,30 +222,32 @@ var Searchbox = {
          
 
          if ( tableSpecified == 0 ) {
-            uri = ( uri.indexOf('?') == -1 ) ? uri + '?as=grid' : uri
-            uri = uri.replace(/&page-num=([0-9]+)/gi , "") 
+            uri = ( uri.indexOf('?') == -1 ) ? uri + '?' : uri
+            uri = uri.replace(/[&]{0,1}page-num=([0-9]+)/gi , "") 
             uri = uri + '&page-num=1'
-            uri = uri.replace(/&page-size=([0-9]+)/gi , "") 
+            uri = uri.replace(/[&]{0,1}page-size=([0-9]+)/gi , "") 
             uri = uri + '&page-size=7'
             if ( gs.length > 0 ) {
                uri = url.protocol + "//" + url.hostname + ':' + url.port + '/' 
                uri = uri + db + '/search' + url.search
-               uri = ( uri.indexOf('?') == -1 ) ? uri + '?as=grid' : uri
-               uri = uri.replace(/&for=([a-zA-Z0-9_%]+)/gi , "" ) 
-               uri = uri.replace(/&with=([a-zA-Z_%\-0-9]+)/gi , "") 
-               uri = uri.replace(/&like-by=([a-zA-Z_%]+)/gi , "") 
-               uri = uri.replace(/&like-val=([a-zA-Z_%]+)/gi , "") 
+               uri = ( uri.indexOf('?') == -1 ) ? uri + '?' : uri
+               uri = uri.replace(/[&]{0,1}pick=([a-zA-Z\,0-9_]+)/gi , "") 
+               uri = uri.replace(/[&]{0,1}for=([a-zA-Z0-9_%]+)/gi , "" ) 
+               uri = uri.replace(/[&]{0,1}with=([a-zA-Z_%\-0-9]+)/gi , "") 
+               uri = uri.replace(/[&]{0,1}like-by=([a-zA-Z_%]+)/gi , "") 
+               uri = uri.replace(/[&]{0,1}like-val=([a-zA-Z_%]+)/gi , "") 
                uri = uri + '&for=' + gs
             }
          }
+         uri = ( uri.endsWith('?') ) ? uri.slice(0, -1) : uri
          window.location.href = uri // and redirect !!!
     } 
     , buildLike(uri,pFor) {
          if ( pFor.length > 0) {
-            uri = uri.replace(/&with=([a-zA-Z_%\-0-9]+)/gi , "") 
-            uri = uri.replace(/&like-by=([a-zA-Z_%]+)/gi , "") 
-            uri = uri.replace(/&like-val=([a-zA-Z_%]+)/gi , "") 
-            uri = uri.replace(/&for=([a-zA-Z0-9_%]+)/gi , "" ) 
+            uri = uri.replace(/[&]{0,1}with=([a-zA-Z_%\-0-9]+)/gi , "") 
+            uri = uri.replace(/[&]{0,1}like-by=([a-zA-Z_%]+)/gi , "") 
+            uri = uri.replace(/[&]{0,1}like-val=([a-zA-Z_%]+)/gi , "") 
+            uri = uri.replace(/[&]{0,1}for=([a-zA-Z0-9_%]+)/gi , "" ) 
             uri = uri + '&like-by=name&like-val=' + pFor
             uri = uri + '&like-by=description&like-val=' + pFor
          } 
