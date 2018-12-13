@@ -37,13 +37,13 @@ sub doListItems {
    my $self             = shift;
    my $db               = $self->stash('db');
    my $item             = $self->stash('item');
+
    my $msr2             = {} ; 
    my $ret              = 1 ; 
    my $msg              = '' ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMetaData( $db ) ;
-   
    $appConfig		 		= $self->app->get('AppConfig');
  
    my $as               = 'grid' ; # the default form of the list control 
@@ -56,7 +56,7 @@ sub doListItems {
    ( $ret , $msg , $refObjModel)  = $self->doSetRequestModelData( $item , $db ) ; 
 
    if ( $ret == 0 ) {
-      ( $ret , $msg , $list_control ) = $self->doBuildListControl ( $msg , $refObjModel , $db , $item , $as  ) ; 
+      ( $ret , $msg , $list_control ) = $self->doBuildListPageType ( $msg , $refObjModel , $db , $item , $as  ) ; 
    } else {
       $list_control = '' ; 
    }
@@ -113,7 +113,7 @@ sub doSetRequestModelData {
 }
 
 
-sub doBuildListControl {
+sub doBuildListPageType {
 
    my $self             = shift ; 
    my $msg              = shift ; 
@@ -129,16 +129,16 @@ sub doBuildListControl {
    my $objPageFactory   = {} ; 
 
    my $lables_pages = { 
-         'lbls'   => 'list-labels'
-      ,  'cloud'  => 'list-cloud' 
-      ,  'grid'   => 'list-grid'
+         'lbls'         => 'list-labels'
+      ,  'cloud'        => 'list-cloud' 
+      ,  'grid'         => 'list-grid'
       ,  'print-table'  => 'list-print-table'
    };
 
    $ui_type = 'page/' . $lables_pages->{ $as } ; 
 
    $objPageFactory                  = 'IssueTracker::Controller::PageFactory'->new(\$appConfig, \$objModel );
-   $objPageBuilder                  = $objPageFactory->doInit( $ui_type );
+   $objPageBuilder                  = $objPageFactory->doSpawn( $ui_type );
    ( $ret , $msg , $list_control )  = $objPageBuilder->doBuildListControl( $msg , \$objModel , $db , $table , $as ) ;
 
    return ( $ret , $msg , $list_control ) ; 

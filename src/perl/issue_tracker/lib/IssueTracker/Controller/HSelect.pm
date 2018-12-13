@@ -18,6 +18,7 @@ use IssueTracker::App::Cnvr::CnrHsr2ToArray ;
 our $appConfig          = {} ; 
 
 sub doHSelectItems {
+
    my $self = shift ; 
    my $db               = $self->stash('db');
    my $item             = $self->stash('item');
