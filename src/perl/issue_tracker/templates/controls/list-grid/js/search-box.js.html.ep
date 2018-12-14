@@ -223,19 +223,19 @@ var Searchbox = {
 
          if ( tableSpecified == 0 ) {
             uri = ( uri.indexOf('?') == -1 ) ? uri + '?' : uri
-            uri = uri.replace(/[&]{0,1}page-num=([0-9]+)/gi , "") 
+            uri = uri.replace(/([&]{0,1}page-num=([0-9]+))+/gi , "") 
             uri = uri + '&page-num=1'
-            uri = uri.replace(/[&]{0,1}page-size=([0-9]+)/gi , "") 
+            uri = uri.replace(/([&]{0,1}page-size=([0-9]+))+/gi , "") 
             uri = uri + '&page-size=7'
             if ( gs.length > 0 ) {
                uri = url.protocol + "//" + url.hostname + ':' + url.port + '/' 
                uri = uri + db + '/search' + url.search
                uri = ( uri.indexOf('?') == -1 ) ? uri + '?' : uri
-               uri = uri.replace(/[&]{0,1}pick=([a-zA-Z\,0-9_]+)/gi , "") 
-               uri = uri.replace(/[&]{0,1}for=([a-zA-Z0-9_%]+)/gi , "" ) 
-               uri = uri.replace(/[&]{0,1}with=([a-zA-Z_%\-0-9]+)/gi , "") 
-               uri = uri.replace(/[&]{0,1}like-by=([a-zA-Z_%]+)/gi , "") 
-               uri = uri.replace(/[&]{0,1}like-val=([a-zA-Z_%]+)/gi , "") 
+               uri = uri.replace(/([&]{0,1}pick=([a-zA-Z\,0-9_]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}for=([a-zA-Z0-9_%]+))+/gi , "" ) 
+               uri = uri.replace(/([&]{0,1}with=([a-zA-Z_%\-0-9]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}like-by=([a-zA-Z_%]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}like-val=([a-zA-Z_%]+))+/gi , "") 
                uri = uri + '&for=' + gs
             }
          }
@@ -244,10 +244,10 @@ var Searchbox = {
     } 
     , buildLike(uri,pFor) {
          if ( pFor.length > 0) {
-            uri = uri.replace(/[&]{0,1}with=([a-zA-Z_%\-0-9]+)/gi , "") 
-            uri = uri.replace(/[&]{0,1}like-by=([a-zA-Z_%]+)/gi , "") 
-            uri = uri.replace(/[&]{0,1}like-val=([a-zA-Z_%]+)/gi , "") 
-            uri = uri.replace(/[&]{0,1}for=([a-zA-Z0-9_%]+)/gi , "" ) 
+            uri = uri.replace(/([&]{0,1}with=([a-zA-Z_%\-0-9]+))+/gi , "") 
+            uri = uri.replace(/([&]{0,1}like-by=([a-zA-Z_%]+))+/gi , "") 
+            uri = uri.replace(/([&]{0,1}like-val=([a-zA-Z_%]+))+/gi , "") 
+            uri = uri.replace(/([&]{0,1}for=([a-zA-Z0-9_%]+))+/gi , "" ) 
             uri = uri + '&like-by=name&like-val=' + pFor
             uri = uri + '&like-by=description&like-val=' + pFor
          } 
