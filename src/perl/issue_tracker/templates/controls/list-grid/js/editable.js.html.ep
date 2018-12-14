@@ -113,8 +113,6 @@
             }
      		}
        , calcVarCharWidth(width,col) {
-            // console.log ( "col:" + String(col))
-            // console.log ( "calcVarCharWidth: " + String(width))
             if ( typeof width !== "undefined" ) {
                if ( width < 3 ) {
                   return 30

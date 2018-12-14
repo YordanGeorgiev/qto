@@ -33,9 +33,12 @@ package IssueTracker::App::Mdl::Model ;
       my $c             = 0 ; 
       my $ret           = 1 ; 
       my $cols = $appConfig->{ "$db" . '.meta' } ; 
+      my @hides = split(/,/,$self->get('select.web-action.hide'));
+
 
       foreach my $key ( keys %$cols ) {
          my $row = $cols->{ $key } ; 
+         next if ( grep ( /^$row->{ 'attribute_name' }$/, @hides )) ;
          next unless $table eq $row->{ 'table_name' } ; 
          $mhr2->{ $c } = $row ;
          $c++ ; 
@@ -61,6 +64,10 @@ package IssueTracker::App::Mdl::Model ;
 
       ( $ret , $msg , $mhr2 ) = $self->doGetTableMeta ( $appConfig , $db , $table );
       return ( $ret , $msg , undef ) unless $ret == 0 ; 
+
+      #my $to_hides   = $self->get('list.web-action.hide') ; 
+      #my @hides      = split ( ',' , $to_hides ) if defined ( $to_hides ) ; 
+
       #debug p $mhr2 ; 
       foreach my $key ( sort { $mhr2->{$a}->{ $to_order_by } <=> $mhr2->{$b}->{ $to_order_by } } keys %$mhr2 ) {
          my $row = $mhr2->{ $key } ; 

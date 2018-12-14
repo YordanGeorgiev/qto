@@ -701,7 +701,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       if ($@) {
          $ret = 400 ; 
          $msg = 'cannot connect to the "' . $db . '" database: ' . DBI->errstr ; 
-         # todo:ysg check if database exists in the current instance
          $objModel->set('postgres_db_name' , 'postgres') ; 
          my ($ret1, $msg1,$hsr2) = $self->doSelectDatabasesList(\$objModel);
          foreach my $key ( keys %$hsr2 ) {
@@ -772,10 +771,11 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       }
       
       if ( defined ( $objModel->get('select.web-action.hide') ) ) {
-         $columns_to_select = " guid,id" ;
          my $lst_columns_to_hide = $objModel->get('select.web-action.hide'); 
          my @cols = split (',' , $lst_columns_to_hide ) ;
          foreach my $col ( @cols ) { 
+            $columns_to_select =~ s/,$col//g;
+            print "\$columns_to_select : $columns_to_select \n" ; 
             my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col );
       	   return ( 404 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
          }
@@ -851,8 +851,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = $limit*$offset ; 
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
-    
-      # print "from RdrPostgresDb.pm 743 : $str_sql \n" ; 
+   
+      # print "from RdrPostgresDb.pm 855: $str_sql \n" ; 
 
       $ret = 0 ; 
       eval { 

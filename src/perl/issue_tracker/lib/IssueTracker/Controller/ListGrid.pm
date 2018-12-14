@@ -34,22 +34,24 @@ sub doBuildListControl {
    my @picks      = split ( ',' , $to_picks ) if defined ( $to_picks ) ; 
    my $to_hides   = $objModel->get('list.web-action.hide') ; 
    my @hides      = split ( ',' , $to_hides ) if defined ( $to_hides ) ; 
-	
+
    unless ( defined ( $to_picks )) {
 		foreach my $col ( @$cols ) {
-		  $control = $control . ",'" . $col . "'" unless (grep /$col/, @hides) ; 
-		}
+         $control = $control . ",'" . $col . "'" unless ( grep (/^$col$/,@hides )) ; 
+      }
    	$control = "['id'," . substr($control, 1) . ']' ; 
 	} 
 	else {
    	$control = "['id'," ; # it is just the js array definining the cols
 		foreach my $to_pick ( @picks ) {
-			$control .= "'" . $to_pick . "' , " unless ( $to_pick eq 'id' ) ; 
+         unless ( grep (/^$to_pick$/,@hides)) {
+            $control .= "'" . $to_pick . "' , " unless ( $to_pick eq 'id' );
+         }
 		}
 		for (1..3) { chop ( $control ) } ;
    	$control .= ']' ;
 	}
-
+   print "control: $control \n" ; 
    return ( $ret , $msg , $control ) ; 
 }
 
