@@ -83,7 +83,7 @@ sub doSelectItems {
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
       ( $ret , $msg , $dat , $cnt ) = $objCnrHsr2ToArray->doConvert ($hsr2);
-
+      
       unless ( $ret == 0 ) {
          $http_code = 404 ; 
          ( $ret , $msg , $met , $mc) = $objModel->doGetTableMeta($appConfig,$db,$item);
