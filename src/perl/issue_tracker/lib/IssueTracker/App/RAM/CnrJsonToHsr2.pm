@@ -175,7 +175,7 @@ package IssueTracker::App::RAM::CnrJsonToHsr2 ;
 
 		my $self = shift;
 
-		#debug print "%$self RunBeforeExit ! \n";
+		#debug rint "%$self RunBeforeExit ! \n";
 	}
 	#eof sub RunBeforeExit
 
@@ -186,7 +186,7 @@ package IssueTracker::App::RAM::CnrJsonToHsr2 ;
 	sub DESTROY {
 		my $self = shift;
 
-		#debug print "the DESTRUCTOR is called  \n" ;
+		#debug rint "the DESTRUCTOR is called  \n" ;
 		$self->RunBeforeExit();
 		return;
 	}   

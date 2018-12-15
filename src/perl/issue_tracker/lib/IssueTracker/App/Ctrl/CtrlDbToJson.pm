@@ -83,14 +83,14 @@ package IssueTracker::App::Ctrl::CtrlDbToJson ;
       for my $table ( @tables ) { 
          my $items_file ="$out_dir/$table" . '.json' ; 
          my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-         my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" );
+         my $objRdrDb 			= $objRdrDbsFactory->doInit ( "$rdbms_type" );
 
          ( $ret , $msg )  = 
-            $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table , undef) ; 
+            $objRdrDb->doSelect( \$objModel , $table , undef) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
          my $objWtrTextFactory = 'IssueTracker::App::IO::Out::WtrTextFactory'->new( \$appConfig , $self ) ; 
-         my $objWtrText 			= $objWtrTextFactory->doInstantiate ( $table );
+         my $objWtrText 			= $objWtrTextFactory->doInit ( $table );
          
          my $objCnrHsr2ToJson = 
             'IssueTracker::App::RAM::CnrHsr2ToJson'->new ( \$appConfig ) ; 

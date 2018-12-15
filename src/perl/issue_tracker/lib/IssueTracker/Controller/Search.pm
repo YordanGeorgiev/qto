@@ -11,13 +11,12 @@ use parent qw(IssueTracker::Controller::BaseController);
 
 use Data::Printer ; 
 use Data::Dumper; 
-use Scalar::Util qw /looks_like_number/;
 
 use IssueTracker::Controller::PageFactory ; 
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlParams ; 
 use IssueTracker::App::Utils::Timer ; 
 
 my $module_trace    = 0 ;
@@ -32,7 +31,7 @@ sub doSearchItems {
    my $db               = $self->stash('db');
    
    my $objModel         = {} ;
-   my $objRdrUrlParams  = {} ; 
+   my $objCnrUrlParams  = {} ; 
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
    my $ret              = 0;
@@ -45,30 +44,16 @@ sub doSearchItems {
    my $srch_control     = 'srch-grid' ; 
    my $notice           = '' ; 
    
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login ');
-      return ; 
-   } 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 ); 
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
    
    $appConfig		 		= $self->app->get('AppConfig');
-   unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
-      
-      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
-      unless ( $ret == 0 ) { 
-         $self->render('text' => $msg ) unless $ret == 0 ; 
-         return ; 
-      }
-      else { 
-         $appConfig->{ $db . '.meta' } = $msr2 ; 
-      }
-   } 
-
    $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
    
    my $query_params = $self->req->query_params ; 
-   $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg ) = $objRdrUrlParams->doSetQueryUrlParams(\$objModel, $query_params , 'Search' );
+   $objCnrUrlParams = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
+   ( $ret , $msg ) = $objCnrUrlParams->doSetQueryUrlParams(\$objModel, $query_params , 'Search' );
 
    if ( ! defined ($self->req->query_params ) or $ret != 0 ) {
    
@@ -83,7 +68,7 @@ sub doSearchItems {
        , 'db' 		         => $db
        , 'ProductType' 		=> $appConfig->{'ProductType'}
        , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
-       , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
+       , 'GitShortHash' => $appConfig->{'GitShortHash'}
        , 'page_load_time'  => $page_load_time
        , 'srch_control'    => "['name']" 
        , 'notice'          => $notice
@@ -125,7 +110,7 @@ sub doBuildSearchControl {
   
 
    $objPageFactory                  = 'IssueTracker::Controller::PageFactory'->new(\$appConfig, \$objModel );
-   $objPageBuilder                  = $objPageFactory->doInstantiate( $ui_type );
+   $objPageBuilder                  = $objPageFactory->doSpawn( $ui_type );
    ( $ret , $msg , $srch_control )  = $objPageBuilder->doBuildSearchControl( $msg , $db  , $as ) ;
 
    return ( $ret , $msg , $srch_control ) ; 
@@ -167,7 +152,7 @@ sub doRenderPageTemplate {
     , 'db' 		         => $db
     , 'ProductType' 		=> $appConfig->{'ProductType'}
     , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
-    , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
+    , 'GitShortHash' => $appConfig->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'srch_control'    => $srch_control
     , 'notice'          => $notice

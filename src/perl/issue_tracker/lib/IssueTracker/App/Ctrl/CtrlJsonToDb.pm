@@ -95,7 +95,7 @@ package IssueTracker::App::Ctrl::CtrlJsonToDb ;
          next if ( keys %{ $objModel->get('hsr2') } == 0 ) ; 
 
          my $objWtrDbsFactory = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-         my $objWtrDb 			= $objWtrDbsFactory->doInstantiate ( "$rdbms_type" );
+         my $objWtrDb 			= $objWtrDbsFactory->doInit ( "$rdbms_type" );
          
          ( $ret , $msg )  = $objWtrDb->doUpsertTable( \$objModel , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 

@@ -1,10 +1,12 @@
 % use utf8;
-% layout 'site';
+% layout 'list';
 
-% content_for header_csss => begin
+% content_for cnt_header_css => begin
    <link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/app_list_labels.css">
    <link rel="stylesheet" type="text/css" media="print" href="../../themes/thme-blue/css/print/controls/app_list_labels.css">
 % end
+
+% content_for cnt_body_controls => begin
 
 <%== $list_control %>
 
@@ -33,3 +35,4 @@ if ( document.getElementById("spn_msg") ) {
    });
 }
 </script>
+% end

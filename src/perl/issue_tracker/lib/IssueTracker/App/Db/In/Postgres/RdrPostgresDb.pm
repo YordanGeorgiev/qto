@@ -12,6 +12,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Mdl::Model ; 
+   use IssueTracker::App::Db::In::Postgres::MojoPgWrapper ; 
 
    our $module_trace                            = 0 ;  
    our $IsUnitTest                              = 0 ; 
@@ -67,7 +68,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset ;" ; 
       
-      # debug print $str_sql ;  
+      # debug rint $str_sql ;  
 
       $ret = 0 ; 
       eval { 
@@ -182,9 +183,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       return ( 0 , "" , "")  unless ( defined ( $ops ) ); 
       return ( 0 , "" , "")  unless ( defined ( $vals ) ); 
 
-      # debug print "from RdrPostgresDb.pm 120 \@$cols @$cols \n" ; 
-      # debug print "from RdrPostgresDb.pm \@$ops @$ops \n" ; 
-      # debug print "from RdrPostgresDb.pm \@$vals @$vals \n" ; 
+      # debug rint "from RdrPostgresDb.pm 120 \@$cols @$cols \n" ; 
+      # debug rint "from RdrPostgresDb.pm \@$ops @$ops \n" ; 
+      # debug rint "from RdrPostgresDb.pm \@$vals @$vals \n" ; 
       #
       if ( @$cols and @$ops and @$vals) {
          
@@ -253,7 +254,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 				$sql .= ' AND ' ; 
          }
 
-         # debug print "from RdrPostgresDb.pm 186 sql : $sql \n" ; 
+         # debug rint "from RdrPostgresDb.pm 186 sql : $sql \n" ; 
 
 			for (1..4) { chop ( $sql) } ;
 			return ( 0 , "" , $sql ) ; 
@@ -313,7 +314,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
-      # debug print "$str_sql \n stop RdrPostgresDb.pm" ; 
+      # debug rint "$str_sql \n stop RdrPostgresDb.pm" ; 
 
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
@@ -358,11 +359,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $str_sql = " 
          select ROW_NUMBER () OVER (ORDER BY datname ) as row_id, datname from pg_database;
       " ; 
-
-      # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $db \n db_host: $db_host " ; 
-      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
-      # $objLogger->doLogDebugMsg ( $debug_msg ) ; 
       
       $sth = $dbh->prepare($str_sql);  
 
@@ -385,6 +381,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       }
 
       $appConfig->{ "databases-list"} = $hsr ;
+
       return ( $ret , $msg , $hsr ) ; 	
    }
 
@@ -434,33 +431,18 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
 
-
-      $str_sql = 
-         " SELECT 
-         * FROM $table 
+      $str_sql = " SELECT * FROM $table 
          WHERE 1=1
          AND guid = '" . $guid . "'
          ;
       " ; 
 
-      # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $db \n db_host: $db_host " ; 
-      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-     
-
-      $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
-                 'RaiseError'          => 1
-               , 'ShowErrorStatement'  => 1
-               , 'PrintError'          => 1
-               , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
-      } ) or $msg = DBI->errstr;
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
       
       $sth = $dbh->prepare($str_sql);  
 
-      $sth->execute()
-            or $objLogger->error ( "$DBI::errstr" ) ;
+      $sth->execute() or $objLogger->error ( "$DBI::errstr" ) ;
 
       $hsr = $sth->fetchall_hashref( 'guid' ) ; 
       binmode(STDOUT, ':utf8');
@@ -476,9 +458,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $objLogger->doLogErrorMsg ( $msg ) ; 
       }
 
-      $debug_msg        = ' ret ' . $ret ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-      
       return ( $ret , $msg , $hsr ) ; 	
    }
 
@@ -507,16 +486,18 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 		$str_sql = "
          SELECT DISTINCT
-             ROW_NUMBER () OVER (ORDER BY pgc.relname , a.attnum) as rowid , 
-             pgc.relname as table_name ,
-             a.attnum as attribute_number,
-             a.attname as attribute_name,
-             format_type(a.atttypid, a.atttypmod) as data_type,
-             a.atttypmod as char_max_length,
-             a.attnotnull as not_null, 
-             com.description as comment,
-             coalesce(i.indisprimary,false) as is_primary_key,
-             def.adsrc as default_value
+             ROW_NUMBER () OVER (ORDER BY pgc.relname , a.attnum) as rowid
+             , pgc.relname as table_name 
+             , a.attnum as attribute_number
+             , a.attname as attribute_name
+             , format_type(a.atttypid, a.atttypmod) as data_type
+             , a.atttypmod as char_max_length
+             , a.attnotnull as not_null
+             , com.description as comment
+             , coalesce(i.indisprimary,false) as is_primary_key
+             , def.adsrc as default_value
+             , meta_columns.skip_in_list as skip_in_list
+             , meta_columns.width as width
          FROM pg_attribute a 
          JOIN pg_class pgc ON pgc.oid = a.attrelid
          LEFT JOIN pg_index i ON 
@@ -526,7 +507,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          LEFT JOIN pg_attrdef def ON 
              (a.attrelid = def.adrelid AND a.attnum = def.adnum)
          LEFT JOIN pg_catalog.pg_namespace n ON n.oid = pgc.relnamespace
-
+         LEFT JOIN meta_columns ON 
+            ( meta_columns.name = a.attname AND meta_columns.table_name = pgc.relname ) 
          WHERE 1=1 
             AND pgc.relkind IN ('r','')
              AND n.nspname <> 'pg_catalog'
@@ -539,16 +521,17 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          ORDER BY rowid
          ;      
          " ; 
-      # debug print "SQL: $str_sql \n STOP RdrPostgresDb.pm" ;   
+      # debug rint "RdrPostgresDb.pm :: doLoadProjDbMetaData $str_sql \n STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
       
       eval { 
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ; 
          $mhsr2 = $sth->fetchall_hashref( 'rowid' ) ; 
+         # debug rint "RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;
          # debug p $mhsr2 ; 
+         # debug rint "STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
       };
       if ( $@ or !scalar(%$mhsr2)) { 
-         # $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
          $msg = " failed to get the project database: " . $db . " meta data ! " ; 
          $msg .= $DBI::errstr ; 
          $ret = 1 ; 
@@ -599,7 +582,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 			ORDER BY t.relname , a.attnum
 			;
 		" ; 
-      # debug print "SQL: $str_sql \n STOP RdrPostgresDb.pm" ;   
+      # debug rint "SQL: $str_sql \n STOP RdrPostgresDb.pm" ;   
       # chk: https://stackoverflow.com/a/451454/65706 
       eval { 
          $sth = $dbh->prepare($str_sql);  
@@ -716,8 +699,18 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       };
 
       if ($@) {
-         $ret = 2 ; 
+         $ret = 400 ; 
          $msg = 'cannot connect to the "' . $db . '" database: ' . DBI->errstr ; 
+         $objModel->set('postgres_db_name' , 'postgres') ; 
+         my ($ret1, $msg1,$hsr2) = $self->doSelectDatabasesList(\$objModel);
+         foreach my $key ( keys %$hsr2 ) {
+            my $row = $hsr2->{$key} ; 
+            if ( $row->{ 'datname' } eq $db ) {
+               $ret = 404 ; 
+               $msg = 'cannot connect to the "' . $db . '" database: the db is unaccessible' . DBI->errstr ; 
+               return ( $ret , $msg , undef ) ; 
+            }
+         }
          return ( $ret , $msg , undef ) ; 
       }
 
@@ -730,7 +723,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    # -----------------------------------------------------------------------------
    # get ALL the table data into hash ref of hash refs 
    # -----------------------------------------------------------------------------
-   sub doSelectTableIntoHashRef {
+   sub doSelect {
 
       my $self                   = shift ; 
       my $objModel               = ${shift @_ } ; 
@@ -756,11 +749,16 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $debug_msg        = q{} ; 
       my $hsr2             = {} ;         # this is hash ref of hash refs to populate with
       my $sth              = {} ;         # this is the statement handle
+      my $cols             = () ;         # the array ref of columns
       my $str_sql          = q{} ;        # this is the sql string to use for the query
 
-      
 
-      my $columns_to_select = "*" ; 
+      ( $ret , $msg , $cols ) = $objModel->doGetTableColumnList ( $appConfig , $db , $table ) ; 
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
+      # old my $columns_to_select = "*" ; # $objModel->doChkIfColumnExists ( $db , $table , $col );
+      my $columns_to_select = 'guid,id,' . join(',' , reverse @$cols) ; 
+      # debug rint "columns_to_select: $columns_to_select \n" ; 
+
       if ( defined ( $objModel->get('select.web-action.pick') ) ) {
          $columns_to_select = " guid,id" ;
          my $lst_columns_to_select = $objModel->get('select.web-action.pick'); 
@@ -773,10 +771,10 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       }
       
       if ( defined ( $objModel->get('select.web-action.hide') ) ) {
-         $columns_to_select = " guid,id" ;
          my $lst_columns_to_hide = $objModel->get('select.web-action.hide'); 
          my @cols = split (',' , $lst_columns_to_hide ) ;
          foreach my $col ( @cols ) { 
+            $columns_to_select =~ s/,$col//g;
             my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col );
       	   return ( 404 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
          }
@@ -852,8 +850,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = $limit*$offset ; 
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
-    
-      # print "from RdrPostgresDb.pm 743 : $str_sql \n" ; 
+   
+      # debug rint "from RdrPostgresDb.pm 855: $str_sql \n" ; 
 
       $ret = 0 ; 
       eval { 
@@ -889,13 +887,12 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 	
 	sub new {
-
-		my $invocant 			= shift ;    
+		my $invocant   = shift ;    
 		$appConfig     = ${ shift @_ } || croak 'appConfig not passed in RdrPostgresDb !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
 		my $self       = {} ; bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize() ; 
+      $self          = $self->doInitialize() ; 
 		return $self;
 	}  
 	
@@ -918,6 +915,65 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 	}	
    
 
+	sub doInitPg {
+      
+     	my $self 			= shift ;  
+		my $pg            = {} ; 
+
+		$ENV{'DBI_TRACE'} = 1 ; 
+      $ENV{'DBI_TRACE'} = 15 ; 
+      $ENV{'DBI_TRACE'} ='SQL' ; 
+      
+		$pg = 'IssueTracker::App::Db::In::Postgres::MojoPgWrapper'->new (\$appConfig, \$objModel ) ; 
+      $pg = $pg->options( {
+              'RaiseError'          => 1
+            , 'ShowErrorStatement'  => 1
+            , 'PrintError'          => 1
+            , 'AutoCommit'          => 1
+            , 'pg_utf8_strings'     => 1
+         } );
+		return $pg ; 
+	}
+
+   sub doHSelectBranch {
+
+      my $self          = shift ; 
+      my $table         = shift || croak 'no table passed !!!' ; 
+      my $seq           = shift || 1 ; 
+   
+      my $rv            = 1  ;
+      my $msg           = 'unknown error occured in RdrPostgresDb::doHSelectBranch' ; 
+      my $pg            = {} ; 
+      my $sql           = {} ; 
+      my $hsr2          = {} ; 
+
+		$pg = $self->doInitPg();
+
+      eval {
+			$sql = " 
+				SELECT * FROM ( 
+               SELECT node.* FROM $table AS node, $table AS parent 
+               WHERE 1=1 AND node.lft 
+               BETWEEN parent.lft AND parent.rgt
+               AND parent.seq = '" . $seq . "')  AS dyn_sql 
+				WHERE 1=1
+				ORDER BY seq
+			" ; 
+         $hsr2 = $pg->db->query("$sql")->hashes ; 
+			# debug p $sql ; 
+         # debug p $hsr2 ; 
+      };
+      if ( $@ ) {
+         $rv               = 404 ; 
+         $msg              = DBI->errstr ; 
+         $objLogger->doLogErrorMsg ( $msg ) ;
+         return ( $rv , $msg ) ; 
+      }
+
+      $rv               = 200 ; 
+      $msg              = '' ; 
+      return ( $rv , $msg , $hsr2 ) ; 
+   }
 
 1;
 

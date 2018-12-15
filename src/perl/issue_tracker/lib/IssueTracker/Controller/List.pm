@@ -15,7 +15,7 @@ use Scalar::Util qw /looks_like_number/;
 
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::Controller::PageFactory ; 
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlParams ; 
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
 use IssueTracker::App::UI::WtrUIFactory ; 
@@ -37,47 +37,33 @@ sub doListItems {
    my $self             = shift;
    my $db               = $self->stash('db');
    my $item             = $self->stash('item');
+
    my $msr2             = {} ; 
    my $ret              = 1 ; 
    my $msg              = '' ; 
 
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login ');
-      return ; 
-   } 
-
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
    $appConfig		 		= $self->app->get('AppConfig');
-   unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
-      
-      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
-      unless ( $ret == 0 ) { 
-         $self->res->code(400) ; 
-         $self->render('text' => $msg ) ; 
-         return ; 
-      }
-      else { 
-         $appConfig->{ $db . '.meta' } = $msr2 ; 
-      }
-   } 
  
    my $as               = 'grid' ; # the default form of the list control 
    my $list_control     = '' ; 
    my $refObjModel      = {} ; 
 
-	# debug print "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
+	# debug rint "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
    
    ( $ret , $msg , $refObjModel)  = $self->doSetRequestModelData( $item , $db ) ; 
 
    if ( $ret == 0 ) {
-      ( $ret , $msg , $list_control ) = $self->doBuildListControl ( $msg , $refObjModel , $db , $item , $as  ) ; 
+      ( $ret , $msg , $list_control ) = $self->doBuildListPageType ( $msg , $refObjModel , $db , $item , $as  ) ; 
    } else {
       $list_control = '' ; 
    }
 
    # $self->doSetHtmlHeaders() ; # uncomment and implement if per list web action headers needed !!!
    $msg = $self->doSetPageMsg ( $ret , $msg ) ; 
-   $self->doRenderPageTemplate( $as , $msg , $db , $item , $list_control ) ; 
+   $self->doRenderPageTemplate( $ret , $msg , $as, $db , $item , $list_control ) ; 
 }
 
 
@@ -94,8 +80,6 @@ sub doSetPageMsg {
       $msg = '<span id="spn_msg">' . $msg . '</span>' ; 
    }
 
-   $self->res->code(400) unless $ret == 0 ; 
-
    return $msg ; 
 }
 
@@ -108,7 +92,7 @@ sub doSetRequestModelData {
    
    my $ret              = 1 ;  
    my $msg              = '' ; 
-   my $objRdrUrlParams  = {} ; 
+   my $objCnrUrlParams  = {} ; 
    my $objModel         = {} ; 
 
    $appConfig		 		= $self->app->get('AppConfig');
@@ -117,19 +101,19 @@ sub doSetRequestModelData {
    $objModel->set('postgres_db_name' , $db ) ; 
    $objModel->set('table_name' , $item ) ; 
 
-   $objRdrUrlParams   = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg ) = $objRdrUrlParams->doSetListUrlParams(\$objModel, $self->req->query_params );
+   $objCnrUrlParams   = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
+   ( $ret , $msg ) = $objCnrUrlParams->doSetListUrlParams(\$objModel, $self->req->query_params );
    return ( $ret , $msg ) unless $ret == 0 ; 
 
-   ( $ret , $msg ) = $objRdrUrlParams->doSetSelectUrlParams(\$objModel, $self->req->query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetSelectUrlParams(\$objModel, $self->req->query_params );
    return ( $ret , $msg ) unless $ret == 0 ; 
 
-   ( $ret , $msg ) = $objRdrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
    return ( $ret , $msg , \$objModel) ; 
 }
 
 
-sub doBuildListControl {
+sub doBuildListPageType {
 
    my $self             = shift ; 
    my $msg              = shift ; 
@@ -145,17 +129,16 @@ sub doBuildListControl {
    my $objPageFactory   = {} ; 
 
    my $lables_pages = { 
-         'lbls'   => 'list-labels'
-      ,  'cloud'  => 'list-cloud' 
-      ,  'grid'   => 'list-grid'
-      ,  'table'  => 'list-rgrid'
+         'lbls'         => 'list-labels'
+      ,  'cloud'        => 'list-cloud' 
+      ,  'grid'         => 'list-grid'
       ,  'print-table'  => 'list-print-table'
    };
 
    $ui_type = 'page/' . $lables_pages->{ $as } ; 
 
    $objPageFactory                  = 'IssueTracker::Controller::PageFactory'->new(\$appConfig, \$objModel );
-   $objPageBuilder                  = $objPageFactory->doInstantiate( $ui_type );
+   $objPageBuilder                  = $objPageFactory->doSpawn( $ui_type );
    ( $ret , $msg , $list_control )  = $objPageBuilder->doBuildListControl( $msg , \$objModel , $db , $table , $as ) ;
 
    return ( $ret , $msg , $list_control ) ; 
@@ -168,18 +151,23 @@ sub doBuildListControl {
 sub doRenderPageTemplate {
    
    my $self             = shift ; 
-   my $as               = shift || 'grid' ; 
+   my $ret              = shift ; 
    my $msg              = shift ; 
+   my $as               = shift || 'grid' ; 
    my $db               = shift ; 
    my $item             = shift ; 
    my $list_control     = shift ; 
    my $notice           = '' ;
 
-   
+   unless ( $ret == 0 ) {
+      $self->res->code($ret) unless $ret == 0 ; 
+   } else {
+      $self->res->code(200) ; 
+   }
+
    my $as_templates = { 
          'lbls'         => 'list-labels'
       ,  'cloud'        => 'list-cloud' 
-      ,  'table'        => 'list-rgrid' 
       ,  'grid'         => 'list-grid' 
       ,  'print-table'  => 'list-print-table' 
    };
@@ -198,7 +186,7 @@ sub doRenderPageTemplate {
     , 'db' 		         => $db
     , 'ProductType' 		=> $appConfig->{'ProductType'}
     , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
-    , 'ShortCommitHash' => $appConfig->{'ShortCommitHash'}
+    , 'GitShortHash' => $appConfig->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'list_control'    => $list_control
     , 'notice'          => $notice

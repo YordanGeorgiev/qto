@@ -58,6 +58,7 @@ use IssueTracker::App::Utils::Timer;
 use IssueTracker::App::Ctrl::Dispatcher;
 use IssueTracker::App::Mdl::Model ; 
 use IssueTracker::App::IO::In::RdrCmdArgs ; 
+use IssueTracker::App::IO::In::RdrEnv ; 
 
 # give a full stack dump on any untrapped exceptions
 local $SIG{__DIE__} = sub {
@@ -129,6 +130,8 @@ sub doInitialize {
    $objModel               = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ; 
    my $objRdrCmdArgs 	   = 'IssueTracker::App::IO::In::RdrCmdArgs'->new(\$appConfig , \$objModel ) ; 
    $objRdrCmdArgs->doRead();
+   my $objRdrEnv 	   = 'IssueTracker::App::IO::In::RdrEnv'->new(\$appConfig , \$objModel ) ; 
+   $objRdrEnv->doRead();
 
 
    $issue_tracker_project  = $ENV{"issue_tracker_project"};
@@ -150,7 +153,6 @@ sub doInitialize {
   return ($ret, $msg);
 }
 
-# eof sub doInitialize
 
 
 #

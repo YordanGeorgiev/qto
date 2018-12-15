@@ -1,25 +1,25 @@
--- DROP TABLE IF EXISTS userstories ; 
+   DROP TABLE IF EXISTS userstories CASCADE;
 
 SELECT 'create the "userstories" table'
 ; 
    CREATE TABLE userstories (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , prio           integer NOT NULL DEFAULT 1
-    , weight         integer NOT NULL DEFAULT 9
+    , level          integer NULL
+    , seq            integer NULL
+    , lft            bigint  NULL
+    , rgt            bigint  NULL
     , status         varchar (20) NOT NULL DEFAULT 'status ...'
-    , category       varchar (20) NOT NULL DEFAULT 'category ...'
+    , prio           integer NOT NULL DEFAULT 1
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
-    , owner          varchar (20) NOT NULL DEFAULT 'unknown'
-    , tags           varchar (50)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_userstories_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
     );
 
-create unique index idx_uniq_userstories_id on userstories (id);
+   create unique index idx_uniq_userstories_id on userstories (id);
 
 
 
@@ -35,7 +35,9 @@ SELECT 'show the columns of the just created table'
    ; 
 
 --The trigger:
-CREATE TRIGGER trg_set_update_time_on_userstories BEFORE UPDATE ON userstories FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+   CREATE TRIGGER trg_set_update_time_on_userstories 
+   BEFORE UPDATE ON userstories 
+   FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
 select tgname
 from pg_trigger

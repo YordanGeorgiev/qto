@@ -14,13 +14,15 @@ use IssueTracker::App::Mdl::Model ;
 use IssueTracker::App::Db::In::RdrDbsFactory ; 
 use IssueTracker::App::Cnvr::CnrHsr2ToHsr2 ; 
 
-
-sub doReloadProjectDbMetaData {
+sub doReloadProjDbMetaData {
 
    my $self                = shift ;
    my $db                  = shift ;
 
    $appConfig		 		   = $self->app->get('AppConfig');
+
+   return if ( exists ( $appConfig->{ $db . '.meta' } )); 
+
    my $objRdrDbsFactory    = {} ; 
    my $objRdrDb            = {} ; 
    my $msr2                = {} ; 
@@ -32,12 +34,12 @@ sub doReloadProjectDbMetaData {
    $objModel->set('postgres_db_name' , $db ) ; 
     
    $objRdrDbsFactory       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig, \$objModel );
-   $objRdrDb               = $objRdrDbsFactory->doInstantiate( $rdbms_type );
+   $objRdrDb               = $objRdrDbsFactory->doInit( $rdbms_type );
    ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMetaData( $db ) ; 
 
    $appConfig->{ "$db" . '.meta' } = $msr2 ; # chk: it-181101180808
-
-   return ( $ret , $msg , $msr2 ) ; 
+   $self->app->set('AppConfig', $appConfig );
+   $self->render('text' => $msg ) unless $ret == 0 ; 
 }
 
 
@@ -56,22 +58,24 @@ sub isAuthorized {
       }
    );
 
+   $self->render('text' => 'Refresh your page to login ');
    return 0  ;
 
 }
 
+
 # 
-# call-by : $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+# call-by : $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
 #
-sub doRenderJson {
+sub doRenderJSON {
 
    my $self          = shift ; 
    my $http_code     = shift ; 
    my $msg           = shift ; 
    my $http_method   = shift || 'GET' ; 
-   my $met           = shift ; 
-   my $cnt           = shift ; 
-   my $dat           = shift ; 
+   my $met           = shift ; # the meta data
+   my $cnt           = shift ; # the count of the data
+   my $dat           = shift ; # the data 
    my $req           = "$http_method " . $self->req->url->to_abs ; 
 
    $self->res->headers->content_type('application/json; charset=utf-8');

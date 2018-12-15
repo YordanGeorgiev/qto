@@ -30,6 +30,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
 for my $row ( @$list ) {
 
    my $table_name = $row->{'table_name'} ; 
+   next unless exists $row->{ 'update_time' } ; 
    my $url = '' ; 
    my $tm = '' ; # the test msg 
 
@@ -42,6 +43,13 @@ for my $row ( @$list ) {
 	;
 	$tm = 'for the hide the guid attribute , no guid: should be present' ; 
 	$t->get_ok($url)->content_unlike('/guid:/' , $tm ) ; 
+
+	$url = '/' . $db_name . '/list/' . $table_name . '?hide=update_time' ; 
+	$t->get_ok( $url )
+		->status_is(200) 
+	;
+	$tm = 'for the hide the update_time attribute , no update_time should be present' ; 
+	$t->get_ok($url)->content_unlike('/update_time/' , $tm ) ; 
 
 }
 
