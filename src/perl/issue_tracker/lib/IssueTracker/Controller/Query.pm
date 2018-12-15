@@ -14,7 +14,7 @@ use parent qw(IssueTracker::Controller::BaseController);
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlParams ; 
 
 my $module_trace    = 0 ;
 our $appConfig      = {};
@@ -36,11 +36,8 @@ sub doQueryItems {
    my $msg              = 'unknown error during global text search ';
    my $msr2             = {} ; 
    
-   
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login '); # inform the user
-      return ; 
-   } 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
    
    $appConfig		 		= $self->app->get('AppConfig');
    unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
@@ -55,7 +52,7 @@ sub doQueryItems {
       }
    } 
 
-   my $objRdrUrlParams  = {} ; 
+   my $objCnrUrlParams  = {} ; 
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
    my $hsr2             = {};
@@ -68,15 +65,15 @@ sub doQueryItems {
    $objModel->set('postgres_db_name' , $db ) ; 
 
    my $query_params = $self->req->query_params ; 
-   $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg ) = $objRdrUrlParams->doSetQueryUrlParams(\$objModel, $query_params , 'Query' );
+   $objCnrUrlParams = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
+   ( $ret , $msg ) = $objCnrUrlParams->doSetQueryUrlParams(\$objModel, $query_params , 'Query' );
    if ( $ret != 0 ) {
-      $self->SUPER::doRenderJson(400,$msg,'GET','','0','');
+      $self->SUPER::doRenderJSON(400,$msg,'GET','','0','');
       return ; 
    } 
 
    $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+   $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
    ($ret, $msg , $hsr2 ) = $objRdrDb->doGlobalSrchIntoHashRef(\$objModel);
 
    if ( $ret == 0 ) {
@@ -85,11 +82,11 @@ sub doQueryItems {
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
       ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 ) ;
 
-      $self->SUPER::doRenderJson(200,$msg,'GET',$msr2,$rows_count,$list);
+      $self->SUPER::doRenderJSON(200,$msg,'GET',$msr2,$rows_count,$list);
    } elsif ( $ret == 204 ) {
-      $self->SUPER::doRenderJson(204,$msg,'GET','','0','');
+      $self->SUPER::doRenderJSON(204,$msg,'GET','','0','');
    } else {
-      $self->SUPER::doRenderJson(400,$msg,'GET','','0','');
+      $self->SUPER::doRenderJSON(400,$msg,'GET','','0','');
    }
 }
 

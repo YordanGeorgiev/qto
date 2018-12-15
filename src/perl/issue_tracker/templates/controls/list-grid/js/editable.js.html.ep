@@ -19,7 +19,6 @@
      , mounted() {
          this.content = this.cnt
          this.displayEmptyCellIfNullOrUndefined()
-         //console.log(this.$el.id)
          this.$el.style.width = this.getColMaxWidth(this.$el) + "px"
      },
      methods: {
@@ -76,10 +75,14 @@
                if ( (meta[prop])["attribute_name"] !== col ) {
                   continue ;
                } else {
-                  if ( (meta[prop])["data_type"].indexOf("char") === -1) {
-                     maxWidth = this.calcWidth()
+                  if ( typeof ((meta[prop])["width"]) != "undefined" && (meta[prop])["width"] != null ) {
+                        maxWidth = this.calcVarCharWidth(Number((meta[prop])["width"]),col)         
                   } else {
-                     maxWidth = this.calcVarCharWidth(Number((meta[prop])["char_max_length"]),col)         
+                     if ( (meta[prop])["data_type"].indexOf("char") === -1) {
+                        maxWidth = this.calcWidth()
+                     } else {
+                        maxWidth = this.calcVarCharWidth(Number((meta[prop])["char_max_length"]),col)         
+                     }
                   }
                }
             }
@@ -110,8 +113,6 @@
             }
      		}
        , calcVarCharWidth(width,col) {
-            // console.log ( "col:" + String(col))
-            // console.log ( "calcVarCharWidth: " + String(width))
             if ( typeof width !== "undefined" ) {
                if ( width < 3 ) {
                   return 30

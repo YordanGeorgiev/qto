@@ -2,35 +2,18 @@ package IssueTracker::Controller::ListGrid ;
 use strict ; use warnings ; 
 
 use Data::Printer ; 
-use Data::Dumper; 
 use Scalar::Util qw /looks_like_number/;
 use Carp ; 
-use Mojo::Base 'Mojolicious::Controller';
 use List::Util 1.33 'any';
 
 use IssueTracker::App::Utils::Logger;
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlParams ; 
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
 use IssueTracker::App::UI::WtrUIFactory ; 
 
-our $module_trace   = 0 ; 
 our $appConfig      = {};
-our $objLogger      = {} ;
 our $objModel       = {} ; 
-our $rdbms_type     = 'postgres' ; 
-
-sub new {
-
-   my $invocant 			= shift ;    
-   $appConfig           = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-   $objModel            = ${ shift @_ } || croak 'missing objModel !!!' ; 
-   my $class            = ref ( $invocant ) || $invocant ; 
-   my $self             = {};       
-   bless( $self, $class );    
-   return $self;
-}  
-
 
 sub doBuildListControl {
 
@@ -42,47 +25,44 @@ sub doBuildListControl {
 
    my $ret           	= 1 ; 
    my $control       	= '' ; 
-   my $mhsr2 				= {};
-   my $objRdrDbsFactory = {} ; 
-   my $objRdrDb 			= {} ; 
-   my $objWtrUIFactory 	= {} ; 
-   my $objUIBuilder 		= {} ; 
+   my $cols             = () ; 
 
-   $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
-   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
-   $table = $objModel->get('table_name'); 
-
-   ( $ret , $msg , $mhsr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
-   # ( $ret , $msg , $mhsr2 ) = $objRdrDb->doSelectTablesColumnList ( $table ) ;
+   ( $ret , $msg , $cols) = $objModel->doGetTableColumnList( $appConfig , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 		
    my $to_picks   = $objModel->get('list.web-action.pick') ; 
    my @picks      = split ( ',' , $to_picks ) if defined ( $to_picks ) ; 
    my $to_hides   = $objModel->get('list.web-action.hide') ; 
    my @hides      = split ( ',' , $to_hides ) if defined ( $to_hides ) ; 
-	
-   #debug p $mhsr2 ;  
 
    unless ( defined ( $to_picks )) {
-   	$control = ']' ; # it is just the js array definining the cols
-		foreach my $id ( reverse sort keys %$mhsr2 ) {
-			my $row = $mhsr2->{ $id } ; 
-			my $col = $row->{ 'attribute_name' } ; 
-				$control = "'" . $col . "' , " . $control unless (grep /$col/, @hides) ; 
-		}
-   	$control = '[' . $control ; 
+		foreach my $col ( @$cols ) {
+         $control = $control . ",'" . $col . "'" unless ( grep (/^$col$/,@hides )) ; 
+      }
+   	$control = "['id'," . substr($control, 1) . ']' ; 
 	} 
 	else {
    	$control = "['id'," ; # it is just the js array definining the cols
 		foreach my $to_pick ( @picks ) {
-			$control .= "'" . $to_pick . "' , " unless ( $to_pick eq 'id' ) ; 
+         unless ( grep (/^$to_pick$/,@hides)) {
+            $control .= "'" . $to_pick . "' , " unless ( $to_pick eq 'id' );
+         }
 		}
 		for (1..3) { chop ( $control ) } ;
    	$control .= ']' ;
 	}
-
    return ( $ret , $msg , $control ) ; 
 }
+
+sub new {
+   my $invocant 			= shift ;    
+   $appConfig           = ${ shift @_ } || croak 'appConfig not set !!!' ;
+   $objModel            = ${ shift @_ } || croak 'objModel not set !!!' ; 
+   my $class            = ref ( $invocant ) || $invocant ; 
+   my $self             = {}; bless( $self, $class );    
+   return $self;
+}  
+
 
 1;
 

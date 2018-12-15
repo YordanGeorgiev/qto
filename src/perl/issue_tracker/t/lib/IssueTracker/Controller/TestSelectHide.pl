@@ -33,6 +33,7 @@ for my $table ( @tables ) {
    $url = "/$db_name" . '/select/' . $table . $url_params ; 
    $tm = "start test a response with only a single column hide for : $url" ; 
    $res = $ua->get($url )->result->json ; 
+   p $res ; 
    ok ( $res->{'ret'} == 200 , $tm ) ; 	
   
    # feature-guid: 83fa6b81-544a-4d1c-b62b-c2628fbcc172

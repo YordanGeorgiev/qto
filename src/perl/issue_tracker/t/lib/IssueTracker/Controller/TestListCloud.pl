@@ -20,18 +20,22 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
   
    $tm = ' when providing a non-existing db the http response code should be 400 ' ; 
    my $db_name = 'non_existent_db' ; 
-   $url = '/' . $db_name . '/list/some-table' ; 
-   $t->get_ok($url)
-      ->status_is(400 , $tm )
-   ;
+   $url = '/' . $db_name . '/list/some-table?as=cloud' ; 
+   $t->get_ok($url)->status_is(400 , $tm ) ;
 
-   $url = '/non_existent_db/list/monthly_issues' ; 
+   $url = '/non_existent_db/list/monthly_issues?as=cloud' ; 
    $tm = ' the error msg should be diplayed in the err_msg label of the page ' ; 
    ok ( $t->get_ok($url)->content_type_is('text/html;charset=UTF-8') , $tm ) ; 
-   # $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
-   # $exp_txt = 'cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
-   # ok ( $t->ua->get($url)->result->body eq $exp_txt , $tm ) ; 
-   ; 
+   $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
+   $exp_txt = 'cannot connect to the "non_existent_db"' ; 
+   #p $dom ; 
+#  $t->ua->get(
+#     $url => sub {
+#     my ($ua, $tx) = @_;
+#     p $tx->result->body
+#   });
+#   Mojo::IOLoop->start unless Mojo::IOLoop->is_running;
+   ok ( $t->get_ok($url)->status_is(400)->content_like(qr/$exp_txt/) , $tm ) ; 
 
    $db_name= $appConfig->{ 'postgres_db_name' } ; 
    $url = '/' . $db_name . '/select-tables' ; 
@@ -70,30 +74,22 @@ for my $table_name ( @list ) {
       $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
       $exp_txt = '' ; 
       ok ( $dom->at('#spn_msg')->text eq $exp_txt , $tm ) ; 
-      ; 
    }
 }
 
    $tm = 'handle error on non-existent db ' ; 
-	$url = '/non_existent_db/list/some_table&as=lbls' ; 
+	$url = '/non_existent_db/list/some_table?as=cloud' ; 
    $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
 
    $exp_txt = 'cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
    $tm = " a text content type response is expected " ; 
    ok ( $t->get_ok($url)->content_type_is('text/html;charset=UTF-8') , $tm ) ; 
-   # ok ( $dom->at('#spn_err_msg')->text eq $exp_txt , $tm ) ; 
+   ok ( $dom->at('#spn_err_msg')->text eq $exp_txt , $tm ) ; 
 
    $db_name= $appConfig->{ 'postgres_db_name' } ; 
    $tm = 'handle error on non-existent table' ; 
 	$url = '/' . $db_name . '/list/non_existent_table?as=lbls' ; 
    $dom = Mojo::DOM->new($t->ua->get($url)->result->body); 
-
-   # p $t->ua->get($url)->result->body ; 
-   # this needs to be asyncrounous with using client code as well ...
-   # $exp_txt = "the table non_existent_table does not exist in the " . $db_name . " database" ; 
-   # ok ( $dom->at('#spn_err_msg')->text eq $exp_txt , $tm ) ; 
-
-
 
 
 done_testing();

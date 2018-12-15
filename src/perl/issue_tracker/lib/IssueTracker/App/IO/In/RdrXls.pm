@@ -87,10 +87,10 @@ sub doReadXlsFileToHsr3 {
       my $MinCol = $worksheet->{'MinCol'};
       my $MaxCol = $worksheet->{'MaxCol'};
 
-      #debug print "MinCol::$MinCol , MaxCol::$MaxCol \n" ;
+      #debug rint "MinCol::$MinCol , MaxCol::$MaxCol \n" ;
       my $col_num = 0;
 
-      #debug print "row_num:: $row_num \n" ;
+      #debug rint "row_num:: $row_num \n" ;
       for my $col ($MinCol .. $MaxCol) {
         # print "col_num:: $col_num \n" ;
         my $cell       = $worksheet->{'Cells'}[$row][$col];
@@ -115,9 +115,9 @@ sub doReadXlsFileToHsr3 {
           # $token = $cell->{'Val'} ;
           my $encoding = $cell->encoding();
 
-          # debug print "token is :: " . $token . "\n" ;
-          # debug print "encoding is :: " . $encoding . "\n" ;
-          # debug print "is_utf8 " . is_utf8 ( $token ) ;
+          # debug rint "token is :: " . $token . "\n" ;
+          # debug rint "encoding is :: " . $encoding . "\n" ;
+          # debug rint "is_utf8 " . is_utf8 ( $token ) ;
           # p($token);
 
           # and this is one of those wtf moments ?!
@@ -173,7 +173,7 @@ sub doInitialize {
 
   my $self = shift;
 
-  #debug print "ExcelHandler::doInitialize appConfig : " . p($appConfig );
+  #debug rint "ExcelHandler::doInitialize appConfig : " . p($appConfig );
   $objLogger          = 'IssueTracker::App::Utils::Logger'->new(\$appConfig);
   $ProductInstanceDir = $appConfig->{'ProductInstanceDir'};
 }

@@ -4,54 +4,51 @@ package IssueTracker::Controller::PageFactory ;
    use Carp ; 
 	use Data::Printer ; 
 
-   use IssueTracker::Controller::ListCloud ; 
    use IssueTracker::Controller::ListGrid ; 
-   use IssueTracker::Controller::SearchGrid ; 
    use IssueTracker::Controller::ListLabels ; 
-   use IssueTracker::Controller::ListReadOnlyGrid ; 
+   use IssueTracker::Controller::ListCloud ; 
    use IssueTracker::Controller::ListPrintTable ; 
+   use IssueTracker::Controller::SearchGrid ; 
 
-	our $appConfig 		= {} ; 
-	our $objModel        = {} ; 
-   our $ui_type         = 'page/list-grid' ; 
+	our $appConfig 		   = {} ; 
+	our $objModel           = {} ; 
+   our $ui_type            = 'page/list-grid' ; 
 
-
-	sub doInstantiate {
+   
+   # objPageFactory->doInit
+   # 
+	sub doSpawn {
 
 		my $self 			   = shift ; 	
 		my $ui_type			   = shift // $ui_type ; 
 		my @args 			   = ( @_ ) ; 
 
 		my $package_file     = () ; 
-		my $objWtrControl    = () ;
+		my $objPageBuilder   = () ;
 
 		if ( $ui_type eq 'page/list-labels' ) {
 		   $package_file     = "IssueTracker/Controller/ListLabels.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListLabels" ; 
+		   $objPageBuilder   = "IssueTracker::Controller::ListLabels" ; 
 		}
 		elsif ( $ui_type eq 'page/list-cloud' ) {
 		   $package_file     = "IssueTracker/Controller/ListCloud.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListCloud" ; 
-		}
-		elsif ( $ui_type eq 'page/list-labels' ) {
-		   $package_file     = "IssueTracker/Controller/ListLabels.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListLabels" ; 
-		}
-		elsif ( $ui_type eq 'page/list-rgrid' ) {
-		   $package_file     = "IssueTracker/Controller/ListReadOnlyGrid.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListReadOnlyGrid" ; 
+		   $objPageBuilder   = "IssueTracker::Controller::ListCloud" ; 
 		}
 		elsif ( $ui_type eq 'page/list-grid' ) {
 		   $package_file     = "IssueTracker/Controller/ListGrid.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListGrid" ; 
+		   $objPageBuilder   = "IssueTracker::Controller::ListGrid" ; 
 		}
 		elsif ( $ui_type eq 'page/list-print-table' ) {
 		   $package_file     = "IssueTracker/Controller/ListPrintTable.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::ListPrintTable" ; 
+		   $objPageBuilder   = "IssueTracker::Controller::ListPrintTable" ; 
 		}
 		elsif ( $ui_type eq 'page/srch-grid' ) {
 		   $package_file     = "IssueTracker/Controller/SearchGrid.pm" ; 
-		   $objWtrControl    = "IssueTracker::Controller::SearchGrid" ; 
+		   $objPageBuilder   = "IssueTracker::Controller::SearchGrid" ; 
+		}
+		elsif ( $ui_type eq 'page/view-doc' ) {
+		   $package_file     = "IssueTracker/Controller/ViewDoc.pm" ; 
+		   $objPageBuilder   = "IssueTracker::Controller::ViewDoc" ; 
 		}
 		else {
 	      croak "ui_type : $ui_type is not implemented !!!" ; 	
@@ -59,23 +56,23 @@ package IssueTracker::Controller::PageFactory ;
 
 		require $package_file;
 
-		return $objWtrControl->new( \$appConfig , \$objModel , @args);
+		return $objPageBuilder->new( \$appConfig , \$objModel , @args);
 	}
 
 
 	sub new {
 
 		my $invocant 			= shift ;    
-		$appConfig           = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-		$objModel            = ${ shift @_ } || croak 'missing objModel !!!' ; 
+		$appConfig           = ${ shift @_ } || croak 'appConfig not set !!!' ; 
+		$objModel            = ${ shift @_ } || croak 'objModel not set !!!' ; 
       my $class            = ref ( $invocant ) || $invocant ; 
 		my $self             = {}; bless( $self, $class );   
-      $self                = $self->doInitialize() ; 
+      $self                = $self->doInit() ; 
 		return $self;
 	}  
 
 
-   sub doInitialize {
+   sub doInit {
       my $self = shift ; 
 
       %$self = (
@@ -84,6 +81,7 @@ package IssueTracker::Controller::PageFactory ;
 
       return $self ; 
 	}	
+
 
 1;
 

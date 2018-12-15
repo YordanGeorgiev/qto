@@ -52,8 +52,6 @@
 
             return axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
             .then(response => { 
-               // console.log ( response )
-               // console.log ( "stop response ")
                return response ; 
             })
             .catch(function(error) {
@@ -63,6 +61,7 @@
          }
          , generatePageSize: function (pgSize) {
                var curi = window.location.href ; 
+               if ( curi.indexOf("?") === -1 ) { curi = curi + '?' }
                if ( typeof pgSize === 'undefined' ) { pgSize = 7 }
                if ( curi.indexOf("page-size=") === -1 ) {
                   return curi + "&page-size=" + pgSize ; 
@@ -156,13 +155,13 @@
                   this.fetchServerSideDataToUI(url_params); 
                   var queryStr = ""
                   for(var kv of url_params.entries()) { queryStr = queryStr + kv[0]+ '='+ kv[1] + '&'; }
-                  var newUri = window.location.href.split('?')[0] + '?' + queryStr.slice(0, - 1)
-                  newUri = newUri.replace(/&oa=([a-zA-Z_]+)/gi , "") 
-                  newUri = newUri.replace(/&od=([a-zA-Z_]+)/gi , "") 
-                  newUri = newUri.replace(/&with=([a-zA-Z_]+)/gi , "") 
-                  newUri = newUri.replace(/&like-by=([a-zA-Z_]+)/gi , "") 
-                  newUri = newUri.replace(/&like-val=([a-zA-Z_]+)/gi , "") 
-                  window.location.href = newUri
+                  var uri = window.location.href.split('?')[0] + '?' + queryStr.slice(0, - 1)
+                  uri = uri.replace(/([&]{0,1}oa=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  uri = uri.replace(/([&]{0,1}od=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  uri = uri.replace(/([&]{0,1}with=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  uri = uri.replace(/([&]{0,1}like-by=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  uri = uri.replace(/([&]{0,1}like-val=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  window.location.href = uri // and redirect !!!
                } else {
                   var msg = result.toString(); 
                   msg = msg + ". Somebody was faster than you in the second you clicked !"
@@ -181,8 +180,7 @@
             var col = arr[0]
             var dbid = arr[1]
             var ret = 1
-         
-            if ( content.trim() === "" ) { content = "null" } //empty cell is treated as null
+            content = ( content == "" ? "null" : content ) //empty cell is treated as null
             
             axios.post('/<%= $db =%>/update/<%= $item =%>', {
                   attribute: col ,
@@ -191,15 +189,16 @@
             })
             .then( 
                response => {
-                  document.getElementById(id).innerHTML= content
+                  content = ( content == "null" ? "" : content )
                   newCntIndx = this.gridData.findIndex(obj => obj.id == dbid);
                   this.gridData[newCntIndx][col] = content; // it-180920075303 , it-181011195040 !!!
                }
             )
             .catch(function (error) {
-               document.getElementById(id).value= oldValue
+               document.getElementById(id).value = (oldValue == "null" ? "" : oldValue)
                if (typeof error !== undefined ) {
                  var errMsg = error.response.data.msg
+                 console.error ( error.response.data.msg )
                  setMsgVisuals(errMsg);
                }
             });

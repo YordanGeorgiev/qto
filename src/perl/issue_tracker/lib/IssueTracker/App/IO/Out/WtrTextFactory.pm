@@ -18,7 +18,7 @@ package IssueTracker::App::IO::Out::WtrTextFactory ;
 	# -----------------------------------------------------------------------------
 	# fabricates different WtrText object 
 	# -----------------------------------------------------------------------------
-	sub doInstantiate {
+	sub doInit {
 
 		my $self 			= shift ; 	
 		my $table			= shift // $table ; # the default is 'daily'
@@ -35,7 +35,7 @@ package IssueTracker::App::IO::Out::WtrTextFactory ;
 		return $objWtrText->new( \$appConfig , $table , @args);
 
 	}
-	# eof sub doInstantiate
+	# eof sub doInit
 	
 
    #

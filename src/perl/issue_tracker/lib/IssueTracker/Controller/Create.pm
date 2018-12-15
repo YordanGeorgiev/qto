@@ -1,6 +1,10 @@
 package IssueTracker::Controller::Create ; 
 use strict ; use warnings ; 
-use Mojo::Base 'Mojolicious::Controller';
+
+require Exporter; our @ISA = qw(Exporter Mojo::Base IssueTracker::Controller::BaseController);
+our $AUTOLOAD =();
+use AutoLoader;
+use parent qw(IssueTracker::Controller::BaseController);
 
 use Data::Printer ; 
 use Data::Dumper; 
@@ -10,14 +14,14 @@ use JSON;
 use IssueTracker::App::Db::Out::WtrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlParams ; 
 
 our $module_trace   = 0 ;
 our $appConfig      = {};
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgre';
 
-
+#
 # --------------------------------------------------------
 # create all the rows from db by passed db and table name
 # --------------------------------------------------------
@@ -27,22 +31,25 @@ sub doCreateBySoleId {
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
    my $rdbms_type       = 'postgres';
-   my $objRdrUrlParams  = {} ; 
+   my $objCnrUrlParams  = {} ; 
    my $objWtrDbsFactory = {} ; 
    my $objWtrDb         = {} ; 
-   my $ret = 0;
-   my $msg = 'unknown error during create item';
-   my $hsr2 = {};
+   my $ret              = 0;
+   my $msg              = 'unknown error during create item';
+   my $hsr2             = {};
 
    my $json = $self->req->body;
    my $perl_hash = decode_json($json) ; 
+
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
 
    $appConfig		= $self->app->get('AppConfig');
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
 
-   $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg ) = $objRdrUrlParams->doSetCreateUrlParams(\$objModel, $perl_hash ) ; 
+   $objCnrUrlParams = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
+   ( $ret , $msg ) = $objCnrUrlParams->doSetCreateUrlParams(\$objModel, $perl_hash ) ; 
    
    if ( $ret != 0 ) {
       $self->res->code(400);
@@ -55,8 +62,8 @@ sub doCreateBySoleId {
    } 
 
    $objWtrDbsFactory
-      = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
-   $objWtrDb = $objWtrDbsFactory->doInstantiate("$rdbms_type");
+         = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
+   $objWtrDb = $objWtrDbsFactory->doInit("$rdbms_type");
    ($ret, $msg) = $objWtrDb->doCreateBySoleId(\$objModel, $item);
 
    $self->res->headers->accept_charset('UTF-8');
@@ -111,4 +118,3 @@ sub doCreateBySoleId {
 
 __END__
 
-# feature-guid: 

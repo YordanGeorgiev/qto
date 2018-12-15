@@ -127,8 +127,8 @@ sub doConvertStrToHashRef {
       my $category_item_count = 0;
       foreach my $item (@arr_items) {
 
-        # debug print "\$item : $item \n" ;
-        # debug print "\$i : $i \n" ;
+        # debug rint "\$item : $item \n" ;
+        # debug rint "\$i : $i \n" ;
         next unless $item;
 
         # which creates the duplicates

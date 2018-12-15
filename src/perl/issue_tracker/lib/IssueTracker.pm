@@ -82,7 +82,7 @@ sub doLoadAppConfig {
 
 	$appConfig->{'proj_instance_dir'} = $appConfig->{'ProductInstanceDir'} unless ( exists $appConfig->{'proj_instance_dir'} );
    my $currentShortHash = `git rev-parse --short HEAD` ; chomp($currentShortHash);
-   $appConfig->{ 'ShortCommitHash' } = $currentShortHash || "" ; 
+   $appConfig->{ 'GitShortHash' } = $currentShortHash || "" ; 
 
    p($appConfig) ; 
    $self->set('AppConfig' , $appConfig );
@@ -116,6 +116,7 @@ sub doRegisterPlugins {
    
    $self->plugin('PODRenderer');
    $self->plugin('BasicAuthPlus');
+   $self->plugin('RenderFile');
 }
 
 #
@@ -254,6 +255,12 @@ sub doSetRoutes {
    , action       => 'doSelectItems'
    );
    
+   # http://host-name:3001/dev_issue_tracker/select/monthly_issues/1
+   $r->get('/:db/hselect/:item')->to(
+     controller   => 'HSelect'
+   , action       => 'doHSelectItems'
+   );
+   
    # http://host-name:3001/dev_issue_tracker/create/monthly_issues?id=123
    $r->post('/:db/create/:item')->to(
      controller   => 'Create'
@@ -272,17 +279,32 @@ sub doSetRoutes {
    , action       => 'doUpdateItemBySingleCol'
    );
 
-   # http://host-name:3001/dev_issue_tracker/select/monthly_issues
+   $r->get('/:db/select-meta')->to(
+     controller   => 'Select'
+   , action       => 'doSelectMeta'
+   );
+
    $r->get('/:db/select-meta/:item')->to(
      controller   => 'Select'
    , action       => 'doSelectMeta'
    );
    
-   
    # http://host-name:3001/dev_issue_tracker/select/monthly_issues
    $r->get('/:db/list/:item')->to(
      controller   => 'List'
    , action       => 'doListItems'
+   );
+
+   # http://host-name:3001/dev_issue_tracker/export/monthly_issues?as=xls
+   $r->get('/:db/export/:item')->to(
+     controller   => 'Export'
+   , action       => 'doExportItems'
+   );
+   
+   # http://host-name:3001/dev_issue_tracker/select/monthly_issues
+   $r->get('/:db/view/:item')->to(
+     controller   => 'View'
+   , action       => 'doViewItems'
    );
 
    $r->any('/:db/*')->to(

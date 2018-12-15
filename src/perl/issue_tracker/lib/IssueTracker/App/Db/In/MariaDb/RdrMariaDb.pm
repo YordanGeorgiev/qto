@@ -33,12 +33,12 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       my $self             = shift ; 
 
       my $msg              = q{} ;         
-      my $ret              = 1 ;          # this is the return value from this method 
+      my $ret              = 1 ;          #  the return value from this method 
       my $debug_msg        = q{} ; 
-      my $hsr              = {} ;         # this is meta hash describing the data hash ^^
-      my $sth              = {} ;         # this is the statement handle
-      my $dbh              = {} ;         # this is the database handle
-      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      my $hsr              = {} ;         #  meta hash describing the data hash ^^
+      my $sth              = {} ;         #  the statement handle
+      my $dbh              = {} ;         #  the database handle
+      my $str_sql          = q{} ;        #  the sql string to use for the query
       
       $str_sql = " 
       SELECT  
@@ -54,12 +54,8 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       ;
       " ; 
 
-      # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n mysql_db_name: $mysql_db_name \n mysql_host: $mysql_host " ; 
-      $debug_msg .= "\n mysql_user: $mysql_user \n mysql_user_pw $mysql_user_pw \n" ; 
-      # $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-     
-      $dbh = DBI->connect("dbi:mysql:database=$mysql_db_name;host=$mysql_host;port=$mysql_port", "$mysql_user", "$mysql_user_pw" , {
+      $dbh = DBI->connect("dbi:mysql:database=$mysql_db_name;host=$mysql_host;port=$mysql_port", 
+         "$mysql_user", "$mysql_user_pw" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
@@ -90,7 +86,6 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       
       return ( $ret , $msg , $hsr ) ; 	
    }
-   # eof sub doSelectTablesList
 
 
 
@@ -106,12 +101,12 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       my $guid             = shift ; 
       
       my $msg              = q{} ;         
-      my $ret              = 1 ;          # this is the return value from this method 
+      my $ret              = 1 ;          #  the return value from this method 
       my $debug_msg        = q{} ; 
-      my $hsr              = {} ;         # this is hash ref of hash refs to populate with
-      my $sth              = {} ;         # this is the statement handle
-      my $dbh              = {} ;         # this is the database handle
-      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      my $hsr              = {} ;         #  hash ref of hash refs to populate with
+      my $sth              = {} ;         #  the statement handle
+      my $dbh              = {} ;         #  the database handle
+      my $str_sql          = q{} ;        #  the sql string to use for the query
 
       $str_sql = 
          " SELECT 
@@ -156,8 +151,6 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       
       return ( $ret , $msg , $hsr ) ; 	
    }
-   # eof sub doSelectItemByGuid
-
 
 
    sub doSelectTablesColumnList {
@@ -168,12 +161,12 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
 
 
       my $msg              = q{} ;         
-      my $ret              = 1 ;          # this is the return value from this method 
+      my $ret              = 1 ;          #  the return value from this method 
       my $debug_msg        = q{} ; 
-      my $mhsr             = {} ;         # this is meta hash describing the data hash ^^
-      my $sth              = {} ;         # this is the statement handle
-      my $dbh              = {} ;         # this is the database handle
-      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      my $mhsr             = {} ;         #  meta hash describing the data hash ^^
+      my $sth              = {} ;         #  the statement handle
+      my $dbh              = {} ;         #  the database handle
+      my $str_sql          = q{} ;        #  the sql string to use for the query
       
       $str_sql = " 
          SELECT 
@@ -226,7 +219,6 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       $objModel->set('hs_headers' , $mhsr ) ; 
       return ( $ret , $msg , $mhsr ) ; 	
    }
-   # eof sub doSelectTablesColumnList
 
 
 
@@ -242,15 +234,15 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       my $query_str        = shift || '*' ;  # the table to get the data from  
    
 
-      $objLogger->doLogDebugMsg ( "doSelectTableIntoHashRef table: $table " ) ; 
+      $objLogger->doLogDebugMsg ( "doSelect table: $table " ) ; 
 
       my $msg              = q{} ;         
-      my $ret              = 1 ;          # this is the return value from this method 
+      my $ret              = 1 ;          #  the return value from this method 
       my $debug_msg        = q{} ; 
-      my $hsr              = {} ;         # this is hash ref of hash refs to populate with
-      my $sth              = {} ;         # this is the statement handle
-      my $dbh              = {} ;         # this is the database handle
-      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      my $hsr              = {} ;         #  hash ref of hash refs to populate with
+      my $sth              = {} ;         #  the statement handle
+      my $dbh              = {} ;         #  the database handle
+      my $str_sql          = q{} ;        #  the sql string to use for the query
 
 
       $str_sql = 
@@ -262,7 +254,8 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       " ; 
 
      
-      $dbh = DBI->connect("dbi:mysql:database=$mysql_db_name;host=$mysql_host;port=$mysql_port", "$mysql_user", "$mysql_user_pw" , {
+      $dbh = DBI->connect("dbi:mysql:database=$mysql_db_name;host=$mysql_host;port=$mysql_port", 
+                  "$mysql_user", "$mysql_user_pw" , {
                  'RaiseError'          => 1
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
@@ -274,16 +267,12 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
 
-
-
 		my @query_output = () ; 
       # LOOP THROUGH RESULTS
       binmode(STDOUT, ':utf8');
       while ( my $row = $sth->fetchrow_hashref ){
           my %hash = %$row ;
-          #say "UTF8 flag is turned on in the STRING $key" if is_utf8( $hash{$key} );
           push @query_output, $row
-          #if is_utf8( $hash{$key} );
       } #eof while
       
 		$msg = DBI->errstr ; 
@@ -306,46 +295,34 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
       return ( $ret , $msg , \@query_output ) ; 	
    
 	}
-   # eof sub doSearchConfigurationEntries
 
 
-
-	
    #
 	# -----------------------------------------------------------------------------
 	# the constructor 
 	# -----------------------------------------------------------------------------
 	sub new {
 
-		my $invocant 			= shift ;    
+		my $invocant 	= shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
       $objModel      = ${ shift @_ } ; 	
-      #p($appConfig ) ; 
-
-      # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
-
-		my $self = {};        # Anonymous hash reference holds instance attributes
-		bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize() ; 
+		my $self = {};  bless( $self, $class ); 
+      $self = $self->doInit() ; 
 		return $self;
 	}  
-	#eof const
 	
    #
 	# --------------------------------------------------------
 	# intializes this object 
 	# --------------------------------------------------------
-   sub doInitialize {
+   sub doInit {
       my $self = shift ; 
 
       %$self = (
            appConfig => $appConfig
       );
 
-		# print "PostgreReader::doInitialize appConfig : " . p($appConfig );
-      # debug sleep 6 ; 
-		
 		$mysql_db_name 	   = $ENV{ 'mysql_db_name' } || $appConfig->{'mysql_db_name'}     || croak "mysql db name undef !!!" ; 
 		$mysql_host 			= $ENV{ 'mysql_host' } || $appConfig->{'mysql_host'} 		|| 'localhost' ;
 		$mysql_port 			= $ENV{ 'mysql_port' } || $appConfig->{'mysql_port'} 		|| '13306' ; 
@@ -357,7 +334,6 @@ package IssueTracker::App::Db::In::MariaDb::RdrMariaDb ;
 
       return $self ; 
 	}	
-	#eof sub doInitialize
    
 
 

@@ -12,7 +12,7 @@ use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
 use IssueTracker::App::UI::WtrUIFactory ; 
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlParams ; 
 
 our $module_trace    = 0 ; 
 our $appConfig       = {};
@@ -48,7 +48,7 @@ sub doBuildListControl {
    my $objWtrUIFactory 	= {} ; 
    my $objUIBuilder 		= {} ; 
 
-   ( $ret , $msg , $mhsr2 ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
+   ( $ret , $msg , $mhsr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 		
    my $to_picks   = $objModel->get('list.web-action.pick') ; 
@@ -76,7 +76,7 @@ sub doBuildListControl {
    	$control .= ']' ;
 	}
 
-	# debug print "control is $control \n" ; 
+	# debug rint "control is $control \n" ; 
    return ( $ret , $msg , $control ) ; 
 }
 
