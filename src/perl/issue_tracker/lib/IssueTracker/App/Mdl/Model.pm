@@ -33,12 +33,12 @@ package IssueTracker::App::Mdl::Model ;
       my $c             = 0 ; 
       my $ret           = 1 ; 
       my $cols = $appConfig->{ "$db" . '.meta' } ; 
-      my @hides = split(/,/,$self->get('select.web-action.hide'));
+      my @hides = split(/,/,$self->get('select.web-action.hide')) if ( defined $self->get('select.web-action.hide') );
 
 
       foreach my $key ( keys %$cols ) {
          my $row = $cols->{ $key } ; 
-         next if ( grep ( /^$row->{ 'attribute_name' }$/, @hides )) ;
+         next if ( defined $self->get('select.web-action.hide') && grep ( /^$row->{ 'attribute_name' }$/, @hides )) ;
          next unless $table eq $row->{ 'table_name' } ; 
          $mhr2->{ $c } = $row ;
          $c++ ; 
@@ -75,9 +75,9 @@ package IssueTracker::App::Mdl::Model ;
          next if ( $row->{ 'attribute_name' } eq 'guid' or $row->{ 'attribute_name' } eq 'id' );
          push ( @cols , $row->{ 'attribute_name' } );
       }
-      # debug print "START Model.pm : \@cols : "  ;
+      # debug rint "START Model.pm : \@cols : "  ;
       # debug foreach my $col ( @cols ) { print "col: $col \n"; } ;  
-      # debug print "STOP  Model.pm : \@cols : "  ;
+      # debug rint "STOP  Model.pm : \@cols : "  ;
       $ret = 0 ; 
       $msg = '' ; 
       return ( $ret , $msg , \@cols);  

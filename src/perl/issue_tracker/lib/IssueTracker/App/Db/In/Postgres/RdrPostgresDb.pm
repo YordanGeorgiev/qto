@@ -68,7 +68,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset ;" ; 
       
-      # debug print $str_sql ;  
+      # debug rint $str_sql ;  
 
       $ret = 0 ; 
       eval { 
@@ -183,9 +183,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       return ( 0 , "" , "")  unless ( defined ( $ops ) ); 
       return ( 0 , "" , "")  unless ( defined ( $vals ) ); 
 
-      # debug print "from RdrPostgresDb.pm 120 \@$cols @$cols \n" ; 
-      # debug print "from RdrPostgresDb.pm \@$ops @$ops \n" ; 
-      # debug print "from RdrPostgresDb.pm \@$vals @$vals \n" ; 
+      # debug rint "from RdrPostgresDb.pm 120 \@$cols @$cols \n" ; 
+      # debug rint "from RdrPostgresDb.pm \@$ops @$ops \n" ; 
+      # debug rint "from RdrPostgresDb.pm \@$vals @$vals \n" ; 
       #
       if ( @$cols and @$ops and @$vals) {
          
@@ -254,7 +254,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 				$sql .= ' AND ' ; 
          }
 
-         # debug print "from RdrPostgresDb.pm 186 sql : $sql \n" ; 
+         # debug rint "from RdrPostgresDb.pm 186 sql : $sql \n" ; 
 
 			for (1..4) { chop ( $sql) } ;
 			return ( 0 , "" , $sql ) ; 
@@ -314,7 +314,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
-      # debug print "$str_sql \n stop RdrPostgresDb.pm" ; 
+      # debug rint "$str_sql \n stop RdrPostgresDb.pm" ; 
 
       $sth->execute()
             or $objLogger->error ( "$DBI::errstr" ) ;
@@ -521,15 +521,15 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          ORDER BY rowid
          ;      
          " ; 
-      # debug print "RdrPostgresDb.pm :: doLoadProjDbMetaData $str_sql \n STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
+      # debug rint "RdrPostgresDb.pm :: doLoadProjDbMetaData $str_sql \n STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
       
       eval { 
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ; 
          $mhsr2 = $sth->fetchall_hashref( 'rowid' ) ; 
-         # debug print "RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;
+         # debug rint "RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;
          # debug p $mhsr2 ; 
-         # debug print "STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
+         # debug rint "STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
       };
       if ( $@ or !scalar(%$mhsr2)) { 
          $msg = " failed to get the project database: " . $db . " meta data ! " ; 
@@ -582,7 +582,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 			ORDER BY t.relname , a.attnum
 			;
 		" ; 
-      # debug print "SQL: $str_sql \n STOP RdrPostgresDb.pm" ;   
+      # debug rint "SQL: $str_sql \n STOP RdrPostgresDb.pm" ;   
       # chk: https://stackoverflow.com/a/451454/65706 
       eval { 
          $sth = $dbh->prepare($str_sql);  
@@ -757,7 +757,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       return ( 400 , $msg , undef ) unless ( $ret == 0 );
       # old my $columns_to_select = "*" ; # $objModel->doChkIfColumnExists ( $db , $table , $col );
       my $columns_to_select = 'guid,id,' . join(',' , reverse @$cols) ; 
-      # debug print "columns_to_select: $columns_to_select \n" ; 
+      # debug rint "columns_to_select: $columns_to_select \n" ; 
 
       if ( defined ( $objModel->get('select.web-action.pick') ) ) {
          $columns_to_select = " guid,id" ;
@@ -775,7 +775,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          my @cols = split (',' , $lst_columns_to_hide ) ;
          foreach my $col ( @cols ) { 
             $columns_to_select =~ s/,$col//g;
-            print "\$columns_to_select : $columns_to_select \n" ; 
             my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col );
       	   return ( 404 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
          }
@@ -852,7 +851,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
    
-      # print "from RdrPostgresDb.pm 855: $str_sql \n" ; 
+      # debug rint "from RdrPostgresDb.pm 855: $str_sql \n" ; 
 
       $ret = 0 ; 
       eval { 

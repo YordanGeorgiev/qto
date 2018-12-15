@@ -61,7 +61,7 @@ sub doExportItems {
    ( $ret , $msg , $refObjModel)  = $self->doSetRequestModelData( $db , $item ) ; 
    my $objModel = $$refObjModel ; 
 #
-#	# debug print "Export.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
+#	# debug rint "Export.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 #   $as = $self->req->query_params->param('as') || $as ; # decide which type of Export page to build
 #   
    $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;

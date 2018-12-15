@@ -158,7 +158,7 @@ package IssueTracker::App::IO::Out::WtrXls ;
            appConfig => $appConfig
        );
 
-      #debug print "WtrXls::doInitialize appConfig : " . p($appConfig );
+      #debug rint "WtrXls::doInitialize appConfig : " . p($appConfig );
       $ProductInstanceDir   = $appConfig->{ 'ProductInstanceDir' } ; 
 
 	   $objWtrDirs       = 'IssueTracker::App::IO::Out::WtrDirs'->new ( \$appConfig ) ; 

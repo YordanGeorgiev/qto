@@ -44,7 +44,7 @@ package IssueTracker::App::Utils::Timer ;
 
 	sub DESTROY {
 		my $self = shift;
-		#debug print "the DESTRUCTOR is called  \n" ; 
+		#debug rint "the DESTRUCTOR is called  \n" ; 
 		return ; 
 	} 
 

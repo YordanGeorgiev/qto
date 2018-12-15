@@ -69,7 +69,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       " ; 
       eval {
          $sth = $dbh->prepare($str_sql);  
-         #debug print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
+         #debug rint "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
 
          $sth->execute() or print STDERR "$DBI::errstr" ; 
       } or $ret = 500 ; # Internal Server error
@@ -134,7 +134,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          " ; 
          eval {
             $sth = $dbh->prepare($str_sql);  
-            # debug print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
+            # debug rint "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
             $sth->execute() ;
             last ; 
          } or next ; 
@@ -212,7 +212,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       " ; 
       eval {
          $sth = $dbh->prepare($str_sql);  
-         #debug print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
+         #debug rint "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
 
          $sth->execute() or print STDERR "$DBI::errstr" ; 
       } or $ret = 500 ; # Internal Server error
