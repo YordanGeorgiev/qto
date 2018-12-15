@@ -117,9 +117,9 @@ sub doSetWithUrlParams {
          }
       }
 
-      # debug print "from CnrUrlParams.pm 47 \@with_cols : @with_cols \n" ; 
-      # debug print "from CnrUrlParams.pm 47 \@with_ops : @with_ops \n" ; 
-      # debug print "from CnrUrlParams.pm 47 \@with_vals : @with_vals \n" ; 
+      # debug rint "from CnrUrlParams.pm 47 \@with_cols : @with_cols \n" ; 
+      # debug rint "from CnrUrlParams.pm 47 \@with_ops : @with_ops \n" ; 
+      # debug rint "from CnrUrlParams.pm 47 \@with_vals : @with_vals \n" ; 
 
       $objModel->set('select.web-action.with-cols' , \@with_cols ) ; 
       $objModel->set('select.web-action.with-ops' , \@with_ops ) ; 

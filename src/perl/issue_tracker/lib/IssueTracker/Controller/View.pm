@@ -34,7 +34,8 @@ sub doViewItems {
    my $msg              = '' ; 
    my $objModel         = {} ; 
    my $view_control     = '' ; 
-   
+   my $as               = 'doc' ; 
+
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMetaData( $db ) ;
 
@@ -70,7 +71,7 @@ sub doBuildViewPageType {
    $objPageBuilder                  = $objPageFactory->doSpawn( $ui_type );
    ( $ret , $msg , $view_control )  = $objPageBuilder->doBuildViewControl( $msg , \$objModel , $db , $item , $as ) ;
 
-   return ( $ret , $msg , $View_control ) ; 
+   return ( $ret , $msg , $view_control ) ; 
 
 }
 

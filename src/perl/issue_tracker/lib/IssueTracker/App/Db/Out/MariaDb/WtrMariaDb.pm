@@ -253,7 +253,6 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
       if ( $ret == 2 ) {
          $msg = DBI->errstr || 'null dbi-errstr on dbi connect' ;
          $objLogger->doLogErrorMsg ( $msg ) ;
-         print "SHOULD RETURN WITH ERROR !!!" ;
          return ( $ret , $msg ) ;
       } else {
          $msg = 'OK for connect ' ;
@@ -352,7 +351,6 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
          return ( $ret , $msg ) ; 
       } else {
          $msg = 'connect OK' ; 
-         print $msg . "\n" ; 
          $objLogger->doLogDebugMsg ( $msg ) ; 
       }
 
@@ -376,8 +374,7 @@ package IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ;
             if exists $hsr2->{ 0 }->{ $column_name } ; 
       } 
    
-      #print "$sql_str_insrt" ; 
-      #sleep 10 ; 
+      #debug rint "$sql_str_insrt" ; 
 
       for (1..3) { chop ( $sql_str_insrt) } ; 
       $sql_str_insrt	.= ')' ; 

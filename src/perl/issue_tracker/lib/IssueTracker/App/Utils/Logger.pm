@@ -88,7 +88,7 @@ if you don't export anything, such as for a purely object-oriented module.
 			$self->MkDir( "$LogDir" ) || cluck( " Cannot create the \$LogDir : $LogDir $! !!! " );
 		}
 
-		#debug print "The log file is " . $appConfig->{ 'LogFile' } ;
+		#debug rint "The log file is " . $appConfig->{ 'LogFile' } ;
 		$LogFile = $appConfig->{ 'LogFile' };
       croak unless $LogFile ; 
 
@@ -213,7 +213,7 @@ if you don't export anything, such as for a purely object-oriented module.
 
 		my $self = shift;
 
-		#debug print "%$self RunBeforeExit ! \n";
+		#debug rint "%$self RunBeforeExit ! \n";
 	}
 	#eof sub RunBeforeExit
 
@@ -224,7 +224,7 @@ if you don't export anything, such as for a purely object-oriented module.
 	sub DESTROY {
 		my $self = shift;
 
-		#debug print "the DESTRUCTOR is called  \n" ;
+		#debug rint "the DESTRUCTOR is called  \n" ;
 		$self->RunBeforeExit();
 		return;
 	}   

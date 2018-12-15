@@ -50,7 +50,7 @@ sub doListItems {
    my $list_control     = '' ; 
    my $refObjModel      = {} ; 
 
-	# debug print "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
+	# debug rint "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
    
    ( $ret , $msg , $refObjModel)  = $self->doSetRequestModelData( $item , $db ) ; 

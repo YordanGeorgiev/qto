@@ -76,7 +76,7 @@ sub doBuildListControl {
    	$control .= ']' ;
 	}
 
-	# debug print "control is $control \n" ; 
+	# debug rint "control is $control \n" ; 
    return ( $ret , $msg , $control ) ; 
 }
 

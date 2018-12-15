@@ -136,13 +136,13 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 
 	sub RunBeforeExit {
 		my $self = shift;
-		#debug print "%$self RunBeforeExit ! \n";
+		#debug rint "%$self RunBeforeExit ! \n";
 	}
 
 
 	sub DESTROY {
 		my $self = shift;
-		#debug print "the DESTRUCTOR is called  \n" ;
+		#debug rint "the DESTRUCTOR is called  \n" ;
 		$self->RunBeforeExit();
 		return;
 	}   

@@ -98,7 +98,7 @@ package IssueTracker::App::Utils::Initiator ;
 		my @DirParts = split( '/' , $my_absolute_path );
 		for ( my $count = 0; $count < $levels_up ; $count++ ){ 
 			pop @DirParts; 
-			#debug print "ok \@DirParts : @DirParts \n" ; 
+			#debug rint "ok \@DirParts : @DirParts \n" ; 
 		}
 		
 		return \@DirParts ; 
@@ -215,7 +215,7 @@ package IssueTracker::App::Utils::Initiator ;
 		$tokens [2] = $tokens [2] // '' ; 
 		$tokens [3] = $tokens [3] // '' ; 
 		$ProductVersion 	= $tokens[1] . '.' . $tokens[2] . '.' . $tokens[3] ; 
-		#debug print "\n\n ProductVersion : $ProductVersion " ; 
+		#debug rint "\n\n ProductVersion : $ProductVersion " ; 
 		
 		$appConfig->{ 'ProductVersion' } 		= $ProductVersion ; 
 		$self->{'AppConfig'} 				= $appConfig; 
@@ -242,7 +242,7 @@ package IssueTracker::App::Utils::Initiator ;
 		my @tokens = split /\./ , $ProductInstanceEnvironment ; 
 		# the type of this environment - dev , test , dev , fb , prod next_line_is_templatized
 		my $ProductType = $tokens[4] ; 
-		# debug print "\n\n ProductType : $ProductType " ; 
+		# debug rint "\n\n ProductType : $ProductType " ; 
 
 		$appConfig->{ 'ProductType' } 			= $ProductType ; 
 		$self->{ 'ProductType' } 			= $ProductType ; 
@@ -270,7 +270,7 @@ package IssueTracker::App::Utils::Initiator ;
 		# the Owner of this environment - dev , test , dev , fb , prod next_line_is_templatized
 		# The username of the person developin this environment 
 		$ProductOwner = $tokens[5] ; 
-		#debug print "\n\n ProductOwner : $ProductOwner " ; 
+		#debug rint "\n\n ProductOwner : $ProductOwner " ; 
 
 		$appConfig->{ 'ProductOwner' } 			= $ProductOwner ; 
 		$self->{'AppConfig'} 				= $appConfig; 
@@ -390,17 +390,17 @@ package IssueTracker::App::Utils::Initiator ;
 		# it just does not work under Windows ... 
 		return $file if ( $^O eq 'MSWin32' ) ; 
 
-		#debug print ( "undef file" ) unless ( $file ) ; 
-		#debug print ( "BEFORE untaint -- file: $file " ) ; 
+		#debug rint ( "undef file" ) unless ( $file ) ; 
+		#debug rint ( "BEFORE untaint -- file: $file " ) ; 
 		
 		unless ( $self->is_tainted ( $file ) ) {
 			
 			$file =~ /([\/_\-\@\w.]+)/ ;
-			#debug print "Initiator::untaint \$1 is $1 \n" ; 
+			#debug rint "Initiator::untaint \$1 is $1 \n" ; 
 			$file = $1; 			
 			#$dat should be now untainted
-			#debug print "file : $file is not tainted \n" ; 
-			#debug print ( "AFTER untaint -- file: $file " ) ; 
+			#debug rint "file : $file is not tainted \n" ; 
+			#debug rint ( "AFTER untaint -- file: $file " ) ; 
 			return $1 ; 
 		} else {
 			carp "Bad dat in file path: '$file'"; 	
