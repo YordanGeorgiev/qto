@@ -1,8 +1,12 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
-# ---
 src/perl/issue_tracker/t/lib/IssueTracker/App/benchmark_url.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/layouts/site.html.ep
+src/perl/issue_tracker/templates/web-actions/view.html.ep
+src/perl/issue_tracker/templates/pages/view-doc.html.ep
+src/perl/issue_tracker/lib/IssueTracker/Controller/View.pm
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestView.t
+src/perl/issue_tracker/templates/layouts/list.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/srch-grid.html.ep
 src/perl/issue_tracker/lib/IssueTracker.pm
@@ -42,7 +46,6 @@ src/perl/issue_tracker/public/themes/thme-blue/img/controls/trash-bin.png
 src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep
 src/perl/issue_tracker/public/lib/js/controls/jqcloud/jqcloud.min.js
-src/perl/issue_tracker/templates/controls/list-rgrid/list-rgrid.html.ep
 src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
 # ---
 src/perl/issue_tracker/public/poc/autocomplete
@@ -50,45 +53,38 @@ src/perl/issue_tracker/public/poc/autocomplete/searchbox-autocomplete.css
 src/perl/issue_tracker/public/poc/autocomplete/div-searchbox.js
 src/perl/issue_tracker/public/poc/autocomplete/autocomplete.html
 # ---
-src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/ListReadOnlyGrid.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/SearchGrid.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/ListPrintTable.pm
 # ---
-src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate.pm
+src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrListLabels.pm
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrJQCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToHsr2.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm
+src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/MojoPgWrapper.pm
 src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrUrlParams.pm
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListCloud.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListAsOutputType.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClientPOC1.pl
-src/perl/issue_tracker/t/lib/IssueTracker/TestClientSidePOC1.t
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListBySelenium.t
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCTestMojoRoleSelenium.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCSeleniumBrowser.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/CnrUrlParams.pm
 # ---
-src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-rgrid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/jqcloud.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/site.css
-src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/list-rgrid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/jqcloud.css
 #---
 src/perl/issue_tracker/lib/IssueTracker/Controller
+src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/Export.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/ListPrintTable.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/SearchGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Query.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Create.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Update.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Delete.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/HSelect.pm
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelect.t
 src/perl/issue_tracker/lib/IssueTracker/Controller/Search.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestQuery.pl
@@ -103,6 +99,15 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestDelete.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListCloud.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestAppLabel.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListAsOutputType.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClientPOC1.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListBySelenium.t
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCTestMojoRoleSelenium.pl
+src/perl/issue_tracker/t/lib/IssueTracker/TestClientSidePOC1.t
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCSeleniumBrowser.pl
 # --- 
 src/perl/issue_tracker/lib/Mojo/Chrome.pm
 src/perl/issue_tracker/lib/Test/Mojo/Role/Chrome.pm
@@ -128,6 +133,7 @@ src/perl/issue_tracker/t/TestDispatcher.pl
 src/perl/issue_tracker/t/TestModel.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrEnv.pm
 # ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
 # ---
@@ -154,7 +160,6 @@ doc/txt/issue-tracker/tests/run-mysql-scripts.test.txt
 src/bash/issue-tracker/helps/run-mysql-scripts.help.sh
 src/bash/issue-tracker/specs/run-mysql-scripts.spec.sh
 # --
-# ---
 src/bash/issue-tracker/bootstrap-issue-tracker.sh
 src/bash/issue-tracker/issue-tracker.sh
 src/bash/issue-tracker/test-issue-tracker.sh
@@ -321,14 +326,16 @@ src/sql/pgsql/dev_issue_tracker/15.create-table-skills.sql
 src/sql/pgsql/dev_issue_tracker/16.create-table-userstories.sql
 src/sql/pgsql/dev_issue_tracker/17.create-table-meta_tables.sql
 src/sql/pgsql/dev_issue_tracker/18.create-table-meta_columns.sql
+src/sql/pgsql/dev_issue_tracker/19.create-table-naming_conventions.sql
+src/sql/pgsql/dev_issue_tracker/20.create-table-goals.sql
+src/sql/pgsql/dev_issue_tracker/21.create-table-devops_guide.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/dev_issue_tracker/93.create-table-benchmarks.sql
 src/sql/pgsql/dev_issue_tracker/94.create-table-test_item.sql
-src/sql/pgsql/dev_issue_tracker/95.create-table-test_item_hierarchy.sql
+src/sql/pgsql/dev_issue_tracker/95.create-table-test_hierarchy_table.sql
 src/sql/pgsql/dev_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/dev_issue_tracker/97.create-table-test_create_table.sql
 src/sql/pgsql/dev_issue_tracker/98.create-table-test_update_table.sql
-src/sql/pgsql/dev_issue_tracker/99.create-table-test_hierarchy_table.sql
 src/sql/pgsql/tst_issue_tracker
 src/sql/pgsql/tst_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/tst_issue_tracker/00.functions.sql
@@ -349,14 +356,15 @@ src/sql/pgsql/tst_issue_tracker/15.create-table-skills.sql
 src/sql/pgsql/tst_issue_tracker/16.create-table-userstories.sql
 src/sql/pgsql/tst_issue_tracker/17.create-table-meta_tables.sql
 src/sql/pgsql/tst_issue_tracker/18.create-table-meta_columns.sql
+src/sql/pgsql/tst_issue_tracker/19.create-table-naming_conventions.sql
+src/sql/pgsql/tst_issue_tracker/20.create-table-goals.sql
+src/sql/pgsql/tst_issue_tracker/21.create-table-devops_guide.sql
 src/sql/pgsql/tst_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/tst_issue_tracker/93.create-table-benchmarks.sql
 src/sql/pgsql/tst_issue_tracker/94.create-table-test_item.sql
-src/sql/pgsql/tst_issue_tracker/95.create-table-test_item_hierarchy.sql
 src/sql/pgsql/tst_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/tst_issue_tracker/97.create-table-test_create_table.sql
 src/sql/pgsql/tst_issue_tracker/98.create-table-test_update_table.sql
-src/sql/pgsql/tst_issue_tracker/99.create-table-test_hierarchy_table.sql
 src/sql/pgsql/prd_issue_tracker
 src/sql/pgsql/prd_issue_tracker/00.create-db.pgsql
 src/sql/pgsql/prd_issue_tracker/00.functions.sql
@@ -376,18 +384,19 @@ src/sql/pgsql/prd_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/prd_issue_tracker/15.create-table-skills.sql
 src/sql/pgsql/prd_issue_tracker/16.create-table-userstories.sql
 src/sql/pgsql/prd_issue_tracker/17.create-table-meta_tables.sql
+src/sql/pgsql/prd_issue_tracker/21.create-table-devops_guide.sql
 src/sql/pgsql/prd_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/prd_issue_tracker/96.create-table-test_delete_table.sql
 src/sql/pgsql/prd_issue_tracker/97.create-table-test_create_table.sql
 src/sql/pgsql/prd_issue_tracker/98.create-table-test_update_table.sql
-src/sql/pgsql/prd_issue_tracker/99.create-table-test_hierarchy_table.sql
 src/sql/pgsql/prd_issue_tracker/18.create-table-meta_columns.sql
+src/sql/pgsql/prd_issue_tracker/19.create-table-naming_conventions.sql
 src/sql/pgsql/prd_issue_tracker/93.create-table-benchmarks.sql
 src/sql/pgsql/prd_issue_tracker/94.create-table-test_item.sql
-src/sql/pgsql/prd_issue_tracker/95.create-table-test_item_hierarchy.sql
 src/sql/pgsql/scripts/check-postgres-tables-permissions.sql
 src/sql/pgsql/scripts/copy-items-from-one-table-to-another.sql
 src/sql/pgsql/scripts/list-table-columns.sql
+src/sql/pgsql/scripts/list-table-cols.sh
 src/sql/pgsql/scripts/upsert_item_trigger.sql
 #----
 src/bash/issue-tracker/tests/db-to-xls.test.sh
@@ -840,7 +849,6 @@ src/sql/mysql/tst_issue_tracker/54.create-Concept-table.sql
 src/bash/issue-tracker/funcs/run-integration-tests.func.sh
 src/bash/issue-tracker/tests/run-integration-tests.test.sh
 src/bash/issue-tracker/helps/run-integration-tests.help.sh
-doc/txt/issue-tracker/tests/run-integration-tests.test.txt
 doc/txt/issue-tracker/helps/run-integration-tests.help.txt
 doc/txt/issue-tracker/funcs/run-integration-tests.func.txt
 doc/dot/readme/what-is-issue-tracker.dot
@@ -890,6 +898,7 @@ src/bash/issue-tracker/scripts/history.sh
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/trash-bin.png
 # ---
 src/bash/issue-tracker/funcs/backup-postgres-db.func.sh
+src/bash/issue-tracker/funcs/backup-postgres-table.func.sh
 src/bash/issue-tracker/tests/backup-postgres-db.test.sh
 doc/txt/issue-tracker/funcs/backup-postgres-db.func.txt
 doc/txt/issue-tracker/tests/backup-postgres-db.test.txt
@@ -917,6 +926,7 @@ src/perl/issue_tracker/t/lib/IssueTracker/TestClientSidePOC2.t
 src/perl/issue_tracker/t/lib/IssueTracker/TestSeleniumSetup.t
 # ---
 src/perl/issue_tracker/lib/auto/AutoLoadableChild/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrEnv/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Update/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToJson/autosplit.ix
@@ -926,15 +936,19 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlJsonToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlTxtToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlXlsToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/Dispatcher/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Create/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Delete/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/MojoPgWrapper/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/MariaDb/RdrMariaDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrPostgresDb/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/MojoPgWrapper/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrCmdArgs/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrDirs/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrFiles/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrText/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrUrlParams/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/CnrUrlParams/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrDirs/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrFiles/autosplit.ix
@@ -947,15 +961,17 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToJson/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrJsonToHsr2/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrJQCloud/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrVueListLabelsTemplate/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrListLabels/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Configurator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Logger/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Timer/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/List/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Export/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Query/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Search/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Select/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/View/autosplit.ix
 src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
 # --
 src/perl/issue_tracker/log/1
@@ -997,10 +1013,30 @@ dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/sql/prd_our_proj
 dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/sql/tst_our_proj
 dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/xls
 dat/host/opt/csitea/our-proj/dat/mix/2018/2018-10/2018-10-07/xls/our-proj.all.20181024_000000.xlsx
-dat/mix/2018/2018-11/2018-11-21/
-dat/mix/2018/2018-11/2018-11-21/.DS_Store
-dat/mix/2018/2018-11/2018-11-21/json
-dat/mix/2018/2018-11/2018-11-21/json/daily_issues.json
-dat/mix/2018/2018-11/2018-11-21/sql
-dat/mix/2018/2018-11/2018-11-21/xls
-dat/mix/2018/2018-11/2018-11-21/xls/issue-tracker.all.20181121_000000.xlsx
+dat/tmp/1
+# ---
+src/bash/issue-tracker/funcs/run-data-load-tests.func.sh
+src/bash/issue-tracker/tests/run-data-load-tests.test.sh
+src/bash/issue-tracker/helps/run-data-load-tests.help.sh
+doc/txt/issue-tracker/funcs/run-data-load-tests.func.txt
+# ---
+src/bash/issue-tracker/funcs/run-unit-tests.func.sh
+src/bash/issue-tracker/tests/run-unit-tests.test.sh
+doc/txt/issue-tracker/funcs/run-unit-tests.func.txt
+src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrHPostgresDb.pm
+src/perl/issue_tracker/lib/IssueTracker/Controller/ViewDoc.pm
+src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrHPostgresDb/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/HSelect/autosplit.ix
+src/perl/issue_tracker/public/dat/tmp/xls/1
+src/perl/issue_tracker/templates/controls/site/app_name_tooltip.html.ep
+# ---
+dat/mix/2018/2018-12/2018-12-15
+dat/mix/2018/2018-12/2018-12-15/~$dev_issue_tracker.userstories.20181215_100417.xlsx
+dat/mix/2018/2018-12/2018-12-15/dev_issue_tracker.userstories.20181215_100417.xlsx
+dat/mix/2018/2018-12/2018-12-15/.DS_Store
+dat/mix/2018/2018-12/2018-12-15/sql
+dat/mix/2018/2018-12/2018-12-15/sql/dev_issue_tracker
+dat/mix/2018/2018-12/2018-12-15/sql/dev_issue_tracker/dev_issue_tracker.20181215_213434.insrt.dmp.sql
+dat/mix/2018/2018-12/2018-12-15/xls
+dat/mix/2018/2018-12/2018-12-15/xls/~$issue-tracker.all.20181215_000000.xlsx
+dat/mix/2018/2018-12/2018-12-15/xls/issue-tracker.all.20181215_000000.xlsx

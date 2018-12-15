@@ -1,7 +1,7 @@
 % use utf8;
-% layout 'site';
+% layout 'list';
 
-% content_for header_csss => begin
+% content_for cnt_header_css => begin
    <link rel="stylesheet" type="text/css" media="screen"  
       href="../../themes/thme-blue/css/screen/controls/pager.css?v=<%= $ProductVersion =%>" />
    <link rel="stylesheet" type="text/css" media="screen"  
@@ -12,6 +12,7 @@
       href="../../themes/thme-blue/css/screen/controls/srch-grid.css?v=<%= $ProductVersion =%>" />
 % end
 
+% content_for cnt_body_controls  => begin
    %= include 'controls/list-grid/xt/search-box.xt'
    %= include 'controls/srch-grid/xt/grid.xt'
 
@@ -34,7 +35,7 @@
      </div>
 
    </div>
-
+% end
 
 % content_for js_scripts => begin
    %= include 'controls/list-grid/js/btn-play-prev-10.js'

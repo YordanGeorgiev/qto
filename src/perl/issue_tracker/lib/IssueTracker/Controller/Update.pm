@@ -17,7 +17,7 @@ use JSON;
 use IssueTracker::App::Db::Out::WtrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlParams ; 
 
 our $module_trace   = 0 ;
 our $appConfig      = {};
@@ -34,7 +34,7 @@ sub doUpdateItemBySingleCol {
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
    my $rdbms_type       = 'postgres';
-   my $objRdrUrlParams  = {} ; 
+   my $objCnrUrlParams  = {} ; 
    my $objWtrDbsFactory = {} ; 
    my $objWtrDb         = {} ; 
    my $ret              = 0;
@@ -48,16 +48,11 @@ sub doUpdateItemBySingleCol {
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
    
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login ');
-      return ; 
-   } 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
    
-   # chk: it-181101180808
-   $self->SUPER::doReloadProjectDbMetaData($db) unless $appConfig->{ "$db" . '.meta' } ; 
-
-   $objRdrUrlParams     = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg )      = $objRdrUrlParams->doSetUpdateUrlParams(\$objModel, $perl_hash ) ; 
+   $objCnrUrlParams     = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
+   ( $ret , $msg )      = $objCnrUrlParams->doSetUpdateUrlParams(\$objModel, $perl_hash ) ; 
    
    if ( $ret != 0 ) {
       $self->res->code(400);
@@ -71,7 +66,7 @@ sub doUpdateItemBySingleCol {
 
    $objWtrDbsFactory
       = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
-   $objWtrDb = $objWtrDbsFactory->doInstantiate("$rdbms_type");
+   $objWtrDb = $objWtrDbsFactory->doInit("$rdbms_type");
    ($ret, $msg) = $objWtrDb->doUpdateItemBySingleCol(\$objModel, $item);
 
    $self->res->headers->accept_charset('UTF-8');

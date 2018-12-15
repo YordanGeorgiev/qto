@@ -1,10 +1,12 @@
-   function setMsgVisuals(txt,eid,msgType){
+   function setMsgVisuals(txt,eid,msgType,pageType){
       if ( typeof eid === "undefined" ) { eid ='div_msg' }
       if ( typeof msgType === "undefined" ) { msgType ='Error' }
-      var txt = stripTechMsgPart(txt)
+      txt = stripTechMsgPart(txt)
       paintError(eid)
       window['paint' + msgType](eid,txt);
-      hideControlsOnError()
+      if ( pageType === 'search' ) {
+         hideControlsOnError()
+      }
       fadeAwayDiv(eid);
    }
    function setStyleProp ( eid,pname,pval) {
@@ -31,7 +33,7 @@
    }
 
    function stripTechMsgPart(txt) {
-      if ( typeof txt != 'undefined' && txt != null ) {
+      if ( typeof txt != 'undefined' && txt != null && txt != "" ) {
          if ( txt.indexOf(' :: ') !== -1 ) {
             console.error ( txt )
             txt = txt.split(/ :: /)[0]

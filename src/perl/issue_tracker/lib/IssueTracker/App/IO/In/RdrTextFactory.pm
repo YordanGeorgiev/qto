@@ -17,7 +17,7 @@ package IssueTracker::App::IO::In::RdrTextFactory ;
 	# -----------------------------------------------------------------------------
 	# fabricates different RdrText object 
 	# -----------------------------------------------------------------------------
-	sub doInstantiate {
+	sub doInit {
 
 		my $self 	      = shift ; 	
 		my $table			= shift // 'daily_issues' ; 
@@ -53,7 +53,7 @@ package IssueTracker::App::IO::In::RdrTextFactory ;
 		return $objRdrText->new( \$appConfig , $objController , $term , @args);
 
 	}
-	# eof sub doInstantiate
+	# eof sub doInit
 	
 
    #

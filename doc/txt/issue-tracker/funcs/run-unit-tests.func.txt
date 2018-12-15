@@ -1,0 +1,38 @@
+# doc/txt/issue-tracker/func/run-unit-tests.func.txt
+
+	doRunUnitTests
+	
+	# Purpose:
+	# ------------------------------------------------------
+	run the unit tests, use also for regression testing
+
+	# Prequisites
+	# ------------------------------------------------------
+	the whole setup up and running
+
+	# Installation
+	# ------------------------------------------------------
+   check the ISG
+
+	# Interdependancies
+	# ------------------------------------------------------
+   the whole setup - chk the System Guide and the DevOps guide
+
+	# Usage:
+	# ------------------------------------------------------
+   # load a proj configuration file into the shell vars
+   doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/nokia-musa.prd.host-name.cnf
+	cd $product_instance_dir
+   clear ; bash src/bash/issue-tracker/issue-tracker.sh -a run-unit-tests
+
+	# Developent
+	# ------------------------------------------------------
+	-- pick all the files to be tested 
+   -- testing perl script needing additional setup have to be separated / automated
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- some of the files might need addtional setup 
+
+
+# eof file: doc/txt/issue-tracker/func/run-unit-tests.func.txt

@@ -95,7 +95,7 @@ package IssueTracker::App::Utils::Configurator ;
       my $cnf_holder   	   = shift ; 
 
 		
-		#debug print "\n Configurator.pm 89 \$ConfFile : $ConfFile \n" ; sleep 5 ; 
+		#debug rint "\n Configurator.pm 89 \$ConfFile : $ConfFile \n" ; sleep 5 ; 
 		# might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
 
@@ -106,7 +106,7 @@ package IssueTracker::App::Utils::Configurator ;
 		$self->doOverWriteConfHolder ($cnf_holder ) ; 
 
 		# populate with new values from the passed ini file
-		#debug print "from Configurator clone : ConfFile:: $ConfFile \n" ; sleep 3 ; 
+		#debug rint "from Configurator clone : ConfFile:: $ConfFile \n" ; sleep 3 ; 
 		$self->doReadConfFile( $ConfFile);
 
 		# OBS in cloning we do not modify the original global app cnfiguration Holder
@@ -162,16 +162,16 @@ package IssueTracker::App::Utils::Configurator ;
 			$Value =~ s/\%ss\%/$sec/g ; 
 
 
-			#debug print " AFTER 2 \$prt1 IS $prt1 ,\$value IS $value,\$prt2 IS $prt2 \n"; 
+			#debug rint " AFTER 2 \$prt1 IS $prt1 ,\$value IS $value,\$prt2 IS $prt2 \n"; 
 			#v.1.2.8 --- ysg --- replace the env vars as well 
 			if ( defined ( $value ) && defined ($ENV{"$value"})) {
 				$Value =~ s/\%$value\%/$ENV{"$value"}/gi;
 				#"%-40s %-80s"
-				##debug printf ("%20s %-30s %-100s " , 'EnvVarName = EnvVarValue' , "$value" , "$ENV{$value}") ; 
+				##debug rintf ("%20s %-30s %-100s " , 'EnvVarName = EnvVarValue' , "$value" , "$ENV{$value}") ; 
 			}
 
 
-			#debug print "BEFORE the cnfHolder key is " . "$key" . "\n" ; 
+			#debug rint "BEFORE the cnfHolder key is " . "$key" . "\n" ; 
 			# at this point of time the $cnfHolder->{"$key"} might not even exist
 		   if ( defined $value ) {	
             unless ( defined ( $cnfHolder->{"$value"} ) ) {
@@ -189,14 +189,14 @@ package IssueTracker::App::Utils::Configurator ;
 		} 
 		#eof if start the interpolation of %vars%
 		
-		#debug #debug print "AFTER 3  \$Value IS $Value \n " ; 
+		#debug #debug rint "AFTER 3  \$Value IS $Value \n " ; 
 
 	  if( $Value =~ m/(.*?)\%([a-zA-Z]*)\%(.*)/g ) {
-			#debug #debug print "LABEL 4  \$Value IS $Value \n " ; 
+			#debug #debug rint "LABEL 4  \$Value IS $Value \n " ; 
 			$Value = $self->doParametrize($key , $Value );
 		}
 		else {
-			#debug #debug print "LABEL 5  \$Value IS $Value \n "  ;
+			#debug #debug rint "LABEL 5  \$Value IS $Value \n "  ;
 			my $die_msg = "the var: %" . "$key" ."% is not defined in the ini file: $ConfFile ";
 			return $Value;
 		}
@@ -239,14 +239,14 @@ package IssueTracker::App::Utils::Configurator ;
 			#$cnf_file='/var/csitea/isg-pub/isg-pub.0.9.5.dev.ysg/foo.txxt' ; 
 			#open (my $cnf_file_h ,'<' , $cnf_file);
 			#open ( cnf_file ,'<' , $cnf_file) or die "$error_msg" ; 
-			# debug print "cofigurator cnf_file is $cnf_file \n" ; 
+			# debug rint "cofigurator cnf_file is $cnf_file \n" ; 
 			my $encoding = ":encoding(UTF-8)" ; 
 			open(my $cnf_file_h , '<', $cnf_file ) 
 				or die " cannot find cnf_file $cnf_file !!!" ; 
 			#while ( < cnf_file > ) {
 			# no spaces between the first < the file handle >
 			while ( <$cnf_file_h> ) {
-				#debug print "cnfigurator \$_ :: $_ \n" ; 
+				#debug rint "cnfigurator \$_ :: $_ \n" ; 
 				#skip the comments
 				next if m/^\s+#/g ; 
 
@@ -257,20 +257,20 @@ package IssueTracker::App::Utils::Configurator ;
 
 					#the var is the left most token separated by =
 					my $key = shift (@tokens ) ; 
-					#debug print "key:$key " if ( $NowInUnitTest ) ; 
+					#debug rint "key:$key " if ( $NowInUnitTest ) ; 
 					#
 					my $value = join ('=' , @tokens ) ; 
-					#debug print "value is $value \n" ; 	
+					#debug rint "value is $value \n" ; 	
 					
 					$key=trim($key);
 					$value = trim($value);
 					
-					# debug print "Configurator while \$value is $value \n" if ( $NowInUnitTest ) ; 
+					# debug rint "Configurator while \$value is $value \n" if ( $NowInUnitTest ) ; 
 					$value = $self->doParametrize($key , $value ) ;
 
 					# if we have include notation 
 					if ( $key eq '#include' ) {
-						#debug print "found include \n\n\n" if ( $NowInUnitTest ) ;  
+						#debug rint "found include \n\n\n" if ( $NowInUnitTest ) ;  
 						# if the include file does not exist or is not readable
 						# return with error
 						unless ( -r $value ) {
@@ -306,7 +306,7 @@ package IssueTracker::App::Utils::Configurator ;
 			my $str_dump = () ; 
 			my $msg = () ; 
 			$msg = "CFPoint8  OK    Dump the ready cnfiguration hash for review \n"  ;      
-			#debug print "[INFO ] $msg" ; 
+			#debug rint "[INFO ] $msg" ; 
 			
 			$str_dump .= "\n\n[INFO ] == START == Using the following env INI in perl :\n" ; 
 			foreach my $key (sort(keys %$cnfHolder))       {
@@ -327,13 +327,13 @@ package IssueTracker::App::Utils::Configurator ;
 			my $self = shift ; 
 			my $passed_cnf_holder = shift ; 
 			
-			#debug print $self->dumpIni();
+			#debug rint $self->dumpIni();
 			
 			foreach my $key (sort(keys %$passed_cnf_holder ))       {
 				$cnfHolder->{"$key"} = $passed_cnf_holder->{"$key"} ; 
 				if ( $NowInUnitTest == 1 ) {
-					#debug print "overwriting the key: $key with value : " . $cnfHolder->{"$key"} . "\n" ; 
-					#debug print "with the the new key: $key with new value : " . $passed_cnf_holder->{"$key"} . "\n" ; 
+					#debug rint "overwriting the key: $key with value : " . $cnfHolder->{"$key"} . "\n" ; 
+					#debug rint "with the the new key: $key with new value : " . $passed_cnf_holder->{"$key"} . "\n" ; 
 				}
 			}
 			
@@ -348,7 +348,7 @@ package IssueTracker::App::Utils::Configurator ;
 			my $self = shift ; 
 			my $msg = () ; 
 			$msg = "set all ini vars to env vars"  ;        
-			#debug print "$msg \n" if ( $NowInUnitTest ) ;  
+			#debug rint "$msg \n" if ( $NowInUnitTest ) ;  
 
 			foreach my $key (sort(keys %$cnfHolder))       {
 				$ENV{"$key"}=$cnfHolder->{"$key"} ; 
@@ -395,7 +395,7 @@ package IssueTracker::App::Utils::Configurator ;
 			my $msg = '' ; 
 			$msg .= "BOOM! BOOM! BOOM! \n RunTime Error !!!\n" ; 
 			$msg .= "ERROR --- undefined function $name(@_) \n" ;
-			#debug print $msg ; 
+			#debug rint $msg ; 
 		};
 		goto &$AUTOLOAD;    # Restart the new routine.
 	} #eof sub  
@@ -406,7 +406,7 @@ package IssueTracker::App::Utils::Configurator ;
 	# -----------------------------------------------------------------------------
 	sub DESTROY {
 		my $self = shift;
-		#debug #debug print "the DESTRUCTOR is called  \n" ; 
+		#debug #debug rint "the DESTRUCTOR is called  \n" ; 
 		return ; 
 	} 
 	# eof sub 

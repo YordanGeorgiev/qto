@@ -39,7 +39,7 @@ package IssueTracker::App::Utils::OO::AutoLoadable ;
 
 		my $self = shift;
 		my $name = our $AUTOLOAD;
-	   # debug print "$name RunBeforeExit ! \n";
+	   # debug rint "$name RunBeforeExit ! \n";
 	}
 	#eof sub RunBeforeExit
 
@@ -50,7 +50,7 @@ package IssueTracker::App::Utils::OO::AutoLoadable ;
 	sub DESTROY {
 		my $self = shift;
 
-		#debug print "the DESTRUCTOR for $self is called  \n" ;
+		#debug rint "the DESTRUCTOR for $self is called  \n" ;
 		$self->RunBeforeExit();
 		return;
 	}   

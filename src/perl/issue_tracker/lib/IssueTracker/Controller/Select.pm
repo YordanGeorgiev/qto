@@ -9,10 +9,10 @@ use parent qw(IssueTracker::Controller::BaseController);
 use Data::Printer ; 
 use Data::Dumper; 
 
-use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
+use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlParams ; 
 
 my $module_trace    = 0 ;
 our $appConfig      = {};
@@ -29,68 +29,48 @@ sub doSelectItems {
    my $db               = $self->stash('db');
    my $item             = $self->stash('item');
    my $http_method      = 'GET' ;  
-   my $rdbms_type       = 'postgres';
-   my $objRdrUrlParams  = {} ; 
+   my $objCnrUrlParams  = {} ; 
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
    my $ret              = 0;
    my $dat              = '' ; 
    my $msg              = 'unknown error during Select item';
    my $hsr2             = {};
-   my $msr2             = {};
    my $met              = {}; # the meta-data of the this item
    my $mc               = {}; # the meta-counter of the meta-data
    my $http_code        = 200 ; 
-   my $cnt       = 0 ; 
+   my $cnt              = 0 ; 
 
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login ');
-      return ; 
-   } 
-   
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
+
    $appConfig		 		= $self->app->get('AppConfig');
-   unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
-      
-      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
-      unless ( $ret == 0 ) { 
-         $self->render('text' => $msg ) unless $ret == 0 ; 
-         return ; 
-      }
-      else { 
-         $appConfig->{ $db . '.meta' } = $msr2 ; 
-      }
-   } 
 
-	# debug print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
+	# debug rint "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
 
    my $query_params = $self->req->query_params ; 
-   $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg ) = $objRdrUrlParams->doSetSelectUrlParams(\$objModel, $query_params );
+   $objCnrUrlParams = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
+   ( $ret , $msg ) = $objCnrUrlParams->doSetSelectUrlParams(\$objModel, $query_params );
    if ( $ret != 0 ) {
       $http_code = 400 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
       return ; 
    } 
 
-   ( $ret , $msg ) = $objRdrUrlParams->doSetWithUrlParams(\$objModel, $query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetWithUrlParams(\$objModel, $query_params );
    if ( $ret != 0 ) {
       $http_code = 400 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
       return ; 
    } 
 
    $objRdrDbsFactory
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+   $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
 
-   ($ret, $msg,$hsr2) = $objRdrDb->doSelectTableIntoHashRef(\$objModel, $item);
-
-   
-   # debug print "Select.pm \n" ; 
-   # debug print "ret: $ret , msg: $msg \n" ; 
-   # debug print "Select.pm \n" ; 
+   ($ret, $msg,$hsr2) = $objRdrDb->doSelect(\$objModel, $item);
 
    unless ( $ret == 0 ) {
       $http_code = $ret ; 
@@ -103,24 +83,24 @@ sub doSelectItems {
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
       ( $ret , $msg , $dat , $cnt ) = $objCnrHsr2ToArray->doConvert ($hsr2);
-
+      
       unless ( $ret == 0 ) {
          $http_code = 404 ; 
-         ( $ret , $msg , $met , $mc) = $objModel->doGetTablesColumnList($appConfig,$db,$item);
+         ( $ret , $msg , $met , $mc) = $objModel->doGetTableMeta($appConfig,$db,$item);
       }
       
-      ( $ret , $msg , $met , $mc) = $objModel->doGetTablesColumnList($appConfig,$db,$item);
+      ( $ret , $msg , $met , $mc) = $objModel->doGetTableMeta($appConfig,$db,$item);
       $http_code = 200 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 404 ) {
       $http_code = 404 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 204 ) {
       $http_code = 204 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } else {
       $http_code = 400 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } 
 }
 
@@ -148,6 +128,8 @@ sub doSelectTables {
    my $objModel   = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
 
 	$objModel->set('postgres_db_name' , $db ) ; 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
 
 	my $ret = 0;
 	my $hsr2 = {};
@@ -155,7 +137,7 @@ sub doSelectTables {
 	my $objRdrDbsFactory
 			= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
 
-	my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+	my $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectTablesList(\$objModel);
 
 
@@ -212,6 +194,7 @@ sub doSelectTables {
 
 }
 
+
 sub doSelectDatabases {
 
 	my $self          = shift;
@@ -229,13 +212,16 @@ sub doSelectDatabases {
 
 	$objModel->set('postgres_db_name' , 'postgres' ) ; 
 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
+
 	my $ret = 0;
 	my $hsr2 = {};
 
 	my $objRdrDbsFactory
 			= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
 
-	my $objRdrDb = $objRdrDbsFactory->doInstantiate("$rdbms_type");
+	my $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectDatabasesList(\$objModel);
 
    if ( $ret == 0 ) {
@@ -245,16 +231,16 @@ sub doSelectDatabases {
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
       ( $ret , $msg , $dat ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2'),'>');
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 400 or $ret == 404) {
       $http_code = $ret ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 2 ) {
       $http_code = 400 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } else {
       $http_code = 404 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    }
 
 }
@@ -267,7 +253,7 @@ sub doSelectMeta {
 
    my $self        = shift;
    my $db          = $self->stash('db');
-   my $table       = $self->stash('item');
+   my $table       = $self->stash('item') || undef ; 
    my $ret         = 0;
    my $msg         = 'unknown error during Select item';
    my $met         = '' ; 
@@ -282,10 +268,8 @@ sub doSelectMeta {
    $appConfig		= $self->app->get('AppConfig');
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    
-   unless ( $self->SUPER::isAuthorized($db) == 1 ) {
-      $self->render('text' => 'Refresh your page to login ');
-      return ; 
-   } 
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
    
    # chk: it-181101180808
    $appConfig		 		= $self->app->get('AppConfig');
@@ -302,7 +286,9 @@ sub doSelectMeta {
    } 
    
    # debug p $appConfig->{ $db . '.meta' } ; 
-   ( $ret , $msg , $met , $cnt ) = $objModel->doGetTablesColumnList ( $appConfig , $db , $table ) ;
+   if ( defined $table ) {
+      ( $ret , $msg , $met , $cnt ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) 
+   }
 
    if ( $ret == 0 ) {
       my $dat = () ; # an array ref holding the converted hash ref of hash refs 
@@ -316,21 +302,21 @@ sub doSelectMeta {
          $http_code = 400 ; $dat = '' ; $cnt = 0 ; 
       }
       my $met = $met ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 400 or $ret == 404 ) {
       $http_code = 400 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 2 ) {
       $http_code = 400 ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 1 ) {
       $http_code = 400 ; 
       $msg = " the table $table does not exist " ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } else {
       $http_code = 400 ; 
       $msg = 'unknown error has occurred' ; 
-      $self->SUPER::doRenderJson($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    }
 }
 

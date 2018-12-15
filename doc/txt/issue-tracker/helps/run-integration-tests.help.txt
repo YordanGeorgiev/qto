@@ -5,6 +5,7 @@
 	# Usage:
 	# ------------------------------------------------------
    bash src/bash/issue-tracker/issue-tracker.sh -a run-integration-tests
-
+   
+   runs all the unit tests in the application -> use also as regression testing 
 
 # eof file: doc/txt/issue-tracker/help/run-integration-tests.help.txt
