@@ -80,9 +80,9 @@ sub doConvert {
             return ( $ret , $msg ) ; 
          }
          else {
-            # debug print 'rid is : ' . $rid . "\n" ; 
-            # debug print 'level is : ' . $level . "\n" ; 
-            # debug print 'prev is : ' . $hsr2->{ $rid-1 }->{$levelh} . "\n" ; 
+            # debug rint 'rid is : ' . $rid . "\n" ; 
+            # debug rint 'level is : ' . $level . "\n" ; 
+            # debug rint 'prev is : ' . $hsr2->{ $rid-1 }->{$levelh} . "\n" ; 
             $msg = 'the ' . $levelh . ' untrapped case for rid ' . "$rid" . "\n" ; 
             carp $msg ; 
             return ( $ret , $msg ) ; 
@@ -187,10 +187,10 @@ sub doPrintRow {
    my $row  = shift ; 
 
    # debug p $rid ; 
-   # debug print " stop  rid \n" ; 
-   # debug print "start row: \n" ; 
+   # debug rint " stop  rid \n" ; 
+   # debug rint "start row: \n" ; 
    p $row ; 
-   # debug print "stop  row: \n" ; 
+   # debug rint "stop  row: \n" ; 
 
 }
 	# -----------------------------------------------------------------------------

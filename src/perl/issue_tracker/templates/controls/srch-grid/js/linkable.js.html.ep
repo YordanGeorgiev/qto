@@ -11,10 +11,11 @@
      , computed: {
          linkOrNot: function() {
             if ( this.id.startsWith ( 'item')) {
-               var newUri = window.location.pathname.replace('/search' , '/list/' + this.cnt )
-               newUri = newUri + '?as=grid&pick=name,description&like-by=name&like-val=' + this.$parent.$parent.urlParamFor
-               newUri = newUri + '&like-by=description&like-val=' + this.$parent.$parent.urlParamFor
-               return '<a tabindex="3" href="' + newUri + '" class="interlnk">' + this.cnt + '</a>'
+               var uri = window.location.pathname.replace('/search' , '/list/' + this.cnt )
+               uri = ( uri.indexOf('?') == -1 ) ? uri + '?' : uri
+               uri = uri + '&like-by=name&like-val=' + this.$parent.$parent.urlParamFor
+               uri = uri + '&like-by=description&like-val=' + this.$parent.$parent.urlParamFor
+               return '<a tabindex="3" href="' + uri + '" class="interlnk">' + this.cnt + '</a>'
             } else {
                return this.cnt
             }

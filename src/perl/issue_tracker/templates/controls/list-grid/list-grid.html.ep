@@ -1,7 +1,7 @@
 % use utf8;
-% layout 'site';
+% layout 'list';
 
-% content_for header_csss => begin
+% content_for cnt_header_css => begin
   <title> list <%= " $item " =%>  <%= "as $as in " =%> <%= "$db " =%> </title> 
    <link rel="stylesheet" type="text/css" media="screen"  
       href="../../themes/thme-blue/css/screen/controls/pager.css?v=<%= $ProductVersion =%>" />
@@ -13,6 +13,7 @@
       href="../../themes/thme-blue/css/screen/controls/list-grid.css?v=<%= $ProductVersion =%>" />
 % end
 
+% content_for cnt_body_controls  => begin
    %= include 'controls/list-grid/xt/search-box.xt'
    %= include 'controls/list-grid/xt/grid.xt'
 
@@ -37,6 +38,7 @@
 
    </div>
 
+% end
 % content_for js_scripts => begin
 
     if ( document.getElementById("spn_msg") ) {

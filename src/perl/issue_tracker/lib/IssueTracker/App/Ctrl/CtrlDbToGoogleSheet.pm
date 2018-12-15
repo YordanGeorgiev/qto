@@ -149,9 +149,9 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
          my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
 
          my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-         my $objRdrDb 			= $objRdrDbsFactory->doInstantiate ( "$rdbms_type" , \$objModel );
+         my $objRdrDb 			= $objRdrDbsFactory->doInit ( "$rdbms_type" , \$objModel );
       
-         ( $ret , $msg  )  = $objRdrDb->doSelectTableIntoHashRef( \$objModel , $table ) ; 
+         ( $ret , $msg  )  = $objRdrDb->doSelect( \$objModel , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
          my $objWtrGoogleSheet    = 'IssueTracker::App::IO::Out::WtrGoogleSheet'->new( \$appConfig ) ;

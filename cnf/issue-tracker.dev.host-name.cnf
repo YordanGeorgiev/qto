@@ -41,10 +41,12 @@ LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
 db_host = host-name
 
 # the pgsql port
-db_port = 13306
+db_port = 5432
+#db_port = 13306
 
 # the mariadb user name
 postgres_db_user = ysg
+postgres_db_user_pw = 0024plapla
 
 # Whether or not to print messages to STDOUT and / or STDERR
 PrintConsoleMsgs =               1

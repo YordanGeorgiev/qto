@@ -98,7 +98,7 @@ package IssueTracker::App::IO::Out::WtrGoogleSheet ;
       my $default_col_to_sort_by = 'seq' ; 
       my $flg_found_default_col_to_sort_by = 0 ; 
       foreach my $colid ( sort { $hsr_meta->{$a}->{'attnum'} <=> $hsr_meta->{$b}->{'attnum'}} keys (%$hsr_meta)) {
-         # debug print "\$colid is $colid \n" ; 
+         # debug rint "\$colid is $colid \n" ; 
          my $col_name     = $hsr_meta->{ $colid }->{ 'attname' } ; 
          $flg_found_default_col_to_sort_by++ if $col_name eq $default_col_to_sort_by ; 
          next if $col_name eq 'guid' ; 
@@ -123,8 +123,8 @@ package IssueTracker::App::IO::Out::WtrGoogleSheet ;
          push ( @row , $rowid ) ; 
          foreach my $colid ( sort { $hsr_meta->{$a}->{'attnum'} <=> $hsr_meta->{$b}->{'attnum'}} keys (%$hsr_meta)) {
             my $col_name     = $hsr_meta->{ $colid }->{ 'attname' } ; 
-            # debug print "col_name $col_name \n" ; 
-            # debug print "colid $colid \n" ; 
+            # debug rint "col_name $col_name \n" ; 
+            # debug rint "colid $colid \n" ; 
             next if $col_name eq 'guid' ; 
             next if $col_name eq 'planned_hours' ; 
             next if $col_name eq 'actual_hours' ; 
@@ -248,7 +248,7 @@ package IssueTracker::App::IO::Out::WtrGoogleSheet ;
            appConfig => $appConfig
        );
 
-      #debug print "WtrGoogleSheet::doInitialize appConfig : " . p($appConfig );
+      #debug rint "WtrGoogleSheet::doInitialize appConfig : " . p($appConfig );
       $ProductInstanceDir   = $appConfig->{ 'ProductInstanceDir' } ; 
 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;

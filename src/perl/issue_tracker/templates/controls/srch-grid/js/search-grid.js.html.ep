@@ -66,20 +66,20 @@
                .then( response => {
                   if ( response.status === 204 ) {
                      var warningMsg = response.statusText
-                     setMsgVisuals(warningMsg,'div_notice','Warning');
+                     setMsgVisuals(warningMsg,'div_notice','Warning','search');
                      return ;
                   } else if ( response.status === 404 || response.status === 400) {
                      var errorMsg = response.statusText + ": " + response.data.msg
-                     setMsgVisuals(errorMsg,'div_msg','Error');
+                     setMsgVisuals(errorMsg,'div_msg','Error','search');
                      return ;
                   } else {
                      var data = response.data
                      var dataType = (typeof data)
                      if ( dataType === 'undefined' ) {
                         var msg = 'unexpected error occurred while fetching data !!!'
-                        setMsgVisuals(data)
+                        setMsgVisuals(data,'div_msg','Error','search');
                      } else if ( dataType === 'string' ) {
-                        setMsgVisuals(data)
+                        setMsgVisuals(data,'div_msg','Error','search');
                      } else {
                         if ( data.dat[0].name === 'init' ) {
                            hideControlsOnError()

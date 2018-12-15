@@ -1,7 +1,10 @@
 package IssueTracker::Controller::Delete ; 
 
 use strict ; use warnings ; 
-use Mojo::Base 'Mojolicious::Controller';
+require Exporter; our @ISA = qw(Exporter Mojo::Base IssueTracker::Controller::BaseController);
+our $AUTOLOAD =();
+use AutoLoader;
+use parent qw(IssueTracker::Controller::BaseController);
 
 use Data::Printer ; 
 use Data::Dumper; 
@@ -11,7 +14,7 @@ use JSON;
 use IssueTracker::App::Db::Out::WtrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
-use IssueTracker::App::IO::In::RdrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlParams ; 
 
 our $module_trace   = 0 ;
 our $appConfig      = {};
@@ -28,12 +31,15 @@ sub doDeleteItemById {
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
    my $rdbms_type       = 'postgres';
-   my $objRdrUrlParams  = {} ; 
+   my $objCnrUrlParams  = {} ; 
    my $objWtrDbsFactory = {} ; 
    my $objWtrDb         = {} ; 
    my $ret = 0;
    my $msg = 'unknown error during Delete item';
    my $hsr2 = {};
+   
+   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   $self->SUPER::doReloadProjDbMetaData( $db ) ;
 
    my $json = $self->req->body;
    my $perl_hash = decode_json($json) ; 
@@ -42,8 +48,8 @@ sub doDeleteItemById {
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
 
-   $objRdrUrlParams = 'IssueTracker::App::IO::In::RdrUrlParams'->new();
-   ( $ret , $msg ) = $objRdrUrlParams->doSetDeleteUrlParams(\$objModel, $perl_hash ) ; 
+   $objCnrUrlParams = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
+   ( $ret , $msg ) = $objCnrUrlParams->doSetDeleteUrlParams(\$objModel, $perl_hash ) ; 
    
    if ( $ret != 0 ) {
       $self->res->code(400);
@@ -57,7 +63,7 @@ sub doDeleteItemById {
 
    $objWtrDbsFactory
       = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
-   $objWtrDb = $objWtrDbsFactory->doInstantiate("$rdbms_type");
+   $objWtrDb = $objWtrDbsFactory->doInit("$rdbms_type");
    ($ret, $msg) = $objWtrDb->doDeleteItemById(\$objModel, $item);
 
    $self->res->headers->accept_charset('UTF-8');

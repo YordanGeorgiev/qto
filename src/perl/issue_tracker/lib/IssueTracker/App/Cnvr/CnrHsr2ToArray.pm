@@ -17,7 +17,7 @@ our $objModel = {} ;
       my $hsr2          = shift ; 
       my $order_op      = shift || 'cmp' ; 
 
-      my $to_order_by   = $objModel->get('select.web-action.o') || 'attnum' ; 
+      my $to_order_by   = $objModel->get('select.web-action.o') || 'id' ; 
       my $to_hide       = $objModel->get('select.web-action.hide');
 
       my $msg        = 'unknown error has occurred !!!' ; 
@@ -29,15 +29,12 @@ our $objModel = {} ;
       my $evl_str_sort_meta = 'keys %$hsr2' ; # as it is just a hash ref of hash refs 
       my $evl_str_sort_by = $evl_str_sort_data ; 
       $evl_str_sort_by = $evl_str_sort_meta if $to_order_by eq 'attnum' ; 
+      $evl_str_sort_by = $evl_str_sort_meta if $to_order_by eq 'attribute_number' ; 
 
-      if ( defined ( $to_order_by) ) {
-         foreach my $key (  eval "$evl_str_sort_by" ) {
-            my $row = $hsr2->{$key} ; 
-            $rows_count = $row->{'rows_count'} if ( exists $row->{'rows_count'} ); delete $row->{'rows_count'} ; 
-            ( $ret , $msg , $row ) = $self->doHideHidables ( $row , $to_hide , $msg ) ; 
-            return ( $ret , $msg ) unless $ret == 0 ; 
-            push ( @list , $row ) ; 
-         }
+      foreach my $key (  eval "$evl_str_sort_by" ) {
+         my $row = $hsr2->{$key} ; 
+         $rows_count = $row->{'rows_count'} if ( exists $row->{'rows_count'} ); delete $row->{'rows_count'} ; 
+         push ( @list , $row ) ; 
       }
       $ret = 0 ; 
       $msg = "" ; 
@@ -45,48 +42,13 @@ our $objModel = {} ;
    } 
 
 
-   #
-	# -----------------------------------------------------------------------------
-	# hide the attribute's values to hide per row in the hash ref of hash refs 
-	# -----------------------------------------------------------------------------
-   sub doHideHidables {
-
-      my $self       = shift ; 
-      my $row        = shift ; 
-      my $to_hide    = shift ; 
-      my $msg        = shift ; 
-
-      my $ret        = 404 ; 
-
-      if ( defined ( $to_hide ) ) {
-         my @hides = split ( ',' , $to_hide ) ; 
-         foreach my $hidable ( @hides ) {
-           unless ( exists $row->{$hidable} ) {
-               $msg = "the $hidable column does not exist" ; 
-            return ( $ret , $msg ) ; 
-           }
-           delete $row->{$hidable} ;  
-         }
-      }
-      $ret = 0 ; 
-      return ( $ret , $msg , $row )  ; 
-   }
-
-   #
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
 	sub new {
-
 		my $class      = shift;    # Class name is in the first parameter
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
-
-		my $self = {};        # Anonymous hash reference holds instance attributes
-		bless( $self, $class );    # Say: $self is a $class
+		my $self = {} ; bless( $self, $class );    # Say: $self is a $class
 		return $self;
 	}  
-	#eof const
   
 
 1;
