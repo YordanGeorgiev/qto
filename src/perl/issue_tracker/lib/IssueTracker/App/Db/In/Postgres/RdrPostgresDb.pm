@@ -960,7 +960,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 				ORDER BY seq
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
-			# debug p $sql ; 
+         # todo:ysg
+			p $sql ; 
          # debug p $hsr2 ; 
       };
       if ( $@ ) {

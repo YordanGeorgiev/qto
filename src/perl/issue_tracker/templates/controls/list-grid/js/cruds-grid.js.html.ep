@@ -206,16 +206,12 @@
           , deleteItem (id) {
                var arr = id.split('-')
                var dbid = arr[2]
-               var newCntIndx = this.gridData.findIndex(obj => obj.id == dbid);
                
                axios.post('/<%= $db =%>/delete/<%= $item =%>', {
                      id: dbid 
                })
                .then( 
                   response => {
-                     if (newCntIndx > -1) {
-                        this.gridData = this.gridData.splice(newCntIndx, 1)
-                     }
                      var url_params = this.getUrlParams();
                      if ( typeof this.$children[0].pageSize !== "undefined" ) {
                         url_params.delete("page-size") ; 
