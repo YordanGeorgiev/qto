@@ -1,24 +1,22 @@
 use strict ; use warnings ; 
 package IssueTracker::App::Mdl::Model ; 
 
-	my $VERSION = '1.2.0';    
+my $VERSION = '1.2.0';    
 
-	require Exporter;
-	our @ISA = qw(Exporter IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::AutoLoadable) ;
-	our $AUTOLOAD =();
-	our $ModuleDebug = 0 ; 
-	use AutoLoader;
+require Exporter;
+our @ISA = qw(Exporter IssueTracker::App::Utils::OO::SetGetable IssueTracker::App::Utils::OO::AutoLoadable) ;
+our $AUTOLOAD =();
+our $ModuleDebug = 0 ; 
+use AutoLoader;
 
-	use Carp qw /cluck confess shortmess croak carp/ ; 
-   use Data::Printer ; 
+use Carp qw /cluck confess shortmess croak carp/ ; 
+use Data::Printer ; 
 
-   use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
-   use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
+use parent 'IssueTracker::App::Utils::OO::SetGetable' ;
+use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
 
-   our $appConfig       = {} ; 
-   our $hsr2            = {} ; # the data - a hash ref of hash refs 
-   our $msr2            = {} ; # the metadata - ditto
-   our $objLogger       = {} ; 
+our $appConfig       = {} ; 
+our $objLogger       = {} ; 
 
 
    sub doGetTableMeta {
@@ -38,7 +36,8 @@ package IssueTracker::App::Mdl::Model ;
 
       foreach my $key ( keys %$cols ) {
          my $row = $cols->{ $key } ; 
-         next if ( defined $self->get('select.web-action.hide') && grep ( /^$row->{ 'attribute_name' }$/, @hides )) ;
+         next if ( defined $self->get('select.web-action.hide') 
+                   && grep ( /^$row->{ 'attribute_name' }$/, @hides )) ;
          next unless $table eq $row->{ 'table_name' } ; 
          $mhr2->{ $c } = $row ;
          $c++ ; 
@@ -48,7 +47,8 @@ package IssueTracker::App::Mdl::Model ;
       $msg = '' ; 
       return ( $ret , $msg , $mhr2 , $c);  
    }
-   
+  
+
    sub doGetTableColumnList {
 
       my $self          = shift ; 
@@ -65,19 +65,12 @@ package IssueTracker::App::Mdl::Model ;
       ( $ret , $msg , $mhr2 ) = $self->doGetTableMeta ( $appConfig , $db , $table );
       return ( $ret , $msg , undef ) unless $ret == 0 ; 
 
-      #my $to_hides   = $self->get('list.web-action.hide') ; 
-      #my @hides      = split ( ',' , $to_hides ) if defined ( $to_hides ) ; 
-
-      #debug p $mhr2 ; 
       foreach my $key ( sort { $mhr2->{$a}->{ $to_order_by } <=> $mhr2->{$b}->{ $to_order_by } } keys %$mhr2 ) {
          my $row = $mhr2->{ $key } ; 
          next if ( defined $row->{ 'skip_in_list'} && $row->{ 'skip_in_list'} == 1 ) ; 
          next if ( $row->{ 'attribute_name' } eq 'guid' or $row->{ 'attribute_name' } eq 'id' );
          push ( @cols , $row->{ 'attribute_name' } );
       }
-      # debug rint "START Model.pm : \@cols : "  ;
-      # debug foreach my $col ( @cols ) { print "col: $col \n"; } ;  
-      # debug rint "STOP  Model.pm : \@cols : "  ;
       $ret = 0 ; 
       $msg = '' ; 
       return ( $ret , $msg , \@cols);  
@@ -118,6 +111,7 @@ package IssueTracker::App::Mdl::Model ;
       $appConfig->{"$db" . '.meta.tables-list'} = \@tbls ; 
    }
 
+
    sub doReplaceTokenInKeys {
       my $self          = shift ; 
       my $to_srch       = shift ; 
@@ -131,17 +125,15 @@ package IssueTracker::App::Mdl::Model ;
    }
 
 
-	sub new {
+sub new {
 
-		my $class      = shift ;    
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-		my $hsr2       = shift @_  || $hsr2 ; 
-		$msr2         = shift @_  || $msr2 ; 
+   my $class      = shift ;    
+   $appConfig     = ${ shift @_ } || croak 'undef passed for appConfig !!!' ; 
 
-		my $self       = {}; bless( $self, $class );    
-      $self          = $self->doInitialize() ; 
-		return $self;
-	}  
+   my $self       = {}; bless( $self, $class );    
+   $self          = $self->doInitialize() ; 
+   return $self;
+}  
 	
    
    sub doInitialize {
@@ -150,8 +142,6 @@ package IssueTracker::App::Mdl::Model ;
 
       %$self = (
              appConfig => $appConfig
-           , hsr2 => $hsr2
-           , msr2 => $msr2
       );
 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;

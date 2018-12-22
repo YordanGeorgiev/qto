@@ -17,27 +17,27 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    my $url = {} ;                                # the url to build for each test 
    my $exp_txt = {} ;                            # the expected text to check 
    my $response = {} ; 
-  
-   # p $t->ua->get($url)->result->body ; 
-   # this needs to be asyncrounous with using client code as well ...
-   my $ProductType = $appConfig->{ 'ProductType' } ; 
-   my $db_name= $appConfig->{ 'postgres_db_name' } ; 
-   $tm = "the app label contains the product_type of this product instance: $ProductType " ; 
-   $url = '/' . $db_name . '/list/monthly_issues?as=cloud' ; 
-   $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
-   ok ( $dom->find('div')->[1] =~ m/$ProductType/ , $tm ) ;
+   my @web_actions = ('list','view');
+ 
+   foreach my $web_action ( @web_actions ) {
+      # debug p $t->ua->get($url)->result->body ; 
+      # this needs to be asyncrounous with using client code as well ...
+      my $ProductType = $appConfig->{ 'ProductType' } ; 
+      my $db_name= $appConfig->{ 'postgres_db_name' } ; 
+      $tm = "$web_action userstories product_type: $ProductType " ; 
+      $url = '/' . $db_name . '/' . $web_action . '/userstories' ; 
+      $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
+      ok ( $dom->find('div')->[1] =~ m/$ProductType/ , $tm ) ;
 
 
-   my $GitShortHash = $appConfig->{ 'GitShortHash' } ; 
-   $tm = "the app label contains the short git hash of this product instance: $GitShortHash" ; 
-   ok ( $dom->find('div')->[1] =~ m/$GitShortHash/ , $tm ) ;
-   
-   my $ProductVersion = $appConfig->{ 'ProductVersion' } ; 
-   $tm = "the app label contains the product version of this product instance: $ProductVersion " ; 
-   ok ( $dom->find('div')->[1] =~ m/$ProductVersion/ , $tm ) ;
-   #my $id = $dom->find('span')->[0] ; 
-   #ok ( $dom->at('html body div span#spn_err_msg')->text eq $exp_txt , $tm ) ; 
-
+      my $GitShortHash = $appConfig->{ 'GitShortHash' } ; 
+      $tm = "the app label contains the short git hash of this product instance: $GitShortHash" ; 
+      ok ( $dom->find('div')->[1] =~ m/$GitShortHash/ , $tm ) ;
+      
+      my $ProductVersion = $appConfig->{ 'ProductVersion' } ; 
+      $tm = "$web_action userstories product version of this product instance: $ProductVersion " ; 
+      ok ( $dom->find('div')->[1] =~ m/$ProductVersion/ , $tm ) ;
+   }
 
 done_testing();
 

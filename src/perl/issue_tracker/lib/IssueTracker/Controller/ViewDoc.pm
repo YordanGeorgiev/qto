@@ -18,6 +18,7 @@ our $objLogger      = {} ;
 our $objModel       = {} ; 
 our $rdbms_type     = 'postgres' ; 
 
+
 sub new {
 
    my $invocant 			= shift ;    
@@ -50,7 +51,7 @@ sub doBuildViewControl {
    $objRdrDbsFactory    = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
    $objRdrDb            = $objRdrDbsFactory->doInit("$rdbms_type");
 
-   ( $ret , $msg , $cols) = $objModel->doGetTableColumnView( $appConfig , $db , $item ) ;
+   ( $ret , $msg , $cols) = $objModel->doGetTableColumnList( $appConfig , $db , $item ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 		
    my $to_picks   = $objModel->get('view.web-action.pick') ; 

@@ -1,45 +1,3 @@
-% use utf8;
-<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/site.css?v=<%= $ProductVersion =%>" />
-  <%= content 'cnt_header_css' %>
-</head>
-<body>
-%= include 'controls/site/app_name_tooltip'
-		<div class="container">
-				 <h1>todo items</h1>
-				 <div id="app"></div>
-		</div>
-
- <template id="list-items">
-        <ul class="items">
-            <li v-for="item in items"
-                :class="{completed: item.completed}"
-                class="item"
-                @click="toggleItem(item.id)"
-                @dblclick="deleteItem(item.id)">{{item.name}}</li>
-        </ul>
-    </template>
-    <template id="app-template">
-        <div>
-            <form @submit.prevent="addItem">
-                <input class="item-input" type="text" placeholder="enter a new item ..." v-model="name" />
-            </form>
-            <list-items />
-        </div>
-    </template>
-<%= content 'cnt_body_controls' %>
-
-<div id="js_libs">
-   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-   <script src="https://unpkg.com/vue@2.5.3/dist/vue.min.js"></script>
-   <script src="https://unpkg.com/vuex@3.0.1/dist/vuex.min.js"></script>
-</div>
-
-<script id="all_js_scripts">
 
 var state = {
 	items: []
@@ -74,10 +32,10 @@ var getters = {
    var actions = {
 		loadItems ({ commit }) {
 			axios
-			.get('/<%= $db =%>/hselect/<%= $item =%>')
-			.then(r => r.data.dat) 
+			.get('http://echo.jsontest.com/name/this-is-item-01-hit-enter-for-more')
+			.then(r => r.data) // replace here ^^^ with your backend call
 			.then(items => {
-				commit('SET_ITEMS', items)
+				commit('SET_ITEMS', Array(items))
 			})
 		  },
         addItem: (context, payload) => {
@@ -135,7 +93,3 @@ var app = new Vue({
         template: "#app-template"
     });
 	
-</script>
-
-</body>
-</html>
