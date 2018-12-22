@@ -1,0 +1,34 @@
+<html>
+<head>
+	<title>list todo items </title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+	<body>
+		<div class="container">
+				 <h1>todo items</h1>
+				 <div id="app"></div>
+		</div>
+
+ <template id="list-items">
+        <ul class="items">
+            <li v-for="item in items"
+                :class="{completed: item.completed}"
+                class="item"
+                @click="toggleItem(item.id)"
+                @dblclick="deleteItem(item.id)">{{item.name}}</li>
+        </ul>
+    </template>
+    <template id="app-template">
+        <div>
+            <form @submit.prevent="addItem">
+                <input class="item-input" type="text" placeholder="enter a new item ..." v-model="name" />
+            </form>
+            <list-items />
+        </div>
+    </template>
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="https://unpkg.com/vue@2.5.3/dist/vue.min.js"></script>
+		<script src="https://unpkg.com/vuex@3.0.1/dist/vuex.min.js"></script>
+		<script src="app.js"></script>
+	</body>
+</html>

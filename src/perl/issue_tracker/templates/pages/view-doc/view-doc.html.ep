@@ -1,0 +1,15 @@
+% use utf8;
+%layout 'site';
+
+% content_for cnt_header_css => begin
+  <title> view <%= " $item " =%>  <%= "as $as in " =%> <%= "$db " =%> </title> 
+   <link rel="stylesheet" type="text/css" media="screen"  
+      href="../../themes/thme-blue/css/screen/controls/searchbox.css?v=<%= $ProductVersion =%>" />
+% end
+
+% content_for cnt_body_controls  => begin
+
+   <div id="div_central_panel" >
+   </div>
+
+% end

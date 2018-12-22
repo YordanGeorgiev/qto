@@ -12,6 +12,7 @@ use parent qw(IssueTracker::Controller::BaseController);
 use Data::Printer ; 
 use Scalar::Util qw /looks_like_number/;
 
+use IssueTracker::Controller::PageFactory ; 
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Utils::Timer ; 
 
@@ -20,10 +21,6 @@ our $appConfig      = {};
 our $objLogger      = {} ;
 
 
-#
-# --------------------------------------------------------
-# View all the items according to the "as" url param output type
-# --------------------------------------------------------
 sub doViewItems {
 
    my $self             = shift;
@@ -39,9 +36,12 @@ sub doViewItems {
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMetaData( $db ) ;
 
-   #$self->render('text' => 'view page is presented');
+   $appConfig		 		= $self->app->get('AppConfig');
+   $objModel            = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    ( $ret , $msg , $view_control ) = $self->doBuildViewPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
-
+   $self->render('text' => 'view page is presented') unless $ret == 0 ; 
+   $self->doRenderPageTemplate( $ret , $msg , $as, $db , $item , $view_control ) if $ret == 0 ;
+   return
 }
 
 sub doBuildViewPageType {
@@ -53,7 +53,7 @@ sub doBuildViewPageType {
    my $item             = shift ; 
    my $as               = shift ; 
 
-   my $ui_type          = 'page/View-grid' ; 
+   my $ui_type          = 'page/view-grid' ; 
    my $ret              = 1 ; 
    my $view_control     = '' ; 
    my $objPageBuilder   = {} ; 
@@ -73,6 +73,51 @@ sub doBuildViewPageType {
 
    return ( $ret , $msg , $view_control ) ; 
 
+}
+
+sub doRenderPageTemplate {
+   
+   my $self             = shift ; 
+   my $ret              = shift ; 
+   my $msg              = shift ; 
+   my $as               = shift || 'doc' ; 
+   my $db               = shift ; 
+   my $item             = shift ; 
+   my $list_control     = shift ; 
+   my $notice           = '' ;
+
+   unless ( $ret == 0 ) {
+      $self->res->code($ret) unless $ret == 0 ; 
+   } else {
+      $self->res->code(200) ; 
+   }
+
+   my $as_templates = { 
+         'doc'          => 'view-doc'
+      ,  'print-doc'    => 'list-print-doc' 
+   };
+  
+   my $template_name    = $as_templates->{ $as } || 'view-doc' ; 
+   my $template         = 'pages/' . $template_name . '/' . $template_name ; 
+
+   my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+   my $page_load_time   = $objTimer->GetHumanReadableTime();
+
+   $self->render(
+      'template'        => $template 
+    , 'as'              => $as
+    , 'msg'             => $msg
+    , 'item'            => $item
+    , 'db' 		         => $db
+    , 'ProductType' 		=> $appConfig->{'ProductType'}
+    , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
+    , 'GitShortHash'    => $appConfig->{'GitShortHash'}
+    , 'page_load_time'  => $page_load_time
+    , 'list_control'    => $list_control
+    , 'notice'          => $notice
+	) ; 
+
+   return ; 
 }
 
 1;

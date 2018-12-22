@@ -1,9 +1,15 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+# --- 
+src/perl/issue_tracker/public/poc/vuex/sabe/
+src/perl/issue_tracker/public/poc/vuex/sabe/app.js
+src/perl/issue_tracker/public/poc/vuex/sabe/index.html
+src/perl/issue_tracker/public/poc/vuex/sabe/styles.css
+# -- 
 src/perl/issue_tracker/t/lib/IssueTracker/App/benchmark_url.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/web-actions/view.html.ep
-src/perl/issue_tracker/templates/pages/view-doc.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/view-doc.html.ep
 src/perl/issue_tracker/lib/IssueTracker/Controller/View.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestView.t
 src/perl/issue_tracker/templates/layouts/list.html.ep
@@ -100,6 +106,7 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestDelete.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListCloud.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListView.t
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestAppLabel.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListAsOutputType.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClientPOC1.pl
