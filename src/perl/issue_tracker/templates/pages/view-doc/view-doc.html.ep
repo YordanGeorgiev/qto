@@ -1,15 +1,40 @@
-% use utf8;
-%layout 'site';
+%layout 'view';
 
 % content_for cnt_header_css => begin
   <title> view <%= " $item " =%>  <%= "as $as in " =%> <%= "$db " =%> </title> 
    <link rel="stylesheet" type="text/css" media="screen"  
-      href="../../themes/thme-blue/css/screen/controls/searchbox.css?v=<%= $ProductVersion =%>" />
+      href="../../themes/thme-blue/css/screen/controls/view-doc.css?v=<%= $ProductVersion =%>" />
 % end
 
 % content_for cnt_body_controls  => begin
 
-   <div id="div_central_panel" >
+<div id="div_central_panel">
+   <div class="container">
+      <div id="app"></div>
    </div>
+ <template id="list-items">
+        <div class="items" style="clear:both">
+            <div v-for="item in items"
+                :class="{completed: item.completed}"
+                @click="toggleItem(item.id)"
+                @dblclick="deleteItem(item.id)"> <h3>{{item.name}}</h3>
+                <div class="cls_desc">
+                <p> {{item.description}} </p>
+                </div>
+                <p><pre>
+                  {{item.src}}
+                 </pre></p>
+            </div>
+        </div>
+    </template>
+    <template id="app-template">
+        <div>
+            <!-- <form @submit.prevent="addItem">
+                <input class="item-input" type="text" placeholder="enter a new item ..." v-model="name" />
+            </form> -->
+            <list-items />
+        </div>
+    </template>
+</div>
 
 % end

@@ -9,28 +9,7 @@
 </head>
 <body>
 %= include 'controls/site/app_name_tooltip'
-		<div class="container">
-				 <h1>todo items</h1>
-				 <div id="app"></div>
-		</div>
 
- <template id="list-items">
-        <ul class="items">
-            <li v-for="item in items"
-                :class="{completed: item.completed}"
-                class="item"
-                @click="toggleItem(item.id)"
-                @dblclick="deleteItem(item.id)">{{item.name}}</li>
-        </ul>
-    </template>
-    <template id="app-template">
-        <div>
-            <form @submit.prevent="addItem">
-                <input class="item-input" type="text" placeholder="enter a new item ..." v-model="name" />
-            </form>
-            <list-items />
-        </div>
-    </template>
 <%= content 'cnt_body_controls' %>
 
 <div id="js_libs">
@@ -65,7 +44,7 @@ var getters = {
             var item = state.items.find(todo => todo.id === payload);
             item.completed = !item.completed;
         },
-        DELETE_TODO: (state, payload) => {
+        DELETE_ITEM: (state, payload) => {
             var index = state.items.findIndex(todo => todo.id === payload);
             state.items.splice(index, 1);
         }
@@ -87,7 +66,7 @@ var getters = {
             context.commit("TOGGLE_ITEM", payload)
         },
         deleteItem: (context, payload) => {
-            context.commit("DELETE_TODO", payload)
+            context.commit("DELETE_ITEM", payload)
         }
     }
 
