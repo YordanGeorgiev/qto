@@ -17,13 +17,14 @@
             <div v-for="item in items"
                 :class="{completed: item.completed}"
                 @click="toggleItem(item.id)"
-                @dblclick="deleteItem(item.id)"> <h3>{{item.name}}</h3>
+                @dblclick="deleteItem(item.id)"> 
+                   <h3 :id="'#<%= $item =%>-' + item.id">
+                   <a :name="'<%= $item =%>-' + item.id" class="permalink scroll" :href="'#<%= $item =%>-' + item.id">#</a>
+                   <a :href="'#<%= $item =%>-' + item.id" class="scroll">{{item.name}}</a></h2>
                 <div class="cls_desc">
                 <p> {{item.description}} </p>
                 </div>
-                <p><pre>
-                  {{item.src}}
-                 </pre></p>
+                <p><pre class="cls_src">{{item.src}}</pre></p>
             </div>
         </div>
     </template>

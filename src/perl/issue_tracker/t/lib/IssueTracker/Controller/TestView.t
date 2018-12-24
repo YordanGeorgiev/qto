@@ -31,12 +31,21 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
       next if $table_name =~ m/test_/g ; # skipping the testing tables
       next unless ( grep( /^$table_name$/, @tables_to_check ) ) ;
 
-      $tm = 'the return code for the ' . $table_name . ' is correct' ; 
+      $tm = 'the return code for the ' . $table_name . ' is 200 ' ; 
       $url = '/' . $db . '/view/' . $table_name  ; 
       ok ($t->get_ok($url)
-         ->status_is(200), $tm);
-#         ->header_is('Accept-Charset' => 'UTF-8')
-#         ->header_is('Accept-Language' => 'fi, en'), $tm )
+         ->status_is(200, $tm)
+         ->header_is('Accept-Charset' => 'UTF-8')
+         ->header_is('Accept-Language' => 'fi, en'), $tm );
+
+      $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
+      #p $dom->find('div')->join("\nSTOP  div \n\nSTART div \n")->say ;
+
+      $tm = 'the view->' . $table_name . ' page should containt 4 scripts elements' ; 
+      ok ( @{$dom->find('script')->to_array} == 4 , $tm );
+
+      $tm = 'the view->' . $table_name . ' page should have more than 0 h3 titles' ; 
+      ok ( @{$dom->find('h3')->to_array} > 0 , $tm );
 
 #      my $res = $ua->get($url)->result->json ; 
 #

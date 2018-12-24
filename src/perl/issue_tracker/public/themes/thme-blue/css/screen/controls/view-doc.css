@@ -7,9 +7,36 @@ h1, h2, h3, h4, h5, h6 {
    clear: both;
    font-size: 16px;
    color: blue;
-   margin-left: +8px;
+   margin-block-start: 0em;
+   margin-block-end: 0em;
+   margin-left: -14px;
+}
+
+.scroll {
+   text-decoration: none;
 }
 
 .cls_desc {
    clear: both;
+   float: left;
 }
+
+.cls_src {
+   clear: both;
+   float: left;
+   color: #4d4d4c;
+   font: 0.9em Consolas, Menlo, Monaco, Courier, monospace;
+   line-height: 1.5em;
+   text-align: left;
+   text-shadow: #eee 0 1px 0;
+   white-space: pre-wrap;
+}
+
+.permalink {
+   visibility: hidden;
+}
+
+.permalink: hover {
+   visibility: visible;
+}
+
