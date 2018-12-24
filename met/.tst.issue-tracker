@@ -1,9 +1,18 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+# --- 
+src/perl/issue_tracker/public/poc/vuex/sabe/
+src/perl/issue_tracker/public/poc/vuex/sabe/app.js
+src/perl/issue_tracker/public/poc/vuex/sabe/index.html
+src/perl/issue_tracker/public/poc/vuex/sabe/styles.css
+# -- 
 src/perl/issue_tracker/t/lib/IssueTracker/App/benchmark_url.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/layouts/site.html.ep
-src/perl/issue_tracker/templates/web-actions/view.html.ep
-src/perl/issue_tracker/templates/pages/view-doc.html.ep
+src/perl/issue_tracker/templates/layouts/view.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/view-doc.html.ep
+src/perl/issue_tracker/templates/components/view-doc-items-list.xt.html.ep
+src/perl/issue_tracker/templates/components/app-template.xt.html.ep
+src/perl/issue_tracker/templates/components/view-doc-editable.html.ep
 src/perl/issue_tracker/lib/IssueTracker/Controller/View.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestView.t
 src/perl/issue_tracker/templates/layouts/list.html.ep
@@ -15,12 +24,12 @@ src/perl/issue_tracker/templates/controls/list-grid/js/global-msg.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/search-box.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/xt/search-box.xt.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/xt/grid.xt.html.ep
-src/perl/issue_tracker/templates/controls/srch-grid/xt/grid.xt.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/editable.js.html.ep
-src/perl/issue_tracker/templates/controls/srch-grid/js/linkable.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid.js.html.ep
-src/perl/issue_tracker/templates/controls/srch-grid/js/search-grid.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
+src/perl/issue_tracker/templates/controls/srch-grid/xt/grid.xt.html.ep
+src/perl/issue_tracker/templates/controls/srch-grid/js/linkable.js.html.ep
+src/perl/issue_tracker/templates/controls/srch-grid/js/search-grid.js.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/js/search-grid-sf.js.html.ep
 # --
 src/perl/issue_tracker/templates/controls/list-grid
@@ -33,6 +42,7 @@ src/perl/issue_tracker/templates/controls/list-grid/js/btn-new.js.html.ep
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/table.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/pager.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-grid.css
+./src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/page-sizer.png
@@ -66,6 +76,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/In/CnrUrlParams.pm
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/jqcloud.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/site.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/view.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/jqcloud.css
 #---
@@ -100,6 +111,7 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestDelete.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListCloud.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListView.t
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestAppLabel.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListAsOutputType.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClientPOC1.pl
@@ -384,6 +396,8 @@ src/sql/pgsql/prd_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/prd_issue_tracker/15.create-table-skills.sql
 src/sql/pgsql/prd_issue_tracker/16.create-table-userstories.sql
 src/sql/pgsql/prd_issue_tracker/17.create-table-meta_tables.sql
+src/sql/pgsql/prd_issue_tracker/19.create-table-naming_conventions.sql
+src/sql/pgsql/prd_issue_tracker/20.create-table-goals.sql
 src/sql/pgsql/prd_issue_tracker/21.create-table-devops_guide.sql
 src/sql/pgsql/prd_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/prd_issue_tracker/96.create-table-test_delete_table.sql

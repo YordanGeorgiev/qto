@@ -1,0 +1,8 @@
+    <template id="app-template">
+        <div>
+            <!-- <form @submit.prevent="addItem">
+                <input class="item-input" type="text" placeholder="enter a new item ..." v-model="name" />
+            </form> -->
+            <view-doc-items-list />
+        </div>
+    </template>

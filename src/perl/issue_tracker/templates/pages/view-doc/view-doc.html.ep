@@ -6,36 +6,119 @@
       href="../../themes/thme-blue/css/screen/controls/view-doc.css?v=<%= $ProductVersion =%>" />
 % end
 
+
 % content_for cnt_body_controls  => begin
+   <div id="div_central_panel">
+      <div class="container">
+         <div id="app"></div>
+      </div>
 
-<div id="div_central_panel">
-   <div class="container">
-      <div id="app"></div>
+      %= include 'components/view-doc-items-list.xt'
+      %= include 'components/app-template.xt'
    </div>
- <template id="list-items">
-        <div class="items" style="clear:both">
-            <div v-for="item in items"
-                :class="{completed: item.completed}"
-                @click="toggleItem(item.id)"
-                @dblclick="deleteItem(item.id)"> 
-                   <h3 :id="'#<%= $item =%>-' + item.id">
-                   <a :name="'<%= $item =%>-' + item.id" class="permalink scroll" :href="'#<%= $item =%>-' + item.id">#</a>
-                   <a :href="'#<%= $item =%>-' + item.id" class="scroll">{{item.name}}</a></h2>
-                <div class="cls_desc">
-                <p> {{item.description}} </p>
-                </div>
-                <p><pre class="cls_src">{{item.src}}</pre></p>
-            </div>
-        </div>
-    </template>
-    <template id="app-template">
-        <div>
-            <!-- <form @submit.prevent="addItem">
-                <input class="item-input" type="text" placeholder="enter a new item ..." v-model="name" />
-            </form> -->
-            <list-items />
-        </div>
-    </template>
-</div>
+% end
 
+
+% content_for cnt_all_js => begin
+
+   <script id="all_js_scripts">
+
+   var state = {
+      items: []
+    };
+
+   var getters = {
+      getItems: state => state.items
+   }
+
+    var mutations = {
+           ADD_ITEM: (state, payload) => {
+               var newItem = {
+                   id: payload.newId,
+                   name: payload.name,
+                   completed: false
+               }
+               state.items.unshift(newItem);
+           },
+           SET_ITEMS (state, items) {
+               state.items = items
+           },
+           TOGGLE_ITEM: (state, payload) => {
+               var item = state.items.find(todo => todo.id === payload);
+               item.completed = !item.completed;
+           },
+           DELETE_ITEM: (state, payload) => {
+               var index = state.items.findIndex(todo => todo.id === payload);
+               state.items.splice(index, 1);
+           }
+    };
+
+    var actions = {
+         loadItems ({ commit }) {
+         axios
+            .get('/<%= $db =%>/hselect/<%= $item =%>')
+            .then(r => r.data.dat) 
+            .then(items => {
+               commit('SET_ITEMS', items)
+            })
+         },
+         addItem: (context, payload) => {
+            context.commit("ADD_ITEM", payload)
+         },
+         toggleItem: (context, payload) => {
+            context.commit("TOGGLE_ITEM", payload)
+         },
+         deleteItem: (context, payload) => {
+            context.commit("DELETE_ITEM", payload)
+         }
+   }
+
+    var store = new Vuex.Store({
+           state: state,
+           getters: getters,
+           mutations: mutations,
+           actions: actions
+       });
+
+
+    Vue.component("view-doc-items-list", {
+           created () {
+               this.$store.dispatch('loadItems')
+           },
+           computed: {
+               items() {
+                   return this.$store.getters.getItems;
+               }
+           },
+           methods: {
+               toggleItem: function(id) {
+                   this.$store.dispatch("toggleItem", id);
+               },
+               deleteItem: function(id) {
+                   this.$store.dispatch("deleteItem", id);
+               }
+           },
+           template: "#view-doc-items-list"
+       });
+      
+
+   var app = new Vue({
+           data: () => ({
+               name: "",
+               newId: 3
+           }),
+           methods: {
+               addItem: function() {
+                   this.$store.dispatch("addItem", this);
+                   this.newId ++;
+                   this.name = "";
+               }
+           },
+           store: store,
+           el: "#app",
+           template: "#app-template"
+       });
+      
+
+   </script>
 % end
