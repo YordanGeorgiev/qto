@@ -719,6 +719,87 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    }
 
 
+   sub getColumnsToSelect {
+
+      my $self          = shift ; 
+      my $objModel      = ${shift @_ } ; 
+      my $table         =  shift  ; 
+      my $cols          =  shift  ; 
+      my $ret           = 1 ; 
+      my $msg           = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
+
+      
+      my $columns_to_select = 'guid,id,' . join(',' , reverse @$cols) ; 
+
+      if ( defined ( $objModel->get('select.web-action.pick') ) ) {
+         $columns_to_select = " guid,id" ;
+         my $lst_columns_to_select = $objModel->get('select.web-action.pick'); 
+         my @cols = split (',' , $lst_columns_to_select ) ;
+         foreach my $col ( @cols ) { 
+            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col );
+      	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
+            $columns_to_select .= " , $col" ; 
+         }
+      }
+      
+      if ( defined ( $objModel->get('select.web-action.hide') ) ) {
+         my $lst_columns_to_hide = $objModel->get('select.web-action.hide'); 
+         my @cols = split (',' , $lst_columns_to_hide ) ;
+         foreach my $col ( @cols ) { 
+            $columns_to_select =~ s/,$col//g;
+            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col );
+      	   return ( 404 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
+         }
+      }
+      
+      $ret = 0 ; $msg = '' ; 
+      return ( $ret , $msg , $columns_to_select) ; 
+   }
+
+   sub doSetColToOrderByDesc {
+
+      my $self          = shift ; 
+      my $objModel      = ${shift @_ } ; 
+      my $table         =  shift  ; 
+      my $cols          =  shift  ; 
+      my $ret           = 1 ; 
+      my $msg           = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
+
+      my $columns_to_order_by_desc = undef ; 
+      if ( defined ( $objModel->get('select.web-action.od') ) ) {
+         $columns_to_order_by_desc = $objModel->get('select.web-action.od'); 
+         my @cols = split (',' , $columns_to_order_by_desc ) ;
+         foreach my $col ( @cols ) { 
+            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col ) ; 
+      	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
+         }
+      }
+      $ret = 0 ; 
+      return ( $ret , $msg , $columns_to_order_by_desc );
+   }
+
+   sub doSetColToOrderByAsc {
+
+      my $self          = shift ; 
+      my $objModel      = ${shift @_ } ; 
+      my $table         =  shift  ; 
+      my $cols          =  shift  ; 
+      my $ret           = 1 ; 
+      my $msg           = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
+
+      my $columns_to_order_by_asc = undef ; 
+      if ( defined ( $objModel->get('select.web-action.oa') ) ) {
+         $columns_to_order_by_asc = $objModel->get('select.web-action.oa'); 
+         my @cols = split (',' , $columns_to_order_by_asc ) ;
+         foreach my $col ( @cols ) { 
+            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col ); 
+      	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
+         }
+      }
+      $ret = 0 ; 
+      return ( $ret , $msg , $columns_to_order_by_asc );
+   }
+
    #
    # -----------------------------------------------------------------------------
    # get ALL the table data into hash ref of hash refs 
@@ -751,54 +832,21 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $sth              = {} ;         # this is the statement handle
       my $cols             = () ;         # the array ref of columns
       my $str_sql          = q{} ;        # this is the sql string to use for the query
+      my $columns_to_select= '' ; 
+      my $columns_to_order_by_asc   = '' ; 
+      my $columns_to_order_by_desc  = '' ; 
 
-
-      ( $ret , $msg , $cols ) = $objModel->doGetTableColumnList ( $appConfig , $db , $table ) ; 
+      ( $ret , $msg , $cols ) = $objModel->doGetItemsDefaultPickCols ( $appConfig , $db , $table ) ; 
       return ( 400 , $msg , undef ) unless ( $ret == 0 );
-      # old my $columns_to_select = "*" ; # $objModel->doChkIfColumnExists ( $db , $table , $col );
-      my $columns_to_select = 'guid,id,' . join(',' , reverse @$cols) ; 
-      # debug rint "columns_to_select: $columns_to_select \n" ; 
 
-      if ( defined ( $objModel->get('select.web-action.pick') ) ) {
-         $columns_to_select = " guid,id" ;
-         my $lst_columns_to_select = $objModel->get('select.web-action.pick'); 
-         my @cols = split (',' , $lst_columns_to_select ) ;
-         foreach my $col ( @cols ) { 
-            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col );
-      	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
-            $columns_to_select .= " , $col" ; 
-         }
-      }
-      
-      if ( defined ( $objModel->get('select.web-action.hide') ) ) {
-         my $lst_columns_to_hide = $objModel->get('select.web-action.hide'); 
-         my @cols = split (',' , $lst_columns_to_hide ) ;
-         foreach my $col ( @cols ) { 
-            $columns_to_select =~ s/,$col//g;
-            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col );
-      	   return ( 404 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
-         }
-      }
+      ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect(\$objModel,$table,$cols);
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
 
-      my $columns_to_order_by_asc = undef ; 
-      if ( defined ( $objModel->get('select.web-action.oa') ) ) {
-         $columns_to_order_by_asc = $objModel->get('select.web-action.oa'); 
-         my @cols = split (',' , $columns_to_order_by_asc ) ;
-         foreach my $col ( @cols ) { 
-            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col ); 
-      	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
-         }
-      }
+      ($ret , $msg , $columns_to_order_by_asc ) = $self->doSetColToOrderByAsc(\$objModel,$table,$cols);
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
       
-      my $columns_to_order_by_desc = undef ; 
-      if ( defined ( $objModel->get('select.web-action.od') ) ) {
-         $columns_to_order_by_desc = $objModel->get('select.web-action.od'); 
-         my @cols = split (',' , $columns_to_order_by_desc ) ;
-         foreach my $col ( @cols ) { 
-            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col ) ; 
-      	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
-         }
-      }
+      ($ret , $msg , $columns_to_order_by_desc ) = $self->doSetColToOrderByDesc(\$objModel,$table,$cols);
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
      
       $str_sql = " 
          SELECT 
@@ -815,15 +863,14 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		
       my $where_clause_fltr = '' ; 
 		( $ret , $msg , $where_clause_fltr ) = $self->doBuildWhereClauseByFltr ( $db , $table ) ; 
-
 		return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql .= $where_clause_fltr if $where_clause_fltr ; 
       
       my $where_clause_with = '' ; 
 		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table ) ; 
-
 		return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql .= $where_clause_with if $where_clause_with ; 
+
       my $order_by = 'ORDER BY' ; 
       if ( defined $columns_to_order_by_asc ) {
          $str_sql .= " $order_by " ; 

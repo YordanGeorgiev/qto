@@ -27,6 +27,7 @@ sub doHSelectItems {
    my $http_code        = 400 ; 
    my $http_method      = 'GET' ; 
    my $met              = {} ; 
+   my $ret              = 1 ; 
    my $cnt              = 0 ; 
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
@@ -38,10 +39,19 @@ sub doHSelectItems {
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMetaData( $db ) ;
    $appConfig		 		= $self->app->get('AppConfig');
+   $objModel            = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
 
    if ( looks_like_number ( $seq )) {
       $objRdrDbsFactory 	= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
       $objRdrDb 				= $objRdrDbsFactory->doInit("$rdbms_type");
+
+      my $objCnrUrlParams = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
+      ( $ret , $msg ) = $objCnrUrlParams->doSetView(\$objModel, $self->req->query_params );
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+      ( $ret , $msg ) = $objCnrUrlParams->doSetSelect(\$objModel, $self->req->query_params );
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
       ($rv, $msg, $dat) 	= $objRdrDb->doHSelectBranch($item, $seq);
       $http_code 				= $rv ;  
    } else {

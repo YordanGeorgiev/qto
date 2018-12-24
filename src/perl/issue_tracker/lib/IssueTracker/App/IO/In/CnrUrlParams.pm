@@ -68,7 +68,7 @@ sub doSetDeleteUrlParams {
 
 }
 
-sub doSetWithUrlParams {
+sub doSetWith {
 
    my $self          = shift ; 
    my $objModel      = ${ shift @_ } ; 
@@ -188,7 +188,7 @@ sub doSetQueryUrlParams {
 }
 
 
-sub doSetSelectUrlParams {
+sub doSetSelect {
 
    my $self          = shift ; 
    my $objModel      = ${ shift @_ } ; 
@@ -258,9 +258,23 @@ sub doSetSelectUrlParams {
 }
 
 
+sub doSetView {
+
+   my $self          = shift ; 
+   my $objModel      = ${ shift @_ } ; 
+   my $query_params  = shift ; 
+   my $ret           = 1 ; 
+   my $msg           = '' ; 
+
+   $objModel->set('view.web-action.bid' , $query_params->param('bid') );
+   $query_params->remove('bid') ; 
+
+   $ret = 0 ; $msg = '' ; 
+   return ( $ret , $msg ) ; 
+}
    
 
-sub doSetListUrlParams {
+sub doSetList {
 
    my $self          = shift ; 
    my $objModel      = ${ shift @_ } ; 
@@ -310,9 +324,9 @@ CnrUrlParams
 use IssueTracker::App::IO::In::CnrUrlParams ; 
 
 $objCnrUrlParams= 'IssueTracker::App::IO::In::CnrUrlParams'->new();
-( $ret , $msg ) = $objCnrUrlParams->doSetSelectUrlParams(\$objModel, $self->req->query_params );
-( $ret , $msg ) = $objCnrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
-( $ret , $msg ) = $objCnrUrlParams->doSetListUrlParams(\$objModel, $self->req->query_params );
+( $ret , $msg ) = $objCnrUrlParams->doSetSelect(\$objModel, $self->req->query_params );
+( $ret , $msg ) = $objCnrUrlParams->doSetWith(\$objModel, $self->req->query_params );
+( $ret , $msg ) = $objCnrUrlParams->doSetList(\$objModel, $self->req->query_params );
   
 
 =head1 DESCRIPTION

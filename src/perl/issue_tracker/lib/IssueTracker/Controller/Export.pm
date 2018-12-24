@@ -104,10 +104,10 @@ sub doSetRequestModelData {
    $objModel->set('table_name' , $item ) ; 
 
    $objCnrUrlParams   = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
-   ( $ret , $msg ) = $objCnrUrlParams->doSetSelectUrlParams(\$objModel, $self->req->query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetSelect(\$objModel, $self->req->query_params );
    return ( $ret , $msg ) unless $ret == 0 ; 
 
-   ( $ret , $msg ) = $objCnrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetWith(\$objModel, $self->req->query_params );
    return ( $ret , $msg , \$objModel) ;
 
 }

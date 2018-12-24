@@ -48,15 +48,14 @@ sub doListItems {
  
    my $as               = 'grid' ; # the default form of the list control 
    my $list_control     = '' ; 
-   my $refObjModel      = {} ; 
+   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
 
-	# debug rint "List.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
    
-   ( $ret , $msg , $refObjModel)  = $self->doSetRequestModelData( $item , $db ) ; 
+   ( $ret , $msg )  = $self->doSetRequestModelData( \$objModel , $db , $item );
 
    if ( $ret == 0 ) {
-      ( $ret , $msg , $list_control ) = $self->doBuildListPageType ( $msg , $refObjModel , $db , $item , $as  ) ; 
+      ( $ret , $msg , $list_control ) = $self->doBuildListPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
    } else {
       $list_control = '' ; 
    }
@@ -87,29 +86,27 @@ sub doSetPageMsg {
 sub doSetRequestModelData {
 
    my $self             = shift ; 
-   my $item             = shift ; 
+   my $objModel         = ${ shift @_ } ; 
    my $db               = shift ; 
+   my $item             = shift ; 
    
    my $ret              = 1 ;  
    my $msg              = '' ; 
    my $objCnrUrlParams  = {} ; 
-   my $objModel         = {} ; 
 
    $appConfig		 		= $self->app->get('AppConfig');
-   $objModel            = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
-
    $objModel->set('postgres_db_name' , $db ) ; 
    $objModel->set('table_name' , $item ) ; 
 
    $objCnrUrlParams   = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
-   ( $ret , $msg ) = $objCnrUrlParams->doSetListUrlParams(\$objModel, $self->req->query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetList(\$objModel, $self->req->query_params );
    return ( $ret , $msg ) unless $ret == 0 ; 
 
-   ( $ret , $msg ) = $objCnrUrlParams->doSetSelectUrlParams(\$objModel, $self->req->query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetSelect(\$objModel, $self->req->query_params );
    return ( $ret , $msg ) unless $ret == 0 ; 
 
-   ( $ret , $msg ) = $objCnrUrlParams->doSetWithUrlParams(\$objModel, $self->req->query_params );
-   return ( $ret , $msg , \$objModel) ; 
+   ( $ret , $msg ) = $objCnrUrlParams->doSetWith(\$objModel, $self->req->query_params );
+   return ( $ret , $msg ) ;
 }
 
 

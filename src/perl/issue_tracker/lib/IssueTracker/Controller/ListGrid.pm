@@ -27,7 +27,7 @@ sub doBuildListControl {
    my $control       	= '' ; 
    my $cols             = () ; 
 
-   ( $ret , $msg , $cols) = $objModel->doGetTableColumnList( $appConfig , $db , $table ) ;
+   ( $ret , $msg , $cols) = $objModel->doGetItemsDefaultPickCols( $appConfig , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 		
    my $to_picks   = $objModel->get('list.web-action.pick') ; 
