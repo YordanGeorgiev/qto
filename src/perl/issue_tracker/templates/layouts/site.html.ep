@@ -8,113 +8,17 @@
   <%= content 'cnt_header_css' %>
 </head>
 <body>
-%= include 'controls/site/app_name_tooltip'
+   %= include 'controls/site/app_name_tooltip'
 
-<%= content 'cnt_body_controls' %>
+   <%= content 'cnt_body_controls' %>
 
-<div id="js_libs">
-   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-   <script src="https://unpkg.com/vue@2.5.3/dist/vue.min.js"></script>
-   <script src="https://unpkg.com/vuex@3.0.1/dist/vuex.min.js"></script>
-</div>
+   <div id="js_libs">
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+      <script src="https://unpkg.com/vue@2.5.3/dist/vue.min.js"></script>
+      <script src="https://unpkg.com/vuex@3.0.1/dist/vuex.min.js"></script>
+   </div>
 
-<script id="all_js_scripts">
-
-var state = {
-	items: []
- };
-
-var getters = {
-	getItems: state => state.items
-}
-
- var mutations = {
-        ADD_ITEM: (state, payload) => {
-            var newItem = {
-                id: payload.newId,
-                name: payload.name,
-                completed: false
-            }
-            state.items.unshift(newItem);
-        },
-        SET_ITEMS (state, items) {
-            state.items = items
-        },
-        TOGGLE_ITEM: (state, payload) => {
-            var item = state.items.find(todo => todo.id === payload);
-            item.completed = !item.completed;
-        },
-        DELETE_ITEM: (state, payload) => {
-            var index = state.items.findIndex(todo => todo.id === payload);
-            state.items.splice(index, 1);
-        }
- };
-
-   var actions = {
-		loadItems ({ commit }) {
-			axios
-			.get('/<%= $db =%>/hselect/<%= $item =%>')
-			.then(r => r.data.dat) 
-			.then(items => {
-				commit('SET_ITEMS', items)
-			})
-		  },
-        addItem: (context, payload) => {
-            context.commit("ADD_ITEM", payload)
-        },
-        toggleItem: (context, payload) => {
-            context.commit("TOGGLE_ITEM", payload)
-        },
-        deleteItem: (context, payload) => {
-            context.commit("DELETE_ITEM", payload)
-        }
-    }
-
- var store = new Vuex.Store({
-        state: state,
-        getters: getters,
-        mutations: mutations,
-        actions: actions
-    });
-
- Vue.component("list-items", {
-  		  created () {
-    			this.$store.dispatch('loadItems')
-  		  },
-        computed: {
-            items() {
-                return this.$store.getters.getItems;
-            }
-        },
-        methods: {
-            toggleItem: function(id) {
-                this.$store.dispatch("toggleItem", id);
-            },
-            deleteItem: function(id) {
-                this.$store.dispatch("deleteItem", id);
-            }
-        },
-        template: "#list-items"
-    });
-	
-var app = new Vue({
-        data: () => ({
-            name: "",
-            newId: 3
-        }),
-        methods: {
-            addItem: function() {
-                this.$store.dispatch("addItem", this);
-                this.newId ++;
-                this.name = "";
-            }
-        },
-        store: store,
-        el: "#app",
-        template: "#app-template"
-    });
-	
-</script>
+   <%= content 'cnt_all_js' %>
 
 </body>
 </html>
