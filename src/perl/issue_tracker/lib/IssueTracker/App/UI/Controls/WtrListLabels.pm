@@ -49,7 +49,7 @@ package IssueTracker::App::UI::Controls::WtrListLabels ;
       if ( defined ( $to_picks ) ) {
          @picks      = split ( ',' , $to_picks ); 
       } else {
-         ( $ret , $msg , $cols) = $objModel->doGetTableColumnList( $appConfig , $db , $table ) ;
+         ( $ret , $msg , $cols) = $objModel->doGetItemsDefaultPickCols( $appConfig , $db , $table ) ;
          return ( $ret , $msg , '' ) unless $ret == 0 ; 
          @picks      = @$cols ;
       }

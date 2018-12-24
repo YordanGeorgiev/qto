@@ -49,7 +49,7 @@ our $objLogger       = {} ;
    }
   
 
-   sub doGetTableColumnList {
+   sub doGetItemsDefaultPickCols {
 
       my $self          = shift ; 
       my $appConfig     = shift ; 

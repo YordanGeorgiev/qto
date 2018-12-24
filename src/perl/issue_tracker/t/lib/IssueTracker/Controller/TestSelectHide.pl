@@ -50,10 +50,10 @@ for my $table ( @tables ) {
    $tm .= "url : $url" ; 
    $res = $ua->get($url )->result->json ; 
    #p $ua->get($url )->result->json ;
-   #p $res ; 
-   ok ( $res->{'ret'} == 404 , $tm ) ; 	
+   p $res ; 
+   ok ( $res->{'ret'} == 400 , $tm ) ; 	
    $tm = "no data is retrieved for non-existent column to hide - url: $url" ; 
-   ok ( $res->{'dat'} == undef , $tm ) ; 	
+   ok ( $res->{'dat'} eq "", $tm ) ; 	
    $tm = "the client is informed for the non-existent column - url: $url" ; 
    ok ( $res->{'msg'} eq 'the non_existent_column column does not exist' , $tm ) ; 	
 

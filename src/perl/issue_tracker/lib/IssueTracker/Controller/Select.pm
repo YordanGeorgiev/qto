@@ -52,14 +52,14 @@ sub doSelectItems {
 
    my $query_params = $self->req->query_params ; 
    $objCnrUrlParams = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
-   ( $ret , $msg ) = $objCnrUrlParams->doSetSelectUrlParams(\$objModel, $query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetSelect(\$objModel, $query_params );
    if ( $ret != 0 ) {
       $http_code = 400 ; 
       $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
       return ; 
    } 
 
-   ( $ret , $msg ) = $objCnrUrlParams->doSetWithUrlParams(\$objModel, $query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetWith(\$objModel, $query_params );
    if ( $ret != 0 ) {
       $http_code = 400 ; 
       $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
