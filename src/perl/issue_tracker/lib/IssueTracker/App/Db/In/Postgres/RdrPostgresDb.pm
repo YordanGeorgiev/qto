@@ -10,6 +10,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    use DBI ; 
 	use Data::Printer ; 
 
+   use Scalar::Util qw /looks_like_number/ ; 
    use IssueTracker::App::Utils::Logger ; 
    use IssueTracker::App::Mdl::Model ; 
    use IssueTracker::App::Db::In::Postgres::MojoPgWrapper ; 
@@ -44,7 +45,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
-      # debug p $appConfig->{ $db . '.meta' }  ; 
+      # debug pr $appConfig->{ $db . '.meta' }  ; 
 
       $objModel->doSetDbTablesList($db ) unless exists $appConfig->{"$db" . '.meta.tables-list'} ; 
       my @tables = @{ $appConfig->{"$db" . '.meta.tables-list'} } ; 
@@ -163,6 +164,27 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		}
 
    } 
+   
+   sub doBuildWhereClauseByBranchId {
+
+      my $self             = shift ; 
+      my $db               = shift ; 
+      my $table            = shift ; 
+
+      my $where_clause_bid = '' , 
+		my $ret              = 400 ; 
+		my $msg              = ' the url parameter branch-id - bid should be a number !!! ' ; 
+
+      my $branch_id = $objModel->get('view.web-action.bid') || 0 ; 
+
+      unless ( looks_like_number $branch_id ) {
+         return ( $ret , $msg , undef );
+		} else {
+         $where_clause_bid = " AND parent.id = '$branch_id' " ; 
+			# simply no withing attributes nor values are provided return => to proceed with the select 
+      	return ( 0 , "" , $where_clause_bid ) ;
+		}
+   } 
 
 
    sub doBuildWhereClauseByWith {
@@ -183,10 +205,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       return ( 0 , "" , "")  unless ( defined ( $ops ) ); 
       return ( 0 , "" , "")  unless ( defined ( $vals ) ); 
 
-      # debug rint "from RdrPostgresDb.pm 120 \@$cols @$cols \n" ; 
-      # debug rint "from RdrPostgresDb.pm \@$ops @$ops \n" ; 
-      # debug rint "from RdrPostgresDb.pm \@$vals @$vals \n" ; 
-      #
+      # print "from RdrPostgresDb.pm 120 \@$cols @$cols \n" ; 
+      # print "from RdrPostgresDb.pm \@$ops @$ops \n" ; 
+      # print "from RdrPostgresDb.pm \@$vals @$vals \n" ; 
       if ( @$cols and @$ops and @$vals) {
          
          for ( my $i = 0 ; $i < scalar ( @$cols ) ; $i++ ) {
@@ -528,7 +549,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $sth->execute() ; 
          $mhsr2 = $sth->fetchall_hashref( 'rowid' ) ; 
          # debug rint "RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;
-         # debug p $mhsr2 ; 
+         # debug pr $mhsr2 ; 
          # debug rint "STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
       };
       if ( $@ or !scalar(%$mhsr2)) { 
@@ -606,7 +627,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 
    #
-   # -----------------------------------------------------------------------------
+   # -  ----------------------------------------------------------------------------
    # get ALL the table data into hash ref of hash refs 
    # -----------------------------------------------------------------------------
    sub doSearchConfigurationEntries {
@@ -985,16 +1006,27 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    sub doHSelectBranch {
 
       my $self          = shift ; 
+      my $db            = shift || croak 'no db passed !!!' ; 
       my $table         = shift || croak 'no table passed !!!' ; 
       my $seq           = shift || 1 ; 
    
       my $rv            = 1  ;
+      my $ret           = 1 ; 
       my $msg           = 'unknown error occured in RdrPostgresDb::doHSelectBranch' ; 
       my $pg            = {} ; 
       my $sql           = {} ; 
       my $hsr2          = {} ; 
+      my $where_clause_with = '' ; 
+      my $where_clause_bid = '' ; 
 
 		$pg = $self->doInitPg();
+
+		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table ) ; 
+		return ( $ret , $msg ) unless $ret == 0 ; 
+      $where_clause_with =~ s/$table/parent/g ; 
+
+      ( $ret , $msg , $where_clause_bid ) = $self->doBuildWhereClauseByBranchId ( $db , $table ) ; 
+		return ( $ret , $msg ) unless $ret == 0 ; 
 
       eval {
 			$sql = " 
@@ -1002,14 +1034,15 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
                SELECT node.* FROM $table AS node, $table AS parent 
                WHERE 1=1 AND node.lft 
                BETWEEN parent.lft AND parent.rgt
-               AND parent.seq = '" . $seq . "')  AS dyn_sql 
-				WHERE 1=1
+               $where_clause_bid
+               $where_clause_with
+               )  AS dyn_sql 
+				WHERE 1=1 
 				ORDER BY seq
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
-         # todo:ysg
-			p $sql ; 
-         # debug p $hsr2 ; 
+			# debug pr $sql ; 
+         # debug pr $hsr2 ; 
       };
       if ( $@ ) {
          $rv               = 404 ; 
