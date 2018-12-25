@@ -5,7 +5,8 @@ src/perl/issue_tracker/public/poc/vuex/sabe/app.js
 src/perl/issue_tracker/public/poc/vuex/sabe/index.html
 src/perl/issue_tracker/public/poc/vuex/sabe/styles.css
 # -- 
-src/perl/issue_tracker/t/lib/IssueTracker/App/benchmark_url.pl
+src/perl/issue_tracker/t/lib/IssueTracker/App/benchmarks/benchmark-list-url.pl
+src/perl/issue_tracker/t/lib/IssueTracker/App/benchmarks/benchmark-view-url.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/layouts/view.html.ep
