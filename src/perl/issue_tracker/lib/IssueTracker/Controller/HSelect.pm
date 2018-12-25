@@ -14,6 +14,7 @@ use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Db::In::RdrDbsFactory ; 
 use IssueTracker::App::IO::In::CnrUrlParams ; 
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
+use IssueTracker::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
 
 our $appConfig          = {} ; 
 
@@ -54,6 +55,10 @@ sub doHSelectItems {
 
       ($rv, $msg, $dat) 	= $objRdrDb->doHSelectBranch($db , $item, $seq);
       $http_code 				= $rv ;  
+      p $dat ; 
+      my $objCnrHashesArrRefToHashesArrRef = 'IssueTracker::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$appConfig  ) ; 
+      # p ( $dat ) ; 
+      $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
    } else {
       $msg = 'the seq ( aka sequence ) url parameter should be a whole number' ; 
       $http_code = 400 ; 
