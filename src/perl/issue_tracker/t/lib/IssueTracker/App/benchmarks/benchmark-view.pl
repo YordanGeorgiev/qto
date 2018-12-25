@@ -11,7 +11,7 @@ use Mojo::IOLoop ;
 
 die_on_fail ; 
 
-BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
+BEGIN { unshift @INC, "$FindBin::Bin/../../../../../../issue_tracker/lib" }
 
 use IssueTracker::App::Utils::Timer ; 
 
@@ -32,41 +32,15 @@ use IssueTracker::App::Utils::Timer ;
 
    my $tm               = '' ; # the test message for each test 
    my $db_name          = 'dev_issue_tracker' ; 
-   my $create_url = (split /\?/ , $url )[0] ; $create_url =~ s|list/[a-zA-Z_]+|create/benchmarks|g ; 
-   print "create_url : $create_url \n" ; 
-   my $update_url = (split /\?/ , $url )[0] ; $update_url =~ s|list/[a-zA-Z_]+|update/benchmarks|g ; 
-   print "update_url : $update_url \n" ; 
 
    my $objTimerId       = {} ;
    $objTimerId          = 'IssueTracker::App::Utils::Timer'->new( 'YYYYMMDDhhmmss' );
    my $id = $objTimerId->GetHumanReadableTime(); 
-   $id = substr( $id , 2) ; 
-   # create the new entry to get the id
+   $id = substr( $id , 2) ; # create the new entry to get the id
 
    my $objTimer         = {} ;
    $objTimer            = 'IssueTracker::App::Utils::Timer'->new( 'YYYY-MM-DD hh:mm:ss' );
    my $start_time       = $objTimer->GetHumanReadableTime();
-   print "start_time: $start_time \n" ; 
-   $ua->post($create_url => json => { "id" =>$id}) ; 
-   $ua->post($update_url => json => { "attribute"=>"start_time", 'id' => $id , 'cnt'=> $start_time } => sub {
-     my ($ua, $tx) = @_;
-     print $tx->result->body . "\n" ; 
-   });
-   Mojo::IOLoop->start unless Mojo::IOLoop->is_running;
-   $ua->post($update_url => json => { "attribute"=>"url", 'id' => $id , 'cnt'=> $url } => sub {
-     my ($ua, $tx) = @_;
-     print $tx->result->body . "\n" ; 
-   });
-   Mojo::IOLoop->start unless Mojo::IOLoop->is_running;
-   my $count = $ARGV[1] || 1000 ; 
-   my $name = $ARGV[2] || 'url average page load' ; 
-   $ua->post($update_url => json => { "attribute"=>"name", 'id' => $id , 'cnt'=> "$name" } => sub {
-     my ($ua, $tx) = @_;
-     print $tx->result->body . "\n" ; 
-   });
-   Mojo::IOLoop->start unless Mojo::IOLoop->is_running;
-
-   my $currentShortHash = `git rev-parse --short HEAD` ; chomp($currentShortHash);
 
    my $begin_time       = time();
    for my $i (1 .. $count ) { # because page-nums are human and non-nerd / machine readables ...
@@ -79,11 +53,6 @@ use IssueTracker::App::Utils::Timer ;
    my $avg_ua_load_time = sprintf("%0.6f" , $diff_time/$count ) ; 
    
    my $stop_time = $objTimer->GetHumanReadableTime();
-   $ua->post($update_url => json => { "attribute"=>"stop_time", 'id' => $id , 'cnt'=> $stop_time } => sub {
-     my ($ua, $tx) = @_;
-     print $tx->result->body . "\n" ; 
-   });
-   Mojo::IOLoop->start unless Mojo::IOLoop->is_running;
    print "stop_time: $stop_time \n" ; 
    
    print "$start_time - $stop_time = $diff_time \n" ; 
