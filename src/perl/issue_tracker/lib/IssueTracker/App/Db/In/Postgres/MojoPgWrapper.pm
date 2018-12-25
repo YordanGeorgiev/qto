@@ -2,7 +2,7 @@ package IssueTracker::App::Db::In::Postgres::MojoPgWrapper ;
 
    use strict ; use warnings ; use utf8 ; 
    require Exporter; our @ISA = qw(Exporter Mojo::Pg) ; 
-   our $AUTOLOAD =();
+   our $AUTOLOAD = ();
    use AutoLoader;
    use parent qw(Mojo::Pg);
 

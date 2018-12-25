@@ -23,6 +23,24 @@
 
    <script id="all_js_scripts">
 
+   function getUrlParams (){
+      var url_params = new URLSearchParams();
+      if( window.location.toString().indexOf("?") != -1) {
+         var href_part = window.location.search.split('?')[1]
+         href_part.replace(/([^=&]+)=([^&]*)/g, 
+            function(m, key, value) {
+               var attr = decodeURIComponent(key)
+               var val = decodeURIComponent(value)
+               url_params.append(attr,val);
+         });
+      } 
+      
+      if ( url_params.has("as") === false) { url_params.append("as" , "doc"); }
+      
+      //debug for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
+      return url_params ; 
+   }
+
    var state = {
       items: []
     };
@@ -55,8 +73,10 @@
 
     var actions = {
          loadItems ({ commit }) {
+         // todo:ysg
+         var url_params = getUrlParams()  
          axios
-            .get('/<%= $db =%>/hselect/<%= $item =%>')
+            .get((window.location.pathname).replace("/view/" , "/hselect/") , { params: url_params })
             .then(r => r.data.dat) 
             .then(items => {
                commit('SET_ITEMS', items)

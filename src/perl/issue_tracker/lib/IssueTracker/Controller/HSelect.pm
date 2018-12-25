@@ -52,7 +52,7 @@ sub doHSelectItems {
       ( $ret , $msg ) = $objCnrUrlParams->doSetSelect(\$objModel, $self->req->query_params );
       return ( $ret , $msg ) unless $ret == 0 ; 
 
-      ($rv, $msg, $dat) 	= $objRdrDb->doHSelectBranch($item, $seq);
+      ($rv, $msg, $dat) 	= $objRdrDb->doHSelectBranch($db , $item, $seq);
       $http_code 				= $rv ;  
    } else {
       $msg = 'the seq ( aka sequence ) url parameter should be a whole number' ; 
