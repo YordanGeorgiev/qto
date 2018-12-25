@@ -5,7 +5,8 @@ src/perl/issue_tracker/public/poc/vuex/sabe/app.js
 src/perl/issue_tracker/public/poc/vuex/sabe/index.html
 src/perl/issue_tracker/public/poc/vuex/sabe/styles.css
 # -- 
-src/perl/issue_tracker/t/lib/IssueTracker/App/benchmark_url.pl
+src/perl/issue_tracker/t/lib/IssueTracker/App/benchmarks/benchmark-list-url.pl
+src/perl/issue_tracker/t/lib/IssueTracker/App/benchmarks/benchmark-view-url.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/layouts/view.html.ep
@@ -130,6 +131,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/UI/Pages/1
 # ---
 src/perl/issue_tracker/t/TestIssueTracker.pl
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr
+src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHashesArrRefToHashesArrRef.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
 src/perl/issue_tracker/t/lib/IssueTracker/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
 src/perl/issue_tracker/t
