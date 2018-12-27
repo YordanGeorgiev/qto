@@ -1,6 +1,32 @@
+#content {   
+	overflow:auto;
+ 	width: 100% ; 
+}
+
+#lft_body {
+	width: 56%; 
+	background: white;
+	clear; none;
+}
+#rgt_toc {
+	width: 38%; 
+	background: white;
+	clear; none;
+}
+
+#lft_body {   
+	float:left; 
+}
+
+#rgt_toc {   
+	float:right; 
+}
+
+
 body {
    padding: 1% 3% 40% 3%;
 }
+
 
 h1, h2, h3, h4, h5, h6 {
    float: left;
