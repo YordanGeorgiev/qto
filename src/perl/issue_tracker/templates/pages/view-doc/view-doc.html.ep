@@ -73,14 +73,14 @@
 
     var actions = {
          loadItems ({ commit }) {
-         // todo:ysg
-         var url_params = getUrlParams()  
-         axios
-            .get((window.location.pathname).replace("/view/" , "/hselect/") , { params: url_params })
-            .then(r => r.data.dat) 
-            .then(items => {
-               commit('SET_ITEMS', items)
-            })
+            // todo:ysg
+            var url_params = getUrlParams()  
+            axios
+               .get((window.location.pathname).replace("/view/" , "/hselect/") , { params: url_params })
+               .then(r => r.data.dat) 
+               .then(items => {
+                  commit('SET_ITEMS', items)
+               })
          },
          addItem: (context, payload) => {
             context.commit("ADD_ITEM", payload)
@@ -101,42 +101,42 @@
        });
 
 
-    Vue.component("view-doc-items-list", {
-           created () {
-               this.$store.dispatch('loadItems')
-           },
-           computed: {
-               items() {
-                   return this.$store.getters.getItems;
-               }
-           },
-           methods: {
-               toggleItem: function(id) {
-                   this.$store.dispatch("toggleItem", id);
-               },
-               deleteItem: function(id) {
-                   this.$store.dispatch("deleteItem", id);
-               }
-           },
-           template: "#view-doc-items-list"
-       });
+   const ViewDocItemsList = Vue.component("view-doc-items-list", {
+      computed: {
+         items() {
+            return this.$store.getters.getItems;
+         }
+       },
+      methods: {
+         toggleItem: function(id) {
+            this.$store.dispatch("toggleItem", id);
+         },
+         deleteItem: function(id) {
+            this.$store.dispatch("deleteItem", id);
+         }
+      },
+      template: "#view-doc-items-list"
+   });
       
 
    var app = new Vue({
-           data: () => ({
-               name: "",
-               newId: 3
-           }),
-           methods: {
-               addItem: function() {
-                   this.$store.dispatch("addItem", this);
-                   this.newId ++;
-                   this.name = "";
+         store: store
+         , data: () => ({})
+         , el: "#app"
+         , components: {
+            'view-doc-items-list': ViewDocItemsList
+         }
+         , template: "#app-template"
+         , created: function () {
+            this.$store.dispatch('loadItems')
+         }
+         , methods: {
+            addItem: function() {
+               this.$store.dispatch("addItem", this);
+               this.newId ++;
+               this.name = "";
                }
            },
-           store: store,
-           el: "#app",
-           template: "#app-template"
        });
       
 
