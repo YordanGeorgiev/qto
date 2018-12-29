@@ -1008,6 +1008,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $self          = shift ; 
       my $db            = shift || croak 'no db passed !!!' ; 
       my $table         = shift || croak 'no table passed !!!' ; 
+      my $bid           = shift || 0 ; 
       my $seq           = shift || 1 ; 
    
       my $rv            = 1  ;
