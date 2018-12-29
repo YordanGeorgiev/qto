@@ -37,7 +37,7 @@ sub doQueryItems {
    my $msr2             = {} ; 
    
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMetaData( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db ) ;
    
    $appConfig		 		= $self->app->get('AppConfig');
    unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
@@ -65,15 +65,16 @@ sub doQueryItems {
    $objModel->set('postgres_db_name' , $db ) ; 
 
    my $query_params = $self->req->query_params ; 
-   $objCnrUrlParams = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
-   ( $ret , $msg ) = $objCnrUrlParams->doSetQueryUrlParams(\$objModel, $query_params , 'Query' );
+   my $objCnrUrlParams = 
+      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
+   ( $ret , $msg ) = $objCnrUrlParams->doSetQueryUrlParams('Query' );
    if ( $ret != 0 ) {
       $self->SUPER::doRenderJSON(400,$msg,'GET','','0','');
       return ; 
    } 
 
    $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
+	$objRdrDb = $objRdrDbsFactory->doSpawn("$rdbms_type");
    ($ret, $msg , $hsr2 ) = $objRdrDb->doGlobalSrchIntoHashRef(\$objModel);
 
    if ( $ret == 0 ) {

@@ -49,7 +49,7 @@ sub doBuildViewControl {
    my $cols             = () ; 
 
    $objRdrDbsFactory    = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
-   $objRdrDb            = $objRdrDbsFactory->doInit("$rdbms_type");
+   $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
 
    ( $ret , $msg , $cols) = $objModel->doGetItemsDefaultPickCols( $appConfig , $db , $item ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 

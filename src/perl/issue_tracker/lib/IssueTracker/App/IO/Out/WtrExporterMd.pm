@@ -16,7 +16,6 @@ use IssueTracker::App::Utils::Logger ;
 use IssueTracker::App::Utils::Timer ; 
 use IssueTracker::App::Db::In::RdrDbsFactory ; 
 use IssueTracker::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
-use IssueTracker::App::IO::In::CnrUrlParams ; 
 use IssueTracker::App::IO::Out::WtrMd ; 
 
 our $module_trace      = 1 ; 
@@ -42,7 +41,7 @@ sub doExport {
    my $dat              = {} ; 
  
    $objRdrDbsFactory 	= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   $objRdrDb 				= $objRdrDbsFactory->doInit("$rdbms_type");
+   $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
 
    ($rv, $msg, $dat) 	= $objRdrDb->doHSelectBranch($db , $table, $objModel->get('view.web-action.bid'));
    $http_code 				= $rv ;  

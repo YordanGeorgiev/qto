@@ -51,8 +51,9 @@ sub doUpdateItemBySingleCol {
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    
-   $objCnrUrlParams     = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
-   ( $ret , $msg )      = $objCnrUrlParams->doSetUpdateUrlParams(\$objModel, $perl_hash ) ; 
+   $objCnrUrlParams = 
+      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
+   ( $ret , $msg )      = $objCnrUrlParams->doSetUpdateUrlParams($perl_hash ) ; 
    
    if ( $ret != 0 ) {
       $self->res->code(400);

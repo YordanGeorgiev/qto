@@ -72,7 +72,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       for my $table ( @tables ) { 
          my $issues_file = ();  
          my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-         my $objRdrDb 			= $objRdrDbsFactory->doInit ( "$rdbms_type" );
+         my $objRdrDb 			= $doReloadProjDbMeta ( "$rdbms_type" );
 
          ( $ret , $msg )  = 
             $objRdrDb->doSelect( \$objModel , $table , $filter_by_attributes ) ; 

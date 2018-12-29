@@ -15,16 +15,21 @@ package IssueTracker::App::IO::In::CnrUrlParams ;
 	use File::Path ; 
    use Mojo::Parameters ; 
    use Scalar::Util::Numeric qw(isint);
+   use Scalar::Util qw /looks_like_number/ ; 
    use Data::Printer ; 
+   use IssueTracker::App::Mdl::Model ; 
 
-
+   
    use parent 'IssueTracker::App::Utils::OO::SetGetable' ; 
    use parent 'IssueTracker::App::Utils::OO::AutoLoadable' ;
+
+   our $query_params = () ; 
+   our $objModel     = {} ; 
+   our $appConfig    = {} ; 
 
 sub doSetCreateUrlParams {
 
    my $self          = shift ; 
-   my $objModel      = ${ shift @_ } ; 
    my $perl_hash     = shift ; 
    my $ret           = 0 ; 
    my $msg           = '' ; 
@@ -39,7 +44,6 @@ sub doSetCreateUrlParams {
 sub doSetUpdateUrlParams {
 
    my $self          = shift ; 
-   my $objModel      = ${ shift @_ } ; 
    my $perl_hash     = shift ; 
    my $ret           = 0 ; 
    my $msg           = '' ; 
@@ -56,7 +60,6 @@ sub doSetUpdateUrlParams {
 sub doSetDeleteUrlParams {
 
    my $self          = shift ; 
-   my $objModel      = ${ shift @_ } ; 
    my $perl_hash     = shift ; 
    my $ret           = 0 ; 
    my $msg           = '' ; 
@@ -71,8 +74,6 @@ sub doSetDeleteUrlParams {
 sub doSetWith {
 
    my $self          = shift ; 
-   my $objModel      = ${ shift @_ } ; 
-   my $query_params  = shift ; 
    my $with_params   = {} ; 
    my $ret           = 1 ; 
    my $msg           = '' ; 
@@ -90,13 +91,11 @@ sub doSetWith {
    $with_params   = $query_params->every_param('with') ; 
    # or where because of the sql gurus around there ...
    $with_params   = $query_params->every_param('where') if ( @$with_params < 1 ) ;
-
-   return unless $with_params ; 
+   return ( 0 , "") unless $with_params ; 
 
    my ( @with_cols , @with_ops , @with_vals ) = () ; 
 
    foreach my $with ( @$with_params ) {
-   
 
       if ( $with =~ m/(.*?)[-](.*?)[-](.*)/g ) {
          push @with_cols , $1 ; 
@@ -136,8 +135,6 @@ sub doSetWith {
 sub doSetQueryUrlParams {
 
    my $self          = shift ; 
-   my $objModel      = ${ shift @_ } ; 
-   my $query_params  = shift ; 
    my $Controller    = shift || 'unknown' ; 
    my $controller    = lc ( $Controller ) ; 
    my $ret           = 0 ; 
@@ -191,8 +188,6 @@ sub doSetQueryUrlParams {
 sub doSetSelect {
 
    my $self          = shift ; 
-   my $objModel      = ${ shift @_ } ; 
-   my $query_params  = shift ; 
    my $ret           = 0 ; 
    my $msg           = '' ; 
    
@@ -261,10 +256,23 @@ sub doSetSelect {
 sub doSetView {
 
    my $self          = shift ; 
-   my $objModel      = ${ shift @_ } ; 
-   my $query_params  = shift ; 
    my $ret           = 1 ; 
+   my $http_code     = 200 ;
    my $msg           = '' ; 
+   my $bid           = $query_params->param('bid') || 0 ; 
+   my $seq           = $query_params->param('seq') ; 
+
+   unless ( looks_like_number $bid ) {
+      $msg = 'the branch-id bid url parameter should be a whole number' ; 
+      $http_code = 400 ; 
+      return ( $http_code , $msg ) 
+   }
+   
+   if ( defined $seq && !looks_like_number $query_params->param('seq') ) {
+      $msg = 'the seq ( aka sequence ) url parameter should be a whole number' ; 
+      $http_code = 400 ; 
+      return ( $http_code , $msg ) 
+   }
 
    $objModel->set('view.web-action.bid' , $query_params->param('bid') );
    $query_params->remove('bid') ; 
@@ -272,7 +280,7 @@ sub doSetView {
    $objModel->set('view.web-action.seq' , $query_params->param('seq') );
    $query_params->remove('seq') ; 
 
-   $ret = 0 ; $msg = '' ; 
+   $ret = 200 ; $msg = '' ; 
    return ( $ret , $msg ) ; 
 }
    
@@ -280,8 +288,6 @@ sub doSetView {
 sub doSetList {
 
    my $self          = shift ; 
-   my $objModel      = ${ shift @_ } ; 
-   my $query_params  = shift ; 
    my $ret           = 1 ; 
    my $msg           = '' ; 
 
@@ -305,12 +311,15 @@ sub doSetList {
 }
 
 
-sub new {
-    my $class = shift;    # Class name is in the first parameter
-    my $self = {};        # Anonymous hash reference holds instance attributes
-    bless($self, $class); # Say: $self is a $class
-    return $self;
-}   
+	sub new {
+		my $invocant   = shift ;    
+		$appConfig     = ${ shift @_ } || croak 'appConfig not passed in RdrPostgresDb !!!' ; 
+		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
+      $query_params  = shift || croak 'no query params passed !!!' ; 
+		my $class      = ref ( $invocant ) || $invocant ; 
+		my $self       = {} ; bless( $self, $class );    # Say: $self is a $class
+		return $self;
+	}  
 
 1;
 
@@ -321,15 +330,12 @@ __END__
 
 CnrUrlParams
 
-=head1 SYNOPSIS
+=head1 SYNOPSIS 
 
+   use IssueTracker::App::IO::In::CnrUrlParams ; 
+   my $objCnrUrlParams = 
+      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
 
-use IssueTracker::App::IO::In::CnrUrlParams ; 
-
-$objCnrUrlParams= 'IssueTracker::App::IO::In::CnrUrlParams'->new();
-( $ret , $msg ) = $objCnrUrlParams->doSetSelect(\$objModel, $self->req->query_params );
-( $ret , $msg ) = $objCnrUrlParams->doSetWith(\$objModel, $self->req->query_params );
-( $ret , $msg ) = $objCnrUrlParams->doSetList(\$objModel, $self->req->query_params );
   
 
 =head1 DESCRIPTION
