@@ -93,14 +93,6 @@ mysql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.5.6.dev.ysg/src/sq
 # the web host where the isg-pub instance residues 
 web_host=host-name
 
-# the number of the web port 
-web_port=5001
-
-# the mysql db data containing load xls
-# after 
-# load_xls=/opt/csitea/issue-tracker/issue-tracker.0.3.0.dev.ysg/doc/xls/issue-tracker-en.xlsx
-load_xls=/vagrant/var/csitea/issue-tracker/issue-tracker.1.0.0.prd.ysg/issue-tracker-en.xlsx
-
 # on which port the mojo should listen
 mojo_morbo_port=3001
 

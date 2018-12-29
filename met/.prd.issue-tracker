@@ -1,4 +1,8 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+# -- 
+src/bash/issue-tracker/funcs/generate-md-docs.func.sh
+doc/txt/issue-tracker/helps/generate-md-docs.help.txt
+doc/txt/issue-tracker/funcs/generate-md-docs.func.txt
 # --- 
 src/perl/issue_tracker/public/poc/vuex/sabe/
 src/perl/issue_tracker/public/poc/vuex/sabe/app.js
@@ -153,13 +157,6 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrCmdArgs.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrEnv.pm
 # ---
 src/bash/issue-tracker/tests/new-issue-tracker-tests.lst
-# ---
-src/bash/issue-tracker/tests/generate-docs.test.sh
-src/bash/issue-tracker/funcs/generate-docs.func.sh
-src/bash/issue-tracker/helps/generate-docs.help.sh
-doc/txt/issue-tracker/funcs/generate-docs.func.txt
-doc/txt/issue-tracker/helps/generate-docs.help.txt
-doc/txt/issue-tracker/tests/generate-docs.test.txt
 # ---
 src/bash/issue-tracker/tests/run-issue-tracker-tests.lst
 cnf/issue-tracker.dev.host-name.cnf
@@ -642,11 +639,11 @@ src/bash/issue-tracker/tests/generate-action-files.test.sh
 #---
 doc/pdf
 doc/md
-doc/md/issue-tracker-devops-guide.md
-doc/md/issue-tracker-features-and-functionalities.md
+doc/md/devops_guide.md
+doc/md/features.md
+doc/md/userstories.md
 doc/md/issue-tracker-system-guide.md
 doc/md/issue-tracker-requirements.md
-doc/md/issue-tracker-user-stories.md
 doc/md/issue-tracker-installation-and-configuration-guide.md
 doc/md/issue-tracker-concepts.md
 doc/pdf
