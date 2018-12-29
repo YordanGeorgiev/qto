@@ -51,15 +51,17 @@ sub doSelectItems {
    $objModel->set('postgres_db_name' , $db ) ; 
 
    my $query_params = $self->req->query_params ; 
-   $objCnrUrlParams = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
-   ( $ret , $msg ) = $objCnrUrlParams->doSetSelect(\$objModel, $query_params );
+   $objCnrUrlParams = 
+      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
+   ( $ret , $msg ) = $objCnrUrlParams->doSetSelect();
+
    if ( $ret != 0 ) {
       $http_code = 400 ; 
       $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
       return ; 
    } 
 
-   ( $ret , $msg ) = $objCnrUrlParams->doSetWith(\$objModel, $query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetWith();
    if ( $ret != 0 ) {
       $http_code = 400 ; 
       $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
@@ -68,8 +70,7 @@ sub doSelectItems {
 
    $objRdrDbsFactory
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
-
+   $objRdrDb = $objRdrDbsFactory->doSpawn ( $rdbms_type );
    ($ret, $msg,$hsr2) = $objRdrDb->doSelect(\$objModel, $item);
 
    unless ( $ret == 0 ) {
@@ -129,7 +130,7 @@ sub doSelectTables {
 
 	$objModel->set('postgres_db_name' , $db ) ; 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMetaData( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db ) ;
 
 	my $ret = 0;
 	my $hsr2 = {};
@@ -137,7 +138,7 @@ sub doSelectTables {
 	my $objRdrDbsFactory
 			= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
 
-	my $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
+	my $objRdrDb = $objRdrDbsFactory->doSpawn("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectTablesList(\$objModel);
 
 
@@ -146,7 +147,9 @@ sub doSelectTables {
 	$self->res->headers->content_type('application/json; charset=utf-8');
 
    my $dat = () ; # an array ref holding the converted hash ref of hash refs 
-
+   
+   # todo:ysg 
+   p $objModel->get('hsr2') ; 
    if ( $ret == 0 ) {
 
       $objModel->set('select.web-action.o', 'row_id' );
@@ -213,7 +216,7 @@ sub doSelectDatabases {
 	$objModel->set('postgres_db_name' , 'postgres' ) ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMetaData( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db ) ;
 
 	my $ret = 0;
 	my $hsr2 = {};
@@ -221,7 +224,7 @@ sub doSelectDatabases {
 	my $objRdrDbsFactory
 			= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
 
-	my $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
+	my $objRdrDb = $objRdrDbsFactory->doSpawn("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectDatabasesList(\$objModel);
 
    if ( $ret == 0 ) {
@@ -269,7 +272,7 @@ sub doSelectMeta {
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMetaData( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db ) ;
    
    # chk: it-181101180808
    $appConfig		 		= $self->app->get('AppConfig');

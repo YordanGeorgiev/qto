@@ -42,14 +42,15 @@ sub doCreateBySoleId {
    my $perl_hash = decode_json($json) ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMetaData( $db ) ;
-
+   $self->SUPER::doReloadProjDbMeta( $db ) ;
    $appConfig		= $self->app->get('AppConfig');
+   
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
 
-   $objCnrUrlParams = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
-   ( $ret , $msg ) = $objCnrUrlParams->doSetCreateUrlParams(\$objModel, $perl_hash ) ; 
+   $objCnrUrlParams = 
+      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
+   ( $ret , $msg ) = $objCnrUrlParams->doSetCreateUrlParams($perl_hash ) ; 
    
    if ( $ret != 0 ) {
       $self->res->code(400);
@@ -64,7 +65,7 @@ sub doCreateBySoleId {
    $objWtrDbsFactory
          = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
    $objWtrDb = $objWtrDbsFactory->doInit("$rdbms_type");
-   ($ret, $msg) = $objWtrDb->doCreateBySoleId(\$objModel, $item);
+   ($ret, $msg) = $objWtrDb->doInsertByItemId($item);
 
    $self->res->headers->accept_charset('UTF-8');
    $self->res->headers->accept_language('fi, en');

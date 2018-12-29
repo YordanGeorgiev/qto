@@ -83,7 +83,7 @@ package IssueTracker::App::Ctrl::CtrlDbToJson ;
       for my $table ( @tables ) { 
          my $items_file ="$out_dir/$table" . '.json' ; 
          my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-         my $objRdrDb 			= $objRdrDbsFactory->doInit ( "$rdbms_type" );
+         my $objRdrDb 			= $objRdrDbsFactory->doSpawn( "$rdbms_type" );
 
          ( $ret , $msg )  = 
             $objRdrDb->doSelect( \$objModel , $table , undef) ; 

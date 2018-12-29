@@ -36,7 +36,7 @@ package IssueTracker::App::IO::Out::WtrExporterXls ;
       my $xls_file         = '' ; 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
-      my $objRdrDb = $objRdrDbsFactory->doInit("$rdbms_type");
+      my $objRdrDb = $doReloadProjDbMeta("$rdbms_type");
       
       ( $ret , $msg , $msr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;
       return ( $ret , $msg ) unless $ret == 0 ; 

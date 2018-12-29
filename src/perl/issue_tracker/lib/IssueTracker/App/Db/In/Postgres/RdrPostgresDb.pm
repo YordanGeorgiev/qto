@@ -489,7 +489,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    # regardless on wether or not the custom meta data in meta_tables and meta_columns
    # tables are defined !!!
    # -----------------------------------------------------------------------------
-   sub doLoadProjDbMetaData {
+   sub doLoadProjDbMeta {
 
       my $self             = shift ; 
       my $db               = shift ; 
@@ -1042,8 +1042,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 				ORDER BY seq
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
-			# debug pr $sql ; 
-         # debug pr $hsr2 ; 
+			# debug rint $sql ; 
+         # debug r $hsr2 ; 
       };
       if ( $@ ) {
          $rv               = 404 ; 

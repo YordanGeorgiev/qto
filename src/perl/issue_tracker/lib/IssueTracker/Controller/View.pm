@@ -93,18 +93,22 @@ sub doSetRequestModelData {
    $objModel->set('postgres_db_name' , $db ) ; 
    $objModel->set('table_name' , $item ) ; 
 
-   $objCnrUrlParams   = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
+   $objCnrUrlParams   = 
+      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
    
-   ( $ret , $msg ) = $objCnrUrlParams->doSetView(\$objModel, $self->req->query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetView();
    return ( $ret , $msg ) unless $ret == 0 ; 
   
-  ( $ret , $msg ) = $objCnrUrlParams->doSetList(\$objModel, $self->req->query_params );
+  ( $ret , $msg ) = $objCnrUrlParams->doSetList();
    return ( $ret , $msg ) unless $ret == 0 ; 
 
-   ( $ret , $msg ) = $objCnrUrlParams->doSetSelect(\$objModel, $self->req->query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetSelect();
    return ( $ret , $msg ) unless $ret == 0 ; 
 
-   ( $ret , $msg ) = $objCnrUrlParams->doSetWith(\$objModel, $self->req->query_params );
+   ( $ret , $msg ) = $objCnrUrlParams->doSetWith();
+   return ( $ret , $msg ) unless $ret == 0 ; 
+
+
    return ( $ret , $msg , \$objModel) ; 
 }
 

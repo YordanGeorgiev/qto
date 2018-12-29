@@ -19,7 +19,7 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
 	# -----------------------------------------------------------------------------
 	# fabricates different RdrDb object 
 	# -----------------------------------------------------------------------------
-	sub doInit {
+	sub doSpawn {
 
 		my $self 			= shift ; 	
 		my $rdbms_type	   = shift // $rdbms_type ; # the default is postgres
@@ -70,7 +70,7 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize() ; 
+      $self = $self->doInit() ; 
 		return $self;
 	}  
 	#eof const
@@ -79,7 +79,7 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
 	# --------------------------------------------------------
 	# intializes this object 
 	# --------------------------------------------------------
-   sub doInitialize {
+   sub doInit {
       my $self = shift ; 
 
       %$self = (

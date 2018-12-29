@@ -63,7 +63,8 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
 	   push ( @tables , split(',',$tables ) ) ; 
 
       my $objRdrDbsFactory       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel  ) ; 
-      my $objRdrDb 			      = $objRdrDbsFactory->doInit ( "$rdbms_type" , \$objModel );
+      my $objRdrDb         = $objRdrDbsFactory->doSpawn("$rdbms_type");
+
       ($ret, $msg , $amsr2 )     = $objRdrDb->doLoadProjDbMetaData( $db );
       return ( $ret , $msg ) unless $ret == 0 ; 
       $appConfig->{ "$db" . '.meta' } = $amsr2 ;

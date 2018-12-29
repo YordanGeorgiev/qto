@@ -69,7 +69,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
       ok ($t->get_ok($url)->status_is(400) , $tm );
 
       $res = $ua->get($url)->result->json ; 
-      my $emsg = " the url parameter branch-id - bid should be a number !!! " ; 
+      my $emsg = "the branch-id bid url parameter should be a whole number" ; 
       ok ( $res->{'msg'} eq $emsg , $emsg) ;
    }
 

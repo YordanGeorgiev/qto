@@ -52,8 +52,9 @@ sub doSearchItems {
    $objModel->set('postgres_db_name' , $db ) ; 
    
    my $query_params = $self->req->query_params ; 
-   $objCnrUrlParams = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
-   ( $ret , $msg ) = $objCnrUrlParams->doSetQueryUrlParams(\$objModel, $query_params , 'Search' );
+   $objCnrUrlParams = 
+      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
+   ( $ret , $msg ) = $objCnrUrlParams->doSetQueryUrlParams('Search' );
 
    if ( ! defined ($self->req->query_params ) or $ret != 0 ) {
    

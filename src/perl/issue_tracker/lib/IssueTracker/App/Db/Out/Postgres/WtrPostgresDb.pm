@@ -55,7 +55,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-      my $objRdrDb 		   = $objRdrDbsFactory->doInit ( 'postgres' );
+      my $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
 
       if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
          $ret = 400 ; 
@@ -93,10 +93,9 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
    }
 
 
-   sub doCreateBySoleId {
+   sub doInsertByItemId {
    
 		my $self 				= shift ; 
-      my $objModel       = ${ shift @_ } ; 
       my $table            = shift ; 
       my $ret              = 0 ; 
       my $msg              = '' ; 
@@ -116,7 +115,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-      my $objRdrDb 		   = $objRdrDbsFactory->doInit ( 'postgres' );
+      my $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
 
       if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
          $ret = 400 ; 
@@ -185,7 +184,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-      my $objRdrDb 		   = $objRdrDbsFactory->doInit ( 'postgres' );
+      my $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
 
       if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
          $ret = 400 ; 
@@ -283,7 +282,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $error_msg        = q{} ; 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
-      my $objRdrDb 		   = $objRdrDbsFactory->doInit ( 'postgre' );
+      my $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
 		
       my $objTimer         = 'IssueTracker::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
 		my $update_time      = $objTimer->GetHumanReadableTime();
@@ -414,7 +413,8 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $update_time      = q{} ; 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
-      my $objRdrDb 		= $objRdrDbsFactory->doInit ( $rdbms_type );
+      my $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
+
       ( $ret , $msg , $dmhsr ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
@@ -555,7 +555,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $dmhsr            = {} ; 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel , $self ) ; 
-      my $objRdrDb 		= $objRdrDbsFactory->doInit ( $rdbms_type );
+      my $objRdrDb         = $objRdrDbsFactory->doSpawn("$rdbms_type");
 
       $objLogger->doLogDebugMsg ( "upsert start for : $table" );
 
@@ -742,7 +742,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $dmhsr            = {} ; 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel , $self ) ; 
-      my $objRdrDb 		= $objRdrDbsFactory->doInit ( $rdbms_type  );
+      my $objRdrDb         = $objRdrDbsFactory->doSpawn("$rdbms_type");
 
       # obs this does not support ordered primary key tables first order yet !!!
       foreach my $table ( keys %$hsr3 ) { 

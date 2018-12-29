@@ -34,8 +34,8 @@ sub doReloadProjDbMeta {
    $objModel->set('postgres_db_name' , $db ) ; 
     
    $objRdrDbsFactory       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig, \$objModel );
-   $objRdrDb               = $objRdrDbsFactory->doInit( $rdbms_type );
-   ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMetaData( $db ) ; 
+   $objRdrDb               = $objRdrDbsFactory->doSpawn( $rdbms_type );
+   ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMeta( $db ) ; 
 
    $appConfig->{ "$db" . '.meta' } = $msr2 ; # chk: it-181101180808
    $self->app->set('AppConfig', $appConfig );
