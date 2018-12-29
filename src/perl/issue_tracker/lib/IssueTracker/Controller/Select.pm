@@ -146,12 +146,8 @@ sub doSelectTables {
 	$self->res->headers->accept_language('fi, en');
 	$self->res->headers->content_type('application/json; charset=utf-8');
 
-   my $dat = () ; # an array ref holding the converted hash ref of hash refs 
-   
-   # todo:ysg 
-   p $objModel->get('hsr2') ; 
+   my $dat = [] ; # an array ref holding the converted hash ref of hash refs 
    if ( $ret == 0 ) {
-
       $objModel->set('select.web-action.o', 'row_id' );
       my $objCnrHsr2ToArray = 
          'IssueTracker::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 

@@ -94,6 +94,14 @@ package IssueTracker::App::IO::Out::WtrMd ;
 
 					$str_response .= $cell ;
 					$str_response .= "\n\n" ; 
+
+            } elsif ( $col_name eq 'src' ) {
+
+					my $src_code  = $row->{ 'src' } ; 
+					$src_code =~ s/^/    /g ; 
+					$src_code =~ s/\n/\n    /gm ; 
+					$str_response .= $src_code ; 
+					$str_response .= "\n\n" ; 
             }
          } 
          #eof foreach col
