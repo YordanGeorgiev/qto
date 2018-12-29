@@ -11,7 +11,6 @@ src/perl/issue_tracker/script/hypnotoad.pid
 src/react/conf-srch/node_modules/**
 **/~$*.xlsx
 **/.DS_Store
-dat/mix/issues/2018/2018-02/2018-02-03/**
 src/perl/issue_tracker/public/bower_components/**
 src/perl/issue_tracker/public/node_modules/**
 src/perl/issue_tracker/public/poc/poc-vue-js-modal/node_modules/**
@@ -21,3 +20,4 @@ src/perl/issue_tracker/public/lib/js/**
 **/*.key
 src/perl/issue_tracker/public/dat/tmp/**
 dat/tmp/**
+**/tmp/**

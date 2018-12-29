@@ -73,6 +73,8 @@ src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/MojoPgWrapper.pm
 src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/CnrUrlParams.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/WtrExportFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrExporterXls.pm
 # ---
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/jqcloud.css
@@ -96,9 +98,9 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/Update.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Delete.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Select.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/HSelect.pm
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelect.t
 src/perl/issue_tracker/lib/IssueTracker/Controller/Search.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelect.t
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestQuery.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSearch.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/LoadTestSelect.pl
@@ -343,6 +345,7 @@ src/sql/pgsql/dev_issue_tracker/18.create-table-meta_columns.sql
 src/sql/pgsql/dev_issue_tracker/19.create-table-naming_conventions.sql
 src/sql/pgsql/dev_issue_tracker/20.create-table-goals.sql
 src/sql/pgsql/dev_issue_tracker/21.create-table-devops_guide.sql
+src/sql/pgsql/dev_issue_tracker/22.create-table-features.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/dev_issue_tracker/93.create-table-benchmarks.sql
 src/sql/pgsql/dev_issue_tracker/94.create-table-test_item.sql

@@ -39,7 +39,7 @@ sub doDeleteItemById {
    my $hsr2 = {};
    
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMetaData( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db ) ;
 
    my $json = $self->req->body;
    my $perl_hash = decode_json($json) ; 

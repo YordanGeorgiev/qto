@@ -14,7 +14,7 @@ use IssueTracker::App::Mdl::Model ;
 use IssueTracker::App::Db::In::RdrDbsFactory ; 
 use IssueTracker::App::Cnvr::CnrHsr2ToHsr2 ; 
 
-sub doReloadProjDbMetaData {
+sub doReloadProjDbMeta {
 
    my $self                = shift ;
    my $db                  = shift ;

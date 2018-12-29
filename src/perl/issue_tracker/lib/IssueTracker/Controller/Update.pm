@@ -49,7 +49,7 @@ sub doUpdateItemBySingleCol {
    $objModel->set('postgres_db_name' , $db ) ; 
    
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMetaData( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db ) ;
    
    $objCnrUrlParams     = 'IssueTracker::App::IO::In::CnrUrlParams'->new();
    ( $ret , $msg )      = $objCnrUrlParams->doSetUpdateUrlParams(\$objModel, $perl_hash ) ; 

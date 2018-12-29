@@ -24,7 +24,7 @@ use IssueTracker::App::Utils::Initiator;
 use IssueTracker::App::Utils::Configurator;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Mdl::Model ; 
-
+use Mojolicious::Plugin::RenderFile ; 
 
 my $module_trace 					= 0;
 our $objConfigurator				= {} ; 
@@ -114,7 +114,6 @@ sub doRegisterPlugins {
    
    my $self = shift ; 
    
-   $self->plugin('PODRenderer');
    $self->plugin('BasicAuthPlus');
    $self->plugin('RenderFile');
 }

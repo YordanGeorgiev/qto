@@ -73,7 +73,6 @@
 
     var actions = {
          loadItems ({ commit }) {
-            // todo:ysg
             var url_params = getUrlParams()  
             axios
                .get((window.location.pathname).replace("/view/" , "/hselect/") , { params: url_params })
