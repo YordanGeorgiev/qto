@@ -1,0 +1,34 @@
+# doc/txt/issue-tracker/func/generate-md-docs.func.txt
+
+	doGenerateMdDocs
+	
+	# Purpose:
+	# ------------------------------------------------------
+	download all the docs of the app in the docs/md/ by calling the 
+   export as md feature 
+
+	# Prequisites
+	# ------------------------------------------------------
+	app up and running - valid hierarchichal docs
+
+	# Installation
+	# ------------------------------------------------------
+   see ISG 
+
+	# Interdependancies
+	# ------------------------------------------------------
+   app up and running with the morbo web server
+
+
+	# Usage:
+	# ------------------------------------------------------
+	bash $0 -a generate-md-docs
+
+	# Developent
+	# ------------------------------------------------------
+
+	# Caveats:
+	# ------------------------------------------------------
+
+
+# eof file: doc/txt/issue-tracker/func/generate-md-docs.func.txt
