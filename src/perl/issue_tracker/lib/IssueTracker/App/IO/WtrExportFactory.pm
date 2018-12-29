@@ -6,6 +6,7 @@ package IssueTracker::App::IO::WtrExportFactory ;
    use Carp ; 
 
    use IssueTracker::App::IO::Out::WtrExporterXls ; 
+   use IssueTracker::App::IO::Out::WtrExporterMd ; 
 
 	our $appConfig 		= {} ; 
 	our $objModel        = {} ; 
@@ -27,8 +28,8 @@ package IssueTracker::App::IO::WtrExportFactory ;
 		   $objWtrExporter   = "IssueTracker::App::IO::Out::WtrExporterXls" ; 
 		}
 		elsif ( $export_type eq 'md' ) {
-		   $package_file     = "IssueTracker/App/IO/Out/WtrExporterXls.pm" ; 
-		   $objWtrExporter   = "IssueTracker::App::IO::Out::WtrExporterXls" ; 
+		   $package_file     = "IssueTracker/App/IO/Out/WtrExporterMd.pm" ; 
+		   $objWtrExporter   = "IssueTracker::App::IO::Out::WtrExporterMd" ; 
 		}
 		else {
 	      croak "the export type: \"$export_type\" is not implemented !!!" ; 	

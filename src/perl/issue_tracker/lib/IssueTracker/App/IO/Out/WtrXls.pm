@@ -49,8 +49,6 @@ package IssueTracker::App::IO::Out::WtrXls ;
 
       my $xls_file_name       = $db. '.' . $table . '.' . $nice_datetime ; 
       my $xls_dir = $appConfig->{ 'ProductInstanceDir' } . '/dat/mix/' . "$year/$nice_month/$nice_date/tmp" ; 
-      # todo: ysg 
-      p $appConfig ; 
       $objWtrDirs->doMkDir ( "$xls_dir" ) ; 
       my $xls_file         = '' ;
       $xls_file         = "$xls_dir/$xls_file_name" . '.xlsx' unless ( defined $objModel->get('controller'));

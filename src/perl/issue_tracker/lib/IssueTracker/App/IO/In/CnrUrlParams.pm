@@ -268,6 +268,9 @@ sub doSetView {
 
    $objModel->set('view.web-action.bid' , $query_params->param('bid') );
    $query_params->remove('bid') ; 
+   
+   $objModel->set('view.web-action.seq' , $query_params->param('seq') );
+   $query_params->remove('seq') ; 
 
    $ret = 0 ; $msg = '' ; 
    return ( $ret , $msg ) ; 

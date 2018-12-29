@@ -36,13 +36,14 @@ sub doHSelectItems {
    my $objModel         = {} ; 
    my $dat              = {} ; 
    my $seq              = $self->req->query_params->param('seq') || 1 ; 
+   my $bid              = $self->req->query_params->param('bid') || 0 ; 
  
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    $appConfig		 		= $self->app->get('AppConfig');
    $objModel            = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
 
-   if ( looks_like_number ( $seq )) {
+   if ( looks_like_number ( $seq ) && looks_like_number ( $bid) ) {
       $objRdrDbsFactory 	= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
       $objRdrDb 				= $objRdrDbsFactory->doInit("$rdbms_type");
 
@@ -53,9 +54,9 @@ sub doHSelectItems {
       ( $ret , $msg ) = $objCnrUrlParams->doSetSelect(\$objModel, $self->req->query_params );
       return ( $ret , $msg ) unless $ret == 0 ; 
 
-      ($rv, $msg, $dat) 	= $objRdrDb->doHSelectBranch($db , $item, $seq);
+      ($rv, $msg, $dat) 	= $objRdrDb->doHSelectBranch($db , $item, $bid);
       $http_code 				= $rv ;  
-      p $dat ; 
+      #debug p $dat ; 
       my $objCnrHashesArrRefToHashesArrRef = 'IssueTracker::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$appConfig  ) ; 
       # p ( $dat ) ; 
       $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
