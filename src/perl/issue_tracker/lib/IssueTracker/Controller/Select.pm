@@ -42,7 +42,7 @@ sub doSelectItems {
    my $cnt              = 0 ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMetaData( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db ) ;
 
    $appConfig		 		= $self->app->get('AppConfig');
 
@@ -275,7 +275,7 @@ sub doSelectMeta {
    $appConfig		 		= $self->app->get('AppConfig');
    unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
       
-      ( $ret , $msg , $met ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
+      ( $ret , $msg , $met ) = $self->SUPER::doReloadProjDbMeta( $db ) ; 
       unless ( $ret == 0 ) { 
          $self->render('text' => $msg ) unless $ret == 0 ; 
          return ; 

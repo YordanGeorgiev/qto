@@ -43,7 +43,7 @@ sub doListItems {
    my $msg              = '' ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMetaData( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db ) ;
    $appConfig		 		= $self->app->get('AppConfig');
  
    my $as               = 'grid' ; # the default form of the list control 

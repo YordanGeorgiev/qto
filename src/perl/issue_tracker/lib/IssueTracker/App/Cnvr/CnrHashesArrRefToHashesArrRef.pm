@@ -1,12 +1,10 @@
 use strict ; use warnings ; 
 package IssueTracker::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
 
-our $appConfig = {} ; 
 use Data::Printer ; 
 use Carp ; 
 
-our $lfth         = 'lft' ; # the string used for the left header - lft or LeftRank
-our $rgth         = 'rgt' ;  # the string used for the rgt header - rgt or RightRank
+our $appConfig       = {} ; 
 	
 #
 # -----------------------------------------------------------------------------
@@ -23,9 +21,6 @@ sub doResetAllSubordinateLevels {
       next if $level <= $current_level  ; 
       $hs_level_counts->{ $level } = 0 ; 
    }
-
-   #debug print "DocBuilder:: doResetAllSubordinateLevels" ; 
-   #debug p($hs_level_counts);
 
 }
 
@@ -88,7 +83,7 @@ sub doConvert {
       if ( $level_num == $prev_level_num ) {
 
          my $prev_level_count = $hs_level_counts->{ $level_num } ; 
-         # print "\$prev_level_count ::: $prev_level_count \n" ; 
+         # rint rint "\$prev_level_count ::: $prev_level_count \n" ; 
          my $curr_level_count = $prev_level_count + 1 ;
          $hs_level_counts->{ $level_num } = $curr_level_count ; 
 
@@ -97,7 +92,7 @@ sub doConvert {
          #$hs_level_counts->{ $level_num } = $start_num  ; 
          $self->doResetAllSubordinateLevels ( $hs_level_counts , $level_num ) ;
          my $prev_level_count = $hs_level_counts->{ $level_num } ; 
-         # print "\$prev_level_count ::: $prev_level_count \n" ; 
+         # debug rint "\$prev_level_count ::: $prev_level_count \n" ; 
          my $curr_level_count = $prev_level_count + 1 ;
          $hs_level_counts->{ $level_num } = $curr_level_count ; 
       }
@@ -114,24 +109,23 @@ sub doConvert {
       $hs_seq_logical_order->{ $id }->{ 'HashReferenceLevelCounts' } = \%copy_of_hs_level_counts ; 
 
 
-      #debug ok print "ok --- level_num ::: " . $level_num . "\n" ; 
+      #debug ok rint "level_num ::: " . $level_num . "\n" ; 
       $prev_row_id = $id ; 
       $prev_row	 = $row ; 
       $rowc++ ; 
    }
    #eof foreach my $i
 
-   # ---
    # build than the logical orders based on filled already level counts 
    # the $row is just a hash reference
    foreach my $row ( @$rs )  {
       # get the id as the key to the logical hash
       my $id  = $row->{ $item_id_name } || 0 ; 
       my $hs_i = $hs_seq_logical_order->{ $id }->{'HashReferenceLevelCounts'} ;
-      #debug p($hs_i);
+      #debug p ($hs_i);
 
       foreach my $key ( sort ( keys ( %$hs_i ) )) {
-         #debug print "hs_i key is " . $key . "\n" ; 
+         #debug rint "hs_i key is " . $key . "\n" ; 
 
          my $post_dot_maybe			= '.' ; 
          $post_dot_maybe 				= '' if $key == 0 ; 
@@ -155,12 +149,12 @@ sub doConvert {
          }
          #debug print "logical order is " . $hs_seq_logical_order->{ $id }->{ 'logic_order' } . "\n" ;  
       }
-      #eof foreach my $key
+      #eof foreach $key
       my $logical_order = $hs_seq_logical_order->{ $id }->{ 'logic_order' } ; 
       $row->{ 'logical_order' } = $logical_order ; 
       push @arr_out , $row ; 
    }
-   #eof foreach my $i
+   #eof foreach row
 
    return \@arr_out ; 
 }
@@ -169,11 +163,9 @@ sub doConvert {
 
 
 sub new {
-
-   my $class      = shift;    # Class name is in the first parameter
+   my $class      = shift;    
    $appConfig     = ${ shift @_ } || croak "appConfig not provided !!!" ; 
-   my $self = {};        # Anonymous hash reference holds instance attributes
-   bless( $self, $class );    # Say: $self is a $class
+   my $self = {}; bless( $self, $class );    
    return $self;
 }  
 
@@ -187,12 +179,12 @@ CnrHashesArrRefToHashesArrRef
 
 =head1 SYNOPSIS
 
-use UrlSniper  ; 
+use CnrHashesArrRefToHashesArrRef;
 
 
 =head1 DESCRIPTION
-the converter between xls read produced hsr2 and a hierarchichal model
-containing hsr2
+Convert an array reference of hashes to array reference of hashes having lft and rgt keys 
+and the logical_order to model a nested-set hierarchichal structure ...
 =head2 EXPORT
 
 

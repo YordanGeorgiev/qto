@@ -48,7 +48,9 @@ package IssueTracker::App::IO::Out::WtrXls ;
       my $nice_date  = "$year" . '-' . "$mon" . '-' . "$mday" ; 
 
       my $xls_file_name       = $db. '.' . $table . '.' . $nice_datetime ; 
-      my $xls_dir = $appConfig->{ 'xls_dir' } || $ENV{'mix_data_dir'} . "/$year/$nice_month/$nice_date" ; 
+      my $xls_dir = $appConfig->{ 'ProductInstanceDir' } . '/dat/mix/' . "$year/$nice_month/$nice_date/tmp" ; 
+      # todo: ysg 
+      p $appConfig ; 
       $objWtrDirs->doMkDir ( "$xls_dir" ) ; 
       my $xls_file         = '' ;
       $xls_file         = "$xls_dir/$xls_file_name" . '.xlsx' unless ( defined $objModel->get('controller'));
@@ -138,11 +140,10 @@ package IssueTracker::App::IO::Out::WtrXls ;
 	# -----------------------------------------------------------------------------
 	sub new {
 
-		my $class = shift;    # Class name is in the first parameter
-		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-		my $self = {};        # Anonymous hash reference holds instance attributes
-		bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize();
+		my $class = shift;    
+		$appConfig = ${ shift @_ } || croak 'appConfig is not provided !!!' ; 
+		my $self = {}; bless( $self, $class ); 
+      $self = $self->doInit();
 		return $self;
 	}  
 	#eof const
@@ -151,14 +152,14 @@ package IssueTracker::App::IO::Out::WtrXls ;
 	# --------------------------------------------------------
 	# intializes this object 
 	# --------------------------------------------------------
-   sub doInitialize {
+   sub doInit {
       my $self          = shift ; 
 
       %$self = (
            appConfig => $appConfig
        );
 
-      #debug rint "WtrXls::doInitialize appConfig : " . p($appConfig );
+      #debug rint "WtrXls::doInit appConfig : " . p($appConfig );
       $ProductInstanceDir   = $appConfig->{ 'ProductInstanceDir' } ; 
 
 	   $objWtrDirs       = 'IssueTracker::App::IO::Out::WtrDirs'->new ( \$appConfig ) ; 
@@ -166,7 +167,7 @@ package IssueTracker::App::IO::Out::WtrXls ;
 
       return $self ; 
 	}	
-	#eof sub doInitialize
+	#eof sub doInit
 
 
 

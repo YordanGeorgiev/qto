@@ -42,7 +42,7 @@ sub doQueryItems {
    $appConfig		 		= $self->app->get('AppConfig');
    unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
       
-      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjectDbMetaData( $db ) ; 
+      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjDbMeta( $db ) ; 
       unless ( $ret == 0 ) { 
          $self->render('text' => $msg ) unless $ret == 0 ; 
          return ; 

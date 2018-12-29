@@ -38,7 +38,7 @@ sub doHSelectItems {
    my $seq              = $self->req->query_params->param('seq') || 1 ; 
  
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMetaData( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db ) ;
    $appConfig		 		= $self->app->get('AppConfig');
    $objModel            = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
 

@@ -34,7 +34,7 @@ sub doViewItems {
    my $as               = 'doc' ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMetaData( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db ) ;
 
    $appConfig		 		= $self->app->get('AppConfig');
    $objModel            = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
