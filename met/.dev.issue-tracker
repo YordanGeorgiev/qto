@@ -454,7 +454,6 @@ src/bash/issue-tracker/funcs/perl/run-perl-unit-tests.func.sh
 src/bash/issue-tracker/helps/perl/run-perl-unit-tests.help.sh
 src/bash/issue-tracker/specs/perl/run-perl-unit-tests.spec.sh
 src/bash/issue-tracker/tests/perl/run-perl-unit-tests.test.sh
-README.md
 .gitignore
 src/bash/issue-tracker/tests/rem-issue-tracker-actions.lst
 src/bash
@@ -639,6 +638,7 @@ src/bash/issue-tracker/tests/generate-action-files.test.sh
 #---
 doc/pdf
 doc/md
+README.md
 doc/md/devops_guide.md
 doc/md/features.md
 doc/md/userstories.md
@@ -647,16 +647,6 @@ doc/md/issue-tracker-requirements.md
 doc/md/issue-tracker-installation-and-configuration-guide.md
 doc/md/issue-tracker-concepts.md
 doc/pdf
-doc/pdf/issue-tracker-devops-guide.pdf
-doc/pdf/issue-tracker-features-and-functionalities.pdf
-doc/pdf/issue-tracker-readme.pdf
-doc/pdf/issue-tracker-system-guide.pdf
-doc/pdf/issue-tracker-tests.pdf
-doc/pdf/issue-tracker-user-stories.pdf
-doc/pdf/issue-tracker-installation-and-configuration-guide.pdf
-doc/pdf/issue-tracker-requirements.pdf
-doc/pdf/issue-tracker-concepts.pdf
-#---
 doc/txt/issue-tracker/funcs/generate-sql.func.txt
 doc/txt/issue-tracker/helps/generate-sql.help.txt
 doc/txt/issue-tracker/specs/generate-sql.spec.txt
@@ -705,14 +695,6 @@ src/bash/issue-tracker/tests/log-test-run-entry.test.sh
 src/bash/issue-tracker/helps/log-test-run-entry.help.sh
 dat/tests/1
 doc/xls
-doc/xls/issue-tracker-features-and-functionalities.xls
-doc/xls/issue-tracker-devops-guide.xls
-doc/xls/issue-tracker-readme.xls
-doc/xls/issue-tracker-system-guide.xls
-doc/xls/issue-tracker-user-stories.xls
-doc/xls/issue-tracker-installation-and-configuration-guide.xls
-doc/xls/issue-tracker-requirements.xls
-doc/xls/issue-tracker-concepts.xls
 #---
 src/bash/issue-tracker/specs/check-perl-modules-prerequisites.spec.sh
 src/bash/issue-tracker/tests/check-perl-modules-prerequisites.test.sh
@@ -763,11 +745,6 @@ doc/txt/issue-tracker/tests/gmail-txt-issues.test.txt
 doc/txt/issue-tracker/specs/gmail-txt-issues.spec.txt
 doc/txt/issue-tracker/helps/gmail-txt-issues.help.txt
 doc/txt/issue-tracker/funcs/gmail-txt-issues.func.txt
-doc/md/issue-tracker-features-and-functionalities.md
-doc/pdf/issue-tracker-features-and-functionalities.pdf
-doc/pdf/issue-tracker-readme.pdf
-doc/xls/issue-tracker-features-and-functionalities.xls
-doc/xls/issue-tracker-readme.xls
 # ---
 src/bash/issue-tracker/funcs/mojo-morbo-start.func.sh
 src/bash/issue-tracker/tests/mojo-morbo-start.test.sh
@@ -787,8 +764,6 @@ doc/txt/issue-tracker/specs/mojo-morbo-stop.spec.txt
 doc/txt/issue-tracker/helps/mojo-morbo-stop.help.txt
 doc/txt/issue-tracker/funcs/mojo-morbo-stop.func.txt
 # ---
-doc/md/issue-tracker-system-guide.md
-doc/pdf/issue-tracker-system-guide.pdf
 met/.prd.issue-tracker
 met/.tst.issue-tracker
 # ---
