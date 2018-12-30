@@ -50,7 +50,7 @@ src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-grid.css
 ./src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
-src/perl/issue_tracker/public/themes/thme-blue/img/controls/page-sizer.png
+src/perl/issue_tracker/public/themes/thme-blue/img/controls/pg-sizer.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/srch.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-next.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-next-10.png

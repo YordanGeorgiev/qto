@@ -38,10 +38,10 @@ DbType 	=         postgres
 LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
 
 # the host on which the mariadb is running 
-db_host = host-name
+postgres_db_host = host-name
 
 # the pgsql port
-db_port = 13306
+postgres_db_port = 13306
 
 # the mariadb user name
 postgres_db_user = ysg

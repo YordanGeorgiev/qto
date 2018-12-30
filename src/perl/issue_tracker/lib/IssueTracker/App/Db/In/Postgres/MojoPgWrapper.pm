@@ -44,12 +44,12 @@ package IssueTracker::App::Db::In::Postgres::MojoPgWrapper ;
 
       $objLogger 			      = 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
 		my $db                  = $appConfig->{'postgres_db_name'} or croak 'postgres_db_name is not set !!!'  ;
-		my $db_host 			   = $appConfig->{'db_host'} or croak 'db_host is not set !!!' ; 
-		my $db_port 			   = $appConfig->{'db_port'} or croak 'db_port is not set !!!' ; 
+		my $postgres_db_host 			   = $appConfig->{'postgres_db_host'} or croak 'postgres_db_host is not set !!!' ; 
+		my $postgres_db_port 			   = $appConfig->{'postgres_db_port'} or croak 'postgres_db_port is not set !!!' ; 
 		my $postgres_db_user 	= $appConfig->{'postgres_db_user'} or croak 'postgres_db_user is not set !!!' ; 
 		my $postgres_db_user_pw = $appConfig->{'postgres_db_user_pw'}  or croak 'postgres_db_user_pw is not set !!!' ; 
-      my $conn_str            = 'postgresql://' . $postgres_db_user . ':' . $postgres_db_user_pw .  '@' . $db_host . ':' . $db_port . '/' . $db . '?sslmode=disable'; 
-      #my $conn_str            = 'postgresql://postgres@' . $db_host . ':' . $db_port . '/' . $db . '?sslmode=disable' ; 
+      my $conn_str            = 'postgresql://' . $postgres_db_user . ':' . $postgres_db_user_pw .  '@' . $postgres_db_host . ':' . $postgres_db_port . '/' . $db . '?sslmode=disable'; 
+      #my $conn_str            = 'postgresql://postgres@' . $postgres_db_host . ':' . $postgres_db_port . '/' . $db . '?sslmode=disable' ; 
       #debug $objLogger->doLogDebugMsg ( "conn_str: $conn_str " ) ; 
       $self = 'Mojo::Pg'->new($conn_str);
       return $self ; 

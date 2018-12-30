@@ -18,7 +18,7 @@ my $t = Test::Mojo->with_roles("+Selenium")->new("IssueTracker")->setup_or_skip_
 ok $t->isa("Test::Mojo");
 ok $t->does("Test::Mojo::Role::Selenium");
 
-#my $url = 'http://192.168.56.120:3001/dev_issue_tracker/list/monthly_issues?as=grid&pick=id,category,prio,status,name,weight,update_time,description&oa=prio&od=id&page-size=100&page-num=1' ; 
+#my $url = 'http://192.168.56.120:3001/dev_issue_tracker/list/monthly_issues?as=grid&pick=id,category,prio,status,name,weight,update_time,description&oa=prio&od=id&pg-size=100&pg-num=1' ; 
 
 #$t->navigate_ok('/dev_issue_tracker/list/monthly_issues')
 #   ->status_is(200)

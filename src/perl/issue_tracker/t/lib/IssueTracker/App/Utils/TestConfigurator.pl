@@ -74,9 +74,9 @@ $msg = "$n " .  "the AppConfig has the LogToFile key" ;
 ok ( exists $appConfig->{'LogToFile'} , $msg ) ; 
 
 #
-#db_host
+#postgres_db_host
 #postgres_db_name
-#db_port
+#postgres_db_port
 #postgres_db_user
 #Emails
 #HostName

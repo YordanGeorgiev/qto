@@ -1,7 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
 src/bash/issue-tracker/funcs/generate-md-docs.func.sh
-doc/txt/issue-tracker/helps/generate-md-docs.help.txt
 doc/txt/issue-tracker/funcs/generate-md-docs.func.txt
 # --- 
 src/perl/issue_tracker/public/poc/vuex/sabe/
@@ -50,7 +49,7 @@ src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-grid.css
 ./src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
-src/perl/issue_tracker/public/themes/thme-blue/img/controls/page-sizer.png
+src/perl/issue_tracker/public/themes/thme-blue/img/controls/pg-sizer.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/srch.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-next.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-next-10.png
@@ -494,7 +493,6 @@ src/bash/issue-tracker/helps/dev/morph-dir.help.sh
 src/bash/issue-tracker/specs/dev/morph-dir.spec.sh
 src/bash/issue-tracker/tests/dev/morph-dir.test.sh
 doc/txt/issue-tracker/funcs/morph-dir.func.txt
-doc/txt/issue-tracker/helps/dev/morph-dir.help.txt
 doc/txt/issue-tracker/specs/dev/morph-dir.spec.txt
 doc/txt/issue-tracker/tests/morph-dir.test.txt
 #---
