@@ -37,14 +37,6 @@ DbType 	=         postgres
 # the log file
 LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
 
-# the host on which the mariadb is running 
-db_host = host-name
-
-# the pgsql port
-db_port = 13306
-
-# the mariadb user name
-postgres_db_user = ysg
 
 # Whether or not to print messages to STDOUT and / or STDERR
 PrintConsoleMsgs =               1

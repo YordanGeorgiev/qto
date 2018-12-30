@@ -54,7 +54,7 @@ is_deeply $chrome->arguments, ['--headless'], 'no explicit headless with executa
 $chrome = Mojo::Chrome->new->catch(sub{ warn pop });
 my $url = 'https://news.google.com/news/?ned=us&hl=en';
 
-#my $url = 'http://192.168.56.120:3001/dev_issue_tracker/list/monthly_issues?as=grid&pick=id,category,prio,status,name,weight,update_time,description&page-num=1&oa=prio&page-size=100' ; 
+#my $url = 'http://192.168.56.120:3001/dev_issue_tracker/list/monthly_issues?as=grid&pick=id,category,prio,status,name,weight,update_time,description&pg-num=1&oa=prio&pg-size=100' ; 
 
 Mojo::IOLoop->delay(
  sub { $chrome->load_page($url, shift->begin) },

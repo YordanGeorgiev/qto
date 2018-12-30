@@ -37,7 +37,7 @@ DbType 	=         postgres
 LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
 
 # the host on which the mariadb is running 
-db_host = host-name
+postgres_db_host = host-name
 
 # OBS ! dev , tst , prd product instances to own db !
 postgres_db_name   = dev_our_proj

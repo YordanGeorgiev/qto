@@ -20,6 +20,7 @@ doGenerateMdDocs(){
 userstories
 devops_guide
 features
+requirements
 EOF
 )
 

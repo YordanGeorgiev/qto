@@ -65,7 +65,7 @@ sub doQueryItems {
    $objModel->set('postgres_db_name' , $db ) ; 
 
    my $query_params = $self->req->query_params ; 
-   my $objCnrUrlParams = 
+   $objCnrUrlParams = 
       'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
    ( $ret , $msg ) = $objCnrUrlParams->doSetQueryUrlParams('Query' );
    if ( $ret != 0 ) {

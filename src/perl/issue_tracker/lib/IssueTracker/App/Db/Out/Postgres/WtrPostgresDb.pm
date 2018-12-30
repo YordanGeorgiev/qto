@@ -23,8 +23,8 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
    our $rdbms_type                              = 'postgres' ; 
 
 	our $db                        = q{} ; 
-	our $db_host 										   = q{} ; 
-	our $db_port 										   = q{} ;
+	our $postgres_db_host 										   = q{} ; 
+	our $postgres_db_port 										   = q{} ;
 	our $postgres_db_user 							   = q{} ; 
 	our $postgres_db_user_pw	 					   = q{} ; 
 	our $web_host 											= q{} ; 
@@ -467,7 +467,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 
       # proper authentication implementation src:
       # http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $db \n db_host: $db_host " ; 
+      $debug_msg .= "\n postgres_db_name: $db \n postgres_db_host: $postgres_db_host " ; 
       $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
       $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
 
@@ -913,8 +913,8 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       );
 
 		$db 			               = $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}        || 'prd_pgsql_runner' ; 
-		$db_host 			         = $ENV{ 'db_host' } || $appConfig->{'db_host'} 		|| 'localhost' ;
-		$db_port 			         = $ENV{ 'db_port' } || $appConfig->{'db_port'} 		|| '13306' ; 
+		$postgres_db_host 			         = $ENV{ 'postgres_db_host' } || $appConfig->{'postgres_db_host'} 		|| 'localhost' ;
+		$postgres_db_port 			         = $ENV{ 'postgres_db_port' } || $appConfig->{'postgres_db_port'} 		|| '13306' ; 
 		$postgres_db_user 			= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'ysg' ; 
 		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' } || $appConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
       

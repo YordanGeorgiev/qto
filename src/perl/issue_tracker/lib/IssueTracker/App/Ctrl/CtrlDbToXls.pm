@@ -69,7 +69,7 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
       return ( $ret , $msg ) unless $ret == 0 ; 
       $appConfig->{ "$db" . '.meta' } = $amsr2 ;
 
-      $objModel->set('select.web-action.page-size' , 1000000000) ; #set the maximum size
+      $objModel->set('select.web-action.pg-size' , 1000000000) ; #set the maximum size
 
       for my $table ( @tables ) { 
          ( $ret , $msg , $msr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;

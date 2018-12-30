@@ -116,9 +116,9 @@ sub doSetWith {
          }
       }
 
-      # debug rint "from CnrUrlParams.pm 47 \@with_cols : @with_cols \n" ; 
-      # debug rint "from CnrUrlParams.pm 47 \@with_ops : @with_ops \n" ; 
-      # debug rint "from CnrUrlParams.pm 47 \@with_vals : @with_vals \n" ; 
+      #debug rint "from CnrUrlParams.pm 47 \@with_cols : @with_cols \n" ; 
+      #debug rint "from CnrUrlParams.pm 47 \@with_ops : @with_ops \n" ; 
+      #debug rint "from CnrUrlParams.pm 47 \@with_vals : @with_vals \n" ; 
 
       $objModel->set('select.web-action.with-cols' , \@with_cols ) ; 
       $objModel->set('select.web-action.with-ops' , \@with_ops ) ; 
@@ -149,38 +149,38 @@ sub doSetQueryUrlParams {
       $query_params->remove('for') ; 
       $ret = 0 ; 
    }
-   # start page-size
-   my $page_size = $query_params->param('page-size') || 7 ; 
-   $msg = "the page size must a positive number, but page-size of " . $page_size . " was requested !!!" ; 
+   # start pg-size
+   my $page_size = $query_params->param('pg-size') || 7 ; 
+   $msg = "the page size must a positive number, but pg-size of " . $page_size . " was requested !!!" ; 
    unless ( isint $page_size ) {
       $ret = 400 ; 
       return ( $ret , $msg ) ; 
    }
    if ( $page_size < 0 ) {
-      $msg = "the page size must a positive number, but page-size of " . $page_size . " was requested !!!" ; 
+      $msg = "the page size must a positive number, but pg-size of " . $page_size . " was requested !!!" ; 
       $ret = 400 ; 
       return ( $ret , $msg ) ; 
    }
    $msg = '' ; 
-   $objModel->set('query.web-action.page-size' , $query_params->param('page-size') );
-   $query_params->remove('page-size') ; 
+   $objModel->set('query.web-action.pg-size' , $query_params->param('pg-size') );
+   $query_params->remove('pg-size') ; 
 
-   # start page-num
-   my $page_num = $query_params->param('page-num') || 1 ; 
-   $msg = "the page num must a positive number, but page-num of " . $page_num . " was requested !!!" ; 
+   # start pg-num
+   my $page_num = $query_params->param('pg-num') || 1 ; 
+   $msg = "the page num must a positive number, but pg-num of " . $page_num . " was requested !!!" ; 
    unless ( isint $page_num ) {
       $ret = 400 ; 
       return ( $ret , $msg ) ; 
    }
    if ( $page_num < 0 ) {
-      $msg = "the page number must a positive number, but page-num of " . $page_num . " was requested !!!" ; 
+      $msg = "the page number must a positive number, but pg-num of " . $page_num . " was requested !!!" ; 
       $ret = 400 ; 
       return ( $ret , $msg ) ; 
    }
    $msg = '' ; 
-   $objModel->set('query.web-action.page-num' , $query_params->param('page-num') );
-   $query_params->remove('page-num') ; 
-   # stop page-num
+   $objModel->set('query.web-action.pg-num' , $query_params->param('pg-num') );
+   $query_params->remove('pg-num') ; 
+   # stop pg-num
    return ( $ret , $msg ) ; 
 }
 
@@ -214,38 +214,38 @@ sub doSetSelect {
    $objModel->set('select.web-action.od' , $query_params->param('od') );
    $query_params->remove('od') ; 
 
-   # start page-size
-   my $page_size = $query_params->param('page-size') || 7 ; 
-   $msg = "the page size must a positive number, but page-size of " . $page_size . " was requested !!!" ; 
+   # start pg-size
+   my $page_size = $query_params->param('pg-size') || 7 ; 
+   $msg = "the page size must a positive number, but pg-size of " . $page_size . " was requested !!!" ; 
    unless ( isint $page_size ) {
       $ret = 400 ; 
       return ( $ret , $msg ) ; 
    }
    if ( $page_size < 0 ) {
-      $msg = "the page size must a positive number, but page-size of " . $page_size . " was requested !!!" ; 
+      $msg = "the page size must a positive number, but pg-size of " . $page_size . " was requested !!!" ; 
       $ret = 400 ; 
       return ( $ret , $msg ) ; 
    }
    $msg = '' ; 
-   $objModel->set('select.web-action.page-size' , $query_params->param('page-size') );
-   $query_params->remove('page-size') ; 
+   $objModel->set('select.web-action.pg-size' , $query_params->param('pg-size') );
+   $query_params->remove('pg-size') ; 
 
-   # start page-num
-   my $page_num = $query_params->param('page-num') || 1 ; 
-   $msg = "the page num must a positive number, but page-num of " . $page_num . " was requested !!!" ; 
+   # start pg-num
+   my $page_num = $query_params->param('pg-num') || 1 ; 
+   $msg = "the page num must a positive number, but pg-num of " . $page_num . " was requested !!!" ; 
    unless ( isint $page_num ) {
       $ret = 400 ; 
       return ( $ret , $msg ) ; 
    }
    if ( $page_num < 0 ) {
-      $msg = "the page number must a positive number, but page-num of " . $page_num . " was requested !!!" ; 
+      $msg = "the page number must a positive number, but pg-num of " . $page_num . " was requested !!!" ; 
       $ret = 400 ; 
       return ( $ret , $msg ) ; 
    }
    $msg = '' ; 
-   $objModel->set('select.web-action.page-num' , $query_params->param('page-num') );
-   $query_params->remove('page-num') ; 
-   # stop page-num
+   $objModel->set('select.web-action.pg-num' , $query_params->param('pg-num') );
+   $query_params->remove('pg-num') ; 
+   # stop pg-num
 
    $ret = 0 ; $msg = '' ; 
    return ( $ret , $msg ) ; 
@@ -303,8 +303,8 @@ sub doSetList {
    $query_params->remove('oa') ; 
    $objModel->set('select.web-action.od' , $query_params->param('od') );
    $query_params->remove('od') ; 
-   $objModel->set('list.web-action.page-size' , $query_params->param('page-size') );
-   $objModel->set('list.web-action.page-num' , $query_params->param('page-num') );
+   $objModel->set('list.web-action.pg-size' , $query_params->param('pg-size') );
+   $objModel->set('list.web-action.pg-num' , $query_params->param('pg-num') );
 
    $ret = 0 ; $msg = '' ; 
    return ( $ret , $msg ) ; 

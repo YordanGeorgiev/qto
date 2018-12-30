@@ -39,7 +39,7 @@ doMorphDir(){
             continue
             ;;
          esac
-			perl -pi -e "s#$to_srch#$to_repl#g" "$file"
+			perl -pi -e "s#\Q$to_srch\E#$to_repl#g" "$file"
 		);
 		done < <(find $dir_to_morph -type f -not -exec file {} \; | grep text | cut -d: -f1)
 		
@@ -50,13 +50,13 @@ doMorphDir(){
 
       # rename the dirs according to the pattern
       while read -r dir ; do (
-         perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;`mkdir -p $n` ;'
+         perl -nle '$o=$_;s#'"\Q$to_srch\E"'#'"$to_repl"'#g;$n=$_;`mkdir -p $n` ;'
       );
       done < <(find $dir_to_morph -type d|grep -v '.git')
 
       # rename the files according to the pattern
       while read -r file ; do (
-         perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;rename($o,$n) unless -e $n ;'
+         perl -nle '$o=$_;s#'"\Q$to_srch\E"'#'"$to_repl"'#g;$n=$_;rename($o,$n) unless -e $n ;'
       );
       done < <(find $dir_to_morph -type f -not -path "*/node_modules/*" |grep -v '.git')
 

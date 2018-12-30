@@ -31,8 +31,8 @@
             
             if ( url_params.has("od") === false) { url_params.append("od" , "id"); }
             if ( url_params.has("as") === false) { url_params.append("as" , "grid"); }
-            if ( url_params.has("page-size") === false) { url_params.append("page-size" , 7); }
-            if ( url_params.has("page-num") === false) { url_params.append("page-num" , 1); }
+            if ( url_params.has("pg-size") === false) { url_params.append("pg-size" , 7); }
+            if ( url_params.has("pg-num") === false) { url_params.append("pg-num" , 1); }
             // debug for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
             return url_params ; 
          }
@@ -50,12 +50,12 @@
          , generatePageSize: function (pgSize) {
                var currUrl = window.location.href ; 
                if ( typeof pgSize === 'undefined' ) { pgSize = 7 }
-               if ( currUrl.indexOf("page-size=") === -1 ) {
-                  return currUrl + "&page-size=" + pgSize ; 
+               if ( currUrl.indexOf("pg-size=") === -1 ) {
+                  return currUrl + "&pg-size=" + pgSize ; 
                } else {
                   return currUrl
-                     .replace("page-size=" + this.pageSize , "page-size=" + pgSize) 
-                     .replace("page-num=" + this.pageNum , "page-num=1");
+                     .replace("pg-size=" + this.pageSize , "pg-size=" + pgSize) 
+                     .replace("pg-num=" + this.pageNum , "pg-num=1");
                }
          }
          , fetchServerSideDataToUI: function(url_params) {
@@ -86,11 +86,11 @@
                         }
                         this.gridData = data.dat ; 
                         var totalRSsize = data.cnt ; 
-                        this.pageSize = url_params.get('page-size');
-                        this.pageNum = url_params.get('page-num');
+                        this.pageSize = url_params.get('pg-size');
+                        this.pageNum = url_params.get('pg-num');
                         this.urlParamFor = url_params.get('for');
                         var remainder = totalRSsize % this.pageSize
-                        var toAdd = 1 // example: page-size 10 , total-rs-size 30 => 3 and not 4
+                        var toAdd = 1 // example: pg-size 10 , total-rs-size 30 => 3 and not 4
                         if ( remainder == 0 ) { toAdd = 0  }
                         this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
                         var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa') ;
@@ -119,48 +119,48 @@
          , goToNextPage: function (id) {
                var uri = window.location.href 
                if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
-               if ( uri.indexOf("page-num=") === -1 ) {
-                  uri = uri + "&page-num=1"
+               if ( uri.indexOf("pg-num=") === -1 ) {
+                  uri = uri + "&pg-num=1"
                } else {
                   var newPageNum = Number(this.pageNum)+1
                   if ( newPageNum > this.pagesCount ) { newPageNum = this.pagesCount }
-                  uri = uri.replace("page-num=" + this.pageNum, "page-num=" + String(newPageNum))
+                  uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
                }
                window.location.href = uri 
          }
          , goToPrevPage: function (id) {
                var uri = window.location.href 
                if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
-               if ( uri.indexOf("page-num=") === -1 ) {
-                  uri = uri + "&page-num=1"
+               if ( uri.indexOf("pg-num=") === -1 ) {
+                  uri = uri + "&pg-num=1"
                } else {
                   var newPageNum = Number(this.pageNum)-1
                   if ( newPageNum < 1 ) { newPageNum = 1 }
-                  uri = uri.replace("page-num=" + this.pageNum, "page-num=" + String(newPageNum))
+                  uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
                }
                window.location.href = uri 
          }
          , goToNextPage10: function (id) {
                var uri = window.location.href 
                if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
-               if ( uri.indexOf("page-num=") === -1 ) {
-                  uri = uri + "&page-num=1"
+               if ( uri.indexOf("pg-num=") === -1 ) {
+                  uri = uri + "&pg-num=1"
                } else {
                   var newPageNum = Number(this.pageNum)+10
                   if ( newPageNum > this.pagesCount ) { newPageNum = this.pagesCount }
-                  uri = uri.replace("page-num=" + this.pageNum, "page-num=" + String(newPageNum))
+                  uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
                }
                window.location.href = uri 
          }
          , goToPrevPage10: function (id) {
                var uri = window.location.href 
                if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
-               if ( uri.indexOf("page-num=") === -1 ) {
-                  uri = uri + "&page-num=1"
+               if ( uri.indexOf("pg-num=") === -1 ) {
+                  uri = uri + "&pg-num=1"
                } else {
                   var newPageNum = Number(this.pageNum)-10
                   if ( newPageNum < 1 ) { newPageNum = 1 }
-                  uri = uri.replace("page-num=" + this.pageNum, "page-num=" + String(newPageNum))
+                  uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
                }
                window.location.href = uri 
          }

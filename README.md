@@ -74,7 +74,7 @@ In the real IT life however the mealage always varies, hence this last "bonus of
 
 ## 4. DEMO 
 You can check the following running instance of the tool:
- http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=7&page-num=1
+ http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&pg-size=7&pg-num=1
 
     
 

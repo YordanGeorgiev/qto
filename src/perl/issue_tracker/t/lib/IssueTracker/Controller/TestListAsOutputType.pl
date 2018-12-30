@@ -48,7 +48,7 @@ for my $row ( @$list ) {
       foreach my $page_size ( @page_sizes ) {
          foreach my $page_num ( @page_nums ) {
             print "url is $url \n" ; 
-            $url = '/' . $db_name . '/list/' . $table_name . '?as=' . "$as" . '&page-size=' . $page_size .'&page-num=' . $page_num ; 
+            $url = '/' . $db_name . '/list/' . $table_name . '?as=' . "$as" . '&pg-size=' . $page_size .'&pg-num=' . $page_num ; 
             $t->get_ok( $url )
                ->status_isnt(400) 
                 ->header_is('Accept-Charset' => 'UTF-8')
@@ -62,13 +62,13 @@ for my $row ( @$list ) {
 	$tm = 'if the page size is not a positive whole number return http 400 ' ; 
    my $page_size = 'not_even_a_number' ; 
    my $page_num = 1 ; 
-   $url = '/' . $db_name . '/list/tst_paging?as=table&page-size=' . $page_size .'&page-num=' . $page_num ; 
+   $url = '/' . $db_name . '/list/tst_paging?as=table&pg-size=' . $page_size .'&pg-num=' . $page_num ; 
    $t->get_ok( $url )->status_is(400 , $tm ) ; 
 	
    $tm = 'if the page num is not a positive whole number return http 400 ' ; 
    $page_size = 15 ; 
    $page_num = 'not_even_a_number' ; 
-   $url = '/' . $db_name . '/list/tst_paging?as=table&page-size=' . $page_size .'&page-num=' . $page_num ; 
+   $url = '/' . $db_name . '/list/tst_paging?as=table&pg-size=' . $page_size .'&pg-num=' . $page_num ; 
    $t->get_ok( $url )->status_is(400 , $tm ) ; 
 
 done_testing();

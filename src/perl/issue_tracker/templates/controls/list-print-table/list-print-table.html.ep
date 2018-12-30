@@ -164,11 +164,11 @@ if ( document.getElementById("spn_msg") ) {
             this.fetchServerSideData(url_params)
             .then( data => {
                this.gridData = data.dat ; 
-               this.pageSize = url_params.get('page-size') || 5 ; 
-               this.pageNum = url_params.get('page-num') || 1 ; 
+               this.pageSize = url_params.get('pg-size') || 5 ; 
+               this.pageNum = url_params.get('pg-num') || 1 ; 
                var totalRSsize = data.met ; 
                var remainder = totalRSsize % this.pageSize
-               var toAdd = 1 // page-size 10 , total-rs-size 30 => 3 and not 4
+               var toAdd = 1 // pg-size 10 , total-rs-size 30 => 3 and not 4
                if ( remainder == 0 ) { toAdd = 0  }
                this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
 

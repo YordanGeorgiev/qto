@@ -4,33 +4,38 @@
 	
 	# Purpose:
 	# ------------------------------------------------------
-	to search and replace 
+	to search and replace strings in both src code and file/dir paths
 
 	# Prequisites
 	# ------------------------------------------------------
-	-- todo: what are the prerequisites of the doMorphDir function
+	perl, preset the to_srch , to_repl and dir_to_morph vars
 
 	# Installation
 	# ------------------------------------------------------
-	-- todo: what are the required installations for the  
-		doMorphDir function to execute without errors
 
 	# Interdependancies
 	# ------------------------------------------------------
-	-- todo: what are the interdependancies for the  
-		doMorphDir function to execute without errors
+   perl, bash   
 
 	# Usage:
 	# ------------------------------------------------------
-	-- todo: how can be the doMorphDir used 
+   export to_srch='the string to search'
+   export to_repl='the string to replace'
+   export dir_to_morph=`/path/to_dir/to/srch/and/replace/recursively`
+   # Action !!!
+   bash src/bash/issue-tracker/issue-tracker.sh -a morph-dir
 
 	# Developent
 	# ------------------------------------------------------
-	-- todo: what issues, todos could be pointed for development
+   - investigate swith for using not only strings but real perl 
+   patterns
 
 	# Caveats:
 	# ------------------------------------------------------
-	-- todo: what are the known caveats of the doMorphDir functions
+	ALWAYS create a copy of you source code dir BEFORE running this func
+   because YOU could screw-up your entire software project, because 
+   search and replacing is REALLY REALLY HARD and DANGEROUS, regardless 
+   of the fact that used properly it will save you tons of time and efforts !!
 
 
 
