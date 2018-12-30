@@ -131,8 +131,8 @@ sub doSetHooks {
 #   if ( $before_render_debug == 1 ) {
 #      $self->hook ( 'before_render' => sub {
 #         my ($c, $args) = @_;
-#         p $c ; 
-#         p ( $c->req->url->to_abs . '?' . $c->req->url->query ) ; 
+#         # debug r $c ; 
+#         # debug r ( $c->req->url->to_abs . '?' . $c->req->url->query ) ; 
 #      });
 #   }
 

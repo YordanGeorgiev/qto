@@ -563,7 +563,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
 
       # debug p($hs_headers ) ; 
-      # print "WtrPostgresDb.pm : $table 336 \n " ; 
+      # debug rint "WtrPostgresDb.pm : $table 336 \n " ; 
   
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ;       
@@ -664,10 +664,8 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
          }
          $sql_str .= '; ' . "\n" ; 
 
-         # debug 
-         print "WtrPostgresDb.pm : 669 \n " ; 
-         # debug 
-         print "sql_str $sql_str \n" ; 
+         # debug rint "WtrPostgresDb.pm : 669 \n " ; 
+         # debug rint "sql_str $sql_str \n" ; 
       } 
       #eof foreach row
        
@@ -690,8 +688,8 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
             $sth = $dbh->prepare($str_sql);  
             $sth->execute();
             $actual_amount_of_inserted_rows = $sth->fetchrow_array() ; 
-            print "\actual_amount_of_inserted_rows: $actual_amount_of_inserted_rows \n" ; 
-            print "expected_amount_of_inserted_rows: $expected_amount_of_inserted_rows \n" ; 
+            print STDOUT "\actual_amount_of_inserted_rows: $actual_amount_of_inserted_rows \n" ; 
+            print STDOUT "expected_amount_of_inserted_rows: $expected_amount_of_inserted_rows \n" ; 
             sleep 2 ; 
          } or return ( $ret , $msg ) ; 
 
