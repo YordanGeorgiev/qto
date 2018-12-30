@@ -8,16 +8,13 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
 	our $appConfig 		= {} ; 
 	our $rdbms_type      = 'postgres' ; 
 	our $objItem			= {} ; 
-   # our $objLogger       = {} ; 
    our $objModel        = {} ; 
 
-	# use IssueTracker::App::Db::RdrDbMariaDb  ; 
    use IssueTracker::App::Db::In::Postgres::RdrPostgresDb ; 
-   use IssueTracker::App::Db::In::MariaDb::RdrMariaDb ; 
 
 	#
 	# -----------------------------------------------------------------------------
-	# fabricates different RdrDb object 
+	# fabricates / produces different RdrDb object 
 	# -----------------------------------------------------------------------------
 	sub doSpawn {
 
@@ -28,18 +25,7 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
 		my $package_file  = () ; 
 		my $objRdrDb   	= () ; 
 
-		# get the application cnfiguration hash
-		# global app cnfig hash
-
-		if ( $rdbms_type eq 'mariadb' ) {
-		   $package_file     = "IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm";
-		   $objRdrDb   		= "IssueTracker::App::Db::In::MariaDb::RdrMariaDb";
-		}
-		elsif ( $rdbms_type eq 'mysql' ) {
-		   $package_file     = "IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm";
-		   $objRdrDb   		= "IssueTracker::App::Db::In::MariaDb::RdrMariaDb";
-		}
-		elsif ( $rdbms_type eq 'postgres' ) {
+		if ( $rdbms_type eq 'postgres' ) {
 		   $package_file     = "IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm";
 		   $objRdrDb   		= "IssueTracker::App::Db::In::Postgres::RdrPostgresDb";
 		}
@@ -48,50 +34,40 @@ package IssueTracker::App::Db::In::RdrDbsFactory ;
 		   $package_file     = "IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm";
 		   $objRdrDb   		= "IssueTracker::App::Db::In::Postgres::RdrPostgresDb";
 		}
+		#if ( $rdbms_type eq 'mariadb' ) {
+		#   $package_file     = "IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm";
+		#   $objRdrDb   		= "IssueTracker::App::Db::In::MariaDb::RdrMariaDb";
+		#}
+		#elsif ( $rdbms_type eq 'mysql' ) {
+		#   $package_file     = "IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm";
+		#   $objRdrDb   		= "IssueTracker::App::Db::In::MariaDb::RdrMariaDb";
+		#}
 
 		require $package_file;
 		return $objRdrDb->new( \$appConfig , \$objModel , @args);
 	}
-	# eof sub doInit
 	
 
-   #
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
 	sub new {
 
 		my $invocant   = shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
-		
-      # might be class or object, but in both cases invocant
-		my $class = ref ( $invocant ) || $invocant ; 
-
-		my $self = {};        # Anonymous hash reference holds instance attributes
-		bless( $self, $class );    # Say: $self is a $class
+		my $class      = ref ( $invocant ) || $invocant ; 
+		my $self = {}; bless( $self, $class ) ; 
       $self = $self->doInit() ; 
 		return $self;
 	}  
-	#eof const
 	
-   #
-	# --------------------------------------------------------
-	# intializes this object 
-	# --------------------------------------------------------
    sub doInit {
       my $self = shift ; 
 
       %$self = (
            appConfig => $appConfig
       );
-
 	   #$objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
-
-
       return $self ; 
 	}	
-	#eof sub doInitialize
 
 1;
 

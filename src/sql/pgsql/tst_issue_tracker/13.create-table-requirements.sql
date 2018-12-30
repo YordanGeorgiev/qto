@@ -1,25 +1,26 @@
--- DROP TABLE IF EXISTS requirements ; 
+DROP TABLE IF EXISTS requirements CASCADE;
 
 SELECT 'create the "requirements" table'
 ; 
    CREATE TABLE requirements (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
+    , level          integer NULL
+    , seq            integer NULL
+    , lft            bigint  NULL
+    , rgt            bigint  NULL
+    , weight         integer NOT NULL DEFAULT 1
     , prio           integer NOT NULL DEFAULT 1
-    , weight         integer NOT NULL DEFAULT 9
     , status         varchar (20) NOT NULL DEFAULT 'status ...'
-    , category       varchar (20) NOT NULL DEFAULT 'category ...'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
-    , owner          varchar (50) NOT NULL DEFAULT 'unknown'
-    , tags           varchar (200)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_requirements_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
     );
 
-create unique index idx_uniq_requirements_id on requirements (id);
+   create unique index idx_uniq_requirements_id on requirements (id);
 
 
 
@@ -35,7 +36,9 @@ SELECT 'show the columns of the just created table'
    ; 
 
 --The trigger:
-CREATE TRIGGER trg_set_update_time_on_requirements BEFORE UPDATE ON requirements FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+   CREATE TRIGGER trg_set_update_time_on_requirements 
+   BEFORE UPDATE ON requirements 
+   FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
 select tgname
 from pg_trigger

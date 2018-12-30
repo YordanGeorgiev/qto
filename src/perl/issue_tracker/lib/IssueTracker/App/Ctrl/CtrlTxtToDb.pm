@@ -88,7 +88,7 @@ package IssueTracker::App::Ctrl::CtrlTxtToDb ;
 
          p($hsr) if $module_trace == 1 ; 
          my $objWtrDbsFactory    = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( \$appConfig , $self ) ; 
-         my $objWtrDb 			   = $objWtrDbsFactory->doInit ( "$rdbms_type" );
+         my $objWtrDb 			   = $objWtrDbsFactory->doSpawn ( "$rdbms_type" );
          
          ( $ret , $msg )            = $objWtrDb->doInsertSqlHashData ( $hsr , $table ) ; 
 

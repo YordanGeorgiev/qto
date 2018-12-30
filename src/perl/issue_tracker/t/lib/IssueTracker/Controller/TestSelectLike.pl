@@ -20,12 +20,15 @@ my @tables = ( 'monthly_issues' , 'yearly_issues' ) ;
 my $ua  = $t->ua ; 
 my $res = {} ; #a tmp result json string
 my $tm = '' ; 
+my @tables_to_scan = ('monthly_issues' , 'yearly_issues' );
 
 $res = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
 
 # foreach table in the app db in test call db/select/table
 for my $table ( @tables ) {
-	
+   
+   	
+   next unless  grep ( /^$table$/, @tables_to_scan ) ;
 	# test a like by select of integers	
 	my $url_params = '?like-by=status&like-val=todo' ; 
 	$t->get_ok('/' . $db_name . '/select/' . $table . $url_params )
@@ -42,8 +45,8 @@ for my $table ( @tables ) {
    # feature-id: d4592c2e-60a4-4078-b499-743423d66d94
 	foreach my $row ( @list ) {
       p $row ; 
-		$tm = 'only rows with status="02-todo%" are selected for '. "$table table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
-		ok ( $row->{'status'} =~ m/02-todo/g, $tm ) ; 
+		$tm = 'only rows with status containing the "todo" string are selected for '. "$table table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
+		ok ( $row->{'status'} =~ m/todo/g, $tm ) ; 
 	}
 
 	print "test a string like \n" ; 

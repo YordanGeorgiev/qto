@@ -100,7 +100,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 
       my $objWtrDbsFactory = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new( 
             \$issue_tracker::appConfig  , \$objModel , \$self , $rdbms_type ) ; 
-      my $objWtrDb 		   = $objWtrDbsFactory->doInit ( "$rdbms_type" , \@tables );
+      my $objWtrDb 		   = $objWtrDbsFactory->doSpawn ( "$rdbms_type" , \@tables );
 
       p($hsr3) if $module_trace == 1 ; 
 
