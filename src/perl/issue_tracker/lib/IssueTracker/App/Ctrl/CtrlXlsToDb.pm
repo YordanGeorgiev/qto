@@ -75,7 +75,7 @@ package IssueTracker::App::Ctrl::CtrlXlsToDb ;
 	   push ( @tables , split(',',$tables ) ) ; 
       my $xls_file            = '' ; 
      
-      print "using the following \@tables: " . join (",", @tables) . "\n" ; 
+      print STDOUT "using the following \@tables: " . join (",", @tables) . "\n" ; 
       # if the xls_file is not defined take the latest one from the mix data dir
       if ( $objModel->get( 'io.xls-file' ) eq 'undefined' ) {
          my $xls_dir          = $ENV{'mix_data_dir' } ;  ; 
