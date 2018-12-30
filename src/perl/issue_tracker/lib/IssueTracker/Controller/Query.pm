@@ -59,7 +59,7 @@ sub doQueryItems {
    my $http_code        = 400 ;
    my $rows_count       = 0 ; 
 
-	# print "Query.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
+	print STDOUT "Query.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
