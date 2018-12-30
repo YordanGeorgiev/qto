@@ -64,7 +64,7 @@ sub doDeleteItemById {
 
    $objWtrDbsFactory
       = 'IssueTracker::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
-   $objWtrDb = $objWtrDbsFactory->doInit("$rdbms_type");
+   $objWtrDb = $objWtrDbsFactory->doSpawn("$rdbms_type");
    ($ret, $msg) = $objWtrDb->doDeleteItemById(\$objModel, $item);
 
    $self->res->headers->accept_charset('UTF-8');

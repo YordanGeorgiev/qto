@@ -1,15 +1,8 @@
-s# file: cnf/issue-tracker.host-name.cnf
+# file: cnf/issue-tracker.host-name.cnf
 [MainSection]
 
 # multiple projects support
 issue_tracker_project = issue-tracker
-
-# OBS ! tst , tst , prd product instances to own db !
-postgres_db_name   = tst_issue_tracker
-postgres_db_port = 5432
-postgres_db_host = host-name
-postgres_db_user = ysg
-postgres_db_user_pw = 0024plapla
 
 # where the scripts to run are situated
 pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.5.6.tst.ysg/src/sql/pgsql/tst_issue_tracker
@@ -20,60 +13,43 @@ DataDir = /opt/csitea/issue-tracker/issue-tracker.0.5.6.tst.ysg/dat
 # where are stored the txt issues files
 mix_data_dir = /opt/csitea/issue-tracker/issue-tracker.0.5.6.tst.ysg/dat/mix
 
-# The logging directory 
-LogDir = %ProductInstanceDir%/dat/log
+# the postgres confs - OBS ! dev , tst , prd product instances to own db !
+postgres_db_name     = tst_issue_tracker
+postgres_db_host     = host-name
+postgres_db_port     = 5432
+postgres_db_user     = ysg
+postgres_db_user_pw  = 0024plapla
 
-# the default Log file
-LogFile =         %LogDir%/%ProductName%.log
-
-# the default chars separating the time from the txt
-LogTimeToTextSeparator = ###
-
-# whether or not to log to a file
-LogToFile =          1
-
-# the time format of the logging 
+# logging confs - set 1 for yes and 0 for now
+LogToFile            = 1
+LogDir               = %ProductInstanceDir%/dat/log
+LogFile              = %LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
+PrintConsoleMsgs     = 1
+PrintInfoMsgs        = 1                             
+PrintWarningMsgs     = 1                             
+PrintErrorMsgs       = 1                             
+PrintDebugMsgs       = 1
+PrintTraceMsgs       = 1 
 TimeFormat =         YYYY.MM.DD hh:mm:ss
+# the default chars separating the time from the txt
 
-# the time format of the logging 
-DbType 	=         postgres
-
-# the log file
-LogFile=%LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
-
-# Whether or not to print messages to STDOUT and / or STDERR
-PrintConsoleMsgs =               1
-
-# Whether or not to pring INFO messages
-PrintInfoMsgs =                  1                             
-
-# Whether or not to pring WARNING messages
-PrintWarningMsgs =               1                             
-
-# Whether or not to pring ERROR messages
-PrintErrorMsgs =                 1                             
-
-# Whether or not to pring DEBUG messages
-PrintDebugMsgs =                 1
-
-# Whether or not to pring TRACE messages
-PrintTraceMsgs =                 1 
-
+LogTimeToTextSeparator = ###
 # the id from the url of the google spread sheet
+
 google_spread_sheet_id = 1p4YwuSB3GtQ0i5ginn4Vc95t09w1WNWJra2yUH1aL0Y
 
 Emails=yordan.georgiev@gmail.com
 
-# changed the propmpt
-PS1="$issue_tracker_project \u@\h [\d \t] [\w] $ \n\n "
-
-# the web host where the isg-pub instance residues 
+# the web host where the issue-tracker app layer instance residues 
 web_host=host-name
 
 # on which port the mojo should listen
 mojo_morbo_port=3002
 
+# on which port the mojo should listen
+mojo_hypnotoad_port=8082
+
 # the last entry is always ignored - this is a bug in the cnf parser 
 foo=bar
 
-# eof file: cnf/issue-tracker.tst.host-name.cnf
+# eof file: cnf/issue-tracker.dev.host-name.cnf

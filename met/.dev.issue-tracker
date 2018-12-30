@@ -226,11 +226,9 @@ src/perl/issue_tracker/lib/IssueTracker/App
 src/perl/issue_tracker/lib/IssueTracker/App/Db
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/RdrDbsFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Db/In/MariaDb/RdrMariaDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/WtrDbsFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/WtrDbsFactory.pm
-src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Mdl/Model.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm
@@ -982,11 +980,9 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlJsonToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlTxtToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlXlsToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/Dispatcher/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/MariaDb/RdrMariaDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/MojoPgWrapper/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrHPostgresDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrPostgresDb/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/MariaDb/WtrMariaDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/CnrUrlParams/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/In/RdrCmdArgs/autosplit.ix

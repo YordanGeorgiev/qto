@@ -14,7 +14,6 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
    our $objLogger       = {} ; 
 
    use IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ; 
-   use IssueTracker::App::Db::Out::MariaDb::WtrMariaDb ; 
 
 
 
@@ -22,7 +21,7 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
 	# -----------------------------------------------------------------------------
 	# fabricates different WtrDb object 
 	# -----------------------------------------------------------------------------
-	sub doInit {
+	sub doSpawn {
 
 		my $self 			= shift ; 	
 		my $db_type			= shift // $db_type ; # the default is mysql
@@ -30,8 +29,6 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
 		my @args 			= ( @_ ) ; 
 		my $WtrDb 		= {}   ; 
 
-		# get the application cnfiguration hash
-		# global app cnfig hash
 		my $package_file     	= () ; 
 		my $objWtrDb   		= () ;
 
@@ -39,22 +36,21 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
 		   $package_file     = "IssueTracker/App/Db/Out/Postgres/WtrPostgresDb.pm";
 		   $objWtrDb   		= "IssueTracker::App::Db::Out::Postgres::WtrPostgresDb" ; 
 		}
-		elsif ( $db_type eq 'mysql' ) {
-			$WtrDb 				= 'WtrDbMariaDb' ; 
-		   $package_file     	= "IssueTracker/App/Db/Out/MariaDb/WtrMariaDb.pm";
-		   $objWtrDb   		= "IssueTracker::App::Db::Out::MariaDb::WtrMariaDb";
-		}
-		elsif ( $db_type eq 'mariadb' ) {
-			$WtrDb 				= 'WtrDbMariaDb' ; 
-		   $package_file     = "IssueTracker/App/Db/Out/MariaDb/WtrMariaDb.pm";
-		   $objWtrDb   		= "IssueTracker::App::Db::Out::MariaDb::WtrMariaDb";
-		}
 		else {
-			# future support for different RDBMS 's should be added here ...
-		   $package_file     = "IssueTracker/App/Db/Out/Postgres/WtrMariaDb.pm";
-		   $objWtrDb   		= "IssueTracker::App::Db::Out::Postgres::WtrMariaDb";
+		   $package_file     = "IssueTracker/App/Db/Out/Postgres/WtrPostgresDb.pm";
+		   $objWtrDb   		= "IssueTracker::App::Db::Out::Postgres::WtrPostgresDb" ; 
 		}
-
+		# future support for different RDBMS 's should be added as follows
+		#elsif ( $db_type eq 'mysql' ) {
+		#	$WtrDb 				= 'WtrDbMariaDb' ; 
+		#   $package_file     	= "IssueTracker/App/Db/Out/MariaDb/WtrMariaDb.pm";
+		#   $objWtrDb   		= "IssueTracker::App::Db::Out::MariaDb::WtrMariaDb";
+		#}
+		#elsif ( $db_type eq 'mariadb' ) {
+		#	$WtrDb 				= 'WtrDbMariaDb' ; 
+		#   $package_file     = "IssueTracker/App/Db/Out/MariaDb/WtrMariaDb.pm";
+		#   $objWtrDb   		= "IssueTracker::App::Db::Out::MariaDb::WtrMariaDb";
+		#}
 
 		require $package_file;
 
@@ -62,26 +58,17 @@ package IssueTracker::App::Db::Out::WtrDbsFactory ;
 	}
 	
 
-   #
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
 	sub new {
 
 		my $invocant 			= shift ;    
 		$appConfig           = ${ shift @_ } || { 'foo' => 'bar' } ; 
 		$objModel            = ${ shift @_ } || croak 'objModel not passed !!!' ; 
       $db_type             = shift || 'postgres' ; 
-		
-      # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
-
-		my $self = {};        # Anonymous hash reference holds instance attributes
-		bless( $self, $class );    # Say: $self is a $class
+	   my $self = {}; bless( $self, $class );    
       $self = $self->doInitialize() ; 
 		return $self;
 	}  
-	#eof const
 	
    #
 	# --------------------------------------------------------
