@@ -21,6 +21,9 @@ userstories
 devops_guide
 features
 requirements
+concepts
+system_guide
+installations
 EOF
 )
 

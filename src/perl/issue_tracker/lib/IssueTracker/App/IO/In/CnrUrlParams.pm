@@ -227,7 +227,8 @@ sub doSetSelect {
       return ( $ret , $msg ) ; 
    }
    $msg = '' ; 
-   $objModel->set('select.web-action.pg-size' , $query_params->param('pg-size') );
+   
+   $objModel->set('select.web-action.pg-size' , $page_size );
    $query_params->remove('pg-size') ; 
 
    # start pg-num
@@ -243,7 +244,7 @@ sub doSetSelect {
       return ( $ret , $msg ) ; 
    }
    $msg = '' ; 
-   $objModel->set('select.web-action.pg-num' , $query_params->param('pg-num') );
+   $objModel->set('select.web-action.pg-num' , $page_num );
    $query_params->remove('pg-num') ; 
    # stop pg-num
 
