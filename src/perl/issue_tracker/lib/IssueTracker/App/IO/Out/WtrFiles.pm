@@ -32,7 +32,7 @@ package IssueTracker::App::IO::Out::WtrFiles ;
 		my $out_file       = shift
 		   || confess ("WtrFiles::doPrintToFile undef \$out_file  !!!");
 		my $prt_str    = shift
-		   || cluck("WtrFiles::doPrintToFile undef \$prt_str  !!!");
+		   || croak("WtrFiles::doPrintToFile undef \$prt_str  !!!");
 		my $mode             = shift 
          || 'utf8' ; 
 
@@ -57,13 +57,13 @@ package IssueTracker::App::IO::Out::WtrFiles ;
          binmode(STDERR, ':utf8');
 
          open(out_file, ">:utf8", "$out_file")
-         || cluck("could not open the \$out_file $out_file! $! \n");
+         || croak("could not open the \$out_file $out_file! $! \n");
 
          binmode(out_file, ":utf8") ; 
          
       } else {
          open(out_file, ">$out_file")
-         || cluck("could not open the \$out_file $out_file! $! \n");
+         || croak("could not open the \$out_file $out_file! $! \n");
       }
       
 
@@ -78,7 +78,7 @@ package IssueTracker::App::IO::Out::WtrFiles ;
 
 	#
 	# -----------------------------------------------------------------------------
-	# Create a dir or cluck why it can't
+	# Create a dir or croak why it can't
 	# use by if ( $self->doMkDir ( $dir_to_create ) ; 
 	# -----------------------------------------------------------------------------
 	sub doMkDir {
@@ -95,7 +95,7 @@ package IssueTracker::App::IO::Out::WtrFiles ;
 			eval { 
 				use autodie ; 
 				my $error_msg = "WtrFiles::failed to create directory $dir_to_create $! !!!"  ; 
-				mkpath( "$dir_to_create" ) || cluck( "$error_msg" ) ;  
+				mkpath( "$dir_to_create" ) || croak( "$error_msg" ) ;  
 			};
 		}    
 		else {

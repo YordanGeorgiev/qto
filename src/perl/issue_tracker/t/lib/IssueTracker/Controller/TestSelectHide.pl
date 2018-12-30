@@ -33,7 +33,7 @@ for my $table ( @tables ) {
    $url = "/$db_name" . '/select/' . $table . $url_params ; 
    $tm = "start test a response with only a single column hide for : $url" ; 
    $res = $ua->get($url )->result->json ; 
-   p $res ; 
+   # debug r $res ; 
    ok ( $res->{'ret'} == 200 , $tm ) ; 	
   
    # feature-guid: 83fa6b81-544a-4d1c-b62b-c2628fbcc172
@@ -49,8 +49,8 @@ for my $table ( @tables ) {
    $url = "/$db_name" . '/select/' . $table . $url_params ; 
    $tm .= "url : $url" ; 
    $res = $ua->get($url )->result->json ; 
-   #p $ua->get($url )->result->json ;
-   p $res ; 
+   # debug r $ua->get($url )->result->json ;
+   # debug r $res ; 
    ok ( $res->{'ret'} == 400 , $tm ) ; 	
    $tm = "no data is retrieved for non-existent column to hide - url: $url" ; 
    ok ( $res->{'dat'} eq "", $tm ) ; 	
