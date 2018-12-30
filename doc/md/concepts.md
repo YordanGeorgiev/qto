@@ -1,26 +1,6 @@
 #  ISSUE-TRACKER CONCEPTS
 
 
-Table of Contents
-
-  * [1. INTRO](#1-intro)
-    * [1.1. Purpose](#11-purpose)
-    * [1.2. Audience](#12-audience)
-    * [1.3. Related documentation](#13-related-documentation)
-  * [2. CORE CONCEPTS](#2-core-concepts)
-    * [2.1. Time intervals based time-management](#21-time-intervals-based-time-management)
-    * [2.2. Personal responsibility](#22-personal-responsibility)
-  * [3. BUSINESS LOGIC](#3-business-logic)
-    * [3.1. Projects management](#31-projects-management)
-    * [3.2. Increase the date for all projects](#32-increase-the-date-for-all-projects)
-    * [3.3. Issues / Issue items / items](#33-issues-/-issue-items-/-items)
-      * [3.3.1. Categories](#331-categories)
-      * [3.3.2. Issues status](#332-issues-status)
-      * [3.3.3. Issues management via time intervals](#333-issues-management-via-time-intervals)
-    * [3.4. Problems](#34-problems)
-    * [3.5. Questions](#35-questions)
-
-
     
 
 ## 1. INTRO
@@ -132,6 +112,18 @@ Sometimes during the workings of your project you encounter problems, which are 
 
 ### 3.5. Questions
 Sometimes during the workings of your project you might be simply asking questions, which are complex enough not to allows the definition of an issue. In those cases it would be more rational to just register the question, discuss it or review it later on, and define the issue(s) addressing this question later on. 
+
+    
+
+## 4. DEFINITIONS
+This section contains definitions of terms within the context of the Issue-Tracker application.
+
+    
+
+### 4.1. release
+An issue-tracker release is the artifact you can download from the following GitHub page:
+https://github.com/YordanGeorgiev/issue-tracker/releases
+The word is also used for the actual release of the latest source code into a working instance available in the web ... 
 
     
 

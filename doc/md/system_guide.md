@@ -1,27 +1,6 @@
 #  ISSUE-TRACKER SYSTEM GUIDE
 
 
-Table of Contents
-
-  * [1. INTRO](#1-intro)
-    * [1.1. Purpose](#11-purpose)
-    * [1.2. Audience](#12-audience)
-  * [2. ARCHITECTURE](#2-architecture)
-    * [2.1. IOCM architecture definition](#21-iocm-architecture-definition)
-      * [2.1.1. The Control components](#211-the-control-components)
-      * [2.1.2. The Model components](#212-the-model-components)
-      * [2.1.3. The Input Components](#213-the-input-components)
-      * [2.1.4. The Output Components](#214-the-output-components)
-      * [2.1.5. The Converter Components](#215-the-converter-components)
-    * [2.2. Multi-instance setup](#22-multi-instance-setup)
-      * [2.2.1. Multi-environment naming convention](#221-multi-environment-naming-convention)
-    * [2.3. Sofware architecture](#23-sofware-architecture)
-      * [2.3.1. Front-End](#231-front-end)
-      * [2.3.2. Back-End](#232-back-end)
-  * [3. APPLICATION CONTROL FLOW ](#3-application-control-flow-)
-    * [3.1. Shell control flow](#31-shell-control-flow)
-
-
     
 
 ## 1. INTRO
@@ -108,7 +87,5 @@ This section provides a generic control flow description for the shell based and
 ### 3.1. Shell control flow
 The shell control flow is based on the control model input output architecture. 
 
-
-issue tracker control flow
-![The generic shell tool control flow](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/devops/shell-action-control-flow-diagram.png)    
+    
 

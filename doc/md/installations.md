@@ -1,60 +1,6 @@
 #  ISSUE-TRACKER INSTALLATIONS AND CONFIGURATION GUIDE
 
 
-Table of Contents
-
-  * [1. INTRODUCTION](#1-introduction)
-    * [1.1. Purpose](#11-purpose)
-    * [1.2. Document status](#12-document-status)
-    * [1.3. Audience](#13-audience)
-    * [1.4. Master storage and storage format](#14-master-storage-and-storage-format)
-    * [1.5. Version control](#15-version-control)
-    * [1.6. Process](#16-process)
-  * [2. OS LEVEL ACCESS](#2-os-level-access)
-    * [2.1. OS level access via aws](#21-os-level-access-via-aws)
-      * [2.1.1. Launch a new instance](#211-launch-a-new-instance)
-          * [2.1.1.1. Choose an Ubuntu AMI](#2111-choose-an-ubuntu-ami)
-          * [2.1.1.2. Select the type of instance](#2112-select-the-type-of-instance)
-      * [2.1.2. Open ports ](#212-open-ports-)
-      * [2.1.3. Create a key-pair to access the instance via ssh](#213-create-a-key-pair-to-access-the-instance-via-ssh)
-      * [2.1.4. Access the running instance via ssh.](#214-access-the-running-instance-via-ssh)
-  * [3. LIBS AND BINARIES INSTALLATIONS ON OS LEVEL](#3-libs-and-binaries-installations-on-os-level)
-    * [3.1. Check you can sudo with the ubuntu user](#31-check-you-can-sudo-with-the-ubuntu-user)
-    * [3.2. Add the issue-tracker application OS user's group](#32-add-the-issue-tracker-application-os-user's-group)
-    * [3.3. Add the issue-tracker application OS user](#33-add-the-issue-tracker-application-os-user)
-    * [3.4. Add the issue-tracker app user to the sudoers group](#34-add-the-issue-tracker-app-user-to-the-sudoers-group)
-    * [3.5. Allow sudo without having to type password ](#35-allow-sudo-without-having-to-type-password-)
-    * [3.6. Install the git binary](#36-install-the-git-binary)
-    * [3.7. Fetch the source](#37-fetch-the-source)
-    * [3.8. run the boot-strap script](#38-run-the-boot-strap-script)
-    * [3.9. Install the OS libs listed in the prereq sh script](#39-install-the-os-libs-listed-in-the-prereq-sh-script)
-    * [3.10. Install the Perl modules listed in the preq pl scriipt](#310-install-the-perl-modules-listed-in-the-preq-pl-scriipt)
-    * [3.11. Disable the warnings in the OAuth2.pm](#311-disable-the-warnings-in-the-oauth2pm)
-    * [3.12. Check that the project source code ](#312-check-that-the-project-source-code-)
-  * [4. POSTGRES RELATED INSTALLATIONS AND CONFIGURATIONS](#4-postgres-related-installations-and-configurations)
-    * [4.1. Configure the Ubuntu repositories](#41-configure-the-ubuntu-repositories)
-    * [4.2. Add the media keys](#42-add-the-media-keys)
-    * [4.3. Install the postgres package with apt](#43-install-the-postgres-package-with-apt)
-    * [4.4. Change the postgres user password](#44-change-the-postgres-user-password)
-      * [4.4.1. start the PostgreSQL](#441-start-the-postgresql)
-      * [4.4.2. Start the pgsql client as the postgres shell user](#442-start-the-pgsql-client-as-the-postgres-shell-user)
-      * [4.4.3. Create the pgsql user ](#443-create-the-pgsql-user-)
-      * [4.4.4. add the uuid generation capability enabling extension](#444-add-the-uuid-generation-capability-enabling-extension)
-      * [4.4.5. Install the dblink extension as follows](#445-install-the-dblink-extension-as-follows)
-    * [4.5. Install the perl modules](#45-install-the-perl-modules)
-  * [5. LOAD THE ISSUE-TRACKER PROJECT DATA](#5-load-the-issue-tracker-project-data)
-    * [5.1. Edit and pre-load the project env vars configuration file](#51-edit-and-pre-load-the-project-env-vars-configuration-file)
-    * [5.2. Create the database and run the DDL scrripts](#52-create-the-database-and-run-the-ddl-scrripts)
-    * [5.3. Start the mojo and hypno servers](#53-start-the-mojo-and-hypno-servers)
-    * [5.4. Load the data from the xls file](#54-load-the-data-from-the-xls-file)
-    * [5.5. Verify that the app layer and the db work together](#55-verify-that-the-app-layer-and-the-db-work-together)
-  * [6. FRONT END-INSTALLATIONS ( OPTIONAL )](#6-front-end-installations-(-optional-))
-    * [6.1. Install NodeJS on Ubuntu](#61-install-nodejs-on-ubuntu)
-    * [6.2. Install npm](#62-install-npm)
-    * [6.3. Install web-pack](#63-install-web-pack)
-    * [6.4. Install bower](#64-install-bower)
-
-
     
 
 ## 1. INTRODUCTION
@@ -383,37 +329,7 @@ Load the data to the db from the xls file
 
 ### 5.5. Verify that the app layer and the db work together
 In the aws menu click Services - EC2. Click on the instances on the left. Check the public DNS name of your instance and use it for the URL as follows:
-http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/dev_issue_tracker/list/yearly_issues?as=table&pick=id,status,prio,name,weight,start_time,stop_time&pg-size=20&pg-num=1
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/dev_issue_tracker/list/yearly_issues?as=table&pick=id,status,prio,name,weight,start_time,stop_time&page-size=20&page-num=1
 
     
-
-## 6. FRONT END-INSTALLATIONS ( OPTIONAL )
-
-
-    
-
-### 6.1. Install NodeJS on Ubuntu
-From the following page:
-https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
-
-    sudo apt-get install -y build-essential
-    sudo apt-get install -y nodejs
-
-### 6.2. Install npm
-Install npm by issuing the following command:
-
-    sudo apt-get install npm
-
-### 6.3. Install web-pack
-Install webpack globally by issueing the following command:
-
-    sudo npm install -g webpack
-
-### 6.4. Install bower
-Install the bower package globally as follows:
-
-    npm config set prefix /usr/local
-    npm install -g bower
-    sudo npm install -g bower
-    which bower
 

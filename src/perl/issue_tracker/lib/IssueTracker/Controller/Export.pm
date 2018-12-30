@@ -75,11 +75,9 @@ sub doSetRequestModelData {
 
    $objCnrUrlParams = 
       'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
-   ( $ret , $msg ) = $objCnrUrlParams->doSetList();
-   return ( $ret , $msg ) unless $ret == 0 ; 
    
    ( $ret , $msg ) = $objCnrUrlParams->doSetView();
-   return ( $ret , $msg ) unless $ret == 0 ; 
+   return ( $ret , $msg ) unless $ret == 200 ; 
 
    ( $ret , $msg ) = $objCnrUrlParams->doSetSelect();
    return ( $ret , $msg ) unless $ret == 0 ; 

@@ -205,9 +205,10 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       return ( 0 , "" , "")  unless ( defined ( $ops ) ); 
       return ( 0 , "" , "")  unless ( defined ( $vals ) ); 
 
-      print "from RdrPostgresDb.pm 120 \@$cols @$cols \n" ; 
-      print "from RdrPostgresDb.pm \@$ops @$ops \n" ; 
-      print "from RdrPostgresDb.pm \@$vals @$vals \n" ; 
+      # debug rint "from RdrPostgresDb.pm 120 \@$cols @$cols \n" ; 
+      # debug rint "from RdrPostgresDb.pm \@$ops @$ops \n" ; 
+      # debug rint "from RdrPostgresDb.pm \@$vals @$vals \n" ; 
+
       if ( @$cols and @$ops and @$vals) {
          
          for ( my $i = 0 ; $i < scalar ( @$cols ) ; $i++ ) {
@@ -909,12 +910,10 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          chop($str_sql); $str_sql .= " DESC " ; 
       }
 
-      #$str_sql .= " ORDER BY id ASC " unless ( $str_sql =~ m/ORDER BY/mgi ); 
-
       my $limit = $objModel->get('select.web-action.pg-size' ) || 7 ; 
       my $page_num = $objModel->get('select.web-action.pg-num' ) || 1 ; 
       my $offset = ( $page_num -1 ) || 0 ; # get default page is 1
-
+      
       $offset = $limit*$offset ; 
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
@@ -960,11 +959,11 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
 		my $self       = {} ; bless( $self, $class );    # Say: $self is a $class
-      $self          = $self->doInitialize() ; 
+      $self          = $self->doInit() ; 
 		return $self;
 	}  
 	
-   sub doInitialize {
+   sub doInit {
       my $self = shift ; 
 
       %$self = (
@@ -972,11 +971,11 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       );
 		
 		$db                  = $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}     || 'prd_ysg_issues' ; 
-		$postgres_db_host 			   = $ENV{ 'postgres_db_host' } || $appConfig->{'postgres_db_host'} 		|| 'localhost' ;
-		$postgres_db_port 			   = $ENV{ 'postgres_db_port' } || $appConfig->{'postgres_db_port'} 		|| '13306' ; 
+		$postgres_db_host    = $ENV{ 'postgres_db_host' } || $appConfig->{'postgres_db_host'} 		|| 'localhost' ;
+		$postgres_db_port    = $ENV{ 'postgres_db_port' } || $appConfig->{'postgres_db_port'} 		|| '13306' ; 
 		$postgres_db_user 	= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'ysg' ; 
 		$postgres_db_user_pw = $ENV{ 'postgres_db_user_pw' } || $appConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
-      
+
 	   $objLogger 			   = 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
 
       return $self ; 
