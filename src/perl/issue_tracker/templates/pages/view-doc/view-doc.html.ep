@@ -10,6 +10,7 @@
 % content_for cnt_body_controls  => begin
    <div id="div_central_panel">
       <div class="container">
+         <div id="div_open_rgt_menu" onclick="openRightMenu()"> ☰ </div>
          <div id="app"></div>
       </div>
 
@@ -138,6 +139,14 @@
            },
        });
       
+
+      function openRightMenu() {
+        document.getElementById("rgt_menu").style.width = "27%";
+      }
+
+      function closeRightMenu() {
+        document.getElementById("rgt_menu").style.width = "0";
+      }
 
    </script>
 % end
