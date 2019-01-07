@@ -27,18 +27,28 @@ package IssueTracker::App::IO::In::CnrUrlPrms ;
    our $objModel     = {} ; 
    our $appConfig    = {} ; 
 
-sub doSetCreateUrlParams {
+
+sub doValidateAndSetCreate {
 
    my $self          = shift ; 
    my $perl_hash     = shift ; 
-   my $ret           = 0 ; 
    my $msg           = '' ; 
+   my $isValid       = 0 ; 
+   my $http_code     = 400 ; 
+   my $id            = $perl_hash->{'id'} ; 
 
-   $objModel->set('create.web-action.id' , $perl_hash->{'id'} ) ; 
+   unless ( isint $id && $id > 0) {
+      $http_code     = 400 ; 
+      $msg           = 'the id must be a whole positive number, but ' . $id . ' was provided !' ; 
+   } else {
+      $http_code     = 200 ; 
+      $isValid       = 1 ; 
+   }
+   $self->set('msg' , $msg ) ; 
+   $self->set('http_code' , $http_code ) ; 
+   $objModel->set('create.web-action.id' , $id ) ; 
    
-   $ret = 0 ; $msg = '' ; 
-   return ( $ret , $msg ) ; 
-
+   return $isValid ; 
 }
 
 sub doSetUpdateUrlParams {
