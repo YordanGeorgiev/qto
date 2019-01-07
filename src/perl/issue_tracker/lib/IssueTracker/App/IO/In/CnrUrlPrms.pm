@@ -51,6 +51,31 @@ sub doValidateAndSetCreate {
    return $isValid ; 
 }
 
+sub doValidateAndSetUpdate {
+
+   my $self          = shift ; 
+   my $perl_hash     = shift ; 
+   my $msg           = '' ; 
+   my $isValid       = 0 ; 
+   my $http_code     = 400 ; 
+   my $id            = $perl_hash->{'id'} ; 
+
+   unless ( isint $id && $id > 0) {
+      $http_code     = 400 ; 
+      $msg           = 'the id must be a whole positive number, but ' . $id . ' was provided !' ; 
+   } else {
+      $http_code     = 200 ; 
+      $isValid       = 1 ; 
+   }
+   $self->set('msg' , $msg ) ; 
+   $self->set('http_code' , $http_code ) ; 
+   $objModel->set('update.web-action.col_name' , $perl_hash->{'attribute'} ) ; 
+   $objModel->set('update.web-action.id' , $perl_hash->{'id'} ) ; 
+   $objModel->set('update.web-action.col_value' , $perl_hash->{'cnt'} ) ; 
+   
+   return $isValid ; 
+}
+
 sub doSetUpdateUrlParams {
 
    my $self          = shift ; 
