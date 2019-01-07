@@ -13,7 +13,7 @@ use Data::Printer ;
 use Carp qw /cluck confess shortmess croak carp/ ;
 
 use IssueTracker::App::Utils::Logger;
-use IssueTracker::App::IO::In::CnrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlPrms ; 
 use IssueTracker::App::IO::WtrExportFactory ; 
 use IssueTracker::App::Utils::Timer ; 
 
@@ -67,22 +67,22 @@ sub doSetRequestModelData {
    
    my $ret              = 1 ;  
    my $msg              = '' ; 
-   my $objCnrUrlParams  = {} ; 
+   my $objCnrUrlPrms  = {} ; 
 
    $appConfig		 		= $self->app->get('AppConfig');
    $objModel->set('postgres_db_name' , $db ) ; 
    $objModel->set('table_name' , $item ) ; 
 
-   $objCnrUrlParams = 
-      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
+   $objCnrUrlPrms = 
+      'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
    
-   ( $ret , $msg ) = $objCnrUrlParams->doSetView();
+   ( $ret , $msg ) = $objCnrUrlPrms->doSetView();
    return ( $ret , $msg ) unless $ret == 200 ; 
 
-   ( $ret , $msg ) = $objCnrUrlParams->doSetSelect();
+   ( $ret , $msg ) = $objCnrUrlPrms->doSetSelect();
    return ( $ret , $msg ) unless $ret == 0 ; 
 
-   ( $ret , $msg ) = $objCnrUrlParams->doSetWith();
+   ( $ret , $msg ) = $objCnrUrlPrms->doSetWith();
    return ( $ret , $msg ) ;
 
 }

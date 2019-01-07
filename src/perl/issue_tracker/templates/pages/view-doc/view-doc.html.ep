@@ -38,7 +38,7 @@
       
       if ( url_params.has("as") === false) { url_params.append("as" , "doc"); }
       
-      //debug for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
+      // for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
       return url_params ; 
    }
 
@@ -75,6 +75,10 @@
     var actions = {
          loadItems ({ commit }) {
             var url_params = getUrlParams()  
+            //todo:ysg
+            console.log(window.location.pathname)
+            for(var pair of url_params.entries()) { console.log(pair[0]+ '->'+ pair[1]); }
+            //todo:ysg
             axios
                .get((window.location.pathname).replace("/view/" , "/hselect/") , { params: url_params })
                .then(r => r.data.dat) 

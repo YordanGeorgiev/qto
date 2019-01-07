@@ -12,7 +12,7 @@ use Data::Dumper;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
-use IssueTracker::App::IO::In::CnrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlPrms ; 
 
 my $module_trace    = 0 ;
 our $appConfig      = {};
@@ -29,7 +29,7 @@ sub doSelectItems {
    my $db               = $self->stash('db');
    my $item             = $self->stash('item');
    my $http_method      = 'GET' ;  
-   my $objCnrUrlParams  = {} ; 
+   my $objCnrUrlPrms  = {} ; 
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
    my $ret              = 0;
@@ -51,9 +51,9 @@ sub doSelectItems {
    $objModel->set('postgres_db_name' , $db ) ; 
 
    my $query_params = $self->req->query_params ; 
-   $objCnrUrlParams = 
-      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
-   ( $ret , $msg ) = $objCnrUrlParams->doSetSelect();
+   $objCnrUrlPrms = 
+      'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+   ( $ret , $msg ) = $objCnrUrlPrms->doSetSelect();
 
    if ( $ret != 0 ) {
       $http_code = 400 ; 
@@ -61,7 +61,7 @@ sub doSelectItems {
       return ; 
    } 
 
-   ( $ret , $msg ) = $objCnrUrlParams->doSetWith();
+   ( $ret , $msg ) = $objCnrUrlPrms->doSetWith();
    if ( $ret != 0 ) {
       $http_code = 400 ; 
       $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);

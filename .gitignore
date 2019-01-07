@@ -1,4 +1,3 @@
-# exclude all the zip files
 **/*.zip
 **/*.log
 **/*.tdy
@@ -8,7 +7,6 @@ dat/tests/t*.txt
 dat/issue-tracker/**
 src/bash/issue-tracker/tmp/**
 src/perl/issue_tracker/script/hypnotoad.pid
-src/react/conf-srch/node_modules/**
 **/~$*.xlsx
 **/.DS_Store
 src/perl/issue_tracker/public/bower_components/**
@@ -21,3 +19,4 @@ src/perl/issue_tracker/public/lib/js/**
 src/perl/issue_tracker/public/dat/tmp/**
 dat/tmp/**
 **/tmp/**
+dat/mix/2019/**

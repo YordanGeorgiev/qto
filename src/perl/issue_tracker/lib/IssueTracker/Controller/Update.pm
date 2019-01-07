@@ -17,7 +17,7 @@ use JSON;
 use IssueTracker::App::Db::Out::WtrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
-use IssueTracker::App::IO::In::CnrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlPrms ; 
 
 our $module_trace   = 0 ;
 our $appConfig      = {};
@@ -34,7 +34,7 @@ sub doUpdateItemBySingleCol {
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
    my $rdbms_type       = 'postgres';
-   my $objCnrUrlParams  = {} ; 
+   my $objCnrUrlPrms  = {} ; 
    my $objWtrDbsFactory = {} ; 
    my $objWtrDb         = {} ; 
    my $ret              = 0;
@@ -51,9 +51,9 @@ sub doUpdateItemBySingleCol {
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    
-   $objCnrUrlParams = 
-      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
-   ( $ret , $msg )      = $objCnrUrlParams->doSetUpdateUrlParams($perl_hash ) ; 
+   $objCnrUrlPrms = 
+      'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+   ( $ret , $msg )      = $objCnrUrlPrms->doSetUpdateUrlParams($perl_hash ) ; 
    
    if ( $ret != 0 ) {
       $self->res->code(400);

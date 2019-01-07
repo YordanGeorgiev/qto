@@ -14,7 +14,7 @@ use parent qw(IssueTracker::Controller::BaseController);
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
-use IssueTracker::App::IO::In::CnrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlPrms ; 
 
 my $module_trace    = 0 ;
 our $appConfig      = {};
@@ -52,7 +52,7 @@ sub doQueryItems {
       }
    } 
 
-   my $objCnrUrlParams  = {} ; 
+   my $objCnrUrlPrms  = {} ; 
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
    my $hsr2             = {};
@@ -65,9 +65,9 @@ sub doQueryItems {
    $objModel->set('postgres_db_name' , $db ) ; 
 
    my $query_params = $self->req->query_params ; 
-   $objCnrUrlParams = 
-      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
-   ( $ret , $msg ) = $objCnrUrlParams->doSetQueryUrlParams('Query' );
+   $objCnrUrlPrms = 
+      'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+   ( $ret , $msg ) = $objCnrUrlPrms->doSetQueryUrlParams('Query' );
    if ( $ret != 0 ) {
       $self->SUPER::doRenderJSON(400,$msg,'GET','','0','');
       return ; 

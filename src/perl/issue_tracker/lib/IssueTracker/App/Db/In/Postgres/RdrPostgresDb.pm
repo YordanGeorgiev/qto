@@ -171,6 +171,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $db               = shift ; 
       my $table            = shift ; 
 
+      my $bid           = $objModel->get( 'hselect.web-action.bid' ) || 0 ; 
+      my $seq           = $objModel->get( 'hselect.web-action.seq' ) || undef ; 
+
       my $where_clause_bid = '' , 
 		my $ret              = 400 ; 
 		my $msg              = ' the url parameter branch-id - bid should be a number !!! ' ; 
@@ -192,6 +195,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $self    = shift ; 
       my $db      = shift ; 
       my $table   = shift ; 
+      my $isHrchy = shift || 0 ; 
 
 		my $sql     = '' ; 
 		my $ret     = 400 ; 
@@ -220,7 +224,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
         
             my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col ) ; 
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
-				$sql .= " $col $op '$val'" ; 
+            my $nodeMayBe = 'dyn_sql.' if $isHrchy == 1 ;
+				$sql .= " $nodeMayBe$col $op '$val'" ; 
          }
       	return ( 0 , "" , $sql) ;
       } elsif ( @$cols or @$vals or @$ops )  {
@@ -1007,8 +1012,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $self          = shift ; 
       my $db            = shift || croak 'no db passed !!!' ; 
       my $table         = shift || croak 'no table passed !!!' ; 
-      my $bid           = shift || 0 ; 
-      my $seq           = shift || 1 ; 
+      my $bid           = $objModel->get( 'hselect.web-action.bid' ) || 0 ; 
+      my $seq           = $objModel->get( 'hselect.web-action.seq' ) || undef ; 
    
       my $rv            = 1  ;
       my $ret           = 1 ; 
@@ -1021,7 +1026,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 		$pg = $self->doInitPg();
 
-		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table ) ; 
+		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 1) ; 
 		return ( $ret , $msg ) unless $ret == 0 ; 
       $where_clause_with =~ s/$table/parent/g ; 
 
@@ -1035,13 +1040,14 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
                WHERE 1=1 AND node.lft 
                BETWEEN parent.lft AND parent.rgt
                $where_clause_bid
-               $where_clause_with
                )  AS dyn_sql 
 				WHERE 1=1 
+            $where_clause_with
 				ORDER BY seq
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
-			# debug rint $sql ; 
+         # todo:ysg
+			print $sql ; 
          # debug r $hsr2 ; 
       };
       if ( $@ ) {
