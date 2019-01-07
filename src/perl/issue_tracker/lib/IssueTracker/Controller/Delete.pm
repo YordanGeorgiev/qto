@@ -45,19 +45,17 @@ sub doDeleteItemById {
    my $perl_hash = decode_json($json) ; 
 
    $appConfig		= $self->app->get('AppConfig');
-   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
-   $objModel->set('postgres_db_name' , $db ) ; 
-
+   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db ) ;
    $objCnrUrlPrms = 
       'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
-   ( $ret , $msg ) = $objCnrUrlPrms->doSetDeleteUrlParams($perl_hash ) ; 
    
-   if ( $ret != 0 ) {
-      $self->res->code(400);
+   unless ( $objCnrUrlPrms->doValidateAndSetDelete ( $perl_hash ) == 1 ) {
+      my $http_code = $objCnrUrlPrms->get('http_code') ; 
+      $self->res->code($http_code);
       $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 400, 
-         'req'   => "POST " . $self->req->url->to_abs
+           'msg'   => $objCnrUrlPrms->get('msg')
+         , 'ret'   => $http_code
+         , 'req'   => "POST " . $self->req->url->to_abs
       });
       return ; 
    } 
