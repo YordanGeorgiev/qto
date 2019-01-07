@@ -14,7 +14,7 @@ use JSON;
 use IssueTracker::App::Db::Out::WtrDbsFactory;
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
-use IssueTracker::App::IO::In::CnrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlPrms ; 
 
 our $module_trace   = 0 ;
 our $appConfig      = {};
@@ -31,7 +31,7 @@ sub doCreateBySoleId {
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
    my $rdbms_type       = 'postgres';
-   my $objCnrUrlParams  = {} ; 
+   my $objCnrUrlPrms  = {} ; 
    my $objWtrDbsFactory = {} ; 
    my $objWtrDb         = {} ; 
    my $ret              = 0;
@@ -48,9 +48,9 @@ sub doCreateBySoleId {
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
 
-   $objCnrUrlParams = 
-      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
-   ( $ret , $msg ) = $objCnrUrlParams->doSetCreateUrlParams($perl_hash ) ; 
+   $objCnrUrlPrms = 
+      'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+   ( $ret , $msg ) = $objCnrUrlPrms->doSetCreateUrlParams($perl_hash ) ; 
    
    if ( $ret != 0 ) {
       $self->res->code(400);

@@ -6,8 +6,10 @@
             @click="toggleItem(item.id)"
             @dblclick="deleteItem(item.id)"> 
             <h3 tabindex="2" :id="'#<%= $item =%>-' + item.id">
-               <a :name="'<%= $item =%>-' + item.id" class="permalink scroll" :href="'#<%= $item =%>-' + item.id">#</a>
-               <a :href="'#<%= $item =%>-' + item.id" class="scroll">{{item.logical_order}} {{item.name}}</a>
+               <a :name="'<%= $item =%>-' + item.id" class="permalink scroll"
+                  :href="'#<%= $item =%>-' + item.id">#</a>
+               <a :href="'#<%= $item =%>-' + item.id" :title="'level:' + item.level + ' :: seq: ' + item.seq "
+                  class="scroll">{{item.logical_order}} {{item.name}}</a>
             </h3>
             <div class="cls_desc">
                <p tabindex="2"> {{item.description}} </p>

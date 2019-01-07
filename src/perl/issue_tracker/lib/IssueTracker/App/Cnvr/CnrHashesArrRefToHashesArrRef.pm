@@ -137,7 +137,7 @@ sub doConvert {
          #$curr_level_count		= '' 
          #	if ( $curr_level_count == 0 and $key == 1 ) ; 
          if ( $key > 1 ) {				
-            my $logical_order = $hs_seq_logical_order->{ $id }->{ 'logic_order' } ; 
+            my $logical_order = $hs_seq_logical_order->{ $id }->{ 'logic_order' } || '' ;
             $logical_order  =~ s/(.*)\.\.\./$1/g ; 
             $logical_order  .= 
                $curr_level_count . $post_dot_maybe ; 

@@ -1,4 +1,4 @@
-package IssueTracker::App::IO::In::CnrUrlParams ; 
+package IssueTracker::App::IO::In::CnrUrlPrms ; 
 	use strict; use warnings; use diagnostics ; 
 
 	my $VERSION = '1.0.0';
@@ -116,9 +116,9 @@ sub doSetWith {
          }
       }
 
-      #debug rint "from CnrUrlParams.pm 47 \@with_cols : @with_cols \n" ; 
-      #debug rint "from CnrUrlParams.pm 47 \@with_ops : @with_ops \n" ; 
-      #debug rint "from CnrUrlParams.pm 47 \@with_vals : @with_vals \n" ; 
+      #debug rint "from CnrUrlPrms.pm 47 \@with_cols : @with_cols \n" ; 
+      #debug rint "from CnrUrlPrms.pm 47 \@with_ops : @with_ops \n" ; 
+      #debug rint "from CnrUrlPrms.pm 47 \@with_vals : @with_vals \n" ; 
 
       $objModel->set('select.web-action.with-cols' , \@with_cols ) ; 
       $objModel->set('select.web-action.with-ops' , \@with_ops ) ; 
@@ -130,6 +130,77 @@ sub doSetWith {
 
    $ret = 0 ; $msg = '' ; 
    return ( $ret , $msg ) ; 
+}
+
+sub doValidateAndSetWith {
+
+   my $self          = shift ; 
+   my $with_params   = {} ; 
+   my $ret           = 1 ; 
+   my $msg           = '' ; 
+   my $isValid       = 0 ; 
+
+   my $ops = {
+       'eq' => '='
+     , 'ne' => '<>'
+     , 'gt' => '>'
+     , 'lt' => '<'
+     , 'ge' => '>='
+     , 'le' => '<='
+     , 'like' => 'like'
+   };
+
+   $with_params   = $query_params->every_param('with') ; 
+   # or where because of the sql gurus around there ...
+   $with_params   = $query_params->every_param('where') if ( @$with_params < 1 ) ;
+
+   unless ( defined ( $with_params ) ) {
+      $isValid = 1 ; 
+      return $isValid ; 
+   }
+
+   my ( @with_cols , @with_ops , @with_vals ) = () ; 
+
+   foreach my $with ( @$with_params ) {
+
+      if ( $with =~ m/(.*?)[-](.*?)[-](.*)/g ) {
+         push @with_cols , $1 ; 
+         #if ( $3 =~ m/(.*?)%(.*?)/g ) { perl bug ?! each second is different ??? ...
+         if ( index($3, '%') != -1 ) {
+            push @with_ops , 'like' ; 
+            push @with_vals , $3 ; 
+         } else {
+            unless ( exists ( $${ops{$2}}) ) {
+               $msg = " error for undefined operator \"$2\" in url syntax. Use one of the following : " ; 
+               $msg .= join("," , keys %$ops);
+               $msg .= " a valid syntax could be : with=prio-eq-1 " ; 
+               $self->set('http_code',400);
+               $self->set('msg',$msg);
+               return $isValid ; 
+            }
+            push @with_ops , $ops->{$2} ; 
+            push @with_vals , $3 ; 
+         }
+      }
+
+      #debug rint "from CnrUrlPrms.pm 47 \@with_cols : @with_cols \n" ; 
+      #debug rint "from CnrUrlPrms.pm 47 \@with_ops : @with_ops \n" ; 
+      #debug rint "from CnrUrlPrms.pm 47 \@with_vals : @with_vals \n" ; 
+
+      $objModel->set('select.web-action.with-cols' , \@with_cols ) ; 
+      $objModel->set('select.web-action.with-ops' , \@with_ops ) ; 
+      $objModel->set('select.web-action.with-vals' , \@with_vals ) ; 
+   
+      $query_params->remove('with') ; 
+      $query_params->remove('where') ; 
+   }
+
+   $isValid = 1 ; 
+   $ret = 0 ; $msg = '' ; 
+   $self->set('http_code',200);
+   $self->set('msg','');
+
+   return $isValid ;  
 }
 
 sub doSetQueryUrlParams {
@@ -165,7 +236,7 @@ sub doSetQueryUrlParams {
    $objModel->set('query.web-action.pg-size' , $query_params->param('pg-size') );
    $query_params->remove('pg-size') ; 
 
-   # start pg-num
+   # $self->doSetList() ; start pg-num
    my $page_num = $query_params->param('pg-num') || 1 ; 
    $msg = "the page num must a positive number, but pg-num of " . $page_num . " was requested !!!" ; 
    unless ( isint $page_num ) {
@@ -253,6 +324,63 @@ sub doSetSelect {
 
 }
 
+sub doValidateAndSetBranchId {
+
+   my $self          = shift ; 
+   my $ret           = 1 ; 
+   my $isValid       = 0 ;
+   my $msg           = '' ; 
+   my $http_code     = 400 ; 
+   my $bid           = $query_params->param('bid') || 0 ; 
+   
+   unless ( looks_like_number $bid ) {
+      $msg = 'the branch-id bid url parameter should be a whole number' ; 
+      $http_code = 400 ; 
+   } else {
+      $isValid = 1 ; 
+      $http_code = 200 ; 
+      $objModel->set('view.web-action.bid' , $query_params->param('bid') );
+      $query_params->remove('bid') ; 
+   }
+   
+   $self->set('http_code'  , $http_code );
+   $self->set('msg'  , $msg );
+   return $isValid ;
+}
+
+
+sub doValidateAndSetSeq {
+
+   my $self          = shift ; 
+   my $ret           = 1 ; 
+   my $isValid       = 0 ;
+   my $msg           = '' ; 
+   my $http_code     = 400 ; 
+   my $seq           = $query_params->param('seq') ;
+   
+   if ( defined $seq && !looks_like_number $query_params->param('seq') ) {
+      $msg = 'the seq ( aka sequence ) url parameter should be a whole number' ; 
+      $http_code = 400 ; 
+      return ( $ret , $msg , $http_code )
+   } else {
+      $isValid = 1 ; 
+      $http_code = 200 ; 
+      $objModel->set('hselect.web-action.seq' , $query_params->param('seq') );
+      $query_params->remove('seq') ; 
+   }
+   
+   $self->set('http_code'  , $http_code );
+   $self->set('msg'  , $msg );
+   return $isValid ;
+}
+
+
+sub doValidateAndSetHSelect {
+   my $self          = shift ; 
+   return $self->doValidateAndSetBranchId() && $self->doValidateAndSetSeq() 
+      && $self->doValidateAndSetWith();
+}
+
 
 sub doSetView {
 
@@ -278,11 +406,11 @@ sub doSetView {
    $objModel->set('view.web-action.bid' , $query_params->param('bid') );
    $query_params->remove('bid') ; 
    
-   $objModel->set('view.web-action.seq' , $query_params->param('seq') );
+   $objModel->set('hselect.web-action.seq' , $query_params->param('seq') );
    $query_params->remove('seq') ; 
-
+   
    $ret = 200 ; $msg = '' ; 
-   return ( $ret , $msg ) ; 
+   return ($ret , $msg );
 }
    
 
@@ -329,13 +457,13 @@ __END__
 
 =head1 NAME
 
-CnrUrlParams
+CnrUrlPrms
 
 =head1 SYNOPSIS 
 
-   use IssueTracker::App::IO::In::CnrUrlParams ; 
-   my $objCnrUrlParams = 
-      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
+   use IssueTracker::App::IO::In::CnrUrlPrms ; 
+   my $objCnrUrlPrms = 
+      'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
 
   
 
