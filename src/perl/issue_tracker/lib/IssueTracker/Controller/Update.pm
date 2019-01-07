@@ -53,14 +53,14 @@ sub doUpdateItemBySingleCol {
    
    $objCnrUrlPrms = 
       'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
-   ( $ret , $msg )      = $objCnrUrlPrms->doSetUpdateUrlParams($perl_hash ) ; 
    
-   if ( $ret != 0 ) {
-      $self->res->code(400);
+   unless ( $objCnrUrlPrms->doValidateAndSetUpdate ( $perl_hash ) == 1 ) {
+      my $http_code = $objCnrUrlPrms->get('http_code') ; 
+      $self->res->code($http_code);
       $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => 400, 
-         'req'   => "POST " . $self->req->url->to_abs
+           'msg'   => $objCnrUrlPrms->get('msg')
+         , 'ret'   => $http_code
+         , 'req'   => "POST " . $self->req->url->to_abs
       });
       return ; 
    } 

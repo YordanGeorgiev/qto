@@ -76,35 +76,29 @@ sub doValidateAndSetUpdate {
    return $isValid ; 
 }
 
-sub doSetUpdateUrlParams {
+sub doValidateAndSetDelete {
 
    my $self          = shift ; 
    my $perl_hash     = shift ; 
-   my $ret           = 0 ; 
    my $msg           = '' ; 
+   my $isValid       = 0 ; 
+   my $http_code     = 400 ; 
+   my $id            = $perl_hash->{'id'} ; 
 
-   $objModel->set('update.web-action.col_name' , $perl_hash->{'attribute'} ) ; 
-   $objModel->set('update.web-action.id' , $perl_hash->{'id'} ) ; 
-   $objModel->set('update.web-action.col_value' , $perl_hash->{'cnt'} ) ; 
-   
-   $ret = 0 ; $msg = '' ; 
-   return ( $ret , $msg ) ; 
-
-}
-
-sub doSetDeleteUrlParams {
-
-   my $self          = shift ; 
-   my $perl_hash     = shift ; 
-   my $ret           = 0 ; 
-   my $msg           = '' ; 
-
+   unless ( isint $id && $id > 0) {
+      $http_code     = 400 ; 
+      $msg           = 'the id must be a whole positive number, but ' . $id . ' was provided !' ; 
+   } else {
+      $http_code     = 200 ; 
+      $isValid       = 1 ; 
+   }
+   $self->set('msg' , $msg ) ; 
+   $self->set('http_code' , $http_code ) ; 
    $objModel->set('delete.web-action.id' , $perl_hash->{'id'} ) ; 
-
-   $ret = 0 ; $msg = '' ; 
-   return ( $ret , $msg ) ; 
-
+   
+   return $isValid ; 
 }
+
 
 sub doSetWith {
 
