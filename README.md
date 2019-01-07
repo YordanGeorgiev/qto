@@ -29,8 +29,8 @@ issue tracker objects polygon
 
 ## 2. AND WHAT IS THIS ?!
 A generic postgres CRUDs ( s stands for search ) web based app for managing multiple databases from the same web application layer by means of simpliest possible UI and/or shell tools for xls export, Google sheets writes etc. An included example application is the "issue-tracker application", which is used to manage multiple projects' issues, including itself ;o). 
-The full and extensive [features and functionalities document](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/features.md) must contain all the features and functionalities of this released version.
-This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture and the Input-Output Controller Model architecture ( more about this in the [System Guide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/system_guide.md)
+The full and extensive [features and functionalities document](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/features) must contain all the features and functionalities of this released version.
+This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture and the Input-Output Controller Model architecture ( more about this in the [System Guide](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/system_guide), which is in a way a reflection of the simple axiom in IT - "if there is one there will be many" ...
 
     
 
