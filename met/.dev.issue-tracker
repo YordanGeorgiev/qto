@@ -58,8 +58,6 @@ src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-prev-10.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/trash-bin.png
 # --
 src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
-src/perl/issue_tracker/templates/controls/list-cloud/list-cloud.html.ep
-src/perl/issue_tracker/public/lib/js/controls/jqcloud/jqcloud.min.js
 src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
 # ---
 src/perl/issue_tracker/public/poc/autocomplete
@@ -69,7 +67,6 @@ src/perl/issue_tracker/public/poc/autocomplete/autocomplete.html
 # ---
 # ---
 src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrListLabels.pm
-src/perl/issue_tracker/lib/IssueTracker/App/UI/Controls/WtrJQCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Cnvr/CnrHsr2ToHsr2.pm
 src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm
@@ -81,11 +78,9 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrExporterXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrExporterMd.pm
 # ---
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
-src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/jqcloud.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/site.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/view.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
-src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/jqcloud.css
 #---
 src/perl/issue_tracker/lib/IssueTracker/Controller
 src/perl/issue_tracker/lib/IssueTracker/Controller/PageFactory.pm
@@ -94,7 +89,6 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/List.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListPrintTable.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/ListLabels.pm
-src/perl/issue_tracker/lib/IssueTracker/Controller/ListCloud.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/SearchGrid.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Query.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Create.pm
@@ -117,7 +111,6 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestDelete.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListCloud.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListView.t
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestAppLabel.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListAsOutputType.pl
@@ -788,8 +781,6 @@ doc/txt/issue-tracker/helps/db-to-json.help.txt
 doc/txt/issue-tracker/funcs/db-to-json.func.txt
 # ---
 src/perl/issue_tracker/public/poc/
-src/perl/issue_tracker/public/poc/list-jqcloud
-src/perl/issue_tracker/public/poc/list-jqcloud/list-jqcloud.html
 src/perl/issue_tracker/public/poc/list-lable
 src/perl/issue_tracker/public/poc/list-lable/app.js
 src/perl/issue_tracker/public/poc/list-lable/list-lable.html
@@ -935,7 +926,6 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Mdl/Model/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToJson/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrJsonToHsr2/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrJQCloud/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/UI/Controls/WtrListLabels/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Configurator/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Utils/Initiator/autosplit.ix

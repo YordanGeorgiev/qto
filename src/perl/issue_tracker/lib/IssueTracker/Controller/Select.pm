@@ -28,56 +28,43 @@ sub doSelectItems {
    my $self             = shift;
    my $db               = $self->stash('db');
    my $item             = $self->stash('item');
+
    my $http_method      = 'GET' ;  
-   my $objCnrUrlPrms  = {} ; 
-   my $objRdrDbsFactory = {} ; 
-   my $objRdrDb         = {} ; 
+   my $http_code        = 200 ; 
    my $ret              = 0;
    my $dat              = '' ; 
    my $msg              = 'unknown error during Select item';
    my $hsr2             = {};
    my $met              = {}; # the meta-data of the this item
    my $mc               = {}; # the meta-counter of the meta-data
-   my $http_code        = 200 ; 
    my $cnt              = 0 ; 
+   my $objCnrUrlPrms    = {} ; 
+   my $objRdrDbsFactory = {} ; 
+   my $objRdrDb         = {} ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
 
-   $appConfig		 		= $self->app->get('AppConfig');
+   $appConfig		= $self->app->get('AppConfig');
 
 	# debug rint "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
-   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
-   $objModel->set('postgres_db_name' , $db ) ; 
-
-   my $query_params = $self->req->query_params ; 
-   $objCnrUrlPrms = 
-      'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
-   ( $ret , $msg ) = $objCnrUrlPrms->doSetSelect();
-
-   if ( $ret != 0 ) {
-      $http_code = 400 ; 
-      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
-      return ; 
-   } 
-
-   ( $ret , $msg ) = $objCnrUrlPrms->doSetWith();
-   if ( $ret != 0 ) {
-      $http_code = 400 ; 
-      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
-      return ; 
-   } 
+   my $objModel   = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db ) ; 
+   $objCnrUrlPrms = 'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+   
+   return $self->SUPER::doRenderJSON(
+      $objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
+         unless $objCnrUrlPrms->doValidateAndSetSelect();
 
    $objRdrDbsFactory
       = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb = $objRdrDbsFactory->doSpawn ( $rdbms_type );
    ($ret, $msg,$hsr2) = $objRdrDb->doSelect(\$objModel, $item);
 
-   unless ( $ret == 0 ) {
+   if ( $ret != 0 ) {
       $http_code = $ret ; 
-   }
-
-   if ( $ret == 0 ) {
+   } elsif ( $ret == 404 or $ret == 204 ) {
+      $http_code = $ret ; 
+   } elsif ( $ret == 0 )  {
       $cnt = 0 ; 
       $http_code = 200 ; 
       $msg = "SELECT OK for table: $item" ; 
@@ -87,22 +74,14 @@ sub doSelectItems {
       
       unless ( $ret == 0 ) {
          $http_code = 404 ; 
-         ( $ret , $msg , $met , $mc) = $objModel->doGetTableMeta($appConfig,$db,$item);
+      } else {
+         $http_code = 200 ; 
       }
-      
       ( $ret , $msg , $met , $mc) = $objModel->doGetTableMeta($appConfig,$db,$item);
-      $http_code = 200 ; 
-      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
-   } elsif ( $ret == 404 ) {
-      $http_code = 404 ; 
-      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
-   } elsif ( $ret == 204 ) {
-      $http_code = 204 ; 
-      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } else {
       $http_code = 400 ; 
-      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } 
+   $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
 }
 
 

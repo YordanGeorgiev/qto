@@ -224,7 +224,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
         
             my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col ) ; 
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
-            my $nodeMayBe = 'dyn_sql.' if $isHrchy == 1 ;
+            my $nodeMayBe = '' ; 
+            $nodeMayBe = 'dyn_sql.' if $isHrchy == 1 ;
 				$sql .= " $nodeMayBe$col $op '$val'" ; 
          }
       	return ( 0 , "" , $sql) ;
@@ -708,40 +709,28 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    # ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
    # -----------------------------------------------------------------------------
    sub doConnectToDb {
+
       my $self = shift ; 
-      my $db = shift ; 
-   
-      my $ret = 1 ; 
-      my $msg = q{} ; 
-      my $dbh = q{} ; 
+      my $db   = shift || 'non_accessible_db'  ;
 
-      eval { 
-         $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
-                    'RaiseError'          => 1
-                  , 'ShowErrorStatement'  => 1
-                  , 'PrintError'          => 1
-                  , 'AutoCommit'          => 1
-                  , 'pg_utf8_strings'     => 1
-         } ) 
-      };
+      my $ret  = 400 ; 
+      my $msg = 'cannot connect to the "' . $db . '" database: '; 
+      my $dbh  = undef ;
 
-      if ($@) {
-         $ret = 400 ; 
-         $msg = 'cannot connect to the "' . $db . '" database: ' . DBI->errstr ; 
-         $objModel->set('postgres_db_name' , 'postgres') ; 
-         my ($ret1, $msg1,$hsr2) = $self->doSelectDatabasesList(\$objModel);
-         foreach my $key ( keys %$hsr2 ) {
-            my $row = $hsr2->{$key} ; 
-            if ( $row->{ 'datname' } eq $db ) {
-               $ret = 404 ; 
-               $msg = 'cannot connect to the "' . $db . '" database: the db is unaccessible' . DBI->errstr ; 
-               return ( $ret , $msg , undef ) ; 
-            }
-         }
-         return ( $ret , $msg , undef ) ; 
+      $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
+                 'RaiseError'          => 0 # otherwise it dies !!!
+               , 'ShowErrorStatement'  => 1
+               , 'PrintError'          => 1
+               , 'AutoCommit'          => 1
+               , 'pg_utf8_strings'     => 1
+      }) ; 
+      
+      if ( defined $dbh  ) {
+         $ret = 0 ; $msg = "" ; 
+      } else {
+         $msg .= DBI->errstr ; 
       }
 
-      $ret = 0 ; $msg = "" ; 
       return ( $ret , $msg , $dbh ) ; 
    }
 
@@ -847,6 +836,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
      
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
+
 
       if ( $self->table_exists ( $db , $table ) == 0  ) {
          $ret = 400 ; 
@@ -1046,8 +1036,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 				ORDER BY seq
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
-         # todo:ysg
-			print $sql ; 
+			# debug rint $sql ; 
          # debug r $hsr2 ; 
       };
       if ( $@ ) {

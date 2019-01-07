@@ -63,11 +63,11 @@
                state.items = items
            },
            TOGGLE_ITEM: (state, payload) => {
-               var item = state.items.find(todo => todo.id === payload);
+               var item = state.items.find(item => item.id === payload);
                item.completed = !item.completed;
            },
            DELETE_ITEM: (state, payload) => {
-               var index = state.items.findIndex(todo => todo.id === payload);
+               var index = state.items.findIndex(item => item.id === payload);
                state.items.splice(index, 1);
            }
     };
@@ -75,10 +75,6 @@
     var actions = {
          loadItems ({ commit }) {
             var url_params = getUrlParams()  
-            //todo:ysg
-            console.log(window.location.pathname)
-            for(var pair of url_params.entries()) { console.log(pair[0]+ '->'+ pair[1]); }
-            //todo:ysg
             axios
                .get((window.location.pathname).replace("/view/" , "/hselect/") , { params: url_params })
                .then(r => r.data.dat) 
