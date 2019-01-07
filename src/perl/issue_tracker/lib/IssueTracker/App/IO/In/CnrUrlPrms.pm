@@ -255,74 +255,137 @@ sub doSetQueryUrlParams {
    return ( $ret , $msg ) ; 
 }
 
-
-sub doSetSelect {
-
+sub doValidateAndSetFltrs {
    my $self          = shift ; 
-   my $ret           = 0 ; 
-   my $msg           = '' ; 
-   
-   # p ($query_params->every_param('fltr-val'));
-
+   my $isValid       = 0 ; 
    $objModel->set('select.web-action.fltr-by' , $query_params->every_param('fltr-by') ) ; 
    $query_params->remove('fltr-by') ; 
    $objModel->set('select.web-action.fltr-val' , $query_params->every_param('fltr-val') ) ; 
    $query_params->remove('fltr-val') ; 
+   $isValid = 1 ; 
+   return $isValid ; 
+}
+
+sub doValidateAndSetLikes {
+   my $self          = shift ; 
+   my $isValid       = 0 ; 
    $objModel->set('select.web-action.like-by' , $query_params->every_param('like-by') ) ; 
    $query_params->remove('like-by') ; 
    $objModel->set('select.web-action.like-val' , $query_params->every_param('like-val') ) ; 
    $query_params->remove('like-val') ; 
+   $isValid = 1 ; 
+   return $isValid ; 
+}
+
+sub doValidateAndSetPicks {
+   my $self          = shift ; 
+   my $isValid       = 0 ; 
    my $picks = $query_params->param('pick') ; 
    if ( defined ( $picks ) ) {
       $picks = 'id,' . $picks unless ($picks =~ m/id,/) ;
    }
    $objModel->set('select.web-action.pick' , $picks ); 
    $query_params->remove('pick') ; 
+   $isValid = 1 ; 
+   return $isValid ; 
+}
+
+sub doValidateAndSetHides {
+   my $self          = shift ; 
+   my $isValid       = 0 ; 
    $objModel->set('select.web-action.hide' , $query_params->param('hide') );
    $query_params->remove('hide') ; 
+   $isValid = 1 ; 
+   return $isValid ; 
+}
+
+sub doValidateAndSetOrderAscendings{
+   my $self          = shift ; 
+   my $isValid       = 0 ; 
    $objModel->set('select.web-action.oa' , $query_params->param('oa') );
    $query_params->remove('oa') ; 
+   $isValid = 1 ; 
+   return $isValid ; 
+}
+
+sub doValidateAndSetOrderDescendings{
+   my $self          = shift ; 
+   my $isValid       = 0 ; 
    $objModel->set('select.web-action.od' , $query_params->param('od') );
    $query_params->remove('od') ; 
+   $isValid = 1 ; 
+   return $isValid ; 
+}
 
+sub doValidateAndSetPageNum {
+   my $self          = shift ; 
+   my $isValid       = 0 ; 
+   my $page_num = $query_params->param('pg-num') || 1 ; 
+   my $msg = "the page num must a positive number, but pg-num of " . $page_num . " was requested !!!" ; 
+   unless ( isint $page_num ) {
+      $self->set('http_code' , 400 ) ; 
+      $self->set('msg' , $msg ) ; 
+      return $isValid ; 
+      
+   }
+   if ( $page_num < 0 ) {
+      $msg = "the page number must a positive number, but pg-num of " . $page_num . " was requested !!!" ; 
+      $self->set('http_code' , 400 ) ; 
+      $self->set('msg' , $msg ) ; 
+      return $isValid ; 
+   }
+   $msg = '' ; 
+   $objModel->set('select.web-action.pg-num' , $page_num );
+   $query_params->remove('pg-num') ; 
+   $isValid = 1 ; 
+   return $isValid ; 
+}
+
+sub doValidateAndSetPageSize {
+   my $self          = shift ; 
+   my $isValid       = 0 ; 
+   
    # start pg-size
    my $page_size = $query_params->param('pg-size') || 7 ; 
-   $msg = "the page size must a positive number, but pg-size of " . $page_size . " was requested !!!" ; 
-   unless ( isint $page_size ) {
-      $ret = 400 ; 
-      return ( $ret , $msg ) ; 
+   my $msg = "the page size must a positive number, but pg-size of " . $page_size . " was requested !!!" ; 
+   unless ( isint ($page_size) ) {
+      my $ret = 400 ; 
+      $self->set('msg' , $msg );
+      $self->set('http_code' , $ret );
+      return $isValid ; 
    }
    if ( $page_size < 0 ) {
       $msg = "the page size must a positive number, but pg-size of " . $page_size . " was requested !!!" ; 
-      $ret = 400 ; 
-      return ( $ret , $msg ) ; 
+      my $ret = 400 ; 
+      $self->set('msg' , $msg );
+      $self->set('http_code' , $ret );
+      return $isValid ; 
    }
    $msg = '' ; 
    
    $objModel->set('select.web-action.pg-size' , $page_size );
    $query_params->remove('pg-size') ; 
+   $isValid = 1 ; 
+   return $isValid ; 
+}
 
-   # start pg-num
-   my $page_num = $query_params->param('pg-num') || 1 ; 
-   $msg = "the page num must a positive number, but pg-num of " . $page_num . " was requested !!!" ; 
-   unless ( isint $page_num ) {
-      $ret = 400 ; 
-      return ( $ret , $msg ) ; 
-   }
-   if ( $page_num < 0 ) {
-      $msg = "the page number must a positive number, but pg-num of " . $page_num . " was requested !!!" ; 
-      $ret = 400 ; 
-      return ( $ret , $msg ) ; 
-   }
-   $msg = '' ; 
-   $objModel->set('select.web-action.pg-num' , $page_num );
-   $query_params->remove('pg-num') ; 
-   # stop pg-num
-
-   $ret = 0 ; $msg = '' ; 
-   return ( $ret , $msg ) ; 
+sub doValidateAndSetSelect {
+   my $self          = shift ; 
+   
+   return 
+         $self->doValidateAndSetWith()
+      && $self->doValidateAndSetFltrs()
+      && $self->doValidateAndSetLikes()
+      && $self->doValidateAndSetPicks()
+      && $self->doValidateAndSetHides()
+      && $self->doValidateAndSetOrderAscendings()
+      && $self->doValidateAndSetOrderDescendings()
+      && $self->doValidateAndSetPageSize()
+      && $self->doValidateAndSetPageNum()
+   ;
 
 }
+
 
 sub doValidateAndSetBranchId {
 
@@ -413,33 +476,6 @@ sub doSetView {
    return ($ret , $msg );
 }
    
-
-sub doSetList {
-
-   my $self          = shift ; 
-   my $ret           = 1 ; 
-   my $msg           = '' ; 
-
-   $objModel->set('list.web-action.fltr-by' , $query_params->every_param('fltr-by') ) ; 
-   $objModel->set('list.web-action.fltr-val' , $query_params->every_param('fltr-val') ) ; 
-
-   $objModel->set('list.web-action.like-by' , $query_params->every_param('like-by') ) ; 
-   $objModel->set('list.web-action.like-val' , $query_params->every_param('like-val') ) ; 
-
-   $objModel->set('list.web-action.pick' , $query_params->param('pick') );
-   $objModel->set('list.web-action.hide' , $query_params->param('hide') );
-   $objModel->set('select.web-action.oa' , $query_params->param('oa') );
-   $query_params->remove('oa') ; 
-   $objModel->set('select.web-action.od' , $query_params->param('od') );
-   $query_params->remove('od') ; 
-   $objModel->set('list.web-action.pg-size' , $query_params->param('pg-size') );
-   $objModel->set('list.web-action.pg-num' , $query_params->param('pg-num') );
-
-   $ret = 0 ; $msg = '' ; 
-   return ( $ret , $msg ) ; 
-}
-
-
 	sub new {
 		my $invocant   = shift ;    
 		$appConfig     = ${ shift @_ } || croak 'appConfig not passed in RdrPostgresDb !!!' ; 

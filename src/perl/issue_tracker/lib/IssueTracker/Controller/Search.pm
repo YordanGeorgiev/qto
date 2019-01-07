@@ -103,7 +103,6 @@ sub doBuildSearchControl {
    my $lables_pages = { 
           'grid'   => 'srch-grid'
 #      ,  'lbls'   => 'srch-labels'
-#      ,  'cloud'  => 'srch-cloud' 
 #      ,  'print-table'  => 'srch-print-table'
    };
 
@@ -134,7 +133,6 @@ sub doRenderPageTemplate {
    my $as_templates = { 
         'grid'          => 'srch-grid' 
 #      ,  'lbls'        => 'srch-labels'
-#      ,  'cloud'       => 'srch-cloud' 
 #      ,  'table'       => 'srch-rgrid' 
 #      ,  'print-table' => 'srch-print-table' 
    };

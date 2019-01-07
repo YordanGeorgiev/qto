@@ -131,7 +131,7 @@ sub new {
    $appConfig     = ${ shift @_ } || croak 'undef passed for appConfig !!!' ; 
 
    my $self       = {}; bless( $self, $class );    
-   $self          = $self->doInitialize() ; 
+   $self          = $self->doInitialize(@_) ; 
    return $self;
 }  
 	
@@ -139,11 +139,13 @@ sub new {
    sub doInitialize {
 
       my $self = shift ; 
+      my $db   = shift ; 
 
       %$self = (
              appConfig => $appConfig
       );
-
+      
+      $self->set('postgres_db_name' , $db ) if defined $db ; 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
 
       return $self ; 
