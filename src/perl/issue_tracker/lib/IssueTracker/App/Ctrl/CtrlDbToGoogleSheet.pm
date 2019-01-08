@@ -151,7 +151,8 @@ package IssueTracker::App::Ctrl::CtrlDbToGoogleSheet ;
          my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
 	      my $objRdrDb = $objRdrDbsFactory->doSpawn("$rdbms_type");
       
-         ( $ret , $msg  )  = $objRdrDb->doSelect( \$objModel , $table ) ; 
+         my $db                     = $objModel->get( 'env.postgres_db_name' );
+         ( $ret , $msg  )  = $objRdrDb->doSelect( $db, $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
          my $objWtrGoogleSheet    = 'IssueTracker::App::IO::Out::WtrGoogleSheet'->new( \$appConfig ) ;

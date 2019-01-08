@@ -44,21 +44,19 @@ sub doSelectItems {
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
-
-   $appConfig		= $self->app->get('AppConfig');
+   $appConfig		      = $self->app->get('AppConfig');
 
 	# debug rint "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
-   my $objModel   = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db ) ; 
-   $objCnrUrlPrms = 'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ; 
+   $objCnrUrlPrms       = 'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
    
    return $self->SUPER::doRenderJSON(
       $objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
          unless $objCnrUrlPrms->doValidateAndSetSelect();
 
-   $objRdrDbsFactory
-      = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   $objRdrDb = $objRdrDbsFactory->doSpawn ( $rdbms_type );
-   ($ret, $msg,$hsr2) = $objRdrDb->doSelect(\$objModel, $item);
+   $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
+   $objRdrDb            = $objRdrDbsFactory->doSpawn ( $rdbms_type );
+   ($ret, $msg, $hsr2)   = $objRdrDb->doSelect($db, $item); # doSelect
 
    if ( $ret != 0 ) {
       $http_code = $ret ; 
@@ -105,14 +103,13 @@ sub doSelectTables {
    my $msg = 'unknown error during select-tables';
 
 	$appConfig	   = $self->app->get('AppConfig');
-   my $objModel   = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
+   my $objModel   = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db) ;
 
-	$objModel->set('postgres_db_name' , $db ) ; 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
 
-	my $ret = 0;
-	my $hsr2 = {};
+	my $ret        = 0;
+	my $hsr2       = {};
 
 	my $objRdrDbsFactory
 			= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );

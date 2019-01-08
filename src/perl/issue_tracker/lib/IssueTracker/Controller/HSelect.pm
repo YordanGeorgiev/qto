@@ -38,7 +38,7 @@ sub doHSelectItems {
    $self->SUPER::doReloadProjDbMeta( $db ) ;
 
    $appConfig		   = $self->app->get('AppConfig');
-   $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db) ;
+   $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
    my $objCnrUrlPrms = 'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
    
    return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 

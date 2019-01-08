@@ -38,6 +38,7 @@ sub doExportItems {
    my $http_method      = 'GET' ; 
    my $met              = '' ; 
    my $cnt              = '' ; 
+   my $dat              = '' ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
@@ -46,7 +47,7 @@ sub doExportItems {
    my $as               = 'xls' ; # the default form of the Export control 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
 
-   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
+   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db , $table ) ;
    my $objCnrUrlPrms    = 'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
    
    return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 

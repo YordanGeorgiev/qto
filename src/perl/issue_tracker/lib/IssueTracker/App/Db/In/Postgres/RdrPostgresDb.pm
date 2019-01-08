@@ -232,7 +232,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       } elsif ( @$cols or @$vals or @$ops )  {
 
 			# if either the with names or the with values are null than the withing url is mall-formed
-			$msg = 'mall-formed url params for filtering with - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<with-value>>' ; 
+			$msg = 'mall-formed url params for filtering with - valid syntax is with=<<attribute>>-<<operator>>-<<value>>' ; 
       	return ( 400 , "$msg" , "") ; 
 		} else {
 
@@ -823,17 +823,12 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    sub doSelect {
 
       my $self                   = shift ; 
-      my $objModel               = ${shift @_ } ; 
+      my $db                     = shift || croak 'no db passed !!!' ;  
       my $table                  = shift || croak 'no table passed !!!' ; 
-      my $filter_by_attributes   = shift ; 
       my $ret                    = 1 ; 
       my $msg                    = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
       my $dbh                    = {} ;         # this is the database handle
 
-      if ( defined $objModel->get('postgres_db_name') ) {
-		   $db = $objModel->get('postgres_db_name');
-      }
-     
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
@@ -870,7 +865,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $columns_to_select , count(*) OVER () as rows_count
          FROM $table 
          WHERE 1=1 " ; 
-      $str_sql .= $filter_by_attributes . " " if $filter_by_attributes ; 
       
       my $like_clause = '' ; 
 		( $ret , $msg , $like_clause ) = $self->doBuildLikeClause ( $db , $table  ) ; 
@@ -884,7 +878,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		$str_sql .= $where_clause_fltr if $where_clause_fltr ; 
       
       my $where_clause_with = '' ; 
-		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table ) ; 
+		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 0) ; 
 		return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql .= $where_clause_with if $where_clause_with ; 
 
@@ -912,8 +906,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = $limit*$offset ; 
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
-   
-      # debug rint "from RdrPostgresDb.pm 855: $str_sql \n" ; 
+
+      # debug rint "from RdrPostgresDb.pm 912: $str_sql \n" ; 
 
       $ret = 0 ; 
       eval { 
@@ -1012,16 +1006,29 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $sql           = {} ; 
       my $hsr2          = {} ; 
       my $where_clause_with = '' ; 
+      my $like_clause = '' ; 
       my $where_clause_bid = '' ; 
 
 		$pg = $self->doInitPg();
 
 		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 1) ; 
 		return ( $ret , $msg ) unless $ret == 0 ; 
-      $where_clause_with =~ s/$table/parent/g ; 
+      if ( $where_clause_with ) {
+         $where_clause_with =~ s/$table/parent/g ; 
+         $where_clause_with =~ s/AND //g ; 
+         $where_clause_with = "AND (dyn_sql.id = $bid OR $where_clause_with)";
+      }
+		
 
       ( $ret , $msg , $where_clause_bid ) = $self->doBuildWhereClauseByBranchId ( $db , $table ) ; 
 		return ( $ret , $msg ) unless $ret == 0 ; 
+      
+      my $limit = $objModel->get('select.web-action.pg-size' ) || 1000 ;
+      my $page_num = $objModel->get('select.web-action.pg-num' ) || 1 ; 
+      my $offset = ( $page_num -1 ) || 0 ; # get default page is 1
+      
+      $offset = $limit*$offset ; 
+      $offset = 0 if ( $offset < 0 ) ; 
 
       eval {
 			$sql = " 
@@ -1034,10 +1041,12 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 				WHERE 1=1 
             $where_clause_with
 				ORDER BY seq
+            LIMIT $limit OFFSET $offset
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
+
 			# debug rint $sql ; 
-         # debug r $hsr2 ; 
+         # r $hsr2 ; 
       };
       if ( $@ ) {
          $rv               = 404 ; 

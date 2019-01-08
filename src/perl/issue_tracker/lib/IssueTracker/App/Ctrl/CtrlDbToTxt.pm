@@ -61,8 +61,8 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
       my $str_issues          = q{} ; 
       my $hsr                 = {} ;   # this is the data hash ref of hash reffs 
       my $mhsr                = {} ;   # this is the meta hash describing the data hash ^^
+      my $db                  = $objModel->get( 'env.postgres_db_name' );
       my @tables              = () ;   # which tables to read from
-      
       my $tables              = $objModel->get( 'ctrl.tables' )  || 'daily_issues' ; 
 	   push ( @tables , split(',',$tables ) ) ; 
 
@@ -75,7 +75,7 @@ package IssueTracker::App::Ctrl::CtrlDbToTxt ;
          my $objRdrDb 			= $objRdrDbsFactory->doSpawn ( "$rdbms_type" );
 
          ( $ret , $msg )  = 
-            $objRdrDb->doSelect( \$objModel , $table , $filter_by_attributes ) ; 
+            $objRdrDb->doSelect( $db , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
          my $objWtrTextFactory = 'IssueTracker::App::IO::Out::WtrTextFactory'->new( \$appConfig , $self ) ; 

@@ -47,7 +47,7 @@ sub doListItems {
    $appConfig		 		= $self->app->get('AppConfig');
  
    my $list_control     = '' ; 
-   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
+   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db , $item) ;
 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
    ( $ret , $msg , $list_control ) = $self->doBuildListPageType ( $msg , \$objModel , $db , $item , $as  ) ; 

@@ -45,7 +45,7 @@ sub doUpdateItemBySingleCol {
    my $perl_hash        = decode_json($json) ; 
 
    $appConfig		      = $self->app->get('AppConfig');
-   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
+   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
    
    return unless ( $self->SUPER::isAuthorized($db) == 1 );

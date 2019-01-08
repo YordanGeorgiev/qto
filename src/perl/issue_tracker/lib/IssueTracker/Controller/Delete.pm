@@ -45,7 +45,7 @@ sub doDeleteItemById {
    my $perl_hash = decode_json($json) ; 
 
    $appConfig		= $self->app->get('AppConfig');
-   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db ) ;
+   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
    $objCnrUrlPrms = 
       'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
    
