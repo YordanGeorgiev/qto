@@ -140,6 +140,15 @@ doRunUnitTests(){
    test $? -ne 0 && return
    doLog "INFO STOP  $test_script"
 	echo -e "\n\n\n" 
+   
+   
+   test_script='src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelectWith.t'
+   doLog "INFO test the hierarchichal select filtering by the whith operator"
+   doLog "INFO START $test_script"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelectWith.t
+   test $? -ne 0 && return
+   doLog "INFO STOP  $test_script"
+	echo -e "\n\n\n" 
 
 	doLog "DEBUG STOP  doRunUnitTests"
 }

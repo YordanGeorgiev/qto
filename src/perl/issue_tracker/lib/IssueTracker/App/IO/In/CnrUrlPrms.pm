@@ -99,68 +99,6 @@ sub doValidateAndSetDelete {
    return $isValid ; 
 }
 
-
-sub doSetWith {
-
-   my $self          = shift ; 
-   my $with_params   = {} ; 
-   my $ret           = 1 ; 
-   my $msg           = '' ; 
-
-   my $ops = {
-       'eq' => '='
-     , 'ne' => '<>'
-     , 'gt' => '>'
-     , 'lt' => '<'
-     , 'ge' => '>='
-     , 'le' => '<='
-     , 'like' => 'like'
-   };
-
-   $with_params   = $query_params->every_param('with') ; 
-   # or where because of the sql gurus around there ...
-   $with_params   = $query_params->every_param('where') if ( @$with_params < 1 ) ;
-   return ( 0 , "") unless $with_params ; 
-
-   my ( @with_cols , @with_ops , @with_vals ) = () ; 
-
-   foreach my $with ( @$with_params ) {
-
-      if ( $with =~ m/(.*?)[-](.*?)[-](.*)/g ) {
-         push @with_cols , $1 ; 
-         #if ( $3 =~ m/(.*?)%(.*?)/g ) { perl bug ?! each second is different ??? ...
-         if ( index($3, '%') != -1 ) {
-            push @with_ops , 'like' ; 
-            push @with_vals , $3 ; 
-         } else {
-            unless ( exists ( $${ops{$2}}) ) {
-               $msg = " error for undefined operator \"$2\" in url syntax. Use one of the following : " ; 
-               $msg .= join("," , keys %$ops);
-               $msg .= " a valid syntax could be : with=prio-eq-1 " ; 
-               $ret = 400 ; 
-               return ( $ret , $msg ) ; 
-            }
-            push @with_ops , $ops->{$2} ; 
-            push @with_vals , $3 ; 
-         }
-      }
-
-      #debug rint "from CnrUrlPrms.pm 47 \@with_cols : @with_cols \n" ; 
-      #debug rint "from CnrUrlPrms.pm 47 \@with_ops : @with_ops \n" ; 
-      #debug rint "from CnrUrlPrms.pm 47 \@with_vals : @with_vals \n" ; 
-
-      $objModel->set('select.web-action.with-cols' , \@with_cols ) ; 
-      $objModel->set('select.web-action.with-ops' , \@with_ops ) ; 
-      $objModel->set('select.web-action.with-vals' , \@with_vals ) ; 
-   
-      $query_params->remove('with') ; 
-      $query_params->remove('where') ; 
-   }
-
-   $ret = 0 ; $msg = '' ; 
-   return ( $ret , $msg ) ; 
-}
-
 sub doValidateAndSetWith {
 
    my $self          = shift ; 
@@ -181,7 +119,7 @@ sub doValidateAndSetWith {
 
    $with_params   = $query_params->every_param('with') ; 
    # or where because of the sql gurus around there ...
-   $with_params   = $query_params->every_param('where') if ( @$with_params < 1 ) ;
+   $with_params   = $query_params->every_param('where') if ( !defined $with_params || @$with_params < 1 ) ;
 
    unless ( defined ( $with_params ) ) {
       $isValid = 1 ; 
@@ -194,10 +132,9 @@ sub doValidateAndSetWith {
 
       if ( $with =~ m/(.*?)[-](.*?)[-](.*)/g ) {
          push @with_cols , $1 ; 
-         #if ( $3 =~ m/(.*?)%(.*?)/g ) { perl bug ?! each second is different ??? ...
-         if ( index($3, '%') != -1 ) {
-            push @with_ops , 'like' ; 
-            push @with_vals , $3 ; 
+         if ( index($2, 'like') != -1 ) {
+            push @with_ops , 'like' ;
+            push @with_vals , '%' . $3 . '%' ; 
          } else {
             unless ( exists ( $${ops{$2}}) ) {
                $msg = " error for undefined operator \"$2\" in url syntax. Use one of the following : " ; 
@@ -287,6 +224,10 @@ sub doSetQueryUrlParams {
 sub doValidateAndSetFltrs {
    my $self          = shift ; 
    my $isValid       = 0 ; 
+
+   return 1 unless defined ( $query_params->every_param('fltr-by') );
+   return 1 unless defined ( $query_params->every_param('fltr-val') );
+
    $objModel->set('select.web-action.fltr-by' , $query_params->every_param('fltr-by') ) ; 
    $query_params->remove('fltr-by') ; 
    $objModel->set('select.web-action.fltr-val' , $query_params->every_param('fltr-val') ) ; 
@@ -298,6 +239,10 @@ sub doValidateAndSetFltrs {
 sub doValidateAndSetLikes {
    my $self          = shift ; 
    my $isValid       = 0 ; 
+
+   return 1 unless defined ( $query_params->every_param('like-by') );
+   return 1 unless defined ( $query_params->every_param('like-val') );
+
    $objModel->set('select.web-action.like-by' , $query_params->every_param('like-by') ) ; 
    $query_params->remove('like-by') ; 
    $objModel->set('select.web-action.like-val' , $query_params->every_param('like-val') ) ; 
@@ -310,6 +255,7 @@ sub doValidateAndSetPicks {
    my $self          = shift ; 
    my $isValid       = 0 ; 
    my $picks = $query_params->param('pick') ; 
+   return 1 unless ( defined $query_params->param('pick') );
    if ( defined ( $picks ) ) {
       $picks = 'id,' . $picks unless ($picks =~ m/id,/) ;
    }
@@ -322,6 +268,7 @@ sub doValidateAndSetPicks {
 sub doValidateAndSetHides {
    my $self          = shift ; 
    my $isValid       = 0 ; 
+   return 1 unless ( defined $query_params->param('hide') ) ; 
    $objModel->set('select.web-action.hide' , $query_params->param('hide') );
    $query_params->remove('hide') ; 
    $isValid = 1 ; 
@@ -331,6 +278,7 @@ sub doValidateAndSetHides {
 sub doValidateAndSetOrderAscendings{
    my $self          = shift ; 
    my $isValid       = 0 ; 
+   return 1 unless ( defined $query_params->param('oa') ) ; 
    $objModel->set('select.web-action.oa' , $query_params->param('oa') );
    $query_params->remove('oa') ; 
    $isValid = 1 ; 
@@ -339,6 +287,7 @@ sub doValidateAndSetOrderAscendings{
 
 sub doValidateAndSetOrderDescendings{
    my $self          = shift ; 
+   return 1 unless ( defined $query_params->param('od') ) ; 
    my $isValid       = 0 ; 
    $objModel->set('select.web-action.od' , $query_params->param('od') );
    $query_params->remove('od') ; 
@@ -349,7 +298,9 @@ sub doValidateAndSetOrderDescendings{
 sub doValidateAndSetPageNum {
    my $self          = shift ; 
    my $isValid       = 0 ; 
+   return 1 unless defined $query_params->param('pg-num') ; 
    my $page_num = $query_params->param('pg-num') || 1 ; 
+
    my $msg = "the page num must a positive number, but pg-num of " . $page_num . " was requested !!!" ; 
    unless ( isint $page_num ) {
       $self->set('http_code' , 400 ) ; 
@@ -373,7 +324,8 @@ sub doValidateAndSetPageNum {
 sub doValidateAndSetPageSize {
    my $self          = shift ; 
    my $isValid       = 0 ; 
-   
+  
+   return 1 unless defined $query_params->param('pg-size') ; 
    # start pg-size
    my $page_size = $query_params->param('pg-size') || 7 ; 
    my $msg = "the page size must a positive number, but pg-size of " . $page_size . " was requested !!!" ; 
@@ -402,11 +354,11 @@ sub doValidateAndSetSelect {
    my $self          = shift ; 
    
    return 
-         $self->doValidateAndSetWith()
-      && $self->doValidateAndSetFltrs()
+       $self->doValidateAndSetFltrs()
       && $self->doValidateAndSetLikes()
       && $self->doValidateAndSetPicks()
       && $self->doValidateAndSetHides()
+      && $self->doValidateAndSetWith()
       && $self->doValidateAndSetOrderAscendings()
       && $self->doValidateAndSetOrderDescendings()
       && $self->doValidateAndSetPageSize()
@@ -469,8 +421,19 @@ sub doValidateAndSetSeq {
 
 sub doValidateAndSetHSelect {
    my $self          = shift ; 
-   return $self->doValidateAndSetBranchId() && $self->doValidateAndSetSeq() 
-      && $self->doValidateAndSetWith();
+   return 
+         $self->doValidateAndSetBranchId() 
+      && $self->doValidateAndSetSeq() 
+      && $self->doValidateAndSetWith()
+      && $self->doValidateAndSetFltrs()
+      && $self->doValidateAndSetLikes()
+      && $self->doValidateAndSetPicks()
+      && $self->doValidateAndSetHides()
+      && $self->doValidateAndSetOrderAscendings()
+      && $self->doValidateAndSetOrderDescendings()
+      && $self->doValidateAndSetPageSize()
+      && $self->doValidateAndSetPageNum()
+      ;
 }
 
 

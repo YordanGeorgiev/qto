@@ -99,6 +99,7 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/HSelect.pm
 src/perl/issue_tracker/lib/IssueTracker/Controller/Search.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelect.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelect.t
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelectWith.t
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestQuery.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSearch.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/LoadTestSelect.pl

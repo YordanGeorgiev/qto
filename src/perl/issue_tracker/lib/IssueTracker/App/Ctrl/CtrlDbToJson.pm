@@ -86,7 +86,7 @@ package IssueTracker::App::Ctrl::CtrlDbToJson ;
          my $objRdrDb 			= $objRdrDbsFactory->doSpawn( "$rdbms_type" );
 
          ( $ret , $msg )  = 
-            $objRdrDb->doSelect( \$objModel , $table , undef) ; 
+            $objRdrDb->doSelect( \$objModel , $table) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
          my $objWtrTextFactory = 'IssueTracker::App::IO::Out::WtrTextFactory'->new( \$appConfig , $self ) ; 
