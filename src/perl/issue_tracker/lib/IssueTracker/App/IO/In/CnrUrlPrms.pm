@@ -115,6 +115,7 @@ sub doValidateAndSetWith {
      , 'ge' => '>='
      , 'le' => '<='
      , 'like' => 'like'
+     , 'in' => 'in'
    };
 
    $with_params   = $query_params->every_param('with') ; 
@@ -135,6 +136,9 @@ sub doValidateAndSetWith {
          if ( index($2, 'like') != -1 ) {
             push @with_ops , 'like' ;
             push @with_vals , '%' . $3 . '%' ; 
+         } elsif ( index($2, 'in') != -1 ) {
+            push @with_ops , 'in' ;
+            push @with_vals , $3 ; 
          } else {
             unless ( exists ( $${ops{$2}}) ) {
                $msg = " error for undefined operator \"$2\" in url syntax. Use one of the following : " ; 

@@ -226,7 +226,10 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
             my $nodeMayBe = '' ; 
             $nodeMayBe = 'dyn_sql.' if $isHrchy == 1 ;
-				$sql .= " $nodeMayBe$col $op '$val'" ; 
+				$sql .= " $nodeMayBe$col $op '$val'" unless ( $op eq 'in' );
+            my $list = $val ; 
+            $list =~ s/,/','/g  ; 
+				$sql .= " $nodeMayBe$col $op ('$list')" if ( $op eq 'in' );
          }
       	return ( 0 , "" , $sql) ;
       } elsif ( @$cols or @$vals or @$ops )  {
@@ -1045,7 +1048,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
 
-			# debug rint $sql ; 
          # r $hsr2 ; 
       };
       if ( $@ ) {

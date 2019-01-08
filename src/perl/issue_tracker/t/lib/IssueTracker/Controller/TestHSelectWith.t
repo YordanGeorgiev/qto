@@ -58,6 +58,30 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
             ok ( $desc =~ m/name/g , $tm );
          }
       }
+
+
+
+      $url = '/' . $db . '/hselect/' . $table_name  . '?bid=0&with=level-in-1,2' ; 
+      
+      ok ($t->get_ok($url)
+         ->status_is(200) 
+         ->header_is('Accept-Charset' => 'UTF-8')
+         ->header_is('Accept-Language' => 'fi, en'), $tm );
+
+      $res = $ua->get($url)->result->json ; 
+
+      $http_code = 200 ; 
+      $tm = "the http_code: $http_code is returned" ;  
+      ok ( $res->{'ret'} == $http_code , $tm) ; 
+      foreach my $row ( @{$res->{'dat'}} ) {
+         my $level = $row->{ 'level' } ; 
+         if ( defined $level ) {
+            my $tm = 'ensure the level is smaller than 3' ; 
+            ok ( $level < 3 , $tm );
+         }
+      }
+
+
    }
 
 # start the hierarchy testing table 
