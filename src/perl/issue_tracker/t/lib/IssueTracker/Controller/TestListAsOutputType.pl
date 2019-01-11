@@ -31,9 +31,11 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    $ua  = $t->ua ; 
    $response = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
    my $list = $response->{ 'dat' } ; 
+   my $counter = 0 ; 
 
    # foreach table in the proj db in test call db/list/table
    for my $row ( @$list ) {
+      $counter++ ; next if $counter % 2 != 0 ; # we have enough tables take each second one
       my $table_name = $row->{'table_name'} ; 
       my $url = '' ; 
       my $tm = '' ; # the test msg 
@@ -51,7 +53,6 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
                $t->get_ok( $url )
                   ->status_isnt(400) 
                    ->header_is('Accept-Charset' => 'UTF-8')
-                   ->header_is('Accept-Language' => 'fi, en' , $tm)
                ;
             }
          }
