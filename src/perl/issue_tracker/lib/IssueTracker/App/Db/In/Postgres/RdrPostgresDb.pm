@@ -910,7 +910,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
 
-      # debug rint "from RdrPostgresDb.pm 912: $str_sql \n" ; 
+      # debug rint "$str_sql \n" . 'vim +914 `find . -name RdrPostgresDb.pm`' . "\n" ; 
 
       $ret = 0 ; 
       eval { 
