@@ -41,7 +41,7 @@ src/perl/issue_tracker/templates/controls/list-grid/js/btn-new.js.html.ep
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/table.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/pager.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-grid.css
-./src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/view-doc.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/pg-sizer.png
@@ -947,3 +947,7 @@ dat/mix/2018/2018-12/2018-12-30/sql/dev_issue_tracker
 dat/mix/2018/2018-12/2018-12-30/sql/dev_issue_tracker/dev_issue_tracker.20181230_214213.insrt.dmp.sql
 dat/mix/2018/2018-12/2018-12-30/xls
 dat/mix/2018/2018-12/2018-12-30/xls/issue-tracker.all.20181230_000000.xlsx
+src/selenium/
+src/selenium/ide
+src/selenium/ide/issue-tracker.remote.side
+src/selenium/ide/issue-tracker.local.side

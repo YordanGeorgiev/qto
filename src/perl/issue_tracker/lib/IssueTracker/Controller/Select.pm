@@ -71,7 +71,7 @@ sub doSelectItems {
       ( $ret , $msg , $dat , $cnt ) = $objCnrHsr2ToArray->doConvert ($hsr2);
       
       unless ( $ret == 0 ) {
-         $http_code = 404 ; 
+        $http_code = 404 ; 
       } else {
          $http_code = 200 ; 
       }
