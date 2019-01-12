@@ -741,7 +741,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    sub getColumnsToSelect {
 
       my $self          = shift ; 
-      my $objModel      = ${shift @_ } ; 
       my $table         =  shift  ; 
       my $cols          =  shift  ; 
       my $ret           = 1 ; 
@@ -854,7 +853,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       ( $ret , $msg , $cols ) = $objModel->doGetItemsDefaultPickCols ( $appConfig , $db , $table ) ; 
       return ( 400 , $msg , undef ) unless ( $ret == 0 );
 
-      ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect(\$objModel,$table,$cols);
+      ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect($table,$cols);
       return ( 400 , $msg , undef ) unless ( $ret == 0 );
 
       ($ret , $msg , $columns_to_order_by_asc ) = $self->doSetColToOrderByAsc(\$objModel,$table,$cols);
@@ -1014,6 +1013,17 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
 		$pg = $self->doInitPg();
 
+      my $cols             = () ;         # the array ref of columns
+      my $columns_to_select = '' ;
+      my @default_pick_cols = ('guid', 'id', 'seq', 'level', 'name', 'description' );
+      my @musthave_pick_cols = ('guid', 'id', 'seq', 'level', 'name' ); # no view-doc without those !!!
+      ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect($table,\@default_pick_cols);
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
+      foreach my $musthave_pick_col ( @musthave_pick_cols ) {
+         $columns_to_select = "$columns_to_select , $musthave_pick_col"
+            unless ( $columns_to_select =~ m/$musthave_pick_col/g );
+      }
+
 		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 1) ; 
 		return ( $ret , $msg ) unless $ret == 0 ; 
       if ( $where_clause_with ) {
@@ -1033,9 +1043,10 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = $limit*$offset ; 
       $offset = 0 if ( $offset < 0 ) ; 
 
+
       eval {
 			$sql = " 
-				SELECT * FROM ( 
+				SELECT $columns_to_select FROM ( 
                SELECT node.* FROM $table AS node, $table AS parent 
                WHERE 1=1 AND node.lft 
                BETWEEN parent.lft AND parent.rgt

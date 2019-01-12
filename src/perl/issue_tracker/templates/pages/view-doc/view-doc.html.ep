@@ -60,6 +60,9 @@
                state.items.unshift(newItem);
            },
            SET_ITEMS (state, items) {
+               // todo:ysg
+               console.log(items)
+               // items = items.forEach(function(item){ delete item.logical_order});
                state.items = items
            },
            TOGGLE_ITEM: (state, payload) => {
