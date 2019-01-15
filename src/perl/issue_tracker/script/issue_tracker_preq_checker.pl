@@ -101,6 +101,7 @@ sub doCheckRequiredModules {
    Mojolicious
    Mojo::Pg
    Selenium::Remote::Driver
+   Selenium::Chrome
    Mojolicious::Plugin::BasicAuthPlus
    Mojolicious::Plugin::StaticCache
    Mojolicious::Plugin::RenderFile

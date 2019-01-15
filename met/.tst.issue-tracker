@@ -112,12 +112,13 @@ src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestSelectWith.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestCreate.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestUpdate.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestDelete.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListView.t
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelect.t
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestAppLabel.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListAsOutputType.pl
-src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListOnClientPOC1.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestViwWithMojoChrome.pl
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListBySelenium.t
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl
+src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestViewDocPage.t
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCTestMojoRoleSelenium.pl
 src/perl/issue_tracker/t/lib/IssueTracker/TestClientSidePOC1.t
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/POCSeleniumBrowser.pl
@@ -331,6 +332,7 @@ src/sql/pgsql/dev_issue_tracker/23.create-table-concepts.sql
 src/sql/pgsql/dev_issue_tracker/24.create-table-system_guide.sql
 src/sql/pgsql/dev_issue_tracker/25.create-table-installations.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
+src/sql/pgsql/dev_issue_tracker/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/dev_issue_tracker/93.create-table-benchmarks.sql
 src/sql/pgsql/dev_issue_tracker/94.create-table-test_item.sql
 src/sql/pgsql/dev_issue_tracker/95.01.create-table-test_hierarchy_table.sql
@@ -366,6 +368,7 @@ src/sql/pgsql/tst_issue_tracker/23.create-table-concepts.sql
 src/sql/pgsql/tst_issue_tracker/24.create-table-system_guide.sql
 src/sql/pgsql/tst_issue_tracker/25.create-table-installations.sql
 src/sql/pgsql/tst_issue_tracker/50.create-table-tst_paging.sql
+src/sql/pgsql/tst_issue_tracker/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/tst_issue_tracker/93.create-table-benchmarks.sql
 src/sql/pgsql/tst_issue_tracker/94.create-table-test_item.sql
 src/sql/pgsql/tst_issue_tracker/95.create-table-test_hierarchy_table.sql
@@ -404,6 +407,7 @@ src/sql/pgsql/prd_issue_tracker/97.create-table-test_create_table.sql
 src/sql/pgsql/prd_issue_tracker/98.create-table-test_update_table.sql
 src/sql/pgsql/prd_issue_tracker/18.create-table-meta_columns.sql
 src/sql/pgsql/prd_issue_tracker/19.create-table-naming_conventions.sql
+src/sql/pgsql/prd_issue_tracker/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/prd_issue_tracker/93.create-table-benchmarks.sql
 src/sql/pgsql/prd_issue_tracker/94.create-table-test_item.sql
 src/sql/pgsql/prd_issue_tracker/95.create-table-test_hierarchy_table.sql
