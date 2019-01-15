@@ -54,6 +54,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
                   ->status_isnt(400) 
                    ->header_is('Accept-Charset' => 'UTF-8')
                ;
+               #my $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
+               #p $dom->all_text ; 
             }
          }
       }
