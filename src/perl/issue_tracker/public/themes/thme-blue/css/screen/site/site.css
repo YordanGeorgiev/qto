@@ -4,7 +4,7 @@ html, body {
    font-family: Helvetica Neue, Arial, sans-serif;
 }
 .app_name_tooltip {
-   color: #C0C0C0;
+   color: #FFFFE0 ;
    font-size: 75%;
    position: fixed; 
    z-index: 10; 
@@ -34,16 +34,17 @@ html, body {
 
 html body div#div_msg {
 	 position: absolute; 
-    top: 1%; 
-	 bottom: 96%; 
-    left: 20%;
-	 z-index: 0; 
+    top: 2%; 
+	 bottom: 95%; 
+    left: 10%;
+	 z-index: 2; 
 	 font-size: 90%;
 	 min-width: 50%; 
-	 max-width: 70%; 
+	 min-height: 6%; 
+	 max-width: 80%; 
 	 overflow-x: hidden;
 	 text-align: center; 
-    vertical-align: top;
+    vertical-align: center;
 	 border-radius: 4px;
     line-height: 25px; /* <-- adjust this */
 }

@@ -1,5 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
+src/perl/issue_tracker/public/poc/snackbar/index.html
+# ---
 src/bash/issue-tracker/funcs/generate-md-docs.func.sh
 doc/txt/issue-tracker/funcs/generate-md-docs.func.txt
 # -- 
