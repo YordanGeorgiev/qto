@@ -1,5 +1,14 @@
     <template id="app-template">
       <div>
+            <template id="snackbar">
+              <snackbar id="snck_msg"
+                  :active.sync="cshowSnackbar" 
+                  :infinity="cinfinity" 
+                  :position="cposition">
+                Lorem ipsum dolor sit amet consectetur adipisicing.
+                <button class="close-btn" @click="showSnackbar = false">close</button>
+              </snackbar>
+           </template>
          <view-doc-items-list />
       </div>
     </template>

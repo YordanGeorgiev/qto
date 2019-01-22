@@ -11,9 +11,9 @@
    <div id="div_central_panel">
       <div class="container">
          <div id="div_open_rgt_menu" onclick="openRightMenu()"> ☰ </div>
-         <div id="app"></div>
+         <div id="view_app">
+         </div>
       </div>
-
       %= include 'components/view-doc-items-list.xt'
       %= include 'components/app-template.xt'
    </div>
@@ -37,17 +37,18 @@
       } 
       
       if ( url_params.has("as") === false) { url_params.append("as" , "doc"); }
-      
       // for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
       return url_params ; 
    }
 
    var state = {
       items: []
+      , snackbar_state: {}
     };
 
    var getters = {
       getItems: state => state.items
+      , getSnackBarState: state => state.snackbar_state
    }
 
     var mutations = {
@@ -60,10 +61,16 @@
                state.items.unshift(newItem);
            },
            SET_ITEMS (state, items) {
-               // todo:ysg
-               console.log(items)
+               // todo:ysg 
+               // ok console.log(items)
                // items = items.forEach(function(item){ delete item.logical_order});
                state.items = items
+           },
+           SET_SNACKBAR_STATE (state, snackbar_state) {
+               // todo:ysg 
+               // ok console.log ( "setting snackbar_state")
+               // ok console.log(snackbar_state)
+               state.snackbar_state = snackbar_state
            },
            TOGGLE_ITEM: (state, payload) => {
                var item = state.items.find(item => item.id === payload);
@@ -81,8 +88,15 @@
             axios
                .get((window.location.pathname).replace("/view/" , "/hselect/") , { params: url_params })
                .then(r => r.data.dat) 
+               .catch(function(error) {
+                  console.log ( error ) 
+                  commit('SET_ITEMS', [])
+                  commit('SET_SNACKBAR_STATE', { showSnackBar:true, infinity:true, position:"top-center"})
+               }) 
                .then(items => {
                   commit('SET_ITEMS', items)
+                  //commit('SET_SNACKBAR_STATE', { showSnackBar:false, infinity:false, position:"top-center"})
+                  commit('SET_SNACKBAR_STATE', { showSnackBar:true, infinity:true, position:"top-center"})
                })
          },
          addItem: (context, payload) => {
@@ -107,27 +121,107 @@
    const ViewDocItemsList = Vue.component("view-doc-items-list", {
       computed: {
          items() {
+            // todo:ysg
+            // ok console.log( "ViewDocItemsList in computed")
+            // ok console.log ( this.$store.getters.getItems )
             return this.$store.getters.getItems;
          }
-       },
-      methods: {
+      }
+      , methods: {
          toggleItem: function(id) {
             this.$store.dispatch("toggleItem", id);
          },
          deleteItem: function(id) {
             this.$store.dispatch("deleteItem", id);
          }
-      },
-      template: "#view-doc-items-list"
+      }
+      , template: "#view-doc-items-list"
    });
       
+  const SnackBar = Vue.component('snackbar', {
+  template: `
+    <transition name="snackbar">
+      <div v-if="active" class="snackbar" :class="classes">
+        <div class="snackbar__wrap">
+          <div class="snackbar__body">
+            <slot></slot>
+          </div>
+        </div>
+      </div>
+    </transition>
+  `
+  , computed: {
+     classes() {
+         return {
+           [`snackbar--${this.position}`]: true
+         } 
+       }
+     , cshowSnackbar() {
+         console.log("compute")
+         console.log(this.$store.getters.getSnackBarState.showSnackbar)
+         console.log(this.$store.getters)
+         console.log(this.$store)
+         console.log(this)
+         return { 'cactive': this.$store.getters.getSnackBarState.showSnackbar }
+     }
+     , cinfinity(){
+         return { 'cinfinity': this.$store.getters.getSnackBarState.infinity }
+     }
+     , cposition(){
+         return { 'cposition': this.$store.getters.getSnackBarState.position }
+     }
+    }
+  , props: {
+     active: {
+         type: Boolean,
+         default: false
+     }
+     , timeout: {
+         type: Number,
+         default: 3000
+     }
+     , infinity: {
+         type: Boolean,
+         default: false
+     }
+     , position: {
+         type: String,
+         default: 'top-center'
+     }
+  }
+  , data() {
+    return {
+      timer: null
+    }
+  }
+  , watch: {
+    active() {
+      this.setTimer()
+    }
+  }
+  , methods: {
+    setTimer() {
+      
+      if (this.timer) clearTimeout(this.timer)
+      
+      if (this.infinity) return;
+      
+      this.timer = setTimeout(() => {
+        this.active = false
+        this.$emit('update:active', false)
+      }, this.timeout)
+    }
+  }
+})
+
 
    var app = new Vue({
          store: store
          , data: () => ({})
-         , el: "#app"
+         , el: "#view_app"
          , components: {
-            'view-doc-items-list': ViewDocItemsList
+              'view-doc-items-list': ViewDocItemsList
+            , 'snackbar': SnackBar
          }
          , template: "#app-template"
          , created: function () {

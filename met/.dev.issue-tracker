@@ -1,6 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
-src/perl/issue_tracker/public/poc/snackbar/index.html
+src/perl/issue_tracker/public/poc/snackbar/snackbar.html
 # ---
 src/bash/issue-tracker/funcs/generate-md-docs.func.sh
 doc/txt/issue-tracker/funcs/generate-md-docs.func.txt
@@ -11,14 +11,14 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/layouts/view.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/view-doc.html.ep
-src/perl/issue_tracker/templates/components/view-doc-items-list.xt.html.ep
 src/perl/issue_tracker/templates/components/app-template.xt.html.ep
-src/perl/issue_tracker/templates/components/view-doc-editable.html.ep
+src/perl/issue_tracker/templates/components/view-doc-items-list.xt.html.ep
 src/perl/issue_tracker/lib/IssueTracker/Controller/View.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestView.t
 src/perl/issue_tracker/templates/layouts/list.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/srch-grid.html.ep
+src/perl/issue_tracker/templates/components/view-doc-editable.html.ep
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/templates/controls/list-grid/js/div-search-box.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/global-msg.js.html.ep
@@ -81,6 +81,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrExporterMd.pm
 # ---
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/site.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/snackbar.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/view.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
 #---
