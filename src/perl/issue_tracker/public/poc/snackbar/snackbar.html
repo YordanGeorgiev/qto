@@ -1,0 +1,134 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="../../poc/snackbar/snackbar.css" />
+</head>
+
+<body>
+<div id="app">
+  <button @click="showSnackbar = !showSnackbar">show</button>
+  
+  <snackbar id="snck_msg" :active.sync="showSnackbar" :infinity="infinity" :position="position">
+       <table style="width: 100%">
+       <tr>
+            <td>
+               <img src="../../themes/thme-blue/img/controls/tack.png" width="24px" height="24px"></img>
+            </td><td></td>
+            <td id="td-top-left">
+                  <input v-model="position" type="radio" name="position" id="top-left" value="top-left">
+            </td>
+            <td id="td-top-center">
+                  <input v-model="position" type="radio" name="position" id="top-center" value="top-center">
+            </td>
+            <td id="td-top-right">
+                  <input v-model="position" type="radio" name="position" id="top-right" value="top-right">
+            </td>
+            <td style="padding: 0% 10% 0% 10%">
+               {{ msg }}
+            </td>
+       </tr>
+       <tr>
+          <td>
+            <input type="checkbox" id="infinity"  v-model="infinity">
+          </td><td></td>
+          <td id="td-bottom-left">
+               <input v-model="position" type="radio" name="position" id="bottom-left" value="bottom-left">
+          </td>
+         <td id="td-bottom-center">
+               <input v-model="position" type="radio" name="position" id="bottom-center" value="bottom-center">
+         </td>
+          <td id="td-bottom-right">
+               <input v-model="position" type="radio" name="position" id="bottom-right" value="bottom-right">
+          </td>
+          <td>
+          </td>
+       </tr>
+       </table>
+      <button type="submit" href="javascript:void(0);" class="close-btn" 
+         v-on:click="showSnackbar = false"> &#x2718; 
+      </button>
+  </snackbar>
+
+</div>
+
+<script src="https://unpkg.com/vue@2.5.3/dist/vue.min.js"></script>
+<script src="https://unpkg.com/vuex@3.0.1/dist/vuex.min.js"></script>
+
+<script>
+console.clear();
+
+Vue.component('snackbar', {
+  template: `
+    <transition name="snackbar">
+      <div v-if="active" class="snackbar" :class="classes">
+        <div class="snackbar__wrap">
+          <div class="snackbar__body">
+            <slot></slot>
+          </div>
+        </div>
+      </div>
+    </transition>
+  `,
+  props: {
+    active: {
+      type: Boolean,
+      default: true
+    },
+    timeout: {
+      type: Number,
+      default: 3000
+    },
+    infinity: {
+      type: Boolean,
+      default: true
+    },
+    position: {
+      type: String,
+      default: 'top-center'
+    }
+  },
+  data() {
+    return {
+      timer: null
+      , msg: ''
+    }
+  },
+  watch: {
+    active() {
+      this.setTimer()
+    }
+  },
+  computed: {
+    classes() {
+      return {
+        [`snackbar--${this.position}`]: true
+      } 
+    }
+  },
+  methods: {
+    setTimer() {
+      if (this.timer) clearTimeout(this.timer)
+      if (this.infinity) return;
+      this.timer = setTimeout(() => {
+        this.active = false
+        this.$emit('update:active', false)
+      }, this.timeout)
+      
+    }
+  }
+})
+
+new Vue({
+  el: '#app',
+  data() {
+    return {
+      msg: 'the msg to be shown'
+      , showSnackbar: !0
+      , position: 'top-center'
+      , infinity: true
+    }
+  }
+})
+</script>
+
+</body>
+</html>
