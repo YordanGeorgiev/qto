@@ -2,14 +2,14 @@ body {
   font-family: Helvetica, Arial, sans-serif;
 }
 .close-btn {
-  padding: 8px 12px;
-  margin: -8px -6px -8px 20px;
+  position: relative; 
+  float: right ; 
+  display: inline;
+  margin: -30px 2px 2px 30px;
   color: #448aff;
   font-family: inherit;
-  font-size: inherit;
-  text-transform: uppercase;
-  border: 4;
-  border-radius: 5px;
+  font-size: small;
+  border-radius: 3px;
   background-color: transparent;
   cursor: pointer;
   outline: 0;
@@ -30,35 +30,14 @@ body {
   z-index: 999;
   border-radius: 5px;
 }
-.snackbar--bottom-right {
-  right: 20px;
-  bottom: 20px;
-}
-.snackbar--bottom-center {
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-.snackbar--bottom-left {
-  left: 20px;
-  bottom: 20px;
-}
-.snackbar--top-right {
-  right: 20px;
-  top: 20px;
-}
 .snackbar--top-center {
   left: 0;
   right: 0;
   top: 0;
 }
-.snackbar--top-left {
-  left: 20px;
-  top: 20px;
-}
 .snackbar__wrap {
   width: auto;
-  min-width: 50%;
+  min-width: 70%;
   max-width: 90%;
   margin: 0 auto;
   padding: 15px;
