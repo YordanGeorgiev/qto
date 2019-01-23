@@ -41,14 +41,30 @@
       return url_params ; 
    }
 
+	function getServerData (url, urlParams ){
+		if ( typeof url_params == "undefined" ) { urlParams = getUrlParams()  }
+		return axios.get(url , { params: urlParams } )
+		.then(response => { 
+			return response ; 
+		})
+		.catch(function(error) {
+			console.error ( error ) 
+			return error.response;
+		}) 
+	}
+
    var state = {
       items: []
-      , snackbar_state: {}
+      , showSnackBar: false
+      , msg : ''
+      , infinity: false
     };
 
    var getters = {
       getItems: state => state.items
-      , getSnackBarState: state => state.snackbar_state
+      , getSnackBarShow: state => state.showSnackBar
+      , getSnackBarMsg: state => state.msg
+      , getSnackBarInfinity: state => state.infinity
    }
 
     var mutations = {
@@ -60,17 +76,17 @@
                }
                state.items.unshift(newItem);
            },
-           SET_ITEMS (state, items) {
-               // todo:ysg 
-               // ok console.log(items)
-               // items = items.forEach(function(item){ delete item.logical_order});
+           SET_ITEMS: (state, items) => {
                state.items = items
            },
-           SET_SNACKBAR_STATE (state, snackbar_state) {
-               // todo:ysg 
-               // ok console.log ( "setting snackbar_state")
-               // ok console.log(snackbar_state)
-               state.snackbar_state = snackbar_state
+           SET_SNACKBAR_SHOW: (state, showSnackBar) => {
+               state.showSnackBar = showSnackBar
+           },
+           SET_SNACKBAR_MSG: (state, msg) => {
+               state.msg = msg
+           },
+           SET_SNACKBAR_INFINITY: (state, infinity) => {
+               state.infinity = infinity
            },
            TOGGLE_ITEM: (state, payload) => {
                var item = state.items.find(item => item.id === payload);
@@ -85,27 +101,55 @@
     var actions = {
          loadItems ({ commit }) {
             var url_params = getUrlParams()  
-            axios
-               .get((window.location.pathname).replace("/view/" , "/hselect/") , { params: url_params })
-               .then(r => r.data.dat) 
-               .catch(function(error) {
-                  console.log ( error ) 
-                  commit('SET_ITEMS', [])
-                  commit('SET_SNACKBAR_STATE', { showSnackBar:true, infinity:true, position:"top-center"})
-               }) 
-               .then(items => {
-                  commit('SET_ITEMS', items)
-                  //commit('SET_SNACKBAR_STATE', { showSnackBar:false, infinity:false, position:"top-center"})
-                  commit('SET_SNACKBAR_STATE', { showSnackBar:true, infinity:true, position:"top-center"})
-               })
-         },
-         addItem: (context, payload) => {
+				var url = (window.location.pathname).replace("/view/" , "/hselect/")
+            getServerData(url , url_params)
+            .then( response => {
+               if ( response.status === 204 ) {
+                  var warningMsg = response.statusText
+                  console.warn ( warningMsg ) 
+                  commit('SET_ITEMS', [] )
+                  commit('SET_SNACKBAR_MSG', warningMsg ) 
+                  commit('SET_SNACKBAR_SHOW', true)
+               } else if ( response.status === 404 || response.status === 400) {
+                  var errorMsg = response.statusText + ": " + response.data.msg
+                  var showSnackBar = true
+                  commit('SET_ITEMS', [] )
+                  commit('SET_SNACKBAR_MSG', errorMsg ) 
+                  commit('SET_SNACKBAR_SHOW', showSnackBar )
+                  console.error( errorMsg ) 
+               } else {
+                  var data = response.data
+                  var dataType = (typeof data)
+                  if ( dataType === 'undefined' ) {
+                     var msg = 'unexpected error occurred while fetching data !!!'
+                  	commit('SET_SNACKBAR_SHOW', true)
+                  	commit('SET_SNACKBAR_MSG', msg ) 
+                  } else {
+                  	items = data.dat 
+                  	commit('SET_ITEMS', items)
+						}
+					}
+				})
+         }
+         , loadSnackBar: (context, showSnackBar) => {
+            context.commit('SET_SNACKBAR_SHOW', showSnackBar)
+         }
+         , loadSnackBarMsg: (context, msg) => {
+            context.commit("SET_SNACKBAR_MSG", msg)
+         }
+         , loadSnackBarInfinity: (context, infinity) => {
+            context.commit("SET_SNACKBAR_INFINITY", infinity)
+         }
+         , hideSnackBar ({ commit }) {
+            commit('SET_SNACKBAR_SHOW', false )
+         }
+         , addItem: (context, payload) => {
             context.commit("ADD_ITEM", payload)
-         },
-         toggleItem: (context, payload) => {
+         }
+         , toggleItem: (context, payload) => {
             context.commit("TOGGLE_ITEM", payload)
-         },
-         deleteItem: (context, payload) => {
+         }
+         , deleteItem: (context, payload) => {
             context.commit("DELETE_ITEM", payload)
          }
    }
@@ -121,129 +165,164 @@
    const ViewDocItemsList = Vue.component("view-doc-items-list", {
       computed: {
          items() {
-            // todo:ysg
-            // ok console.log( "ViewDocItemsList in computed")
-            // ok console.log ( this.$store.getters.getItems )
             return this.$store.getters.getItems;
          }
       }
       , methods: {
          toggleItem: function(id) {
             this.$store.dispatch("toggleItem", id);
-         },
-         deleteItem: function(id) {
+         }
+         , deleteItem: function(id) {
             this.$store.dispatch("deleteItem", id);
          }
       }
       , template: "#view-doc-items-list"
    });
-      
-  const SnackBar = Vue.component('snackbar', {
-  template: `
-    <transition name="snackbar">
-      <div v-if="active" class="snackbar" :class="classes">
-        <div class="snackbar__wrap">
-          <div class="snackbar__body">
-            <slot></slot>
-          </div>
-        </div>
-      </div>
-    </transition>
-  `
-  , computed: {
-     classes() {
-         return {
-           [`snackbar--${this.position}`]: true
-         } 
+         
+   const SnackBar = Vue.component('snackbar', {
+     template: `
+       <transition name="snackbar">
+         <div v-if="cactive" class="snackbar" :class="classes">
+           <div class="snackbar__wrap">
+             <div class="snackbar__body">
+               <slot></slot>
+             </div>
+				 <div> {{ this.cmsg }} </div>
+           </div>
+         </div>
+       </transition>
+     `
+     , computed: {
+         classes() {
+            return {
+               [`snackbar--${this.position}`]: true
+            } 
+         }
+			, cactive: {
+				get: function(){
+					return this.$store.getters.getSnackBarShow 
+				}
+				, set: function(newVal){
+         		this.$store.dispatch("loadSnackBar", newVal);
+				}
+			}
+			, cmsg: {
+				get: function(){
+					return this.$store.getters.getSnackBarMsg
+				}
+				, set: function(newVal){
+         		this.$store.dispatch("loadSnackBarMsg", newVal);
+				}
+			}
+     }
+     , props: {
+       active: {
+         type: Boolean
+         , default: false
        }
-     , cshowSnackbar() {
-         console.log("compute")
-         console.log(this.$store.getters.getSnackBarState.showSnackbar)
-         console.log(this.$store.getters)
-         console.log(this.$store)
-         console.log(this)
-         return { 'cactive': this.$store.getters.getSnackBarState.showSnackbar }
+       , infinity : {
+         type: Boolean
+         , default: false
+       }
+       , position: {
+         type: String
+         , default: 'top-center'
+       }
+       , msg: {
+         type: String
+         , default: 'msg-default-value'
+       }
+       , timeout: {
+         type: Number
+         , default: 3500
+       }
+     },
+     data() {
+         return {
+         	timer: null
+         }
+     },
+     watch: {
+     	cactive() {
+      	this.setTimer()
+       }
+     	, infinity() {
+      	this.setTimer()
+       }
      }
-     , cinfinity(){
-         return { 'cinfinity': this.$store.getters.getSnackBarState.infinity }
+     , methods: {
+			 setTimer() {
+				if (this.timer ) clearTimeout(this.timer)
+				if (!this.infinity) { 
+					this.timer = setTimeout(() => {
+						this.cactive = false
+						this.$emit('update:active', false)
+					}, this.timeout)
+				} else {
+						this.cactive = true
+						this.$emit('update:cactive', true)
+				}
+			 }
      }
-     , cposition(){
-         return { 'cposition': this.$store.getters.getSnackBarState.position }
-     }
-    }
-  , props: {
-     active: {
-         type: Boolean,
-         default: false
-     }
-     , timeout: {
-         type: Number,
-         default: 3000
-     }
-     , infinity: {
-         type: Boolean,
-         default: false
-     }
-     , position: {
-         type: String,
-         default: 'top-center'
-     }
-  }
-  , data() {
-    return {
-      timer: null
-    }
-  }
-  , watch: {
-    active() {
-      this.setTimer()
-    }
-  }
-  , methods: {
-    setTimer() {
-      
-      if (this.timer) clearTimeout(this.timer)
-      
-      if (this.infinity) return;
-      
-      this.timer = setTimeout(() => {
-        this.active = false
-        this.$emit('update:active', false)
-      }, this.timeout)
-    }
-  }
-})
+   })
 
 
    var app = new Vue({
-         store: store
-         , data: () => ({})
-         , el: "#view_app"
-         , components: {
-              'view-doc-items-list': ViewDocItemsList
-            , 'snackbar': SnackBar
+      store: store
+      , el: "#view_app"
+      , template: "#app-template"
+      , components: {
+           'view-doc-items-list': ViewDocItemsList
+         , 'snackbar': SnackBar
+      }
+		, computed: {
+         cshowSnackBar: {
+				get: function() {
+					return this.$store.getters.getSnackBarShow ;
+				}
+				, set: function(newVal) {
+         		this.$store.dispatch("loadSnackBar", newVal);
+				}
          }
-         , template: "#app-template"
-         , created: function () {
-            this.$store.dispatch('loadItems')
-         }
-         , methods: {
-            addItem: function() {
-               this.$store.dispatch("addItem", this);
-               this.newId ++;
-               this.name = "";
-               }
-           },
-       });
+			, cinfinity: {
+				get: function(){
+					return this.$store.getters.getSnackBarInfinity
+				}
+				, set: function(newVal){
+					this.cactive = true 
+         		this.$store.dispatch("loadSnackBarInfinity", newVal);
+				}
+			}
+		}
+      , data: () => ({
+         position: 'top-center'
+         , ctimeout: 3500
+      })
+      , created: function () {
+         this.$store.dispatch('loadItems')
+         this.$store.dispatch("loadSnackBar");
+         this.$store.dispatch("loadSnackBarInfinity", false);
+      }
+      , methods: {
+         addItem: function() {
+            this.$store.dispatch("addItem", this);
+            this.newId ++;
+            this.name = "";
+            }
+        , hideSnackBar: function() {
+            this.$store.dispatch("hideSnackBar", this);
+         	this.$store.dispatch("loadSnackBarInfinity", false);
+          }
+        }
+   });
       
+   function openRightMenu() {
+     document.getElementById("rgt_menu").style.width = "27%";
+   }
 
-      function openRightMenu() {
-        document.getElementById("rgt_menu").style.width = "27%";
-      }
-
-      function closeRightMenu() {
-        document.getElementById("rgt_menu").style.width = "0";
-      }
+   function closeRightMenu() {
+     document.getElementById("rgt_menu").style.width = "0";
+   }
 
    </script>
 % end
