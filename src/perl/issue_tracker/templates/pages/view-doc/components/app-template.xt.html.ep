@@ -1,6 +1,7 @@
  <template id="app-template">
    <div>
       %= include 'pages/view-doc/components/snackbar'
+      <div id="div_open_rgt_menu" v-if="cRgtMenuShow" onclick="openRightMenu()"> ☰ </div>
       <view-doc-items-list />
    </div>
   </template>
