@@ -1015,7 +1015,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       my $cols             = () ;         # the array ref of columns
       my $columns_to_select = '' ;
-      my @default_pick_cols = ('guid', 'id', 'seq', 'level', 'name', 'description' );
+      my @default_pick_cols = ('guid', 'id', 'seq', 'level', 'name', 'description','src');
       my @musthave_pick_cols = ('guid', 'id', 'seq', 'level', 'name' ); # no view-doc without those !!!
       ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect($table,\@default_pick_cols);
       return ( 400 , $msg , undef ) unless ( $ret == 0 );

@@ -97,45 +97,45 @@ The common listing syntax components are as follows:
     http://host-name:3000/dev_ysg_issues/list/monthly_issues?as=table&pick=id,status,prio,name,description&page-size=15&page-num=1&o=prio&with=status-ne-09-done
     
 
-#### 2.2.2. Successful execution
+##### 2.2.1.1. Successful execution
 You can use the pick=col1,col2,col3 url parameter to select for only desired attributes.
 You could filter the result the same way the filters for the select page work ( see bellow ). 
 
     
 
-#### 2.2.3. Error handling for non-existent db
+##### 2.2.1.2. Error handling for non-existent db
 If the db provided in the url pattern does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out. Example url:
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/non_existent/list/yearly_issues?as=table&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
-#### 2.2.4. Error handling for non-existent table
+##### 2.2.1.3. Error handling for non-existent table
 If the table requested does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out. Example:
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/non_existent_table?as=table&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
-#### 2.2.5. Error handling for non-existent column
+##### 2.2.1.4. Error handling for non-existent column
 If the column requested does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out.
 Example:
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=table&pick=NON_EXISTENT,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
-#### 2.2.6. The "pick" url param
+#### 2.2.2. The "pick" url param
 You can use the pick=col1,col2,col3 url parameter to select for only desired attributes to be show in the ui control used for listing.
 The following url demonstrates this syntax:
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=table&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
-#### 2.2.7. The "hide" url param
+#### 2.2.3. The "hide" url param
 If you do not specify any attribute to pick, you could hide specific attributes by using the "hide=col1,col2,col3" syntax.
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=established=guid,description
 
     
 
-#### 2.2.8. The "with=col-operator-value" filter
+#### 2.2.4. The "with=col-operator-value" filter
 You can filter the result of the query by using the "with=col-operator-value". The following examples demonstrates, which operators are supported.
 An error message is shown if you do not use existing operator. 
 The following url demonstrates this syntax:
@@ -158,7 +158,7 @@ http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/
     
     
 
-#### 2.2.9. The "where=col-operator-value" filter
+#### 2.2.5. The "where=col-operator-value" filter
 You can filter the result of the query by using the "where=col-operator-value", which works exactly as the with operator, thus the following examples demonstrates, which operators are supported.
 An error message is shown if you do not use existing operator. 
 
@@ -179,7 +179,7 @@ An error message is shown if you do not use existing operator.
     
     
 
-#### 2.2.10. Filtering with "like"
+#### 2.2.6. Filtering with "like"
 The filtering with the like operator translates to the SQL "like" operator- the "like-by=&lt;&lt;attr&gt;&gt;&like-val=&lt;&lt;val&gt;&gt; filtering, where &lt;&lt;attr&gt;&gt; stands for the name of the attribute to use the like operator. 
 Example:
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=table&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
@@ -340,15 +340,23 @@ http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/
 
     
 
-### 2.6. The view page
+### 2.6. The view-doc page
 The view page presents the data of a database table, having nested-set hierarchichal model partially or fully by the means of different controls
 
     
 
-#### 2.6.1. The view-doc page
-The view page presents the data of a database table partially or fully by using a document like structure. The 
+#### 2.6.1. Error handling for the view-doc page
+Should there be an error a dynamic snackbar is presented with the error message. The snackbar hides itself by default after 3.9 seconds ( set by default , but it could be pinned to the page by the user to view it properly / send it furter). 
+Whenever an error occurs the show right menu button does not occur and no document is presented
 
-    
+    <<web-host>>:<<web-port>>/<<database>>/view/<<table-name>>?as=doc
+
+#### 2.6.2. Normal page load
+When the page is loaded all the content of the document is presented / according to the urls params / which are applying the same filtering as in the list page , but on the hierarchichal data-set …
+The rigt menu, containing the table of contents of the document can be opened and closed and scrolled separately
+
+
+    <<web-host>>:<<web-port>>/<<database>>/view/<<table-name>>?as=doc
 
 ### 2.7. The export url
 The export url follows the same syntax naming conventions as the list page , but instead of presenting a list with the data it exports it in the specified with "as" url parameter format. 
@@ -976,7 +984,7 @@ If the syntax is correct but an non-existent like operator's attribute is provid
 You can filter the result of the query by using the "with=col-operator-value"
 
     // 20180605150216
-    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?as=cloud&with=prio-lt-6&o=prio&pick=name,prio&with=status-eq-02-todo
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?as=grid&with=prio-lt-6&o=prio&pick=name,prio&with=status-eq-02-todo
     
     {
        "dat": [
@@ -987,7 +995,7 @@ You can filter the result of the query by using the "with=col-operator-value"
           }
        ],
        "msg": "",
-       "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?as=cloud",
+       "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?as=grid",
        "ret": 200
     }
 
@@ -1001,11 +1009,11 @@ If the column used does not exist an error is provided as follows:
 
 
     // 20180605150010
-    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?as=cloud&with=prio-lt-7&o=prio&pick=name,prio&with=foo-eq-02-todo
+    // http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?as=grid&with=prio-lt-7&o=prio&pick=name,prio&with=foo-eq-02-todo
     
     {
        "msg": "the foo column does not exist",
-       "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?as=cloud",
+       "req": "GET http://192.168.56.120:3000/dev_issue_tracker/select/monthly_issues?as=grid",
        "ret": 400
     }
 
