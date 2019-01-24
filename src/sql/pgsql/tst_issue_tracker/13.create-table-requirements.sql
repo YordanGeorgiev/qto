@@ -14,6 +14,7 @@ SELECT 'create the "requirements" table'
     , status         varchar (20) NOT NULL DEFAULT 'status ...'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
+    , src            varchar (4000)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_requirements_guid PRIMARY KEY (guid)
     ) WITH (

@@ -11,6 +11,7 @@ SELECT 'create the "requirements" table'
     , category       varchar (20) NOT NULL DEFAULT 'category ...'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
+    , src            varchar (4000)
     , owner          varchar (50) NOT NULL DEFAULT 'unknown'
     , tags           varchar (200)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())

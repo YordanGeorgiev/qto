@@ -13,6 +13,7 @@ SELECT 'create the "userstories" table'
     , prio           integer NOT NULL DEFAULT 1
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
+    , src            varchar (4000)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_userstories_guid PRIMARY KEY (guid)
     ) WITH (
