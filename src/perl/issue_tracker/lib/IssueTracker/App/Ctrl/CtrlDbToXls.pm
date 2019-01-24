@@ -74,7 +74,7 @@ package IssueTracker::App::Ctrl::CtrlDbToXls ;
       for my $table ( @tables ) { 
          ( $ret , $msg , $msr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;
          return ( $ret , $msg ) unless $ret == 0 ; 
-         ( $ret , $msg , $hsr2)  = $objRdrDb->doSelect( \$objModel , $table ) ; 
+         ( $ret , $msg , $hsr2)  = $objRdrDb->doSelect( $db , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
          my $objWtrXls    = 'IssueTracker::App::IO::Out::WtrXls'->new( \$appConfig ) ;
          ($ret , $msg , $xls_file ) = $objWtrXls->doBuildXlsFromHashRef ( \$objModel , $table , $hsr2 , $msr2) ;

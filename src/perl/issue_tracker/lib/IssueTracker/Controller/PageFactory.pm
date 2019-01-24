@@ -6,7 +6,6 @@ package IssueTracker::Controller::PageFactory ;
 
    use IssueTracker::Controller::ListGrid ; 
    use IssueTracker::Controller::ListLabels ; 
-   use IssueTracker::Controller::ListCloud ; 
    use IssueTracker::Controller::ListPrintTable ; 
    use IssueTracker::Controller::SearchGrid ; 
 
@@ -29,10 +28,6 @@ package IssueTracker::Controller::PageFactory ;
 		if ( $ui_type eq 'page/list-labels' ) {
 		   $package_file     = "IssueTracker/Controller/ListLabels.pm" ; 
 		   $objPageBuilder   = "IssueTracker::Controller::ListLabels" ; 
-		}
-		elsif ( $ui_type eq 'page/list-cloud' ) {
-		   $package_file     = "IssueTracker/Controller/ListCloud.pm" ; 
-		   $objPageBuilder   = "IssueTracker::Controller::ListCloud" ; 
 		}
 		elsif ( $ui_type eq 'page/list-grid' ) {
 		   $package_file     = "IssueTracker/Controller/ListGrid.pm" ; 

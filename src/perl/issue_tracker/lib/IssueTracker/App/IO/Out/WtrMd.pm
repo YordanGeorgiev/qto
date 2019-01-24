@@ -80,10 +80,9 @@ package IssueTracker::App::IO::Out::WtrMd ;
 						$str_response .= $h_syntax . $cell ; 
 						$str_response .= "\n" ; 
                  
-                  # todo:ysg add the table of contents
-                  # add the table of contents if this is the level 1
+                  # it-190108215050
                   # $str_response .= $str_toc  if $row->{'level'} == 1 ; 
-                 #
+                 
 				} elsif ( $col_name eq 'description' ) {
 					my $cell 		= $row->{ 'description' } ; 
 					$cell =~ s/</&lt;/g ; 

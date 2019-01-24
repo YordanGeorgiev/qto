@@ -19,6 +19,7 @@
    function paintError(eid,txt){
       document.getElementById(eid).innerHTML=""
       document.getElementById(eid).innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
+      setStyleProp(eid,'z-index','3')
       setStyleProp(eid,'display','inline')
       setStyleProp(eid,'box-shadow','0 0 10px red')
       setStyleProp(eid,'background-color','#FFFF00')
@@ -47,7 +48,8 @@
    function fadeAwayDiv(toFade) {
       if ( typeof toFade === 'undefined' && toFade != null ) { toFade='div_msg' }
       var div_msg_style = document.getElementById(toFade).style; div_msg_style.opacity = 1; 
-      (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,750)})();
+      (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,300)})();
+      setStyleProp(toFade,'z-index','0')
    }
    function hideControlsOnError() {
      setStyleProp('grid','display','none')

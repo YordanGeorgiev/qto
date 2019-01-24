@@ -22,9 +22,9 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 	our $objModel                                = {} ; 
    our $rdbms_type                              = 'postgres' ; 
 
-	our $db                        = q{} ; 
-	our $postgres_db_host 										   = q{} ; 
-	our $postgres_db_port 										   = q{} ;
+	our $db                                      = q{} ; 
+	our $postgres_db_host 								= q{} ; 
+	our $postgres_db_port 								= q{} ;
 	our $postgres_db_user 							   = q{} ; 
 	our $postgres_db_user_pw	 					   = q{} ; 
 	our $web_host 											= q{} ; 
@@ -557,7 +557,7 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel , $self ) ; 
       my $objRdrDb         = $objRdrDbsFactory->doSpawn("$rdbms_type");
 
-      $objLogger->doLogDebugMsg ( "upsert start for : $table" );
+      $objLogger->doLogDebugMsg ( "upsert start for : db: $db table $table" );
 
       ( $ret , $msg , $hs_headers ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
@@ -715,13 +715,10 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 	sub doUpsertTables {
 
 		my $self 			   = shift ; 
-      my $objModel       = ${ shift @_ } ; 
+      my $objModel         = ${ shift @_ } ; 
 		my $hsr3 		      = $objModel->get( 'hsr3' ) ; 
-      my @tables = @{ $_[0] } ; 
+      my @tables           = @{ $_[0] } ; 
 
-      binmode(STDIN,  ':utf8');
-      binmode(STDOUT, ':utf8');
-      binmode(STDERR, ':utf8');
 		my $ret 				   = 1 ; 
 		my $msg 				   = ' failed to connect during insert to db !!! ' ; 
 		my $debug_msg 		   = ' failed to connect during insert to db !!! ' ; 
@@ -733,14 +730,16 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
       my $dbh              = {} ;    # this is the database handle
       my $str_sql          = q{} ;   # this is the sql string to use for the query
       my $rv               = 0 ;     # apperantly insert ok returns rv = 1 !!! 
-      
       my $hs_headers       = {} ; 
       my $update_time      = q{} ; # must have the default value now() in db
-      
       my $dmhsr            = {} ; 
 
       my $objRdrDbsFactory = 'IssueTracker::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel , $self ) ; 
       my $objRdrDb         = $objRdrDbsFactory->doSpawn("$rdbms_type");
+      
+      binmode(STDIN,  ':utf8');
+      binmode(STDOUT, ':utf8');
+      binmode(STDERR, ':utf8');
 
       # obs this does not support ordered primary key tables first order yet !!!
       foreach my $table ( keys %$hsr3 ) { 
@@ -880,43 +879,33 @@ package IssueTracker::App::Db::Out::Postgres::WtrPostgresDb ;
 	}
 
 
-   #
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
 	sub new {
-
 		my $invocant 	= shift ;    
 		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in WtrPostgresDb !!!' ; 
       $objController = shift ;  
 		my $class      = ref ( $invocant ) || $invocant ; 
-		my $self       = {};        # Anonymous hash reference holds instance attributes
-		bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize() ; 
+		my $self       = {};  bless( $self, $class );  
+      $self          = $self->doInit() ; 
 
 		return $self;
 	}  
 
 
-   #
-	# --------------------------------------------------------
-	# intializes this object 
-	# --------------------------------------------------------
-   sub doInitialize {
+   sub doInit {
       my $self = shift ; 
 
       %$self = (
            appConfig => $appConfig
       );
 
-		$db 			               = $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}        || 'prd_pgsql_runner' ; 
-		$postgres_db_host 			         = $ENV{ 'postgres_db_host' } || $appConfig->{'postgres_db_host'} 		|| 'localhost' ;
-		$postgres_db_port 			         = $ENV{ 'postgres_db_port' } || $appConfig->{'postgres_db_port'} 		|| '13306' ; 
-		$postgres_db_user 			= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'ysg' ; 
-		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' } || $appConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
+		$db 			               = $ENV{ 'postgres_db_name' }     || $appConfig->{'postgres_db_name'}    || 'prd_issue_tracker' ; 
+		$postgres_db_host 			= $ENV{ 'postgres_db_host' }     || $appConfig->{'postgres_db_host'}    || 'localhost' ;
+		$postgres_db_port 			= $ENV{ 'postgres_db_port' }     || $appConfig->{'postgres_db_port'}    || '13306' ; 
+		$postgres_db_user 			= $ENV{ 'postgres_db_user' }     || $appConfig->{'postgres_db_user'}    || 'ysg' ; 
+		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' }  || $appConfig->{'postgres_db_user_pw'} || 'no_pass_provided!!!' ; 
       
-	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			         = 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
 
       return $self ; 
 	}	

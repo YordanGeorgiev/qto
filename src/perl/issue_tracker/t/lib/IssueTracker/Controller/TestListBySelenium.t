@@ -47,6 +47,7 @@ for my $row ( @$tables_list ) {
 } 
 # eof foreach table
 
+p $driver->get_sessions(); 
 
 $driver->quit();
 
