@@ -1,5 +1,3 @@
- <template id="app-template">
-   <div>
 	<snackbar id="snck_msg" :active="cshowSnackBar" :position="position" :timeout="ctimeout" :infinity="cinfinity">
       <div>
          <input type="checkbox" id="infinity" v-model="cinfinity">
@@ -9,6 +7,3 @@
 			&#x2718; 
 		</button>
 	</snackbar>
-      <view-doc-items-list />
-   </div>
-  </template>

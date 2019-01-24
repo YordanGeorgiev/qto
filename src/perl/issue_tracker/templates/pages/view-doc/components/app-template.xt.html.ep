@@ -1,0 +1,6 @@
+ <template id="app-template">
+   <div>
+      %= include 'pages/view-doc/components/snackbar'
+      <view-doc-items-list />
+   </div>
+  </template>

@@ -1,0 +1,11 @@
+	function getServerData (url, urlParams ){
+		if ( typeof url_params == "undefined" ) { urlParams = getUrlParams()  }
+		return axios.get(url , { params: urlParams } )
+		.then(response => { 
+			return response ; 
+		})
+		.catch(function(error) {
+			console.error ( error ) 
+			return error.response;
+		}) 
+	}
