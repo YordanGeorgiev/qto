@@ -900,7 +900,6 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlJsonToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlTxtToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlXlsToDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/Dispatcher/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/MariaDb/RdrMariaDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/MojoPgWrapper/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrHPostgresDb/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Db/In/Postgres/RdrPostgresDb/autosplit.ix
@@ -950,6 +949,7 @@ dat/mix/2019/2019-01/2019-01-24
 dat/mix/2019/2019-01/2019-01-24/.DS_Store
 dat/mix/2019/2019-01/2019-01-24/sql
 dat/mix/2019/2019-01/2019-01-24/sql/dev_issue_tracker
+dat/mix/2019/2019-01/2019-01-24/sql/dev_issue_tracker/dev_issue_tracker.20190124_104552.insrt.dmp.sql
 dat/mix/2019/2019-01/2019-01-24/sql/dev_issue_tracker/dev_issue_tracker.20190124_211900.insrt.dmp.sql
 dat/mix/2019/2019-01/2019-01-24/tmp
 dat/mix/2019/2019-01/2019-01-24/xls
