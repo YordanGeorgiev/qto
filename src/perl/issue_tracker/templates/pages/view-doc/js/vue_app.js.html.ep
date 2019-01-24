@@ -3,6 +3,7 @@
       , showSnackBar: false
       , msg : ''
       , infinity: false
+      , showRgtMenu: false
     };
 
    var getters = {
@@ -10,6 +11,7 @@
       , getSnackBarShow: state => state.showSnackBar
       , getSnackBarMsg: state => state.msg
       , getSnackBarInfinity: state => state.infinity
+      , getRgtMenuShow: state => state.showRgtMenu
    }
 
     var mutations = {
@@ -32,6 +34,9 @@
            },
            SET_SNACKBAR_INFINITY: (state, infinity) => {
                state.infinity = infinity
+           },
+           SET_RGT_MENU_SHOW: (state, showRgtMenu) => {
+               state.showRgtMenu = showRgtMenu
            },
            TOGGLE_ITEM: (state, payload) => {
                var item = state.items.find(item => item.id === payload);
@@ -72,6 +77,7 @@
                   	commit('SET_SNACKBAR_MSG', errorMsg ) 
                   } else {
                   	items = data.dat 
+                  	commit('SET_RGT_MENU_SHOW', true)
                   	commit('SET_ITEMS', items)
 						}
 					}
@@ -85,6 +91,9 @@
          }
          , loadSnackBarInfinity: (context, infinity) => {
             context.commit("SET_SNACKBAR_INFINITY", infinity)
+         }
+         , loadRgtMenuShow: (context, showRgtMenu) => {
+            context.commit("SET_RGT_MENU_SHOW", showRgtMenu)
          }
          , hideSnackBar ({ commit }) {
             commit('SET_SNACKBAR_SHOW', false )
@@ -235,8 +244,17 @@
 					return this.$store.getters.getSnackBarInfinity
 				}
 				, set: function(newVal){
-					this.cactive = true 
+					this.cactive = true // todo:ysg bug ?!
          		this.$store.dispatch("loadSnackBarInfinity", newVal);
+				}
+			}
+			, cRgtMenuShow: {
+				get: function(){
+					return this.$store.getters.getRgtMenuShow
+				}
+				, set: function(newVal){
+					this.rgt_menu_show = newVal
+         		this.$store.dispatch("loadRgtMenuShow", newVal);
 				}
 			}
 		}
@@ -248,6 +266,7 @@
          this.$store.dispatch('loadItems')
          this.$store.dispatch("loadSnackBar");
          this.$store.dispatch("loadSnackBarInfinity", false);
+         this.$store.dispatch("loadRgtMenuShow", false);
       }
       , methods: {
          addItem: function() {
