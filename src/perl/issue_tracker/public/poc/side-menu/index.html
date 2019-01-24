@@ -1,0 +1,84 @@
+<html>
+<head>
+<style>
+/* The side navigation menu */
+.rgt_side_nav {
+  height: 100%; 
+  width: 0; 
+  position: fixed; 
+  z-index: 1; 
+  top: 0; 
+  right: 0;
+  background-color: #E8E8E8 ;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20%; 
+  transition: 0.5s; /* 0.5 second slide transition effect */
+}
+
+.rgt_side_nav a {
+  padding: 2% 2% 2% 6%;
+  text-decoration: none;
+  font-size: 25px;
+  color: #333333;
+  display: block;
+  transition: 0.3s;
+}
+
+.rgt_side_nav a:hover {
+  color: #f1f1f1;
+}
+
+.rgt_side_nav .cls_close_btn {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  font-size: 30px;
+  margin-right: 70px;
+}
+
+#main {
+  transition: margin-right .5s;
+  padding: 6%;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the rgt_side_nav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .rgt_side_nav {
+		padding-top: 10px;
+	}
+  .rgt_side_nav a {
+		font-size: 12%;
+	}
+}
+</style>
+
+</head>
+<body>
+	<div id="rgt_menu" class="rgt_side_nav">
+	  <a href="javascript:void(0)" class="cls_close_btn" onclick="closeNav()">&times;</a>
+	  <a href="#">About</a>
+	  <a href="#">Services</a>
+	  <a href="#">Clients</a>
+	  <a href="#">Contact</a>
+	</div>
+
+	<!-- Use any element to open the rgt_side_nav -->
+	<div id="div_open_rgt_menu" style="float:right;font-size: 25px;" onclick="openRightMenu()"> ☰ </div>
+
+	<div id="main">
+	</div>
+<script>
+
+/* Set the width of the side navigation to 250px */
+function openRightMenu() {
+  document.getElementById("rgt_menu").style.width = "23%";
+}
+
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+  document.getElementById("rgt_menu").style.width = "0";
+}
+
+</script>
+</body>
+</html>

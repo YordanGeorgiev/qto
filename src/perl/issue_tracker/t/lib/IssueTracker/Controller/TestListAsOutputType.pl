@@ -31,45 +31,36 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    $ua  = $t->ua ; 
    $response = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
    my $list = $response->{ 'dat' } ; 
+   my $counter = 0 ; 
 
-# foreach table in the proj db in test call db/list/table
-for my $row ( @$list ) {
+   # foreach table in the proj db in test call db/list/table
+   for my $row ( @$list ) {
+      $counter++ ; next if $counter % 2 != 0 ; # we have enough tables take each second one
+      my $table_name = $row->{'table_name'} ; 
+      my $url = '' ; 
+      my $tm = '' ; # the test msg 
 
-   my $table_name = $row->{'table_name'} ; 
-   my $url = '' ; 
-   my $tm = '' ; # the test msg 
-
-	$tm = 'for get the correct http status code - 200 , utf-8 and fi,en as langs' ; 
-  
-   my @output_types = ( 'grid' , 'print-table' , 'cloud' ) ;   # only the table output type supports page sizing
-   my @page_sizes = ( 5,10,15,30 ) ;  # only the table output type supports page sizing
-   my @page_nums = ( 1,2,3  ) ;        # only the table output type supports page sizing
-   foreach my $as ( @output_types ) {
-      foreach my $page_size ( @page_sizes ) {
-         foreach my $page_num ( @page_nums ) {
-            print "url is $url \n" ; 
-            $url = '/' . $db_name . '/list/' . $table_name . '?as=' . "$as" . '&pg-size=' . $page_size .'&pg-num=' . $page_num ; 
-            $t->get_ok( $url )
-               ->status_isnt(400) 
-                ->header_is('Accept-Charset' => 'UTF-8')
-                ->header_is('Accept-Language' => 'fi, en' , $tm)
-            ;
+      $tm = 'for get the correct http status code - 200 , utf-8 and fi,en as langs' ; 
+     
+      my @output_types = ( 'grid' , 'print-table' ) ;   # only the table output type supports page sizing
+      my @page_sizes = ( 5,10,30 ) ;  # only the table output type supports page sizing
+      my @page_nums = ( 1,2,3 ) ;        # only the table output type supports page sizing
+      foreach my $as ( @output_types ) {
+         foreach my $page_size ( @page_sizes ) {
+            foreach my $page_num ( @page_nums ) {
+               print "url is $url \n" ; 
+               $url = '/' . $db_name . '/list/' . $table_name . '?as=' . "$as" . '&pg-size=' . $page_size .'&pg-num=' . $page_num ; 
+               $t->get_ok( $url )
+                  ->status_isnt(400) 
+                   ->header_is('Accept-Charset' => 'UTF-8')
+               ;
+               #my $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
+               #p $dom->all_text ; 
+            }
          }
       }
    }
-}
 
-	$tm = 'if the page size is not a positive whole number return http 400 ' ; 
-   my $page_size = 'not_even_a_number' ; 
-   my $page_num = 1 ; 
-   $url = '/' . $db_name . '/list/tst_paging?as=table&pg-size=' . $page_size .'&pg-num=' . $page_num ; 
-   $t->get_ok( $url )->status_is(400 , $tm ) ; 
-	
-   $tm = 'if the page num is not a positive whole number return http 400 ' ; 
-   $page_size = 15 ; 
-   $page_num = 'not_even_a_number' ; 
-   $url = '/' . $db_name . '/list/tst_paging?as=table&pg-size=' . $page_size .'&pg-num=' . $page_num ; 
-   $t->get_ok( $url )->status_is(400 , $tm ) ; 
 
 done_testing();
 

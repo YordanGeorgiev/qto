@@ -37,8 +37,7 @@ sub doViewItems {
    $self->SUPER::doReloadProjDbMeta( $db ) ;
 
    $appConfig		 		= $self->app->get('AppConfig');
-   $objModel            = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
-   ( $ret , $msg )  = $self->doSetRequestModelData( \$objModel, $db , $item );
+   $objModel            = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db ) ;
 
    ( $ret , $msg , $view_control ) = $self->doBuildViewPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
    $self->render('text' => 'view page is presented') unless $ret == 0 ; 
@@ -77,40 +76,6 @@ sub doBuildViewPageType {
 
 }
 
-sub doSetRequestModelData {
-
-   my $self             = shift ; 
-   my $objModel         = ${shift @_ } ; 
-   my $db               = shift ; 
-   my $item             = shift ; 
-   
-   my $ret              = 1 ;  
-   my $msg              = '' ; 
-   my $objCnrUrlParams  = {} ; 
-
-   $appConfig		 		= $self->app->get('AppConfig');
-
-   $objModel->set('postgres_db_name' , $db ) ; 
-   $objModel->set('table_name' , $item ) ; 
-
-   $objCnrUrlParams   = 
-      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
-   
-   ( $ret , $msg ) = $objCnrUrlParams->doSetView();
-   return ( $ret , $msg ) unless $ret == 0 ; 
-  
-  ( $ret , $msg ) = $objCnrUrlParams->doSetList();
-   return ( $ret , $msg ) unless $ret == 0 ; 
-
-   ( $ret , $msg ) = $objCnrUrlParams->doSetSelect();
-   return ( $ret , $msg ) unless $ret == 0 ; 
-
-   ( $ret , $msg ) = $objCnrUrlParams->doSetWith();
-   return ( $ret , $msg ) unless $ret == 0 ; 
-
-
-   return ( $ret , $msg , \$objModel) ; 
-}
 
 
 sub doRenderPageTemplate {

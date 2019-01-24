@@ -80,8 +80,8 @@ our $objLogger       = {} ;
    sub doChkIfColumnExists {
 
       my $self          = shift ; 
-      my $db            = shift ; 
-      my $table         = shift ; 
+      my $db            = shift || $self->get('postgres_db_name');
+      my $table         = shift || $self->get('table_name');
       my $col           = shift ; 
    
       my $cols = $appConfig->{ "$db" . '.meta' } ; 
@@ -129,21 +129,24 @@ sub new {
 
    my $class      = shift ;    
    $appConfig     = ${ shift @_ } || croak 'undef passed for appConfig !!!' ; 
-
    my $self       = {}; bless( $self, $class );    
-   $self          = $self->doInitialize() ; 
+   $self          = $self->doInit(@_) ; 
    return $self;
 }  
 	
    
-   sub doInitialize {
+   sub doInit {
 
-      my $self = shift ; 
+      my $self    = shift ; 
+      my $db      = shift ; 
+      my $table   = shift ; 
 
       %$self = (
              appConfig => $appConfig
       );
-
+      
+      $self->set('postgres_db_name' , $db )  if defined $db ; 
+      $self->set('table_name' , $table )     if defined $table ; 
 	   $objLogger 			= 'IssueTracker::App::Utils::Logger'->new( \$appConfig ) ;
 
       return $self ; 

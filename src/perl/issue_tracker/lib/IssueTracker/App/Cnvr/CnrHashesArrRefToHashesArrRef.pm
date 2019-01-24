@@ -46,12 +46,17 @@ sub doConvert {
    my $prev_row_id			   = 0 ; 
    my $prev_row 				   = {} ; 
 
-   @$rs = sort { $a->{ 'seq' } <=> $b->{ 'seq' } } @$rs;
+   # only hierarchy nested-set model tables should by converted
+   foreach my $row ( @$rs )  {
+      return \@$rs unless defined $row->{ 'seq' } ; 
+   }
+
+   @$rs = sort { $a->{ 'seq' } <=> $b->{ 'seq' } } @$rs ; 
    my $rowc	= 0 ; 
 
    # fill first the level counts
    foreach my $row ( @$rs )  {
-
+      next unless defined $row->{ 'seq' } ; 
       # set the id as the key to the logical hash
       my $id  = $row->{ $item_id_name } || $start_upper_level ; 
       $prev_level_num = $prev_row->{'level'} || 0 ; 
@@ -137,7 +142,7 @@ sub doConvert {
          #$curr_level_count		= '' 
          #	if ( $curr_level_count == 0 and $key == 1 ) ; 
          if ( $key > 1 ) {				
-            my $logical_order = $hs_seq_logical_order->{ $id }->{ 'logic_order' } ; 
+            my $logical_order = $hs_seq_logical_order->{ $id }->{ 'logic_order' } || '' ;
             $logical_order  =~ s/(.*)\.\.\./$1/g ; 
             $logical_order  .= 
                $curr_level_count . $post_dot_maybe ; 

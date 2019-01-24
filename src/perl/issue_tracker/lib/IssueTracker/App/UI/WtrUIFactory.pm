@@ -6,7 +6,6 @@ package IssueTracker::App::UI::WtrUIFactory ;
    use Carp ; 
 
    use IssueTracker::App::UI::Controls::WtrListLabels ; 
-   use IssueTracker::App::UI::Controls::WtrJQCloud ; 
 
 	our $appConfig 		= {} ; 
 	our $objModel        = {} ; 
@@ -26,10 +25,6 @@ package IssueTracker::App::UI::WtrUIFactory ;
 		if ( $ui_type eq 'control/list-labels' ) {
 		   $package_file     = "IssueTracker/App/UI/Controls/WtrListLabels.pm" ; 
 		   $objWtrControl    = "IssueTracker::App::UI::Controls::WtrListLabels" ; 
-		}
-		elsif ( $ui_type eq 'control/list-cloud' ) {
-		   $package_file     = "IssueTracker/App/UI/Controls/WtrJQCloud.pm" ; 
-		   $objWtrControl    = "IssueTracker::App::UI::Controls::WtrJQCloud" ; 
 		}
 		else {
 	      croak "not implemented !!!" ; 	

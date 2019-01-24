@@ -2,5 +2,6 @@
 %layout 'site';
 
 % content_for cnt_header_css => begin
-  <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/view.css?v=<%= $ProductVersion =%>" />
+  <link rel="stylesheet" type="text/css" 
+   href="../../themes/thme-blue/css/screen/site/view.css?v=<%= $ProductVersion =%>" />
 % end

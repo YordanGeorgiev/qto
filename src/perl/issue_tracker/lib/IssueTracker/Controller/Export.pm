@@ -13,7 +13,7 @@ use Data::Printer ;
 use Carp qw /cluck confess shortmess croak carp/ ;
 
 use IssueTracker::App::Utils::Logger;
-use IssueTracker::App::IO::In::CnrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlPrms ; 
 use IssueTracker::App::IO::WtrExportFactory ; 
 use IssueTracker::App::Utils::Timer ; 
 
@@ -35,6 +35,10 @@ sub doExportItems {
    my $msg              = 0 ; 
    my $msr2             = {}  ; 
    my $file_to_export   = '/tmp/non-existent-file-to-export.tmp' ; 
+   my $http_method      = 'GET' ; 
+   my $met              = '' ; 
+   my $cnt              = '' ; 
+   my $dat              = '' ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
@@ -43,8 +47,11 @@ sub doExportItems {
    my $as               = 'xls' ; # the default form of the Export control 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
 
-   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
-   ( $ret , $msg )      = $self->doSetRequestModelData( \$objModel , $db , $item );
+   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db , $table ) ;
+   my $objCnrUrlPrms    = 'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+   
+   return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
+      unless $objCnrUrlPrms->doValidateAndSetSelect();
 
    my $objExportFactory = 'IssueTracker::App::IO::WtrExportFactory'->new(\$appConfig, \$objModel , $as );
    my $objExporter      = $objExportFactory->doSpawn( $as );
@@ -57,36 +64,6 @@ sub doExportItems {
       $self->render_file('filepath' => "$file_to_export" ); 
    }
 }
-
-sub doSetRequestModelData {
-
-   my $self             = shift ; 
-   my $objModel         = ${ shift @_ } ; 
-   my $db               = shift ; 
-   my $item             = shift ; 
-   
-   my $ret              = 1 ;  
-   my $msg              = '' ; 
-   my $objCnrUrlParams  = {} ; 
-
-   $appConfig		 		= $self->app->get('AppConfig');
-   $objModel->set('postgres_db_name' , $db ) ; 
-   $objModel->set('table_name' , $item ) ; 
-
-   $objCnrUrlParams = 
-      'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
-   
-   ( $ret , $msg ) = $objCnrUrlParams->doSetView();
-   return ( $ret , $msg ) unless $ret == 200 ; 
-
-   ( $ret , $msg ) = $objCnrUrlParams->doSetSelect();
-   return ( $ret , $msg ) unless $ret == 0 ; 
-
-   ( $ret , $msg ) = $objCnrUrlParams->doSetWith();
-   return ( $ret , $msg ) ;
-
-}
-
 
 
 

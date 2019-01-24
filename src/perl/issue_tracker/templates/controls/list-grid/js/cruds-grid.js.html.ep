@@ -261,7 +261,7 @@
                   uri = uri + "&pg-num=1"
                } else {
                   var newPageNum = Number(this.pageNum)-1
-                  if ( newPageNum < 1 ) { newPageNum = 1 }
+                  if ( typeof newPageNum == "undefined" || newPageNum < 1 ) { newPageNum = 1 }
                   uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
                }
                window.location.href = uri 
@@ -285,7 +285,7 @@
                   uri = uri + "&pg-num=1"
                } else {
                   var newPageNum = Number(this.pageNum)-10
-                  if ( newPageNum < 1 ) { newPageNum = 1 }
+                  if ( typeof newPageNum == "undefined" || newPageNum < 1 ) { newPageNum = 1 }
                   uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
                }
                window.location.href = uri 

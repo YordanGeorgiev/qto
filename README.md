@@ -19,7 +19,7 @@ Table of Contents
     
 
 ## 1. WHY
-Why ?! Yet.  Another. App ?!
+Why ?! Yet.  Another App ?!
 
 Because work should be inspiring and not overwhelming people. Because even good intentions without proper commitment, allocation and resourcing and most importantly, a mean for tracking advancement of an endeavor in open way reflecting the reality, might end-up making people less happy, when in fact a really simple solution could be applied for any bigger challenge requiring progress tracking, communication and coordination ... And tons of other reasons we all having been in project disasters know about ... Still here ?! Let's move on !
 
@@ -27,12 +27,10 @@ Because work should be inspiring and not overwhelming people. Because even good 
 issue tracker objects polygon 
 ![The relations between the issue tracker objects ](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/readme/what-is-is.png)    
 
-## 2. WHAT 
-A generic postgres CRUDs ( s stands for search ) web based app for managing multiple databases from the same web application layer by means of simpliest possible UI and/or shell tools for xls export , Google sheets writes etc. An included example application is the "issue-tracker application", which is used to manage multiple projects' issues, including itself ;o)
-
-The full and extensive features and functionalities document cold be read from: https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-features-and-functionalities.md
-
-This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture and the Input-Output Controller Model architecture ( more about this in the [System Guide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/system_guide.md)
+## 2. AND WHAT IS THIS ?!
+A generic postgres CRUDs ( s stands for search ) web based app for managing multiple databases from the same web application layer by means of simpliest possible UI and/or shell tools for xls export, Google sheets writes etc. An included example application is the "issue-tracker application", which is used to manage multiple projects' issues, including itself ;o). 
+The full and extensive [features and functionalities document](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/features) must contain all the features and functionalities of this released version.
+This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture and the Input-Output Controller Model architecture ( more about this in the [System Guide](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/system_guide), which is in a way a reflection of the simple axiom in IT - "if there is one there will be many" ...
 
     
 
@@ -50,6 +48,7 @@ Your organisation:
 - has full trust to the persons in the org having http access for CRUD operations, as only basic auth over http exists
 - has the a need to load MANY tables into a postgres db, which might be changing constantly DDL wise
 - the API of having bigint id and uid as PK as well as default vals for nullable cols is acceptable
+- might have the need to save technical documentation in versioned md format
 
     
 
@@ -74,7 +73,7 @@ In the real IT life however the mealage always varies, hence this last "bonus of
     
 
 ## 4. DEMO 
-You can check the following [running instance of the tool](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&pg-size=7&pg-num=1):
+You can check the following [running instance of the web app](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&pg-size=7&pg-num=1):
 
 
 ## 5. INSTALLATION AND CONFIGURATION
@@ -84,7 +83,7 @@ follow the installation instructions in the [Installation Guide](https://github.
 
 ## 6. ADDITIONAL DOCS
 Additional docs could be found in the [doc/md] https://github.com/YordanGeorgiev/issue-tracker/tree/master/doc/md) dir.
-A good starting point could be the [Features and Functionalities document](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/issue-tracker-features-and-functionalities.md).
+A good starting point could be the [Features and Functionalities document](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/features.md).
 The [user-stories doc](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/userstories.md)
 The [Requirements document](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/requirements.md)  document contains the requirements for the application:
 The [SystemGuide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/system_guide.md) contains the description of the existing issue-tracker System and it's architecture:

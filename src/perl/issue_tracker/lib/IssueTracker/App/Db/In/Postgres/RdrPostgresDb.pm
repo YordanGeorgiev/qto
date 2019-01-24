@@ -171,6 +171,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $db               = shift ; 
       my $table            = shift ; 
 
+      my $bid           = $objModel->get( 'hselect.web-action.bid' ) || 0 ; 
+      my $seq           = $objModel->get( 'hselect.web-action.seq' ) || undef ; 
+
       my $where_clause_bid = '' , 
 		my $ret              = 400 ; 
 		my $msg              = ' the url parameter branch-id - bid should be a number !!! ' ; 
@@ -192,6 +195,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $self    = shift ; 
       my $db      = shift ; 
       my $table   = shift ; 
+      my $isHrchy = shift || 0 ; 
 
 		my $sql     = '' ; 
 		my $ret     = 400 ; 
@@ -220,13 +224,18 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
         
             my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $col ) ; 
       	   return ( 400 , "the $col column does not exist" , "") unless ( $col_exists ) ; 
-				$sql .= " $col $op '$val'" ; 
+            my $nodeMayBe = '' ; 
+            $nodeMayBe = 'dyn_sql.' if $isHrchy == 1 ;
+				$sql .= " $nodeMayBe$col $op '$val'" unless ( $op eq 'in' );
+            my $list = $val ; 
+            $list =~ s/,/','/g  ; 
+				$sql .= " $nodeMayBe$col $op ('$list')" if ( $op eq 'in' );
          }
       	return ( 0 , "" , $sql) ;
       } elsif ( @$cols or @$vals or @$ops )  {
 
 			# if either the with names or the with values are null than the withing url is mall-formed
-			$msg = 'mall-formed url params for filtering with - valid syntax is ?fltr-by=<<attribute>>&fltr-val=<<with-value>>' ; 
+			$msg = 'mall-formed url params for filtering with - valid syntax is with=<<attribute>>-<<operator>>-<<value>>' ; 
       	return ( 400 , "$msg" , "") ; 
 		} else {
 
@@ -703,40 +712,28 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    # ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
    # -----------------------------------------------------------------------------
    sub doConnectToDb {
+
       my $self = shift ; 
-      my $db = shift ; 
-   
-      my $ret = 1 ; 
-      my $msg = q{} ; 
-      my $dbh = q{} ; 
+      my $db   = shift || 'non_accessible_db'  ;
 
-      eval { 
-         $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
-                    'RaiseError'          => 1
-                  , 'ShowErrorStatement'  => 1
-                  , 'PrintError'          => 1
-                  , 'AutoCommit'          => 1
-                  , 'pg_utf8_strings'     => 1
-         } ) 
-      };
+      my $ret  = 400 ; 
+      my $msg = 'cannot connect to the "' . $db . '" database: '; 
+      my $dbh  = undef ;
 
-      if ($@) {
-         $ret = 400 ; 
-         $msg = 'cannot connect to the "' . $db . '" database: ' . DBI->errstr ; 
-         $objModel->set('postgres_db_name' , 'postgres') ; 
-         my ($ret1, $msg1,$hsr2) = $self->doSelectDatabasesList(\$objModel);
-         foreach my $key ( keys %$hsr2 ) {
-            my $row = $hsr2->{$key} ; 
-            if ( $row->{ 'datname' } eq $db ) {
-               $ret = 404 ; 
-               $msg = 'cannot connect to the "' . $db . '" database: the db is unaccessible' . DBI->errstr ; 
-               return ( $ret , $msg , undef ) ; 
-            }
-         }
-         return ( $ret , $msg , undef ) ; 
+      $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
+                 'RaiseError'          => 0 # otherwise it dies !!!
+               , 'ShowErrorStatement'  => 1
+               , 'PrintError'          => 1
+               , 'AutoCommit'          => 1
+               , 'pg_utf8_strings'     => 1
+      }) ; 
+      
+      if ( defined $dbh  ) {
+         $ret = 0 ; $msg = "" ; 
+      } else {
+         $msg .= DBI->errstr ; 
       }
 
-      $ret = 0 ; $msg = "" ; 
       return ( $ret , $msg , $dbh ) ; 
    }
 
@@ -744,7 +741,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    sub getColumnsToSelect {
 
       my $self          = shift ; 
-      my $objModel      = ${shift @_ } ; 
       my $table         =  shift  ; 
       my $cols          =  shift  ; 
       my $ret           = 1 ; 
@@ -829,19 +825,15 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
    sub doSelect {
 
       my $self                   = shift ; 
-      my $objModel               = ${shift @_ } ; 
+      my $db                     = shift || croak 'no db passed !!!' ;  
       my $table                  = shift || croak 'no table passed !!!' ; 
-      my $filter_by_attributes   = shift ; 
       my $ret                    = 1 ; 
       my $msg                    = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
       my $dbh                    = {} ;         # this is the database handle
 
-      if ( defined $objModel->get('postgres_db_name') ) {
-		   $db = $objModel->get('postgres_db_name');
-      }
-     
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
+
 
       if ( $self->table_exists ( $db , $table ) == 0  ) {
          $ret = 400 ; 
@@ -861,7 +853,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       ( $ret , $msg , $cols ) = $objModel->doGetItemsDefaultPickCols ( $appConfig , $db , $table ) ; 
       return ( 400 , $msg , undef ) unless ( $ret == 0 );
 
-      ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect(\$objModel,$table,$cols);
+      ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect($table,$cols);
       return ( 400 , $msg , undef ) unless ( $ret == 0 );
 
       ($ret , $msg , $columns_to_order_by_asc ) = $self->doSetColToOrderByAsc(\$objModel,$table,$cols);
@@ -875,7 +867,6 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
          $columns_to_select , count(*) OVER () as rows_count
          FROM $table 
          WHERE 1=1 " ; 
-      $str_sql .= $filter_by_attributes . " " if $filter_by_attributes ; 
       
       my $like_clause = '' ; 
 		( $ret , $msg , $like_clause ) = $self->doBuildLikeClause ( $db , $table  ) ; 
@@ -889,7 +880,7 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 		$str_sql .= $where_clause_fltr if $where_clause_fltr ; 
       
       my $where_clause_with = '' ; 
-		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table ) ; 
+		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 0) ; 
 		return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql .= $where_clause_with if $where_clause_with ; 
 
@@ -917,8 +908,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = $limit*$offset ; 
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
-   
-      # debug rint "from RdrPostgresDb.pm 855: $str_sql \n" ; 
+
+      # debug rint "$str_sql \n" . 'vim +914 `find . -name RdrPostgresDb.pm`' . "\n" ; 
 
       $ret = 0 ; 
       eval { 
@@ -1007,8 +998,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $self          = shift ; 
       my $db            = shift || croak 'no db passed !!!' ; 
       my $table         = shift || croak 'no table passed !!!' ; 
-      my $bid           = shift || 0 ; 
-      my $seq           = shift || 1 ; 
+      my $bid           = $objModel->get( 'hselect.web-action.bid' ) || 0 ; 
+      my $seq           = $objModel->get( 'hselect.web-action.seq' ) || undef ; 
    
       my $rv            = 1  ;
       my $ret           = 1 ; 
@@ -1017,32 +1008,58 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
       my $sql           = {} ; 
       my $hsr2          = {} ; 
       my $where_clause_with = '' ; 
+      my $like_clause = '' ; 
       my $where_clause_bid = '' ; 
 
 		$pg = $self->doInitPg();
 
-		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table ) ; 
+      my $cols             = () ;         # the array ref of columns
+      my $columns_to_select = '' ;
+      my @default_pick_cols = ('guid', 'id', 'seq', 'level', 'name', 'description' );
+      my @musthave_pick_cols = ('guid', 'id', 'seq', 'level', 'name' ); # no view-doc without those !!!
+      ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect($table,\@default_pick_cols);
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
+      foreach my $musthave_pick_col ( @musthave_pick_cols ) {
+         $columns_to_select = "$columns_to_select , $musthave_pick_col"
+            unless ( $columns_to_select =~ m/$musthave_pick_col/g );
+      }
+
+		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 1) ; 
 		return ( $ret , $msg ) unless $ret == 0 ; 
-      $where_clause_with =~ s/$table/parent/g ; 
+      if ( $where_clause_with ) {
+         $where_clause_with =~ s/$table/parent/g ; 
+         $where_clause_with =~ s/AND //g ; 
+         $where_clause_with = "AND (dyn_sql.id = $bid OR $where_clause_with)";
+      }
+		
 
       ( $ret , $msg , $where_clause_bid ) = $self->doBuildWhereClauseByBranchId ( $db , $table ) ; 
 		return ( $ret , $msg ) unless $ret == 0 ; 
+      
+      my $limit = $objModel->get('select.web-action.pg-size' ) || 1000 ;
+      my $page_num = $objModel->get('select.web-action.pg-num' ) || 1 ; 
+      my $offset = ( $page_num -1 ) || 0 ; # get default page is 1
+      
+      $offset = $limit*$offset ; 
+      $offset = 0 if ( $offset < 0 ) ; 
+
 
       eval {
 			$sql = " 
-				SELECT * FROM ( 
+				SELECT $columns_to_select FROM ( 
                SELECT node.* FROM $table AS node, $table AS parent 
                WHERE 1=1 AND node.lft 
                BETWEEN parent.lft AND parent.rgt
                $where_clause_bid
-               $where_clause_with
                )  AS dyn_sql 
 				WHERE 1=1 
+            $where_clause_with
 				ORDER BY seq
+            LIMIT $limit OFFSET $offset
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
-			# debug rint $sql ; 
-         # debug r $hsr2 ; 
+
+         # r $hsr2 ; 
       };
       if ( $@ ) {
          $rv               = 404 ; 

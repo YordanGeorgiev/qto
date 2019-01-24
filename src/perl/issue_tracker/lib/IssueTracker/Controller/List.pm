@@ -15,11 +15,10 @@ use Scalar::Util qw /looks_like_number/;
 
 use IssueTracker::App::Utils::Logger;
 use IssueTracker::Controller::PageFactory ; 
-use IssueTracker::App::IO::In::CnrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlPrms ; 
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
 use IssueTracker::App::UI::WtrUIFactory ; 
-use IssueTracker::Controller::ListCloud ; 
 use IssueTracker::Controller::ListLabels ;
 use IssueTracker::App::Utils::Timer ; 
 
@@ -41,26 +40,18 @@ sub doListItems {
    my $msr2             = {} ; 
    my $ret              = 1 ; 
    my $msg              = '' ; 
+   my $as               = 'grid' ; # the default form of the list control 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    $appConfig		 		= $self->app->get('AppConfig');
  
-   my $as               = 'grid' ; # the default form of the list control 
    my $list_control     = '' ; 
-   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
+   my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db , $item) ;
 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
-   
-   ( $ret , $msg )  = $self->doSetRequestModelData( \$objModel , $db , $item );
+   ( $ret , $msg , $list_control ) = $self->doBuildListPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
 
-   if ( $ret == 0 ) {
-      ( $ret , $msg , $list_control ) = $self->doBuildListPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
-   } else {
-      $list_control = '' ; 
-   }
-
-   # $self->doSetHtmlHeaders() ; # uncomment and implement if per list web action headers needed !!!
    $msg = $self->doSetPageMsg ( $ret , $msg ) ; 
    $self->doRenderPageTemplate( $ret , $msg , $as, $db , $item , $list_control ) ; 
 }
@@ -83,33 +74,6 @@ sub doSetPageMsg {
 }
 
 
-sub doSetRequestModelData {
-
-   my $self             = shift ; 
-   my $objModel         = ${ shift @_ } ; 
-   my $db               = shift ; 
-   my $item             = shift ; 
-   
-   my $ret              = 1 ;  
-   my $msg              = '' ; 
-   my $objCnrUrlParams  = {} ; 
-
-   $appConfig		 		= $self->app->get('AppConfig');
-   $objModel->set('postgres_db_name' , $db ) ; 
-   $objModel->set('table_name' , $item ) ; 
-
-   $objCnrUrlParams   = 'IssueTracker::App::IO::In::CnrUrlParams'->new(\$appConfig , \$objModel , $self->req->query_params);
-
-   ( $ret , $msg ) = $objCnrUrlParams->doSetList();
-   return ( $ret , $msg ) unless $ret == 0 ; 
-
-   ( $ret , $msg ) = $objCnrUrlParams->doSetSelect();
-   return ( $ret , $msg ) unless $ret == 0 ; 
-
-   ( $ret , $msg ) = $objCnrUrlParams->doSetWith();
-   return ( $ret , $msg ) ;
-}
-
 
 sub doBuildListPageType {
 
@@ -128,7 +92,6 @@ sub doBuildListPageType {
 
    my $lables_pages = { 
          'lbls'         => 'list-labels'
-      ,  'cloud'        => 'list-cloud' 
       ,  'grid'         => 'list-grid'
       ,  'print-table'  => 'list-print-table'
    };
@@ -165,7 +128,6 @@ sub doRenderPageTemplate {
 
    my $as_templates = { 
          'lbls'         => 'list-labels'
-      ,  'cloud'        => 'list-cloud' 
       ,  'grid'         => 'list-grid' 
       ,  'print-table'  => 'list-print-table' 
    };

@@ -7,7 +7,7 @@ use Data::Dumper;
 use Scalar::Util qw /looks_like_number/;
 
 use IssueTracker::App::Utils::Logger;
-use IssueTracker::App::IO::In::CnrUrlParams ; 
+use IssueTracker::App::IO::In::CnrUrlPrms ; 
 use IssueTracker::App::Db::In::RdrDbsFactory;
 use IssueTracker::App::Cnvr::CnrHsr2ToArray ; 
 use IssueTracker::App::UI::WtrUIFactory ; 

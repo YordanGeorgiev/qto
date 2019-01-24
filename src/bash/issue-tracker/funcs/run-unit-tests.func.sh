@@ -59,13 +59,6 @@ doRunUnitTests(){
    doLog "INFO STOP  $test_script"
 	echo -e "\n\n\n" 
    
-   test_script='src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListCloud.pl'
-   doLog "INFO START $test_script"
-   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListCloud.pl
-   test $? -ne 0 && return
-   doLog "INFO STOP  $test_script"
-	echo -e "\n\n\n" 
-   
    doLog "INFO START test the List Controller with the hide url param"
    test_script='src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestListHide.pl'
    doLog "INFO START $test_script"
@@ -144,6 +137,15 @@ doRunUnitTests(){
    doLog "INFO test the search action on the web-action"
    doLog "INFO START $test_script"
    perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelect.t
+   test $? -ne 0 && return
+   doLog "INFO STOP  $test_script"
+	echo -e "\n\n\n" 
+   
+   
+   test_script='src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelectWith.t'
+   doLog "INFO test the hierarchichal select filtering by the whith operator"
+   doLog "INFO START $test_script"
+   perl src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestHSelectWith.t
    test $? -ne 0 && return
    doLog "INFO STOP  $test_script"
 	echo -e "\n\n\n" 
