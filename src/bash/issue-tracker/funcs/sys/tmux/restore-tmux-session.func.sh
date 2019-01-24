@@ -52,7 +52,6 @@ doCheckTmuxIsInstalled(){
 # restores a tmux session
 # ---------------------------------------------------------
 doRestoreTmuxSession(){
-   source "$product_instance_dir/src/bash/$run_unit/funcs/sys/tmux/tmux-common.sh"
 
    doCheckTmuxIsInstalled
 

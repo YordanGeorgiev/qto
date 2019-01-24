@@ -1,5 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
+src/perl/issue_tracker/public/poc/snackbar/snackbar.html
+# ---
 src/bash/issue-tracker/funcs/generate-md-docs.func.sh
 doc/txt/issue-tracker/funcs/generate-md-docs.func.txt
 # -- 
@@ -8,15 +10,19 @@ src/perl/issue_tracker/t/lib/IssueTracker/App/benchmarks/benchmark-view-url.pl
 src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/layouts/view.html.ep
+src/perl/issue_tracker/templates/js/global/get-url-params.func.js.html.ep
+src/perl/issue_tracker/templates/js/global/get-server-data.func.js.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/view-doc.html.ep
-src/perl/issue_tracker/templates/components/view-doc-items-list.xt.html.ep
-src/perl/issue_tracker/templates/components/app-template.xt.html.ep
-src/perl/issue_tracker/templates/components/view-doc-editable.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/components/snackbar.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/components/app-template.xt.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/components/view-doc-items-list.xt.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/js/vue_app.js.html.ep
 src/perl/issue_tracker/lib/IssueTracker/Controller/View.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestView.t
 src/perl/issue_tracker/templates/layouts/list.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/srch-grid.html.ep
+src/perl/issue_tracker/templates/components/view-doc-editable.html.ep
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/templates/controls/list-grid/js/div-search-box.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/global-msg.js.html.ep
@@ -45,6 +51,7 @@ src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/pg-sizer.png
+src/perl/issue_tracker/public/themes/thme-blue/img/controls/tack.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/srch.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-next.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-next-10.png
@@ -79,6 +86,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrExporterMd.pm
 # ---
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/site.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/snackbar.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/site/view.css
 src/perl/issue_tracker/public/themes/thme-blue/css/print/controls/app_list_labels.css
 #---
@@ -535,10 +543,6 @@ src/bash/issue-tracker/specs/sys/tmux/save-tmux-session.spec.sh
 src/bash/issue-tracker/tests/save-tmux-session.test.sh
 src/bash/issue-tracker/tests/sys/tmux/save-tmux-session.test.sh
 #---
-doc/txt/issue-tracker/funcs/restore-tmux-session.func.txt
-doc/txt/issue-tracker/helps/sys/tmux/restore-tmux-session.help.txt
-doc/txt/issue-tracker/specs/restore-tmux-session.spec.txt
-doc/txt/issue-tracker/specs/sys/tmux/restore-tmux-session.spec.txt
 src/bash/issue-tracker/funcs/sys/tmux/restore-tmux-session.func.sh
 src/bash/issue-tracker/helps/restore-tmux-session.help.sh
 src/bash/issue-tracker/specs/sys/tmux/restore-tmux-session.spec.sh
@@ -595,17 +599,6 @@ src/bash/issue-tracker/specs/remove-action-files.spec.sh
 src/bash/issue-tracker/funcs/remove-action-files.func.sh
 src/bash/issue-tracker/helps/remove-action-files.help.sh
 src/bash/issue-tracker/tests/remove-action-files.test.sh
-#---
-doc/txt/issue-tracker/funcs/tmux-common.func.txt
-doc/txt/issue-tracker/helps/sys/tmux/tmux-common.help.txt
-doc/txt/issue-tracker/specs/sys/tmux/tmux-common.spec.txt
-doc/txt/issue-tracker/specs/tmux-common.spec.txt
-doc/txt/issue-tracker/tests/tmux-common.test.txt
-src/bash/issue-tracker/funcs/sys/tmux/tmux-common.func.sh
-src/bash/issue-tracker/helps/tmux-common.help.sh
-src/bash/issue-tracker/specs/sys/tmux-common.spec.sh
-src/bash/issue-tracker/specs/sys/tmux/tmux-common.spec.sh
-src/bash/issue-tracker/tests/tmux-common.test.sh
 #---
 doc/txt/issue-tracker/funcs/print-help.func.txt
 doc/txt/issue-tracker/helps/man/print-help.help.txt
