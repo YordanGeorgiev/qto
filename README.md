@@ -19,7 +19,9 @@ Table of Contents
     
 
 ## 1. WHY
-Why ?! Yet.  Another App ?!
+Why ?! Yet! Another App ?!
+
+Because software production should be efficient, yet smooth and interesting ...
 
 Because work should be inspiring and not overwhelming people. Because even good intentions without proper commitment, allocation and resourcing and most importantly, a mean for tracking advancement of an endeavor in open way reflecting the reality, might end-up making people less happy, when in fact a really simple solution could be applied for any bigger challenge requiring progress tracking, communication and coordination ... And tons of other reasons we all having been in project disasters know about ... Still here ?! Let's move on !
 
@@ -73,22 +75,30 @@ In the real IT life however the mealage always varies, hence this last "bonus of
     
 
 ## 4. DEMO 
-You can check the following [running instance of the web app](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&pg-size=7&pg-num=1):
+You can check the following [running instance of the web app](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/monthly_issues), additionally every doc bellow has it's "it-doc" link aka the "native" issue-tracker document format ... 
 
 
 ## 5. INSTALLATION AND CONFIGURATION
 You could either try quickly to execute the instructions bellow this section or 
-follow the installation instructions in the [Installation Guide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/installations.md)
-
+follow the installation instructions in the [Installation Guide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/installations.md) ([Installation Guide it-doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/installations)).
 
 ## 6. ADDITIONAL DOCS
 Additional docs could be found in the [doc/md] https://github.com/YordanGeorgiev/issue-tracker/tree/master/doc/md) dir.
-A good starting point could be the [Features and Functionalities document](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/features.md).
-The [user-stories doc](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/userstories.md)
-The [Requirements document](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/requirements.md)  document contains the requirements for the application:
-The [SystemGuide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/system_guide.md) contains the description of the existing issue-tracker System and it's architecture:
-The [DevOps Guide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/devops_guide.md) contains the instructions for the devops operators:
-Keep in mind that the documentation is constantly updated with every release.
+A good starting point could be the [Features and Functionalities document](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/features.md)
+([Features it doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/features))
+
+The [user-stories md doc](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/userstories.md)([user-stories it doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/userstories)) contains the DEFINED userstories for the application ( needless to say a lot of userstories have been implemented without even proper definition, which is wrong, but acceptable FOR NOW because of the incompleteness of the application ... ). Not also that you check the actual status of each doc item, by changing the web action "view" to "list" in each document's url for example the [user stories it doc ](http://192.168.56.120:3003/prd_issue_tracker/list/userstories?oa=seq&pg-size=10) presents the same document in it's "list" ui, which is a simplistic ui for presenting the actual relational database table ...
+
+The [Requirements md-doc](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/requirements.md) 
+([requirements it doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/requirements)) contains the requirements set for the application. 
+
+The [SystemGuide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/system_guide.md) contains the description of the existing issue-tracker System and it's architecture ([System Guide it doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/system_guide)).
+
+The [DevOps Guide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/devops_guide.md) contains the instructions for the devops operators and developers ([DevOps Guide it doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/devops_guide)).
+
+The [Installation Guide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/installations.md) ([Installation Guide it-doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/installations)) contains the installation instructions for the application.
+
+The aim is to keep the documentation as up-to-date with every release as possible.
     
 
 ## 7. ACKNOWLEDGEMENTS
@@ -99,7 +109,8 @@ This project would NOT have been possible without the work of the people working
 - GNU Linux
 - Vue
 
-Deep gratitudes and thanks to all those people ! This application aims to contain the best practices of our former colleagues and collaborators and co-travelers in life, which also deserve huge thanks for their support and contributions !
+Deep gratitudes and thanks to all those people ! This application aims to contain the best practices of our former colleagues and collaborators and co-travelers in life, which also deserve huge thanks for their support and contributions ! 
+We tend to incorporate and re-use a lot of code snippets from stackoverflow and codepen, should you consider that you were the author of those code snippets and you deserve mentioning of the source please let us know ...
 
 
     
