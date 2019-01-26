@@ -1,7 +1,11 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
-src/perl/issue_tracker/public/poc/snackbar/snackbar.html
-# ---
+# -- start websocket
+src/perl/issue_tracker/public/poc/web-socket/web-socket.html
+src/perl/issue_tracker/public/poc/web-socket/wsclient.js
+src/perl/issue_tracker/lib/IssueTracker/Controller/WebSocketPoc.pm
+src/perl/issue_tracker/lib/IssueTracker.pm
+# -- stop websocket
 src/bash/issue-tracker/funcs/generate-md-docs.func.sh
 doc/txt/issue-tracker/funcs/generate-md-docs.func.txt
 # -- 
@@ -23,7 +27,6 @@ src/perl/issue_tracker/templates/layouts/list.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/srch-grid.html.ep
 src/perl/issue_tracker/templates/components/view-doc-editable.html.ep
-src/perl/issue_tracker/lib/IssueTracker.pm
 src/perl/issue_tracker/templates/controls/list-grid/js/div-search-box.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/global-msg.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/search-box.js.html.ep
@@ -63,8 +66,9 @@ src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
 # ---
 # --- 
-src/perl/issue_tracker/public/poc/side-menu/index.html
+src/perl/issue_tracker/public/poc/snackbar/snackbar.html
 src/perl/issue_tracker/public/poc/snackbar/snackbar.css
+src/perl/issue_tracker/public/poc/side-menu/index.html
 src/perl/issue_tracker/public/poc/vuex/sabe/
 src/perl/issue_tracker/public/poc/vuex/sabe/app.js
 src/perl/issue_tracker/public/poc/vuex/sabe/index.html
