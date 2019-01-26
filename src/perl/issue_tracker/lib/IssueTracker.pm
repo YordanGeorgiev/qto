@@ -310,6 +310,8 @@ sub doSetRoutes {
      controller   => 'Search'
    , action       => 'doSearchItems'
    );
+
+   $r->websocket('/websocketecho')->to('WebSocketPoc#doTestWebSocket');
 }
 
 # -----------------------------------------------------------------------------

@@ -15,7 +15,6 @@ doMojoHypnotoadStart(){
    test -z "$MOJO_MODE" && export MOJO_MODE='prd'
 
 
-        # Action !!!
    cd src/perl/issue_tracker/script
    hypnotoad  issue_tracker  &
    cd $product_instance_dir
