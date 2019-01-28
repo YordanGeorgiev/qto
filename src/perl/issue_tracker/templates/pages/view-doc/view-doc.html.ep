@@ -4,6 +4,8 @@
   <title> view <%= " $item " =%>  <%= "as $as in " =%> <%= "$db " =%> </title> 
    <link rel="stylesheet" type="text/css" media="screen"  
       href="../../themes/thme-blue/css/screen/controls/view-doc.css?v=<%= $ProductVersion =%>" />
+   <link rel="stylesheet" type="text/css" media="screen"  
+      href="../../themes/thme-blue/css/screen/controls/right-click-menu.css?v=<%= $ProductVersion =%>" />
 % end
 
 
@@ -12,6 +14,9 @@
       <div class="container">
          <div id="view_app">
          </div>
+
+      %= include 'pages/view-doc/components/right-click-menu'
+
       </div>
       %= include 'pages/view-doc/components/view-doc-items-list.xt'
       %= include 'pages/view-doc/components/app-template.xt'
@@ -25,6 +30,7 @@
 
    %= include 'js/global/get-url-params.func.js'
    %= include 'js/global/get-server-data.func.js'
+   %= include 'js/global/right-click-menu.func.js'
    %= include 'pages/view-doc/js/vue_app.js'
 
 

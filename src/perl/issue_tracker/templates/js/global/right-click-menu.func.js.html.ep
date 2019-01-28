@@ -1,0 +1,21 @@
+         var rgtClickContextMenu = document.getElementById('div-context-menu');
+         console.log ( "rgtClickContextMenu")
+         console.log ( rgtClickContextMenu.toString() ) // todo:ysg
+         document.onclick = function(e){
+             rgtClickContextMenu.style.display = 'none';
+         }
+         document.oncontextmenu = function(e){
+            var elmnt = e.target
+            if ( elmnt.className.startsWith ( "cls-context-menu-link")) {
+               e.preventDefault();
+               var eid = elmnt.id.replace(/title-/,"")
+               rgtClickContextMenu.style.left = e.pageX + 'px'
+               rgtClickContextMenu.style.top = e.pageY + 'px'
+               rgtClickContextMenu.style.display = 'block'
+               setTimeout(function() {
+                  rgtClickContextMenu.style.display = 'block'; }, 2000);
+               var toRepl = "=" + eid.toString()
+               rgtClickContextMenu.innerHTML = rgtClickContextMenu.innerHTML.replace(/=\d+/g,toRepl)
+               console.log(rgtClickContextMenu.innerHTML.toString()) // todo:ysg
+            }
+         }
