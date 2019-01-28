@@ -20,11 +20,13 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/layouts/view.html.ep
 src/perl/issue_tracker/templates/js/global/get-url-params.func.js.html.ep
+src/perl/issue_tracker/templates/js/global/right-click-menu.func.js.html.ep
 src/perl/issue_tracker/templates/js/global/get-server-data.func.js.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/view-doc.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/components/snackbar.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/components/app-template.xt.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/components/view-doc-items-list.xt.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/components/right-click-menu.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/js/vue_app.js.html.ep
 src/perl/issue_tracker/lib/IssueTracker/Controller/View.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestView.t
@@ -56,6 +58,7 @@ src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/table.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/pager.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/list-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/view-doc.css
+src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/right-click-menu.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/issue_tracker/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/pg-sizer.png
