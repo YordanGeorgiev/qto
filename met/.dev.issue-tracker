@@ -1,16 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
-# -- start websocket
-src/perl/issue_tracker/public/poc/right-click-menu/right-click-menu.html
-src/perl/issue_tracker/public/poc/right-click-menu/right-click-menu.css
-src/perl/issue_tracker/public/poc/right-click-menu-01
-src/perl/issue_tracker/public/poc/right-click-menu-01/right-click-menu-01.css
-src/perl/issue_tracker/public/poc/right-click-menu-01/right-click-menu-01.html
-src/perl/issue_tracker/public/poc/web-socket/web-socket.html
-src/perl/issue_tracker/public/poc/web-socket/wsclient.js
-src/perl/issue_tracker/lib/IssueTracker/Controller/WebSocketPoc.pm
 src/perl/issue_tracker/lib/IssueTracker.pm
-# -- stop websocket
 src/bash/issue-tracker/funcs/generate-md-docs.func.sh
 doc/txt/issue-tracker/funcs/generate-md-docs.func.txt
 # -- 
@@ -74,6 +64,14 @@ src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
 # ---
 # --- 
+src/perl/issue_tracker/public/poc/web-socket/web-socket.html
+src/perl/issue_tracker/public/poc/web-socket/wsclient.js
+src/perl/issue_tracker/lib/IssueTracker/Controller/WebSocketPoc.pm
+src/perl/issue_tracker/public/poc/right-click-menu/right-click-menu.html
+src/perl/issue_tracker/public/poc/right-click-menu/right-click-menu.css
+src/perl/issue_tracker/public/poc/right-click-menu-01
+src/perl/issue_tracker/public/poc/right-click-menu-01/right-click-menu-01.css
+src/perl/issue_tracker/public/poc/right-click-menu-01/right-click-menu-01.html
 src/perl/issue_tracker/public/poc/snackbar/snackbar.html
 src/perl/issue_tracker/public/poc/snackbar/snackbar.css
 src/perl/issue_tracker/public/poc/side-menu/index.html
@@ -227,6 +225,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrMd.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGoogleSheet.pm
 src/perl/issue_tracker/lib/IssueTracker/App/RAM
+src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrTxtToHtml.pm
 src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToTxt.pm
 src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrHsr2ToJson.pm
 src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrJsonToHsr2.pm
@@ -932,6 +931,7 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrMd/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrText/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Mdl/Model/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrTxtToHtml/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToJson/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrHsr2ToTxt/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/RAM/CnrJsonToHsr2/autosplit.ix
