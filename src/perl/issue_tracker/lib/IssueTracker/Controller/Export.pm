@@ -51,7 +51,7 @@ sub doExportItems {
    my $objCnrUrlPrms    = 'IssueTracker::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
    
    return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
-      unless $objCnrUrlPrms->doValidateAndSetSelect();
+      unless $objCnrUrlPrms->doValidateAndSetHSelect();
 
    my $objExportFactory = 'IssueTracker::App::IO::WtrExportFactory'->new(\$appConfig, \$objModel , $as );
    my $objExporter      = $objExportFactory->doSpawn( $as );

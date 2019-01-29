@@ -1,6 +1,4 @@
          var rgtClickContextMenu = document.getElementById('div-context-menu');
-         console.log ( "rgtClickContextMenu")
-         console.log ( rgtClickContextMenu.toString() ) // todo:ysg
          document.onclick = function(e){
              rgtClickContextMenu.style.display = 'none';
          }
@@ -12,10 +10,9 @@
                rgtClickContextMenu.style.left = e.pageX + 'px'
                rgtClickContextMenu.style.top = e.pageY + 'px'
                rgtClickContextMenu.style.display = 'block'
-               setTimeout(function() {
+               setTimeout(function() { // firefox bug !?
                   rgtClickContextMenu.style.display = 'block'; }, 2000);
                var toRepl = "=" + eid.toString()
                rgtClickContextMenu.innerHTML = rgtClickContextMenu.innerHTML.replace(/=\d+/g,toRepl)
-               console.log(rgtClickContextMenu.innerHTML.toString()) // todo:ysg
             }
          }
