@@ -14,5 +14,6 @@
                   rgtClickContextMenu.style.display = 'block'; }, 2000);
                var toRepl = "=" + eid.toString()
                rgtClickContextMenu.innerHTML = rgtClickContextMenu.innerHTML.replace(/=\d+/g,toRepl)
+               console.log ( rgtClickContextMenu.baseURI )
             }
          }

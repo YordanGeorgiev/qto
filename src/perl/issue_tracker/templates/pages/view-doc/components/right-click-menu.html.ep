@@ -1,8 +1,5 @@
       <div id="div-context-menu" class="cls-context-menu">
           <ul>
-              <li><a href="?bid=0">open branch-id=0</a></li>
-              <li><a href="http://192.168.56.120:3001/dev_issue_tracker/list/devops_guide?bid=0">list</a></li>
-              <li><a href="http://192.168.56.120:3001/dev_issue_tracker/export/devops_guide?bid=0&as=md">export as md</a></li>
-              <li><a href="http://192.168.56.120:3001/dev_issue_tracker/export/devops_guide?bid=0&as=xls">export as xls</a></li>
+              <li><a href="?bid=0">bid=0 open</a></li>
           </ul>
       </div>
