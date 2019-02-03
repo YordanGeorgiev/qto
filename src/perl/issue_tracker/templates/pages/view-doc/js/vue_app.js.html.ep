@@ -108,7 +108,7 @@
          , hideSnackBar ({ commit }) {
             commit('SET_SNACKBAR_SHOW', false )
          }
-         , showContextMenu (context,payload,id) {
+         , showContextMenu (context,payload) {
             var e = payload ; 
             var id = String(e.target.id).split('-')[1]
             e.preventDefault();
@@ -116,6 +116,7 @@
             menu.style.left = e.pageX + 'px'
             menu.style.top = e.pageY + 'px'
             menu.style.display = 'block'
+            menu.style.zIndex = 100
             menu.cid = id
             context.commit('SET_CONTEXT_MENU_SHOW', true , id)
          }
