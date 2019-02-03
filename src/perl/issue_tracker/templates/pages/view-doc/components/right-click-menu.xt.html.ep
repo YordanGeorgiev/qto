@@ -8,7 +8,11 @@
 	  <ul>
 		 <context-menu-item>
 			<a @click="openItem($event,cid)"><img src="../../themes/thme-blue/img/controls/open-book.png" 
-				class="context-menu-icon"  width="16"> open {{ cid }} </a>
+				class="context-menu-icon"  width="16"> open / dive </a>
+		 </context-menu-item>
+		 <context-menu-item>
+			<a @click="exportItemToGitHubMd($event,cid)"><img src="../../themes/thme-blue/img/controls/github-md.png" 
+				class="context-menu-icon"  width="16"> export to md </a>
 		 </context-menu-item>
 	  </ul>
 	</div>
