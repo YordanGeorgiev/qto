@@ -1,21 +1,19 @@
 <template id="view-doc-items-list">
    <div id="content">
       <div id="lft_body">
-         <div v-for="item in items"
-            :class="{completed: item.completed}"
-            @click="toggleItem(item.id)"
-            @dblclick="deleteItem(item.id)"> 
-            <h3 tabindex="2" :id="'#<%= $item =%>-' + item.id">
+         <div v-for="item in items" @click="hideContextMenu()"> 
+            <h3 tabindex="2" :id="'tle_<%= $item =%>-' + item.id" class="title" @contextmenu = "showContextMenu($event,item.id)">
                <a :name="'<%= $item =%>-' + item.id" class="permalink scroll"
                   :href="'#<%= $item =%>-' + item.id">#</a>
                <a :id="'title-'+ item.id" :href="'#<%= $item =%>-' + item.id" :title="'level:' + item.level + ' :: seq: ' + item.seq "
                   class="cls-context-menu-link">{{item.logical_order}} {{item.name}}</a>
             </h3>
-            <div class="cls_desc">
+            <div class="cls_desc" :id="'dsc_<%= $item =%>-' + item.id">
                <p tabindex="2"> {{item.description}} </p>
             </div>
                <p><pre tabindex="2" class="cls_src">{{item.src}}</pre></p>
          </div>
+         <p style="padding-bottom: 50%"></p>
       </div>
       <div id="rgt_menu" class="rgt_side_nav">
         <a href="javascript:void(0)" class="cls_close_btn" onclick="closeRightMenu()">&times;</a>
@@ -27,6 +25,7 @@
                </div>
             </div>
          </div>
+         <p style="padding-bottom: 50%"></p>
       </div>
    </div>
  </template>

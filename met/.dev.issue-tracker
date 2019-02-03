@@ -3,7 +3,16 @@
 src/perl/issue_tracker/public/poc/right-click-vmenu
 src/perl/issue_tracker/public/poc/right-click-vmenu/right-click-menu.css
 src/perl/issue_tracker/public/poc/right-click-vmenu/right-click-vmenu.html
-# --
+# ---
+src/perl/issue_tracker/templates/pages/view-doc/js/right-click-menu.js.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/view-doc.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/js/view-doc-items-list.js.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/js/snackbar.js.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/js/vue_app.js.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/components/snackbar.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/components/view-doc-items-list.xt.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/components/right-click-menu.xt.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/components/app-template.xt.html.ep
 src/perl/issue_tracker/lib/IssueTracker.pm
 src/bash/issue-tracker/funcs/generate-md-docs.func.sh
 doc/txt/issue-tracker/funcs/generate-md-docs.func.txt
@@ -14,14 +23,7 @@ src/perl/issue_tracker/lib/IssueTracker/Controller/BaseController.pm
 src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/layouts/view.html.ep
 src/perl/issue_tracker/templates/js/global/get-url-params.func.js.html.ep
-src/perl/issue_tracker/templates/js/global/right-click-menu.func.js.html.ep
 src/perl/issue_tracker/templates/js/global/get-server-data.func.js.html.ep
-src/perl/issue_tracker/templates/pages/view-doc/view-doc.html.ep
-src/perl/issue_tracker/templates/pages/view-doc/components/snackbar.html.ep
-src/perl/issue_tracker/templates/pages/view-doc/components/app-template.xt.html.ep
-src/perl/issue_tracker/templates/pages/view-doc/components/view-doc-items-list.xt.html.ep
-src/perl/issue_tracker/templates/pages/view-doc/components/right-click-menu.html.ep
-src/perl/issue_tracker/templates/pages/view-doc/js/vue_app.js.html.ep
 src/perl/issue_tracker/lib/IssueTracker/Controller/View.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestView.t
 src/perl/issue_tracker/templates/layouts/list.html.ep
@@ -336,6 +338,8 @@ src/sql/pgsql/dev_issue_tracker/01.create-table-daily_issues.sql
 src/sql/pgsql/dev_issue_tracker/02.create-table-weekly_issues.sql
 src/sql/pgsql/dev_issue_tracker/03.create-table-monthly_issues.sql
 src/sql/pgsql/dev_issue_tracker/04.create-table-yearly_issues.sql
+src/sql/pgsql/dev_issue_tracker/04.01.create-table-yearly_issues_2018.sql
+src/sql/pgsql/dev_issue_tracker/04.create-table-yearly_issues_2018.sql
 src/sql/pgsql/dev_issue_tracker/05.create-table-quinquennially_issues.sql
 src/sql/pgsql/dev_issue_tracker/06.create-table-decadally_issues.sql
 src/sql/pgsql/dev_issue_tracker/07.create-table-confs.sql
@@ -344,6 +348,7 @@ src/sql/pgsql/dev_issue_tracker/10.create-table-problems.sql
 src/sql/pgsql/dev_issue_tracker/11.create-table-principles.sql
 src/sql/pgsql/dev_issue_tracker/12.create-table-check_lists.sql
 src/sql/pgsql/dev_issue_tracker/13.create-table-requirements.sql
+src/sql/pgsql/dev_issue_tracker/13.1.create-table-requirements_doc.sql
 src/sql/pgsql/dev_issue_tracker/14.create-table-ideas.sql
 src/sql/pgsql/dev_issue_tracker/15.create-table-skills.sql
 src/sql/pgsql/dev_issue_tracker/16.create-table-userstories.sql
@@ -354,8 +359,10 @@ src/sql/pgsql/dev_issue_tracker/20.create-table-goals.sql
 src/sql/pgsql/dev_issue_tracker/21.create-table-devops_guide.sql
 src/sql/pgsql/dev_issue_tracker/22.create-table-features.sql
 src/sql/pgsql/dev_issue_tracker/23.create-table-concepts.sql
+src/sql/pgsql/dev_issue_tracker/23.1.create-table-concepts_doc.sql
 src/sql/pgsql/dev_issue_tracker/24.create-table-system_guide.sql
 src/sql/pgsql/dev_issue_tracker/25.create-table-installations.sql
+src/sql/pgsql/dev_issue_tracker/25.1.create-table-installations_doc.sql
 src/sql/pgsql/dev_issue_tracker/50.create-table-tst_paging.sql
 src/sql/pgsql/dev_issue_tracker/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/dev_issue_tracker/93.create-table-benchmarks.sql

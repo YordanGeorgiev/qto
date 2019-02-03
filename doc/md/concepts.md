@@ -1,4 +1,24 @@
 #  ISSUE-TRACKER CONCEPTS
+* [1. INTRO](#1-intro)
+  * [1.1. PURPOSE](#11-purpose)
+  * [1.2. AUDIENCE](#12-audience)
+  * [1.3. RELATED DOCUMENTATION](#13-related-documentation)
+* [2. CORE CONCEPTS](#2-core-concepts)
+  * [2.1. TIME INTERVALS BASED TIME-MANAGEMENT](#21-time-intervals-based-time-management)
+  * [2.2. PERSONAL RESPONSIBILITY](#22-personal-responsibility)
+* [3. BUSINESS LOGIC](#3-business-logic)
+  * [3.1. PROJECTS MANAGEMENT](#31-projects-management)
+  * [3.2. INCREASE THE DATE FOR ALL PROJECTS](#32-increase-the-date-for-all-projects)
+  * [3.3. ISSUES / ISSUE ITEMS / ITEMS](#33-issues-/-issue-items-/-items)
+    * [3.3.1. Categories](#331-categories)
+    * [3.3.2. Issues status](#332-issues-status)
+    * [3.3.3. Issues management via time intervals](#333-issues-management-via-time-intervals)
+  * [3.4. PROBLEMS](#34-problems)
+  * [3.5. QUESTIONS](#35-questions)
+* [4. DEFINITIONS](#4-definitions)
+  * [4.1. RELEASE](#41-release)
+
+
 
 
     

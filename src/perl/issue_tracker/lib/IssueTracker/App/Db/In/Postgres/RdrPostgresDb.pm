@@ -1055,9 +1055,9 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 				WHERE 1=1 
             $where_clause_with
 				ORDER BY seq
-            LIMIT $limit OFFSET $offset
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
+         #old LIMIT $limit OFFSET $offset
 
          # r $hsr2 ; 
       };

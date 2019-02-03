@@ -1,25 +1,41 @@
-.cls-context-menu-link {
-   text-decoration: none;
+.title {
+  display: block;
+  color: blue;
+}
+.title a {
+  text-decoration:none;
 }
 
-.cls-context-menu { position:absolute; display:none; }
-
+.cls-context-menu { 
+   display:none; 
+   position:absolute; 
+}
 .cls-context-menu ul, #context-menu li {
     list-style:none;
     margin:0; padding:0;
     background:white;
 }
-
 .cls-context-menu { border:solid 1px #CCC;}
-.cls-context-menu li { border-bottom:solid 1px #CCC; }
-.cls-context-menu li:last-child { border:none; }
-.cls-context-menu li a {
-    display:block;
-    padding:5px 10px; 
-    text-decoration:none;
-    color:blue;
+.cls-context-menu li { 
+   border-bottom:solid 1px #CCC; 
+   display:block;
+   padding:5px 12px; 
+   text-decoration:none;
+   color:blue;
 }
-.cls-context-menu li a:hover {
-    background:blue;
-    color:#FFF;
+.cls-context-menu li:hover{ 
+    background: blue;
+    color: #FFF;
+}
+.cls-context-menu li:last-child { border:none; }
+.context-menu-icon {
+  top: 1px;
+  position: relative;
+  margin-right: 2px;
+}
+.cls-context-menu-item {
+  cursor: pointer;
+  display:block;
+  padding:20px;
+  background:#ECECEC;
 }
