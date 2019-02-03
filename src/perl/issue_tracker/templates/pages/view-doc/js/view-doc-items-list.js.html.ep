@@ -12,7 +12,7 @@
             this.$store.dispatch("deleteItem", id);
          }
          , showContextMenu: function (e,id) {
-            this.$store.dispatch("showContextMenu",e,id);
+            this.$store.dispatch("showContextMenu",e);
          }
          , hideContextMenu: function () {
             document.getElementById("div-context-menu").style.display = "none"
