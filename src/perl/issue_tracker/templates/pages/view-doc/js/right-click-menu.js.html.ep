@@ -43,5 +43,19 @@ const ContextMenu = Vue.component('context-menu', {
          uri = uri + '&as=md'         
          window.location.href = uri
 	   }
+	   , exportItemToXls: function (e) {
+         var itemId = e.target.parentElement.parentElement.parentElement.cid
+         var uri = window.location.href 
+         uri = uri.replace('/view/', '/export/')
+         if ( uri.indexOf("#") != -1 ) { uri = uri.split('#')[0]}
+         if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
+         if ( uri.indexOf("bid=") === -1 ) {
+            uri = uri + "&bid=" + itemId
+         } else {
+            uri = uri.replace(/bid=\d+/g, "bid=" + String(itemId))
+         }
+         uri = uri + '&as=xls'         
+         window.location.href = uri
+	   }
 	}
 });
