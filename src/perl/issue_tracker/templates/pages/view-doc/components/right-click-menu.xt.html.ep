@@ -8,11 +8,15 @@
 	  <ul>
 		 <context-menu-item>
 			<a @click="openItem($event,cid)"><img src="../../themes/thme-blue/img/controls/open-book.png" 
-				class="context-menu-icon"  width="16"> open / dive </a>
+				class="context-menu-icon"  width="18"> open / dive </a>
 		 </context-menu-item>
 		 <context-menu-item>
 			<a @click="exportItemToGitHubMd($event,cid)"><img src="../../themes/thme-blue/img/controls/github-md.png" 
-				class="context-menu-icon"  width="16"> export to md </a>
+				class="context-menu-icon"  width="18"> export to md </a>
+		 </context-menu-item>
+		 <context-menu-item>
+			<a @click="exportItemToXls($event,cid)"><img src="../../themes/thme-blue/img/controls/xls-icon.png" 
+				class="context-menu-icon"  width="18"> export to xls </a>
 		 </context-menu-item>
 	  </ul>
 	</div>
