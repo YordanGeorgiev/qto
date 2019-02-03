@@ -1,4 +1,57 @@
 #  REQUIREMENTS
+* [1. INTRO](#1-intro)
+  * [1.1. PURPOSE](#11-purpose)
+  * [1.2. AUDIENCE](#12-audience)
+  * [1.3. RELATED DOCUMENTATION](#13-related-documentation)
+* [2. DEPLOYABILITY](#2-deployability)
+  * [2.1. FULL DEPLOYMENT IN LESS THAN AN HOUR](#21-full-deployment-in-less-than-an-hour)
+    * [2.1.1. Deploy by simple unzip](#211-deploy-by-simple-unzip)
+    * [2.1.2. Oneliner for prerequisite binaries check](#212-oneliner-for-prerequisite-binaries-check)
+    * [2.1.3. Oneliner for Perl modules check](#213-oneliner-for-perl-modules-check)
+    * [2.1.4. Installation documentation](#214-installation-documentation)
+  * [2.2. A FULL APPLICATION CLONE SHOULD BE READY FOR LESS THAN 5 MINUTES](#22-a-full-application-clone-should-be-ready-for-less-than-5-minutes)
+    * [2.2.1. Shell script for postgres db creation](#221-shell-script-for-postgres-db-creation)
+    * [2.2.2. One liner for single restore](#222-one-liner-for-single-restore)
+* [3. USER-FRIENDLINESS](#3-user-friendliness)
+  * [3.1. ONELINER SHELL CALLS](#31-oneliner-shell-calls)
+    * [3.1.1. Database recreation and DDL scripts run one-liners](#311-database-recreation-and-ddl-scripts-run-one-liners)
+    * [3.1.2. Table(s) load via aa single one-liner](#312-table(s)-load-via-aa-single-one-liner)
+    * [3.1.3. Testing one-liner call](#313-testing-one-liner-call)
+    * [3.1.4. Test messages user](#314-test-messages-user)
+* [4. RELIABILITY AND STABILITY](#4-reliability-and-stability)
+  * [4.1. ZERO TOLLERANCE TOWARDS CRASHING](#41-zero-tollerance-towards-crashing)
+  * [4.2. ZERO TOLLERANCE TOWARDS BUGS](#42-zero-tollerance-towards-bugs)
+  * [4.3. DAILY BACKUPS](#43-daily-backups)
+  * [4.4. LOGGING](#44-logging)
+  * [4.5. FULL BACKUP TO THE CLOUD IN LESS THAN 5 MINUTES](#45-full-backup-to-the-cloud-in-less-than-5-minutes)
+* [5. SCALABILITY](#5-scalability)
+  * [5.1. FEATURE SCALABILITY](#51-feature-scalability)
+  * [5.2. SETUP SCALABILITY](#52-setup-scalability)
+  * [5.3. PROJECTS DATABASES SCALABILITY](#53-projects-databases-scalability)
+* [6. PERFORMANCE](#6-performance)
+  * [6.1. PAGE LOAD MAXIMUM TIME](#61-page-load-maximum-time)
+  * [6.2. LOGIN, LOGOUT](#62-login,-logout)
+* [7. MULTI-INSTANCE OPERABILITY AND DEPLOYABILITY](#7-multi-instance-operability-and-deployability)
+  * [7.1. ENVIRONMENT TYPE SELF-AWARENESS](#71-environment-type-self-awareness)
+  * [7.2. CROSS RUNNING BETWEEN INSTANCES OF DIFFERENT TYPES](#72-cross-running-between-instances-of-different-types)
+* [8. UI REQUIREMENTS](#8-ui-requirements)
+  * [8.1. CRUDS](#81-cruds)
+    * [8.1.1. Execution time](#811-execution-time)
+    * [8.1.2. Visual indication](#812-visual-indication)
+  * [8.2. CLARITY ON ERRORS](#82-clarity-on-errors)
+* [9. SECURITY](#9-security)
+  * [9.1. AUTHENTICATION](#91-authentication)
+    * [9.1.1. Non-athentication mode](#911-non-athentication-mode)
+    * [9.1.2. Basic authentication mode](#912-basic-authentication-mode)
+    * [9.1.3. Native authentication](#913-native-authentication)
+    * [9.1.4. Web SSO authentication](#914-web-sso-authentication)
+  * [9.2. AUTHRORISATION](#92-authrorisation)
+* [10. DOCUMENTATION](#10-documentation)
+  * [10.1. DOCUMENTATION COMPLETENESS](#101-documentation-completeness)
+  * [10.2. DOCUMENTATION AND CODE BASE SYNCHRONIZATION](#102-documentation-and-code-base-synchronization)
+    * [10.2.1. requirements push](#1021-requirements-push)
+
+
 
 
     
@@ -279,6 +332,11 @@ in at least the md and pdf file formats.
 
 ### 10.2. Documentation and code base synchronization
 Each running instance MUST have its required documentation set up-to-date. No undocumented or hidden features are allowed. Should any be missing or misreported a new issue must be created to correct those with top priority. 
+
+    
+
+#### 10.2.1. requirements push
+Whenever a project database meta-data is updated a new "do releoad the current page" should be pushed on all the clients having currently session in the application ...
 
     
 

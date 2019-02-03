@@ -1,0 +1,26 @@
+   const ViewDocItemsList = Vue.component("view-doc-items-list", {
+      computed: {
+         items() {
+            return this.$store.getters.getItems;
+         }
+      }
+      , methods: {
+         toggleItem: function(id) {
+            this.$store.dispatch("toggleItem", id);
+         }
+         , deleteItem: function(id) {
+            this.$store.dispatch("deleteItem", id);
+         }
+         , showContextMenu: function (e,id) {
+            this.$store.dispatch("showContextMenu",e,id);
+         }
+         , hideContextMenu: function () {
+            document.getElementById("div-context-menu").style.display = "none"
+         }
+      }
+      , template: "#view-doc-items-list"
+   });
+
+   document.onclick = function(e) {
+      document.getElementById("div-context-menu").style.display = "none"
+   }   
