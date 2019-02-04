@@ -362,12 +362,15 @@ src/sql/pgsql/qto/18.create-table-meta_columns.sql
 src/sql/pgsql/qto/19.create-table-naming_conventions.sql
 src/sql/pgsql/qto/20.create-table-goals.sql
 src/sql/pgsql/qto/21.create-table-devops_guide.sql
+src/sql/pgsql/qto/21.1.create-table-devops_guide_doc.sql
 src/sql/pgsql/qto/22.create-table-features.sql
+src/sql/pgsql/qto/22.1.create-table-features_doc.sql
 src/sql/pgsql/qto/23.1.create-table-concepts_doc.sql
 src/sql/pgsql/qto/23.create-table-concepts.sql
 src/sql/pgsql/qto/24.create-table-system_guide.sql
-src/sql/pgsql/qto/25.1.create-table-installations_doc.sql
+src/sql/pgsql/qto/24.1.create-table-system_guide_doc.sql
 src/sql/pgsql/qto/25.create-table-installations.sql
+src/sql/pgsql/qto/25.1.create-table-installations_doc.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/qto/93.create-table-benchmarks.sql

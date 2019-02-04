@@ -1,4 +1,23 @@
 #  ISSUE-TRACKER SYSTEM GUIDE
+* [1. INTRO](#1-intro)
+  * [1.1. PURPOSE](#11-purpose)
+  * [1.2. AUDIENCE](#12-audience)
+* [2. ARCHITECTURE](#2-architecture)
+  * [2.1. IOCM ARCHITECTURE DEFINITION](#21-iocm-architecture-definition)
+    * [2.1.1. The Control components](#211-the-control-components)
+    * [2.1.2. The Model components](#212-the-model-components)
+    * [2.1.3. The Input Components](#213-the-input-components)
+    * [2.1.4. The Output Components](#214-the-output-components)
+    * [2.1.5. The Converter Components](#215-the-converter-components)
+  * [2.2. MULTI-INSTANCE SETUP](#22-multi-instance-setup)
+    * [2.2.1. Multi-environment naming convention](#221-multi-environment-naming-convention)
+  * [2.3. SOFWARE ARCHITECTURE](#23-sofware-architecture)
+    * [2.3.1. Front-End](#231-front-end)
+    * [2.3.2. Back-End](#232-back-end)
+* [3. APPLICATION CONTROL FLOW ](#3-application-control-flow-)
+  * [3.1. SHELL CONTROL FLOW](#31-shell-control-flow)
+
+
 
 
     
@@ -9,12 +28,12 @@
     
 
 ### 1.1. Purpose
-The purpose of this guide is to provide description of the existing issue-tracker System and it's architecture
+The purpose of this guide is to provide description of the existing qto System and it's architecture
 
     
 
 ### 1.2. Audience
-Any givien instance of the issue-tracker should have ONE and only ONE person which is responsible at the end for the funtioning of THIS instance - so think carefully before attempting to take ownership for an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instannce. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no service level agreement, nor even promise to help. 
+Any givien instance of the qto should have ONE and only ONE person which is responsible at the end for the funtioning of THIS instance - so think carefully before attempting to take ownership for an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instannce. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no service level agreement, nor even promise to help. 
 
     
 
@@ -55,12 +74,12 @@ The Converters apply usually the business logic for converting the input data fr
     
 
 ### 2.2. Multi-instance setup
-The multi-instance setup refers to the capability of any installed and setup instance of the issue-tracker application to "know" its version , environment type  - developement , testing and production ) and owner.
+The multi-instance setup refers to the capability of any installed and setup instance of the qto application to "know" its version , environment type  - developement , testing and production ) and owner.
 
     
 
 #### 2.2.1. Multi-environment naming convention
-Each database used by the issue-tracker application has an &lt;&lt;environment abbreviation&gt;&gt; suffix refering to its environment type. Running application layers against different db versions should be supported as much as possible.  
+Each database used by the qto application has an &lt;&lt;environment abbreviation&gt;&gt; suffix refering to its environment type. Running application layers against different db versions should be supported as much as possible.  
 
     
 

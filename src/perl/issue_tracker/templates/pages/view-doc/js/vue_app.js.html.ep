@@ -5,7 +5,6 @@
       , msg : ''
       , infinity: false
       , showRgtMenu: false
-      , cid : null
     };
 
    var getters = {
@@ -32,9 +31,8 @@
            SET_SNACKBAR_SHOW: (state, showSnackBar) => {
                state.showSnackBar = showSnackBar
            },
-           SET_CONTEXT_MENU_SHOW: (state, showContextMenu, id) => {
+           SET_CONTEXT_MENU_SHOW: (state, showContextMenu, e) => {
                state.showContextMenu = showContextMenu
-               state.cid = id
            },
            SET_SNACKBAR_MSG: (state, msg) => {
                state.msg = msg
@@ -112,8 +110,10 @@
          , showContextMenu (context,payload) {
             var e = payload ; 
             var id = String(e.target.id).split('-')[1]
+            if ( typeof ( id ) === "undefined" ) { return }
+            console.log ( id ) 
+            console.log ( "id" )
             e.preventDefault();
-            if ( typeof ( id ) == "undefined" ) return
             var menu = document.getElementById("div-context-menu");
             menu.style.left = e.pageX + 'px'
             menu.style.top = e.pageY + 'px'
@@ -211,8 +211,8 @@
                this.$store.dispatch("hideSnackBar", this);
                this.$store.dispatch("loadSnackBarInfinity", false);
            }
-         , showContextMenu: function (e,id) {
-            this.$store.dispatch("showContextMenu",e,id);
+         , showContextMenu: function (e) {
+            this.$store.dispatch("showContextMenu",e);
          }
      }
    });
