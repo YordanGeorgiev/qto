@@ -112,6 +112,7 @@
             var e = payload ; 
             var id = String(e.target.id).split('-')[1]
             e.preventDefault();
+            if ( typeof ( id ) == "undefined" ) return
             var menu = document.getElementById("div-context-menu");
             menu.style.left = e.pageX + 'px'
             menu.style.top = e.pageY + 'px'

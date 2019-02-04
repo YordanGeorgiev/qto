@@ -7,15 +7,19 @@
 	<div id="div-context-menu" :nid="cid" class="cls-context-menu" style="left: 160px; top: 57px; display: none">
 	  <ul>
 		 <context-menu-item>
-			<a @click="openItem($event,cid)"><img src="../../themes/thme-blue/img/controls/open-book.png" 
+			<a @click="openItem($event)"><img src="../../themes/thme-blue/img/controls/open-book.png" 
 				class="context-menu-icon"  width="18"> open / dive </a>
 		 </context-menu-item>
 		 <context-menu-item>
-			<a @click="exportItemToGitHubMd($event,cid)"><img src="../../themes/thme-blue/img/controls/github-md.png" 
+			<a @click="openInList($event)"><img src="../../themes/thme-blue/img/controls/open-in-listing.png" 
+				class="context-menu-icon"  width="18"> open in list</a>
+		 </context-menu-item>
+		 <context-menu-item>
+			<a @click="exportItemToGitHubMd($event)"><img src="../../themes/thme-blue/img/controls/github-md.png" 
 				class="context-menu-icon"  width="18"> export to md </a>
 		 </context-menu-item>
 		 <context-menu-item>
-			<a @click="exportItemToXls($event,cid)"><img src="../../themes/thme-blue/img/controls/xls-icon.png" 
+			<a @click="exportItemToXls($event)"><img src="../../themes/thme-blue/img/controls/xls-icon.png" 
 				class="context-menu-icon"  width="18"> export to xls </a>
 		 </context-menu-item>
 	  </ul>

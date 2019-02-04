@@ -29,6 +29,19 @@ const ContextMenu = Vue.component('context-menu', {
          }
          window.location.href = uri
 	   }
+	   , openInList: function (e) {
+         var itemId = e.target.parentElement.parentElement.parentElement.cid
+         var uri = window.location.href 
+         uri = uri.replace('/view/', '/list/')
+         if ( uri.indexOf("#") != -1 ) { uri = uri.split('#')[0]}
+         if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
+         if ( uri.indexOf("bid=") === -1 ) {
+            uri = uri + "&with=id-eq-" + String(itemId)
+         } else {
+            uri = uri.replace(/bid=\d+/g, "with=id-eq-" + String(itemId))
+         }
+         window.location.href = uri
+	   }
 	   , exportItemToGitHubMd: function (e) {
          var itemId = e.target.parentElement.parentElement.parentElement.cid
          var uri = window.location.href 
@@ -36,7 +49,7 @@ const ContextMenu = Vue.component('context-menu', {
          if ( uri.indexOf("#") != -1 ) { uri = uri.split('#')[0]}
          if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
          if ( uri.indexOf("bid=") === -1 ) {
-            uri = uri + "&bid=" + itemId
+            uri = uri + "&bid=" + String(itemId)
          } else {
             uri = uri.replace(/bid=\d+/g, "bid=" + String(itemId))
          }
@@ -50,7 +63,7 @@ const ContextMenu = Vue.component('context-menu', {
          if ( uri.indexOf("#") != -1 ) { uri = uri.split('#')[0]}
          if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
          if ( uri.indexOf("bid=") === -1 ) {
-            uri = uri + "&bid=" + itemId
+            uri = uri + "&bid=" + String(itemId)
          } else {
             uri = uri.replace(/bid=\d+/g, "bid=" + String(itemId))
          }
