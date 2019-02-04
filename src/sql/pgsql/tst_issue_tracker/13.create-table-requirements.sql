@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS requirements CASCADE;
+-- DROP TABLE IF EXISTS requirements CASCADE;
 
 SELECT 'create the "requirements" table'
 ; 
@@ -6,9 +6,6 @@ SELECT 'create the "requirements" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , level          integer NULL
-    , seq            integer NULL
-    , lft            bigint  NULL
-    , rgt            bigint  NULL
     , weight         integer NOT NULL DEFAULT 1
     , prio           integer NOT NULL DEFAULT 1
     , status         varchar (20) NOT NULL DEFAULT 'status ...'

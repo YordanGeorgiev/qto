@@ -1,4 +1,4 @@
--- DROP TABLE IF EXISTS weekly_issues ; 
+--DROP TABLE IF EXISTS weekly_issues ; 
 
 SELECT 'create the "weekly_issues" table'
 ; 
@@ -7,13 +7,13 @@ SELECT 'create the "weekly_issues" table'
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , level          integer NULL
     , seq            integer NULL
-    , type           varchar (30) NOT NULL DEFAULT 'task'
-    , weight         integer NOT NULL DEFAULT 9
-    , category       varchar (30) NOT NULL DEFAULT 'category ...'
-    , status         varchar (20) NOT NULL DEFAULT 'status ...'
     , prio           integer NOT NULL DEFAULT 1
+    , weight         integer NOT NULL DEFAULT 9
+    , status         varchar (20) NOT NULL DEFAULT 'status ...'
+    , category       varchar (30) NOT NULL DEFAULT 'category ...'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
+    , type           varchar (30) NOT NULL DEFAULT 'task'
     , owner          varchar (20) NOT NULL DEFAULT 'unknown'
     , start_time     timestamp NOT NULL DEFAULT DATE_TRUNC('second', NOW())
     , stop_time      timestamp NOT NULL DEFAULT DATE_TRUNC('second', NOW())

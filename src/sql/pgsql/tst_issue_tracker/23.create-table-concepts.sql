@@ -5,10 +5,6 @@ SELECT 'create the "concepts" table'
    CREATE TABLE concepts (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , level          integer NULL
-    , seq            integer NULL
-    , lft            bigint  NULL
-    , rgt            bigint  NULL
     , prio           integer NOT NULL DEFAULT 1
     , status         varchar (20) NOT NULL DEFAULT 'status ...'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'

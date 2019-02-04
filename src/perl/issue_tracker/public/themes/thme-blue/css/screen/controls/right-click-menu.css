@@ -11,8 +11,16 @@
 .cls-context-menu { 
    display:none; 
    position:absolute; 
+   border-top-left-radius: 15%;
+   border-top-right-radius: 15%;
+   border-bottom-left-radius: 15%;
+   border-bottom-right-radius: 15%;
+   border: 3px solid #CDCDCD;
+   box-shadow: 15px 15px 25px #C0C0C0;
+   -webkit-box-shadow: 15px 15px 20px #C0C0C0;
+   -moz-box-shadow: 15px 15px 20px #C0C0C0;
 }
-.cls-context-menu ul, #context-menu li {
+.cls-context-menu ul, .cls-context-menu li {
     list-style:none;
     margin:0; padding:0;
     background:white;
@@ -26,14 +34,14 @@
    color:blue;
 }
 .cls-context-menu li:hover{ 
-    background: blue;
-    color: #FFF;
+   background: blue;
+   color: #FFF;
 }
 .cls-context-menu li:last-child { border:none; }
 .context-menu-icon {
   top: 1px;
   position: relative;
-  margin-right: 2px;
+  margin-right: 4px;
 }
 .cls-context-menu-item {
   cursor: pointer;

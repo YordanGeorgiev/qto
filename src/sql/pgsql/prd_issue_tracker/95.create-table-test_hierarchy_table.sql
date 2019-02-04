@@ -1,5 +1,5 @@
 -- START create table test_hierarchy_table
--- DROP TABLE IF EXISTS test_hierarchy_table ; 
+DROP TABLE IF EXISTS test_hierarchy_table ; 
 
 SELECT 'create the "test_hierarchy_table" table' as "---"
 ;
@@ -23,7 +23,7 @@ SELECT 'create the "test_hierarchy_table" table' as "---"
 -- --------------------------------------------------------
 
 
--- DROP TABLE IF EXISTS test_hierarchy_table_expected ; 
+DROP TABLE IF EXISTS test_hierarchy_table_expected ; 
 
 SELECT 'create the "test_hierarchy_table_expected" table' as "---"
 ;

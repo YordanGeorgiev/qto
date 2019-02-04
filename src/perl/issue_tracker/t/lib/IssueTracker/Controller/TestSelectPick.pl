@@ -17,7 +17,7 @@ my $appConfig = $t->app->get('AppConfig') ;
 # if the product instance id dev -> dev_issue_tracker
 # if the product instance id tst -> tst_issue_tracker
 my $db_name = $appConfig->{ 'postgres_db_name' } ; 
-my @tables = ( 'installations' , 'requirements' , 'devops_guide' , 'userstories' ) ; 
+my @tables = ( 'installations' , 'requirements_doc' , 'devops_guide' , 'userstories_doc' ) ; 
 my @web_actions = ( 'select' , 'hselect' ) ; 
 my $ua = $t->ua ; 
 my $res = {} ; #a tmp result json string

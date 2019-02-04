@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS yearly_issues ; 
+DROP TABLE IF EXISTS yearly_issues_2018 ; 
 
-SELECT 'create the "yearly_issues" table'
+SELECT 'create the "yearly_issues_2018" table'
 ; 
-   CREATE TABLE yearly_issues (
+   CREATE TABLE yearly_issues_2018 (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , level          integer NULL
@@ -21,12 +21,12 @@ SELECT 'create the "yearly_issues" table'
     , actual_hours   decimal (6,2) NULL
     , tags           varchar (200)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
-    , CONSTRAINT pk_yearly_issues_guid PRIMARY KEY (guid)
+    , CONSTRAINT pk_yearly_issues_2018_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
     );
 
-create unique index idx_uniq_yearly_issues_id on yearly_issues (id);
+create unique index idx_uniq_yearly_issues_2018_id on yearly_issues_2018 (id);
 
 
 
@@ -35,17 +35,17 @@ SELECT 'show the columns of the just created table'
 
    SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute
-   WHERE  attrelid = 'public.yearly_issues'::regclass
+   WHERE  attrelid = 'public.yearly_issues_2018'::regclass
    AND    attnum > 0
    AND    NOT attisdropped
    ORDER  BY attnum
    ; 
 
 --The trigger:
-CREATE TRIGGER trg_set_update_time_on_yearly_issues BEFORE UPDATE ON yearly_issues FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+CREATE TRIGGER trg_set_update_time_on_yearly_issues_2018 BEFORE UPDATE ON yearly_issues_2018 FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
 select tgname
 from pg_trigger
 where not tgisinternal
-and tgrelid = 'yearly_issues'::regclass;
+and tgrelid = 'yearly_issues_2018'::regclass;
 
