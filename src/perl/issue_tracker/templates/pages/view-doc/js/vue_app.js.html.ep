@@ -82,7 +82,7 @@
                   	commit('SET_SNACKBAR_SHOW', true)
                   	commit('SET_SNACKBAR_MSG', errorMsg ) 
                   } else {
-                  	items = data.dat 
+                  	items = data.dat  //alles ok
                      var isNotAPrintDoc = ( document.location.search.indexOf('as=print-doc')<=0 ? true : false )
                   	commit('SET_RGT_MENU_SHOW', isNotAPrintDoc )
                   	commit('SET_ITEMS', items)
@@ -167,6 +167,11 @@
          		this.$store.dispatch("loadContextMenu", newVal, id);
 				}
          }
+			, cmsg: {
+				get: function(){
+					return this.$store.getters.getSnackBarMsg
+				}
+			}
 			, cinfinity: {
 				get: function(){
 					return this.$store.getters.getSnackBarInfinity
@@ -192,7 +197,7 @@
       , created: function () {
          this.$store.dispatch('loadItems')
          this.$store.dispatch("loadContextMenu", false, 0);
-         this.$store.dispatch("loadSnackBar");
+         this.$store.dispatch("loadSnackBar" , false);
          this.$store.dispatch("loadSnackBarInfinity", false);
          this.$store.dispatch("loadRgtMenuShow", false);
       }

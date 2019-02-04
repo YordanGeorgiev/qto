@@ -11,7 +11,7 @@
          , deleteItem: function(id) {
             this.$store.dispatch("deleteItem", id);
          }
-         , showContextMenu: function (e,id) {
+         , showContextMenu: function (e) {
             this.$store.dispatch("showContextMenu",e);
          }
          , hideContextMenu: function () {
