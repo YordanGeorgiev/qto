@@ -83,7 +83,8 @@
                   	commit('SET_SNACKBAR_MSG', errorMsg ) 
                   } else {
                   	items = data.dat 
-                  	commit('SET_RGT_MENU_SHOW', true)
+                     var isNotAPrintDoc = ( document.location.search.indexOf('as=print-doc')<=0 ? true : false )
+                  	commit('SET_RGT_MENU_SHOW', isNotAPrintDoc )
                   	commit('SET_ITEMS', items)
                   	commit('SET_SNACKBAR_SHOW', false)
 						}
@@ -140,7 +141,7 @@
        });
 
 
-   var app = new Vue({
+   const app = new Vue({
       store: store
       , el: "#view_app"
       , template: "#app-template"
