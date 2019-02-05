@@ -7,8 +7,8 @@
 	<div id="div-context-menu" :nid="cid" class="cls-context-menu" style="left: 160px; top: 57px; display: none">
 	  <ul>
 		 <context-menu-item>
-			<a @click="openItem($event)"><img src="../../themes/thme-blue/img/controls/open-book.png" 
-				class="context-menu-icon"  width="18"> open / dive </a>
+			<a :id="'rgt_clk_open_a-'+cid" @click="openItem($event)"><img src="../../themes/thme-blue/img/controls/open-book.png" 
+				class="context-menu-icon" :id="'rgt_clk_open_a-'+cid" width="18"> open / dive </a>
 		 </context-menu-item>
 		 <context-menu-item>
 			<a @click="openInList($event)"><img src="../../themes/thme-blue/img/controls/open-in-listing.png" 

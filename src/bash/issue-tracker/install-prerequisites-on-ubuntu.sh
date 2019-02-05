@@ -45,6 +45,7 @@ done < <(cat << "EOF"
 	python-dev 
 	build-essential
    gpgsm
+   nodejs
 EOF
 )
 
@@ -57,6 +58,9 @@ sudo pip install --upgrade selenium
 
 curl -L http://cpanmin.us | perl - --sudo App::cpanminus
 sudo cpanm install JSON
+
+# js libraries
+sudo npm install -g mocha
 
 echo installing the nice-to-have pre-requisites
 echo you have 5 seconds to proceed ...
@@ -86,12 +90,5 @@ EOF
 #npm config edit
 #npm install vue-js-modal --save
 #npm config edit
-#echo $https_proxy
-#npm install vue-js-modal --save
-#npm config ls -l
-#npm config edit
-#npm install vue-js-modal --save
-#npm init
-#npm install vue-js-modal --save
 #npm install vue --save
 # eof file: src/bash/issue-tracker/install-prerequisites-on-ubuntu.sh

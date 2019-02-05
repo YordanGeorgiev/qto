@@ -116,16 +116,16 @@
             console.log ( "showContextMenu")
             console.log ( id ) // todo:ysg
             console.log ( "id" )
-            if ( typeof ( id ) === "undefined" ) { return }
+            if ( typeof ( id ) === "undefined" ) { alert ( "showContextMenu id undef" ) ; return }
             e.preventDefault();
             var menu = document.getElementById("div-context-menu");
+            console.log ( menu ) //todo:ysg
+            console.log ( "menu" )
+            menu.cid = id
             menu.style.left = e.pageX + 'px'
             menu.style.top = e.pageY + 'px'
             menu.style.display = 'block'
-            menu.firstElementChild.className = "cls-context-menu-hover"
-            menu.firstElementChild.focus()
             menu.style.zIndex = 101
-            menu.cid = id
             context.commit('SET_CONTEXT_MENU_SHOW', true , id)
          }
          , addItem: (context, payload) => {

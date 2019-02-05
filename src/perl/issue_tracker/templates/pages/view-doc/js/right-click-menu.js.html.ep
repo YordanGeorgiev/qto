@@ -24,42 +24,43 @@ const ContextMenu = Vue.component('context-menu', {
 	, methods: {
 	   openItem: function (e) {
          var id = e.target.parentElement.parentElement.parentElement.cid
-         if ( typeof ( id ) == "undefined" ) { alert ( "NULL id on open Item " ) ; return }
-         console.log ( id)
-         console.log ( "STOP openItem:: ID")
+         if ( typeof ( id ) == "undefined" ) { //the img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
          var uri = window.location.href 
-         console.log ( uri )
-         console.log ( "START openItem:: uri ")
 			uri = uri.setUriParam("bid",id)
-         console.log ( uri )
-         console.log ( "STOP  openItem:: uri ")
          window.location.href = uri
 	   }
 	   , openInList: function (e) {
          var id = e.target.parentElement.parentElement.parentElement.cid
-         var uri = window.location.href.replace('/view/', '/list/').setUriParam("bid",String(id))
-         uri = uri.setUriParam("as","grid").setUriParam("oa","seq")
-         console.log ( uri )
-         console.log ( "STOP uri ")
-         //window.location.href = uri.setUriParam("as","grid").setUriParam("oa","seq")
+         if ( typeof ( id ) == "undefined" ) { //the img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var uri = window.location.href.replace('/view/', '/list/')
+         uri = uri.setUriParam("bid",id)
+         uri = uri.setUriParam("as","grid")
+         uri = uri.setUriParam("oa","seq")
+         window.location.href = uri
 	   }
 	   , exportItemToGitHubMd: function (e) {
          var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //the img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
          var uri = window.location.href.replace('/view/', '/export/')
-         uri = uri.setUriParam("bid",String(id)).setUriParam("as","md")
-         console.log ( uri )
-         console.log ( "STOP uri ")
+         uri = uri.setUriParam("bid",id)
+         uri = uri.setUriParam("as","md")
          window.location.href = uri
-         //window.location.href = uri.setUriParam("bid",String(id)).setUriParam("as","md")
 	   }
 	   , exportItemToXls: function (e) {
          var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
          var uri = window.location.href.replace('/view/', '/export/')
-         uri = uri.setUriParam("bid",String(id)).setUriParam("as","xls") // ysg:todo
-         console.log ( uri )
-         console.log ( "STOP uri ")
+         uri = uri.setUriParam("bid",id)
+         uri = uri.setUriParam("as","xls") // ysg:todo
          window.location.href = uri
-         //window.location.href = uri.setUriParam("bid",String(id)).setUriParam("as","xls")
 	   }
 	}
 });
