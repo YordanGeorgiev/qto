@@ -1,0 +1,14 @@
+// call by: uri = uri.setUriParam("as","md")
+String.prototype.setUriParam = function (paramName, paramValue) {
+   var uri = this
+   var fragment = ( uri.indexOf('#') === -1 ) ? '' : uri.split('#')[1] 
+   uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
+   if ( uri.indexOf("?") === -1 ) { uri = uri + '?&' } 
+   uri = ( uri.indexOf(paramName + '=') === -1 ) ? (uri + paramName + "=" + String(paramValue)):uri
+   uri = uri.replace ( '?' + paramName , '?&' + paramName)
+   var toRepl = (paramValue != null) ? toRepl = '$1' + paramValue : ''
+   var toSrch = new RegExp('([&]' + paramName + '=)([^&#].*?)')
+   uri = uri.replace(toSrch,toRepl)
+   uri = ( fragment.length == 0 ) ? uri : (uri+"#"+fragment) //may-be re-add the fragment 
+   return uri
+}

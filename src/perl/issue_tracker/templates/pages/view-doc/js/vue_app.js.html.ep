@@ -93,6 +93,9 @@
             context.commit('SET_SNACKBAR_SHOW', showSnackBar)
          }
          , loadContextMenu: (context, showContextMenu,id) => {
+            console.log ( "loadContextMenu")
+            console.log ( id )  
+            console.log ( "id" ) // todo:ysg
             context.commit('SET_CONTEXT_MENU_SHOW', showContextMenu, id)
          }
          , loadSnackBarMsg: (context, msg) => {
@@ -110,15 +113,18 @@
          , showContextMenu (context,payload) {
             var e = payload ; 
             var id = String(e.target.id).split('-')[1]
-            if ( typeof ( id ) === "undefined" ) { return }
-            console.log ( id ) 
+            console.log ( "showContextMenu")
+            console.log ( id ) // todo:ysg
             console.log ( "id" )
+            if ( typeof ( id ) === "undefined" ) { return }
             e.preventDefault();
             var menu = document.getElementById("div-context-menu");
             menu.style.left = e.pageX + 'px'
             menu.style.top = e.pageY + 'px'
             menu.style.display = 'block'
-            menu.style.zIndex = 100
+            menu.firstElementChild.className = "cls-context-menu-hover"
+            menu.firstElementChild.focus()
+            menu.style.zIndex = 101
             menu.cid = id
             context.commit('SET_CONTEXT_MENU_SHOW', true , id)
          }

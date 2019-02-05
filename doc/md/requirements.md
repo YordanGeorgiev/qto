@@ -88,7 +88,7 @@ according to the file format used for the documentation storage.
     
 
 ## 2. DEPLOYABILITY
-The issue-tracker must be easily deployable on any Unix like OS. Windows family based OS'es are explicitly out of the scope of the issue-tracker tool. Any issue-tracker instance should be configurable as easily as possible for the version it has.  
+The qto must be easily deployable on any Unix like OS. Windows family based OS'es are explicitly out of the scope of the qto tool. Any qto instance should be configurable as easily as possible for the version it has.  
 
     
 
@@ -98,7 +98,7 @@ The full System should be ready for use in a "blank" OS host in less than an hou
     
 
 #### 2.1.1. Deploy by simple unzip
-The issue-tracker tool could be deployed by a simply unzip of the full package, which must have all of the documentation and scripts to provide assistance for the setup and the configuration of the tool. 
+The qto tool could be deployed by a simply unzip of the full package, which must have all of the documentation and scripts to provide assistance for the setup and the configuration of the tool. 
 
     
 
@@ -118,7 +118,7 @@ The installation of the required mysql and postgres db must be documented in the
     
 
 ### 2.2. A full application clone should be ready for less than 5 minutes
-A DevOps operator should be able to perform an application clone of the issue-tracker application in less than 5 minutes. 
+A DevOps operator should be able to perform an application clone of the qto application in less than 5 minutes. 
 
     
 
@@ -128,7 +128,7 @@ The creation of the postgres database should be doable via a single shell call.
     
 
 #### 2.2.2. One liner for single restore
-The full data example of a cloned from the issue-tracker db should be loadable with a single shell call. 
+The full data example of a cloned from the qto db should be loadable with a single shell call. 
 
     
 
@@ -192,7 +192,7 @@ The application shoud support configuratble logging to STDOUT and STDERR for the
     
 
 ### 4.5. Full backup to the cloud in less than 5 minutes
-A gull backup of sotware,configuration and data for the issue-tracker and/or another project database should be doable in less than 5 minutes. The backup should be easily searchable from the cloud as well. 
+A gull backup of sotware,configuration and data for the qto and/or another project database should be doable in less than 5 minutes. The backup should be easily searchable from the cloud as well. 
 
     
 
@@ -212,7 +212,7 @@ The creation of new instances of the application should be as easy as possible.
     
 
 ### 5.3. Projects databases scalability
-Each instance of the issue-tracker application must be able to connect to one or many project databases which DDL schemas matching the current api of the application.
+Each instance of the qto application must be able to connect to one or many project databases which DDL schemas matching the current api of the application.
 
     
 
@@ -238,7 +238,7 @@ Every login and logout operation MUST complete in less than 0.3 seconds in moder
     
 
 ### 7.1. Environment type self-awareness
-Each deployed and running instance of the issue-tracker must "know" its own environment type - dev,tst, qas or prd to comply with the multi-instance architecture on a single host. 
+Each deployed and running instance of the qto must "know" its own environment type - dev,tst, qas or prd to comply with the multi-instance architecture on a single host. 
 
     
 
@@ -278,7 +278,7 @@ The UI must present every error in a clear and concise way, so that the end-user
     
 
 ## 9. SECURITY
-An well operated instance of the issue-tracker application should have security corresponding to the data sensitivity it is operating on. 
+An well operated instance of the qto application should have security corresponding to the data sensitivity it is operating on. 
 
     
 
@@ -288,28 +288,28 @@ Users should by authenticated via a standard implementation of web tokens.
     
 
 #### 9.1.1. Non-athentication mode
-Any issue-tracker instance should support a non-authentication mode - that is all users having http access could perform all the actions on the UI without restrictions
+Any qto instance should support a non-authentication mode - that is all users having http access could perform all the actions on the UI without restrictions
 
     
 
 #### 9.1.2. Basic authentication mode
-An issue-tracker instance running under basic authentication mode should support single system user per project database authentication, which must have full acess for the all the available actions via the web ui. 
-It is worth noting that each issue-tracker instance having access to data resources should meet the requirements on organisation's level for data access - i.e. if instance dev has full access to the dev,tst,prd project databases there is no rationel of having basic authentication on the prd instance having access to the same dev,tst,prd databases. 
+An qto instance running under basic authentication mode should support single system user per project database authentication, which must have full acess for the all the available actions via the web ui. 
+It is worth noting that each qto instance having access to data resources should meet the requirements on organisation's level for data access - i.e. if instance dev has full access to the dev,tst,prd project databases there is no rationel of having basic authentication on the prd instance having access to the same dev,tst,prd databases. 
 
     
 
 #### 9.1.3. Native authentication
-The issue-tracker should support native web tokens based authentication, by using as login a valid user e-mail and password, stored in the issue-tracker database. 
+The qto should support native web tokens based authentication, by using as login a valid user e-mail and password, stored in the qto database. 
 
     
 
 #### 9.1.4. Web SSO authentication
-The issue-tracker should support authorization
+The qto should support authorization
 
     
 
 ### 9.2. Authrorisation
-The SysAdmin of any instance should be able to add users to the issue-tracker instance. 
+The SysAdmin of any instance should be able to add users to the qto instance. 
 
     
 

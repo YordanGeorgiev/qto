@@ -14,6 +14,7 @@ SELECT 'create the "test_hierarchy_table" table' as "---"
     , rgt            integer NULL
     , name           varchar (200) NOT NULL
     , description    varchar (4000)
+    , src            varchar (4000)
     , CONSTRAINT pk_test_hierarchy_table_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE

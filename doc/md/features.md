@@ -22,38 +22,35 @@
     * [2.2.4. The "with=col-operator-value" filter](#224-the-"with=col-operator-value"-filter)
     * [2.2.5. The "where=col-operator-value" filter](#225-the-"where=col-operator-value"-filter)
     * [2.2.6. Filtering with "like"](#226-filtering-with-"like")
-  * [2.3. LIST AS TABLE PAGE](#23-list-as-table-page)
-    * [2.3.1. table sorting](#231-table-sorting)
-    * [2.3.2. table quick filtering](#232-table-quick-filtering)
-    * [2.3.3. set table paging size](#233-set-table-paging-size)
-    * [2.3.4. paging - setting the table's page number](#234-paging--setting-the-table's-page-number)
-  * [2.4. LIST LABELS PAGE](#24-list-labels-page)
-  * [2.5. LIST AS ETABLE PAGE](#25-list-as-etable-page)
-    * [2.5.1. table sorting](#251-table-sorting)
-    * [2.5.2. Keyboard usability](#252-keyboard-usability)
-      * [2.5.2.1. Navigability of the list page with the keyboard](#2521-navigability-of-the-list-page-with-the-keyboard)
-      * [2.5.2.2. Focus the quick search box](#2522-focus-the-quick-search-box)
-      * [2.5.2.3. Undo the edit on a cell](#2523-undo-the-edit-on-a-cell)
-    * [2.5.3. New item creation ( CREATE )](#253-new-item-creation-(-create-))
-      * [2.5.3.1. Successful execution](#2531-successful-execution)
-      * [2.5.3.2. Error handling on db create error](#2532-error-handling-on-db-create-error)
-    * [2.5.4. Single cell Inline-edit ( UPDATE )](#254-single-cell-inline-edit-(-update-))
-      * [2.5.4.1. Table columns resizing](#2541-table-columns-resizing)
-      * [2.5.4.2. Contents for the table's cells](#2542-contents-for-the-table's-cells)
-      * [2.5.4.3. Successful execution](#2543-successful-execution)
-      * [2.5.4.4. Error handling on db update error](#2544-error-handling-on-db-update-error)
-      * [2.5.4.5. Nulls handling](#2545-nulls-handling)
-    * [2.5.5. Item deletion ( DELETE )](#255-item-deletion-(-delete-))
-      * [2.5.5.1. Successful execution](#2551-successful-execution)
-      * [2.5.5.2. Error handling on delete error](#2552-error-handling-on-delete-error)
-    * [2.5.6. List as print-table page](#256-list-as-print-table-page)
-  * [2.6. THE VIEW-DOC PAGE](#26-the-view-doc-page)
-    * [2.6.1. Error handling for the view-doc page](#261-error-handling-for-the-view-doc-page)
-    * [2.6.2. Normal page load](#262-normal-page-load)
-    * [2.6.3. The right click menu](#263-the-right-click-menu)
-  * [2.7. THE EXPORT URL](#27-the-export-url)
-    * [2.7.1. Export data to xls](#271-export-data-to-xls)
-    * [2.7.2. Export data to md](#272-export-data-to-md)
+    * [2.2.7. table sorting](#227-table-sorting)
+    * [2.2.8. table quick filtering](#228-table-quick-filtering)
+    * [2.2.9. set table paging size](#229-set-table-paging-size)
+    * [2.2.10. paging - setting the table's page number](#2210-paging--setting-the-table's-page-number)
+    * [2.2.11. table sorting](#2211-table-sorting)
+    * [2.2.12. Keyboard usability](#2212-keyboard-usability)
+      * [2.2.12.1. Navigability of the list page with the keyboard](#22121-navigability-of-the-list-page-with-the-keyboard)
+      * [2.2.12.2. Focus the quick search box](#22122-focus-the-quick-search-box)
+      * [2.2.12.3. Undo the edit on a cell](#22123-undo-the-edit-on-a-cell)
+    * [2.2.13. New item creation ( CREATE )](#2213-new-item-creation-(-create-))
+      * [2.2.13.1. Successful execution](#22131-successful-execution)
+      * [2.2.13.2. Error handling on db create error](#22132-error-handling-on-db-create-error)
+    * [2.2.14. Single cell Inline-edit ( UPDATE )](#2214-single-cell-inline-edit-(-update-))
+      * [2.2.14.1. Table columns resizing](#22141-table-columns-resizing)
+      * [2.2.14.2. Contents for the table's cells](#22142-contents-for-the-table's-cells)
+      * [2.2.14.3. Successful execution](#22143-successful-execution)
+      * [2.2.14.4. Error handling on db update error](#22144-error-handling-on-db-update-error)
+      * [2.2.14.5. Nulls handling](#22145-nulls-handling)
+    * [2.2.15. Item deletion ( DELETE )](#2215-item-deletion-(-delete-))
+      * [2.2.15.1. Successful execution](#22151-successful-execution)
+      * [2.2.15.2. Error handling on delete error](#22152-error-handling-on-delete-error)
+    * [2.2.16. List as print-table page](#2216-list-as-print-table-page)
+  * [2.3. THE VIEW-DOC PAGE](#23-the-view-doc-page)
+    * [2.3.1. Error handling for the view-doc page](#231-error-handling-for-the-view-doc-page)
+    * [2.3.2. Normal page load](#232-normal-page-load)
+    * [2.3.3. The right click menu](#233-the-right-click-menu)
+  * [2.4. THE EXPORT URL](#24-the-export-url)
+    * [2.4.1. Export data to xls](#241-export-data-to-xls)
+    * [2.4.2. Export data to md](#242-export-data-to-md)
 * [3. DEVOPS FEATURES AND FUNCTIONALITIES](#3-devops-features-and-functionalities)
   * [3.1. TESTABILITY](#31-testability)
     * [3.1.1. Perl syntax check call](#311-perl-syntax-check-call)
@@ -331,31 +328,26 @@ http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/
     # this example url will list all the monthly_issues items having the "bug" string in their "name" attribute:
     http://host-name:3000/dev_issue_tracker/list/monthly_issues?as=table&like-by=name&like-val=bug
 
-### 2.3. List as table page
-The list table page lists all the rows from any table in the app db in form of simple ui table , which is sortable by clicking with  .. 
-
-    
-
-#### 2.3.1. table sorting
+#### 2.2.7. table sorting
 The listed table is sortable by clicking on the columns OR by navigating with the tab key on the keyboard on a column and hitting Enter. 
 The sorted column is visually shown as the active one on page load:
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=table&oa=prio&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
-#### 2.3.2. table quick filtering
+#### 2.2.8. table quick filtering
 You can filter the already presented part of the result set in the page by using the search textbox. This is only an ui type of filtering for the already loaded data. This type of filtering is different compared to the url parameters filtering by using the with url param syntax and it filters the already fetched from the db data-set, whereas the with=&lt;&lt;attribute&gt;&gt;&lt;&lt;operator&gt;&gt;&lt;&lt;value&gt;&gt; filtering does filter on the database side.
 You could focus the quick search textbox by pressing the forward slash on your keyboard. 
 The quick search box works instantaneously, thus hitting enter is not needed. 
 
     
 
-#### 2.3.3. set table paging size
+#### 2.2.9. set table paging size
 You can set the page size of the result set to be fetched from the database by using the "&page-size=&lt;&lt;page-size&gt;&gt;" url parameter or by clicking on the page sizes links right of the table search box. 
 
     
 
-#### 2.3.4. paging - setting the table's page number
+#### 2.2.10. paging - setting the table's page number
 If the result-set requested is larger than the page size you can go to the next page number by using the "&page-num=&lt;&lt;page-num&gt;&gt;" url parameter. 
 You could go to the next page number by clicking on the links just bellow the quick search textbox. The table control has UI for setting the table page number. 
 The pager shows 10 pages at a "pager page" so getting to the end of hundreds of pages ( depending of course on your page size ) is comparably easy. 
@@ -363,47 +355,35 @@ You could quickly use the / char shortcut to focus to the quick search box and f
 
     
 
-### 2.4. List labels page
-The list labels page lists all the rows from any table in the app db in form of "labels" - rectangular forms containing all the selected attributes ( by default all ) and their values. 
-Note that only the as=lbls url change triggers the different view of the same data:
-http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=lbls&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
-
-    
-
-### 2.5. List as etable page
-The list a table page has all the functionalities as the list as "table" page with the following additional features
-
-    
-
-#### 2.5.1. table sorting
+#### 2.2.11. table sorting
 The listed table is sortable by clicking on the columns OR by navigating with the tab key on the keyboard on a column and hitting Enter. 
 The sorted column is visually shown as the active one on page load:
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=etable&oa=prio&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
-#### 2.5.2. Keyboard usability
+#### 2.2.12. Keyboard usability
 You can quickly traverse the cells of the table via the tab key, which does go over the non-editable items too ( the id's ) , so that you could quickly scroll the table as scrolling when the editable is in focus does not work. 
 The whole table is easily scrollable whenever the cursor is on non-editable part of the table ( the id's column ) and whenever the last rows must be edited the page is scrolled so that the rows are situated in the middle and not the bottom of the screen. 
 
     
 
-##### 2.5.2.1. Navigability of the list page with the keyboard
+##### 2.2.12.1. Navigability of the list page with the keyboard
 The order of the list-as-grid page has been arranged so that the ui user cuold cycly trough the whole table with the tab easily. 
 
     
 
-##### 2.5.2.2. Focus the quick search box
+##### 2.2.12.2. Focus the quick search box
 You could focus the quick search by typing / IF you are not editing a cell. Thus the paging on the next cell is quite handy - as you could easily jump onto the quick search and with couple of tabs navigate to the next page. 
 
     
 
-##### 2.5.2.3. Undo the edit on a cell
+##### 2.2.12.3. Undo the edit on a cell
 If you were on a cell and types some text without leaving it, but you change your mind you could simply press the Esc key, which will restore the original content of the cell and you could proceed by tab to the next cell. 
 
     
 
-#### 2.5.3. New item creation ( CREATE )
+#### 2.2.13. New item creation ( CREATE )
 A new item could be added to the table in the ui and thus in the db table by clicking the plus button above the table ( which uses the google material design ui ). 
 The new button has a fixed positon, thus available during scrolling as well from the same position. 
 The new button changes it's appears when focused via the keyboard, and can be pressed when in focus by hitting enter with the keyboard. 
@@ -412,112 +392,113 @@ http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/dev_issue_tracker/
 
     
 
-##### 2.5.3.1. Successful execution
+##### 2.2.13.1. Successful execution
 After clicking the plus button the System adds the new row into the database table and presents it into the table ui AS THE FIRST ROW to emphasize the created row - that is the existing sort of the table is changed to the id column.
 This behavior is not obvious if you have at the time of pressing the add-new button a valid search in the quick search box as the result set will most probably not show your new item as the filter is ongoing, this is rather bug, which for now is handled with the dimming of the add new button during an active search in the quick search box. 
 
     
 
-##### 2.5.3.2. Error handling on db create error
+##### 2.2.13.2. Error handling on db create error
 If any error occurs while the creation an error msg is presented clearly with fading effect, which returns the error msg from the database. 
 On invalid input the data is not created to the database and nothing is stored. 
 
     
 
-#### 2.5.4. Single cell Inline-edit ( UPDATE )
+#### 2.2.14. Single cell Inline-edit ( UPDATE )
 The table can be edited inline so that the data is updated to the database. White space in the cells is preserved. 
 To practice new items' creations updates and deletions to get confortable on the app's behaviour please use first the development instances of the issue-tracker project: 
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/dev_issue_tracker/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
 
     
 
-##### 2.5.4.1. Table columns resizing
+##### 2.2.14.1. Table columns resizing
 You can resize the columns of the tables to a max size of 500 pixels by dragging only one text area. Note however that the textarea will NOT be resized bigger than the maximum width of the current column … 
 For the estetics of the table a certain default values for certain columns' cotents widths are assumed.
 
     
 
-##### 2.5.4.2. Contents for the table's cells
+##### 2.2.14.2. Contents for the table's cells
 The table's cells should accept any UTF-8 characters including html entities. The textarea's width should adjust automatically till the width of the widest cell in the table column. 
 
     
 
-##### 2.5.4.3. Successful execution
+##### 2.2.14.3. Successful execution
 If the single cell inline-edit is successful no msg is presented and the data is updated to the database storage.
 If the updated cell was part of the currently sorted column the ui is automatically adjusted to the new sort order ( for example if a numeric sort was applied and the cell had value of 9 with 1..9 range and the smallest to greatest was currently active if the new update is 1 the item will appear in the top of the listing.
 
     
 
-##### 2.5.4.4. Error handling on db update error
+##### 2.2.14.4. Error handling on db update error
 If any error occurs while updating an error msg is presented clearly with fading effect, which returns the error msg from the database. 
 On invalid input the data is not updated to the database and the old value in the cell is restored.
 
     
 
-##### 2.5.4.5. Nulls handling
+##### 2.2.14.5. Nulls handling
 Nulls handling is somewhat problematic in ui. For now the behavior by convention is to leave a nullable record in the database as null, whether the cell of the ui table is left empty ( white space chars are also considered empty)
 
     
 
-#### 2.5.5. Item deletion ( DELETE )
+#### 2.2.15. Item deletion ( DELETE )
 You could delete items by clicking the delete button in the beginning of every item. 
 To practice new items' creations and deletions to get confortable on the app's behaviour please use first the development instances of the issue-tracker project: 
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/dev_issue_tracker/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
 
     
 
-##### 2.5.5.1. Successful execution
+##### 2.2.15.1. Successful execution
 If the deletion is successful the item is removed both from the ui and from the database. 
 
     
 
-##### 2.5.5.2. Error handling on delete error
+##### 2.2.15.2. Error handling on delete error
 If any error occurs while deleting the item an error msg is presented clearly with fading effect, which returns the error msg from the database. 
 On invalid input the data is not updated to the database and the old value in the cell is restored.
 
     
 
-#### 2.5.6. List as print-table page
+#### 2.2.16. List as print-table page
 The list as print-table page is aimed at producing quickly refined result-set from the database for a further copy paste or even print to paper. 
 It has all the functionalities as the list as "table" page, without the filtering from the quick search box and without the ui for the pager and page-sizer -the url params for paging and page-sizing work, however. All the url params work as in the etable listing page. 
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/yearly_issues?as=print-table&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
 
     
 
-### 2.6. The view-doc page
+### 2.3. The view-doc page
 The view page presents the data of a database table, having nested-set hierarchichal model partially or fully by the means of different controls
 
     
 
-#### 2.6.1. Error handling for the view-doc page
+#### 2.3.1. Error handling for the view-doc page
 Should there be an error a dynamic snackbar is presented with the error message. The snackbar hides itself by default after 3.9 seconds ( set by default , but it could be pinned to the page by the user to view it properly / send it furter). 
 Whenever an error occurs the show right menu button does not occur and no document is presented
 
     <<web-host>>:<<web-port>>/<<database>>/view/<<table-name>>?as=doc
 
-#### 2.6.2. Normal page load
+#### 2.3.2. Normal page load
 When the page is loaded all the content of the document is presented / according to the urls params / which are applying the same filtering as in the list page , but on the hierarchichal data-set …
 The rigt menu, containing the table of contents of the document can be opened and closed and scrolled separately
 
 
     <<web-host>>:<<web-port>>/<<database>>/view/<<table-name>>?as=doc
 
-#### 2.6.3. The right click menu
+#### 2.3.3. The right click menu
 You can perform actions on any item by right-cliking the titles either from the document or fro mthe table of contents below
 
     
 
-### 2.7. The export url
+### 2.4. The export url
 The export url follows the same syntax naming conventions as the list page , but instead of presenting a list with the data it exports it in the specified with "as" url parameter format. 
+You can export the content of any item , by right-clicking its title either in the document or in the right table of contents list and choosing export as &lt;&lt;type&gt;&gt;
 
     <<web-host>>:<<web-port>>/<<database>>/export/<<table-name>>?as=xls
 
-#### 2.7.1. Export data to xls
+#### 2.4.1. Export data to xls
 To export data via the export url you could apply any of the listing parameters and replace the list web action with the export one and the as=&lt;&lt;control&gt; to the as=xls and the application will present you with a save file dialog with the desired data. 
 
     <<web-host>>:<<web-port>>/<<database>>/export/<<table-name>>?as=xls
 
-#### 2.7.2. Export data to md
+#### 2.4.2. Export data to md
 To export a document via the export url you could apply any of the listing parameters and replace the view web action with the export one and the as=&lt;&lt;control&gt; to the as=md and the application will present you with a save file dialog with a generated md document with the desired data
 
     <<web-host>>:<<web-port>>/<<database>>/export/<<table-name>>?as=xls

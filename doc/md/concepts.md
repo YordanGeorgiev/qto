@@ -76,9 +76,9 @@ You should assign 0 or 1 persons responsible for an issue at a time. Of course i
     
 
 ### 3.1. Projects management
-You can manage multiple projects with the issue-tracker tool. Each project has its own data directories, database storage and configurations. You could also have different envornments named dev,tst,prd for each project separately. 
-As the tool is backwards compatible you could have differrrent instances of the issue-tracker projects with different versions ( and set of features ) operatiing against differrent project ( each one in its own version).
-You must pre-set the configuration variables of an issue-tracker project each time you start working on a project from the shell
+You can manage multiple projects with the qto tool. Each project has its own data directories, database storage and configurations. You could also have different envornments named dev,tst,prd for each project separately. 
+As the tool is backwards compatible you could have differrrent instances of the qto projects with different versions ( and set of features ) operatiing against differrent project ( each one in its own version).
+You must pre-set the configuration variables of an qto project each time you start working on a project from the shell
 
     
 
@@ -100,7 +100,7 @@ The categories could contain letters ,numbers, dashes
     
 
 #### 3.3.2. Issues status
-You could define whatever statuses you like. As issue-tracker has been built to develop itself ( how sarcastic could that be ;o), that is for tracing the progress of a software project the following "default" statuses have been used: 
+You could define whatever statuses you like. As qto has been built to develop itself ( how sarcastic could that be ;o), that is for tracing the progress of a software project the following "default" statuses have been used: 
 01-eval - for evaluate the issue
 02-todo - for decided to do the issue
 03-wip - for the issue is being in work in progress mode
@@ -141,8 +141,8 @@ This section contains definitions of terms within the context of the Issue-Track
     
 
 ### 4.1. release
-An issue-tracker release is the artifact you can download from the following GitHub page:
-https://github.com/YordanGeorgiev/issue-tracker/releases
+An qto release is the artifact you can download from the following GitHub page:
+https://github.com/YordanGeorgiev/qto/releases
 The word is also used for the actual release of the latest source code into a working instance available in the web ... 
 
     
