@@ -37,6 +37,10 @@
    background: blue;
    color: #FFF;
 }
+.cls-context-menu-hover{ 
+   background: blue;
+   color: #FFF;
+}
 .cls-context-menu li:last-child { border:none; }
 .context-menu-icon {
   top: 1px;

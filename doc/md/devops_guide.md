@@ -1,16 +1,98 @@
 #  ISSUE-TRACKER DEVOPS GUIDE
+* [1. GUIDING PRINCIPLE'S](#1-guiding-principle's)
+  * [1.1. PERSONAL RESPONSIBILITY](#11-personal-responsibility)
+  * [1.2. ATTEMPT FOR 100% TEST COVERAGE TO ACHIEVE RELIABILITY](#12-attempt-for-100%-test-coverage-to-achieve-reliability)
+  * [1.3. IT SHOULD JUST WORK](#13-it-should-just-work)
+  * [1.4. NAMING CONVENTIONS](#14-naming-conventions)
+  * [1.5. BE USER-FRIENDLY TO ALL](#15-be-user-friendly-to-all)
+  * [1.6. AIM FOR SIMPLICITY](#16-aim-for-simplicity)
+  * [1.7. DO NOT ALLOW BROKEN WINDOWS](#17-do-not-allow-broken-windows)
+* [2. MAINTENANCE AND OPERATIONS](#2-maintenance-and-operations)
+  * [2.1. RDBMS RUN-STATE MANAGEMENT](#21-rdbms-run-state-management)
+    * [2.1.1. To check the status of the postgreSql](#211-to-check-the-status-of-the-postgresql)
+    * [2.1.2. To stop the postgreSql](#212-to-stop-the-postgresql)
+    * [2.1.3. To start the postgreSql](#213-to-start-the-postgresql)
+    * [2.1.4. to check the port on which it is listening ](#214-to-check-the-port-on-which-it-is-listening-)
+    * [2.1.5. Check the postgres status](#215-check-the-postgres-status)
+  * [2.2. APPLICATION LAYER RUN-STATE MANAGEMENT](#22-application-layer-run-state-management)
+    * [2.2.1. start the application layer](#221-start-the-application-layer)
+    * [2.2.2. stop the application layer](#222-stop-the-application-layer)
+    * [2.2.3. Restart OS network service](#223-restart-os-network-service)
+* [3. BACKUP AND RESTORE](#3-backup-and-restore)
+  * [3.1. BACKUP A DATABASE](#31-backup-a-database)
+  * [3.2. RESTORE A DATABASE](#32-restore-a-database)
+  * [3.3. BACKUP A DATABASE TABLE](#33-backup-a-database-table)
+  * [3.4. RESTORE A DATABASE TABLE](#34-restore-a-database-table)
+* [4. USAGE SCENARIOS](#4-usage-scenarios)
+  * [4.1. SHELL BASED ACTIONS USAGE](#41-shell-based-actions-usage)
+  * [4.2. RUN INCREASE-DATE ACTION](#42-run-increase-date-action)
+  * [4.3. RUN XLS-TO-DB ACTION](#43-run-xls-to-db-action)
+  * [4.4. RUN DB-TO-TXT ACTION](#44-run-db-to-txt-action)
+  * [4.5. LOAD XLS ISSUES TO DB AND FROM DB TO TXT FILES](#45-load-xls-issues-to-db-and-from-db-to-txt-files)
+  * [4.6. RUN THE QTO FILE TO DB LOAD](#46-run-the-qto-file-to-db-load)
+  * [4.7. VERIFY THE INSERTED DATA FROM THE DB](#47-verify-the-inserted-data-from-the-db)
+  * [4.8. WEB BASED ROUTES USAGE](#48-web-based-routes-usage)
+  * [4.9. RUN THE HTTP://&LT;&LT;WEB-HOST&GT;&GT;:&LT;&LT;WEB-PORT&GT;&GT;/&LT;&LT;PROJ-DB&GT;&GT;/GET/&LT;&LT;TABLE&GT;&GT;/&LT;&LT;GUID&GT;&GT; ROUTE](#49-run-the-http//web-hostweb-port/proj-db/get/table/guid-route)
+* [5. NAMING CONVENTIONS](#5-naming-conventions)
+  * [5.1. DIRS NAMING CONVENTIONS](#51-dirs-naming-conventions)
+  * [5.2. ROOT DIRS NAMING CONVENTIONS](#52-root-dirs-naming-conventions)
+* [6. SOURCE CODE MANAGEMENT](#6-source-code-management)
+  * [6.1. AIM FOR TRACEABILITY BETWEEN USER-STORIES, REQUIREMENTS, FEATURES AND FUNCTIONALITIES](#61-aim-for-traceability-between-user-stories,-requirements,-features-and-functionalities)
+  * [6.2. ZERO TOLERANCE FOR BUGS](#62-zero-tolerance-for-bugs)
+  * [6.3. FEATURE DEVELOPMENT IN A FEATURE BRANCH](#63-feature-development-in-a-feature-branch)
+  * [6.4. ALWAYS START WITH A TEST UNIT CREATION](#64-always-start-with-a-test-unit-creation)
+  * [6.5. BRANCH FOR DEVELOPMENT - DEV](#65-branch-for-development--dev)
+  * [6.6. TESTING AND INTEGRATIONS IN THE TST BRANCH](#66-testing-and-integrations-in-the-tst-branch)
+  * [6.7. QUALITY ASSURANCE IN THE QAS BRANCH](#67-quality-assurance-in-the-qas-branch)
+  * [6.8. PRODUCTION IN THE PRD BRANCH](#68-production-in-the-prd-branch)
+* [7. SCENARIOS](#7-scenarios)
+  * [7.1. A SMALL TEAM PROJECT HOURS TRACKING SCENARIO](#71-a-small-team-project-hours-tracking-scenario)
+* [8. WAY OF WORKING](#8-way-of-working)
+  * [8.1. DEFINITION OF DONE](#81-definition-of-done)
+  * [8.2. E-MAIL COMMUNICATION](#82-e-mail-communication)
+  * [8.3. CHAT / IRC](#83-chat-/-irc)
+  * [8.4. DOCUMENTATION](#84-documentation)
+* [9. FEATURE IMPLEMENTATION WORKFLOW](#9-feature-implementation-workflow)
+  * [9.1. ISSUE CREATION](#91-issue-creation)
+  * [9.2. USER-STORY CREATION](#92-user-story-creation)
+  * [9.3. REQUIREMENTS CREATION](#93-requirements-creation)
+  * [9.4. PROBLEM REGISTRATION](#94-problem-registration)
+  * [9.5. FEATURE BRANCH CREATION](#95-feature-branch-creation)
+  * [9.6. CREATE A TEST-ENTRY POINT](#96-create-a-test-entry-point)
+  * [9.7. IMPLEMENTATION OF PROOF OF CONCEPT](#97-implementation-of-proof-of-concept)
+  * [9.8. PROTOTYPE IMPLEMENTATION](#98-prototype-implementation)
+  * [9.9. UNIT AND / OR INTEGRATION TEST CREATION](#99-unit-and-/-or-integration-test-creation)
+  * [9.10. IMPLEMENTATION ](#910-implementation-)
+  * [9.11. DEPLOYMENT AND TEST TO THE TEST ENVIRONMENT](#911-deployment-and-test-to-the-test-environment)
+  * [9.12. DEPLOYMENT AND TEST TO THE PRODUCTION ENVIRONMENT](#912-deployment-and-test-to-the-production-environment)
+  * [9.13. QUALITY ASSURANCE ITERATION](#913-quality-assurance-iteration)
+  * [9.14. DOD CHECK-LIST WALKTHROUGH](#914-dod-check-list-walkthrough)
+  * [9.15. THE FEATURE OR FUNCTIONALITY CURRENT DESCRIPTION IS ADDED IN THE DOCS](#915-the-feature-or-functionality-current-description-is-added-in-the-docs)
+  * [9.16. THE RELATED REQUIREMENT IS ADDED IN THE REQUIREMENTS DOCUMENT](#916-the-related-requirement-is-added-in-the-requirements-document)
+  * [9.17. AT LEAST 2 TIMES PASSED UNIT TESTS RUN IN EACH ENVIRONMENT INSTANCE](#917-at-least-2-times-passed-unit-tests-run-in-each-environment-instance)
+  * [9.18. AT LEAST 2 TIMES PASSED INTEGRATION TESTS RUN IN EACH ENVIRONMENT INSTANCE](#918-at-least-2-times-passed-integration-tests-run-in-each-environment-instance)
+  * [9.19. DEPLOYMENT TO THE TEST ENVIRONMENT](#919-deployment-to-the-test-environment)
+  * [9.20. CHECK THAT ALL THE FILES IN THE DEPLOYMENT PACKAGE ARE THE SAME AS THOSE IN THE LATEST COMMIT OF THE DEV GIT BRANCH. ](#920-check-that-all-the-files-in-the-deployment-package-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
+  * [9.21. RESTART THE APPLICATION LAYER](#921-restart-the-application-layer)
+* [10. SYSTEM ADMINISTRATION AND MAINTENANCE OPERATIONS](#10-system-administration-and-maintenance-operations)
+  * [10.1. KNOWN ISSUES AND WORKAROUNDS](#101-known-issues-and-workarounds)
+    * [10.1.1. Morbo is stuck](#1011-morbo-is-stuck)
+    * [10.1.2. Probable root cause](#1012-probable-root-cause)
+    * [10.1.3. Known solution and workaround](#1013-known-solution-and-workaround)
+
+
 
 
     
 
 ## 1. GUIDING PRINCIPLE'S
-This section might seem too philosophical for a start, yet all the development in the issue-tracker has ATTEMPTED to follow the principles described bellow. If you skip this section now you might later on wander many times why something works and it is implemented as it is ... and not "the right way". 
+This section might seem too philosophical for a start, yet all the development in the qto has ATTEMPTED to follow the principles described bellow. If you skip this section now you might later on wander many times why something works and it is implemented as it is ... and not "the right way". 
 Of course you are free to not follow these principles, the less you follow them the smaller the possibility to pull features from your instance(s) - you could even use the existing functionality to create a totally different fork with different name and start developing your own toll with name X - the authors give you the means to do that with this tool ... , but if you want to use and contribute to THIS tool than you better help defined those leading principles and follow them. 
 
     
 
 ### 1.1. Personal responsibility
-Any given instance of the issue-tracker should have ONE and only ONE person which is responsible at the end for the functioning of THIS instance - so think carefully before attempting to take ownership for an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instance. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no service level agreement, nor even promise to help. 
+Any given instance of the qto should have ONE and only ONE person which is responsible at the end for the functioning of THIS instance - so think carefully before attempting to take ownership for an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instance. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no service level agreement, nor even promise to help. 
 
     
 
@@ -22,7 +104,7 @@ Testing ensures the consistency and future expandability of the functionalities.
     
 
 ### 1.3. It should just work
-Any instance of the issue-tracker should simply work as promised. No less no more. 
+Any instance of the qto should simply work as promised. No less no more. 
 Any instance is the combination of code, configurations, binaries in the System and data - that is the instance you are using should just work for the set of functionalities promised. 
 
     
@@ -98,16 +180,16 @@ Check the port to which the postres is running with this command:
 #### 2.2.1. start the application layer
 To start the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern 
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-hypnotoad-start
+    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
     
-    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
+    bash src/bash/qto/qto.sh -a mojo-morbo-start
 
 #### 2.2.2. stop the application layer
 To stop the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern 
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-hypnotoad-stop
+    bash src/bash/qto/qto.sh -a mojo-hypnotoad-stop
     
-    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop
+    bash src/bash/qto/qto.sh -a mojo-morbo-stop
 
 #### 2.2.3. Restart OS network service
 Sometimes you might just need to restart the whole network service on Ubuntu:
@@ -124,7 +206,7 @@ You backup a database with the following one-liner. Noe
 
     # obs you have to have the shell vars pre-loaded !!!
     # clear; doParseCnfEnvVars <<path-to-cnf-file>>
-    bash src/bash/issue-tracker/issue-tracker.sh -a backup-postgres-db
+    bash src/bash/qto/qto.sh -a backup-postgres-db
 
 ### 3.2. Restore a database
 You restore a database by first running the pgsql scripts of the project database and than restoring the insert data 
@@ -132,10 +214,27 @@ You restore a database by first running the pgsql scripts of the project databas
     # obs you have to have the shell vars pre-loaded !!!
     # clear; doParseCnfEnvVars <<path-to-cnf-file>>
     
-    bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
+    bash src/bash/qto/qto.sh -a run-pgsql-scripts
     psql 
     
     psql -d $postgres_db_name < dat/mix/sql/pgsql/dbdumps/dev_issue_tracker/dev_issue_tracker.20180813_202202.insrt.dmp.sql
+
+### 3.3. Backup a database table
+You backup a database table with the following one-liner. Noe 
+
+    # obs you have to have the shell vars pre-loaded !!!
+    # clear; doParseCnfEnvVars <<path-to-cnf-file>>
+    bash src/bash/qto/qto.sh -a backup-postgres-table -t my_table
+
+### 3.4. Restore a database table
+You restore a database table by first running the pgsql scripts of the project database or ONLY for that table and than restoring the insert data from the table insert file.
+
+    # obs you have to have the shell vars pre-loaded !!!
+    # clear; doParseCnfEnvVars <<path-to-cnf-file>>
+    # re-apply the table ddl
+    psql -d $postgres_db_name < src/sql/pgsql/dev_issue_tracker/13.create-table-requirements.sql
+    
+    psql -d $postgres_db_name < dat/tmp/requirements.data.sql
 
 ## 4. USAGE SCENARIOS
 
@@ -151,7 +250,7 @@ You restore a database by first running the pgsql scripts of the project databas
 You track the issues of your projects by storing them into xls files in "daily" proj_txt dirs. 
 Each time the day changes by running the increase-date action you will be able to clone the data of the previous date and start working on the current date. 
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a increase-date
+    bash src/bash/qto/qto.sh -a increase-date
 
 ### 4.3. Run xls-to-db action
 You insert the date of the daily , weekly , monthly or yearly issues from the daily input excel file(s) by running the xls-to-db action. 
@@ -160,33 +259,33 @@ You should be able to update only non-nullable column by reducing the number of 
 
     
     export do_truncate_tables=1 ;
-    bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db
+    bash src/bash/qto/qto.sh -a xls-to-db
 
 ### 4.4. Run db-to-txt action
 The db-to-txt action converts your db tables into txt files by using "smart" formatting rules. This feature is deprecated and should work only for tables having the same attributes set as the "issues" tables. 
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
+    bash src/bash/qto/qto.sh -a db-to-txt
 
 ### 4.5. Load xls issues to db and from db to txt files
 to load xls issues to db and from db to txt files
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db -a db-to-txt 
+    bash src/bash/qto/qto.sh -a xls-to-db -a db-to-txt 
     
     # or run for all the periods
     for period in `echo daily weekly monthly yearly`; do export period=$period ; 
-    bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db -a db-to-txt ; done ;
+    bash src/bash/qto/qto.sh -a xls-to-db -a db-to-txt ; done ;
 
-### 4.6. Run the issue-tracker file to db load
-Run the issue-tracker file to db load 
+### 4.6. Run the qto file to db load
+Run the qto file to db load 
 
     # ensure the following actions will be tested
-    cat src/bash/issue-tracker/tests/run-issue-tracker-tests.lst | grep -v '#'
+    cat src/bash/qto/tests/run-qto-tests.lst | grep -v '#'
     # output should be if not correct
     check-perl-syntax
-    run-issue-tracker
+    run-qto
     
     # test those uncommented actions
-    bash src/bash/issue-tracker/test-issue-tracker.sh
+    bash src/bash/qto/test-qto.sh
 
 ### 4.7. Verify the inserted data from the db
 Verify the inserted data from the db as follows:
@@ -207,7 +306,7 @@ http://doc-pub-host:3000/dev_stockit_issues/get/companies/727cf807-c9f1-446b-a7f
     # load the items
     while read -r f; do 
     export xls_file=$f; 
-    bash src/bash/issue-tracker/issue-tracker.sh -a xls-to-db  ; 
+    bash src/bash/qto/qto.sh -a xls-to-db  ; 
     done < <(find $proj_txt_dir -type f)
     
     # verify the data
@@ -234,7 +333,7 @@ src - for the source code of the actual projects and subprojects
     
 
 ## 6. SOURCE CODE MANAGEMENT
-The issue-tracker is a derivative of the wrapp tool - this means that development and deployment process must be integrated into a single pipeline. 
+The qto is a derivative of the wrapp tool - this means that development and deployment process must be integrated into a single pipeline. 
 
     
 
@@ -271,7 +370,7 @@ No code should be merged into the development branch without broad testing cover
 The tst branch is dedicated for testing of all the tests, the deployment, performance testing and configuration changes. Should you need to perform bigger than a small hotfix changes you must branch the tst branch into a separate dev--feature branch and re-run the integration testing and approval all over. 
 At the end all the integration tests should be behind this shell call. 
 
-    export issue_tracker_project=""; bash src/bash/issue-tracker/issue-tracker.sh -a run-integration-tests
+    export issue_tracker_project=""; bash src/bash/qto/qto.sh -a run-integration-tests
 
 ### 6.7. Quality assurance in the qas branch
 At this phase all the tests with all the expected functionalities should work at once. No small hotfixes are allowed - if a need arises new branch is created to the tst branch The quality assurance
@@ -294,8 +393,8 @@ This scenario describes the steps and processes, which could be implemented to a
     
 
 ## 8. WAY OF WORKING
-This section describes the way of working within a team working on the issue-tracker project. 
-The work on the issue-tracker project is conducted by using the Scrum methodology, thus the Scrum
+This section describes the way of working within a team working on the qto project. 
+The work on the qto project is conducted by using the Scrum methodology, thus the Scrum
 
     
 
@@ -330,7 +429,7 @@ As in other places the main principle to follow is "use common sense" , thus try
     
 
 ### 9.1. Issue creation
-Even if you do not have a defined documentation artifact - create a new issue, which could be the start for a an action affecting the run-state, configuration , data , features and functionalities or other aspects of the issue-tracker application. 
+Even if you do not have a defined documentation artifact - create a new issue, which could be the start for a an action affecting the run-state, configuration , data , features and functionalities or other aspects of the qto application. 
 An issue could be a bug, a request for a feature or even simply an undefined combination of problems and solution which could quickly be formalized by defining a new requirement, another issue, feature-request
 
     
@@ -396,12 +495,12 @@ Implement by quick unit test runs. Constantly improve both the code , configurat
 Deploy to the test environment. 
 
     # deploy to the tst environment
-    bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
+    bash src/bash/qto/qto.sh -a to-tst
     
     # go to the product instance dir of the tst env for this version
-    cd ../issue-tracker.<<version>>.tst.<<owner>>
+    cd ../qto.<<version>>.tst.<<owner>>
     # run the integration tests
-    bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-integration-tests
+    bash src/bash/qto/qto.sh -a run-perl-integration-tests
     
 
 ### 9.12. Deployment and test to the production environment
@@ -419,50 +518,50 @@ Perform the DoD checklist as follows
 
     
 
-#### 9.14.1. The related requirement is added in the requirements document
-The related requirement is added in the requirements document - there might be one or more requirements added. 
-
-    
-
-#### 9.14.2. The feature or functionality current description is added in the docs
+### 9.15. The feature or functionality current description is added in the docs
 The feature or functionality current description is added in the Features and Functionalities document. 
 
     
 
-### 9.15. At least 2 times passed integration tests run in each environment instance
+### 9.16. The related requirement is added in the requirements document
+The related requirement is added in the requirements document - there might be one or more requirements added. 
+
+    
+
+### 9.17. At least 2 times passed unit tests run in each environment instance
 At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. 
 
     
 
-#### 9.15.1. At least 2 times passed unit tests run in each environment instance
+### 9.18. At least 2 times passed integration tests run in each environment instance
 At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. 
 
     
 
-### 9.16. Deployment to the test environment
+### 9.19. Deployment to the test environment
 Deploy to the test environment as follows:
 
     # deploy to the tst environment
-    bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
+    bash src/bash/qto/qto.sh -a to-tst
     
     # go to the product instance dir of the tst env for this version
-    cd ../issue-tracker.<<version>>.tst.<<owner>>
+    cd ../qto.<<version>>.tst.<<owner>>
     
 
-#### 9.16.1. Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. 
+### 9.20. Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. 
 Deploy to the test environment as follows:
 
     # deploy to the tst environment
-    bash src/bash/issue-tracker/issue-tracker.sh -a to-tst
+    bash src/bash/qto/qto.sh -a to-tst
     
     # go to the product instance dir of the tst env for this version
-    cd ../issue-tracker.<<version>>.tst.<<owner>>
+    cd ../qto.<<version>>.tst.<<owner>>
     
 
-#### 9.16.2. restart the application layer
+### 9.21. restart the application layer
 Well just chain the both commands. 
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop ; bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
+    bash src/bash/qto/qto.sh -a mojo-morbo-stop ; bash src/bash/qto/qto.sh -a mojo-morbo-start
 
 ## 10. SYSTEM ADMINISTRATION AND MAINTENANCE OPERATIONS
 
@@ -478,29 +577,29 @@ Well just chain the both commands.
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
-     [INFO ] 2018.09.14-10:23:14 EEST [issue-tracker][@host-name] [4426] running action :: mojo-morbo-start:doMojoMorboStart
+     [INFO ] 2018.09.14-10:23:14 EEST [qto][@host-name] [4426] running action :: mojo-morbo-start:doMojoMorboStart
     (Not all processes could be identified, non-owned process info
      will not be shown, you would have to be root to see it all.)
     tcp        0      0 0.0.0.0:3001            0.0.0.0:*               LISTEN      6034/issue_tracker
     tcp        0      0 0.0.0.0:3002            0.0.0.0:*               LISTEN      7626/issue_tracker
     Can't create listen socket: Address already in use at /usr/local/share/perl/5.26.0/Mojo/IOLoop.pm line 130.
-     [INFO ] 2018.09.14-10:23:16 EEST [issue-tracker][@host-name] [4426] STOP FOR issue-tracker RUN with:
-     [INFO ] 2018.09.14-10:23:16 EEST [issue-tracker][@host-name] [4426] STOP FOR issue-tracker RUN: 0 0 # = STOP MAIN = issue-tracker
-    issue-tracker-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/issue-tracker/issue-tracker.0.4.9.dev.ysg] $
+     [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN with:
+     [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
+    qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
 #### 10.1.2. Probable root cause
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
-     [INFO ] 2018.09.14-10:23:14 EEST [issue-tracker][@host-name] [4426] running action :: mojo-morbo-start:doMojoMorboStart
+     [INFO ] 2018.09.14-10:23:14 EEST [qto][@host-name] [4426] running action :: mojo-morbo-start:doMojoMorboStart
     (Not all processes could be identified, non-owned process info
      will not be shown, you would have to be root to see it all.)
     tcp        0      0 0.0.0.0:3001            0.0.0.0:*               LISTEN      6034/issue_tracker
     tcp        0      0 0.0.0.0:3002            0.0.0.0:*               LISTEN      7626/issue_tracker
     Can't create listen socket: Address already in use at /usr/local/share/perl/5.26.0/Mojo/IOLoop.pm line 130.
-     [INFO ] 2018.09.14-10:23:16 EEST [issue-tracker][@host-name] [4426] STOP FOR issue-tracker RUN with:
-     [INFO ] 2018.09.14-10:23:16 EEST [issue-tracker][@host-name] [4426] STOP FOR issue-tracker RUN: 0 0 # = STOP MAIN = issue-tracker
-    issue-tracker-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/issue-tracker/issue-tracker.0.4.9.dev.ysg] $
+     [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN with:
+     [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
+    qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
 #### 10.1.3. Known solution and workaround
 List the running perl processes which run the morbo and kill the instances

@@ -1,5 +1,8 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
+src/js/node/js-unit-tests/01-set-url-param/test/test.js
+src/js/node/js-unit-tests/01-set-url-param/package.json
+# -- 
 src/perl/issue_tracker/public/poc/right-click-vmenu
 src/perl/issue_tracker/public/poc/right-click-vmenu/right-click-menu.css
 src/perl/issue_tracker/public/poc/right-click-vmenu/right-click-vmenu.html
@@ -24,6 +27,7 @@ src/perl/issue_tracker/templates/layouts/site.html.ep
 src/perl/issue_tracker/templates/layouts/view.html.ep
 src/perl/issue_tracker/templates/js/global/get-url-params.func.js.html.ep
 src/perl/issue_tracker/templates/js/global/get-server-data.func.js.html.ep
+src/perl/issue_tracker/templates/js/global/set-url-param.func.js.html.ep
 src/perl/issue_tracker/lib/IssueTracker/Controller/View.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestView.t
 src/perl/issue_tracker/templates/layouts/list.html.ep
@@ -371,6 +375,7 @@ src/sql/pgsql/qto/24.create-table-system_guide.sql
 src/sql/pgsql/qto/24.1.create-table-system_guide_doc.sql
 src/sql/pgsql/qto/25.create-table-installations.sql
 src/sql/pgsql/qto/25.1.create-table-installations_doc.sql
+src/sql/pgsql/qto/26.create-table-release_history.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/qto/93.create-table-benchmarks.sql
@@ -718,12 +723,10 @@ doc/txt/issue-tracker/funcs/mojo-morbo-stop.func.txt
 # ---
 met/.prd.issue-tracker
 met/.tst.issue-tracker
-# ---
 src/bash/issue-tracker/funcs/run-integration-tests.func.sh
 src/bash/issue-tracker/tests/run-integration-tests.test.sh
 src/bash/issue-tracker/helps/run-integration-tests.help.sh
 doc/txt/issue-tracker/helps/run-integration-tests.help.txt
-doc/txt/issue-tracker/funcs/run-integration-tests.func.txt
 doc/dot/readme/what-is-issue-tracker.dot
 doc/dot/readme/what-is-it-system.dot
 doc/dot/devops/shell-action-control-flow-diagram.dot
@@ -842,6 +845,7 @@ src/bash/issue-tracker/tests/run-data-load-tests.test.sh
 src/bash/issue-tracker/helps/run-data-load-tests.help.sh
 doc/txt/issue-tracker/funcs/run-data-load-tests.func.txt
 # ---
+src/bash/issue-tracker/funcs/run-js-unit-tests.func.sh
 src/bash/issue-tracker/funcs/run-unit-tests.func.sh
 src/bash/issue-tracker/tests/run-unit-tests.test.sh
 doc/txt/issue-tracker/funcs/run-unit-tests.func.txt

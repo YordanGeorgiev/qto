@@ -1,4 +1,4 @@
-% if ( param('as') ne "print-doc" ) {
+% if ( !defined ( param('as') ) or param('as') ne "print-doc" ) {
    <div class="app_name_tooltip"> <%= "$db" =%>
       <div class="app_name_tooltiptext">
          <%= " $ProductVersion " =%>
