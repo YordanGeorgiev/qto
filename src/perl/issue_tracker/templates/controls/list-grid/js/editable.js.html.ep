@@ -63,16 +63,12 @@
             var columnWidthsFiltered = Array.prototype.slice.call(textareaList).filter(elm => elm.id.startsWith(col))
             var widths = columnWidthsFiltered.map( elm => Number(elm.style.width.slice(0,-2)) )
             var maxWidth = widths.sort(function(a, b) { return b - a })[0]
-            console.log ( maxWidth)
-            console.log ( "maxWidth") // todo:ysg
-            maxWidth = ( typeof ( maxWidth ) == 'undefined' ) ? 60 : maxWidth
+            //maxWidth = ( typeof ( maxWidth ) == 'undefined' ) ? 60 : maxWidth
             return maxWidth
          }
        , getColMaxWidth(el) {
             var col = el.id.split('-')[0]
             var meta = this.$parent.$parent.gridMetaData
-            console.log ( meta ) 
-            console.log ( "meta" ) //todo:ysg
             for (var prop in this.$parent.$parent.gridMetaData) {
                if (!this.$parent.$parent.gridMetaData.hasOwnProperty(prop)) {
                  continue;
@@ -92,9 +88,7 @@
                }
             }
 
-            maxWidth = ( typeof ( maxWidth ) == 'undefined' ) ? 60 : maxWidth
-            console.log ( maxWidth)
-            console.log ( "maxWidth") // todo:ysg
+            // maxWidth = ( typeof ( maxWidth ) == 'undefined' ) ? 60 : maxWidth
             return maxWidth
          }
        , calcWidth() {

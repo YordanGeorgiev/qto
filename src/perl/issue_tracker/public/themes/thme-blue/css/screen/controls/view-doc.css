@@ -1,12 +1,10 @@
 body {
    padding: 1% 3% 40% 3%;
 }
-
 #content {   
 	overflow:auto;
  	width: 100% ; 
 }
-
 #lft_body {
 	overflow:auto;
  	width: 80% ; 
@@ -15,11 +13,9 @@ body {
    padding: 0% 10% 0% 10% ;
    transition: margin-right .5s;
 }
-
 #rgt_toc {
    padding: 0% 3% 0% 3% ;
 }
-
 h1, h2, h3, h4, h5, h6 {
    float: left;
    clear: both;
@@ -28,16 +24,13 @@ h1, h2, h3, h4, h5, h6 {
    margin-block-end: 0em;
    margin-left: -14px;
 }
-
 .scroll {
    text-decoration: none;
 }
-
 .cls_desc {
    clear: both;
    float: left;
 }
-
 .cls_src {
    clear: both;
    float: left;
@@ -88,7 +81,6 @@ h1, h2, h3, h4, h5, h6 {
 .rgt_side_nav a:active {
   color: #f1f1f1;
 }
-
 .rgt_side_nav .cls_close_btn {
   position: absolute;
   top: 0;
@@ -96,7 +88,6 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 30px;
   margin-right: 70px;
 }
-
 @media screen and (max-height: 20%) {
   .rgt_side_nav {
 		padding-top: 10px;
@@ -105,7 +96,6 @@ h1, h2, h3, h4, h5, h6 {
 		font-size: 12%;
 	}
 }
-
 #div_open_rgt_menu {
   position: fixed;
   top: 0 ;
@@ -114,4 +104,10 @@ h1, h2, h3, h4, h5, h6 {
   float:right;
   font-size: 25px;
   padding: 1% 2% 2% 2%;
+}
+.cls_doc_img {
+   clear: both;
+   font-size: 80%;
+   font-weight: bold;
+   color: #A9A9A9 ;
 }
