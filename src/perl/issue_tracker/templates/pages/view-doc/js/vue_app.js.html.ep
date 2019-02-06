@@ -93,9 +93,6 @@
             context.commit('SET_SNACKBAR_SHOW', showSnackBar)
          }
          , loadContextMenu: (context, showContextMenu,id) => {
-            console.log ( "loadContextMenu")
-            console.log ( id )  
-            console.log ( "id" ) // todo:ysg
             context.commit('SET_CONTEXT_MENU_SHOW', showContextMenu, id)
          }
          , loadSnackBarMsg: (context, msg) => {
@@ -113,14 +110,9 @@
          , showContextMenu (context,payload) {
             var e = payload ; 
             var id = String(e.target.id).split('-')[1]
-            console.log ( "showContextMenu")
-            console.log ( id ) // todo:ysg
-            console.log ( "id" )
             if ( typeof ( id ) === "undefined" ) { alert ( "showContextMenu id undef" ) ; return }
             e.preventDefault();
             var menu = document.getElementById("div-context-menu");
-            console.log ( menu ) //todo:ysg
-            console.log ( "menu" )
             menu.cid = id
             menu.style.left = e.pageX + 'px'
             menu.style.top = e.pageY + 'px'

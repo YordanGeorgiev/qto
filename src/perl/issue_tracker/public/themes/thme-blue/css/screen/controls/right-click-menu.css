@@ -11,14 +11,14 @@
 .cls-context-menu { 
    display:none; 
    position:absolute; 
-   border-top-left-radius: 15%;
-   border-top-right-radius: 15%;
-   border-bottom-left-radius: 15%;
-   border-bottom-right-radius: 15%;
+   border-top-left-radius: 8%;
+   border-top-right-radius: 8%;
+   border-bottom-left-radius: 8%;
+   border-bottom-right-radius: 8%;
    border: 3px solid #CDCDCD;
-   box-shadow: 15px 15px 25px #C0C0C0;
-   -webkit-box-shadow: 15px 15px 20px #C0C0C0;
-   -moz-box-shadow: 15px 15px 20px #C0C0C0;
+   box-shadow: 10px 10px 10px 10px #C0C0C0;
+   -webkit-box-shadow: 10px 10px 10px 10px #C0C0C0;
+   -moz-box-shadow: 10px 10px 10px 10px #C0C0C0;
 }
 .cls-context-menu ul, .cls-context-menu li {
     list-style:none;

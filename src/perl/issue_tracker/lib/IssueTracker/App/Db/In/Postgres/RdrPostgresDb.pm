@@ -1075,11 +1075,8 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 				ORDER BY seq
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
+         # old?! LIMIT $limit OFFSET $offset
 
-         p $hsr2 ; #todo:ysg
-         #old LIMIT $limit OFFSET $offset
-
-         # r $hsr2 ; 
       };
       if ( $@ ) {
          $rv               = 404 ; 

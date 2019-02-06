@@ -380,6 +380,8 @@ src/sql/pgsql/qto/26.create-table-release_history.sql
 src/sql/pgsql/qto/27.create-table-maintenance_guide.sql
 src/sql/pgsql/qto/27.1.create-table-maintenance_guide_doc.sql
 src/sql/pgsql/qto/28.create-table-imgs.sql
+src/sql/pgsql/qto/29.create-table-enduser_guide.sql
+src/sql/pgsql/qto/29.1.create-table-enduser_guide_doc.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/qto/93.create-table-benchmarks.sql
@@ -600,13 +602,14 @@ src/bash/issue-tracker/tests/generate-action-files.test.sh
 doc/pdf
 README.md
 doc/md
-doc/md/concepts.md
-doc/md/devops_guide.md
-doc/md/features.md
-doc/md/installations.md
-doc/md/requirements.md
-doc/md/system_guide.md
-doc/md/userstories.md
+doc/md/concepts_doc.md
+doc/md/devops_guide_doc.md
+doc/md/enduser_guide_doc.md
+doc/md/features_doc.md
+doc/md/installations_doc.md
+doc/md/requirements_doc.md
+doc/md/system_guide_doc.md
+doc/md/userstories_doc.md
 # --
 doc/txt/issue-tracker/funcs/generate-sql.func.txt
 doc/txt/issue-tracker/helps/generate-sql.help.txt
