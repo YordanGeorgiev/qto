@@ -37,7 +37,7 @@ const ContextMenu = Vue.component('context-menu', {
             id = e.target.parentElement.parentElement.parentElement.parentElement.cid
          }
          var uri = window.location.href.replace('/view/', '/list/')
-         uri = uri.setUriParam("bid",id)
+         uri = uri.setUriParam("bid",String(id))
          uri = uri.setUriParam("as","grid")
          uri = uri.setUriParam("oa","seq")
          window.location.href = uri
