@@ -144,21 +144,23 @@
             .then ( result => {
                if ( result.toString() !== "Error: Request failed with status code 409" ) {
                   var url_params = this.getUrlParams();
-                  var deletables = ["pg-num", "pg-size", "od", "oa", "with", "like-by", "like-val"];
-                  for(var kv of url_params.entries()) { 
-                     if ( deletables.indexOf(kv[0]) != -1 ) {
-                        url_params.delete(String(kv[0])) ; 
-                     }
-                  }
-                  url_params.set("od" , "id");
-                  url_params.set("pg-size" , "7");
-                  url_params.set("pg-num" , 1);
-                  this.fetchServerSideDataToUI(url_params); 
                   var queryStr = ""
                   for(var kv of url_params.entries()) { queryStr = queryStr + kv[0]+ '='+ kv[1] + '&'; }
                   var uri = window.location.href.split('?')[0] + '?' + queryStr.slice(0, - 1)
-                  uri = uri.replace(/([&]{0,1}oa=([0-9a-zA-Z_\-]+))+/gi , "") 
-                  uri = uri.replace(/([&]{0,1}od=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  if ( uri.indexOf("oa=prio") === -1 ) { url_params.set("od" , "id") }
+                  url_params.set("pg-size" , "7")
+                  url_params.set("pg-num" , 1)
+                  this.fetchServerSideDataToUI(url_params)
+                  if ( uri.indexOf("oa=prio") === -1 ) { 
+                     uri = uri.replace(/([&]{0,1}oa=([0-9a-zA-Z_\-]+))+/gi , "") 
+                     uri = uri.replace(/([&]{0,1}od=([0-9a-zA-Z_\-]+))+/gi , "") 
+                     uri = uri.setUriParam("od","id")
+                  } else {
+                     uri = uri.setUriParam("od",null)
+                  }
+                  uri = uri.replace(/([&]{0,1}pg-num=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  uri = uri.replace(/([&]{0,1}pg-size=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  uri = uri.replace(/([&]{0,1}for=([0-9a-zA-Z_\-]+))+/gi , "") 
                   uri = uri.replace(/([&]{0,1}with=([0-9a-zA-Z_\-]+))+/gi , "") 
                   uri = uri.replace(/([&]{0,1}like-by=([0-9a-zA-Z_\-]+))+/gi , "") 
                   uri = uri.replace(/([&]{0,1}like-val=([0-9a-zA-Z_\-]+))+/gi , "") 

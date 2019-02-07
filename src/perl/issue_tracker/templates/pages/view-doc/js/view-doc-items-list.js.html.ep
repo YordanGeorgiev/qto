@@ -4,6 +4,9 @@
             return this.$store.getters.getItems;
          }
       }
+      , created() {
+         console.log ( this )
+      }
       , methods: {
          toggleItem: function(id) {
             this.$store.dispatch("toggleItem", id);

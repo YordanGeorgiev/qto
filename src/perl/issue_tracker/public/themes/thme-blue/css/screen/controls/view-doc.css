@@ -17,12 +17,14 @@ body {
    padding: 0% 3% 0% 3% ;
 }
 h1, h2, h3, h4, h5, h6 {
+   padding-top: 30px;
    float: left;
    clear: both;
    font-size: 16px;
    margin-block-start: 0em;
    margin-block-end: 0em;
-   margin-left: -14px;
+   margin-left: -10px;
+   line-height: 1.5em;
 }
 .scroll {
    text-decoration: none;
@@ -30,16 +32,18 @@ h1, h2, h3, h4, h5, h6 {
 .cls_desc {
    clear: both;
    float: left;
+   max-width: 80% ;
+   white-space: pre-wrap;
 }
 .cls_src {
    clear: both;
    float: left;
    color: #4d4d4c;
    font: 0.9em Consolas, Menlo, Monaco, Courier, monospace;
-   line-height: 1.5em;
    text-align: left;
    text-shadow: #eee 0 1px 0;
    white-space: pre-wrap;
+   line-height: 1.5em;
 }
 
 .permalink {

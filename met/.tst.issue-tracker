@@ -74,6 +74,7 @@ src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-next-10.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-prev.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/play-prev-10.png
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/trash-bin.png
+src/perl/issue_tracker/public/themes/thme-blue/img/controls/pdf-print-preview.png
 # --
 src/perl/issue_tracker/templates/controls/list-labels/list-labels.html.ep
 src/perl/issue_tracker/templates/controls/list-print-table/list-print-table.html.ep
@@ -382,6 +383,9 @@ src/sql/pgsql/qto/27.1.create-table-maintenance_guide_doc.sql
 src/sql/pgsql/qto/28.create-table-imgs.sql
 src/sql/pgsql/qto/29.create-table-enduser_guide.sql
 src/sql/pgsql/qto/29.1.create-table-enduser_guide_doc.sql
+src/sql/pgsql/qto/27.1.create-table-maintenance_guide_doc.sql
+src/sql/pgsql/qto/30.create-table-deployment_guide.sql
+src/sql/pgsql/qto/30.1.create-table-deployment_guide_doc.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/qto/93.create-table-benchmarks.sql

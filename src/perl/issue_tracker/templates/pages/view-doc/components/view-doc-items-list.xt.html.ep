@@ -1,5 +1,13 @@
 <template id="view-doc-items-list">
    <div id="content">
+      <div v-if="_self.$el.baseURI.indexOf('as=print-doc') !== -1" class="cls_print_toc" v-for="item in items">
+         <div tabindex="2" :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event,item.id)">
+            <a :id="'tlp_<%= $item =%>-' + item.id"  :href="'#<%= $item =%>-' + item.id" class="scroll">
+               {{item.logical_order}} {{item.name}}
+            </a>
+         </div>
+      </div>
+      <p v-if="_self.$el.baseURI.indexOf('as=print-doc') !== -1" style="page-break-after: always;">&nbsp;</p>
       <div id="lft_body">
          <div v-for="item in items" @click="hideContextMenu()"> 
             <h3 tabindex="2" :id="'tle_<%= $item =%>-' + item.id" class="title" 
@@ -9,10 +17,9 @@
                <a :id="'title-'+ item.id" :href="'#<%= $item =%>-' + item.id" :title="'level:' + item.level + ' :: seq: ' + item.seq "
                   class="cls-context-menu-link">{{item.logical_order}} {{item.name}}</a>
             </h3>
-            <div class="cls_desc" :id="'dsc_<%= $item =%>-' + item.id">
-               <p tabindex="2"> {{item.description}} </p>
-            </div>
-               <p><pre tabindex="2" class="cls_src">{{item.src}}</pre></p>
+            <div v-if="item.description" class="cls_desc" :id="'dsc_<%= $item =%>-' + item.id">
+               <p tabindex="2"> {{ item.description }}</p></div>
+            <p v-if="item.src"><pre v-if="item.src" tabindex="2" class="cls_src">{{item.src}}</pre></p>
             <div v-if="item.img_relative_path" class="cls_doc_img">
                <p> {{ item.img_name }}  </p>
                <img :src="item.img_relative_path" :style="item.img_style"></img>
