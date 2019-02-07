@@ -6,7 +6,7 @@ SELECT 'create the "userstories" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , status         varchar (20) NOT NULL DEFAULT 'status ...'
-    , prio           integer NOT NULL DEFAULT 1
+    , prio           integer NOT NULL DEFAULT 0
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())

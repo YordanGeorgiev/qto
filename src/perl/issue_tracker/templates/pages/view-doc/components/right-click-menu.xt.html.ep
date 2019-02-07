@@ -22,6 +22,10 @@
 			<a @click="exportItemToXls($event)"><img src="../../themes/thme-blue/img/controls/xls-icon.png" 
 				class="context-menu-icon"  width="18"> export to xls </a>
 		 </context-menu-item>
+		 <context-menu-item>
+			<a @click="openInPrintPreview($event)"><img src="../../themes/thme-blue/img/controls/pdf-print-preview.png" 
+				class="context-menu-icon"  width="18"> pdf print preview </a>
+		 </context-menu-item>
 	  </ul>
 	</div>
 </template>

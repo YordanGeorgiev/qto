@@ -59,7 +59,17 @@ const ContextMenu = Vue.component('context-menu', {
          }
          var uri = window.location.href.replace('/view/', '/export/')
          uri = uri.setUriParam("bid",id)
-         uri = uri.setUriParam("as","xls") // ysg:todo
+         uri = uri.setUriParam("as","xls")
+         window.location.href = uri
+	   }
+	   , openInPrintPreview: function (e) {
+         var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var uri = window.location.href
+         uri = uri.setUriParam("bid",id)
+         uri = uri.setUriParam("as","print-doc") 
          window.location.href = uri
 	   }
 	}

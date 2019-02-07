@@ -2,9 +2,9 @@
 
 % content_for cnt_header_css => begin
   <title> view <%= " $item " =%>  <%= "as $as in " =%> <%= "$db " =%> </title> 
-   <link rel="stylesheet" type="text/css" media="screen"  
+   <link rel="stylesheet" type="text/css" 
       href="../../themes/thme-blue/css/screen/controls/view-doc.css?v=<%= $ProductVersion =%>" />
-   <link rel="stylesheet" type="text/css" media="screen"  
+   <link rel="stylesheet" type="text/css" 
       href="../../themes/thme-blue/css/screen/controls/right-click-menu.css?v=<%= $ProductVersion =%>" />
 % end
 
