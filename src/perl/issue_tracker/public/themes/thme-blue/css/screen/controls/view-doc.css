@@ -32,18 +32,25 @@ h1, h2, h3, h4, h5, h6 {
 .cls_desc {
    clear: both;
    float: left;
-   max-width: 80% ;
+   width: 80% ;
    white-space: pre-wrap;
 }
 .cls_src {
    clear: both;
    float: left;
    color: #4d4d4c;
+   width: 80% ;
+   padding: 2% 4% 2% 1%;
+   background-color: #F8F8F8;
    font: 0.9em Consolas, Menlo, Monaco, Courier, monospace;
    text-align: left;
    text-shadow: #eee 0 1px 0;
    white-space: pre-wrap;
    line-height: 1.5em;
+   border-top-left-radius: 8px;
+   border-top-right-radius: 8px;
+   border-bottom-left-radius: 8px;
+   border-bottom-right-radius: 8px;
 }
 
 .permalink {
@@ -114,4 +121,8 @@ h1, h2, h3, h4, h5, h6 {
    font-size: 80%;
    font-weight: bold;
    color: #A9A9A9 ;
+}
+.cls_print_toc {
+   padding-left: 10%;
+   line-height: 1.5em;
 }
