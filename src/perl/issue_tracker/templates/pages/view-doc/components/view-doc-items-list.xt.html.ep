@@ -7,14 +7,15 @@
             </a>
          </div>
       </div>
-      <p v-if="_self.$el.baseURI.indexOf('as=print-doc') !== -1" style="page-break-after: always;">&nbsp;</p>
+      <p style="page-break-after: always;">&nbsp;</p>
       <div id="lft_body">
          <div v-for="item in items" @click="hideContextMenu()"> 
             <h3 tabindex="2" :id="'tle_<%= $item =%>-' + item.id" class="title" 
                @contextmenu = "showContextMenu($event,item.id)">
                <a :id="'htl_<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" class="permalink scroll"
                   :href="'#<%= $item =%>-' + item.id">#</a>
-               <a :id="'title-'+ item.id" :href="'#<%= $item =%>-' + item.id" :title="'level:' + item.level + ' :: seq: ' + item.seq "
+               <a :id="'title-'+ item.id" :href="'#<%= $item =%>-' + item.id" 
+                  :title="'level:' + item.level + ' :: seq: ' + item.seq "
                   class="cls-context-menu-link">{{item.logical_order}} {{item.name}}</a>
             </h3>
             <div v-if="item.description" class="cls_desc" :id="'dsc_<%= $item =%>-' + item.id">
