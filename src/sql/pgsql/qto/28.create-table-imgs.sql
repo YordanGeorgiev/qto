@@ -5,7 +5,7 @@ SELECT 'create the "imgs" table'
    CREATE TABLE imgs (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , name           varchar (100) NOT NULL DEFAULT 'image figure title ...'
+    , name           varchar (200) NOT NULL DEFAULT 'image figure title ...'
     , relative_path  varchar (1000) NOT NULL DEFAULT 'src/perl/issue_tracker/public/dat/img/qto/...'
     , http_path      varchar (1000) NOT NULL DEFAULT 'https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/..'
     , style          varchar (100) NOT NULL DEFAULT 'width: 800px; height: 600x'
