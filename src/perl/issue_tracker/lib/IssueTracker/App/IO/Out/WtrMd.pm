@@ -20,6 +20,16 @@ package IssueTracker::App::IO::Out::WtrMd ;
    our $objModel          = {} ; 
    our $objWtrDirs     = {} ; 
    our $ProductInstanceDir = {} ; 
+	
+   # -----------------------------------------------------------------------------
+	# credit:http://www.dispersiondesign.com/articles/perl/converting_text_to_html
+	# -----------------------------------------------------------------------------
+	sub convertHtmlEntities {
+		my $str = shift || '' ; 
+		$str =~ s/>/&gt;/g;
+		$str =~ s/</&lt;/g;
+		return $str ;
+	}
 
    #
    # ------------------------------------------------------
@@ -53,6 +63,8 @@ package IssueTracker::App::IO::Out::WtrMd ;
       my $col_id = 0 ; 
       my $row_id = 0 ; 
       my @col_names = ('id' , 'name' , 'description' , 'src')  ;
+      
+      my $str_toc = $self->doBuildTOC($table,$ahs2);
 
       foreach my $row ( @$ahs2 ) {
          my $id = $row->{ 'id' } ; 
@@ -81,7 +93,7 @@ package IssueTracker::App::IO::Out::WtrMd ;
 						$str_response .= "\n" ; 
                  
                   # it-190108215050
-                  # $str_response .= $str_toc  if $row->{'level'} == 1 ; 
+                  $str_response .= $str_toc  if $row_id == 1 ; 
                  
 				} elsif ( $col_name eq 'description' ) {
 					my $cell 		= $row->{ 'description' } ; 
@@ -95,7 +107,6 @@ package IssueTracker::App::IO::Out::WtrMd ;
 					$str_response .= "\n\n" ; 
 
             } elsif ( $col_name eq 'src' ) {
-
 					my $src_code  = $row->{ 'src' } ; 
 					$src_code =~ s/^/    /g ; 
 					$src_code =~ s/\n/\n    /gm ; 
@@ -118,6 +129,77 @@ package IssueTracker::App::IO::Out::WtrMd ;
       return (1 , $msg , undef ) unless -f $md_file ; 
    }
 
+   sub doBuildTOC {
+
+      my $self       = shift ; 
+      my $table      = shift ; 
+      my $ahs2       = shift ; 
+      my $row_id     = 0 ; 
+      my @col_names  = ('id' , 'name' , 'description' , 'src')  ;
+      my $control    = '' ; 
+
+      foreach my $row ( @$ahs2 ) {
+         my $id = $row->{ 'id' } ; 
+		   my $logical_order	= $row->{ 'logical_order' } || '' ; 
+		   my $level	= $row->{ 'level' } || 0 ; 
+         # p $row ; 
+         $row_id++ ; 
+
+      foreach my $col_name ( @col_names ) {
+            # debug p( $row );
+            # debug p $row->{ $col_name } ; 
+            if ( !defined ( $row )  or !defined ( $row->{ $col_name } ) or $row->{ $col_name } eq 'NULL' ) {
+               $row->{ $col_name } = '' ; 
+            }
+
+				if ( $col_name eq 'name' && $level != 0 ) {
+					my $title = '' ; 
+					my $msg							= '' ; 
+					my $debug_msg					= '' ; 
+
+					my $title_data					= $row->{'name'} ; 
+					$title_data						= convertHtmlEntities ( $title_data) ;
+					my $level_num					= $row->{'level'} ; 
+					$title_data						 = uc($title_data ) if ( $level_num == 1 or $level_num == 0 or $level_num == 2 ) ; 
+
+					my $id							= 'id' ; 
+					my $spaces 						= '' ; 
+               my $asterixes              = '' ; 
+               my $dashes                 = '' ; 
+					for ( my $i=1; $i < $row->{ 'level' };$i++) {
+						$spaces				  .= '  ' ; 
+						$asterixes		     .= '*' ; 
+						$dashes		        .= '#' ; 
+						$spaces				  .= '  ' if $i > 3 ; 
+					}
+					
+					my $title_link					= '' ; 
+					$title_link					   = lc ($title_data ) ; 
+					$title_link					   =~ s/ /-/g ; 
+					$title_link					   =~ s/[\<\>\?\!\:]//g ; 
+					$title_link					   =~ s/&gt;//g ; 
+					$title_link					   =~ s/&lt;//g ; 
+					$title_link					   =~ s/\-\-/-/g ; 
+					$title_link					   =~ s/\.//g ; 
+					
+					$title	 						.= $spaces . '*' . ' [' . $logical_order . " " . $title_data . ']' ; 
+               $logical_order              =~ s/\.//g ; 
+					$title	 						.= '(' . '#' . $logical_order . "-" . $title_link . ')' ; 
+					$title	 						.= "\n" ; 
+					
+					$control .= $title ; 
+                 
+				} elsif ( $col_name eq 'description' ) {
+            } elsif ( $col_name eq 'src' ) {
+            }
+         } 
+         #eof foreach col
+      } 
+      
+      $control .= "\n\n" ; 
+
+      return $control ; 
+   }
  
    # 
 	# -----------------------------------------------------------------------------

@@ -37,7 +37,7 @@ sub doValidateAndSetCreate {
    my $http_code     = 400 ; 
    my $id            = $perl_hash->{'id'} ; 
 
-   unless ( isint $id && $id > 0) {
+   unless ( isint $id && $id >= 0) {
       $http_code     = 400 ; 
       $msg           = 'the id must be a whole positive number, but ' . $id . ' was provided !' ; 
    } else {
@@ -60,7 +60,7 @@ sub doValidateAndSetUpdate {
    my $http_code     = 400 ; 
    my $id            = $perl_hash->{'id'} ; 
 
-   unless ( isint $id && $id > 0) {
+   unless ( isint $id && $id >= 0) {
       $http_code     = 400 ; 
       $msg           = 'the id must be a whole positive number, but ' . $id . ' was provided !' ; 
    } else {
@@ -85,7 +85,7 @@ sub doValidateAndSetDelete {
    my $http_code     = 400 ; 
    my $id            = $perl_hash->{'id'} ; 
 
-   unless ( isint $id && $id > 0) {
+   unless ( isint $id && $id >= 0) {
       $http_code     = 400 ; 
       $msg           = 'the id must be a whole positive number, but ' . $id . ' was provided !' ; 
    } else {

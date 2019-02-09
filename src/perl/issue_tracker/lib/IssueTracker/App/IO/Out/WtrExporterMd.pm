@@ -43,7 +43,7 @@ sub doExport {
    $objRdrDbsFactory 	= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
 
-   ($rv, $msg, $dat) 	= $objRdrDb->doHSelectBranch($db , $table, $objModel->get('view.web-action.bid'));
+   ($rv, $msg, $dat) 	= $objRdrDb->doHSelectBranch($db , $table, $objModel->get('hselect.web-action.bid'));
    $http_code 				= $rv ;  
    my $objCnrHashesArrRefToHashesArrRef = 'IssueTracker::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$appConfig  ) ; 
    # p ( $dat ) ; 

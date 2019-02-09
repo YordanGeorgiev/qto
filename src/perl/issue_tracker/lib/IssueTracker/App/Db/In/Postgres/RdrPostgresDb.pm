@@ -1046,20 +1046,37 @@ package IssueTracker::App::Db::In::Postgres::RdrPostgresDb ;
 
       eval {
 			$sql = " 
-				SELECT $columns_to_select FROM ( 
+				SELECT $columns_to_select 
+            , img_id
+            , img_item_guid
+            , img_name
+            , img_relative_path
+            , img_style
+            , img_description
+            FROM ( 
                SELECT node.* FROM $table AS node, $table AS parent 
                WHERE 1=1 AND node.lft 
                BETWEEN parent.lft AND parent.rgt
                $where_clause_bid
                )  AS dyn_sql 
+            LEFT JOIN ( 
+               SELECT 
+                 imgs.id            as img_id
+               , imgs.item_guid     as img_item_guid
+               , imgs.name          as img_name
+               , imgs.relative_path as img_relative_path
+               , imgs.style         as img_style
+               , imgs.description   as img_description
+               FROM imgs
+            ) AS imgs
+            ON ( dyn_sql.guid = imgs.img_item_guid ) 
 				WHERE 1=1 
             $where_clause_with
 				ORDER BY seq
-            LIMIT $limit OFFSET $offset
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
+         # old?! LIMIT $limit OFFSET $offset
 
-         # r $hsr2 ; 
       };
       if ( $@ ) {
          $rv               = 404 ; 

@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/usr/bin/env bash
 # file: src/bash/issue-tracker.sh doc at the eof file
 
 umask 022    ;

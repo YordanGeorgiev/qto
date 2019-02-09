@@ -1,8 +1,10 @@
-<div class="app_name_tooltip"> <%= "$db" =%>
-   <div class="app_name_tooltiptext">
-      <%= " $ProductVersion " =%>
-      <%= " $ProductType " =%>
-      <%= " $GitShortHash " =%>
-      <%= " $page_load_time " =%>
+% if ( !defined ( param('as') ) or param('as') ne "print-doc" ) {
+   <div class="app_name_tooltip"> <%= "$db" =%>
+      <div class="app_name_tooltiptext">
+         <%= " $ProductVersion " =%>
+         <%= " $ProductType " =%>
+         <%= " $GitShortHash " =%>
+         <%= " $page_load_time " =%>
+      </div>
    </div>
-</div>
+% }
