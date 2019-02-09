@@ -2,17 +2,24 @@
 
 % content_for cnt_header_css => begin
   <title> view <%= " $item " =%>  <%= "as $as in " =%> <%= "$db " =%> </title> 
-   <link rel="stylesheet" type="text/css" media="screen"  
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+   <link rel="stylesheet" type="text/css" 
       href="../../themes/thme-blue/css/screen/controls/view-doc.css?v=<%= $ProductVersion =%>" />
+   <link rel="stylesheet" type="text/css" 
+      href="../../themes/thme-blue/css/screen/controls/right-click-menu.css?v=<%= $ProductVersion =%>" />
 % end
 
 
 % content_for cnt_body_controls  => begin
    <div id="div_central_panel">
       <div class="container">
-         <div id="view_app">
+         <div id="view_app" @click="hideContextMenu" @contextmenu = "showContextMenu($event)">
          </div>
       </div>
+      %= include 'pages/view-doc/components/snackbar'
+      %= include 'pages/view-doc/components/right-click-menu.xt'
       %= include 'pages/view-doc/components/view-doc-items-list.xt'
       %= include 'pages/view-doc/components/app-template.xt'
    </div>
@@ -25,6 +32,10 @@
 
    %= include 'js/global/get-url-params.func.js'
    %= include 'js/global/get-server-data.func.js'
+   %= include 'js/global/set-url-param.func.js'
+   %= include 'pages/view-doc/js/snackbar.js'
+   %= include 'pages/view-doc/js/right-click-menu.js'
+   %= include 'pages/view-doc/js/view-doc-items-list.js'
    %= include 'pages/view-doc/js/vue_app.js'
 
 

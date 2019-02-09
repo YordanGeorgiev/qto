@@ -4,7 +4,7 @@ html, body {
    font-family: Helvetica Neue, Arial, sans-serif;
 }
 .app_name_tooltip {
-   color: #FFFFE0 ;
+   color: #D3D3D3 ;
    font-size: 75%;
    position: fixed; 
    z-index: 10; 
@@ -22,7 +22,7 @@ html, body {
    margin-right: 10px ; 
    width: 60px;
    background-color: grey ; 
-   color: #fff;
+   color: #fffaaa;
    text-align: right;
    border-radius: 6px;
    padding: 2px 10px 2px 10px ;

@@ -224,55 +224,61 @@ sub doSetRoutes {
    my $self = shift ; 
    my $r = $self->routes;
 	
-   # http://host-name:3001/dev_issue_tracker/Search/monthly_issues
+   # http://host-name:3001/qto/Search/monthly_issues
    $r->get('/:db/search')->to(
      controller   => 'Search'
    , action       => 'doSearchItems'
    );
 
-   # http://host-name:3001/dev_issue_tracker/query?for=<<global-txt-srch>>
+   # http://host-name:3001/qto/query?for=<<global-txt-srch>>
    $r->get('/:db/query')->to(
      controller   => 'Query'
    , action       => 'doQueryItems'
    );
 	
-   # http://host-name:3001/dev_issue_tracker/select-databases
+   # http://host-name:3001/qto/select-databases
    $r->get('/:db/select-databases')->to(
      controller   => 'Select'
    , action       => 'doSelectDatabases'
    );
 
-	# http://host-name:3001/dev_issue_tracker/select-tables
+	# http://host-name:3001/qto/select-tables
    $r->get('/:db/select-tables')->to(
      controller   => 'Select'
    , action       => 'doSelectTables'
    );
    
-   # http://host-name:3001/dev_issue_tracker/select/monthly_issues
+   # http://host-name:3001/qto/select/monthly_issues
    $r->get('/:db/select/:item')->to(
      controller   => 'Select'
    , action       => 'doSelectItems'
    );
    
-   # http://host-name:3001/dev_issue_tracker/select/monthly_issues/1
+   # http://host-name:3001/qto/select/monthly_issues/1
    $r->get('/:db/hselect/:item')->to(
      controller   => 'HSelect'
    , action       => 'doHSelectItems'
    );
    
-   # http://host-name:3001/dev_issue_tracker/create/monthly_issues?id=123
+   # http://host-name:3001/qto/hselect/monthly_issues/1
+   $r->get('/:db/hlselect/:item')->to(
+     controller   => 'HLSelect'
+   , action       => 'doHLSelectItems'
+   );
+   
+   # http://host-name:3001/qto/create/monthly_issues?id=123
    $r->post('/:db/create/:item')->to(
      controller   => 'Create'
    , action       => 'doCreateBySoleId'
    );
    
-   # http://host-name:3001/dev_issue_tracker/delete/monthly_issues?id=123
+   # http://host-name:3001/qto/delete/monthly_issues?id=123
    $r->post('/:db/delete/:item')->to(
      controller   => 'Delete'
    , action       => 'doDeleteItemById'
    );
    
-   # http://host-name:3001/dev_issue_tracker/update/monthly_issues
+   # http://host-name:3001/qto/update/monthly_issues
    $r->post('/:db/update/:item')->to(
      controller   => 'Update'
    , action       => 'doUpdateItemBySingleCol'
@@ -288,19 +294,19 @@ sub doSetRoutes {
    , action       => 'doSelectMeta'
    );
    
-   # http://host-name:3001/dev_issue_tracker/select/monthly_issues
+   # http://host-name:3001/qto/select/monthly_issues
    $r->get('/:db/list/:item')->to(
      controller   => 'List'
    , action       => 'doListItems'
    );
 
-   # http://host-name:3001/dev_issue_tracker/export/monthly_issues?as=xls
+   # http://host-name:3001/qto/export/monthly_issues?as=xls
    $r->get('/:db/export/:item')->to(
      controller   => 'Export'
    , action       => 'doExportItems'
    );
    
-   # http://host-name:3001/dev_issue_tracker/select/monthly_issues
+   # http://host-name:3001/qto/select/monthly_issues
    $r->get('/:db/view/:item')->to(
      controller   => 'View'
    , action       => 'doViewItems'
@@ -310,6 +316,8 @@ sub doSetRoutes {
      controller   => 'Search'
    , action       => 'doSearchItems'
    );
+
+   $r->websocket('/websocketecho')->to('WebSocketPoc#doTestWebSocket');
 }
 
 # -----------------------------------------------------------------------------
