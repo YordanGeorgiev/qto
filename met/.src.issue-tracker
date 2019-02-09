@@ -602,6 +602,8 @@ src/bash/issue-tracker/funcs/dev/generate-action-files.func.sh
 src/bash/issue-tracker/helps/generate-action-files.help.sh
 src/bash/issue-tracker/specs/generate-action-files.spec.sh
 src/bash/issue-tracker/tests/generate-action-files.test.sh
+src/perl/issue_tracker/public/dat/img/qto/concepts_doc/what-is-is.png
+src/perl/issue_tracker/public/poc/web-socket/web-socket-add-div.html
 #---
 doc/pdf
 README.md
@@ -866,6 +868,8 @@ src/perl/issue_tracker/public/dat/tmp/xls/1
 src/perl/issue_tracker/templates/controls/site/app_name_tooltip.html.ep
 # ---
 src/perl/issue_tracker/lib/auto/AutoLoadableChild/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/HLSelect/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/Controller/WebSocketPoc/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToJson/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Ctrl/CtrlDbToTxt/autosplit.ix
@@ -914,6 +918,10 @@ src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Select/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/Update/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/Controller/View/autosplit.ix
 src/perl/issue_tracker/lib/auto/SetGetableChild/autosplit.ix
+met/.dev.issue-tracker
+met/.src.issue-tracker
+met/.tst.issue-tracker
+met/.prd.issue-tracker
 # ---
 src/selenium/
 src/selenium/ide
