@@ -47,18 +47,22 @@ doMorphDir(){
 
 		#search and repl %var_id% with var_id_val in deploy_tmp_dir 
 		doLog "INFO search and replace in dir and file paths dir_to_morph:$dir_to_morph"
-
       # rename the dirs according to the pattern
       while read -r dir ; do (
-         perl -nle '$o=$_;s#'"\Q$to_srch\E"'#'"$to_repl"'#g;$n=$_;`mkdir -p $n` ;'
+         echo $dir|perl -nle '$o=$_;s#'"\Q$to_srch\E"'#'"$to_repl"'#g;$n=$_;`mkdir -p $n` ;'
       );
-      done < <(find $dir_to_morph -type d|grep -v '.git')
+      done < <(find $dir_to_morph -type d -not -path "/*node_modules/*" |grep -v '.git')
 
       # rename the files according to the pattern
       while read -r file ; do (
-         perl -nle '$o=$_;s#'"\Q$to_srch\E"'#'"$to_repl"'#g;$n=$_;rename($o,$n) unless -e $n ;'
+         echo $file | perl -nle '$o=$_;s|'"\Q$to_srch\E"'|'"$to_repl"'|g;$n=$_;rename($o,$n) unless -e $n ;'
       );
       done < <(find $dir_to_morph -type f -not -path "*/node_modules/*" |grep -v '.git')
+      
+      while read -r dir ; do (
+         rm -rv $dir
+      );
+      done < <(find $dir_to_morph -type d -not -path "/*node_modules/*" |grep -v '.git'|grep "$to_srch")
 
 }
 #eof doMorphDir
