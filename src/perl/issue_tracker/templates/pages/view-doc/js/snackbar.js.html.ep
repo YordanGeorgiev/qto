@@ -1,0 +1,97 @@
+   const SnackBar = Vue.component('snackbar', {
+     template: `
+       <transition name="snackbar">
+         <div v-if="cactive" class="snackbar" :class="classes">
+           <div class="snackbar__wrap">
+             <div class="snackbar__body">
+               <div>
+                  <input type="checkbox" id="infinity" v-model="infinity">
+                  <img src="../../themes/thme-blue/img/controls/tack.png" width="24px" height="24px"></img>
+               </div>
+               <button type="submit" href="javascript:void(0);" class="close-btn" 
+                  v-on:click="hideSnackBar">
+                  &#x2718; 
+               </button>
+               <slot></slot>
+             </div>
+				 <div> {{ this.cmsg }} </div>
+           </div>
+         </div>
+       </transition>
+     `
+     , computed: {
+         classes() {
+            return {
+               [`snackbar--${this.position}`]: true
+            } 
+         }
+			, cactive: {
+				get: function(){
+					return this.$store.getters.getSnackBarShow 
+				}
+				, set: function(newVal){
+         		this.$store.dispatch("loadSnackBar", newVal);
+				}
+			}
+			, cmsg: {
+				get: function(){
+					return this.$store.getters.getSnackBarMsg
+				}
+				, set: function(newVal){
+         		this.$store.dispatch("loadSnackBarMsg", newVal);
+				}
+			}
+     }
+     , props: {
+       active: {
+         type: Boolean
+         , default: false
+       }
+       , infinity : {
+         type: Boolean
+         , default: false
+       }
+       , position: {
+         type: String
+         , default: 'top-center'
+       }
+       , msg: {
+         type: String
+         , default: 'msg-default-value'
+       }
+       , timeout: {
+         type: Number
+         , default: 3900
+       }
+     },
+     data() {
+         return {
+         	timer: null
+         }
+     },
+     watch: {
+     	cactive() {
+      	this.setTimer()
+       }
+     	, infinity() {
+      	this.setTimer()
+       }
+     }
+     , methods: {
+			 setTimer() {
+				if (this.timer ) clearTimeout(this.timer)
+				if (!this.infinity) { 
+					this.timer = setTimeout(() => {
+						this.cactive = false
+						this.$emit('update:active', false)
+					}, this.timeout)
+				} else {
+						this.cactive = true
+						this.$emit('update:cactive', true)
+				}
+			 }
+         , hideSnackBar: function (e) {
+            this.$store.dispatch("hideSnackBar",e);
+         }
+     }
+   })

@@ -1,0 +1,164 @@
+<html>
+<head>
+   <style>
+		html, body, #app {
+		  margin: 0;
+		  width: 100%;
+		  height: 100%;
+		  display: flex;
+		  text-align: center;
+		  align-items: center;
+		  justify-content: center;
+		  background-color: #343338;
+		  font-family: Roboto, Tahoma, sans-serif;
+		}
+		.title {
+		  color: white;
+		  display: block;
+		  font-size: 25px;
+		}
+
+      .cls-context-menu { 
+			display:none; 
+			position:absolute; 
+		}
+      .cls-context-menu ul, #context-menu li {
+          list-style:none;
+          margin:0; padding:0;
+          background:white;
+      }
+      .cls-context-menu { border:solid 1px #CCC;}
+      .cls-context-menu li { 
+			border-bottom:solid 1px #CCC; 
+         display:block;
+         padding:5px 12px; 
+         text-decoration:none;
+         color:blue;
+		}
+      .cls-context-menu li:hover{ 
+          background: blue;
+          color: #FFF;
+		}
+      .cls-context-menu li:last-child { border:none; }
+
+		.context-menu-icon {
+		  top: 1px;
+		  position: relative;
+		  margin-right: 2px;
+		}
+		.cls-context-menu-item {
+		  cursor: pointer;
+        display:block;
+        padding:20px;
+        background:#ECECEC;
+		}
+
+
+
+</style>
+	  <!-- <link rel="stylesheet" type="text/css"
+			 href="../../poc/right-click-vmenu/right-click-menu.css" /> -->
+</head>
+<body>
+
+
+<template id="context-menu-item-template">
+  <li class="cls-context-menu-item">
+    <slot></slot>
+  </li>
+</template>
+
+<template id="context-menu-template">
+	<div id="div-context-menu" :nid="cid" class="cls-context-menu" style="left: 160px; top: 57px; display: none">
+	  <ul>
+		 <context-menu-item>
+			<a @click="addNewItem($event)"><img class="context-menu-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NS40IDQ1LjQiPjxwYXRoIGZpbGw9IiNmOTY5MGUiIGQ9Ik00MS4zIDE4LjZIMjYuOFY0YzAtMi0xLjgtNC00LTQtMi40IDAtNC4yIDItNC4yIDR2MTQuNkg0Yy0yIDAtNCAxLjgtNCA0IDAgMS4yLjUgMi4zIDEuMiAzIC44LjggMS44IDEuMyAzIDEuM2gxNC40djE0LjNjMCAxIC40IDIgMS4yIDMgLjcuNiAxLjggMSAzIDEgMi4yIDAgNC0xLjcgNC00VjI3aDE0LjVjMi4zIDAgNC0yIDQtNC4zcy0xLjgtNC00LTR6Ii8+PC9zdmc+" width="12"> 
+			 add new </a>
+		 </context-menu-item>
+		 <context-menu-item>
+			<a @click="updateItem($event)"><img class="context-menu-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MjguOSA1MjguOSI+PHBhdGggZmlsbD0iI2Y5NjkwZSIgZD0iTTMyOSA4OWwxMDcuNSAxMDcuN0wxNjQgNDY5IDU2LjcgMzYxLjYgMzI5IDg5em0xODktMjUuOGwtNDgtNDhjLTE4LjQtMTguNS00OC41LTE4LjUtNjcgMGwtNDYgNDYgMTA3LjUgMTA3LjVMNTE4IDExNWMxNC41LTE0LjIgMTQuNS0zNy40IDAtNTEuOHpNLjQgNTEyLjdjLTIgOC44IDYgMTYuNyAxNC44IDE0LjZsMTIwLTI5TDI3LjUgMzkwLjUuMyA1MTIuNnoiLz48L3N2Zz4=" width="12">
+			edit </a>
+		 </context-menu-item>
+		 <context-menu-item>
+			<a @click="removeItem($event)"><img class="context-menu-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMzkuMiAzMzkuMiI+PHBhdGggZmlsbD0iI2Y5NjkwZSIgZD0iTTI0Ny4yIDE2OS42bDg0LTg0YzUuMy01LjMgOC0xMS43IDgtMTkuNCAwLTcuNi0yLjctMTQtOC0xOS40TDI5Mi40IDhDMjg3IDIuNyAyODAuNiAwIDI3MyAwYy03LjcgMC0xNCAyLjctMTkuNSA4bC04NCA4NEw4NS44IDhDODAuMyAyLjcgNzQgMCA2Ni4yIDBjLTcuNiAwLTE0IDIuNy0xOS40IDhMOCA0Ni44Yy01LjMgNS40LTggMTEuOC04IDE5LjQgMCA3LjcgMi43IDE0IDggMTkuNWw4NCA4NC04NCA4My44QzIuNyAyNTkgMCAyNjUuMyAwIDI3M2MwIDcuNiAyLjcgMTQgOCAxOS40bDM4LjggMzguOGM1LjQgNS4zIDExLjggOCAxOS40IDggNy43IDAgMTQtMi43IDE5LjUtOGw4NC04NCA4My44IDg0YzUuNCA1LjMgMTEuOCA4IDE5LjUgOCA3LjYgMCAxNC0yLjcgMTkuNC04bDM4LjgtMzguOGM1LjMtNS40IDgtMTEuOCA4LTE5LjUgMC03LjctMi43LTE0LTgtMTkuNWwtODQtODR6Ii8+PC9zdmc+" width="10">
+			remove</a>
+		 </context-menu-item>
+	  </ul>
+	</div>
+</template>
+
+<div id="app" @click="hideContextMenu()" @contextmenu = "showContextMenu($event)">
+  <div>
+    <h3 id="title-1" class="title">Num-01 Click with right-a on body</h3>
+    <h3 id="title-2" class="title">Num-02 Click with right-a on body</h3>
+   </div>
+   <context-menu></context-menu>
+</div>
+
+   <div id="js_libs">
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+      <script src="https://unpkg.com/vue@2.5.3/dist/vue.js"></script> 
+      <script src="https://unpkg.com/vuex@3.0.1/dist/vuex.js"></script>
+   </div>
+   <script>
+
+Vue.component('context-menu-item', {
+  template: '#context-menu-item-template',
+  props: {
+    icon: ''
+  }
+});
+
+Vue.component('context-menu', {
+	template: '#context-menu-template'
+	, props: {
+		icon: ''
+		, nid: null
+	}
+   , data() {
+         return {
+         	cid: null
+         }
+   }
+	, methods: {
+		addNewItem: function (e) {
+         var itemId = e.target.parentElement.parentElement.parentElement.cid
+         var msg = "UPDATE clicked for item-id : " + itemId
+         console.log ( msg ) ; alert ( msg ) ;
+	 }
+	 , updateItem: function (e) {
+         var itemId = e.target.parentElement.parentElement.parentElement.cid
+         var msg = "UPDATE clicked for item-id : " + itemId
+         console.log ( msg ) ; alert ( msg ) ;
+	 }
+	 , removeItem: function (e) {
+         var itemId = e.target.parentElement.parentElement.parentElement.cid
+         var msg = "REMOVE clicked for item-id : " + itemId
+         console.log ( msg ) ; alert ( msg ) ;
+	 }
+	}
+});
+
+var vm = new Vue({
+  el: '#app'
+	, methods: {
+		showContextMenu: function (e) {
+			if ( e.target.className.startsWith("title") ) {
+				e.preventDefault();
+				var menu = document.getElementById("div-context-menu");
+				menu.style.left = e.pageX + 'px'
+				menu.style.top = e.pageY + 'px'
+				menu.style.display = 'block'
+				menu.cid = e.target.id.replace(/title-/,"")
+				console.log ( "cid")
+				console.log ( menu.cid )
+		 	}
+		}
+		, hideContextMenu: function () {
+			document.getElementById("div-context-menu").style.display = "none"
+		}
+	}
+});
+   </script>
+</body>
+</html>

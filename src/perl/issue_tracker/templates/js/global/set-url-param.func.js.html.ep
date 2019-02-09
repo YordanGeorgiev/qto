@@ -1,0 +1,16 @@
+String.prototype.setUriParam = function (paramName, paramValue) {
+   var uri = this
+   var fragment = ( uri.indexOf('#') === -1 ) ? '' : uri.split('#')[1] 
+   uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
+   if ( uri.indexOf("?") === -1 ) { uri = uri + '?&' } 
+   uri = uri.replace ( '?' + paramName , '?&' + paramName)
+   var toRepl = (paramValue != null) ? ('$1' + paramValue) : ''
+   var toSrch = new RegExp('([&]' + paramName + '=)(([^&#]*)?)')
+   uri = uri.replace(toSrch,toRepl)
+   if (uri.indexOf(paramName + '=') === -1 && toRepl != '' ) {
+      var ampersandMayBe = uri.endsWith('&') ? '' : '&'
+      uri = uri + ampersandMayBe + paramName + "=" + String(paramValue)
+   }
+   uri = ( fragment.length == 0 ) ? uri : (uri+"#"+fragment) //may-be re-add the fragment 
+   return uri
+}
