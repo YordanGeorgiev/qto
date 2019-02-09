@@ -1,4 +1,4 @@
--- DROP TABLE IF EXISTS monthly_issues ; 
+DROP TABLE IF EXISTS monthly_issues ; 
 
 SELECT 'create the "monthly_issues" table'
 ; 
@@ -11,7 +11,7 @@ SELECT 'create the "monthly_issues" table'
     , weight         integer NOT NULL DEFAULT 9
     , category       varchar (30) NOT NULL DEFAULT 'category ...'
     , status         varchar (20) NOT NULL DEFAULT 'status ...'
-    , prio           integer NOT NULL DEFAULT 1
+    , prio           integer NOT NULL DEFAULT 0
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
     , owner          varchar (20) NOT NULL DEFAULT 'unknown'
