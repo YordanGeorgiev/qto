@@ -4,6 +4,9 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/site.css?v=<%= $ProductVersion =%>" />
   <%= content 'cnt_header_css' %>
 </head>
