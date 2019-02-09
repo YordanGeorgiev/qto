@@ -63,6 +63,7 @@
             var columnWidthsFiltered = Array.prototype.slice.call(textareaList).filter(elm => elm.id.startsWith(col))
             var widths = columnWidthsFiltered.map( elm => Number(elm.style.width.slice(0,-2)) )
             var maxWidth = widths.sort(function(a, b) { return b - a })[0]
+            //maxWidth = ( typeof ( maxWidth ) == 'undefined' ) ? 60 : maxWidth
             return maxWidth
          }
        , getColMaxWidth(el) {
@@ -87,6 +88,7 @@
                }
             }
 
+            // maxWidth = ( typeof ( maxWidth ) == 'undefined' ) ? 60 : maxWidth
             return maxWidth
          }
        , calcWidth() {

@@ -1,0 +1,76 @@
+Vue.component('context-menu-item', {
+  template: '#context-menu-item-template',
+  props: {
+    icon: ''
+  }
+});
+
+const ContextMenu = Vue.component('context-menu', {
+	template: '#context-menu-template'
+	, props: {
+		  icon: ''
+		, nid: null
+	}
+	, computed: {
+		 cid: {		
+			get: function () {
+           return this.nid
+         }
+         , set: function (newVal) {
+           this.nid = newVal
+         }
+       }
+   }
+	, methods: {
+	   openItem: function (e) {
+         var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //the img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var uri = window.location.href 
+			uri = uri.setUriParam("bid",id)
+         window.location.href = uri
+	   }
+	   , openInList: function (e) {
+         var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //the img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var uri = window.location.href.replace('/view/', '/list/')
+         uri = uri.setUriParam("bid",String(id))
+         uri = uri.setUriParam("as","grid")
+         uri = uri.setUriParam("oa","seq")
+         window.location.href = uri
+	   }
+	   , exportItemToGitHubMd: function (e) {
+         var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //the img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var uri = window.location.href.replace('/view/', '/export/')
+         uri = uri.setUriParam("bid",id)
+         uri = uri.setUriParam("as","md")
+         window.location.href = uri
+	   }
+	   , exportItemToXls: function (e) {
+         var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var uri = window.location.href.replace('/view/', '/export/')
+         uri = uri.setUriParam("bid",id)
+         uri = uri.setUriParam("as","xls")
+         window.location.href = uri
+	   }
+	   , openInPrintPreview: function (e) {
+         var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var uri = window.location.href
+         uri = uri.setUriParam("bid",id)
+         uri = uri.setUriParam("as","print-doc") 
+         window.location.href = uri
+	   }
+	}
+});

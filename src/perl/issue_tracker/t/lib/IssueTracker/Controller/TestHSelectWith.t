@@ -30,7 +30,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
    my $ua  = $t->ua ; 
    my $response = $ua->get('/' . $db . '/select-tables')->result->json ; 
    my $list = $response->{ 'dat' } ; 
-   my @tables_to_check = ( 'devops_guide' , 'userstories' ) ; 
+   my @tables_to_check = ( 'devops_guide_doc' , 'userstories_doc' ) ; 
 
    for my $row ( @$list ) {
       

@@ -1,0 +1,27 @@
+#link {
+    display:block;
+    padding:20px;
+    background:#ECECEC;
+}
+
+#context-menu { position:absolute; display:none; }
+
+#context-menu ul, #context-menu li {
+    list-style:none;
+    margin:0; padding:0;
+    background:white;
+}
+
+#context-menu { border:solid 1px #CCC;}
+#context-menu li { border-bottom:solid 1px #CCC; }
+#context-menu li:last-child { border:none; }
+#context-menu li a {
+    display:block;
+    padding:5px 10px; 
+    text-decoration:none;
+    color:blue;
+}
+#context-menu li a:hover {
+    background:blue;
+    color:#FFF;
+}

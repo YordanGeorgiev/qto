@@ -1,0 +1,32 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="../../poc/right-click-menu-01/right-click-menu-01.css" />
+</head>
+
+<body>
+	<div id="div_rgt_menu_example">
+		<a id="link" href="#">Right click here</a>
+		<div id="context-menu">
+			 <ul>
+				  <li><a href="#">Item 1</a></li>
+				  <li><a href="#">Item 2</a></li>
+				  <li><a href="#">Item 3</a></li>
+			 </ul>
+		</div>
+	</div>
+	<script>
+	var menu = document.getElementById('context-menu');
+
+	document.onclick = function(e){
+		 menu.style.display = 'none';
+	}
+
+	document.getElementById('link').oncontextmenu = function(e){
+		e.preventDefault();        
+		 menu.style.left = e.pageX + 'px';
+		 menu.style.top = e.pageY + 'px';
+		 menu.style.display = 'block';
+	}
+	</script>
+</body>
+</html>
