@@ -14,6 +14,7 @@ SELECT 'create the "concepts_doc" table'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
     , src            varchar (4000)
+    , regex_changes  text NULL
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_concepts_doc_guid PRIMARY KEY (guid)
     ) WITH (

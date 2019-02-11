@@ -1,4 +1,4 @@
--- DROP TABLE IF EXISTS maintenance_guide_doc CASCADE;
+DROP TABLE IF EXISTS maintenance_guide_doc CASCADE;
 
 SELECT 'create the "maintenance_guide_doc" table'
 ; 
@@ -15,6 +15,7 @@ SELECT 'create the "maintenance_guide_doc" table'
     , name           varchar (200) NOT NULL DEFAULT 'name ...'
     , description    text NULL
     , src            text NULL
+    , regex_changes  text NULL
     , runtime        varchar (20) NULL 
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_maintenance_guide_doc_guid PRIMARY KEY (guid)
