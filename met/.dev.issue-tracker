@@ -12,6 +12,7 @@ src/perl/issue_tracker/templates/pages/view-doc/view-doc.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/js/view-doc-items-list.js.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/js/snackbar.js.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/js/vue_app.js.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/components/rgx-div.js.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/components/snackbar.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/components/view-doc-items-list.xt.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/components/right-click-menu.xt.html.ep
@@ -28,6 +29,7 @@ src/perl/issue_tracker/templates/layouts/view.html.ep
 src/perl/issue_tracker/templates/js/global/get-url-params.func.js.html.ep
 src/perl/issue_tracker/templates/js/global/get-server-data.func.js.html.ep
 src/perl/issue_tracker/templates/js/global/set-url-param.func.js.html.ep
+src/perl/issue_tracker/templates/js/global/linkifies.func.js.html.ep
 src/perl/issue_tracker/lib/IssueTracker/Controller/View.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestView.t
 src/perl/issue_tracker/templates/layouts/list.html.ep
