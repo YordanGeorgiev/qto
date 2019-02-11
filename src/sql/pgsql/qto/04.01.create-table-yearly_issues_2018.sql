@@ -41,11 +41,4 @@ SELECT 'show the columns of the just created table'
    ORDER  BY attnum
    ; 
 
---The trigger:
-CREATE TRIGGER trg_set_update_time_on_yearly_issues_2018 BEFORE UPDATE ON yearly_issues_2018 FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
-
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'yearly_issues_2018'::regclass;
 
