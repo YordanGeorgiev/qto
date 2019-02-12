@@ -2,12 +2,11 @@
    <div id="content">
       <div v-if="_self.$el.baseURI.indexOf('as=print-doc') !== -1" class="cls_print_toc" v-for="item in items">
          <div tabindex="2" :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event,item.id)">
-            <a :id="'tlp_<%= $item =%>-' + item.id"  :href="'#<%= $item =%>-' + item.id" class="scroll">
-               {{item.logical_order}} {{item.name}}
-            </a>
+            <a :id="'tlp_<%= $item =%>-' + item.id"  
+               :href="'#<%= $item =%>-' + item.id" class="scroll"> {{item.logical_order}} {{item.name}} </a>
          </div>
       </div>
-      <p style="page-break-after: always;">&nbsp;</p>
+         <div class="cls_page_breaker"></div>
       <div id="lft_body">
          <div v-for="item in items" @click="hideContextMenu()"> 
             <h3 tabindex="2" :id="'tle_<%= $item =%>-' + item.id" class="title" 
