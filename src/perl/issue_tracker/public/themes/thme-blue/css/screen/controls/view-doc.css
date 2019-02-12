@@ -5,6 +5,9 @@ body {
 	overflow:auto;
  	width: 100% ; 
 }
+.container {
+   margin-bottom: 10%;
+}
 #lft_body {
 	overflow:auto;
  	width: 80% ; 
@@ -123,6 +126,16 @@ h1, h2, h3, h4, h5, h6 {
    color: #A9A9A9 ;
 }
 .cls_print_toc {
-   padding-left: 10%;
+   padding-left: 13%;
    line-height: 1.5em;
+}
+@media print {
+   .cls_page_breaker {
+      page-break-after: always;
+   }
+}
+@media screen {
+   .cls_page_breaker {
+      visibility: hidden ;
+   }
 }
