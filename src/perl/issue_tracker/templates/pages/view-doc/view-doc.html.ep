@@ -40,6 +40,5 @@
    %= include 'pages/view-doc/js/view-doc-items-list.js'
    %= include 'pages/view-doc/js/vue_app.js'
 
-
    </script>
 % end

@@ -1,12 +1,12 @@
   const RgxDiv = Vue.component ('rgx-div', {
-     template: `<div v-bind:id="id" @blur="onBlur" v-bind:regex_changes="regex_changes" v-html="lnkMayBe"></div>`,
+     template: `<div v-bind:id="id" @blur="onBlur" v-bind:formats="formats" v-html="lnkMayBe"></div>`,
      props: {
 		   id: {}
          , cnt: {
             twoWay: true
             , default: ""
          }
-         , regex_changes: {
+         , formats: {
             twoWay: true
             , default: null
          }
@@ -14,13 +14,13 @@
      , computed: {
          lnkMayBe: function() {
             var lnkMayBe = (this.cnt == null) ? '' : this.cnt
-            if ( this.regex_changes != null ) {
-              console.log ( titles )
-              var titles = JSON.parse(this.regex_changes).lnktitles
+            if ( this.formats != null ) {
+              var titles = JSON.parse(this.formats).lnktitles
 				  titles.map ( title => lnkMayBe = String(lnkMayBe).linkifyOne(title) )	
             } else {
 				  lnkMayBe = String(lnkMayBe).linkify()
 			   }
+            lnkMayBe = lnkMayBe.linkifyItems()
 			   return (typeof(lnkMayBe) != "undefined") ? lnkMayBe : ''
          }
      }
