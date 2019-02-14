@@ -41,7 +41,8 @@
 % end
 % content_for js_scripts => begin
 
-    %= include 'js/global/set-url-param.func.js'
+   %= include 'js/global/linkifies.func.js'
+   %= include 'js/global/set-url-param.func.js'
 
     if ( document.getElementById("spn_msg") ) {
 
