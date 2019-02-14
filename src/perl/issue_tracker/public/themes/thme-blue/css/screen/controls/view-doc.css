@@ -124,9 +124,10 @@ h1, h2, h3, h4, h5, h6 {
    font-size: 80%;
    font-weight: bold;
    color: #A9A9A9 ;
+   padding-bottom: 5% ;
 }
 .cls_print_toc {
-   padding-left: 13%;
+   padding-left: 10%;
    line-height: 1.5em;
 }
 @media print {
@@ -138,4 +139,7 @@ h1, h2, h3, h4, h5, h6 {
    .cls_page_breaker {
       visibility: hidden ;
    }
+}
+.cls_fig {
+padding: 3% 0% 2% 0%;
 }

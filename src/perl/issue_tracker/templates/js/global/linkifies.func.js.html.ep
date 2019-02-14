@@ -1,10 +1,11 @@
 if(!String.linkify) {
     String.prototype.linkify = function() {
-        // http://, https://, ftp:// pseudo ->// www. without http:// or https://
         var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;\[\]]*[a-z0-9-+&@#\/%=~_|]/gim;
         var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
         var emailAddressPattern = /[\w.]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+/gim;
         return this
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;')
             .replace(urlPattern, '<a href="$&">$&</a>')
             .replace(pseudoUrlPattern, '$1<a href="http://$2">$2</a>')
     };
@@ -19,4 +20,17 @@ if(!String.linkifyOne) {
             .replace(urlPattern, '<a href="$2">' + title + '</a>')
             .replace(pseudoUrlPattern, '$2<a href="http://$3">' + title + '</a>')
     };
+}
+if(!String.linkifyItems) {
+   String.prototype.linkifyItems = function(){
+      var docItems = ['userstories_doc', 'deployment_guide_doc', 'enduser_guide_doc', 'system_guide_doc', 'concepts_doc', 'maintenance_guide_doc','installations_doc','features_doc','requirements_doc','devops_guide_doc','maintenance_guide_doc'];
+      var me = ( typeof(this) === "undefined" ) ? '' : this
+      docItems.map ( itm => { 
+         var strPattern = '(('+itm + ')(-)' + '(\\d{1,18}))' //todo:ysg qto-> parametrize
+         var rgxPattern = new RegExp(strPattern,'igm')
+			var uri = window.location.href.split('/').slice(0, 3).join('/')
+         me = me.replace(rgxPattern, '<a href="' + uri+'/qto/view/$2#$2-$4">$&</a>')
+      })
+      return me
+   };
 }

@@ -9,19 +9,19 @@
          <div class="cls_page_breaker"></div>
       <div id="lft_body">
          <div v-for="item in items" @click="hideContextMenu()"> 
-            <h3 tabindex="2" :id="'tle_<%= $item =%>-' + item.id" class="title" 
+            <h3 tabindex="2" :ref="'<%= $item =%>-' + item.id" :id="'<%= $item =%>-' + item.id" class="title" 
                @contextmenu = "showContextMenu($event,item.id)">
-               <a :id="'htl_<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" class="permalink scroll"
+               <a :id="'a<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" class="permalink scroll"
                   :href="'#<%= $item =%>-' + item.id">#</a>
                <a :id="'title-'+ item.id" :href="'#<%= $item =%>-' + item.id" 
                   :title="'level:' + item.level + ' :: seq: ' + item.seq "
                   class="cls-context-menu-link">{{item.logical_order}} {{item.name}}</a>
             </h3>
-            <rgx-div :cnt="item.description" :regex_changes="item.regex_changes" class="cls_desc" :id="'dsc_<%= $item =%>-' + item.id">
+            <rgx-div :cnt="item.description" :formats="item.formats" class="cls_desc" :id="'dsc_<%= $item =%>-' + item.id">
 				</rgx-div>
             <p v-if="item.src"><pre v-if="item.src" tabindex="2" class="cls_src">{{item.src}}</pre></p>
             <div v-if="item.img_relative_path" class="cls_doc_img">
-               <p> {{ item.img_name }}  </p>
+               <p class="cls_fig"> {{ item.img_name }}  </p>
                <img :src="item.img_relative_path" :style="item.img_style"></img>
             </div>
          </div>
