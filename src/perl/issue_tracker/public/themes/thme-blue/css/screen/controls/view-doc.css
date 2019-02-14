@@ -55,16 +55,12 @@ h1, h2, h3, h4, h5, h6 {
    border-bottom-left-radius: 8px;
    border-bottom-right-radius: 8px;
 }
-
 .permalink {
    visibility: hidden;
 }
-
 .permalink: hover {
    visibility: visible;
 }
-
-
 .rgt_side_nav {
   width: 27%;
   height: 100%; 
@@ -78,22 +74,28 @@ h1, h2, h3, h4, h5, h6 {
   padding-top: 3%; 
   transition: 0.5s; 
 }
-
 .rgt_side_nav a {
   padding: 0% 0% 0% 7%;
-  text-decoration: none;
-  font-size: 14px;
+  text-decoration:none;
+  font-size:14px;
   color:#1936e0 ;
-  display: block;
+  display:block;
   transition: 0.3s;
 }
-
-.rgt_side_nav a:hover {
-  color: #f1f1f1;
-}
-
-.rgt_side_nav a:active {
-  color: #f1f1f1;
+.rgt_side_nav a:hover , .rgt_side_nav a:active{
+   color: #FFFFE0;
+   font-weight: bold;
+   background-color: #D3D3D3;
+   border: 1px solid #CDCDCD;
+   border-radius: 2px;
+   box-shadow: 1px 1px 10px #C0C0C0;
+   -webkit-box-shadow: 1px 1px 10px #C0C0C0;
+   -moz-box-shadow: 1px 1px 10px #C0C0C0;
+   border-top-left-radius: 5%;
+   border-top-right-radius: 5%;
+   border-bottom-left-radius: 5%;
+   border-bottom-right-radius: 5%;
+   margin: 1px;
 }
 .rgt_side_nav .cls_close_btn {
   position: absolute;
