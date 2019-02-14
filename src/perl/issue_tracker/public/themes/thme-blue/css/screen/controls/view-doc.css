@@ -56,6 +56,9 @@ h1, h2, h3, h4, h5, h6 {
    border-bottom-right-radius: 8px;
 }
 .permalink {
+   display: block;
+   height: 20px; /*same height as header*/
+   margin-top: -20px; /*same height as header*/
    visibility: hidden;
 }
 .permalink: hover {
@@ -97,12 +100,20 @@ h1, h2, h3, h4, h5, h6 {
    border-bottom-right-radius: 5%;
    margin: 1px;
 }
-.rgt_side_nav .cls_close_btn {
+#close_btn_top {
   position: absolute;
   top: 0;
-  left: 5px;
+  margin: 2px 2px 2px 2px;
+  font-size: 25px;
+  padding-right: 70px;
+}
+#close_btn_bottom {
+  position: relative;
+  padding-bottom: 10%;
+  margin: 2px 2px 2px 2px;
+  left: 0px;
   font-size: 30px;
-  margin-right: 70px;
+  padding-right: 70px;
 }
 @media screen and (max-height: 20%) {
   .rgt_side_nav {

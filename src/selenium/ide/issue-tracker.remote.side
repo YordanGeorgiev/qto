@@ -308,8 +308,8 @@
       "target": "linkText=×",
       "targets": [
         ["linkText=×", "linkText"],
-        ["css=a.cls_close_btn", "css"],
-        ["css=.cls_close_btn", "css:finder"],
+        ["css=a.cls_close_btn_top", "css"],
+        ["css=.cls_close_btn_top", "css:finder"],
         ["xpath=//a[contains(text(),'×')]", "xpath:link"],
         ["xpath=//a[@onclick='closeRightMenu()']", "xpath:attributes"],
         ["xpath=//div[@id='rgt_menu']/a", "xpath:idRelative"],
@@ -338,8 +338,8 @@
       "target": "linkText=×",
       "targets": [
         ["linkText=×", "linkText"],
-        ["css=a.cls_close_btn", "css"],
-        ["css=.cls_close_btn", "css:finder"],
+        ["css=a.cls_close_btn_top", "css"],
+        ["css=.cls_close_btn_top", "css:finder"],
         ["xpath=//a[contains(text(),'×')]", "xpath:link"],
         ["xpath=//a[@onclick='closeRightMenu()']", "xpath:attributes"],
         ["xpath=//div[@id='rgt_menu']/a", "xpath:idRelative"],
@@ -368,8 +368,8 @@
       "target": "linkText=×",
       "targets": [
         ["linkText=×", "linkText"],
-        ["css=a.cls_close_btn", "css"],
-        ["css=.cls_close_btn", "css:finder"],
+        ["css=a.cls_close_btn_top", "css"],
+        ["css=.cls_close_btn_top", "css:finder"],
         ["xpath=//a[contains(text(),'×')]", "xpath:link"],
         ["xpath=//a[@onclick='closeRightMenu()']", "xpath:attributes"],
         ["xpath=//div[@id='rgt_menu']/a", "xpath:idRelative"],
