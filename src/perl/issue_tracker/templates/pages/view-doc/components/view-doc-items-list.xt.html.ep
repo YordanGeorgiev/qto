@@ -8,10 +8,10 @@
       </div>
          <div class="cls_page_breaker"></div>
       <div id="lft_body">
-         <div v-for="item in items" @click="hideContextMenu()"> 
-            <h3 tabindex="2" :ref="'<%= $item =%>-' + item.id" :id="'<%= $item =%>-' + item.id" class="title" 
+         <div v-for="item in items" @click="hideContextMenu()">
+            <h3 tabindex="2" :ref="'<%= $item =%>-' + item.id" :id="'h<%= $item =%>-' + item.id" class="title" 
                @contextmenu = "showContextMenu($event,item.id)">
-               <a :id="'a<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" class="permalink scroll"
+               <a :id="'<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" class="permalink scroll"
                   :href="'#<%= $item =%>-' + item.id">#</a>
                <a :id="'title-'+ item.id" :href="'#<%= $item =%>-' + item.id" 
                   :title="'level:' + item.level + ' :: seq: ' + item.seq "
@@ -28,7 +28,7 @@
          <p style="padding-bottom: 50%"></p>
       </div>
       <div id="rgt_menu" class="rgt_side_nav">
-        <a href="javascript:void(0)" class="cls_close_btn" onclick="closeRightMenu()">&times;</a>
+        <a href="javascript:void(0)" id="close_btn_top" onclick="closeRightMenu()">&times;</a>
          <div id="rgt_toc">
             <div v-for="item in items">
                <div tabindex="2" :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event,item.id)">
@@ -42,7 +42,8 @@
                </div>
             </div>
          </div>
-         <p style="padding-bottom: 50%"></p>
+       <a href="javascript:void(0)" id="close_btn_bottom" onclick="closeRightMenu()"> &raquo;</a>
+       <p style="padding-bottom: 10%"></p>
       </div>
    </div>
  </template>
