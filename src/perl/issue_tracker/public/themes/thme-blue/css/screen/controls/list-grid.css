@@ -150,6 +150,7 @@ textarea {
   box-shadow: 4px 4px 4px 4px #C0C0C0;
   -webkit-box-shadow: 4px 4px 4px 4px #C0C0C0;
   -moz-box-shadow: 4px 4px 4px 4px #C0C0C0;
+  word-wrap:break-word;
 }
 .cls_tbltooltip:hover .cls_tbltooltiptext {
   visibility: visible;

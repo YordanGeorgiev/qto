@@ -1,19 +1,23 @@
-#  issue-tracker
+#  README
+* [1. WHY](#1-why)
+  * [1.1. SO, WHAT IS THIS ?!](#11-so,-what-is-this-)
+  * [1.2. WHAT CAN IT DO FOR MY ORGANISATION](#12-what-can-it-do-for-my-organisation)
+  * [1.3. ASSUMPTION AND PREREQUISITES](#13-assumption-and-prerequisites)
+  * [1.4. PROPOSED CAPABILITIES](#14-proposed-capabilities)
+  * [1.5. DEPLOYMENT AND INSTALLATION ASSISTANCE](#15-deployment-and-installation-assistance)
+* [2. DEMO](#2-demo)
+* [3. INSTALLATION AND CONFIGURATION](#3-installation-and-configuration)
+* [4. DOCUMENTATION](#4-documentation)
+  * [4.1. THE ENDUSER GUIDE](#41-the-enduser-guide)
+  * [4.2. THE CONCEPTS DOC](#42-the-concepts-doc)
+    * [4.2.1. The UserStories doc](#421-the-userstories-doc)
+  * [4.3. THE REQUIREMENTS DOC](#43-the-requirements-doc)
+    * [4.3.1. The DevOps Guide doc](#431-the-devops-guide-doc)
+  * [4.4. THE INSTALLATIONS DOC](#44-the-installations-doc)
+* [5. ACKNOWLEDGEMENTS](#5-acknowledgements)
+    * [5.1. LICENSE](#51-license)
 
 
-Table of Contents
-
-  * [1. WHY](#1-why)
-  * [2. WHAT ](#2-what-)
-  * [3. SUITABILITY FOR REAL-LIFE USAGE SCENARIO](#3-suitability-for-real-life-usage-scenario)
-    * [3.1. Assumption and prerequisites](#31-assumption-and-prerequisites)
-    * [3.2. Proposed capabilities](#32-proposed-capabilities)
-    * [3.3. Installation assistance](#33-installation-assistance)
-  * [4. DEMO ](#4-demo-)
-  * [5. INSTALLATION AND CONFIGURATION](#5-installation-and-configuration)
-  * [6. ADDITIONAL DOCS](#6-additional-docs)
-  * [7. ACKNOWLEDGEMENTS](#7-acknowledgements)
-  * [8. LICENSE](#8-license)
 
 
     
@@ -26,23 +30,25 @@ Because software production should be efficient, yet smooth and interesting ...
 Because work should be inspiring and not overwhelming people. Because even good intentions without proper commitment, allocation and resourcing and most importantly, a mean for tracking advancement of an endeavor in open way reflecting the reality, might end-up making people less happy, when in fact a really simple solution could be applied for any bigger challenge requiring progress tracking, communication and coordination ... And tons of other reasons we all having been in project disasters know about ... Still here ?! Let's move on !
 
 
-issue tracker objects polygon 
-![The relations between the issue tracker objects ](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/readme/what-is-is.png)    
-
-## 2. AND WHAT IS THIS ?!
-A generic postgres CRUDs ( s stands for search ) web based app for managing multiple databases from the same web application layer by means of simpliest possible UI and/or shell tools for xls export, Google sheets writes etc. An included example application is the "issue-tracker application", which is used to manage multiple projects' issues, including itself ;o). 
-The full and extensive [features and functionalities document](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/features) must contain all the features and functionalities of this released version.
-This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture and the Input-Output Controller Model architecture ( more about this in the [System Guide](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/system_guide), which is in a way a reflection of the simple axiom in IT - "if there is one there will be many" ...
+Figure: 1 
+the 7 main entities of the qto app
+![Figure: 1 
+the 7 main entities of the qto app](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/readme/what-is-is.png)
 
     
 
-## 3. SUITABILITY FOR REAL-LIFE USAGE SCENARIO
-We have stumbled into real life problem in the ETL integrations of a big Scandinavian telco, which could have been solved even with the current version of the tool, although the versioning starts with the mighty zero …
-Of course next versions will provide much more scenarios in real-life, but this description applies to this current version, that is you can start using it as soon as you deploy your own instance ... 
+### 1.1. SO, WHAT IS THIS ?!
+
+A generic postgres CRUDs ( s stands for search ) web based app for managing multiple databases from the same web application layer by means of simpliest possible UI and/or shell tools for xls export, Google sheets writes etc. An included example application is the "issue-tracker application", which is used to manage multiple projects' issues, including itself ;o). The full and extensive  http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/features_doc must contain all the features and functionalities of this released version. This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture and the Input-Output Controller Model architecture ( more about this in the http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/system_guide_doc , which is in a way a reflection of the simple axiom in IT - "if there is one there will be many" ...
 
     
 
-### 3.1. Assumption and prerequisites
+### 1.2. WHAT CAN IT DO FOR MY ORGANISATION
+We have stumbled into real life problem in the ETL integrations of a big Scandinavian telco, which could have been solved even with the current version of the tool, although the versioning starts with the mighty zero … Of course next versions will provide much more scenarios in real-life, but this description applies to this current version, that is you can start using it as soon as you deploy your own instance ...
+
+    
+
+### 1.3. Assumption and prerequisites
 Your organisation:
 
 - has the need to constantly update comparably small ( less than 10k rows) hierarchy tables
@@ -54,7 +60,7 @@ Your organisation:
 
     
 
-### 3.2. Proposed capabilities
+### 1.4. Proposed capabilities
 You could:
 
 - deploy an instance of the issue-tracker, bare metal/docker install should take no more than 2h
@@ -66,62 +72,85 @@ You could:
 
     
 
-### 3.3. Installation assistance
-We could provide you with free assistance for the deployment of the first instance in your
-organization, even we consider the existing documentation good enough to deploy the application only
-by following the instructions in the [Installation Guide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/installations.md)
-In the real IT life however the mealage always varies, hence this last "bonus offer".
+### 1.5. Deployment and installation assistance
+We could provide you with free assistance for the deployment of the first instance in your organization, even we consider the existing documentation good enough to deploy the application only by following the instructions in the http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/installations_doc In the real IT life however the mealage always varies, hence this last "bonus offer".
+
 
     
 
-## 4. DEMO 
-You can check the following [running instance of the web app](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/list/monthly_issues), additionally every doc bellow has it's "it-doc" link aka the "native" issue-tracker document format ... 
+## 2. DEMO
+You can check the following http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/enduser_guide_doc of the web app, additionally every doc bellow has it's "it-doc" link aka the "native" issue-tracker document format …
 
-
-## 5. INSTALLATION AND CONFIGURATION
-You could either try quickly to execute the instructions bellow this section or 
-follow the installation instructions in the [Installation Guide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/installations.md) ([Installation Guide it-doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/installations)).
-
-## 6. ADDITIONAL DOCS
-Additional docs could be found in the [doc/md] https://github.com/YordanGeorgiev/issue-tracker/tree/master/doc/md) dir.
-A good starting point could be the [Features and Functionalities document](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/features.md)
-([Features it doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/features))
-
-The [user-stories md doc](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/userstories.md)([user-stories it doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/userstories)) contains the DEFINED userstories for the application ( needless to say a lot of userstories have been implemented without even proper definition, which is wrong, but acceptable FOR NOW because of the incompleteness of the application ... ). Not also that you check the actual status of each doc item, by changing the web action "view" to "list" in each document's url for example the [user stories it doc ](http://192.168.56.120:3003/prd_issue_tracker/list/userstories?oa=seq&pg-size=10) presents the same document in it's "list" ui, which is a simplistic ui for presenting the actual relational database table ...
-
-The [Requirements md-doc](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/requirements.md) 
-([requirements it doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/requirements)) contains the requirements set for the application. 
-
-The [SystemGuide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/system_guide.md) contains the description of the existing issue-tracker System and it's architecture ([System Guide it doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/system_guide)).
-
-The [DevOps Guide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/devops_guide.md) contains the instructions for the devops operators and developers ([DevOps Guide it doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/devops_guide)).
-
-The [Installation Guide](https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/installations.md) ([Installation Guide it-doc](http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/prd_issue_tracker/view/installations)) contains the installation instructions for the application.
-
-The aim is to keep the documentation as up-to-date with every release as possible.
     
 
-## 7. ACKNOWLEDGEMENTS
+## 3. INSTALLATION AND CONFIGURATION
+You could either try quickly to execute the instructions bellow this section or follow the installation instructions : 
+ - in https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/installations_doc.md
+ - in http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/readme_doc
+
+    
+
+## 4. DOCUMENTATION
+QTO IS about documentation, we do all the doc-fooding on our docs, which are aimed to be as up-to-date to the current release version as possible. Thus you get the following documentation set:
+
+    
+
+### 4.1. The EndUser Guide
+The enduser guide contains mostly UI usage instructions:
+ - https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/enduser_guide_doc.md
+ - http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/concepts_doc
+
+    
+
+### 4.2. The Concepts doc
+General level concepts of the applicaton. 
+ - https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/concepts_doc.md
+ - http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/concepts_doc
+
+    
+
+#### 4.2.1. The UserStories doc
+Naturally contains the userstories of the app. 
+- in https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/userstories_doc.md 
+
+    
+
+### 4.3. The Requirements doc
+Contains the specs and requirements, which can be defined at the current stage of the development:
+ - https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/requirements_doc.md
+ - http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/requirements_doc
+
+    
+
+#### 4.3.1. The DevOps Guide doc
+Contains content on how to develop the application + general devops info.
+- https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/devops_guide_doc.md
+- http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/devops_guide_doc
+
+    
+
+### 4.4. The installations doc
+Contains the tasks and activities to perform to get a fully operational instance of the qto application:
+ - https://github.com/YordanGeorgiev/issue-tracker/blob/master/doc/md/installations_doc.md
+ - http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/installations_doc
+
+    
+
+## 5. ACKNOWLEDGEMENTS
 This project would NOT have been possible without the work of the people working on the following frameworks/languages/OS communities listed in no particular order.
+Perl
+Mojolicious
+GNU Linux
+Vue
 
-- Perl
-- Mojolicious
-- GNU Linux
-- Vue
-
-Deep gratitudes and thanks to all those people ! This application aims to contain the best practices of our former colleagues and collaborators and co-travelers in life, which also deserve huge thanks for their support and contributions ! 
-We tend to incorporate and re-use a lot of code snippets from stackoverflow and codepen, should you consider that you were the author of those code snippets and you deserve mentioning of the source please let us know ...
-
+Deep gratitudes and thanks to all those people ! This application aims to contain the best practices of our former colleagues and collaborators and co-travelers in life, which also deserve huge thanks for their support and contributions ! We tend to incorporate and re-use a lot of code snippets from stackoverflow and codepen, should you consider that you were the author of those code snippets and you deserve mentioning of the source please let us know ...
 
     
 
-## 8. LICENSE
-All the trademarks mentioned in the documentation and in the source code belong to their owners. 
-This application uses the Perl Artistic license, check the license.txt file or the following link :
-https://dev.perl.org/licenses/artistic.html
+#### 5.1. LICENSE
+All the trademarks mentioned in the documentation and in the source code belong to their owners. This application uses the Perl Artistic license, check the license.txt file or the following link : https://dev.perl.org/licenses/artistic.html
 
 Should any trademark attribution be missing, mistaken or erroneous, please contact us as soon as possible for rectification.
-
 
     
 

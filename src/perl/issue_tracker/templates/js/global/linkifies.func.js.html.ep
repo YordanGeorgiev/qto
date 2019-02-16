@@ -17,8 +17,8 @@ if(!String.linkifyOne) {
         var urlPattern = /([^">]){1}\b((?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;\[\]]*[a-z0-9-+&@#\/%=~_|])/im;
         var pseudoUrlPattern = /([^">]){1}([^|[^\/])([^"]www\.[\S]+(\b|$))/im;
         return this
-            .replace(urlPattern, '<a href="$2">' + title + '</a>')
-            .replace(pseudoUrlPattern, '$2<a href="http://$3">' + title + '</a>')
+            .replace(urlPattern, ' <a href="$2">' + title + '</a>')
+            .replace(pseudoUrlPattern, ' $2<a href="http://$3">' + title + '</a>')
     };
 }
 if(!String.linkifyItems) {
