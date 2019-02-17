@@ -924,9 +924,9 @@ src/selenium/
 src/selenium/ide
 src/selenium/ide/issue-tracker.remote.side
 src/selenium/ide/issue-tracker.local.side
-dat/mix/2019/2019-02/2019-02-15/sql
-dat/mix/2019/2019-02/2019-02-15/sql/qto
-dat/mix/2019/2019-02/2019-02-15/sql/qto/qto.20190215_131441.insrt.dmp.sql
-dat/mix/2019/2019-02/2019-02-15/tmp
-dat/mix/2019/2019-02/2019-02-15/xls
-dat/mix/2019/2019-02/2019-02-15/xls/qto.all.20190215_000000.xlsx
+dat/mix/2019/2019-02/2019-02-17
+dat/mix/2019/2019-02/2019-02-17/xls
+dat/mix/2019/2019-02/2019-02-17/xls/qto.all.20190217_000000.xlsx
+dat/mix/2019/2019-02/2019-02-17/sql
+dat/mix/2019/2019-02/2019-02-17/sql/dev_qto
+dat/mix/2019/2019-02/2019-02-17/sql/dev_qto/dev_qto.20190217_194143.insrt.dmp.sql
