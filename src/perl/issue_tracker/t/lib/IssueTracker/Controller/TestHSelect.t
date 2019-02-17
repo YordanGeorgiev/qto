@@ -73,20 +73,6 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../issue_tracker/lib" }
       ok ( $res->{'msg'} eq $emsg , $emsg) ;
    }
 
-# start the hierarchy testing table 
-$tm = 'the status code from the test_hierarchy_table is 200' ; 
-$url = '/' . $db . '/hselect/test_hierarchy_table?bid=0' ; 
-ok ($t->get_ok($url)
-   ->status_is(200) 
-   ->header_is('Accept-Charset' => 'UTF-8')
-   ->header_is('Accept-Language' => 'fi, en'), $tm );
-
-my $res = $ua->get($url)->result->json ; 
-
-my $http_code = 200 ; 
-$tm = "the http_code: $http_code is returned" ;  
-ok ( $res->{'ret'} == $http_code , $tm) ; 
-# stop  the hierarchy testing table 
 
 done_testing();
 
