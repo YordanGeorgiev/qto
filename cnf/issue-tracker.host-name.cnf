@@ -5,16 +5,16 @@
 issue_tracker_project = issue-tracker
 
 # where the scripts to run are situated
-pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.5.8.prd.ysg/src/sql/pgsql/prd_issue_tracker
+pgsql_scripts_dir = /opt/csitea/issue-tracker/issue-tracker.0.5.9.prd.ysg/src/sql/pgsql/qto
 
 # the root dir for all the project data 
-DataDir = /opt/csitea/issue-tracker/issue-tracker.0.5.8.prd.ysg/dat
+DataDir = /opt/csitea/issue-tracker/issue-tracker.0.5.9.prd.ysg/dat
 
 # where are stored the txt issues files
-mix_data_dir = /opt/csitea/issue-tracker/issue-tracker.0.5.8.prd.ysg/dat/mix
+mix_data_dir = /opt/csitea/issue-tracker/issue-tracker.0.5.9.prd.ysg/dat/mix
 
 # the postgres confs - OBS ! dev , tst , prd product instances to own db !
-postgres_db_name     = prd_issue_tracker
+postgres_db_name     = prd_qto
 postgres_db_host     = host-name
 postgres_db_port     = 5432
 postgres_db_user     = ysg

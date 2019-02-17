@@ -40,6 +40,7 @@ sub doExportItems {
    my $cnt              = '' ; 
    my $dat              = '' ; 
 
+   $db = $self->SUPER::doResolveDbName ( $db ) ; 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    $appConfig		 		= $self->app->get('AppConfig');

@@ -1,4 +1,4 @@
---DROP TABLE IF EXISTS requirements_doc CASCADE;
+DROP TABLE IF EXISTS requirements_doc CASCADE;
 
 SELECT 'create the "requirements_doc" table'
 ; 
@@ -15,6 +15,7 @@ SELECT 'create the "requirements_doc" table'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
     , src            varchar (4000)
+    , formats  text NULL
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_requirements_doc_guid PRIMARY KEY (guid)
     ) WITH (

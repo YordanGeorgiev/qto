@@ -33,11 +33,12 @@
    %= include 'js/global/get-url-params.func.js'
    %= include 'js/global/get-server-data.func.js'
    %= include 'js/global/set-url-param.func.js'
+   %= include 'js/global/linkifies.func.js'
    %= include 'pages/view-doc/js/snackbar.js'
    %= include 'pages/view-doc/js/right-click-menu.js'
+   %= include 'pages/view-doc/components/rgx-div.js'
    %= include 'pages/view-doc/js/view-doc-items-list.js'
    %= include 'pages/view-doc/js/vue_app.js'
-
 
    </script>
 % end

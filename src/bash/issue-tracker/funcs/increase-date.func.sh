@@ -1,4 +1,4 @@
-# src/bash/issue-tracker/funcs/increase-date.func.sh
+# file: src/bash/issue-tracker/funcs/increase-date.func.sh
 # today is --date="+1 day"
 # tommorrow is --date="+1 day"
 #
@@ -18,7 +18,8 @@ doIncreaseDate(){
    # find the latest project_daily_txt_dir
    latest_proj_daily_dir=""
    latest_proj_daily_dir=$(find $mix_data_dir -type d -maxdepth 3|grep -v txt|grep -v json|grep -v xls|sort -nr|head -1)
-   echo "latest_proj_daily_dir: $latest_proj_daily_dir" 
+   echo "using the following latest_proj_daily_dir: $latest_proj_daily_dir"
+   sleep 1
 
 	# debug set -x
    if [[ ${tgt_date+x} && -n $tgt_date ]] ; then
@@ -45,13 +46,11 @@ doIncreaseDate(){
 	msg="using the following date: \"$tgt_date\""
   	doLog "INFO $msg"
   
-   # set -x
-   # define the today's daily_txt_dir
+   # define the today's daily_data_dir
    tgt_days_monthly_data_dir="$mix_data_dir"/$(date "+%Y" -d "$tgt_date")
    tgt_days_monthly_data_dir="$tgt_days_monthly_data_dir"/$(date "+%Y-%m" -d "$tgt_date")
    mkdir -p $tgt_days_monthly_data_dir
    export daily_data_dir="$tgt_days_monthly_data_dir"'/'$(date "+%Y-%m-%d" -d "$tgt_date")
-
 
    error_msg="
    nothing can be done - as the daily data dir \$daily_data_dir : 
@@ -63,8 +62,7 @@ doIncreaseDate(){
    todays_tmp_dir=$tmp_dir/$(date "+%Y-%m-%d" -d "$tgt_date")    # becauses of vboxsf !!!
    cmd="cp -vr $latest_proj_daily_dir $todays_tmp_dir/"
 
-   doRunCmdOrExit "$cmd"
-   cd $todays_tmp_dir
+   doRunCmdOrExit "$cmd" ; cd $todays_tmp_dir
 
    # foreach sh or txt file
    while read -r f ; do 
@@ -88,7 +86,8 @@ doIncreaseDate(){
    done < <(find . -type f -name '*.txt' -o -name '*.sh')
    
    rm -f *.bak       # remove any possible bak files
-   mv $todays_tmp_dir $daily_data_dir 
+   mv $todays_tmp_dir $daily_data_dir
+   rm -rfvd $daily_data_dir/tmp
   
    export daily_data_dir=$mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
   
@@ -109,7 +108,7 @@ doIncreaseDate(){
       # and I just don't know where this one comes from, but it is fake !!!
       rm -v "$daily_data_dir/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
       mv "$f" "$daily_data_dir/xls/$proj"."$table".$(date "+%Y%m%d_%H%M%S" -d "$tgt_date")."$file_ext"
-   done < <(find $daily_data_dir/xls -type f -name "*.xlsx")
+   done < <(find $daily_data_dir/xls -type f \( -name "*.xlsx" -o -name "*.xls" \))
 
    doBackupPostgresDb
 

@@ -1,4 +1,4 @@
-   DROP TABLE IF EXISTS userstories_doc CASCADE;
+DROP TABLE IF EXISTS userstories_doc CASCADE;
 
 SELECT 'create the "userstories_doc" table'
 ; 
@@ -9,11 +9,12 @@ SELECT 'create the "userstories_doc" table'
     , seq            integer NULL
     , lft            bigint  NULL
     , rgt            bigint  NULL
-    , status         varchar (20) NOT NULL DEFAULT 'status ...'
+    , status         varchar (20) NOT NULL DEFAULT 'status...'
     , prio           integer NOT NULL DEFAULT 1
-    , name           varchar (100) NOT NULL DEFAULT 'name ...'
+    , name           varchar (200) NOT NULL DEFAULT 'name/title...'
     , description    varchar (4000)
     , src            varchar (4000)
+    , formats  text NULL
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_userstories_doc_guid PRIMARY KEY (guid)
     ) WITH (

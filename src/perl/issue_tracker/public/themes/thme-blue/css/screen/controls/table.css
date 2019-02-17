@@ -5,16 +5,6 @@
    display: block;
 }
 
-#pager {
-   /*
-   display: block;
-   position: absolute;
-   margin-top: 0%;
-   margin-left: 65%;
-   -webkit-font-smoothing: antialiased;
-   width: 35%;
-   */
-}
 table {
 	table-layout: fixed; 
    max-width: 100% ; 

@@ -2,6 +2,7 @@ html, body {
    overflow-x: hidden;
    max-width: 100%; 
    font-family: Helvetica Neue, Arial, sans-serif;
+   scroll-behavior: smooth;
 }
 .app_name_tooltip {
    color: #D3D3D3 ;

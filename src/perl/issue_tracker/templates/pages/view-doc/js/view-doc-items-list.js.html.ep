@@ -4,6 +4,9 @@
             return this.$store.getters.getItems;
          }
       }
+      , components: {
+           'rgx-div': RgxDiv
+      }
       , methods: {
          toggleItem: function(id) {
             this.$store.dispatch("toggleItem", id);

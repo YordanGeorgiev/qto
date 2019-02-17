@@ -1,11 +1,9 @@
 body {
    padding: 1% 3% 40% 3%;
 }
-
 #dev_central_panel{
    padding: 0;
 }
-
 #btnNew{
    position: fixed;
    font-size: 24px;
@@ -128,7 +126,33 @@ textarea {
 	background-color: #FFFFE0;
 	white-space:pre-wrap;
 }
-
 .cls_cnt_edtble:focus {
 	background-color: #FFFFE0;
+}
+.cls_tbltooltip {
+  position: relative;
+  display: inline-block;
+}
+.cls_tbltooltip .cls_tbltooltiptext {
+  visibility: hidden;
+  width: 70%;
+  height: auto;
+  background-color: white;
+  color: dark-grey;
+  text-align: left ;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 10;
+  font-size: 13px ;
+  top: -40px;
+  right: 100%; 
+  border: 2px solid white;
+  box-shadow: 4px 4px 4px 4px #C0C0C0;
+  -webkit-box-shadow: 4px 4px 4px 4px #C0C0C0;
+  -moz-box-shadow: 4px 4px 4px 4px #C0C0C0;
+  word-wrap:break-word;
+}
+.cls_tbltooltip:hover .cls_tbltooltiptext {
+  visibility: visible;
+  padding: 2% 2% 2% 2% ;
 }

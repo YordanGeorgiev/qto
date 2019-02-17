@@ -12,6 +12,7 @@ src/perl/issue_tracker/templates/pages/view-doc/view-doc.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/js/view-doc-items-list.js.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/js/snackbar.js.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/js/vue_app.js.html.ep
+src/perl/issue_tracker/templates/pages/view-doc/components/rgx-div.js.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/components/snackbar.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/components/view-doc-items-list.xt.html.ep
 src/perl/issue_tracker/templates/pages/view-doc/components/right-click-menu.xt.html.ep
@@ -28,12 +29,12 @@ src/perl/issue_tracker/templates/layouts/view.html.ep
 src/perl/issue_tracker/templates/js/global/get-url-params.func.js.html.ep
 src/perl/issue_tracker/templates/js/global/get-server-data.func.js.html.ep
 src/perl/issue_tracker/templates/js/global/set-url-param.func.js.html.ep
+src/perl/issue_tracker/templates/js/global/linkifies.func.js.html.ep
 src/perl/issue_tracker/lib/IssueTracker/Controller/View.pm
 src/perl/issue_tracker/t/lib/IssueTracker/Controller/TestView.t
 src/perl/issue_tracker/templates/layouts/list.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/list-grid.html.ep
 src/perl/issue_tracker/templates/controls/srch-grid/srch-grid.html.ep
-src/perl/issue_tracker/templates/components/view-doc-editable.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/div-search-box.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/global-msg.js.html.ep
 src/perl/issue_tracker/templates/controls/list-grid/js/search-box.js.html.ep
@@ -311,9 +312,7 @@ cnf/readme.txt
 # ---
 src/bash/issue-tracker/tests/increase-date.test.sh
 src/bash/issue-tracker/funcs/increase-date.func.sh
-src/bash/issue-tracker/specs/increase-date.spec.sh
 src/bash/issue-tracker/helps/increase-date.help.sh
-doc/txt/issue-tracker/specs/increase-date.spec.txt
 doc/txt/issue-tracker/tests/increase-date.test.txt
 doc/txt/issue-tracker/funcs/increase-date.func.txt
 doc/txt/issue-tracker/helps/increase-date.help.txt
@@ -386,6 +385,8 @@ src/sql/pgsql/qto/29.1.create-table-enduser_guide_doc.sql
 src/sql/pgsql/qto/27.1.create-table-maintenance_guide_doc.sql
 src/sql/pgsql/qto/30.create-table-deployment_guide.sql
 src/sql/pgsql/qto/30.1.create-table-deployment_guide_doc.sql
+src/sql/pgsql/qto/31.1.create-table-readme_doc.sql
+src/sql/pgsql/qto/31.create-table-readme.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/qto/93.create-table-benchmarks.sql
@@ -399,6 +400,7 @@ src/sql/pgsql/scripts/check-postgres-tables-permissions.sql
 src/sql/pgsql/scripts/copy-items-from-one-table-to-another.sql
 src/sql/pgsql/scripts/list-table-columns.sql
 src/sql/pgsql/scripts/list-table-cols.sh
+src/sql/pgsql/scripts/list-postgres-tables.sh
 src/sql/pgsql/scripts/upsert_item_trigger.sql
 #----
 src/bash/issue-tracker/tests/db-to-xls.test.sh
@@ -776,11 +778,6 @@ src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.css
 src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.html
 src/perl/issue_tracker/public/poc/poc-vue-js-modal/src/vue-js-modal.js
 # ---
-src/sql/pgsql/prd_issue_tracker/12.create-table-check_lists.sql
-src/sql/pgsql/prd_issue_tracker/98.create-table-test_update_table.sql
-src/sql/pgsql/tst_issue_tracker/12.create-table-check_lists.sql
-src/sql/pgsql/tst_issue_tracker/98.create-table-test_update_table.sql
-# ---
 src/bash/issue-tracker/scripts/history.sh
 src/perl/issue_tracker/public/themes/thme-blue/img/controls/trash-bin.png
 # ---
@@ -927,10 +924,9 @@ src/selenium/
 src/selenium/ide
 src/selenium/ide/issue-tracker.remote.side
 src/selenium/ide/issue-tracker.local.side
-dat/mix/2019/2019-02/2019-02-09
-dat/mix/2019/2019-02/2019-02-09/sql
-dat/mix/2019/2019-02/2019-02-09/sql/qto
-dat/mix/2019/2019-02/2019-02-09/sql/qto/qto.20190209_100503.insrt.dmp.sql
-dat/mix/2019/2019-02/2019-02-09/tmp
-dat/mix/2019/2019-02/2019-02-09/xls
-dat/mix/2019/2019-02/2019-02-09/xls/qto.all.20190209_000000.xlsx
+dat/mix/2019/2019-02/2019-02-17
+dat/mix/2019/2019-02/2019-02-17/xls
+dat/mix/2019/2019-02/2019-02-17/xls/qto.all.20190217_000000.xlsx
+dat/mix/2019/2019-02/2019-02-17/sql
+dat/mix/2019/2019-02/2019-02-17/sql/dev_qto
+dat/mix/2019/2019-02/2019-02-17/sql/dev_qto/dev_qto.20190217_194143.insrt.dmp.sql
