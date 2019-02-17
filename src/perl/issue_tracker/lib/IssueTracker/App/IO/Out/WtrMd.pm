@@ -62,7 +62,7 @@ package IssueTracker::App::IO::Out::WtrMd ;
       my $nxt_col_id = 1 ; 
       my $col_id = 0 ; 
       my $row_id = 0 ; 
-      my @col_names = ('id' , 'name' , 'description' , 'src')  ;
+      my @col_names = ('id' , 'name' , 'description' , 'img_relative_path', 'src')  ;
       
       my $str_toc = $self->doBuildTOC($table,$ahs2);
 
@@ -73,8 +73,8 @@ package IssueTracker::App::IO::Out::WtrMd ;
          $row_id++ ; 
 
       foreach my $col_name ( @col_names ) {
-            # debug p( $row );
-            # debug p $row->{ $col_name } ; 
+            p( $row );
+            p $row->{ $col_name } ; 
             if ( !defined ( $row )  or !defined ( $row->{ $col_name } ) or $row->{ $col_name } eq 'NULL' ) {
                $row->{ $col_name } = '' ; 
             }
@@ -102,17 +102,27 @@ package IssueTracker::App::IO::Out::WtrMd ;
 
                # convert all the relative paths as md lins as well
                $cell =~ s! ((\.\.\/){0,1}([a-zA-Z0-9_\-\/\\]*)[\/\\]([a-zA-Z0-9_\-]*)\.([a-zA-Z0-9]*)) ! [$3]($1) !gm ; 
-
 					$str_response .= $cell ;
+
 					$str_response .= "\n\n" ; 
 
+            } elsif ( $col_name eq 'img_relative_path' and defined ( $row->{'img_item_guid'} ) ) {	
+
+               # ![myimage-alt-tag](url-to-image)
+               $str_response			.= "\n" . $row->{'img_name'} . "\n" ; 
+               $str_response			.= '![' . $row->{'img_name'} . ']'  ; 
+               $str_response			.= '(' . $row->{'img_relative_path'} . ')' ; 
+					$str_response        .= "\n\n" ; 
+
             } elsif ( $col_name eq 'src' ) {
+
 					my $src_code  = $row->{ 'src' } ; 
 					$src_code =~ s/^/    /g ; 
 					$src_code =~ s/\n/\n    /gm ; 
 					$str_response .= $src_code ; 
 					$str_response .= "\n\n" ; 
-            }
+
+            } 
          } 
          #eof foreach col
       } 

@@ -34,6 +34,7 @@ sub doHSelectItems {
    my $objRdrDb      = {} ; 
    my $objRdrDbsFactory = {} ; 
  
+   $db = $self->SUPER::doResolveDbName ( $db ) ; 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
 
@@ -50,7 +51,7 @@ sub doHSelectItems {
    ($http_code, $msg, $dat) 	= $objRdrDb->doHSelectBranch( $db , $item );
    my $objCnrHashesArrRefToHashesArrRef = 'IssueTracker::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$appConfig  ) ; 
    $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
-   
+
    $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    return ; 
 }

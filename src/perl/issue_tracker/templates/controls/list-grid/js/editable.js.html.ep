@@ -1,5 +1,5 @@
    Vue.component('editable', {
-     template: `<textarea v-bind:id="id" class="cls_cnt_edtble" @blur="onBlur" v-bind:title="content" v-model="cnt" v-on:focus="focused" v-on:click="onClick" v-on:keyup.tab="this.document.execCommand('selectAll',false,null);" v-on:keyup.esc="revertChange">{{ content }}</textarea>`,
+     template: `<textarea v-bind:id="id" class="cls_cnt_edtble" @blur="onBlur" v-model="cnt" v-on:focus="focused" v-on:click="onClick" v-on:keyup.tab="this.document.execCommand('selectAll',false,null);" v-on:keyup.esc="revertChange"></textarea>`,
      props: {
 		   id: {}
          , cnt: {
@@ -12,7 +12,7 @@
       }
      , data() {
          return {
-            content: this.cnt
+            content: this.lnkMayBe
          }
 	  }
      , oldData: ""

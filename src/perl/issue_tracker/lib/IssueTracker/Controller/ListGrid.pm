@@ -30,9 +30,9 @@ sub doBuildListControl {
    ( $ret , $msg , $cols) = $objModel->doGetItemsDefaultPickCols( $appConfig , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 		
-   my $to_picks   = $objModel->get('list.web-action.pick') ; 
+   my $to_picks   = $objModel->get('select.web-action.pick') ; 
    my @picks      = split ( ',' , $to_picks ) if defined ( $to_picks ) ; 
-   my $to_hides   = $objModel->get('list.web-action.hide') ; 
+   my $to_hides   = $objModel->get('select.web-action.hide') ; 
    my @hides      = split ( ',' , $to_hides ) if defined ( $to_hides ) ; 
 
    unless ( defined ( $to_picks )) {

@@ -191,6 +191,7 @@
       , data: () => ({
          position: 'top-center'
          , ctimeout: 3900
+         , updater: ''
       })
       , created: function () {
          this.$store.dispatch('loadItems')
@@ -213,7 +214,18 @@
             this.$store.dispatch("showContextMenu",e);
          }
      }
+     , updated: function() {
+         this.$nextTick(function() {
+         var uri = window.location.href 
+         var anchor = ( uri.indexOf('#') === -1 ) ? '' : uri.split('#')[1]
+         if ( String(anchor).length > 0 && this.updater === 'page_load') {
+            this.updater = "" // only on page-load !
+            location.href = "#"+String(anchor)
+         }
+       })
+      }
    });
+   app.updater = "page_load"
 
    function openRightMenu() {
      document.getElementById("rgt_menu").style.width = "27%";

@@ -5,6 +5,9 @@ body {
 	overflow:auto;
  	width: 100% ; 
 }
+.container {
+   margin-bottom: 10%;
+}
 #lft_body {
 	overflow:auto;
  	width: 80% ; 
@@ -17,7 +20,7 @@ body {
    padding: 0% 3% 0% 3% ;
 }
 h1, h2, h3, h4, h5, h6 {
-   padding-top: 30px;
+   padding: 30px 0px 10px 0px;
    float: left;
    clear: both;
    font-size: 16px;
@@ -52,16 +55,15 @@ h1, h2, h3, h4, h5, h6 {
    border-bottom-left-radius: 8px;
    border-bottom-right-radius: 8px;
 }
-
 .permalink {
+   display: block;
+   height: 20px; /*same height as header*/
+   margin-top: -20px; /*same height as header*/
    visibility: hidden;
 }
-
 .permalink: hover {
    visibility: visible;
 }
-
-
 .rgt_side_nav {
   width: 27%;
   height: 100%; 
@@ -75,29 +77,43 @@ h1, h2, h3, h4, h5, h6 {
   padding-top: 3%; 
   transition: 0.5s; 
 }
-
 .rgt_side_nav a {
   padding: 0% 0% 0% 7%;
-  text-decoration: none;
-  font-size: 14px;
+  text-decoration:none;
+  font-size:14px;
   color:#1936e0 ;
-  display: block;
+  display:block;
   transition: 0.3s;
 }
-
-.rgt_side_nav a:hover {
-  color: #f1f1f1;
+.rgt_side_nav a:hover , .rgt_side_nav a:active{
+   color: #FFFFE0;
+   font-weight: bold;
+   background-color: #D3D3D3;
+   border: 1px solid #CDCDCD;
+   border-radius: 2px;
+   box-shadow: 1px 1px 10px #C0C0C0;
+   -webkit-box-shadow: 1px 1px 10px #C0C0C0;
+   -moz-box-shadow: 1px 1px 10px #C0C0C0;
+   border-top-left-radius: 5%;
+   border-top-right-radius: 5%;
+   border-bottom-left-radius: 5%;
+   border-bottom-right-radius: 5%;
+   margin: 1px;
 }
-
-.rgt_side_nav a:active {
-  color: #f1f1f1;
-}
-.rgt_side_nav .cls_close_btn {
+#close_btn_top {
   position: absolute;
   top: 0;
-  left: 5px;
+  margin: 2px 2px 2px 2px;
+  font-size: 25px;
+  padding-right: 70px;
+}
+#close_btn_bottom {
+  position: relative;
+  padding-bottom: 10%;
+  margin: 2px 2px 2px 2px;
+  left: 0px;
   font-size: 30px;
-  margin-right: 70px;
+  padding-right: 70px;
 }
 @media screen and (max-height: 20%) {
   .rgt_side_nav {
@@ -121,8 +137,22 @@ h1, h2, h3, h4, h5, h6 {
    font-size: 80%;
    font-weight: bold;
    color: #A9A9A9 ;
+   padding-bottom: 5% ;
 }
 .cls_print_toc {
    padding-left: 10%;
    line-height: 1.5em;
+}
+@media print {
+   .cls_page_breaker {
+      page-break-after: always;
+   }
+}
+@media screen {
+   .cls_page_breaker {
+      visibility: hidden ;
+   }
+}
+.cls_fig {
+padding: 3% 0% 2% 0%;
 }

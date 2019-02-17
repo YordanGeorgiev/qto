@@ -1,18 +1,13 @@
 #!/usr/bin/env bash
 # file: src/bash/issue-tracker.sh doc at the eof file
-
 umask 022    ;
-
-set -u -o pipefail
-
-# print the commands
-# set -x
-# print each input line as well
-# set -v
+set -u -o pipefail 
+# set -x # print the commands
+# set -v # print each input line as well
 # exit the script if any statement returns a non-true return value. gotcha !!!
 # set -e # src: http://mywiki.wooledge.org/BashFAQ/105
 
-#v0.2.7 
+# v0.5.9
 #------------------------------------------------------------------------------
 # the main function called
 #------------------------------------------------------------------------------
@@ -42,9 +37,8 @@ main(){
 	doRunActions "$@"
 	doExit 0 "# = STOP  MAIN = $run_unit "
 }
-#eof main
 
-# v0.2.7 
+# v0.5.9 
 #------------------------------------------------------------------------------
 # the "reflection" func - identify the the funcs per file
 #------------------------------------------------------------------------------
@@ -60,11 +54,10 @@ get_function_list () {
     done
 '
 }
-#eof func get_function_list
 
 
 
-# v0.2.7 
+# v0.5.9 
 #------------------------------------------------------------------------------
 # run all the actions
 #------------------------------------------------------------------------------
@@ -105,13 +98,10 @@ doRunActions(){
 	);
 	done < <(echo "$actions")
 
-
-
 }
-#eof func doRunActions
 
 
-#v0.2.7 
+# v0.5.9 
 #------------------------------------------------------------------------------
 # register the run-time vars before the call of the $0
 #------------------------------------------------------------------------------
@@ -131,13 +121,12 @@ doInit(){
 
 
 
-#v0.2.7 
+# v0.5.9 
 #------------------------------------------------------------------------------
 # parse the single letter command line args
 #------------------------------------------------------------------------------
 doParseCmdArgs(){
 
-   # traverse all the possible cmd args
    while getopts ":a:c:d:i:h:t:" opt; do
      case $opt in
       a)
@@ -167,12 +156,11 @@ doParseCmdArgs(){
      esac
    done
 }
-#eof func doParseCmdArgs
 
 
 
 
-#v0.2.7 
+#v0.5.9 
 #------------------------------------------------------------------------------
 # create an example host dependant ini file
 #------------------------------------------------------------------------------
@@ -193,7 +181,7 @@ doCreateDefaultConfFile(){
 #eof func doCreateDefaultConfFile
 
 
-#v0.2.7 
+#v0.5.9 
 #------------------------------------------------------------------------------
 # perform the checks to ensure that all the vars needed to run are set
 #------------------------------------------------------------------------------
@@ -207,14 +195,13 @@ doCheckReadyToStart(){
 	which perl 2>/dev/null || { echo >&2 "The perl binary is missing ! Aborting ..."; exit 1; }
 
 }
-#eof func doCheckReadyToStart
 
 
 
 trap "exit 1" TERM
 export TOP_PID=$$
 
-# v0.2.7
+# v0.5.9
 #------------------------------------------------------------------------------
 # clean and exit with passed status and message
 # call by: 
@@ -246,7 +233,7 @@ doExit(){
 #eof func doExit
 
 
-#v0.2.7 
+#v0.5.9 
 #------------------------------------------------------------------------------
 # echo pass params and print them to a log file and terminal
 # with timestamp and $host_name and $0 PID
@@ -270,28 +257,27 @@ doLog(){
 			log_file="$product_instance_dir/dat/log/bash/$run_unit.`date "+%Y%m"`.log"
    echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$run_unit][@$host_name] [$$] $msg " >> $log_file
 }
-#eof func doLog
 
 
-#v0.2.7
+#v0.5.9
 #------------------------------------------------------------------------------
 # cleans the unneeded during after run-time stuff
 # do put here the after cleaning code
 #------------------------------------------------------------------------------
 doCleanAfterRun(){
    # remove the temporary dir and all the stuff bellow it
-   cmd="rm -fvr $tmp_dir"
+   cmd="rm -dfvr $tmp_dir"
    doRunCmdAndLog "$cmd"
+   rm -rdfvr $tmp_dir
 
 
 #   while read -r f ; do 
 #      test -f $f && rm -fv "$f" ; 
 #   done < <(find "$run_unit_bash_dir" -type f -name '*.bak')
 }
-#eof func doCleanAfterRun
 
 
-#v0.2.7 
+#v0.5.9 
 #------------------------------------------------------------------------------
 # run a command and log the call and its output to the log_file
 # doPrintHelp: doRunCmdAndLog "$cmd"
@@ -309,10 +295,9 @@ doRunCmdAndLog(){
    [ $ret_cmd -eq 0 ] || doLog "$error_msg"
    doLog "DEBUG : cmdoutput : \"$msg\""
 }
-#eof func doRunCmdAndLog
 
 
-#v0.2.7 
+#v0.5.9 
 #------------------------------------------------------------------------------
 # run a command on failure exit with message
 # doPrintHelp: doRunCmdOrExit "$cmd"
@@ -342,10 +327,9 @@ doRunCmdOrExit(){
 	fi
 
 }
-#eof func doRunCmdOrExit
 
 
-#v0.2.7 
+#v0.5.9 
 #------------------------------------------------------------------------------
 # set the variables from the $0.$host_name.cnf file which has ini like syntax
 #------------------------------------------------------------------------------
@@ -378,14 +362,6 @@ doSetVars(){
 
 	cd "$run_unit_bash_dir/"
 
-   # start set default vars
-   # do_print_debug_msgs=0
-   # stop set default vars
-   # set -x
-	# test -z "${issue_tracker_project:-}" && doParseConfFile
-	#test -z "${issue_tracker_project:-}" || doSetUndefinedShellVarsFromCnfFile
-   # sleep 20
-
 	( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
 	doLog "INFO # --------------------------------------"
@@ -409,59 +385,8 @@ doClearTheScreen(){
 	printf "\033[2J";printf "\033[0;0H"
 }
 
-#------------------------------------------------------------------------------
-# set vars from the cnf file, but only if they are not pre-set in the calling shell
-#------------------------------------------------------------------------------
-doSetUndefinedShellVarsFromCnfFile(){
 
-	# set a default cnfiguration file
-	export cnf_file="$run_unit_bash_dir/$run_unit.cnf"
-
-	# however if there is a host dependant cnf file override it
-	test -f "$run_unit_bash_dir/$run_unit.$host_name.cnf" \
-		&& export cnf_file="$run_unit_bash_dir/$run_unit.$host_name.cnf"
-	
-	# if we have perl apps they will share the same cnfiguration settings with this one
-	test -f "$product_instance_dir/$run_unit.$host_name.cnf" \
-		&& export cnf_file="$product_instance_dir/$run_unit.$host_name.cnf"
-   
-   # however if there is a host dependant and env-aware cnf file override it
-	test -f "$product_instance_dir/$run_unit.$env_type.$host_name.cnf" \
-		&& export cnf_file="$product_instance_dir/$run_unit.$env_type.$host_name.cnf"
-
-   test -z "${INI_SECTION-}" && INI_SECTION=MainSection
-
-   doLog "DEBUG reading: the following configuration file"
-   doLog "DEBUG ""$cnf_file"
-
-   # and pre-register for nice logging
-   ( set -o posix ; set ) | sort >"$tmp_dir/vars.before"
-   settings=`sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
-      -e 's/#.*$//' \
-      -e 's/[[:space:]]*$//' \
-      -e 's/^[[:space:]]*//' \
-      -e "s/^\(.*\)=\([^\"']*\)$/\1=\"\2\"/" \
-      < $cnf_file \
-      | sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
-
-   # export the var_name=var_value pairs
-   # debug set -x
-   while IFS=' ' read -d' ' s ; do eval 'export '$s ; done <<< $settings
-   s=''
-   set +x
-   # and post-register for nice logging
-   ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
-
-   doLog "INFO added the following vars from section: [$INI_SECTION]"
-   cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
-   echo -e "$cmd"
-   echo -e "$cmd" >> $log_file
-   echo -e "\n\n"
-   sleep 1; printf "\033[2J";printf "\033[0;0H" # and clear the screen
-}
-#eof func doSetShellVarsFromCnfFile
-
-# v0.2.7
+# v0.5.9
 #------------------------------------------------------------------------------
 # parse the ini like $0.$host_name.cnf and set the variables
 # cleans the unneeded during after run-time stuff. Note the MainSection
@@ -526,9 +451,5 @@ main "$@"
 # 4 --- perl syntax check error
 #----------------------------------------------------------
 #
-# VersionHistory:
-#------------------------------------------------------------------------------
-# 1.0.0 --- 2016-09-11 12:24:15 -- init from bash-stub
-#----------------------------------------------------------
 #
-#eof file: issue-tracker.sh v0.2.7
+#eof file: issue-tracker.sh v0.5.9

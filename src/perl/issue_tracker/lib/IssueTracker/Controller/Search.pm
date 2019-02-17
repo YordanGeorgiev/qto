@@ -44,6 +44,7 @@ sub doSearchItems {
    my $srch_control     = 'srch-grid' ; 
    my $notice           = '' ; 
    
+   $db = $self->SUPER::doResolveDbName ( $db ) ; 
    return unless ( $self->SUPER::isAuthorized($db) == 1 ); 
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    

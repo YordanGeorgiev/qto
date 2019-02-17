@@ -1,23 +1,22 @@
--- DROP TABLE IF EXISTS check_lists ; 
+   DROP TABLE IF EXISTS readme CASCADE;
 
-SELECT 'create the "check_lists" table'
+SELECT 'create the "readme" table'
 ; 
-   CREATE TABLE check_lists (
+   CREATE TABLE readme (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , seq            integer NULL
     , prio           integer NOT NULL DEFAULT 1
     , status         varchar (20) NOT NULL DEFAULT 'status ...'
-    , category       varchar (30) NOT NULL DEFAULT 'category ...'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
-    , CONSTRAINT pk_check_lists_guid PRIMARY KEY (guid)
+    , CONSTRAINT pk_readme_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
     );
 
-create unique index idx_uniq_check_lists_id on check_lists (id);
+   create unique index idx_uniq_readme_id on readme (id);
+
 
 
 SELECT 'show the columns of the just created table'
@@ -25,14 +24,19 @@ SELECT 'show the columns of the just created table'
 
    SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute
-   WHERE  attrelid = 'public.check_lists'::regclass
+   WHERE  attrelid = 'public.readme'::regclass
    AND    attnum > 0
    AND    NOT attisdropped
    ORDER  BY attnum
    ; 
 
+--The trigger:
+   CREATE TRIGGER trg_set_update_time_on_readme 
+   BEFORE UPDATE ON readme 
+   FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
 select tgname
 from pg_trigger
 where not tgisinternal
-and tgrelid = 'check_lists'::regclass;
+and tgrelid = 'readme'::regclass;
+

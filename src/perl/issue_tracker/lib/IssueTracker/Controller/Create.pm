@@ -41,6 +41,7 @@ sub doCreateBySoleId {
    my $json = $self->req->body;
    my $perl_hash = decode_json($json) ; 
 
+   $db = $self->SUPER::doResolveDbName ( $db ) ; 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    $appConfig		      = $self->app->get('AppConfig');
