@@ -312,9 +312,7 @@ cnf/readme.txt
 # ---
 src/bash/issue-tracker/tests/increase-date.test.sh
 src/bash/issue-tracker/funcs/increase-date.func.sh
-src/bash/issue-tracker/specs/increase-date.spec.sh
 src/bash/issue-tracker/helps/increase-date.help.sh
-doc/txt/issue-tracker/specs/increase-date.spec.txt
 doc/txt/issue-tracker/tests/increase-date.test.txt
 doc/txt/issue-tracker/funcs/increase-date.func.txt
 doc/txt/issue-tracker/helps/increase-date.help.txt
@@ -387,6 +385,8 @@ src/sql/pgsql/qto/29.1.create-table-enduser_guide_doc.sql
 src/sql/pgsql/qto/27.1.create-table-maintenance_guide_doc.sql
 src/sql/pgsql/qto/30.create-table-deployment_guide.sql
 src/sql/pgsql/qto/30.1.create-table-deployment_guide_doc.sql
+src/sql/pgsql/qto/31.1.create-table-readme_doc.sql
+src/sql/pgsql/qto/31.create-table-readme.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/qto/93.create-table-benchmarks.sql
@@ -400,6 +400,7 @@ src/sql/pgsql/scripts/check-postgres-tables-permissions.sql
 src/sql/pgsql/scripts/copy-items-from-one-table-to-another.sql
 src/sql/pgsql/scripts/list-table-columns.sql
 src/sql/pgsql/scripts/list-table-cols.sh
+src/sql/pgsql/scripts/list-postgres-tables.sh
 src/sql/pgsql/scripts/upsert_item_trigger.sql
 #----
 src/bash/issue-tracker/tests/db-to-xls.test.sh
@@ -923,10 +924,9 @@ src/selenium/
 src/selenium/ide
 src/selenium/ide/issue-tracker.remote.side
 src/selenium/ide/issue-tracker.local.side
-dat/mix/2019/2019-02/2019-02-14
-dat/mix/2019/2019-02/2019-02-14/sql
-dat/mix/2019/2019-02/2019-02-14/sql/qto
-dat/mix/2019/2019-02/2019-02-14/sql/qto/qto.20190214_225509.insrt.dmp.sql
-dat/mix/2019/2019-02/2019-02-14/tmp
-dat/mix/2019/2019-02/2019-02-14/xls
-dat/mix/2019/2019-02/2019-02-14/xls/qto.all.20190214_000000.xlsx
+dat/mix/2019/2019-02/2019-02-15/sql
+dat/mix/2019/2019-02/2019-02-15/sql/qto
+dat/mix/2019/2019-02/2019-02-15/sql/qto/qto.20190215_131441.insrt.dmp.sql
+dat/mix/2019/2019-02/2019-02-15/tmp
+dat/mix/2019/2019-02/2019-02-15/xls
+dat/mix/2019/2019-02/2019-02-15/xls/qto.all.20190215_000000.xlsx

@@ -4,7 +4,6 @@ use strict ; use warnings ;
 use Mojo::Base 'Mojolicious::Controller';
 use Data::Printer ; 
 
-
 our $module_trace    = 0 ; 
 our $appConfig       = {};
 our $objLogger       = {} ;
@@ -13,6 +12,20 @@ our $rdbms_type      = 'postgres' ;
 use IssueTracker::App::Mdl::Model ; 
 use IssueTracker::App::Db::In::RdrDbsFactory ; 
 use IssueTracker::App::Cnvr::CnrHsr2ToHsr2 ; 
+
+
+sub doResolveDbName {
+   my $self                = shift ; 
+   my $db                  = shift ; 
+   my @env_prefixes        = ( 'dev_' , 'tst_' , 'qas_' , 'prd_' );
+ 
+   my $db_prefix           = substr($db,0,4);
+   unless ( grep ( /^$db_prefix$/, @env_prefixes)) {
+      $db = $appConfig->{ 'ProductType' } . '_' . $db ; 
+   } 
+   return $db ;
+}
+
 
 sub doReloadProjDbMeta {
 

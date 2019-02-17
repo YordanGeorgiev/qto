@@ -14,7 +14,7 @@ DataDir = /opt/csitea/issue-tracker/issue-tracker.0.5.9.dev.ysg/dat
 mix_data_dir = /opt/csitea/issue-tracker/issue-tracker.0.5.9.dev.ysg/dat/mix
 
 # the postgres confs - OBS ! dev , tst , prd product instances to own db !
-postgres_db_name     = qto
+postgres_db_name     = dev_qto
 postgres_db_host     = host-name
 postgres_db_port     = 5432
 postgres_db_user     = ysg

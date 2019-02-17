@@ -42,6 +42,7 @@ sub doSelectItems {
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
 
+   $db = $self->SUPER::doResolveDbName ( $db ) ; 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    $appConfig		      = $self->app->get('AppConfig');
@@ -105,6 +106,7 @@ sub doSelectTables {
 	$appConfig	   = $self->app->get('AppConfig');
    my $objModel   = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig , $db) ;
 
+   $db = $self->SUPER::doResolveDbName ( $db ) ; 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
 
@@ -185,6 +187,7 @@ sub doSelectDatabases {
 	$appConfig	   = $self->app->get('AppConfig');
    my $objModel   = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
 
+   $db = $self->SUPER::doResolveDbName ( $db ) ; 
 	$objModel->set('postgres_db_name' , 'postgres' ) ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
@@ -243,6 +246,7 @@ sub doSelectMeta {
    $appConfig		= $self->app->get('AppConfig');
    my $objModel         = 'IssueTracker::App::Mdl::Model'->new ( \$appConfig ) ;
    
+   $db = $self->SUPER::doResolveDbName ( $db ) ; 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    

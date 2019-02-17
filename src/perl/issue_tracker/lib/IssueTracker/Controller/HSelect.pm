@@ -34,6 +34,7 @@ sub doHSelectItems {
    my $objRdrDb      = {} ; 
    my $objRdrDbsFactory = {} ; 
  
+   $db = $self->SUPER::doResolveDbName ( $db ) ; 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
 

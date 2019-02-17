@@ -45,6 +45,7 @@ sub doTestWebSocket {
    return ; 
  
 #   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+#   $db = $self->SUPER::doResolveDbName ( $db ) ; 
 #   $self->SUPER::doReloadProjDbMeta( $db ) ;
 #
 #   $appConfig		   = $self->app->get('AppConfig');
