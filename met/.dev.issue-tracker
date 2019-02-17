@@ -312,9 +312,7 @@ cnf/readme.txt
 # ---
 src/bash/issue-tracker/tests/increase-date.test.sh
 src/bash/issue-tracker/funcs/increase-date.func.sh
-src/bash/issue-tracker/specs/increase-date.spec.sh
 src/bash/issue-tracker/helps/increase-date.help.sh
-doc/txt/issue-tracker/specs/increase-date.spec.txt
 doc/txt/issue-tracker/tests/increase-date.test.txt
 doc/txt/issue-tracker/funcs/increase-date.func.txt
 doc/txt/issue-tracker/helps/increase-date.help.txt
