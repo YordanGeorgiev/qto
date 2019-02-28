@@ -1,4 +1,4 @@
-# doc/txt/issue-tracker/action-to-remove/action-to-remove.spec.txt
+# doc/txt/issue-tracker/spec/action-to-remove.spec.txt
 
 	doSpecActionToRemove
 	
@@ -33,5 +33,4 @@
 	-- todo: what are the known caveats of the doSpecActionToRemove functions
 
 
-
-# eof file: doc/txt/issue-tracker/action-to-remove/action-to-remove.spec.txt
+# eof file: doc/txt/issue-tracker/spec/action-to-remove.spec.txt

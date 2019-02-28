@@ -676,14 +676,7 @@ doc/txt/issue-tracker/specs/check-perl-modules-prerequisites.spec.txt
 doc/txt/issue-tracker/funcs/check-perl-modules-prerequisites.func.txt
 doc/txt/issue-tracker/tests/check-perl-modules-prerequisites.test.txt
 doc/txt/issue-tracker/helps/check-perl-modules-prerequisites.help.txt
-doc/txt/issue-tracker/helps/action-to-remove.help.txt
-doc/txt/issue-tracker/specs/action-to-remove.spec.txt
-doc/txt/issue-tracker/funcs/action-to-remove.func.txt
-doc/txt/issue-tracker/tests/action-to-remove.test.txt
-src/bash/issue-tracker/funcs/action-to-remove.func.sh
-src/bash/issue-tracker/helps/action-to-remove.help.sh
 src/bash/issue-tracker/helps/backup-file.help.sh
-src/bash/issue-tracker/specs/action-to-remove.spec.sh
 doc/txt/issue-tracker/funcs/clone-to-app.func.txt
 doc/txt/issue-tracker/tests/clone-to-app.test.txt
 src/bash/issue-tracker/helps/clone-to-app.help.sh

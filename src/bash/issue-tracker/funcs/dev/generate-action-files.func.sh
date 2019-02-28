@@ -63,7 +63,7 @@ doGenerateActionFiles(){
 				doc_file_exists=$(find "doc/txt/$run_unit/$deliverable_type""s" | grep $act.$deliverable_type.txt| wc -l)
 				if [ $doc_file_exists -eq 0 ];then
 
-					cp -v doc/txt/issue-tracker/tmpl/%act%.%deliverable_type%.txt "$deliverable_doc_file"
+					cp -v doc/txt/$run_unit/tmpl/%act%.%deliverable_type%.txt "$deliverable_doc_file"
 					perl -pi -e "s|%full_func%|$full_func|g" "$deliverable_doc_file"
 					perl -pi -e "s|%act%|$act|g" "$deliverable_doc_file"
 					perl -pi -e "s|%deliverable_type%|$deliverable_type|g" "$deliverable_doc_file"
@@ -74,12 +74,14 @@ doGenerateActionFiles(){
 
       echo -e "generated the following files: \n" ; 
       find . | grep -i $act |cut -c 3-|sort -nr
+      find . | grep -i $act |cut -c 3-|sort -nr >> met/.$env_type.$run_unit
       echo -e "\n\n" 
 
 		doLog "DEBUG STOP  :: checking action: $act"
 		
 	); 
-	done< <(cat src/bash/$run_unit/tests/new-issue-tracker-tests.lst)
+	done< <(cat "src/bash/$run_unit/tests/new-$run_unit-tests.lst")
+   clear ; for env in `echo dev tst prd src`; do cp -v met/.$env_type.$run_unit met/.$env.$run_unit ; done
 	
 	doLog "DEBUG STOP  : doGenerateActionFiles"
 
