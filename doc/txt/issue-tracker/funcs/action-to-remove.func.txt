@@ -1,4 +1,4 @@
-# doc/txt/issue-tracker/action-to-remove/action-to-remove.func.txt
+# doc/txt/issue-tracker/func/action-to-remove.func.txt
 
 	doActionToRemove
 	
@@ -33,5 +33,4 @@
 	-- todo: what are the known caveats of the doActionToRemove functions
 
 
-
-# eof file: doc/txt/issue-tracker/action-to-remove/action-to-remove.func.txt
+# eof file: doc/txt/issue-tracker/func/action-to-remove.func.txt

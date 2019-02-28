@@ -1,4 +1,4 @@
-# doc/txt/issue-tracker/action-to-remove/action-to-remove.test.txt
+# doc/txt/issue-tracker/test/action-to-remove.test.txt
 
 	doTestActionToRemove
 	
@@ -33,5 +33,4 @@
 	-- todo: what are the known caveats of the doTestActionToRemove functions
 
 
-
-# eof file: doc/txt/issue-tracker/action-to-remove/action-to-remove.test.txt
+# eof file: doc/txt/issue-tracker/test/action-to-remove.test.txt
