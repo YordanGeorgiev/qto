@@ -1,6 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
-src/js/node/js-unit-tests/01-set-url-param/test/test.js
+src/js/node/js-unit-tests/00-set-url-param/test/test.js
 src/js/node/js-unit-tests/01-set-url-param/package.json
 # -- 
 src/perl/issue_tracker/public/poc/right-click-vmenu
@@ -110,6 +110,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/MojoPgWrapper.pm
 src/perl/issue_tracker/lib/IssueTracker/App/UI/WtrUIFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/In/CnrUrlPrms.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/WtrExportFactory.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/WtrMdFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrExporterXls.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrExporterMd.pm
 # ---
@@ -240,7 +241,8 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/Out
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrTextFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrText.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrXls.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrMd.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGitHubMd.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrParadoxMd.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGoogleSheet.pm
 src/perl/issue_tracker/lib/IssueTracker/App/RAM
 src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrTxtToHtml.pm
@@ -387,6 +389,7 @@ src/sql/pgsql/qto/30.create-table-deployment_guide.sql
 src/sql/pgsql/qto/30.1.create-table-deployment_guide_doc.sql
 src/sql/pgsql/qto/31.1.create-table-readme_doc.sql
 src/sql/pgsql/qto/31.create-table-readme.sql
+src/sql/pgsql/qto/32.create-table-export_files.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/qto/93.create-table-benchmarks.sql
@@ -884,7 +887,7 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrExporterMd/autosplit.
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrExporterXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrFiles/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrGoogleSheet/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrMd/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrGitHubMd/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrText/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Mdl/Model/autosplit.ix

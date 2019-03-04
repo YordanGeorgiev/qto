@@ -18,7 +18,8 @@ package IssueTracker::App::IO::WtrExportFactory ;
 		my $self 			= shift ; 	
 		my $export_type   = shift // $export_type ; # the default is control
 
-		my @args 			= ( @_ ) ; 
+		my @args 			= ( @_ ) || () ; 
+      unshift @args, $export_type ;
 
 		my $package_file  = () ; 
 		my $objWtrExporter = () ;
@@ -27,7 +28,11 @@ package IssueTracker::App::IO::WtrExportFactory ;
 		   $package_file     = "IssueTracker/App/IO/Out/WtrExporterXls.pm" ; 
 		   $objWtrExporter   = "IssueTracker::App::IO::Out::WtrExporterXls" ; 
 		}
-		elsif ( $export_type eq 'md' ) {
+		elsif ( $export_type eq 'md' or $export_type eq 'github-md' ) {
+		   $package_file     = "IssueTracker/App/IO/Out/WtrExporterMd.pm" ; 
+		   $objWtrExporter   = "IssueTracker::App::IO::Out::WtrExporterMd" ; 
+		}
+		elsif ( $export_type eq 'paradox-md' ) {
 		   $package_file     = "IssueTracker/App/IO/Out/WtrExporterMd.pm" ; 
 		   $objWtrExporter   = "IssueTracker::App::IO::Out::WtrExporterMd" ; 
 		}

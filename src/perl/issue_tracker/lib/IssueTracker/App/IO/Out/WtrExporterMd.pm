@@ -16,12 +16,12 @@ use IssueTracker::App::Utils::Logger ;
 use IssueTracker::App::Utils::Timer ; 
 use IssueTracker::App::Db::In::RdrDbsFactory ; 
 use IssueTracker::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
-use IssueTracker::App::IO::Out::WtrMd ; 
+use IssueTracker::App::IO::WtrMdFactory ; 
 
 our $module_trace      = 1 ; 
 our $objModel          = {} ; 
 our $appConfig         = {} ; 
-our $rdbms_type        = 'postgres' ; 
+our $export_type       = 'md' ; 
 
 
 sub doExport {
@@ -37,11 +37,10 @@ sub doExport {
    my $cnt              = 0 ; 
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
-   my $rdbms_type       = 'postgres' ; 
    my $dat              = {} ; 
  
    $objRdrDbsFactory 	= 'IssueTracker::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
+   $objRdrDb            = $objRdrDbsFactory->doSpawn("$export_type");
 
    ($rv, $msg, $dat) 	= $objRdrDb->doHSelectBranch($db , $table, $objModel->get('hselect.web-action.bid'));
    $http_code 				= $rv ;  
@@ -49,7 +48,9 @@ sub doExport {
    # p ( $dat ) ; 
    $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
 
-   my $objWtrMd    = 'IssueTracker::App::IO::Out::WtrMd'->new( \$appConfig , \$objModel) ;
+   #my $objWtrGitHubMd    = 'IssueTracker::App::IO::Out::WtrGitHubMd'->new( \$appConfig , \$objModel) ;
+   my $objWtrMdFactory = 'IssueTracker::App::IO::WtrMdFactory'->new( \$appConfig , \$objModel ) ;
+   my $objWtrMd = $objWtrMdFactory->doSpawn("$export_type");
    return $objWtrMd->doWrite ( $table , $dat );
 }
 
@@ -58,7 +59,7 @@ sub doExport {
 		my $invocant   = shift ;    
 		$appConfig     = ${ shift @_ } || croak 'missing appConfig !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'missing objModel !!!' ; 
-		$rdbms_type    = shift         || $rdbms_type ; 
+		$export_type   = shift         || $export_type ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
 		my $self       = {}; bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInit() ; 

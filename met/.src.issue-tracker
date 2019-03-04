@@ -240,7 +240,7 @@ src/perl/issue_tracker/lib/IssueTracker/App/IO/Out
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrTextFactory.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrText.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrXls.pm
-src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrMd.pm
+src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGitHubMd.pm
 src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGoogleSheet.pm
 src/perl/issue_tracker/lib/IssueTracker/App/RAM
 src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrTxtToHtml.pm
@@ -884,7 +884,7 @@ src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrExporterMd/autosplit.
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrExporterXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrFiles/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrGoogleSheet/autosplit.ix
-src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrMd/autosplit.ix
+src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrGitHubMd/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrText/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/IO/Out/WtrXls/autosplit.ix
 src/perl/issue_tracker/lib/auto/IssueTracker/App/Mdl/Model/autosplit.ix
