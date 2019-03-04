@@ -400,7 +400,7 @@ IssueTracker::App::IO::Out::WtrExporterMd	src/perl/issue_tracker/lib/IssueTracke
 IssueTracker::App::IO::Out::WtrExporterXls	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrExporterXls.pm	1;"	package	language:Perl
 IssueTracker::App::IO::Out::WtrFiles	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrFiles.pm	1;"	package	language:Perl
 IssueTracker::App::IO::Out::WtrGoogleSheet	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGoogleSheet.pm	1;"	package	language:Perl
-IssueTracker::App::IO::Out::WtrMd	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrMd.pm	1;"	package	language:Perl
+IssueTracker::App::IO::Out::WtrGitHubMd	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGitHubMd.pm	1;"	package	language:Perl
 IssueTracker::App::IO::Out::WtrText	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrText.pm	1;"	package	language:Perl
 IssueTracker::App::IO::Out::WtrTextFactory	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrTextFactory.pm	1;"	package	language:Perl
 IssueTracker::App::IO::Out::WtrXls	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrXls.pm	1;"	package	language:Perl
@@ -1545,7 +1545,7 @@ contains	src/js/node/js-unit-tests/01-set-url-param/node_modules/he/he.js	70;"	f
 contextLines	src/js/node/js-unit-tests/01-set-url-param/node_modules/diff/lib/patch/create.js	23;"	function	language:JavaScript	function:structuredPatch
 convertChangesToDMP	src/js/node/js-unit-tests/01-set-url-param/node_modules/diff/lib/convert/dmp.js	6;"	function	language:JavaScript
 convertChangesToXML	src/js/node/js-unit-tests/01-set-url-param/node_modules/diff/lib/convert/xml.js	5;"	function	language:JavaScript
-convertHtmlEntities	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrMd.pm	27;"	subroutine	language:Perl
+convertHtmlEntities	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGitHubMd.pm	27;"	subroutine	language:Perl
 convertHtmlEntities	src/perl/issue_tracker/lib/IssueTracker/App/RAM/CnrTxtToHtml.pm	90;"	subroutine	language:Perl
 copf	src/js/node/js-unit-tests/01-set-url-param/node_modules/he/he.js	55;"	property	language:JavaScript	class:decodeMap
 coprod	src/js/node/js-unit-tests/01-set-url-param/node_modules/he/he.js	55;"	property	language:JavaScript	class:decodeMap
@@ -1864,7 +1864,7 @@ doBuildMsg	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	412;"	sub
 doBuildRunLogMsg	src/perl/issue_tracker/lib/IssueTracker/App/Utils/Logger.pm	450;"	subroutine	language:Perl
 doBuildSearchControl	src/perl/issue_tracker/lib/IssueTracker/Controller/Search.pm	87;"	subroutine	language:Perl
 doBuildSearchControl	src/perl/issue_tracker/lib/IssueTracker/Controller/SearchGrid.pm	19;"	subroutine	language:Perl
-doBuildTOC	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrMd.pm	132;"	subroutine	language:Perl
+doBuildTOC	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGitHubMd.pm	132;"	subroutine	language:Perl
 doBuildViewControl	src/perl/issue_tracker/lib/IssueTracker/Controller/ViewDoc.pm	34;"	subroutine	language:Perl
 doBuildViewPageType	src/perl/issue_tracker/lib/IssueTracker/Controller/View.pm	48;"	subroutine	language:Perl
 doBuildWhereClauseByBranchId	src/perl/issue_tracker/lib/IssueTracker/App/Db/In/Postgres/RdrPostgresDb.pm	168;"	subroutine	language:Perl
@@ -1984,7 +1984,7 @@ doInit	src/perl/issue_tracker/lib/IssueTracker/App/Db/Out/Postgres/WtrPostgresDb
 doInit	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/RdrTextFactory.pm	20;"	subroutine	language:Perl
 doInit	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrExporterMd.pm	69;"	subroutine	language:Perl
 doInit	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrExporterXls.pm	65;"	subroutine	language:Perl
-doInit	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrMd.pm	223;"	subroutine	language:Perl
+doInit	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGitHubMd.pm	223;"	subroutine	language:Perl
 doInit	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrTextFactory.pm	21;"	subroutine	language:Perl
 doInit	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrXls.pm	153;"	subroutine	language:Perl
 doInit	src/perl/issue_tracker/lib/IssueTracker/App/IO/WtrExportFactory.pm	56;"	subroutine	language:Perl
@@ -2252,7 +2252,7 @@ doValidateAndSetSeq	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/CnrUrlPrms
 doValidateAndSetUpdate	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/CnrUrlPrms.pm	54;"	subroutine	language:Perl
 doValidateAndSetWith	src/perl/issue_tracker/lib/IssueTracker/App/IO/In/CnrUrlPrms.pm	102;"	subroutine	language:Perl
 doViewItems	src/perl/issue_tracker/lib/IssueTracker/Controller/View.pm	24;"	subroutine	language:Perl
-doWrite	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrMd.pm	38;"	subroutine	language:Perl
+doWrite	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGitHubMd.pm	38;"	subroutine	language:Perl
 doWriteGSheetFromHashRef	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGoogleSheet.pm	41;"	subroutine	language:Perl
 doXlsToDb	src/bash/issue-tracker/funcs/xls-to-db.func.sh	8;"	function	language:Sh
 doXlsToDb	src/perl/issue_tracker/lib/IssueTracker/App/Ctrl/Dispatcher.pm	61;"	subroutine	language:Perl
@@ -3583,7 +3583,7 @@ new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrExporterMd.pm	57;"	sub
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrExporterXls.pm	53;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrFiles.pm	113;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGoogleSheet.pm	229;"	subroutine	language:Perl
-new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrMd.pm	208;"	subroutine	language:Perl
+new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrGitHubMd.pm	208;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrText.pm	80;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrTextFactory.pm	45;"	subroutine	language:Perl
 new	src/perl/issue_tracker/lib/IssueTracker/App/IO/Out/WtrXls.pm	139;"	subroutine	language:Perl
