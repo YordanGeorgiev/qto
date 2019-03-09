@@ -18,8 +18,9 @@ doGenerateMdDocs(){
       file_name=$(curl -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .name'); 
       rel_path=$(curl -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .path');
       [ "${rel_path-}" == "null" ] && rel_path=""
-      echo -e "\nrunning: curl -s -o \"$docs_root_dir/$rel_path/$file_name\" \ \n \"$basic_url/$url\"\n"       
-      curl -o "$docs_root_dir/$rel_path/$file_name" "$basic_url/$url"
+      file_path=$(echo $docs_root_dir/$rel_path/$file_name|perl -ne 's|[/]{2,5}|/|g;print')
+      echo -e "\nrunning: curl -s -o \"$file_path\" \ \n \"$basic_url/$url\"\n"       
+      curl -o "$file_path" "$basic_url/$url"
    done < <(curl -s $furl | jq -r '.dat[]|.url')
 	
 	doLog "DEBUG STOP  doGenerateMdDocs"
