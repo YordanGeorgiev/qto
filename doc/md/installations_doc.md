@@ -212,6 +212,9 @@ The bootstrap script will interpolate change the git deployment dir to a "produc
 ### 3.9. Install the OS libs listed in the prereq sh script
 The "prereq"script contains the listing of the binaries to be installed. Run the script. 
 
+Open the script it vim - it contains several ad-hoc installation steps which could not be automated .... 
+The whole binaries setup will be automated - chk: it-181207010500
+
     # go to your product instance dir - 
     cd ~/opt/csitea/qto/qto.$product_version.dev.$USER
     sudo bash src/bash/qto/install-prerequisites-on-ubuntu.sh

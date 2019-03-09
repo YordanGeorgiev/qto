@@ -390,6 +390,14 @@ src/sql/pgsql/qto/30.1.create-table-deployment_guide_doc.sql
 src/sql/pgsql/qto/31.1.create-table-readme_doc.sql
 src/sql/pgsql/qto/31.create-table-readme.sql
 src/sql/pgsql/qto/32.create-table-export_files.sql
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+src/sql/pgsql/qto/33.create-table-links.sql
+>>>>>>> 3c66f2ae... init
+=======
+src/sql/pgsql/qto/33.create-table-links.sql
+>>>>>>> 43a0b3fa... it-190309100850 fill in the export_files data and configure update qto docs
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/qto/93.create-table-benchmarks.sql

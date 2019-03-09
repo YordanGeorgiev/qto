@@ -2,33 +2,27 @@
 
 #
 # ---------------------------------------------------------
-# cat doc/txt/issue-tracker/funcs/generate-md-docs.func.txt
+# for docs: cat doc/txt/issue-tracker/funcs/generate-md-docs.func.txt
 # ---------------------------------------------------------
 doGenerateMdDocs(){
 
 	doLog "DEBUG START doGenerateMdDocs"
-	
-   while read -r table ; do \
-      url='http://'"$web_host"':'"$mojo_morbo_port/$postgres_db_name"'/export/'"$table"'?as=md'
-      # debug echo url: $url
-      item=$(echo $table |perl -ne 's/_doc//g;print')
-      md_file="$product_instance_dir/doc/md/$item.md"
-      wget -O "$md_file" "$url"
-      msg="the $table.md doc has than 100 lines and is probably empty !!!"
-      test $(wc -l "$md_file"|cut -d" " -f 1) -lt 100 && echo $msg >> $tmp_dir/do_exit
-   done < <(cat <<EOF
-userstories_doc
-devops_guide_doc
-features_doc
-requirements_doc
-concepts_doc
-system_guide_doc
-installations_doc
-EOF
-)
+   test -z "${proj_instance_dir-}" && proj_instance_dir="$product_instance_dir"
+   test -z "${docs_root_dir-}" && docs_root_dir="$proj_instance_dir"
+   # <<web-host>>:<<web-port>>/<<db>>/select/export_files?as=grid&od=id
+   basic_url="http://$web_host:$mojo_morbo_port/$postgres_db_name"
+   furl="$basic_url"'/select/export_files?as=grid&od=id'
 
+   while read -r url ; do 
+      printf "\033[2J";printf "\033[0;0H"
+      file_name=$(curl -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .name'); 
+      rel_path=$(curl -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .path');
+      [ "${rel_path-}" == "null" ] && rel_path=""
+      echo -e "\nrunning: curl -s -o \"$docs_root_dir/$rel_path/$file_name\" \ \n \"$basic_url/$url\"\n"       
+      curl -o "$docs_root_dir/$rel_path/$file_name" "$basic_url/$url"
+   done < <(curl -s $furl | jq -r '.dat[]|.url')
+	
 	doLog "DEBUG STOP  doGenerateMdDocs"
 }
-
 
 # eof file: src/bash/issue-tracker/funcs/generate-md-docs.func.sh

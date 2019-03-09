@@ -6,7 +6,7 @@ SELECT 'create the "export_files" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , url            varchar (200) NOT NULL DEFAULT 'url...'
-    , path           varchar (50) NOT NULL DEFAULT 'relative-path' 
+    , path           varchar (50) NULL DEFAULT 'rel-path-from-doc-root' 
     , name           varchar (100) NOT NULL DEFAULT 'the-export-file-name'
     , extension      varchar (50) NOT NULL DEFAULT 'the-file-extension' 
     , description    varchar (200) NOT NULL DEFAULT 'description...'
