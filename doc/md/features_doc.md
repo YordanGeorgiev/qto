@@ -105,33 +105,33 @@
     
 
 ### 1.1. Purpose
-The purpose of this document is to describe all the features, functionalities and capabilities provided by a properly installed, configured and operated instance of the issue-tracker application. 
-This document is the CONTRACT between you as the potential, former or active user of an issue-tracker instance and the product owner of that instance. 
+The purpose of this document is to describe all the features, functionalities and capabilities provided by a properly installed, configured and operated instance of the qto application. 
+This document is the CONTRACT between you as the potential, former or active user of an qto instance and the product owner of that instance. 
 
     
 
 ### 1.2. Document status
-This document is updated constantly in every release of the application. Each version however is considered to be a complete version regarding the issue-tracker version it situated in.
+This document is updated constantly in every release of the application. Each version however is considered to be a complete version regarding the qto version it situated in.
 
     
 
 ### 1.3. Audience
-This document is aimed for everyone, who shall, will or even would like to interact with an issue-tracker application instance. 
+This document is aimed for everyone, who shall, will or even would like to interact with an qto application instance. 
 
     
 
 ### 1.4. Master storage and storage format
-The master storage of this document is the master branch of the issue-tracker release you are interested in. The main storage format is Markdown. 
+The master storage of this document is the master branch of the qto release you are interested in. The main storage format is Markdown. 
 
     
 
 ### 1.5. Version control
-The contents of this document MUST be updated according to the EXISTING features, functionalities and capabilities of the issue-tracker version, in which this document residues.
+The contents of this document MUST be updated according to the EXISTING features, functionalities and capabilities of the qto version, in which this document residues.
 
     
 
 ### 1.6. Process
-The issue-tracker provides a mean for tracking of this documentation contents to the source code per feature/functionality, thus should you find inconsistencies in the behavior of the application and the content of this document you should create a bug issue and assign it to the owner of your product instance.
+The qto provides a mean for tracking of this documentation contents to the source code per feature/functionality, thus should you find inconsistencies in the behavior of the application and the content of this document you should create a bug issue and assign it to the owner of your product instance.
 
     
 
@@ -141,32 +141,32 @@ The issue-tracker provides a mean for tracking of this documentation contents to
     
 
 ### 2.1. Testability
-The issue-tracker app has a good and improving all the time test coverage. You can all the tests in the application as follows:
+The qto app has a good and improving all the time test coverage. You can all the tests in the application as follows:
 
     
 
 #### 2.1.1. Perl syntax check call
 You can check the perl syntax for each perl code file in the whole project by issuing the following shell call:
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a check-perl-syntax
+    bash src/bash/qto/qto.sh -a check-perl-syntax
 
 #### 2.1.2. Unit tests call
 You can run the unit tests of the application by issuing the following single shell call:
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a run-perl-unit-tests
+    bash src/bash/qto/qto.sh -a run-perl-unit-tests
 
 #### 2.1.3. Integration tests call
 You can run the integration tests of the application by issuing the following single shell call ( note that the integration tests will not start if you do not have pre-loaded the needed shell env vars for your project you want to operate on ). 
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a run-integration-tests
+    bash src/bash/qto/qto.sh -a run-integration-tests
 
 #### 2.1.4. Bash tests call
 You can run all the bash functions in the tool by issuing the following command in the shell. 
 
     # if you set the previous 2 actions as those to be tested
-    bash src/bash/issue-tracker/test-issue-tracker.sh
+    bash src/bash/qto/test-qto.sh
     
-    2018-05-12 18:01:08      START test-issue-tracker test run report
+    2018-05-12 18:01:08      START test-qto test run report
     
     result  start-time  stop-time   action-name
        ok    18:01:09 18:01:19 run-perl-unit-tests
@@ -174,7 +174,7 @@ You can run all the bash functions in the tool by issuing the following command 
     
     
     
-    2018-05-12 18:01:30      STOP  test-issue-tracker test run report
+    2018-05-12 18:01:30      STOP  test-qto test run report
 
 ### 2.2. Documentation
 We consider up-to-date and complete documentation as being integral part of the application, thus each release must have the documentation updated to it's current set of features, functionalities and capabilities. 
@@ -186,7 +186,7 @@ You might argue that the amount of documentation is too big, yet the more you di
 You can generate all the md and pdf docs by if you have a running instance of the isg-pub application accessible via single shell call by issuing the following command: 
 The command will fail if there is a doc configured in the isg-pub database which has less than 100 lines. 
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a generate-docs
+    bash src/bash/qto/qto.sh -a generate-docs
 
 #### 2.2.2. Full documentation set
 Every instance of the isssue-tracker application comes with up-to-date documentation set addressing the latest commit of the released version, namely the following documents:
@@ -216,16 +216,16 @@ Logging is implemented as follows:
     
 
 #### 2.3.1. Bash logging
-The issue-tracker.sh bash entry point loggs both to STDOUT and file. You cold easily defined your own log levels. 
+The qto.sh bash entry point loggs both to STDOUT and file. You cold easily defined your own log levels. 
 
     doLog "INFO an info msg"
-    [INFO ] 2018.05.08-21:05:25 EEST [issue-tracker][@host-name] [29667] an info msg:
+    [INFO ] 2018.05.08-21:05:25 EEST [qto][@host-name] [29667] an info msg:
 
 #### 2.3.2. Perl logging
 The perl logger could be configured to log to file and std outputs. 
 
     doLog "INFO an info msg"
-    [INFO ] 2018.05.08-21:05:25 EEST [issue-tracker][@host-name] [29667] an info msg:
+    [INFO ] 2018.05.08-21:05:25 EEST [qto][@host-name] [29667] an info msg:
 
 ### 2.4. Development efficiency increasing actions
 
@@ -233,11 +233,11 @@ The perl logger could be configured to log to file and std outputs.
     
 
 #### 2.4.1. Support for different projects
-The issue-tracker could be used against many different projects as soon as they have the needed file and dir structure , configuration file and dedicated db in the PostgreSQL. 
-You could quickly fork a new project out of the issue-tracker instance by copying the 
+The qto could be used against many different projects as soon as they have the needed file and dir structure , configuration file and dedicated db in the PostgreSQL. 
+You could quickly fork a new project out of the qto instance by copying the 
 
-    # pre-load the vars of an issue-tracker project
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.doc-pub-host.cnf
+    # pre-load the vars of an qto project
+    doParseIniEnvVars /vagrant/csitea/cnf/projects/qto/qto-issues.dev.doc-pub-host.cnf
 
 #### 2.4.2. The "morph-dir" action
 You can recursively search and replace strings in both file and dir paths and their contents ( as soon as they non-binary , txt files ) by issuing the following commands:
@@ -245,7 +245,7 @@ You can recursively search and replace strings in both file and dir paths and th
     export to_srch=WriterTxtDaily
     export to_repl=WriterTxtTerm
     export dir_to_morph=`pwd`
-    bash src/bash/issue-tracker/issue-tracker.sh -a morph-dir
+    bash src/bash/qto/qto.sh -a morph-dir
     fg
     history | cut -c 8-
     
@@ -253,7 +253,7 @@ You can recursively search and replace strings in both file and dir paths and th
 #### 2.4.3. Perl code syntax check
 You can check the perl code syntax with the following command:
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a check-perl-syntax
+    bash src/bash/qto/qto.sh -a check-perl-syntax
 
 #### 2.4.4. Single call export of the md and pdf documentation files
 Single call export of the md and pdf documentation files
@@ -261,40 +261,40 @@ Single call export of the md and pdf documentation files
     
 
 ## 3. SYSADMIN FEATURES AND FUNCTIONALITIES
-The term feature usually denotes an UI usability, but as the sysadmins of the issue-tracker system must be technical people accustomed to the black screen in this context feature simply means a well memorizable shell call to perform a single action on the System they must operate. 
+The term feature usually denotes an UI usability, but as the sysadmins of the qto system must be technical people accustomed to the black screen in this context feature simply means a well memorizable shell call to perform a single action on the System they must operate. 
 
     # pre-load the project variables
-    doParseCnfEnvVars cnf/issue-tracker.dev.host-name.cnf
+    doParseCnfEnvVars cnf/qto.dev.host-name.cnf
     
     # run the run-integration-tests
-    bash src/bash/issue-tracker/issue-tracker.sh -a run-integration-tests
+    bash src/bash/qto/qto.sh -a run-integration-tests
 
 ### 3.1. Enforced daily backups by "increase-date" action
-The concept of daily backups in in-build in the functionalities of the issue-tracker application for all the projects data - that is you cannot operate the application without having daily backups, as every day a new working daily dir having the current day daily backup will be created!
+The concept of daily backups in in-build in the functionalities of the qto application for all the projects data - that is you cannot operate the application without having daily backups, as every day a new working daily dir having the current day daily backup will be created!
 The "increase-date" action copies the content of the latest daily data dir ( build by concentrating the mix_data_dir and the latest date string) with the current date in the file path. 
 This IS the defacto way of making backup of the data ( including db dumps ) on daily basis, which could be quite easily made really robust for Unix admins with couple of cron scripts and symlinks ... 
 The increase-date behaves for different projects in the same way, except of course using a different daily data dir root. 
 
     # load the env vars for a different proj: 
-    clear; doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/issue-tracker/ysg-issues.dev.host-name.cnf
+    clear; doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/qto/ysg-issues.dev.host-name.cnf
     
     # make backup of the latest daily dir
-    bash src/bash/issue-tracker/issue-tracker.sh -a increase-date
+    bash src/bash/qto/qto.sh -a increase-date
 
 ### 3.2. Postgres db backup
 You can backup any project database by using the following calls:
 
     # pre-load the project variables
-    doParseCnfEnvVars cnf/issue-tracker.dev.host-name.cnf
+    doParseCnfEnvVars cnf/qto.dev.host-name.cnf
     # replace the second strin to the full path of the project file if needed 
     
     # backup the postgres db of the project 
-    bash src/bash/issue-tracker/issue-tracker.sh -a backup-postgres-db
+    bash src/bash/qto/qto.sh -a backup-postgres-db
 
 ### 3.3. The "run-pgsql-scripts" action
 You can create a preconfigured &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; postgres via a single shell call. The scripts will fail if any of the sql scripts have a syntax error - all the ddl events will be displayed in the STDOUT and stored in the shell log file for later audit.
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a run-pgsql-scripts
+    bash src/bash/qto/qto.sh -a run-pgsql-scripts
 
 ### 3.4. The "run-mysql-scripts" action
 You can create a preconfigured &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; in mariadb  via a single shell call. The scripts will fail if any of the sql scripts have a syntax error - all the ddl events will be displayed in the STDOUT and stored in the shell log file for later audit
@@ -315,14 +315,14 @@ The tool knows to correctly fetch the issues files for the configured period ( b
 You can load you issues from an "issues txt file" , having a specific syntax into a PosgtreSQL issue table, by issueing the shell.
 This call with truncate the issue table from the db and convert all the issues data from the issues txt file into the issue table. 
 
-    # pre-load the vars of an issue-tracker project
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.doc-pub-host.cnf
+    # pre-load the vars of an qto project
+    doParseIniEnvVars /vagrant/csitea/cnf/projects/qto/qto-issues.dev.doc-pub-host.cnf
     
     # ensure there is no data in the issue table
     psql -d "$db_name" -c 'TRUNCATE TABLE issue ;'
     
     # run the txt-to-db action
-    bash src/bash/issue-tracker/issue-tracker.sh -a txt-to-db
+    bash src/bash/qto/qto.sh -a txt-to-db
     
     # check the data by :
     psql -d "$db_name" -c 'SELECT issue_id , category , name FROM issue order by name'
@@ -335,7 +335,7 @@ You can load your already stored in the issue table issues and load them into th
     SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
     
     # run the db-to-xls action
-    bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
+    bash src/bash/qto/qto.sh -a db-to-txt
     
     # check the updated data
     psql -d "$db_name" -c '
@@ -346,17 +346,17 @@ You can load your already stored in the issue table issues and load them into th
 
     export issues_order_by_attribute=start_time
     
-    bash src/bash/issue-tracker/issue-tracker.sh -a db-to-txt
+    bash src/bash/qto/qto.sh -a db-to-txt
 
 #### 3.4.5. restart the morbo development server
 You could restart the development morbo server by issuing the following syntax ( Note that each environment type starts within the pre-configured mojo_morbo_port if configured to do so):
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-stop ; bash src/bash/issue-tracker/issue-tracker.sh -a mojo-morbo-start
+    bash src/bash/qto/qto.sh -a mojo-morbo-stop ; bash src/bash/qto/qto.sh -a mojo-morbo-start
 
 #### 3.4.6. restart the hypnotoad production server
 You could restart the production hypnotoad server by issuing the following syntax:
 
-    bash src/bash/issue-tracker/issue-tracker.sh -a mojo-hypnotoad-stop ; bash src/bash/issue-tracker/issue-tracker.sh -a mojo-hypnotoad-start
+    bash src/bash/qto/qto.sh -a mojo-hypnotoad-stop ; bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
 
 ## 4. ETL / DATA INTEGRATION FEATURES AND FUNCTIONALITIES
 
@@ -366,15 +366,15 @@ You could restart the production hypnotoad server by issuing the following synta
 ### 4.1. The "db-to-xls" action against postgres
 You can unload your already stored ANY xls table with unique id's and load them into a xls file. 
 
-    # pre-load the vars of an issue-tracker project
-    doParseIniEnvVars /vagrant/csitea/cnf/projects/issue-tracker/issue-tracker-issues.dev.doc-pub-host.cnf
+    # pre-load the vars of an qto project
+    doParseIniEnvVars /vagrant/csitea/cnf/projects/qto/qto-issues.dev.doc-pub-host.cnf
     
     
     # check the data by :
     psql -d "$db_name" -c 'SELECT issue_id , start_time , stop_time , category , name FROM issue order by prio'
     
     # run the db-to-xls action
-    bash src/bash/issue-tracker/issue-tracker.sh -a db-to-xls
+    bash src/bash/qto/qto.sh -a db-to-xls
     
 
 ### 4.2. The "xls-to-db" action
@@ -389,7 +389,7 @@ if you do not provide a xls file the newest xls file from the mix data dir will 
     clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; export load_model=upsert ; perl src/perl/issue_tracker/script/issue_tracker.pl --tables $tables --do xls-to-db
 
 #### 4.2.2. The "xls-to-db" action with nested-set mode against mysql
-You could run the xls-to-db action against mysql or mariadb rdbms so that the issue-tracker will arrange your table to be compatible with the nested-set hierarchy model. 
+You could run the xls-to-db action against mysql or mariadb rdbms so that the qto will arrange your table to be compatible with the nested-set hierarchy model. 
 
     export tables=Tests,ItemController,ItemModel,ItemView,ExportFile,UserStory,Requirement,DevOps,Feature,ReadMe,SystemGuide,Image,ExportFile; export do_truncate_tables=1 ; export rdbms_type=mysql ; export load_model=nested-set ; perl src/perl/issue_tracker/script/issue_tracker.pl --do xls-to-db --tables $tables
 
@@ -502,12 +502,12 @@ If the table provided in the url pattern does not exist an error is shown.
     
 
 ### 5.4. select web action
-An http-client could get the contents of ANY table of a database to which the issue-tracker has connectivity to ( ie not only the one configured in the application layer but also other databases in the same postgres instance)  by using the following syntax:
+An http-client could get the contents of ANY table of a database to which the qto has connectivity to ( ie not only the one configured in the application layer but also other databases in the same postgres instance)  by using the following syntax:
 
     <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>
 
 #### 5.4.1. successful execution
-An http-client could get the contents of ANY table of a database to which the issue-tracker has connectivity to by calling the following url:
+An http-client could get the contents of ANY table of a database to which the qto has connectivity to by calling the following url:
 &lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;database&gt;&gt;/select/&lt;&lt;table-name&gt;&gt;
 
     
@@ -563,7 +563,7 @@ Those are eventual transated to a where clause in the db select part.
       "dat": {
         "c89d3283-0a9f-4b8d-9dcc-84a63e64276b": {
           "actual_hours": null,
-          "category": "issue-tracker-features",
+          "category": "qto-features",
           "description": "add the web select controller “\r\n - implementation code\r\n - tests \r\n - documentation additions for :\r\n-- requirements\r\n-- userstories\r\n-- tests \r\n-- features and functionalities",
           "guid": "c89d3283-0a9f-4b8d-9dcc-84a63e64276b",
           "id": 180402,
@@ -693,7 +693,7 @@ Those are eventual transated to a where clause in the db select part.
       "dat": {
         "c89d3283-0a9f-4b8d-9dcc-84a63e64276b": {
           "actual_hours": null,
-          "category": "issue-tracker-features",
+          "category": "qto-features",
           "description": "add the web select controller “\r\n - implementation code\r\n - tests \r\n - documentation additions for :\r\n-- requirements\r\n-- userstories\r\n-- tests \r\n-- features and functionalities",
           "guid": "c89d3283-0a9f-4b8d-9dcc-84a63e64276b",
           "id": 180402,
@@ -796,7 +796,7 @@ The response of the url query presents all but the hidden attribute values.
     {
       "dat": [
         {
-          "category": "issue-tracker-features",
+          "category": "qto-features",
           "name": "improve integration testing",
           "prio": 5,
           "start_time": null,
@@ -823,13 +823,13 @@ If the column which values are requested to be hidden does not exist the proper 
     }
 
 ### 5.5. select-tables web action
-An http-client could get the select of all the tables of a database to which the issue-tracker has connectivity to ( that is not only the one configured in the application layer )
+An http-client could get the select of all the tables of a database to which the qto has connectivity to ( that is not only the one configured in the application layer )
 
 
     <<web-host>>:<<web-port>>/<<database>>/select-tables
 
 #### 5.5.1. successful execution
-An http-client could get the select of all the tables of a database to which the issue-tracker has connectivity to
+An http-client could get the select of all the tables of a database to which the qto has connectivity to
 
 
     // 20180505205212
@@ -880,7 +880,7 @@ An http-client could query the name and description attributes for all the table
     <<web-host>>:<<web-port>>/<<database>>/select/<<table-name>>
 
 #### 5.6.1. successful execution
-An http-client could get the contents of ANY table of a database to which the issue-tracker has connectivity to by calling the following url:
+An http-client could get the contents of ANY table of a database to which the qto has connectivity to by calling the following url:
 &lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;database&gt;&gt;/query?for=&lt;&lt;phrase-to-srch-for&gt;&gt;
 For example: 
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/query?for=meta-data
@@ -944,12 +944,12 @@ http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/query?for=
     
 
 ### 6.1. Fully open mode
-Currently the default mode of any running issue-tracker application is "fully open", that is any user having access to the url of the application might perform any change from the ui. 
+Currently the default mode of any running qto application is "fully open", that is any user having access to the url of the application might perform any change from the ui. 
 
     
 
 ### 6.2. Basic authentication mode
-A fully deployed and configured issue-tracker instance provides basic authentication mode for any project database it has access to allowing thus persons having the credentials of the system account used for the particular project database to have full read,write and delete access to the data of that instance, in a way preventing users not having access to those credentials to the application. 
+A fully deployed and configured qto instance provides basic authentication mode for any project database it has access to allowing thus persons having the credentials of the system account used for the particular project database to have full read,write and delete access to the data of that instance, in a way preventing users not having access to those credentials to the application. 
 It is worth noting that this basic authentication does not mean strict security requirements for business and personal data on the web.
 For more info consult the BasicAuthPlus module docs  :
 https://metacpan.org/pod/Mojolicious::Plugin::BasicAuthPlus#DESCRIPTION
