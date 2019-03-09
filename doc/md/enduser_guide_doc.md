@@ -63,38 +63,38 @@
     
 
 ### 1.1. Purpose
-The purpose of this document is to describe all the features, functionalities and capabilities provided by a properly installed, configured and operated instance of the issue-tracker application. 
-This document is the CONTRACT between you as the potential, former or active user of an issue-tracker instance and the product owner of that instance. 
+The purpose of this document is to describe all the features, functionalities and capabilities provided by a properly installed, configured and operated instance of the qto application. 
+This document is the CONTRACT between you as the potential, former or active user of an qto instance and the product owner of that instance. 
 
     
 
 ### 1.2. Document status
-This document is updated constantly in every release of the issue-tracker. Each version however is considered to be a complete version regarding the issue-tracker version it situated in.
+This document is updated constantly in every release of the qto. Each version however is considered to be a complete version regarding the qto version it situated in.
 
     
 
 ### 1.3. Audience
-This document is aimed for everyone, who shall, will or even would like to interact with an issue-tracker application instance. 
+This document is aimed for everyone, who shall, will or even would like to interact with an qto application instance. 
 
     
 
 ### 1.4. Master storage and storage format
-The master storage of this document is the master branch of the issue-tracker release you are interested in. The main storage format is Markdown. 
+The master storage of this document is the master branch of the qto release you are interested in. The main storage format is Markdown. 
 
     
 
 ### 1.5. Version control
-The contents of this document MUST be updated according to the EXISTING features, functionalities and capabilities of the issue-tracker version, in which this document residues.
+The contents of this document MUST be updated according to the EXISTING features, functionalities and capabilities of the qto version, in which this document residues.
 
     
 
 ### 1.6. Process
-The issue-tracker provides a mean for tracking of this documentation contents to the source code per feature/functionality, thus should you find inconsistencies in the behavior of the application and the content of this document you should create a bug issue and assign it to the owner of your product instance.
+The qto provides a mean for tracking of this documentation contents to the source code per feature/functionality, thus should you find inconsistencies in the behavior of the application and the content of this document you should create a bug issue and assign it to the owner of your product instance.
 
     
 
 ## 2. UI FEATURES
-This section describes the User Interface ( UI ) features of the issue-tracker application, which all ( for now ) are accessible from an internet browser accessing a running instance of the issue-tracker application. The following examples illustrate the concept:
+This section describes the User Interface ( UI ) features of the qto application, which all ( for now ) are accessible from an internet browser accessing a running instance of the qto application. The following examples illustrate the concept:
 
     
 
@@ -104,19 +104,19 @@ You could access multiple projects by accessing their project databases as the f
     
 
 #### 2.1.1. Change projects via url
-The following 2 different databases are actually the tst and dev databases of the issue-tracker, but of course the database names could be any valid other database names:
+The following 2 different databases are actually the tst and dev databases of the qto, but of course the database names could be any valid other database names:
 
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
-http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/tst_issue_tracker/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/tst_qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
 Note the upper left corner of the page contains the name of your current project database. 
 
-    # access the issue-tracker's project development database
+    # access the qto's project development database
     http://host-name:3000/qto/list/monthly_issues
     
-    # access the issue-tracker's project testing database
-    http://host-name:3000/tst_issue_tracker/list/monthly_issues
+    # access the qto's project testing database
+    http://host-name:3000/tst_qto/list/monthly_issues
     
     # access the aspark-starter project production database
     http://host-name:3000/prd_aspark_starter/list/monthly_issues
@@ -134,16 +134,16 @@ You can combine both the ":in &lt;&lt;db&gt;&gt;" and ":for &lt;&lt;item&gt;&gt;
 
 ### 2.2. The list page
 The list page presents part or the whole content of a database by the means of UI controls - dynamic html table, forms etc. 
-In the context of the issue-tracker's parley the "listing" is the ui list of control/(s) you get by using the following URL format:
+In the context of the qto's parley the "listing" is the ui list of control/(s) you get by using the following URL format:
 
     http://<<web-host>>:<<web-port>>/<<proj-db-name>>/list/<<item>>?as&<<ui-type>>&<<listing-params>>
     
 
 #### 2.2.1. Listing url syntax
 The common listing syntax components are as follows:
-- web-host is the web-host the issue-tracker's web instances is accessible from
+- web-host is the web-host the qto's web instances is accessible from
 - web-port - the web port the instance is accessible from 
-- proj-db-name is the name of the database of your project ( as the issue-tracker supports multiple projects , with multiple databases ... ) 
+- proj-db-name is the name of the database of your project ( as the qto supports multiple projects , with multiple databases ... ) 
 - list - is the name of the action to perform 
 - item is the name of the item which ui controls you want to list ( could be issues,problems,questions, etc.
 - ?&lt;&lt;params&gt;&gt; the additional url parameters used to control the look and behavior of the listing action, should the url params be omitted the full content of the item table with default ui look and behavior are displayed. 
@@ -300,7 +300,7 @@ If you were on a cell and types some text without leaving it, but you change you
 A new item could be added to the table in the ui and thus in the db table by clicking the plus button above the table ( which uses the google material design ui ). 
 The new button has a fixed positon, thus available during scrolling as well from the same position. 
 The new button changes it's appears when focused via the keyboard, and can be pressed when in focus by hitting enter with the keyboard. 
-To practice new items' creations and deletions to get confortable on the app's behaviour please use first the development instances of the issue-tracker project: 
+To practice new items' creations and deletions to get confortable on the app's behaviour please use first the development instances of the qto project: 
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
 
     
@@ -319,7 +319,7 @@ On invalid input the data is not created to the database and nothing is stored.
 
 #### 2.2.14. Single cell Inline-edit ( UPDATE )
 The table can be edited inline so that the data is updated to the database. White space in the cells is preserved. 
-To practice new items' creations updates and deletions to get confortable on the app's behaviour please use first the development instances of the issue-tracker project: 
+To practice new items' creations updates and deletions to get confortable on the app's behaviour please use first the development instances of the qto project: 
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
 
     
@@ -354,7 +354,7 @@ Nulls handling is somewhat problematic in ui. For now the behavior by convention
 
 #### 2.2.15. Item deletion ( DELETE )
 You could delete items by clicking the delete button in the beginning of every item. 
-To practice new items' creations and deletions to get confortable on the app's behaviour please use first the development instances of the issue-tracker project: 
+To practice new items' creations and deletions to get confortable on the app's behaviour please use first the development instances of the qto project: 
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
 
     

@@ -6,8 +6,8 @@ SELECT 'create the "imgs" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , name           varchar (200) NOT NULL DEFAULT 'image figure title ...'
-    , relative_path  varchar (1000) NOT NULL DEFAULT 'src/perl/issue_tracker/public/dat/img/qto/...'
-    , http_path      varchar (1000) NOT NULL DEFAULT 'https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/..'
+    , relative_path  varchar (1000) NOT NULL DEFAULT 'src/perl/qto/public/dat/img/qto/...'
+    , http_path      varchar (1000) NOT NULL DEFAULT 'https://raw.githubusercontent.com/YordanGeorgiev/qto/dev/doc/img/..'
     , style          varchar (100) NOT NULL DEFAULT 'width: 800px; height: 600x'
     , item_guid      UUID NOT NULL DEFAULT gen_random_uuid()
     , description    varchar (4000) NOT NULL DEFAULT 'txt to appear on alt ...' 

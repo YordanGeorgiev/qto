@@ -1,0 +1,37 @@
+# doc/txt/qto/help/db-to-json.help.txt
+
+	doHelpDbToJson
+	
+	# Purpose:
+	# ------------------------------------------------------
+	export all the db tables to json files
+
+	# Prequisites
+	# ------------------------------------------------------
+	the web server up and running
+
+	# Installation
+	# ------------------------------------------------------
+   - run the ddl tables 
+   - load the data to the tables 
+
+	# Interdependancies
+	# ------------------------------------------------------
+	the web server up and running
+
+	# Usage:
+	# ------------------------------------------------------
+   bash src/bash/qto/qto.sh -a db-to-json
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: the web port has to be parametrized - now 3000 used
+   and the 5001 is for the mysql db .... isg-pub
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: the web port has to be parametrized - now 3000 used
+   and the 5001 is for the mysql db .... isg-pub
+
+
+# eof file: doc/txt/qto/help/db-to-json.help.txt

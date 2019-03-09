@@ -1,0 +1,32 @@
+# doc/txt/qto/test/mojo-morbo-start.test.txt
+
+	doTestMojoMorboStart
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to test the staring of the mojo qto app 
+
+	# Prequisites
+	# ------------------------------------------------------
+   - Mojolicious installed
+   perl src/perl/qto/script/qto_preq_checker.pl
+
+   # Installation
+	# ------------------------------------------------------
+   perl src/perl/qto/script/qto_preq_checker.pl
+   
+	# Interdependancies
+   # ------------------------------------------------------
+   mojo 
+	# Usage:
+	# ------------------------------------------------------
+	$0 -a mojo-morbo-start
+
+	# Issues
+	# ------------------------------------------------------
+
+	# Caveats:
+	# ------------------------------------------------------
+   none known so far
+
+# eof file: doc/txt/qto/test/mojo-morbo-start.test.txt

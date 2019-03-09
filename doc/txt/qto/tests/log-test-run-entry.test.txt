@@ -1,0 +1,37 @@
+# doc/txt/qto/log-test-run-entry/log-test-run-entry.test.txt
+
+	doTestLogTestRunEntry
+	
+	# Purpose:
+	# ------------------------------------------------------
+   to test the doLogTestEntry function
+
+	# Prequisites
+	# ------------------------------------------------------
+   qto core funcs , perl , bash
+
+	# Installation and configurtion
+	# ------------------------------------------------------
+   uncomment thhe log-test-run-entry action line from the 
+   src/bash/qto/tests/run-qto-tests.lst
+	
+   # Interdependancies
+	# ------------------------------------------------------
+
+	# Usage:
+	# ------------------------------------------------------
+   uncomment the log-test-run-entry line in the file:
+   src/bash/qto/tests/run-qto-tests.lst
+   src/bash/qto/test-qto.sh
+
+	# Developent
+	# ------------------------------------------------------
+   - todo   more failing tests ...    	
+
+	# Caveats:
+	# ------------------------------------------------------
+	none yet ...
+
+
+
+# eof file: doc/txt/qto/log-test-run-entry/log-test-run-entry.test.txt

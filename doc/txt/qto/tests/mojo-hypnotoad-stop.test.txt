@@ -1,0 +1,19 @@
+# doc/txt/qto/test/mojo-hypnotoad-stop.test.txt
+
+	doTestMojoHypnotoadStop
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to test mojo-hypnotoad-stop action
+
+	# Usage:
+	# ------------------------------------------------------
+   bash src/bash/qto/test-qto.sh
+
+
+	# Caveats:
+	# ------------------------------------------------------
+	none
+
+
+# eof file: doc/txt/qto/test/mojo-hypnotoad-stop.test.txt

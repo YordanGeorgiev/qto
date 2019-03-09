@@ -1,0 +1,9 @@
+# doc/txt/qto/func/mojo-hypnotoad-stop.func.txt
+
+	doMojoHypnotoadStop
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to stop all running instances of the qto mojo app
+
+# eof file: doc/txt/qto/func/mojo-hypnotoad-stop.func.txt

@@ -4,8 +4,8 @@
 **/*.dmp.sql
 dat/xls/run/*.xlsx
 dat/tests/t*.txt
-dat/issue-tracker/**
-src/bash/issue-tracker/tmp/**
+dat/qto/**
+src/bash/qto/tmp/**
 src/perl/issue_tracker/script/hypnotoad.pid
 **/~$*.xlsx
 **/.DS_Store

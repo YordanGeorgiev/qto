@@ -68,7 +68,7 @@ You must make sure that you clearly define and state your issues and update thei
 Figure: 1 
 the 7 main entities of the qto app
 ![Figure: 1 
-the 7 main entities of the qto app](https://raw.githubusercontent.com/YordanGeorgiev/issue-tracker/dev/doc/img/readme/what-is-is.png)
+the 7 main entities of the qto app](https://raw.githubusercontent.com/YordanGeorgiev/qto/dev/doc/img/readme/what-is-is.png)
 
     
 

@@ -1,0 +1,38 @@
+# doc/txt/qto/create-relative-package/create-relative-package.func.txt
+
+	doCreateRelativePackage
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to create a relative zip package with the files specified
+   in the includd file
+
+	# Prequisites
+	# ------------------------------------------------------
+   gnu bash , zip , unzip , perl the include file to use, qto core
+
+	# Installation
+	# ------------------------------------------------------
+   install the gnu bash , zip , perl , unzip binaries
+
+	# Interdependancies
+	# ------------------------------------------------------
+   gnu bash , zip , unzip , perl the include file to use , qto core
+
+	# Usage:
+	# ------------------------------------------------------
+
+   # creates the relative package with the current env include file in met/.<<env>>.qto
+   bash src/bash/qto/qto.sh -a create-relative-package -i
+
+   # creates the relative package with different include file
+   bash src/bash/qto/qto.sh -a create-relative-package -i met/.tmp.qto	
+
+	# Developent
+	# ------------------------------------------------------
+
+	# Caveats:
+	# ------------------------------------------------------
+
+
+# eof file: doc/txt/qto/create-relative-package/create-relative-package.func.txt

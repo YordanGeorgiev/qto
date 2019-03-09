@@ -1,0 +1,37 @@
+# doc/txt/qto/check-perl-syntax/check-perl-syntax.func.txt
+
+	doCheckPerlSyntax
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doCheckPerlSyntax function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doCheckPerlSyntax function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doCheckPerlSyntax function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doCheckPerlSyntax function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doCheckPerlSyntax used 
+
+	# Development
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doCheckPerlSyntax functions
+
+
+
+# eof file: doc/txt/qto/check-perl-syntax/check-perl-syntax.func.txt

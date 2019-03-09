@@ -1,0 +1,6 @@
+# doc/txt/qto/help/gmail-txt-issues.help.txt
+
+	doHelpGmailTxtIssues
+
+
+# eof file: doc/txt/qto/help/gmail-txt-issues.help.txt

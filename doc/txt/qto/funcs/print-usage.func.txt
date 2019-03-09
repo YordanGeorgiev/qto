@@ -1,0 +1,37 @@
+# doc/txt/qto/print-usage/print-usage.func.txt
+
+	doPrintUsage
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doPrintUsage function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doPrintUsage function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doPrintUsage function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doPrintUsage function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doPrintUsage used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doPrintUsage functions
+
+
+
+# eof file: doc/txt/qto/print-usage/print-usage.func.txt
