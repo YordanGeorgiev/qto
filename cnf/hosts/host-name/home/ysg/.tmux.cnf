@@ -103,15 +103,15 @@ run '~/.tmux/plugins/tpm/tpm'
 # ---------------------------------------------------------
 # 1.1.1 -- 2016-12-07 13:50:49 -- ysg -- save buffer instructions 
 # 1.1.0 -- 2016-12-07 13:21:01 -- ysg -- better doc for copy-cat , shortcut for sessions
-# 1.0.9 -- 2016-09-01 13:01:46 -- ysg -- swap window
-# 1.0.8 -- 2016-08-29 11:24:09 -- ysg -- more shortcuts in doc
-# 1.0.7 -- 2016-08-29 09:20:29 -- ysg -- more shortcuts in doc
-# 1.0.6 -- 2016-08-23 23:12:29 -- ysg -- added cheat-sheet
-# 1.0.5 -- 2016-08-23 22:04:23 -- ysg -- search highlight with plugins
-# 1.0.4 -- 2016-08-17 08:38:02 -- ysg -- easier copy paste
-# 1.0.3 -- 2016-07-20 09:34:18 -- ysg -- vi copy mode
-# 1.0.2 -- 2016-07-20 09:28:18 -- ysg -- vi copy mode
-# 1.0.1 -- 2016-07-12 23:29:33 -- ysg -- Ctrl + J as prefix 
-# 1.0.0 -- 2016-07-12 23:29:10 -- ysg -- orginal version
+# 1.0.9 -- 20.6.19-01 13:01:46 -- ysg -- swap window
+# 1.0.8 -- 20.6.18-29 11:24:09 -- ysg -- more shortcuts in doc
+# 1.0.7 -- 20.6.18-29 09:20:29 -- ysg -- more shortcuts in doc
+# 1.0.6 -- 20.6.18-23 23:12:29 -- ysg -- added cheat-sheet
+# 1.0.5 -- 20.6.18-23 22:04:23 -- ysg -- search highlight with plugins
+# 1.0.4 -- 20.6.18-17 08:38:02 -- ysg -- easier copy paste
+# 1.0.3 -- 20.6.17-20 09:34:18 -- ysg -- vi copy mode
+# 1.0.2 -- 20.6.17-20 09:28:18 -- ysg -- vi copy mode
+# 1.0.1 -- 20.6.17-12 23:29:33 -- ysg -- Ctrl + J as prefix 
+# 1.0.0 -- 20.6.17-12 23:29:10 -- ysg -- orginal version
 #
 # eof file: ~/.tmux.cnf

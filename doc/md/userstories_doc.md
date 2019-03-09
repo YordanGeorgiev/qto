@@ -44,7 +44,7 @@
   * [1.16. ACCESS ISSUES TXT FORMAT FROM EMAIL](#116-access-issues-txt-format-from-email)
   * [1.17. ACCESS ISSUES DATA FROM GOOGLE SHEET](#117-access-issues-data-from-google-sheet)
     * [1.17.1. Apply publish filter while posting to Google Sheet](#1171-apply-publish-filter-while-posting-to-google-sheet)
-* [2. TEAM LEAD PERSPECTIVE](#2-team-lead-perspective)
+* [2. TEAM LEADER BIZ PERSPECTIVE](#2-team-leader-biz-perspective)
   * [2.1. PROJECTS MANAGEMENT](#21-projects-management)
     * [2.1.1. Create new projects](#211-create-new-projects)
     * [2.1.2. Remove existing projects](#212-remove-existing-projects)
@@ -498,57 +498,57 @@ I wanto to be able to apply publishing filter for columns to be left unpublished
 
     
 
-## 2. TEAM LEAD PERSPECTIVE
-As a team lead
+## 2. TEAM LEADER BIZ PERSPECTIVE
+As a team leader
 In order to operate successfully one or many projects of my team(s)  
 I want to have a nice user experience while using the qto tool.
 
     
 
 ### 2.1. Projects management
-As an team lead
+As an team leader
 In order to be able to manage multiple projects 
 I want to  be able to create , update and remove projects.
 
     
 
 #### 2.1.1. Create new projects
-As an team lead
+As an team leader
 In order to be able to manage new projects 
 I want to  be able to create projects via the qto
 
     
 
 #### 2.1.2. Remove existing projects
-As an team lead
+As an team leader
 In order to be able to stop the work on existing projects
 I want to be able to remove projects via the qto
 
     
 
 #### 2.1.3. Update existing projects
-As an team lead
+As an team leader
 In order to be able to change attributes of the projects I am responsible for
 I want to be able to update the projects' data. 
 
     
 
 #### 2.1.4. Search for existing projects
-As an team lead
+As an team leader
 In order to be able to quickly access existing projects
 I want to be able to search the projects. 
 
     
 
 #### 2.1.5. Switch between projects
-As a team lead
+As a team leader
 In order to manage issues from different projects  
 I want to be able to switch between different projects easily and quickly
 
     
 
 ##### 2.1.5.1. Web UI for switch between projects
-As a team lead
+As a team leader
 In order to manage issues from different projects  
 I wanto to be able to switch between different projects easily and quickly
 by simply changing the first token of the url of the app
@@ -556,14 +556,14 @@ by simply changing the first token of the url of the app
     
 
 ##### 2.1.5.2. Current project visibility
-As a team lead
+As a team leader
 In order to avoid confusion between different projects 
 I wanto to be able to see the current project name from any interface I am working in quickly and easily
 
     
 
 ### 2.2. Time management
-As an team lead
+As an team leader
 In order to be able the maximize the performance of the team for qto used periods 
 I wanto to be able to manage time efficiently 
 by accessing a simple page containing its value and the period it is related to.
@@ -571,7 +571,7 @@ by accessing a simple page containing its value and the period it is related to.
     
 
 #### 2.2.1. Total planned time tracking
-As a team lead 
+As a team leader 
 In order to see the planned time left for achieving the goals of a period
 I want to be able to have a +-3% approximation of the planned time left for a period
 by accessing a simple page containing its value and the period it is related to
@@ -579,14 +579,14 @@ by accessing a simple page containing its value and the period it is related to
     
 
 #### 2.2.2. Total remaining allocated time tracking
-As a team lead 
+As a team leader 
 In order to see the remaining time left for achieving the goals of a period
 I want to be able to have a +-3% approximation of the allocated time left for a period
 
     
 
 #### 2.2.3. Total spent time tracking
-As a team lead 
+As a team leader 
 In order to see the spent time left for achieving the goals of a period
 I want to be able to have a +-3% approximation of the spent time left for a period
 by accessing a simple page containing its value and the period it is related to
@@ -594,70 +594,70 @@ by accessing a simple page containing its value and the period it is related to
     
 
 #### 2.2.4. Tracking of issues per period
-As a team lead 
+As a team leader 
 In order to see the relation of the issues to the daily,weekly,monthly,yearly,quinquennially and decadelly periods 
 I wanto to be able to manage the issues within those periods per period and mother period
 
     
 
 ### 2.3. Security Management
-As an team lead
+As an team leader
 In order to keep my business data secure 
 I wanto to be able decide which users to which projects will have access to the data my qto application has access to. 
 
     
 
 #### 2.3.1. Users management
-As an team lead
+As an team leader
 In order to keep my business data secure 
 I wanto to be able decide which users to which projects will 
 
     
 
 ##### 2.3.1.1. Add new users to a project
-As an team lead
+As an team leader
 In order to be able to add new users into a project
 I wanto to be able to add them via the UI only by their e-mail address. 
 
     
 
 ##### 2.3.1.2. Update existing users in a project
-As an team lead
+As an team leader
 In order to be able to update the existing users from a project
 I wanto to be able to update their details via the UI only by their e-mail address. 
 
     
 
 ##### 2.3.1.3. Delete existing users from a project
-As an team lead
+As an team leader
 In order to be able to delete the existing users from a project
 I wanto to be able to delete their details via the UI only by their e-mail address. 
 
     
 
 ##### 2.3.1.4. Search for users in a project
-As an team lead
+As an team leader
 In order to be able to search the existing users from a project
 I wanto to be able to search their details via the UI only by their e-mail address. 
 
     
 
 #### 2.3.2. Users access management
-As a team lead 
+As a team leader 
 In order provide the persons and programs access to my project
 I want to provide read, write access to the data and execute access ( run DDL's) per table
 
     
 
 ##### 2.3.2.1. Grant access per project
-As a team lead 
+As a team leader 
 In order to enroll authenticated users into the project I am responsible to 
 I want to be able to grant them with access by only writing their e-mail into a text field and clicking invite button. 
 
     
 
 ##### 2.3.2.2. Personal data handling minimization
-As a team lead 
+As a team leader 
 In order to avoid legal obligations and complex procedures while handling personal data
 I want to be able to handle the interpersonal exchange of data by collecting ONLY the e-mail of the persons or programs participating in the project
 
@@ -1142,7 +1142,7 @@ I wanto to be able to quess the file paths of the issues file by their date
 As a DevOps 
 In order to be able quickly to switch between different projects
 I wanto to have the project name of the issues file in its name as the first token as follows:
-&lt;&lt;qto_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
+&lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
 
     
 
@@ -1150,7 +1150,7 @@ I wanto to have the project name of the issues file in its name as the first tok
 As a DevOps 
 In order to be able quickly and programmatically to go back in the history
 I wanto to have the current registration date in the file name and path
-&lt;&lt;qto_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
+&lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
 
     
 
@@ -1158,7 +1158,7 @@ I wanto to have the current registration date in the file name and path
 As a DevOps 
 In order to be able quickly and programmatically to go back in the history
 I wanto to have the current registration date in the file name and path
-&lt;&lt;qto_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt; ( daily|weekly|monthly|yearly) &gt;&gt;.txt
+&lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt; ( daily|weekly|monthly|yearly) &gt;&gt;.txt
 
     
 

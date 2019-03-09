@@ -49,7 +49,6 @@
 * [10. DOCUMENTATION](#10-documentation)
   * [10.1. DOCUMENTATION COMPLETENESS](#101-documentation-completeness)
   * [10.2. DOCUMENTATION AND CODE BASE SYNCHRONIZATION](#102-documentation-and-code-base-synchronization)
-    * [10.2.1. requirements push](#1021-requirements-push)
 
 
 
@@ -62,7 +61,7 @@
     
 
 ### 1.1. Purpose
-The purpose of this document is to present the requirements set to the Issue-Tracker application for this current version.
+The purpose of this document is to present the requirements set to the qto application for this current version.
 
     
 
@@ -72,7 +71,7 @@ This document could be of interest for any potential and actual users of the app
     
 
 ### 1.3. Related documentation
-This document is part of the Issue-Tracker application documentation-set, which contains the following documents:
+This document is part of the qto application documentation-set, which contains the following documents:
  - UserStories - the collection of userstories used to describe "what is desired"
  - SystemGuide - architecture and System description
  - DevOps Guide - a guide for the developers and devops operators
@@ -203,7 +202,6 @@ A gull backup of sotware,configuration and data for the qto and/or another proje
 
 ### 5.1. Feature scalability
 The addition of new features should be as scalable as possible. 
-devops_guide_doc-11
 
     
 
@@ -333,11 +331,6 @@ in at least the md and pdf file formats.
 
 ### 10.2. Documentation and code base synchronization
 Each running instance MUST have its required documentation set up-to-date. No undocumented or hidden features are allowed. Should any be missing or misreported a new issue must be created to correct those with top priority. 
-
-    
-
-#### 10.2.1. requirements push
-Whenever a project database meta-data is updated a new "do releoad the current page" should be pushed on all the clients having currently session in the application ...
 
     
 

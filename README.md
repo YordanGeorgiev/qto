@@ -33,7 +33,7 @@ Because work should be inspiring and not overwhelming people. Because even good 
 Figure: 1 
 the 7 main entities of the qto app
 ![Figure: 1 
-the 7 main entities of the qto app](https://raw.githubusercontent.com/YordanGeorgiev/qto/dev/doc/img/readme/what-is-is.png)
+the 7 main entities of the qto app](https://raw.githubusercontent.com/YordanGeorgiev/qto/master/doc/img/readme/what-is-is.png)
 
     
 
