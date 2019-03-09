@@ -381,27 +381,27 @@ You can unload your already stored ANY xls table with unique id's and load them 
 You can load the latest produced xls file ( note as long as your xls sheet headers match the columns in your db table ANY xls is compatible )
 You can control whether or not the loadable table should be truncated by setting the do_truncate_tables environment variable to 1 or 0. 
 
-    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; export load_model=upsert ; perl src/perl/issue_tracker/script/issue_tracker.pl --tables $tables --do xls-to-db
+    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; export load_model=upsert ; perl src/perl/qto/script/qto.pl --tables $tables --do xls-to-db
 
 #### 4.2.1. The "xls-to-db" action without passing xls file
 if you do not provide a xls file the newest xls file from the mix data dir will be used
 
-    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; export load_model=upsert ; perl src/perl/issue_tracker/script/issue_tracker.pl --tables $tables --do xls-to-db
+    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; export load_model=upsert ; perl src/perl/qto/script/qto.pl --tables $tables --do xls-to-db
 
 #### 4.2.2. The "xls-to-db" action with nested-set mode against mysql
 You could run the xls-to-db action against mysql or mariadb rdbms so that the qto will arrange your table to be compatible with the nested-set hierarchy model. 
 
-    export tables=Tests,ItemController,ItemModel,ItemView,ExportFile,UserStory,Requirement,DevOps,Feature,ReadMe,SystemGuide,Image,ExportFile; export do_truncate_tables=1 ; export rdbms_type=mysql ; export load_model=nested-set ; perl src/perl/issue_tracker/script/issue_tracker.pl --do xls-to-db --tables $tables
+    export tables=Tests,ItemController,ItemModel,ItemView,ExportFile,UserStory,Requirement,DevOps,Feature,ReadMe,SystemGuide,Image,ExportFile; export do_truncate_tables=1 ; export rdbms_type=mysql ; export load_model=nested-set ; perl src/perl/qto/script/qto.pl --do xls-to-db --tables $tables
 
 ### 4.3. The db-to-json shell action
 You could make a backup of all your postgres tables data by running the db-to-json shell action as follows:
 
-    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; perl src/perl/issue_tracker/script/issue_tracker.pl --do db-to-json --tables $tables
+    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; perl src/perl/qto/script/qto.pl --do db-to-json --tables $tables
 
 ### 4.4. The json-to-db shell action
 You could restore a previously created json files backup ( the json files are stored in the &lt;&lt;ProductInstanceDir&gt;&gt;/dat/json by default by issueing the following oneliner ( you need to have the web server up and running in order to fetch the list of tables too ) 
 
-    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; perl src/perl/issue_tracker/script/issue_tracker.pl --do json-to-db --tables $tables
+    clear ; export tables=`curl -s -k http://$web_host:3000/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; perl src/perl/qto/script/qto.pl --do json-to-db --tables $tables
 
 ## 5. BACK-END API FUNCTIONALITIES
 

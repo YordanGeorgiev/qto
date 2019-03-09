@@ -1,0 +1,10 @@
+# doc/txt/qto/db-to-xls/db-to-xls.test.txt
+
+	doTestDbToXls
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to test the db-to-xls action
+
+
+# eof file: doc/txt/qto/db-to-xls/db-to-xls.test.txt

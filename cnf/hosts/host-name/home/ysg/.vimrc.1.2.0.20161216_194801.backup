@@ -56,7 +56,7 @@ set sw=3
 " set the number of columns
 set co=120
 
-" set issue-trackering by default
+" set qtoing by default
 set wrap
 
 " start custom mappings

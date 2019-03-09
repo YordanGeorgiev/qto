@@ -1,0 +1,39 @@
+# file: doc/txt/qto/helps/pckg/create-full-7z-package.help.txt
+	
+	# Purpose:
+	# ------------------------------------------------------
+	the create-full-7z-package function crates a 7z package
+	from relative file paths in the met/.<<curr_env>>.qto file 
+	product dir and if cnfigured into the network backup dir, like:
+	qto.1.0.8.dev.20160929_164741.lp-nl-host.7z
+
+	# Prequisites
+	# ------------------------------------------------------
+	The user should have the 7z pacckaging password var set in the shell as follows:
+	export pcking_pw=my-verys-secret-pw
+
+	# Installation
+	# ------------------------------------------------------
+	the binaries 7z , perl , bash , xargs should be installed 
+
+	# Interdependancies
+	# ------------------------------------------------------
+	you might helpify different file paths containing file :
+	bash src/bash/qto/qto.sh -a create-full-7z-package -i met/.deploy
+
+	# Usage:
+	# ------------------------------------------------------
+	bash src/bash/qto/qto.sh -a create-full-7z-package 
+	call should create a 7z type of package
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: clear up console output
+	-- better error handling when I file is not found 	
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- if you do not file physically a file helpified in the 
+		relative file paths include file you might 
+
+# eof file: doc/txt/qto/helps/pckg/create-full-7z-package.help.txt

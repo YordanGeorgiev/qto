@@ -1,0 +1,35 @@
+# doc/txt/qto/check-perl-syntax/check-perl-syntax.test.txt
+
+	doTestCheckPerlSyntax
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to test the check-perl-syntax action ...
+
+	# Prequisites
+	# ------------------------------------------------------
+	perl , all the perl modules required for deploying the perl component
+
+	# Installation
+	# ------------------------------------------------------
+   perl 
+
+	# Interdependancies
+	# ------------------------------------------------------
+   check the preq script 
+
+	# Usage:
+	# ------------------------------------------------------
+   $0 -a check-perl-syntax
+
+	# Development
+	# ------------------------------------------------------
+	
+
+	# Caveats:
+	# ------------------------------------------------------
+   none so far 	
+
+
+
+# eof file: doc/txt/qto/check-perl-syntax/check-perl-syntax.test.txt

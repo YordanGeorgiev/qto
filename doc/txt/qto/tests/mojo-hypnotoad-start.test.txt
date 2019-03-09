@@ -1,0 +1,9 @@
+# doc/txt/qto/test/mojo-hypnotoad-start.test.txt
+
+	doTestMojoHypnotoadStart
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to test the mojo-hypnotoad-start action
+
+# eof file: doc/txt/qto/test/mojo-hypnotoad-start.test.txt

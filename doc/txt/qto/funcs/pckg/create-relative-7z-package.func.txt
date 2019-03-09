@@ -1,0 +1,37 @@
+# doc/txt/qto/create-relative-7z-package/create-relative-7z-package.func.txt
+
+	doCreateRelative7zPackage
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doCreateRelative7zPackage function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doCreateRelative7zPackage function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doCreateRelative7zPackage function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doCreateRelative7zPackage function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doCreateRelative7zPackage used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doCreateRelative7zPackage functions
+
+
+
+# eof file: doc/txt/qto/create-relative-7z-package/create-relative-7z-package.func.txt

@@ -1,0 +1,37 @@
+# doc/txt/qto/print-help/print-help.test.txt
+
+	doTestPrintHelp
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doTestPrintHelp function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doTestPrintHelp function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doTestPrintHelp function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doTestPrintHelp function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doTestPrintHelp used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doTestPrintHelp functions
+
+
+
+# eof file: doc/txt/qto/print-help/print-help.test.txt

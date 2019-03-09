@@ -1,0 +1,9 @@
+# doc/txt/qto/help/mojo-hypnotoad-stop.help.txt
+
+	doHelpMojoHypnotoadStop
+	
+	# Purpose:
+	# ------------------------------------------------------
+   to stp the running instance of the hypnotoad started web app
+
+# eof file: doc/txt/qto/help/mojo-hypnotoad-stop.help.txt

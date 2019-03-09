@@ -1,0 +1,11 @@
+# doc/txt/qto/create-full-package/create-full-package.func.txt
+
+	
+	# What does it do ?
+	# ------------------------------------------------------
+	for each relative file path specified the include file 
+	adds it to a zip package
+	
+
+
+# eof file: doc/txt/qto/create-full-package/create-full-package.func.txt

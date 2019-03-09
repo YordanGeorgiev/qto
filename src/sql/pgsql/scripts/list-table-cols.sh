@@ -3,7 +3,7 @@
 export postgres_db_name=$1
 export table_name=$2
 
-test -z ${postgres_db_name:-} && export postgres_db_name='dev_issue_tracker'
+test -z ${postgres_db_name:-} && export postgres_db_name='dev_qto'
 test -z ${table_name:-} && export table_name='monthly_issues'
 echo -e "\n\n"
 

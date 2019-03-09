@@ -1,0 +1,61 @@
+# doc/txt/qto/func/generate-md-docs.func.txt
+
+	doGenerateMdDocs
+	
+	# Purpose:
+	# ------------------------------------------------------
+	download all the docs of an qto app onto a <<proj_docs_root_dir>> or <<proj_instance_dir>>/docs/md/ by calling the 
+   export as md feature by fetching json string from the pre-defined export files table
+	# Prequisites
+	# ------------------------------------------------------
+	app up and running - valid hierarchichal docs
+
+	# Installation
+	# ------------------------------------------------------
+   see ISG 
+
+	# Interdependancies
+	# ------------------------------------------------------
+   app up and running with the morbo web server
+
+	# Usage:
+	# ------------------------------------------------------
+	bash $0 -a generate-md-docs
+
+	# Developent
+	# ------------------------------------------------------
+	http://192.168.56.120:3001/prd_livy_rester/select/export_files?as=grid&od=id
+	parsing it and producing the desired exported files
+
+	this is an example of the json string returned   
+   "cnt": 4,
+   "dat": [
+      {
+         "description": "main/src/main/paradox/isg/InstallationsAndConfigurations.md",
+         "extension": "md",
+         "guid": "4cf8d2be-08ae-40ec-b42c-e53a084833b7",
+         "id": 190304223302,
+         "name": "InstallationsAndConfigurations.md",
+         "path": "isg",
+         "update_time": "2019-03-04 22:21:56",
+         "url": "export/installations_doc?as=paradox-md"
+      },
+      {
+         "description": "main/src/main/paradox/data/DataHandling.md",
+         "extension": "md",
+         "guid": "331e2ba4-c34b-4de1-b4cf-9e9639f1562c",
+         "id": 190304223329,
+         "name": "DataHandling.md",
+         "path": "data",
+         "update_time": "2019-03-04 22:35:26",
+         "url": "export/deployment_guide_doc?as=paradox-md"
+      }
+	]
+ 
+
+	# Caveats:
+	# ------------------------------------------------------
+   to output a document into the root dir leave the path cell blank
+
+
+# eof file: doc/txt/qto/func/generate-md-docs.func.txt

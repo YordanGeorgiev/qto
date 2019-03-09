@@ -1142,7 +1142,7 @@ I wanto to be able to quess the file paths of the issues file by their date
 As a DevOps 
 In order to be able quickly to switch between different projects
 I wanto to have the project name of the issues file in its name as the first token as follows:
-&lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
+&lt;&lt;qto_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
 
     
 
@@ -1150,7 +1150,7 @@ I wanto to have the project name of the issues file in its name as the first tok
 As a DevOps 
 In order to be able quickly and programmatically to go back in the history
 I wanto to have the current registration date in the file name and path
-&lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
+&lt;&lt;qto_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
 
     
 
@@ -1158,7 +1158,7 @@ I wanto to have the current registration date in the file name and path
 As a DevOps 
 In order to be able quickly and programmatically to go back in the history
 I wanto to have the current registration date in the file name and path
-&lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt; ( daily|weekly|monthly|yearly) &gt;&gt;.txt
+&lt;&lt;qto_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt; ( daily|weekly|monthly|yearly) &gt;&gt;.txt
 
     
 

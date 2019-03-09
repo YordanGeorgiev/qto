@@ -38,7 +38,7 @@
     * [4.4.4. add the uuid generation capability enabling extension](#444-add-the-uuid-generation-capability-enabling-extension)
     * [4.4.5. Install the dblink extension as follows](#445-install-the-dblink-extension-as-follows)
   * [4.5. INSTALL THE PERL MODULES](#45-install-the-perl-modules)
-* [5. LOAD THE ISSUE-TRACKER PROJECT DATA](#5-load-the-issue-tracker-project-data)
+* [5. LOAD THE ISSUE-TRACKER PROJECT DATA](#5-load-the-qto-project-data)
   * [5.1. EDIT AND PRE-LOAD THE PROJECT ENV VARS CONFIGURATION FILE](#51-edit-and-pre-load-the-project-env-vars-configuration-file)
   * [5.2. CREATE THE DATABASE AND RUN THE DDL SCRRIPTS](#52-create-the-database-and-run-the-ddl-scrripts)
   * [5.3. START THE MOJO AND HYPNO SERVERS](#53-start-the-mojo-and-hypno-servers)
@@ -224,7 +224,7 @@ The Perl modules installation looks ALWAYS, yet it usually goes trough without a
 
     # go to your product instance dir - 
     cd /opt/csitea/qto/qto.$product_version.dev.$USER
-    sudo perl src/perl/issue_tracker/script/issue_tracker_preq_checker.pl
+    sudo perl src/perl/qto/script/qto_preq_checker.pl
 
 ### 3.11. Disable the warnings in the OAuth2.pm
 As many of the actions in the qto this is simply a one-liner. 
@@ -375,11 +375,11 @@ The morbo dev server is listening on the 3000 port by default and the hypnotoad 
 ### 5.4. Load the data from the xls file
 Load the data to the db from the xls file
 
-    clear ; export tables=`curl -s -k http://$web_host:8080/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; export load_model=upsert ; perl src/perl/issue_tracker/script/issue_tracker.pl --tables $tables --do xls-to-db
+    clear ; export tables=`curl -s -k http://$web_host:8080/$postgres_db_name/select-tables|jq -r '.| .dat| .[] | .table_name'|perl -ne 's/\s+/,/g;print'`;export do_truncate_tables=1 ; export rdbms_type=postgres ; export load_model=upsert ; perl src/perl/qto/script/qto.pl --tables $tables --do xls-to-db
 
 ### 5.5. Verify that the app layer and the db work together
 In the aws menu click Services - EC2. Click on the instances on the left. Check the public DNS name of your instance and use it for the URL as follows:
-http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/dev_issue_tracker/list/yearly_issues?as=table&pick=id,status,prio,name,weight,start_time,stop_time&page-size=20&page-num=1
+http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/dev_qto/list/yearly_issues?as=table&pick=id,status,prio,name,weight,start_time,stop_time&page-size=20&page-num=1
 
     
 

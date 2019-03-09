@@ -1,0 +1,37 @@
+# doc/txt/qto/xls-to-db/xls-to-db.test.txt
+
+	doTestXlsToDb
+	
+	# Purpose:
+	# ------------------------------------------------------
+	-- todo: what is the purpose of the doTestXlsToDb function
+
+	# Prequisites
+	# ------------------------------------------------------
+	-- todo: what are the prerequisites of the doTestXlsToDb function
+
+	# Installation
+	# ------------------------------------------------------
+	-- todo: what are the required installations for the  
+		doTestXlsToDb function to execute without errors
+
+	# Interdependancies
+	# ------------------------------------------------------
+	-- todo: what are the interdependancies for the  
+		doTestXlsToDb function to execute without errors
+
+	# Usage:
+	# ------------------------------------------------------
+	-- todo: how can be the doTestXlsToDb used 
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	-- todo: what are the known caveats of the doTestXlsToDb functions
+
+
+
+# eof file: doc/txt/qto/xls-to-db/xls-to-db.test.txt

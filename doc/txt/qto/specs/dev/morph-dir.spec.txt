@@ -1,0 +1,43 @@
+# doc/txt/qto/morph-dir/morph-dir.spec.txt
+
+	doSpecMorphDir
+	
+	# Purpose:
+	# ------------------------------------------------------
+	As a Developer I want to be able to quickly "morph" aka copy
+	directories into new directories so that for each occurence of a string 
+	to search I will be able to replace with a correspondent ocuurence of a 
+	pre-set in the shell env str_repl
+
+	# Prequisites
+	# ------------------------------------------------------
+	The shell variables for the morphing should be set in the calling shell
+
+	# Installation
+	# ------------------------------------------------------
+	Perl should be installed
+
+	# Interdependancies
+	# ------------------------------------------------------
+	None
+
+	# Usage:
+	# ------------------------------------------------------
+	export dir_to_morph=<<the-dir-to-search-and-replace-in-recursively>> 
+	export to_srch=<<the-string-to-search-for>>
+	export to_repl=<<the-string-to-replace-with>>
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	If the string to replace has the same string as the qto then 
+	the whole morphing will not work aka if your starting app is named qto
+
+
+
+
+# eof file: doc/txt/qto/morph-dir/morph-dir.spec.txt
+#------------------------------------------------------------------------------

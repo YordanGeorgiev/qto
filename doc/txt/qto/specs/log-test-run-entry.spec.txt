@@ -1,0 +1,36 @@
+# doc/txt/qto/log-test-run-entry/log-test-run-entry.spec.txt
+
+	doSpecLogTestRunEntry
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to present the specs of the doLogTestRunEntry function
+
+	# Prequisites
+	# ------------------------------------------------------
+	bash , perl , core funcs
+
+	# Installation
+	# ------------------------------------------------------
+   none
+
+	# Interdependancies
+	# ------------------------------------------------------
+   none
+
+	# Usage:
+	# ------------------------------------------------------
+	doLogTestRunEntry START "$msg"
+	doLogTestRunEntry INFO "$msg"
+	doLogTestRunEntry STOP "$msg"
+
+	# Developent
+	# ------------------------------------------------------
+	
+
+	# Caveats:
+	# ------------------------------------------------------
+
+
+
+# eof file: doc/txt/qto/log-test-run-entry/log-test-run-entry.spec.txt

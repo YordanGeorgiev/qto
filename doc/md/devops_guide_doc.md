@@ -217,7 +217,7 @@ You restore a database by first running the pgsql scripts of the project databas
     bash src/bash/qto/qto.sh -a run-pgsql-scripts
     psql 
     
-    psql -d $postgres_db_name < dat/mix/sql/pgsql/dbdumps/dev_issue_tracker/dev_issue_tracker.20180813_202202.insrt.dmp.sql
+    psql -d $postgres_db_name < dat/mix/sql/pgsql/dbdumps/dev_qto/dev_qto.20180813_202202.insrt.dmp.sql
 
 ### 3.3. Backup a database table
 You backup a database table with the following one-liner. Noe 
@@ -232,7 +232,7 @@ You restore a database table by first running the pgsql scripts of the project d
     # obs you have to have the shell vars pre-loaded !!!
     # clear; doParseCnfEnvVars <<path-to-cnf-file>>
     # re-apply the table ddl
-    psql -d $postgres_db_name < src/sql/pgsql/dev_issue_tracker/13.create-table-requirements.sql
+    psql -d $postgres_db_name < src/sql/pgsql/dev_qto/13.create-table-requirements.sql
     
     psql -d $postgres_db_name < dat/tmp/requirements.data.sql
 
@@ -291,7 +291,7 @@ Run the qto file to db load
 Verify the inserted data from the db as follows:
 
     # check that the rows where inserted
-    echo 'SELECT * FROM issue ; ' | psql -d dev_issue_tracker
+    echo 'SELECT * FROM issue ; ' | psql -d dev_qto
 
 ### 4.8. web based routes usage
 
@@ -370,7 +370,7 @@ No code should be merged into the development branch without broad testing cover
 The tst branch is dedicated for testing of all the tests, the deployment, performance testing and configuration changes. Should you need to perform bigger than a small hotfix changes you must branch the tst branch into a separate dev--feature branch and re-run the integration testing and approval all over. 
 At the end all the integration tests should be behind this shell call. 
 
-    export issue_tracker_project=""; bash src/bash/qto/qto.sh -a run-integration-tests
+    export qto_project=""; bash src/bash/qto/qto.sh -a run-integration-tests
 
 ### 6.7. Quality assurance in the qas branch
 At this phase all the tests with all the expected functionalities should work at once. No small hotfixes are allowed - if a need arises new branch is created to the tst branch The quality assurance
@@ -580,8 +580,8 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:14 EEST [qto][@host-name] [4426] running action :: mojo-morbo-start:doMojoMorboStart
     (Not all processes could be identified, non-owned process info
      will not be shown, you would have to be root to see it all.)
-    tcp        0      0 0.0.0.0:3001            0.0.0.0:*               LISTEN      6034/issue_tracker
-    tcp        0      0 0.0.0.0:3002            0.0.0.0:*               LISTEN      7626/issue_tracker
+    tcp        0      0 0.0.0.0:3001            0.0.0.0:*               LISTEN      6034/qto
+    tcp        0      0 0.0.0.0:3002            0.0.0.0:*               LISTEN      7626/qto
     Can't create listen socket: Address already in use at /usr/local/share/perl/5.26.0/Mojo/IOLoop.pm line 130.
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN with:
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
@@ -594,8 +594,8 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:14 EEST [qto][@host-name] [4426] running action :: mojo-morbo-start:doMojoMorboStart
     (Not all processes could be identified, non-owned process info
      will not be shown, you would have to be root to see it all.)
-    tcp        0      0 0.0.0.0:3001            0.0.0.0:*               LISTEN      6034/issue_tracker
-    tcp        0      0 0.0.0.0:3002            0.0.0.0:*               LISTEN      7626/issue_tracker
+    tcp        0      0 0.0.0.0:3001            0.0.0.0:*               LISTEN      6034/qto
+    tcp        0      0 0.0.0.0:3002            0.0.0.0:*               LISTEN      7626/qto
     Can't create listen socket: Address already in use at /usr/local/share/perl/5.26.0/Mojo/IOLoop.pm line 130.
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN with:
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto

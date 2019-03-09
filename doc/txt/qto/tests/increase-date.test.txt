@@ -1,0 +1,33 @@
+# doc/txt/qto/increase-date/increase-date.test.txt
+
+	doTestIncreaseDate
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to test the increase-date action
+
+	# Prequisites
+	# ------------------------------------------------------
+   the increase-date.func.sh action file 	
+
+
+	# Interdependancies
+	# ------------------------------------------------------
+   the project files in the qto projects conf dir
+   
+	# Usage:
+	# ------------------------------------------------------
+	doParseIniEnvVars /vagrant/csitea/cnf/projects/isg-pub/isg-pub.futu-here.host-name.conf
+   $0 -a increase-date
+
+	# Developent
+	# ------------------------------------------------------
+	-- todo: what issues, todos could be pointed for development
+
+	# Caveats:
+	# ------------------------------------------------------
+	when ran from vm on Windows a nasty cannot write to file occurs when editing 
+
+
+
+# eof file: doc/txt/qto/increase-date/increase-date.test.txt

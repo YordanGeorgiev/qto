@@ -1,0 +1,15 @@
+# doc/txt/qto/txt-to-db/txt-to-db.test.txt
+
+	doTestTxtToDb
+	
+	# Purpose:
+	# ------------------------------------------------------
+	to test the txt-to-db wrapper func 
+
+	# Caveats:
+	# ------------------------------------------------------
+	none known so far
+
+
+
+# eof file: doc/txt/qto/txt-to-db/txt-to-db.test.txt

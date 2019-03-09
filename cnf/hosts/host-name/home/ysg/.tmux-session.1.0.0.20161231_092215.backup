@@ -1,5 +1,5 @@
-sess--issue-tracker	win--run-isgpub	/opt/csitea/isg-pub/isg-pub.0.9.7.tst.ysg
-sess--issue-tracker	win--vim--issue-tracker	/opt/csitea/issue-tracker/issue-tracker.1.1.6.dev.ysg
-sess--issue-tracker	win--tst--issue-tracker	/opt/csitea/issue-tracker/issue-tracker.1.1.6.tst.ysg
-sess--issue-tracker	win--prd--issue-tracker	/opt/csitea/issue-tracker/issue-tracker.1.1.6.prd.ysg
-sess--issue-tracker	win--git--issue-tracker	/opt/csitea/issue-tracker/issue-tracker.1.1.6.git.ysg
+sess--qto	win--run-isgpub	/opt/csitea/isg-pub/isg-pub.0.9.7.tst.ysg
+sess--qto	win--vim--qto	/opt/csitea/qto/qto.1.1.6.dev.ysg
+sess--qto	win--tst--qto	/opt/csitea/qto/qto.1.1.6.tst.ysg
+sess--qto	win--prd--qto	/opt/csitea/qto/qto.1.1.6.prd.ysg
+sess--qto	win--git--qto	/opt/csitea/qto/qto.1.1.6.git.ysg
