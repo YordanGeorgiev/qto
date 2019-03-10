@@ -106,6 +106,8 @@ sub doCheckRequiredModules {
    Mojolicious::Plugin::StaticCache
    Mojolicious::Plugin::RenderFile
    Time::HiRes
+   Mojolicious::Plugin::Authentication
+   Mojo::JWT
   );
 
   for (@modules) {
