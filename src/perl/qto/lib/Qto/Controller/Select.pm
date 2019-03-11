@@ -44,7 +44,7 @@ sub doSelectItems {
 
    $db = $self->SUPER::doResolveDbName ( $db ) ; 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db , $item) ;
    $appConfig		      = $self->app->get('AppConfig');
 
 	# debug rint "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
@@ -108,7 +108,7 @@ sub doSelectTables {
 
    $db = $self->SUPER::doResolveDbName ( $db ) ; 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db , 'meta_columns' ) ;
 
 	my $ret        = 0;
 	my $hsr2       = {};
@@ -191,7 +191,7 @@ sub doSelectDatabases {
 	$objModel->set('postgres_db_name' , 'postgres' ) ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db , 'meta_columns') ;
 
 	my $ret = 0;
 	my $hsr2 = {};
@@ -241,8 +241,6 @@ sub doSelectMeta {
    my $dat         = '' ; 
    my $cnt         = 0;
 
-	# print "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
-
    $appConfig		= $self->app->get('AppConfig');
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ;
    
@@ -250,21 +248,8 @@ sub doSelectMeta {
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    
-   # chk: it-181101180808
    $appConfig		 		= $self->app->get('AppConfig');
-   unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
       
-      ( $ret , $msg , $met ) = $self->SUPER::doReloadProjDbMeta( $db ) ; 
-      unless ( $ret == 0 ) { 
-         $self->render('text' => $msg ) unless $ret == 0 ; 
-         return ; 
-      }
-      else { 
-         $appConfig->{ $db . '.meta' } = $met ; 
-      }
-   } 
-   
-   # debug p $appConfig->{ $db . '.meta' } ; 
    if ( defined $table ) {
       ( $ret , $msg , $met , $cnt ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) 
    }

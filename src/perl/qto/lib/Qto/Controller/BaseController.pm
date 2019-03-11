@@ -17,6 +17,7 @@ use Qto::App::Cnvr::CnrHsr2ToHsr2 ;
 sub doResolveDbName {
    my $self                = shift ; 
    my $db                  = shift ; 
+   my $item                = shift ; 
    my @env_prefixes        = ( 'dev_' , 'tst_' , 'qas_' , 'prd_' );
  
    my $db_prefix           = substr($db,0,4);
@@ -31,10 +32,12 @@ sub doReloadProjDbMeta {
 
    my $self                = shift ;
    my $db                  = shift ;
+   my $item                = shift || '' ; 
 
    $appConfig		 		   = $self->app->get('AppConfig');
 
-   return if ( exists ( $appConfig->{ $db . '.meta' } )); 
+   # reload the columns meta data ONLY after the meta_columns has been requested
+   return if ( exists ( $appConfig->{ $db . '.meta' } ) && $item ne 'meta_columns' ); 
 
    my $objRdrDbsFactory    = {} ; 
    my $objRdrDb            = {} ; 
