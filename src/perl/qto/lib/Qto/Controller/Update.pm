@@ -54,7 +54,7 @@ sub doUpdateItemBySingleCol {
    $objCnrUrlPrms = 
       'Qto::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
    
-   unless ( $objCnrUrlPrms->doValidateAndSetUpdate ( $perl_hash ) == 1 ) {
+   unless ( $objCnrUrlPrms->doValidateAndSetUpdate ( $perl_hash , $item ) == 1 ) {
       my $http_code = $objCnrUrlPrms->get('http_code') ; 
       $self->res->code($http_code);
       $self->render( 'json' =>  { 
@@ -65,10 +65,11 @@ sub doUpdateItemBySingleCol {
       return ; 
    } 
 
+
    $objWtrDbsFactory
       = 'Qto::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
    $objWtrDb = $objWtrDbsFactory->doSpawn("$rdbms_type");
-   ($ret, $msg) = $objWtrDb->doUpdateItemBySingleCol(\$objModel, $item);
+   ($ret, $msg) = $objWtrDb->doUpdateItemBySingleColToDb(\$objModel, $item);
 
    $self->res->headers->accept_charset('UTF-8');
    $self->res->headers->accept_language('fi, en');

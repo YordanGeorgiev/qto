@@ -108,6 +108,7 @@ sub doCheckRequiredModules {
    Time::HiRes
    Mojolicious::Plugin::Authentication
    Mojo::JWT
+   Authen::Passphrase::BlowfishCrypt
   );
 
   for (@modules) {
