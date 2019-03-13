@@ -83,29 +83,23 @@ LINE 3:          SET seq = \'should be integer but string passed\'
       ->json_is({"ret" => 404 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . $url , 
                  "msg" => "$exp_err_msg"});
 
-   $tm = 'the string "not_an_integer" should not qualify for an id ...' ; 
-   my $id = 'not_an_integer' ; 
-   $exp_err_msg = 'the id must be a whole positive number, but not_an_integer was provided !' ;
-   $url = '/' . $db . '/create/test_create_table' ; 
-   ok ($t->post_ok($url => json => {"attribute"=>"seq", "id" =>"$id", "cnt"=>"should be integer but string passed"})
-      ->json_is({"ret" => 400 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . $url , 
-                 "msg" => "$exp_err_msg"}),$tm);
-  
+   $tm = "passwords should be hashed" ; 
+   $t->post_ok($url => json => {"attribute"=>"password", "id" =>"4", "cnt"=>"secret"})->status_is(200);
 
-   $tm = 'the id should be a positive number' ; 
-   $id = '-1' ; 
-   $exp_err_msg = 'the id must be a whole positive number, but -1 was provided !' ;
-   $url = '/' . $db . '/create/test_create_table' ; 
-   ok ($t->post_ok($url => json => {"attribute"=>"seq", "id" =>"$id", "cnt"=>"should be integer but string passed"})
-      ->json_is({"ret" => 400 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . $url , 
-                 "msg" => "$exp_err_msg"}),$tm);
-#$ua->post(
-#  $url => json => {"attribute"=>"seq", "id" =>"1", "cnt"=>"name-10-updated"} => sub {
-#    my ($ua, $tx) = @_;
-#    p $tx->result->body
-#  });
-#  Mojo::IOLoop->start unless Mojo::IOLoop->is_running;
-#
+   $url = '/' . $db . '/select/test_update_table?pick=password&with=id-eq-4' ; 
+   $t->get_ok($url )->status_is(200) ;
+
+   $tm = 'the "password" attribute in the app_user and test_update_table tables is encrypted ' ; 
+   $res = $ua->get($url)->result->json ; 
+   ok ( match_passphrase_against_crypto_hash($res->{'dat'}->[0]->{'password'},'secret') == 1 , $tm ) ; 
+
+
+   sub match_passphrase_against_crypto_hash {
+      my ($crypto_hash, $passphrase) = @_;
+      return Authen::Passphrase::BlowfishCrypt
+            ->from_rfc2307($crypto_hash)->match($passphrase);
+   }
+
 done_testing();
 
 # feature-guid: 

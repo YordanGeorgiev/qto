@@ -34,7 +34,8 @@ for my $web_action ( @web_actions ) {
       # feature-guid: 95cdac3a-4a41-4c5b-9ba8-6f8134b0edc9
       $tm = "start test a response with only a single column pick" ; 
       $url_params = "?pick=name" ; 
-      $url ="/$db_name/$web_action/$table/$url_params"; 
+      $url ="/$db_name/$web_action/$table" . "$url_params"; 
+      print "url: $url \n" ; 
       $res = $ua->get($url )->result->json ; 
       ok ( $res->{'ret'} == 200 , $tm ) ; 	
      

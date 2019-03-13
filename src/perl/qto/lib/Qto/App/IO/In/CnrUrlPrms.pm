@@ -18,6 +18,7 @@ package Qto::App::IO::In::CnrUrlPrms ;
    use Scalar::Util qw /looks_like_number/ ; 
    use Data::Printer ; 
    use Qto::App::Mdl::Model ; 
+	use Authen::Passphrase::BlowfishCrypt ; 
 
    
    use parent 'Qto::App::Utils::OO::SetGetable' ; 
@@ -55,6 +56,8 @@ sub doValidateAndSetUpdate {
 
    my $self          = shift ; 
    my $perl_hash     = shift ; 
+   my $item          = shift ; 
+
    my $msg           = '' ; 
    my $isValid       = 0 ; 
    my $http_code     = 400 ; 
@@ -69,9 +72,18 @@ sub doValidateAndSetUpdate {
    }
    $self->set('msg' , $msg ) ; 
    $self->set('http_code' , $http_code ) ; 
-   $objModel->set('update.web-action.col_name' , $perl_hash->{'attribute'} ) ; 
+
+   my $col_name      = $perl_hash->{'attribute'} ; 
+   my $col_value     = $perl_hash->{'cnt'} ; 
+   my @tables        = ( 'app_user' , 'test_update_table');
+   if ( grep ( /$item/, @tables ) == 1 ) {
+	   $col_value     = $self->make_crypto_hash($col_value ) if $col_name eq 'password' ;
+   }
+
+
+   $objModel->set('update.web-action.col_name' , $col_name) ; 
    $objModel->set('update.web-action.id' , $perl_hash->{'id'} ) ; 
-   $objModel->set('update.web-action.col_value' , $perl_hash->{'cnt'} ) ; 
+   $objModel->set('update.web-action.col_value' , $col_value ) ; 
    
    return $isValid ; 
 }
@@ -481,6 +493,16 @@ sub doSetView {
 		my $self       = {} ; bless( $self, $class );    # Say: $self is a $class
 		return $self;
 	}  
+	
+   sub make_crypto_hash {
+		my $self = shift ; 
+		my ($passphrase) = @_;
+		return 'Authen::Passphrase::BlowfishCrypt'->new(
+			  'cost'        => 8,
+			  'salt_random' => 1,
+			  'passphrase'  => $passphrase,
+		 )->as_rfc2307;
+   }
 
 1;
 

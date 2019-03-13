@@ -159,7 +159,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
    }
 
 
-   sub doUpdateItemBySingleCol {
+   sub doUpdateItemBySingleColToDb {
 
 		my $self 				= shift ; 
       my $objModel         = ${ shift @_ } ; 
@@ -197,10 +197,9 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          $msg = "the $col_name column does not exist" ; 
          return ( $ret , $msg ) ; 
       }
-
-      $col_value 		=~ s|\'|\'\'|g ; 
-      # clear any possible winblows carriage returns
-      $col_value     =~ s|\r\n|\n|g if ( $col_value ) ; 
+		
+      $col_value 		=~ s|\'|\'\'|g ;  
+      $col_value     =~ s|\r\n|\n|g if ( $col_value ) ; # clear any possible winblows carriage returns
       $col_value = "'" . $col_value . "'" unless ( $col_value eq 'null' ) ; 
 
       $str_sql = " 
@@ -212,7 +211,6 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       eval {
          $sth = $dbh->prepare($str_sql);  
          #debug rint "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
-
          $sth->execute() or print STDERR "$DBI::errstr" ; 
       } or $ret = 500 ; # Internal Server error
 
