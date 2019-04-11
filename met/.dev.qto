@@ -230,6 +230,7 @@ src/perl/qto/script/qto.pl
 src/perl/qto/script/qto
 src/perl/qto/script/qto_preq_checker.pl
 src/bash/qto/install-prerequisites-on-ubuntu.sh
+src/bash/qto/deploy-start-minio.sh
 src/perl/qto
 src/perl/qto/lib
 src/perl/qto/lib/Qto
@@ -890,6 +891,7 @@ met/.dev.qto
 met/.src.qto
 met/.tst.qto
 met/.prd.qto
+src/bash/qto/deploy-start-minio.sh
 # ---
 src/selenium/
 src/selenium/ide
