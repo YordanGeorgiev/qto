@@ -46,6 +46,10 @@ done < <(cat << "EOF"
 	build-essential
    gpgsm
    nodejs
+   lsof
+   pgrep
+   minio
+   mc
 EOF
 )
 
