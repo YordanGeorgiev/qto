@@ -1,0 +1,52 @@
+# file: ~/.profile_opts
+# 
+# purpose:
+# to be the entry point for the opts to be sourced on every machine with bash
+# to enable portability of well working generic opts between hosts
+#
+# usage:
+# souce this file into your ~/.bashrc by adding ONLY this line at the end:
+# source ~/.bash_srcs
+
+
+# source my bash functions
+test -f ~/.bash_funcs.`hostname -s` && source ~/.bash_funcs.`hostname -s`
+
+# source my bash aliases
+test -f ~/.bash_aliases.`hostname -s` && source ~/.bash_aliases.`hostname -s`
+
+# source my java settings
+test -f ~/.java_opts.`hostname -s` && source ~/.java_opts.`hostname -s`
+
+# source my hadoop opts
+test -f ~/.hadoop_opts.`hostname -s` && source ~/.hadoop_opts.`hostname -s`
+
+# source my prefered amzn aws settings
+test -f ~/.amzn_aws_opts.`hostname -s` && source ~/.amzn_aws_opts.`hostname -s`
+
+# source my mysql opts
+test -f ~/.mysql_opts.`hostname -s` && source ~/.mysql_opts.`hostname -s`
+
+# source my postgre opts
+test -f ~/.postgre_opts.`hostname -s` && source ~/.postgre_opts.`hostname -s`
+
+# add some secrets ... 
+test -f ~/.bash_secret.`hostname -s` && source ~/.bash_secret.`hostname -s`
+
+# source the hadoop
+test -f ~/.spark_opts.`hostname -s` && source ~/.spark_opts.`hostname -s`
+
+# source the python related vars
+test -f ~/.python_opts.`hostname -s` && source ~/.python_opts.`hostname -s`
+
+# source my bash settings
+test -f ~/.bash_opts.`hostname -s` && source ~/.bash_opts.`hostname -s`
+
+# source my vim settings
+test -f ~/.vim_opts.`hostname -s` && source ~/.vim_opts.`hostname -s`
+
+# souce my minio confs
+test -f ~/.minio_opts.`hostname -s` && source ~/.minio_opts.`hostname -s`
+
+
+# eof file: ~/.profile_opts
