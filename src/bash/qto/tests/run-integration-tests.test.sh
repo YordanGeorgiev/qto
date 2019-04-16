@@ -6,7 +6,7 @@ doTestRunIntegrationTests(){
 	doLog "DEBUG START doTestRunIntegrationTests"
 	
 	# Action !!!
-   bash src/bash/qto/qto.sh -a run-perl-unit-tests
+   bash src/bash/qto/qto.sh -a run-integration-tests
 
 	doLog "DEBUG STOP  doTestRunIntegrationTests"
 }
