@@ -2,20 +2,27 @@
 
 # v1.0.9
 # ---------------------------------------------------------
-# todo: add doBuildQtoDockerImage comments ...
+# cat doc/txt/qto/funcs/build-qto-docker-image.func.txt
 # ---------------------------------------------------------
 doBuildQtoDockerImage(){
 
 	doLog "DEBUG START doBuildQtoDockerImage"
 	
-	cat doc/txt/qto/funcs/build-qto-docker-image.func.txt
-	
 	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 	# Action !!!
    cd $product_instance_dir/src/docker
-   docker build -t qto_image .
+   docker build -t qto-image .
    cd -
+
+   # run the docker in the background
+   docker run -d --name  qto-cotainer-01 -p 127.0.0.1:15432:15432 --restart=always qto-image
+
+	# --detach , -d       Run container in background and print container ID
+	# --name              Assign a name to the container
+	# --publish , -p      Publish a container’s port(s) to the host
+	# --volume , -v       Bind mount a volume
+	# --restart           Restart policy to apply when a container exits
 
 	doLog "DEBUG STOP  doBuildQtoDockerImage"
 }
