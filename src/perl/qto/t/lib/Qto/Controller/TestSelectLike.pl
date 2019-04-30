@@ -26,7 +26,6 @@ $res = $ua->get('/' . $db_name . '/select-tables')->result->json ;
 
 # foreach table in the app db in test call db/select/table
 for my $table ( @tables ) {
-   
    	
    next unless  grep ( /^$table$/, @tables_to_scan ) ;
 	# test a like by select of integers	
@@ -40,14 +39,15 @@ for my $table ( @tables ) {
 	print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
    $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
 	my @list = @{$res->{'dat'}} ; 
-   print "stop p list \n" ; 
 
    # feature-id: d4592c2e-60a4-4078-b499-743423d66d94
 	foreach my $row ( @list ) {
-      p $row ; 
-		$tm = 'only rows with status containing the "todo" string are selected for '. "$table table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
+		$tm = 'only rows with status containing the "todo" string are selected for ' ; 
+      $tm .= "$table table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
 		ok ( $row->{'status'} =~ m/todo/g, $tm ) ; 
 	}
+
+
 
 	print "test a string like \n" ; 
 	$url_params = '?like-by=category&like-val=feature' ; 
@@ -60,8 +60,9 @@ for my $table ( @tables ) {
 		$tm = "all the retrieved rows of the the table: $table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ;
 		ok ( $row->{'category'} =~ m/feature/g , $tm ) ; 
 	}
-#
-# feature-guid: dfd70012-bc52-4c8a-860f-a760d77f50ad
+
+   #
+   # feature-guid: dfd70012-bc52-4c8a-860f-a760d77f50ad
 	print 'test a response with invalid syntax - provide like-by only' . "\n" ; 
 	$url_params = '?like-by=status' ; 
 	print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
@@ -88,6 +89,34 @@ for my $table ( @tables ) {
    ok ( $res->{'ret'} == 400 ) ; 	
    print "stop  test a response with valid syntax, but use unexisting columns \n" ; 
    
+	$url_params = '?like-by=name,description&like-val=add' ; # choose a word which most probably WILL occur
+	$t->get_ok('/' . $db_name . '/select/' . $table . $url_params )->status_is(200) ;
+
+	print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
+	@list = @{$res->{'dat'}} ; 
+
+   # feature-id: d4592c2e-60a4-4078-b499-743423d66d94
+	foreach my $row ( @list ) {
+		$tm = "\n".'test-06 only rows having BOTH name and description containing the string "add" ' ; 
+      $tm .= "in the \n $table table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
+		ok ( $row->{'name'} =~ m/add/g , $tm ) ; 
+		ok ( $row->{'description'} =~ m/add/g, $tm ) ; 
+	}
+	
+   $url_params = '?like-by=name&like-val=add&like-by=description&like-val=the' ; # choose a word which most probably WILL occur
+	$t->get_ok('/' . $db_name . '/select/' . $table . $url_params )->status_is(200) ;
+
+	print "\n running url: /$db_name" . '/select/' . $table . $url_params . "\n" ; 	
+   $res = $ua->get('/' . $db_name . '/select/' . $table . $url_params )->result->json ; 
+	@list = @{$res->{'dat'}} ; 
+
+   # feature-id: d4592c2e-60a4-4078-b499-743423d66d94
+	foreach my $row ( @list ) {
+		$tm = "\n".'test-07 EITHER name has the "add" string OR the description has the "the" string' ; 
+      $tm .= "in the \n $table table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
+		ok ( ( $row->{'name'} =~ m/add/g or $row->{'description'} =~ m/the/g), $tm ) ; 
+	}
 } 
 #eof foreach table
 

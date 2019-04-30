@@ -1,13 +1,13 @@
 #div_grid_tmpl {
-	padding-top: 1% ; 
+	padding: 1% 1% 1% 1% ; 
 	max-width: 100%;
 	clear: both; 
    display: block;
 }
 
-table {
+table#grid {
 	table-layout: fixed; 
-   max-width: 100% ; 
+   max-width: 98% ; 
 	border: 4px solid #F0F8FF ; 
 	border-radius: 9px;
 	background-color: #fff;
@@ -16,6 +16,7 @@ table {
 }
 #grid {
    clear: both ; 
+   max-width: 98% ; 
 }
 th {
 	background-color: #339aff ; 

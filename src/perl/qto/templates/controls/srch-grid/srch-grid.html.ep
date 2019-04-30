@@ -38,6 +38,7 @@
 % end
 
 % content_for js_scripts => begin
+   %= include 'js/global/linkifies.func.js'
    %= include 'controls/list-grid/js/btn-play-prev-10.js'
    %= include 'controls/list-grid/js/btn-play-prev.js'
    %= include 'controls/list-grid/js/btn-play-next.js'

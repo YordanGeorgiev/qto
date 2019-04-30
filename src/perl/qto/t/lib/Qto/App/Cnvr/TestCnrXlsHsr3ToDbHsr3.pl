@@ -67,7 +67,7 @@ is( $trap->exit, 1, $msg );
 # test-02
 # -----
 $msg = ' test-02 :: if exitting with error, the proper error msg should be issued' ; 
-is( $trap->stdout, ' the level for row id 0 was not defined !!!', $msg ) ; 
+is( $trap->stdout, ' the level for row id 0 was not defined !!! Error found in the following table: ', $msg ) ; 
 
 # 3.
 # -----

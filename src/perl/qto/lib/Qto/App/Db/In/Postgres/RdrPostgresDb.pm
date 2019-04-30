@@ -49,17 +49,26 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 
       $objModel->doSetDbTablesList($db ) unless exists $appConfig->{"$db" . '.meta.tables-list'} ; 
       my @tables = @{ $appConfig->{"$db" . '.meta.tables-list'} } ; 
-      my $str_sql = 'SELECT guid as guid, id as id, item as item, name as name, description as description' ; 
+      my $ts_qry = $qry ; 
+      $ts_qry =~ s/\s+/ & /g ; # to_tsquery('english', 'The & Fat & Rats')
+      my $str_sql = 'SELECT guid as guid, id as id, item as item, name as name, description as description , relevancy' ; 
       $str_sql .= ', count(*) OVER () as rows_count FROM ( ' ;
       foreach my $table ( @tables ) {
          if ( $objModel->doChkIfColumnExists ( $db , $table , 'name' ) == 1
                && $objModel->doChkIfColumnExists ( $db , $table , 'description' ) == 1 ) {
 
-            $str_sql .= " SELECT guid ,id , '" . "$table" . "' as item, name , description FROM $table \n" ; 
-            $str_sql .= " WHERE 1 = 1 AND ( name like '%" . "$qry" . "%' or description like '%" . "$qry" . "%') UNION ALL \n" ; 
+            $str_sql .= "
+               SELECT guid ,id , '" . "$table" . "' as item, name , description 
+               , ts_rank(to_tsvector(name || description) , to_tsquery('" . $ts_qry . "')) as relevancy
+               FROM $table 
+               WHERE 1=1
+               AND ts_rank(to_tsvector(name || description), to_tsquery('" . $ts_qry . "')) <> 0 
+               AND ( name like '%" . "$qry" . "%' or description like '%" . "$qry" . "%')
+               UNION ALL " ; 
          }
       }
-	   for (1..11) { chop ( $str_sql ) } ;
+	   for (1..10) { chop ( $str_sql ) } ; # chop off the last union all
+      # rint "str_sql : $str_sql \n" ; 
       $str_sql .= ' ) a ' ; 
       my $limit = $objModel->get('query.web-action.pg-size' ) || 7 ; 
       my $page_num = $objModel->get('query.web-action.pg-num' ) || 1 ; 
@@ -69,8 +78,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset ;" ; 
       
-      # debug rint $str_sql ;  
-
+      print "str_sql : $str_sql \n" ; # todo:ysg
       $ret = 0 ; 
       eval { 
          $msg = "" ; 
@@ -122,35 +130,42 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 
       if ( @$ref_like_names and @$ref_like_values  ) {
 			
-         $sql = ' AND (' ; 
+         $sql .= ' AND ( ' ; 
 
          for ( my $i = 0 ; $i < scalar ( @$ref_like_names ) ; $i++ ) {
-				my ( $like_name , $like_value ) = () ; 
-            $like_name = $ref_like_names->["$i"] ;
+				my ( $like_names , $like_value ) = () ; 
+            $like_names = $ref_like_names->["$i"] ;
             $like_value = $ref_like_values->["$i"] ;
 
-        
-            my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $like_name ) ; 
-      	   return ( 400 , "the $like_name column does not exist" , "") unless ( $col_exists ) ; 
-            
-            # if the like value is a number
-            $like_name = "CAST( $like_name AS TEXT)" if $like_value =~ /\d{1,100}/g ; 
+            my @like_or_names = split (',', $like_names) ; # the syntax is like-by=attr1,attr2
+            foreach my $like_name ( @like_or_names ) {
+               $sql .= ' ( ' ; 
+              
+               my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $like_name ) ; 
+               return ( 400 , "the $like_name column does not exist" , "") unless ( $col_exists ) ; 
+               
+               # if the like value is a number
+               $like_name = "CAST( $like_name AS TEXT)" if $like_value =~ /\d{1,100}/g ; 
 
-            my @like_values_list = split (',' , $like_value ) ;
-            my $str = '' ;
-            foreach my $item ( @like_values_list ) {
-               $str .= " $like_name LIKE '%" . $item . "%' OR " ;
-            }
-
-            if ( defined ( $like_value ) and defined ( $like_name ) ) {
-               $sql .= "$str "
-            } else {
+               my @like_values_list = split (',' , $like_value ) ;
+               my $str = '' ;
+               foreach my $val ( @like_values_list ) {
+                  $str .= " $like_name LIKE '%" . $val . "%' OR " ;
+               }
 			      for (1..3) { chop ( $str ) } ;
-            }
-         }
-			for (1..4) { chop ( $sql ) } ;
-		   $sql .= ') ' ; 
+               $sql .= $str ; 
+               $sql .= ' ) AND '  ;
+           } #eof foreach potential multiple or combined attributes
+			  for (1..5) { chop ( $sql ) } ;
+           chop $sql if $i > 0 ; 
 
+            $sql .= ' ) OR ' ;
+         } #eof foreach like-by pair
+			for (1..3) { chop ( $sql ) } ;
+
+         print "sql: \n $sql \n" ; 
+         print "sql just before the return" ; 
+         #$sql .= ' ) ' ;
 			return ( 0 , "" , $sql ) ; 
 
       } elsif ( @$ref_like_names or @$ref_like_values )  {
