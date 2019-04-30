@@ -233,7 +233,7 @@ var Searchbox = {
                uri = uri + db + '/search' + url.search
                uri = ( uri.indexOf('?') == -1 ) ? uri + '?' : uri
                uri = uri.replace(/([&]{0,1}pick=([a-zA-Z\,0-9_]+))+/gi , "") 
-               uri = uri.replace(/([&]{0,1}for=([a-zA-Z0-9_%]+))+/gi , "" ) 
+               uri = uri.replace(/([&]{0,1}for=([a-zA-Z0-9_%\-]+))+/gi , "" ) 
                uri = uri.replace(/([&]{0,1}with=([a-zA-Z_%\-0-9]+))+/gi , "") 
                uri = uri.replace(/([&]{0,1}like-by=([a-zA-Z_%]+))+/gi , "") 
                uri = uri.replace(/([&]{0,1}like-val=([a-zA-Z_%]+))+/gi , "") 
@@ -241,6 +241,7 @@ var Searchbox = {
             }
          }
          uri = ( uri.endsWith('?') ) ? uri.slice(0, -1) : uri
+         uri = ( uri.includes('&od=relevancy') ) ? uri + '&od=relevancy' : uri 
          window.location.href = uri // and redirect !!!
     } 
     , buildLike(uri,pFor) {
@@ -248,7 +249,7 @@ var Searchbox = {
             uri = uri.replace(/([&]{0,1}with=([a-zA-Z_%\-0-9]+))+/gi , "") 
             uri = uri.replace(/([&]{0,1}like-by=([a-zA-Z_%]+))+/gi , "") 
             uri = uri.replace(/([&]{0,1}like-val=([a-zA-Z_%]+))+/gi , "") 
-            uri = uri.replace(/([&]{0,1}for=([a-zA-Z0-9_%]+))+/gi , "" ) 
+            uri = uri.replace(/([&]{0,1}for=([a-zA-Z0-9_%\-]+))+/gi , "" ) 
             uri = uri + '&like-by=name&like-val=' + pFor
             uri = uri + '&like-by=description&like-val=' + pFor
          } 

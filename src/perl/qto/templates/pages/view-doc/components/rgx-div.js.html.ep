@@ -37,9 +37,10 @@
               var el = ev.target
               var modifiedContent = ev.target.value
               //this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
-              this.displayEmptyCellIfNullOrUndefined()
+              //this.displayEmptyCellIfNullOrUndefined()
           }
-          , created: function(){
+          , created: function (){
+              var i = 1
               console.log( "textarea created" )
               console.log(this.$store)
           }

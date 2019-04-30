@@ -75,13 +75,13 @@ sub doQueryItems {
 
    $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
 	$objRdrDb = $objRdrDbsFactory->doSpawn("$rdbms_type");
-   ($ret, $msg , $hsr2 ) = $objRdrDb->doGlobalSrchIntoHashRef(\$objModel);
+   ($ret, $msg , $hsr2 ) = $objRdrDb->doGlobalSrchIntoHashRef(\$objModel );
 
    if ( $ret == 0 ) {
       my $list = ();
       my $objCnrHsr2ToArray = 
          'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 ) ;
+      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 , '>', 'relevancy') ;
 
       $self->SUPER::doRenderJSON(200,$msg,'GET',$msr2,$rows_count,$list);
    } elsif ( $ret == 204 ) {

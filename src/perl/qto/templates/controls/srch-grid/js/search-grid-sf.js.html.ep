@@ -77,6 +77,17 @@
 		 , goToNextPage10: function (id){
        	   this.$parent.goToNextPage10(id);
        }
+       , lnkMayBe: function(cnt) {
+         var lnkMayBe = (cnt == null) ? '' :cnt 
+         if ( this.formats != null ) {
+           var titles = JSON.parse(this.formats).lnktitles
+           titles.map ( title => lnkMayBe = String(lnkMayBe).linkifyOne(title) )	
+         } else {
+           lnkMayBe = String(lnkMayBe).linkify()
+         }
+         lnkMayBe = lnkMayBe.linkifyItems()
+         return (typeof(lnkMayBe) != "undefined") ? lnkMayBe : ''
+       }
 	 }
    })
 

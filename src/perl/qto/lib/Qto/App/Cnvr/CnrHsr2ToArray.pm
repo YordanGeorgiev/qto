@@ -16,8 +16,9 @@ our $objModel = {} ;
       my $self          = shift ; 
       my $hsr2          = shift ; 
       my $order_op      = shift || 'cmp' ; 
+      my $to_order_by   = shift || $objModel->get('select.web-action.o') ; 
 
-      my $to_order_by   = $objModel->get('select.web-action.o') || 'id' ; 
+      $to_order_by   = 'id' unless ( defined $to_order_by ) ; 
       my $to_hide       = $objModel->get('select.web-action.hide');
 
       my $msg        = 'unknown error has occurred !!!' ; 
@@ -30,6 +31,7 @@ our $objModel = {} ;
       my $evl_str_sort_by = $evl_str_sort_data ; 
       $evl_str_sort_by = $evl_str_sort_meta if $to_order_by eq 'attnum' ; 
       $evl_str_sort_by = $evl_str_sort_meta if $to_order_by eq 'attribute_number' ; 
+      $evl_str_sort_by = $evl_str_sort_meta if $to_order_by eq 'relevancy' ; 
 
       foreach my $key (  eval "$evl_str_sort_by" ) {
          my $row = $hsr2->{$key} ; 
