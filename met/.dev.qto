@@ -409,6 +409,7 @@ src/sql/pgsql/scripts/list-table-columns.sql
 src/sql/pgsql/scripts/list-table-cols.sh
 src/sql/pgsql/scripts/list-postgres-tables.sh
 src/sql/pgsql/scripts/upsert_item_trigger.sql
+src/sql/pgsql/scripts/rank-srch.sql
 #----
 src/bash/qto/tests/db-to-xls.test.sh
 src/bash/qto/funcs/db-to-xls.func.sh

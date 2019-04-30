@@ -29,6 +29,17 @@ h1, h2, h3, h4, h5, h6 {
    margin-left: -10px;
    line-height: 1.5em;
 }
+.cls_desc {
+	display: block ;
+	clear: both;
+	float: left ; 
+	width: 100% ; 
+   font-size:16px ;
+   border:3px solid #FFFFFF ; 
+   border-radius: 7px;
+	word-wrap: break-word;
+	overflow: hidden;
+}
 .scroll {
    text-decoration: none;
 }

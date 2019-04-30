@@ -28,6 +28,9 @@ SELECT 'create the "monthly_issues" table'
 
 create unique index idx_uniq_monthly_issues_id on monthly_issues (id);
 
+-- the rank search index
+CREATE INDEX idx_rank_monthly_issues ON monthly_issues
+USING gin(to_tsvector('English', name || ' ' || description || 'owner')); 
 
 
 SELECT 'show the columns of the just created table'
