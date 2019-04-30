@@ -21,6 +21,7 @@ sub doResolveDbName {
    my @env_prefixes        = ( 'dev_' , 'tst_' , 'qas_' , 'prd_' );
  
    my $db_prefix           = substr($db,0,4);
+   $appConfig		 		   = $self->app->get('AppConfig');
    unless ( grep ( /^$db_prefix$/, @env_prefixes)) {
       $db = $appConfig->{ 'ProductType' } . '_' . $db ; 
    } 

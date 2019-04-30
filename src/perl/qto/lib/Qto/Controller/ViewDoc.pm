@@ -60,10 +60,13 @@ sub doBuildViewControl {
    my @hides      = split ( ',' , $to_hides ) if defined ( $to_hides ) ; 
 	
    unless ( defined ( $to_picks )) {
-		foreach my $col ( @$cols ) {
-		  $control = $control . ",'" . $col . "'" unless (grep /$col/, @hides) ; 
-		}
-   	$control = "['id'," . substr($control, 1) . ']' ; 
+       
+      if ( defined ( $cols )) {
+         foreach my $col ( @$cols ) {
+           $control = $control . ",'" . $col . "'" unless (grep /$col/, @hides) ; 
+         }
+         $control = "['id'," . substr($control, 1) . ']' ; 
+      }
 	} 
 	else {
    	$control = "['id'," ; # it is just the js array definining the cols
