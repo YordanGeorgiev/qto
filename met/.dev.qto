@@ -1,5 +1,8 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
+src/perl/qto/public/poc/modal-dialog/modal-01
+src/perl/qto/public/poc/modal-dialog/modal-01/index.html
+#
 src/docker/Dockerfile
 src/js/node/js-unit-tests/01-set-url-param/test/test.js
 src/js/node/js-unit-tests/01-set-url-param/package.json
@@ -765,10 +768,6 @@ src/perl/qto/public/poc/list-vue-grid
 src/perl/qto/public/poc/list-vue-grid/app.js
 src/perl/qto/public/poc/list-vue-grid/list-vue-grid.css
 src/perl/qto/public/poc/list-vue-grid/list-vue-grid.html
-src/perl/qto/public/poc/modal-dialog
-src/perl/qto/public/poc/modal-dialog/modal-dialog-app.js
-src/perl/qto/public/poc/modal-dialog/modal-dialog.css
-src/perl/qto/public/poc/modal-dialog/modal-dialog.html
 src/perl/qto/public/poc/poc-vue-js-modal
 src/perl/qto/public/poc/poc-vue-js-modal/dist
 src/perl/qto/public/poc/poc-vue-js-modal/package.json
