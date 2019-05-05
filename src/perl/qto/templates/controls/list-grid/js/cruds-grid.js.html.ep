@@ -1,19 +1,19 @@
    var gruds_crid = new Vue({
      el: '#cruds-grid',
      data: {
-       globalSrch: '',
-       gridColumns: <%== $list_control =%>,
-       gridData: [],
-       gridMetaData: {},
-       pageSize: 7,
-       pageNum: 1,
-       pagesCount: 0,
-       UrlParams:{ as:"grid" },
-       pageSizes: ['5', '7', '10','15','20','30','50','100']
-         , searchInputChanged: ""
+        globalSrch: ''
+      , gridColumns: <%== $list_control =%>
+      , gridData: []
+      , gridMetaData: {}
+      , pageSize: 7
+      , pageNum: 1
+      , pagesCount: 0
+      , UrlParams:{ as:"grid" }
+      , pageSizes: ['5', '7', '10','15','20','30','50','100']
+      , searchInputChanged: ""
 		},
      	methods: {
-        onSearchBoxInputChanged: function(quickSrch) {
+       onSearchBoxInputChanged: function(quickSrch) {
             this.globalSrch = quickSrch ; 
         } 
       , inpQuickSrchCH: function(event) {
