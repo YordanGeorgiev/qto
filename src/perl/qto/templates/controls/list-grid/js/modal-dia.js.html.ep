@@ -1,0 +1,43 @@
+Vue.component('modal', {
+	  template: '#modal-tmpl'
+	, data: function() {
+		return {
+			showModal: false
+			, cnt: ''
+			, cid: ''
+			, itemId: null
+			, itemData: null
+		}
+	}
+	, mounted () {
+		console.log ( 'in modal component with the following id: ' + this.$attrs.id ) 
+      this.itemId = this.$attrs.id.replace("dia-","")
+      this.itemData = this.$parent.data.find(obj => obj.id == this.itemId )
+      // this.cnt = this.itemData // todo:ysg 
+      this.cnt = this.toTable()
+      console.log ( this.$parent.$parent.gridMetaData ) // get the meta data
+      console.log ( this.cnt) // the generated html content
+	}
+	, created () {
+      // console.log ( itemData ) // a single itemData todo:ysg
+      // console.log ( this.$parent.$parent.gridMetaData ) // get the meta data
+	}
+	, methods: {
+       toTable: function() {
+         console.log ( 'from toTable this.itemData' ) // a single itemData todo:ysg
+         console.log ( this.itemData ) // a single itemData todo:ysg
+         var html = '<table>';
+         for (const prop in this.itemData) {
+            html += '<tr>';
+            if (this.itemData.hasOwnProperty(prop)) {
+              console.log(`${prop}: ${this.itemData[prop]}`)
+              html += '<td>' + prop + '</td>'
+              html += '<td>' + this.itemData[prop] + '</td>'
+            }
+         }
+         html += '</tr>';
+         html += '</table>';
+         return html
+       }
+	}
+})

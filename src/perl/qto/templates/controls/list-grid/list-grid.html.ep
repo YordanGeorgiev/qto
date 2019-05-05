@@ -9,12 +9,15 @@
       href="../../themes/thme-blue/css/screen/controls/searchbox.css?v=<%= $ProductVersion =%>" />
    <link rel="stylesheet" type="text/css" media="screen"  
       href="../../themes/thme-blue/css/screen/controls/table.css?v=<%= $ProductVersion =%>" />
+   <link rel="stylesheet" type="text/css" media="screen"  
+      href="../../themes/thme-blue/css/screen/controls/modal-dia.css?v=<%= $ProductVersion =%>" />
    <link rel="stylesheet" type="text/css" media="screen" 
       href="../../themes/thme-blue/css/screen/controls/list-grid.css?v=<%= $ProductVersion =%>" />
 % end
 
 % content_for cnt_body_controls  => begin
    %= include 'controls/list-grid/xt/search-box.xt'
+   %= include 'controls/list-grid/xt/modal-dia.xt'
    %= include 'controls/list-grid/xt/grid.xt'
 
    <div id="dev_central_panel" >
@@ -53,6 +56,7 @@
          %= include 'controls/list-grid/js/btn-play-next-10.js'
          %= include 'controls/list-grid/js/btn-new.js'
          %= include 'controls/list-grid/js/editable.js'
+         %= include 'controls/list-grid/js/modal-dia.js'
          %= include 'controls/list-grid/js/cruds-grid-sf.js'
          %= include 'controls/list-grid/js/cruds-grid.js'
     }

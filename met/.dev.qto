@@ -44,7 +44,9 @@ src/perl/qto/templates/controls/list-grid/js/global-msg.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/search-box.js.html.ep
 src/perl/qto/templates/controls/list-grid/xt/search-box.xt.html.ep
 src/perl/qto/templates/controls/list-grid/xt/grid.xt.html.ep
+src/perl/qto/templates/controls/list-grid/xt/modal-dia.xt.html.ep
 src/perl/qto/templates/controls/list-grid/js/editable.js.html.ep
+src/perl/qto/templates/controls/list-grid/js/modal-dia.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/cruds-grid.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
 src/perl/qto/templates/controls/srch-grid/xt/grid.xt.html.ep
@@ -60,6 +62,7 @@ src/perl/qto/templates/controls/list-grid/js/btn-play-next.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/btn-play-next-10.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/btn-new.js.html.ep
 src/perl/qto/public/themes/thme-blue/css/screen/controls/table.css
+src/perl/qto/public/themes/thme-blue/css/screen/controls/modal-dia.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/pager.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/list-grid.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css

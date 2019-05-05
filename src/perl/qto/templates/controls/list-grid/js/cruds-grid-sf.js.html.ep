@@ -4,6 +4,8 @@
        data: { type: Array, twoWay: true}
        , columns: Array
        , filterKey: String
+       , showModal: false
+       , cid: null
      },
      data: function () {
        var sortOrders = {}
@@ -16,7 +18,7 @@
        }
      },
 	  computed: {
-		 filteredData: {		
+		  filteredData: {		
 			 get: function () {
 				var sortKey = this.sortKey
 				var filterKey = this.filterKey && this.filterKey.toLowerCase()
@@ -53,7 +55,12 @@
        }
      },
      methods: {
-       sortBy: function (key) {
+       showModalDialog: function (e) {
+           this.showModal = true
+           console.log ( "triggered by " + e.target.id ) // todo:ysg
+           this.cid = e.target.id.replace("btn-modal-","dia-") ; 
+       }
+       , sortBy: function (key) {
             this.sortKey = key
             this.sortOrders[key] = this.sortOrders[key] * -1
        }
