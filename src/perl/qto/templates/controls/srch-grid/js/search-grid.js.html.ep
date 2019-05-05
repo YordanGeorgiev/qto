@@ -1,23 +1,30 @@
    var search_grid = new Vue({
      el: '#search-grid',
      data: {
-       globalSrch: '',
-       gridColumns: <%== $srch_control =%>,
-       gridData: [],
-       gridMetaData: {},
-       pageSize: 7,
-       urlParamFor: "" ,
-       pageNum: 1,
-       pagesCount: 0,
-       UrlParams:{ as:"grid" },
-       pageSizes: ['5', '7', '10','15','20','30','50','100']
-         , searchInputChanged: ""
+       globalSrch: ''
+       , gridColumns: <%== $srch_control =%>
+       , gridData: []
+       , gridMetaData: {}
+       , pageSize: 7
+       , urlParamFor: ""
+       , pageNum: 1
+       , pagesCount: 0
+       , UrlParams:{ as:"grid" }
+       , pageSizes: ['5', '7', '10','15','20','30','50','100']
+       , searchInputChanged: ""
+       , showModal: false
+       , cid: null
 		},
      	methods: {
-        onSearchBoxInputChanged: function(quickSrch) {
+         showModalDialog: function (e) {
+           this.showModal = true
+           console.log ( "triggered by " + e.target.id ) // todo:ysg
+           this.cid = e.target.id.replace("btn-modal-","dia-") ; 
+         }
+       , onSearchBoxInputChanged: function(quickSrch) {
             this.globalSrch = quickSrch ; 
         } 
-      , getUrlParams: function (){
+       , getUrlParams: function (){
             var url_params = new URLSearchParams();
             if( window.location.toString().indexOf("?") != -1) {
                var href_part = window.location.search.split('?')[1].split('#')[0]
