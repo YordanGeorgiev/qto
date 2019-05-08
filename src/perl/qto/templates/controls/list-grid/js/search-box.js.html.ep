@@ -242,7 +242,7 @@ var Searchbox = {
          }
          uri = ( uri.endsWith('?') ) ? uri.slice(0, -1) : uri
          uri = ( uri.includes('&od=relevancy') ) ? uri + '&od=relevancy' : uri 
-         window.location.href = uri // and redirect !!!
+         window.location.href = encodeURI(uri) // and redirect !!!
     } 
     , buildLike(uri,pFor) {
          if ( pFor.length > 0) {
