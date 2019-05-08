@@ -163,9 +163,9 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          } #eof foreach like-by pair
 			for (1..3) { chop ( $sql ) } ;
 
-         print "sql: \n $sql \n" ; 
-         print "sql just before the return" ; 
-         #$sql .= ' ) ' ;
+         print "\n\nsql: \n $sql \n\n" ; 
+         print "STOP vim +167 `find . -name RdrPostgresDb.pm` sql just before the return" ; 
+         #$sql .= ' ) '  ;
 			return ( 0 , "" , $sql ) ; 
 
       } elsif ( @$ref_like_names or @$ref_like_values )  {
@@ -899,7 +899,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 		return ( $ret , $msg ) unless $ret == 0 ; 
 		$str_sql .= $where_clause_with if $where_clause_with ; 
 
-      my $order_by = 'ORDER BY' ; 
+      my $order_by = "\n" . 'ORDER BY' ; 
       if ( defined $columns_to_order_by_asc ) {
          $str_sql .= " $order_by " ; 
          foreach my $col ( split /,/ , $columns_to_order_by_asc ){
@@ -924,7 +924,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
 
-      # debug rint "$str_sql \n" . 'vim +914 `find . -name RdrPostgresDb.pm`' . "\n" ; 
+      print "$str_sql \n" . 'vim +927 `find . -name RdrPostgresDb.pm`' . "\n" ; 
 
       $ret = 0 ; 
       eval { 
