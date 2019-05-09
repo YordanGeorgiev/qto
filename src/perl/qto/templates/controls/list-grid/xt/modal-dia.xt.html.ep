@@ -1,11 +1,38 @@
+<script type="x-template" id="form-input">
+  <div v-on:keyup.tab="this.document.execCommand('selectAll',false,null);">
+    <label>{{label}}</label>
+    <input class="minput" type="text" :value="cnt"/>
+  </div>
+</script>
+
+<script type="x-template" id="form-textarea">
+  <div v-on:keyup.tab="this.document.execCommand('selectAll',false,null);">
+    <label>{{label}}</label>
+    <textarea class="mtextarea" :value="cnt"></textarea>
+  </div>
+</script>
+
+<script type="x-template" id="form-select">
+  <div>
+    <label>Select</label>
+    <select class="mselect">
+      <option v-for="oitem in cnt" :value="oitem.value">{{oitem.text}}</option>
+    </select>
+  </div>
+  <div v-html="cnt"></div>
+</script>
+
 <script type="text/x-template" id="modal-tmpl">
   <transition name="modal">
-    <div id="div-modal-tmpl" class="modal-mask" v-on:click="$emit('close')">
+    <div id="div-modal-tmpl" class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
           <button class="cls-modal-close-btn" v-on:click="$emit('close')">Close</button>
-          <div name="header">{{this.$attrs.id.replace('dia-','')}}</div>
-          <div name="content" v-html="cnt"> {{cnt}} </div>
+          <div name="header"><%= " $item " =%>: {{this.$attrs.id.replace('dia-','')}}</div>
+          <div name="content" v-html="cnt"> </div>
+          <div>
+          <component v-for="field in fields" v-bind:is="field.type" :key="field.id" :cnt="field.cnt" :label="field.label"></component>
+          </div>
         </div>
       </div>
     </div>

@@ -1,32 +1,94 @@
+Vue.component('form-input', {
+	template: '#form-input'
+	, props: ['label','cnt']
+});
+
+Vue.component('form-select', {
+	template: '#form-select'
+	, props: ['label','cnt']
+});
+
+Vue.component('form-textarea', {
+	template: '#form-textarea'
+	, props: ['label','cnt']
+});
+
 Vue.component('modal', {
 	  template: '#modal-tmpl'
+	, props: ['field']
 	, data: function() {
 		return {
 			showModal: false
 			, cnt: ''
 			, cid: ''
+         , itmName: '<%= "$item" =%>'
 			, itemId: null
 			, itemData: null
+			, itmMeta: null
+			, fields: []
+			, count: 0
 		}
 	}
 	, mounted () {
       this.itemId = this.$attrs.id.replace("dia-","")
       this.itemData = this.$parent.data.find(obj => obj.id == this.itemId )
-      this.cnt = this.toTable()
+      this.itmMeta = this.$parent.$parent.gridMeta
+      // console.log ( "start printing the meta data from s") // todo:ysg
+      // console.log ( "stop  printing the meta data from s")
+      // this.cnt = this.toTable()
+      // objs.sort((a,b) => (a.attribute_number > b.attribute_number) ? 1 : ((b.attribute_number > a.attribute_number) ? -1 : 0))
+      console.log ( String ( typeof this.itmMeta ))
+      for (const prop in this.itmMeta) {
+         if (this.itmMeta.hasOwnProperty(prop)) {
+            var dataType = this.itmMeta[prop].data_type
+            var charMaxLength = this.itmMeta[prop].char_max_length
+            var attributeName = String(this.itmMeta[prop].attribute_name)
+            var attributeValue = this.itemData[attributeName]
+            if ( dataType.includes('character varying')  && Number(charMaxLength) > 99 ) {
+               if (this.itemData.hasOwnProperty(attributeName)) {
+		            this.addFormElement('form-textarea',attributeName,attributeValue )
+               }
+            } else {
+               if (this.itemData.hasOwnProperty(attributeName)) {
+		            this.addFormElement('form-input',attributeName,attributeValue )
+               }
+            }
+         }
+      }
+      /*
+		this.addFormElement('form-input',"form-input-content")
+		this.addFormElement('form-textarea',"form-textarea-content")
+      var select_cnt = [
+        {'value': 1, 'text': 'item-01'},
+        {'value': 2, 'text': 'item-02'}
+      ]
+		this.addFormElement('form-select',select_cnt)
+      */
+	}
+	, created() {
 	}
 	, methods: {
-       toTable: function() {
+      toTable: function() {
          var html = '<table>';
          for (const prop in this.itemData) {
             html += '<tr>';
             if (this.itemData.hasOwnProperty(prop)) {
               html += '<td>' + prop + '</td>'
+              console.log ( prop )
               html += '<td>' + this.itemData[prop] + '</td>'
             }
          }
          html += '</tr>';
          html += '</table>';
          return html
-       }
+      }
+		, addFormElement: function(type,label,cnt) {
+			this.fields.push({
+			  'type': type
+			  , id: this.count++
+			  , 'label':label
+			  , 'cnt':cnt
+			});
+		 }
 	}
 })
