@@ -1,13 +1,13 @@
-# src/bash/qto/funcs/run-perl-unit-tests.func.sh
+# src/bash/qto/funcs/run-functional-tests.func.sh
 
 # v1.1.3
 # ---------------------------------------------------------
-# implement the calls to all the perl unit testing 
+# implement the calls to all the functional tests
 # ---------------------------------------------------------
-doRunPerlTests(){
+doRunFunctionalTests(){
    
    test -z $sleep_interval && sleep_interval=2
-	doLog "DEBUG START : doRunPerlTests"
+	doLog "DEBUG START : doRunFunctionalTests"
 
 	doLog "INFO START Component testing Initiator.pm with TestInitiator "
 	perl src/perl/qto/t/TestInitiator.pl
@@ -42,7 +42,7 @@ doRunPerlTests(){
 	echo -e "\n\n\n" 
 
 }
-# eof func doRunPerlTests
+# eof func doRunFunctionalTests
 
 
-# eof file: src/bash/qto/funcs/run-perl-unit-tests.func.sh
+# eof file: src/bash/qto/funcs/run-functional-tests.func.sh

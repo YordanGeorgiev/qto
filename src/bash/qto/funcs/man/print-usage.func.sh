@@ -33,7 +33,7 @@ doPrintUsage(){
       bash $0 -a run-qto
       bash $0 -a check-perl-modules-prerequisites
       bash $0 -a check-perl-syntax
-      bash $0 -a run-perl-unit-tests
+      bash $0 -a run-functional-tests
       bash $0 -a run-qto
       bash $0 -a clone-to-app
       bash $0 -a gmail-package

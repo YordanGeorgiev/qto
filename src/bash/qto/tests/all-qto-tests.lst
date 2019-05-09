@@ -1,4 +1,4 @@
-run-perl-unit-tests
+run-functional-tests
 run-integration-tests
 run-mysql-scripts
 mojo-hypnotoad-start

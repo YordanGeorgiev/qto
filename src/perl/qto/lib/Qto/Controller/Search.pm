@@ -31,7 +31,7 @@ sub doSearchItems {
    my $db               = $self->stash('db');
    
    my $objModel         = {} ;
-   my $objCnrUrlPrms  = {} ; 
+   my $objCnrUrlPrms    = {} ; 
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
    my $ret              = 0;
@@ -101,12 +101,10 @@ sub doBuildSearchControl {
 
    my $lables_pages = { 
           'grid'   => 'srch-grid'
-#      ,  'print-table'  => 'srch-print-table'
    };
 
    $ui_type = 'page/' . $lables_pages->{ $as } ; 
   
-
    $objPageFactory                  = 'Qto::Controller::PageFactory'->new(\$appConfig, \$objModel );
    $objPageBuilder                  = $objPageFactory->doSpawn( $ui_type );
    ( $ret , $msg , $srch_control )  = $objPageBuilder->doBuildSearchControl( $msg , $db  , $as ) ;
@@ -128,8 +126,6 @@ sub doRenderPageTemplate {
    my $notice           = '' ; 
    my $as_templates = { 
         'grid'          => 'srch-grid' 
-#      ,  'lbls'        => 'srch-labels'
-#      ,  'print-table' => 'srch-print-table' 
    };
   
    my $template_name    = $as_templates->{ $as } || 'srch-grid' ; 
