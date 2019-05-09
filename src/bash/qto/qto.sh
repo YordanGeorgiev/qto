@@ -7,7 +7,7 @@ set -u -o pipefail
 # exit the script if any statement returns a non-true return value. gotcha !!!
 # set -e # src: http://mywiki.wooledge.org/BashFAQ/105
 
-# v0.5.9
+# v0.6.2
 #------------------------------------------------------------------------------
 # the main function called
 #------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ main(){
 	doExit 0 "# = STOP  MAIN = $run_unit "
 }
 
-# v0.5.9 
+# v0.6.2 
 #------------------------------------------------------------------------------
 # the "reflection" func - identify the the funcs per file
 #------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ get_function_list () {
 
 
 
-# v0.5.9 
+# v0.6.2 
 #------------------------------------------------------------------------------
 # run all the actions
 #------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ doRunActions(){
 }
 
 
-# v0.5.9 
+# v0.6.2 
 #------------------------------------------------------------------------------
 # register the run-time vars before the call of the $0
 #------------------------------------------------------------------------------
@@ -121,7 +121,7 @@ doInit(){
 
 
 
-# v0.5.9 
+# v0.6.2 
 #------------------------------------------------------------------------------
 # parse the single letter command line args
 #------------------------------------------------------------------------------
@@ -160,7 +160,7 @@ doParseCmdArgs(){
 
 
 
-#v0.5.9 
+#v0.6.2 
 #------------------------------------------------------------------------------
 # create an example host dependant ini file
 #------------------------------------------------------------------------------
@@ -181,19 +181,15 @@ doCreateDefaultConfFile(){
 #eof func doCreateDefaultConfFile
 
 
-#v0.5.9 
+#v0.6.2 
 #------------------------------------------------------------------------------
 # perform the checks to ensure that all the vars needed to run are set
 #------------------------------------------------------------------------------
 doCheckReadyToStart(){
 
    test -f ${cnf_file-} || doCreateDefaultConfFile 
-
-	# check http://stackoverflow.com/a/677212/65706
-	# but which works for both cygwin and Ubuntu ?!
 	command -v zip 2>/dev/null || { echo >&2 "The zip binary is missing ! Aborting ..."; exit 1; }
 	which perl 2>/dev/null || { echo >&2 "The perl binary is missing ! Aborting ..."; exit 1; }
-
 }
 
 
@@ -201,7 +197,7 @@ doCheckReadyToStart(){
 trap "exit 1" TERM
 export TOP_PID=$$
 
-# v0.5.9
+# v0.6.2
 #------------------------------------------------------------------------------
 # clean and exit with passed status and message
 # call by: 
@@ -233,7 +229,7 @@ doExit(){
 #eof func doExit
 
 
-#v0.5.9 
+#v0.6.2 
 #------------------------------------------------------------------------------
 # echo pass params and print them to a log file and terminal
 # with timestamp and $host_name and $0 PID
@@ -259,7 +255,7 @@ doLog(){
 }
 
 
-#v0.5.9
+#v0.6.2
 #------------------------------------------------------------------------------
 # cleans the unneeded during after run-time stuff
 # do put here the after cleaning code
@@ -277,7 +273,7 @@ doCleanAfterRun(){
 }
 
 
-#v0.5.9 
+#v0.6.2 
 #------------------------------------------------------------------------------
 # run a command and log the call and its output to the log_file
 # doPrintHelp: doRunCmdAndLog "$cmd"
@@ -297,7 +293,7 @@ doRunCmdAndLog(){
 }
 
 
-#v0.5.9 
+#v0.6.2 
 #------------------------------------------------------------------------------
 # run a command on failure exit with message
 # doPrintHelp: doRunCmdOrExit "$cmd"
@@ -328,8 +324,11 @@ doRunCmdOrExit(){
 
 }
 
+clearTheScreen(){
+	printf "\033[2J";printf "\033[0;0H"
+}
 
-#v0.5.9 
+#v0.6.2 
 #------------------------------------------------------------------------------
 # set the variables from the $0.$host_name.cnf file which has ini like syntax
 #------------------------------------------------------------------------------
@@ -375,18 +374,14 @@ doSetVars(){
    cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
    echo -e "$cmd"
 
-   # and clear the screen
-   printf "\033[2J";printf "\033[0;0H"
+   clearTheScreen
 }
 #eof func doSetVars
 
 
-doClearTheScreen(){
-	printf "\033[2J";printf "\033[0;0H"
-}
 
 
-# v0.5.9
+# v0.6.2
 #------------------------------------------------------------------------------
 # parse the ini like $0.$host_name.cnf and set the variables
 # cleans the unneeded during after run-time stuff. Note the MainSection
@@ -452,4 +447,4 @@ main "$@"
 #----------------------------------------------------------
 #
 #
-#eof file: qto.sh v0.5.9
+#eof file: qto.sh v0.6.2

@@ -1,4 +1,40 @@
-	.modal-mask {
+   label, input, select, textarea {
+      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+      font-size: 13px;
+      font-weight: normal;
+      line-height: 1.3;
+      margin-top: 15px;
+      border-radius: 5px;
+      width: 60%;
+   }
+   label {
+      display: inline-block;
+      width: 100px;
+      text-align: right;
+      margin-right: 20px;
+   }
+   input.minput[type="text"]{
+      background-color: #F0FFFF;
+      border:1px solid #B0C4DE;
+   }
+   input.minput[type="text"]:focus{
+      outline: none !important;
+      border:2px solid #F5B7B1;
+      box-shadow: 0 0 10px #719ECE;
+   }
+   textarea.mtextarea {
+      background-color: #F0FFFF;
+      border:1px solid #B0C4DE;
+   }
+   textarea.mtextarea:focus {
+      outline: none !important;
+      box-shadow: 0 0 10px #719ECE;
+      border:2px solid #F5B7B1;
+   }
+   form {
+       margin:3% 0;
+   }
+   .modal-mask {
 	  position: fixed;
 	  z-index: 9998;
 	  top: 0;
@@ -22,8 +58,8 @@
 	}
 
 	.modal-container {
-	  width: 40%;
-	  height: auto;
+	  width: 45%;
+	  height: 80%;
 	  min-height: 100px;
 	  margin: 3px auto;
 	  padding: 10px 20px 5px 40px ;

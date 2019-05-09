@@ -4,7 +4,7 @@
        globalSrch: ''
        , gridColumns: <%== $srch_control =%>
        , gridData: []
-       , gridMetaData: {}
+       , gridMeta: {}
        , pageSize: 7
        , urlParamFor: ""
        , pageNum: 1

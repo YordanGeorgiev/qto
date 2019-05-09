@@ -68,9 +68,9 @@
          }
        , getColMaxWidth(el) {
             var col = el.id.split('-')[0]
-            var meta = this.$parent.$parent.gridMetaData
-            for (var prop in this.$parent.$parent.gridMetaData) {
-               if (!this.$parent.$parent.gridMetaData.hasOwnProperty(prop)) {
+            var meta = this.$parent.$parent.gridMeta
+            for (var prop in this.$parent.$parent.gridMeta) {
+               if (!this.$parent.$parent.gridMeta.hasOwnProperty(prop)) {
                  continue;
                }
                if ( (meta[prop])["attribute_name"] !== col ) {

@@ -1,15 +1,15 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
-src/perl/qto/public/poc/modal-dialog/modal-01
-src/perl/qto/public/poc/modal-dialog/modal-01/index.html
+src/perl/qto/public/poc/modal-dialog/modal-02/index.html
+#
+src/perl/qto/public/poc/notes/index.html
+src/perl/qto/public/poc/web-socket/web-socket.html
+src/perl/qto/public/poc/web-socket/wsclient.js
+src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
 #
 src/docker/Dockerfile
 src/js/node/js-unit-tests/01-set-url-param/test/test.js
 src/js/node/js-unit-tests/01-set-url-param/package.json
-# -- 
-src/perl/qto/public/poc/right-click-vmenu
-src/perl/qto/public/poc/right-click-vmenu/right-click-menu.css
-src/perl/qto/public/poc/right-click-vmenu/right-click-vmenu.html
 # ---
 src/perl/qto/templates/pages/view-doc/js/right-click-menu.js.html.ep
 src/perl/qto/templates/pages/view-doc/view-doc.html.ep
@@ -45,8 +45,8 @@ src/perl/qto/templates/controls/list-grid/js/search-box.js.html.ep
 src/perl/qto/templates/controls/list-grid/xt/search-box.xt.html.ep
 src/perl/qto/templates/controls/list-grid/xt/grid.xt.html.ep
 src/perl/qto/templates/controls/list-grid/xt/modal-dia.xt.html.ep
-src/perl/qto/templates/controls/list-grid/js/editable.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/modal-dia.js.html.ep
+src/perl/qto/templates/controls/list-grid/js/editable.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/cruds-grid.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
 src/perl/qto/templates/controls/srch-grid/xt/grid.xt.html.ep
@@ -88,9 +88,6 @@ src/perl/qto/templates/controls/list-labels/list-labels.html.ep
 src/perl/qto/templates/controls/list-print-table/list-print-table.html.ep
 # ---
 # --- 
-src/perl/qto/public/poc/web-socket/web-socket.html
-src/perl/qto/public/poc/web-socket/wsclient.js
-src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
 src/perl/qto/public/poc/right-click-menu/right-click-menu.html
 src/perl/qto/public/poc/right-click-menu/right-click-menu.css
 src/perl/qto/public/poc/right-click-menu-01
@@ -767,14 +764,6 @@ src/perl/qto/public/poc/list-vue-grid
 src/perl/qto/public/poc/list-vue-grid/app.js
 src/perl/qto/public/poc/list-vue-grid/list-vue-grid.css
 src/perl/qto/public/poc/list-vue-grid/list-vue-grid.html
-src/perl/qto/public/poc/poc-vue-js-modal
-src/perl/qto/public/poc/poc-vue-js-modal/dist
-src/perl/qto/public/poc/poc-vue-js-modal/package.json
-src/perl/qto/public/poc/poc-vue-js-modal/src
-src/perl/qto/public/poc/poc-vue-js-modal/src/index.js
-src/perl/qto/public/poc/poc-vue-js-modal/src/vue-js-modal.css
-src/perl/qto/public/poc/poc-vue-js-modal/src/vue-js-modal.html
-src/perl/qto/public/poc/poc-vue-js-modal/src/vue-js-modal.js
 # ---
 src/bash/qto/scripts/history.sh
 src/perl/qto/public/themes/thme-blue/img/controls/trash-bin.png
@@ -792,7 +781,6 @@ src/perl/qto/public/poc/vue-editable-component
 src/perl/qto/public/poc/vue-editable-component/vue-editable-component.html
 src/perl/qto/public/poc/vue-editable-component/app.js
 # ---
-src/perl/qto/public/poc/vuetify/index.html
 src/perl/qto/public/poc/vue-create-new-button/
 src/perl/qto/public/poc/vue-create-new-button/vue-create-new-button.css
 src/perl/qto/public/poc/vue-create-new-button/vue-create-new-button.html
@@ -886,6 +874,13 @@ src/perl/qto/lib/auto/Qto/Controller/Select/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Update/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/View/autosplit.ix
 src/perl/qto/lib/auto/SetGetableChild/autosplit.ix
+# -- 
+src/perl/qto/public/poc/right-click-vmenu
+src/perl/qto/public/poc/right-click-vmenu/right-click-menu.css
+src/perl/qto/public/poc/right-click-vmenu/right-click-vmenu.html
+src/perl/qto/public/poc/modal-dialog/modal-01
+src/perl/qto/public/poc/modal-dialog/modal-01/index.html
+# ---
 met/.dev.qto
 met/.src.qto
 met/.tst.qto
