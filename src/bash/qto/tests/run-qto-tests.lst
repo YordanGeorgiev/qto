@@ -1,6 +1,6 @@
 backup-postgres-db
 # db-to-json
-# run-perl-unit-tests
+# run-functional-tests
 # run-integration-tests
 # run-mysql-scripts
 #xls-to-db

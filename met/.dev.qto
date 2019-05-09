@@ -445,13 +445,9 @@ doc/txt/qto/funcs/xls-to-db.func.txt
 doc/txt/qto/specs/xls-to-db.spec.txt
 doc/txt/qto/helps/xls-to-db.help.txt
 #----
-doc/txt/qto/helps/perl/run-perl-unit-tests.help.txt
-doc/txt/qto/specs/perl/run-perl-unit-tests.spec.txt
-doc/txt/qto/tests/perl/run-perl-unit-tests.test.txt
-src/bash/qto/funcs/perl/run-perl-unit-tests.func.sh
-src/bash/qto/helps/perl/run-perl-unit-tests.help.sh
-src/bash/qto/specs/perl/run-perl-unit-tests.spec.sh
-src/bash/qto/tests/perl/run-perl-unit-tests.test.sh
+src/bash/qto/funcs/perl/run-functional-tests.func.sh
+src/bash/qto/helps/perl/run-functional-tests.help.sh
+src/bash/qto/tests/perl/run-functional-tests.test.sh
 .gitignore
 src/bash/qto/tests/rem-qto-actions.lst
 src/bash
