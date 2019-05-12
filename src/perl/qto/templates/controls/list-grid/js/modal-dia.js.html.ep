@@ -1,16 +1,25 @@
 Vue.component('form-input', {
 	template: '#form-input'
-	, props: ['label','cnt']
+	, props: ['label','cnt','cid']
+   , mounted(){
+      this.cid = 'min-' + this.$parent.$attrs.id.replace("dia-","")
+   }
 });
 
 Vue.component('form-select', {
 	template: '#form-select'
-	, props: ['label','cnt']
+	, props: ['label','cnt','cid']
+   , mounted(){
+      this.cid = 'msl-' + this.$parent.$attrs.id.replace("dia-","")
+   }
 });
 
 Vue.component('form-textarea', {
 	template: '#form-textarea'
-	, props: ['label','cnt']
+	, props: ['label','cnt','cid']
+   , mounted(){
+      this.cid = 'mtx-' + this.$parent.$attrs.id.replace("dia-","")
+   }
 });
 
 Vue.component('modal', {

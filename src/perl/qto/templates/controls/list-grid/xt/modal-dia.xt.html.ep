@@ -1,22 +1,22 @@
 <script type="x-template" id="form-input">
   <div v-on:keyup.tab="this.document.execCommand('selectAll',false,null);">
     <label>{{label}}</label>
-    <input class="minput" type="text" :value="cnt"/>
+    <input class="minput" type="text" :id="cid" :value="cnt" tabindex="1"/>
   </div>
 </script>
 
 <script type="x-template" id="form-textarea">
   <div v-on:keyup.tab="this.document.execCommand('selectAll',false,null);">
     <label>{{label}}</label>
-    <textarea class="mtextarea" :value="cnt"></textarea>
+    <textarea class="mtextarea" :value="cnt" :id="cid" tabindex="1"></textarea>
   </div>
 </script>
 
 <script type="x-template" id="form-select">
   <div>
     <label>Select</label>
-    <select class="mselect">
-      <option v-for="oitem in cnt" :value="oitem.value">{{oitem.text}}</option>
+    <select class="mselect" tabindex="1">
+      <option v-for="oitem in cnt" :value="oitem.value" :id="cid">{{oitem.text}}</option>
     </select>
   </div>
   <div v-html="cnt"></div>
@@ -30,8 +30,9 @@
           <button class="cls-modal-close-btn" v-on:click="$emit('close')">Close</button>
           <div name="header"><%= " $item " =%>: {{this.$attrs.id.replace('dia-','')}}</div>
           <div name="content" v-html="cnt"> </div>
-          <div>
-          <component v-for="field in fields" v-bind:is="field.type" :key="field.id" :cnt="field.cnt" :label="field.label"></component>
+          <div class="form-container">
+            <component v-for="field in fields" v-bind:is="field.type" :key="field.id" :cnt="field.cnt" :label="field.label">
+            </component>
           </div>
         </div>
       </div>

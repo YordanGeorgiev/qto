@@ -16,7 +16,7 @@
 
 % content_for cnt_body_controls  => begin
    %= include 'controls/list-grid/xt/search-box.xt'
-   %= include 'controls/list-grid/xt/modal-dia.xt'
+   %= include 'controls/srch-grid/xt/modal-dia.xt'
    %= include 'controls/srch-grid/xt/grid.xt'
 
    <div id="dev_central_panel" >
@@ -47,7 +47,7 @@
    %= include 'controls/list-grid/js/btn-play-next.js'
    %= include 'controls/list-grid/js/btn-play-next-10.js'
    %= include 'controls/srch-grid/js/linkable.js'
-   %= include 'controls/list-grid/js/modal-dia.js'
+   %= include 'controls/srch-grid/js/modal-dia.js'
    %= include 'controls/srch-grid/js/search-grid-sf.js'
    %= include 'controls/srch-grid/js/search-grid.js'
 % end

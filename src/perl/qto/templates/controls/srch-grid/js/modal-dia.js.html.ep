@@ -1,0 +1,35 @@
+Vue.component('modal', {
+	  template: '#modal-tmpl'
+	, props: ['field']
+	, data: function() {
+		return {
+			showModal: false
+			, cnt: ''
+			, cid: ''
+			, itemId: null
+			, itemData: null
+		}
+	}
+	, mounted () {
+      this.itemId = this.$attrs.id.replace("dia-","")
+      this.itemData = this.$parent.data.find(obj => obj.id == this.itemId )
+      this.cnt = this.toTable()
+	}
+	, created() {
+	}
+	, methods: {
+      toTable: function() {
+         var html = '<table>';
+         for (const prop in this.itemData) {
+            html += '<tr>';
+            if (this.itemData.hasOwnProperty(prop)) {
+              html += '<td>' + prop + '</td>'
+              html += '<td>' + this.itemData[prop] + '</td>'
+            }
+         }
+         html += '</tr>';
+         html += '</table>';
+         return html
+      }
+	}
+})

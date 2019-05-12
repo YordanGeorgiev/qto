@@ -1,0 +1,13 @@
+<script type="text/x-template" id="modal-tmpl">
+  <transition name="modal">
+    <div id="div-modal-tmpl" class="modal-mask">
+      <div class="modal-wrapper" v-on:click="$emit('close')">
+        <div class="modal-container">
+          <button class="cls-modal-close-btn" v-on:click="$emit('close')">Close</button>
+          <div name="header">{{this.$attrs.id.replace('dia-','')}}</div>
+          <div name="content" v-html="cnt"> </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</script>

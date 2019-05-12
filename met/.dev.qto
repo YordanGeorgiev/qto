@@ -51,6 +51,8 @@ src/perl/qto/templates/controls/list-grid/js/cruds-grid.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
 src/perl/qto/templates/controls/srch-grid/xt/grid.xt.html.ep
 src/perl/qto/templates/controls/srch-grid/js/linkable.js.html.ep
+src/perl/qto/templates/controls/srch-grid/xt/modal-dia.xt.html.ep
+src/perl/qto/templates/controls/srch-grid/js/modal-dia.js.html.ep
 src/perl/qto/templates/controls/srch-grid/js/search-grid.js.html.ep
 src/perl/qto/templates/controls/srch-grid/js/search-grid-sf.js.html.ep
 # --
