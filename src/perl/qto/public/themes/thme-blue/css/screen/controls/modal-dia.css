@@ -20,7 +20,7 @@
    input.minput[type="text"]:focus{
       outline: none !important;
       border:2px solid #F5B7B1;
-      box-shadow: 0 0 10px #719ECE;
+      box-shadow: 0 0 15px #719ECE;
    }
    textarea.mtextarea {
       background-color: #F0FFFF;
@@ -28,7 +28,7 @@
    }
    textarea.mtextarea:focus {
       outline: none !important;
-      box-shadow: 0 0 10px #719ECE;
+      box-shadow: 0 0 15px #719ECE;
       border:2px solid #F5B7B1;
    }
    form {
@@ -43,7 +43,7 @@
 	  height: 100%;
 	  background-color: rgba(0, 0, 0, .5);
 	  display: table;
-	  transition: opacity .3s ease;
+	  transition: opacity .2s ease;
 	}
 
 	button {
@@ -58,10 +58,10 @@
 	}
 
 	.modal-container {
-	  width: 45%;
+	  width: 55%;
 	  height: 80%;
+	  margin: 10px auto ;
 	  min-height: 100px;
-	  margin: 3px auto;
 	  padding: 10px 20px 5px 40px ;
 	  background-color: #fff;
 	  border-radius: 2px;
