@@ -14,6 +14,7 @@ table#grid {
 	border-collapse:separate;
    margin-top: 1%;
 }
+
 #grid {
    clear: both ; 
    max-width: 98% ; 

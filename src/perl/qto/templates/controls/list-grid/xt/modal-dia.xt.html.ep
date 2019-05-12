@@ -28,12 +28,13 @@
       <div class="modal-wrapper">
         <div class="modal-container">
           <button class="cls-modal-close-btn" v-on:click="$emit('close')">Close</button>
-          <div name="header"><%= " $item " =%>: {{this.$attrs.id.replace('dia-','')}}</div>
+          <div name="header" class="dia-header"><%= " $item " =%>: {{this.$attrs.id.replace('dia-','')}}</div>
           <div name="content" v-html="cnt"> </div>
           <div class="form-container">
             <component v-for="field in fields" v-bind:is="field.type" :key="field.id" :cnt="field.cnt" :label="field.label">
             </component>
           </div>
+          <div name="footer" class="dia-footer"><%= " $item " =%>: {{this.$attrs.id.replace('dia-','')}}</div>
         </div>
       </div>
     </div>

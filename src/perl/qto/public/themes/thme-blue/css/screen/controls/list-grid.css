@@ -110,11 +110,10 @@ textarea {
    font-size: 80%;
 }
 
-#grid tbody tr td:nth-child(2){ 
-   width: 8px ; 
+table#grid tbody tr td:nth-child(2){ 
+   width: auto;
    display: inline-block;
-   overflow: hidden;
-   font-size: 11px ; 
+   font-size: 10px ; 
    color: #a4a9c4;
 }
 .cls_cnt_edtble {
@@ -155,4 +154,29 @@ textarea {
 .cls_tbltooltip:hover .cls_tbltooltiptext {
   visibility: visible;
   padding: 2% 2% 2% 2% ;
+}
+button.gridOpenBtn {
+   background: #ABF ;
+   color: white;
+   padding: 5px;
+   border: 2px solid #ABF;
+   border-left-color: #ABF;
+   border-left-style: none;
+   border-right-color: #ABF;
+   border-right-style: none;
+   border-top-color: #ABF;
+   border-radius: 3px;
+}
+button.gridOpenBtn:hover , button.gridOpenBtn:focus , button.gridOpenBtn:active{
+   background: #ABF ;
+   color: blue;
+   padding: 5px;
+   border: 2px solid #ABF;
+   border-left-color: #ABF;
+   border-left-style: none;
+   border-right-color: #ABF;
+   border-right-style: none;
+   border-top-color: #ABF;
+   border-radius: 3px;
+   box-shadow: 3px 3px 3px 3px #C0C0C0;
 }
