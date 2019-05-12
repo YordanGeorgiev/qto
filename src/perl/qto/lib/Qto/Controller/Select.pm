@@ -80,6 +80,9 @@ sub doSelectItems {
    } else {
       $http_code = 400 ; 
    } 
+
+   p $met ; # todo:ysg
+
    $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
 }
 
