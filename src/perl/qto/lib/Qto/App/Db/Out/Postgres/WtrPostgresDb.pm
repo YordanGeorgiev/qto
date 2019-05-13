@@ -208,6 +208,10 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          WHERE id='$id'     
       ;
       " ; 
+     
+      print 'vim +212 `find . -name WtrPostgresDb.pm` str_sql: ' . $str_sql ; 
+      print 'vim +212 `find . -name WtrPostgresDb.pm` str_sql: STOP '  ; # todo:ysg
+
       eval {
          $sth = $dbh->prepare($str_sql);  
          #debug rint "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 

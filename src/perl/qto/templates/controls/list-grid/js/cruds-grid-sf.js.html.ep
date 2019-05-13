@@ -57,7 +57,6 @@
      methods: {
        showModalDialog: function (e) {
            this.showModal = true
-           // console.log ( "triggered by " + e.target.id ) // todo:ysg
            this.cid = e.target.id.replace("btn-modal-","dia-") ; 
        }
        , sortBy: function (key) {
@@ -77,7 +76,6 @@
 		 }
        , updateItem: function (content,id,oldValue) {
             this.$parent.updateItem(content,id,oldValue);
-            var col = id.split('-')[0] 
        }
        , createNewItem: function (id) {
             this.$parent.createNewItem(id);

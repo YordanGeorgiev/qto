@@ -3,7 +3,7 @@
 }
 .dia-footer {
    color: grey;
-   margin-top: 5%;
+   margin-top: 15%;
    margin-bottom: 2%;
 }
 .form-container {
@@ -100,7 +100,10 @@ button:hover , button:focus , button:active{
   font-family: Helvetica, Arial, sans-serif;
 }
 
-.cls-modal-close-btn {
+#modal-close-btn {
+  position: absolute;
+  top:4%;
+  left:77%;
   float: right;
 }
 

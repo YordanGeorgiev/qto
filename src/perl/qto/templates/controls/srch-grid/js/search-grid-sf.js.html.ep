@@ -1,7 +1,8 @@
    Vue.component('search-grid-sf', {
      template: '#grid-template',
      props: {
-       data: {type: Array, twoWay: true}
+       data: { 
+         type: Array, twoWay: true}
        , columns: Array
        , filterKey: String
        , showModal: false
