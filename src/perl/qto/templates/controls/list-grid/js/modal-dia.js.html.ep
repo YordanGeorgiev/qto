@@ -1,26 +1,100 @@
 Vue.component('form-input', {
 	template: '#form-input'
-	, props: ['label','cnt','cid']
-   , mounted(){
-      this.cid = 'min-' + this.$parent.$attrs.id.replace("dia-","")
+	, props: {
+       label: {
+         default: ""
+      }
+      , cid: {
+         twoWay: true
+         , defult: null
+      }
+      , cnt: {
+         twoWay: true
+         , defult: ""
+      }
    }
-});
-
-Vue.component('form-select', {
-	template: '#form-select'
-	, props: ['label','cnt','cid']
+   , data: function(){
+      return {
+         oldData: ''
+         , content: null
+      }
+   }
    , mounted(){
-      this.cid = 'msl-' + this.$parent.$attrs.id.replace("dia-","")
+      this.cid = this.label + '-' + this.$parent.$attrs.id.replace("dia-","")
+      this.content = this.cnt
+   }
+   , methods: {
+      onBlur(ev) {
+         var modifiedContent = ev.target.value
+         this.content = modifiedContent
+         this.cid = ev.target.id
+         this.$parent.updateItem(modifiedContent,this.cid,this.oldData)
+			// nop this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
+         // this.cnt = modifiedContent //todo:ysg add if ok !!!
+         // this.displayEmptyCellIfNullOrUndefined()
+      }
+      , forceRerender() {
+         this.key += 1;  
+      }
+      , focused(ev) {
+            this.oldData = ev.target.value
+       }
    }
 });
 
 Vue.component('form-textarea', {
 	template: '#form-textarea'
-	, props: ['label','cnt','cid']
+	, props: {
+       label: {
+         default: ""
+      }
+      , cid: {
+         twoWay: true
+         , defult: null
+      }
+      , cnt: {
+         twoWay: true
+         , defult: ""
+      }
+   }
+   , data: function(){
+      return {
+         oldData: ''
+         , content: null
+      }
+   }
    , mounted(){
-      this.cid = 'mtx-' + this.$parent.$attrs.id.replace("dia-","")
+      this.cid = this.label + '-' + this.$parent.$attrs.id.replace("dia-","")
+      this.content = this.cnt
+   }
+   , methods: {
+      onBlur(ev) {
+         var modifiedContent = ev.target.value
+         this.content = modifiedContent
+         this.cid = ev.target.id
+         this.$parent.updateItem(modifiedContent,this.cid,this.oldData)
+			// nop this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
+         // this.cnt = modifiedContent //todo:ysg add if ok !!!
+         // this.displayEmptyCellIfNullOrUndefined()
+      }
+      , focused(ev) {
+         this.oldData = ev.target.value
+      }
+      , forceRerender() {
+         this.key += 1;  
+      }
    }
 });
+
+
+Vue.component('form-select', {
+	template: '#form-select'
+	, props: ['label','cnt','cid']
+   , mounted(){
+      //this.cid = 'msl-' + this.$parent.$attrs.id.replace("dia-","")
+   }
+});
+
 
 Vue.component('modal', {
 	  template: '#modal-tmpl'
@@ -38,64 +112,75 @@ Vue.component('modal', {
 			, count: 0
 		}
 	}
-	, mounted () {
-      var shown = ""
-      this.itemId = this.$attrs.id.replace("dia-","")
-      this.itemData = this.$parent.data.find(obj => obj.id == this.itemId )
-      this.itmMeta = this.$parent.$parent.gridMeta
-      Object.keys(this.itmMeta).sort((a,b) => (this.itmMeta[a].attribute_number > this.itmMeta[b].attribute_number) ? 1 : ( this.itmMeta[b].attribute_number > this.itmMeta[a].attribute_number ) ? -1 :0).map( key => {
-         var prop = this.itmMeta[Number(key)]
-         if (this.itmMeta.hasOwnProperty(key)) {
-            var dataType = this.itmMeta[key].data_type
-            var charMaxLength = this.itmMeta[key].char_max_length
-            var attributeName = String(this.itmMeta[key].attribute_name)
-            var attributeValue = this.itemData[attributeName]
-            if ( dataType.includes('character varying')  && Number(charMaxLength) > 99 ) {
-               if (this.itemData.hasOwnProperty(attributeName) && shown.indexOf(',' + attributeName + ',') === -1) {
-		            this.addFormElement('form-textarea',attributeName,attributeValue )
-               }
-            } else {
-               if (this.itemData.hasOwnProperty(attributeName) && shown.indexOf(',' + attributeName + ',') === -1) {
-		            this.addFormElement('form-input',attributeName,attributeValue )
-               }
-            }
-           shown = shown + ',' + attributeName + ','
+   , watch: {
+      showModal: function () {
+         if ( showModal == true ) {
+            this.$el.querySelector("form-container").focus()
          }
-      })
-      /*
-		this.addFormElement('form-input',"form-input-content")
-		this.addFormElement('form-textarea',"form-textarea-content")
-      var select_cnt = [
-        {'value': 1, 'text': 'item-01'},
-        {'value': 2, 'text': 'item-02'}
-      ]
-		this.addFormElement('form-select',select_cnt)
-      */
-	}
+      }
+   }
+	, mounted () {
+      this.redraw()
+   }
 	, created() {
+      // console.log ( "created" )
 	}
 	, methods: {
-      toTable: function() {
-         var html = '<table>';
-         for (const prop in this.itemData) {
-            html += '<tr>';
-            if (this.itemData.hasOwnProperty(prop)) {
-              html += '<td>' + prop + '</td>'
-              console.log ( prop )
-              html += '<td>' + this.itemData[prop] + '</td>'
-            }
-         }
-         html += '</tr>';
-         html += '</table>';
-         return html
-      }
-		, addFormElement: function(type,label,cnt) {
+		addFormElement: function(type,tsElId,ccid,label,cnt) {
 			this.fields.push({
-			  'type': type
-			  , id: this.count++
+			    'type': type
+			  , 'key': tsElId
+           , 'id':ccid
 			  , 'label':label
 			  , 'cnt':cnt
 			});
 		 }
+      , redraw: function() {
+         // this.fields = [] this causes awfull redraw ..
+         var shown = ",guid,id,update_time"
+         this.itemId = this.$attrs.id.replace("dia-","")
+         this.itemData = this.$parent.data.find(obj => obj.id == this.itemId )
+         this.itmMeta = this.$parent.$parent.gridMeta
+         Object.keys(this.itmMeta).sort((a,b) => (this.itmMeta[a].attribute_number > this.itmMeta[b].attribute_number) ? 1 : ( this.itmMeta[b].attribute_number > this.itmMeta[a].attribute_number ) ? -1 :0).map( key => {
+            var prop = this.itmMeta[Number(key)]
+            if (this.itmMeta.hasOwnProperty(key)) {
+               console.log ( this.itmMeta[key] )
+               var dataType = this.itmMeta[key].data_type
+               var charMaxLength = this.itmMeta[key].char_max_length
+               var attributeName = String(this.itmMeta[key].attribute_name)
+               var attributeNum = Number(this.itmMeta[key].attribute_number)
+               var attributeValue = this.itemData[attributeName]
+               var elId = attributeName + '-' + String(this.itemId)
+               var tsElId = elId + '-' + ((new Date().getTime() * 10000) + 621355968000000000)
+               if ( dataType.includes('character varying')  && Number(charMaxLength) > 99 ) {
+                  if (this.itemData.hasOwnProperty(attributeName) && shown.indexOf(',' + attributeName + ',') === -1) {
+                     this.addFormElement('form-textarea',tsElId,elId,attributeName,attributeValue )
+                  }
+               } else {
+                  if (this.itemData.hasOwnProperty(attributeName) && shown.indexOf(',' + attributeName + ',') === -1) {
+                     this.addFormElement('form-input',tsElId,elId,attributeName,attributeValue )
+                  }
+               }
+              shown = shown + ',' + attributeName + ','
+            }
+         })
+         document.getElementById("type-190512133633").focus()
+	   }
+      , updateItem: function (modifiedContent,id,oldValue) {
+         var arr = id.split('-')
+         var col = arr[0]
+         var dbid = arr[1]
+			this.$emit('update', modifiedContent ,id,this.oldData) // parent's job !!!
+         var elId = col + '-' + dbid
+         var tsElId = elId + '-' + ((new Date().getTime() * 10000) + 621355968000000000)
+         this.fields.find(obj => obj.id == elId).id = col + "-" + dbid
+         this.fields.find(obj => obj.id == elId).key = tsElId
+         this.fields.find(obj => obj.id == elId).label = col
+         this.fields.find(obj => obj.id == elId).cnt = modifiedContent // dyn controls !!!
+         // this.itemData = this.$parent.data.find(obj => obj.id == this.itemId )
+         this.cid = 'dia-' + dbid
+         // this.fields.map(o=>o.forceUpdate())
+         //this.itemData = this.$parent.data.find(obj => obj.id == this.itemId )
+       }
 	}
 })

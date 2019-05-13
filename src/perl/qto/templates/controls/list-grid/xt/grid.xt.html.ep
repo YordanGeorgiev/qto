@@ -1,6 +1,6 @@
 	<script type="text/x-template" id="grid-template">
       <div id="div_grid_tmpl" style="overflow-x: auto;" >
-         <modal :id="cid" v-if="showModal" v-on:close="showModal = false" >
+         <modal :id="cid" v-if="showModal" v-on:close="showModal = false" v-on:update="updateItem">
          </modal>
          <div_search_box id="div_search_box" />
          <btn-new tabindex="2" id="btnNew" v-on:clickedBtnNew="createNewItem" ></btn-new>

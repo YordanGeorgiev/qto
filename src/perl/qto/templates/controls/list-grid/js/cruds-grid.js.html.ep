@@ -178,26 +178,26 @@
             });
 
          }
-         , updateItem: function (content,id,oldValue) {
+         , updateItem: function (modifiedContent,id,oldValue) {
             var arr = id.split('-')
             var col = arr[0]
             var dbid = arr[1]
-            var ret = 1
-            content = ( content == "" ? "null" : content ) //empty cell is treated as null
+            modifiedContent = ( modifiedContent == "" ? "null" : modifiedContent ) //empty cell is treated as null
             
             axios.post('/<%= $db =%>/update/<%= $item =%>', {
                   attribute: col ,
                   id: dbid , 
-                  cnt: content
+                  cnt: modifiedContent
             })
             .then( 
                response => {
-                  content = ( content == "null" ? "" : content )
+                  modifiedContent = ( modifiedContent == "null" ? "" : modifiedContent )
                   newCntIndx = this.gridData.findIndex(obj => obj.id == dbid);
-                  this.gridData[newCntIndx][col] = content; // it-180920075303 , it-181011195040 !!!
+                  this.gridData[newCntIndx][col] = modifiedContent; // it-180920075303 , it-181011195040 !!!
                }
             )
             .catch(function (error) {
+               console.log ( String(error))
                document.getElementById(id).value = (oldValue == "null" ? "" : oldValue)
                if (typeof error !== undefined ) {
                  var errMsg = error.response.data.msg

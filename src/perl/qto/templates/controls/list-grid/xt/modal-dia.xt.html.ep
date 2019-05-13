@@ -1,14 +1,14 @@
 <script type="x-template" id="form-input">
   <div v-on:keyup.tab="this.document.execCommand('selectAll',false,null);">
     <label>{{label}}</label>
-    <input class="minput" type="text" :id="cid" :value="cnt" tabindex="1"/>
+    <input class="minput" type="text" :id="cid" :value="content" tabindex="1" @blur="onBlur" v-on:focus="focused" />
   </div>
 </script>
 
 <script type="x-template" id="form-textarea">
   <div v-on:keyup.tab="this.document.execCommand('selectAll',false,null);">
     <label>{{label}}</label>
-    <textarea class="mtextarea" :value="cnt" :id="cid" tabindex="1"></textarea>
+    <textarea class="mtextarea" :id="cid" :value="content" tabindex="1" @blur="onBlur" v-on:focus="focused" />
   </div>
 </script>
 
@@ -23,18 +23,19 @@
 </script>
 
 <script type="text/x-template" id="modal-tmpl">
-  <transition name="modal">
+  <transition name="modal" :id="cid">
     <div id="div-modal-tmpl" class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-          <button class="cls-modal-close-btn" v-on:click="$emit('close')">Close</button>
           <div name="header" class="dia-header"><%= " $item " =%>: {{this.$attrs.id.replace('dia-','')}}</div>
           <div name="content" v-html="cnt"> </div>
-          <div class="form-container">
-            <component v-for="field in fields" v-bind:is="field.type" :key="field.id" :cnt="field.cnt" :label="field.label">
+          <div id="form-container" tabindex="0" class="form-container">
+            <component v-for="field in fields" v-bind="field" :cid.sync="field.id" :is="field.type" :key.sync="field.key" v-bind:cnt.sync="field.cnt" :content.sync="field.cnt" :label.sync="field.label">
             </component>
           </div>
-          <div name="footer" class="dia-footer"><%= " $item " =%>: {{this.$attrs.id.replace('dia-','')}}</div>
+          <div name="footer" class="dia-footer">
+          <%= " $item " =%>: {{this.$attrs.id.replace('dia-','') + '  @' + new Date().toISOString().replace('T',' ').replace('Z','')}}</div>
+          <button id="modal-close-btn" v-on:click="$emit('close')" tabindex="1">&nbsp;&times;&nbsp;</button>
         </div>
       </div>
     </div>

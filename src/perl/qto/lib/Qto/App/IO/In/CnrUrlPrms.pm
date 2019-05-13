@@ -65,6 +65,7 @@ sub doValidateAndSetUpdate {
 
    unless ( isint $id && $id >= 0) {
       $http_code     = 400 ; 
+      $id = 'undefined' unless ( defined $id ) ;
       $msg           = 'the id must be a whole positive number, but ' . $id . ' was provided !' ; 
    } else {
       $http_code     = 200 ; 
