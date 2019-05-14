@@ -119,3 +119,7 @@ button:hover , button:focus , button:active{
   -webkit-transform: scale(0.95);
   transform: scale(0.95);
 }
+#modal-dia-title-id {
+   width: 30%;
+   border:none;
+}

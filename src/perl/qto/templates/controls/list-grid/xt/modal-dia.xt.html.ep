@@ -1,22 +1,22 @@
 <script type="x-template" id="form-input">
-  <div v-on:keyup.tab="this.document.execCommand('selectAll',false,null);">
+  <div :ref="cid" v-on:keyup.tab="this.document.execCommand('selectAll',false,null);">
     <label>{{label}}</label>
-    <input class="minput" type="text" :id="cid" :value="content" tabindex="1" @blur="onBlur" v-on:focus="focused" />
+    <input class="minput" type="text" :id="cid" :value="content" tabindex="0" @blur="onBlur" v-on:focus="focused" />
   </div>
 </script>
 
 <script type="x-template" id="form-textarea">
-  <div v-on:keyup.tab="this.document.execCommand('selectAll',false,null);">
+  <div :ref="cid" v-on:keyup.tab="this.document.execCommand('selectAll',false,null);">
     <label>{{label}}</label>
-    <textarea class="mtextarea" :id="cid" :value="content" tabindex="1" @blur="onBlur" v-on:focus="focused" />
+    <textarea class="mtextarea" :id="cid" :value="content" tabindex="0" @blur="onBlur" v-on:focus="focused" />
   </div>
 </script>
 
 <script type="x-template" id="form-select">
   <div>
     <label>Select</label>
-    <select class="mselect" tabindex="1">
-      <option v-for="oitem in cnt" :value="oitem.value" :id="cid">{{oitem.text}}</option>
+    <select class="mselect">
+      <option v-for="oitem in cnt" :value="oitem.value" :id="cid" >{{oitem.text}}</option>
     </select>
   </div>
   <div v-html="cnt"></div>
@@ -27,15 +27,18 @@
     <div id="div-modal-tmpl" class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-          <div name="header" class="dia-header"><%= " $item " =%>: {{this.$attrs.id.replace('dia-','')}}</div>
+          <div name="header" class="dia-header">
+            <input id="modal-dia-title-id" :value="'<%=  $item  =%>-'+this.$attrs.id.replace('dia-','')" readonly>
+            </input></div>
           <div name="content" v-html="cnt"> </div>
-          <div id="form-container" tabindex="0" class="form-container">
-            <component v-for="field in fields" v-bind="field" :cid.sync="field.id" :is="field.type" :key.sync="field.key" v-bind:cnt.sync="field.cnt" :content.sync="field.cnt" :label.sync="field.label">
+          <div id="form-container" ref="form_container" class="form-container">
+            <component v-for="field in fields" v-bind="field" :cid.sync="field.id" :is="field.type" :key.sync="field.key" v-bind:cnt.sync="field.cnt" :content.sync="field.cnt" :label.sync="field.label" :ref="field.id">
             </component>
           </div>
           <div name="footer" class="dia-footer">
-          <%= " $item " =%>: {{this.$attrs.id.replace('dia-','') + '  @' + new Date().toISOString().replace('T',' ').replace('Z','')}}</div>
-          <button id="modal-close-btn" v-on:click="$emit('close')" tabindex="1">&nbsp;&times;&nbsp;</button>
+            <%= " $item " =%>: {{this.$attrs.id.replace('dia-','') + '  @' + new Date().toISOString().replace('T',' ').replace('Z','')}}
+          </div>
+          <button id="modal-close-btn" v-on:click="$emit('close')" tabindex="0">&nbsp;&times;&nbsp;</button>
         </div>
       </div>
     </div>

@@ -29,9 +29,6 @@ Vue.component('form-input', {
          this.content = modifiedContent
          this.cid = ev.target.id
          this.$parent.updateItem(modifiedContent,this.cid,this.oldData)
-			// nop this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
-         // this.cnt = modifiedContent //todo:ysg add if ok !!!
-         // this.displayEmptyCellIfNullOrUndefined()
       }
       , forceRerender() {
          this.key += 1;  
@@ -73,9 +70,6 @@ Vue.component('form-textarea', {
          this.content = modifiedContent
          this.cid = ev.target.id
          this.$parent.updateItem(modifiedContent,this.cid,this.oldData)
-			// nop this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
-         // this.cnt = modifiedContent //todo:ysg add if ok !!!
-         // this.displayEmptyCellIfNullOrUndefined()
       }
       , focused(ev) {
          this.oldData = ev.target.value
@@ -90,19 +84,15 @@ Vue.component('form-textarea', {
 Vue.component('form-select', {
 	template: '#form-select'
 	, props: ['label','cnt','cid']
-   , mounted(){
-      //this.cid = 'msl-' + this.$parent.$attrs.id.replace("dia-","")
-   }
 });
 
 
 Vue.component('modal', {
 	  template: '#modal-tmpl'
-	, props: ['field']
+	, props: ['field','showModal']
 	, data: function() {
 		return {
-			showModal: false
-			, cnt: ''
+			cnt: ''
 			, cid: ''
          , itmName: '<%= "$item" =%>'
 			, itemId: null
@@ -112,18 +102,15 @@ Vue.component('modal', {
 			, count: 0
 		}
 	}
-   , watch: {
-      showModal: function () {
-         if ( showModal == true ) {
-            this.$el.querySelector("form-container").focus()
-         }
-      }
-   }
 	, mounted () {
       this.redraw()
    }
-	, created() {
-      // console.log ( "created" )
+	, updated() {
+        if ( this.count == 0 ) {
+           document.getElementById("modal-dia-title-id").focus()
+           document.getElementById("modal-dia-title-id").click()
+           this.count++
+        }
 	}
 	, methods: {
 		addFormElement: function(type,tsElId,ccid,label,cnt) {
@@ -136,15 +123,14 @@ Vue.component('modal', {
 			});
 		 }
       , redraw: function() {
-         // this.fields = [] this causes awfull redraw ..
          var shown = ",guid,id,update_time"
          this.itemId = this.$attrs.id.replace("dia-","")
          this.itemData = this.$parent.data.find(obj => obj.id == this.itemId )
          this.itmMeta = this.$parent.$parent.gridMeta
+         var firstElId = null 
          Object.keys(this.itmMeta).sort((a,b) => (this.itmMeta[a].attribute_number > this.itmMeta[b].attribute_number) ? 1 : ( this.itmMeta[b].attribute_number > this.itmMeta[a].attribute_number ) ? -1 :0).map( key => {
             var prop = this.itmMeta[Number(key)]
             if (this.itmMeta.hasOwnProperty(key)) {
-               console.log ( this.itmMeta[key] )
                var dataType = this.itmMeta[key].data_type
                var charMaxLength = this.itmMeta[key].char_max_length
                var attributeName = String(this.itmMeta[key].attribute_name)
@@ -154,17 +140,18 @@ Vue.component('modal', {
                var tsElId = elId + '-' + ((new Date().getTime() * 10000) + 621355968000000000)
                if ( dataType.includes('character varying')  && Number(charMaxLength) > 99 ) {
                   if (this.itemData.hasOwnProperty(attributeName) && shown.indexOf(',' + attributeName + ',') === -1) {
+                     firstElId = elId
                      this.addFormElement('form-textarea',tsElId,elId,attributeName,attributeValue )
                   }
                } else {
                   if (this.itemData.hasOwnProperty(attributeName) && shown.indexOf(',' + attributeName + ',') === -1) {
+                     firstElId = elId
                      this.addFormElement('form-input',tsElId,elId,attributeName,attributeValue )
                   }
                }
               shown = shown + ',' + attributeName + ','
             }
          })
-         document.getElementById("type-190512133633").focus()
 	   }
       , updateItem: function (modifiedContent,id,oldValue) {
          var arr = id.split('-')
@@ -177,10 +164,7 @@ Vue.component('modal', {
          this.fields.find(obj => obj.id == elId).key = tsElId
          this.fields.find(obj => obj.id == elId).label = col
          this.fields.find(obj => obj.id == elId).cnt = modifiedContent // dyn controls !!!
-         // this.itemData = this.$parent.data.find(obj => obj.id == this.itemId )
          this.cid = 'dia-' + dbid
-         // this.fields.map(o=>o.forceUpdate())
-         //this.itemData = this.$parent.data.find(obj => obj.id == this.itemId )
        }
 	}
 })
