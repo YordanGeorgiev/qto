@@ -4,46 +4,50 @@
     * [1.1.1. UI Page load times](#111-ui-page-load-times)
     * [1.1.2. UI Page parts load times](#112-ui-page-parts-load-times)
   * [1.2. SEARCH](#12-search)
-    * [1.2.1. SearchBox autocomplete for changing the project ( databases ) ](#121-searchbox-autocomplete-for-changing-the-project-(-databases-)-)
-    * [1.2.2. SearchBox autocomplete for item-name](#122-searchbox-autocomplete-for-item-name)
-    * [1.2.3. SearchBox autocomplete for with &lt;&lt;attribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;](#123-searchbox-autocomplete-for-with-attribute-name-operator-attribute-value)
-  * [1.3. ITEMS LISTING](#13-items-listing)
-    * [1.3.1. items listing in table format](#131-items-listing-in-table-format)
-      * [1.3.1.1. Automatic issue items sequencing](#1311-automatic-issue-items-sequencing)
-      * [1.3.1.2. items re-ordering by desired or defaut attribute in list view](#1312-items-re-ordering-by-desired-or-defaut-attribute-in-list-view)
-      * [1.3.1.3. items list default row height](#1313-items-list-default-row-height)
-      * [1.3.1.4. Drag and drop columns in table to reorder columns order](#1314-drag-and-drop-columns-in-table-to-reorder-columns-order)
-      * [1.3.1.5. Columns resizing in table listing](#1315-columns-resizing-in-table-listing)
-  * [1.4. ITEMS VIEWING IN DOCUMENT FORMAT](#14-items-viewing-in-document-format)
-    * [1.4.1. Right menu with table of contents](#141-right-menu-with-table-of-contents)
-    * [1.4.2. Clickable links in the description](#142-clickable-links-in-the-description)
-    * [1.4.3. Items interlinking](#143-items-interlinking)
-  * [1.5. ITEMS EDITING](#15-items-editing)
-    * [1.5.1. Single Cell Items editing in list as table view](#151-single-cell-items-editing-in-list-as-table-view)
-      * [1.5.1.1. Single Cell Items editing in list as table view in-line](#1511-single-cell-items-editing-in-list-as-table-view-in-line)
-      * [1.5.1.2. Items editing in list as table view via form](#1512-items-editing-in-list-as-table-view-via-form)
-      * [1.5.1.3. Refresh list on item edit](#1513-refresh-list-on-item-edit)
-  * [1.6. ITEMS CREATION](#16-items-creation)
-    * [1.6.1. Items creation inline](#161-items-creation-inline)
-    * [1.6.2. Items creation by form](#162-items-creation-by-form)
-  * [1.7. ITEMS DELETION](#17-items-deletion)
-    * [1.7.1. Items deletion inline](#171-items-deletion-inline)
-    * [1.7.2. Items deletion from the edit form](#172-items-deletion-from-the-edit-form)
-  * [1.8. ITEMS EXPORT](#18-items-export)
-    * [1.8.1. Items xls export](#181-items-xls-export)
-    * [1.8.2. Issues export to Google calendar](#182-issues-export-to-google-calendar)
-  * [1.9. ITEMS IMPORT](#19-items-import)
-    * [1.9.1. Items xls import](#191-items-xls-import)
-  * [1.10. ITEMS MOVE](#110-items-move)
-  * [1.11. MOBILE UI](#111-mobile-ui)
-  * [1.12. UI FOR ACCESSING DIFFERENT PROJECTS](#112-ui-for-accessing-different-projects)
-  * [1.13. UI FOR TIME MANAGEMENT IN GOOGLE CALENDAR](#113-ui-for-time-management-in-google-calendar)
-  * [1.14. ITEMS DATA TRANSFER BETWEEN DIFFERENT PROJECTS](#114-items-data-transfer-between-different-projects)
-    * [1.14.1. Copy an qto instance issue to  a google calendar event](#1141-copy-an-qto-instance-issue-to-a-google-calendar-event)
-  * [1.15. ISSUES IMPORT FROM GOOGLE CALENDAR](#115-issues-import-from-google-calendar)
-  * [1.16. ACCESS ISSUES TXT FORMAT FROM EMAIL](#116-access-issues-txt-format-from-email)
-  * [1.17. ACCESS ISSUES DATA FROM GOOGLE SHEET](#117-access-issues-data-from-google-sheet)
-    * [1.17.1. Apply publish filter while posting to Google Sheet](#1171-apply-publish-filter-while-posting-to-google-sheet)
+  * [1.3. GLOBAL SEARCH MODAL DIALOG UI](#13-global-search-modal-dialog-ui)
+    * [1.3.1. SearchBox autocomplete for changing the project ( databases ) ](#131-searchbox-autocomplete-for-changing-the-project-(-databases-)-)
+    * [1.3.2. SearchBox autocomplete for item-name](#132-searchbox-autocomplete-for-item-name)
+  * [1.4. SEARCH-AUTOCOMPLETE ON MODAL SEARCH DIALOG](#14-search-autocomplete-on-modal-search-dialog)
+    * [1.4.1. SearchBox autocomplete for with &lt;&lt;attribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;](#141-searchbox-autocomplete-for-with-attribute-name-operator-attribute-value)
+  * [1.5. ITEMS LISTING](#15-items-listing)
+    * [1.5.1. items listing in grid / table format](#151-items-listing-in-grid-/-table-format)
+      * [1.5.1.1. Automatic issue items sequencing](#1511-automatic-issue-items-sequencing)
+      * [1.5.1.2. items re-ordering by desired or defaut attribute in list view](#1512-items-re-ordering-by-desired-or-defaut-attribute-in-list-view)
+      * [1.5.1.3. items list default row height](#1513-items-list-default-row-height)
+      * [1.5.1.4. Drag and drop columns in table to reorder columns order](#1514-drag-and-drop-columns-in-table-to-reorder-columns-order)
+      * [1.5.1.5. Columns resizing in table listing](#1515-columns-resizing-in-table-listing)
+  * [1.6. ITEMS VIEWING IN DOCUMENT FORMAT](#16-items-viewing-in-document-format)
+    * [1.6.1. Right menu with table of contents](#161-right-menu-with-table-of-contents)
+    * [1.6.2. Clickable links in the description](#162-clickable-links-in-the-description)
+    * [1.6.3. Items interlinking](#163-items-interlinking)
+  * [1.7. ITEMS EDITING](#17-items-editing)
+    * [1.7.1. Single Cell Items editing in list table page](#171-single-cell-items-editing-in-list-table-page)
+      * [1.7.1.1. Single Cell Items editing in list as table view in-line](#1711-single-cell-items-editing-in-list-as-table-view-in-line)
+      * [1.7.1.2. Items editing in list as table view via form](#1712-items-editing-in-list-as-table-view-via-form)
+      * [1.7.1.3. Single Cell Items editing in list table page via the modal-dia edit form](#1713-single-cell-items-editing-in-list-table-page-via-the-modal-dia-edit-form)
+      * [1.7.1.4. Refresh list on item edit](#1714-refresh-list-on-item-edit)
+  * [1.8. ITEMS CREATION](#18-items-creation)
+    * [1.8.1. Items creation inline](#181-items-creation-inline)
+    * [1.8.2. Items creation by form](#182-items-creation-by-form)
+  * [1.9. ITEMS DELETION](#19-items-deletion)
+    * [1.9.1. Items deletion inline](#191-items-deletion-inline)
+    * [1.9.2. Items deletion from the edit form](#192-items-deletion-from-the-edit-form)
+  * [1.10. ITEMS EXPORT](#110-items-export)
+    * [1.10.1. Items xls export](#1101-items-xls-export)
+    * [1.10.2. Issues export to Google calendar](#1102-issues-export-to-google-calendar)
+  * [1.11. ITEMS IMPORT](#111-items-import)
+    * [1.11.1. Items xls import](#1111-items-xls-import)
+  * [1.12. HIERARCHICAL ITEMS MANAGEMENT](#112-hierarchical-items-management)
+  * [1.13. ITEMS MOVE](#113-items-move)
+  * [1.14. MOBILE UI](#114-mobile-ui)
+  * [1.15. UI FOR ACCESSING DIFFERENT PROJECTS](#115-ui-for-accessing-different-projects)
+  * [1.16. UI FOR TIME MANAGEMENT IN GOOGLE CALENDAR](#116-ui-for-time-management-in-google-calendar)
+  * [1.17. ITEMS DATA TRANSFER BETWEEN DIFFERENT PROJECTS](#117-items-data-transfer-between-different-projects)
+    * [1.17.1. Copy an qto instance issue to  a google calendar event](#1171-copy-an-qto-instance-issue-to-a-google-calendar-event)
+  * [1.18. ISSUES IMPORT FROM GOOGLE CALENDAR](#118-issues-import-from-google-calendar)
+  * [1.19. ACCESS ISSUES TXT FORMAT FROM EMAIL](#119-access-issues-txt-format-from-email)
+  * [1.20. ACCESS ISSUES DATA FROM GOOGLE SHEET](#120-access-issues-data-from-google-sheet)
+    * [1.20.1. Apply publish filter while posting to Google Sheet](#1201-apply-publish-filter-while-posting-to-google-sheet)
 * [2. TEAM LEADER BIZ PERSPECTIVE](#2-team-leader-biz-perspective)
   * [2.1. PROJECTS MANAGEMENT](#21-projects-management)
     * [2.1.1. Create new projects](#211-create-new-projects)
@@ -58,6 +62,7 @@
     * [2.2.2. Total remaining allocated time tracking](#222-total-remaining-allocated-time-tracking)
     * [2.2.3. Total spent time tracking](#223-total-spent-time-tracking)
     * [2.2.4. Tracking of issues per period](#224-tracking-of-issues-per-period)
+    * [2.2.5. tracking of issues per target product version](#225-tracking-of-issues-per-target-product-version)
   * [2.3. SECURITY MANAGEMENT](#23-security-management)
     * [2.3.1. Users management](#231-users-management)
       * [2.3.1.1. Add new users to a project](#2311-add-new-users-to-a-project)
@@ -200,14 +205,21 @@ I want to have a pop-up search SearchBox with dimmed background providing with i
 
     
 
-#### 1.2.1. SearchBox autocomplete for changing the project ( databases ) 
+### 1.3. global search modal dialog ui
+As an UI user 
+In order to have the best possible search experience
+I want to be able to search from a modal dialog UI which will pop-up on a dimmed background after the search-box is focused .. 
+
+    
+
+#### 1.3.1. SearchBox autocomplete for changing the project ( databases ) 
 As an qto ui user 
 In order to be able to quickly switch between projects of the qto application instance I have access to
 I wanto to be able to start typing with the ":to" operator and the System to autocomplete a dropdown of databases my instance has access to. 
 
     
 
-#### 1.2.2. SearchBox autocomplete for item-name
+#### 1.3.2. SearchBox autocomplete for item-name
 As an qto ui user 
 In order to be able to quickly specify the name of the item I am searching for ( issue,problem,idea etc. )
 I want to be able to use a special natural-language like syntax in the autocomplete when the SearchBox appears,
@@ -215,7 +227,14 @@ by having the System displayed the ":in" string and starting providing me autoco
 
     
 
-#### 1.2.3. SearchBox autocomplete for with &lt;&lt;attribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;
+### 1.4. search-autocomplete on modal search dialog
+As an UI user 
+In order to get quickly to exactly the searched item I am searching for
+I want the System to present me with autocomplete of the mostly occuring string I am searching for with the name of the item on the left and when clicking on it I want it to open the list as grid page with all the items having this item in the search ... 
+
+    
+
+#### 1.4.1. SearchBox autocomplete for with &lt;&lt;attribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;
 As an qto ui user 
 In order to be able to quickly specify the search criteria to re-strict the already chosen item to search for 
 I want to be able to use a special natural-language like syntax in the autocomplete when the SearchBox appears,
@@ -223,28 +242,28 @@ by having the System displayed the "with:type-here-the-attribute op:type-here-op
 
     
 
-### 1.3. Items listing
+### 1.5. Items listing
 As an qto ui user 
 In order to be able to quickly see as much items ( issues, problems, ideas etc. ) 
 I want to list the items in a web page according to the filtering criteria I might have specified earlier on … 
 
     
 
-#### 1.3.1. items listing in table format
+#### 1.5.1. items listing in grid / table format
 As an UI user of the qto application 
-In order to quickly display as much items ( issues,problems, questions, etc. ) as possible
-I want to be able to list the items per period. 
+In order to access the data from any item in any qto complient db
+I want to be able to list any item in a sortable and filterable grid UI. 
 
     
 
-##### 1.3.1.1. Automatic issue items sequencing
+##### 1.5.1.1. Automatic issue items sequencing
 As an UI user of the qto application 
 In order to save time while arranging all the different issue items
 I want the System to automatically sequence each item in list view by a defaut incremental sequence unless I have specified my own sequence. 
 
     
 
-##### 1.3.1.2. items re-ordering by desired or defaut attribute in list view
+##### 1.5.1.2. items re-ordering by desired or defaut attribute in list view
 As a UI user 
 In order to prioritize and re-arrange to a logical sequence my items 
 I wanto to be able to drag and drop items up and down , 
@@ -252,47 +271,47 @@ which would correspondingly increase or decrease their attribute to which they a
 
     
 
-##### 1.3.1.3. items list default row height
+##### 1.5.1.3. items list default row height
 As a UI user 
 In order to quickly comprehend the data in the lists  
 I wanto each row of the ui to have a certain minimum height and whenever the data cannot fit into this height to be greater than it
 
     
 
-##### 1.3.1.4. Drag and drop columns in table to reorder columns order
+##### 1.5.1.4. Drag and drop columns in table to reorder columns order
 As the UI user of an qto instance 
 In order to list the attributes of an item in a order significant for the moment
 I want to be able to drag and drop columns in the table so that the System would re-render the table with the new order. 
 
     
 
-##### 1.3.1.5. Columns resizing in table listing
+##### 1.5.1.5. Columns resizing in table listing
 As the UI user of an qto instance 
 In order to see better the contents in the table columns 
 I want to be able to resize the columns width ( excel like or by other means ) 
 
     
 
-### 1.4. Items viewing in document format
+### 1.6. Items viewing in document format
 As the UI user of an qto application instance
 In order to grasp a large amount of hierarchichal data 
 I want to be able to organize and view it in document like format with hierarchichal strucuture
 
     
 
-#### 1.4.1. Right menu with table of contents
+#### 1.6.1. Right menu with table of contents
 As the UI user of a qto application instance 
 I wanto to be able to quickly scan and navigate in the document structure from the right menu , which could open opened and closed and will be separately scrollable than the content of the document
 
     
 
-#### 1.4.2. Clickable links in the description
+#### 1.6.2. Clickable links in the description
 As the UI user of a qto application instance 
 I wanto to be able to quickly click on the links in the description, is liks exist in the content of the paragraphs
 
     
 
-#### 1.4.3. Items interlinking
+#### 1.6.3. Items interlinking
 As the UI user of a qto application instance 
 I wanto to be able to quickly create links / references to any other item in document format by their id by using the following syntax : &lt;&lt;item-name&gt;&gt;-&lt;&lt;id&gt;
 For example :
@@ -305,21 +324,21 @@ for example: principles-1805311658
 
     
 
-### 1.5. Items editing
+### 1.7. Items editing
 As an UI user of the qto application 
 In order to update the application data via the UI 
 I wan to to be able to edit the data for ANY of the items in the application I have access to. 
 
     
 
-#### 1.5.1. Single Cell Items editing in list as table view
+#### 1.7.1. Single Cell Items editing in list table page
 As an UI user of the qto application 
 In order to be able to quickly edit the data of ANY item I
-I want to be able to quickly navigate to the item to edit and update the data of exactly this item 
+I want to be able to quickly navigate to the item to edit and update the data of exactly this item in a table like form 
 
     
 
-##### 1.5.1.1. Single Cell Items editing in list as table view in-line
+##### 1.7.1.1. Single Cell Items editing in list as table view in-line
 As an UI user of the qto application 
 In order to be able to quickly edit the data of ANY item I
 I want to be able to quickly navigate to the cell of the table of the data I want to edit
@@ -327,21 +346,28 @@ and update the data by clicking with the mouse or navigating with the tab and ty
 
     
 
-##### 1.5.1.2. Items editing in list as table view via form
+##### 1.7.1.2. Items editing in list as table view via form
 As an UI user of the qto application 
 In order to be able to quickly edit the data of ANY item 
 I want to be able to click on the edit button , fill in the poping-up dialog with the form of the full data of the item and clicking the Save button. 
 
     
 
-##### 1.5.1.3. Refresh list on item edit
+##### 1.7.1.3. Single Cell Items editing in list table page via the modal-dia edit form
+As an UI user of the qto application 
+In order to be able to quickly edit the data of ANY item 
+I want to be able to open an edit form from each row of the table and edit the details from that form. 
+
+    
+
+##### 1.7.1.4. Refresh list on item edit
 As an UI user of the qto application 
 In order to see the updated list after editing it
 I want the System to refresh the list according to the new updated value - that is for example if the order was set to be prio and the prio was updated, the page should be refreshed with the new prio order applied
 
     
 
-### 1.6. Items creation
+### 1.8. Items creation
 As an UI user of the application 
 I order to create new items in the application 
 I wanto to be able to create them via the UI 
@@ -349,7 +375,7 @@ by clicking "create new button" and filling as few as possible data entries and 
 
     
 
-#### 1.6.1. Items creation inline
+#### 1.8.1. Items creation inline
 As an UI user of the application 
 I order to create new items in the application 
 I wanto to be able to create them via the edit-table listing UI page 
@@ -358,7 +384,7 @@ when the System will add a new row which will appear automatically in top of the
 
     
 
-#### 1.6.2. Items creation by form
+#### 1.8.2. Items creation by form
 As an UI user of the application 
 I order to create new items in the application 
 I wanto to be able to create them via the edit-table listing UI page 
@@ -367,7 +393,7 @@ when the System will add a new row which will appear automatically in top of the
 
     
 
-### 1.7. Items deletion
+### 1.9. Items deletion
 As an UI user of the application 
 I order to delete existing items in the project
 I wanto to be able to delete them via the UI 
@@ -375,7 +401,7 @@ by clicking a "delete " button and confirming the deletion for the item
 
     
 
-#### 1.7.1. Items deletion inline
+#### 1.9.1. Items deletion inline
 As an UI user of the application 
 I order to delete existing items in the project
 I wanto to be able to delete them via the UI 
@@ -383,7 +409,7 @@ by clicking a "delete " button and confirming the deletion for the item by click
 
     
 
-#### 1.7.2. Items deletion from the edit form
+#### 1.9.2. Items deletion from the edit form
 As an UI user of the application 
 I order to delete existing items in the project
 I wanto to be able to delete them via the UI of the edit form
@@ -392,21 +418,21 @@ and confirming the deletion for the item by clicking on the ok dialog presented 
 
     
 
-### 1.8. Items export
+### 1.10. Items export
 As an UI user of the application 
 I order to export the data  of the items in the application 
 I wan to to be able to perform every possible export in the UI from a single button click or a single url access. 
 
     
 
-#### 1.8.1. Items xls export
+#### 1.10.1. Items xls export
 As an UI user of the application 
 I order to export the data  of the items in the application into xls format
 I wanto to be able to perform the exprot by clicking on an xls icon like button and point to the file path to save to the listed in the UI data
 
     
 
-#### 1.8.2. Issues export to Google calendar
+#### 1.10.2. Issues export to Google calendar
 As the UI user of an qto instance 
 In order to be able to visualize and manage my start- and stop_time having issues better 
 I wanto to be able to export my issues to Google calendar 
@@ -414,84 +440,94 @@ I wanto to be able to export my issues to Google calendar
 
     
 
-### 1.9. Items import
+### 1.11. Items import
 As an UI user of the application 
 I order to import data  of the items in the application 
 I wanto to be able to perform every possible import in the UI from a single button click and pointing to the file path of a file
 
     
 
-#### 1.9.1. Items xls import
+#### 1.11.1. Items xls import
 As an UI user of the application 
 I order to import the data  of the items in the application into xls format
 I wanto to be able to perform the exprot by clicking on an xls icon like button and point to the file path to save to the listed in the UI data
 
     
 
-### 1.10. Items move
+### 1.12. hierarchical items management
+As an the ui user
+In order to manage the hierarchical items in the application
+I want to be able to manage by actions (list,create,update,delete,search) ANY hierarchichal items of the application in from a hierarchical doc format
+
+ - by their id
+ - by their sequence
+
+    
+
+### 1.13. Items move
 As an UI user of the application 
 I order to move the items into different tables
 I wanto to be able to move them from a button in the listing page by specifying the target table
 
     
 
-### 1.11. Mobile UI
+### 1.14. Mobile UI
 As an UI user of the qto application 
 In order to enjoy to be able to access it quickly on the go
 I wanto to be able to use the same UI on an advanced mobile phones. 
 
     
 
-### 1.12. UI for accessing different projects
+### 1.15. UI for accessing different projects
 As an qto ui user 
 In order to be able to quickly switch between projects of the qto application instance I have access to
 I wanto to be able to access a web page providing autocomplete to preloaded configuration entries for the different projects
 
     
 
-### 1.13. UI for Time management in Google Calendar
+### 1.16. UI for Time management in Google Calendar
 As an qto ui user 
 In order to be prepare for issues such as ( events , tasks ) which have start and stop time
 I wanto to be able to view the issues with the same title, start_time and stop_time in google calendar
 
     
 
-### 1.14. items data transfer between different projects
+### 1.17. items data transfer between different projects
 As the UI user of an qto instance 
 In order to save be able to track my personal time usage between different projects and the different interdependancies 
 I want to be able to move items data from one project to another via the UI
 
     
 
-#### 1.14.1. Copy an qto instance issue to  a google calendar event
+#### 1.17.1. Copy an qto instance issue to  a google calendar event
 As an qto ui user 
 In order to be able to see my issues time-schedule via phone and browser in a calendar view
 I wanto to be able to copy via the ui an issue as a new google calendar event
 
     
 
-### 1.15. Issues import from Google calendar
+### 1.18. Issues import from Google calendar
 As the UI user of an qto instance 
 In order to be able to visualize and manage my  start- and stop_time having issues better 
 I wanto to be able to import my Google calendar issues into my qto profile on an qto instance
 
     
 
-### 1.16. Access issues txt format from email
+### 1.19. Access issues txt format from email
 As a user of the issue tracker tool 
 In order to be able to access and read my issues from a mobile device
 I wanto to be able to send each period txt file from the daily folder via gmail. 
 
     
 
-### 1.17. Access issues data from Google sheet
+### 1.20. Access issues data from Google sheet
 As the biz user  of the issue tracker tool 
 In order to be able to share and edit the data with multiple users authenticated within the Google eco system
 I wanto to be able to access , edit and update the issues data from google sheeet
 
     
 
-#### 1.17.1. Apply publish filter while posting to Google Sheet
+#### 1.20.1. Apply publish filter while posting to Google Sheet
 As the biz user  of the issue tracker tool 
 In order to show only relevant data to the future viewers of the published to Google sheets issues data
 I wanto to be able to apply publishing filter for columns to be left unpublished per item table per project
@@ -597,6 +633,12 @@ by accessing a simple page containing its value and the period it is related to
 As a team leader 
 In order to see the relation of the issues to the daily,weekly,monthly,yearly,quinquennially and decadelly periods 
 I wanto to be able to manage the issues within those periods per period and mother period
+
+    
+
+#### 2.2.5. tracking of issues per target product version
+As Biz Manager 
+I want to be able to track the issues development per target product version
 
     
 
