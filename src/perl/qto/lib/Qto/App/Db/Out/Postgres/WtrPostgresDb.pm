@@ -209,12 +209,11 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       ;
       " ; 
      
-      print 'vim +212 `find . -name WtrPostgresDb.pm` str_sql: ' . $str_sql ; 
-      print 'vim +212 `find . -name WtrPostgresDb.pm` str_sql: STOP '  ; # todo:ysg
+      # debug 'vim +212 `find . -name WtrPostgresDb.pm` str_sql: ' . "\n" . $str_sql ; 
+      # debug rint 'vim +212 `find . -name WtrPostgresDb.pm` str_sql: STOP '  ; 
 
       eval {
          $sth = $dbh->prepare($str_sql);  
-         #debug rint "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
          $sth->execute() or print STDERR "$DBI::errstr" ; 
       } or $ret = 500 ; # Internal Server error
 

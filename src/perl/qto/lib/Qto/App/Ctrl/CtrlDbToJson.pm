@@ -79,14 +79,16 @@ package Qto::App::Ctrl::CtrlDbToJson ;
          $out_dir = "$mix_data_dir/$year/$year-$mon/$year-$mon-$mday/json" ; 
       } 
 
+      my $db = $appConfig->{ 'postgres_db_name' } ; 
 
       for my $table ( @tables ) { 
          my $items_file ="$out_dir/$table" . '.json' ; 
          my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
          my $objRdrDb 			= $objRdrDbsFactory->doSpawn( "$rdbms_type" );
 
+         
          ( $ret , $msg )  = 
-            $objRdrDb->doSelect( \$objModel , $table) ; 
+            $objRdrDb->doSelectAll( $db , $table) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
          my $objWtrTextFactory = 'Qto::App::IO::Out::WtrTextFactory'->new( \$appConfig , $self ) ; 

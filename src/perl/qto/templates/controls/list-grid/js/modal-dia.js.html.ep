@@ -23,6 +23,7 @@ Vue.component('form-input', {
       this.cid = this.label + '-' + this.$parent.$attrs.id.replace("dia-","")
       this.content = this.cnt
    }
+   , oldData: ""
    , methods: {
       onBlur(ev) {
          var modifiedContent = ev.target.value
@@ -56,14 +57,14 @@ Vue.component('form-textarea', {
    }
    , data: function(){
       return {
-         oldData: ''
-         , content: null
+         content: null
       }
    }
    , mounted(){
       this.cid = this.label + '-' + this.$parent.$attrs.id.replace("dia-","")
       this.content = this.cnt
    }
+   , oldData: ""
    , methods: {
       onBlur(ev) {
          var modifiedContent = ev.target.value
@@ -99,6 +100,7 @@ Vue.component('modal', {
 			, itemData: null
 			, itmMeta: null
 			, fields: []
+			, msg: ""
 			, count: 0
 		}
 	}
@@ -157,7 +159,7 @@ Vue.component('modal', {
          var arr = id.split('-')
          var col = arr[0]
          var dbid = arr[1]
-			this.$emit('update', modifiedContent ,id,this.oldData) // parent's job !!!
+			this.$emit('update', modifiedContent ,id,oldValue) // events up ...
          var elId = col + '-' + dbid
          var tsElId = elId + '-' + ((new Date().getTime() * 10000) + 621355968000000000)
          this.fields.find(obj => obj.id == elId).id = col + "-" + dbid
