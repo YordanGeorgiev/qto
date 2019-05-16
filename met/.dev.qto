@@ -1,7 +1,5 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
-src/perl/qto/public/poc/modal-dialog/modal-02/index.html
-#
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/public/poc/web-socket/web-socket.html
 src/perl/qto/public/poc/web-socket/wsclient.js
@@ -882,6 +880,7 @@ src/perl/qto/public/poc/right-click-vmenu/right-click-menu.css
 src/perl/qto/public/poc/right-click-vmenu/right-click-vmenu.html
 src/perl/qto/public/poc/modal-dialog/modal-01
 src/perl/qto/public/poc/modal-dialog/modal-01/index.html
+src/perl/qto/public/poc/modal-dialog/modal-02/index.html
 # ---
 met/.dev.qto
 met/.src.qto

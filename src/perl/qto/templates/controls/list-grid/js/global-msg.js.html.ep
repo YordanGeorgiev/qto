@@ -1,6 +1,7 @@
    function setMsgVisuals(txt,eid,msgType,pageType){
       if ( typeof eid === "undefined" ) { eid ='div_msg' }
       if ( typeof msgType === "undefined" ) { msgType ='Error' }
+      console.log ( "setMsgVisuals eid: " + eid) ; // todo:ysg
       txt = stripTechMsgPart(txt)
       paintError(eid)
       window['paint' + msgType](eid,txt);
@@ -17,20 +18,23 @@
    }
 
    function paintError(eid,txt){
-      document.getElementById(eid).innerHTML=""
-      document.getElementById(eid).innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
-      setStyleProp(eid,'z-index','3')
-      setStyleProp(eid,'display','inline')
-      setStyleProp(eid,'box-shadow','0 0 10px red')
-      setStyleProp(eid,'background-color','#FFFF00')
+      if ( typeof document.getElementById(eid) !== "undefined" && document.getElementById(eid) != null) { 
+         document.getElementById(eid).innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
+         setStyleProp(eid,'z-index','3')
+         setStyleProp(eid,'display','inline')
+         setStyleProp(eid,'box-shadow','0 0 10px red')
+         setStyleProp(eid,'background-color','#FFFF00')
+      }
    }
 
    function paintWarning(eid,txt){
-      document.getElementById(eid).innerHTML=""
-      document.getElementById(eid).innerHTML="<span id=\"spn_warr_msg\">" + txt + '</span>';
-      setStyleProp(eid,'display','inline')
-      setStyleProp(eid,'box-shadow','0 0 10px #80838A')
-      setStyleProp(eid,'background-color','#CEC9D7')
+      if ( typeof document.getElementById(eid) !== "undefined" && document.getElementById(eid) != null) { 
+         document.getElementById(eid).innerHTML=""
+         document.getElementById(eid).innerHTML="<span id=\"spn_warr_msg\">" + txt + '</span>';
+         setStyleProp(eid,'display','inline')
+         setStyleProp(eid,'box-shadow','0 0 10px #80838A')
+         setStyleProp(eid,'background-color','#CEC9D7')
+      }
    }
 
    function stripTechMsgPart(txt) {
@@ -47,9 +51,11 @@
 
    function fadeAwayDiv(toFade) {
       if ( typeof toFade === 'undefined' && toFade != null ) { toFade='div_msg' }
-      var div_msg_style = document.getElementById(toFade).style; div_msg_style.opacity = 1; 
-      (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,300)})();
-      setStyleProp(toFade,'z-index','0')
+      if ( typeof document.getElementById(toFade) !== "undefined" && document.getElementById(toFade) != null){ 
+         var div_msg_style = document.getElementById(toFade).style; div_msg_style.opacity = 1; 
+         (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,300)})();
+         setStyleProp(toFade,'z-index','0')
+      }
    }
    function hideControlsOnError() {
      setStyleProp('grid','display','none')

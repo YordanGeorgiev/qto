@@ -837,6 +837,77 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
    # -----------------------------------------------------------------------------
    # get ALL the table data into hash ref of hash refs 
    # -----------------------------------------------------------------------------
+   sub doSelectAll {
+
+      my $self                   = shift ; 
+      my $db                     = shift || croak 'no db passed !!!' ;  
+      my $table                  = shift || croak 'no table passed !!!' ; 
+      my $ret                    = 1 ; 
+      my $msg                    = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
+      my $dbh                    = {} ;         # this is the database handle
+
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+
+      if ( $self->table_exists ( $db , $table ) == 0  ) {
+         $ret = 400 ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
+         return ( $ret , $msg ) ; 
+      }
+
+      my $debug_msg        = q{} ; 
+      my $hsr2             = {} ;         # this is hash ref of hash refs to populate with
+      my $sth              = {} ;         # this is the statement handle
+      my $cols             = () ;         # the array ref of columns
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      my $columns_to_select= '' ; 
+      my $columns_to_order_by_asc   = '' ; 
+      my $columns_to_order_by_desc  = '' ; 
+
+      $str_sql = " 
+         SELECT *
+         FROM $table 
+         WHERE 1=1 " ; 
+      
+      print "$str_sql \n" . 'vim +873 `find . -name RdrPostgresDb.pm`' . "\n" ; 
+
+      $ret = 0 ; 
+      eval { 
+         $msg = "" ; 
+         $sth = $dbh->prepare($str_sql);  
+         $sth->execute() or $ret = 400 ; 
+         # :jump it-180919115859 
+         $msg = DBI->errstr if $ret  == 400 ; 
+         die "$msg" unless $ret == 0 ; 
+         $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
+         $msg = DBI->errstr if $ret  == 400 ; 
+         die "$msg" unless $ret == 0 ; 
+         $objModel->set('hsr2' , $hsr2 );
+         $objModel->set($db . '.dat.' . $table , $hsr2 ); # wip: 181114145604
+      };
+      if ( $@ ) { 
+         my $tmsg = "$@" ; 
+         $objLogger->doLogErrorMsg ( "$msg" ) ;
+         $msg = "failed to get $table table data :: $tmsg" unless $ret == 404 ; 
+         return ( $ret , $msg , "" ) ; 
+      };
+
+      $dbh->disconnect();
+         unless ( keys %{$hsr2}) {
+            $msg = ' no data for this search request !!! ' ;
+            $objLogger->doLogWarningMsg ( $msg ) ; 
+            $ret = 204 ;
+         }
+      binmode(STDOUT, ':utf8');
+      return ( $ret , $msg , $hsr2 ) ; 	
+
+   }
+
+   #
+   # -----------------------------------------------------------------------------
+   # get ALL the table data into hash ref of hash refs 
+   # -----------------------------------------------------------------------------
    sub doSelect {
 
       my $self                   = shift ; 

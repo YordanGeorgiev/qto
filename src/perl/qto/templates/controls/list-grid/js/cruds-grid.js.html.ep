@@ -197,12 +197,16 @@
                }
             )
             .catch(function (error) {
-               console.log ( String(error))
-               document.getElementById(id).value = (oldValue == "null" ? "" : oldValue)
+               if ( id.endsWith('-')) {
+                  document.getElementById(id).value = (oldValue == "null" ? "" : oldValue)
+               } else {
+                  document.getElementById(id).getElementsByTagName('input')[0].value = (oldValue == "null" ? "" : oldValue)
+               }
                if (typeof error !== undefined ) {
                  var errMsg = error.response.data.msg
                  console.error ( error.response.data.msg )
-                 setMsgVisuals(errMsg);
+                 setMsgVisuals(errMsg,'div_msg');
+                 setMsgVisuals(errMsg,'modal-dia-msg');
                }
             });
           }

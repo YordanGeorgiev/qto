@@ -29,8 +29,7 @@
         <div class="modal-container">
           <div name="header" class="dia-header">
             <input id="modal-dia-title-id" :value="'<%=  $item  =%>-'+this.$attrs.id.replace('dia-','')" readonly>
-            </input></div>
-          <div name="content" v-html="cnt"> </div>
+            </input><div id="modal-dia-msg" align="center"> </div></div>
           <div id="form-container" ref="form_container" class="form-container">
             <component v-for="field in fields" v-bind="field" :cid.sync="field.id" :is="field.type" :key.sync="field.key" v-bind:cnt.sync="field.cnt" :content.sync="field.cnt" :label.sync="field.label" :ref="field.id">
             </component>
