@@ -800,8 +800,6 @@ doc/txt/qto/funcs/start-selenium.func.txt
 src/bash/qto/funcs/start-selenium.func.sh
 cnf/sec/passwd/1
 dat/host
-dat/host/opt
-dat/host/opt/csitea
 dat/host/var
 dat/host/var/csitea
 dat/host/var/csitea/cnf
