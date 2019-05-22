@@ -1,12 +1,13 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
+src/perl/qto/public/poc/notes/index.html
+src/perl/qto/public/poc/web-socket/web-socket.html
+src/perl/qto/public/poc/web-socket/wsclient.js
+src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
+#
 src/docker/Dockerfile
 src/js/node/js-unit-tests/01-set-url-param/test/test.js
 src/js/node/js-unit-tests/01-set-url-param/package.json
-# -- 
-src/perl/qto/public/poc/right-click-vmenu
-src/perl/qto/public/poc/right-click-vmenu/right-click-menu.css
-src/perl/qto/public/poc/right-click-vmenu/right-click-vmenu.html
 # ---
 src/perl/qto/templates/pages/view-doc/js/right-click-menu.js.html.ep
 src/perl/qto/templates/pages/view-doc/view-doc.html.ep
@@ -41,11 +42,15 @@ src/perl/qto/templates/controls/list-grid/js/global-msg.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/search-box.js.html.ep
 src/perl/qto/templates/controls/list-grid/xt/search-box.xt.html.ep
 src/perl/qto/templates/controls/list-grid/xt/grid.xt.html.ep
+src/perl/qto/templates/controls/list-grid/xt/modal-dia.xt.html.ep
+src/perl/qto/templates/controls/list-grid/js/modal-dia.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/editable.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/cruds-grid.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
 src/perl/qto/templates/controls/srch-grid/xt/grid.xt.html.ep
 src/perl/qto/templates/controls/srch-grid/js/linkable.js.html.ep
+src/perl/qto/templates/controls/srch-grid/xt/modal-dia.xt.html.ep
+src/perl/qto/templates/controls/srch-grid/js/modal-dia.js.html.ep
 src/perl/qto/templates/controls/srch-grid/js/search-grid.js.html.ep
 src/perl/qto/templates/controls/srch-grid/js/search-grid-sf.js.html.ep
 # --
@@ -57,6 +62,7 @@ src/perl/qto/templates/controls/list-grid/js/btn-play-next.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/btn-play-next-10.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/btn-new.js.html.ep
 src/perl/qto/public/themes/thme-blue/css/screen/controls/table.css
+src/perl/qto/public/themes/thme-blue/css/screen/controls/modal-dia.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/pager.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/list-grid.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
@@ -82,9 +88,6 @@ src/perl/qto/templates/controls/list-labels/list-labels.html.ep
 src/perl/qto/templates/controls/list-print-table/list-print-table.html.ep
 # ---
 # --- 
-src/perl/qto/public/poc/web-socket/web-socket.html
-src/perl/qto/public/poc/web-socket/wsclient.js
-src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
 src/perl/qto/public/poc/right-click-menu/right-click-menu.html
 src/perl/qto/public/poc/right-click-menu/right-click-menu.css
 src/perl/qto/public/poc/right-click-menu-01
@@ -409,6 +412,7 @@ src/sql/pgsql/scripts/list-table-columns.sql
 src/sql/pgsql/scripts/list-table-cols.sh
 src/sql/pgsql/scripts/list-postgres-tables.sh
 src/sql/pgsql/scripts/upsert_item_trigger.sql
+src/sql/pgsql/scripts/rank-srch.sql
 #----
 src/bash/qto/tests/db-to-xls.test.sh
 src/bash/qto/funcs/db-to-xls.func.sh
@@ -438,13 +442,8 @@ doc/txt/qto/funcs/xls-to-db.func.txt
 doc/txt/qto/specs/xls-to-db.spec.txt
 doc/txt/qto/helps/xls-to-db.help.txt
 #----
-doc/txt/qto/funcs/perl/run-functional-tests.func.txt
-doc/txt/qto/helps/perl/run-functional-tests.help.txt
-doc/txt/qto/specs/perl/run-functional-tests.spec.txt
-doc/txt/qto/tests/perl/run-functional-tests.test.txt
 src/bash/qto/funcs/perl/run-functional-tests.func.sh
 src/bash/qto/helps/perl/run-functional-tests.help.sh
-src/bash/qto/specs/perl/run-functional-tests.spec.sh
 src/bash/qto/tests/perl/run-functional-tests.test.sh
 .gitignore
 src/bash/qto/tests/rem-qto-actions.lst
@@ -530,7 +529,6 @@ src/bash/qto/tests/sys/tmux/save-tmux-session.test.sh
 #---
 src/bash/qto/funcs/sys/tmux/restore-tmux-session.func.sh
 src/bash/qto/helps/restore-tmux-session.help.sh
-src/bash/qto/specs/sys/tmux/restore-tmux-session.spec.sh
 src/bash/qto/tests/sys/tmux/restore-tmux-session.test.sh
 #---
 src/bash/qto/tests/sys/backup-file.test.sh
@@ -749,6 +747,7 @@ doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
 # --- the application data
 dat/etc/postgresql/9.6/main/pg_hba.conf
+dat/etc/postgresql/9.6/main/postgresql.conf
 # ---
 src/bash/qto/funcs/db-to-json.func.sh
 src/bash/qto/tests/db-to-json.test.sh
@@ -765,18 +764,6 @@ src/perl/qto/public/poc/list-vue-grid
 src/perl/qto/public/poc/list-vue-grid/app.js
 src/perl/qto/public/poc/list-vue-grid/list-vue-grid.css
 src/perl/qto/public/poc/list-vue-grid/list-vue-grid.html
-src/perl/qto/public/poc/modal-dialog
-src/perl/qto/public/poc/modal-dialog/modal-dialog-app.js
-src/perl/qto/public/poc/modal-dialog/modal-dialog.css
-src/perl/qto/public/poc/modal-dialog/modal-dialog.html
-src/perl/qto/public/poc/poc-vue-js-modal
-src/perl/qto/public/poc/poc-vue-js-modal/dist
-src/perl/qto/public/poc/poc-vue-js-modal/package.json
-src/perl/qto/public/poc/poc-vue-js-modal/src
-src/perl/qto/public/poc/poc-vue-js-modal/src/index.js
-src/perl/qto/public/poc/poc-vue-js-modal/src/vue-js-modal.css
-src/perl/qto/public/poc/poc-vue-js-modal/src/vue-js-modal.html
-src/perl/qto/public/poc/poc-vue-js-modal/src/vue-js-modal.js
 # ---
 src/bash/qto/scripts/history.sh
 src/perl/qto/public/themes/thme-blue/img/controls/trash-bin.png
@@ -794,7 +781,6 @@ src/perl/qto/public/poc/vue-editable-component
 src/perl/qto/public/poc/vue-editable-component/vue-editable-component.html
 src/perl/qto/public/poc/vue-editable-component/app.js
 # ---
-src/perl/qto/public/poc/vuetify/index.html
 src/perl/qto/public/poc/vue-create-new-button/
 src/perl/qto/public/poc/vue-create-new-button/vue-create-new-button.css
 src/perl/qto/public/poc/vue-create-new-button/vue-create-new-button.html
@@ -814,8 +800,6 @@ doc/txt/qto/funcs/start-selenium.func.txt
 src/bash/qto/funcs/start-selenium.func.sh
 cnf/sec/passwd/1
 dat/host
-dat/host/opt
-dat/host/opt/csitea
 dat/host/var
 dat/host/var/csitea
 dat/host/var/csitea/cnf
@@ -888,6 +872,14 @@ src/perl/qto/lib/auto/Qto/Controller/Select/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Update/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/View/autosplit.ix
 src/perl/qto/lib/auto/SetGetableChild/autosplit.ix
+# -- 
+src/perl/qto/public/poc/right-click-vmenu
+src/perl/qto/public/poc/right-click-vmenu/right-click-menu.css
+src/perl/qto/public/poc/right-click-vmenu/right-click-vmenu.html
+src/perl/qto/public/poc/modal-dialog/modal-01
+src/perl/qto/public/poc/modal-dialog/modal-01/index.html
+src/perl/qto/public/poc/modal-dialog/modal-02/index.html
+# ---
 met/.dev.qto
 met/.src.qto
 met/.tst.qto
@@ -905,11 +897,9 @@ dat/mix/2019/2019-03/2019-03-10/sql/dev_qto/dev_qto.20190310_143936.insrt.dmp.sq
 dat/mix/2019/2019-03/2019-03-10/tmp
 dat/mix/2019/2019-03/2019-03-10/xls
 dat/mix/2019/2019-03/2019-03-10/xls/qto.all.20190310_000000.xlsx
-src/bash/qto/tests/build-qto-docker-image.test.sh
-src/bash/qto/specs/build-qto-docker-image.spec.sh
-src/bash/qto/helps/build-qto-docker-image.help.sh
 src/bash/qto/funcs/build-qto-docker-image.func.sh
-doc/txt/qto/tests/build-qto-docker-image.test.txt
-doc/txt/qto/specs/build-qto-docker-image.spec.txt
+src/bash/qto/tests/build-qto-docker-image.test.sh
+src/bash/qto/helps/build-qto-docker-image.help.sh
 doc/txt/qto/helps/build-qto-docker-image.help.txt
 doc/txt/qto/funcs/build-qto-docker-image.func.txt
+src/bash/qto/funcs/admin/restart-network.func.sh
