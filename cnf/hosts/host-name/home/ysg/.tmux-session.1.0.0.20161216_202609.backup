@@ -1,6 +1,0 @@
-sess--qto	win---root-mgmt	/opt/csitea/qto/qto.1.1.6.dev.ysg
-sess--qto	win---vim-qto	/opt/csitea/qto/qto.1.1.6.dev.ysg
-sess--qto	win---vim-tool	/opt/csitea/qto/qto.1.1.6.dev.ysg
-sess--tool	win---root-mgmt	/opt/csitea/tool/tool.1.1.6.dev.ysg
-sess--tool	win---vim-tool	/opt/csitea/tool/tool.1.1.6.dev.ysg
-sess--tool	win---vim-tool	/opt/csitea/tool/tool.1.1.6.dev.ysg

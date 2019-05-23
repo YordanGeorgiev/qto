@@ -995,7 +995,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
 
-      print "$str_sql \n" . 'vim +927 `find . -name RdrPostgresDb.pm`' . "\n" ; 
+      # debug rint "$str_sql \n" . 'vim +927 `find . -name RdrPostgresDb.pm`' . "\n" ; 
 
       $ret = 0 ; 
       eval { 

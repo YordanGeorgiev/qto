@@ -397,6 +397,7 @@ src/sql/pgsql/qto/31.create-table-readme.sql
 src/sql/pgsql/qto/32.create-table-export_files.sql
 src/sql/pgsql/qto/33.create-table-links.sql
 src/sql/pgsql/qto/34.create-table-app_user.sql
+src/sql/pgsql/qto/35.create-table-release_issues.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/qto/93.create-table-benchmarks.sql
@@ -649,10 +650,6 @@ cnf/hosts/host-name/home
 cnf/hosts/host-name/home/ysg
 cnf/hosts/host-name/home/ysg/.muttrc
 cnf/hosts/host-name/home/ysg/.tmux.cnf
-cnf/hosts/host-name/home/ysg/.tmux.cnf.1.1.1.20161231_092125.backup
-cnf/hosts/host-name/home/ysg/.tmux-session.1.0.0.20161216_202609.backup
-cnf/hosts/host-name/home/ysg/.tmux-session.1.0.0.20161231_092215.backup
-cnf/hosts/host-name/home/ysg/.vimrc.1.2.0.20161216_194801.backup
 LICENSE
 lib/readme.txt
 lib/bash/funcs/
@@ -903,3 +900,4 @@ src/bash/qto/helps/build-qto-docker-image.help.sh
 doc/txt/qto/helps/build-qto-docker-image.help.txt
 doc/txt/qto/funcs/build-qto-docker-image.func.txt
 src/bash/qto/funcs/admin/restart-network.func.sh
+src/bash/qto/funcs/print-stats.func.sh
