@@ -13,7 +13,7 @@
 	  }
      , computed: {
          lnkMayBe: function() {
-            var lnkMayBe = (this.cnt == null) ? '' : this.cnt
+            var lnkMayBe = (this.content == null) ? '' : this.content
             if ( this.formats != null ) {
               var titles = JSON.parse(this.formats).lnktitles
 				  titles.map ( title => lnkMayBe = String(lnkMayBe).linkifyOne(title) )	
@@ -32,17 +32,19 @@
             content: this.cnt
          }
 	  }
+     , mounted: function (){
+        this.$el.style.height = 'auto';
+        this.$el.style.height = this.$el.scrollHeight + 'px';
+      }
      , methods: {
           onBlur(ev) {
               var el = ev.target
-              var modifiedContent = ev.target.value
+              var newVal  = ev.target.value
               //this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
               //this.displayEmptyCellIfNullOrUndefined()
-          }
-          , created: function (){
-              var i = 1
-              console.log( "textarea created" )
-              console.log(this.$store)
+              console.log ( "onBlur")
+         	  this.$store.dispatch("updateItem", newVal);
+              console.log ( "onBlur")
           }
 		}
    })

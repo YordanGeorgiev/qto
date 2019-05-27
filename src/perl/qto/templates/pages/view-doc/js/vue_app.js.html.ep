@@ -24,30 +24,30 @@
                    completed: false
                }
                state.items.unshift(newItem);
-           },
-           SET_ITEMS: (state, items) => {
+           }
+           , SET_ITEMS: (state, items) => {
                state.items = items
-           },
-           SET_SNACKBAR_SHOW: (state, showSnackBar) => {
+           }
+           , SET_SNACKBAR_SHOW: (state, showSnackBar) => {
                state.showSnackBar = showSnackBar
-           },
-           SET_CONTEXT_MENU_SHOW: (state, showContextMenu, e) => {
+           }
+           , SET_CONTEXT_MENU_SHOW: (state, showContextMenu, e) => {
                state.showContextMenu = showContextMenu
-           },
-           SET_SNACKBAR_MSG: (state, msg) => {
+           }
+           , SET_SNACKBAR_MSG: (state, msg) => {
                state.msg = msg
-           },
-           SET_SNACKBAR_INFINITY: (state, infinity) => {
+           }
+           , SET_SNACKBAR_INFINITY: (state, infinity) => {
                state.infinity = infinity
-           },
-           SET_RGT_MENU_SHOW: (state, showRgtMenu) => {
+           }
+           , SET_RGT_MENU_SHOW: (state, showRgtMenu) => {
                state.showRgtMenu = showRgtMenu
-           },
-           TOGGLE_ITEM: (state, payload) => {
-               var item = state.items.find(item => item.id === payload);
-               item.completed = !item.completed;
-           },
-           DELETE_ITEM: (state, payload) => {
+           }
+           , DELETE_ITEM: (state, payload) => {
+               var index = state.items.findIndex(item => item.id === payload);
+               state.items.splice(index, 1);
+           }
+           , UPDATE_ITEM: (state, payload) => {
                var index = state.items.findIndex(item => item.id === payload);
                state.items.splice(index, 1);
            }
@@ -123,11 +123,11 @@
          , addItem: (context, payload) => {
             context.commit("ADD_ITEM", payload)
          }
-         , toggleItem: (context, payload) => {
-            context.commit("TOGGLE_ITEM", payload)
-         }
          , deleteItem: (context, payload) => {
             context.commit("DELETE_ITEM", payload)
+         }
+         , updateItem: (context, payload) => {
+            context.commit("UPDATE_ITEM", payload)
          }
    }
 
@@ -203,8 +203,13 @@
       , methods: {
            addItem: function() {
                this.$store.dispatch("addItem", this);
-               this.newId ++;
-               this.name = "";
+               //this.newId ++;
+               //this.name = "";
+           }
+           , updateItem: function() {
+               this.$store.dispatch("updateItem", this);
+               //this.newId ++;
+               //this.name = "";
            }
            , hideSnackBar: function() {
                this.$store.dispatch("hideSnackBar", this);

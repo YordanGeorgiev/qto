@@ -30,24 +30,22 @@ h1, h2, h3, h4, h5, h6 {
    line-height: 1.5em;
 }
 .cls_desc {
-	display: block ;
-	clear: both;
-	float: left ; 
-	width: 100% ; 
-   font-size:16px ;
+   float: left;
+   height: auto; 
+	width: 100%; 
+   clear: both;
+   width: 80% ;
+   white-space: pre-wrap;
+	display: block;
+	float: left; 
+   font-size:16px;
    border:3px solid #FFFFFF ; 
    border-radius: 7px;
 	word-wrap: break-word;
-	overflow: hidden;
+   overflow: hidden;
 }
 .scroll {
    text-decoration: none;
-}
-.cls_desc {
-   clear: both;
-   float: left;
-   width: 80% ;
-   white-space: pre-wrap;
 }
 .cls_src {
    clear: both;
