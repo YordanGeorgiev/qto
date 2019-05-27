@@ -48,8 +48,12 @@
                state.items.splice(index, 1);
            }
            , UPDATE_ITEM: (state, payload) => {
-               var index = state.items.findIndex(item => item.id === payload);
-               state.items.splice(index, 1);
+               console.log ( "mutation: UPDATE_ITEM: called ") //todo:ysg
+               var arr = payload.eid.split('-')
+               var dbid = arr[1]
+               var index = state.items.findIndex(item => item.id == dbid)
+               state.items[index].description = payload.newVal
+               // console.log ( state.items )
            }
     };
 
@@ -127,7 +131,41 @@
             context.commit("DELETE_ITEM", payload)
          }
          , updateItem: (context, payload) => {
-            context.commit("UPDATE_ITEM", payload)
+            // console.log ( "action: updateItem called ") // todo:ysg
+            // console.log ( "context:")
+            // console.log ( context)
+            // console.log ( ":payload:")
+            // console.log ( payload )
+            // console.log ( ":eid:")
+            // console.log ( payload.eid)
+            // console.log ( ":newVal:")
+            // console.log ( payload.newVal) // todo:ysg
+            var arr = payload.eid.split('-')
+            var dbid = arr[1]
+            var dsc_col = arr[0]
+            var col = dsc_col.split('_')[1]
+            var newCnt = payload.newVal
+            newCnt = ( newCnt == "" ? "null" : newCnt ) //empty cell is treated as null
+            
+            axios.post('/<%= $db =%>/update/<%= $item =%>', {
+                  attribute: col ,
+                  id: dbid , 
+                  cnt: newCnt
+            })
+            .then( 
+               response => {
+                  newCnt = ( newCnt == "null" ? "" : newCnt )
+                  context.commit("UPDATE_ITEM", payload)
+               }
+            )
+            .catch(function (error) {
+               if (typeof error !== undefined ) {
+                 console.error ( error )
+                 // todo:display the snackbar
+                 //setMsgVisuals(errMsg,'div_msg');
+                 //setMsgVisuals(errMsg,'modal-dia-msg');
+               }
+            });
          }
    }
 
@@ -201,20 +239,20 @@
          this.$store.dispatch("loadRgtMenuShow", false);
       }
       , methods: {
-           addItem: function() {
-               this.$store.dispatch("addItem", this);
-               //this.newId ++;
-               //this.name = "";
-           }
-           , updateItem: function() {
-               this.$store.dispatch("updateItem", this);
-               //this.newId ++;
-               //this.name = "";
-           }
-           , hideSnackBar: function() {
-               this.$store.dispatch("hideSnackBar", this);
-               this.$store.dispatch("loadSnackBarInfinity", false);
-           }
+         addItem: function() {
+            this.$store.dispatch("addItem", this);
+            //this.newId ++;
+            //this.name = "";
+         }
+         , updateItem: function(e) {
+            this.$store.dispatch("updateItem", e);
+            //this.newId ++;
+            //this.name = "";
+         }
+         , hideSnackBar: function() {
+            this.$store.dispatch("hideSnackBar", this);
+            this.$store.dispatch("loadSnackBarInfinity", false);
+         }
          , showContextMenu: function (e) {
             this.$store.dispatch("showContextMenu",e);
          }

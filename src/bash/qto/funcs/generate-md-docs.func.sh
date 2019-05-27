@@ -13,6 +13,8 @@ doGenerateMdDocs(){
    basic_url="http://$web_host:$mojo_morbo_port/$postgres_db_name"
    furl="$basic_url"'/select/export_files?as=grid&od=id'
 
+   curl -s $furl | jq -r '.dat[]|.url'
+
    while read -r url ; do 
       file_name=$(curl -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .name'); 
       rel_path=$(curl -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .path');
