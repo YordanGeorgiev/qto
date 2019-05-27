@@ -11,7 +11,7 @@ doGenerateMdDocs(){
    test -z "${docs_root_dir-}" && docs_root_dir="$proj_instance_dir"
    # <<web-host>>:<<web-port>>/<<db>>/select/export_files?as=grid&od=id
    basic_url="http://$web_host:$mojo_morbo_port/$postgres_db_name"
-   furl="$basic_url"'/select/export_files?as=grid&od=id'
+   furl="$basic_url"'/select/export_files?as=grid&od=id&pg-size=20'
 
    curl -s $furl | jq -r '.dat[]|.url'
 
