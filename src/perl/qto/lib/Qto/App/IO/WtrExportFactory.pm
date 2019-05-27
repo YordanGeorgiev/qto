@@ -29,6 +29,7 @@ package Qto::App::IO::WtrExportFactory ;
 		   $objWtrExporter   = "Qto::App::IO::Out::WtrExporterXls" ; 
 		}
 		elsif ( $export_type eq 'md' or $export_type eq 'github-md' ) {
+         print "exporting md \n" ; 
 		   $package_file     = "Qto/App/IO/Out/WtrExporterMd.pm" ; 
 		   $objWtrExporter   = "Qto::App::IO::Out::WtrExporterMd" ; 
 		}

@@ -14,15 +14,18 @@ doGenerateMdDocs(){
    furl="$basic_url"'/select/export_files?as=grid&od=id'
 
    while read -r url ; do 
-      printf "\033[2J";printf "\033[0;0H"
       file_name=$(curl -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .name'); 
       rel_path=$(curl -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .path');
       [ "${rel_path-}" == "null" ] && rel_path=""
       file_path=$(echo $docs_root_dir/$rel_path/$file_name|perl -ne 's|[/]{2,5}|/|g;print')
-      echo -e "\nrunning: curl -s -o \"$file_path\" \ \n \"$basic_url/$url\"\n"       
-      curl -o "$file_path" "$basic_url/$url"
+      echo -e "\nrunning: curl -s -o \"$file_path\" \ \n \"$basic_url/export/$url\""       
+      curl -s "$basic_url/export/$url" -o "$file_path"
+      lines=$(wc -l "$file_path"|awk '{print $1;}')
+      [[ $lines -eq 0 ]] && doExit 0 "load the $url !!! the table is empty !!!"
+      echo -e "$lines lines in the $file_path file \n"
    done < <(curl -s $furl | jq -r '.dat[]|.url')
 	
+   printf "\033[2J";printf "\033[0;0H"
 	doLog "DEBUG STOP  doGenerateMdDocs"
 }
 
