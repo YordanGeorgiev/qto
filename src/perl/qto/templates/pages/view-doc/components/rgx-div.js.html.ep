@@ -1,5 +1,5 @@
   const RgxDiv = Vue.component ('rgx-div', {
-     template: `<textarea v-bind:id="id" @blur="onBlur" v-bind:formats="formats" v-html="lnkMayBe"></textarea>`,
+     template: `<textarea v-bind:id="id" @blur="onBlur" v-bind:formats="formats" v-html="cnt"></textarea>`,
      props: {
 		   id: {}
          , cnt: {
@@ -11,19 +11,6 @@
             , default: null
          }
 	  }
-     , computed: {
-         lnkMayBe: function() {
-            var lnkMayBe = (this.content == null) ? '' : this.content
-            if ( this.formats != null ) {
-              var titles = JSON.parse(this.formats).lnktitles
-				  titles.map ( title => lnkMayBe = String(lnkMayBe).linkifyOne(title) )	
-            } else {
-				  lnkMayBe = String(lnkMayBe).linkify()
-			   }
-            lnkMayBe = lnkMayBe.linkifyItems()
-			   return (typeof(lnkMayBe) != "undefined") ? lnkMayBe : ''
-         }
-     }
      , model: {
         prop: 'cnt'
       }
@@ -40,11 +27,8 @@
           onBlur(ev) {
               var el = ev.target
               var newVal  = ev.target.value
-              //this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
-              //this.displayEmptyCellIfNullOrUndefined()
-              console.log ( "onBlur")
-         	  this.$store.dispatch("updateItem", newVal);
-              console.log ( "onBlur")
+              var payload = {'eid': this.$el.id, 'newVal': newVal}
+         	  this.$store.dispatch("updateItem", payload);
           }
 		}
    })

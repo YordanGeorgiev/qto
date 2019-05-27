@@ -17,7 +17,7 @@
                   :title="'level:' + item.level + ' :: seq: ' + item.seq "
                   class="cls-context-menu-link">{{item.logical_order}} {{item.name}}</a>
             </h3>
-            <rgx-div :cnt="item.description" :formats="item.formats" class="cls_desc" :id="'dsc_<%= $item =%>-' + item.id">
+            <rgx-div :cnt="item.description" :formats="item.formats" class="cls_desc" :id="'dsc_description-' + item.id">
 				</rgx-div>
             <p v-if="item.src"><pre v-if="item.src" tabindex="2" class="cls_src">{{item.src}}</pre></p>
             <div v-if="item.img_relative_path" class="cls_doc_img">
