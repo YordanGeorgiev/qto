@@ -1,0 +1,9 @@
+if(!Object.isNullOrEmpty) {
+    Object.isNullOrEmpty = function(s) {
+      if ( typeof (s) != "undefined" && this.cnt != null && String(this.cnt).trim() != ""){
+         return false
+      } else {
+         return true
+      }
+    };
+}
