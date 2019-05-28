@@ -34,6 +34,7 @@
    %= include 'js/global/get-server-data.func.js'
    %= include 'js/global/set-url-param.func.js'
    %= include 'js/global/linkifies.func.js'
+   %= include 'js/global/isNullOrEmpty.func.js'
    %= include 'pages/view-doc/js/snackbar.js'
    %= include 'pages/view-doc/js/right-click-menu.js'
    %= include 'pages/view-doc/components/rgx-div.js'

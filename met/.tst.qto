@@ -32,6 +32,7 @@ src/perl/qto/templates/js/global/get-url-params.func.js.html.ep
 src/perl/qto/templates/js/global/get-server-data.func.js.html.ep
 src/perl/qto/templates/js/global/set-url-param.func.js.html.ep
 src/perl/qto/templates/js/global/linkifies.func.js.html.ep
+src/perl/qto/templates/js/global/isNullOrEmpty.func.js.html.ep
 src/perl/qto/lib/Qto/Controller/View.pm
 src/perl/qto/t/lib/Qto/Controller/TestView.t
 src/perl/qto/templates/layouts/list.html.ep

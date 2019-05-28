@@ -19,9 +19,12 @@
             content: this.cnt
          }
 	  }
-     , mounted: function (){
-        this.$el.style.height = 'auto';
-        this.$el.style.height = this.$el.scrollHeight + 'px';
+     , mounted: function(){
+         if ( this.cnt ){
+            this.$el.style.height = this.$el.scrollHeight + 'px';
+         } else {
+            this.$el.style.height = '5px';
+         }
       }
      , methods: {
           onBlur(ev) {
