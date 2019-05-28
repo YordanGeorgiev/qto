@@ -39,7 +39,7 @@
     * [3.8.2. Error handling on db create error](#382-error-handling-on-db-create-error)
   * [3.9. ITEM EDIT ( UPDATE )](#39-item-edit-(-update-))
     * [3.9.1. Form edit](#391-form-edit)
-    * [3.9.2. In-line edit UPDATE )](#392-in-line-edit-update-))
+    * [3.9.2. In-line edit ( UPDATE )](#392-in-line-edit-(-update-))
       * [3.9.2.1. Table columns resizing](#3921-table-columns-resizing)
       * [3.9.2.2. Contents for the table's cells](#3922-contents-for-the-table's-cells)
       * [3.9.2.3. Successful execution](#3923-successful-execution)
@@ -70,7 +70,7 @@
 
 ### 1.1. Purpose
 The purpose of this  document is to describe all the features, functionalities and capabilities provided by a properly installed, configured and operated instance of the qto application from the point of view of the application end-user.
-This document is the CONTRACT between you as the potential, former or active user of an qto instance and the product owner of that instance. So should something here be described to work in a particular way, contrarian of your user experience, you should create an issue and assign it to your instance owner. 
+This document is the CONTRACT between you as the potential, former or active user of an qto instance and the product owner of that instance. Thus, should something here be described to work in a particular way, contrarian of your user experience, you should create an issue and assign it to your instance owner. 
 
 
     
@@ -86,22 +86,22 @@ This document is aimed for everyone, who shall, will or even would like to inter
     
 
 ### 1.4. Master storage and storage format
-The master storage of this document is the master branch of the qto release you are interested in. The main storage format is Markdown. 
+The master storage of this document is the _doc table of the production database of the instance you are using. 
 
     
 
 ### 1.5. Version control
-The contents of this document MUST be updated according to the EXISTING features, functionalities and capabilities of the qto version, in which this document residues
+The contents of this document MUST be updated according to the EXISTING features, functionalities and capabilities of the qto version, in which this document residues.
 
     
 
 ### 1.6. Process
-The qto provides a mean for tracking of this documentation contents to the source code per feature/functionality, thus should you find inconsistencies in the behavior of the application and the content of this document you should create a bug issue and assign it to the owner of your product instance.
+The qto provides a mean for tracking of this documentation contents to the source code per feature/functionality, thus should you find inconsistencies in the behaviour of the application and the content of this document you should create a bug issue and assign it to the owner of your product instance.
 
     
 
 ## 2. CONCEPTS
-This section describes the User Interface ( UI ) features of the qto application, which all ( for now ) are accessible from an internet browser accessing a running instance of the qto application. The following examples illustrate the concept:
+This section describes the User Interface ( UI ) features of the qto application, which are accessible from an internet browser accessing a running instance of the qto application
 
     
 
@@ -129,12 +129,12 @@ Note the upper left corner of the page contains the name of your current project
     http://host-name:3000/prd_aspark_starter/list/monthly_issues
 
 ### 2.3. Switch projects by the :to operator in the search-box
-If you type the ":to &lt;&lt;database-name&gt;&gt;" you will get a drop down which will list the projects databases , to which your instance has access to, by chosing the database from the list and hitting enter you will be redirected to the same url by on the different database.
+If you type the ":to &lt;&lt;database-name&gt;&gt;" you will get a drop down which will list the projects databases , to which your instance has access to, by choosing the database from the list and hitting enter you will be redirected to the same url by on the different database.
 
     
 
 ### 2.4. Switch items by using the :for operator in the search-box
-If you type the ":in &lt;&lt;item-name&gt;&gt;" you will get a drop down which will list the items , to which your instance has access to, by chosing the item from the list and hitting enter you will be redirected to the same url by on the different database.
+If you type the ":in &lt;&lt;item-name&gt;&gt;" you will get a drop down which will list the items , to which your instance has access to, by choosing the item from the list and hitting enter you will be redirected to the same url by on the different database.
 You can combine both the ":in &lt;&lt;db&gt;&gt;" and ":for &lt;&lt;item&gt;&gt;" operators at once. 
 
     
@@ -150,20 +150,20 @@ In the context of the qto's parley the "listing" is the ui list of control/(s) y
 The common listing syntax components are as follows:
 - web-host is the web-host the qto's web instances is accessible from
 - web-port - the web port the instance is accessible from 
-- proj-db-name is the name of the database of your project ( as the qto supports multiple projects , with multiple databases ... ) 
+- proj-db-name is the name of the database of your project ( as the qto supports multiple projects , with multiple databases ... )
 - list - is the name of the action to perform 
-- item is the name of the item which ui controls you want to list ( could be issues,problems,questions, etc.
-- ?&lt;&lt;params&gt;&gt; the additional url parameters used to control the look and behavior of the listing action, should the url params be omitted the full content of the item table with default ui look and behavior are displayed. 
+- item is the name of the item which ui controls you want to list ( could be issues, problems, questions, etc.
+- ?&lt;&lt;params&gt;&gt; the additional url parameters used to control the look and behaviour of the listing action, should the url params be omitted the full content of the item table with default ui look and behaviour are displayed. 
 
     http://host-name:3000/qto/list/monthly_issues
 
 #### 3.1.1. viewing the full content of the items
-You can quickly view the full content of each cell of the listing table by hovering with the mouse on top of it. Note that all the links in the content are replaced with clickable links in the tooltip as well as the internal links such as the following one : enduser_guide_doc-190214224314 ( which just refer to the upper title in this document 
+You can quickly view the full content of each cell of the listing table by hovering with the mouse on top of it. Note that all the links in the content are replaced with clickable links in the tooltip as well as the internal links such as the following one : enduser_guide_doc-190214224314 ( which just refer to the upper title in this document.
 
     
 
 #### 3.1.2. Successful execution
-You can use the pick=col1,col2,col3 url parameter to select for only desired attributes.
+You can use the pick=col1, col2, col3 url parameter to select for only desired attributes.
 You could filter the result the same way the filters for the select page work ( see bellow ). 
 
     
@@ -298,7 +298,7 @@ The whole table is easily scrollable whenever the cursor is on non-editable part
     
 
 #### 3.7.1. Navigability of the list page with the keyboard
-The order of the list-as-grid page has been arranged so that the ui user could cycle trough the whole table with the tab easily. 
+The order of the list-as-grid page has been arranged so that the ui user could cycle trough the whole table with the tab easily.
 
     
 
@@ -350,7 +350,7 @@ You open the form to edit an item from the id button on the left. A modal dialog
 
     
 
-#### 3.9.2. In-line edit UPDATE )
+#### 3.9.2. In-line edit ( UPDATE )
 The grid can be edited inline so that the data is updated to the database. White space in the cells is preserved. 
 To practice new items' creations updates and deletions to get confortable on the app's behaviour please use first the development instances of the qto project: 
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
@@ -359,12 +359,12 @@ http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/list/monthly_i
 
 ##### 3.9.2.1. Table columns resizing
 You can resize the columns of the tables to a max size of 500 pixels by dragging only one text area. Note however that the textarea will NOT be resized bigger than the maximum width of the current column … 
-For the estetics of the table a certain default values for certain columns' cotents widths are assumed.
+For the visual outlook of the table a certain default values for certain columns' contents widths are assumed.
 
     
 
 ##### 3.9.2.2. Contents for the table's cells
-The table's cells should accept any UTF-8 characters including html entities. The textarea's width should adjust automatically till the width of the widest cell in the table column. 
+The table's cells should accept any UTF-8 characters including html entities. The textarea's width should adjust automatically till the width of the widest cell in the table column.
 
     
 
@@ -381,7 +381,7 @@ On invalid input the data is not updated to the database and the old value in th
     
 
 ##### 3.9.2.5. Nulls handling
-Nulls handling is somewhat problematic in ui. For now the behavior by convention is to leave a nullable record in the database as null, whether the cell of the ui table is left empty ( white space chars are also considered empty)
+Nulls handling is somewhat problematic in ui. For now the behaviour by convention is to leave a nullable record in the database as null, whether the cell of the ui table is left empty ( white space chars are also considered empty)
 
     
 
@@ -405,7 +405,7 @@ On invalid input the data is not updated to the database and the old value in th
 
 ### 3.11. List as print-table page
 The list as print-table page is aimed at producing quickly refined result-set from the database for a further copy paste or even print to paper. 
-It has all the functionalities as the list as "table" page, without the filtering from the quick search box and without the ui for the pager and page-sizer -the url params for paging and page-sizing work, however. All the url params work as in the etable listing page. 
+It has all the functionalities as the list as "table" page, without the filtering from the quick search box and without the ui for the pager and page-sizer -the url params for paging and page-sizing work, however. All the url params work as in the grid listing page. 
 http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/list/yearly_issues?as=print-table&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
 
     
@@ -422,14 +422,14 @@ Whenever an error occurs the show right menu button does not occur and no docume
     <<web-host>>:<<web-port>>/<<database>>/view/<<table-name>>?as=doc
 
 ### 4.2. Normal page load
-When the page is loaded all the content of the document is presented / according to the urls params / which are applying the same filtering as in the list page , but on the hierarchichal data-set …
-The rigt menu, containing the table of contents of the document can be opened and closed and scrolled separately
+When the page is loaded all the content of the document is presented / according to the urls params / which are applying the same filtering as in the list page , but on the hierarchical data-set …
+The right menu, containing the table of contents of the document can be opened and closed and scrolled separately
 
 
     <<web-host>>:<<web-port>>/<<database>>/view/<<table-name>>?as=doc
 
 ### 4.3. The right click menu
-You can perform actions on any item by right-cliking the titles either from the document or fro mthe table of contents below. You can open and close the right menu from the open close links. You could navigate with the keyboard trough the right menu links too. 
+You can perform actions on any item by right-clicking the titles either from the document or from the table of contents below. You can open and close the right menu from the open close links. You could navigate with the keyboard trough the right menu links too. 
 Note that when you click on a link on the right menu the title of the item you clicked on is scrolled to the top of the page.
 
     

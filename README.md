@@ -25,9 +25,8 @@
 ## 1. WHY
 Why ?! Yet! Another App ?!
 
-Because software production should be efficient, yet smooth and interesting ...
-
-Because work should be inspiring and not overwhelming people. Because even good intentions without proper commitment, allocation and resourcing and most importantly, a mean for tracking advancement of an endeavor in open way reflecting the reality, might end-up making people less happy, when in fact a really simple solution could be applied for any bigger challenge requiring progress tracking, communication and coordination ... And tons of other reasons we all having been in project disasters know about ... Still here ?! Let's move on !
+Because work should be inspiring and not overwhelming people. 
+Because even good intentions without transparency, proper commitment, allocation and resourcing and most importantly, a mean for tracking advancement of an endeavour in open way reflecting the reality, might end-up making people less happy, when in fact a really simple solution could be applied for any bigger challenge requiring progress tracking, communication and coordination ... And tons of other reasons we all having been in project disasters know about ... Still here ?! Let's move on !
 
 
 Figure: 1 
@@ -38,8 +37,8 @@ the 7 main entities of the qto app](https://raw.githubusercontent.com/YordanGeor
     
 
 ## 2. SO, WHAT IS THIS ?!
-
-A generic postgres CRUDs ( s stands for search ) web based app for managing multiple databases from the same web application layer by means of simpliest possible UI and/or shell tools for xls export, Google sheets writes etc. An included example application is the "qto application", which is used to manage multiple projects' issues, including itself ;o). The full and extensive  http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/features_doc must contain all the features and functionalities of this released version. This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture and the Input-Output Controller Model architecture ( more about this in the http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/system_guide_doc , which is in a way a reflection of the simple axiom in IT - "if there is one there will be many" ...
+A generic postgres CRUDs ( s stands for search ) web based app for managing multiple databases from the same web application layer by means of simplest possible UI and/or shell tools for xls/md export, import etc. An included example application is the "qto application", which is used to manage multiple projects' issues, including itself ;o). 
+The full and extensive  http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/features_doc must contain all the features and functionalities of this released version. This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture, which is in a way a reflection of the simple axiom in IT - "if there is one there will be many" ...
 
     
 
@@ -73,7 +72,7 @@ You could:
     
 
 ### 2.4. Deployment and installation assistance
-We could provide you with free assistance for the deployment of the first instance in your organization, even we consider the existing documentation good enough to deploy the application only by following the instructions in the http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/installations_doc In the real IT life however the mealage always varies, hence this last "bonus offer".
+We could provide you with free assistance for the deployment of the first instance in your organisation, even we consider the existing documentation good enough to deploy the application only by following the instructions in the http://ec2-34-243-97-157.eu-west-1.compute.amazonaws.com:8080/qto/view/installations_doc In the real IT life however the milage always varies, hence this last "bonus offer".
 
 
     
@@ -143,8 +142,9 @@ Perl
 Mojolicious
 GNU Linux
 Vue
+FreeBSD
 
-Deep gratitudes and thanks to all those people ! This application aims to contain the best practices of our former colleagues and collaborators and co-travelers in life, which also deserve huge thanks for their support and contributions ! We tend to incorporate and re-use a lot of code snippets from stackoverflow and codepen, should you consider that you were the author of those code snippets and you deserve mentioning of the source please let us know ...
+Deep gratitudes and thanks to all those people ! This application aims to contain the best practices of our former colleagues and collaborators and fellow travellers in life, which also deserve huge thanks for their support and contributions ! We tend to incorporate and re-use a lot of code snippets from the Stackoverflow and Codepen sites, should you consider that you were the author of those code snippets and you deserve mentioning of the source please let us know ...
 
     
 
