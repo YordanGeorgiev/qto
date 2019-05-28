@@ -1,4 +1,4 @@
-#  ISSUE-TRACKER CONCEPTS
+#  QTO CONCEPTS
 * [1. INTRO](#1-intro)
   * [1.1. PURPOSE](#11-purpose)
   * [1.2. AUDIENCE](#12-audience)
