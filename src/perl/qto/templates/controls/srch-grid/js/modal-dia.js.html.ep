@@ -8,6 +8,7 @@ Vue.component('modal', {
 			, cid: ''
 			, itemId: null
 			, itemData: null
+         , count:0
 		}
 	}
 	, mounted () {
@@ -17,11 +18,18 @@ Vue.component('modal', {
 	}
 	, created() {
 	}
+	, updated() {
+        if ( this.count == 0 ) {
+           document.getElementById("modal-dia-title-id").focus()
+           document.getElementById("modal-dia-title-id").click()
+           this.count++
+        }
+	}
 	, methods: {
       toTable: function() {
          var html = '<table>';
          for (const prop in this.itemData) {
-            html += '<tr>';
+            html += '<tr tabindex="0">';
             if (this.itemData.hasOwnProperty(prop)) {
               html += '<td>' + prop + '</td>'
               html += '<td>' + this.itemData[prop] + '</td>'
