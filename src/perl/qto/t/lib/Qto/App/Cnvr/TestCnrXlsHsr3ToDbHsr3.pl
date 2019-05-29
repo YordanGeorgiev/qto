@@ -22,7 +22,7 @@ for example:
 doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/qto/ysg-issues.dev.host-name.cnf'  ; 
 croak $m unless ( defined ( $ENV{ "qto_project" } )) ; 
 
-my $objInitiator 				= 'Qto::App::Utils::Initiator'->new(1);	
+my $objInitiator 				= 'Qto::App::Utils::Initiator'->new(0);	
 my $appConfig					= {} ;
 $appConfig                 = $objInitiator->get('AppConfig');
 my $objConfigurator
