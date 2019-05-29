@@ -51,9 +51,16 @@
                console.log ( "mutation: UPDATE_ITEM: called ") //todo:ysg
                var arr = payload.eid.split('-')
                var dbid = arr[1]
+               var dsc_col = arr[0]
+               var col = dsc_col.split('_')[1]
                var index = state.items.findIndex(item => item.id == dbid)
-               state.items[index].description = payload.newVal
-               // console.log ( state.items )
+               if ( col === 'description' ) {
+                  state.items[index].description = payload.newVal
+               } else if ( col === 'src' ) {
+                  state.items[index].src= payload.newVal
+               } else {
+                  console.error ( "unknown col for dbid: " + String(dbid ) )
+               }
            }
     };
 
