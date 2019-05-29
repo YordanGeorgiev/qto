@@ -201,6 +201,7 @@ cnf/qto.dev.host-name.cnf
 cnf/qto.tst.host-name.cnf
 cnf/qto.prd.host-name.cnf
 cnf/qto.host-name.cnf
+cnf/bash/.profile_opts.host-name
 # ---
 src/bash/lib/.bash_funcs.host-name
 # --
@@ -813,6 +814,7 @@ src/perl/qto/public/dat/tmp/xls/1
 src/perl/qto/templates/controls/site/app_name_tooltip.html.ep
 # ---
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
+src/perl/qto/lib/auto/Qto/App/IO/Out/WtrParadoxMd/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HLSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WebSocketPoc/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
