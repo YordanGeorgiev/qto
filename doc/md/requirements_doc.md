@@ -75,11 +75,14 @@ This document could be of interest for any potential and actual users of the app
 
 ### 1.3. Related documentation
 This document is part of the QTO application documentation-set, which contains the following documents:
+ - ReadMe - the initial landing readme doc for the project
  - UserStories - the collection of user-stories used to describe "what is desired"
+ - Requirements - the structured collection of the requirements 
  - SystemGuide - architecture and System description
  - DevOps Guide - a guide for the developers and devops operators
  - Installation Guide - a guide for installation of the application
- - Features and Functionalities - description of the current features and functionalities
+ - End-User Guide - the guide for the usage of the UI ( mainly ) for the end-users
+ - Concepts - the concepts doc 
 
 All the documents should be updated and redistributed in combination of the current version of the application and should be found under the following directories:
 doc/md
@@ -151,7 +154,7 @@ The developers should be able to create the database via a single oneline call
     
 
 #### 3.1.2. Table(s) load via aa single one-liner
-The developers should be able to load a table to the database via a single oneline call 
+The developers should be able to load a table to the database via a single oneline call.
 
     
 
@@ -245,7 +248,7 @@ Each deployed and running instance of the qto must "know" its own environment ty
     
 
 ### 7.2. Cross running between instances of different types
-The application layers should support as much as possible cross running between different application layer instances and database instances - for example a dev application layer should be able to fetch data from a prd database. 
+The application layers should support as much as possible cross running between different application layer instances and database instances - for example a dev application layer should be able to fetch data from a prd database.
 
     
 
@@ -285,7 +288,8 @@ A well operated instance of the qto application should have security correspondi
     
 
 ### 9.1. Authentication
-Users should be authenticated via a standard implementation of web tokens. 
+The Users should be authenticated by means of the most simplest OAauth2.0 authentication flow: 
+https://tools.ietf.org/html/rfc6749#section-5.1
 
     
 

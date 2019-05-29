@@ -33,7 +33,7 @@ The purpose of this guide is to provide description of the existing issue-tracke
     
 
 ### 1.2. Audience
-Any givien instance of the issue-tracker should have ONE and only ONE person which is responsible at the end for the funtioning of THIS instance - so think carefully before attempting to take ownership for an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instannce. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no service level agreement, nor even promise to help. 
+Any givien instance of the qto should have ONE and only ONE person which is responsible at the end for the funtioning of THIS instance - so think carefully before attempting to take ownership for an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instance. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no service level agreement, nor even promise to help. 
 
     
 
@@ -43,7 +43,7 @@ Any givien instance of the issue-tracker should have ONE and only ONE person whi
     
 
 ### 2.1. IOCM architecture definition
-The Input-Output Control Model architecture is and application architecture providing the highest possible abstraction for allmost any software artifact, by dividing its components based on their abstract responsibilities, such as Input, Output , Control and Model. 
+The Input-Output Control Model architecture is and application architecture providing the highest possible abstraction for almost any software artefact, by dividing its main executing components based on their abstract responsibilities - Input, Output , Control and Model. 
 
     
 
@@ -53,8 +53,8 @@ The Control components control the control flow in the application. The instanti
     
 
 #### 2.1.2. The Model components
-The model components model the DATA of the application - that is no configuration, nor control flow nor anything else should be contained wihing the model. 
-Should you encounter data, which is not modelled yet , you should expand the Model and NOT provide differrent data storage and passing techniques elsewhere in the code base ... 
+The model components model the DATA of the application - that is no configuration, nor control flow nor anything else should be contained wihin the model. 
+Should you encounter data, which is not modelled yet , you should expand the Model and NOT provide different data storage and passing techniques elsewhere in the code base ... 
 
     
 
@@ -74,12 +74,12 @@ The Converters apply usually the business logic for converting the input data fr
     
 
 ### 2.2. Multi-instance setup
-The multi-instance setup refers to the capability of any installed and setup instance of the issue-tracker application to "know" its version , environment type  - developement , testing and production ) and owner.
+The multi-instance setup refers to the capability of any installed and setup instance of the qto application to "know" its version , environment type  - development , testing and production ) and owner.
 
     
 
 #### 2.2.1. Multi-environment naming convention
-Each database used by the issue-tracker application has an &lt;&lt;environment abbreviation&gt;&gt; suffix refering to its environment type. Running application layers against different db versions should be supported as much as possible.  
+Each database used by the qto application has an &lt;&lt;environment abbreviation&gt;&gt; suffix referring to its environment type. Running application layers against different db versions should be supported as much as possible.  
 
     
 
@@ -94,7 +94,7 @@ The Mojolicious Web Framework runs on top of a perl instance, which serves the b
     
 
 #### 2.3.2. Back-End
-The id's of the tables which ARE VISIBLE to the end users ui are big integers, which are formed by the concatenation of the year,month,day,hour,minutes and second in which the row in the table is created. 
+The id's of the tables which ARE VISIBLE to the end users ui are big integers, which are formed by the concatenation of the year, month, day, hour, minutes and second in which the row in the table is created. 
 
     
 
