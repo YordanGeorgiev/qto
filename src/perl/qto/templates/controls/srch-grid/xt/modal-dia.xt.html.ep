@@ -1,13 +1,14 @@
 <script type="text/x-template" id="modal-tmpl">
   <transition name="modal">
     <div id="div-modal-tmpl" class="modal-mask">
-      <div class="modal-wrapper" v-on:click="$emit('close')">
+      <div class="modal-wrapper">
         <div class="modal-container">
-          <button class="cls-modal-close-btn" v-on:click="$emit('close')">Close</button>
-          <div name="header">{{this.$attrs.id.replace('dia-','')}}</div>
+        <input tabindex="0" id="modal-dia-title-id" :value="this.$attrs.id.replace('dia-','')" readonly></input>
+          <div name="header"></div>
           <div name="content" v-html="cnt"> </div>
         </div>
       </div>
+          <button id="modal-close-btn" v-on:click="$emit('close')" tabindex="0">&nbsp;&times;&nbsp;</button>
     </div>
   </transition>
 </script>
