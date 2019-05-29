@@ -19,7 +19,10 @@
             </h3>
             <rgx-div :cnt="item.description" :formats="item.formats" class="cls_desc" :id="'dsc_description-' + item.id">
 				</rgx-div>
-            <p v-if="item.src"><pre v-if="item.src" tabindex="2" class="cls_src">{{item.src}}</pre></p>
+            <p v-if="item.src">
+            <rgx-div :cnt="item.src" :formats="item.formats" class="cls_src" :id="'src_src-' + item.id">
+				</rgx-div>
+            </p>
             <div v-if="item.img_relative_path" class="cls_doc_img">
                <p class="cls_fig"> {{ item.img_name }}  </p>
                <img :src="item.img_relative_path" :style="item.img_style"></img>
