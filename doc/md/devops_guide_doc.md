@@ -24,15 +24,13 @@
   * [3.3. BACKUP A DATABASE TABLE](#33-backup-a-database-table)
   * [3.4. RESTORE A DATABASE TABLE](#34-restore-a-database-table)
 * [4. USAGE SCENARIOS](#4-usage-scenarios)
-  * [4.1. SHELL BASED ACTIONS USAGE](#41-shell-based-actions-usage)
-  * [4.2. RUN INCREASE-DATE ACTION](#42-run-increase-date-action)
-  * [4.3. RUN XLS-TO-DB ACTION](#43-run-xls-to-db-action)
-  * [4.4. RUN DB-TO-TXT ACTION](#44-run-db-to-txt-action)
-  * [4.5. LOAD XLS ISSUES TO DB AND FROM DB TO TXT FILES](#45-load-xls-issues-to-db-and-from-db-to-txt-files)
-  * [4.6. RUN THE QTO FILE TO DB LOAD](#46-run-the-qto-file-to-db-load)
-  * [4.7. VERIFY THE INSERTED DATA FROM THE DB](#47-verify-the-inserted-data-from-the-db)
-  * [4.8. WEB BASED ROUTES USAGE](#48-web-based-routes-usage)
-  * [4.9. RUN THE HTTP://&LT;&LT;WEB-HOST&GT;&GT;:&LT;&LT;WEB-PORT&GT;&GT;/&LT;&LT;PROJ-DB&GT;&GT;/GET/&LT;&LT;TABLE&GT;&GT;/&LT;&LT;GUID&GT;&GT; ROUTE](#49-run-the-http//web-hostweb-port/proj-db/get/table/guid-route)
+  * [4.1. RUN INCREASE-DATE ACTION](#41-run-increase-date-action)
+  * [4.2. RUN XLS-TO-DB ACTION](#42-run-xls-to-db-action)
+  * [4.3. RUN DB-TO-TXT ACTION](#43-run-db-to-txt-action)
+  * [4.4. LOAD XLS ISSUES TO DB AND FROM DB TO TXT FILES](#44-load-xls-issues-to-db-and-from-db-to-txt-files)
+  * [4.5. RUN THE QTO FILE TO DB LOAD](#45-run-the-qto-file-to-db-load)
+  * [4.6. VERIFY THE INSERTED DATA FROM THE DB](#46-verify-the-inserted-data-from-the-db)
+  * [4.7. RUN THE HTTP://&LT;&LT;WEB-HOST&GT;&GT;:&LT;&LT;WEB-PORT&GT;&GT;/&LT;&LT;PROJ-DB&GT;&GT;/GET/&LT;&LT;TABLE&GT;&GT;/&LT;&LT;GUID&GT;&GT; ROUTE](#47-run-the-http//web-hostweb-port/proj-db/get/table/guid-route)
 * [5. NAMING CONVENTIONS](#5-naming-conventions)
   * [5.1. DIRS NAMING CONVENTIONS](#51-dirs-naming-conventions)
   * [5.2. ROOT DIRS NAMING CONVENTIONS](#52-root-dirs-naming-conventions)
@@ -45,40 +43,38 @@
   * [6.6. TESTING AND INTEGRATIONS IN THE TST BRANCH](#66-testing-and-integrations-in-the-tst-branch)
   * [6.7. QUALITY ASSURANCE IN THE QAS BRANCH](#67-quality-assurance-in-the-qas-branch)
   * [6.8. PRODUCTION IN THE PRD BRANCH](#68-production-in-the-prd-branch)
-* [7. SCENARIOS](#7-scenarios)
-  * [7.1. A SMALL TEAM PROJECT HOURS TRACKING SCENARIO](#71-a-small-team-project-hours-tracking-scenario)
-* [8. WAY OF WORKING](#8-way-of-working)
-  * [8.1. DEFINITION OF DONE](#81-definition-of-done)
-  * [8.2. E-MAIL COMMUNICATION](#82-e-mail-communication)
-  * [8.3. CHAT / IRC](#83-chat-/-irc)
-  * [8.4. DOCUMENTATION](#84-documentation)
-* [9. FEATURE IMPLEMENTATION WORKFLOW](#9-feature-implementation-workflow)
-  * [9.1. ISSUE CREATION](#91-issue-creation)
-  * [9.2. USER-STORY CREATION](#92-user-story-creation)
-  * [9.3. REQUIREMENTS CREATION](#93-requirements-creation)
-  * [9.4. PROBLEM REGISTRATION](#94-problem-registration)
-  * [9.5. FEATURE BRANCH CREATION](#95-feature-branch-creation)
-  * [9.6. CREATE A TEST-ENTRY POINT](#96-create-a-test-entry-point)
-  * [9.7. IMPLEMENTATION OF PROOF OF CONCEPT](#97-implementation-of-proof-of-concept)
-  * [9.8. PROTOTYPE IMPLEMENTATION](#98-prototype-implementation)
-  * [9.9. UNIT AND / OR INTEGRATION TEST CREATION](#99-unit-and-/-or-integration-test-creation)
-  * [9.10. IMPLEMENTATION ](#910-implementation-)
-  * [9.11. DEPLOYMENT AND TEST TO THE TEST ENVIRONMENT](#911-deployment-and-test-to-the-test-environment)
-  * [9.12. DEPLOYMENT AND TEST TO THE PRODUCTION ENVIRONMENT](#912-deployment-and-test-to-the-production-environment)
-  * [9.13. QUALITY ASSURANCE ITERATION](#913-quality-assurance-iteration)
-  * [9.14. DOD CHECK-LIST WALKTHROUGH](#914-dod-check-list-walkthrough)
-  * [9.15. THE FEATURE OR FUNCTIONALITY CURRENT DESCRIPTION IS ADDED IN THE DOCS](#915-the-feature-or-functionality-current-description-is-added-in-the-docs)
-  * [9.16. THE RELATED REQUIREMENT IS ADDED IN THE REQUIREMENTS DOCUMENT](#916-the-related-requirement-is-added-in-the-requirements-document)
-  * [9.17. AT LEAST 2 TIMES PASSED UNIT TESTS RUN IN EACH ENVIRONMENT INSTANCE](#917-at-least-2-times-passed-unit-tests-run-in-each-environment-instance)
-  * [9.18. AT LEAST 2 TIMES PASSED INTEGRATION TESTS RUN IN EACH ENVIRONMENT INSTANCE](#918-at-least-2-times-passed-integration-tests-run-in-each-environment-instance)
-  * [9.19. DEPLOYMENT TO THE TEST ENVIRONMENT](#919-deployment-to-the-test-environment)
-  * [9.20. CHECK THAT ALL THE FILES IN THE DEPLOYMENT PACKAGE ARE THE SAME AS THOSE IN THE LATEST COMMIT OF THE DEV GIT BRANCH. ](#920-check-that-all-the-files-in-the-deployment-package-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
-  * [9.21. RESTART THE APPLICATION LAYER](#921-restart-the-application-layer)
-* [10. SYSTEM ADMINISTRATION AND MAINTENANCE OPERATIONS](#10-system-administration-and-maintenance-operations)
-  * [10.1. KNOWN ISSUES AND WORKAROUNDS](#101-known-issues-and-workarounds)
-    * [10.1.1. Morbo is stuck](#1011-morbo-is-stuck)
-    * [10.1.2. Probable root cause](#1012-probable-root-cause)
-    * [10.1.3. Known solution and workaround](#1013-known-solution-and-workaround)
+* [7. WAY OF WORKING](#7-way-of-working)
+  * [7.1. DEFINITION OF DONE](#71-definition-of-done)
+  * [7.2. E-MAIL COMMUNICATION](#72-e-mail-communication)
+  * [7.3. CHAT / IRC](#73-chat-/-irc)
+  * [7.4. DOCUMENTATION](#74-documentation)
+* [8. FEATURE IMPLEMENTATION WORKFLOW](#8-feature-implementation-workflow)
+  * [8.1. ISSUE CREATION](#81-issue-creation)
+  * [8.2. USER-STORY CREATION](#82-user-story-creation)
+  * [8.3. REQUIREMENTS CREATION](#83-requirements-creation)
+  * [8.4. PROBLEM REGISTRATION](#84-problem-registration)
+  * [8.5. FEATURE BRANCH CREATION](#85-feature-branch-creation)
+  * [8.6. CREATE A TEST-ENTRY POINT](#86-create-a-test-entry-point)
+  * [8.7. IMPLEMENTATION OF PROOF OF CONCEPT](#87-implementation-of-proof-of-concept)
+  * [8.8. PROTOTYPE IMPLEMENTATION](#88-prototype-implementation)
+  * [8.9. UNIT AND / OR INTEGRATION TEST CREATION](#89-unit-and-/-or-integration-test-creation)
+  * [8.10. IMPLEMENTATION ](#810-implementation-)
+  * [8.11. DEPLOYMENT AND TEST TO THE TEST ENVIRONMENT](#811-deployment-and-test-to-the-test-environment)
+  * [8.12. DEPLOYMENT AND TEST TO THE PRODUCTION ENVIRONMENT](#812-deployment-and-test-to-the-production-environment)
+  * [8.13. QUALITY ASSURANCE ITERATION](#813-quality-assurance-iteration)
+  * [8.14. DOD CHECK-LIST WALKTHROUGH](#814-dod-check-list-walkthrough)
+  * [8.15. THE FEATURE OR FUNCTIONALITY CURRENT DESCRIPTION IS ADDED IN THE DOCS](#815-the-feature-or-functionality-current-description-is-added-in-the-docs)
+  * [8.16. THE RELATED REQUIREMENT IS ADDED IN THE REQUIREMENTS DOCUMENT](#816-the-related-requirement-is-added-in-the-requirements-document)
+  * [8.17. AT LEAST 2 TIMES PASSED UNIT TESTS RUN IN EACH ENVIRONMENT INSTANCE](#817-at-least-2-times-passed-unit-tests-run-in-each-environment-instance)
+  * [8.18. AT LEAST 2 TIMES PASSED INTEGRATION TESTS RUN IN EACH ENVIRONMENT INSTANCE](#818-at-least-2-times-passed-integration-tests-run-in-each-environment-instance)
+  * [8.19. DEPLOYMENT TO THE TEST ENVIRONMENT](#819-deployment-to-the-test-environment)
+  * [8.20. CHECK THAT ALL THE FILES IN THE DEPLOYMENT PACKAGE ARE THE SAME AS THOSE IN THE LATEST COMMIT OF THE DEV GIT BRANCH. ](#820-check-that-all-the-files-in-the-deployment-package-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
+  * [8.21. RESTART THE APPLICATION LAYER](#821-restart-the-application-layer)
+* [9. SYSTEM ADMINISTRATION AND MAINTENANCE OPERATIONS](#9-system-administration-and-maintenance-operations)
+  * [9.1. KNOWN ISSUES AND WORKAROUNDS](#91-known-issues-and-workarounds)
+    * [9.1.1. Morbo is stuck](#911-morbo-is-stuck)
+    * [9.1.2. Probable root cause](#912-probable-root-cause)
+    * [9.1.3. Known solution and workaround](#913-known-solution-and-workaround)
 
 
 
@@ -98,13 +94,13 @@ Any given instance of the qto should have ONE and only ONE person which is respo
 
 ### 1.2. Attempt for 100% test coverage to achieve reliability
 The more you increase your test coverage the greater the confidence that the code will work as expected. 
-Do not write a single function without first implementing the testing call for that function - this has been proven really, really difficult, yet the more features are added the less the time wasted in troubleshooting of bugs and un-expected behavior when proper testing is implemented. 
+Do not write a single function without first implementing the testing call for that function - this has been proven really, really difficult, yet the more features are added the less the time wasted in troubleshooting of bugs and un-expected behaviour when proper testing is implemented. 
 Testing ensures the consistency and future expandability of the functionalities. 
 
     
 
 ### 1.3. It should just work
-Any instance of the qto should simply work as promised. No less no more. 
+Any instance of the qto should simply work as promised - no less, no more. 
 Any instance is the combination of code, configurations, binaries in the System and data - that is the instance you are using should just work for the set of functionalities promised. 
 
     
@@ -115,7 +111,7 @@ All the names used in the code and the configurations MUST BE human readable and
     
 
 ### 1.5. Be user-friendly to all
-Especially to technical personnel, as you cannot achieve user-friendliness for the end-users unless your developers and technical personnel are happy while interacting with your artifacts. 
+Especially to technical personnel, as you cannot achieve user-friendliness for the end-users unless your developers and technical personnel are happy while interacting with your artefacts. 
 
     
 
@@ -125,7 +121,7 @@ Things should be as simple as possible, but not simpler - if Einstein said it it
     
 
 ### 1.7. Do not allow broken windows
-A broken windows is any peace of code or documentation which is hanging around not included in the integration tests suite and not matching the most up-to-date standars for work deliverables. Either bring it up to the standard level or get rid of it. 
+A broken windows is any peace of code or documentation which is hanging around not included in the integration tests suite and not matching the most up-to-date standards for work deliverables. Either bring it up to the standard level or get rid of it. 
 
     
 
@@ -162,7 +158,7 @@ To check the port on which it is listening issue:
 
 #### 2.1.5. Check the postgres status
 Check the postgres status.
-Check the port to which the postres is running with this command:
+Check the port to which the Postgres is running with this command:
 
     sudo /etc/init.d/postgresql status
     
@@ -185,7 +181,7 @@ To start the application layer in development mode use the morbo command ( debug
     bash src/bash/qto/qto.sh -a mojo-morbo-start
 
 #### 2.2.2. stop the application layer
-To stop the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern 
+To stop the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern.
 
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-stop
     
@@ -241,18 +237,13 @@ You restore a database table by first running the pgsql scripts of the project d
 
     
 
-### 4.1. Shell based actions usage
-
-
-    
-
-### 4.2. Run increase-date action
+### 4.1. Run increase-date action
 You track the issues of your projects by storing them into xls files in "daily" proj_txt dirs. 
-Each time the day changes by running the increase-date action you will be able to clone the data of the previous date and start working on the current date. 
+Each time the day changes by running the increase-date action you will be able to clone the data of the previous date and start working on the current date.
 
     bash src/bash/qto/qto.sh -a increase-date
 
-### 4.3. Run xls-to-db action
+### 4.2. Run xls-to-db action
 You insert the date of the daily , weekly , monthly or yearly issues from the daily input excel file(s) by running the xls-to-db action. 
 If you have the guid column with uuid's than this will be upsert and not bare insert.
 You should be able to update only non-nullable column by reducing the number of columns in your xls sheet.
@@ -261,12 +252,12 @@ You should be able to update only non-nullable column by reducing the number of 
     export do_truncate_tables=1 ;
     bash src/bash/qto/qto.sh -a xls-to-db
 
-### 4.4. Run db-to-txt action
+### 4.3. Run db-to-txt action
 The db-to-txt action converts your db tables into txt files by using "smart" formatting rules. This feature is deprecated and should work only for tables having the same attributes set as the "issues" tables. 
 
     bash src/bash/qto/qto.sh -a db-to-txt
 
-### 4.5. Load xls issues to db and from db to txt files
+### 4.4. Load xls issues to db and from db to txt files
 to load xls issues to db and from db to txt files
 
     bash src/bash/qto/qto.sh -a xls-to-db -a db-to-txt 
@@ -275,7 +266,7 @@ to load xls issues to db and from db to txt files
     for period in `echo daily weekly monthly yearly`; do export period=$period ; 
     bash src/bash/qto/qto.sh -a xls-to-db -a db-to-txt ; done ;
 
-### 4.6. Run the qto file to db load
+### 4.5. Run the qto file to db load
 Run the qto file to db load 
 
     # ensure the following actions will be tested
@@ -287,18 +278,13 @@ Run the qto file to db load
     # test those uncommented actions
     bash src/bash/qto/test-qto.sh
 
-### 4.7. Verify the inserted data from the db
+### 4.6. Verify the inserted data from the db
 Verify the inserted data from the db as follows:
 
     # check that the rows where inserted
     echo 'SELECT * FROM issue ; ' | psql -d dev_qto
 
-### 4.8. web based routes usage
-
-
-    
-
-### 4.9. Run the http://&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;proj-db&gt;&gt;/get/&lt;&lt;table&gt;&gt;/&lt;&lt;guid&gt;&gt; route
+### 4.7. Run the http://&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;proj-db&gt;&gt;/get/&lt;&lt;table&gt;&gt;/&lt;&lt;guid&gt;&gt; route
 Load a table with guid's.
 Check a single item with your browser, for example:
 http://doc-pub-host:3000/dev_stockit_issues/get/companies/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
@@ -311,6 +297,9 @@ http://doc-pub-host:3000/dev_stockit_issues/get/companies/727cf807-c9f1-446b-a7f
     
     # verify the data
     psql -d $db_name -c "SELECT * FROM company_eps "
+    
+    
+    
 
 ## 5. NAMING CONVENTIONS
 
@@ -382,29 +371,19 @@ The prd branch is the one deployed to the production environment. This code is N
 
     
 
-## 7. SCENARIOS
-
-
-    
-
-### 7.1. A small team project hours tracking scenario
-This scenario describes the steps and processes, which could be implemented to achieve a small team ( 3-10 ) members issue-tracking with hours reporting by using the issue-handler combined with Google Cloud authentication and storage.
-
-    
-
-## 8. WAY OF WORKING
+## 7. WAY OF WORKING
 This section describes the way of working within a team working on the qto project. 
 The work on the qto project is conducted by using the Scrum methodology, thus the Scrum
 
     
 
-### 8.1. Definition of Done
+### 7.1. Definition of Done
 Each issue must have a tangible artifact. An issue without tangible artifact is a thought thrown in the air.
 The DoD must be iterated and updated during each Sprint Review. 
 
     
 
-### 8.2. E-mail communication
+### 7.2. E-mail communication
 Do not use e-mail communication for code style, testing, developing etc. Issues which could be achieved with the code review interface of the source code management system. 
 Before writing an e-mail think first could you find a way to avoid writing it at all. 
 Do not expect answer of your e-mail within 2 hours. 
@@ -412,29 +391,29 @@ Use e-mail when you have to get an written evidence on agreed matters, which mig
 
     
 
-### 8.3. Chat / IRC
+### 7.3. Chat / IRC
 Should you want a quicker respond than 2 hours use thre chat tool
 
     
 
-### 8.4. Documentation
+### 7.4. Documentation
 Undocumented feature is not a feature. 
 
     
 
-## 9. FEATURE IMPLEMENTATION WORKFLOW
+## 8. FEATURE IMPLEMENTATION WORKFLOW
 This section describes the common workflow for implementing a feature. 
 As in other places the main principle to follow is "use common sense" , thus try to follow this workflow for feature implementation, but challenge it as soon as it defies the common sense. 
 
     
 
-### 9.1. Issue creation
+### 8.1. Issue creation
 Even if you do not have a defined documentation artifact - create a new issue, which could be the start for a an action affecting the run-state, configuration , data , features and functionalities or other aspects of the qto application. 
 An issue could be a bug, a request for a feature or even simply an undefined combination of problems and solution which could quickly be formalized by defining a new requirement, another issue, feature-request
 
     
 
-### 9.2. User-Story creation
+### 8.2. User-Story creation
 Use the following template while creating the user story:
 As an &lt;&lt;role&gt;&gt;
 In order to &lt;&lt;achieve something&gt;&gt; 
@@ -442,17 +421,17 @@ I wanto to be able &lt;&lt;action-description&gt;&gt;
 
     
 
-### 9.3. Requirements creation
+### 8.3. Requirements creation
 Define a formal requirement as soon as possible. 
 
     
 
-### 9.4. Problem registration
+### 8.4. Problem registration
 Problems are usually entities which last for longer time period. 
 
     
 
-### 9.5. Feature branch creation
+### 8.5. Feature branch creation
 Create the feature branch by using the following naming convention:
  - dev--&lt;&lt;short-feature-title&gt;&gt;
 
@@ -466,32 +445,33 @@ Create the feature branch by using the following naming convention:
     remotes/origin/master
     
 
-### 9.6. Create a test-entry point
+### 8.6. Create a test-entry point
 Even the smallest proof of concept needs a small test-entry point. Start always with the testing and the testing scalability in mind. 
 
     
 
-### 9.7. Implementation of Proof of Concept
+### 8.7. Implementation of Proof of Concept
+Aim to create a small POC for the new concept, feature or functionality - for example a page having a lot of hardcoding, which constrains the scope for ONLY this new thing. 
+Try however to use the same naming convention, and implement with future integrations within the end truly dynamic code. 
+
+    
+
+### 8.8. Prototype implementation
+The same instructions as the POC apply, but the prototype contains a certain and broader level of integration with the dynamic parts of the System.
+
+    
+
+### 8.9. Unit and / or integration test creation
 
 
     
 
-### 9.8. Prototype implementation
-
-
-    
-
-### 9.9. Unit and / or integration test creation
-
-
-    
-
-### 9.10. Implementation 
+### 8.10. Implementation 
 Implement by quick unit test runs. Constantly improve both the code , configuration changes and the test code. 
 
     
 
-### 9.11. Deployment and test to the test environment
+### 8.11. Deployment and test to the test environment
 Deploy to the test environment. 
 
     # deploy to the tst environment
@@ -499,46 +479,45 @@ Deploy to the test environment.
     
     # go to the product instance dir of the tst env for this version
     cd ../qto.<<version>>.tst.<<owner>>
-    # run the integration tests
-    bash src/bash/qto/qto.sh -a run-perl-integration-tests
-    
+    bash src/bash/qto/qto.sh -a run-integration-tests
+    bash src/bash/qto/qto.sh -a run-functional-tests
 
-### 9.12. Deployment and test to the production environment
-Repeat the same to the production environment. As the current version is usually work in progress your stable version will be one level bellow and thanks to the architecture of the tool you could test in the production environment ( as soon as you have proper configuration ) 
-
-    
-
-### 9.13. Quality assurance iteration
-This phase might be longer depending on the feature. Some of the features stay in quality assurance mode EVEN if they have been deployed to production 
+### 8.12. Deployment and test to the production environment
+Repeat the same to the production environment. As the current version is usually work in progress your stable version will be one level bellow and thanks to the architecture of the tool you could test in the production environment ( as soon as you have proper configuration ).
 
     
 
-### 9.14. DoD check-list walkthrough
-Perform the DoD checklist as follows
+### 8.13. Quality assurance iteration
+This phase might be longer depending on the feature. Some of the features stay in quality assurance mode EVEN if they have been deployed to production.
 
     
 
-### 9.15. The feature or functionality current description is added in the docs
+### 8.14. DoD check-list walkthrough
+Perform the DoD checklist as follows.
+
+    
+
+### 8.15. The feature or functionality current description is added in the docs
 The feature or functionality current description is added in the Features and Functionalities document. 
 
     
 
-### 9.16. The related requirement is added in the requirements document
+### 8.16. The related requirement is added in the requirements document
 The related requirement is added in the requirements document - there might be one or more requirements added. 
 
     
 
-### 9.17. At least 2 times passed unit tests run in each environment instance
+### 8.17. At least 2 times passed unit tests run in each environment instance
 At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. 
 
     
 
-### 9.18. At least 2 times passed integration tests run in each environment instance
+### 8.18. At least 2 times passed integration tests run in each environment instance
 At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. 
 
     
 
-### 9.19. Deployment to the test environment
+### 8.19. Deployment to the test environment
 Deploy to the test environment as follows:
 
     # deploy to the tst environment
@@ -548,7 +527,7 @@ Deploy to the test environment as follows:
     cd ../qto.<<version>>.tst.<<owner>>
     
 
-### 9.20. Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. 
+### 8.20. Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. 
 Deploy to the test environment as follows:
 
     # deploy to the tst environment
@@ -558,22 +537,22 @@ Deploy to the test environment as follows:
     cd ../qto.<<version>>.tst.<<owner>>
     
 
-### 9.21. restart the application layer
+### 8.21. restart the application layer
 Well just chain the both commands. 
 
     bash src/bash/qto/qto.sh -a mojo-morbo-stop ; bash src/bash/qto/qto.sh -a mojo-morbo-start
 
-## 10. SYSTEM ADMINISTRATION AND MAINTENANCE OPERATIONS
+## 9. SYSTEM ADMINISTRATION AND MAINTENANCE OPERATIONS
 
 
     
 
-### 10.1. Known issues and workarounds
+### 9.1. Known issues and workarounds
 
 
     
 
-#### 10.1.1. Morbo is stuck
+#### 9.1.1. Morbo is stuck
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -587,7 +566,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 10.1.2. Probable root cause
+#### 9.1.2. Probable root cause
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -601,7 +580,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 10.1.3. Known solution and workaround
+#### 9.1.3. Known solution and workaround
 List the running perl processes which run the morbo and kill the instances
 
     ps -ef | grep -i perl
