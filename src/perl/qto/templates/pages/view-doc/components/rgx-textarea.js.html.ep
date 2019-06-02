@@ -1,0 +1,55 @@
+  const RgxTextArea = Vue.component ('rgx-textarea', {
+     template: `<textarea v-bind:id="id" @blur="onBlur" v-bind:formats="formats" v-on:keyup.esc="revertChange" v-html="cnt"></textarea>`,
+     props: {
+		   id: {}
+         , cnt: {
+            twoWay: true
+            , default: ""
+         }
+         , formats: {
+            twoWay: true
+            , default: null
+         }
+	  }
+     , model: {
+        prop: 'cnt'
+      }
+     , data: function (){
+         return {
+            content: this.cnt
+            , oldData: ""
+         }
+	  }
+     , mounted: function(){
+         if ( this.cnt ){
+            this.$el.style.height = this.$el.scrollHeight + 'px';
+         } else {
+            this.$el.style.height = '5px';
+         }
+         this.displayEmptyCellIfNullOrUndefined()
+      }
+     , methods: {
+          onBlur(ev) {
+              var el = ev.target
+              var newVal  = ev.target.value
+              var payload = {'eid': this.$el.id, 'newVal': newVal}
+         	  this.$store.dispatch("updateItem", payload);
+              this.$el.style.height = "auto";
+          }
+         , focused(ev) {
+               var el = ev.target
+               this.oldData = ( typeof ev.target.value == "undefined" ) ? " " : ev.target.value
+          }
+          , revertChange() {
+              this.$el.value = this.oldData ; 
+              this.displayEmptyCellIfNullOrUndefined()
+          }
+          , displayEmptyCellIfNullOrUndefined() {
+               if ( typeof this.cnt == "undefined" || this.cnt === 'null' || this.cnt == null) {
+                  this.$el.innerText = " "
+                  this.$el.value = " "
+                  this.cnt = " "
+               }
+          }
+		}
+   })

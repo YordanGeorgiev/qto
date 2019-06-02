@@ -2,17 +2,9 @@
 
 umask 022    ;
 
-# print the commands
-# set -x
-# print each input line as well
-# set -v
-# exit the script if any statement returns a non-true return value. gotcha !!!
-# set -e
 trap 'doExit $LINENO $BASH_COMMAND; exit' SIGHUP SIGINT SIGQUIT
 
-
-
-#v0.1.8
+#v0.6.4
 #------------------------------------------------------------------------------
 # checks the perl syntax of the cgi perl modules
 #------------------------------------------------------------------------------
@@ -27,12 +19,12 @@ doCheckPerlSyntax(){
 	# remove all the empty dirs
 	# hmm should this be here ?!
 	# if it is here the auto lib dir was created warning appears
-	#find . -type d -empty -exec rm -fvr {} \;
+	# find . -type d -empty -exec rm -fvr {} \;
 	
 	declare -a ret
 	ret=0	
 
-	# foreach perl app in the src/perl dir
+	# foreach perl file in the src/perl dir
 	while read -r dir ; do 
 
 		echo -e "\n"
@@ -71,31 +63,5 @@ doCheckPerlSyntax(){
 
 	doLog "INFO == STOP  == doCheckPerlSyntax NO Errors !!!"
 }
-
-
-
-#
-#----------------------------------------------------------
-# Purpose:
-# check the perl syntax
-#----------------------------------------------------------
-#
-#----------------------------------------------------------
-# Requirements: bash , perl , ctags
-#
-#----------------------------------------------------------
-#
-#----------------------------------------------------------
-#  EXIT CODES
-# 0 --- Successfull completion
-# 2 --- Invalid options 
-# 3 --- deployment file not found
-# 4 --- perl syntax check error
-#----------------------------------------------------------
-#
-# VersionHistory:
-#------------------------------------------------------------------------------
-# 0.1.8 --- 2016-07-31 13:27:21
-
 
 # eof file: src/bash/qto/funcs/check-perl-syntax.func.sh

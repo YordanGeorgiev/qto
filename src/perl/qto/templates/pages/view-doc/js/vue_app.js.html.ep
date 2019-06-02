@@ -58,6 +58,8 @@
                   state.items[index].description = payload.newVal
                } else if ( col === 'src' ) {
                   state.items[index].src= payload.newVal
+               } else if ( col === 'name' ) {
+                  state.items[index].name= payload.newVal
                } else {
                   console.error ( "unknown col for dbid: " + String(dbid ) )
                }

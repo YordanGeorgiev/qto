@@ -5,7 +5,8 @@
          }
       }
       , components: {
-           'rgx-div': RgxDiv
+           'rgx-textarea': RgxTextArea
+           , 'rgx-input': RgxInput
       }
       , methods: {
          toggleItem: function(id) {

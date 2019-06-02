@@ -15,13 +15,12 @@
                   :href="'#<%= $item =%>-' + item.id">#</a>
                <a :id="'title-'+ item.id" :href="'#<%= $item =%>-' + item.id" 
                   :title="'level:' + item.level + ' :: seq: ' + item.seq "
-                  class="cls-context-menu-link">{{item.logical_order}} {{item.name}}</a>
+                  class="cls-context-menu-link">{{item.logical_order}}</a>
+               <rgx-input :id="'inp_name-' + item.id" :cnt="item.name" class="cls_title">{{item.name}}</rgx-input>
             </h3>
-            <rgx-div :cnt="item.description" :formats="item.formats" class="cls_desc" :id="'dsc_description-' + item.id">
-				</rgx-div>
+            <rgx-textarea :cnt="item.description" :formats="item.formats" class="cls_desc" :id="'dsc_description-' + item.id"/>
             <p v-if="item.src">
-            <rgx-div :cnt="item.src" :formats="item.formats" class="cls_src" :id="'src_src-' + item.id">
-				</rgx-div>
+               <rgx-textarea :cnt="item.src" :formats="item.formats" class="cls_src" :id="'src_src-' + item.id"/>
             </p>
             <div v-if="item.img_relative_path" class="cls_doc_img">
                <p class="cls_fig"> {{ item.img_name }}  </p>
