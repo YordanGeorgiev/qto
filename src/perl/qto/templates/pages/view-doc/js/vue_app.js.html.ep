@@ -48,21 +48,23 @@
                state.items.splice(index, 1);
            }
            , UPDATE_ITEM: (state, payload) => {
-               console.log ( "mutation: UPDATE_ITEM: called ") //todo:ysg
                var arr = payload.eid.split('-')
                var dbid = arr[1]
                var dsc_col = arr[0]
                var col = dsc_col.split('_')[1]
-               var index = state.items.findIndex(item => item.id == dbid)
+               var citems = state.items
+               var index = citems.findIndex(item => item.id == dbid)
                if ( col === 'description' ) {
                   state.items[index].description = payload.newVal
                } else if ( col === 'src' ) {
-                  state.items[index].src= payload.newVal
+                  state.items[index].src = payload.newVal
                } else if ( col === 'name' ) {
-                  state.items[index].name= payload.newVal
+                  state.items[index].name = payload.newVal
                } else {
                   console.error ( "unknown col for dbid: " + String(dbid ) )
                }
+               // qto-190602195122 this should not be needed !!! vuex model not used properly ?!
+               document.getElementById(payload.eid).value = payload.newVal
            }
     };
 
@@ -139,7 +141,7 @@
          , deleteItem: (context, payload) => {
             context.commit("DELETE_ITEM", payload)
          }
-         , updateItem: (context, payload) => {
+         , updateItem: (context,payload) => {
             // console.log ( "action: updateItem called ") // todo:ysg
             // console.log ( "context:")
             // console.log ( context)
@@ -155,26 +157,30 @@
             var col = dsc_col.split('_')[1]
             var newCnt = payload.newVal
             newCnt = ( newCnt == "" ? "null" : newCnt ) //empty cell is treated as null
-            
             axios.post('/<%= $db =%>/update/<%= $item =%>', {
                   attribute: col ,
                   id: dbid , 
                   cnt: newCnt
             })
-            .then( 
-               response => {
+            .then(response => { 
+               if ( typeof response.status != "undefined" && response.status === 200 ) {
                   newCnt = ( newCnt == "null" ? "" : newCnt )
                   context.commit("UPDATE_ITEM", payload)
+               } else {
+                  context.commit('SET_SNACKBAR_SHOW', true)
+                  context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
+                  payload.newVal = payload.oldData
+                  context.commit("UPDATE_ITEM", payload)
                }
-            )
-            .catch(function (error) {
-               if (typeof error !== undefined ) {
-                 console.error ( error )
-                 // todo:display the snackbar
-                 //setMsgVisuals(errMsg,'div_msg');
-                 //setMsgVisuals(errMsg,'modal-dia-msg');
-               }
-            });
+            })
+            .catch(error => {
+               console.log ( error ) 
+               console.error ( error.response.data.msg )
+               context.commit('SET_SNACKBAR_SHOW', true)
+               context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
+               payload.newVal = payload.oldData
+               context.commit("UPDATE_ITEM", payload)
+            }) 
          }
    }
 

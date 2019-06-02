@@ -2,13 +2,13 @@
      template: `<textarea v-bind:id="id" @blur="onBlur" v-bind:formats="formats" v-on:keyup.esc="revertChange" v-html="cnt"></textarea>`,
      props: {
 		   id: {}
-         , cnt: {
-            twoWay: true
-            , default: ""
-         }
          , formats: {
             twoWay: true
             , default: null
+         }
+         , cnt: {
+            twoWay: true
+            , default: ""
          }
 	  }
      , model: {
@@ -32,7 +32,7 @@
           onBlur(ev) {
               var el = ev.target
               var newVal  = ev.target.value
-              var payload = {'eid': this.$el.id, 'newVal': newVal}
+              var payload = {'eid': this.$el.id, 'newVal': newVal, 'oldData': this.oldData}
          	  this.$store.dispatch("updateItem", payload);
               this.$el.style.height = "auto";
           }
