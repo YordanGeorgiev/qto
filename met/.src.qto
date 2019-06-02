@@ -14,7 +14,8 @@ src/perl/qto/templates/pages/view-doc/view-doc.html.ep
 src/perl/qto/templates/pages/view-doc/js/view-doc-items-list.js.html.ep
 src/perl/qto/templates/pages/view-doc/js/snackbar.js.html.ep
 src/perl/qto/templates/pages/view-doc/js/vue_app.js.html.ep
-src/perl/qto/templates/pages/view-doc/components/rgx-div.js.html.ep
+src/perl/qto/templates/pages/view-doc/components/rgx-textarea.js.html.ep
+src/perl/qto/templates/pages/view-doc/components/rgx-input.js.html.ep
 src/perl/qto/templates/pages/view-doc/components/snackbar.html.ep
 src/perl/qto/templates/pages/view-doc/components/view-doc-items-list.xt.html.ep
 src/perl/qto/templates/pages/view-doc/components/right-click-menu.xt.html.ep
@@ -427,12 +428,6 @@ doc/txt/qto/specs/db-to-xls.spec.txt
 doc/txt/qto/helps/db-to-xls.help.txt
 #---
 #---
-doc/txt/qto/funcs/perl/check-perl-syntax.func.txt
-doc/txt/qto/helps/perl/check-perl-syntax.help.txt
-doc/txt/qto/specs/perl/check-perl-syntax.spec.txt
-doc/txt/qto/tests/perl/check-perl-syntax.test.txt
-src/bash/qto/helps/perl/check-perl-syntax.help.sh
-src/bash/qto/specs/perl/check-perl-syntax.spec.sh
 src/bash/qto/funcs/perl/check-perl-syntax.func.sh
 src/bash/qto/tests/perl/check-perl-syntax.test.sh
 #----
@@ -530,8 +525,8 @@ src/bash/qto/specs/sys/tmux/save-tmux-session.spec.sh
 src/bash/qto/tests/save-tmux-session.test.sh
 src/bash/qto/tests/sys/tmux/save-tmux-session.test.sh
 #---
+src/bash/qto/funcs/sys/tmux/tmux-common.sh
 src/bash/qto/funcs/sys/tmux/restore-tmux-session.func.sh
-src/bash/qto/helps/restore-tmux-session.help.sh
 src/bash/qto/tests/sys/tmux/restore-tmux-session.test.sh
 #---
 src/bash/qto/tests/sys/backup-file.test.sh

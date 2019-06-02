@@ -37,7 +37,8 @@
    %= include 'js/global/isNullOrEmpty.func.js'
    %= include 'pages/view-doc/js/snackbar.js'
    %= include 'pages/view-doc/js/right-click-menu.js'
-   %= include 'pages/view-doc/components/rgx-div.js'
+   %= include 'pages/view-doc/components/rgx-textarea.js'
+   %= include 'pages/view-doc/components/rgx-input.js'
    %= include 'pages/view-doc/js/view-doc-items-list.js'
    %= include 'pages/view-doc/js/vue_app.js'
 
