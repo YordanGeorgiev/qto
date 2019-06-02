@@ -20,7 +20,7 @@ body {
    padding: 0% 3% 0% 3% ;
 }
 h1, h2, h3, h4, h5, h6 {
-   padding: 30px 0px 10px 0px;
+   padding: 10px 0px 10px 0px;
    float: left;
    clear: left;
    font-size: 16px;
@@ -61,7 +61,6 @@ textarea.cls_desc {
    border-radius: 7px;
 	word-wrap: break-word;
    overflow: hidden;
-   margin-bottom: 15px;
    padding: 10px 10px 10px 10px ;
 }
 textarea.cls_desc:hover, textarea.cls_desc:focus , textarea.cls_src:hover,  textarea.cls_src:focus {
@@ -69,7 +68,7 @@ textarea.cls_desc:hover, textarea.cls_desc:focus , textarea.cls_src:hover,  text
    border:2px solid #C0C0C0;
    box-shadow: 0 0 15px #719ECE;
    caret-color: red;
-   padding: 20px 20px 20px 20px ;
+   padding: 10px 10px 10px 10px ;
 }
 .scroll {
    text-decoration: none;

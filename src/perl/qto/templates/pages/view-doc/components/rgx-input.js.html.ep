@@ -13,9 +13,10 @@
      , data: function (){
          return {
             content: this.cnt
-            , oldData: ""
+            , oldData: this.cnt
          }
 	  }
+     , oldData: null
      , mounted: function(){
          if ( this.cnt ){
             this.$el.style.height = this.$el.scrollHeight + 'px';
@@ -28,7 +29,7 @@
           onBlur(ev) {
               var el = ev.target
               var newVal  = ev.target.value
-              var payload = {'eid': this.$el.id, 'newVal': newVal}
+              var payload = {'eid': this.$el.id, 'newVal': newVal, 'oldData': this.oldData}
          	  this.$store.dispatch("updateItem", payload);
               this.$el.style.height = "auto";
           }
