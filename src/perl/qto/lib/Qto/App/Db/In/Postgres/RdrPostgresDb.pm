@@ -78,7 +78,6 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset ;" ; 
       
-      print "str_sql : $str_sql \n" ; # todo:ysg
       $ret = 0 ; 
       eval { 
          $msg = "" ; 
@@ -1161,8 +1160,6 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 				ORDER BY seq
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
-         # old?! LIMIT $limit OFFSET $offset
-         p $sql ; # todo:ysg
       };
       if ( $@ ) {
          $rv               = 404 ; 

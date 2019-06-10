@@ -33,6 +33,7 @@
               var payload = {'eid': this.$el.id, 'newVal': newVal, 'oldData': this.oldData}
          	  this.$store.dispatch("updateItem", payload);
               this.$el.style.height = "auto";
+     		     this.autogrow() 
           }
          , focused(ev) {
                var el = ev.target

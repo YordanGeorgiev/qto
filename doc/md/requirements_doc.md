@@ -5,9 +5,9 @@
   * [1.3. RELATED DOCUMENTATION](#13-related-documentation)
 * [2. DEPLOYABILITY](#2-deployability)
   * [2.1. FULL DEPLOYMENT IN LESS THAN AN HOUR](#21-full-deployment-in-less-than-an-hour)
-    * [2.1.1. Deploy by simple unzip](#211-deploy-by-simple-unzip)
-    * [2.1.2. Oneliner for prerequisite binaries check](#212-oneliner-for-prerequisite-binaries-check)
-    * [2.1.3. Oneliner for Perl modules check](#213-oneliner-for-perl-modules-check)
+    * [2.1.1. A working instance deployment by simple unzip command](#211-a-working-instance-deployment-by-simple-unzip-command)
+    * [2.1.2. Binary prerequisites check script](#212-binary-prerequisites-check-script)
+    * [2.1.3. Required Perl modules checker script](#213-required-perl-modules-checker-script)
     * [2.1.4. Installation documentation](#214-installation-documentation)
   * [2.2. A FULL APPLICATION CLONE SHOULD BE READY FOR LESS THAN 5 MINUTES](#22-a-full-application-clone-should-be-ready-for-less-than-5-minutes)
     * [2.2.1. Shell script for postgres db creation](#221-shell-script-for-postgres-db-creation)
@@ -49,7 +49,7 @@
 * [10. DOCUMENTATION](#10-documentation)
   * [10.1. DOCUMENTATION COMPLETENESS](#101-documentation-completeness)
   * [10.2. DOCUMENTATION AND CODE BASE SYNCHRONIZATION](#102-documentation-and-code-base-synchronization)
-    * [10.2.1. requirements push](#1021-requirements-push)
+    * [10.2.1. Requirements push](#1021-requirements-push)
 * [11. WORKING PRINCIPLES](#11-working-principles)
   * [11.1. PERSONAL RESPONSIBILITY](#111-personal-responsibility)
 
@@ -64,12 +64,12 @@
     
 
 ### 1.1. Purpose
-The purpose of this document is to present the requirements set to the qto application for this current version.
+The purpose of this document is to present the requirements set to the qto application for the version of this instance.
 
     
 
 ### 1.2. Audience
-This document could be of interest for any potential and actual users of the application. Developers and Architects working on the application MUST read and understand this document at least to the extend of their own contribution for the application. 
+This document could be of interest for any potential and actual users of the application. Product Owners, Developers and Architects working on the application MUST read and understand this document at least to the extend of their own contribution for the application. 
 
     
 
@@ -93,7 +93,8 @@ according to the file format used for the documentation storage.
     
 
 ## 2. DEPLOYABILITY
-The qto must be easily deployable on any Unix like OS. Windows family based OS'es are explicitly out of the scope of the qto tool. Any qto instance should be configurable as easily as possible for the version it has.  
+The qto must be easily deployable on any Unix like OS. 
+Windows family based OS'es are explicitly out of the scope of the qto tool. Any qto instance should be configurable as easily as possible for the version it has.  
 
     
 
@@ -102,33 +103,33 @@ The full System should be ready for use by end-users in a "blank" modern Unix li
 
     
 
-#### 2.1.1. Deploy by simple unzip
-The qto tool could be deployed by a simply unzip of the full package, which must have all of the documentation and scripts to provide assistance for the setup and the configuration of the tool.
+#### 2.1.1. A working instance deployment by simple unzip command
+The qto tool could be deployed by a simply unzip of the full package, which must have all of the documentation and scripts to provide assistance for the setup and the configuration of the tool as well as the initial data to populate the qto database. 
 
     
 
-#### 2.1.2. Oneliner for prerequisite binaries check
+#### 2.1.2. Binary prerequisites check script
 All the binaries which are required for the running of the tool must be checked by a user-friendly binaries prerequisites check script.
 
     
 
-#### 2.1.3. Oneliner for Perl modules check
+#### 2.1.3. Required Perl modules checker script
 All the required Perl modules, must be verifiable via a single runnable perl script. The DockerScript file should contain all the perl modules installations. 
 
     
 
 #### 2.1.4. Installation documentation
-The installation of the required Postgres db must be documented in the DevOps guide, which should have both markdown and pdf versions in the doc directory of the deployment package.
+The installation of the required Postgres db must be documented in the DevOps guide, which should have tge markdown version in the doc directory of the deployment package.
 
     
 
 ### 2.2. A full application clone should be ready for less than 5 minutes
-A DevOps operator should be able to perform an application clone of the Qto application in less than 5 minutes. 
+A DevOps operator should be able to perform an application clone ( having app-name changed to new-app-name etc. ) of the Qto application in less than 5 minutes. 
 
     
 
 #### 2.2.1. Shell script for postgres db creation
-The creation of the Postgres database should be doable via a single shell call. 
+The creation of the Postgres database of a qto project should be doable via a single shell call. 
 
     
 
@@ -177,17 +178,17 @@ Each test should obey the following convention:
     
 
 ### 4.1. Zero tollerance towards crashing
-Crashing in normally configured and operating environment must not be tollerated, as soon as any crash has occurred a bug must be registered and the bug set with prio towards the features pipeline. 
+Crashing in normally configured and operating environment must not be tolerated, as soon as any crash has occurred a bug must be registered and the bug set with the highest possible prio towards the features pipeline. 
 
     
 
 ### 4.2. Zero tollerance towards bugs
-All bugs and inconsistencies must be dealt with top priority bypassing new features implementation. 
+All bugs and inconsistencies must be dealt with top priority by passing new features implementation.  Should the average amount of bugs increase after a release a purely bug fixing release should follow.
 
     
 
 ### 4.3. Daily backups
-Daily backups should be show-stopper for the normal operation of the application - that is if an instance is to be considered as normally operating , the daily backups should be performed automatically as indispensable part of the functioning of the application. 
+Daily backups should be show-stopper for the normal operation of the application - that is if an instance is to be considered as normally operating , the daily backups of all instance project databases data and secrets should be performed automatically as indispensable part of the functioning of the application. 
 
     
 
@@ -202,7 +203,7 @@ A full backup of the software, configuration and data for the qto and/or another
     
 
 ## 5. SCALABILITY
-
+ 
 
     
 
@@ -273,7 +274,7 @@ The full execution time of any crud operation ( create, update, delete, search) 
     
 
 #### 8.1.2. Visual indication
-The System should not show ok messages , but only error messages, yet the UI should be as responsive that the end-user would easily understand when an item has been created, updated or deleted.
+The System should not show the so called ok messages, but only error messages ( with added verbosity on the console level ), yet the UI should be as responsive that the end-user would easily understand when an item has been created, updated or deleted.
 
     
 
@@ -294,7 +295,7 @@ https://tools.ietf.org/html/rfc6749#section-5.1
     
 
 #### 9.1.1. Non-athentication mode
-Any qto instance should support a non-authentication mode - that is all users having http access could perform all the actions on the UI without restrictions
+Any qto instance should support a non-authentication mode - that is all users having http access could perform all the actions on the UI without restrictions.
 
     
 
@@ -345,7 +346,7 @@ Each running instance MUST have its required documentation set up-to-date for it
 
     
 
-#### 10.2.1. requirements push
+#### 10.2.1. Requirements push
 Whenever a project database meta-data is updated a new "do reload the current page" should be pushed on all the clients having currently session in the application …
 
     
