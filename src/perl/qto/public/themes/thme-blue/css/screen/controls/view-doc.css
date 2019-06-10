@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, h6 {
    width: 100% ;
 }
 textarea.cls_title {
-   width: 70% ;
+   width: 74% ;
    font-size: 16px;
    margin-block-start: 0em;
    margin-block-end: 0em;
@@ -52,7 +52,7 @@ textarea.cls_title:hover, textarea.cls_title:focus , textarea.cls_src:hover,  te
 }
 textarea.cls_desc {
    clear: both;
-   width: 80% ;
+   width: 75% ;
    white-space: pre-wrap;
 	display: block;
 	float: left; 
@@ -62,12 +62,14 @@ textarea.cls_desc {
 	word-wrap: break-word;
    overflow: hidden;
    padding: 10px 10px 10px 10px ;
+   margin-top: 5px;
 }
-textarea.cls_desc:hover, textarea.cls_desc:focus , textarea.cls_src:hover,  textarea.cls_src:focus {
+textarea.cls_desc:hover, textarea.cls_desc:focus {
    outline: none !important;
    border:2px solid #C0C0C0;
    box-shadow: 0 0 15px #719ECE;
    caret-color: red;
+   width: 75%;
    padding: 10px 10px 10px 10px ;
 }
 .scroll {
@@ -77,7 +79,7 @@ textarea.cls_desc:hover, textarea.cls_desc:focus , textarea.cls_src:hover,  text
    clear: both;
    float: left;
    color: #4d4d4c;
-   width: 70%;
+   width: 72%;
    padding: 2% 4% 2% 1%;
    background-color: #F8F8F8;
    font: 0.9em Consolas, Menlo, Monaco, Courier, monospace;
@@ -90,6 +92,9 @@ textarea.cls_desc:hover, textarea.cls_desc:focus , textarea.cls_src:hover,  text
    border-bottom-left-radius: 8px;
    border-bottom-right-radius: 8px;
    border-color: #C0C0C0;
+}
+textarea.cls_src:hover, textarea.cls_src:focus , textarea.cls_src:hover,  textarea.cls_src:focus {
+   width: 72%;
 }
 .permalink {
    display: block;

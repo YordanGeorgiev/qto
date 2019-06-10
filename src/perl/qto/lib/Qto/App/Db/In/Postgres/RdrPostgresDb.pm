@@ -1162,7 +1162,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
          # old?! LIMIT $limit OFFSET $offset
-
+         p $sql ; # todo:ysg
       };
       if ( $@ ) {
          $rv               = 404 ; 

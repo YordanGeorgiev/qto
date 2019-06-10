@@ -1,33 +1,31 @@
   const RgxTextArea = Vue.component ('rgx-textarea', {
-     template: `<textarea v-bind:id="id" @blur="onBlur" v-bind:formats="formats" v-on:keyup.esc="revertChange" v-html="cnt"></textarea>`,
+     template: `<textarea v-bind:id="id" @blur="onBlur" v-html="ccnt" v-on:keyup.esc="revertChange"></textarea>`,
      props: {
 		   id: {}
          , formats: {
             twoWay: true
-            , default: null
-         }
-         , cnt: {
-            twoWay: true
             , default: ""
          }
 	  }
-     , model: {
-        prop: 'cnt'
-      }
+     , computed: {
+			ccnt: {
+				get: function() {
+					return this.cnt
+				},
+				set: function(newValue) {
+					this.cnt = newValue
+				}
+			}
+	  }
      , data: function (){
          return {
-            content: this.cnt
-            , oldData: ""
+            oldData: ""
+				, cnt: ""
          }
 	  }
      , mounted: function(){
-         if ( this.cnt ){
-            this.$el.style.height = this.$el.scrollHeight + 'px';
-         } else {
-            this.$el.style.height = '5px';
-         }
-         this.displayEmptyCellIfNullOrUndefined()
-      }
+     		this.autogrow() 
+		}
      , methods: {
           onBlur(ev) {
               var el = ev.target
@@ -40,12 +38,20 @@
                var el = ev.target
                this.oldData = ( typeof ev.target.value == "undefined" ) ? " " : ev.target.value
           }
+			 , autogrow() {
+					if ( this.$el.value ){
+						this.$el.style.height = this.$el.scrollHeight + 'px';
+					} else {
+						this.$el.style.height = '5px';
+					}
+					this.displayEmptyCellIfNullOrUndefined()
+			 }
           , revertChange() {
               this.$el.value = this.oldData ; 
               this.displayEmptyCellIfNullOrUndefined()
           }
           , displayEmptyCellIfNullOrUndefined() {
-               if ( typeof this.cnt == "undefined" || this.cnt === 'null' || this.cnt == null) {
+               if ( typeof this.ccnt == "undefined" || this.ccnt === 'null' || this.ccnt == null) {
                   this.$el.innerText = " "
                   this.$el.value = " "
                   this.cnt = " "
