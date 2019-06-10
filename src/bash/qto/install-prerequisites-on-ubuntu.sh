@@ -30,7 +30,7 @@ done < <(cat << "EOF"
 	wget
 	libwww-curl-perl
    libtest-www-selenium-perl
-	postgresql-9.6
+	postgresql-11.3
 	libdbd-pgsql
 	libxml-atom-perl
    git
@@ -50,6 +50,7 @@ done < <(cat << "EOF"
    pgrep
    minio
    mc
+   libssl-dev
 EOF
 )
 
@@ -88,11 +89,9 @@ done < <(cat << "EOF"
 EOF
 )
 
+echo installing Mojolicious
+sudo curl -L cpanmin.us | perl - Mojolicious
+
 # cd src/perl/qto/public
 
-#npm config list
-#npm config edit
-#npm install vue-js-modal --save
-#npm config edit
-#npm install vue --save
 # eof file: src/bash/qto/install-prerequisites-on-ubuntu.sh

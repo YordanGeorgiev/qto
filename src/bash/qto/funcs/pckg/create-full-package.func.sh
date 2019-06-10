@@ -8,6 +8,7 @@ doCreateFullPackage(){
 
 	doLog "INFO START create-full-package.func.sh" ;
 
+   test -z ${qto_project:-} && qto_project=qto
 	#define default vars
 	test -z ${include_file:-}         && \
 		include_file="$product_instance_dir/met/.$env_type.$run_unit"

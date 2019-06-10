@@ -153,12 +153,18 @@ To start the postgreSql issues:
 #### 2.1.4. to check the port on which it is listening 
 To check the port on which it is listening issue:
 
+
+
+
+
     sudo netstat -tulntp | grep -i postgres
     # tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      8095/postgres
 
 #### 2.1.5. Check the postgres status
 Check the postgres status.
 Check the port to which the Postgres is running with this command:
+
+
 
     sudo /etc/init.d/postgresql status
     
@@ -277,6 +283,8 @@ Run the qto file to db load
     
     # test those uncommented actions
     bash src/bash/qto/test-qto.sh
+    
+    
 
 ### 4.6. Verify the inserted data from the db
 Verify the inserted data from the db as follows:

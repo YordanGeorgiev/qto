@@ -2,17 +2,16 @@
 # ---------------------------------------------------------
 # source this lib function by:
 # source ./lib/bash/funcs/parse-cnf-env-vars.sh
-# call by: doParseCnfEnvVars cnf/qto.dev.host-name.cnf
+# call by: doParseCnfEnvVars cnf/qto.dev.ip-172-31-18-13.cnf
 # verify by: 
 # echo $qto_project 
 # should echo:
 # ysg-issues
 # ---------------------------------------------------------
 doParseCnfEnvVars(){
-
    cnf_file=$1;shift 1;
    test -z "$cnf_file" && echo " you should set the cnf_file !!!"
-	
+
    INI_SECTION=MainSection
 
    ( set -o posix ; set ) | sort >~/vars.before
@@ -26,8 +25,7 @@ doParseCnfEnvVars(){
 
    # export the var_name=var_value pairs
    # debug set -x
-   while IFS=' ' read -d' ' s ; do eval 'export '$s ; done <<< $settings
-   s=''
+   while IFS=' ' read -d' ' setting ; do eval 'export '$setting ; done <<< $settins
 
    # and post-register for nice logging
    ( set -o posix ; set ) | sort >~/vars.after
@@ -39,7 +37,7 @@ doParseCnfEnvVars(){
 
 #
 # ---------------------------------------------------------
-# call by: doParseIniEnvVars sfw/sh/isg-pub/isg-pub.mini-nz.ysg-host-name.conf
+# call by: doParseIniEnvVars sfw/sh/isg-pub/isg-pub.mini-nz.ysg-ip-172-31-18-13.conf
 #; file: mini-nz.sh.hostname.conf docs at the end
 #[MainSection]
 #; the name of the project

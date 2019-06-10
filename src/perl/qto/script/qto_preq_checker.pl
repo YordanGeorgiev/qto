@@ -73,9 +73,6 @@ sub doCheckRequiredModules {
    Spreadsheet::ParseExcel
    Spreadsheet::XLSX
    Spreadsheet::ParseExcel::FmtJapan
-   Net::Google::DataAPI::Auth::OAuth2
-   Net::Google::Spreadsheets::V4
-   Net::Google::Spreadsheets;
    Text::CSV_XS
    Module::Build::Tiny
    Carp::Always
@@ -86,11 +83,8 @@ sub doCheckRequiredModules {
    Spreadsheet::ParseExcel
    Spreadsheet::XLSX
    JSON
-   Net::Google::DataAPI::Auth::OAuth2
    Text::CSV_XS
-   Net::Google::Spreadsheets::V4
    Term::Prompt
-   Net::Google::Spreadsheets
    Test::Trap
    Test::More
    Test::Most
@@ -98,7 +92,6 @@ sub doCheckRequiredModules {
    Tie::Hash::DBD
    Scalar::Util::Numeric
    IPC::System::Simple
-   Mojolicious
    Mojo::Pg
    Selenium::Remote::Driver
    Selenium::Chrome
@@ -108,7 +101,14 @@ sub doCheckRequiredModules {
    Time::HiRes
    Mojolicious::Plugin::Authentication
    Mojo::JWT
+   Mojo::Pg
    Authen::Passphrase::BlowfishCrypt
+   Net::Google::DataAPI::Auth::OAuth2
+   Net::Google::Spreadsheets::V4
+   Net::Google::Spreadsheets;
+   Net::Google::DataAPI::Auth::OAuth2
+   Net::Google::Spreadsheets::V4
+   Net::Google::Spreadsheets
   );
 
   for (@modules) {

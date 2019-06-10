@@ -5,7 +5,7 @@
     * [1.1.2. UI Page parts load times](#112-ui-page-parts-load-times)
   * [1.2. SEARCH](#12-search)
   * [1.3. GLOBAL SEARCH MODAL DIALOG UI](#13-global-search-modal-dialog-ui)
-    * [1.3.1. SearchBox autocomplete for changing the project ( databases ) ](#131-searchbox-autocomplete-for-changing-the-project-(-databases-)-)
+    * [1.3.1. SearchBox autocomplete for changing the project ( databases )](#131-searchbox-autocomplete-for-changing-the-project-(-databases-))
     * [1.3.2. SearchBox autocomplete for item-name](#132-searchbox-autocomplete-for-item-name)
   * [1.4. SEARCH-AUTOCOMPLETE ON MODAL SEARCH DIALOG](#14-search-autocomplete-on-modal-search-dialog)
     * [1.4.1. SearchBox autocomplete for with &lt;&lt;attribute&gt;&gt; name &lt;&lt;operator&gt;&gt; &lt;&lt;attribute-value&gt;&gt;](#141-searchbox-autocomplete-for-with-attribute-name-operator-attribute-value)
@@ -196,6 +196,7 @@ As an UI user of the qto application
 In order to enjoy the usage of the tool and interact efficiently   
 I want to  have a maximum page part load time on efficient network less than 0.5 seconds and preferably even less than 0.3 seconds
 
+
     
 
 ### 1.2. Search
@@ -205,14 +206,14 @@ I want to have a pop-up search SearchBox with dimmed background providing with i
 
     
 
-### 1.3. global search modal dialog ui
+### 1.3. Global search modal dialog ui
 As an UI user 
 In order to have the best possible search experience
-I want to be able to search from a modal dialog UI which will pop-up on a dimmed background after the search-box is focused .. 
+I want to be able to search from a modal dialog UI which will pop-up on a dimmed background after the search-box is focused ...
 
     
 
-#### 1.3.1. SearchBox autocomplete for changing the project ( databases ) 
+#### 1.3.1. SearchBox autocomplete for changing the project ( databases )
 As an qto ui user 
 In order to be able to quickly switch between projects of the qto application instance I have access to
 I want to be able to start typing with the ":to" operator and the System to autocomplete a dropdown of databases my instance has access to. 
