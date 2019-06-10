@@ -1,7 +1,7 @@
 <template id="view-doc-items-list">
    <div id="content">
       <div v-if="_self.$el.baseURI.indexOf('as=print-doc') !== -1" class="cls_print_toc" v-for="item in items">
-         <div tabindex="2" :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event,item.id)">
+         <div v-if="_self.$el.baseURI.indexOf('as=print-doc') !== -1" tabindex="2" :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event,item.id)">
             <a :id="'tlp_<%= $item =%>-' + item.id"  
                :href="'#<%= $item =%>-' + item.id" class="scroll"> {{item.logical_order}} {{item.name}} </a>
          </div>
@@ -18,10 +18,11 @@
                   class="cls-context-menu-link">{{item.logical_order}}</a>
                <rgx-input :id="'inp_name-' + item.id" :cnt="item.name" class="cls_title">{{item.name}}</rgx-input>
             </h3>
-            <rgx-textarea :cnt="item.description" :formats="item.formats" class="cls_desc" :id="'dsc_description-' + item.id"/>
-            <p v-if="item.src">
-               <rgx-textarea :cnt="item.src" :formats="item.formats" class="cls_src" :id="'src_src-' + item.id"/>
-            </p>
+            <rgx-textarea v-html="item.description" :formats="item.formats" class="cls_desc" :id="'dsc_description-' + item.id">
+			   </rgx-textarea>
+				<p v-if="item.src">
+           		<rgx-textarea v-html="item.src" class="cls_src" :id="'src_src-' + item.id"></rgx-textarea>
+				</p>
             <div v-if="item.img_relative_path" class="cls_doc_img">
                <p class="cls_fig"> {{ item.img_name }}  </p>
                <img :src="item.img_relative_path" :style="item.img_style"></img>

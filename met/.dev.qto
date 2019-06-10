@@ -401,6 +401,7 @@ src/sql/pgsql/qto/32.create-table-export_files.sql
 src/sql/pgsql/qto/33.create-table-links.sql
 src/sql/pgsql/qto/34.create-table-app_user.sql
 src/sql/pgsql/qto/35.create-table-release_issues.sql
+src/sql/pgsql/qto/36.create-table-enduser_issues.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.sql
 src/sql/pgsql/qto/93.create-table-benchmarks.sql
@@ -885,10 +886,9 @@ doc/txt/qto/helps/build-qto-docker-image.help.txt
 doc/txt/qto/funcs/build-qto-docker-image.func.txt
 src/bash/qto/funcs/admin/restart-network.func.sh
 src/bash/qto/funcs/print-stats.func.sh
-dat/mix/2019/2019-05/2019-05-29
-dat/mix/2019/2019-05/2019-05-29/sql
-dat/mix/2019/2019-05/2019-05-29/sql/dev_qto
-dat/mix/2019/2019-05/2019-05-29/sql/dev_qto/dev_qto.20190529_225225.insrt.dmp.sql
-dat/mix/2019/2019-05/2019-05-29/tmp
-dat/mix/2019/2019-05/2019-05-29/xls
-dat/mix/2019/2019-05/2019-05-29/xls/qto.all.20190529_000000.xlsx
+dat/mix/2019/2019-06/2019-06-06/xls
+dat/mix/2019/2019-06/2019-06-06/xls/qto.all.20190606_000000.xlsx
+dat/mix/2019/2019-06/2019-06-06/sql
+dat/mix/2019/2019-06/2019-06-06/sql/dev_qto
+dat/mix/2019/2019-06/2019-06-06/sql/dev_qto/dev_qto.20190605_165521.insrt.dmp.sql
+dat/mix/2019/2019-06/2019-06-06/sql/dev_qto/dev_qto.20190606_044226.insrt.dmp.sql
