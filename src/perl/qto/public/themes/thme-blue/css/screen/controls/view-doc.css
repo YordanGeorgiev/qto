@@ -197,3 +197,29 @@ textarea.cls_src:hover, textarea.cls_src:focus , textarea.cls_src:hover,  textar
 .cls_fig {
 padding: 3% 0% 2% 0%;
 }
+.cls_tbltooltip {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+.cls_tbltooltip .cls_tbltooltiptext {
+  visibility: hidden;
+  height: auto;
+  background-color: white;
+  text-align: left ;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 10;
+  font-size: 13px ;
+  top: -40px;
+  left: 78%; 
+  width: 27% ;
+  border: 2px solid white;
+  -webkit-box-shadow: 4px 4px 4px 4px #C0C0C0;
+  -moz-box-shadow: 4px 4px 4px 4px #C0C0C0;
+  word-wrap:break-word;
+}
+.cls_tbltooltip:hover .cls_tbltooltiptext{
+  visibility: visible;
+  padding: 2% 2% 2% 2% ;
+}

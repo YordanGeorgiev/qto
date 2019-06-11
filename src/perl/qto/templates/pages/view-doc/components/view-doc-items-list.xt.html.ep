@@ -18,8 +18,12 @@
                   class="cls-context-menu-link">{{item.logical_order}}</a>
                <rgx-input :id="'inp_name-' + item.id" :cnt="item.name" class="cls_title">{{item.name}}</rgx-input>
             </h3>
-            <rgx-textarea v-html="item.description" :formats="item.formats" class="cls_desc" :id="'dsc_description-' + item.id">
-			   </rgx-textarea>
+            <div class="cls_tbltooltip">
+               <rgx-textarea v-html="item.description" :formats="item.formats" class="cls_desc" :id="'dsc_description-' + item.id">
+               </rgx-textarea>
+               <div class="cls_tbltooltiptext" v-html="lnkMayBe(item.description)">
+               </div>
+            </div>
 				<p v-if="item.src">
            		<rgx-textarea v-html="item.src" class="cls_src" :id="'src_src-' + item.id"></rgx-textarea>
 				</p>

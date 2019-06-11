@@ -21,6 +21,12 @@
          , hideContextMenu: function () {
             document.getElementById("div-context-menu").style.display = "none"
          }
+         , lnkMayBe: function(cnt) {
+            var lnkMayBe = (cnt == null) ? '' :cnt 
+            lnkMayBe = String(lnkMayBe).linkify()
+            lnkMayBe = lnkMayBe.linkifyItems()
+            return (typeof(lnkMayBe) != "undefined") ? lnkMayBe : ''
+          }
       }
       , template: "#view-doc-items-list"
    });
