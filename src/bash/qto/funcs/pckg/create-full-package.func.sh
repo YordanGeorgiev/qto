@@ -71,7 +71,8 @@ doCreateFullPackage(){
       export exit_code=1 ;  doExit "$msg" ; 
       exit 1
    fi
-  
+ 
+   test -z ${mix_data_dir:-} && mix_data_dir=$product_instance_dir/dat/mix
    # backup the project data dir if not running on the product itself ...
    test -d $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d") || doIncreaseDate
    # and zip the project data dir

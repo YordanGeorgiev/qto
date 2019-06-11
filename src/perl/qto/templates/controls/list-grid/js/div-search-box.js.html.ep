@@ -102,14 +102,16 @@ Vue.component('div_search_box', {
   }
   , template: ` <searchbox :dblist="pdblist" :tblist="ptblist" :collist="pcollist" />`
   , mounted() {
-      // start on forward slash focus the quick search input textbox 
+      // focus the search textbox on forward slash, but only when not in textarea ...
       window.addEventListener('keyup', function(event) {
          if (event.key === "/" ) { 
             var focusedElement = document.activeElement;
             if ( typeof focusedElement !== "undefined" ) {
                if ( typeof focusedElement.getAttribute("contenteditable") === "undefined" ) {
+                  return;
                } else {
-                  if ( focusedElement.getAttribute("class") == "cls_cnt_edtble") {
+                  if ( focusedElement.getAttribute("class") == "cls_desc") {
+                     return ;
                   } else {
                      document.getElementById("inp_srch_box").focus();
                   }
