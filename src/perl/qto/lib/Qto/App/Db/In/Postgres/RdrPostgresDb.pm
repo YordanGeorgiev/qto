@@ -21,8 +21,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 	our $objLogger 										= {} ; 
 	our $objModel                                = {} ; 
 	our $db                        					= q{} ; 
-	our $postgres_db_host 										   = q{} ; 
-	our $postgres_db_port 										   = q{} ;
+	our $postgres_db_host 							   = q{} ; 
+	our $postgres_db_port 							   = q{} ;
 	our $postgres_db_user 							   = q{} ; 
 	our $postgres_db_user_pw	 					   = q{} ; 
 	our $web_host 											= q{} ; 
@@ -137,30 +137,30 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
             $like_value = $ref_like_values->["$i"] ;
 
             my @like_or_names = split (',', $like_names) ; # the syntax is like-by=attr1,attr2
-            foreach my $like_name ( @like_or_names ) {
+            foreach my $like_or_name ( @like_or_names ) {
                $sql .= ' ( ' ; 
               
-               my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $like_name ) ; 
-               return ( 400 , "the $like_name column does not exist" , "") unless ( $col_exists ) ; 
+               my $col_exists = $objModel->doChkIfColumnExists ( $db , $table , $like_or_name ) ; 
+               return ( 400 , "the $like_or_name column does not exist" , "") unless ( $col_exists ) ; 
                
                # if the like value is a number
-               $like_name = "CAST( $like_name AS TEXT)" if $like_value =~ /\d{1,100}/g ; 
+               $like_or_name = "CAST( $like_or_name AS TEXT)" if $like_value =~ /\d{1,100}/g ; 
 
                my @like_values_list = split (',' , $like_value ) ;
                my $str = '' ;
                foreach my $val ( @like_values_list ) {
-                  $str .= " $like_name LIKE '%" . $val . "%' OR " ;
+                  $str .= " $like_or_name LIKE '%" . $val . "%' OR " ;
                }
 			      for (1..3) { chop ( $str ) } ;
                $sql .= $str ; 
-               $sql .= ' ) AND '  ;
+               $sql .= ' ) OR '  ;
            } #eof foreach potential multiple or combined attributes
-			  for (1..5) { chop ( $sql ) } ;
+			  for (1..4) { chop ( $sql ) } ;
            chop $sql if $i > 0 ; 
 
-            $sql .= ' ) OR ' ;
+            $sql .= ' ) AND ' ;
          } #eof foreach like-by pair
-			for (1..3) { chop ( $sql ) } ;
+			for (1..4) { chop ( $sql ) } ;
 
          print "\n\nsql: \n $sql \n\n" ; 
          print "STOP vim +167 `find . -name RdrPostgresDb.pm` sql just before the return" ; 
@@ -994,7 +994,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
 
-      # debug rint "$str_sql \n" . 'vim +927 `find . -name RdrPostgresDb.pm`' . "\n" ; 
+      # debug
+      print "$str_sql \n" . 'vim +927 `find . -name RdrPostgresDb.pm`' . "\n" ; 
 
       $ret = 0 ; 
       eval { 
