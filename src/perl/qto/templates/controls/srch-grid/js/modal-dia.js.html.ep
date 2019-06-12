@@ -9,14 +9,22 @@ Vue.component('modal', {
 			, itemId: null
 			, itemData: null
          , count:0
+         , lnkOpen: null 
 		}
 	}
 	, mounted () {
       this.itemId = this.$attrs.id.replace("dia-","")
       this.itemData = this.$parent.data.find(obj => obj.id == this.itemId )
       this.cnt = this.toTable()
-	}
-	, created() {
+
+      var id=this.$attrs.id.replace('dia-','')
+      var item = this.itemData.item
+      var db = window.location.pathname.split('/')[1]
+      if ( item.endsWith("_doc" )) {
+         this.lnkOpen = "/" + db + '/view/' + item + '#' + item + "-" + id
+      } else {
+         this.lnkOpen = "/" + db + '/list/' + item + '?&with=id-eq-' + id + '&open=btn-modal-' + id
+      }
 	}
 	, updated() {
         if ( this.count == 0 ) {
@@ -28,14 +36,18 @@ Vue.component('modal', {
 	, methods: {
       toTable: function() {
          var html = '<table>';
-         for (const prop in this.itemData) {
-            html += '<tr tabindex="0">';
-            if (this.itemData.hasOwnProperty(prop)) {
-              html += '<td>' + prop + '</td>'
-              html += '<td>' + this.itemData[prop] + '</td>'
-            }
-         }
-         html += '</tr>';
+         var oprops = ['id','item','name','description','relevancy','guid']
+         oprops.map(oprop => {
+               for (const prop in this.itemData) {
+                  if ( oprop !== prop ) { continue; }
+                  html += '<tr tabindex="0">';
+                  if (this.itemData.hasOwnProperty(prop)) {
+                    html += '<td>' + prop + '</td>'
+                    html += '<td>' + this.itemData[prop] + '</td>'
+                  }
+               }
+               html += '</tr>';
+         })
          html += '</table>';
          return html
       }

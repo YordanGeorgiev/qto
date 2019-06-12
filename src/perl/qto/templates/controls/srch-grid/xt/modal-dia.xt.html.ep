@@ -4,6 +4,7 @@
       <div class="modal-wrapper">
         <div class="modal-container">
         <input tabindex="0" id="modal-dia-title-id" :value="this.$attrs.id.replace('dia-','')" readonly></input>
+        <a :href="lnkOpen"><img src="../../themes/thme-blue/img/controls/edit-pen.svg" style="margin-left:20px;width:24px;height:24px"></a>
           <div name="header"></div>
           <div name="content" v-html="cnt"> </div>
         </div>

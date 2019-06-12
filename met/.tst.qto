@@ -31,6 +31,7 @@ src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
 src/perl/qto/templates/js/global/get-url-params.func.js.html.ep
 src/perl/qto/templates/js/global/get-server-data.func.js.html.ep
+src/perl/qto/templates/js/global/on-load.funcs.js.html.ep
 src/perl/qto/templates/js/global/set-url-param.func.js.html.ep
 src/perl/qto/templates/js/global/linkifies.func.js.html.ep
 src/perl/qto/templates/js/global/isNullOrEmpty.func.js.html.ep
@@ -76,6 +77,7 @@ src/perl/qto/public/themes/thme-blue/img/controls/tack.png
 src/perl/qto/public/themes/thme-blue/img/controls/srch.png
 src/perl/qto/public/themes/thme-blue/img/controls/pg-sizer.png
 src/perl/qto/public/themes/thme-blue/img/controls/github-md.png
+src/perl/qto/public/themes/thme-blue/img/controls/edit-pen.svg
 src/perl/qto/public/themes/thme-blue/img/controls/xls-icon.png
 src/perl/qto/public/themes/thme-blue/img/controls/open-in-listing.png
 src/perl/qto/public/themes/thme-blue/img/controls/open-book.png

@@ -6,6 +6,7 @@
        , filterKey: String
        , showModal: false
        , cid: null
+       , refss: null
      },
      data: function () {
        var sortOrders = {}
@@ -16,8 +17,8 @@
          sortKey: '',
          sortOrders: sortOrders
        }
-     },
-	  computed: {
+     }
+	  , computed: {
 		  filteredData: {		
 			 get: function () {
 				var sortKey = this.sortKey

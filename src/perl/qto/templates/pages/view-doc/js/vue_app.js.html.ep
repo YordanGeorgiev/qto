@@ -142,15 +142,6 @@
             context.commit("DELETE_ITEM", payload)
          }
          , updateItem: (context,payload) => {
-            // console.log ( "action: updateItem called ") // todo:ysg
-            // console.log ( "context:")
-            // console.log ( context)
-            // console.log ( ":payload:")
-            // console.log ( payload )
-            // console.log ( ":eid:")
-            // console.log ( payload.eid)
-            // console.log ( ":newVal:")
-            // console.log ( payload.newVal) // todo:ysg
             var arr = payload.eid.split('-')
             var dbid = arr[1]
             var dsc_col = arr[0]

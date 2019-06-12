@@ -1,7 +1,6 @@
    function setMsgVisuals(txt,eid,msgType,pageType){
       if ( typeof eid === "undefined" ) { eid ='div_msg' }
       if ( typeof msgType === "undefined" ) { msgType ='Error' }
-      console.log ( "setMsgVisuals eid: " + eid) ; // todo:ysg
       txt = stripTechMsgPart(txt)
       paintError(eid)
       window['paint' + msgType](eid,txt);

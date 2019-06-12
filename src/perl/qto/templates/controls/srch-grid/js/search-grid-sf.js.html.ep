@@ -17,8 +17,8 @@
          sortKey: '',
          sortOrders: sortOrders
        }
-     },
-	  computed: {
+     }
+	  , computed: {
 		 filteredData: {		
 			 get: function () {
 				var sortKey = this.sortKey
