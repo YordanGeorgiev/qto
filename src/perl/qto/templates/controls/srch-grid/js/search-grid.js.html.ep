@@ -18,7 +18,6 @@
      	methods: {
          showModalDialog: function (e) {
            this.showModal = true
-           console.log ( "triggered by " + e.target.id ) // todo:ysg
            this.cid = e.target.id.replace("btn-modal-","dia-") ; 
          }
        , onSearchBoxInputChanged: function(quickSrch) {

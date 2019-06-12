@@ -237,6 +237,9 @@ var Searchbox = {
                uri = uri.replace(/([&]{0,1}with=([a-zA-Z_%\-0-9]+))+/gi , "") 
                uri = uri.replace(/([&]{0,1}like-by=([a-zA-Z_0-9%]+))+/gi , "") 
                uri = uri.replace(/([&]{0,1}like-val=([a-zA-Z_0-9%]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}pg-num=([0-9]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}pg-size=([0-9]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}open=([a-zA-Z0-9_%\-]+))+/gi , "" ) 
                uri = uri + '&for=' + gs
             }
          }

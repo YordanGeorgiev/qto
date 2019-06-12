@@ -44,8 +44,10 @@
 % end
 % content_for js_scripts => begin
 
-   %= include 'js/global/linkifies.func.js'
+   %= include 'js/global/get-url-params.func.js'
    %= include 'js/global/set-url-param.func.js'
+   %= include 'js/global/linkifies.func.js'
+   %= include 'js/global/on-load.funcs.js'
 
     if ( document.getElementById("spn_msg") ) {
 

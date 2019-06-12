@@ -1,0 +1,14 @@
+function sleep(ms) {
+   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+window.addEventListener("load", function(event) {
+   var uri = window.location.href
+   if ( uri.indexOf('open=') !== -1) {
+      url_params = getUrlParams()
+      var eid = url_params.get("open")
+      var el = document.getElementById(eid)
+      sleep(400)
+      if ( typeof el != "undefined" ) { el.click() }
+   }
+});

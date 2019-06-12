@@ -10,14 +10,7 @@
 	  }
      , computed: {
          linkOrNot: function() {
-            if ( this.id.startsWith ( 'item')) {
-               var uri = window.location.pathname.replace('/search' , '/list/' + this.cnt )
-               uri = ( uri.indexOf('?') == -1 ) ? uri + '?' : uri
-               uri = uri + '&like-by=name,description&like-val=' + this.$parent.$parent.urlParamFor
-               return '<a tabindex="3" href="' + uri + '" class="interlnk">' + this.cnt + '</a>'
-            } else {
-               return this.cnt
-            }
+            return this.cnt
          }
        }
      , model: {
