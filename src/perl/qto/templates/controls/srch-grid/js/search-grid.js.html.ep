@@ -45,6 +45,7 @@
          }
 	      , fetchServerSideData: function (url_params){
             if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
+            var uri = (window.location.pathname).replace(/\/[a-zA-Z_0-9]+\/search/ , "<%= $db =%>/query")
             return axios.get((window.location.pathname).replace("/search" , "/query") , { params: url_params } )
             .then(response => { 
                return response ; 
