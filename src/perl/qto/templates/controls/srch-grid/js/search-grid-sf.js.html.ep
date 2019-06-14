@@ -58,7 +58,6 @@
      methods: {
        showModalDialog: function (e) {
          this.showModal = true
-         console.log ( "triggered by " + e.target.id )
          this.cid = e.target.id.replace("btn-modal-","dia-") ; 
        }
        , sortBy: function (key) {

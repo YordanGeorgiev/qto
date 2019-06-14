@@ -11,6 +11,7 @@ SELECT 'create the "meta_columns" table'
     , description    varchar (4000)
     , skip_in_list   boolean null default false
     , width          integer NULL DEFAULT null
+    , readonly       boolean null default false 
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_meta_columns_guid PRIMARY KEY (guid)
     , CONSTRAINT uc_table_column unique (table_name, name)
