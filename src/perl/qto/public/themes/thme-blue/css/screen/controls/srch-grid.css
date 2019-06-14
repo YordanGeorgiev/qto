@@ -77,7 +77,7 @@ a.interlnk:visited {
    padding: 2px;
    overflow: hidden;
 	min-width: 10px;
-	max-width: 500px; /* why percentages do not work here !!! */
+	max-width: 400px; /* why percentages do not work here !!! */
    width: 100%; 
 	resize: both; 
    background-color: transparent;
@@ -93,19 +93,6 @@ a.interlnk:visited {
 
 .cls_cnt_lnkble:focus {
 	background-color: #FFFFE0;
-}
-#grid tbody tr td:nth-child(1) { 
-   width: 10%;
-   font-size: 80%;
-}
-#grid tbody tr td:nth-child(2) { 
-   width: 25%;
-}
-#grid tbody tr td:nth-child(3) { 
-   width: 40%;
-}
-#grid tbody tr td:nth-child(4) { 
-   width: 50%;
 }
 .cls_tbltooltip {
   position: relative;
