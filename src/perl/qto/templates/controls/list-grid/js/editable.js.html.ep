@@ -87,8 +87,6 @@
                   }
                }
             }
-
-            // maxWidth = ( typeof ( maxWidth ) == 'undefined' ) ? 60 : maxWidth
             return maxWidth
          }
        , calcWidth() {
