@@ -108,6 +108,7 @@ our $objLogger       = {} ;
          $tables{ $table } = $table ; 
       }
       @tbls = keys %tables ; 
+
       $appConfig->{"$db" . '.meta.tables-list'} = \@tbls ; 
    }
 

@@ -240,6 +240,8 @@ var Searchbox = {
                uri = uri.replace(/([&]{0,1}pg-num=([0-9]+))+/gi , "") 
                uri = uri.replace(/([&]{0,1}pg-size=([0-9]+))+/gi , "") 
                uri = uri.replace(/([&]{0,1}open=([a-zA-Z0-9_%\-]+))+/gi , "" ) 
+               uri = uri.replace(/([&]{0,1}oa=([a-zA-Z_0-9%]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}od=([a-zA-Z_0-9%]+))+/gi , "") 
                uri = uri + '&for=' + gs
             }
          }
