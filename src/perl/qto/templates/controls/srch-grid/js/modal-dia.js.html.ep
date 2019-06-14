@@ -23,7 +23,7 @@ Vue.component('modal', {
       if ( item.endsWith("_doc" )) {
          this.lnkOpen = "/" + db + '/view/' + item + '#' + item + "-" + id
       } else {
-         this.lnkOpen = "/" + db + '/list/' + item + '?&with=id-eq-' + id + '&open=btn-modal-' + id
+         this.lnkOpen = "/" + db + '/list/' + item + '?&with=id-eq-' + id + '&open=' + id
       }
 	}
 	, updated() {

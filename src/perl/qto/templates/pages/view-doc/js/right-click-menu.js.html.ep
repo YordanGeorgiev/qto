@@ -41,7 +41,7 @@ const ContextMenu = Vue.component('context-menu', {
          uri = uri.setUriParam("bid",String(id))
          uri = uri.setUriParam("as","grid")
          uri = uri.setUriParam("oa","seq")
-         uri = uri.setUriParam("open",'btn-modal-' + String(id))
+         uri = uri.setUriParam("open",String(id))
          window.location.href = uri
 	   }
 	   , exportItemToGitHubMd: function (e) {
