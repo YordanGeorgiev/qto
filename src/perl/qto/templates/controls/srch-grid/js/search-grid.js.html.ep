@@ -92,6 +92,7 @@
                            hideControlsOnError()
                         }
                         this.gridData = data.dat ; 
+								this.gridMeta = data.met
                         var totalRSsize = data.cnt ; 
                         this.pageSize = url_params.get('pg-size');
                         this.pageNum = url_params.get('pg-num');

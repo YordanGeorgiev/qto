@@ -34,8 +34,8 @@ sub doQueryItems {
    my $db               = $self->stash('db');
    my $ret              = 1 ; 
    my $msg              = 'unknown error during global text search ';
-   my $msr2             = {} ; 
-   
+   my $msr2             = $self->doGetRsMeta() ; 
+
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    
@@ -92,6 +92,48 @@ sub doQueryItems {
 }
 
 
+sub doGetRsMeta {
+   my $self = shift ; 
+
+   my $msr2             = {
+		'0' => {
+			'attribute_name' => 'id',
+			'attribute_number' => 1,
+			'char_max_length' => 104,
+			'data_type' => 'character varying(100)',
+			'width' => '20'
+		}
+		, '1' => {
+			'attribute_name' => 'item',
+			'attribute_number' => 2,
+			'char_max_length' => 104,
+			'data_type' => 'character varying(100)',
+			'width' => '40'
+		}
+		, '2' => {
+			'attribute_name' => 'relevancy',
+			'attribute_number' => 3,
+			'char_max_length' => 60,
+			'data_type' => 'character varying(100)',
+			'width' => '20'
+		}
+		, '3' => {
+			'attribute_name' => 'name',
+			'attribute_number' => 4,
+			'char_max_length' => 104,
+			'data_type' => 'character varying(100)',
+			'width' => '100'
+		}
+		, '4' => {
+			'attribute_name' => 'description',
+			'attribute_number' => 5,
+			'char_max_length' => 4004,
+			'data_type' => 'character varying(4000)',
+			'width' => '600'
+		}
+}; 
+      return $msr2 ; 
+}
 1;
 
 __END__

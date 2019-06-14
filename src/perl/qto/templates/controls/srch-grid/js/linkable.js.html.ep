@@ -23,10 +23,86 @@
 	  }
      , mounted() {
          this.content = this.cnt
+         this.$el.style.width = this.getColMaxWidth(this.$el) + "px"
      },
      methods: {
        onBlur(ev) {
 				var el = ev.target
        }
+       , calcVarCharWidth(width,col) {
+				console.log ( "calcVarCharWidth: width: " + width + " col: " + col )
+            if ( typeof width !== "undefined" ) {
+               if ( width < 3 ) {
+                  return 30
+               } else if ( width > 2  && width < 7 ) {
+                  return 40
+               } else if ( width > 6 && width < 16 ) {
+                  return 60
+               } else if ( width > 15 && width < 35 ) {
+                  return 60
+               } else if ( width > 34 && width < 105) {
+                  return 240
+               } else if ( width > 104 && width < 205 ) {
+                  return 300
+               } else  {
+                  return 460
+               }
+            } else {
+               return 20
+            }
+     		}
+       , calcWidth() {
+            var width = 20
+            if ( typeof this.content != undefined && this.content != null) {
+               width = this.content.toString().length
+               if ( width < 3 ) {
+                  return 30
+               } else if ( width > 2  && width < 7 ) {
+                  return 40
+               } else if ( width > 6 && width < 16 ) {
+                  return 60
+               } else if ( width > 15 && width < 35 ) {
+                  return 150
+               } else if ( width > 34 && width < 60 ) {
+                  return 240
+               } else if ( width > 59 && width < 90 ) {
+                  return 300
+               } else  {
+                  return 460
+               }
+            } else {
+                  return 20
+            }
+     		}
+       , getColMaxWidth(el) {
+            var col = el.id.split('-')[0]
+            var meta = this.$parent.$parent.gridMeta
+				console.log ( meta ) // todo:ysg
+            for (var prop in meta) {
+               if (!meta.hasOwnProperty(prop)) {
+                 continue;
+               }
+               if ( (meta[prop])["attribute_name"] !== col ) {
+                  continue ;
+               } else {
+						console.log ( "col: " + col )
+                  if ( typeof ((meta[prop])["width"]) != "undefined" && (meta[prop])["width"] != null ) {
+								console.log ( Number((meta[prop])["width"] )	)
+								console.log ( meta[prop] )
+                        maxWidth = this.calcVarCharWidth(Number((meta[prop])["width"]),col)         
+								console.log ( "01-maxWidth: " + String(maxWidth))
+                  } else {
+                     if ( (meta[prop])["data_type"].indexOf("char") === -1) {
+                        maxWidth = this.calcWidth()
+								console.log ( "02-maxWidth: " + String(maxWidth))
+                     } else {
+                        maxWidth = this.calcVarCharWidth(Number((meta[prop])["char_max_length"]),col)         
+								console.log ( "03-maxWidth: " + String(maxWidth))
+                     }
+                  }
+               }
+            }
+            return maxWidth
+         }
 		}
    })
