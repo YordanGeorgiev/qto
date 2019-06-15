@@ -1,0 +1,30 @@
+# src/bash/qto/funcs/build-qto-docker-image.func.sh
+
+# v0.6.5
+# ---------------------------------------------------------
+# remove all the docker containers on the host with warning
+# and inform if none exists
+# ---------------------------------------------------------
+doRemoveAllDockerContainers(){
+   clearTheScreen
+	doLog "INFO START doRemoveAllDockerContainers !!! " 
+   doLog "INFO Are you SURE ??!! You have 3 seconds to abort by Ctrl + C !!"
+   sleep 3
+
+   
+   if test $(docker ps -a -q| wc -l) -eq 0
+   then
+      doLog "INFO No docker containers found. Nothing to do !!!"
+   else
+      doLog "INFO stopping containers ..."
+      docker stop $(docker ps -aq)
+      doLog "INFO removing containers ..."
+      docker rm $(docker ps -a -q)
+   fi
+
+	doLog "INFO STOP  doRemoveAllDockerContainers"
+}
+# eof func doBuildQtoDockerImage
+
+
+# eof file: src/bash/qto/funcs/build-qto-docker-image.func.sh
