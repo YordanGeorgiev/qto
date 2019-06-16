@@ -8,13 +8,11 @@ doBuildQtoDockerImage(){
 
 	doLog "DEBUG START doBuildQtoDockerImage"
 	
-   img_file_name='ubuntu-bionic-core-cloudimg-amd64-root.tar.gz'
-   mkdir -p $product_instance_dir/dat/tar/
-   uri='https://partner-images.canonical.com/core/bionic/current/'"$img_file_name"
-   test -f $product_instance_dir/dat/tar/$img_file_name || \
-      wget -O "$product_instance_dir/dat/tar/$img_file_name" "$uri"
-
-   docker build -t qto-image -f "$product_instance_dir/src/docker/Dockerfile" .
+   doRemoveAllDockerContainers 
+   doRemoveAllDockerImages             # todo:ysg rem !!!
+   cd "$product_instance_dir/src/docker"
+   docker build -t qto-image .
+   cd -
 
    # run the docker in the background
    docker run -d --name  qto-container-01 -p 127.0.0.1:15432:15432 --restart=always qto-image
