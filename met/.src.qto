@@ -1,11 +1,16 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
+src/docker/Dockerfile
+src/bash/qto/funcs/build-qto-docker-image.func.sh
+src/bash/qto/funcs/remove-all-docker-images.func.sh
+src/bash/qto/funcs/remove-all-docker-containers.func.sh
+src/bash/qto/tests/build-qto-docker-image.test.sh
+# -- 
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/public/poc/web-socket/web-socket.html
 src/perl/qto/public/poc/web-socket/wsclient.js
 src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
 #
-src/docker/Dockerfile
 src/js/node/js-unit-tests/01-set-url-param/test/test.js
 src/js/node/js-unit-tests/01-set-url-param/package.json
 # ---
@@ -881,11 +886,6 @@ src/selenium/
 src/selenium/ide
 src/selenium/ide/qto.remote.side
 src/selenium/ide/qto.local.side
-src/bash/qto/funcs/build-qto-docker-image.func.sh
-src/bash/qto/tests/build-qto-docker-image.test.sh
-src/bash/qto/helps/build-qto-docker-image.help.sh
-doc/txt/qto/helps/build-qto-docker-image.help.txt
-doc/txt/qto/funcs/build-qto-docker-image.func.txt
 src/bash/qto/funcs/admin/restart-network.func.sh
 src/bash/qto/funcs/print-stats.func.sh
 dat/mix/2019/2019-06/2019-06-06/xls
