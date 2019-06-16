@@ -4,6 +4,11 @@
 # ---------------------------------------------------------
 # remove all the docker images on the host with warning
 # and inform if none exists
+#$ docker system prune -a --volumes
+#$ docker image prune
+#$ docker container prune
+#$ docker volume prune
+#$ docker network prune
 # ---------------------------------------------------------
 doRemoveAllDockerImages(){
    clearTheScreen

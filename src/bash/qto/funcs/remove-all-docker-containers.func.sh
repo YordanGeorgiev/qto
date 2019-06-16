@@ -18,8 +18,9 @@ doRemoveAllDockerContainers(){
    else
       doLog "INFO stopping containers ..."
       docker stop $(docker ps -aq)
+      sleep 1
       doLog "INFO removing containers ..."
-      docker rm $(docker ps -a -q)
+      docker rm $(docker ps -aq)
    fi
 
 	doLog "INFO STOP  doRemoveAllDockerContainers"

@@ -13,6 +13,19 @@ doCheckPerlSyntax(){
 	doLog "INFO == START == doCheckPerlSyntax"
 	cd $product_instance_dir
 
+   # start prevent spew out of the Any::Moose warnings workaround
+   export to_srch='use Any::Moose;'
+   export to_repl="
+   no warnings 'deprecated' ;
+   use Any::Moose ;
+   use warnings 'deprecated' ;
+   "
+   while read -r f ; do \
+      test $(grep "no warnings 'deprecated'" $f|wc -l) -eq 0 && \
+      sudo perl -pi -e 's/'"$to_srch"'/'"$to_repl"'/g' $f ; \
+   done < <(find /usr/local -name OAuth2.pm)
+   # start prevent spew out of the Any::Moose warnings workaround
+
 	#remove all the autosplit.ix files 
 	find . -name autosplit.ix | xargs rm -fv
 	

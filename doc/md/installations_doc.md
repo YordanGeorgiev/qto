@@ -159,7 +159,7 @@ The name of the group could be anything, as well it's gid , use those values if 
 ### 3.3. Add the qto application OS user
 Add the user as shown bellow. The name of the user could be also anything, as log as it belongs to the above configured group. 
 
-    export user=usr_qto
+    export user=usrqtoapp
     export uid=10001
     export home_dir=/home/$user
     export desc="the qto group"
@@ -173,13 +173,13 @@ Add the user as shown bellow. The name of the user could be also anything, as lo
 ### 3.4. Add the qto app user to the sudoers group
 Edit the /etc/group as follows:
 
-    sudo:x:27:ubuntu,usr_qto
+    sudo:x:27:ubuntu,usrqtoapp
 
 ### 3.5. Allow sudo without having to type password 
 Add the following text to the /etc/sudoers file:
 
     # See sudoers(5) for more information on "#include" directives:
-    usr_qto  ALL=(ALL) NOPASSWD: ALL
+    usrqtoapp  ALL=(ALL) NOPASSWD: ALL
 
 ### 3.6. Install the most essential binaries + git
 You will need the git binary to fetch the qto source - you could alternatively download its zip fille. 
@@ -189,8 +189,8 @@ You will need the git binary to fetch the qto source - you could alternatively d
 ### 3.7. Fetch the source
 Fetch the source from git hub as follows:
 
-    # run as usr_qto
-    sudo su - usr_qto
+    # run as usrqtoapp
+    sudo su - usrqtoapp
     
     # got to a dir you have write permissions , for example:
     mkdir -p ~/opt/; cd ~/opt/

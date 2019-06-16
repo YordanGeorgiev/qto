@@ -245,7 +245,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $dbh = q{} ; 
 
       eval { 
-         $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
+         $dbh = DBI->connect("dbi:Pg:dbname=$db;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
                     'RaiseError'          => 1
                   , 'ShowErrorStatement'  => 1
                   , 'PrintError'          => 1
@@ -276,6 +276,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $table            = shift ; 
 
       my $ret              = 1 ; 
+      my $dbh              = {} ; 
       my $msg              = 'unknown error while sql insert ' ; 		
       my $str_sql_insert   = q{} ; 
       my $str_col_list     = q{} ; 
@@ -342,14 +343,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       # http://stackoverflow.com/a/19980156/65706
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
-      my $dbh = DBI->connect("DBI:Pg:dbname=$db", "", "" , {
-                 'RaiseError'          => 1
-               , 'ShowErrorStatement'  => 1
-               , 'PrintError'          => 1
-               , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
-      } ) or $msg = DBI->errstr;
-      
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       
       $ret = $dbh->do( $str_sql_insert ) ; 
       $msg = DBI->errstr ; 
@@ -474,13 +468,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
 
       eval {
-         $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
-                 'RaiseError'          => 1
-               , 'ShowErrorStatement'  => 1
-               , 'PrintError'          => 1
-               , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
-         } );
+         ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       } or $ret = 2  ;
 
       if ( $ret == 2 ) {

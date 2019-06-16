@@ -1,0 +1,18 @@
+CREATE ROLE usrqtoapp WITH PASSWORD 'usrqtoapp' LOGIN ;
+-- \c dev_qto
+GRANT SELECT ON ALL TABLES IN SCHEMA PUBLIC TO usrqtoapp;
+GRANT SELECT ON TABLE pg_attribute TO usrqtoapp ;
+GRANT SELECT ON TABLE pg_class TO usrqtoapp;
+GRANT SELECT ON TABLE pg_index TO usrqtoapp;
+GRANT SELECT ON TABLE pg_description TO usrqtoapp ;
+GRANT SELECT ON TABLE pg_attrdef TO usrqtoapp ;
+GRANT SELECT ON TABLE pg_catalog TO usrqtoapp ;
+GRANT ALL PRIVILEGES ON DATABASE dev_qto TO USRQTOAPP;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO usrqtoapp ;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO usrqtoapp ;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO usrqtoapp ;
+
+-- \c postgres
+CREATE USER usrqtoadmin WITH SUPERUSER PASSWORD 'usrqtoadmin';
+GRANT ALL PRIVILEGES ON DATABASE POSTGRES TO usrqtoadmin ; 
+

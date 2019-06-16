@@ -1,38 +1,34 @@
 #
 # ---------------------------------------------------------
-# source this lib function by:
-# source ./lib/bash/funcs/parse-cnf-env-vars.sh
-# call by: doParseCnfEnvVars cnf/qto.dev.ip-172-31-18-13.cnf
-# verify by: 
-# echo $qto_project 
-# should echo:
-# ysg-issues
+# cat cnf/qto.dev.host-name.cnf
+# [MainSection]
+# postgres_db_name     = dev_qto
+# postgres_db_host     = host-name
+# 
+# call by: doParseCnfEnvVars cnf/qto.dev.host-name.cnf
 # ---------------------------------------------------------
 doParseCnfEnvVars(){
+
    cnf_file=$1;shift 1;
    test -z "$cnf_file" && echo " you should set the cnf_file !!!"
-
+	
    INI_SECTION=MainSection
 
-   ( set -o posix ; set ) | sort >~/vars.before
-   settings=`sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
-      -e 's/#.*$//' \
-      -e 's/[[:space:]]*$//' \
-      -e 's/^[[:space:]]*//' \
-      -e "s/^\(.*\)=\([^\"']*\)$/\1=\"\2\"/" \
-      < $cnf_file \
-      | sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
+	( set -o posix ; set ) | sort >~/vars.before
 
-   # export the var_name=var_value pairs
-   # debug set -x
-   while IFS=' ' read -d' ' setting ; do eval 'export '$setting ; done <<< $settins
+	eval `sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
+		-e 's/#.*$//' \
+		-e 's/[[:space:]]*$//' \
+		-e 's/^[[:space:]]*//' \
+		-e "s/^\(.*\)=\([^\"']*\)$/export \1=\"\2\"/" \
+		< $cnf_file \
+		| sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
 
    # and post-register for nice logging
    ( set -o posix ; set ) | sort >~/vars.after
 
    echo "INFO added the following vars from section: [$INI_SECTION]"
    comm -3 ~/vars.before ~/vars.after | perl -ne 's#\s+##g;print "\n $_ "'
-
 }
 
 #

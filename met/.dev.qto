@@ -2,9 +2,12 @@
 # -- 
 src/docker/Dockerfile
 src/bash/qto/funcs/build-qto-docker-image.func.sh
+src/bash/qto/funcs/full-clean-docker.func.sh
 src/bash/qto/funcs/remove-all-docker-images.func.sh
 src/bash/qto/funcs/remove-all-docker-containers.func.sh
 src/bash/qto/tests/build-qto-docker-image.test.sh
+src/bash/qto/bootstrap-qto.sh
+src/sql/pgsql/scripts/grant-permissions.sql
 # -- 
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/public/poc/web-socket/web-socket.html
@@ -213,7 +216,6 @@ cnf/bash/.profile_opts.host-name
 # ---
 src/bash/lib/.bash_funcs.host-name
 # --
-src/bash/qto/bootstrap-qto.sh
 src/bash/qto/qto.sh
 src/bash/qto/test-qto.sh
 src/bash/qto/tests/all-qto-tests.lst

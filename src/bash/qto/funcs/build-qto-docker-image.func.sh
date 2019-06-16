@@ -7,15 +7,16 @@
 doBuildQtoDockerImage(){
 
 	doLog "DEBUG START doBuildQtoDockerImage"
-	
+
+   doFullCleanDocker
    doRemoveAllDockerContainers 
    doRemoveAllDockerImages             # todo:ysg rem !!!
    cd "$product_instance_dir/src/docker"
    docker build -t qto-image .
    cd -
 
-   # run the docker in the background
-   docker run -d --name  qto-container-01 -p 127.0.0.1:15432:15432 --restart=always qto-image
+   echo to run the docker in the background by exposing the postgres ports run:
+   echo docker run -d --name  qto-container-01 -p 127.0.0.1:15432:15432 --restart=always qto-image
 
 	# --detach , -d       Run container in background and print container ID
 	# --name              Assign a name to the container

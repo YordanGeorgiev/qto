@@ -22,7 +22,7 @@ doRunPgsqlScripts(){
    sql_script="$pgsql_scripts_dir/""00.create-db.pgsql"
    
    # run the sql save the result into a tmp log file
-   psql -v ON_ERROR_STOP=1 -q -t -X -U "${pgsql_user:-}" \
+   PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -v ON_ERROR_STOP=1 -q -t -X -w -U "${postgres_db_useradmin:-}" \
        -v postgres_db_name="${postgres_db_name:-}" -f "$sql_script" postgres > "$tmp_log_file" 2>&1
    ret=$?
    doLog "INFO ret: $ret" 
@@ -65,7 +65,7 @@ doRunPgsqlScripts(){
 		doLog "INFO START ::: running $relative_sql_script"
 		echo -e '\n\n'
 		# run the sql save the result into a tmp log file
-		psql -v ON_ERROR_STOP=1 -q -t -X -U "${pgsql_user:-}" \
+      PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -v ON_ERROR_STOP=1 -q -t -X -w -U "${postgres_db_useradmin:-}" \
          -v postgres_db_name="$postgres_db_name" -f "$sql_script" "$postgres_db_name" > "$tmp_log_file" 2>&1
       ret=$?
 

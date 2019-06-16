@@ -652,76 +652,6 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 
 
    #
-   # -  ----------------------------------------------------------------------------
-   # get ALL the table data into hash ref of hash refs 
-   # -----------------------------------------------------------------------------
-   sub doSearchConfigurationEntries {
-
-      my $self             = shift ; 
-      my $db          = shift || 'ysg_issues' ; # the default db
-      my $table            = shift || 'confs' ;  # the table to get the data from  
-      my $query_str        = shift || '*' ;  # the table to get the data from  
-   
-      my $msg              = q{} ;         
-      my $ret              = 1 ;          # this is the return value from this method 
-      my $debug_msg        = q{} ; 
-      my $hsr              = {} ;         # this is hash ref of hash refs to populate with
-      my $sth              = {} ;         # this is the statement handle
-      my $dbh              = {} ;         # this is the database handle
-      my $str_sql          = q{} ;        # this is the sql string to use for the query
-
-
-      $str_sql = 
-         " SELECT 
-         guid, value as name FROM $table 
-         WHERE 1=1
-         AND value like '%" . $query_str . "%'
-         ;
-      " ; 
-
-     
-      $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
-              'RaiseError'          => 1
-            , 'ShowErrorStatement'  => 1
-            , 'PrintError'          => 1
-            , 'AutoCommit'          => 1
-            , 'pg_utf8_strings'     => 1
-      } ) or $msg = DBI->errstr;
-      
-      $sth = $dbh->prepare($str_sql);  
-
-      $sth->execute()
-            or $objLogger->error ( "$DBI::errstr" ) ;
-
-		my @query_output = () ; 
-      
-      binmode(STDOUT, ':utf8');
-      while ( my $row = $sth->fetchrow_hashref ){
-          my %hash = %$row ;
-          #debug say "UTF8 flag is turned on in the STRING $key" if is_utf8( $hash{$key} );
-          push @query_output, $row
-          #debug if is_utf8( $hash{$key} );
-      } 
-      
-		$msg = DBI->errstr ; 
-
-      unless ( defined ( $msg ) ) {
-         $msg = 'SELECT OK for table: ' . "$table" ; 
-         $ret = 0 ; 
-      } else {
-         $objLogger->doLogErrorMsg ( $msg ) ; 
-      }
-
-      $dbh->disconnect();
-      
-      $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-
-      return ( $ret , $msg , \@query_output ) ; 	
-   
-	}
-
-   #
    # -----------------------------------------------------------------------------
    # open the database handle if possible, if not return proper error msgs
    # ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
@@ -735,7 +665,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $msg = 'cannot connect to the "' . $db . '" database: '; 
       my $dbh  = undef ;
 
-      $dbh = DBI->connect("dbi:Pg:dbname=$db", "", "" , {
+      $dbh = DBI->connect("dbi:Pg:dbname=$db;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
                  'RaiseError'          => 0 # otherwise it dies !!!
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
@@ -1048,10 +978,10 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
            appConfig => $appConfig
       );
 		
-		$db                  = $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}     || 'prd_ysg_issues' ; 
-		$postgres_db_host    = $ENV{ 'postgres_db_host' } || $appConfig->{'postgres_db_host'} 		|| 'localhost' ;
-		$postgres_db_port    = $ENV{ 'postgres_db_port' } || $appConfig->{'postgres_db_port'} 		|| '13306' ; 
-		$postgres_db_user 	= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'ysg' ; 
+		$db                  = $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}     || 'dev_qto' ; 
+		$postgres_db_host    = $ENV{ 'postgres_db_host' } || $appConfig->{'postgres_db_host'} 		|| '127.0.0.1' ;
+		$postgres_db_port    = $ENV{ 'postgres_db_port' } || $appConfig->{'postgres_db_port'} 		|| '15432' ; 
+		$postgres_db_user 	= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'usrqtoapp' ; 
 		$postgres_db_user_pw = $ENV{ 'postgres_db_user_pw' } || $appConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
 
 	   $objLogger 			   = 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
@@ -1063,13 +993,14 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 	sub doInitPg {
       
      	my $self 			= shift ;  
+		my $db            = shift ; 
 		my $pg            = {} ; 
 
 		$ENV{'DBI_TRACE'} = 1 ; 
       $ENV{'DBI_TRACE'} = 15 ; 
       $ENV{'DBI_TRACE'} ='SQL' ; 
       
-		$pg = 'Qto::App::Db::In::Postgres::MojoPgWrapper'->new (\$appConfig, \$objModel ) ; 
+		$pg = 'Qto::App::Db::In::Postgres::MojoPgWrapper'->new (\$appConfig, \$objModel , $db ) ; 
       $pg = $pg->options( {
               'RaiseError'          => 1
             , 'ShowErrorStatement'  => 1
@@ -1098,7 +1029,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $like_clause = '' ; 
       my $where_clause_bid = '' ; 
 
-		$pg = $self->doInitPg();
+		$pg = $self->doInitPg($db);
 
       my $cols             = () ;         # the array ref of columns
       my $columns_to_select = '' ;

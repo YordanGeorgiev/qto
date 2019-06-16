@@ -15,15 +15,17 @@ mix_data_dir = /opt/csitea/qto/qto.0.6.5.tst.ysg/dat/mix
 
 # the postgres confs - OBS ! dev , tst , prd product instances to own db !
 postgres_db_name     = tst_qto
-postgres_db_host     = host-name
-postgres_db_port     = 5432
-postgres_db_user     = ysg
-postgres_db_user_pw  = 0024plapla
+postgres_db_host           = 127.0.0.1
+postgres_db_port           = 15432
+postgres_db_user           = usrqtoapp
+postgres_db_user_pw        = usrqtoapp
+postgres_db_useradmin      = usrqtoadmin
+postgres_db_useradmin_pw   = usrqtoadmin
 
 # logging confs - set 1 for yes and 0 for now
 LogToFile            = 1
-LogDir               = %ProductInstanceDir%/dat/log
-LogFile              = %LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
+LogDir               = /opt/csitea/qto/qto.0.6.5.tst.ysg/dat/log
+LogFile              = /opt/csitea/qto/qto.0.6.5.tst.ysg/dat/log/qto.%YYYY%.%MM%.%DD%.log
 PrintConsoleMsgs     = 1
 PrintInfoMsgs        = 1                             
 PrintWarningMsgs     = 1                             
