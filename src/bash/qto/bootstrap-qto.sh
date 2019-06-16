@@ -7,14 +7,14 @@ set -eu -o pipefail # fail on error , debug all lines
 
 run_unit='qto'
 run_unit_type='dev'
-run_unit_owner=$USER || 'ysg'
+run_unit_owner='usrqtoapp'
 unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
 product_base_dir=$(cd $unit_run_dir/../../../..; echo `pwd`)
 product_dump_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
 product_dir="$product_base_dir/csitea/$run_unit" 
 product_tmp_install_dir="$product_base_dir"/"$run_unit"'-tmp-install'
 cd "$product_dump_dir"
-run_unit_ver=$(git tag|sort -nr|head -n 1) || run_unit_ver='0.1.9'
+run_unit_ver=$(git tag|sort -nr|head -n 1) || run_unit_ver='0.6.5'
 product_instance_dir="$product_dir"'/'"$run_unit"'.'"$run_unit_ver"'.'"$run_unit_type"'.'"$run_unit_owner"
 
 mkdir -p "$product_dir" ; cd $_
@@ -35,7 +35,42 @@ perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;rename($o,$n) unless -e $n 
 find "$dir/" -not -path "./.git/*" -type f -exec perl -pi -e "s#$to_srch#$to_repl#g" {} \;
 find "$dir/" -not -path "./.git/*" -type f -name '*.bak' | xargs rm -f
 
-echo "GO TO YOUR product_instance_dir by"
+# START === create symlink to the executing user's ~/opt/csitea
+export link_path=/opt/csitea
+export tgt_path=~/opt/csitea
+mkdir -p `dirname "$link_path"`
+test -L "$link_path" && unlink "$link_path"
+sudo ln -s "$tgt_path" "$link_path"
+ls -la $link_path; 
+# STOP === create symlink
+
+export to_srch='ysg'
+export to_repl=$run_unit_owner
+export dir=$product_instance_dir/cnf
+#-- search and replace in file and dir paths excludding the .git dir
+find "$dir/"  -not -path "./.git/*" -type d |\
+perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;`mkdir -p $n` ;'
+find "$dir/"  -not -path "./.git/*" -type f |\
+perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;rename($o,$n) unless -e $n ;'
+
+#-- search and replace in file contents excludging the .git dir
+find "$dir/" -not -path "./.git/*" -type f -exec perl -pi -e "s#$to_srch#$to_repl#g" {} \;
+find "$dir/" -not -path "./.git/*" -type f -name '*.bak' | xargs rm -f
+
+export to_srch='use Any::Moose;'
+export to_repl="
+no warnings 'deprecated' ;
+use Any::Moose;
+use warnings 'deprecated' ;
+"
+while read -r f ; do sudo perl -pi -e 's/'"$to_srch"'/'"$to_repl"'/g' $f ; \
+   done < <(find /usr/local -name OAuth2.pm)
+
+# set a default .vimrc
+test -f ~/.vimrc && cp -v ~/.vimrc ~/.vimrc.$(date "+%Y%m%d_%H%M%S").bak
+cp -v $product_instance_dir/cnf/hosts/$(hostname -s)/home/$run_unit_owner/.vimrc ~/.vimrc
+
+echo "DO ALWAYS ! GO TO YOUR product_instance_dir by while working on a qto instance !!!"
 echo "cd $product_instance_dir"
 cd $product_instance_dir
 
