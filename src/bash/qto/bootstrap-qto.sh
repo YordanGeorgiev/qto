@@ -7,7 +7,7 @@ set -eu -o pipefail # fail on error , debug all lines
 
 run_unit='qto'
 run_unit_type='dev'
-run_unit_owner='usrqtoapp'
+run_unit_owner='usrqtoadmin'
 unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
 product_base_dir=$(cd $unit_run_dir/../../../..; echo `pwd`)
 product_dump_dir=$(cd $unit_run_dir/../../..; echo `pwd`)

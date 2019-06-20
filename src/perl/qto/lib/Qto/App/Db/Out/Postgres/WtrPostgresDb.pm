@@ -27,6 +27,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 	our $postgres_db_port 								= q{} ;
 	our $postgres_db_user 							   = q{} ; 
 	our $postgres_db_user_pw	 					   = q{} ; 
+	our $postgres_db_useradmin 							   = q{} ; 
+	our $postgres_db_useradmin_pw	 					   = q{} ; 
 	our $web_host 											= q{} ; 
    our @tables                                  = ( 'daily_issues' );
    our $objController                           = () ; 
@@ -50,7 +52,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 		   $db = $objModel->get('postgres_db_name');
       }
       
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
@@ -110,7 +112,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 		   $db = $objModel->get('postgres_db_name');
       }
       
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
@@ -179,7 +181,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 		   $db = $objModel->get('postgres_db_name');
       }
       
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
@@ -234,9 +236,9 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
    #
    # -----------------------------------------------------------------------------
    # open the database handle if possible, if not return proper error msgs
-   # ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+   # ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
    # -----------------------------------------------------------------------------
-   sub doConnectToDb {
+   sub doConnectToDbAsAppUser {
       my $self = shift ; 
       my $db = shift ; 
    
@@ -245,7 +247,43 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $dbh = q{} ; 
 
       eval { 
+		$postgres_db_user 			= $ENV{ 'postgres_db_user' }     || $appConfig->{'postgres_db_user'}    || 'ysg' ; 
+		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' }  || $appConfig->{'postgres_db_user_pw'} || 'no_pass_provided!!!' ; 
          $dbh = DBI->connect("dbi:Pg:dbname=$db;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
+                    'RaiseError'          => 1
+                  , 'ShowErrorStatement'  => 1
+                  , 'PrintError'          => 1
+                  , 'AutoCommit'          => 1
+                  , 'pg_utf8_strings'     => 1
+         } ) 
+      };
+
+      if ($@) {
+         $ret = 2 ; 
+         $msg = 'cannot connect to the "' . $db . '" database: ' . DBI->errstr ; 
+         return ( $ret , $msg , undef ) ; 
+      }
+
+      $ret = 0 ; $msg = "" ; 
+      return ( $ret , $msg , $dbh ) ; 
+   }
+   #
+   # -----------------------------------------------------------------------------
+   # open the database handle if possible, if not return proper error msgs
+   # ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
+   # -----------------------------------------------------------------------------
+   sub doConnectToDbAsAdminUser {
+      my $self = shift ; 
+      my $db = shift ; 
+   
+      my $ret = 1 ; 
+      my $msg = q{} ; 
+      my $dbh = q{} ; 
+
+      eval { 
+		$postgres_db_useradmin 			= $ENV{ 'postgres_db_useradmin' }     || $appConfig->{'postgres_db_useradmin'}    || 'ysg' ; 
+		$postgres_db_useradmin_pw 		= $ENV{ 'postgres_db_useradmin_pw' }  || $appConfig->{'postgres_db_useradmin_pw'} || 'no_pass_provided!!!' ; 
+         $dbh = DBI->connect("dbi:Pg:dbname=$db;port=$postgres_db_port", "$postgres_db_useradmin", "$postgres_db_useradmin_pw" , {
                     'RaiseError'          => 1
                   , 'ShowErrorStatement'  => 1
                   , 'PrintError'          => 1
@@ -343,7 +381,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       # http://stackoverflow.com/a/19980156/65706
       $objLogger->doLogDebugMsg ( $debug_msg ) ; 
      
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
       
       $ret = $dbh->do( $str_sql_insert ) ; 
       $msg = DBI->errstr ; 
@@ -468,7 +506,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
 
       eval {
-         ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+         ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
       } or $ret = 2  ;
 
       if ( $ret == 2 ) {
@@ -554,7 +592,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       # debug p($hs_headers ) ; 
       # debug rint "WtrPostgresDb.pm : $table 336 \n " ; 
   
-      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAdminUser ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ;       
 
       my $sql_str          = '' ; 
@@ -751,7 +789,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          #debug p $hs_headers ;  
          #debug p $hs_table->{ 0 } ; 
          #debug p($hs_headers ) ; 
-         ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+         ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
          return ( $ret , $msg ) unless $ret == 0 ;       
 
          my $sql_str          = '' ; 
@@ -891,6 +929,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 		$db 			               = $ENV{ 'postgres_db_name' }     || $appConfig->{'postgres_db_name'}    || 'prd_qto' ; 
 		$postgres_db_host 			= $ENV{ 'postgres_db_host' }     || $appConfig->{'postgres_db_host'}    || 'localhost' ;
 		$postgres_db_port 			= $ENV{ 'postgres_db_port' }     || $appConfig->{'postgres_db_port'}    || '13306' ; 
+		$postgres_db_useradmin 			= $ENV{ 'postgres_db_useradmin' }     || $appConfig->{'postgres_db_useradmin'}    || 'ysg' ; 
+		$postgres_db_useradmin_pw 		= $ENV{ 'postgres_db_useradmin_pw' }  || $appConfig->{'postgres_db_useradmin_pw'} || 'no_pass_provided!!!' ; 
 		$postgres_db_user 			= $ENV{ 'postgres_db_user' }     || $appConfig->{'postgres_db_user'}    || 'ysg' ; 
 		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' }  || $appConfig->{'postgres_db_user_pw'} || 'no_pass_provided!!!' ; 
       
