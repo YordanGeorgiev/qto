@@ -1,6 +1,10 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
 src/docker/Dockerfile
+src/docker/Dockerfile.deploy-quick-test
+src/docker/Dockerfile.deploy-qto.0.6.5.dev.ysg
+src/bash/scripts/docker-entry-point.sh
+src/bash/scripts/add-qto-os-users.sh
 src/bash/qto/funcs/build-qto-docker-image.func.sh
 src/bash/qto/funcs/full-clean-docker.func.sh
 src/bash/qto/funcs/remove-all-docker-images.func.sh
