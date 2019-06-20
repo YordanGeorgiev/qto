@@ -1,0 +1,17 @@
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda1 during installation
+UUID=3b1f516a-7702-4801-9b33-8a918ef6a06f /               ext4    errors=remount-ro 0       1
+# /boot was on /dev/sda2 during installation
+UUID=bd912460-f4fa-4104-97fb-21e1fb265698 /boot           ext4    defaults        0       2
+# /opt was on /dev/sda5 during installation
+UUID=098d58f3-4284-41af-bb97-93cbfa64976e /opt            ext4    defaults        0       2
+/swapfile                                 none            swap    sw              0       0
+# the the shared with the host folder
+# do sudo usermod -a -G vboxsf $USER; sudo reboot
+/media/sf_hos/ /hos vboxsf bind,uid=10001,rw,umask=0000 0 0
