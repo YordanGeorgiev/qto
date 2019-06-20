@@ -1,6 +1,6 @@
 # src/bash/qto/funcs/backup-postgres-db.func.sh
 
-# v1.0.9
+# v0.6.5
 # ---------------------------------------------------------
 # cat doc/txt/qto/funcs/backup-postgres-db.func.txt
 # ---------------------------------------------------------
@@ -13,7 +13,9 @@ doBackupPostgresDb(){
 
    test -z "${postgres_db_name-}" && postgres_db_name="${env_type-}"_"${run_unit//-/_}"
    mkdir -p $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/; 
-   pg_dump  --column-inserts --data-only $postgres_db_name  > \
+
+   PGPASSWORD="${postgres_db_useradmin_pw:-}" pg_dump -v ON_ERROR_STOP=1 -q -t -X -w -U "${postgres_db_useradmin:-}" \
+   --column-inserts --data-only $postgres_db_name  > \
    $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/$postgres_db_name.`date "+%Y%m%d_%H%M%S"`.insrt.dmp.sql 
    ls -1 $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/* | sort -nr
    wc -l $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/* | sort -nr

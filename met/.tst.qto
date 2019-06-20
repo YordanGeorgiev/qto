@@ -2,9 +2,12 @@
 # -- 
 src/docker/Dockerfile
 src/bash/qto/funcs/build-qto-docker-image.func.sh
+src/bash/qto/funcs/full-clean-docker.func.sh
 src/bash/qto/funcs/remove-all-docker-images.func.sh
 src/bash/qto/funcs/remove-all-docker-containers.func.sh
 src/bash/qto/tests/build-qto-docker-image.test.sh
+src/bash/qto/bootstrap-qto.sh
+src/sql/pgsql/scripts/grant-permissions.sql
 # -- 
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/public/poc/web-socket/web-socket.html
@@ -213,7 +216,6 @@ cnf/bash/.profile_opts.host-name
 # ---
 src/bash/lib/.bash_funcs.host-name
 # --
-src/bash/qto/bootstrap-qto.sh
 src/bash/qto/qto.sh
 src/bash/qto/test-qto.sh
 src/bash/qto/tests/all-qto-tests.lst
@@ -360,7 +362,8 @@ doc/txt/qto/helps/txt-to-db.help.txt
 src/sql/pgsql
 src/sql/pgsql/qto/
 src/sql/pgsql/qto/00.create-db.pgsql
-src/sql/pgsql/qto/00.functions.sql
+src/sql/pgsql/qto/00.01.create-qto-app-user.sql
+src/sql/pgsql/qto/00.02.functions.sql
 src/sql/pgsql/qto/01.create-table-daily_issues.sql
 src/sql/pgsql/qto/02.create-table-weekly_issues.sql
 src/sql/pgsql/qto/03.create-table-monthly_issues.sql
@@ -537,13 +540,6 @@ src/bash/qto/funcs/sys/tmux/tmux-common.sh
 src/bash/qto/funcs/sys/tmux/restore-tmux-session.func.sh
 src/bash/qto/tests/sys/tmux/restore-tmux-session.test.sh
 #---
-src/bash/qto/tests/sys/backup-file.test.sh
-src/bash/qto/specs/sys/backup-file.spec.sh
-src/bash/qto/funcs/sys/backup-file.func.sh
-doc/txt/qto/tests/sys/backup-file.test.txt
-doc/txt/qto/specs/sys/backup-file.spec.txt
-doc/txt/qto/helps/sys/backup-file.help.txt
-doc/txt/qto/funcs/backup-file.func.txt
 #---
 doc/txt/qto/specs/pckg/create-relative-package.spec.txt
 doc/txt/qto/tests/pckg/create-relative-package.test.txt
@@ -682,7 +678,6 @@ doc/txt/qto/specs/check-perl-modules-prerequisites.spec.txt
 doc/txt/qto/funcs/check-perl-modules-prerequisites.func.txt
 doc/txt/qto/tests/check-perl-modules-prerequisites.test.txt
 doc/txt/qto/helps/check-perl-modules-prerequisites.help.txt
-src/bash/qto/helps/backup-file.help.sh
 doc/txt/qto/funcs/clone-to-app.func.txt
 doc/txt/qto/tests/clone-to-app.test.txt
 src/bash/qto/helps/clone-to-app.help.sh
