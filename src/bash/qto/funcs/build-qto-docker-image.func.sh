@@ -12,7 +12,7 @@ doBuildQtoDockerImage(){
    doRemoveAllDockerContainers 
    doRemoveAllDockerImages             # todo:ysg rem !!!
    cd "$product_instance_dir/src/docker"
-   docker build -t qto-image .
+   docker build -t qto-image:$product_version .
    cd -
 
    echo to run the docker in the background by exposing the postgres ports run:

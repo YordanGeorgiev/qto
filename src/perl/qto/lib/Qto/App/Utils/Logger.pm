@@ -17,10 +17,11 @@ package Qto::App::Utils::Logger ;
 	use Data::Printer ; 
 	use Qto::App::Utils::Timer ; 
 
-	# the hash holding the vars
-	our ( $RunDir , $LogFile ) = ();
-   our ( $caller_pckg, $filename, $line ) = ();
    our $appConfig   = {} ; 
+	our $RunDir             = q{};
+	our $LogDir             = q{};
+	our $LogFile            = q{};
+   our ( $caller_pckg, $filename, $line ) = ();
 	our $PID = "$$" ; 
 	our $objTimer ; 
 	our $HostName ; 
@@ -74,7 +75,6 @@ if you don't export anything, such as for a purely object-oriented module.
       my $self = shift ; 
    
       # if the log dir does not exist create it
-		my $LogDir = '';
 		$LogDir = $appConfig->{ 'LogDir' };
 		# define the log dir as the current dir if not cnfigured 
 		unless ( defined( $LogDir ) ) {
@@ -88,7 +88,8 @@ if you don't export anything, such as for a purely object-oriented module.
 			$self->MkDir( "$LogDir" ) || cluck( " Cannot create the \$LogDir : $LogDir $! !!! " );
 		}
 
-		#debug rint "The log file is " . $appConfig->{ 'LogFile' } ;
+      # todo:ysg 
+		print "The log file is " . $appConfig->{ 'LogFile' } ;
 		$LogFile = $appConfig->{ 'LogFile' };
       croak unless $LogFile ; 
 

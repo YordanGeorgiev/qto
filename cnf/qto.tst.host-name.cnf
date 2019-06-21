@@ -1,22 +1,22 @@
 # file: cnf/qto.host-name.cnf
 [MainSection]
 
-# multiple projects support
+# qto is just a project with multiple projects support
 qto_project = qto
 
 # where the scripts to run are situated
-pgsql_scripts_dir = /opt/csitea/qto/qto.0.6.5.tst.ysg/src/sql/pgsql/qto
+pgsql_scripts_dir = %ProductInstanceDir%/src/sql/pgsql/qto
 
 # the root dir for all the project data 
-DataDir = /opt/csitea/qto/qto.0.6.5.tst.ysg/dat
+DataDir = %ProductInstanceDir%/dat
 
 # where are stored the txt issues files
-mix_data_dir = /opt/csitea/qto/qto.0.6.5.tst.ysg/dat/mix
+mix_data_dir = %ProductInstanceDir%/dat/mix
 
 # the postgres confs - OBS ! dev , tst , prd product instances to own db !
-postgres_db_name     = tst_qto
+postgres_db_name           = tst_qto
 postgres_db_host           = 127.0.0.1
-postgres_db_port           = 15432
+postgres_db_port           = 25432
 postgres_db_user           = usrqtoapp
 postgres_db_user_pw        = usrqtoapp
 postgres_db_useradmin      = usrqtoadmin
@@ -24,8 +24,8 @@ postgres_db_useradmin_pw   = usrqtoadmin
 
 # logging confs - set 1 for yes and 0 for now
 LogToFile            = 1
-LogDir               = /opt/csitea/qto/qto.0.6.5.tst.ysg/dat/log
-LogFile              = /opt/csitea/qto/qto.0.6.5.tst.ysg/dat/log/qto.%YYYY%.%MM%.%DD%.log
+LogDir               = %ProductInstanceDir%/dat/log
+LogFile              = %LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
 PrintConsoleMsgs     = 1
 PrintInfoMsgs        = 1                             
 PrintWarningMsgs     = 1                             
