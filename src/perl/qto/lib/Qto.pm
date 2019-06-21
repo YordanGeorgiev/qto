@@ -78,7 +78,12 @@ sub doLoadAppConfig {
 
    $objConfigurator  = 'Qto::App::Utils::Configurator'->new( 
          $ConfFile, \$appConfig);
+   $appConfig       = $objConfigurator->getConfHolder()  ;
    $objLogger        = 'Qto::App::Utils::Logger'->new(\$appConfig);
+
+   # todo:ysg 
+   p $appConfig ; 
+   print "STOP Qto.pm appConfig \n" ;
 
 	$appConfig->{'proj_instance_dir'} = $appConfig->{'ProductInstanceDir'} unless ( exists $appConfig->{'proj_instance_dir'} );
    my $currentShortHash = `git rev-parse --short HEAD` ; chomp($currentShortHash);

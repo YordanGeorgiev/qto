@@ -10,8 +10,12 @@
 doParseCnfEnvVars(){
 
    cnf_file=$1;shift 1;
+
    test -z "$cnf_file" && echo " you should set the cnf_file !!!"
-	
+
+   cnf_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$cnf_file")
+   product_instance_dir=${cnf_dir%/*}
+
    INI_SECTION=MainSection
 
 	( set -o posix ; set ) | sort >~/vars.before
@@ -20,6 +24,7 @@ doParseCnfEnvVars(){
 		-e 's/#.*$//' \
 		-e 's/[[:space:]]*$//' \
 		-e 's/^[[:space:]]*//' \
+		-e "s|%ProductInstanceDir%|${product_instance_dir}|" \
 		-e "s/^\(.*\)=\([^\"']*\)$/export \1=\"\2\"/" \
 		< $cnf_file \
 		| sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`

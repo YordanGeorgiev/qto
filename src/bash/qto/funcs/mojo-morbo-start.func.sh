@@ -19,7 +19,7 @@ doMojoMorboStart(){
    export MOJO_LISTEN='http://*:'"$mojo_morbo_port"
    test -z "${mojo_morbo_port:-}" && export MOJO_LISTEN='http://*:3001'
 	# Action !!!
-   doLog "INFO running: morbo -w $product_instance_dir/src/perl/qto \ 
+   doLog "INFO running: morbo -w $product_instance_dir/src/perl/script/qto
    --listen $MOJO_LISTEN $product_instance_dir/src/perl/qto/script/qto"
 
    bash -c "morbo -w $product_instance_dir/src/perl/qto --listen $MOJO_LISTEN $product_instance_dir/src/perl/qto/script/qto" &
