@@ -1,14 +1,18 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
 src/docker/Dockerfile
+src/docker/Dockerfile.deploy-quick-test
+src/docker/Dockerfile.deploy-qto.0.6.5.dev.ysg
 src/bash/scripts/docker-entry-point.sh
+src/bash/scripts/add-qto-os-users.sh
 src/bash/qto/funcs/build-qto-docker-image.func.sh
 src/bash/qto/funcs/full-clean-docker.func.sh
 src/bash/qto/funcs/remove-all-docker-images.func.sh
 src/bash/qto/funcs/remove-all-docker-containers.func.sh
 src/bash/qto/tests/build-qto-docker-image.test.sh
+src/sql/pgsql/scripts/admin/grant-permissions.sql
 src/bash/qto/bootstrap-qto.sh
-src/sql/pgsql/scripts/grant-permissions.sql
+src/sql/pgsql/list-postgres-schemas.sql
 # -- 
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/public/poc/web-socket/web-socket.html
@@ -422,13 +426,21 @@ src/sql/pgsql/qto/95.create-table-test_hierarchy_table.sql
 src/sql/pgsql/qto/96.create-table-test_delete_table.sql
 src/sql/pgsql/qto/97.create-table-test_create_table.sql
 src/sql/pgsql/qto/98.create-table-test_update_table.sql
-src/sql/pgsql/scripts/check-postgres-tables-permissions.sql
-src/sql/pgsql/scripts/copy-items-from-one-table-to-another.sql
-src/sql/pgsql/scripts/list-table-columns.sql
-src/sql/pgsql/scripts/list-table-cols.sh
-src/sql/pgsql/scripts/list-postgres-tables.sh
-src/sql/pgsql/scripts/upsert_item_trigger.sql
-src/sql/pgsql/scripts/rank-srch.sql
+src/sql/pgsql/scripts/admin
+src/sql/pgsql/scripts/admin/check-postgres-tables-permissions.sql
+src/sql/pgsql/scripts/admin/copy-items-from-one-table-to-another.sql
+src/sql/pgsql/scripts/admin/grant-permissions.sql
+src/sql/pgsql/scripts/admin/list-postgres-schemas.sql
+src/sql/pgsql/scripts/admin/list-schema-tables.sql
+src/sql/pgsql/scripts/admin/list-table-columns.sql
+src/sql/pgsql/scripts/admin/list-table-priviledges.sql
+src/sql/pgsql/scripts/admin/rank-srch.sql
+src/sql/pgsql/scripts/admin/upsert_item_trigger.sql
+src/sql/pgsql/scripts/app
+src/sql/pgsql/scripts/bash
+src/sql/pgsql/scripts/bash/list-postgres-tables.sh
+src/sql/pgsql/scripts/bash/list-table-cols.sh
+src/sql/pgsql/list-table-priviledges.sql
 #----
 src/bash/qto/tests/db-to-xls.test.sh
 src/bash/qto/funcs/db-to-xls.func.sh
@@ -692,12 +704,10 @@ doc/txt/qto/tests/remove-package-files.test.txt
 doc/txt/qto/specs/remove-package-files.spec.txt
 doc/txt/qto/helps/remove-package-files.help.txt
 doc/txt/qto/funcs/remove-package-files.func.txt
-src/bash/qto/tests/run-pgsql-scripts.test.sh
-src/bash/qto/specs/run-pgsql-scripts.spec.sh
-src/bash/qto/helps/run-pgsql-scripts.help.sh
 src/bash/qto/funcs/run-pgsql-scripts.func.sh
+src/bash/qto/tests/run-pgsql-scripts.test.sh
+src/bash/qto/helps/run-pgsql-scripts.help.sh
 doc/txt/qto/tests/run-pgsql-scripts.test.txt
-doc/txt/qto/specs/run-pgsql-scripts.spec.txt
 doc/txt/qto/helps/run-pgsql-scripts.help.txt
 doc/txt/qto/funcs/run-pgsql-scripts.func.txt
 tags

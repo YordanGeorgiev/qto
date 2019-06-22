@@ -70,6 +70,9 @@ while read -r f ; do sudo perl -pi -e 's/'"$to_srch"'/'"$to_repl"'/g' $f ; \
 test -f ~/.vimrc && cp -v ~/.vimrc ~/.vimrc.$(date "+%Y%m%d_%H%M%S").bak
 cp -v $product_instance_dir/cnf/hosts/$(hostname -s)/home/$run_unit_owner/.vimrc ~/.vimrc
 
+test - /etc/postgresql/11/main/pg_hba.conf && \
+   cp v- $product_instance_dir/cnf/hosts/$(hostname -s)/etc/postgresql/11/main/pg_hba.conf /etc/postgresql/11/main/pg_hba.conf
+
 echo "DO ALWAYS ! GO TO YOUR product_instance_dir by while working on a qto instance !!!"
 echo "cd $product_instance_dir"
 cd $product_instance_dir

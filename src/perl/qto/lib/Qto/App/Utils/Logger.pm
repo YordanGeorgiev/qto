@@ -88,8 +88,6 @@ if you don't export anything, such as for a purely object-oriented module.
 			$self->MkDir( "$LogDir" ) || cluck( " Cannot create the \$LogDir : $LogDir $! !!! " );
 		}
 
-      # todo:ysg 
-		print "The log file is " . $appConfig->{ 'LogFile' } ;
 		$LogFile = $appConfig->{ 'LogFile' };
       croak unless $LogFile ; 
 
