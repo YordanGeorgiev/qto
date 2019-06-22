@@ -9,6 +9,6 @@ doRestartNetwork(){
    doLog "INFO stop  restarting network."
    
    doLog "INFO start restarting postgres ..."
-   sudo su - postgresql -c "sh /etc/init.d/postgresql restart"
+   sudo sh /etc/init.d/postgresql restart
    doLog "INFO stop  restarting postgres ..."
 }

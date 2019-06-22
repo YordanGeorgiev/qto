@@ -965,9 +965,10 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 		my $invocant   = shift ;    
 		$appConfig     = ${ shift @_ } || croak 'appConfig not passed in RdrPostgresDb !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
+      $db            = shift ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
 		my $self       = {} ; bless( $self, $class );    # Say: $self is a $class
-      $self          = $self->doInit() ; 
+      $self          = $self->doInit($db) ; 
 		return $self;
 	}  
 	
@@ -978,7 +979,6 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
            appConfig => $appConfig
       );
 		
-		$db                  = $ENV{ 'postgres_db_name' } || $appConfig->{'postgres_db_name'}     || 'dev_qto' ; 
 		$postgres_db_host    = $ENV{ 'postgres_db_host' } || $appConfig->{'postgres_db_host'} 		|| '127.0.0.1' ;
 		$postgres_db_port    = $ENV{ 'postgres_db_port' } || $appConfig->{'postgres_db_port'} 		|| '15432' ; 
 		$postgres_db_user 	= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'usrqtoapp' ; 
@@ -1092,7 +1092,10 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
             $where_clause_with
 				ORDER BY seq
 			" ; 
+         p $sql ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
+         # todo:ysg 
+         p $hsr2 ; 
       };
       if ( $@ ) {
          $rv               = 404 ; 

@@ -62,39 +62,6 @@ RUN echo "postgres:postgres" | chpasswd
 USER postgres
 RUN echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /var/lib/postgresql/.bashrc
 
-RUN /etc/init.d/postgresql start 
-
-RUN echo "local   all             postgres                                peer" \
-   >> /etc/postgresql/11/main/pg_hba.conf
-rUN echo "local   all             all                                     md5" \
-   >> /etc/postgresql/11/main/pg_hba.conf
-RUN echo "host    all             all             0.0.0.0/0               md5" \
-   >> /etc/postgresql/11/main/pg_hba.conf
-RUN echo "host    all             all             ::1/128                 md5" \
-   >> /etc/postgresql/11/main/pg_hba.conf
-RUN echo "local   replication     postgres                                peer" \
-   >> /etc/postgresql/11/main/pg_hba.conf
-RUN echo "host    replication     postgres        127.0.0.1/32            md5" \
-   >> /etc/postgresql/11/main/pg_hba.conf
-RUN echo "host    replication     postgres        ::1/128                 md5" \
-   >> /etc/postgresql/11/main/pg_hba.conf
-
-RUN echo "data_directory = '/var/lib/postgresql/11/main'" \
-   >> /etc/postgresql/11/main/postgresql.conf
-RUN echo "hba_file = '/etc/postgresql/11/main/pg_hba.conf'" \
-   >> /etc/postgresql/11/main/postgresql.conf
-RUN echo "ident_file = '/etc/postgresql/11/main/pg_ident.conf'" \
-   >> /etc/postgresql/11/main/postgresql.conf
-RUN echo "external_pid_file = '/var/run/postgresql/11-main.pid'" \
-   >> /etc/postgresql/11/main/postgresql.conf
-RUN echo "listen_addresses='*'" \
-   >> /etc/postgresql/11/main/postgresql.conf
-RUN echo "port = 15432" \
-   >> /etc/postgresql/11/main/postgresql.conf
-RUN echo "max_connections = 100" \
-   >> /etc/postgresql/11/main/postgresql.conf
-RUN echo "unix_socket_directories = '/var/run/postgresql'" \
-   >> /etc/postgresql/11/main/postgresql.conf
 
 # add the uuid generation capability enabling extensions
 RUN /etc/init.d/postgresql restart &&\
@@ -175,12 +142,13 @@ RUN wget 'https://s3-eu-west-1.amazonaws.com/qto.fi/prd_qto.latest.insrt.dmp.sql
 
 RUN bash src/bash/qto/qto.sh -a check-perl-syntax
 
-RUN echo 'docker run -d --name qto-container-01 -p 127.0.0.1:15432:15432 -p 127.0.0.1:3001:3001 --restart=unless-stopped qto-image'
+RUN echo 'docker run -d --name qto-container-01 -p 127.0.0.1:15432:15432 -p 127.0.0.1:3001:3001 --restart=unless-stopped qto-image:0.6.5'
 RUN echo 'to attach to the the running container run:'
 RUN echo 'docker exec -it qto-container-01 /bin/bash'
 
 # set the default command to run when starting the container
 USER root
+RUN cp -v /home/usrqtoadmin/opt/csitea/qto/qto.0.6.5.dev.usrqtoadmin//etc/postgresql/11/main/pg_hba.conf /etc/postgresql/11/main/pg_hba.conf
 RUN sudo chown -R postgres:postgres "/etc/postgresql"
 RUN sudo chown -R postgres:postgres "/var/lib/postgresql"
 

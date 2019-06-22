@@ -75,7 +75,9 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
 	   push ( @tables , split(',',$tables ) ) ; 
       my $xls_file            = '' ; 
      
-      print STDOUT "using the following \@tables: " . join (",", @tables) . "\n" ; 
+      $msg = "using the following \@tables: " . join (",", @tables) . "\n" ; 
+      $objLogger->doLogInfoMsg ( $msg ) ; 
+
       # if the xls_file is not defined take the latest one from the mix data dir
       if ( $objModel->get( 'io.xls-file' ) eq 'undefined' ) {
          my $xls_dir          = $ENV{'mix_data_dir' } ;  ; 
@@ -94,7 +96,7 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
       ( $ret , $msg  ) = 
             $objRdrXls->doReadXlsFileToHsr3 ( $xls_file , \$objModel) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
-      my $hsr3                = $objModel->get('hsr3' ); 
+      my $hsr3             = $objModel->get('hsr3' ); 
 
       $msg                 = 'unknown error while inserting db tables !!!' ; 
 
@@ -104,10 +106,7 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
 
       p($hsr3) if $module_trace == 1 ; 
 
-      my $load_model = $ENV{ 'load_model' } || 'upsert' ; 
-
-      # for now only nested-set support for mysql and mariadb
-      $load_model = 'nested-set' if ( $rdbms_type eq 'mysql' or $rdbms_type eq 'mariadb' ) ; 
+      my $load_model = $ENV{ 'load_model' } || 'nested-set' ; 
 
       # p ( $hsr3 ) ; 
       # print " STOP before \n" ; 
@@ -125,9 +124,11 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
             my $hsr2 = $hsr3->{ "$table" } ; 
             my $objCnrXlsHsr3ToDbHsr3 = 
                   'Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$qto::appConfig , $rdbms_type ) ; 
-            # p ( $hsr2 ) ; 
+            p ( $hsr2 ) ; 
+            # todo:ysg
             $hsr2 = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2 , $table ) ; 
             $objModel->set('hsr2' , $hsr2 );
+            $objModel->set('postgres_db_name',$ENV{'postgres_db_name'}) ;
             ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objModel , $table ) ; 
          }
 

@@ -44,11 +44,13 @@ sub doHSelectItems {
   
    return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
       unless $objCnrUrlPrms->doValidateAndSetHSelect();
-   
+  
+
    $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb 			= $objRdrDbsFactory->doSpawn("$rdbms_type");
 
    ($http_code, $msg, $dat) 	= $objRdrDb->doHSelectBranch( $db , $item );
+
    my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$appConfig  ) ; 
    $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
 

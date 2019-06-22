@@ -8,9 +8,9 @@ doBuildQtoDockerImage(){
 
 	doLog "DEBUG START doBuildQtoDockerImage"
 
-   doFullCleanDocker
-   doRemoveAllDockerContainers 
-   doRemoveAllDockerImages             # todo:ysg rem !!!
+   # doFullCleanDocker
+   # doRemoveAllDockerContainers 
+   # doRemoveAllDockerImages             # todo:ysg rem !!!
    cd "$product_instance_dir/src/docker"
    docker build -t qto-image:$product_version .
    cd -
