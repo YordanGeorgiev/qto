@@ -334,47 +334,47 @@ clearTheScreen(){
 #------------------------------------------------------------------------------
 doSetVars(){
 
-   cd $run_unit_bash_dir
-   for i in {1..3} ; do cd .. ; done ;
-   export product_instance_dir=`pwd`;
-	# include all the func files to fetch their funcs 
-	while read -r func_file ; do . "$func_file" ; done < <(find . -name "*func.sh")
-	# debug while read -r func_file ; do echo "$func_file" ; done < <(find . -name "*func.sh")
+    cd $run_unit_bash_dir
+    for i in {1..3} ; do cd .. ; done ;
+    export product_instance_dir=`pwd`;
+    # include all the func files to fetch their funcs 
+    while read -r func_file ; do . "$func_file" ; done < <(find . -name "*func.sh")
+    # debug while read -r func_file ; do echo "$func_file" ; done < <(find . -name "*func.sh")
 
-   # this will be dev , tst, prd
-   export env_type=$(echo `basename "$product_instance_dir"`|cut -d'.' -f5)
-   export product_owner=$(echo `basename "$product_instance_dir"`|cut -d'.' -f6)
-	export product_version=$(echo `basename "$product_instance_dir"`|cut -d'.' -f2-4)
-	environment_name=$(basename "$product_instance_dir")
+    # this will be dev , tst, prd
+    export env_type=$(echo `basename "$product_instance_dir"`|cut -d'.' -f5)
+    export product_owner=$(echo `basename "$product_instance_dir"`|cut -d'.' -f6)
+    export product_version=$(echo `basename "$product_instance_dir"`|cut -d'.' -f2-4)
+    environment_name=$(basename "$product_instance_dir")
 
-	cd ..
-	product_dir=`pwd`;
+    cd ..
+    product_dir=`pwd`;
 
-	cd ..
-	product_base_dir=`pwd`;
+    cd ..
+    product_base_dir=`pwd`;
 
-	org_dir=`pwd`
-	org_name=$(echo `basename "$org_dir"`)
+    org_dir=`pwd`
+    org_name=$(echo `basename "$org_dir"`)
 
-	cd ..
-	org_base_dir=`pwd`;
+    cd ..
+    org_base_dir=`pwd`;
 
-	cd "$run_unit_bash_dir/"
+    cd "$run_unit_bash_dir/"
 
-	( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
+    ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
-	doLog "INFO # --------------------------------------"
-	doLog "INFO # -----------------------"
-	doLog "INFO # ===		 START MAIN   === $run_unit"
-	doLog "INFO # -----------------------"
-	doLog "INFO # --------------------------------------"
-	
-   exit_code=0
-   doLog "INFO using the following vars:"
-   cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
-   echo -e "$cmd"
+    doLog "INFO # --------------------------------------"
+    doLog "INFO # -----------------------"
+    doLog "INFO # ===		 START MAIN   === $run_unit"
+    doLog "INFO # -----------------------"
+    doLog "INFO # --------------------------------------"
 
-   clearTheScreen
+    exit_code=0
+    doLog "INFO using the following vars:"
+    cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
+    echo -e "$cmd"
+
+    clearTheScreen
 }
 #eof func doSetVars
 

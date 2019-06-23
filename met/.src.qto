@@ -1,8 +1,11 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
-src/docker/Dockerfile
 src/docker/Dockerfile.deploy-quick-test
 src/docker/Dockerfile.deploy-qto.0.6.5.dev.ysg
+src/bash/qto/install/docker/install-postgres.sh
+src/bash/qto/install/docker/provision-os-users.sh
+src/bash/qto/install/docker/install-perl-modules.sh
+src/bash/qto/install/docker/fetch-db-dump.sql
 src/bash/scripts/docker-entry-point.sh
 src/bash/scripts/add-qto-os-users.sh
 src/bash/qto/funcs/build-qto-docker-image.func.sh
@@ -13,6 +16,7 @@ src/bash/qto/tests/build-qto-docker-image.test.sh
 src/sql/pgsql/scripts/admin/grant-permissions.sql
 src/bash/qto/bootstrap-qto.sh
 src/sql/pgsql/list-postgres-schemas.sql
+src/bash/qto/funcs/admin/restart-postgres.func.sh
 # -- 
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/public/poc/web-socket/web-socket.html

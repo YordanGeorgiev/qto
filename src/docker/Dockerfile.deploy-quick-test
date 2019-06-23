@@ -11,48 +11,6 @@ RUN echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /root/.bashrc
 ENV TZ=Europe/Helsinki
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt-get update && apt-get install -y wget curl sudo perl zip unzip gnupg2 gnupg1 git bash vim
-RUN apt-get clean && apt-get update
+RUN apt-get clean && apt-get update && apt-get install -y wget curl sudo perl zip unzip gnupg2 gnupg1 git bash vim
 
-# -- start add the qto os level application user
-RUN sudo groupadd -g "10001" "grpqtoadmin"
-RUN sudo cat /etc/group | grep --color "grpqtoadmin"
-
-RUN sudo useradd --uid "10001" --home-dir "/home/usrqtoadmin" --gid "10001" \
-   --create-home --shell /bin/bash "usrqtoadmin"
-RUN echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /home/usrqtoadmin/.bashrc
-
-# obs !! dummy password qto-190616104728
-RUN sudo cat /etc/passwd | grep --color "usrqtoadmin"
-# add the usrqtoadmin to the sudoers 
-RUN echo "usrqtoadmin ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-# -- stop add the qto os level application user
-
-
-RUN sudo groupadd -g "10002" "grpqtoapp"
-RUN sudo cat /etc/group | grep --color "grpqtoapp"
-
-RUN sudo useradd --uid "10002" --home-dir "/home/usrqtoapp" --gid "10002" \
-   --create-home --shell /bin/bash "usrqtoapp"
-RUN echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /home/usrqtoapp/.bashrc
-
-
-RUN echo "usrqtoapp:usrqtoapp" | chpasswd
-RUN echo "usrqtoadmin:usrqtoadmin" | chpasswd
-
-RUN echo 'docker run -d --name qto-container-01 -p 127.0.0.1:15432:15432 -p 127.0.0.1:3001:3001 --restart=unless-stopped qto-image'
-RUN echo 'to attach to the the running container run:'
-RUN echo 'docker exec -it -u root qto-container-01 /bin/bash'
-
-USER usrqtoadmin
-RUN echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /home/usrqtoadmin/.bashrc
-RUN mkdir -p /home/usrqtoadmin/opt
-WORKDIR /home/usrqtoadmin/opt/
-RUN git clone https://github.com/YordanGeorgiev/qto.git
-WORKDIR /home/usrqtoadmin/opt/qto
-RUN git checkout v0.6.5
-RUN bash src/bash/qto/bootstrap-qto.sh
-
-USER root
-RUN chmod 755 /home/usrqtoadmin/opt/csitea/qto/qto.0.6.5.dev.usrqtoadmin/src/bash/scripts/docker-entry-point.sh
-CMD ["/home/usrqtoadmin/opt/csitea/qto/qto.0.6.5.dev.usrqtoadmin/src/bash/scripts/docker-entry-point.sh","-d"]
+CMD ["bash","-c","while true; do sleep 1; done;"]

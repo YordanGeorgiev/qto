@@ -1,7 +1,7 @@
 #!/bin/bash
 # file:src/bash/scripts/docker-entry-point.sh 
 if [[ $1 == "-d" ]]; then
-  while true; do sleep 1000; done
+  while true; do sleep 1; done
 fi
 
 if [[ $1 == "-bash" ]]; then

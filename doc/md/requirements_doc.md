@@ -109,17 +109,18 @@ The qto tool could be deployed by a simply unzip of the full package, which must
     
 
 #### 2.1.2. Binary prerequisites check script
-All the binaries which are required for the running of the tool must be checked by a user-friendly binaries prerequisites check script.
+All the binaries which are required for the running of the tool must be checked by a user-friendly binaries prerequisites check script. 
+
 
     
 
 #### 2.1.3. Required Perl modules checker script
-All the required Perl modules, must be verifiable via a single runnable perl script. The DockerScript file should contain all the perl modules installations. 
+All the required Perl modules, must be verifiable via a single runnable perl script. The DockerScript file should contain all the perl modules installations.
 
     
 
 #### 2.1.4. Installation documentation
-The installation of the required Postgres db must be documented in the DevOps guide, which should have tge markdown version in the doc directory of the deployment package.
+The installation of the required Postgres db must be documented in the DevOps guide, which should have the markdown version in the doc directory of the deployment package.
 
     
 
@@ -134,7 +135,7 @@ The creation of the Postgres database of a qto project should be doable via a si
     
 
 #### 2.2.2. One liner for single restore
-The full data example of a cloned from the qto db should be loadable with a single shell call. 
+The full data example of a cloned from the qto db should be loadable with a single shell call. _
 
     
 
