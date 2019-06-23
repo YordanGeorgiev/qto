@@ -4,14 +4,13 @@ CREATE USER usrqtoadmin WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS
 -- alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -q -t -X -w -U ${postgres_db_useradmin:-}"
 -- psql -d dev_qto < src/sql/pgsql/list-table-priviledges.sql | less
 -- \c dev_qto
-CREATE ROLE usrqtoapp WITH PASSWORD 'usrqtoapp' LOGIN ;
+ALTER ROLE usrqtoapp WITH PASSWORD 'usrqtoapp' LOGIN ;
 
 GRANT SELECT ON ALL TABLES IN SCHEMA PUBLIC TO usrqtoapp;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO usrqtoapp;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO usrqtoapp;
 
-SELECT rolname, rolsuper, rolinherit, rolcreaterole, rolcreatedb, rolcanlogin, rolreplication, rolconnlimit, rolvaliduntil 
-FROM pg_roles 
+SELECT rolname, rolsuper, rolinherit, rolcreaterole, rolcreatedb, rolcanlogin, rolreplication, rolconnlimit FROM pg_roles 
 WHERE 1=1
 AND rolname='usrqtoapp'
 ;

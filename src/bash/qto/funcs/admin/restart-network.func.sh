@@ -1,5 +1,6 @@
 doRestartNetwork(){
 
+   which timeout 2>/dev/null || { echo >&2 "The timout binary is missing - brew install coreutils"; exit 1; }
    # do not run if no passwordless sudo of the running usr ...
    timeout 2 sudo id || doExit 1 \
       "you need to have sudo to able to restart the network !!!"

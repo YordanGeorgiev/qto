@@ -175,22 +175,26 @@ Check the port to which the Postgres is running with this command:
     sudo netstat -plunt |grep postgres
 
 ### 2.2. Application Layer run-state management
-
+Remember to cd to the product instance dir you are going to work on for example: 
+cd /vagrant/opt/csitea/qto/qto.0.6.5.dev.ysg
+All the examples bellow are assuming you've done that in advance. 
 
     
 
 #### 2.2.1. start the application layer
 To start the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern 
 
+    # start hypnotoad ( does the stop as well )
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
-    
+    # start morbo
     bash src/bash/qto/qto.sh -a mojo-morbo-start
 
 #### 2.2.2. stop the application layer
-To stop the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern.
+To stop the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern. Note that the morbo command does not stop any running morbo on OTHER product instance dir, but the hypnotoad does stop all - aka hypntotoad as the binary of production must be running only on 1 and only one instance on a host.
 
+    # only stop hypno
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-stop
-    
+    # only stop morbo
     bash src/bash/qto/qto.sh -a mojo-morbo-stop
 
 #### 2.2.3. Restart OS network service
@@ -199,15 +203,15 @@ Sometimes you might just need to restart the whole network service on Ubuntu:
     sudo /etc/init.d/networking restart
 
 ## 3. BACKUP AND RESTORE
-
+You could easily add those commands to your crontab for scheduled execution - remember to add the absolution patsh of the qto.sh entry script.
 
     
 
 ### 3.1. Backup a database
-You backup a database with the following one-liner. Noe 
+You backup a database with the following one-liner. 
 
-    # obs you have to have the shell vars pre-loaded !!!
-    # clear; doParseCnfEnvVars <<path-to-cnf-file>>
+    # obs you must have the shell vars pre-loaded !!! Note dev, tst or prd instances !
+    # clear; doParseCnfEnvVars cnf/qto.prd.host-name.cnf
     bash src/bash/qto/qto.sh -a backup-postgres-db
 
 ### 3.2. Restore a database

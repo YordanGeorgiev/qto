@@ -4,16 +4,26 @@
   * [2.1. WHAT CAN IT DO TO MY ORGANISATION ?](#21-what-can-it-do-to-my-organisation-)
   * [2.2. ASSUMPTION AND PREREQUISITES](#22-assumption-and-prerequisites)
   * [2.3. PROPOSED CAPABILITIES](#23-proposed-capabilities)
-  * [2.4. DEPLOYMENT AND INSTALLATION ASSISTANCE](#24-deployment-and-installation-assistance)
 * [3. DEMO](#3-demo)
-* [4. INSTALLATION AND CONFIGURATION](#4-installation-and-configuration)
-* [5. DOCUMENTATION](#5-documentation)
-  * [5.1. THE ENDUSER GUIDE DOC](#51-the-enduser-guide-doc)
-  * [5.2. THE CONCEPTS DOC](#52-the-concepts-doc)
-  * [5.3. THE USERSTORIES DOC](#53-the-userstories-doc)
-  * [5.4. THE REQUIREMENTS DOC](#54-the-requirements-doc)
-  * [5.5. THE DEVOPS GUIDE DOC](#55-the-devops-guide-doc)
-  * [5.6. THE INSTALLATIONS DOC](#56-the-installations-doc)
+* [4. DOCUMENTATION](#4-documentation)
+  * [4.1. THE INSTALLATIONS DOC](#41-the-installations-doc)
+  * [4.2. THE CONCEPTS DOC](#42-the-concepts-doc)
+  * [4.3. THE USERSTORIES DOC](#43-the-userstories-doc)
+  * [4.4. THE DEVOPS GUIDE DOC](#44-the-devops-guide-doc)
+  * [4.5. THE ENDUSER GUIDE DOC](#45-the-enduser-guide-doc)
+  * [4.6. THE REQUIREMENTS DOC](#46-the-requirements-doc)
+* [5. INSTALLATION AND CONFIGURATION](#5-installation-and-configuration)
+  * [5.1. FETCH THE SOURCE](#51-fetch-the-source)
+  * [5.2. RUN THE BOOTSTRAP SCRIPT](#52-run-the-bootstrap-script)
+  * [5.3. BUILD THE QTO IMAGE](#53-build-the-qto-image)
+  * [5.4. RUN THE CONTAINER](#54-run-the-container)
+  * [5.5. ATTACH TO THE RUNNING CONTAINER](#55-attach-to-the-running-container)
+  * [5.6. SWITHCH TO THE USRQTOAMDIN USER](#56-swithch-to-the-usrqtoamdin-user)
+  * [5.7. RUN THE DEV_QTO DB SCRIPTS](#57-run-the-dev_qto-db-scripts)
+  * [5.8. PRE-LOAD THE PRODUCT INSTANCE DIR ENVIRONMENTAL VARIABLES](#58-pre-load-the-product-instance-dir-environmental-variables)
+  * [5.9. LOAD THE DEV_QTO DB DATA](#59-load-the-dev_qto-db-data)
+  * [5.10. START THE APPLICATION LAYER](#510-start-the-application-layer)
+  * [5.11. VERIFY THAT THE WHOLE SYSTEM WORKS](#511-verify-that-the-whole-system-works)
 * [6. ACKNOWLEDGEMENTS](#6-acknowledgements)
 * [7. LICENSE](#7-license)
 
@@ -28,17 +38,17 @@ Why ?! Yet! Another App ?!
 Because work should be inspiring and not overwhelming people. 
 Because even good intentions without transparency, proper commitment, allocation and resourcing and most importantly, a mean for tracking advancement of an endeavour in open way reflecting the reality, might end-up making people less happy, when in fact a really simple solution could be applied for any bigger challenge requiring progress tracking, communication and coordination ... And tons of other reasons we all having been in project disasters know about ... Still here ?! Let's move on !
 
-
-Figure: 1 
-the 7 main entities of the qto app
-![Figure: 1 
-the 7 main entities of the qto app](https://raw.githubusercontent.com/YordanGeorgiev/qto/master/doc/img/readme/what-is-is.png)
-
     
 
 ## 2. SO, WHAT IS THIS ?!
 A generic postgres CRUDs ( s stands for search ) web based app for managing multiple databases from the same web application layer by means of simplest possible UI and/or shell tools for xls/md export, import etc. An included example application is the "qto application", which is used to manage multiple projects' issues, including itself ;o). 
 The full and extensive http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/features_doc must contain all the features and functionalities of this released version. This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture, which is in a way a reflection of the simple axiom in IT - "if there is one there will be many" ...
+
+
+Figure: 1 
+the 7 main entities of the qto app
+![Figure: 1 
+the 7 main entities of the qto app](https://raw.githubusercontent.com/YordanGeorgiev/qto/master/doc/img/readme/what-is-is.png)
 
     
 
@@ -71,68 +81,137 @@ You could:
 
     
 
-### 2.4. Deployment and installation assistance
-We could provide you with free assistance for the deployment of the first instance in your organisation, even we consider the existing documentation good enough to deploy the application only by following the instructions in the http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/installations_doc In the real IT life however the milage always varies, hence this last "bonus offer".
-
-
-    
-
 ## 3. DEMO
 You can check the following http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/enduser_guide_doc of the web app, additionally every doc bellow has it's "it-doc" link aka the "native" qto document format …
 
     
 
-## 4. INSTALLATION AND CONFIGURATION
-You could either try quickly to execute the instructions bellow this section or follow the installation instructions : 
- - in https://github.com/YordanGeorgiev/qto/blob/master/doc/md/installations_doc.md
- - in http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/readme_doc
-
-    
-
-## 5. DOCUMENTATION
+## 4. DOCUMENTATION
 QTO IS about documentation, we do all the doc-fooding on our docs, which are aimed to be as up-to-date to the current release version as possible. Thus you get the following documentation set:
 
     
 
-### 5.1. The EndUser Guide doc
-The enduser guide contains mostly UI usage instructions:
- - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/enduser_guide_doc.md
- - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/concepts_doc
+### 4.1. The Installations doc
+Contains the tasks and activities to perform to get a fully operational instance of the qto application:
+ - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/installations_doc.md
+ - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/installations_doc
 
     
 
-### 5.2. The Concepts doc
+### 4.2. The Concepts doc
 General level concepts of the application. 
  - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/concepts_doc.md
  - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/concepts_doc
 
     
 
-### 5.3. The UserStories doc
+### 4.3. The UserStories doc
 Naturally contains the userstories of the app. 
 - in https://github.com/YordanGeorgiev/qto/blob/master/doc/md/userstories_doc.md 
 - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/userstories_doc
 
     
 
-### 5.4. The Requirements doc
-Contains the specs and requirements, which can be defined at the current stage of the development:
- - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/requirements_doc.md
- - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/requirements_doc
-
-    
-
-### 5.5. The DevOps Guide doc
+### 4.4. The DevOps Guide doc
 Contains content on how to develop the application + general devops info.
 - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/devops_guide_doc.md
 - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/devops_guide_doc
 
     
 
-### 5.6. The Installations doc
-Contains the tasks and activities to perform to get a fully operational instance of the qto application:
- - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/installations_doc.md
- - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/installations_doc
+### 4.5. The EndUser Guide doc
+The enduser guide contains mostly UI usage instructions:
+ - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/enduser_guide_doc.md
+ - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/concepts_doc
+
+    
+
+### 4.6. The Requirements doc
+Contains the specs and requirements, which can be defined at the current stage of the development:
+ - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/requirements_doc.md
+ - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/requirements_doc
+
+    
+
+## 5. INSTALLATION AND CONFIGURATION
+This section provides the instructions to build the whole system from scratch on docker. You will need git, bash, perl and docker to complete the whole containerised deployment. 
+It should take about 30-45 min to complete depending on your network connection and host hardware specs, 75% of which is the image building process which does not require shell interaction. 
+
+    
+
+### 5.1. Fetch the source
+Fetch the source on your local machnine, which will be use to run the container.
+
+    mkdir -p ~/opt/ ; cd ~/opt
+    git clone https://github.com/YordanGeorgiev/qto
+
+### 5.2. Run the bootstrap script
+In qto each deployment instance is "self-aware" of the type of environment it represents - ak dev, tst , prd. To bootstrap to the dev environment run the following command
+
+    # bootstrap for multi-environment setup 
+    bash qto/src/bash/qto/bootstrap-qto.sh
+
+### 5.3. Build the qto image
+This step will take 80% of the time. It is non-interactive, that is the whole image building should succeed at once. 
+
+    # go to the product instance dir as adived in the end of the bootstrap script … 
+    # build the docker image
+    clear ; bash src/bash/qto/qto.sh -a build-qto-docker-image
+
+### 5.4. Run the container
+Run the container of the already build image
+
+    # run the container from the already build image
+    docker run -d --name qto-container-01 -p 127.0.0.1:15432:15432 -p 127.0.0.1:3001:3001 --restart=unless-stopped qto-image
+
+### 5.5. Attach to the running container
+To attach to the running container run the following command:
+
+    # attach to the container 
+    docker exec -it -u root qto-cotainer-01 /bin/bash
+
+### 5.6. Swithch to the usrqtoamdin user
+Swithch to the usrqtoamdin user and go to the product instance dir of the container. 
+
+    # swith user to the usrqtoadmin ( the password is usrqtoadmin )
+    su - usrqtoadmin
+    
+    # to the dev environment of the 0.6.5 version
+    cd ~/opt/csitea/qto/qto.0.6.5.dev.usrqtoadmin
+
+### 5.7. Run the dev_qto db scripts
+The installation of this dev instance would require the creation of the dev_qto database, which can be accomplished by running the following command.
+
+    # run the instance db DDLs ( you could later on create your own dbs ...)
+    bash src/bash/qto/qto.sh -a run-pgsql-scripts
+
+### 5.8. Pre-load the product instance dir environmental variables
+Each product instance comes with its own set of environmental variables, which must be preloaded each time you start working in a terminal session with that instance. 
+
+    # load the bash function used for the env vars pre-loading
+    source lib/bash/funcs/parse-cnf-env-vars.sh
+    # load the env vars of the product instance
+    doParseCnfEnvVars cnf/qto.dev.$(hostname -s).cnf
+
+### 5.9. Load the dev_qto db data
+The data dump of the most latest prd_qto database is stored in the image, thus to load the data issue the following command. 
+
+    # load the data for the example qto db
+    alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -q -t -X -w -U ${postgres_db_useradmin:-}"
+    psql -d dev_qto < dat/prd_qto.latest.insrt.dmp.sql
+
+### 5.10. start the application layer
+To start the Mojolicious development webserver you could use the following qto single shell action wrapper call.
+
+    # start the application layer
+    bash src/bash/qto/qto.sh -a mojo-morbo-start
+
+### 5.11. Verify that the whole system works
+To verify the list ui point your local machine browser to the following uri:
+http://localhost:3001/qto/list/release_issues
+
+To verify the view doc ui point your local machine browser to the following uri:
+http://localhost:3001/qto/view/installations_doc
 
     
 

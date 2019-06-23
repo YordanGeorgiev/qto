@@ -4,7 +4,7 @@
   * [1.2. AUDIENCE](#12-audience)
   * [1.3. RELATED DOCUMENTATION](#13-related-documentation)
 * [2. CORE CONCEPTS](#2-core-concepts)
-  * [2.1. TIME INTERVALS BASED TIME-MANAGEMENT](#21-time-intervals-based-time-management)
+  * [2.1. TRUST AND CLARITY](#21-trust-and-clarity)
   * [2.2. PERSONAL RESPONSIBILITY](#22-personal-responsibility)
 * [3. BUSINESS LOGIC](#3-business-logic)
   * [3.1. PROJECTS MANAGEMENT](#31-projects-management)
@@ -60,14 +60,8 @@ according to the file format used for the documentation storage.
 
     
 
-### 2.1. Time intervals based time-management
-The time rules our lifes. Issue-tracker is aimed to help you and your organisation to manage your time and resources in the best possible way YOU CAN. You must make sure that you clearly define and state your issues and update their information based on the events from the real world.
+### 2.1. Trust and clarity
 
-
-Figure: 1 
-the 7 main entities of the qto app
-![Figure: 1 
-the 7 main entities of the qto app](https://raw.githubusercontent.com/YordanGeorgiev/qto/master/doc/img/readme/what-is-is.png)
 
     
 
