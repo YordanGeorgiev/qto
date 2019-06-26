@@ -127,7 +127,6 @@ src/perl/qto/public/poc/autocomplete/searchbox-autocomplete.css
 src/perl/qto/public/poc/autocomplete/div-searchbox.js
 src/perl/qto/public/poc/autocomplete/autocomplete.html
 # ---
-# ---
 src/perl/qto/lib/Qto/App/UI/Controls/WtrListLabels.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToHsr2.pm
@@ -344,7 +343,6 @@ src/bash/qto/funcs/increase-date.func.sh
 src/bash/qto/helps/increase-date.help.sh
 doc/txt/qto/tests/increase-date.test.txt
 doc/txt/qto/funcs/increase-date.func.txt
-doc/txt/qto/helps/increase-date.help.txt
 # ---
 src/bash/qto/tests/db-to-txt.test.sh
 src/bash/qto/funcs/db-to-txt.func.sh
@@ -886,9 +884,3 @@ src/selenium/ide/qto.remote.side
 src/selenium/ide/qto.local.side
 src/bash/qto/funcs/admin/restart-network.func.sh
 src/bash/qto/funcs/print-stats.func.sh
-dat/mix/2019/2019-06/2019-06-06/xls
-dat/mix/2019/2019-06/2019-06-06/xls/qto.all.20190606_000000.xlsx
-dat/mix/2019/2019-06/2019-06-06/sql
-dat/mix/2019/2019-06/2019-06-06/sql/dev_qto
-dat/mix/2019/2019-06/2019-06-06/sql/dev_qto/dev_qto.20190605_165521.insrt.dmp.sql
-dat/mix/2019/2019-06/2019-06-06/sql/dev_qto/dev_qto.20190606_044226.insrt.dmp.sql
