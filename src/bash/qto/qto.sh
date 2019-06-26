@@ -1,13 +1,7 @@
 #!/usr/bin/env bash
 # file: src/bash/qto.sh doc at the eof file
-umask 022    ;
-set -u -o pipefail 
-# set -x # print the commands
-# set -v # print each input line as well
-# exit the script if any statement returns a non-true return value. gotcha !!!
-# set -e # src: http://mywiki.wooledge.org/BashFAQ/105
 
-# v0.6.2
+# v0.6.5
 #------------------------------------------------------------------------------
 # the main function called
 #------------------------------------------------------------------------------
@@ -38,7 +32,8 @@ main(){
 	doExit 0 "# = STOP  MAIN = $run_unit "
 }
 
-# v0.6.2 
+
+# v0.6.5 
 #------------------------------------------------------------------------------
 # the "reflection" func - identify the the funcs per file
 #------------------------------------------------------------------------------
@@ -56,8 +51,7 @@ get_function_list () {
 }
 
 
-
-# v0.6.2 
+# v0.6.5 
 #------------------------------------------------------------------------------
 # run all the actions
 #------------------------------------------------------------------------------
@@ -65,7 +59,7 @@ doRunActions(){
 
 	cd $product_instance_dir
    test -z "${actions+1}" && doPrintUsage && doExit 0 
-
+   daily_backup_dir=$product_instance_dir/dat/mix/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
 	while read -d ' ' action ; do (
 		doLog "DEBUG action: \"$action\""
 
@@ -78,8 +72,9 @@ doRunActions(){
 				action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
 				test "$action_name" != $action && continue
 				
-				doLog "INFO running action :: $action_name":"$function_name"
+				doLog "INFO start running action :: $action_name":"$function_name"
 				test "$action_name" == "$action" && $function_name
+				doLog "INFO stop  running action :: $action_name":"$function_name"
 
 			);
 			done< <(get_function_list "$func_file")
@@ -98,14 +93,22 @@ doRunActions(){
 	);
 	done < <(echo "$actions")
 
+   test -d "$daily_backup_dir" || doBackupPostgresDb
 }
 
 
-# v0.6.2 
+# v0.6.5 
 #------------------------------------------------------------------------------
 # register the run-time vars before the call of the $0
 #------------------------------------------------------------------------------
 doInit(){
+
+   # set -x # print the commands
+   # set -v # print each input line as well
+   # exit the script if any statement returns a non-true return value. gotcha !!!
+   # set -e # src: http://mywiki.wooledge.org/BashFAQ/105
+   umask 022    ;
+   set -u -o pipefail 
    call_start_dir=`pwd`
    run_unit_bash_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
    tmp_dir="$run_unit_bash_dir/tmp/.tmp.$$"
@@ -121,7 +124,7 @@ doInit(){
 
 
 
-# v0.6.2 
+# v0.6.5 
 #------------------------------------------------------------------------------
 # parse the single letter command line args
 #------------------------------------------------------------------------------
@@ -160,7 +163,7 @@ doParseCmdArgs(){
 
 
 
-#v0.6.2 
+#v0.6.5 
 #------------------------------------------------------------------------------
 # create an example host dependant ini file
 #------------------------------------------------------------------------------
@@ -178,18 +181,22 @@ doCreateDefaultConfFile(){
 	echo -e "#eof file: $cnf_file" >> $cnf_file
 
 }
-#eof func doCreateDefaultConfFile
 
 
-#v0.6.2 
+#v0.6.5 
 #------------------------------------------------------------------------------
 # perform the checks to ensure that all the vars needed to run are set
 #------------------------------------------------------------------------------
 doCheckReadyToStart(){
 
+   echo 'checking for configuration files ...'
    test -f ${cnf_file-} || doCreateDefaultConfFile 
+   echo 'ok' ; printf "\n"
+
+   echo 'checking for the required binaries ...'
 	command -v zip 2>/dev/null || { echo >&2 "The zip binary is missing ! Aborting ..."; exit 1; }
 	which perl 2>/dev/null || { echo >&2 "The perl binary is missing ! Aborting ..."; exit 1; }
+   echo 'ok' ; printf "\n"
 }
 
 
@@ -197,7 +204,7 @@ doCheckReadyToStart(){
 trap "exit 1" TERM
 export TOP_PID=$$
 
-# v0.6.2
+# v0.6.5
 #------------------------------------------------------------------------------
 # clean and exit with passed status and message
 # call by: 
@@ -229,7 +236,7 @@ doExit(){
 #eof func doExit
 
 
-#v0.6.2 
+#v0.6.5 
 #------------------------------------------------------------------------------
 # echo pass params and print them to a log file and terminal
 # with timestamp and $host_name and $0 PID
@@ -255,7 +262,7 @@ doLog(){
 }
 
 
-#v0.6.2
+#v0.6.5
 #------------------------------------------------------------------------------
 # cleans the unneeded during after run-time stuff
 # do put here the after cleaning code
@@ -273,7 +280,7 @@ doCleanAfterRun(){
 }
 
 
-#v0.6.2 
+#v0.6.5 
 #------------------------------------------------------------------------------
 # run a command and log the call and its output to the log_file
 # doPrintHelp: doRunCmdAndLog "$cmd"
@@ -293,7 +300,7 @@ doRunCmdAndLog(){
 }
 
 
-#v0.6.2 
+#v0.6.5 
 #------------------------------------------------------------------------------
 # run a command on failure exit with message
 # doPrintHelp: doRunCmdOrExit "$cmd"
@@ -328,7 +335,7 @@ clearTheScreen(){
 	printf "\033[2J";printf "\033[0;0H"
 }
 
-#v0.6.2 
+#v0.6.5 
 #------------------------------------------------------------------------------
 # set the variables from the $0.$host_name.cnf file which has ini like syntax
 #------------------------------------------------------------------------------
@@ -381,7 +388,7 @@ doSetVars(){
 
 
 
-# v0.6.2
+# v0.6.5
 #------------------------------------------------------------------------------
 # parse the ini like $0.$host_name.cnf and set the variables
 # cleans the unneeded during after run-time stuff. Note the MainSection
@@ -447,4 +454,4 @@ main "$@"
 #----------------------------------------------------------
 #
 #
-#eof file: qto.sh v0.6.2
+#eof file: qto.sh v0.6.5
