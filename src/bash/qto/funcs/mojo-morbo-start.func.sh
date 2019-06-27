@@ -1,6 +1,6 @@
 # src/bash/qto/funcs/mojo-morbo-start.func.sh
 
-# v1.0.9
+# v0.6.5
 # ---------------------------------------------------------
 # start the qto web app with the morbo
 # cat doc/txt/qto/funcs/mojo-morbo-start.func.txt
@@ -8,6 +8,10 @@
 doMojoMorboStart(){
 
 	doLog "DEBUG START doMojoMorboStart"
+
+   test -z ${qto_project:-} && \
+      source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh" && \
+      doParseCnfEnvVars "$product_instance_dir/cnf/$run_unit.$env_type.*.cnf"
 
    doMojoMorboStop 0
 
@@ -27,10 +31,12 @@ doMojoMorboStart(){
    # sudo visudoers 
    # usr_it ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
    netstat -tulpn | grep qto
+ 
+   # if cmd arg -b is passed to the qto.sh, should not exit like ever, never because of docker
+   test $run_in_backround -eq 1 && while true; do sleep 1000; done;
 
    doLog "DEBUG STOP  doMojoMorboStart"
 }
-# eof func doMojoMorboStart
 
 
 # eof file: src/bash/qto/funcs/mojo-morbo-start.func.sh

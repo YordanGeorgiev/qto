@@ -51,6 +51,8 @@ mojo_morbo_port=3003
 # on which port the mojo should listen
 mojo_hypnotoad_port=8080
 
+PS1='qto-proj prd \u@\h [\d \t] [\w] $ \n\n '
+
 # the last entry is always ignored - this is a bug in the cnf parser 
 foo=bar
 

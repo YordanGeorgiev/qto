@@ -16,7 +16,7 @@ doFullCleanDocker(){
    docker volume prune -f
    docker network prune -f
 
-	doLog "INFO STOP  doRemoveAllDockerImages"
+	doLog "INFO STOP  full clean of the docker"
 }
 
 

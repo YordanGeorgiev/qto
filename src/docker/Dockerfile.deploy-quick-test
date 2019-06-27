@@ -2,15 +2,20 @@
 FROM ubuntu:18.04
 
 USER root
+
+ARG product_instance_dir=/opt/csitea/qto/qto.0.6.5.dev.usrqtoadmin
+ENV product_instance_dir $product_instance_dir
+
+WORKDIR /opt/
+ADD . $product_instance_dir
+WORKDIR $product_instance_dir
+
 # obs !!! todo: parametrize qto-190616104728
 RUN echo "root:root" | chpasswd
 RUN echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /root/.bashrc
 # src: https://stackoverflow.com/a/28769950/65706
 
-# install the most basic binaries
-ENV TZ=Europe/Helsinki
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-RUN apt-get clean && apt-get update && apt-get install -y wget curl sudo perl zip unzip gnupg2 gnupg1 git bash vim
+RUN chmod 755 $product_instance_dir/src/bash/qto/install/docker/install-test.sh && \
+   bash $product_instance_dir/src/bash/qto/install/docker/install-test.sh
 
 CMD ["bash","-c","while true; do sleep 1; done;"]

@@ -1,13 +1,8 @@
 doRestartNetwork(){
 
-   which timeout 2>/dev/null || { echo >&2 "The timout binary is missing - brew install coreutils"; exit 1; }
-   # do not run if no passwordless sudo of the running usr ...
-   timeout 2 sudo id || doExit 1 \
-      "you need to have sudo to able to restart the network !!!"
-
-   doLog "INFO start restarting network ..."
-   sudo /etc/init.d/networking restart
-   doLog "INFO stop  restarting network."
+	test -z ${USER:-} && export USER=$(echo $HOME|cut -d'/' -f 3)
+	test `sudo -n -l -U $USER 2>&1 | egrep -c -i "not allowed to run sudo|unknown user"` -eq 0 \
+		|| doLog "FATAL you need to have sudo to run this script !!!"
    
    doLog "INFO start restarting postgres ..."
    sudo sh /etc/init.d/postgresql restart

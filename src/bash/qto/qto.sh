@@ -130,10 +130,14 @@ doInit(){
 #------------------------------------------------------------------------------
 doParseCmdArgs(){
 
-   while getopts ":a:c:d:i:h:t:" opt; do
+   run_in_backround=0
+   while getopts ":a:b:c:d:i:h:t:" opt; do
      case $opt in
       a)
          actions="${actions:-}""$OPTARG "
+         ;;
+      b)
+         run_in_backround=1
          ;;
       c)
          export run_unit="$OPTARG "
@@ -189,9 +193,7 @@ doCreateDefaultConfFile(){
 #------------------------------------------------------------------------------
 doCheckReadyToStart(){
 
-   echo 'checking for configuration files ...'
    test -f ${cnf_file-} || doCreateDefaultConfFile 
-   echo 'ok' ; printf "\n"
 
    echo 'checking for the required binaries ...'
 	command -v zip 2>/dev/null || { echo >&2 "The zip binary is missing ! Aborting ..."; exit 1; }
@@ -342,8 +344,7 @@ clearTheScreen(){
 doSetVars(){
 
     cd $run_unit_bash_dir
-    for i in {1..3} ; do cd .. ; done ;
-    export product_instance_dir=`pwd`;
+    for i in {1..3} ; do cd .. ; done ; export product_instance_dir=`pwd`;
     # include all the func files to fetch their funcs 
     while read -r func_file ; do . "$func_file" ; done < <(find . -name "*func.sh")
     # debug while read -r func_file ; do echo "$func_file" ; done < <(find . -name "*func.sh")

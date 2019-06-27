@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 run_unit_bash_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
 
@@ -15,6 +15,7 @@ sudo cat /etc/passwd | grep --color "usrqtoadmin"
 echo "usrqtoadmin ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /home/usrqtoadmin/.bashrc
 cat lib/bash/funcs/parse-cnf-env-vars.sh >> /home/usrqtoadmin/.bashrc
+cat $(find cnf -name .vimrc|head -n 1) > /home/usrqtoadmin/.vimrc
 mkdir -p /home/usrqtoadmin/opt
 
 # -- start add the qto app user 
@@ -26,3 +27,4 @@ sudo useradd --uid "10002" --home-dir "/home/usrqtoapp" --gid "10002" \
 echo "usrqtoapp:usrqtoapp" | chpasswd
 echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /home/usrqtoapp/.bashrc
 cat lib/bash/funcs/parse-cnf-env-vars.sh >> /home/usrqtoapp/.bashrc
+cat $(find cnf -name .vimrc | head -n 1) > /home/usrqtoapp/.vimrc
