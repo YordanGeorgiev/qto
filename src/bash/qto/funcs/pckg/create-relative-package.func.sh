@@ -1,12 +1,13 @@
 #!/bin/bash
 
 
-#v0.2.3
+#v0.6.5
 #------------------------------------------------------------------------------
-# creates a package from the relative file paths specified in the .dev file
+# creates a package from the relative file paths specified in the .env file
 #------------------------------------------------------------------------------
 doCreateRelativePackage(){
 
+   #todo:ysg 
 	cd $product_instance_dir
 	mkdir -p $product_dir/dat/zip
 		test $? -ne 0 && doExit 2 "Failed to create $product_instance_dir/dat/zip !"

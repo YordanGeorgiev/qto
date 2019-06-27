@@ -15,7 +15,7 @@ doRunPgsqlScripts(){
 
    # if the calling shell did not have exported pgsql_scripts_dir var	
 	test -z "${pgsql_scripts_dir:-}" && \
-	   pgsql_scripts_dir="$product_instance_dir/src/sql/pgsql/${postgres_db_name:-}"
+	   pgsql_scripts_dir="$product_instance_dir/src/sql/pgsql/qto"
 
    # if a relative path is passed add to the product version dir
 	[[ ${pgsql_scripts_dir:-} == /* ]] || export pgsql_scripts_dir="$product_instance_dir"/"$pgsql_scripts_dir"

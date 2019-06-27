@@ -5,7 +5,6 @@
 # for docs: cat doc/txt/qto/funcs/generate-md-docs.func.txt
 # ---------------------------------------------------------
 doGenerateMdDocs(){
-
 	doLog "DEBUG START doGenerateMdDocs"
    test -z "${proj_instance_dir-}" && proj_instance_dir="$product_instance_dir"
    test -z "${docs_root_dir-}" && docs_root_dir="$proj_instance_dir"

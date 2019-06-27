@@ -1,23 +1,27 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
-src/bash/scripts/readme.sh
+src/bash/qto/funcs/admin/restart-postgres.func.sh
+src/bash/qto/funcs/mojo-morbo-start.func.sh
+src/bash/qto/install/docker/install-test.sh
+src/bash/qto/install/docker/docker-entry-point.sh
+src/bash/qto/bootstrap-qto-docker.sh
+src/bash/qto/bootstrap-qto-host.sh
 src/docker/Dockerfile.deploy-quick-test
 src/docker/Dockerfile.deploy-qto.0.6.5.dev.ysg
 src/bash/qto/install/docker/install-postgres.sh
 src/bash/qto/install/docker/provision-os-users.sh
 src/bash/qto/install/docker/install-perl-modules.sh
-src/bash/qto/install/docker/fetch-db-dump.sql
-src/bash/scripts/docker-entry-point.sh
-src/bash/scripts/add-qto-os-users.sh
+src/bash/qto/install/docker/
 src/bash/qto/funcs/build-qto-docker-image.func.sh
 src/bash/qto/funcs/full-clean-docker.func.sh
 src/bash/qto/funcs/remove-all-docker-images.func.sh
 src/bash/qto/funcs/remove-all-docker-containers.func.sh
 src/bash/qto/tests/build-qto-docker-image.test.sh
 src/sql/pgsql/scripts/admin/grant-permissions.sql
-src/bash/qto/bootstrap-qto.sh
-src/sql/pgsql/list-postgres-schemas.sql
 src/bash/qto/funcs/admin/restart-postgres.func.sh
+cnf/postgres/etc/postgresql/11/main
+cnf/postgres/etc/postgresql/11/main/pg_hba.conf
+cnf/postgres/etc/postgresql/11/main/postgresql.conf
 # -- 
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/public/poc/web-socket/web-socket.html
@@ -443,7 +447,6 @@ src/sql/pgsql/scripts/app
 src/sql/pgsql/scripts/bash
 src/sql/pgsql/scripts/bash/list-postgres-tables.sh
 src/sql/pgsql/scripts/bash/list-table-cols.sh
-src/sql/pgsql/list-table-priviledges.sql
 #----
 src/bash/qto/tests/db-to-xls.test.sh
 src/bash/qto/funcs/db-to-xls.func.sh
@@ -706,30 +709,17 @@ tags
 # ---
 # ----
 cnf/perl/.perltidyrc
-src/bash/qto/funcs/gmail-txt-issues.func.sh
-src/bash/qto/tests/gmail-txt-issues.test.sh
-src/bash/qto/specs/gmail-txt-issues.spec.sh
-src/bash/qto/helps/gmail-txt-issues.help.sh
-doc/txt/qto/tests/gmail-txt-issues.test.txt
-doc/txt/qto/specs/gmail-txt-issues.spec.txt
-doc/txt/qto/helps/gmail-txt-issues.help.txt
-doc/txt/qto/funcs/gmail-txt-issues.func.txt
 # ---
-src/bash/qto/funcs/mojo-morbo-start.func.sh
 src/bash/qto/tests/mojo-morbo-start.test.sh
-src/bash/qto/specs/mojo-morbo-start.spec.sh
 src/bash/qto/helps/mojo-morbo-start.help.sh
 doc/txt/qto/tests/mojo-morbo-start.test.txt
-doc/txt/qto/specs/mojo-morbo-start.spec.txt
 doc/txt/qto/helps/mojo-morbo-start.help.txt
 doc/txt/qto/funcs/mojo-morbo-start.func.txt
 # ---
 src/bash/qto/tests/mojo-morbo-stop.test.sh
-src/bash/qto/specs/mojo-morbo-stop.spec.sh
 src/bash/qto/helps/mojo-morbo-stop.help.sh
 src/bash/qto/funcs/mojo-morbo-stop.func.sh
 doc/txt/qto/tests/mojo-morbo-stop.test.txt
-doc/txt/qto/specs/mojo-morbo-stop.spec.txt
 doc/txt/qto/helps/mojo-morbo-stop.help.txt
 doc/txt/qto/funcs/mojo-morbo-stop.func.txt
 # ---
@@ -762,7 +752,6 @@ src/perl/qto/public/poc/list-vue-grid/app.js
 src/perl/qto/public/poc/list-vue-grid/list-vue-grid.css
 src/perl/qto/public/poc/list-vue-grid/list-vue-grid.html
 # ---
-src/bash/qto/scripts/history.sh
 src/perl/qto/public/themes/thme-blue/img/controls/trash-bin.png
 # ---
 src/bash/qto/funcs/backup-postgres-db.func.sh

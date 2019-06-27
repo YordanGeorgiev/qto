@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # start install perl modules
 wget - http://cpanmin.us | perl - --self-upgrade
