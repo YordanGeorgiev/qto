@@ -24,3 +24,5 @@ src/node/node_modules/**
 src/js/node/js-unit-tests/01-set-url-param/node_modules/**
 **/node_modules/**
 tags
+**/*.swp
+**/*.swo

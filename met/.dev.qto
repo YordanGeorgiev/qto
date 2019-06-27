@@ -1,5 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
+src/bash/scripts/readme.sh
 src/docker/Dockerfile.deploy-quick-test
 src/docker/Dockerfile.deploy-qto.0.6.5.dev.ysg
 src/bash/qto/install/docker/install-postgres.sh
@@ -541,17 +542,6 @@ src/bash/qto/helps/pckg/create-relative-7z-package.help.sh
 src/bash/qto/specs/pckg/create-relative-7z-package.spec.sh
 src/bash/qto/tests/pckg/create-relative-7z-package.test.sh
 #---
-doc/txt/qto/funcs/save-tmux-session.func.txt
-doc/txt/qto/helps/sys/tmux/save-tmux-session.help.txt
-doc/txt/qto/specs/save-tmux-session.spec.txt
-doc/txt/qto/specs/sys/tmux/save-tmux-session.spec.txt
-doc/txt/qto/tests/save-tmux-session.test.txt
-src/bash/qto/funcs/save-tmux-session.func.sh
-src/bash/qto/funcs/sys/tmux/save-tmux-session.func.sh
-src/bash/qto/specs/save-tmux-session.spec.sh
-src/bash/qto/specs/sys/tmux/save-tmux-session.spec.sh
-src/bash/qto/tests/save-tmux-session.test.sh
-src/bash/qto/tests/sys/tmux/save-tmux-session.test.sh
 #---
 src/bash/qto/funcs/sys/tmux/tmux-common.sh
 src/bash/qto/funcs/sys/tmux/restore-tmux-session.func.sh
@@ -757,8 +747,6 @@ doc/dot/devops/shell-action-control-flow-diagram.dot
 doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
 # --- the application data
-dat/etc/postgresql/9.6/main/pg_hba.conf
-dat/etc/postgresql/9.6/main/postgresql.conf
 # ---
 src/bash/qto/funcs/db-to-json.func.sh
 src/bash/qto/tests/db-to-json.test.sh
