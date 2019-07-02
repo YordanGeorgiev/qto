@@ -158,8 +158,8 @@ This step will take 80% of the time. It is non-interactive, that is the whole im
 Run the container of the already build image issue the following command:
 
     # run the container from the already build image
-    docker run -d --name qto-container-01 -p 127.0.0.1:15432:15432 -p 127.0.0.1:3001:3001 --restart=unless-stopped qto-image
-
+    docker run -d --name qto-container-01 -v `pwd`:/opt/csitea/qto/qto.0.6.5.dev.ysg -p 127.0.0.1:15432:15432 -p 127.0.0.1:3001:3001 qto-image:0.6.5
+    
 ### 5.5. Attach to the running container ( optional)
 If you want to see what is happening in the container,  run the following command:
 
