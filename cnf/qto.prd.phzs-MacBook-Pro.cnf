@@ -1,7 +1,7 @@
-# file: cnf/qto.host-name.cnf
+# file: cnf/qto.phzs-MacBook-Pro.cnf
 [MainSection]
 
-# multiple projects support
+# qto is just a project with multiple projects support
 qto_project = qto
 
 # where the scripts to run are situated
@@ -14,7 +14,7 @@ DataDir = %ProductInstanceDir%/dat
 mix_data_dir = %ProductInstanceDir%/dat/mix
 
 # the postgres confs - OBS ! dev , tst , prd product instances to own db !
-postgres_db_name           = prd_qto
+postgres_db_name           = dev_qto
 postgres_db_host           = 127.0.0.1
 postgres_db_port           = 15432
 postgres_db_user           = usrqtoapp
@@ -51,7 +51,7 @@ mojo_morbo_port=3003
 # on which port the mojo should listen
 mojo_hypnotoad_port=8080
 
-PS1='qto-proj prd \u@\h [\d \t] [\w] $ \n\n '
+PS1='qto-proj prd $(date "+%F %T") "\\u@\\h \\w $ \\n\\n '
 
 # set here your time zone
 TZ=Europe/Helsinki
@@ -59,4 +59,4 @@ TZ=Europe/Helsinki
 # the last entry is always ignored - this is a bug in the cnf parser 
 foo=bar
 
-# eof file: cnf/qto.prd.host-name.cnf
+# eof file: cnf/qto.prd.phzs-MacBook-Pro.cnf

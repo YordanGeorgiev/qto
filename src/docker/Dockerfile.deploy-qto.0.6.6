@@ -1,9 +1,10 @@
 # vim:set ft=dockerfile:
 FROM ubuntu:18.04
 
-ARG product_instance_dir='/opt/csitea/qto/qto.0.6.5.dev.usrqtoadmin'
+ARG product_instance_dir
 ENV product_instance_dir $product_instance_dir
 ARG postgres_db_name='dev_qto'
+ENV postgres_db_name $postgres_db_name
 ARG postgres_db_useradmin='usrqtoadmin'
 ENV postgres_db_useradmin_pw 'usrqtoadmin'
 
@@ -12,7 +13,8 @@ RUN echo "root:root" | chpasswd
 RUN echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /root/.bashrc
 
 # install the most basic binaries
-ENV TZ=Europe/Helsinki
+ARG TZ
+ENV TZ $TZ
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone 
 RUN apt-get update && apt-get install -y wget curl sudo perl zip unzip gnupg2 gnupg1 git bash
 

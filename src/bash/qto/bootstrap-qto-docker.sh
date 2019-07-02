@@ -1,11 +1,7 @@
 #!/bin/bash
 # file: src/bash/qto/bootstrap-qto.sh
 
-set -x
-
 set -eu -o pipefail # fail on error , debug all lines
-# uncomment the next line if you have bootstraping problems and sent it to me
-# set -eux -o pipefail # fail on error , debug all lines
 set -x
 
 unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
@@ -53,9 +49,6 @@ wget "$latest_dump_uri" -O "$product_instance_dir/dat/prd_qto.latest.insrt.dmp.s
 
 PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -q -t -X -w -U ${postgres_db_useradmin:-} \
    -d $postgres_db_name < "$product_instance_dir/dat/prd_qto.latest.insrt.dmp.sql"
-
-#bash src/bash/qto/qto.sh -a restart-network
-#bash src/bash/qto/qto.sh -a mojo-morbo-start
 
 
 # eof file src/bash/qto/bootstrap-qto.sh
