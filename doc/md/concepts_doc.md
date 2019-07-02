@@ -40,18 +40,19 @@ Developers and Architects working on the application MUST read and understand th
     
 
 ### 1.3. Related documentation
-This document is part of the Issue-Tracker application documentation-set, which contains the following documents:
+This document is part of the qto application documentation-set, which contains the following documents:
+ - ReadMe - the initial readme file of the project
+ - Concepts - contains the concepts of the application
  - UserStories - the collection of userstories used to describe "what is desired"
  - SystemGuide - architecture and System description
  - DevOps Guide - a guide for the developers and devops operators
  - Installation Guide - a guide for installation of the application
  - Features and Functionalities - description of the current features and functionalities
+ - Requirements - description of the Requirements for the application
 
-All the documents should be updated and redistributed in combination of the current version of the application and should be found under the following directories:
-doc/md
-doc/pdf
-doc/xls
-according to the file format used for the documentation storage.
+
+All the documents should be updated and redistributed in combination of the current version of the application and should be found under the doc/md directory.
+
 
     
 
@@ -76,8 +77,8 @@ You should assign 0 or 1 persons responsible for an issue at a time. Of course i
     
 
 ### 3.1. Projects management
-You can manage multiple projects with the issue-tracker tool. Each project has its own data directories, database storage and configurations. You could also have different envornments named dev,tst,prd for each project separately. 
-As the tool is backwards compatible you could have differrrent instances of the issue-tracker projects with different versions ( and set of features ) operatiing against differrent project ( each one in its own version).
+You can manage multiple projects with the qto tool. Each project has its own data directories, database storage and configurations. You could also have different environments named dev, tst, prd for each project separately. 
+As the tool is backwards compatible you could have different instances of the issue-tracker projects with different versions ( and set of features ) operating against different project ( each one in its own version).
 You must pre-set the configuration variables of an issue-tracker project each time you start working on a project from the shell
 
     

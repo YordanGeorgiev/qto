@@ -16,7 +16,7 @@ mix_data_dir = %ProductInstanceDir%/dat/mix
 # the postgres confs - OBS ! dev , tst , prd product instances to own db !
 postgres_db_name           = prd_qto
 postgres_db_host           = 127.0.0.1
-postgres_db_port           = 35432
+postgres_db_port           = 15432
 postgres_db_user           = usrqtoapp
 postgres_db_user_pw        = usrqtoapp
 postgres_db_useradmin      = usrqtoadmin
