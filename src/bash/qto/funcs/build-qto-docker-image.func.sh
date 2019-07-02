@@ -8,9 +8,9 @@ doBuildQtoDockerImage(){
 
     doLog "DEBUG START doBuildQtoDockerImage"
 
-    doFullCleanDocker
-    doRemoveAllDockerContainers 
-    doRemoveAllDockerImages             # todo:ysg rem !!!
+    #doFullCleanDocker
+    #doRemoveAllDockerContainers 
+    # doRemoveAllDockerImages             # todo:ysg rem !!!
     postgres_db_name="$env_type"'_'"$run_unit"
     cp -v "$product_instance_dir/src/docker/Dockerfile.deploy-qto.0.6.5.dev.ysg" "$product_instance_dir/Dockerfile"
     # cp -v "$product_instance_dir/src/docker/Dockerfile.deploy-quick-test" "$product_instance_dir/Dockerfile"
