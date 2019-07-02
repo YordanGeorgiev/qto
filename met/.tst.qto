@@ -873,3 +873,6 @@ src/selenium/ide/qto.remote.side
 src/selenium/ide/qto.local.side
 src/bash/qto/funcs/admin/restart-network.func.sh
 src/bash/qto/funcs/print-stats.func.sh
+cnf/hosts/host-name/etc/fstab
+cnf/hosts/host-name/etc/network/interfaces
+cnf/hosts/host-name/home/ysg/.vimrc

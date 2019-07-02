@@ -118,49 +118,50 @@
   * [6.4. XLS-TO-POSTGRES-DB HIERARCHICAL DATA LOAD](#64-xls-to-postgres-db-hierarchical-data-load)
     * [6.4.1. error reporting in xls-to-postgres-db hierarchical data load ](#641-error-reporting-in-xls-to-postgres-db-hierarchical-data-load-)
 * [7. DEVOPS PERSPECTIVE](#7-devops-perspective)
-  * [7.1. SYSTEM VERIFIABILITY AND TESTABILITY](#71-system-verifiability-and-testability)
-    * [7.1.1. Clarity and brevity of the end to end tests](#711-clarity-and-brevity-of-the-end-to-end-tests)
-    * [7.1.2. Abort end-to-end tests on single test fail](#712-abort-end-to-end-tests-on-single-test-fail)
-  * [7.2. LOGGING](#72-logging)
-    * [7.2.1. Control flow logging](#721-control-flow-logging)
-    * [7.2.2. Log entries format configuration](#722-log-entries-format-configuration)
-    * [7.2.3. Single entry point for end to end tests](#723-single-entry-point-for-end-to-end-tests)
-    * [7.2.4. Tool run log to human readable description](#724-tool-run-log-to-human-readable-description)
-  * [7.3. APPLICATION'S SOURCE CODE AND DOCUMENTATION INTEGRITY](#73-application's-source-code-and-documentation-integrity)
-    * [7.3.1. Userstories to test case relations](#731-userstories-to-test-case-relations)
-    * [7.3.2. UUID trackability for test files and userstories](#732-uuid-trackability-for-test-files-and-userstories)
-    * [7.3.3. Components start run message print](#733-components-start-run-message-print)
-    * [7.3.4. Tool exit with exit code and exit message](#734-tool-exit-with-exit-code-and-exit-message)
-    * [7.3.5. Execution path tracing by UUID's](#735-execution-path-tracing-by-uuid's)
-    * [7.3.6. Issues directories naming conventions](#736-issues-directories-naming-conventions)
-    * [7.3.7. Issues files naming conventions](#737-issues-files-naming-conventions)
-    * [7.3.8. Issues file open](#738-issues-file-open)
-    * [7.3.9. Issues files history](#739-issues-files-history)
-    * [7.3.10. Issues files naming conventions](#7310-issues-files-naming-conventions)
-      * [7.3.10.1. Issues files naming conventions for the  project](#73101-issues-files-naming-conventions-for-the-project)
-      * [7.3.10.2. Issues files naming conventions for current date](#73102-issues-files-naming-conventions-for-current-date)
-      * [7.3.10.3. Issues files naming conventions for the time frame](#73103-issues-files-naming-conventions-for-the-time-frame)
-  * [7.4. ISSUES TRANSFORMATIONS](#74-issues-transformations)
-    * [7.4.1. 
-Load by txt-to-db action](#741-
+  * [7.1. PROJECT DEPLOYMENT](#71-project-deployment)
+  * [7.2. SYSTEM VERIFIABILITY AND TESTABILITY](#72-system-verifiability-and-testability)
+    * [7.2.1. Clarity and brevity of the end to end tests](#721-clarity-and-brevity-of-the-end-to-end-tests)
+    * [7.2.2. Abort end-to-end tests on single test fail](#722-abort-end-to-end-tests-on-single-test-fail)
+  * [7.3. LOGGING](#73-logging)
+    * [7.3.1. Control flow logging](#731-control-flow-logging)
+    * [7.3.2. Log entries format configuration](#732-log-entries-format-configuration)
+    * [7.3.3. Single entry point for end to end tests](#733-single-entry-point-for-end-to-end-tests)
+    * [7.3.4. Tool run log to human readable description](#734-tool-run-log-to-human-readable-description)
+  * [7.4. APPLICATION'S SOURCE CODE AND DOCUMENTATION INTEGRITY](#74-application's-source-code-and-documentation-integrity)
+    * [7.4.1. Userstories to test case relations](#741-userstories-to-test-case-relations)
+    * [7.4.2. UUID trackability for test files and userstories](#742-uuid-trackability-for-test-files-and-userstories)
+    * [7.4.3. Components start run message print](#743-components-start-run-message-print)
+    * [7.4.4. Tool exit with exit code and exit message](#744-tool-exit-with-exit-code-and-exit-message)
+    * [7.4.5. Execution path tracing by UUID's](#745-execution-path-tracing-by-uuid's)
+    * [7.4.6. Issues directories naming conventions](#746-issues-directories-naming-conventions)
+    * [7.4.7. Issues files naming conventions](#747-issues-files-naming-conventions)
+    * [7.4.8. Issues file open](#748-issues-file-open)
+    * [7.4.9. Issues files history](#749-issues-files-history)
+    * [7.4.10. Issues files naming conventions](#7410-issues-files-naming-conventions)
+      * [7.4.10.1. Issues files naming conventions for the  project](#74101-issues-files-naming-conventions-for-the-project)
+      * [7.4.10.2. Issues files naming conventions for current date](#74102-issues-files-naming-conventions-for-current-date)
+      * [7.4.10.3. Issues files naming conventions for the time frame](#74103-issues-files-naming-conventions-for-the-time-frame)
+  * [7.5. ISSUES TRANSFORMATIONS](#75-issues-transformations)
+    * [7.5.1. 
+Load by txt-to-db action](#751-
 load-by-txt-to-db-action)
-      * [7.4.1.1. Load issues file from file system to db](#7411-load-issues-file-from-file-system-to-db)
-    * [7.4.2. Load issues by db-to-xls action](#742-load-issues-by-db-to-xls-action)
-    * [7.4.3. Load issues by xls-to-db action](#743-load-issues-by-xls-to-db-action)
-      * [7.4.3.1. Load issues by xls-to-db action for insert or upset](#7431-load-issues-by-xls-to-db-action-for-insert-or-upset)
-      * [7.4.3.2. Load issues by xls-to-db action by truncating or not the loadable table](#7432-load-issues-by-xls-to-db-action-by-truncating-or-not-the-loadable-table)
-    * [7.4.4. Load issues by db-to-txt](#744-load-issues-by-db-to-txt)
-      * [7.4.4.1. xls-to-db action load sort by issues prio attribute](#7441-xls-to-db-action-load-sort-by-issues-prio-attribute)
-      * [7.4.4.2. db-to-txt action load sort by issues start_time attribute](#7442-db-to-txt-action-load-sort-by-issues-start_time-attribute)
-      * [7.4.4.3. db-to-txt action load sort by issues start_time attribute](#7443-db-to-txt-action-load-sort-by-issues-start_time-attribute)
-    * [7.4.5. Load issues file from db to file system](#745-load-issues-file-from-db-to-file-system)
-  * [7.5. ISSUES FILE FILTERING](#75-issues-file-filtering)
-  * [7.6. SINGLE SHELL CALL FOR PROJECTS SWITCHING](#76-single-shell-call-for-projects-switching)
-  * [7.7. ISSUES PUBLISHING FROM SHELL CALLS](#77-issues-publishing-from-shell-calls)
-    * [7.7.1. Issues publishing in e-mail format](#771-issues-publishing-in-e-mail-format)
-    * [7.7.2. Issues handling in google sheet format](#772-issues-handling-in-google-sheet-format)
-    * [7.7.3. Issues publishing in google calendar format](#773-issues-publishing-in-google-calendar-format)
-  * [7.8. METADATA HANDLING](#78-metadata-handling)
+      * [7.5.1.1. Load issues file from file system to db](#7511-load-issues-file-from-file-system-to-db)
+    * [7.5.2. Load issues by db-to-xls action](#752-load-issues-by-db-to-xls-action)
+    * [7.5.3. Load issues by xls-to-db action](#753-load-issues-by-xls-to-db-action)
+      * [7.5.3.1. Load issues by xls-to-db action for insert or upset](#7531-load-issues-by-xls-to-db-action-for-insert-or-upset)
+      * [7.5.3.2. Load issues by xls-to-db action by truncating or not the loadable table](#7532-load-issues-by-xls-to-db-action-by-truncating-or-not-the-loadable-table)
+    * [7.5.4. Load issues by db-to-txt](#754-load-issues-by-db-to-txt)
+      * [7.5.4.1. xls-to-db action load sort by issues prio attribute](#7541-xls-to-db-action-load-sort-by-issues-prio-attribute)
+      * [7.5.4.2. db-to-txt action load sort by issues start_time attribute](#7542-db-to-txt-action-load-sort-by-issues-start_time-attribute)
+      * [7.5.4.3. db-to-txt action load sort by issues start_time attribute](#7543-db-to-txt-action-load-sort-by-issues-start_time-attribute)
+    * [7.5.5. Load issues file from db to file system](#755-load-issues-file-from-db-to-file-system)
+  * [7.6. ISSUES FILE FILTERING](#76-issues-file-filtering)
+  * [7.7. SINGLE SHELL CALL FOR PROJECTS SWITCHING](#77-single-shell-call-for-projects-switching)
+  * [7.8. ISSUES PUBLISHING FROM SHELL CALLS](#78-issues-publishing-from-shell-calls)
+    * [7.8.1. Issues publishing in e-mail format](#781-issues-publishing-in-e-mail-format)
+    * [7.8.2. Issues handling in google sheet format](#782-issues-handling-in-google-sheet-format)
+    * [7.8.3. Issues publishing in google calendar format](#783-issues-publishing-in-google-calendar-format)
+  * [7.9. METADATA HANDLING](#79-metadata-handling)
 * [8. UI DEVELOPER PERSPECTIVE](#8-ui-developer-perspective)
   * [8.1. EASY SETUP FOR TESTABILITY](#81-easy-setup-for-testability)
   * [8.2. CODE TRACEABILITY BY UUID](#82-code-traceability-by-uuid)
@@ -1040,7 +1041,14 @@ I want to have a nice user experience while using the qto application.
 
     
 
-### 7.1. System verifiability and testability
+### 7.1. Project deployment
+As a potential Developer of the qto or a qto application 
+In order to have the easiest installation experience 
+I want to be able to deploy fully functional development environment on a clean host in less than an hour with a single oneliner. 
+
+    
+
+### 7.2. System verifiability and testability
 As an ITOPS 
 In order to be able to rely on the operations of the tool 
  and manage easily its features and functionalities
@@ -1049,35 +1057,35 @@ by issuing a single shell call.
 
     
 
-#### 7.1.1. Clarity and brevity of the end to end tests
+#### 7.2.1. Clarity and brevity of the end to end tests
 As an ITOPS 
 In order to be able to verify all the features and functionalities of the tool within the System
 I want to see the results of each test in 1 flow in the following format:.
 
     
 
-#### 7.1.2. Abort end-to-end tests on single test fail
+#### 7.2.2. Abort end-to-end tests on single test fail
 As an ITOPS 
 In order to be able to run continuously end-to-end tests and skip for several runs failing tests
 I want to be able to configure the single e2e entry point script to skip certain tests, but report me what was skipped. 
 
     
 
-### 7.2. Logging
+### 7.3. Logging
 As a Full-Stack Developer
 In order to quickly understand what is happening in the application
 I want to have easy-to-use and highly customisable logging to both file and console.
 
     
 
-#### 7.2.1. Control flow logging
+#### 7.3.1. Control flow logging
 As a CLI user 
 In order to be able to understand what the issue tracker tool is executing
 I want  to have configurable logging with stderr, stdout and file output
 
     
 
-#### 7.2.2. Log entries format configuration
+#### 7.3.2. Log entries format configuration
 As a Full-Stack Developer
 In order to be able to get the msg of any component of the application 
 I want each log entry to content:
@@ -1088,70 +1096,70 @@ I want each log entry to content:
 
     
 
-#### 7.2.3. Single entry point for end to end tests
+#### 7.3.3. Single entry point for end to end tests
 As an DevOps
 In order to be able to verify all the features and functionalities of the tool within the System
 I want to run a single shell call running all the end-to-end test of the application ensuring the specified features and functionalities.  
 
     
 
-#### 7.2.4. Tool run log to human readable description
+#### 7.3.4. Tool run log to human readable description
 As a CLI user 
 In order to be able to get a human readable description of the log of the specific run of the tool
 I want to be able to translate the recorded uuid's in the execution run log to their respective records
 
     
 
-### 7.3. Application's source code and documentation integrity
+### 7.4. Application's source code and documentation integrity
 As a Full-Stack Developer
 In order to make easy the entry of other developers to the projects
 I want to be able to point to written documentation for user-stories, issues, features and functionalities, which will be linked to parts of the source code. 
 
     
 
-#### 7.3.1. Userstories to test case relations
+#### 7.4.1. Userstories to test case relations
 As a Developer 
 In order to ensure the stability and expandability of the application
 I want to be able to run for each implemented user-story a single test
 
     
 
-#### 7.3.2. UUID trackability for test files and userstories
+#### 7.4.2. UUID trackability for test files and userstories
 As a Developer 
 In order to identify each user-story to be tested with its according test
 I want to be able to track each user-story or test code entry point file by UUID.
 
     
 
-#### 7.3.3. Components start run message print
+#### 7.4.3. Components start run message print
 As a CLI user 
 In order to know when a component has been started
 I want to be able to see the "START &lt;&lt;COMPONENT NAME&gt;&gt; on either the STDOUT or the log file of the component
 
     
 
-#### 7.3.4. Tool exit with exit code and exit message
+#### 7.4.4. Tool exit with exit code and exit message
 As a CLI user or calling  automated component
 In order to be able to understand whether or not the execution of the call to the tool was successful or not 
 I want to get the exit code from the tool execution and see the exit message
 
     
 
-#### 7.3.5. Execution path tracing by UUID's
+#### 7.4.5. Execution path tracing by UUID's
 As a DevOps operator
 Foreach execution run of the tool
 I want to be able to walk trough the execution path of the tool programmatically. 
 
     
 
-#### 7.3.6. Issues directories naming conventions
+#### 7.4.6. Issues directories naming conventions
 As a issues manager
 In order to be able to manage lots of issues from different projects stored in plain txt files 
 I want to be able to store large quantity of issues txt files by their date on daily, weekly, monthly, yearly and decadally basis
 
     
 
-#### 7.3.7. Issues files naming conventions
+#### 7.4.7. Issues files naming conventions
 As a issues manager
 In order to be able to manage lots of issues from different projects stored in plain txt files 
 and open them quickly
@@ -1159,28 +1167,28 @@ I want to be able to just type the first letter in a text editor supporting sele
 
     
 
-#### 7.3.8. Issues file open
+#### 7.4.8. Issues file open
 As a CLI user 
 In order to be able quickly to access my issues ( daily , weekly, monthly , yearly )
 I want to be able to view my daily issues by simply opening a single txt file
 
     
 
-#### 7.3.9. Issues files history
+#### 7.4.9. Issues files history
 As a CLI user 
 In order to be able quickly to search trough old issues 
 I want to be able to access old issues files by their date held in their file names from the file system
 
     
 
-#### 7.3.10. Issues files naming conventions
+#### 7.4.10. Issues files naming conventions
 As a DevOps 
 In order to be able quickly to access and manage programmatically issues
 I want to be able to guess the file paths of the issues file by their date 
 
     
 
-##### 7.3.10.1. Issues files naming conventions for the  project
+##### 7.4.10.1. Issues files naming conventions for the  project
 As a DevOps 
 In order to be able quickly to switch between different projects
 I wanto to have the project name of the issues file in its name as the first token as follows:
@@ -1188,7 +1196,7 @@ I wanto to have the project name of the issues file in its name as the first tok
 
     
 
-##### 7.3.10.2. Issues files naming conventions for current date
+##### 7.4.10.2. Issues files naming conventions for current date
 As a DevOps 
 In order to be able quickly and programmatically to go back in the history
 I wanto to have the current registration date in the file name and path
@@ -1196,7 +1204,7 @@ I wanto to have the current registration date in the file name and path
 
     
 
-##### 7.3.10.3. Issues files naming conventions for the time frame
+##### 7.4.10.3. Issues files naming conventions for the time frame
 As a DevOps 
 In order to be able quickly and programmatically to go back in the history
 I want to have the current registration date in the file name and path
@@ -1204,7 +1212,7 @@ I want to have the current registration date in the file name and path
 
     
 
-### 7.4. Issues transformations
+### 7.5. Issues transformations
 As a cli user of the qto application 
 In order to be able to sort the issues according to their attributes 
 and edit them in both txt file and xls file
@@ -1216,7 +1224,7 @@ db-to-txt - to load a txt file from db table
 
     
 
-#### 7.4.1. 
+#### 7.5.1. 
 Load by txt-to-db action
 As a cli user of the qto application 
 in order to store my issues in structured form to db for further processing
@@ -1224,7 +1232,7 @@ I want to be able to load any issue file with a single line shell call to a db
 
     
 
-##### 7.4.1.1. Load issues file from file system to db
+##### 7.5.1.1. Load issues file from file system to db
 As a cli user of the qto application 
 - in order to be able to handle issues from different projects
 - and load them to db for further processing
@@ -1235,14 +1243,14 @@ I want to:
 
     
 
-#### 7.4.2. Load issues by db-to-xls action
+#### 7.5.2. Load issues by db-to-xls action
 As a cli user of the qto application 
 in order to be able to sort and edit my issues in Excel
 I want to be able to unload my issues from one or many tables in the db at once in a single shell call
 
     
 
-#### 7.4.3. Load issues by xls-to-db action
+#### 7.5.3. Load issues by xls-to-db action
 As a cli user of the qto application 
 in order to store my issues in structured form to db for further processing after being sorted in Excel
 I want to be able to load my latest xls file with a single line shell call to a db 
@@ -1250,7 +1258,7 @@ by choosing the names of the tables to load
 
     
 
-##### 7.4.3.1. Load issues by xls-to-db action for insert or upset
+##### 7.5.3.1. Load issues by xls-to-db action for insert or upset
 As a cli user of the qto application 
 in order to insert or upsert my issues in structured form to db for further processing after being sorted in Excel
 I want to be able to load my latest xls file with a single line shell call to a db 
@@ -1258,7 +1266,7 @@ by choosing the names of the tables to load and specifying upsert by adding the 
 
     
 
-##### 7.4.3.2. Load issues by xls-to-db action by truncating or not the loadable table
+##### 7.5.3.2. Load issues by xls-to-db action by truncating or not the loadable table
 As a cli user of the qto application 
 in order to store my issues in structured form to db for further processing after being sorted in Excel
 I want to be able to load my latest xls file with a single line shell call to a db 
@@ -1266,7 +1274,7 @@ by choosing the names of the tables to load
 
     
 
-#### 7.4.4. Load issues by db-to-txt
+#### 7.5.4. Load issues by db-to-txt
 As a cli user of the qto application 
 in order to store my issues in more structured data format for further processing
 I want to :
@@ -1275,7 +1283,7 @@ I want to :
 
     
 
-##### 7.4.4.1. xls-to-db action load sort by issues prio attribute
+##### 7.5.4.1. xls-to-db action load sort by issues prio attribute
 As a cli user of the qto application 
 during the db-to-txt action load
 in order to understand the priority of my issues
@@ -1285,7 +1293,7 @@ by choosing the names of the tables to load
 
     
 
-##### 7.4.4.2. db-to-txt action load sort by issues start_time attribute
+##### 7.5.4.2. db-to-txt action load sort by issues start_time attribute
 As a cli user of the qto application 
 during the db-to-txt action load
 in order to understand the priority of my issues
@@ -1295,7 +1303,7 @@ by choosing the names of the tables to load
 
     
 
-##### 7.4.4.3. db-to-txt action load sort by issues start_time attribute
+##### 7.5.4.3. db-to-txt action load sort by issues start_time attribute
 As a cli user of the qto application 
 during the db-to-txt action load
 in order to view the issues by categories
@@ -1304,7 +1312,7 @@ I want to :
 
     
 
-#### 7.4.5. Load issues file from db to file system
+#### 7.5.5. Load issues file from db to file system
 As a cli user of the qto application 
 in order to store my issues in more structured data format for further processing
 I want to :
@@ -1313,14 +1321,14 @@ I want to :
 
     
 
-### 7.5. issues file filtering
+### 7.6. issues file filtering
 As a CLI user 
 In order to filter quickly my issues 
 I want to  be able to show the issues with their categories of only certain status
 
     
 
-### 7.6. Single shell call for projects switching
+### 7.7. Single shell call for projects switching
 As an issues-manager 
 In order to be able to switch between different projects quickly
 I want to be able to issue a single shell call for loading a project's configuration
@@ -1328,35 +1336,35 @@ and run the issue-handler against this pre-loaded configuration
 
     
 
-### 7.7. Issues publishing from shell calls
+### 7.8. Issues publishing from shell calls
 As a DevOps 
 In order to be able to quickly share the current issues data in tabular format
 I want to be able to issue a single shell call for copying the current items data to a medium by specifying the tables to be published
 
     
 
-#### 7.7.1. Issues publishing in e-mail format
+#### 7.8.1. Issues publishing in e-mail format
 As a DevOps 
 In order to be able to quickly share the current issues data in email format
 I want  to be able to issue a single shell call for copying the current items data to email by specifying the tables to be published
 
     
 
-#### 7.7.2. Issues handling in google sheet format
+#### 7.8.2. Issues handling in google sheet format
 As a DevOps 
 In order to be able to quickly share the current issues data in tabular format
 I want  to be able to issue a single shell call for copying the current items data to google sheet by specifying the tables to be published
 
     
 
-#### 7.7.3. Issues publishing in google calendar format
+#### 7.8.3. Issues publishing in google calendar format
 As a DevOps 
 In order to be able to quickly share the current issues data in google calendar format
 I want  to be able to issue a single shell call for copying the current items data to google calendar by specifying the tables to be published for the items having set start_time and stop_time attributes. 
 
     
 
-### 7.8. Metadata handling
+### 7.9. Metadata handling
 As a DevOps operator
 In order to be able to programatically manage all aspects of my data
 I wan to to have a single entry point to manage the meta data per tables , columns and UI elements

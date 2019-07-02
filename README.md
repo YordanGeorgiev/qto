@@ -12,18 +12,13 @@
   * [4.4. THE DEVOPS GUIDE DOC](#44-the-devops-guide-doc)
   * [4.5. THE ENDUSER GUIDE DOC](#45-the-enduser-guide-doc)
   * [4.6. THE REQUIREMENTS DOC](#46-the-requirements-doc)
-* [5. INSTALLATION AND CONFIGURATION](#5-installation-and-configuration)
+* [5. INSTALLATION AND CONFIGURATION VIA DOCKER](#5-installation-and-configuration-via-docker)
   * [5.1. FETCH THE SOURCE](#51-fetch-the-source)
   * [5.2. RUN THE BOOTSTRAP SCRIPT](#52-run-the-bootstrap-script)
   * [5.3. BUILD THE QTO IMAGE](#53-build-the-qto-image)
   * [5.4. RUN THE CONTAINER](#54-run-the-container)
-  * [5.5. ATTACH TO THE RUNNING CONTAINER](#55-attach-to-the-running-container)
-  * [5.6. SWITHCH TO THE USRQTOAMDIN USER](#56-swithch-to-the-usrqtoamdin-user)
-  * [5.7. RUN THE DEV_QTO DB SCRIPTS](#57-run-the-dev_qto-db-scripts)
-  * [5.8. PRE-LOAD THE PRODUCT INSTANCE DIR ENVIRONMENTAL VARIABLES](#58-pre-load-the-product-instance-dir-environmental-variables)
-  * [5.9. LOAD THE DEV_QTO DB DATA](#59-load-the-dev_qto-db-data)
-  * [5.10. START THE APPLICATION LAYER](#510-start-the-application-layer)
-  * [5.11. VERIFY THAT THE WHOLE SYSTEM WORKS](#511-verify-that-the-whole-system-works)
+  * [5.5. ATTACH TO THE RUNNING CONTAINER ( OPTIONAL)](#55-attach-to-the-running-container-(-optional))
+  * [5.6. VERIFY THAT THE WHOLE SYSTEM WORKS](#56-verify-that-the-whole-system-works)
 * [6. ACKNOWLEDGEMENTS](#6-acknowledgements)
 * [7. LICENSE](#7-license)
 
@@ -133,85 +128,50 @@ Contains the specs and requirements, which can be defined at the current stage o
 
     
 
-## 5. INSTALLATION AND CONFIGURATION
+## 5. INSTALLATION AND CONFIGURATION VIA DOCKER
 This section provides the instructions to build the whole system from scratch on docker. You will need git, bash, perl and docker to complete the whole containerised deployment. 
-It should take about 30-45 min to complete depending on your network connection and host hardware specs, 75% of which is the image building process which does not require shell interaction. 
+It should take about 30-45 min to complete depending on your network connection and host hardware specs, 75%-80% of which is the image building process which does not require shell interaction. 
+The target setup is such that you could edit the source code on the host machine, but both the db and the application layer will be run in the docker. 
 
     
 
 ### 5.1. Fetch the source
-Fetch the source on your local machnine, which will be use to run the container.
+Fetch the source on your local machine, which will be use to run the container onto a dir your user has full read, write and execute permissions:
 
     mkdir -p ~/opt/ ; cd ~/opt
     git clone https://github.com/YordanGeorgiev/qto
 
 ### 5.2. Run the bootstrap script
-In qto each deployment instance is "self-aware" of the type of environment it represents - ak dev, tst , prd. To bootstrap to the dev environment run the following command
+In the qto realm each deployment INSTANCE is "self-aware" of the type of environment it represents -  dev, tst , prd. To bootstrap to the dev environment run the following command:
 
-    # bootstrap for multi-environment setup 
-    bash qto/src/bash/qto/bootstrap-qto.sh
+    bash src/bash/qto/bootstrap-qto-host.sh
+    # cd to the product instance dir as suggested by the script
 
 ### 5.3. Build the qto image
-This step will take 80% of the time. It is non-interactive, that is the whole image building should succeed at once. 
+This step will take 80% of the time. It is non-interactive, that is the whole image building should succeed at once. This is the v0.6.5 experimental feature, thus should you have problems with it create an issue to the owner of the product instance you fetch the source from ...
 
     # go to the product instance dir as adived in the end of the bootstrap script … 
     # build the docker image
     clear ; bash src/bash/qto/qto.sh -a build-qto-docker-image
 
 ### 5.4. Run the container
-Run the container of the already build image
+Run the container of the already build image issue the following command:
 
     # run the container from the already build image
     docker run -d --name qto-container-01 -p 127.0.0.1:15432:15432 -p 127.0.0.1:3001:3001 --restart=unless-stopped qto-image
 
-### 5.5. Attach to the running container
-To attach to the running container run the following command:
+### 5.5. Attach to the running container ( optional)
+If you want to see what is happening in the container,  run the following command:
 
     # attach to the container 
     docker exec -it -u root qto-cotainer-01 /bin/bash
 
-### 5.6. Swithch to the usrqtoamdin user
-Swithch to the usrqtoamdin user and go to the product instance dir of the container. 
-
-    # swith user to the usrqtoadmin ( the password is usrqtoadmin )
-    su - usrqtoadmin
-    
-    # to the dev environment of the 0.6.5 version
-    cd ~/opt/csitea/qto/qto.0.6.5.dev.usrqtoadmin
-
-### 5.7. Run the dev_qto db scripts
-The installation of this dev instance would require the creation of the dev_qto database, which can be accomplished by running the following command.
-
-    # run the instance db DDLs ( you could later on create your own dbs ...)
-    bash src/bash/qto/qto.sh -a run-pgsql-scripts
-
-### 5.8. Pre-load the product instance dir environmental variables
-Each product instance comes with its own set of environmental variables, which must be preloaded each time you start working in a terminal session with that instance. 
-
-    # load the bash function used for the env vars pre-loading
-    source lib/bash/funcs/parse-cnf-env-vars.sh
-    # load the env vars of the product instance
-    doParseCnfEnvVars cnf/qto.dev.$(hostname -s).cnf
-
-### 5.9. Load the dev_qto db data
-The data dump of the most latest prd_qto database is stored in the image, thus to load the data issue the following command. 
-
-    # load the data for the example qto db
-    alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -q -t -X -w -U ${postgres_db_useradmin:-}"
-    psql -d dev_qto < dat/prd_qto.latest.insrt.dmp.sql
-
-### 5.10. start the application layer
-To start the Mojolicious development webserver you could use the following qto single shell action wrapper call.
-
-    # start the application layer
-    bash src/bash/qto/qto.sh -a mojo-morbo-start
-
-### 5.11. Verify that the whole system works
+### 5.6. Verify that the whole system works
 To verify the list ui point your local machine browser to the following uri:
 http://localhost:3001/qto/list/release_issues
 
 To verify the view doc ui point your local machine browser to the following uri:
-http://localhost:3001/qto/view/installations_doc
+http://localhost:3001/qto/view/devops_guide_doc
 
     
 
