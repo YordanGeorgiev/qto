@@ -6,39 +6,42 @@
 # ---------------------------------------------------------
 doBuildQtoDockerImage(){
 
-    doLog "DEBUG START doBuildQtoDockerImage"
+   doLog "DEBUG START doBuildQtoDockerImage"
 
-    #doFullCleanDocker
-    #doRemoveAllDockerContainers 
-    # doRemoveAllDockerImages             # todo:ysg rem !!!
-    postgres_db_name="$env_type"'_'"$run_unit"
-    cp -v "$product_instance_dir/src/docker/Dockerfile.deploy-qto.0.6.5.dev.ysg" "$product_instance_dir/Dockerfile"
-    # cp -v "$product_instance_dir/src/docker/Dockerfile.deploy-quick-test" "$product_instance_dir/Dockerfile"
-    cd $product_instance_dir
-    chmod 777 $product_instance_dir/src/bash/qto/install/docker/docker-entry-point.sh
-    docker build \
-      --build-arg product_instance_dir=/opt/csitea/qto/qto.0.6.5.dev.ysg \
-      --build-arg postgres_db_name=$postgres_db_name \
-      -t qto-image:$product_version .
+   set -x
+   test -z ${qto_project:-} && \
+      source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh" && \
+      doParseCnfEnvVars "$product_instance_dir/cnf/$run_unit.$env_type."$(hostname -s)'.cnf'
 
-    test $? -ne 0 && doLog "FATAL the docker image building failed !!!"
-    rm -v "$product_instance_dir/Dockerfile"
+   # doFullCleanDocker
+   # doRemoveAllDockerContainers 
+   # doRemoveAllDockerImages             # todo:ysg rem !!!
+   postgres_db_name="$env_type"'_'"$run_unit"
+   cp -v "$product_instance_dir/src/docker/Dockerfile.deploy-$run_unit.$product_version" "$product_instance_dir/Dockerfile"
+   # cp -v "$product_instance_dir/src/docker/Dockerfile.deploy-quick-test" "$product_instance_dir/Dockerfile"
 
-    printf "\n\n"
-    echo 'to instantiate a new container, run :'
-    echo 'docker run -d --name qto-container-01 -v `pwd`:/opt/csitea/qto/qto.0.6.5.dev.ysg -p 127.0.0.1:15432:15432 -p 127.0.0.1:3001:3001 qto-image:0.6.5'
-    printf "\n\n"
-    echo 'to attach to the the running container run:'
-    echo 'docker exec -it qto-container-01 /bin/bash'
-    printf "\n\n"
+   # Action !!!
+   docker build \
+   --build-arg product_instance_dir=/opt/csitea/$run_unit/$environment_name \
+   --build-arg postgres_db_name=$postgres_db_name \
+   --build-arg TZ=${TZ:-} \
+   -t qto-image:$product_version .
 
-    # --detach , -d       Run container in background and print container ID
-    # --name              Assign a name to the container
-    # --publish , -p      Publish a container’s port(s) to the host
-    # --volume , -v       Bind mount a volume
-    # --restart           Restart policy to apply when a container exits
+   test $? -ne 0 && doLog "FATAL the docker image building failed !!!"
+   rm -v "$product_instance_dir/Dockerfile"
 
-    doLog "DEBUG STOP  doBuildQtoDockerImage"
+   printf "\n\n"
+   echo 'to instantiate a new container, run :'
+   echo "bash $product_instance_dir/src/bash/qto/qto.sh -a run-container"
+   printf "\n\n"
+
+   # --detach , -d       Run container in background and print container ID
+   # --name              Assign a name to the container
+   # --publish , -p      Publish a container’s port(s) to the host
+   # --volume , -v       Bind mount a volume
+   # --restart           Restart policy to apply when a container exits
+
+   doLog "DEBUG STOP  doBuildQtoDockerImage"
 }
 
 

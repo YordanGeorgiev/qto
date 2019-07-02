@@ -16,12 +16,11 @@ doRemoveAllDockerImages(){
    doLog "INFO Are you SURE ??!! You have 3 seconds to abort by Ctrl + C !!"
    sleep 3
    
-   if test -z "$(docker images | grep '^<none>' | awk '{print $3}')"
+   if test -z "$(docker images | grep qto-image |awk '{print $3}')"
    then
       doLog "INFO No docker images found. Nothing to do !!!"
    else
-      docker rmi $(docker images | grep '^<none>' | awk '{print $3}')
-      docker system prune -a
+      docker rmi $(docker images | grep qto-image |awk '{print $3}')
    fi
 
 	doLog "INFO STOP removing all the docker images"

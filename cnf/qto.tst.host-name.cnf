@@ -53,6 +53,9 @@ mojo_hypnotoad_port=8082
 
 PS1='qto-proj tst \u@\h [\d \t] [\w] $ \n\n '
 
+# set here your time zone
+TZ=Europe/Helsinki
+
 # the last entry is always ignored - this is a bug in the cnf parser 
 foo=bar
 

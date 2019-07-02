@@ -17,8 +17,7 @@
   * [5.2. RUN THE BOOTSTRAP SCRIPT](#52-run-the-bootstrap-script)
   * [5.3. BUILD THE QTO IMAGE](#53-build-the-qto-image)
   * [5.4. RUN THE CONTAINER](#54-run-the-container)
-  * [5.5. ATTACH TO THE RUNNING CONTAINER ( OPTIONAL)](#55-attach-to-the-running-container-(-optional))
-  * [5.6. VERIFY THAT THE WHOLE SYSTEM WORKS](#56-verify-that-the-whole-system-works)
+  * [5.5. VERIFY THAT THE WHOLE SYSTEM WORKS](#55-verify-that-the-whole-system-works)
 * [6. ACKNOWLEDGEMENTS](#6-acknowledgements)
 * [7. LICENSE](#7-license)
 
@@ -56,8 +55,8 @@ We have stumbled into real life problem in the ETL integrations of a big Scandin
 Your organisation:
 
 - has the need to constantly update comparably small ( less than 10k rows) hierarchy tables
-- has secured intranet access to a Linux box
-- has full trust to the persons in the org having http access for CRUD operations, as only basic auth over http exists
+- has secured intranet access to a Linux box - aka using http is not an issue
+- has full trust to the persons in the org for CRUD operations, as only basic auth over http exists
 - has the a need to load MANY tables into a postgres db, which might be changing constantly DDL wise
 - the API of having bigint id and uid as PK as well as default vals for nullable cols is acceptable
 - might have the need to save technical documentation in versioned md format
@@ -67,7 +66,7 @@ Your organisation:
 ### 2.3. Proposed capabilities
 You could:
 
-- deploy an instance of the qto, bare metal/docker install should take no more than 2h
+- deploy an instance of the qto, bare metal/vm/docker install should take no more than 2h
 - demo the simple search feature ( working only with name and description cols , but you could ddl hack-it)
 - provide access to the non-technical person via http for CRUD operations
 - provide them with initial links to grasp the "semi-sql" syntax
@@ -157,16 +156,10 @@ This step will take 80% of the time. It is non-interactive, that is the whole im
 ### 5.4. Run the container
 Run the container of the already build image issue the following command:
 
-    # run the container from the already build image
-    docker run -d --name qto-container-01 -v `pwd`:/opt/csitea/qto/qto.0.6.5.dev.ysg -p 127.0.0.1:15432:15432 -p 127.0.0.1:3001:3001 qto-image:0.6.5
-    
-### 5.5. Attach to the running container ( optional)
-If you want to see what is happening in the container,  run the following command:
+    bash src/bash/qto/qto.sh -a run-container
+    # read the actual command to attach to the container if needed
 
-    # attach to the container 
-    docker exec -it -u root qto-cotainer-01 /bin/bash
-
-### 5.6. Verify that the whole system works
+### 5.5. Verify that the whole system works
 To verify the list ui point your local machine browser to the following uri:
 http://localhost:3001/qto/list/release_issues
 
