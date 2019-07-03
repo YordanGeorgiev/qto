@@ -5,21 +5,22 @@
   * [2.2. ASSUMPTION AND PREREQUISITES](#22-assumption-and-prerequisites)
   * [2.3. PROPOSED CAPABILITIES](#23-proposed-capabilities)
 * [3. DEMO](#3-demo)
-* [4. DOCUMENTATION](#4-documentation)
-  * [4.1. THE INSTALLATIONS DOC](#41-the-installations-doc)
-  * [4.2. THE CONCEPTS DOC](#42-the-concepts-doc)
-  * [4.3. THE USERSTORIES DOC](#43-the-userstories-doc)
-  * [4.4. THE DEVOPS GUIDE DOC](#44-the-devops-guide-doc)
-  * [4.5. THE ENDUSER GUIDE DOC](#45-the-enduser-guide-doc)
-  * [4.6. THE REQUIREMENTS DOC](#46-the-requirements-doc)
-* [5. INSTALLATION AND CONFIGURATION VIA DOCKER](#5-installation-and-configuration-via-docker)
-  * [5.1. FETCH THE SOURCE](#51-fetch-the-source)
-  * [5.2. RUN THE BOOTSTRAP SCRIPT](#52-run-the-bootstrap-script)
-  * [5.3. BUILD THE QTO IMAGE](#53-build-the-qto-image)
-  * [5.4. RUN THE CONTAINER](#54-run-the-container)
-  * [5.5. VERIFY THAT THE WHOLE SYSTEM WORKS](#55-verify-that-the-whole-system-works)
-* [6. ACKNOWLEDGEMENTS](#6-acknowledgements)
-* [7. LICENSE](#7-license)
+* [4. MISSION](#4-mission)
+* [5. DOCUMENTATION](#5-documentation)
+  * [5.1. THE INSTALLATIONS DOC](#51-the-installations-doc)
+  * [5.2. THE CONCEPTS DOC](#52-the-concepts-doc)
+  * [5.3. THE USERSTORIES DOC](#53-the-userstories-doc)
+  * [5.4. THE DEVOPS GUIDE DOC](#54-the-devops-guide-doc)
+  * [5.5. THE ENDUSER GUIDE DOC](#55-the-enduser-guide-doc)
+  * [5.6. THE REQUIREMENTS DOC](#56-the-requirements-doc)
+* [6. INSTALLATION AND CONFIGURATION VIA DOCKER](#6-installation-and-configuration-via-docker)
+  * [6.1. FETCH THE SOURCE](#61-fetch-the-source)
+  * [6.2. RUN THE BOOTSTRAP SCRIPT](#62-run-the-bootstrap-script)
+  * [6.3. BUILD THE QTO IMAGE](#63-build-the-qto-image)
+  * [6.4. RUN THE CONTAINER](#64-run-the-container)
+  * [6.5. VERIFY THAT THE WHOLE SYSTEM WORKS](#65-verify-that-the-whole-system-works)
+* [7. ACKNOWLEDGEMENTS](#7-acknowledgements)
+* [8. LICENSE](#8-license)
 
 
 
@@ -80,86 +81,91 @@ You can check the following http://ec2-52-213-247-228.eu-west-1.compute.amazonaw
 
     
 
-## 4. DOCUMENTATION
+## 4. MISSION
+Enable transperent collaboration.
+
+    
+
+## 5. DOCUMENTATION
 QTO IS about documentation, we do all the doc-fooding on our docs, which are aimed to be as up-to-date to the current release version as possible. Thus you get the following documentation set:
 
     
 
-### 4.1. The Installations doc
+### 5.1. The Installations doc
 Contains the tasks and activities to perform to get a fully operational instance of the qto application:
  - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/installations_doc.md
  - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/installations_doc
 
     
 
-### 4.2. The Concepts doc
+### 5.2. The Concepts doc
 General level concepts of the application. 
  - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/concepts_doc.md
  - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/concepts_doc
 
     
 
-### 4.3. The UserStories doc
+### 5.3. The UserStories doc
 Naturally contains the userstories of the app. 
 - in https://github.com/YordanGeorgiev/qto/blob/master/doc/md/userstories_doc.md 
 - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/userstories_doc
 
     
 
-### 4.4. The DevOps Guide doc
+### 5.4. The DevOps Guide doc
 Contains content on how to develop the application + general devops info.
 - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/devops_guide_doc.md
 - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/devops_guide_doc
 
     
 
-### 4.5. The EndUser Guide doc
+### 5.5. The EndUser Guide doc
 The enduser guide contains mostly UI usage instructions:
  - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/enduser_guide_doc.md
  - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/concepts_doc
 
     
 
-### 4.6. The Requirements doc
+### 5.6. The Requirements doc
 Contains the specs and requirements, which can be defined at the current stage of the development:
  - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/requirements_doc.md
  - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/requirements_doc
 
     
 
-## 5. INSTALLATION AND CONFIGURATION VIA DOCKER
+## 6. INSTALLATION AND CONFIGURATION VIA DOCKER
 This section provides the instructions to build the whole system from scratch on docker. You will need git, bash, perl and docker to complete the whole containerised deployment. 
 It should take about 30-45 min to complete depending on your network connection and host hardware specs, 75%-80% of which is the image building process which does not require shell interaction. 
 The target setup is such that you could edit the source code on the host machine, but both the db and the application layer will be run in the docker. 
 
     
 
-### 5.1. Fetch the source
+### 6.1. Fetch the source
 Fetch the source on your local machine, which will be use to run the container onto a dir your user has full read, write and execute permissions:
 
     mkdir -p ~/opt/ ; cd ~/opt
     git clone https://github.com/YordanGeorgiev/qto
 
-### 5.2. Run the bootstrap script
+### 6.2. Run the bootstrap script
 In the qto realm each deployment INSTANCE is "self-aware" of the type of environment it represents -  dev, tst , prd. To bootstrap to the dev environment run the following command:
 
     bash src/bash/qto/bootstrap-qto-host.sh
     # cd to the product instance dir as suggested by the script
 
-### 5.3. Build the qto image
+### 6.3. Build the qto image
 This step will take 80% of the time. It is non-interactive, that is the whole image building should succeed at once. This is the v0.6.5 experimental feature, thus should you have problems with it create an issue to the owner of the product instance you fetch the source from ...
 
     # go to the product instance dir as adived in the end of the bootstrap script … 
     # build the docker image
     clear ; bash src/bash/qto/qto.sh -a build-qto-docker-image
 
-### 5.4. Run the container
-Run the container of the already build image issue the following command:
+### 6.4. Run the container
+Run a container of the already build image issue the following command:
 
     bash src/bash/qto/qto.sh -a run-container
     # read the actual command to attach to the container if needed
 
-### 5.5. Verify that the whole system works
+### 6.5. Verify that the whole system works
 To verify the list ui point your local machine browser to the following uri:
 http://localhost:3001/qto/list/release_issues
 
@@ -168,7 +174,7 @@ http://localhost:3001/qto/view/devops_guide_doc
 
     
 
-## 6. ACKNOWLEDGEMENTS
+## 7. ACKNOWLEDGEMENTS
 This project would NOT have been possible without the work of the people working on the following frameworks/languages/OS communities listed in no particular order.
  - Perl
  - Mojolicious
@@ -180,7 +186,7 @@ Deep gratitudes and thanks to all those people ! This application aims to contai
 
     
 
-## 7. LICENSE
+## 8. LICENSE
 All the trademarks mentioned in the documentation and in the source code belong to their owners. This application uses the Perl Artistic license, check the license.txt file or the following link : https://dev.perl.org/licenses/artistic.html
 
 Should any trademark attribution be missing, mistaken or erroneous, please contact us as soon as possible for rectification.
