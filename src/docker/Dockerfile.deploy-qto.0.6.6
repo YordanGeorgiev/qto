@@ -3,10 +3,12 @@ FROM ubuntu:18.04
 
 ARG product_instance_dir
 ENV product_instance_dir $product_instance_dir
-ARG postgres_db_name='dev_qto'
+ARG postgres_db_name 
 ENV postgres_db_name $postgres_db_name
 ARG postgres_db_useradmin='usrqtoadmin'
 ENV postgres_db_useradmin_pw 'usrqtoadmin'
+ARG host_host_name
+ENV host_host_name $host_host_name
 
 # obs !!! todo: parametrize qto-190616104728
 RUN echo "root:root" | chpasswd
@@ -27,10 +29,6 @@ RUN chmod 755 src/bash/qto/install/docker/provision-os-users.sh && \
     bash src/bash/qto/install/docker/provision-os-users.sh
 RUN chmod 755 src/bash/qto/install/docker/install-postgres.sh && \
     bash src/bash/qto/install/docker/install-postgres.sh
-
-# expose the PostgreSQL port
-EXPOSE 15432
-EXPOSE 3001
 
 # add VOLUMEs to allow backup of config, logs and databases
 # VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]

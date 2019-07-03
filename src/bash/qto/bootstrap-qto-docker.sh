@@ -39,7 +39,7 @@ cd $product_instance_dir
 
 source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh"
 
-doParseCnfEnvVars "$product_instance_dir/cnf/qto.dev.host-name.cnf"
+doParseCnfEnvVars "$product_instance_dir/cnf/$run_unit.$env_type.$host_host_name.cnf"
 
 bash $product_instance_dir/src/bash/qto/qto.sh -a restart-postgres
 bash $product_instance_dir/src/bash/qto/qto.sh -a run-pgsql-scripts

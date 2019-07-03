@@ -51,7 +51,7 @@ mojo_morbo_port=3001
 # on which port the mojo should listen
 mojo_hypnotoad_port=8081
 
-PS1='qto-proj dev $(date "+%F %T") "\u@\h \w $ \n\n '
+#PS1='qto-proj dev $(date "+%F %T") "\\u@\\h \\w $ \\n\\n '
 
 # set here your time zone
 TZ=Europe/Helsinki

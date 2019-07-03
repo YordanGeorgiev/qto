@@ -884,10 +884,9 @@ cnf/hosts/host-name/home/ysg/.vimrc
 dat/mix
 dat/mix/2019
 dat/mix/2019/2019-07
-dat/mix/2019/2019-07/2019-07-02
-dat/mix/2019/2019-07/2019-07-02/sql
-dat/mix/2019/2019-07/2019-07-02/sql/dev_qto
-dat/mix/2019/2019-07/2019-07-02/sql/dev_qto/dev_qto.20190702_142727.insrt.dmp.sql
-dat/mix/2019/2019-07/2019-07-02/tmp
-dat/mix/2019/2019-07/2019-07-02/xls
-dat/mix/2019/2019-07/2019-07-02/xls/qto.all.20190702_000000.xlsx
+dat/mix/2019/2019-07/2019-07-03
+dat/mix/2019/2019-07/2019-07-03/sql
+dat/mix/2019/2019-07/2019-07-03/sql/dev_qto
+dat/mix/2019/2019-07/2019-07-03/sql/dev_qto/dev_qto.20190703_000032.insrt.dmp.sql
+dat/mix/2019/2019-07/2019-07-03/xls
+dat/mix/2019/2019-07/2019-07-03/xls/qto.all.20190703_000000.xlsx

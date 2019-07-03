@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-set -x
 
+set -x
 unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
 
 # Add the PostgreSQL PGP key to verify their Debian packages.
@@ -41,8 +41,8 @@ sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "dblink";'
 psql_cnf_dir='/etc/postgresql/11/main'
 test -f $psql_cnf_dir/pg_hba.conf && \
    sudo cp -v $psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf.orig.bak && \
-   sudo cp -v $product_instance_dir/cnf/postgres/$psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf
-   sudo chown postgres:postres 
+   sudo cp -v $product_instance_dir/cnf/postgres/$psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf && \
+   sudo chown postgres:postres $psql_cnf_dir
 
 test -f $psql_cnf_dir/postgresql.conf && \
    sudo cp -v $psql_cnf_dir/postgresql.conf $psql_cnf_dir/postgresql.conf.orig && \
