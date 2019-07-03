@@ -6,6 +6,7 @@
 doChangeEnvType(){
 
 	doLog "DEBUG START doChangeEnvType"
+   
 	
 
 	tgt_env="$1"

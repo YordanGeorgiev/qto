@@ -223,6 +223,16 @@ src/perl/qto/lib/Qto/App/IO/In/RdrEnv.pm
 src/bash/qto/tests/new-qto-tests.lst
 # ---
 src/bash/qto/tests/run-qto-tests.lst
+cnf/tpl
+cnf/tpl/qto.dev.p-host-name.cnf
+cnf/tpl/qto.dev.v-host-name.cnf
+cnf/tpl/qto.tst.p-host-name.cnf
+cnf/tpl/qto.tst.v-host-name.cnf
+cnf/tpl/qto.prd.p-host-name.cnf
+cnf/tpl/qto.prd.v-host-name.cnf
+cnf/tpl/qto.p-host-name.cnf
+cnf/tpl/qto.v-host-name.cnf
+# ---
 cnf/qto.dev.host-name.cnf
 cnf/qto.tst.host-name.cnf
 cnf/qto.prd.host-name.cnf
@@ -883,10 +893,11 @@ cnf/hosts/host-name/etc/network/interfaces
 cnf/hosts/host-name/home/ysg/.vimrc
 dat/mix
 dat/mix/2019
-dat/mix/2019/2019-07
-dat/mix/2019/2019-07/2019-07-03
-dat/mix/2019/2019-07/2019-07-03/sql
-dat/mix/2019/2019-07/2019-07-03/sql/dev_qto
-dat/mix/2019/2019-07/2019-07-03/sql/dev_qto/dev_qto.20190703_000032.insrt.dmp.sql
-dat/mix/2019/2019-07/2019-07-03/xls
-dat/mix/2019/2019-07/2019-07-03/xls/qto.all.20190703_000000.xlsx
+dat/mix/2019/2019-07/2019-07-04/sql
+dat/mix/2019/2019-07/2019-07-04/sql/dev_qto
+dat/mix/2019/2019-07/2019-07-04/sql/dev_qto/dev_qto.20190704_210416.insrt.dmp.sql
+dat/mix/2019/2019-07/2019-07-04/tmp
+dat/mix/2019/2019-07/2019-07-04/xls
+dat/mix/2019/2019-07/2019-07-04/xls/qto.all.20190704_000000.xlsx
+dat/mix/2019/2019-07/2019-07-04/xls/~$qto.all.20190704_000000.xlsx
+doc/gliffy//multi-env-setup.gliffy

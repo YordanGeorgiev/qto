@@ -1,4 +1,4 @@
-# file: cnf/qto.phzs-MacBook-Pro.cnf
+# file: cnf/qto.v-host-name.cnf
 [MainSection]
 
 # qto is just a project with multiple projects support
@@ -43,15 +43,15 @@ google_spread_sheet_id = 1p4YwuSB3GtQ0i5ginn4Vc95t09w1WNWJra2yUH1aL0Y
 Emails=yordan.georgiev@gmail.com
 
 # the web host where the qto app layer instance residues 
-web_host=host-name
+web_host=v-host-name
 
 # on which port the mojo should listen
-mojo_morbo_port=3003
+mojo_morbo_port=3001
 
 # on which port the mojo should listen
-mojo_hypnotoad_port=8080
+mojo_hypnotoad_port=8081
 
-PS1='qto-proj prd $(date "+%F %T") "\\u@\\h \\w $ \\n\\n '
+#PS1='qto-proj dev $(date "+%F %T") "\\u@\\h \\w $ \\n\\n '
 
 # set here your time zone
 TZ=Europe/Helsinki
@@ -59,4 +59,4 @@ TZ=Europe/Helsinki
 # the last entry is always ignored - this is a bug in the cnf parser 
 foo=bar
 
-# eof file: cnf/qto.prd.phzs-MacBook-Pro.cnf
+# eof file: cnf/qto.dev.v-host-name.cnf

@@ -5,8 +5,8 @@
   * [2.2. ASSUMPTION AND PREREQUISITES](#22-assumption-and-prerequisites)
   * [2.3. PROPOSED CAPABILITIES](#23-proposed-capabilities)
 * [3. DEMO](#3-demo)
-* [4. MISSION](#4-mission)
-* [5. DOCUMENTATION](#5-documentation)
+* [4. DOCUMENTATION](#4-documentation)
+* [5. MISSION](#5-mission)
   * [5.1. THE INSTALLATIONS DOC](#51-the-installations-doc)
   * [5.2. THE CONCEPTS DOC](#52-the-concepts-doc)
   * [5.3. THE USERSTORIES DOC](#53-the-userstories-doc)
@@ -81,13 +81,13 @@ You can check the following http://ec2-52-213-247-228.eu-west-1.compute.amazonaw
 
     
 
-## 4. MISSION
-Enable transperent collaboration.
+## 4. DOCUMENTATION
+QTO IS about documentation, we do all the doc-fooding on our docs, which are aimed to be as up-to-date to the current release version as possible. Thus you get the following documentation set:
 
     
 
-## 5. DOCUMENTATION
-QTO IS about documentation, we do all the doc-fooding on our docs, which are aimed to be as up-to-date to the current release version as possible. Thus you get the following documentation set:
+## 5. MISSION
+Enable transperent collaboration.
 
     
 
@@ -149,13 +149,14 @@ Fetch the source on your local machine, which will be use to run the container o
 ### 6.2. Run the bootstrap script
 In the qto realm each deployment INSTANCE is "self-aware" of the type of environment it represents -  dev, tst , prd. To bootstrap to the dev environment run the following command:
 
-    bash src/bash/qto/bootstrap-qto-host.sh
+    bash qto/src/bash/qto/bootstrap-qto-host.sh
+    
     # cd to the product instance dir as suggested by the script
+    
 
 ### 6.3. Build the qto image
-This step will take 80% of the time. It is non-interactive, that is the whole image building should succeed at once. This is the v0.6.5 experimental feature, thus should you have problems with it create an issue to the owner of the product instance you fetch the source from ...
+This step will take 80% of the time. It is non-interactive, that is the whole image building should succeed at once. 
 
-    # go to the product instance dir as adived in the end of the bootstrap script … 
     # build the docker image
     clear ; bash src/bash/qto/qto.sh -a build-qto-docker-image
 
@@ -171,6 +172,8 @@ http://localhost:3001/qto/list/release_issues
 
 To verify the view doc ui point your local machine browser to the following uri:
 http://localhost:3001/qto/view/devops_guide_doc
+
+Note that you deployed a development environment type ( aka dev ) instance. Read further in the devops_guide how to setup tst and prd environments as well ...
 
     
 

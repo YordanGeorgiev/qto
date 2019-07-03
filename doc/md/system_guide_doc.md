@@ -28,12 +28,12 @@
     
 
 ### 1.1. Purpose
-The purpose of this guide is to provide description of the existing issue-tracker System and it's architecture
+The purpose of this guide is to provide description of the qto systems and application architecture.
 
     
 
 ### 1.2. Audience
-Any givien instance of the qto should have ONE and only ONE person which is responsible at the end for the funtioning of THIS instance - so think carefully before attempting to take ownership for an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instance. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no service level agreement, nor even promise to help. 
+Architects and System designers of a potential or current system, comprised on deployed and operating qto instances. Developers and devops operators.
 
     
 
@@ -80,7 +80,7 @@ The multi-instance setup refers to the capability of any installed and setup ins
 Figure: 2
 qto multi-instance setup
 ![Figure: 2
-qto multi-instance setup](https://github.com/YordanGeorgiev/qto/blob/v0.6.6/doc/img/system_guide/qto-multi-env-setup.png?raw=true)
+qto multi-instance setup](https://github.com/YordanGeorgiev/qto/blob/v0.6.6/doc/img/system_guide/multi-env-setup.png?raw=true)
 
     
 
