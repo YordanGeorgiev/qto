@@ -75,7 +75,6 @@ doRunActions(){
 				test "$action_name" != $action && continue
 				
 				doLog "INFO start running action :: $action_name":"$function_name"
-				# todo:ysg test "$action_name" == "$action" && $function_name
 				test "$action_name" == "$action" && actions_to_run=$(echo -e "$actions_to_run\n$function_name")
 				doLog "INFO stop  running action :: $action_name":"$function_name"
 
@@ -95,6 +94,7 @@ doRunActions(){
 	done < <(echo "$actions")
 
    while read -r action_to_run ; do 
+	   cd $product_instance_dir
       $action_to_run ;
    done < <(echo $actions_to_run)
    
@@ -204,6 +204,11 @@ doCheckReadyToStart(){
 	command -v zip 2>/dev/null || { echo >&2 "The zip binary is missing ! Aborting ..."; exit 1; }
 	which perl 2>/dev/null || { echo >&2 "The perl binary is missing ! Aborting ..."; exit 1; }
    echo 'ok' ; printf "\n"
+
+   if [[ "$OSTYPE" == "darwin"* ]]; then
+		export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+		export PATH="/usr/local/opt/grep/libexec/gnubin/:$PATH"
+   fi
 }
 
 

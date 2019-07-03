@@ -2,8 +2,6 @@
 # file: src/bash/qto/bootstrap-qto.sh
 
 set -eu -o pipefail # fail on error , debug all lines
-# uncomment the next line if you have bootstraping problems and sent it to me
-# set -eux -o pipefail # fail on error , debug all lines
 
 run_unit='qto'
 run_unit_type='dev'
@@ -21,8 +19,16 @@ mkdir -p "$product_dir" ; cd $_
 # each product instance has name, version, environment type and a single person as the owner
 mv -v $product_dump_dir "$product_instance_dir"; cd $product_instance_dir
 # START -- search and replace recursively 
+
+for env in `echo dev tst prd `; do
+   cp -v "$product_instance_dir/cnf/tpl/qto.$env.p-host-name.cnf" \
+         "$product_instance_dir/cnf/qto.$env."$(hostname -s)".cnf"
+   cp -v "$product_instance_dir/cnf/tpl/qto.$env.v-host-name.cnf" \
+         "$product_instance_dir/cnf/qto.$env."$(hostname -s)".cnf"
+done
+
 export dir=.
-export to_srch="phzs-MacBook-Pro"
+export to_srch="p-host-name"
 export to_repl="$(hostname -s)"
 
 #-- search and replace in file and dir paths excludding the .git dir

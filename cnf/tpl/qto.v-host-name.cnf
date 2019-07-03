@@ -1,7 +1,7 @@
-# file: cnf/qto.host-name.cnf
+# file: cnf/qto.v-host-name.cnf
 [MainSection]
 
-# multiple projects support
+# qto is just a project with multiple projects support
 qto_project = qto
 
 # where the scripts to run are situated
@@ -25,14 +25,14 @@ postgres_db_useradmin_pw   = usrqtoadmin
 # logging confs - set 1 for yes and 0 for now
 LogToFile            = 1
 LogDir               = %ProductInstanceDir%/dat/log
-LogFile              = %LogDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
+LogFile              = %ProductInstanceDir%/%ProductName%.%YYYY%.%MM%.%DD%.log
 PrintConsoleMsgs     = 1
 PrintInfoMsgs        = 1                             
 PrintWarningMsgs     = 1                             
 PrintErrorMsgs       = 1                             
 PrintDebugMsgs       = 1
 PrintTraceMsgs       = 1 
-TimeFormat =         YYYY.MM.DD hh:mm:ss
+TimeFormat           = YYYY.MM.DD hh:mm:ss
 # the default chars separating the time from the txt
 
 LogTimeToTextSeparator = ###
@@ -43,7 +43,7 @@ google_spread_sheet_id = 1p4YwuSB3GtQ0i5ginn4Vc95t09w1WNWJra2yUH1aL0Y
 Emails=yordan.georgiev@gmail.com
 
 # the web host where the qto app layer instance residues 
-web_host=host-name
+web_host=v-host-name
 
 # on which port the mojo should listen
 mojo_morbo_port=3003
@@ -59,4 +59,4 @@ TZ=Europe/Helsinki
 # the last entry is always ignored - this is a bug in the cnf parser 
 foo=bar
 
-# eof file: cnf/qto.prd.host-name.cnf
+# eof file: cnf/qto.prd.v-host-name.cnf

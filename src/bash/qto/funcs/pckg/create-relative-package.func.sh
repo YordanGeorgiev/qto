@@ -7,8 +7,6 @@
 #------------------------------------------------------------------------------
 doCreateRelativePackage(){
 
-   #todo:ysg 
-	cd $product_instance_dir
 	mkdir -p $product_dir/dat/zip
 		test $? -ne 0 && doExit 2 "Failed to create $product_instance_dir/dat/zip !"
 
@@ -59,9 +57,6 @@ doCreateRelativePackage(){
 	# note: | grep -vP "$perl_ignore_file_pattern" | grep -vP '^\s*#'
 
 
-	if [[ "$OSTYPE" == "darwin"* ]]; then
-		PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
-   fi
 
 	# zip MM ops -MM = --must-match
 	# All  input  patterns must match at least one file and all input files found must be readable.

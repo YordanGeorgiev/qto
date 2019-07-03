@@ -26,3 +26,4 @@ src/js/node/js-unit-tests/01-set-url-param/node_modules/**
 tags
 **/*.swp
 **/*.swo
+cnf/*.cnf
