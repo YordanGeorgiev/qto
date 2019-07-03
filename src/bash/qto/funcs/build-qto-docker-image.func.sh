@@ -8,14 +8,13 @@ doBuildQtoDockerImage(){
 
    doLog "DEBUG START doBuildQtoDockerImage"
 
-   set -x
    test -z ${qto_project:-} && \
       source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh" && \
       doParseCnfEnvVars "$product_instance_dir/cnf/$run_unit.$env_type."$(hostname -s)'.cnf'
 
-   # doFullCleanDocker
-   # doRemoveAllDockerContainers 
-   # doRemoveAllDockerImages             # todo:ysg rem !!!
+   doFullCleanDocker
+   doRemoveAllDockerContainers 
+   doRemoveAllDockerImages             # todo:ysg rem !!!
    postgres_db_name="$env_type"'_'"$run_unit"
    cp -v "$product_instance_dir/src/docker/Dockerfile.deploy-$run_unit.$product_version" "$product_instance_dir/Dockerfile"
    # cp -v "$product_instance_dir/src/docker/Dockerfile.deploy-quick-test" "$product_instance_dir/Dockerfile"
@@ -25,7 +24,8 @@ doBuildQtoDockerImage(){
    --build-arg product_instance_dir=/opt/csitea/$run_unit/$environment_name \
    --build-arg postgres_db_name=$postgres_db_name \
    --build-arg TZ=${TZ:-} \
-   -t qto-image:$product_version .
+   --build-arg host_host_name=$(hostname -s) \
+   -t qto-image:$product_version.$env_type .
 
    test $? -ne 0 && doLog "FATAL the docker image building failed !!!"
    rm -v "$product_instance_dir/Dockerfile"

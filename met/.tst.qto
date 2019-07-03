@@ -1,14 +1,16 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
 src/bash/qto/funcs/build-qto-docker-image.func.sh
+src/bash/qto/funcs/remove-all-docker-containers.func.sh
+src/bash/qto/funcs/remove-all-docker-images.func.sh
 src/docker/Dockerfile.deploy-qto.0.6.6
+src/docker/Dockerfile.deploy-quick-test
 src/bash/qto/funcs/run-container.func.sh
 src/bash/qto/funcs/mojo-morbo-start.func.sh
 src/bash/qto/install/docker/install-test.sh
 src/bash/qto/install/docker/docker-entry-point.sh
 src/bash/qto/bootstrap-qto-docker.sh
 src/bash/qto/bootstrap-qto-host.sh
-src/docker/Dockerfile.deploy-quick-test
 src/bash/qto/install/docker/install-postgres.sh
 src/bash/qto/install/docker/provision-os-users.sh
 src/bash/qto/install/docker/install-perl-modules.sh
@@ -16,8 +18,6 @@ src/bash/qto/install/docker/
 src/bash/qto/funcs/run-container.func.sh
 src/bash/qto/funcs/admin/restart-postgres.func.sh
 src/bash/qto/funcs/full-clean-docker.func.sh
-src/bash/qto/funcs/remove-all-docker-images.func.sh
-src/bash/qto/funcs/remove-all-docker-containers.func.sh
 src/bash/qto/tests/build-qto-docker-image.test.sh
 src/sql/pgsql/scripts/admin/grant-permissions.sql
 src/bash/qto/funcs/admin/restart-postgres.func.sh
@@ -884,10 +884,9 @@ cnf/hosts/host-name/home/ysg/.vimrc
 dat/mix
 dat/mix/2019
 dat/mix/2019/2019-07
-dat/mix/2019/2019-07/2019-07-02
-dat/mix/2019/2019-07/2019-07-02/sql
-dat/mix/2019/2019-07/2019-07-02/sql/dev_qto
-dat/mix/2019/2019-07/2019-07-02/sql/dev_qto/dev_qto.20190702_142727.insrt.dmp.sql
-dat/mix/2019/2019-07/2019-07-02/tmp
-dat/mix/2019/2019-07/2019-07-02/xls
-dat/mix/2019/2019-07/2019-07-02/xls/qto.all.20190702_000000.xlsx
+dat/mix/2019/2019-07/2019-07-03
+dat/mix/2019/2019-07/2019-07-03/sql
+dat/mix/2019/2019-07/2019-07-03/sql/dev_qto
+dat/mix/2019/2019-07/2019-07-03/sql/dev_qto/dev_qto.20190703_000032.insrt.dmp.sql
+dat/mix/2019/2019-07/2019-07-03/xls
+dat/mix/2019/2019-07/2019-07-03/xls/qto.all.20190703_000000.xlsx

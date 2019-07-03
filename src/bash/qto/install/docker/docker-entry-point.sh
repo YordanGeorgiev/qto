@@ -10,8 +10,8 @@
 
    sudo sh /etc/init.d/postgresql start &
 
-   test -f "$product_instance_dir/cnf/$run_unit.$env_type.host-name.cnf" && \
-      cp -v "$product_instance_dir/cnf/$run_unit.$env_type.host-name.cnf" \
+   test -f "$product_instance_dir/cnf/$run_unit.$env_type.$host_host_name.cnf" && \
+      cp -v "$product_instance_dir/cnf/$run_unit.$env_type.$host_host_name.cnf" \
             "$product_instance_dir/cnf/$run_unit.$env_type."$(hostname -s)'.cnf'
       
    test -z ${qto_project:-} && \

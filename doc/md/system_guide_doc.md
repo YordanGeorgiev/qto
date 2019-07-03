@@ -76,6 +76,12 @@ The Converters apply usually the business logic for converting the input data fr
 ### 2.2. Multi-instance setup
 The multi-instance setup refers to the capability of any installed and setup instance of the qto application to "know" its version , environment type  - development , testing and production ) and owner.
 
+
+Figure: 2
+qto multi-instance setup
+![Figure: 2
+qto multi-instance setup](https://github.com/YordanGeorgiev/qto/blob/v0.6.6/doc/img/system_guide/qto-multi-env-setup.png?raw=true)
+
     
 
 #### 2.2.1. Multi-environment naming convention

@@ -5,6 +5,8 @@ USER root
 
 ARG product_instance_dir=/opt/csitea/qto/qto.0.6.5.dev.usrqtoadmin
 ENV product_instance_dir $product_instance_dir
+ARG host_host_name
+ENV host_host_name $host_host_name
 
 WORKDIR /opt/
 ADD . $product_instance_dir

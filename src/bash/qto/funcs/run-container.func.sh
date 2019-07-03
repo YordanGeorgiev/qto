@@ -4,9 +4,12 @@
 doRunContainer(){
    doLog "DEBUG START doRunContainer"
 
+   set -x
    test -z ${qto_project:-} && \
       source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh" && \
-      doParseCnfEnvVars "$product_instance_dir/cnf/$run_unit.$env_type."$(hostname -s)'.cnf'
+      doParseCnfEnvVars $product_instance_dir/cnf/$run_unit.$env_type.$host_name.cnf
+   
+   sleep 10
 
    tgt_product_instance_dir='/opt/csitea/'"$run_unit/$environment_name"
    chmod 777 $product_instance_dir/src/bash/qto/install/docker/docker-entry-point.sh
@@ -15,11 +18,12 @@ doRunContainer(){
 
    docker run -d --name $container_name \
       -e product_instance_dir=$tgt_product_instance_dir \
+      -e host_host_name=$(hostname -s) \
       -v $product_instance_dir:$tgt_product_instance_dir \
-      -p 127.0.0.1:${postgres_db_port:-}:$postgres_db_port \
       -p  127.0.0.1:${mojo_morbo_port:-}:$mojo_morbo_port \
-      'qto-image':${product_version:-}
-
+      'qto-image':${product_version:-}.$env_type
+   
+   # -p 127.0.0.1:${postgres_db_port:-}:$postgres_db_port \
 
    printf "\n"
    echo do check which containers are running 
