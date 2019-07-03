@@ -58,27 +58,28 @@ get_function_list () {
 doRunActions(){
 
 	cd $product_instance_dir
+   actions_to_run=''
+
    test -z "${actions+1}" && doPrintUsage && doExit 0 
    daily_backup_dir=$product_instance_dir/dat/mix/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
-	while read -d ' ' action ; do (
+	while read -d ' ' action ; do 
 		doLog "DEBUG action: \"$action\""
 
-		while read -r func_file ; do (
+		while read -r func_file ; do 
          # debug doLog "DEBUG func_file: $func_file"
 
-			while read -r function_name ; do (
+			while read -r function_name ; do 
             doLog "DEBUG function_name: $function_name"
 
 				action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
 				test "$action_name" != $action && continue
 				
 				doLog "INFO start running action :: $action_name":"$function_name"
-				test "$action_name" == "$action" && $function_name
+				# todo:ysg test "$action_name" == "$action" && $function_name
+				test "$action_name" == "$action" && actions_to_run=$(echo -e "$actions_to_run\n$function_name")
 				doLog "INFO stop  running action :: $action_name":"$function_name"
 
-			);
 			done< <(get_function_list "$func_file")
-		); 
 		done < <(find src/bash/qto/funcs -type f -name '*.sh')
 
 				
@@ -90,9 +91,13 @@ doRunActions(){
 		test "$action" == 'to-src'									&& doChangeEnvType 'src'
 		[[ $action == to-ver=* ]]									&& doChangeVersion $action
 		[[ $action == to-app=* ]]									&& doCloneToApp $action
-	);
+
 	done < <(echo "$actions")
 
+   while read -r action_to_run ; do 
+      $action_to_run ;
+   done < <(echo $actions_to_run)
+   
    test -d "$daily_backup_dir" || doBackupPostgresDb
 }
 
