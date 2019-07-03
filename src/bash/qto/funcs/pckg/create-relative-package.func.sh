@@ -59,6 +59,10 @@ doCreateRelativePackage(){
 	# note: | grep -vP "$perl_ignore_file_pattern" | grep -vP '^\s*#'
 
 
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+   fi
+
 	# zip MM ops -MM = --must-match
 	# All  input  patterns must match at least one file and all input files found must be readable.
 	ret=0

@@ -7,6 +7,8 @@ doChangeVersion(){
 
 	tgt_version="$1"
 	shift 1;
+
+
 	prefix='to-ver='
 	tgt_version=${tgt_version#$prefix}
 	tgt_environment_name=$(echo $environment_name | perl -ne "s/$product_version/$tgt_version/g;print")
