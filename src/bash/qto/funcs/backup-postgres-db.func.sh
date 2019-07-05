@@ -17,6 +17,7 @@ doBackupPostgresDb(){
    test -d $backup_dir || mkdir -p $backup_dir
    # Action !!!
    PGPASSWORD="${postgres_db_useradmin_pw:-}" pg_dump -U "${postgres_db_useradmin:-}"  \
+         -h $postgres_db_host -p $postgres_db_port -w \
          --format=plain --column-inserts --data-only $postgres_db_name  \
          > $backup_dir/$backup_fname
 

@@ -28,7 +28,11 @@ doRunIntegrationTests(){
    bash src/bash/qto/qto.sh -a run-pgsql-scripts
 
    last_db_backup_file=$(find  -name $postgres_db_name*.sql | sort -n | tail -n 1)
-   psql -d $postgres_db_name < "$last_db_backup_file"
+   PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -v ON_ERROR_STOP=1 -q -t -X -w \
+      -h $postgres_db_host -p $postgres_db_port -U "${postgres_db_useradmin:-}" \
+      -v postgres_db_name="$postgres_db_name" -f "$last_db_backup_file" -d "$postgres_db_name"
+   ret=$?
+   #test $ret -ne 0 && doExit 1 "the integration tests failed on db restore .."
 
    doLog "INFO generating md docs"
    bash src/bash/qto/qto.sh -a generate-md-docs
@@ -40,12 +44,6 @@ doRunIntegrationTests(){
    test $? -ne 0 && return
 	echo -e "\n\n\n" 
    
-   doLog "INFO re-create the $env_type db"
-   bash src/bash/qto/qto.sh -a run-pgsql-scripts
-
-   last_db_backup_file=$(find  -name $postgres_db_name*.sql | sort -n | tail -n 1)
-   psql -d $postgres_db_name < "$last_db_backup_file"
-
 	doLog "DEBUG STOP  doRunIntegrationTests"
 }
 

@@ -43,7 +43,7 @@ google_spread_sheet_id = 1p4YwuSB3GtQ0i5ginn4Vc95t09w1WNWJra2yUH1aL0Y
 Emails=yordan.georgiev@gmail.com
 
 # the web host where the qto app layer instance residues 
-web_host=v-host-name
+web_host=localhost
 
 # on which port the mojo should listen
 mojo_morbo_port=3002
