@@ -2,7 +2,6 @@
 # file: src/bash/qto/bootstrap-qto.sh
 
 set -eu -o pipefail # fail on error , debug all lines
-set -x
 run_unit_bash_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
 cd $run_unit_bash_dir
 for i in {1..3} ; do cd .. ; done ; export product_instance_dir=`pwd`;

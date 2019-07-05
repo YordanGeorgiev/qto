@@ -12,9 +12,12 @@ doBuildQtoDockerImage(){
       source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh" && \
       doParseCnfEnvVars "$product_instance_dir/cnf/$run_unit.$env_type."$(hostname -s)'.cnf'
 
+   test -f "$product_instance_dir/src/docker/Dockerfile.deploy-$run_unit.$product_version" || \
+      doExit 1 "create the src/docker/Dockerfile.deploy-$run_unit.$product_version"
+
    # doFullCleanDocker
-   doRemoveAllDockerContainers 
-   doRemoveAllDockerImages          
+   doRemoveDockerContainers 
+   doRemoveDockerImages          
    postgres_db_name="$env_type"'_'"$run_unit"
    cp -v "$product_instance_dir/src/docker/Dockerfile.deploy-$run_unit.$product_version" "$product_instance_dir/Dockerfile"
 

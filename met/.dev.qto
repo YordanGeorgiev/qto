@@ -1,7 +1,9 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # -- 
 src/bash/qto/funcs/build-qto-docker-image.func.sh
-src/docker/Dockerfile.deploy-qto.0.6.6
+src/bash/qto/funcs/remove-docker-images.func.sh
+src/bash/qto/funcs/remove-docker-containers.func.sh
+src/docker/Dockerfile.deploy-qto.0.6.7
 src/bash/qto/funcs/run-container.func.sh
 src/bash/qto/funcs/mojo-morbo-start.func.sh
 src/bash/qto/install/docker/install-test.sh
@@ -13,11 +15,8 @@ src/bash/qto/install/docker/install-postgres.sh
 src/bash/qto/install/docker/provision-os-users.sh
 src/bash/qto/install/docker/install-perl-modules.sh
 src/bash/qto/install/docker/
-src/bash/qto/funcs/run-container.func.sh
 src/bash/qto/funcs/admin/restart-postgres.func.sh
 src/bash/qto/funcs/full-clean-docker.func.sh
-src/bash/qto/funcs/remove-all-docker-images.func.sh
-src/bash/qto/funcs/remove-all-docker-containers.func.sh
 src/bash/qto/tests/build-qto-docker-image.test.sh
 src/sql/pgsql/scripts/admin/grant-permissions.sql
 src/bash/qto/funcs/admin/restart-postgres.func.sh
@@ -233,13 +232,6 @@ cnf/tpl/qto.prd.v-host-name.cnf
 cnf/tpl/qto.p-host-name.cnf
 cnf/tpl/qto.v-host-name.cnf
 # ---
-cnf/qto.dev.host-name.cnf
-cnf/qto.tst.host-name.cnf
-cnf/qto.prd.host-name.cnf
-cnf/qto.host-name.cnf
-cnf/qto.dev.phzs-MacBook-Pro.cnf
-cnf/qto.tst.phzs-MacBook-Pro.cnf
-cnf/qto.prd.phzs-MacBook-Pro.cnf
 cnf/bash/.profile_opts.host-name
 # ---
 src/bash/lib/.bash_funcs.host-name
@@ -643,10 +635,11 @@ doc/md
 doc/md/concepts_doc.md
 doc/md/devops_guide_doc.md
 doc/md/enduser_guide_doc
+doc/md/features_doc.md
 doc/md/installations_doc.md
 doc/md/requirements_doc.md
-doc/md/system_guide_doc.md
 doc/md/userstories_doc.md
+doc/md/system_guide_doc.md
 # --
 doc/txt/qto/funcs/generate-sql.func.txt
 doc/txt/qto/helps/generate-sql.help.txt
@@ -899,5 +892,4 @@ dat/mix/2019/2019-07/2019-07-04/sql/dev_qto/dev_qto.20190704_210416.insrt.dmp.sq
 dat/mix/2019/2019-07/2019-07-04/tmp
 dat/mix/2019/2019-07/2019-07-04/xls
 dat/mix/2019/2019-07/2019-07-04/xls/qto.all.20190704_000000.xlsx
-dat/mix/2019/2019-07/2019-07-04/xls/~$qto.all.20190704_000000.xlsx
 doc/gliffy//multi-env-setup.gliffy
