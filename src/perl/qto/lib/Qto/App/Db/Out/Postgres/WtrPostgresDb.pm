@@ -760,7 +760,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $hs_headers       = {} ; 
       my $update_time      = q{} ; # must have the default value now() in db
       my $dmhsr            = {} ; 
-
+      $db = $objModel->get('postgres_db_name');
       my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel , $self ) ; 
       my $objRdrDb         = $objRdrDbsFactory->doSpawn("$rdbms_type");
       
@@ -773,7 +773,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
          $objLogger->doLogDebugMsg ( "doUpsertTables table: $table" );
          # load ONLY the tables defined to load
-         next unless grep( /^$table$/, @tables ) ; 
+         next unless grep( /^$table$/, @tables )  ; 
 
          if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
             $ret = 400 ; 

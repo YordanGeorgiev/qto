@@ -18,6 +18,7 @@ doParseCnfEnvVars <<path-to-your-qto-projects-cnf-files>>/<<qto-cnf-file>>
 for example:
 doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/qto/ysg-issues.dev.host-name.cnf'  ; 
 croak $m unless ( defined ( $ENV{ "qto_project" } )) ; 
+$ENV{ 'load_model' } = 'upsert' ; 
 
 my $tn                     = '' ; # the test number 
 my $cmd                    = '' ; # the cmd to run 
@@ -40,7 +41,7 @@ $ENV{'rdbms_type'} = 'postgres' ;
 $tn      = 'test-01' ; 
 $m       = "$tn:
    test the xls-to-db action - the script should exit with 0" ; 
-$cmd = "$ProductInstanceDir/src/perl/qto/script/qto.pl --do xls-to-db -t daily_issues" ; 
+$cmd = "$ProductInstanceDir/src/perl/qto/script/qto.pl --do xls-to-db --tables daily_issues" ; 
 
 print "running :\n $cmd \n" ; # and Action !!!
 # $cmd_out = `$cmd 2>&1 1>/dev/null` ; 
@@ -56,7 +57,7 @@ my $exp_file               = "$out_dir/daily_issues.json" ;
 unlink $exp_file if ( -f $exp_file ) ; 
 
 $cmd = 
-   "$ProductInstanceDir/src/perl/qto/script/qto.pl --do db-to-json -t daily_issues" ; 
+   "$ProductInstanceDir/src/perl/qto/script/qto.pl --do db-to-json --tables daily_issues" ; 
 $tn      = 'test-02' ; 
 $m       = "$tn:
    test the db-to-json action - the script should exit with 0" ; 

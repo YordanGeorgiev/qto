@@ -18,7 +18,7 @@ RUN echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /root/.bashrc
 ARG TZ
 ENV TZ $TZ
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone 
-RUN apt-get update && apt-get install -y wget curl sudo perl zip unzip gnupg2 gnupg1 git bash
+RUN apt-get update && apt-get install -y wget curl sudo perl zip unzip gnupg2 gnupg1 git bash jq
 
 WORKDIR /opt/
 ADD . $product_instance_dir

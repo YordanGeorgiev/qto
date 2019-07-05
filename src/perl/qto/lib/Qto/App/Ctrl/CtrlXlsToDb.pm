@@ -112,6 +112,7 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
       # print " STOP before \n" ; 
 
       if ( $load_model eq 'upsert' ) {
+         $objModel->set('postgres_db_name',$ENV{'postgres_db_name'}) ;
          ( $ret , $msg  )        = $objWtrDb->doUpsertTables( \$objModel , \@tables) ; 
          
          p ( $objModel->get('hsr3') ) if $module_trace == 1 ; 

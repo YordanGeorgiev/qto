@@ -583,12 +583,10 @@ src/bash/qto/funcs/dev/change-version.func.sh
 src/bash/qto/helps/change-version.help.sh
 src/bash/qto/specs/change-version.spec.sh
 #---
-doc/txt/qto/specs/change-env-type.spec.txt
+src/bash/qto/funcs/change-env-type.func.sh
 doc/txt/qto/helps/change-env-type.help.txt
 doc/txt/qto/tests/change-env-type.test.txt
-src/bash/qto/specs/change-env-type.spec.sh
 src/bash/qto/helps/change-env-type.help.sh
-src/bash/qto/funcs/change-env-type.func.sh
 src/bash/qto/tests/change-env-type.test.sh
 #---
 doc/txt/qto/specs/remove-action-files.spec.txt
@@ -888,8 +886,8 @@ dat/mix
 dat/mix/2019
 dat/mix/2019/2019-07/2019-07-04/sql
 dat/mix/2019/2019-07/2019-07-04/sql/dev_qto
-dat/mix/2019/2019-07/2019-07-04/sql/dev_qto/dev_qto.20190704_210416.insrt.dmp.sql
 dat/mix/2019/2019-07/2019-07-04/tmp
 dat/mix/2019/2019-07/2019-07-04/xls
-dat/mix/2019/2019-07/2019-07-04/xls/qto.all.20190704_000000.xlsx
+dat/mix/2019/2019-07/2019-07-05/xls/qto.all.20190705_000000.xlsx
 doc/gliffy//multi-env-setup.gliffy
+dat/mix/2019/2019-07/2019-07-05/sql/dev_qto/dev_qto.20190705_150423.insrt.dmp.sql
