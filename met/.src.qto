@@ -1,4 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+#
+src/perl/qto/t/lib/Qto/Controller/TestLogon.pl
+src/perl/qto/lib/Qto/Controller/Logon.pm
 # -- 
 src/bash/qto/funcs/build-qto-docker-image.func.sh
 src/bash/qto/funcs/remove-docker-images.func.sh
@@ -755,6 +758,7 @@ src/perl/qto/public/dat/tmp/xls/1
 src/perl/qto/templates/controls/site/app_name_tooltip.html.ep
 # ---
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/Logon/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrParadoxMd/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HLSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WebSocketPoc/autosplit.ix
