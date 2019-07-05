@@ -36,7 +36,6 @@ use warnings 'deprecated' ;
 while read -r f ; do sudo perl -pi -e 's/'"$to_srch"'/'"$to_repl"'/g' $f ; \
    done < <(find /usr/local -name OAuth2.pm)
 
-
 echo "DO ALWAYS ! GO TO YOUR product_instance_dir by while working on a qto instance !!!"
 echo "cd $product_instance_dir"
 cd $product_instance_dir
@@ -47,6 +46,8 @@ cp -v "$product_instance_dir/cnf/$run_unit.$env_type.$host_host_name.cnf" \
       "$product_instance_dir/cnf/$run_unit.$env_type."$(hostname -s)".cnf"
 
 doParseCnfEnvVars "$product_instance_dir/cnf/$run_unit.$env_type."$(hostname -s)".cnf"
+echo "doParseCnfEnvVars $product_instance_dir/cnf/$run_unit.$env_type.$(hostname -s).cnf" \
+   >> /home/usrqtoadmin/.bashrc
 
 bash $product_instance_dir/src/bash/qto/qto.sh -a restart-postgres
 bash $product_instance_dir/src/bash/qto/qto.sh -a run-pgsql-scripts

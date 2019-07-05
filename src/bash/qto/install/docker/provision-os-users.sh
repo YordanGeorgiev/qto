@@ -15,6 +15,7 @@ sudo cat /etc/passwd | grep --color "usrqtoadmin"
 echo "usrqtoadmin ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /home/usrqtoadmin/.bashrc
 cat lib/bash/funcs/parse-cnf-env-vars.sh >> /home/usrqtoadmin/.bashrc
+
 cat $(find cnf -name .vimrc|head -n 1) > /home/usrqtoadmin/.vimrc
 mkdir -p /home/usrqtoadmin/opt
 
