@@ -225,6 +225,12 @@ sub doSetRoutes {
      controller   => 'Search'
    , action       => 'doSearchItems'
    );
+   
+   # http://host-name:3001/qto/query?for=<<global-txt-srch>>
+   $r->post('/:db/logon')->to(
+     controller   => 'Logon'
+   , action       => 'doLogonUser'
+   );
 
    # http://host-name:3001/qto/query?for=<<global-txt-srch>>
    $r->get('/:db/query')->to(
