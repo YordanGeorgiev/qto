@@ -442,11 +442,7 @@ src/sql/pgsql/qto/35.create-table-release_issues.sql
 src/sql/pgsql/qto/36.create-table-enduser_issues.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/91.create-table-test_empty_table.sql
-<<<<<<< HEAD
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.wip
-=======
-src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.sql
->>>>>>> 1154159e... qto-190705172236 separate the OS binary dependencies from the postgres ones ..
 src/sql/pgsql/qto/93.create-table-benchmarks.sql
 src/sql/pgsql/qto/94.create-table-test_item.sql
 src/sql/pgsql/qto/95.01.create-table-test_hierarchy_table.sql
@@ -711,6 +707,7 @@ doc/dot/readme/what-is-it-system.dot
 doc/dot/devops/shell-action-control-flow-diagram.dot
 doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
+doc/img/system_guide/multi-env-setup.png
 # --- the application data
 # ---
 src/bash/qto/funcs/db-to-json.func.sh

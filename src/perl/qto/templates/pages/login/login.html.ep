@@ -23,5 +23,6 @@
 
    <script id="all_js_scripts">
       document.getElementById("email").focus();
+      document.getElementById("email").select();
    </script>
 % end
