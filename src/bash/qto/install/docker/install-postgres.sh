@@ -17,11 +17,6 @@ apt-get clean && apt-get update && apt-get install -f -y postgresql-server-dev-1
 ## ensure the postresql starts on boot 
 sudo update-rc.d postgresql enable
 
-# add the required binaries
-apt-get clean && apt-get update && apt-get install -y perl net-tools exuberant-ctags mutt curl wget libwww-curl-perl libtest-www-selenium-perl libdbd-pgsql libxml-atom-perl git vim libxml-atom-perl tar gzip graphviz python-selenium chromium-chromedriver python-selenium python-setuptools python-dev build-essential gpgsm nodejs lsof libssl-dev 
-apt-get clean && apt-get update
-
-
 mkdir -p /etc/postgresql/11/main/
 mkdir -p /var/lib/postgresql/11/main
 

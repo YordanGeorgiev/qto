@@ -32,7 +32,7 @@ sub doSelectItems {
    my $http_method      = 'GET' ;  
    my $http_code        = 200 ; 
    my $ret              = 0;
-   my $dat              = '' ; 
+   my $dat              = undef ; 
    my $msg              = 'unknown error during Select item';
    my $hsr2             = {};
    my $met              = {}; # the meta-data of the this item
@@ -63,6 +63,8 @@ sub doSelectItems {
       $http_code = $ret ; 
    } elsif ( $ret == 404 or $ret == 204 ) {
       $http_code = $ret ; 
+      $dat = {} ;
+      $cnt = 0 ; 
    } elsif ( $ret == 0 )  {
       $cnt = 0 ; 
       $http_code = 200 ; 

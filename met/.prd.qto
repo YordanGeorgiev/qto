@@ -11,6 +11,7 @@ src/bash/qto/install/docker/docker-entry-point.sh
 src/bash/qto/bootstrap-qto-docker.sh
 src/bash/qto/bootstrap-qto-host.sh
 src/docker/Dockerfile.deploy-quick-test
+src/bash/qto/install/docker/install-admin-utils.sh
 src/bash/qto/install/docker/install-postgres.sh
 src/bash/qto/install/docker/provision-os-users.sh
 src/bash/qto/install/docker/install-perl-modules.sh
@@ -420,7 +421,8 @@ src/sql/pgsql/qto/34.create-table-app_user.sql
 src/sql/pgsql/qto/35.create-table-release_issues.sql
 src/sql/pgsql/qto/36.create-table-enduser_issues.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
-src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.sql
+src/sql/pgsql/qto/91.create-table-test_empty_table.sql
+src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.wip
 src/sql/pgsql/qto/93.create-table-benchmarks.sql
 src/sql/pgsql/qto/94.create-table-test_item.sql
 src/sql/pgsql/qto/95.01.create-table-test_hierarchy_table.sql
@@ -667,9 +669,9 @@ doc/txt/qto/tests/mojo-morbo-start.test.txt
 doc/txt/qto/helps/mojo-morbo-start.help.txt
 doc/txt/qto/funcs/mojo-morbo-start.func.txt
 # ---
+src/bash/qto/funcs/mojo-morbo-stop.func.sh
 src/bash/qto/tests/mojo-morbo-stop.test.sh
 src/bash/qto/helps/mojo-morbo-stop.help.sh
-src/bash/qto/funcs/mojo-morbo-stop.func.sh
 doc/txt/qto/tests/mojo-morbo-stop.test.txt
 doc/txt/qto/helps/mojo-morbo-stop.help.txt
 doc/txt/qto/funcs/mojo-morbo-stop.func.txt
