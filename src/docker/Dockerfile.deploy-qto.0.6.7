@@ -25,6 +25,8 @@ ADD . $product_instance_dir
 WORKDIR $product_instance_dir
 #   ^^^ todo:ysg replace with the git clone 
 
+RUN chmod 755 src/bash/qto/install/docker/install-admin-utils.sh && \
+    bash src/bash/qto/install/docker/install-admin-utils.sh
 RUN chmod 755 src/bash/qto/install/docker/provision-os-users.sh && \
     bash src/bash/qto/install/docker/provision-os-users.sh
 RUN chmod 755 src/bash/qto/install/docker/install-postgres.sh && \

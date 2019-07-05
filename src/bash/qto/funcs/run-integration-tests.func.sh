@@ -32,7 +32,7 @@ doRunIntegrationTests(){
       -h $postgres_db_host -p $postgres_db_port -U "${postgres_db_useradmin:-}" \
       -v postgres_db_name="$postgres_db_name" -f "$last_db_backup_file" -d "$postgres_db_name"
    ret=$?
-   #test $ret -ne 0 && doExit 1 "the integration tests failed on db restore .."
+   test $ret -ne 0 && doExit 1 "the integration tests failed on db restore .."
 
    doLog "INFO generating md docs"
    bash src/bash/qto/qto.sh -a generate-md-docs
