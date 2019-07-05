@@ -1,15 +1,12 @@
 # src/bash/qto/funcs/run-container.func.sh
 
-# v0.6.6
+# v0.6.7
 doRunContainer(){
    doLog "DEBUG START doRunContainer"
 
-   set -x
    test -z ${qto_project:-} && \
       source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh" && \
       doParseCnfEnvVars $product_instance_dir/cnf/$run_unit.$env_type.$host_name.cnf
-   
-   sleep 10
 
    tgt_product_instance_dir='/opt/csitea/'"$run_unit/$environment_name"
    chmod 777 $product_instance_dir/src/bash/qto/install/docker/docker-entry-point.sh
