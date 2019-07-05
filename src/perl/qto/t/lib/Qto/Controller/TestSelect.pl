@@ -40,8 +40,6 @@ for my $row ( @$list ) {
    my $url = '' ; 
    my $tm = '' ; # the test msg 
 
-
-
    # feature-guid: 1d270227-0959-488f-83d3-0397221385a0
 	$t->get_ok('/' . $db_name . '/select/' . $table_name)
 		->status_is(200) 

@@ -13,6 +13,7 @@ our $rdbms_type      = 'postgres' ;
 use Qto::App::Mdl::Model ; 
 use Qto::App::Db::In::RdrDbsFactory ; 
 use Qto::App::Cnvr::CnrHsr2ToHsr2 ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 
 sub doReloadProjDbMeta {
@@ -21,6 +22,7 @@ sub doReloadProjDbMeta {
    my $db                  = shift ;
    my $item                = shift || '' ; 
 
+   $db = toEnvName ( $db ) ;
    $appConfig		 		   = $self->app->get('AppConfig');
 
    # reload the columns meta data ONLY after the meta_columns has been requested
@@ -50,12 +52,12 @@ sub isAuthorized {
 
    my $self                = shift ;
    my $db                  = shift ;
-
+   $db = toEnvName ( $db ) ;
    return 1 if $ENV{'QTO_ONGOING_TEST'}; # no authentication when testing if desired so !!!
 
    $appConfig		 		   = $self->app->get('AppConfig');
 
-   unless ( defined ( $self->session( 'app.user')) ) {
+   unless ( defined ( $self->session( 'app.' . $db . '.user')) ) {
       my $url = '/' . $db . '/login' ;
       $self->session( 'app.msg' => 'please login first into ' . $db);
       $self->session( 'app.url' => $self->req->url->to_abs );

@@ -2,7 +2,7 @@ package Qto::Controller::Login ;
 use strict ; use warnings ; 
 
 use Mojo::Base 'Mojolicious::Controller';
-use Mojolicious::Sessions; 
+use Mojolicious::Sessions ;
 use Data::Printer ; 
 use Qto::App::Utils::Timer ; 
 use Qto::App::IO::In::CnrPostPrms ; 
@@ -68,7 +68,7 @@ sub doLoginUser {
            $msg = "wrong password for $email" ;
          } else {
            $objLogger->doLogInfoMsg ( "login ok for $email") ; 
-           $self->session( 'app.user' => $email);
+           $self->session( 'app.' . $db . '.user' => $email);
            $self->redirect_to( $redirect_url);
            return ;
          }
@@ -88,18 +88,17 @@ sub doShowLoginForm {
    my $db               = $self->stash('db');
    my $msg              = undef ; 
    my $msg_color        = 'grey' ; 
-   $db = toPlainName( $db ) ; 
    
-
+   $db                  = toEnvName ( $db , $appConfig) ;
    $appConfig		 		= $self->app->get('AppConfig');
 
-   my $redirect_url = $self->session( 'app.url' ) if defined $self->session( 'app.url' ) ; 
-   $self->session(expires => 1);
-   my $sessions = Mojolicious::Sessions->new;
-   $sessions->cookie_name('qto');
-   $sessions->default_expiration(86400);
-   my $instance_domain = $appConfig->{ 'web_host' } . ':' . $appConfig->{ 'mojo_hypnotoad_port' } ;
-   $sessions  = $sessions->cookie_domain( $instance_domain);
+   my $redirect_url = $self->session( 'app.' . $db . '.url' ) if defined $self->session( 'app.' . $db . '.url' ) ; 
+   #$self->session(expires => 1);
+   my $session = Mojolicious::Sessions->new ;
+   $session->cookie_name('qto.' . $db);
+   $session->default_expiration(86400);
+   my $instance_domain = $appConfig->{ 'web_host' } . ':' . $appConfig->{ 'mojo_hypnotoad_port' } . '.' . $db ;
+   $session  = $session->cookie_domain( $instance_domain);
 
    $self->doRenderPageTemplate(200,$msg,$msg_color,$db,$redirect_url) ;
    return
@@ -118,7 +117,7 @@ sub doRenderPageTemplate {
    my $notice           = '' ;
 
    $msg = "$db login" unless $msg ; 
-   $msg = $self->session( 'app.msg' ) if defined $self->session( 'app.msg' ) ;
+   $msg = $self->session( 'app.' , $db . '.msg' ) if defined $self->session( 'app.' . $db . '.msg' ) ;
 
    $self->res->code($http_code) ; 
 

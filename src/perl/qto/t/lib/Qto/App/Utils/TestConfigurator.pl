@@ -23,7 +23,7 @@ my $objInitiator     = {} ;
 my $objConfigurator  = {} ; 
 my $appConfig        = {} ; 
 my $ConfFile         = {} ; 
-$objInitiator 		   = 'Qto::App::Utils::Initiator'->new(4);
+$objInitiator 		   = 'Qto::App::Utils::Initiator'->new(0);
 $appConfig           = $objInitiator->get('AppConfig');
 
   $objConfigurator

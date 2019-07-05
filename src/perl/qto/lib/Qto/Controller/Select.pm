@@ -58,7 +58,7 @@ sub doSelectItems {
 
    $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb            = $objRdrDbsFactory->doSpawn ( $rdbms_type );
-   my $caller_email     = $self->session( 'app.user' );
+   my $caller_email     = $self->session( 'app.' . $db . '.user' );
    ($ret, $msg, $hsr2)  = $objRdrDb->doSelect($db, $item,$caller_email); # doSelect
 
    if ( $ret != 0 ) {

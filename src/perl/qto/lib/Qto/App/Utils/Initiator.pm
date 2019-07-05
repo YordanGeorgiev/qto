@@ -65,7 +65,8 @@ package Qto::App::Utils::Initiator ;
 		my $msg  = ();
 		my $levels_up = 9 + $rel_levels ; 
 		my $product_base_dir = '' ; 
-		my @DirParts = @{doGetDirParts($levels_up)};
+		my @DirParts = ();
+		@DirParts = @{doGetDirParts($levels_up)};
       $product_base_dir = join( '/', @DirParts );
 		#untainting ...
 		$ProductBaseDir 						= $product_base_dir ; 
@@ -75,10 +76,8 @@ package Qto::App::Utils::Initiator ;
 		$appConfig->{'ProductBaseDir'} 	= $ProductBaseDir ; 
 		$self->{'AppConfig'} 				= $appConfig; 
 
-		print "ProductBaseDir: $ProductBaseDir \n" ; 
 		return $ProductBaseDir;
 	}
-	#eof sub doResolveMyProductBaseDir
 	
 
 	#
@@ -93,18 +92,17 @@ package Qto::App::Utils::Initiator ;
 
 		$my_absolute_path =~ m/^(.*)(\\|\/)(.*)/;
 		$my_absolute_path = $1;
-
+      
 		$my_absolute_path =~ tr|\\|/| if ( $^O eq 'MSWin32' );
 		my @DirParts = split( '/' , $my_absolute_path );
 		for ( my $count = 0; $count < $levels_up ; $count++ ){ 
 			pop @DirParts; 
-			#debug rint "ok \@DirParts : @DirParts \n" ; 
 		}
 		
 		return \@DirParts ; 
 	}
-	#eof sub doResolveMyProductBaseDir
-	#
+	
+   #
 	# ---------------------------------------------------------
 	# the product version dir is the dir where this product 
 	# instance is situated
@@ -121,7 +119,6 @@ package Qto::App::Utils::Initiator ;
 		$appConfig->{'ProductDir'} 	= $ProductDir ; 
 		$self->{'AppConfig'} 				= $appConfig; 
       
-      print ( "ProductDir : $ProductDir \n ") ; 
 		return $ProductDir;
 	}
 	#eof sub doResolveMyProductDir
@@ -148,7 +145,6 @@ package Qto::App::Utils::Initiator ;
 		$appConfig->{'ProductInstanceDir'} 	= $ProductInstanceDir ; 
 		$self->{'AppConfig'} 				   = $appConfig; 
 
-      print "ProductInstanceDir: $ProductInstanceDir \n" ; 
 		return $ProductInstanceDir;
 	}
 	#eof sub doResolveMyProductInstanceDir
@@ -172,7 +168,6 @@ package Qto::App::Utils::Initiator ;
 		$self->{ 'ProductInstanceEnvironment' } 		= $ProductInstanceEnvironment ; 
 		$self->{'AppConfig'} 				= $appConfig; 
 
-      print "ProductInstanceEnvironment: $ProductInstanceEnvironment \n" ; 
 		return $ProductInstanceEnvironment;
 	}
 	#eof sub doResolveMyProductInstanceEnvironment
@@ -291,11 +286,10 @@ package Qto::App::Utils::Initiator ;
 
 		$HostName = hostname ; 
 		$self->set ( 'HostName' , $HostName );
-		$appConfig->{ 'HostName' }	= $HostName ; 
+		$appConfig->{ 'HostName' }	      = $HostName ; 
 		$self->{'AppConfig'} 				= $appConfig; 
 		return $HostName;
 	}
-	#eof sub doResolveMyHostName
 
 
 	#
@@ -330,7 +324,6 @@ package Qto::App::Utils::Initiator ;
 		 
 		return $ConfFile;
 	}
-	#eof sub doResolveMyConfFile
 
 
 =head2 new
@@ -364,7 +357,6 @@ package Qto::App::Utils::Initiator ;
 		$HostName 					      = $self->doResolveMyHostName();
 		$ConfFile 					      = $self->doResolveMyConfFile();
 
-		print $self->dumpFields();
 
 		return $self;
 	}  
@@ -378,14 +370,12 @@ package Qto::App::Utils::Initiator ;
 	# cleans potentially suspicious dirs and files for the perl -T call
 	# -----------------------------------------------------------------------------
 	sub untaint {
-		
+	   my $self          = shift ; 	
+		my $file 			= shift || croak 'no file passed !!!' ;
 
 		# Don't pollute caller's value.
   		local $@;   
 
-		my $self 		= shift ; 
-		my $file			= '' ; 
-		$file 			= shift ; 
 		
 		# it just does not work under Windows ... 
 		return $file if ( $^O eq 'MSWin32' ) ; 
@@ -407,7 +397,6 @@ package Qto::App::Utils::Initiator ;
 		}
 		
 	}
-	#eof sub untaint
 	
 
 	# -----------------------------------------------------------------------------
@@ -417,7 +406,8 @@ package Qto::App::Utils::Initiator ;
 	sub is_tainted {
 		my $self = shift ; 
   		local $@;   # Don't pollute caller's value.
-		return ! eval { eval("#" . substr(join("", @_), 0, 0)); 1 };
+      my @params = @_ || ();
+		return ! eval { eval("#" . substr(join("", @params), 0, 0)); 1 };
 	}
 
 
