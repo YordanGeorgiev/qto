@@ -613,11 +613,11 @@ if you don't export anything, such as for a purely object-oriented module.
 			};
 
 			if ( $@ ) {
-				if (undef)   { $msg 			= "[INFO ] No error. Proceed " ; }
+				if (undef)      { $msg 			= "[INFO ] No error. Proceed " ; }
 				elsif ('open')  { $error_msg 	= "[FATAL] failed to open the dir: $dir_to_create" ; }
 				elsif (':io')   { $error_msg 	= "[FATAL] Non-open, IO error for the dir: $dir_to_create " ; }
 				elsif (':all')  { $error_msg 	= "[FATAL] All other autodie errors for the dir: $dir_to_create " ; }
-		  		default        { $msg 			= "[INFO ] No error at all" ; }
+		  		default         { $msg 			= "[INFO ] No error at all" ; }
 			}
 			if ( $error_msg ) {
 				my $solution_msg = " check the permissions of the dir to create: $dir_to_create " ; 
