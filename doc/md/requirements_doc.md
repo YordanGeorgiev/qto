@@ -290,7 +290,11 @@ A well operated instance of the qto application should have security correspondi
     
 
 ### 9.1. Authentication
-The Users should be authenticated by means of the most simplest OAauth2.0 authentication flow: 
+There should be the following 4 modes of authentication: 
+ - None - the app is open to anyone ( must be deprecated ) 
+ - Basic Auth - the application uses basic http authentication via .httppasswd files ( should be deprecated ) 
+ - Basic Native Auth - the application matches the passwords via blowfish encryption and stores the authentication details into the session of default of 10h
+ - Web Tokens Auth - The Users should be authenticated by means of the most simplest OAauth2.0 authentication flow: 
 https://tools.ietf.org/html/rfc6749#section-5.1
 
     
