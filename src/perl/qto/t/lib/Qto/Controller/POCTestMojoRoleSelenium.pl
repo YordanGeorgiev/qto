@@ -47,7 +47,7 @@ $t->element_is_displayed("div");
 my $dom = Mojo::DOM->new($t->ua->get($url)->wait_for(1)->result->body) ; 
 #p $dom->find('div')->join("\nSTOP  div \n\nSTART div \n")->say ;
 
-my $tm = 'the view->test_hierarchy_table page should containt 4 scripts elements' ; 
+$tm = 'the view->test_hierarchy_table page should containt 4 scripts elements' ; 
 ok ( @{$dom->find('script')->to_array} == 4 , $tm );
 
 foreach my $e ( @{$dom->find('h3')} ) { p $e->to_string ; p $e->content ; p $e->text ;} ; 

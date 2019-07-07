@@ -8,13 +8,14 @@ our $ModuleDebug = 0 ;
 use AutoLoader;
 
 use Data::Printer ; 
+use JSON;
 
 use parent qw(Qto::Controller::BaseController);
 
 use Qto::App::Db::In::RdrDbsFactory;
 use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
-use Qto::App::IO::In::CnrUrlPrms ; 
+use Qto::App::IO::In::CnrPostPrms ; 
 
 my $module_trace    = 0 ;
 our $appConfig      = {};
@@ -39,31 +40,57 @@ sub doLogonUser {
    my $http_code        = 400 ;
    my $rows_count       = 0 ; 
    my $msr2             = {}  ; 
-
+   my $dat              = {}  ; 
+   
+   $appConfig		 		= $self->app->get('AppConfig');
 	#print STDOUT "Logon.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
+   my $post_body_data   = decode_json($self->req->body) ; 
+   my $objModel      = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
    $objModel->set('postgres_db_name' , $db ) ; 
 
-   $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-	$objRdrDb = $objRdrDbsFactory->doSpawn("$rdbms_type");
-   ($ret, $msg , $hsr2 ) = $objRdrDb->doNativeLogonAuth(\$objModel );
+   my $objCnrPostPrms = 
+      'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel );
+   ( $ret , $msg ) = $objCnrPostPrms->doSetLogonUrlParams('Logon' , $post_body_data);
 
-   $ret = 0 ; #todo:ysg
+
+   if ( $ret != 0 ) {
+      $self->doRender(400);
+   } 
+
+   #p $post_body_data ; 
+   #$objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
+	#$objRdrDb = $objRdrDbsFactory->doSpawn("$rdbms_type");
+   #($ret, $msg , $hsr2 ) = $objRdrDb->doNativeLogonAuth(\$objModel );
+
    if ( $ret == 0 ) {
       my $list = ();
-      my $objCnrHsr2ToArray = 
-         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
-      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 , '>', 'relevancy') ;
+      #my $objCnrHsr2ToArray = 
+      #   'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
+      #( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 , '>', 'relevancy') ;
+      $self->doRender(200);
+   
+     #$self->SUPER::doRenderJSON(200,$msg,'POST',$msr2,$rows_count,());
+   } 
+   #elsif ( $ret == 204 ) {
+   #   $self->SUPER::doRenderJSON(204,$msg,'POST','','0','');
+   #} else {
+   #   $self->SUPER::doRenderJSON(400,$msg,'POST','','0','');
+   #}
 
-      $self->SUPER::doRenderJSON(200,$msg,'GET',$msr2,$rows_count,$list);
-   } elsif ( $ret == 204 ) {
-      $self->SUPER::doRenderJSON(204,$msg,'GET','','0','');
-   } else {
-      $self->SUPER::doRenderJSON(400,$msg,'GET','','0','');
-   }
 }
 
+sub doRender {
+   my $self = shift ; 
+   my $http_code = shift ; 
+
+   $self->res->headers->content_type('application/json; charset=utf-8');
+   $self->res->code($http_code);
+   $self->render( 'json' =>  { 
+        'ret'   => $http_code
+   });
+
+}
 
 1;
 

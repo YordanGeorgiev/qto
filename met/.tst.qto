@@ -143,6 +143,8 @@ src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/qto/lib/Qto/App/Db/In/Postgres/MojoPgWrapper.pm
 src/perl/qto/lib/Qto/App/UI/WtrUIFactory.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
+src/perl/qto/lib/Qto/App/IO/In/CnrEncrypter.pm
+src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
 src/perl/qto/lib/Qto/App/IO/WtrExportFactory.pm
 src/perl/qto/lib/Qto/App/IO/WtrMdFactory.pm
 src/perl/qto/lib/Qto/App/IO/Out/WtrExporterXls.pm
@@ -758,7 +760,9 @@ src/perl/qto/public/dat/tmp/xls/1
 src/perl/qto/templates/controls/site/app_name_tooltip.html.ep
 # ---
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
+src/perl/qto/lib/auto/Qto/App/IO/In/CnrEncrypter/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Logon/autosplit.ix
+src/perl/qto/lib/auto/Qto/App/IO/In/CnrPostPrms/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrParadoxMd/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HLSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WebSocketPoc/autosplit.ix

@@ -18,7 +18,7 @@ package Qto::App::IO::In::CnrUrlPrms ;
    use Scalar::Util qw /looks_like_number/ ; 
    use Data::Printer ; 
    use Qto::App::Mdl::Model ; 
-	use Authen::Passphrase::BlowfishCrypt ; 
+   use Qto::App::IO::In::CnrEncrypter ; 
 
    
    use parent 'Qto::App::Utils::OO::SetGetable' ; 
@@ -76,9 +76,11 @@ sub doValidateAndSetUpdate {
 
    my $col_name      = $perl_hash->{'attribute'} ; 
    my $col_value     = $perl_hash->{'cnt'} ; 
-   my @tables        = ( 'app_user' , 'test_update_table');
+   my @tables        = ( 'users' , 'test_update_table');
+
    if ( grep ( /$item/, @tables ) == 1 ) {
-	   $col_value     = $self->make_crypto_hash($col_value ) if $col_name eq 'password' ;
+      my $objCnrEncrypter = 'Qto::App::IO::In::CnrEncrypter'->new();
+	   $col_value     = $objCnrEncrypter->make_crypto_hash($col_value ) if $col_name eq 'password' ;
    }
 
 
@@ -495,15 +497,6 @@ sub doSetView {
 		return $self;
 	}  
 	
-   sub make_crypto_hash {
-		my $self = shift ; 
-		my ($passphrase) = @_;
-		return 'Authen::Passphrase::BlowfishCrypt'->new(
-			  'cost'        => 8,
-			  'salt_random' => 1,
-			  'passphrase'  => $passphrase,
-		 )->as_rfc2307;
-   }
 
 1;
 

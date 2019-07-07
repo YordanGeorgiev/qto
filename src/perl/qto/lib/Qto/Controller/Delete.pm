@@ -48,7 +48,8 @@ sub doDeleteItemById {
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
    $objCnrUrlPrms = 
       'Qto::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
-   
+
+
    unless ( $objCnrUrlPrms->doValidateAndSetDelete ( $perl_hash ) == 1 ) {
       my $http_code = $objCnrUrlPrms->get('http_code') ; 
       $self->res->code($http_code);
