@@ -15,20 +15,29 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $db_name= $appConfig->{ 'postgres_db_name' } ; 
    my $url = '/' . $db_name . '/logon' ; 
    
-   $tm = "both username and password are filled in"; 
-   ok ( $t->post_ok($url => json => {"user" =>'user', 'password' => 'password'})->status_is(200) , $tm );
+   # 01..03
+   $tm = "the email posted should not empty"; 
+   ok ( $t->post_ok($url => json => {"email" =>''})->status_is(400) , $tm );
 
-   $tm = "the user posted should not empty"; 
-   ok ( $t->post_ok($url => json => {"user" =>''})->status_is(400) , $tm );
-
-   $tm = "the user posted should not be undefined"; 
-   ok ( $t->post_ok($url => json => {"user" =>undef})->status_is(400) , $tm );
-   
+   # 04..06
+   $tm = "the email posted should not be undefined"; 
+   ok ( $t->post_ok($url => json => {"email" =>undef})->status_is(400) , $tm );
+  
+   # 07..09
    $tm = "the password posted should not be empty "; 
-   ok ( $t->post_ok($url => json => {"user" =>'user', 'password' => ''})->status_is(400) , $tm );
-   
+   ok ( $t->post_ok($url => json => {"email" =>'email', 'password' => ''})->status_is(400) , $tm );
+ 
+   #10..12
    $tm = "the password posted should not be undefined"; 
-   ok ( $t->post_ok($url => json => {"user" =>'user', 'password' => undef})->status_is(400) , $tm );
+   ok ( $t->post_ok($url => json => {"email" =>'email', 'password' => undef})->status_is(400) , $tm );
+   
+   #13..15
+   $tm = "both email and password are filled in and the password matches - see users create table";
+   ok ( $t->post_ok($url => json => {"email" =>'test.user@gmail.com', 'password' => 'password'})->status_is(200) , $tm );
+
+   #16..18
+   $tm = "401 unauthorized is returned if the password does not match"; 
+   ok ( $t->post_ok($url => json => {"email" =>'test.user@gmail.com', 'password' => 'invalid'})->status_is(401) , $tm );
 
 
 done_testing();

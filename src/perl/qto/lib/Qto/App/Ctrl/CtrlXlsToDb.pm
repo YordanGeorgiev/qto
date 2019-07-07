@@ -125,8 +125,6 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
             my $hsr2 = $hsr3->{ "$table" } ; 
             my $objCnrXlsHsr3ToDbHsr3 = 
                   'Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$qto::appConfig , $rdbms_type ) ; 
-            p ( $hsr2 ) ; 
-            # todo:ysg
             $hsr2 = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2 , $table ) ; 
             $objModel->set('hsr2' , $hsr2 );
             $objModel->set('postgres_db_name',$ENV{'postgres_db_name'}) ;
