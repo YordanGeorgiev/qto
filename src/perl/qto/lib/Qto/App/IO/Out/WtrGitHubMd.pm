@@ -73,8 +73,8 @@ package Qto::App::IO::Out::WtrGitHubMd ;
          $row_id++ ; 
 
       foreach my $col_name ( @col_names ) {
-            p( $row );
-            p $row->{ $col_name } ; 
+            # debug p( $row );
+            # debug p $row->{ $col_name } ; 
             if ( !defined ( $row )  or !defined ( $row->{ $col_name } ) or $row->{ $col_name } eq 'NULL' ) {
                $row->{ $col_name } = '' ; 
             }
