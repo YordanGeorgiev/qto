@@ -46,6 +46,12 @@ package Qto::App::IO::In::CnrEncrypter ;
 		 )->as_rfc2307;
    }
 
+   sub match_passphrase_against_crypto_hash {
+      my $self = shift  ;
+      my ($crypto_hash, $passphrase) = @_;
+      return Authen::Passphrase::BlowfishCrypt
+            ->from_rfc2307($crypto_hash)->match($passphrase);
+   }
 1;
 
 __END__
@@ -79,7 +85,7 @@ yordan.georgiev@gmail.com
 
 =head1 COPYRIGHT MOR LICENSE
 
-Copyright (C) 2018 Yordan Georgiev
+Copyright (C) 2019 Yordan Georgiev
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.1 or,

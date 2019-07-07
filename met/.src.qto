@@ -422,7 +422,7 @@ src/sql/pgsql/qto/31.1.create-table-readme_doc.sql
 src/sql/pgsql/qto/31.create-table-readme.sql
 src/sql/pgsql/qto/32.create-table-export_files.sql
 src/sql/pgsql/qto/33.create-table-links.sql
-src/sql/pgsql/qto/34.create-table-app_user.sql
+src/sql/pgsql/qto/34.create-table-users.sql
 src/sql/pgsql/qto/35.create-table-release_issues.sql
 src/sql/pgsql/qto/36.create-table-enduser_issues.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql

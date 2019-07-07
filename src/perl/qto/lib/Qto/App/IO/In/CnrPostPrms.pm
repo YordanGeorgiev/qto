@@ -44,14 +44,14 @@ package Qto::App::IO::In::CnrPostPrms ;
       my $controller       = lc ( $Controller ) ; 
       my $ret              = 1 ;
       my $msg              = '' ; 
-      my $user             = $post_body_data->{'user'} ;
+      my $email            = $post_body_data->{'email'} ;
       my $password         = $post_body_data->{'password'} ;
 
-      if ( !defined ( $user ) or $user eq '' ) {
-         $msg = "fill in the user name" ; 
+      if ( !defined ( $email ) or $email eq '' ) {
+         $msg = "fill in the email name" ; 
          $ret = 400 ; 
       } else {
-         $objModel->set($controller . '.user' , $user );
+         $objModel->set($controller . '.email' , $email );
          $ret = 0 ; 
       }
 
@@ -100,7 +100,7 @@ yordan.georgiev@gmail.com
 
 =head1 COPYRIGHT MOR LICENSE
 
-Copyright (C) 2018 Yordan Georgiev
+Copyright (C) 2019 Yordan Georgiev
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.1 or,

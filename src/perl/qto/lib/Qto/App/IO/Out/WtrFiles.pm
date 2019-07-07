@@ -155,7 +155,7 @@ yordan.georgiev@gmail.com
 
 =head1 COPYRIGHT MOR LICENSE
 
-Copyright (C) 2018 Yordan Georgiev
+Copyright (C) 2019 Yordan Georgiev
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.1 or,
