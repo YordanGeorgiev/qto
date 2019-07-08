@@ -36,25 +36,28 @@ sub doLogonUser {
    my $msg              = 'unknown error during global text search ';
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
-   my $hsr             = {};
+   my $hsr              = {};
    my $http_code        = 400 ;
    my $rows_count       = 0 ; 
    my $msr2             = {}  ; 
    my $dat              = {}  ; 
-   
    $appConfig		 		= $self->app->get('AppConfig');
+   $objLogger           = 'Qto::App::Utils::Logger'->new( \$appConfig );
 	#print STDOUT "Logon.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
    my $post_body_data   = decode_json($self->req->body) ; 
    my $password         = $post_body_data->{ 'password' } ; 
-   my $objModel      = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
+   my $email            = $post_body_data->{ 'email' } ; 
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
    $objModel->set('postgres_db_name' , $db ) ; 
+   $objLogger->doLogInfoMsg ( "login attempt for $email") ; 
 
    my $objCnrPostPrms = 
       'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel );
    ( $ret , $msg ) = $objCnrPostPrms->doSetLogonUrlParams('Logon' , $post_body_data);
 
    if ( $ret != 0 ) {
+      $objLogger->doLogInfoMsg ( "login failed for '$email'") ; 
       $self->doRender(400);
       return ;
    } 
@@ -73,6 +76,11 @@ sub doLogonUser {
       }
    } 
 
+   if ( $http_code == 200 ) {
+      $objLogger->doLogInfoMsg ( "login ok for $email") ; 
+   } else {
+      $objLogger->doLogErrorMsg ( "login failed for $email") ; 
+   }
    $self->doRender($http_code);
    #   $self->SUPER::doRenderJSON(400,$msg,'POST','','0','');
 

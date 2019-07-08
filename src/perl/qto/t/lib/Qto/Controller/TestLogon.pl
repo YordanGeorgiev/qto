@@ -16,7 +16,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $url = '/' . $db_name . '/logon' ; 
    
    # 01..03
-   $tm = "the email posted should not empty"; 
+   $tm = "the email posted should not be empty"; 
    ok ( $t->post_ok($url => json => {"email" =>''})->status_is(400) , $tm );
 
    # 04..06

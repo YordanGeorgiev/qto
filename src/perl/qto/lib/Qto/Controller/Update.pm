@@ -15,13 +15,11 @@ use Scalar::Util qw /looks_like_number/;
 use JSON;
 
 use Qto::App::Db::Out::WtrDbsFactory;
-use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
 
 our $module_trace   = 0 ;
 our $appConfig      = {};
-our $objLogger      = {} ;
 our $rdbms_type     = 'postgre';
 
 

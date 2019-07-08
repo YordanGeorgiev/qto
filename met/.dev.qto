@@ -348,6 +348,7 @@ cnf/hosts/host-name/home/ysg/.tmux.cnf
 cnf/hosts/host-name/etc/pam.d/common-session-noninteractive
 cnf/hosts/host-name/etc/pam.d/common-session
 cnf/hosts/host-name/etc/security/limits.conf
+cnf/hosts/host-name/etc/network/interfaces
 cnf/readme.txt
 # ---
 src/bash/qto/tests/increase-date.test.sh
