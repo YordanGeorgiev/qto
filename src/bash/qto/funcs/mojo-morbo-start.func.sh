@@ -14,6 +14,10 @@ doMojoMorboStart(){
       doParseCnfEnvVars "$product_instance_dir/cnf/$run_unit.$env_type.*.cnf"
 
    doMojoMorboStop 0
+   
+   # to prevent the 'failed: could not create socket: Too many open files at sys' error
+   # perl -e 'while(1){open($a{$b++}, "<" ,"/dev/null") or die $b;print " $b"}' to check
+   ulimit -n 4096
 
 	sleep "$sleep_interval"
    export MOJO_MODE="$env_type"
