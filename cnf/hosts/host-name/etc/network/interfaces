@@ -1,40 +1,29 @@
-source /etc/network/interfaces.d/*
+# file: /etc/network/interfaces
+# purpose: example config for Ubuntu 18.04 vm running on mac
+# with host-only and bridged network setting
+#
+# stat -c "%U:%G %a %n" /etc/network/interfaces
+# root:root 644 /etc/network/interfaces
+# bash src/bash/qto/qto.sh -a restart-network
 # src: http://stackoverflow.com/a/37052810/65706
+#
+source /etc/network/interfaces.d/*
 
 # The loopback network interface
 auto lo
 iface lo inet loopback
 
-# Host Only Network
+# Bridged Network
 auto enp0s3
 iface enp0s3 inet static
-#dns-nameservers 10.130.130.67 10.130.141.67 10.130.137.67 8.8.8.8 8.8.4.4
-dns-nameservers 8.8.8.8 8.8.4.4
 address 192.168.56.120
 network 192.168.56.0
 netmask 255.255.255.0
 broadcast 192.168.56.255
-
-# NAT Network
-auto enp0s8
-iface enp0s8 inet dhcp
-#dns-nameservers 10.130.130.67 10.130.141.67 10.130.137.67 8.8.8.8 8.8.4.4
 dns-nameservers 8.8.8.8 8.8.4.4
 
-
-# The loopback network interface
-# auto lo
-# iface lo inet loopback
-
 # Host Only Network
-# auto enp0s3
-# iface enp0s3 inet dhcp
+auto enp0s8
+iface enp0s8 inet dhcp
+#dns-nameservers 8.8.8.8 8.8.4.4
 
-# iface enp0s3 inet static
-# iface enp0s3 inet dhcp
-# dns-nameservers 192.168.80.253
-# netmask 255.255.248.0
-# broadcast 192.168.80.255
-
-
-# dns-nameservers 8.8.8.8 8.8.4.4
