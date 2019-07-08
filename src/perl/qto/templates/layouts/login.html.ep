@@ -1,0 +1,7 @@
+% use utf8;
+%layout 'site';
+
+% content_for cnt_header_css => begin
+  <link rel="stylesheet" type="text/css" 
+   href="../../themes/thme-blue/css/screen/site/login.css?v=<%= $ProductVersion =%>" />
+% end

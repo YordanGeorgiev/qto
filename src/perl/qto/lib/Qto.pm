@@ -219,11 +219,11 @@ sub doSetRoutes {
    
    my $self = shift ; 
    my $r = $self->routes;
-	
-   # http://host-name:3001/qto/Search/monthly_issues
-   $r->get('/:db/search')->to(
-     controller   => 'Search'
-   , action       => 'doSearchItems'
+   
+   # http://host-name:3001/qto/login
+   $r->get('/:db/login')->to(
+     controller   => 'Login'
+   , action       => 'doShowLoginForm'
    );
    
    # http://host-name:3001/qto/query?for=<<global-txt-srch>>
@@ -231,6 +231,13 @@ sub doSetRoutes {
      controller   => 'Logon'
    , action       => 'doLogonUser'
    );
+	
+   # http://host-name:3001/qto/Search/monthly_issues
+   $r->get('/:db/search')->to(
+     controller   => 'Search'
+   , action       => 'doSearchItems'
+   );
+   
 
    # http://host-name:3001/qto/query?for=<<global-txt-srch>>
    $r->get('/:db/query')->to(

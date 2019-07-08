@@ -1,0 +1,46 @@
+%layout 'login';
+
+% content_for cnt_header_css => begin
+  <title> <%= "$db " =%> login </title> 
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+   <link rel="stylesheet" type="text/css" 
+      href="../../themes/thme-blue/css/screen/controls/view-doc.css?v=<%= $ProductVersion =%>" />
+   <link rel="stylesheet" type="text/css" 
+      href="../../themes/thme-blue/css/screen/controls/right-click-menu.css?v=<%= $ProductVersion =%>" />
+% end
+
+
+% content_for cnt_body_controls  => begin
+   <div id="div_central_panel">
+   
+<form method="post" action="/logon">
+<div class="box">
+	<h1> qto login </h1>
+
+	<input type="email" name="email" value="email" 
+		onFocus="console.log('onFocusEmail');" 
+		onblur="console.log('onBlurEmail');" class="email" />
+  
+  <input type="password" name="email" value="password" 
+		onFocus="console.log('onFocusPassword');" 
+		onblur="console.log('onblurPassword');" class="email" />
+    
+    <a href="#"><div class="btn">Sign In</div></a> 
+    <a href="#"><div id="btn2">Sign Up</div></a>
+	</div>
+</form>
+        <!-- <p>Forgot your password? <u style="color:#f1c40f;">Click Here!</u></p> -->
+   </div>
+% end
+
+
+% content_for cnt_all_js => begin
+
+   <script id="all_js_scripts">
+
+   <!-- include 'js/global/get-url-params.func.js' -->
+
+   </script>
+% end
