@@ -5,14 +5,12 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
   <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/site.css?v=<%= $ProductVersion =%>" />
-  <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/snackbar.css?v=<%= $ProductVersion =%>" />
   <%= content 'cnt_header_css' %>
 </head>
 <body>
    %= include 'controls/site/app_name_tooltip'
 
    <%= content 'cnt_body_controls' %>
-
    <div id="js_libs">
       <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
       <script src="https://unpkg.com/vue@2.5.3/dist/vue.js"></script>

@@ -2,6 +2,9 @@
 #
 src/perl/qto/t/lib/Qto/Controller/TestLogon.pl
 src/perl/qto/lib/Qto/Controller/Logon.pm
+src/perl/qto/lib/Qto/Controller/Login.pm
+src/perl/qto/templates/pages/login
+src/perl/qto/templates/pages/login/login.html.ep
 # -- start deployment
 src/bash/qto/funcs/build-qto-docker-image.func.sh
 src/bash/qto/funcs/remove-docker-images.func.sh
@@ -56,6 +59,7 @@ src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.pl
 src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
+src/perl/qto/templates/layouts/login.html.ep
 src/perl/qto/templates/js/global/get-url-params.func.js.html.ep
 src/perl/qto/templates/js/global/get-server-data.func.js.html.ep
 src/perl/qto/templates/js/global/on-load.funcs.js.html.ep
@@ -154,6 +158,7 @@ src/perl/qto/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/qto/public/themes/thme-blue/css/screen/site/site.css
 src/perl/qto/public/themes/thme-blue/css/screen/site/snackbar.css
 src/perl/qto/public/themes/thme-blue/css/screen/site/view.css
+src/perl/qto/public/themes/thme-blue/css/screen/site/login.css
 src/perl/qto/public/themes/thme-blue/css/print/controls/app_list_labels.css
 #---
 src/perl/qto/lib/Qto/Controller
