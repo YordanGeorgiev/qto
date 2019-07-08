@@ -12,6 +12,7 @@ src/bash/qto/funcs/remove-docker-containers.func.sh
 src/docker/Dockerfile.deploy-qto.0.6.7
 src/bash/qto/funcs/run-container.func.sh
 src/bash/qto/funcs/mojo-morbo-start.func.sh
+src/bash/qto/funcs/mojo-daemon-start.func.sh
 src/bash/qto/install/docker/install-test.sh
 src/bash/qto/install/docker/docker-entry-point.sh
 src/bash/qto/bootstrap-qto-docker.sh
@@ -769,6 +770,7 @@ src/perl/qto/public/dat/tmp/xls/1
 src/perl/qto/templates/controls/site/app_name_tooltip.html.ep
 # ---
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/Login/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/In/CnrEncrypter/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Logon/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/In/CnrPostPrms/autosplit.ix
