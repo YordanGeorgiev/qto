@@ -2,7 +2,7 @@
 #
 src/perl/qto/t/lib/Qto/Controller/TestLogon.pl
 src/perl/qto/lib/Qto/Controller/Logon.pm
-# -- 
+# -- start deployment
 src/bash/qto/funcs/build-qto-docker-image.func.sh
 src/bash/qto/funcs/remove-docker-images.func.sh
 src/bash/qto/funcs/remove-docker-containers.func.sh
@@ -27,7 +27,7 @@ src/bash/qto/funcs/admin/restart-postgres.func.sh
 cnf/postgres/etc/postgresql/11/main
 cnf/postgres/etc/postgresql/11/main/pg_hba.conf
 cnf/postgres/etc/postgresql/11/main/postgresql.conf
-# -- 
+# -- stop  deployment
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/public/poc/web-socket/web-socket.html
 src/perl/qto/public/poc/web-socket/wsclient.js
@@ -345,6 +345,9 @@ cnf/hosts/host-name/home
 cnf/hosts/host-name/home/ysg
 cnf/hosts/host-name/home/ysg/.muttrc
 cnf/hosts/host-name/home/ysg/.tmux.cnf
+cnf/hosts/host-name/etc/pam.d/common-session-noninteractive
+cnf/hosts/host-name/etc/pam.d/common-session
+cnf/hosts/host-name/etc/security/limits.conf
 cnf/readme.txt
 # ---
 src/bash/qto/tests/increase-date.test.sh
