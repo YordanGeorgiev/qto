@@ -51,7 +51,7 @@ package Qto::App::Db::In::Postgres::MojoPgWrapper ;
 		my $postgres_db_user 	= $ENV{'postgres_db_user'} || $appConfig->{'postgres_db_user'} or croak 'postgres_db_user is not set !!!' ; 
 		my $postgres_db_user_pw = $ENV{'postgres_db_user_pw'} || $appConfig->{'postgres_db_user_pw'}  or croak 'postgres_db_user_pw is not set !!!' ; 
       my $conn_str            = 'postgresql://' . $postgres_db_user . ':' . $postgres_db_user_pw .  '@' . $postgres_db_host . ':' . $postgres_db_port . '/' . $db . '?sslmode=disable'; 
-      $objLogger->doLogDebugMsg ( "conn_str: $conn_str " ) ; 
+      #debug $objLogger->doLogDebugMsg ( "conn_str: $conn_str " ) ; 
       $self = 'Mojo::Pg'->new($conn_str);
       return $self ; 
    }
@@ -71,6 +71,7 @@ package Qto::App::Db::In::Postgres::MojoPgWrapper ;
 #   5  A bad response was received from the backend.
 #   6  A nonfatal error occurred (a notice or warning message)
 #   7  A fatal error was returned: the last query failed.
+
 1;
 
 __END__

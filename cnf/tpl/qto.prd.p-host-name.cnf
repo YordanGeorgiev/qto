@@ -48,6 +48,9 @@ web_host=localhost
 # on which port the mojo should listen
 mojo_morbo_port=3003
 
+# on which port the https web server should listen
+mojo_daemon_port=6003
+
 # on which port the mojo should listen
 mojo_hypnotoad_port=8080
 

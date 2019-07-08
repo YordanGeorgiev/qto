@@ -12,6 +12,8 @@ src/bash/qto/funcs/remove-docker-containers.func.sh
 src/docker/Dockerfile.deploy-qto.0.6.7
 src/bash/qto/funcs/run-container.func.sh
 src/bash/qto/funcs/mojo-morbo-start.func.sh
+src/bash/qto/funcs/mojo-daemon-start.func.sh
+src/bash/qto/funcs/mojo-daemon-stop.func.sh
 src/bash/qto/install/docker/install-test.sh
 src/bash/qto/install/docker/docker-entry-point.sh
 src/bash/qto/bootstrap-qto-docker.sh

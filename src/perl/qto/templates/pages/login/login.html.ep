@@ -15,7 +15,7 @@
 % content_for cnt_body_controls  => begin
    <div id="div_central_panel">
    
-<form method="post" action="/logon">
+<form method="post" action="/<%= $db  =%>/logon">
 <div class="box">
 	<h1> qto login </h1>
 
