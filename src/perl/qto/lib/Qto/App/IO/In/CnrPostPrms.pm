@@ -17,6 +17,8 @@ package Qto::App::IO::In::CnrPostPrms ;
    use Scalar::Util::Numeric qw(isint);
    use Scalar::Util qw /looks_like_number/ ; 
    use Data::Printer ; 
+   use Email::Valid;
+
    use Qto::App::Mdl::Model ; 
 	use Authen::Passphrase::BlowfishCrypt ; 
    use Qto::App::IO::In::CnrEncrypter ; 
@@ -50,14 +52,20 @@ package Qto::App::IO::In::CnrPostPrms ;
       if ( !defined ( $email ) or $email eq '' ) {
          $msg = "fill in the email name" ; 
          $ret = 400 ; 
+         return ( $ret , $msg ) ; 
       } else {
          $objModel->set($controller . '.email' , $email );
-         $ret = 0 ; 
+         unless( Email::Valid->address($email) ) {
+            $msg = "the email address: $email is not valid!";
+            $ret = 400 ; 
+            return ( $ret , $msg ) ; 
+         }
       }
 
       if ( !defined ( $password ) or $password eq '' ) {
          $msg = "fill in the password " ; 
          $ret = 400 ; 
+         return ( $ret , $msg ) ; 
       } else {
          $objModel->set($controller . '.password' , $password );
          my $objCnrEncrypter = 'Qto::App::IO::In::CnrEncrypter'->new();
@@ -66,7 +74,7 @@ package Qto::App::IO::In::CnrPostPrms ;
          $ret = 0 ; 
       }
 
-      return ( $ret , $msg , ) ; 
+      return ( $ret , $msg ) ; 
    }
 
 1;
