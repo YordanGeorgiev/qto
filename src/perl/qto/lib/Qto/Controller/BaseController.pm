@@ -12,6 +12,7 @@ our $rdbms_type      = 'postgres' ;
 use Qto::App::Mdl::Model ; 
 use Qto::App::Db::In::RdrDbsFactory ; 
 use Qto::App::Cnvr::CnrHsr2ToHsr2 ; 
+use Mojolicious::Sessions; 
 
 
 sub doResolveDbName {
@@ -64,11 +65,21 @@ sub isAuthorized {
 
    my $self                = shift ;
    my $db                  = shift ;
+
+   return 1 if $ENV{'QTO_ONGOING_TEST'}; # no authentication when testing if desired so !!!
+
    $appConfig		 		   = $self->app->get('AppConfig');
 
-   my $htpasswd_file = $appConfig->{ 'ProductInstanceDir'} . '/cnf/sec/passwd/' . $db . '.htpasswd' ;
+   unless ( defined ( $self->session( 'app.user')) ) {
+      my $url = '/' . $db . '/login' ;
+      $self->session( 'app.msg' => 'please login first into ' . $db);
+      $self->session( 'app.url' => $self->req->url->to_abs );
+      $self->redirect_to( $url );
+      return 0 ;
+   }
 
-   return 1 unless -f $htpasswd_file ;  # open by default !!! ( temporary till v0.5.1 )
+   my $htpasswd_file = $appConfig->{ 'ProductInstanceDir'} . '/cnf/sec/passwd/' . $db . '.htpasswd' ;
+   return 1 unless -f $htpasswd_file ;  # open by default !!! ( temporary till v0.5 if desired so !!!
    return 1 if $self->basic_auth(
       $db => {
          'path' => $htpasswd_file

@@ -19,5 +19,6 @@
 
    <%= content 'cnt_all_js' %>
 
+   % stash('template', __FILE__);
 </body>
 </html>

@@ -1,10 +1,15 @@
 # src/bash/qto/funcs/run-functional-tests.func.sh
 
-# v0.6.5
+# v0.6.7
 # ---------------------------------------------------------
 # implement the calls to all the functional tests
 # ---------------------------------------------------------
 doRunFunctionalTests(){
+  
+   export QTO_ONGOING_TEST=1
+   test -z ${qto_project:-} && \
+      source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh" && \
+      doParseCnfEnvVars "$product_instance_dir/cnf/$run_unit.$env_type.*.cnf"
    
    test -z $sleep_interval && sleep_interval=1
 	doLog "DEBUG START : doRunFunctionalTests"
@@ -46,6 +51,7 @@ doRunFunctionalTests(){
    doLog "INFO STOP  testing controllers"
 	sleep $sleep_interval; clearTheScreen ; 
 
+   export QTO_ONGOING_TEST=0
 }
 
 
