@@ -7,7 +7,7 @@
 app_name=qto
 
 # to whom to send e-mails - use space as delimiter
-Emails=first_name.last_name@gmail.com
+AdminEmail=first_name.last_name@gmail.com
 
 # this way each environment will se its respective db 
 db="$env_type"_"$app_name"

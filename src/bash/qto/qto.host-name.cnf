@@ -10,7 +10,7 @@ app_name=qto
 db=qto
 
 # to whom to send e-mails - use space as delimiter
-Emails=yordan.georgiev@gmail.com
+AdminEmail=yordan.georgiev@gmail.com
 
 # this way each environment will se its respective db 
 postgres_db_name="$env_type"_"$db"

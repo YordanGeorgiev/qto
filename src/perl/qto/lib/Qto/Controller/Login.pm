@@ -21,6 +21,7 @@ sub doLoginUser {
    my $db               = $self->stash('db');
    my $ret              = 1 ; 
    my $msg              = 'unknown error during global text search ';
+   my $msg_color        = 'red' ;
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
    my $hsr              = {};
@@ -46,7 +47,7 @@ sub doLoginUser {
 
    if ( $ret != 0 ) {
       $objLogger->doLogInfoMsg ( 'login failed for "' . $self->setEmptyIfNull($email) . '"') ; 
-      $self->doRenderPageTemplate($ret , 'validation failed! ' . $msg , $db);
+      $self->doRenderPageTemplate($ret , 'login failed! ' . $msg , $msg_color,$db);
       return ;
    } 
 
@@ -71,7 +72,7 @@ sub doLoginUser {
       $http_code = 401 ; 
       $objLogger->doLogErrorMsg ( "login failed for $email") ; 
    }
-   $self->doRenderPageTemplate($http_code,$msg,$db);
+   $self->doRenderPageTemplate($http_code,$msg,$msg_color,$db);
 }
 #eof sub doLoginUser
 
@@ -81,12 +82,13 @@ sub doShowLoginForm {
    my $self             = shift;
    my $db               = $self->stash('db');
    my $msg              = undef ; 
+   my $msg_color        = 'grey' ; 
    $db = $self->doResolveDbName ( $db ) ; 
 
    $appConfig		 		= $self->app->get('AppConfig');
 
    #$self->render('text' => 'the login page is presented') ;
-   $self->doRenderPageTemplate(200,$msg,$db) ;
+   $self->doRenderPageTemplate(200,$msg,$msg_color,$db) ;
    return
 }
 
@@ -96,6 +98,7 @@ sub doRenderPageTemplate {
    my $self             = shift ; 
    my $http_code        = shift ; 
    my $msg              = shift ;
+   my $msg_color        = shift || 'red' ;
    my $db               = shift ; 
    my $notice           = '' ;
 
@@ -111,6 +114,7 @@ sub doRenderPageTemplate {
    $self->render(
       'template'        => $template 
     , 'msg'             => $msg
+    , 'msg_color'       => $msg_color
     , 'db' 		         => $db
     , 'ProductType' 		=> $appConfig->{'ProductType'}
     , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
