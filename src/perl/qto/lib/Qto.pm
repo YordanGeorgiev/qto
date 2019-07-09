@@ -209,6 +209,8 @@ sub doSessions {
    
    my $self = shift ; 
    $self->sessions->default_expiration(86400); # set expiry to 1 day
+   $self->secrets(['Mojolicious rocks!!!' . randomStr()]);
+
 }
 
 #
@@ -366,5 +368,12 @@ sub dumpFields {
 
    return $strFields;
 }    
+
+sub randomStr {
+   my @chars   = ("A".."Z", "a".."z");
+   my $string  = '' ; 
+   $string    .= $chars[rand @chars] for 1..3;
+   return $string 
+}
 
 1;

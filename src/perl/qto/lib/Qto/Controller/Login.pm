@@ -2,6 +2,7 @@ package Qto::Controller::Login ;
 use strict ; use warnings ; 
 
 use Mojo::Base 'Mojolicious::Controller';
+use Mojolicious::Sessions; 
 use Data::Printer ; 
 use Qto::App::Utils::Timer ; 
 use Qto::App::IO::In::CnrPostPrms ; 
@@ -37,6 +38,9 @@ sub doLoginUser {
    my $pass         = $self->param('pass');
    my $epass        = undef ; 
    my $email        = $self->param('email' );
+   my $redirect_url = $self->param('redirect-url' );
+   $redirect_url    = '/' . $db . '/home' unless $redirect_url ;
+   
    my $objModel     = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
    $objModel->set('postgres_db_name' , $db ) ; 
    $objLogger->doLogInfoMsg ( "login attempt for " . $self->setEmptyIfNull($email)) ; 
@@ -47,7 +51,7 @@ sub doLoginUser {
 
    if ( $ret != 0 ) {
       $objLogger->doLogInfoMsg ( 'login failed for "' . $self->setEmptyIfNull($email) . '"') ; 
-      $self->doRenderPageTemplate($ret , 'login failed! ' . $msg , $msg_color,$db);
+      $self->doRenderPageTemplate($ret , 'login failed! ' . $msg , $msg_color,$db,$redirect_url);
       return ;
    } 
 
@@ -62,9 +66,9 @@ sub doLoginUser {
            $http_code = 401 ; 
            $msg = "wrong password for $email" ;
          } else {
-           my $home_page = '/' . $db . '/home' ; 
            $objLogger->doLogInfoMsg ( "login ok for $email") ; 
-           $self->redirect_to( $home_page );
+           $self->session( 'app.user' => $email);
+           $self->redirect_to( $redirect_url);
            return ;
          }
       }
@@ -72,7 +76,7 @@ sub doLoginUser {
       $http_code = 401 ; 
       $objLogger->doLogErrorMsg ( "login failed for $email") ; 
    }
-   $self->doRenderPageTemplate($http_code,$msg,$msg_color,$db);
+   $self->doRenderPageTemplate($http_code,$msg,$msg_color,$db,$redirect_url);
 }
 #eof sub doLoginUser
 
@@ -87,8 +91,15 @@ sub doShowLoginForm {
 
    $appConfig		 		= $self->app->get('AppConfig');
 
-   #$self->render('text' => 'the login page is presented') ;
-   $self->doRenderPageTemplate(200,$msg,$msg_color,$db) ;
+   my $redirect_url = $self->session( 'app.url' ) if defined $self->session( 'app.url' ) ; 
+   $self->session(expires => 1);
+   my $sessions = Mojolicious::Sessions->new;
+   $sessions->cookie_name('qto');
+   $sessions->default_expiration(86400);
+   my $instance_domain = $appConfig->{ 'web_host' } . ':' . $appConfig->{ 'mojo_hypnotoad_port' } ;
+   $sessions  = $sessions->cookie_domain( $instance_domain);
+
+   $self->doRenderPageTemplate(200,$msg,$msg_color,$db,$redirect_url) ;
    return
 }
 
@@ -100,9 +111,13 @@ sub doRenderPageTemplate {
    my $msg              = shift ;
    my $msg_color        = shift || 'red' ;
    my $db               = shift ; 
+   my $redirect_url     = shift ; 
+
    my $notice           = '' ;
 
    $msg = "$db login" unless $msg ; 
+   $msg = $self->session( 'app.msg' ) if defined $self->session( 'app.msg' ) ;
+
    $self->res->code($http_code) ; 
 
    my $template_name    = 'login' ; 
@@ -121,6 +136,7 @@ sub doRenderPageTemplate {
     , 'GitShortHash'    => $appConfig->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'notice'          => $notice
+    , 'redirect_url'    => $redirect_url
 	) ; 
 
    return ; 
