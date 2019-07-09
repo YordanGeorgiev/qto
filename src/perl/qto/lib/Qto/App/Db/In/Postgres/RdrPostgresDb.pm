@@ -62,7 +62,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
             $ret = 200 ; 
             $msg = "" ; 
          } else { 
-            $msg = "$email not found !" ;  
+            $msg = "$email not found ! Contact " . $appConfig->{ 'AdminEmail' } . " to request access." ;  
             $ret = 401 if ( scalar ( keys %$hsr ) != 1 );
          }
       };

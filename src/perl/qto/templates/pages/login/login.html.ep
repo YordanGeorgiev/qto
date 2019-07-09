@@ -8,7 +8,7 @@
 % content_for cnt_body_controls  => begin
    <div id="div_central_panel">
 	<div class="box">
-		<h4> <span> <%= $msg =%> </span> </h4>
+		<h4> <span style="color:<%= $msg_color =%>;"> <%= $msg =%> </span> </h4>
 		%= form_for 'login' => (method => 'POST') => begin
 			%= text_field 'email', id => 'email', class=>"email", value=>'your.email@company.com'
 			%= password_field 'pass', id => 'pass', class=>"email", value=>'email'

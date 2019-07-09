@@ -7,8 +7,8 @@ doGmailPackage(){
 	mutt --help >/dev/null 2>&1 ||
 	{ doLog "ERROR. mutt is not installed or not in PATH. Aborting." >&2; exit 1; }
   
-   if [ -z "$Emails" ]; then
-      msg="Emails to set mail to not set !!! you need to export Emails=list-of-emails-to-send-mail-to-comma-delimited" ;
+   if [ -z "$AdminEmail" ]; then
+      msg="AdminEmail to set mail to not set !!! you need to export AdminEmail=list-of-emails-to-send-mail-to-comma-delimited" ;
       export exit_code=1 ;  
       doExit "$msg";
       exit 1 ;
@@ -27,10 +27,10 @@ doGmailPackage(){
 	echo $zip_file>$tmp_dir/.msg
 
    doLog "DEBUG cnf_files is ${cnf_file+x}"
-   doLog "DEBUG Emails: $Emails"
+   doLog "DEBUG AdminEmail: $AdminEmail"
 
 	set -x
-	for Email in $Emails; do (
+	for Email in $AdminEmail; do (
 		mutt -s "${mail_msg-}::: ""$zip_file_name" -a "$zip_file"'.txt' -- "$Email" < $tmp_dir/.msg
 	);
 	done
