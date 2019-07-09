@@ -30,9 +30,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
    sub doNativeLogonAuth  {
 
       my $self             = shift ; 
-      my $login_hash       = shift ; 
-      my $email            = $login_hash->{'email'} ; 
-      my $password         = $login_hash->{'password'} ; 
+      my $email            = shift ; 
+      my $password         = shift ; 
       my $msg              = q{} ;         
       my $ret              = 401 ;        # 401 Unauthorized http code
       my $debug_msg        = q{} ; 
@@ -59,8 +58,13 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          $sth->execute() or $objLogger->error ( "$DBI::errstr" ) ;
          $hsr = $sth->fetchall_hashref( 'id' ) ; 
 
-         $ret = 200 if ( scalar ( keys %$hsr ) == 1 );
-         $ret = 401 if ( scalar ( keys %$hsr ) != 1 );
+         if ( scalar ( keys %$hsr ) == 1 ) {
+            $ret = 200 ; 
+            $msg = "" ; 
+         } else { 
+            $msg = "$email not found !" ;  
+            $ret = 401 if ( scalar ( keys %$hsr ) != 1 );
+         }
       };
       if ( $@ ) { 
          my $tmsg = "$@" ; 

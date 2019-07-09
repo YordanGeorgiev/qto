@@ -1,10 +1,11 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 #
-src/perl/qto/t/lib/Qto/Controller/TestLogon.pl
-src/perl/qto/lib/Qto/Controller/Logon.pm
+src/perl/qto/t/lib/Qto/Controller/TestLogin.pl
 src/perl/qto/lib/Qto/Controller/Login.pm
 src/perl/qto/templates/pages/login
 src/perl/qto/templates/pages/login/login.html.ep
+src/perl/qto/templates/pages/home/home.html.ep
+src/perl/qto/lib/Qto/Controller/Home.pm
 # -- start deployment
 src/bash/qto/funcs/build-qto-docker-image.func.sh
 src/bash/qto/funcs/remove-docker-images.func.sh
@@ -13,6 +14,7 @@ src/docker/Dockerfile.deploy-qto.0.6.7
 src/bash/qto/funcs/run-container.func.sh
 src/bash/qto/funcs/mojo-morbo-start.func.sh
 src/bash/qto/funcs/mojo-daemon-start.func.sh
+src/bash/qto/funcs/mojo-daemon-stop.func.sh
 src/bash/qto/install/docker/install-test.sh
 src/bash/qto/install/docker/docker-entry-point.sh
 src/bash/qto/bootstrap-qto-docker.sh
@@ -61,6 +63,7 @@ src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
 src/perl/qto/templates/layouts/login.html.ep
+src/perl/qto/templates/layouts/home.html.ep
 src/perl/qto/templates/js/global/get-url-params.func.js.html.ep
 src/perl/qto/templates/js/global/get-server-data.func.js.html.ep
 src/perl/qto/templates/js/global/on-load.funcs.js.html.ep
@@ -160,6 +163,7 @@ src/perl/qto/public/themes/thme-blue/css/screen/site/site.css
 src/perl/qto/public/themes/thme-blue/css/screen/site/snackbar.css
 src/perl/qto/public/themes/thme-blue/css/screen/site/view.css
 src/perl/qto/public/themes/thme-blue/css/screen/site/login.css
+src/perl/qto/public/themes/thme-blue/css/screen/site/home.css
 src/perl/qto/public/themes/thme-blue/css/print/controls/app_list_labels.css
 #---
 src/perl/qto/lib/Qto/Controller

@@ -1,0 +1,13 @@
+#div_central_panel{
+   padding: 0;
+}
+body{
+  margin: 0 auto 0 auto;  
+  text-align:center;
+  margin: 3% 0% 3% 0%;   
+}
+
+h1{
+  font-size:1.5em;
+  color:#CDCDCD;
+}
