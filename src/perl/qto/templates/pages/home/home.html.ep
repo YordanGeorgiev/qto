@@ -1,0 +1,23 @@
+%layout 'home';
+
+% content_for cnt_header_css => begin
+  <title> <%= "$db " =%> home </title> 
+% end
+
+
+% content_for cnt_body_controls  => begin
+   <div id="div_central_panel">
+	<div class="box">
+		<h4> <span id="welcome_msg"> <%= $msg =%> </span> </h4>
+	</div>
+% end
+
+
+% content_for cnt_all_js => begin
+
+   <script id="all_js_scripts">
+	<!-- todo:ysg -->
+   <!-- include 'js/global/get-url-params.func.js' -->
+
+   </script>
+% end

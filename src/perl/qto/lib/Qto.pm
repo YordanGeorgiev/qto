@@ -220,10 +220,22 @@ sub doSetRoutes {
    my $self = shift ; 
    my $r = $self->routes;
    
+   # http://host-name:3001/qto/home
+   $r->get('/:db/home')->to(
+     controller   => 'Home'
+   , action       => 'doLanding'
+   );
+   
    # http://host-name:3001/qto/login
    $r->get('/:db/login')->to(
      controller   => 'Login'
    , action       => 'doShowLoginForm'
+   );
+   
+# http://host-name:3001/qto/query?for=<<global-txt-srch>>
+   $r->post('/:db/login')->to(
+     controller   => 'Login'
+   , action       => 'doLoginUser'
    );
    
    # http://host-name:3001/qto/query?for=<<global-txt-srch>>

@@ -48,7 +48,7 @@ h1{
   font-size:1em;
 }
 
-.btn{
+input[type="submit"]{
   background:#2ecc71;
   width:125px;
   padding-top:5px;
@@ -60,31 +60,13 @@ h1{
   margin-top:20px;
   margin-bottom:20px;
   float:left;
-  margin-left:16px;
+  margin-left:30%;
   font-weight:800;
   font-size:0.8em;
 }
 
-.btn:hover{
+input[type="submit"]:hover{
   background:#2CC06B; 
+  color:yellow;
 }
 
-#btn2{
-  float:left;
-  background:#3498db;
-  width:125px;  padding-top:5px;
-  padding-bottom:5px;
-  color:white;
-  border-radius:4px;
-  border: #2980b9 1px solid;
-  
-  margin-top:20px;
-  margin-bottom:20px;
-  margin-left:10px;
-  font-weight:800;
-  font-size:0.8em;
-}
-
-#btn2:hover{ 
-background:#3594D2; 
-}

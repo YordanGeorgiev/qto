@@ -47,7 +47,7 @@ package Qto::App::IO::In::CnrPostPrms ;
       my $ret              = 1 ;
       my $msg              = '' ; 
       my $email            = $post_body_data->{'email'} ;
-      my $password         = $post_body_data->{'password'} ;
+      my $pass         = $post_body_data->{'pass'} ;
 
       if ( !defined ( $email ) or $email eq '' ) {
          $msg = "fill in the email name" ; 
@@ -62,20 +62,59 @@ package Qto::App::IO::In::CnrPostPrms ;
          }
       }
 
-      if ( !defined ( $password ) or $password eq '' ) {
-         $msg = "fill in the password " ; 
+      if ( !defined ( $pass ) or $pass eq '' ) {
+         $msg = "fill in the pass " ; 
          $ret = 400 ; 
          return ( $ret , $msg ) ; 
       } else {
-         $objModel->set($controller . '.password' , $password );
+         $objModel->set($controller . '.pass' , $pass );
          my $objCnrEncrypter = 'Qto::App::IO::In::CnrEncrypter'->new();
-         $password = $objCnrEncrypter->make_crypto_hash($password ) ; 
-         $post_body_data->{'password'} = $password ; 
+         $pass = $objCnrEncrypter->make_crypto_hash($pass ) ; 
          $ret = 0 ; 
       }
 
       return ( $ret , $msg ) ; 
    }
+   
+   sub doSetLoginUrlParams {
+
+      my $self             = shift ; 
+      my $Controller       = shift || 'Logon' ; 
+      my $email            = shift ; 
+      my $pass             = shift ; 
+      my $controller       = lc ( $Controller ) ; 
+      my $ret              = 1 ;
+      my $msg              = '' ; 
+      my $epass            = undef ; # the encrypted hash
+
+
+      if ( !defined ( $email ) or $email eq '' ) {
+         $msg = "empty email ! " ; 
+         $ret = 400 ; 
+         return ( $ret , $msg ) ; 
+      } else {
+         unless( Email::Valid->address($email) ) {
+            $msg = "$email is not a valid email! ";
+            $ret = 400 ; 
+            return ( $ret , $msg ) ; 
+         }
+      }
+
+      if ( !defined ( $pass ) or $pass eq '' ) {
+         $msg = " empty password ! " ; 
+         $ret = 400 ; 
+         return ( $ret , $msg ) ; 
+      } else {
+         $objModel->set($controller . '.pass' , $pass );
+         my $objCnrEncrypter = 'Qto::App::IO::In::CnrEncrypter'->new();
+         $epass = $objCnrEncrypter->make_crypto_hash($pass ) ; 
+         $ret = 0 ; 
+         $msg = '' ; 
+      }
+
+      return ( $ret , $msg , $epass ) ; 
+   }
+
 
 1;
 
