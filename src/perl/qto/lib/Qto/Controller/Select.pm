@@ -13,6 +13,7 @@ use Qto::App::Utils::Logger;
 use Qto::App::Db::In::RdrDbsFactory;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 my $module_trace    = 0 ;
 our $appConfig      = {};
@@ -42,10 +43,10 @@ sub doSelectItems {
    my $objRdrDbsFactory = {} ; 
    my $objRdrDb         = {} ; 
 
-   $db = $self->SUPER::doResolveDbName ( $db ) ; 
+   $appConfig		      = $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db , $item) ;
-   $appConfig		      = $self->app->get('AppConfig');
 
 	# debug rint "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ; 
@@ -109,7 +110,7 @@ sub doSelectTables {
 	$appConfig	   = $self->app->get('AppConfig');
    my $objModel   = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
 
-   $db = $self->SUPER::doResolveDbName ( $db ) ; 
+   $db                  = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db , 'meta_columns' ) ;
 
@@ -190,7 +191,7 @@ sub doSelectDatabases {
 	$appConfig	   = $self->app->get('AppConfig');
    my $objModel   = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ;
 
-   $db = $self->SUPER::doResolveDbName ( $db ) ; 
+   $db                  = toEnvName ( $db , $appConfig) ;
 	$objModel->set('postgres_db_name' , 'postgres' ) ; 
 
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
@@ -247,7 +248,7 @@ sub doSelectMeta {
    $appConfig		= $self->app->get('AppConfig');
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ;
    
-   $db = $self->SUPER::doResolveDbName ( $db ) ; 
+   $db                  = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    

@@ -6,6 +6,7 @@ use Data::Printer ;
 use Qto::App::Utils::Timer ; 
 use Qto::App::IO::In::CnrPostPrms ; 
 use Qto::App::Db::In::RdrDbsFactory ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $appConfig      = {} ;
 our $objLogger      = {} ;
@@ -29,7 +30,7 @@ sub doLanding {
    my $dat              = {}  ; 
    $appConfig		 		= $self->app->get('AppConfig');
    $objLogger           = 'Qto::App::Utils::Logger'->new( \$appConfig );
-   $db                  = $self->doResolveDbName ( $db ) ;
+   $db                  = toEnvName ( $db , $appConfig) ;
 
    $self->doRenderPageTemplate($http_code,$msg,$db);
 }
@@ -75,20 +76,6 @@ sub setEmptyIfNull {
    return $word ; 
 }
 
-
-sub doResolveDbName {
-   my $self                = shift ; 
-   my $db                  = shift ; 
-   my $item                = shift ; 
-   my @env_prefixes        = ( 'dev_' , 'tst_' , 'qas_' , 'prd_' );
- 
-   my $db_prefix           = substr($db,0,4);
-   $appConfig		 		   = $self->app->get('AppConfig');
-   unless ( grep ( /^$db_prefix$/, @env_prefixes)) {
-      $db = $appConfig->{ 'ProductType' } . '_' . $db ; 
-   } 
-   return $db ;
-}
 
 1;
 

@@ -15,6 +15,7 @@ use Qto::App::Db::Out::WtrDbsFactory;
 use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $module_trace   = 0 ;
 our $appConfig      = {};
@@ -41,7 +42,7 @@ sub doCreateBySoleId {
    my $json = $self->req->body;
    my $perl_hash = decode_json($json) ; 
 
-   $db = $self->SUPER::doResolveDbName ( $db ) ; 
+   $db                  = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    $appConfig		      = $self->app->get('AppConfig');

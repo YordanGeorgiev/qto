@@ -14,6 +14,7 @@ use Qto::App::Db::In::RdrDbsFactory ;
 use Qto::App::IO::In::CnrUrlPrms ; 
 use Qto::App::Cnvr::CnrHsr2ToArray ;  
 use Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $appConfig          = {} ; 
 
@@ -36,7 +37,8 @@ sub doHLSelectItems {
    my $objRdrDbsFactory = {} ; 
    my $mc            = 0 ; 
  
-   $db = $self->SUPER::doResolveDbName ( $db ) ; 
+   $appConfig		   = $self->app->get('AppConfig');
+   $db               = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
 

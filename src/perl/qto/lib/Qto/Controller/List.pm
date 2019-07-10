@@ -21,6 +21,8 @@ use Qto::App::Cnvr::CnrHsr2ToArray ;
 use Qto::App::UI::WtrUIFactory ; 
 use Qto::Controller::ListLabels ;
 use Qto::App::Utils::Timer ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
+
 
 our $module_trace   = 0 ; 
 our $appConfig      = {};
@@ -43,10 +45,10 @@ sub doListItems {
    my $as               = 'grid' ; # the default form of the list control 
 
   
-   $db = $self->SUPER::doResolveDbName ( $db ) ; 
+   $appConfig		 		= $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
-   $appConfig		 		= $self->app->get('AppConfig');
  
    my $list_control     = '' ; 
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item) ;

@@ -16,6 +16,7 @@ use Qto::App::Utils::Logger;
 use Qto::App::IO::In::CnrUrlPrms ; 
 use Qto::App::IO::WtrExportFactory ; 
 use Qto::App::Utils::Timer ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $appConfig      = {};
 our $objLogger      = {} ;
@@ -40,10 +41,10 @@ sub doExportItems {
    my $cnt              = '' ; 
    my $dat              = '' ; 
 
-   $db = $self->SUPER::doResolveDbName ( $db ) ; 
+   $appConfig		 		= $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
-   $appConfig		 		= $self->app->get('AppConfig');
  
    my $as               = 'xls' ; # the default form of the Export control 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build

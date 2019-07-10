@@ -14,6 +14,7 @@ use Qto::App::Db::In::RdrDbsFactory ;
 use Qto::App::IO::In::CnrUrlPrms ; 
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $appConfig          = {} ; 
 
@@ -34,11 +35,11 @@ sub doHSelectItems {
    my $objRdrDb      = {} ; 
    my $objRdrDbsFactory = {} ; 
  
-   $db = $self->SUPER::doResolveDbName ( $db ) ; 
+   $appConfig		   = $self->app->get('AppConfig');
+   $db               = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
 
-   $appConfig		   = $self->app->get('AppConfig');
    $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
    my $objCnrUrlPrms = 'Qto::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
   

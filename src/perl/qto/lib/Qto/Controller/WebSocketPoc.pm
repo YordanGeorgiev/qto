@@ -14,6 +14,7 @@ use Qto::App::Db::In::RdrDbsFactory ;
 use Qto::App::IO::In::CnrUrlPrms ; 
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $appConfig          = {} ; 
 
@@ -45,7 +46,7 @@ sub doTestWebSocket {
    return ; 
  
 #   return unless ( $self->SUPER::isAuthorized($db) == 1 );
-#   $db = $self->SUPER::doResolveDbName ( $db ) ; 
+   #$db                  = toEnvName ( $db , $appConfig) ;
 #   $self->SUPER::doReloadProjDbMeta( $db ) ;
 #
 #   $appConfig		   = $self->app->get('AppConfig');

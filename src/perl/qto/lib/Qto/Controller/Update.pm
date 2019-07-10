@@ -17,6 +17,7 @@ use JSON;
 use Qto::App::Db::Out::WtrDbsFactory;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $module_trace   = 0 ;
 our $appConfig      = {};
@@ -43,6 +44,7 @@ sub doUpdateItemBySingleCol {
    my $perl_hash        = decode_json($json) ; 
 
    $appConfig		      = $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $appConfig) ;
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
    
