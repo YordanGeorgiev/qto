@@ -766,9 +766,6 @@ src/bash/qto/helps/run-data-load-tests.help.sh
 doc/txt/qto/funcs/run-data-load-tests.func.txt
 # ---
 src/bash/qto/funcs/run-js-unit-tests.func.sh
-src/bash/qto/funcs/run-unit-tests.func.sh
-src/bash/qto/tests/run-unit-tests.test.sh
-doc/txt/qto/funcs/run-unit-tests.func.txt
 src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrHPostgresDb.pm
 src/perl/qto/lib/Qto/Controller/ViewDoc.pm
 src/perl/qto/public/dat/tmp/xls/1

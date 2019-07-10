@@ -41,10 +41,10 @@
   * [8.2. CLARITY ON ERRORS](#82-clarity-on-errors)
 * [9. SECURITY](#9-security)
   * [9.1. AUTHENTICATION](#91-authentication)
-    * [9.1.1. Non-athentication mode](#911-non-athentication-mode)
-    * [9.1.2. Basic authentication mode](#912-basic-authentication-mode)
-    * [9.1.3. Native authentication](#913-native-authentication)
-    * [9.1.4. Web SSO authentication](#914-web-sso-authentication)
+    * [9.1.1. Non-authentication mode](#911-non-authentication-mode)
+    * [9.1.2. Basic authentication mode ( to be deprecated )](#912-basic-authentication-mode-(-to-be-deprecated-))
+    * [9.1.3. Simple Native authentication ( experimental )](#913-simple-native-authentication-(-experimental-))
+    * [9.1.4. JSON web token authentication](#914-json-web-token-authentication)
   * [9.2. AUTHRORISATION](#92-authrorisation)
 * [10. DOCUMENTATION](#10-documentation)
   * [10.1. DOCUMENTATION COMPLETENESS](#101-documentation-completeness)
@@ -287,36 +287,49 @@ The UI must present every error in a clear and concise way, so that the end-user
 ## 9. SECURITY
 A well operated instance of the qto application should have security corresponding to the data sensitivity it is operating on. 
 
+
     
 
 ### 9.1. Authentication
 There should be the following 4 modes of authentication: 
- - None - the app is open to anyone ( must be deprecated ) 
- - Basic Auth - the application uses basic http authentication via .httppasswd files ( should be deprecated ) 
- - Basic Native Auth - the application matches the passwords via blowfish encryption and stores the authentication details into the session of default of 10h
- - Web Tokens Auth - The Users should be authenticated by means of the most simplest OAauth2.0 authentication flow: 
-https://tools.ietf.org/html/rfc6749#section-5.1
+
+
 
     
 
-#### 9.1.1. Non-athentication mode
-Any qto instance should support a non-authentication mode - that is all users having http access could perform all the actions on the UI without restrictions.
+#### 9.1.1. Non-authentication mode
+Any qto instance should support a non-authentication mode - that is all users having http and/or https access could perform all the actions on the UI without any restrictions, that is the customer organisation wanting own custom solution for authentication and authorisation should be able to run an instance with non-authorisation mode.
 
     
 
-#### 9.1.2. Basic authentication mode
+#### 9.1.2. Basic authentication mode ( to be deprecated )
 An qto instance running under basic authentication mode should support single system user per project database authentication, which must have full access for the all the available actions via the web ui. 
-It is worth noting that each qto instance having access to data resources should meet the requirements on organisation's level for data access - i.e. if instance dev has full access to the dev, tst, prd project databases there is no reason of having basic authentication on the prd instance having access to the same dev, tst, prd databases. 
+It is worth noting that each qto instance having access to data resources should meet the requirements on organisation's level for data access - i.e. if instance dev has full access to the dev, tst, prd project databases there is no reason of having basic authentication on the prd instance having access to the same dev, tst, prd databases.
 
     
 
-#### 9.1.3. Native authentication
+#### 9.1.3. Simple Native authentication ( experimental )
+The application must match the passwords via blowfish encryption and store the authentication details into the session of default of 10h.
+Users should login with email and password. Users' names and other personal data MUST NOT be tracked by the application. 
+All registered users should have access to all but users related data. 
+Unregistered users should have access to the login page only. 
+If a user is not registered the error msg to the login should prompt him which e-mail to contact to be registered ( which will be the e-mail of the product owner instance ). 
+All login error msgs should be clear and displayed with red color. 
+The regular users should see only their credentials. Only the admin user should see all the users credentials , but with the passwords encrypted.
+If the admin user is able to impersonate another user it must simply mean that he/she has done that on purpose ( aka maliciously )
+
+
+
+
+
+    
+
+#### 9.1.4. JSON web token authentication
 The qto application should support native web tokens based authentication, by using as login a valid user e-mail and password, stored in the qto instance database. 
 
-    
-
-#### 9.1.4. Web SSO authentication
 The qto should support SSO authentication as described in the following RFC's. 
+The Users should be authenticated by means of the most simplest OAauth2.0 authentication flow: 
+https://tools.ietf.org/html/rfc6749#section-5.1
 
     
 

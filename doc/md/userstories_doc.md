@@ -3,6 +3,7 @@
   * [1.1. UI PERFORMANCE](#11-ui-performance)
     * [1.1.1. UI Page load times](#111-ui-page-load-times)
     * [1.1.2. UI Page parts load times](#112-ui-page-parts-load-times)
+    * [1.1.3. Login and Logout operations durations](#113-login-and-logout-operations-durations)
   * [1.2. SEARCH](#12-search)
   * [1.3. GLOBAL SEARCH MODAL DIALOG UI](#13-global-search-modal-dialog-ui)
     * [1.3.1. SearchBox autocomplete for changing the project ( databases ) ](#131-searchbox-autocomplete-for-changing-the-project-(-databases-)-)
@@ -111,6 +112,8 @@
   * [5.4. SYSTEM RELIABILITY](#54-system-reliability)
   * [5.5. EASE OF USE](#55-ease-of-use)
   * [5.6. SECURITY](#56-security)
+    * [5.6.1. Who logged in and out when](#561-who-logged-in-and-out-when)
+    * [5.6.2. Who changed what and why](#562-who-changed-what-and-why)
 * [6. ETL AND INTEGRATIONS PERSPECTIVE](#6-etl-and-integrations-perspective)
   * [6.1. DATABASE TO JSON FILES DATA LOAD](#61-database-to-json-files-data-load)
   * [6.2. JSON FILES TO DB DATA LOAD](#62-json-files-to-db-data-load)
@@ -196,6 +199,13 @@ I want to   have a maximum page load time on efficient network less than 0.5 sec
 As an UI user of the qto application 
 In order to enjoy the usage of the tool and interact efficiently   
 I want to  have a maximum page part load time on efficient network less than 0.5 seconds and preferably even less than 0.3 seconds
+
+    
+
+#### 1.1.3. Login and Logout operations durations
+As an UI user of the qto application 
+In order to minimize any negative experience from authenticating myself 
+I want to be able to perfom the login and logout operations of any instance in less than 0,3 seconds. 
 
     
 
@@ -985,6 +995,22 @@ I want to generally perform any command the system within the sysadmin scope via
 As the SysAdmin
 In order to be able to provide the best possible security level of operation for the qto instance I am responsible for
 I want to have pre-defined and clear set of tasks and activities to perform related to the security. 
+
+    
+
+#### 5.6.1. Who logged in and out when
+As the SysAdmin
+In order to provide the best possible security for the data of my organisation 
+I want to be able to provide easily and quickly answer to the question :
+Who logged in and out when?
+
+    
+
+#### 5.6.2. Who changed what and why
+As the SysAdmin
+In order to provide the best possible security for the data of my organisation 
+I want to be able to provide easily and quickly answer to the question :
+Who changed what and why?
 
     
 

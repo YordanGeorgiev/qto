@@ -18,6 +18,9 @@
     * [2.2.1. start the application layer](#221-start-the-application-layer)
     * [2.2.2. stop the application layer](#222-stop-the-application-layer)
     * [2.2.3. Restart OS network service](#223-restart-os-network-service)
+  * [2.3. SECURITY RELATED OPERATIONS](#23-security-related-operations)
+    * [2.3.1. Add, modify and delete new users to the application in the basic qto native authentication mode ( the default one )](#231-add,-modify-and-delete-new-users-to-the-application-in-the-basic-qto-native-authentication-mode-(-the-default-one-))
+    * [2.3.2. Add, modify and delete new users to the application in the basic http mode ( the default one )](#232-add,-modify-and-delete-new-users-to-the-application-in-the-basic-http-mode-(-the-default-one-))
 * [3. BACKUP AND RESTORE](#3-backup-and-restore)
   * [3.1. BACKUP A DATABASE](#31-backup-a-database)
   * [3.2. RESTORE A DATABASE](#32-restore-a-database)
@@ -65,8 +68,8 @@
   * [8.14. DOD CHECK-LIST WALKTHROUGH](#814-dod-check-list-walkthrough)
   * [8.15. THE FEATURE OR FUNCTIONALITY CURRENT DESCRIPTION IS ADDED IN THE DOCS](#815-the-feature-or-functionality-current-description-is-added-in-the-docs)
   * [8.16. THE RELATED REQUIREMENT IS ADDED IN THE REQUIREMENTS DOCUMENT](#816-the-related-requirement-is-added-in-the-requirements-document)
-  * [8.17. AT LEAST 2 TIMES PASSED UNIT TESTS RUN IN EACH ENVIRONMENT INSTANCE](#817-at-least-2-times-passed-unit-tests-run-in-each-environment-instance)
-  * [8.18. AT LEAST 2 TIMES PASSED INTEGRATION TESTS RUN IN EACH ENVIRONMENT INSTANCE](#818-at-least-2-times-passed-integration-tests-run-in-each-environment-instance)
+  * [8.17. AT LEAST 2 TIMES PASSED FUNCTIONAL AND JS TESTS RUN ](#817-at-least-2-times-passed-functional-and-js-tests-run-)
+  * [8.18. AT LEAST 2 TIMES PASSED INTEGRATION TESTS  IN EACH ENVIRONMENT INSTANCE](#818-at-least-2-times-passed-integration-tests-in-each-environment-instance)
   * [8.19. DEPLOYMENT TO THE TEST ENVIRONMENT](#819-deployment-to-the-test-environment)
   * [8.20. CHECK THAT ALL THE FILES IN THE DEPLOYMENT PACKAGE ARE THE SAME AS THOSE IN THE LATEST COMMIT OF THE DEV GIT BRANCH. ](#820-check-that-all-the-files-in-the-deployment-package-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
   * [8.21. RESTART THE APPLICATION LAYER](#821-restart-the-application-layer)
@@ -201,6 +204,26 @@ To stop the application layer in development mode use the morbo command ( debug 
 Sometimes you might just need to restart the whole network service on Ubuntu:
 
     sudo /etc/init.d/networking restart
+
+### 2.3. Security related operations
+There are 3 security modes of operations in qto:
+ - none authenticative one ( no login , all can be changed by anyone )
+ - basic http authentication mode ( http passwords are stored in htpasswd file
+ - native authentication mode - the user credentials are stored per db
+
+    
+
+#### 2.3.1. Add, modify and delete new users to the application in the basic qto native authentication mode ( the default one )
+You as the owner of the instance you are running must be aware that the requests to register to the instances you are operating will come via e-mail. 
+Simply add, update and delete users in the users table and sent the password with prompt to edit it to the new user.
+
+    
+
+#### 2.3.2. Add, modify and delete new users to the application in the basic http mode ( the default one )
+Use the following http password generator:
+http://www.htaccesstools.com/htpasswd-generator/
+
+    echo <<generated pass>> >> /cnf/sec/passwd/<<env_db>>'.htpasswd'
 
 ## 3. BACKUP AND RESTORE
 You could easily add those commands to your crontab for scheduled execution - remember to add the absolution patsh of the qto.sh entry script.
@@ -371,7 +394,7 @@ No code should be merged into the development branch without broad testing cover
 The tst branch is dedicated for testing of all the tests, the deployment, performance testing and configuration changes. Should you need to perform bigger than a small hotfix changes you must branch the tst branch into a separate dev--feature branch and re-run the integration testing and approval all over. 
 At the end all the integration tests should be behind this shell call. 
 
-    export qto_project=""; bash src/bash/qto/qto.sh -a run-integration-tests
+    bash src/bash/qto/qto.sh -a run-integration-tests
 
 ### 6.7. Quality assurance in the qas branch
 At this phase all the tests with all the expected functionalities should work at once. No small hotfixes are allowed - if a need arises new branch is created to the tst branch The quality assurance
@@ -443,7 +466,7 @@ Problems are usually entities which last for longer time period.
 
     
 
-### 8.5. Feature branch creation
+### 8.5. feature branch creation
 Create the feature branch by using the following naming convention:
  - dev--&lt;&lt;short-feature-title&gt;&gt;
 
@@ -519,18 +542,19 @@ The related requirement is added in the requirements document - there might be o
 
     
 
-### 8.17. At least 2 times passed unit tests run in each environment instance
-At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. 
+### 8.17. At least 2 times passed functional and js tests run 
+Use the following shell actions ( Note that since v0.6.7 as authentication is required for most of the web-actions the QTO_ONGOING_TEST environmental variable has to be set to 1 to run those separately) :
 
-    
+    bash src/bash/qto/qto.sh -a run-js-tests
+    bash src/bash/qto/qto.sh -a run-functional-tests
 
-### 8.18. At least 2 times passed integration tests run in each environment instance
-At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. 
+### 8.18. At least 2 times passed integration tests  in each environment instance
+At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. Since v0.6.7 as authentication is required for most of the web-actions the QTO_ONGOING_TEST environmental variable has to be set to 1 to run those separately. 
 
-    
+    bash src/bash/qto/qto.sh -a run-integration-tests
 
 ### 8.19. Deployment to the test environment
-Deploy to the test environment as follows:
+Deploy to the test environment as shown in the code snippet bellow. Re-run the tests via the tests shell actions. 
 
     # deploy to the tst environment
     bash src/bash/qto/qto.sh -a to-tst

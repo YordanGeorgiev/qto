@@ -78,6 +78,7 @@ You could:
 
 ## 3. DEMO
 You can check the following http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/enduser_guide_doc of the web app, additionally every doc bellow has it's "it-doc" link aka the "native" qto document format …
+Use the "test.user@gmail.com" and "secret" credentials to login or even better try to login with your own e-mail and request access from the admin e-mail displayed to the error msg ...
 
     
 

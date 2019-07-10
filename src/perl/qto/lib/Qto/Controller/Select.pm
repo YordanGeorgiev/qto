@@ -58,7 +58,8 @@ sub doSelectItems {
 
    $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb            = $objRdrDbsFactory->doSpawn ( $rdbms_type );
-   ($ret, $msg, $hsr2)   = $objRdrDb->doSelect($db, $item); # doSelect
+   my $caller_email     = $self->session( 'app.user' );
+   ($ret, $msg, $hsr2)  = $objRdrDb->doSelect($db, $item,$caller_email); # doSelect
 
    if ( $ret != 0 ) {
       $http_code = $ret ; 
