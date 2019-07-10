@@ -442,7 +442,11 @@ src/sql/pgsql/qto/35.create-table-release_issues.sql
 src/sql/pgsql/qto/36.create-table-enduser_issues.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/91.create-table-test_empty_table.sql
+<<<<<<< HEAD
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.wip
+=======
+src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.sql
+>>>>>>> 1154159e... qto-190705172236 separate the OS binary dependencies from the postgres ones ..
 src/sql/pgsql/qto/93.create-table-benchmarks.sql
 src/sql/pgsql/qto/94.create-table-test_item.sql
 src/sql/pgsql/qto/95.01.create-table-test_hierarchy_table.sql
@@ -850,9 +854,11 @@ src/perl/qto/lib/auto/Qto/Controller/WebSocketPoc/autosplit.ix
 src/perl/qto/lib/auto/SetGetableChild/autosplit.ix
 dat/mix
 doc/gliffy//multi-env-setup.gliffy
-dat/mix/2019/2019-07/2019-07-09
-dat/mix/2019/2019-07/2019-07-09/sql
-dat/mix/2019/2019-07/2019-07-09/sql/dev_qto
-dat/mix/2019/2019-07/2019-07-09/sql/dev_qto/dev_qto.20190709_210610.insrt.dmp.sql
-dat/mix/2019/2019-07/2019-07-09/xls
-dat/mix/2019/2019-07/2019-07-09/xls/qto.all.20190709_000000.xlsx
+dat/mix/2019/2019-07/2019-07-10
+dat/mix/2019/2019-07/2019-07-10/.DS_Store
+dat/mix/2019/2019-07/2019-07-10/sql
+dat/mix/2019/2019-07/2019-07-10/sql/dev_qto
+dat/mix/2019/2019-07/2019-07-10/sql/dev_qto/dev_qto.20190710_111911.insrt.dmp.sql
+dat/mix/2019/2019-07/2019-07-10/tmp
+dat/mix/2019/2019-07/2019-07-10/xls
+dat/mix/2019/2019-07/2019-07-10/xls/qto.all.20190710_000000.xlsx
