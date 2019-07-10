@@ -213,8 +213,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          } #eof foreach like-by pair
 			for (1..4) { chop ( $sql ) } ;
 
-         print "\n\nsql: \n $sql \n\n" ; 
-         print "STOP vim +167 `find . -name RdrPostgresDb.pm` sql just before the return" ; 
+         #debug rint "\n\nsql: \n $sql \n\n" ; 
+         #debut rint "STOP vim +167 `find . -name RdrPostgresDb.pm` sql just before the return" ; 
          #$sql .= ' ) '  ;
 			return ( 0 , "" , $sql ) ; 
 

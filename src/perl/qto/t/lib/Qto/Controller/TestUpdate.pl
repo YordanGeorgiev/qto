@@ -51,7 +51,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    # debug p $res ; 
 
 
-   $exp_err_msg = 'update failed :: cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
+   $exp_err_msg = 'update failed :: cannot connect to the "dev_non_existent_db" database: FATAL:  database "dev_non_existent_db" does not exist' ; 
    $url = '/non_existent_db/update/test_update_table' ; 
 
 

@@ -47,9 +47,12 @@ doRunFunctionalTests(){
 	sleep $sleep_interval; clearTheScreen ; 
 
    doLog "INFO START testing controllers"
-   find src/perl/qto/t/lib/Qto/Controller/ -type f -name '*.pl' -exec perl {} \;
-   doLog "INFO STOP  testing controllers"
-	sleep $sleep_interval; clearTheScreen ; 
+   while read -r f ; do 
+      doLog "INFO START functional test for $f"
+      perl $f ;
+      doLog "INFO STOP  functional test for $f"
+      clearTheScreen
+   done < <(find src/perl/qto/t/lib/Qto/Controller/ -print -type f -name '*.pl'|sort)
 
    export QTO_ONGOING_TEST=0
 }

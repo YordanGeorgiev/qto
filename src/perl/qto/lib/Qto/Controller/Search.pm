@@ -18,6 +18,7 @@ use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
 use Qto::App::Utils::Timer ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 my $module_trace        = 0 ;
 our $appConfig          = {};
@@ -44,12 +45,12 @@ sub doSearchItems {
    my $srch_control     = 'srch-grid' ; 
    my $notice           = '' ; 
    
-   $db = $self->SUPER::doResolveDbName ( $db ) ; 
 
+   $appConfig		 		= $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthorized($db) == 1 ); 
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    
-   $appConfig		 		= $self->app->get('AppConfig');
    $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
    
    $objCnrUrlPrms = 

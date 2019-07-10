@@ -2,6 +2,7 @@ package Qto::Controller::BaseController ;
 use strict ; use warnings ; 
 
 use Mojo::Base 'Mojolicious::Controller';
+use Mojolicious::Sessions; 
 use Data::Printer ; 
 
 our $module_trace    = 0 ; 
@@ -12,22 +13,6 @@ our $rdbms_type      = 'postgres' ;
 use Qto::App::Mdl::Model ; 
 use Qto::App::Db::In::RdrDbsFactory ; 
 use Qto::App::Cnvr::CnrHsr2ToHsr2 ; 
-use Mojolicious::Sessions; 
-
-
-sub doResolveDbName {
-   my $self                = shift ; 
-   my $db                  = shift ; 
-   my $item                = shift ; 
-   my @env_prefixes        = ( 'dev_' , 'tst_' , 'qas_' , 'prd_' );
- 
-   my $db_prefix           = substr($db,0,4);
-   $appConfig		 		   = $self->app->get('AppConfig');
-   unless ( grep ( /^$db_prefix$/, @env_prefixes)) {
-      $db = $appConfig->{ 'ProductType' } . '_' . $db ; 
-   } 
-   return $db ;
-}
 
 
 sub doReloadProjDbMeta {

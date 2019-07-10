@@ -15,6 +15,7 @@ use Scalar::Util qw /looks_like_number/;
 use Qto::Controller::PageFactory ; 
 use Qto::App::Utils::Logger;
 use Qto::App::Utils::Timer ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $module_trace   = 0 ; 
 our $appConfig      = {};
@@ -33,11 +34,11 @@ sub doViewItems {
    my $view_control     = '' ; 
    my $as               = 'doc' ; 
 
-   $db = $self->SUPER::doResolveDbName ( $db ) ; 
+   $appConfig		 		= $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthorized($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
 
-   $appConfig		 		= $self->app->get('AppConfig');
    $objModel            = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db ) ;
 
    ( $ret , $msg , $view_control ) = $self->doBuildViewPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
