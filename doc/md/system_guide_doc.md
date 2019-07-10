@@ -16,6 +16,12 @@
     * [2.3.2. Back-End](#232-back-end)
 * [3. APPLICATION CONTROL FLOW ](#3-application-control-flow-)
   * [3.1. SHELL CONTROL FLOW](#31-shell-control-flow)
+    * [3.1.1. Front-End](#311-front-end)
+    * [3.1.2. Back-End](#312-back-end)
+* [4. SECURITY](#4-security)
+  * [4.1. NON-SECURITY MODE](#41-non-security-mode)
+  * [4.2. BASIC HTTP SECURITY MODE](#42-basic-http-security-mode)
+  * [4.3. SIMPLE NATIVE SECURITY MODE ( EXPERIMENTAL )](#43-simple-native-security-mode-(-experimental-))
 
 
 
@@ -111,6 +117,38 @@ This section provides a generic control flow description for the shell based and
 
 ### 3.1. Shell control flow
 The shell control flow is based on the control model input output architecture. 
+
+    
+
+#### 3.1.1. Front-End
+The Mojolicious Web Framework runs on top of a perl instance, which serves the back-end requests and passes back and forth json, as well as the ui Mojo templates dynamically, which combined with the vue template create the generic ui. 
+
+    
+
+#### 3.1.2. Back-End
+The id's of the tables which ARE VISIBLE to the end users ui are big integers, which are formed by the concatenation of the year, month, day, hour, minutes and second in which the row in the table is created. 
+
+    
+
+## 4. SECURITY
+This section provides an overview of the security of a system operating the qto application. 
+
+    
+
+### 4.1. Non-security mode
+In the non-security mode the application does NOT authenticate any one. Both runs over https and ht
+
+    
+
+### 4.2. Basic http security mode
+in this mode different http passwords can be registed. The following web page can be used for that : 
+http://www.htaccesstools.com/htpasswd-generator/
+
+    
+
+### 4.3. Simple native security mode ( EXPERIMENTAL )
+This feature is experimental as of v0.6.7. It simply means that it needs much more testing in real-life scenarios to provide the level of centainty promised by it. In this mode the user credentials - email and password are stored in the users table with a blowfish encryption. And all but the login page need a match for the e-mail with the respective password. 
+Sessions are used for storing the state of the authentication, which is entirely handled by the Mojolicious web framework - all data gets serialized to json and stored Base64 encoded on the client-side, but is protected from unwanted changes with a HMAC-SHA1 signature. 
 
     
 

@@ -296,6 +296,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
             $list =~ s/,/','/g  ; 
 				$sql .= " $nodeMayBe$col $op ('$list')" if ( $op eq 'in' );
          }
+
       	return ( 0 , "" , $sql) ;
       } elsif ( @$cols or @$vals or @$ops )  {
 
@@ -893,6 +894,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $self                   = shift ; 
       my $db                     = shift || croak 'no db passed !!!' ;  
       my $table                  = shift || croak 'no table passed !!!' ; 
+      my $caller_email           = shift ; 
       my $ret                    = 1 ; 
       my $msg                    = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
       my $dbh                    = {} ;         # this is the database handle
@@ -933,6 +935,12 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          $columns_to_select , count(*) OVER () as rows_count
          FROM $table 
          WHERE 1=1 " ; 
+
+      if ( defined $caller_email ) {
+         if ( $table eq 'users' and $caller_email ne $appConfig->{'AdminEmail'} ){
+            $str_sql .= "AND email = '" . $caller_email . "'"
+         }
+      }
       
       my $like_clause = '' ; 
 		( $ret , $msg , $like_clause ) = $self->doBuildLikeClause ( $db , $table  ) ; 
