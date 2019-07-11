@@ -13,8 +13,8 @@ doMojoHypnotoadStart(){
       source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh" && \
       doParseCnfEnvVars "$product_instance_dir/cnf/$run_unit.$env_type.$host_name.cnf"
 
-   export MOJO_MODE="$env_type"
-   test -z "$MOJO_MODE" && export MOJO_MODE='prd'
+   export MOJO_LOG_LEVEL='error'
+   export MOJO_MODE='production'
 
    cd src/perl/qto/script
    hypnotoad  qto  &

@@ -235,7 +235,7 @@ Any new feature which does not meet this requirement should be disregarded or im
     
 
 ### 6.2. Login, logout
-Every login and logout operation MUST complete in less than 0.3 seconds in modern network environments
+Every login and logout operation MUST complete in less than 0.3 seconds in modern network environments. 
 
     
 
@@ -314,12 +314,10 @@ Users should login with email and password. Users' names and other personal data
 All registered users should have access to all but users related data. 
 Unregistered users should have access to the login page only. 
 If a user is not registered the error msg to the login should prompt him which e-mail to contact to be registered ( which will be the e-mail of the product owner instance ). 
-All login error msgs should be clear and displayed with red color. 
+All login error msgs should be clear and displayed with red colour. 
 The regular users should see only their credentials. Only the admin user should see all the users credentials , but with the passwords encrypted.
 If the admin user is able to impersonate another user it must simply mean that he/she has done that on purpose ( aka maliciously )
-
-
-
+The sessions of different dev, tst and prod app layer instances should not intermix within the multiple open processes / threads of the same browser of the same user.
 
 
     

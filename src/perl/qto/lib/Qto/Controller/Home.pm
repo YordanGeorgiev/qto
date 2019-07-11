@@ -49,7 +49,7 @@ sub doRenderPageTemplate {
    $msg = "$db home" unless $msg ; 
    $self->res->code($http_code) ; 
 
-   my $template_name    = 'Home' ; 
+   my $template_name    = 'home' ; 
    my $template         = 'pages/' . $template_name . '/' . $template_name ; 
 
    my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
