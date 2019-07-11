@@ -11,7 +11,7 @@ use Data::Printer ;
 
 use parent qw(Qto::Controller::BaseController);
 
-use Qto::App::Db::In::RdrDbsFactory;
+use Qto::App::Db::In::RdrDbsFcry;
 use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
@@ -53,7 +53,7 @@ sub doQueryItems {
    } 
 
    my $objCnrUrlPrms  = {} ; 
-   my $objRdrDbsFactory = {} ; 
+   my $objRdrDbsFcry = {} ; 
    my $objRdrDb         = {} ; 
    my $hsr2             = {};
    my $http_code        = 400 ;
@@ -73,8 +73,8 @@ sub doQueryItems {
       return ; 
    } 
 
-   $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-	$objRdrDb = $objRdrDbsFactory->doSpawn("$rdbms_type");
+   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+	$objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
    ($ret, $msg , $hsr2 ) = $objRdrDb->doGlobalSrchIntoHashRef(\$objModel );
 
    if ( $ret == 0 ) {

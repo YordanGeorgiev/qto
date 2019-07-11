@@ -13,7 +13,7 @@ use Data::Printer ;
 use Data::Dumper; 
 
 use Qto::Controller::PageFactory ; 
-use Qto::App::Db::In::RdrDbsFactory;
+use Qto::App::Db::In::RdrDbsFcry;
 use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
@@ -33,7 +33,7 @@ sub doSearchItems {
    
    my $objModel         = {} ;
    my $objCnrUrlPrms    = {} ; 
-   my $objRdrDbsFactory = {} ; 
+   my $objRdrDbsFcry = {} ; 
    my $objRdrDb         = {} ; 
    my $ret              = 0;
    my $msg              = 'unknown error during search';

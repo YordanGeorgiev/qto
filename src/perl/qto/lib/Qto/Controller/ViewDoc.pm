@@ -8,7 +8,7 @@ use Scalar::Util qw /looks_like_number/;
 
 use Qto::App::Utils::Logger;
 use Qto::App::IO::In::CnrUrlPrms ; 
-use Qto::App::Db::In::RdrDbsFactory;
+use Qto::App::Db::In::RdrDbsFcry;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::UI::WtrUIFactory ; 
 
@@ -42,14 +42,14 @@ sub doBuildViewControl {
    my $ret           	= 1 ; 
    my $control       	= '' ; 
    my $mhsr2 				= {};
-   my $objRdrDbsFactory = {} ; 
+   my $objRdrDbsFcry = {} ; 
    my $objRdrDb 			= {} ; 
    my $objWtrUIFactory 	= {} ; 
    my $objUIBuilder 		= {} ; 
    my $cols             = () ; 
 
-   $objRdrDbsFactory    = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
-   $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
+   $objRdrDbsFcry    = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel ) ;
+   $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
    ( $ret , $msg , $cols) = $objModel->doGetItemsDefaultPickCols( $appConfig , $db , $item ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 

@@ -6,7 +6,7 @@ use Mojolicious::Sessions ;
 use Data::Printer ; 
 use Qto::App::Utils::Timer ; 
 use Qto::App::IO::In::CnrPostPrms ; 
-use Qto::App::Db::In::RdrDbsFactory ; 
+use Qto::App::Db::In::RdrDbsFcry ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $appConfig      = {} ;
@@ -24,7 +24,7 @@ sub doLoginUser {
    my $ret              = 1 ; 
    my $msg              = 'unknown error during global text search ';
    my $msg_color        = 'red' ;
-   my $objRdrDbsFactory = {} ; 
+   my $objRdrDbsFcry = {} ; 
    my $objRdrDb         = {} ; 
    my $hsr              = {};
    my $http_code        = 400 ;
@@ -56,8 +56,8 @@ sub doLoginUser {
       return ;
    } 
 
-   $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-	$objRdrDb = $objRdrDbsFactory->doSpawn("$rdbms_type");
+   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+	$objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
    ($http_code, $msg , $hsr ) = $objRdrDb->doNativeLogonAuth($email,$epass);
    if ( $http_code == 200 ) {
       my $objCnrEncrypter  = 'Qto::App::IO::In::CnrEncrypter'->new();

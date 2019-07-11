@@ -14,7 +14,7 @@ package Qto::App::IO::Out::WtrExporterXls ;
 
    use Qto::App::Utils::Logger ; 
    use Qto::App::Utils::Timer ; 
-   use Qto::App::Db::In::RdrDbsFactory ; 
+   use Qto::App::Db::In::RdrDbsFcry ; 
    use Qto::App::IO::Out::WtrXls ; 
 
    our $module_trace      = 1 ; 
@@ -35,8 +35,8 @@ package Qto::App::IO::Out::WtrExporterXls ;
       my $rdbms_type       = 'postgres' ; 
       my $xls_file         = '' ; 
 
-      my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel ) ;
-      my $objRdrDb = $objRdrDbsFactory->doSpawn ( $rdbms_type ) ; 
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel ) ;
+      my $objRdrDb = $objRdrDbsFcry->doSpawn ( $rdbms_type ) ; 
       
       ( $ret , $msg , $msr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;
       return ( $ret , $msg ) unless $ret == 0 ; 

@@ -11,7 +11,7 @@ our $objLogger       = {} ;
 our $rdbms_type      = 'postgres' ; 
 
 use Qto::App::Mdl::Model ; 
-use Qto::App::Db::In::RdrDbsFactory ; 
+use Qto::App::Db::In::RdrDbsFcry ; 
 use Qto::App::Cnvr::CnrHsr2ToHsr2 ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
@@ -28,7 +28,7 @@ sub doReloadProjDbMeta {
    # reload the columns meta data ONLY after the meta_columns has been requested
    return if ( exists ( $appConfig->{ $db . '.meta' } ) && $item ne 'meta_columns' ); 
 
-   my $objRdrDbsFactory    = {} ; 
+   my $objRdrDbsFcry    = {} ; 
    my $objRdrDb            = {} ; 
    my $msr2                = {} ; 
    my $ret                 = 1 ; 
@@ -38,8 +38,8 @@ sub doReloadProjDbMeta {
    $objModel               = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
     
-   $objRdrDbsFactory       = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig, \$objModel );
-   $objRdrDb               = $objRdrDbsFactory->doSpawn( $rdbms_type );
+   $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig, \$objModel );
+   $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type );
    ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMeta( $db ) ; 
 
    $appConfig->{ "$db" . '.meta' } = $msr2 ; # chk: it-181101180808

@@ -1,4 +1,4 @@
-package Qto::App::Db::Out::WtrDbsFactory ; 
+package Qto::App::Db::Out::WtrDbsFcry ; 
 
 	use strict; use warnings;
 	

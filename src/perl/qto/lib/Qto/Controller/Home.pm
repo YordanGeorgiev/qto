@@ -5,7 +5,7 @@ use Mojo::Base 'Mojolicious::Controller';
 use Data::Printer ; 
 use Qto::App::Utils::Timer ; 
 use Qto::App::IO::In::CnrPostPrms ; 
-use Qto::App::Db::In::RdrDbsFactory ; 
+use Qto::App::Db::In::RdrDbsFcry ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $appConfig      = {} ;
@@ -22,7 +22,7 @@ sub doLanding {
    my $db               = $self->stash('db');
    my $ret              = 1 ; 
    my $msg              = '' ;
-   my $objRdrDbsFactory = {} ; 
+   my $objRdrDbsFcry = {} ; 
    my $objRdrDb         = {} ; 
    my $hsr              = {};
    my $http_code        = 200 ;

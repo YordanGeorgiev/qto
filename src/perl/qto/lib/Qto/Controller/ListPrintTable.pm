@@ -8,7 +8,7 @@ use Carp ;
 use Mojo::Base 'Mojolicious::Controller';
 use List::Util 1.33 'any';
 
-use Qto::App::Db::In::RdrDbsFactory;
+use Qto::App::Db::In::RdrDbsFcry;
 use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::UI::WtrUIFactory ; 
@@ -43,7 +43,7 @@ sub doBuildListControl {
    my $ret           	= 1 ; 
    my $control       	= '' ; 
    my $mhsr2 				= {};
-   my $objRdrDbsFactory = {} ; 
+   my $objRdrDbsFcry = {} ; 
    my $objRdrDb 			= {} ; 
    my $objWtrUIFactory 	= {} ; 
    my $objUIBuilder 		= {} ; 
