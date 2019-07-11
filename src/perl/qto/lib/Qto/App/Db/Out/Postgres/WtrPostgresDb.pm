@@ -34,7 +34,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
    our $objController                           = () ; 
    
 
-   sub doDeleteItemById {
+   sub doDeleteById {
 
 		my $self 				= shift ; 
       my $objModel       = ${ shift @_ } ; 

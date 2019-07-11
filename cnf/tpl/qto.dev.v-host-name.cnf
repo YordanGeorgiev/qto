@@ -45,10 +45,13 @@ AdminEmail=yordan.georgiev@gmail.com
 # the web host where the qto app layer instance residues 
 web_host=v-host-name
 
-# on which port the mojo should listen
+# on which port the mojo morbo should listen
 mojo_morbo_port=3001
 
-# on which port the mojo should listen
+# on which port the mojo daemon should listen
+mojo_daemon_port=441
+
+# on which port the mojo hypnotoad should listen
 mojo_hypnotoad_port=8081
 
 #PS1='qto-proj dev $(date "+%F %T") "\\u@\\h \\w $ \\n\\n '

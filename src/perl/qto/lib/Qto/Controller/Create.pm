@@ -26,7 +26,7 @@ our $rdbms_type     = 'postgre';
 # --------------------------------------------------------
 # create all the rows from db by passed db and table name
 # --------------------------------------------------------
-sub doCreateBySoleId {
+sub doCreateById {
 
    my $self             = shift;
    my $item             = $self->stash('item');

@@ -25,7 +25,7 @@ our $rdbms_type     = 'postgre';
 # --------------------------------------------------------
 # Delete all the rows from db by passed db and table name
 # --------------------------------------------------------
-sub doDeleteItemById {
+sub doDeleteById {
 
    my $self             = shift;
    my $item             = $self->stash('item');
@@ -64,7 +64,7 @@ sub doDeleteItemById {
    $objWtrDbsFactory
       = 'Qto::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
    $objWtrDb = $objWtrDbsFactory->doSpawn("$rdbms_type");
-   ($ret, $msg) = $objWtrDb->doDeleteItemById(\$objModel, $item);
+   ($ret, $msg) = $objWtrDb->doDeleteById(\$objModel, $item);
 
    $self->res->headers->accept_charset('UTF-8');
    $self->res->headers->accept_language('fi, en');

@@ -27,7 +27,7 @@ our $rdbms_type     = 'postgre';
 # --------------------------------------------------------
 # Update all the rows from db by passed db and table name
 # --------------------------------------------------------
-sub doUpdateItemBySingleCol {
+sub doUpdateById {
 
    my $self             = shift;
    my $item             = $self->stash('item');
