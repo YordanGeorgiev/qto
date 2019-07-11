@@ -117,9 +117,9 @@ You could access multiple projects by accessing their project databases as the f
 ### 2.2. Change projects via url
 The following 2 different databases are actually the tst and dev databases of the qto, but of course the database names could be any valid other database names:
 
-http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
+https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
-http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
+https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
 Note the upper left corner of the page contains the name of your current project database. 
 
@@ -183,7 +183,7 @@ You could filter the result the same way the filters for the select page work ( 
 
 #### 4.1.3. Error handling for non-existent db on list-items
 If the db provided in the url pattern does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out. Example url:
-http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/non_existent/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
+https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/non_existent/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
 
 
@@ -192,14 +192,14 @@ http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/non_existent/list
 
 #### 4.1.4. Error handling for non-existent item table
 If the item table requested does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out. Example:
-http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/list/non_existent_table?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
+https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/list/non_existent_table?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
 #### 4.1.5. Error handling for non-existent column
 If the column requested does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out.
 Example:
-http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/list/yearly_issues?as=grid&pick=NON_EXISTENT,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
+https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/list/yearly_issues?as=grid&pick=NON_EXISTENT,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
@@ -211,13 +211,13 @@ The listing url syntax mimics the sql select clause syntax, yet in much more sim
 ##### 4.1.6.1. The "pick" url param
 You can use the pick=col1,col2,col3 url parameter to select for only desired attributes to be show in the ui control used for listing.
 The following url demonstrates this syntax:
-http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/prd_qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
+https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/prd_qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
 ##### 4.1.6.2. The "hide" url param
 If you do not specify any attribute to pick, you could hide specific attributes by using the "hide=col1,col2,col3" syntax.
-http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/list/yearly_issues?hide=description
+https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/list/yearly_issues?hide=description
 
     
 
@@ -269,7 +269,7 @@ An error message is shown if you do not use existing operator.
 ##### 4.1.6.5. Filtering with "like"
 The filtering with the like operator translates to the SQL "like" operator- the "like-by=&lt;&lt;attr&gt;&gt;&like-val=&lt;&lt;val&gt;&gt; filtering, where &lt;&lt;attr&gt;&gt; stands for the name of the attribute to use the like operator. 
 Example:
-http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
+https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
 
     # this example url will list all the monthly_issues items having the "bug" string in their "name" attribute:
     http://host-name:3000/qto/list/monthly_issues?as=grid&like-by=name&like-val=bug
@@ -277,7 +277,7 @@ http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/list/yearly_i
 ### 4.2. Sorting an item table
 The listed table is sortable by clicking on the columns OR by navigating with the tab key on the keyboard on a column and hitting Enter. 
 The sorted column is visually shown as the active one on page load:
-http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1&where=status-eq-09-done
+https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
@@ -370,7 +370,7 @@ You open the form to edit an item from the id button on the left. A modal dialog
 #### 4.9.2. In-line edit ( UPDATE )
 The grid can be edited inline so that the data is updated to the database. White space in the cells is preserved. 
 To practice new items' creations updates and deletions to get comfortable on the app's behaviour please use first the development instances of the qto project: 
-http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
+https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
 
     
 
@@ -405,7 +405,7 @@ Nulls handling is somewhat problematic in ui. For now the behaviour by conventio
 ### 4.10. Item deletion ( DELETE )
 You could delete items by clicking the delete button with the trash icon in the beginning of every item. 
 To practice new items' creations and deletions to get comfortable on the app's behaviour please use first the development instances of the qto project: 
-http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
+https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
 
     
 
@@ -422,7 +422,7 @@ The usual way if an error has occurred during the delete the error msg is displa
 ### 4.11. List as print-table page
 The list as print-table page is aimed at producing quickly refined result-set from the database for a further copy paste on to another html page ( wiki etc. )  or even print to paper. 
 It has all the functionalities as the list as "table" page, without the filtering from the quick search box and without the ui for the pager and page-sizer -the url params for paging and page-sizing work, however. All the url params work as in the grid listing page. 
-http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/list/yearly_issues?as=print-table&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
+https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/list/yearly_issues?as=print-table&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
 
     
 

@@ -20,8 +20,9 @@ doMojoMorboStart(){
    ulimit -n 4096
 
 	sleep "$sleep_interval"
-   export MOJO_MODE="$env_type"
-   test -z "$MOJO_MODE" && export MOJO_MODE='dev'
+   # chk: https://github.com/mojolicious/mojo/wiki/%25ENV
+   export MOJO_MODE='development'
+   export MOJO_LOG_LEVEL='debug'
    test -z "${mojo_morbo_port:-}" && export mojo_morbo_port='3001'
 
    export MOJO_LISTEN='http://*:'"$mojo_morbo_port"
@@ -32,8 +33,9 @@ doMojoMorboStart(){
 
    bash -c "morbo -w $product_instance_dir/src/perl/qto --listen $MOJO_LISTEN $product_instance_dir/src/perl/qto/script/qto" &
 	doLog "DEBUG check with netstat "
-   # sudo visudoers 
-   # usr_it ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
+
+   # requires sudo visudoers 
+   # usrqtoadmin ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
    netstat -tulpn | grep qto
  
    # if cmd arg -b is passed to the qto.sh, should not exit like ever, never because of docker
