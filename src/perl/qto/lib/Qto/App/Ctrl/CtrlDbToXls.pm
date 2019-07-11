@@ -14,7 +14,7 @@ package Qto::App::Ctrl::CtrlDbToXls ;
 
    use parent 'Qto::App::Utils::OO::SetGetable' ;
    use Qto::App::Utils::Logger ; 
-   use Qto::App::Db::In::RdrDbsFactory ; 
+   use Qto::App::Db::In::RdrDbsFcry ; 
    use Qto::App::IO::Out::WtrXls ; 
    use Qto::App::Mdl::Model ; 
 
@@ -62,8 +62,8 @@ package Qto::App::Ctrl::CtrlDbToXls ;
       my $db                     = $objModel->get( 'env.postgres_db_name' );
 	   push ( @tables , split(',',$tables ) ) ; 
 
-      my $objRdrDbsFactory       = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel  ) ; 
-      my $objRdrDb         = $objRdrDbsFactory->doSpawn("$rdbms_type");
+      my $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel  ) ; 
+      my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       ($ret, $msg , $amsr2 )     = $objRdrDb->doLoadProjDbMetaData( $db );
       return ( $ret , $msg ) unless $ret == 0 ; 

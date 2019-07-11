@@ -11,7 +11,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 	use Carp ; 
 
    use Qto::App::Utils::Logger ; 
-   use Qto::App::Db::In::RdrDbsFactory ; 
+   use Qto::App::Db::In::RdrDbsFcry ; 
    use Qto::App::Utils::Timer ; 
 
 
@@ -49,8 +49,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAdminUser ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
-      my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-      my $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+      my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
          $ret = 400 ; 
@@ -105,8 +105,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
-      my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-      my $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+      my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
          $ret = 400 ; 
@@ -142,6 +142,71 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
       return ( $ret , $msg ) ; 
    }
+   
+   sub doHInsertRow {
+   
+		my $self 				= shift ; 
+      my $db               = shift ; 
+      my $table            = shift ; 
+      my $id               = shift ; 
+      my $seq              = shift ; 
+
+      my $ret              = 0 ; 
+      my $msg              = '' ; 
+   
+
+      my $dbh              = {} ;         # this is the database handle
+      my $sth              = {} ;         # the statement handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      
+      
+      ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+      my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
+
+      if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
+         $ret = 400 ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
+         return ( $ret , $msg ) ; 
+      }
+
+      # this basically restricts the application from creating no more than 100 new items per
+      # minute IF there are ongoing requests, which FOR NOW should suffice ...
+      no warnings 'exiting' ; 
+      for ( my $trialNum = 0 ; $trialNum < 100 ; $trialNum++ ) { 
+         $id = $id + $trialNum ; 
+         $str_sql = " 
+         INSERT INTO  $table ( id ) VALUES ( '$id' );
+         " ; 
+         eval {
+            $sth = $dbh->prepare($str_sql);  
+            # debug rint "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
+            $sth->execute() ;
+            last ; 
+         } or next ; 
+      } 
+      use warnings 'exiting' ; 
+
+      binmode(STDOUT, ':utf8');
+
+      unless ( defined ( $DBI::errstr ) ) {
+         $msg = 'CREATE OK ' ; 
+         $ret = 0 ; 
+         return ( $ret , $msg ) ; 
+      } else {
+         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $msg = "$DBI::errstr" ; 
+         if ( $msg =~ m/duplicate key value violates unique constraint/ ){
+            $ret = 409 ; 
+         } else {
+            $ret = 400 ; 
+         }
+      }
+      return ( $ret , $msg ) ; 
+   }
 
 
    sub doInsertByItemId {
@@ -165,8 +230,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
-      my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-      my $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+      my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
          $ret = 400 ; 
@@ -234,8 +299,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
-      my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-      my $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+      my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
          $ret = 400 ; 
@@ -371,8 +436,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $str_val_list     = q{} ; 
       my $error_msg        = q{} ; 
 
-      my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
-      my $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , $self ) ; 
+      my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 		
       my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
 		my $update_time      = $objTimer->GetHumanReadableTime();
@@ -495,8 +560,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $dmhsr            = {} ; 
       my $update_time      = q{} ; 
 
-      my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , $self ) ; 
-      my $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , $self ) ; 
+      my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       ( $ret , $msg , $dmhsr ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
@@ -631,8 +696,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       
       my $dmhsr            = {} ; 
 
-      my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel , $self ) ; 
-      my $objRdrDb         = $objRdrDbsFactory->doSpawn("$rdbms_type");
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel , $self ) ; 
+      my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       $objLogger->doLogDebugMsg ( "upsert start for : db: $db table $table" );
 
@@ -811,8 +876,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $update_time      = q{} ; # must have the default value now() in db
       my $dmhsr            = {} ; 
       $db = $objModel->get('postgres_db_name');
-      my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel , $self ) ; 
-      my $objRdrDb         = $objRdrDbsFactory->doSpawn("$rdbms_type");
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel , $self ) ; 
+      my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
       
       binmode(STDIN,  ':utf8');
       binmode(STDOUT, ':utf8');

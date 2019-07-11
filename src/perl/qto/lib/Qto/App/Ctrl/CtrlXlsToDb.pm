@@ -16,7 +16,7 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
    use parent 'Qto::App::Utils::OO::AutoLoadable' ;
 
    use Qto::App::Utils::Logger ; 
-   use Qto::App::Db::Out::WtrDbsFactory ; 
+   use Qto::App::Db::Out::WtrDbsFcry ; 
    use Qto::App::IO::In::RdrDirs ; 
    use Qto::App::IO::In::RdrXls ; 
    use Qto::App::Mdl::Model ; 
@@ -100,9 +100,9 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
 
       $msg                 = 'unknown error while inserting db tables !!!' ; 
 
-      my $objWtrDbsFactory = 'Qto::App::Db::Out::WtrDbsFactory'->new( 
+      my $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new( 
             \$qto::appConfig  , \$objModel , \$self , $rdbms_type ) ; 
-      my $objWtrDb 		   = $objWtrDbsFactory->doSpawn ( "$rdbms_type" , \@tables );
+      my $objWtrDb 		   = $objWtrDbsFcry->doSpawn ( "$rdbms_type" , \@tables );
 
       p($hsr3) if $module_trace == 1 ; 
 

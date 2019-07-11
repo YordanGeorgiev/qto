@@ -14,7 +14,7 @@ use List::Util 1.33 'any';
 
 use Qto::App::Utils::Logger ; 
 use Qto::App::Utils::Timer ; 
-use Qto::App::Db::In::RdrDbsFactory ; 
+use Qto::App::Db::In::RdrDbsFcry ; 
 use Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
 use Qto::App::IO::WtrMdFactory ; 
 
@@ -35,12 +35,12 @@ sub doExport {
    my $met              = {} ; 
    my $ret              = 1 ; 
    my $cnt              = 0 ; 
-   my $objRdrDbsFactory = {} ; 
+   my $objRdrDbsFcry = {} ; 
    my $objRdrDb         = {} ; 
    my $dat              = {} ; 
  
-   $objRdrDbsFactory 	= 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   $objRdrDb            = $objRdrDbsFactory->doSpawn("$export_type");
+   $objRdrDbsFcry 	= 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+   $objRdrDb            = $objRdrDbsFcry->doSpawn("$export_type");
 
    ($rv, $msg, $dat) 	= $objRdrDb->doHSelectBranch($db , $table, $objModel->get('hselect.web-action.bid'));
    $http_code 				= $rv ;  

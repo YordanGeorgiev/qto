@@ -10,7 +10,7 @@ use Data::Printer ;
 use Data::Dumper; 
 
 use Qto::App::Utils::Logger;
-use Qto::App::Db::In::RdrDbsFactory ; 
+use Qto::App::Db::In::RdrDbsFcry ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
 use Qto::App::Cnvr::CnrHsr2ToArray ;  
 use Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
@@ -34,7 +34,7 @@ sub doHLSelectItems {
    my $objModel      = {} ; 
    my $appConfig     = {} ; 
    my $objRdrDb      = {} ; 
-   my $objRdrDbsFactory = {} ; 
+   my $objRdrDbsFcry = {} ; 
    my $mc            = 0 ; 
  
    $appConfig		   = $self->app->get('AppConfig');
@@ -49,8 +49,8 @@ sub doHLSelectItems {
    return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
       unless $objCnrUrlPrms->doValidateAndSetHSelect();
    
-   $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   $objRdrDb 			= $objRdrDbsFactory->doSpawn("$rdbms_type");
+   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+   $objRdrDb 			= $objRdrDbsFcry->doSpawn("$rdbms_type");
 
    ($http_code, $msg, $dat) 	= $objRdrDb->doHSelectBranch( $db , $item );
    my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$appConfig  ) ; 

@@ -16,7 +16,7 @@ package Qto::App::Ctrl::CtrlJsonToDb ;
    use parent 'Qto::App::Utils::OO::AutoLoadable' ;
 
    use Qto::App::Utils::Logger ; 
-   use Qto::App::Db::Out::WtrDbsFactory ; 
+   use Qto::App::Db::Out::WtrDbsFcry ; 
    use Qto::App::IO::In::RdrTextFactory ; 
    use Qto::App::IO::Out::WtrFiles ;
    use Qto::App::RAM::CnrJsonToHsr2 ; 
@@ -94,8 +94,8 @@ package Qto::App::Ctrl::CtrlJsonToDb ;
 
          next if ( keys %{ $objModel->get('hsr2') } == 0 ) ; 
 
-         my $objWtrDbsFactory = 'Qto::App::Db::Out::WtrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-         my $objWtrDb 			= $objWtrDbsFactory->doSpawn ( "$rdbms_type" );
+         my $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+         my $objWtrDb 			= $objWtrDbsFcry->doSpawn ( "$rdbms_type" );
          
          ( $ret , $msg )  = $objWtrDb->doUpsertTable( \$objModel , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 

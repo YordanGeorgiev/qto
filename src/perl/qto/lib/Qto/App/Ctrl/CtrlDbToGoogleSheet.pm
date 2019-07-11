@@ -19,7 +19,7 @@ package Qto::App::Ctrl::CtrlDbToGoogleSheet ;
    use parent 'Qto::App::Utils::OO::AutoLoadable' ;
 
    use Qto::App::Utils::Logger ; 
-   use Qto::App::Db::In::RdrDbsFactory ; 
+   use Qto::App::Db::In::RdrDbsFcry ; 
    use Qto::App::IO::In::RdrFiles ; 
    use Qto::App::IO::Out::WtrGoogleSheet ; 
    use Qto::App::Mdl::Model ; 
@@ -148,8 +148,8 @@ package Qto::App::Ctrl::CtrlDbToGoogleSheet ;
          my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
          my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
 
-         my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-	      my $objRdrDb = $objRdrDbsFactory->doSpawn("$rdbms_type");
+         my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+	      my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
       
          my $db                     = $objModel->get( 'env.postgres_db_name' );
          ( $ret , $msg  )  = $objRdrDb->doSelectRows( $db, $table ) ; 

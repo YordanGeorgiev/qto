@@ -10,7 +10,7 @@ use Data::Printer ;
 use Data::Dumper; 
 
 use Qto::App::Utils::Logger;
-use Qto::App::Db::In::RdrDbsFactory;
+use Qto::App::Db::In::RdrDbsFcry;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
@@ -40,7 +40,7 @@ sub doSelectItems {
    my $mc               = {}; # the meta-counter of the meta-data
    my $cnt              = 0 ; 
    my $objCnrUrlPrms    = {} ; 
-   my $objRdrDbsFactory = {} ; 
+   my $objRdrDbsFcry = {} ; 
    my $objRdrDb         = {} ; 
 
    $appConfig		      = $self->app->get('AppConfig');
@@ -56,8 +56,8 @@ sub doSelectItems {
       $objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
          unless $objCnrUrlPrms->doValidateAndSetSelect();
 
-   $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-   $objRdrDb            = $objRdrDbsFactory->doSpawn ( $rdbms_type );
+   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+   $objRdrDb            = $objRdrDbsFcry->doSpawn ( $rdbms_type );
    my $who     = $self->session( 'app.' . $db . '.user' );
    ($http_code, $msg, $hsr2)  = $objRdrDb->doSelectRows($db, $item,$who); # doSelect
 
@@ -103,16 +103,11 @@ sub doSelectTables {
 	my $ret        = 0;
 	my $hsr2       = {};
 
-	my $objRdrDbsFactory
-			= 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
+	my $objRdrDbsFcry
+			= 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
 
-	my $objRdrDb = $objRdrDbsFactory->doSpawn("$rdbms_type");
+	my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectTablesList(\$objModel);
-
-
-	$self->res->headers->accept_charset('UTF-8');
-	$self->res->headers->accept_language('fi, en');
-	$self->res->headers->content_type('application/json; charset=utf-8');
 
    my $dat = [] ; # an array ref holding the converted hash ref of hash refs 
    if ( $ret == 0 ) {
@@ -186,10 +181,10 @@ sub doSelectDatabases {
 	my $ret = 0;
 	my $hsr2 = {};
 
-	my $objRdrDbsFactory
-			= 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
+	my $objRdrDbsFcry
+			= 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
 
-	my $objRdrDb = $objRdrDbsFactory->doSpawn("$rdbms_type");
+	my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectDatabasesList(\$objModel);
 
    if ( $ret == 0 ) {

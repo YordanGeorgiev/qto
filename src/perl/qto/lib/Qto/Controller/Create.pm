@@ -11,7 +11,7 @@ use Data::Dumper;
 use Scalar::Util qw /looks_like_number/;
 use JSON;
 
-use Qto::App::Db::Out::WtrDbsFactory;
+use Qto::App::Db::Out::WtrDbsFcry;
 use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::IO::In::CnrPostPrms ; 
@@ -33,7 +33,7 @@ sub doCreateById {
    my $db               = $self->stash('db');
    my $rdbms_type       = 'postgres';
    my $objCnrPostPrms   = {} ; 
-   my $objWtrDbsFactory = {} ; 
+   my $objWtrDbsFcry = {} ; 
    my $objWtrDb         = {} ; 
    my $ret              = 0;
    my $msg              = 'unknown error during create item';
@@ -62,14 +62,9 @@ sub doCreateById {
       return ; 
    } 
 
-   $objWtrDbsFactory
-         = 'Qto::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
-   $objWtrDb = $objWtrDbsFactory->doSpawn("$rdbms_type");
+   $objWtrDbsFcry  = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$appConfig, \$objModel );
+   $objWtrDb = $objWtrDbsFcry->doSpawn("$rdbms_type");
    ($ret, $msg) = $objWtrDb->doInsertByItemId($item);
-
-   $self->res->headers->accept_charset('UTF-8');
-   $self->res->headers->accept_language('fi, en');
-   $self->res->headers->content_type('application/json; charset=utf-8');
 
    if ( $ret == 0 ) {
       my $http_code = 200 ; 

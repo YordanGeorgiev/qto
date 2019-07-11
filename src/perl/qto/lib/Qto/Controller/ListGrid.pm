@@ -8,7 +8,7 @@ use List::Util 1.33 'any';
 
 use Qto::App::Utils::Logger;
 use Qto::App::IO::In::CnrUrlPrms ; 
-use Qto::App::Db::In::RdrDbsFactory;
+use Qto::App::Db::In::RdrDbsFcry;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::UI::WtrUIFactory ; 
 

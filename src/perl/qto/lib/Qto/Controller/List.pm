@@ -16,7 +16,7 @@ use Scalar::Util qw /looks_like_number/;
 use Qto::App::Utils::Logger;
 use Qto::Controller::PageFactory ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
-use Qto::App::Db::In::RdrDbsFactory;
+use Qto::App::Db::In::RdrDbsFcry;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::UI::WtrUIFactory ; 
 use Qto::Controller::ListLabels ;

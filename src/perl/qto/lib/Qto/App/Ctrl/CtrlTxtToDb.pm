@@ -14,7 +14,7 @@ package Qto::App::Ctrl::CtrlTxtToDb ;
 
    use parent 'Qto::App::Utils::OO::SetGetable' ;
    use Qto::App::Utils::Logger ; 
-   use Qto::App::Db::Out::WtrDbsFactory ; 
+   use Qto::App::Db::Out::WtrDbsFcry ; 
    use Qto::App::IO::In::RdrTextFactory ; 
 	
 	our $module_trace                = 0 ; 
@@ -87,8 +87,8 @@ package Qto::App::Ctrl::CtrlTxtToDb ;
 
 
          p($hsr) if $module_trace == 1 ; 
-         my $objWtrDbsFactory    = 'Qto::App::Db::Out::WtrDbsFactory'->new( \$appConfig , $self ) ; 
-         my $objWtrDb 			   = $objWtrDbsFactory->doSpawn ( "$rdbms_type" );
+         my $objWtrDbsFcry    = 'Qto::App::Db::Out::WtrDbsFcry'->new( \$appConfig , $self ) ; 
+         my $objWtrDb 			   = $objWtrDbsFcry->doSpawn ( "$rdbms_type" );
          
          ( $ret , $msg )            = $objWtrDb->doInsertSqlHashData ( $hsr , $table ) ; 
 

@@ -10,7 +10,7 @@ use Data::Printer ;
 use Data::Dumper; 
 use JSON;
 
-use Qto::App::Db::Out::WtrDbsFactory;
+use Qto::App::Db::Out::WtrDbsFcry;
 use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::IO::In::CnrPostPrms ; 
@@ -30,20 +30,17 @@ sub doHCreateById {
    my $self             = shift;
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
-   my $rdbms_type       = 'postgres';
    my $objCnrPostPrms   = {} ; 
-   my $objWtrDbsFactory = {} ; 
+   my $objWtrDbsFcry = {} ; 
    my $objWtrDb         = {} ; 
-   my $ret              = 0;
+   my $ret              = 1;
+   my $http_code        = 400 ;
    my $msg              = 'unknown error during HCreate item';
    my $hsr2             = {};
    my $json             = $self->req->body;
    my $perl_hash        = decode_json($json) ; 
-
-   # todo:ysg 
-   p $perl_hash ; 
-   print "stop print perl_hash \n" ; 
-   
+   my $id               = $perl_hash->{'id'};
+   my $seq              = $perl_hash->{'seq'}; # the sequence of the hierarchy item
    $db                  = toEnvName ( $db , $appConfig) ;
    # todo:ysg !!!
    # return unless ( $self->SUPER::isAuthenticated($db) == 1 );
@@ -55,67 +52,28 @@ sub doHCreateById {
    $objCnrPostPrms = 
       'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel);
    
-   #unless ( $objCnrPostPrms->doValidateAndSetHCreate ( $perl_hash ) == 1 ) {
-      my $http_code = $objCnrPostPrms->get('http_code') ; 
-      $msg = $objCnrPostPrms->get('msg') ; 
-      $self->res->code($http_code ) ;
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => $http_code , 
-         'req'   => "POST " . $self->req->url->to_abs
-      });
-      return ; 
+   #"unless ( $objCnrPostPrms->doValidateAndSetHCreate ( $perl_hash ) == 1 ) {
+    #  my $http_code = $objCnrPostPrms->get('http_code') ; 
+    #  $msg = $objCnrPostPrms->get('msg') ; 
+    #  $self->res->code($http_code ) ;
+    #  $self->render( 'json' =>  { 
+    #     'msg'   => $msg,
+    #     'ret'   => $http_code , 
+    #     'req'   => "POST " . $self->req->url->to_abs
+    #  });
+    #  return ; 
    #} 
 
-   $objWtrDbsFactory
-         = 'Qto::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
-   $objWtrDb = $objWtrDbsFactory->doSpawn("$rdbms_type");
-   ($ret, $msg) = $objWtrDb->doInsertByItemId($item);
+   $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$appConfig, \$objModel );
+   $objWtrDb = $objWtrDbsFcry->doSpawn("$rdbms_type");
+   ($http_code, $msg) = $objWtrDb->doHInsertRow($db,$item,$id,$seq);
 
-   $self->res->headers->accept_charset('UTF-8');
-   $self->res->headers->accept_language('fi, en');
-   $self->res->headers->content_type('application/json; charset=utf-8');
-
-   if ( $ret == 0 ) {
-      my $http_code = 200 ; 
-      my $rows_count = 0 ; 
-      $msg = "HCreate OK for table: $item" ; 
-
-      $self->res->code($http_code);
-      $self->render( 'json' =>  { 
-           'msg'   => $msg
-         , 'ret'   => $http_code
-         , 'req'   => "POST " . $self->req->url->to_abs
-      });
-   } elsif ( $ret == 400 ) {
-
-      $self->res->code(400);
-      $self->render( 'json' =>  { 
-           'msg'   => $msg
-         , 'ret'   => 400
-         , 'req'   => "POST " . $self->req->url->to_abs
-      });
-   } elsif ( $ret == 2 ) {
-
-      $self->res->code(400);
-      $self->render( 'json' =>  { 
-         'msg'   => $msg
-         ,'ret'   => 400
-         ,'req'   => "POST " . $self->req->url->to_abs
-      });
-   } elsif ( $ret == 409) {
-
-      my $post_msg = ' while creating a new item ' ; 
-      $post_msg .= 'with the following id: ' . $perl_hash->{'id'} ; 
-      $msg .= $post_msg ; 
-      $self->res->code($ret);
-      $self->render( 'json' => { 
-         'msg'   => $msg
-         ,'ret' => $ret
-         ,'req'   => "POST " . $self->req->url->to_abs
-      })
-      ;
-   }
+   $self->res->code($http_code);
+   $self->render( 'json' =>  { 
+        'msg'   => $msg
+      , 'ret'   => $http_code
+      , 'req'   => "POST " . $self->req->url->to_abs
+   });
 }
 
 

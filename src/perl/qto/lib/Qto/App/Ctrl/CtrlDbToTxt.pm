@@ -15,7 +15,7 @@ package Qto::App::Ctrl::CtrlDbToTxt ;
    use parent 'Qto::App::Utils::OO::SetGetable' ;
    use parent 'Qto::App::Utils::OO::AutoLoadable' ;
    use Qto::App::Utils::Logger ; 
-   use Qto::App::Db::In::RdrDbsFactory ; 
+   use Qto::App::Db::In::RdrDbsFcry ; 
    use Qto::App::IO::Out::WtrTextFactory ; 
    use Qto::App::RAM::CnrHsr2ToTxt ; 
    use Qto::App::Mdl::Model ; 
@@ -71,8 +71,8 @@ package Qto::App::Ctrl::CtrlDbToTxt ;
 
       for my $table ( @tables ) { 
          my $issues_file = ();  
-         my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-         my $objRdrDb 			= $objRdrDbsFactory->doSpawn ( "$rdbms_type" );
+         my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+         my $objRdrDb 			= $objRdrDbsFcry->doSpawn ( "$rdbms_type" );
 
          ( $ret , $msg )  = 
             $objRdrDb->doSelectRows( $db , $table ) ; 

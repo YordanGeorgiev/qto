@@ -15,7 +15,7 @@ package Qto::App::Ctrl::CtrlDbToJson ;
    use parent 'Qto::App::Utils::OO::SetGetable' ;
    use parent 'Qto::App::Utils::OO::AutoLoadable' ;
    use Qto::App::Utils::Logger ; 
-   use Qto::App::Db::In::RdrDbsFactory ; 
+   use Qto::App::Db::In::RdrDbsFcry ; 
    use Qto::App::IO::Out::WtrTextFactory ; 
    use Qto::App::IO::Out::WtrFiles ;
    use Qto::App::RAM::CnrHsr2ToJson ; 
@@ -83,8 +83,8 @@ package Qto::App::Ctrl::CtrlDbToJson ;
 
       for my $table ( @tables ) { 
          my $items_file ="$out_dir/$table" . '.json' ; 
-         my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
-         my $objRdrDb 			= $objRdrDbsFactory->doSpawn( "$rdbms_type" );
+         my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+         my $objRdrDb 			= $objRdrDbsFcry->doSpawn( "$rdbms_type" );
 
          
          ( $ret , $msg )  = 

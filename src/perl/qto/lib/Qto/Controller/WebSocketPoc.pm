@@ -10,7 +10,7 @@ use Data::Printer ;
 use Data::Dumper; 
 
 use Qto::App::Utils::Logger;
-use Qto::App::Db::In::RdrDbsFactory ; 
+use Qto::App::Db::In::RdrDbsFcry ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
@@ -33,7 +33,7 @@ sub doTestWebSocket {
 #   my $dat           = [] ;
 #   my $objModel      = {} ; 
 #   my $objRdrDb      = {} ; 
-#   my $objRdrDbsFactory = {} ; 
+#   my $objRdrDbsFcry = {} ; 
 	
 	# Increase inactivity timeout for connection to 300 seconds
 	$self->inactivity_timeout(300);
@@ -56,8 +56,8 @@ sub doTestWebSocket {
 #   return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
 #      unless $objCnrUrlPrms->doValidateAndSetWebSocketPoc();
 #   
-#   $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
-#   $objRdrDb 			= $objRdrDbsFactory->doSpawn("$rdbms_type");
+#   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+#   $objRdrDb 			= $objRdrDbsFcry->doSpawn("$rdbms_type");
 #
 #   ($http_code, $msg, $dat) 	= $objRdrDb->doWebSocketPocBranch( $db , $item );
 #   my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$appConfig  ) ; 

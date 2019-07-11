@@ -1,4 +1,4 @@
-package Qto::App::Db::In::RdrDbsFactory ; 
+package Qto::App::Db::In::RdrDbsFcry ; 
 
 	use strict; use warnings;
 	

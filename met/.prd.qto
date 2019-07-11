@@ -309,10 +309,10 @@ src/perl/qto/lib/Qto/App/RAM/CnrJsonToHsr2.pm
 src/perl/qto/lib/Qto/App
 src/perl/qto/lib/Qto/App/Db
 src/perl/qto/lib/Qto/App/Db/In
-src/perl/qto/lib/Qto/App/Db/In/RdrDbsFactory.pm
+src/perl/qto/lib/Qto/App/Db/In/RdrDbsFcry.pm
 src/perl/qto/lib/Qto/App/Db/Out
-src/perl/qto/lib/Qto/App/Db/Out/WtrDbsFactory.pm
-src/perl/qto/lib/Qto/App/Db/Out/WtrDbsFactory.pm
+src/perl/qto/lib/Qto/App/Db/Out/WtrDbsFcry.pm
+src/perl/qto/lib/Qto/App/Db/Out/WtrDbsFcry.pm
 src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
 src/perl/qto/lib/Qto/App/Mdl/Model.pm
 src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm

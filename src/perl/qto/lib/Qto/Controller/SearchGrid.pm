@@ -7,7 +7,7 @@ use Carp ;
 use Mojo::Base 'Mojolicious::Controller';
 
 use Qto::App::IO::In::CnrUrlPrms ; 
-use Qto::App::Db::In::RdrDbsFactory;
+use Qto::App::Db::In::RdrDbsFcry;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::UI::WtrUIFactory ; 
 
