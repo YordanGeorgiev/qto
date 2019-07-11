@@ -37,7 +37,7 @@ Because even good intentions without transparency, proper commitment, allocation
 
 ## 2. SO, WHAT IS THIS ?!
 A generic postgres CRUDs ( s stands for search ) web based app for managing multiple databases from the same web application layer by means of simplest possible UI and/or shell tools for xls/md export, import etc. An included example application is the "qto application", which is used to manage multiple projects' issues, including itself ;o). 
-The full and extensive http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/features_doc must contain all the features and functionalities of this released version. This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture, which is in a way a reflection of the simple axiom in IT - "if there is one there will be many" ...
+The full and extensive https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/view/features_doc must contain all the features and functionalities of this released version. This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture, which is in a way a reflection of the simple axiom in IT - "if there is one there will be many" ...
 
 
 Figure: 1 
@@ -77,7 +77,7 @@ You could:
     
 
 ## 3. DEMO
-You can check the following http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/enduser_guide_doc of the web app, additionally every doc bellow has it's "it-doc" link aka the "native" qto document format …
+You can check the following https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/view/enduser_guide_doc of the web app, additionally every doc bellow has it's "it-doc" link aka the "native" qto document format …
 Use the "test.user@gmail.com" and "secret" credentials to login or even better try to login with your own e-mail and request access from the admin e-mail displayed to the error msg ...
 
     
@@ -95,42 +95,42 @@ Enable transperent collaboration.
 ### 5.1. The Installations doc
 Contains the tasks and activities to perform to get a fully operational instance of the qto application:
  - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/installations_doc.md
- - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/installations_doc
+ - https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/view/installations_doc
 
     
 
 ### 5.2. The Concepts doc
 General level concepts of the application. 
  - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/concepts_doc.md
- - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/concepts_doc
+ - https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/view/concepts_doc
 
     
 
 ### 5.3. The UserStories doc
 Naturally contains the userstories of the app. 
 - in https://github.com/YordanGeorgiev/qto/blob/master/doc/md/userstories_doc.md 
-- http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/userstories_doc
+- https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/view/userstories_doc
 
     
 
 ### 5.4. The DevOps Guide doc
 Contains content on how to develop the application + general devops info.
 - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/devops_guide_doc.md
-- http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/devops_guide_doc
+- https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/view/devops_guide_doc
 
     
 
 ### 5.5. The EndUser Guide doc
 The enduser guide contains mostly UI usage instructions:
  - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/enduser_guide_doc.md
- - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/concepts_doc
+ - https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/view/concepts_doc
 
     
 
 ### 5.6. The Requirements doc
 Contains the specs and requirements, which can be defined at the current stage of the development:
  - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/requirements_doc.md
- - http://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com:8080/qto/view/requirements_doc
+ - https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/view/requirements_doc
 
     
 
