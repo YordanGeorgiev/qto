@@ -153,8 +153,6 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
       my $ret              = 0 ; 
       my $msg              = '' ; 
-   
-
       my $dbh              = {} ;         # this is the database handle
       my $sth              = {} ;         # the statement handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
@@ -373,7 +371,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       };
 
       if ($@) {
-         $ret = 2 ; 
+         $ret = 400 ; 
          $msg = 'cannot connect to the "' . $db . '" database: ' . DBI->errstr ; 
          return ( $ret , $msg , undef ) ; 
       }

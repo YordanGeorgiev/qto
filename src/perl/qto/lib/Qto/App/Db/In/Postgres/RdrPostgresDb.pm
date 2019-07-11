@@ -495,7 +495,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $msg  = () ; 
 
       ($ret, $msg, $hsr2) = $self->doSelectTablesList(\$objModel);
-      return $table_exists unless $ret == 0 ; 
+      return 0 unless $ret == 0 ;  # aka the table does not exist 
 
 
       for my $key ( keys %$hsr2 ) {
