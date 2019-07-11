@@ -8,13 +8,14 @@ use parent qw(Qto::Controller::BaseController);
 
 use Data::Printer ; 
 use Data::Dumper; 
-use Scalar::Util qw /looks_like_number/;
 use JSON;
 
 use Qto::App::Db::Out::WtrDbsFactory;
 use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
-use Qto::App::IO::In::CnrUrlPrms ; 
+use Qto::App::IO::In::CnrPostPrms ; 
+use Scalar::Util qw /looks_like_number/;
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $module_trace   = 0 ;
 our $appConfig      = {};
@@ -31,30 +32,32 @@ sub doDeleteById {
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
    my $rdbms_type       = 'postgres';
-   my $objCnrUrlPrms  = {} ; 
+   my $objCnrPostPrms   = {} ; 
    my $objWtrDbsFactory = {} ; 
    my $objWtrDb         = {} ; 
-   my $ret = 0;
-   my $msg = 'unknown error during Delete item';
-   my $hsr2 = {};
+   my $ret              = 0;
+   my $msg              = 'unknown error during Delete item';
+   my $hsr2             = {};
+  
+   $appConfig		      = $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $appConfig);
    
-   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
 
    my $json = $self->req->body;
    my $perl_hash = decode_json($json) ; 
 
-   $appConfig		= $self->app->get('AppConfig');
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
-   $objCnrUrlPrms = 
-      'Qto::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+   $objCnrPostPrms = 
+      'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel );
 
 
-   unless ( $objCnrUrlPrms->doValidateAndSetDelete ( $perl_hash ) == 1 ) {
-      my $http_code = $objCnrUrlPrms->get('http_code') ; 
+   unless ( $objCnrPostPrms->doValidateAndSetDelete ( $perl_hash ) == 1 ) {
+      my $http_code = $objCnrPostPrms->get('http_code') ; 
       $self->res->code($http_code);
       $self->render( 'json' =>  { 
-           'msg'   => $objCnrUrlPrms->get('msg')
+           'msg'   => $objCnrPostPrms->get('msg')
          , 'ret'   => $http_code
          , 'req'   => "POST " . $self->req->url->to_abs
       });

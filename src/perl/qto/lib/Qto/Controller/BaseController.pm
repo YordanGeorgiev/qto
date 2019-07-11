@@ -22,8 +22,8 @@ sub doReloadProjDbMeta {
    my $db                  = shift ;
    my $item                = shift || '' ; 
 
-   $db = toEnvName ( $db ) ;
    $appConfig		 		   = $self->app->get('AppConfig');
+   $db = toEnvName ( $db , $appConfig ) ;
 
    # reload the columns meta data ONLY after the meta_columns has been requested
    return if ( exists ( $appConfig->{ $db . '.meta' } ) && $item ne 'meta_columns' ); 
@@ -48,14 +48,15 @@ sub doReloadProjDbMeta {
 }
 
 
-sub isAuthorized {
+sub isAuthenticated {
 
    my $self                = shift ;
    my $db                  = shift ;
-   $db = toEnvName ( $db ) ;
-   return 1 if $ENV{'QTO_ONGOING_TEST'}; # no authentication when testing if desired so !!!
 
    $appConfig		 		   = $self->app->get('AppConfig');
+   $db = toEnvName ( $db , $appConfig ) ;
+
+   return 1 if $ENV{'QTO_ONGOING_TEST'}; # no authentication when testing if desired so !!!
 
    unless ( defined ( $self->session( 'app.' . $db . '.user')) ) {
       my $url = '/' . $db . '/login' ;

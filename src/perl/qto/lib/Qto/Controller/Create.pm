@@ -14,7 +14,7 @@ use JSON;
 use Qto::App::Db::Out::WtrDbsFactory;
 use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
-use Qto::App::IO::In::CnrUrlPrms ; 
+use Qto::App::IO::In::CnrPostPrms ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $module_trace   = 0 ;
@@ -32,7 +32,7 @@ sub doCreateById {
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
    my $rdbms_type       = 'postgres';
-   my $objCnrUrlPrms    = {} ; 
+   my $objCnrPostPrms   = {} ; 
    my $objWtrDbsFactory = {} ; 
    my $objWtrDb         = {} ; 
    my $ret              = 0;
@@ -43,17 +43,16 @@ sub doCreateById {
    my $perl_hash = decode_json($json) ; 
 
    $db                  = toEnvName ( $db , $appConfig) ;
-   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    $appConfig		      = $self->app->get('AppConfig');
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
-   $objCnrUrlPrms = 
-      'Qto::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+   $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel );
    
-   unless ( $objCnrUrlPrms->doValidateAndSetCreate ( $perl_hash ) == 1 ) {
-      my $http_code = $objCnrUrlPrms->get('http_code') ; 
-      $msg = $objCnrUrlPrms->get('msg') ; 
+   unless ( $objCnrPostPrms->doValidateAndSetCreate ( $perl_hash ) == 1 ) {
+      my $http_code = $objCnrPostPrms->get('http_code') ; 
+      $msg = $objCnrPostPrms->get('msg') ; 
       $self->res->code($http_code ) ;
       $self->render( 'json' =>  { 
          'msg'   => $msg,
