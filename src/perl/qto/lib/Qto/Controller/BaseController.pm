@@ -54,14 +54,14 @@ sub isAuthenticated {
    my $db                  = shift ;
 
    $appConfig		 		   = $self->app->get('AppConfig');
-   $db = toEnvName ( $db , $appConfig ) ;
+   $db                     = toEnvName ( $db , $appConfig ) ;
 
    return 1 if $ENV{'QTO_ONGOING_TEST'}; # no authentication when testing if desired so !!!
 
    unless ( defined ( $self->session( 'app.' . $db . '.user')) ) {
       my $url = '/' . $db . '/login' ;
-      $self->session( 'app.msg' => 'please login first into ' . $db);
-      $self->session( 'app.url' => $self->req->url->to_abs );
+      $self->session( 'app.' . $db . '.msg' => 'please login first into ' . $db);
+      $self->session( 'app.' . $db . '.url' => $self->req->url->to_abs );
       $self->redirect_to( $url );
       return 0 ;
    }

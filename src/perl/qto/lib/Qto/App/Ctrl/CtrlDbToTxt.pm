@@ -75,7 +75,7 @@ package Qto::App::Ctrl::CtrlDbToTxt ;
          my $objRdrDb 			= $objRdrDbsFactory->doSpawn ( "$rdbms_type" );
 
          ( $ret , $msg )  = 
-            $objRdrDb->doSelect( $db , $table ) ; 
+            $objRdrDb->doSelectRows( $db , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
          my $objWtrTextFactory = 'Qto::App::IO::Out::WtrTextFactory'->new( \$appConfig , $self ) ; 

@@ -1,11 +1,13 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 #
 # start HCreate
+src/perl/qto/lib/Qto/Controller/Truncate.pm
+src/perl/qto/t/lib/Qto/Controller/TestTruncate.pl
 src/perl/qto/t/lib/Qto/Controller/TestHCreate.pl
-src/perl/qto/t/lib/Qto/Controller/TestCreate.pl
 src/perl/qto/lib/Qto/Controller/HCreate.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
+src/perl/qto/t/lib/Qto/Controller/TestCreate.pl
 # stop  HCreate
 # start login
 src/perl/qto/t/lib/Qto/Controller/TestLogin.pl
@@ -446,6 +448,7 @@ src/sql/pgsql/qto/34.create-table-users.sql
 src/sql/pgsql/qto/35.create-table-release_issues.sql
 src/sql/pgsql/qto/36.create-table-enduser_issues.sql
 src/sql/pgsql/qto/50.create-table-tst_paging.sql
+src/sql/pgsql/qto/90.create-table-test_truncate_table.sql
 src/sql/pgsql/qto/91.create-table-test_empty_table.sql
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.wip
 src/sql/pgsql/qto/93.create-table-benchmarks.sql
