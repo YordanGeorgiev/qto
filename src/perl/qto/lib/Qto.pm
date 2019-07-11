@@ -250,10 +250,6 @@ sub doSetRoutes {
    , action       => 'doSelectTables'
    );
    
-   $r->get('/:db/select/:item')->to(
-     controller   => 'Select'
-   , action       => 'doSelectItems'
-   );
    
    $r->get('/:db/hselect/:item')->to(
      controller   => 'HSelect'
@@ -270,6 +266,11 @@ sub doSetRoutes {
    , action       => 'doCreateById'
    );
    
+   $r->post('/:db/hcreate/:item')->to(
+     controller   => 'HCreate'
+   , action       => 'doHCreateById'
+   );
+   
    $r->post('/:db/delete/:item')->to(
      controller   => 'Delete'
    , action       => 'doDeleteById'
@@ -278,6 +279,11 @@ sub doSetRoutes {
    $r->post('/:db/update/:item')->to(
      controller   => 'Update'
    , action       => 'doUpdateById'
+   );
+   
+   $r->get('/:db/select/:item')->to(
+     controller   => 'Select'
+   , action       => 'doSelectItems'
    );
 
    $r->get('/:db/select-meta')->to(

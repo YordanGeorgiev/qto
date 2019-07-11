@@ -36,7 +36,7 @@ sub doQueryItems {
    my $msg              = 'unknown error during global text search ';
    my $msr2             = $self->doGetRsMeta() ; 
 
-   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    
    $appConfig		 		= $self->app->get('AppConfig');

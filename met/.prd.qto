@@ -1,39 +1,20 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 #
+# start HCreate
+src/perl/qto/t/lib/Qto/Controller/TestHCreate.pl
+src/perl/qto/t/lib/Qto/Controller/TestCreate.pl
+src/perl/qto/lib/Qto/Controller/HCreate.pm
+src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
+src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
+# stop  HCreate
+# start login
 src/perl/qto/t/lib/Qto/Controller/TestLogin.pl
 src/perl/qto/lib/Qto/Controller/Login.pm
 src/perl/qto/templates/pages/login
 src/perl/qto/templates/pages/login/login.html.ep
 src/perl/qto/templates/pages/home/home.html.ep
 src/perl/qto/lib/Qto/Controller/Home.pm
-# -- start deployment
-src/bash/qto/funcs/build-qto-docker-image.func.sh
-src/bash/qto/funcs/remove-docker-images.func.sh
-src/bash/qto/funcs/remove-docker-containers.func.sh
-src/docker/Dockerfile.deploy-qto.0.6.7
-src/bash/qto/funcs/run-container.func.sh
-src/bash/qto/funcs/mojo-morbo-start.func.sh
-src/bash/qto/funcs/mojo-daemon-start.func.sh
-src/bash/qto/funcs/mojo-daemon-stop.func.sh
-src/bash/qto/install/docker/install-test.sh
-src/bash/qto/install/docker/docker-entry-point.sh
-src/bash/qto/bootstrap-qto-docker.sh
-src/bash/qto/bootstrap-qto-host.sh
-src/docker/Dockerfile.deploy-quick-test
-src/bash/qto/install/docker/install-admin-utils.sh
-src/bash/qto/install/docker/install-postgres.sh
-src/bash/qto/install/docker/provision-os-users.sh
-src/bash/qto/install/docker/install-perl-modules.sh
-src/bash/qto/install/docker/
-src/bash/qto/funcs/admin/restart-postgres.func.sh
-src/bash/qto/funcs/full-clean-docker.func.sh
-src/bash/qto/tests/build-qto-docker-image.test.sh
-src/sql/pgsql/scripts/admin/grant-permissions.sql
-src/bash/qto/funcs/admin/restart-postgres.func.sh
-cnf/postgres/etc/postgresql/11/main
-cnf/postgres/etc/postgresql/11/main/pg_hba.conf
-cnf/postgres/etc/postgresql/11/main/postgresql.conf
-# -- stop  deployment
+# stop  login
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/public/poc/web-socket/web-socket.html
 src/perl/qto/public/poc/web-socket/wsclient.js
@@ -56,7 +37,34 @@ src/perl/qto/templates/pages/view-doc/components/app-template.xt.html.ep
 src/perl/qto/lib/Qto.pm
 src/bash/qto/funcs/generate-md-docs.func.sh
 doc/txt/qto/funcs/generate-md-docs.func.txt
-# -- 
+# -- start docker deployment
+src/bash/qto/funcs/build-qto-docker-image.func.sh
+src/bash/qto/funcs/remove-docker-images.func.sh
+src/bash/qto/funcs/remove-docker-containers.func.sh
+src/docker/Dockerfile.deploy-qto.0.6.8
+src/bash/qto/funcs/run-container.func.sh
+src/bash/qto/funcs/mojo-morbo-start.func.sh
+src/bash/qto/funcs/mojo-daemon-start.func.sh
+src/bash/qto/funcs/mojo-daemon-stop.func.sh
+src/bash/qto/install/docker/install-test.sh
+src/bash/qto/install/docker/docker-entry-point.sh
+src/bash/qto/bootstrap-qto-docker.sh
+src/bash/qto/bootstrap-qto-host.sh
+src/docker/Dockerfile.deploy-quick-test
+src/bash/qto/install/docker/install-admin-utils.sh
+src/bash/qto/install/docker/install-postgres.sh
+src/bash/qto/install/docker/provision-os-users.sh
+src/bash/qto/install/docker/install-perl-modules.sh
+src/bash/qto/install/docker/
+src/bash/qto/funcs/admin/restart-postgres.func.sh
+src/bash/qto/funcs/full-clean-docker.func.sh
+src/bash/qto/tests/build-qto-docker-image.test.sh
+src/sql/pgsql/scripts/admin/grant-permissions.sql
+src/bash/qto/funcs/admin/restart-postgres.func.sh
+cnf/postgres/etc/postgresql/11/main
+cnf/postgres/etc/postgresql/11/main/pg_hba.conf
+cnf/postgres/etc/postgresql/11/main/postgresql.conf
+# -- stop  docker deployment
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.pl
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.pl
 src/perl/qto/lib/Qto/Controller/BaseController.pm
@@ -151,9 +159,7 @@ src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToHsr2.pm
 src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/qto/lib/Qto/App/Db/In/Postgres/MojoPgWrapper.pm
 src/perl/qto/lib/Qto/App/UI/WtrUIFactory.pm
-src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrEncrypter.pm
-src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
 src/perl/qto/lib/Qto/App/IO/WtrExportFactory.pm
 src/perl/qto/lib/Qto/App/IO/WtrMdFactory.pm
 src/perl/qto/lib/Qto/App/IO/Out/WtrExporterXls.pm
@@ -195,7 +201,6 @@ src/perl/qto/t/lib/Qto/Controller/TestSelectPick.pl
 src/perl/qto/t/lib/Qto/Controller/TestSelectOrder.pl
 src/perl/qto/t/lib/Qto/Controller/TestSelectHide.pl
 src/perl/qto/t/lib/Qto/Controller/TestSelectWith.pl
-src/perl/qto/t/lib/Qto/Controller/TestCreate.pl
 src/perl/qto/t/lib/Qto/Controller/TestUpdate.pl
 src/perl/qto/t/lib/Qto/Controller/TestDelete.pl
 src/perl/qto/t/lib/Qto/Controller/TestHSelect.t
@@ -445,11 +450,12 @@ src/sql/pgsql/qto/91.create-table-test_empty_table.sql
 src/sql/pgsql/qto/92.create-table-test_auto_hierarchy_table.wip
 src/sql/pgsql/qto/93.create-table-benchmarks.sql
 src/sql/pgsql/qto/94.create-table-test_item.sql
-src/sql/pgsql/qto/95.01.create-table-test_hierarchy_table.sql
-src/sql/pgsql/qto/95.create-table-test_hierarchy_table.sql
+src/sql/pgsql/qto/95.create-table-test_hcreate_table.sql
 src/sql/pgsql/qto/96.create-table-test_delete_table.sql
 src/sql/pgsql/qto/97.create-table-test_create_table.sql
 src/sql/pgsql/qto/98.create-table-test_update_table.sql
+src/sql/pgsql/scripts/01.create-table-test_hierarchy_table.sql
+src/sql/pgsql/scripts/02.create-table-test_hierarchy_table.sql
 src/sql/pgsql/scripts/admin
 src/sql/pgsql/scripts/admin/check-postgres-tables-permissions.sql
 src/sql/pgsql/scripts/admin/copy-items-from-one-table-to-another.sql

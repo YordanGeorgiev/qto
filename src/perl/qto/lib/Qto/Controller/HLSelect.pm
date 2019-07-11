@@ -39,7 +39,7 @@ sub doHLSelectItems {
  
    $appConfig		   = $self->app->get('AppConfig');
    $db               = toEnvName ( $db , $appConfig) ;
-   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
 
    $appConfig		   = $self->app->get('AppConfig');

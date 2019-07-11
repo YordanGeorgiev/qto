@@ -38,44 +38,6 @@ package Qto::App::IO::In::CnrPostPrms ;
 		return $self;
 	}  
 
-   sub doSetLogonUrlParams {
-
-      my $self             = shift ; 
-      my $Controller       = shift || 'Logon' ; 
-      my $post_body_data   = shift || croak 'no post body data in CnrPostPrms::doSetLogonUrlParams' ;
-      my $controller       = lc ( $Controller ) ; 
-      my $ret              = 1 ;
-      my $msg              = '' ; 
-      my $email            = $post_body_data->{'email'} ;
-      my $pass         = $post_body_data->{'pass'} ;
-
-      if ( !defined ( $email ) or $email eq '' ) {
-         $msg = "fill in the email name" ; 
-         $ret = 400 ; 
-         return ( $ret , $msg ) ; 
-      } else {
-         $objModel->set($controller . '.email' , $email );
-         unless( Email::Valid->address($email) ) {
-            $msg = "the email address: $email is not valid!";
-            $ret = 400 ; 
-            return ( $ret , $msg ) ; 
-         }
-      }
-
-      if ( !defined ( $pass ) or $pass eq '' ) {
-         $msg = "fill in the pass " ; 
-         $ret = 400 ; 
-         return ( $ret , $msg ) ; 
-      } else {
-         $objModel->set($controller . '.pass' , $pass );
-         my $objCnrEncrypter = 'Qto::App::IO::In::CnrEncrypter'->new();
-         $pass = $objCnrEncrypter->make_crypto_hash($pass ) ; 
-         $ret = 0 ; 
-      }
-
-      return ( $ret , $msg ) ; 
-   }
-   
    sub doSetLoginUrlParams {
 
       my $self             = shift ; 
@@ -114,6 +76,92 @@ package Qto::App::IO::In::CnrPostPrms ;
 
       return ( $ret , $msg , $epass ) ; 
    }
+
+sub doValidateAndSetCreate {
+
+   my $self          = shift ; 
+   my $perl_hash     = shift ; 
+   my $msg           = '' ; 
+   my $isValid       = 0 ; 
+   my $http_code     = 400 ; 
+   my $id            = $perl_hash->{'id'} ; 
+
+   unless ( isint $id && $id >= 0) {
+      $http_code     = 400 ; 
+      $msg           = 'the id must be a whole positive number, but ' . $id . ' was provided !' ; 
+   } else {
+      $http_code     = 200 ; 
+      $isValid       = 1 ; 
+   }
+   $self->set('msg' , $msg ) ; 
+   $self->set('http_code' , $http_code ) ; 
+   $objModel->set('create.web-action.id' , $id ) ; 
+   
+   return $isValid ; 
+}
+
+sub doValidateAndSetUpdate {
+
+   my $self          = shift ; 
+   my $perl_hash     = shift ; 
+   my $item          = shift ; 
+
+   my $msg           = '' ; 
+   my $isValid       = 0 ; 
+   my $http_code     = 400 ; 
+   my $id            = $perl_hash->{'id'} ; 
+
+   unless ( isint $id && $id >= 0) {
+      $http_code     = 400 ; 
+      $id = 'undefined' unless ( defined $id ) ;
+      $msg           = 'the id must be a whole positive number, but ' . $id . ' was provided !' ; 
+   } else {
+      $http_code     = 200 ; 
+      $isValid       = 1 ; 
+   }
+   $self->set('msg' , $msg ) ; 
+   $self->set('http_code' , $http_code ) ; 
+
+   my $col_name      = $perl_hash->{'attribute'} ; 
+   my $col_value     = $perl_hash->{'cnt'} ; 
+   my @tables        = ( 'users' , 'test_update_table');
+
+   if ( grep ( /$item/, @tables ) == 1 ) {
+      my $objCnrEncrypter = 'Qto::App::IO::In::CnrEncrypter'->new();
+	   $col_value     = $objCnrEncrypter->make_crypto_hash($col_value ) if $col_name eq 'password' ;
+   }
+
+
+   $objModel->set('update.web-action.col_name' , $col_name) ; 
+   $objModel->set('update.web-action.id' , $perl_hash->{'id'} ) ; 
+   $objModel->set('update.web-action.col_value' , $col_value ) ; 
+   
+   return $isValid ; 
+}
+
+
+sub doValidateAndSetDelete {
+
+   my $self          = shift ; 
+   my $perl_hash     = shift ; 
+   my $msg           = '' ; 
+   my $isValid       = 0 ; 
+   my $http_code     = 400 ; 
+   my $id            = $perl_hash->{'id'} ; 
+
+   unless ( isint $id && $id >= 0) {
+      $http_code     = 400 ; 
+      $msg           = 'the id must be a whole positive number, but ' . $id . ' was provided !' ; 
+   } else {
+      $http_code     = 200 ; 
+      $isValid       = 1 ; 
+   }
+   $self->set('msg' , $msg ) ; 
+   $self->set('http_code' , $http_code ) ; 
+   $objModel->set('delete.web-action.id' , $perl_hash->{'id'} ) ; 
+   
+   return $isValid ; 
+}
 
 
 1;

@@ -45,7 +45,7 @@ sub doSelectItems {
 
    $appConfig		      = $self->app->get('AppConfig');
    $db                  = toEnvName ( $db , $appConfig) ;
-   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db , $item) ;
 
 	# debug rint "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
@@ -112,7 +112,7 @@ sub doSelectTables {
    my $objModel   = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
 
    $db                  = toEnvName ( $db , $appConfig) ;
-   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db , 'meta_columns' ) ;
 
 	my $ret        = 0;
@@ -195,7 +195,7 @@ sub doSelectDatabases {
    $db                  = toEnvName ( $db , $appConfig) ;
 	$objModel->set('postgres_db_name' , 'postgres' ) ; 
 
-   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db , 'meta_columns') ;
 
 	my $ret = 0;
@@ -250,7 +250,7 @@ sub doSelectMeta {
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ;
    
    $db                  = toEnvName ( $db , $appConfig) ;
-   return unless ( $self->SUPER::isAuthorized($db) == 1 );
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    
    $appConfig		 		= $self->app->get('AppConfig');

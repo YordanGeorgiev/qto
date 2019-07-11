@@ -20,6 +20,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $ua            = $t->ua ; 
    my $objTimer      = {} ;
    $url              = '/' . $db . '/delete/test_delete_table' ; 
+   my $env           = $appConfig->{'ProductType' };
 
    # the delete by attribute requires the following json format : 
    # the name of the attribute
@@ -57,7 +58,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    ok ( $res->{'ret'} eq 200 , $tm ) ; 
 
    $tm = 'present the correct msg when non_existent_db is provided' ; 
-   $exp_err_msg = 'cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
+   $exp_err_msg = 'cannot connect to the "' . $env . '_non_existent_db" database: FATAL:  database "' . $env . '_non_existent_db" does not exist' ; 
    $url = '/non_existent_db/delete/test_delete_table' ; 
    ok ( $t->post_ok($url => json => {"attribute"=>"name", "id" =>"1", "cnt"=>"name-1-deleted"})
       ->json_is({"ret" => 400 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . '/non_existent_db/delete/test_delete_table' , "msg" => "$exp_err_msg"}),$tm);
