@@ -42,7 +42,7 @@ package Qto::App::IO::Out::WtrExporterXls ;
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
-      ( $ret , $msg , $hsr2)  = $objRdrDb->doSelect( $db , $table ) ; 
+      ( $ret , $msg , $hsr2)  = $objRdrDb->doSelectRows( $db , $table ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
       my $objWtrXls    = 'Qto::App::IO::Out::WtrXls'->new( \$appConfig ) ;

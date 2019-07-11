@@ -58,35 +58,20 @@ sub doSelectItems {
 
    $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new(\$appConfig, \$objModel );
    $objRdrDb            = $objRdrDbsFactory->doSpawn ( $rdbms_type );
-   my $caller_email     = $self->session( 'app.' . $db . '.user' );
-   ($ret, $msg, $hsr2)  = $objRdrDb->doSelect($db, $item,$caller_email); # doSelect
+   my $who     = $self->session( 'app.' . $db . '.user' );
+   ($http_code, $msg, $hsr2)  = $objRdrDb->doSelectRows($db, $item,$who); # doSelect
 
-   if ( $ret != 0 ) {
-      $http_code = $ret ; 
-   } elsif ( $ret == 404 or $ret == 204 ) {
-      $http_code = $ret ; 
-      $dat = {} ;
+   if ( $http_code == 200 )  {
       $cnt = 0 ; 
-   } elsif ( $ret == 0 )  {
-      $cnt = 0 ; 
-      $http_code = 200 ; 
-      $msg = "SELECT OK for table: $item" ; 
+      $msg = '' ; 
       my $objCnrHsr2ToArray = 
          'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
       ( $ret , $msg , $dat , $cnt ) = $objCnrHsr2ToArray->doConvert ($hsr2);
-      
-      unless ( $ret == 0 ) {
-        $http_code = 404 ; 
-      } else {
-         $http_code = 200 ; 
-      }
-      ( $ret , $msg , $met , $mc) = $objModel->doGetTableMeta($appConfig,$db,$item);
-   } else {
-      $http_code = 400 ; 
+      ( $ret , $msg , $met , $mc)   = $objModel->doGetTableMeta($appConfig,$db,$item);
    } 
-
    $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
 }
+
 
 
 #

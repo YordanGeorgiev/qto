@@ -889,12 +889,12 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
    # -----------------------------------------------------------------------------
    # get ALL the table data into hash ref of hash refs 
    # -----------------------------------------------------------------------------
-   sub doSelect {
+   sub doSelectRows {
 
       my $self                   = shift ; 
       my $db                     = shift || croak 'no db passed !!!' ;  
       my $table                  = shift || croak 'no table passed !!!' ; 
-      my $caller_email           = shift ; 
+      my $who           = shift ; 
       my $ret                    = 1 ; 
       my $msg                    = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
       my $dbh                    = {} ;         # this is the database handle
@@ -936,9 +936,9 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          FROM $table 
          WHERE 1=1 " ; 
 
-      if ( defined $caller_email ) {
-         if ( $table eq 'users' and $caller_email ne $appConfig->{'AdminEmail'} ){
-            $str_sql .= "AND email = '" . $caller_email . "'"
+      if ( defined $who ) {
+         if ( $table eq 'users' and $who ne $appConfig->{'AdminEmail'} ){
+            $str_sql .= "AND email = '" . $who . "'"
          }
       }
       
@@ -985,25 +985,24 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 
       # rint "$str_sql \n" . 'vim +987 `find . -name RdrPostgresDb.pm`' . "\n" ; 
 
-      $ret = 0 ; 
       eval { 
          $msg = "" ; 
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() or $ret = 400 ; 
-         # :jump it-180919115859 
          $msg = DBI->errstr if $ret  == 400 ; 
-         die "$msg" unless $ret == 0 ; 
+         die "$msg" if $ret == 400 ;
          $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
          $msg = DBI->errstr if $ret  == 400 ; 
-         die "$msg" unless $ret == 0 ; 
+         die "$msg" if $ret == 400 ;
          $objModel->set('hsr2' , $hsr2 );
-         $objModel->set($db . '.dat.' . $table , $hsr2 ); # wip: 181114145604
+         $objModel->set($db . '.dat.' . $table , $hsr2 ); 
+         $ret = 200 ;
       };
       if ( $@ ) { 
          my $tmsg = "$@" ; 
          $objLogger->doLogErrorMsg ( "$msg" ) ;
          $msg = "failed to get $table table data :: $tmsg" unless $ret == 404 ; 
-         return ( $ret , $msg , "" ) ; 
+         return ( $ret , $msg , {} ) ; 
       };
 
       $dbh->disconnect();

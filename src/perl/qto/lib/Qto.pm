@@ -276,6 +276,11 @@ sub doSetRoutes {
    , action       => 'doDeleteById'
    );
    
+   $r->get('/:db/truncate/:item')->to(
+     controller   => 'Truncate'
+   , action       => 'doTruncateItem'
+   );
+   
    $r->post('/:db/update/:item')->to(
      controller   => 'Update'
    , action       => 'doUpdateById'

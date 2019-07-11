@@ -27,12 +27,61 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 	our $postgres_db_port 								= q{} ;
 	our $postgres_db_user 							   = q{} ; 
 	our $postgres_db_user_pw	 					   = q{} ; 
-	our $postgres_db_useradmin 							   = q{} ; 
-	our $postgres_db_useradmin_pw	 					   = q{} ; 
+	our $postgres_db_useradmin 				      = q{} ; 
+	our $postgres_db_useradmin_pw	 				   = q{} ; 
 	our $web_host 											= q{} ; 
    our @tables                                  = ( 'daily_issues' );
    our $objController                           = () ; 
    
+
+   sub doTruncateTable {
+
+		my $self 				= shift ; 
+      my $objModel         = ${ shift @_ } ; 
+      my $db               = shift ; 
+      my $table            = shift ; 
+      my $ret              = 0 ; 
+      my $msg              = '' ; 
+      my $dbh              = {} ;         # this is the database handle
+      my $sth              = {} ;         # the statement handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+     
+      ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAdminUser ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+      my $objRdrDbsFactory = 'Qto::App::Db::In::RdrDbsFactory'->new( \$appConfig , \$objModel ) ; 
+      my $objRdrDb            = $objRdrDbsFactory->doSpawn("$rdbms_type");
+
+      if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
+         $ret = 400 ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
+         return ( $ret , $msg ) ; 
+      }
+
+      $str_sql = "TRUNCATE $table " ; 
+      eval {
+         $sth = $dbh->prepare($str_sql);  
+         $sth->execute() or print STDERR "$DBI::errstr" ; 
+      } or $ret = 500 ; # Internal Server error
+
+      binmode(STDOUT, ':utf8');
+
+      unless ( defined ( $DBI::errstr ) ) {
+         $msg = '' ; 
+         $ret = 0 ; 
+      } else {
+         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $msg = "$DBI::errstr" ; 
+         if ( $msg =~ m/some strange/ ){
+            $ret = 409 ; 
+         } else {
+            $ret = 400 ; 
+         }
+      }
+
+      return ( $ret , $msg ) ; 
+   }
+
 
    sub doDeleteById {
 
@@ -281,8 +330,9 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $dbh = q{} ; 
 
       eval { 
-		$postgres_db_useradmin 			= $ENV{ 'postgres_db_useradmin' }     || $appConfig->{'postgres_db_useradmin'}    || 'ysg' ; 
-		$postgres_db_useradmin_pw 		= $ENV{ 'postgres_db_useradmin_pw' }  || $appConfig->{'postgres_db_useradmin_pw'} || 'no_pass_provided!!!' ; 
+		$postgres_db_useradmin 			= $ENV{ 'postgres_db_useradmin' }     || $appConfig->{'postgres_db_useradmin'} ;
+		$postgres_db_useradmin_pw 		= $ENV{ 'postgres_db_useradmin_pw' }  || $appConfig->{'postgres_db_useradmin_pw'} 
+         || 'no_pass_provided!!!' ; 
          $dbh = DBI->connect("dbi:Pg:dbname=$db;port=$postgres_db_port", "$postgres_db_useradmin", "$postgres_db_useradmin_pw" , {
                     'RaiseError'          => 1
                   , 'ShowErrorStatement'  => 1

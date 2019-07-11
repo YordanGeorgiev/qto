@@ -152,7 +152,7 @@ package Qto::App::Ctrl::CtrlDbToGoogleSheet ;
 	      my $objRdrDb = $objRdrDbsFactory->doSpawn("$rdbms_type");
       
          my $db                     = $objModel->get( 'env.postgres_db_name' );
-         ( $ret , $msg  )  = $objRdrDb->doSelect( $db, $table ) ; 
+         ( $ret , $msg  )  = $objRdrDb->doSelectRows( $db, $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
          my $objWtrGoogleSheet    = 'Qto::App::IO::Out::WtrGoogleSheet'->new( \$appConfig ) ;

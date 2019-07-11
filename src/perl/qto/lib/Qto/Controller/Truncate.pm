@@ -1,6 +1,6 @@
-package Qto::Controller::HCreate ; 
-use strict ; use warnings ; 
+package Qto::Controller::Truncate ; 
 
+use strict ; use warnings ; 
 require Exporter; our @ISA = qw(Exporter Mojo::Base Qto::Controller::BaseController);
 our $AUTOLOAD =();
 use AutoLoader;
@@ -21,56 +21,34 @@ our $appConfig      = {};
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgre';
 
-#
+
 # --------------------------------------------------------
-# HCreate - create an item in a hierachichal table
+# Truncate all the rows from db by passed db and table name
 # --------------------------------------------------------
-sub doHCreateById {
+sub doTruncateItem {
+
 
    my $self             = shift;
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
-   my $rdbms_type       = 'postgres';
    my $objCnrPostPrms   = {} ; 
    my $objWtrDbsFactory = {} ; 
    my $objWtrDb         = {} ; 
    my $ret              = 0;
-   my $msg              = 'unknown error during HCreate item';
+   my $msg              = 'unknown error during Truncate item';
    my $hsr2             = {};
-   my $json             = $self->req->body;
-   my $perl_hash        = decode_json($json) ; 
-
-   # todo:ysg 
-   p $perl_hash ; 
-   print "stop print perl_hash \n" ; 
-   
-   $db                  = toEnvName ( $db , $appConfig) ;
-   # todo:ysg !!!
-   # return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-
-   $self->SUPER::doReloadProjDbMeta( $db ) ;
+  
    $appConfig		      = $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $appConfig);
    
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
-   $objCnrPostPrms = 
-      'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel);
-   
-   #unless ( $objCnrPostPrms->doValidateAndSetHCreate ( $perl_hash ) == 1 ) {
-      my $http_code = $objCnrPostPrms->get('http_code') ; 
-      $msg = $objCnrPostPrms->get('msg') ; 
-      $self->res->code($http_code ) ;
-      $self->render( 'json' =>  { 
-         'msg'   => $msg,
-         'ret'   => $http_code , 
-         'req'   => "POST " . $self->req->url->to_abs
-      });
-      return ; 
-   #} 
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
+   $self->SUPER::doReloadProjDbMeta( $db ) ;
 
-   $objWtrDbsFactory
-         = 'Qto::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
-   $objWtrDb = $objWtrDbsFactory->doSpawn("$rdbms_type");
-   ($ret, $msg) = $objWtrDb->doInsertByItemId($item);
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
+   $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel );
+   $objWtrDbsFactory    = 'Qto::App::Db::Out::WtrDbsFactory'->new(\$appConfig, \$objModel );
+   $objWtrDb            = $objWtrDbsFactory->doSpawn("$rdbms_type");
+   ($ret, $msg)         = $objWtrDb->doTruncateTable(\$objModel, $db , $item);
 
    $self->res->headers->accept_charset('UTF-8');
    $self->res->headers->accept_language('fi, en');
@@ -79,12 +57,13 @@ sub doHCreateById {
    if ( $ret == 0 ) {
       my $http_code = 200 ; 
       my $rows_count = 0 ; 
-      $msg = "HCreate OK for table: $item" ; 
+      $msg = "Truncate OK for table: $item" ; 
 
       $self->res->code($http_code);
       $self->render( 'json' =>  { 
            'msg'   => $msg
          , 'ret'   => $http_code
+         , 'dat'   => {}
          , 'req'   => "POST " . $self->req->url->to_abs
       });
    } elsif ( $ret == 400 ) {
@@ -103,15 +82,11 @@ sub doHCreateById {
          ,'ret'   => 400
          ,'req'   => "POST " . $self->req->url->to_abs
       });
-   } elsif ( $ret == 409) {
-
-      my $post_msg = ' while creating a new item ' ; 
-      $post_msg .= 'with the following id: ' . $perl_hash->{'id'} ; 
-      $msg .= $post_msg ; 
-      $self->res->code($ret);
+   } else {
+      $self->res->code(400);
       $self->render( 'json' => { 
-         'msg'   => $msg
-         ,'ret' => $ret
+          'msg'   => $msg
+         ,'ret' => 404
          ,'req'   => "POST " . $self->req->url->to_abs
       })
       ;
@@ -124,3 +99,4 @@ sub doHCreateById {
 
 __END__
 
+# feature-guid: 

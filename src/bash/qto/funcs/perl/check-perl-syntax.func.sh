@@ -36,15 +36,17 @@ doCheckPerlSyntax(){
 		# run the autoloader utility	
 		find . -name '*.pm' -exec perl -MAutoSplit -e 'autosplit($ARGV[0], $ARGV[1], 0, 1, 1)' {} \;
 		
+         c=0
 			# foreach perl file check the syntax by setting the correct INC dirs	
 			while read -r file ; do 
-            echo perl -MCarp::Always -I `pwd` -I `pwd`/lib -wc "$file"
-				perl -MCarp::Always -I `pwd` -I `pwd`/lib -wc "$file" 
-            # run the perltidy inline
-            # perltidy -b "$file"
-            # sleep 3
-				ret=$? ; 
-				test $ret -ne 0 && break 2 ; 
+            # run in a chunk of 3
+            c=$((c+1)) ; test $c -eq 3 && sleep 1 && export c=0 ;
+            (
+               echo perl -MCarp::Always -I `pwd` -I `pwd`/lib -wc "$file";
+               perl -MCarp::Always -I `pwd` -I `pwd`/lib -wc "$file"
+               ret=$? ; 
+               test $ret -ne 0 && break 2 ; 
+            )&
 			done < <(find "." -type f \( -name "*.pl" -or -name "*.pm" \))
 
 			test $ret -ne 0 && break ; 

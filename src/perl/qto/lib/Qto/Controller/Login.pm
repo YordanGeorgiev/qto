@@ -92,16 +92,17 @@ sub doShowLoginForm {
    $db                  = toEnvName ( $db , $appConfig) ;
    $appConfig		 		= $self->app->get('AppConfig');
 
-   my $redirect_url = $self->session( 'app.' . $db . '.url' ) if defined $self->session( 'app.' . $db . '.url' ) ; 
-   #$self->session(expires => 1);
+   my $redirect_url = $self->session( 'app.' . $db . '.url' ) 
+         if defined $self->session( 'app.' . $db . '.url' ) ; 
    my $session = Mojolicious::Sessions->new ;
+   $self->session(expires => 1);
    $session->cookie_name('qto.' . $db);
    $session->default_expiration(86400);
    my $instance_domain = $appConfig->{ 'web_host' } . ':' . $appConfig->{ 'mojo_hypnotoad_port' } . '.' . $db ;
    $session  = $session->cookie_domain( $instance_domain);
 
    $self->doRenderPageTemplate(200,$msg,$msg_color,$db,$redirect_url) ;
-   return
+   return ;
 }
 
 
