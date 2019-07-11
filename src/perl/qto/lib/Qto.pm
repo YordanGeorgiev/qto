@@ -20,11 +20,12 @@ use Encode qw< encode decode >;
 use Unicode::Normalize qw< NFD NFC >;
 use IO::Compress::Gzip 'gzip' ;
 
+use Mojolicious::Plugin::RenderFile ; 
+
 use Qto::App::Utils::Initiator;
 use Qto::App::Utils::Configurator;
 use Qto::App::Utils::Logger;
 use Qto::App::Mdl::Model ; 
-use Mojolicious::Plugin::RenderFile ; 
 
 my $module_trace 					= 0;
 our $objConfigurator				= {} ; 
@@ -81,7 +82,8 @@ sub doLoadAppConfig {
    $appConfig       = $objConfigurator->getConfHolder()  ;
    $objLogger        = 'Qto::App::Utils::Logger'->new(\$appConfig);
 
-	$appConfig->{'proj_instance_dir'} = $appConfig->{'ProductInstanceDir'} unless ( exists $appConfig->{'proj_instance_dir'} );
+	$appConfig->{'proj_instance_dir'} = $appConfig->{'ProductInstanceDir'} 
+      unless ( exists $appConfig->{'proj_instance_dir'} );
    my $currentShortHash = `git rev-parse --short HEAD` ; chomp($currentShortHash);
    $appConfig->{ 'GitShortHash' } = $currentShortHash || "" ; 
 
@@ -95,18 +97,6 @@ sub doLoadAppConfig {
 }
 
 
-# -----------------------------------------------------------------------------
-# return a field's value - aka the "getter"
-# -----------------------------------------------------------------------------
-sub get {
-
-   my $self = shift;
-   my $name = shift;
-   croak "\@TRYING to get an undef name" unless $name ;  
-   croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
-
-   return $self->{ $name };
-}    
 
 # -----------------------------------------------------------------------------
 # src: https://mojolicious.org/perldoc/Mojolicious/Plugins
@@ -204,7 +194,10 @@ sub doSetHooks {
 
 }
 
-
+ 
+# -----------------------------------------------------------------------------
+# src: https://mojolicious.org/perldoc/Mojolicious/Sessions
+# -----------------------------------------------------------------------------
 sub doSessions {
    
    my $self = shift ; 
@@ -213,7 +206,7 @@ sub doSessions {
 
 }
 
-#
+
 # -----------------------------------------------------------------------------
 # src: https://mojolicious.org/perldoc/Mojolicious/Guides/Routing
 # -----------------------------------------------------------------------------
@@ -222,89 +215,69 @@ sub doSetRoutes {
    my $self = shift ; 
    my $r = $self->routes;
    
-   # http://host-name:3001/qto/home
    $r->get('/:db/home')->to(
      controller   => 'Home'
    , action       => 'doLanding'
    );
    
-   # http://host-name:3001/qto/login
    $r->get('/:db/login')->to(
      controller   => 'Login'
    , action       => 'doShowLoginForm'
    );
    
-# http://host-name:3001/qto/query?for=<<global-txt-srch>>
    $r->post('/:db/login')->to(
      controller   => 'Login'
    , action       => 'doLoginUser'
    );
    
-   # http://host-name:3001/qto/query?for=<<global-txt-srch>>
-   $r->post('/:db/logon')->to(
-     controller   => 'Logon'
-   , action       => 'doLogonUser'
-   );
-	
-   # http://host-name:3001/qto/Search/monthly_issues
    $r->get('/:db/search')->to(
      controller   => 'Search'
    , action       => 'doSearchItems'
    );
    
-
-   # http://host-name:3001/qto/query?for=<<global-txt-srch>>
    $r->get('/:db/query')->to(
      controller   => 'Query'
    , action       => 'doQueryItems'
    );
 	
-   # http://host-name:3001/qto/select-databases
    $r->get('/:db/select-databases')->to(
      controller   => 'Select'
    , action       => 'doSelectDatabases'
    );
 
-	# http://host-name:3001/qto/select-tables
    $r->get('/:db/select-tables')->to(
      controller   => 'Select'
    , action       => 'doSelectTables'
    );
    
-   # http://host-name:3001/qto/select/monthly_issues
    $r->get('/:db/select/:item')->to(
      controller   => 'Select'
    , action       => 'doSelectItems'
    );
    
-   # http://host-name:3001/qto/select/monthly_issues/1
    $r->get('/:db/hselect/:item')->to(
      controller   => 'HSelect'
    , action       => 'doHSelectItems'
    );
    
-   # http://host-name:3001/qto/hselect/monthly_issues/1
    $r->get('/:db/hlselect/:item')->to(
      controller   => 'HLSelect'
    , action       => 'doHLSelectItems'
    );
    
-   # http://host-name:3001/qto/create/monthly_issues?id=123
    $r->post('/:db/create/:item')->to(
      controller   => 'Create'
-   , action       => 'doCreateBySoleId'
+   , action       => 'doCreateById'
    );
    
-   # http://host-name:3001/qto/delete/monthly_issues?id=123
    $r->post('/:db/delete/:item')->to(
      controller   => 'Delete'
-   , action       => 'doDeleteItemById'
+   , action       => 'doDeleteById'
    );
    
-   # http://host-name:3001/qto/update/monthly_issues
    $r->post('/:db/update/:item')->to(
      controller   => 'Update'
-   , action       => 'doUpdateItemBySingleCol'
+   , action       => 'doUpdateById'
    );
 
    $r->get('/:db/select-meta')->to(
@@ -317,19 +290,16 @@ sub doSetRoutes {
    , action       => 'doSelectMeta'
    );
    
-   # http://host-name:3001/qto/select/monthly_issues
    $r->get('/:db/list/:item')->to(
      controller   => 'List'
    , action       => 'doListItems'
    );
 
-   # http://host-name:3001/qto/export/monthly_issues?as=xls
    $r->get('/:db/export/:item')->to(
      controller   => 'Export'
    , action       => 'doExportItems'
    );
    
-   # http://host-name:3001/qto/select/monthly_issues
    $r->get('/:db/view/:item')->to(
      controller   => 'View'
    , action       => 'doViewItems'
@@ -343,6 +313,20 @@ sub doSetRoutes {
    $r->websocket('/websocketecho')->to('WebSocketPoc#doTestWebSocket');
 }
 
+
+# -----------------------------------------------------------------------------
+# return a field's value - aka the "getter"
+# -----------------------------------------------------------------------------
+sub get {
+
+   my $self = shift;
+   my $name = shift;
+   croak "\@TRYING to get an undef name" unless $name ;  
+   croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
+
+   return $self->{ $name };
+}    
+
 # -----------------------------------------------------------------------------
 # set a field's value - aka the "setter"
 # -----------------------------------------------------------------------------
@@ -353,11 +337,9 @@ sub set {
    my $value = shift;
    $self->{ "$name" } = $value;
 }
-# eof sub set
 
-#
 # -----------------------------------------------------------------------------
-# return the fields of this obj instance. Perl vs. Java - check mate !!!
+# return the fields of this obj instance. Perl vs. Java - checkmate !!!
 # -----------------------------------------------------------------------------
 sub dumpFields {
    my $self      = shift;

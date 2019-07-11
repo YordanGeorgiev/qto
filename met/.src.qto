@@ -205,7 +205,7 @@ src/perl/qto/t/lib/Qto/Controller/TestViwWithMojoChrome.pl
 src/perl/qto/t/lib/Qto/Controller/TestListBySelenium.t
 src/perl/qto/t/lib/Qto/Controller/TestListHide.pl
 src/perl/qto/t/lib/Qto/Controller/TestViewDocPage.t
-src/perl/qto/t/lib/Qto/Controller/POCTestMojoRoleSelenium.pl
+src/perl/qto/t/lib/Qto/Controller/POCTestMojoRoleSelenium.todo
 src/perl/qto/t/lib/Qto/TestClientSidePOC1.t
 src/perl/qto/t/lib/Qto/Controller/POCSeleniumBrowser.pl
 # --- 
