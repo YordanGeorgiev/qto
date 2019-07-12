@@ -6,7 +6,7 @@ use FindBin;
 
 die_on_fail ; 
 
-BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
+BEGIN { unshift @INC, "$FindBin::Bin/../../../../../../qto/lib" }
 
    my $tm = '' ; # the test message for each test 
    my $t = Test::Mojo->new('Qto');

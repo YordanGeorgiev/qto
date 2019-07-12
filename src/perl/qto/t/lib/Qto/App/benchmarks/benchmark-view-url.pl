@@ -15,7 +15,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../../qto/lib" }
 
 use Qto::App::Utils::Timer ; 
 
-   my $url              = $ARGV[0] || die "Nothing to benchark , give an url as the first cmd arg !!!" ; 
+   my $url              = $ARGV[0] || 'localhost:3001/qto/list/release_issues' ;
    my $ua               = 'Mojo::UserAgent'->new;
 
 	$ua->on( start => sub {

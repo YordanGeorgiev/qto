@@ -4,10 +4,12 @@
 src/perl/qto/lib/Qto/Controller/Truncate.pm
 src/perl/qto/t/lib/Qto/Controller/TestTruncate.pl
 src/perl/qto/t/lib/Qto/Controller/TestHCreate.pl
+src/sql/pgsql/qto/00.03.stored-procedures.sql
 src/perl/qto/lib/Qto/Controller/HCreate.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
 src/perl/qto/t/lib/Qto/Controller/TestCreate.pl
+src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
 # stop  HCreate
 # start login
 src/perl/qto/t/lib/Qto/Controller/TestLogin.pl
@@ -67,8 +69,10 @@ cnf/postgres/etc/postgresql/11/main
 cnf/postgres/etc/postgresql/11/main/pg_hba.conf
 cnf/postgres/etc/postgresql/11/main/postgresql.conf
 # -- stop  docker deployment
+src/bash/qto/funcs/perl/run-benchmarks.func.sh
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.pl
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.pl
+src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.pl
 src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
@@ -196,7 +200,6 @@ src/perl/qto/t/lib/Qto/Controller/TestHSelect.t
 src/perl/qto/t/lib/Qto/Controller/TestHSelectWith.t
 src/perl/qto/t/lib/Qto/Controller/TestQuery.pl
 src/perl/qto/t/lib/Qto/Controller/TestSearch.pl
-src/perl/qto/t/lib/Qto/Controller/LoadTestSelect.pl
 src/perl/qto/t/lib/Qto/Controller/TestSelectFilter.pl
 src/perl/qto/t/lib/Qto/Controller/TestSelectLike.pl
 src/perl/qto/t/lib/Qto/Controller/TestSelectPick.pl
@@ -399,6 +402,7 @@ src/sql/pgsql/qto/
 src/sql/pgsql/qto/00.create-db.pgsql
 src/sql/pgsql/qto/00.01.create-qto-app-user.sql
 src/sql/pgsql/qto/00.02.functions.sql
+src/sql/pgsql/qto/00.03.stored-procedures.sql
 src/sql/pgsql/qto/01.create-table-daily_issues.sql
 src/sql/pgsql/qto/02.create-table-weekly_issues.sql
 src/sql/pgsql/qto/03.create-table-monthly_issues.sql
