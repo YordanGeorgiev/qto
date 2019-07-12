@@ -10,8 +10,6 @@ wget - http://cpanmin.us | perl - --self-upgrade
 
 #bash -c "sudo -s 'curl -L cpanmin.us | perl - Mojolicious'"
 # cpan Mojolicious
-sudo perl -MCPAN -e 'install URL::Encode'
-sudo perl -MCPAN -e 'install Carp::Always'
 sudo perl -MCPAN -e 'install Data::Printer'
 sudo perl -MCPAN -e 'install Term::Prompt'
 sudo perl -MCPAN -e 'install Email::Valid'
@@ -39,5 +37,6 @@ sudo perl -MCPAN -e 'install Net::Google::DataAPI::Auth::OAuth2'
 sudo perl -MCPAN -e 'CPAN::Shell->force(qw( install Net::Google::DataAPI::Auth::OAuth2));'
 sudo perl -MCPAN -e 'install Net::Google::Spreadsheets::V4'
 sudo perl -MCPAN -e 'install Net::Google::Spreadsheets;'
+sudo perl -MCPAN -e 'install DBIx::ProcedureCall'
 # stop install perl modules
 

@@ -34,6 +34,7 @@ sub doHCreateById {
    my $objWtrDbsFcry = {} ; 
    my $objWtrDb         = {} ; 
    my $ret              = 1;
+   my $dat              = {} ;
    my $http_code        = 400 ;
    my $msg              = 'unknown error during HCreate item';
    my $hsr2             = {};
@@ -57,6 +58,7 @@ sub doHCreateById {
       $self->res->code($http_code ) ;
       $self->render( 'json' =>  { 
          'msg'   => $msg,
+         'dat'   => $dat,
          'ret'   => $http_code , 
          'req'   => "POST " . $self->req->url->to_abs
       });
@@ -65,11 +67,12 @@ sub doHCreateById {
 
    $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$appConfig, \$objModel );
    $objWtrDb = $objWtrDbsFcry->doSpawn("$rdbms_type");
-   ($http_code, $msg) = $objWtrDb->doHInsertRow($db,$item,$id,$seq);
+   ($http_code, $msg,$dat) = $objWtrDb->doHInsertRow($db,$item,$id,$seq);
 
    $self->res->code($http_code);
    $self->render( 'json' =>  { 
         'msg'   => $msg
+      , 'dat'   => $dat
       , 'ret'   => $http_code
       , 'req'   => "POST " . $self->req->url->to_abs
    });

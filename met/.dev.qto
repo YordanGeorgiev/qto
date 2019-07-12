@@ -4,10 +4,12 @@
 src/perl/qto/lib/Qto/Controller/Truncate.pm
 src/perl/qto/t/lib/Qto/Controller/TestTruncate.pl
 src/perl/qto/t/lib/Qto/Controller/TestHCreate.pl
+src/sql/pgsql/qto/00.03.stored-procedures.sql
 src/perl/qto/lib/Qto/Controller/HCreate.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
 src/perl/qto/t/lib/Qto/Controller/TestCreate.pl
+src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
 # stop  HCreate
 # start login
 src/perl/qto/t/lib/Qto/Controller/TestLogin.pl
@@ -399,6 +401,7 @@ src/sql/pgsql/qto/
 src/sql/pgsql/qto/00.create-db.pgsql
 src/sql/pgsql/qto/00.01.create-qto-app-user.sql
 src/sql/pgsql/qto/00.02.functions.sql
+src/sql/pgsql/qto/00.03.stored-procedures.sql
 src/sql/pgsql/qto/01.create-table-daily_issues.sql
 src/sql/pgsql/qto/02.create-table-weekly_issues.sql
 src/sql/pgsql/qto/03.create-table-monthly_issues.sql

@@ -94,6 +94,7 @@ sub doCheckRequiredModules {
    Net::Google::Spreadsheets
    Term::ReadKey
    Term::Prompt
+   DBIx::ProcedureCall
   );
 
   for (@modules) {
