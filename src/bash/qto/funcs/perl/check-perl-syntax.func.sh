@@ -44,8 +44,8 @@ doCheckPerlSyntax(){
             (
                echo perl -MCarp::Always -I `pwd` -I `pwd`/lib -wc "$file";
                perl -MCarp::Always -I `pwd` -I `pwd`/lib -wc "$file"
-               ret=$? ; 
-               test $ret -ne 0 && break 2 ; 
+               #ret=$? ;  # probably not needed ... better just to spit out the error for the
+               #test $ret -ne 0 && break 2 ; 
             )&
 			done < <(find "." -type f \( -name "*.pl" -or -name "*.pm" \))
 

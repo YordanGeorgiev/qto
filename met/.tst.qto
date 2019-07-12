@@ -700,10 +700,6 @@ doc/txt/qto/funcs/mojo-morbo-start.func.txt
 # ---
 src/bash/qto/funcs/mojo-morbo-stop.func.sh
 src/bash/qto/tests/mojo-morbo-stop.test.sh
-src/bash/qto/helps/mojo-morbo-stop.help.sh
-doc/txt/qto/tests/mojo-morbo-stop.test.txt
-doc/txt/qto/helps/mojo-morbo-stop.help.txt
-doc/txt/qto/funcs/mojo-morbo-stop.func.txt
 # ---
 met/.prd.qto
 met/.tst.qto
@@ -718,7 +714,6 @@ doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
 doc/img/system_guide/multi-env-setup.png
 # --- the application data
-# ---
 src/bash/qto/funcs/db-to-json.func.sh
 src/bash/qto/tests/db-to-json.test.sh
 src/bash/qto/helps/db-to-json.help.sh

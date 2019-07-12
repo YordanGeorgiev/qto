@@ -41,28 +41,27 @@ sub doHCreateById {
    my $perl_hash        = decode_json($json) ; 
    my $id               = $perl_hash->{'id'};
    my $seq              = $perl_hash->{'seq'}; # the sequence of the hierarchy item
-   $db                  = toEnvName ( $db , $appConfig) ;
    # todo:ysg !!!
    # return unless ( $self->SUPER::isAuthenticated($db) == 1 );
 
    $self->SUPER::doReloadProjDbMeta( $db ) ;
    $appConfig		      = $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $appConfig) ;
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
-   $objCnrPostPrms = 
-      'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel);
+   $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel);
    
-   #"unless ( $objCnrPostPrms->doValidateAndSetHCreate ( $perl_hash ) == 1 ) {
-    #  my $http_code = $objCnrPostPrms->get('http_code') ; 
-    #  $msg = $objCnrPostPrms->get('msg') ; 
-    #  $self->res->code($http_code ) ;
-    #  $self->render( 'json' =>  { 
-    #     'msg'   => $msg,
-    #     'ret'   => $http_code , 
-    #     'req'   => "POST " . $self->req->url->to_abs
-    #  });
-    #  return ; 
-   #} 
+   unless ( $objCnrPostPrms->chkHCreateHasValidParams( $perl_hash ) == 1 ) {
+      my $http_code = $objCnrPostPrms->get('http_code') ; 
+      $msg = $objCnrPostPrms->get('msg') ; 
+      $self->res->code($http_code ) ;
+      $self->render( 'json' =>  { 
+         'msg'   => $msg,
+         'ret'   => $http_code , 
+         'req'   => "POST " . $self->req->url->to_abs
+      });
+      return ; 
+   } 
 
    $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$appConfig, \$objModel );
    $objWtrDb = $objWtrDbsFcry->doSpawn("$rdbms_type");

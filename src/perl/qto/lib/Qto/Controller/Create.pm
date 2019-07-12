@@ -33,19 +33,19 @@ sub doCreateById {
    my $db               = $self->stash('db');
    my $rdbms_type       = 'postgres';
    my $objCnrPostPrms   = {} ; 
-   my $objWtrDbsFcry = {} ; 
+   my $objWtrDbsFcry    = {} ; 
    my $objWtrDb         = {} ; 
    my $ret              = 0;
    my $msg              = 'unknown error during create item';
    my $hsr2             = {};
-
-   my $json = $self->req->body;
-   my $perl_hash = decode_json($json) ; 
-
+   my $json             = $self->req->body;
+   my $perl_hash        = decode_json($json) ; 
+   $appConfig		      = $self->app->get('AppConfig');
    $db                  = toEnvName ( $db , $appConfig) ;
+
+
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ) ;
-   $appConfig		      = $self->app->get('AppConfig');
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
    $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel );

@@ -3,7 +3,8 @@ package Qto::App::Cnvr::CnrDbName ;
 use strict ; use warnings ; 
 
 use Exporter qw(import);
- 
+use Carp qw< carp croak confess cluck >;
+
 our @EXPORT = qw(toPlainName toEnvName );
 
 sub toEnvName {
@@ -13,6 +14,8 @@ sub toEnvName {
  
    my $db_prefix           = substr($db,0,4);
    unless ( grep ( /^$db_prefix$/, @env_prefixes)) {
+      carp  "appconfig->producttype is undef " unless $appConfig->{ 'ProductType' } ;
+      carp "db is undef " unless $db ; 
       $db = $appConfig->{ 'ProductType' } . '_' . $db ; 
    } 
    return $db ;
