@@ -9,13 +9,13 @@ SELECT 'create the "test_hcreate_table" table' as "---"
    CREATE TABLE test_hcreate_table (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , level          integer NULL
-    , seq            integer NULL
-    , lft            integer NULL 
-    , rgt            integer NULL 
-    , name           varchar (200) NOT NULL
-    , description    varchar (4000)
-    , src            varchar (4000)
+    , level          integer NOT NULL DEFAULT 1
+    , seq            integer NOT NULL DEFAULT 1
+    , lft            integer NOT NULL DEFAULT 0
+    , rgt            integer NOT NULL DEFAULT 0
+    , name           varchar (200) NOT NULL DEFAULT 'name...'
+    , description    varchar (4000) NULL
+    , src            varchar (4000) NULL
     , CONSTRAINT pk_test_hcreate_table_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
