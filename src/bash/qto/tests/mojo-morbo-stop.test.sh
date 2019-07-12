@@ -1,13 +1,12 @@
 # src/bash/qto/funcs/mojo-morbo-stop.test.sh
 
-# v1.0.9
+# v0.6.7
 # ---------------------------------------------------------
-# cat doc/txt/qto/tests/mojo-morbo-stop.test.txt
+# test the stoping of the mojo morbo server
 # ---------------------------------------------------------
 doTestMojoMorboStop(){
 
 	doLog "DEBUG START doTestMojoMorboStop"
-	
 	
 	sleep "$sleep_interval"
 	
@@ -15,8 +14,8 @@ doTestMojoMorboStop(){
    bash src/bash/qto/qto.sh -a mojo-morbo-stop
 	doLog "check with netstat "
    # sudo visudoers 
-   # ysg ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
-   netstat -tulpn | grep qto
+   # usrqtoadmin ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
+   sudo netstat -tulpn | grep qto
 
 	doLog "DEBUG STOP  doTestMojoMorboStop"
 }

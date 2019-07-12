@@ -77,6 +77,41 @@ package Qto::App::IO::In::CnrPostPrms ;
       return ( $ret , $msg , $epass ) ; 
    }
 
+# 1 -> has , 0 -> does not have
+sub chkHCreateHasValidParams {
+
+   my $self          = shift ; 
+   my $perl_hash     = shift ; 
+   my $msg           = '' ; 
+   my $isValid       = 0 ; 
+   my $errors        = 0 ; 
+   my $http_code     = 400 ; 
+   my $id            = $perl_hash->{'id'} ; 
+   my $seq           = $perl_hash->{'seq'} ; 
+
+   unless ( isint $id && $id >= 0) {
+      $msg           = 'the id must be a whole positive number, but ' . $id . ' was provided !' ; 
+      $errors++ ;
+   } 
+   unless ( isint $seq && $seq >= 1) { # the seq must start from 1 and not 0 !!! by definition
+      $msg           = 'the seq must be a whole positive number, but ' . $seq . ' was provided !' ; 
+      $errors++ ;
+   } 
+
+   if ( $errors ) {
+      $http_code = 400 ; 
+      $self->set('msg' , $msg ) ; 
+   } else {
+      $isValid = 1 ;
+      $http_code = 200 ;
+      $objModel->set('hcreate.web-action.id' , $id ) ; 
+   }
+
+   $self->set('http_code' , $http_code ) ; 
+   return $isValid ; 
+}
+
+
 sub doValidateAndSetCreate {
 
    my $self          = shift ; 
