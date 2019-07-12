@@ -69,8 +69,10 @@ cnf/postgres/etc/postgresql/11/main
 cnf/postgres/etc/postgresql/11/main/pg_hba.conf
 cnf/postgres/etc/postgresql/11/main/postgresql.conf
 # -- stop  docker deployment
+src/bash/qto/funcs/perl/run-benchmarks.func.sh
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.pl
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.pl
+src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.pl
 src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
@@ -198,7 +200,6 @@ src/perl/qto/t/lib/Qto/Controller/TestHSelect.t
 src/perl/qto/t/lib/Qto/Controller/TestHSelectWith.t
 src/perl/qto/t/lib/Qto/Controller/TestQuery.pl
 src/perl/qto/t/lib/Qto/Controller/TestSearch.pl
-src/perl/qto/t/lib/Qto/Controller/LoadTestSelect.pl
 src/perl/qto/t/lib/Qto/Controller/TestSelectFilter.pl
 src/perl/qto/t/lib/Qto/Controller/TestSelectLike.pl
 src/perl/qto/t/lib/Qto/Controller/TestSelectPick.pl
