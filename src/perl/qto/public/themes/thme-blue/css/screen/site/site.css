@@ -7,30 +7,44 @@ html, body {
 .app_name_tooltip {
    color: #D3D3D3 ;
    font-size: 75%;
+   display: inline-block;
    position: fixed; 
    z-index: 10; 
-   left: 2%;
+   left: 1%;
    top: 1%;
    font-weight: 500;
-   display: inline-block;
 }
-.app_name_tooltip .app_name_tooltiptext {
+.app_name_tooltiptext {
    visibility: hidden ; 
-   position: absolute; 
+   position: absolute;
    z-index: 10;
-   top: 0%;
-   left: 12%;
-   margin-right: 10px ; 
+   top: -1%;
+   left: 35px;
    width: 60px;
    background-color: grey ; 
    color: #fffaaa;
    text-align: right;
-   border-radius: 6px;
-   padding: 2px 10px 2px 10px ;
+   border-radius: 7px;
+   padding: 7px 10px 7px 10px ;
+}
+
+#app_tooltip:hover {
+   visibility: visible;
+   background-color: #D3D3D3;
+	border: 2px solid #CDCDCD;
+	border-radius: 3px;
+	box-shadow: 1px 1px 15px #C0C0C0;
+	-webkit-box-shadow: 1px 1px 15px #C0C0C0;
+	-moz-box-shadow: 1px 1px 15px #C0C0C0;
+   border-top-left-radius: 45%;
+   border-top-right-radius: 45%;
+   border-bottom-left-radius: 45%;
+   border-bottom-right-radius: 45%;
+   margin: 3px;
 }
 
 .app_name_tooltip:hover .app_name_tooltiptext {
-    visibility: visible;
+   visibility: visible;
 }
 
 html body div#div_msg {
