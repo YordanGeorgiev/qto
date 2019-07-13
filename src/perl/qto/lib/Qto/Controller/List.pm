@@ -48,7 +48,7 @@ sub doListItems {
    $appConfig		 		= $self->app->get('AppConfig');
    $db                  = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
  
    my $list_control     = '' ; 
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item) ;

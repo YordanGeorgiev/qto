@@ -40,7 +40,7 @@ sub doHLSelectItems {
    $appConfig		   = $self->app->get('AppConfig');
    $db               = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
 
    $appConfig		   = $self->app->get('AppConfig');
    $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;

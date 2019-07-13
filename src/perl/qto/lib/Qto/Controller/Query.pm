@@ -37,12 +37,12 @@ sub doQueryItems {
    my $msr2             = $self->doGetRsMeta() ; 
 
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db,'search' ) ;
    
    $appConfig		 		= $self->app->get('AppConfig');
    unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
       
-      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjDbMeta( $db ) ; 
+      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjDbMeta( $db ,'search') ; 
       unless ( $ret == 0 ) { 
          $self->render('text' => $msg ) unless $ret == 0 ; 
          return ; 

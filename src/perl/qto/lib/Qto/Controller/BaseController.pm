@@ -26,9 +26,14 @@ sub doReloadProjDbMeta {
    $db = toEnvName ( $db , $appConfig ) ;
 
    # reload the columns meta data ONLY after the meta_columns has been requested
-   return if ( exists ( $appConfig->{ $db . '.meta' } ) && $item ne 'meta_columns' ); 
+   #return if ( exists ( $appConfig->{ $db . '.meta' } ) && $item ne 'meta_columns' ); 
+   if ( defined ( $appConfig->{ $db . '.meta' } ) ) {
+      if ( $item ne 'meta_columns' ) {
+         return ; 
+      }
+   }
 
-   my $objRdrDbsFcry    = {} ; 
+   my $objRdrDbsFcry       = {} ; 
    my $objRdrDb            = {} ; 
    my $msr2                = {} ; 
    my $ret                 = 1 ; 
@@ -65,18 +70,20 @@ sub isAuthenticated {
       $self->session( 'app.' . $db . '.url' => $self->req->url->to_abs );
       $self->redirect_to( $url );
       return 0 ;
+   } else {
+      return 1 
    }
 
-   my $htpasswd_file = $appConfig->{ 'ProductInstanceDir'} . '/cnf/sec/passwd/' . $db . '.htpasswd' ;
-   return 1 unless -f $htpasswd_file ;  # open by default !!! ( temporary till v0.5 if desired so !!!
-   return 1 if $self->basic_auth(
-      $db => {
-         'path' => $htpasswd_file
-      }
-   );
+   #my $htpasswd_file = $appConfig->{ 'ProductInstanceDir'} . '/cnf/sec/passwd/' . $db . '.htpasswd' ;
+   #return 1 unless -f $htpasswd_file ;  # open by default !!! ( temporary till v0.5 if desired so !!!
+   #return 1 if $self->basic_auth(
+   #   $db => {
+   #      'path' => $htpasswd_file
+   #   }
+   #);
 
-   $self->render('text' => 'Refresh your page to login ');
-   return 0  ;
+   #$self->render('text' => 'Refresh your page to login ');
+   #return 0  ;
 
 }
 
