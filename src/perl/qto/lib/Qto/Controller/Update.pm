@@ -49,7 +49,7 @@ sub doUpdateById {
    $objModel->set('postgres_db_name' , $db ) ; 
    
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
    
    $objCnrPostPrms = 
       'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel );

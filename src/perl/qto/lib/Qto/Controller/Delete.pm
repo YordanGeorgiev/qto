@@ -43,7 +43,7 @@ sub doDeleteById {
    $db                  = toEnvName ( $db , $appConfig);
    
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
 
    my $json = $self->req->body;
    my $perl_hash = decode_json($json) ; 

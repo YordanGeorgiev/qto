@@ -231,7 +231,7 @@ sub doSelectMeta {
    
    $db                  = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db,$table ) ;
    
    $appConfig		 		= $self->app->get('AppConfig');
       

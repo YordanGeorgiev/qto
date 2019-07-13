@@ -44,7 +44,7 @@ sub doExportItems {
    $appConfig		 		= $self->app->get('AppConfig');
    $db                  = toEnvName ( $db , $appConfig) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db ) ;
+   $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
  
    my $as               = 'xls' ; # the default form of the Export control 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
