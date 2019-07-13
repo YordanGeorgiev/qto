@@ -22,7 +22,7 @@ sub toEnvName {
 }
   
 sub toPlainName {
-   my $db                  = shift ; 
+   my $db  = shift ; 
    $db =~ s/^|dev_|tst_|qas_|prd_|//g;
    return $db ;
 }
