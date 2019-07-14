@@ -90,21 +90,19 @@ sub doSelectTables {
 
 	my $self       = shift;
 	my $db         = $self->stash('db');
-	my $rdbms_type = 'postgres';
    my $msg = 'unknown error during select-tables';
 
-	$appConfig	   = $self->app->get('AppConfig');
-   my $objModel   = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
+   $appConfig		= $self->app->get('AppConfig');
+   $db            = toEnvName ( $db , $appConfig) ;
 
-   $db                  = toEnvName ( $db , $appConfig) ;
+   my $objModel   = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db , 'meta_columns' ) ;
 
 	my $ret        = 0;
 	my $hsr2       = {};
 
-	my $objRdrDbsFcry
-			= 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+	my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
 
 	my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectTablesList(\$objModel);

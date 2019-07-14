@@ -12,15 +12,20 @@ src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
 # stop  HCreate
 # start login
 src/perl/qto/t/lib/Qto/Controller/TestLogin.pl
+src/perl/qto/public/poc/vuex/sabe/
+src/perl/qto/public/poc/vuex/sabe/app.js
+src/perl/qto/public/poc/vuex/sabe/index.html
+src/perl/qto/public/poc/vuex/sabe/styles.css
 src/perl/qto/lib/Qto/Controller/Login.pm
 src/perl/qto/templates/pages/login
 src/perl/qto/templates/pages/login/login.html.ep
 src/perl/qto/templates/pages/home/home.html.ep
+src/perl/qto/templates/controls/list-url-lists/js/list-url-lists.js.html.ep
 src/perl/qto/lib/Qto/Controller/Home.pm
+src/perl/qto/public/poc/web-socket/wsclient.js
+src/perl/qto/public/poc/web-socket/web-socket.html
 # stop  login
 src/perl/qto/public/poc/notes/index.html
-src/perl/qto/public/poc/web-socket/web-socket.html
-src/perl/qto/public/poc/web-socket/wsclient.js
 src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
 #
 src/js/node/js-unit-tests/01-set-url-param/test/test.js
@@ -149,10 +154,6 @@ src/perl/qto/public/poc/right-click-menu-01/right-click-menu-01.html
 src/perl/qto/public/poc/snackbar/snackbar.html
 src/perl/qto/public/poc/snackbar/snackbar.css
 src/perl/qto/public/poc/side-menu/index.html
-src/perl/qto/public/poc/vuex/sabe/
-src/perl/qto/public/poc/vuex/sabe/app.js
-src/perl/qto/public/poc/vuex/sabe/index.html
-src/perl/qto/public/poc/vuex/sabe/styles.css
 src/perl/qto/public/poc/autocomplete
 src/perl/qto/public/poc/autocomplete/searchbox-autocomplete.css
 src/perl/qto/public/poc/autocomplete/div-searchbox.js

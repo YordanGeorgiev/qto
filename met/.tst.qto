@@ -12,15 +12,20 @@ src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
 # stop  HCreate
 # start login
 src/perl/qto/t/lib/Qto/Controller/TestLogin.pl
+src/perl/qto/public/poc/vuex/sabe/
+src/perl/qto/public/poc/vuex/sabe/app.js
+src/perl/qto/public/poc/vuex/sabe/index.html
+src/perl/qto/public/poc/vuex/sabe/styles.css
 src/perl/qto/lib/Qto/Controller/Login.pm
 src/perl/qto/templates/pages/login
 src/perl/qto/templates/pages/login/login.html.ep
 src/perl/qto/templates/pages/home/home.html.ep
+src/perl/qto/templates/controls/list-url-lists/js/list-url-lists.js.html.ep
 src/perl/qto/lib/Qto/Controller/Home.pm
+src/perl/qto/public/poc/web-socket/wsclient.js
+src/perl/qto/public/poc/web-socket/web-socket.html
 # stop  login
 src/perl/qto/public/poc/notes/index.html
-src/perl/qto/public/poc/web-socket/web-socket.html
-src/perl/qto/public/poc/web-socket/wsclient.js
 src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
 #
 src/js/node/js-unit-tests/01-set-url-param/test/test.js
@@ -122,6 +127,7 @@ src/perl/qto/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/qto/public/themes/thme-blue/img/controls/
 src/perl/qto/public/themes/thme-blue/img/controls/tack.png
+src/perl/qto/public/themes/thme-blue/img/controls/home.png
 src/perl/qto/public/themes/thme-blue/img/controls/srch.png
 src/perl/qto/public/themes/thme-blue/img/controls/pg-sizer.png
 src/perl/qto/public/themes/thme-blue/img/controls/github-md.png
@@ -148,10 +154,6 @@ src/perl/qto/public/poc/right-click-menu-01/right-click-menu-01.html
 src/perl/qto/public/poc/snackbar/snackbar.html
 src/perl/qto/public/poc/snackbar/snackbar.css
 src/perl/qto/public/poc/side-menu/index.html
-src/perl/qto/public/poc/vuex/sabe/
-src/perl/qto/public/poc/vuex/sabe/app.js
-src/perl/qto/public/poc/vuex/sabe/index.html
-src/perl/qto/public/poc/vuex/sabe/styles.css
 src/perl/qto/public/poc/autocomplete
 src/perl/qto/public/poc/autocomplete/searchbox-autocomplete.css
 src/perl/qto/public/poc/autocomplete/div-searchbox.js
@@ -397,14 +399,12 @@ doc/txt/qto/helps/txt-to-db.help.txt
 # ---
 # the postgres DDL scripts
 src/sql/pgsql
-
 src/sql/pgsql/qto
 src/sql/pgsql/qto/00.create-db.pgsql
 src/sql/pgsql/qto/01.create-qto-app-user.sql
 src/sql/pgsql/qto/funcs
 src/sql/pgsql/qto/funcs/01.create-func-fns_update_time.sql
 src/sql/pgsql/qto/funcs/02.create-func-f_concat_ws.sql
-src/sql/pgsql/qto/funcs/03.create-func-fnc_tree_traversal.sql
 src/sql/pgsql/qto/tables
 src/sql/pgsql/qto/tables/01.create-table-daily_issues.sql
 src/sql/pgsql/qto/tables/02.create-table-weekly_issues.sql
@@ -461,6 +461,7 @@ src/sql/pgsql/qto/tables/94.create-table-test_item.sql
 src/sql/pgsql/qto/tables/95.create-table-test_hcreate_table.sql
 src/sql/pgsql/qto/tables/96.create-table-test_delete_table.sql
 src/sql/pgsql/qto/tables/97.create-table-test_create_table.sql
+src/sql/pgsql/qto/tables/97.03.create-func-fnc_tree_traversal.sql
 src/sql/pgsql/qto/tables/98.create-table-test_update_table.sql
 src/sql/pgsql/scripts/01.create-table-test_hierarchy_table.sql
 src/sql/pgsql/scripts/02.create-table-test_hierarchy_table.sql

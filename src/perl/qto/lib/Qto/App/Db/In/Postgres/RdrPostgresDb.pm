@@ -413,8 +413,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       $sth = $dbh->prepare($str_sql);  
       # debug rint "$str_sql \n stop RdrPostgresDb.pm" ; 
 
-      $sth->execute()
-            or $objLogger->error ( "$DBI::errstr" ) ;
+      $sth->execute() or $objLogger->error ( "$DBI::errstr" ) ;
 
       $hsr = $sth->fetchall_hashref( 'row_id' ) ; 
       

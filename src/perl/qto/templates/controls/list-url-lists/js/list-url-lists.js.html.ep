@@ -1,0 +1,131 @@
+var webSocket   = null;
+var ws_protocol = null;
+var ws_hostname = null;
+var ws_port     = null;
+var ws_endpoint = null;
+
+function openWSConnection(protocol,hostname,port,endpoint) {
+   var webSocketURL = protocol + "://" + hostname + ":" + port + endpoint;
+   console.log("openWSConnection::Connecting to: " + webSocketURL);
+   try {
+        webSocket = new WebSocket(webSocketURL);
+
+        webSocket.onopen = function(openEvent) {
+         console.log("WebSocket OPEN: " + JSON.stringify(openEvent, null, 4));
+         webSocket.send("HellowWorld")
+        };
+        webSocket.onclose = function (closeEvent) {
+            console.log("WebSocket CLOSE: " + JSON.stringify(closeEvent, null, 4));
+        };
+        webSocket.onerror = function (errorEvent) {
+            console.log("WebSocket ERROR: " + JSON.stringify(errorEvent, null, 4));
+        };
+        webSocket.onmessage = function (messageEvent) {
+            var wsMsg = messageEvent.data;
+            console.log("WebSocket MESSAGE: " + wsMsg);
+            if (wsMsg.indexOf("error") > 0) {
+                console.error ( "error: " + wsMsg.error + "\r\n" );
+            } else {
+                console.log("message: " + wsMsg + "\r\n")
+            }
+        };
+    } catch (exception) {
+        console.error(exception);
+    }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function createWebSocket() {
+   ws_protocol = "ws" // todo:ysg might be also wss
+   ws_hostname = '192.168.56.120'
+   // "<%= $self->app->get('AppConfig')->{ 'web_host' } %>"
+   ws_port     = "8080"
+   //ws_port     = <%= $self->app->get('AppConfig')->{ 'mojo_hypnotoad_port' } %>
+   ws_endpoint = '/websocketecho' ;
+   openWSConnection(ws_protocol, ws_hostname, ws_port, ws_endpoint);
+}
+
+
+
+var state = {
+	items: []
+ };
+
+var getters = {
+	getItems: state => state.items
+}
+
+ var mutations = {
+        ADD_ITEM: (state, payload) => {
+            var newItem = {
+                id: payload.newId,
+                name: payload.name,
+                completed: false
+            }
+            state.items.unshift(newItem);
+        },
+        SET_ITEMS (state, items) {
+            state.items = items
+        },
+        DELETE_TODO: (state, payload) => {
+            var index = state.items.findIndex(todo => todo.id === payload);
+            state.items.splice(index, 1);
+        }
+ };
+
+   var actions = {
+		loadItems ({ commit }) {
+         createWebSocket()
+		  },
+        addItem: (context, payload) => {
+            context.commit("ADD_ITEM", payload)
+        },
+        deleteItem: (context, payload) => {
+            context.commit("DELETE_TODO", payload)
+        }
+    }
+
+ var store = new Vuex.Store({
+        state: state,
+        getters: getters,
+        mutations: mutations,
+        actions: actions
+    });
+
+ Vue.component("list-items", {
+  		  created () {
+    			this.$store.dispatch('loadItems')
+  		  },
+        computed: {
+            items() {
+                return this.$store.getters.getItems;
+            }
+        },
+        methods: {
+            deleteItem: function(id) {
+                this.$store.dispatch("deleteItem", id);
+            }
+        },
+        template: "#list-items"
+    });
+	
+var app = new Vue({
+        data: () => ({
+            name: "",
+            newId: 3
+        }),
+        methods: {
+            addItem: function() {
+                this.$store.dispatch("addItem", this);
+                this.newId ++;
+                this.name = "";
+            }
+        },
+        store: store,
+        el: "#app",
+        template: "#app-template"
+    });
+	

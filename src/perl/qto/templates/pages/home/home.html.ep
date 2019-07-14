@@ -7,17 +7,33 @@
 
 % content_for cnt_body_controls  => begin
    <div id="div_central_panel">
-	<div class="box">
 		<h4> <span id="welcome_msg"> <%= $msg =%> </span> </h4>
+		<div id="app"></div>
 	</div>
+
+   <template id="list-items">
+        <ul class="items">
+            <li v-for="item in items"
+                :class="{completed: item.completed}"
+                class="item"
+                @click="toggleItem(item.id)"
+                @dblclick="deleteItem(item.id)">{{item.name}}</li>
+        </ul>
+    </template>
+    <template id="app-template">
+        <div>
+            <list-items />
+        </div>
+    </template>
 % end
 
 
 % content_for cnt_all_js => begin
 
    <script id="all_js_scripts">
-	<!-- todo:ysg -->
-   <!-- include 'js/global/get-url-params.func.js' -->
 
+      %= include 'controls/list-url-lists/js/list-url-lists.js'
+		
    </script>
+
 % end
