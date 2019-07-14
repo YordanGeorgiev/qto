@@ -16,27 +16,12 @@ use Qto::App::Cnvr::CnrHsr2ToArray ;
 use Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
-our $appConfig          = {} ; 
 
 sub doTestWebSocket {
 
    my $self          = shift ; 
-#   my $db            = $self->stash('db');
-#   my $item          = $self->stash('item');
-#   my $msg           = '' ; 
-#   my $http_code     = 400 ; 
-#   my $http_method   = 'GET' ; 
-#   my $met           = {} ; 
-#   my $ret           = 1 ; 
-#   my $cnt           = 0 ; 
-#   my $rdbms_type    = 'postgres' ; 
-#   my $dat           = [] ;
-#   my $objModel      = {} ; 
-#   my $objRdrDb      = {} ; 
-#   my $objRdrDbsFcry = {} ; 
 	
-	# Increase inactivity timeout for connection to 300 seconds
-	$self->inactivity_timeout(300);
+	$self->inactivity_timeout(3000);
 
 	$self->on( 'message' => sub {
 		my ($self, $msg) = @_;
@@ -44,32 +29,6 @@ sub doTestWebSocket {
 	});
 
    return ; 
- 
-#   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   #$db                  = toEnvName ( $db , $appConfig) ;
-#   $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
-#
-#   $appConfig		   = $self->app->get('AppConfig');
-#   $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
-#   my $objCnrUrlPrms = 'Qto::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
-#   
-#   return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
-#      unless $objCnrUrlPrms->doValidateAndSetWebSocketPoc();
-#   
-#   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
-#   $objRdrDb 			= $objRdrDbsFcry->doSpawn("$rdbms_type");
-#
-#   ($http_code, $msg, $dat) 	= $objRdrDb->doWebSocketPocBranch( $db , $item );
-#   my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$appConfig  ) ; 
-#   $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
-#   
-#   $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
-#  
-#   $dat = "foobar" ; 
-#   $self->render( 'json' =>  { 
-#      , 'dat'   => $dat
-#   });
-
 }
 
 1 ; 
