@@ -4,6 +4,7 @@ use strict ; use warnings ;
 use Mojo::Base 'Mojolicious::Controller';
 use Mojolicious::Sessions ;
 use Data::Printer ; 
+
 use Qto::App::Utils::Timer ; 
 use Qto::App::IO::In::CnrPostPrms ; 
 use Qto::App::Db::In::RdrDbsFcry ; 
@@ -15,7 +16,7 @@ our $rdbms_type     = 'postgres';
 
 #
 # --------------------------------------------------------
-# Select all the rows from db by passed db and table name
+# called after the users presses the login button
 # --------------------------------------------------------
 sub doLoginUser {
 
@@ -24,7 +25,7 @@ sub doLoginUser {
    my $ret              = 1 ; 
    my $msg              = 'unknown error during global text search ';
    my $msg_color        = 'red' ;
-   my $objRdrDbsFcry = {} ; 
+   my $objRdrDbsFcry    = {} ; 
    my $objRdrDb         = {} ; 
    my $hsr              = {};
    my $http_code        = 400 ;
@@ -36,18 +37,17 @@ sub doLoginUser {
    $db                  = toEnvName ( $db , $appConfig) ;
 	#print STDOUT "Logon.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
-   my $pass         = $self->param('pass');
-   my $epass        = undef ; 
-   my $email        = $self->param('email' );
-   my $redirect_url = $self->param('redirect-url' );
-   $redirect_url    = '/' . toPlainName ($db) . '/home' unless $redirect_url ;
+   my $pass             = $self->param('pass');
+   my $epass            = undef ; 
+   my $email            = $self->param('email' );
+   my $redirect_url     = $self->param('redirect-url' );
+   $redirect_url        = '/' . toPlainName ($db) . '/home' unless $redirect_url ;
    
-   my $objModel     = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
    $objModel->set('postgres_db_name' , $db ) ; 
    $objLogger->doLogInfoMsg ( "login attempt for " . $self->setEmptyIfNull($email)) ; 
 
-   my $objCnrPostPrms = 
-      'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel );
+   my $objCnrPostPrms   = 'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel );
    ( $ret , $msg , $epass) = $objCnrPostPrms->doSetLoginUrlParams('Login' , $email , $pass );
 
    if ( $ret != 0 ) {
@@ -56,9 +56,10 @@ sub doLoginUser {
       return ;
    } 
 
-   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
-	$objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
+   $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+	$objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
    ($http_code, $msg , $hsr ) = $objRdrDb->doNativeLogonAuth($email,$epass);
+
    if ( $http_code == 200 ) {
       my $objCnrEncrypter  = 'Qto::App::IO::In::CnrEncrypter'->new();
       foreach my $key ( keys %$hsr ) {
@@ -89,8 +90,8 @@ sub doShowLoginForm {
    my $msg              = undef ; 
    my $msg_color        = 'grey' ; 
    
-   $db                  = toEnvName ( $db , $appConfig) ;
    $appConfig		 		= $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $appConfig) ;
 
    my $redirect_url = $self->session( 'app.' . $db . '.url' ) 
          if defined $self->session( 'app.' . $db . '.url' ) ; 

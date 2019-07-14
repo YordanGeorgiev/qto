@@ -7,3 +7,4 @@
   <link rel="stylesheet" type="text/css" 
       href="../../themes/thme-blue/css/screen/site/view.css?v=<%= $ProductVersion =%>" />
 % end
+% stash('template_name', __FILE__);

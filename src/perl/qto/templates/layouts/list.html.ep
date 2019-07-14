@@ -29,3 +29,5 @@
 	<div id="div_notice"> <span> <%== $notice %> </span></div>
 </body>
 </html>
+
+% stash('template_name', __FILE__);

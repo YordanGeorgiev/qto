@@ -1,8 +1,15 @@
 package Qto::Controller::Home ;
 use strict ; use warnings ; 
 
-use Mojo::Base 'Mojolicious::Controller';
+require Exporter;
+our @ISA = qw(Exporter Mojo::Base Qto::Controller::BaseController);
+our $AUTOLOAD =();
+our $ModuleDebug = 0 ; 
+use AutoLoader;
+
+use parent qw(Qto::Controller::BaseController);
 use Data::Printer ; 
+
 use Qto::App::Utils::Timer ; 
 use Qto::App::IO::In::CnrPostPrms ; 
 use Qto::App::Db::In::RdrDbsFcry ; 
@@ -22,19 +29,18 @@ sub doLanding {
    my $db               = $self->stash('db');
    my $ret              = 1 ; 
    my $msg              = '' ;
-   my $objRdrDbsFcry = {} ; 
-   my $objRdrDb         = {} ; 
-   my $hsr              = {};
-   my $http_code        = 200 ;
    my $rows_count       = 0 ; 
    my $dat              = {}  ; 
+   
    $appConfig		 		= $self->app->get('AppConfig');
-   $objLogger           = 'Qto::App::Utils::Logger'->new( \$appConfig );
    $db                  = toEnvName ( $db , $appConfig) ;
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
+   $self->SUPER::doReloadProjDbMeta( $db, 'home' ) ;
+   
+   my $http_code        = 200  ; 
 
    $self->doRenderPageTemplate($http_code,$msg,$db);
 }
-#eof sub doHomeUser
 
 
 

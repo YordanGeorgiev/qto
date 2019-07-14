@@ -8,7 +8,10 @@
   <%= content 'cnt_header_css' %>
 </head>
 <body>
-   %= include 'controls/site/app_name_tooltip'
+
+% unless ( substr($template_name,-13) eq 'login.html.ep' ) {
+   %= include 'controls/site/app_name_tooltip' 
+% }
 
    <%= content 'cnt_body_controls' %>
    <div id="js_libs">
@@ -19,6 +22,5 @@
 
    <%= content 'cnt_all_js' %>
 
-   % stash('template', __FILE__);
 </body>
 </html>
