@@ -440,8 +440,6 @@ src/sql/pgsql/qto/tables/24.create-table-system_guide.sql
 src/sql/pgsql/qto/tables/25.1.create-table-installations_doc.sql
 src/sql/pgsql/qto/tables/25.create-table-installations.sql
 src/sql/pgsql/qto/tables/26.create-table-release_history.sql
-src/sql/pgsql/qto/tables/27.1.create-table-maintenance_guide_doc.sql
-src/sql/pgsql/qto/tables/27.create-table-maintenance_guide.sql
 src/sql/pgsql/qto/tables/28.create-table-imgs.sql
 src/sql/pgsql/qto/tables/29.1.create-table-enduser_guide_doc.sql
 src/sql/pgsql/qto/tables/29.create-table-enduser_guide.sql
