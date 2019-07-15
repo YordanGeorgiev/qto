@@ -1,5 +1,4 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
-#
 # start HCreate
 src/perl/qto/lib/Qto/Controller/Truncate.pm
 src/perl/qto/t/lib/Qto/Controller/TestTruncate.pl
@@ -20,9 +19,12 @@ src/perl/qto/lib/Qto/Controller/Login.pm
 src/perl/qto/templates/pages/login
 src/perl/qto/templates/pages/login/login.html.ep
 src/perl/qto/templates/pages/home/home.html.ep
+src/perl/qto/templates/controls/robust-websocket/js/robust-websocket.js.html.ep
 src/perl/qto/templates/controls/list-url-lists/js/list-url-lists.js.html.ep
 src/perl/qto/lib/Qto/Controller/Home.pm
 src/perl/qto/public/poc/web-socket/wsclient.js
+src/perl/qto/lib/Qto.pm
+src/perl/qto/lib/Qto/Controller/WsSelect.pm
 src/perl/qto/public/poc/web-socket/web-socket.html
 # stop  login
 src/perl/qto/public/poc/notes/index.html
@@ -42,7 +44,6 @@ src/perl/qto/templates/pages/view-doc/components/snackbar.html.ep
 src/perl/qto/templates/pages/view-doc/components/view-doc-items-list.xt.html.ep
 src/perl/qto/templates/pages/view-doc/components/right-click-menu.xt.html.ep
 src/perl/qto/templates/pages/view-doc/components/app-template.xt.html.ep
-src/perl/qto/lib/Qto.pm
 src/bash/qto/funcs/generate-md-docs.func.sh
 doc/txt/qto/funcs/generate-md-docs.func.txt
 # -- start docker deployment
@@ -444,8 +445,6 @@ src/sql/pgsql/qto/tables/27.create-table-maintenance_guide.sql
 src/sql/pgsql/qto/tables/28.create-table-imgs.sql
 src/sql/pgsql/qto/tables/29.1.create-table-enduser_guide_doc.sql
 src/sql/pgsql/qto/tables/29.create-table-enduser_guide.sql
-src/sql/pgsql/qto/tables/30.1.create-table-deployment_guide_doc.sql
-src/sql/pgsql/qto/tables/30.create-table-deployment_guide.sql
 src/sql/pgsql/qto/tables/31.1.create-table-readme_doc.sql
 src/sql/pgsql/qto/tables/31.create-table-readme.sql
 src/sql/pgsql/qto/tables/32.create-table-export_files.sql

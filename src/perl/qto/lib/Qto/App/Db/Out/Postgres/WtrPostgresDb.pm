@@ -186,8 +186,6 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          $msg = "$DBI::errstr" ; 
       }
 			
-		p $hsr ; 
-		print "stop print hsr \n" ; #todo:ysg
 	
 		$dbh->disconnect ;
       return ( $ret , $msg , $hsr) ; 
