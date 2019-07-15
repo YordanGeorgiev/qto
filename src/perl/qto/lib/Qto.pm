@@ -321,7 +321,8 @@ sub doSetRoutes {
    , action       => 'doSearchItems'
    );
 
-   $r->websocket('/websocketecho')->to('WebSocketPoc#doTestWebSocket');
+   $r->websocket('/ws-select-items')->to('WsSelect#doWsSelectTables');
+   $r->websocket('/wsecho')->to('WSSelect#wsecho');
 }
 
 

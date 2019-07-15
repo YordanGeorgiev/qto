@@ -12,13 +12,26 @@
 	</div>
 
    <template id="list-items">
-        <ul class="items">
-            <li v-for="item in items"
-                :class="{completed: item.completed}"
-                class="item"
-                @click="toggleItem(item.id)"
-                @dblclick="deleteItem(item.id)">{{item.name}}</li>
-        </ul>
+		<div id="container">
+		  <div id="left">
+			  <ul class="cls_items">
+					<li v-for="item in items" v-if="!item.endsWith('_doc')"
+						 class="cls_lst_item"
+						 @click="toggleItem(item.id)"
+						 @dblclick="deleteItem(item.id)">
+						<a :href="'/<%= $db %>/list/' + item"> list {{item}} </a></li>
+			  </ul>
+		  </div>
+		  <div id="right">
+			  <ul class="cls_items">
+					<li v-for="item in items" v-if="item.endsWith('_doc')"
+						 class="cls_lst_item"
+						 @click="toggleItem(item.id)"
+						 @dblclick="deleteItem(item.id)">
+						<a :href="'/<%= $db %>/view/' + item"> view {{item}} </a></li>
+			  </ul>
+		  </div>
+		</div>
     </template>
     <template id="app-template">
         <div>
@@ -32,7 +45,9 @@
 
    <script id="all_js_scripts">
 
+		%= include 'controls/robust-websocket/js/robust-websocket.js'
       %= include 'controls/list-url-lists/js/list-url-lists.js'
+		
 		
    </script>
 

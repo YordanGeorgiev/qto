@@ -14,3 +14,7 @@
       // for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
       return url_params ; 
    }
+
+   function sleep(ms) {
+     return new Promise(resolve => setTimeout(resolve, ms));
+   }

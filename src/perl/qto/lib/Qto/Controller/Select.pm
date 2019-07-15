@@ -87,7 +87,6 @@ sub doSelectItems {
 # }
 # --------------------------------------------------------
 sub doSelectTables {
-
 	my $self       = shift;
 	my $db         = $self->stash('db');
    my $msg = 'unknown error during select-tables';
