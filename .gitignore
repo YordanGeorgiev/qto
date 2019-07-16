@@ -6,17 +6,16 @@ dat/xls/run/*.xlsx
 dat/tests/t*.txt
 dat/qto/**
 src/bash/qto/tmp/**
-src/perl/issue_tracker/script/hypnotoad.pid
 **/~$*.xlsx
 **/.DS_Store
-src/perl/issue_tracker/public/bower_components/**
-src/perl/issue_tracker/public/node_modules/**
-src/perl/issue_tracker/public/poc/poc-vue-js-modal/node_modules/**
+src/perl/qto/public/bower_components/**
+src/perl/qto/public/node_modules/**
+src/perl/qto/public/poc/poc-vue-js-modal/node_modules/**
 **/*.htpasswd
-src/perl/issue_tracker/public/lib/js/**
+src/perl/qto/public/lib/js/**
 **/*.crt
 **/*.key
-src/perl/issue_tracker/public/dat/tmp/**
+src/perl/qto/public/dat/tmp/**
 dat/tmp/**
 **/tmp/**
 dat/mix/2019/**
@@ -27,3 +26,4 @@ tags
 **/*.swp
 **/*.swo
 cnf/*.cnf
+**/hypnotoad.pid
