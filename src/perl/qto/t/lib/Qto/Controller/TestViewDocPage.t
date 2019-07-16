@@ -16,7 +16,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $dom           = {} ;
    my $ua            = $t->ua ; 
    my $response      = $ua->get('/' . $db . '/select-tables')->result->json ; 
-   my $item          = 'test_hierarchy_table' ; 
+   my $item          = 'test_hierarchy_doc' ; 
 
    $tm = 'the view-doc page for the ' . $item . ' returns http 200 ' ; 
    $url = "/$db/view/$item" ; 
@@ -33,10 +33,10 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
       ->header_is('Accept-Language' => 'fi, en'), $tm );
 
    $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
-   # ok ( $dom->find('div')->[1] =~ m/$ProductType/ , $tm ) ;
+   ok ( $dom->find('div')->[1] =~ m/$appConfig->{'ProductType'}/ , $tm ) ;
 
-   my @headers = $dom->find('div#lft_body')->map('all_text'); 
-   p @headers ; 
+   #my @headers = $dom->find('div#lft_body')->map('all_text'); 
+   #p @headers ; 
 
 
 

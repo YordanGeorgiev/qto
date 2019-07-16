@@ -214,12 +214,9 @@ src/perl/qto/t/lib/Qto/Controller/TestHSelect.t
 src/perl/qto/t/lib/Qto/Controller/TestAppLabel.pl
 src/perl/qto/t/lib/Qto/Controller/TestListAsOutputType.pl
 src/perl/qto/t/lib/Qto/Controller/TestViwWithMojoChrome.pl
-src/perl/qto/t/lib/Qto/Controller/TestListBySelenium.t
+src/perl/qto/t/lib/Qto/Controller/TestMojoRoleSelenium.pl
 src/perl/qto/t/lib/Qto/Controller/TestListHide.pl
 src/perl/qto/t/lib/Qto/Controller/TestViewDocPage.t
-src/perl/qto/t/lib/Qto/Controller/POCTestMojoRoleSelenium.todo
-src/perl/qto/t/lib/Qto/TestClientSidePOC1.t
-src/perl/qto/t/lib/Qto/Controller/POCSeleniumBrowser.pl
 # --- 
 src/perl/qto/lib/Mojo/Chrome.pm
 src/perl/qto/lib/Test/Mojo/Role/Chrome.pm
@@ -251,6 +248,7 @@ src/perl/qto/lib/Qto/App/IO/In/RdrEnv.pm
 src/bash/qto/tests/new-qto-tests.lst
 # ---
 src/bash/qto/tests/run-qto-tests.lst
+.vimrc
 cnf/tpl
 cnf/tpl/qto.dev.p-host-name.cnf
 cnf/tpl/qto.dev.v-host-name.cnf
@@ -360,7 +358,6 @@ src/perl/qto/script
 src/perl/qto/script/qto
 src/perl/qto/lib
 src/perl/qto/t
-src/perl/qto/t/basic.t
 cnf
 cnf/hosts
 cnf/hosts/host-name
@@ -460,7 +457,7 @@ src/sql/pgsql/qto/tables/96.create-table-test_delete_table.sql
 src/sql/pgsql/qto/tables/97.create-table-test_create_table.sql
 src/sql/pgsql/qto/tables/97.03.create-func-fnc_tree_traversal.sql
 src/sql/pgsql/qto/tables/98.create-table-test_update_table.sql
-src/sql/pgsql/scripts/01.create-table-test_hierarchy_table.sql
+src/sql/pgsql/qto/tables/99.create-table-test_hierarchy_doc.sql
 src/sql/pgsql/scripts/02.create-table-test_hierarchy_table.sql
 src/sql/pgsql/scripts/admin
 src/sql/pgsql/scripts/admin/check-postgres-tables-permissions.sql
@@ -716,13 +713,10 @@ doc/dot/devops/shell-action-control-flow-diagram.dot
 doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
 doc/img/system_guide/multi-env-setup.png
+doc/gliffy/multi-env-setup.gliffy
 # --- the application data
 src/bash/qto/funcs/db-to-json.func.sh
 src/bash/qto/tests/db-to-json.test.sh
-src/bash/qto/helps/db-to-json.help.sh
-doc/txt/qto/tests/db-to-json.test.txt
-doc/txt/qto/helps/db-to-json.help.txt
-doc/txt/qto/funcs/db-to-json.func.txt
 # ---
 src/perl/qto/public/poc/
 src/perl/qto/public/poc/list-lable
@@ -757,9 +751,6 @@ src/perl/qto/public/poc/list-vue-grid-editable
 src/perl/qto/public/poc/list-vue-grid-editable/app.js
 src/perl/qto/public/poc/list-vue-grid-editable/list-vue-grid-editable.css
 src/perl/qto/public/poc/list-vue-grid-editable/list-vue-grid-editable.html
-# ---
-src/perl/qto/t/lib/Qto/TestClientSidePOC2.t
-src/perl/qto/t/lib/Qto/TestSeleniumSetup.t
 # ---
 # --
 src/perl/qto/log/1
@@ -856,13 +847,18 @@ src/perl/qto/lib/auto/Qto/Controller/Update/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/View/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WebSocketPoc/autosplit.ix
 src/perl/qto/lib/auto/SetGetableChild/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/HCreate/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/Home/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/Truncate/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/WSSelect/autosplit.ix
 dat/mix
-doc/gliffy//multi-env-setup.gliffy
-dat/mix/2019/2019-07/2019-07-10
-dat/mix/2019/2019-07/2019-07-10/.DS_Store
-dat/mix/2019/2019-07/2019-07-10/sql
-dat/mix/2019/2019-07/2019-07-10/sql/dev_qto
-dat/mix/2019/2019-07/2019-07-10/sql/dev_qto/dev_qto.20190710_111911.insrt.dmp.sql
-dat/mix/2019/2019-07/2019-07-10/tmp
-dat/mix/2019/2019-07/2019-07-10/xls
-dat/mix/2019/2019-07/2019-07-10/xls/qto.all.20190710_000000.xlsx
+dat/mix/2019/2019-07/2019-07-16/
+dat/mix/2019/2019-07/2019-07-16/.DS_Store
+dat/mix/2019/2019-07/2019-07-16/sql
+dat/mix/2019/2019-07/2019-07-16/sql/dev_qto
+dat/mix/2019/2019-07/2019-07-16/sql/dev_qto/dev_qto.20190716_001118.insrt.dmp.sql
+dat/mix/2019/2019-07/2019-07-16/sql/dev_qto/dev_qto.20190716_181136.insrt.dmp.sql
+dat/mix/2019/2019-07/2019-07-16/sql/.DS_Store
+dat/mix/2019/2019-07/2019-07-16/tmp
+dat/mix/2019/2019-07/2019-07-16/xls
+dat/mix/2019/2019-07/2019-07-16/xls/qto.all.20190716_000000.xlsx

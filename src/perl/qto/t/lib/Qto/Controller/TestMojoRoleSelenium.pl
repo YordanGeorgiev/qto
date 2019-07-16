@@ -36,23 +36,23 @@ $tm = "The '☰' char is used for the open right menu " ;
 $url = 'http://192.168.56.120:3001/dev_qto/view/userstories_doc'  ; 
 ok (
    $t->navigate_ok("$url")
-      ->live_text_is('div#div_open_rgt_menu' => ' ☰ ') , $tm );
+      ->live_text_is('div#div_open_rgt_menu' => '☰') , $tm );
 
 
 ok (
    $t->navigate_ok("$url")
-      ->live_text_is('div#lft_body' => '☰') , $tm );
+      ->live_text_is('div#div_open_rgt_menu' => '☰') , $tm );
 $t->element_is_displayed("div");
 
-my $dom = Mojo::DOM->new($t->ua->get($url)->wait_for(1)->result->body) ; 
+#my $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
 #p $dom->find('div')->join("\nSTOP  div \n\nSTART div \n")->say ;
 
-$tm = 'the view->test_hierarchy_table page should containt 4 scripts elements' ; 
+#$tm = 'the view->test_hierarchy_table page should containt 4 scripts elements' ; 
 #ok ( @{$dom->find('script')->to_array} == 4 , $tm );
 
 #foreach my $e ( @{$dom->find('h3')} ) { p $e->to_string ; p $e->content ; p $e->text ;} ; 
 
-$tm = 'the view->test_hierarchy_table page should have more than 0 h3 titles' ; 
+#$tm = 'the view->test_hierarchy_table page should have more than 0 h3 titles' ; 
 #ok ( @{$dom->find('h3')->to_array} > 0 , $tm );
 
 
