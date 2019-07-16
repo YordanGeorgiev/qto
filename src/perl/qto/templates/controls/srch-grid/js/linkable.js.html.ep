@@ -77,7 +77,6 @@
        , getColMaxWidth(el) {
             var col = el.id.split('-')[0]
             var meta = this.$parent.$parent.gridMeta
-				console.log ( meta ) // todo:ysg
             for (var prop in meta) {
                if (!meta.hasOwnProperty(prop)) {
                  continue;

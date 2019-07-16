@@ -11,12 +11,12 @@ body{
 }
 #left{
    float:left;
-   width:65%;
+   width:70%;
    overflow:hidden;
 }
 #right{
    float:left;
-   width:35%;
+   width:30%;
    overflow:hidden;
 } 
 
@@ -27,7 +27,7 @@ h1{
 
 ul{
    list-style: none; 
-   width: 360px;
+   width: 270px;
 }
 
 .cls_lst_item {
@@ -38,11 +38,16 @@ ul{
        -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
             box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
    font-weight: bold ; 
-   border-top-left-radius: 4%;
-   border-top-right-radius: 4%;
-   border-bottom-left-radius: 4%;
-   border-bottom-right-radius: 4%;
+   border-radius: 7px;
 	border: 1px solid #CDCDCD;
+}
+
+ul :hover {
+   outline: none !important;
+   border:2px solid #C0C0C0;
+   box-shadow: 0 0 15px #719ECE;
+   caret-color: red;
+   resize: none;
 }
 
 .cls_lst_item a {
