@@ -61,8 +61,10 @@ sub isAuthenticated {
    $appConfig		 		   = $self->app->get('AppConfig');
    $db                     = toEnvName ( $db , $appConfig ) ;
 
+   # non-authentication mode IF the app has been stared with this env var
    return 1 if $ENV{'QTO_ONGOING_TEST'}; # no authentication when testing if desired so !!!
 
+   # basic native authentication mode if NOT started with this env var
    unless ( defined ( $self->session( 'app.' . $db . '.user')) ) {
       my $pdb                 = toPlainName ( $db ) ;
       my $url = '/' . $pdb . '/login' ;
@@ -73,17 +75,6 @@ sub isAuthenticated {
    } else {
       return 1 
    }
-
-   #my $htpasswd_file = $appConfig->{ 'ProductInstanceDir'} . '/cnf/sec/passwd/' . $db . '.htpasswd' ;
-   #return 1 unless -f $htpasswd_file ;  # open by default !!! ( temporary till v0.5 if desired so !!!
-   #return 1 if $self->basic_auth(
-   #   $db => {
-   #      'path' => $htpasswd_file
-   #   }
-   #);
-
-   #$self->render('text' => 'Refresh your page to login ');
-   #return 0  ;
 
 }
 
