@@ -26,12 +26,12 @@ if(!String.linkifyItems) {
       var docItems = ['userstories_doc', 'deployment_guide_doc', 'enduser_guide_doc', 'system_guide_doc', 'concepts_doc', 'maintenance_guide_doc','installations_doc','features_doc','requirements_doc','devops_guide_doc','maintenance_guide_doc'];
       var me = ( typeof(this) === "undefined" ) ? '' : this
       docItems.map ( itm => { 
-         var strPattern = '(('+itm + ')(-)' + '(\\d{1,18}))' // yearly_issues-190215124643
+         var strPattern = '(('+itm + ')(-)' + '(\\d{1,18}))' // example: yearly_issues-190215124643
          var rgxPattern = new RegExp(strPattern,'igm')
-			var uri = window.location.href.split('/').slice(0, 3).join('/')
-         me = me.replace(rgxPattern, '<a href="' + uri+'/qto/view/$2#$2-$4">$&</a>')
+			var uri = window.location.href.split('/').slice(0, 4).join('/')
+         me = me.replace(rgxPattern, '<a href="' + uri+'/view/$2#$2-$4">$&</a>')
       }) // yearly_issues-190215124643
-     var listItems = ['benchmarks','check_lists','concepts','confs','daily_issues','decadally_issues','deployment_guide','devops_guide','enduser_guide','features','goals','ideas','imgs','installations','maintenance_guide','meta_columns','meta_tables','monthly_issues','naming_conventions','principles','problems','questions','quinquennially_issues','release_history','requirements','skills','system_guide','test_auto_hierarchy_table','test_auto_hierarchy_table_expected','test_create_table','test_delete_table','test_hierarchy_table','test_hierarchy_table_expected','test_item','test_update_table','tst_paging','userstories','weekly_issues','yearly_issues','yearly_issues_2018']
+     var listItems = ['release_issues','benchmarks','check_lists','concepts','confs','daily_issues','decadally_issues','deployment_guide','devops_guide','enduser_guide','features','goals','ideas','imgs','installations','maintenance_guide','meta_columns','meta_tables','monthly_issues','naming_conventions','principles','problems','questions','quinquennially_issues','release_history','requirements','skills','system_guide','test_auto_hierarchy_table','test_auto_hierarchy_table_expected','test_create_table','test_delete_table','test_hierarchy_table','test_hierarchy_table_expected','test_item','test_update_table','tst_paging','userstories','weekly_issues','yearly_issues','yearly_issues_2018']
       me = ( typeof(me) === "undefined" ) ? '' : me
       listItems.map ( itm => { 
          var strPattern = '(('+itm + ')(-)' + '(\\d{1,18}))' // qto-190611021615
