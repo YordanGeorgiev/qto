@@ -40,10 +40,10 @@
   * [8.2. CLARITY ON ERRORS](#82-clarity-on-errors)
     * [8.2.1. Meta data referesh](#821-meta-data-referesh)
 * [9. SECURITY](#9-security)
-  * [9.1. AUTHENTICATION](#91-authentication)
+  * [9.1. AUTHENTICATION ](#91-authentication-)
     * [9.1.1. Non-athentication mode](#911-non-athentication-mode)
-    * [9.1.2. Basic authentication mode](#912-basic-authentication-mode)
-  * [9.2. AUTHRORISATION](#92-authrorisation)
+    * [9.1.2. Simple native authentication mode](#912-simple-native-authentication-mode)
+  * [9.2. AUTHORISATION](#92-authorisation)
 * [10. DOCUMENTATION](#10-documentation)
   * [10.1. DOCUMENTATION COMPLETENESS](#101-documentation-completeness)
   * [10.2. DOCUMENTATION AND CODE BASE SYNCHRONIZATION](#102-documentation-and-code-base-synchronization)
@@ -141,8 +141,8 @@ The full data example of a cloned from the qto db should be loadable with a sing
     
 
 ## 3. USER-FRIENDLINESS
-The interaction with each endpoint and interface of an application instance should be as user-friendly as possble. 
-As abstract as it may sound the tool must be multi-dimensionally and vertically integrated regarding the questions what,how and why towards a new person interacting with the tool by the usage of code comments,links from the documentations and uuids to be used for simple grepping from the docs till the source code. 
+The interaction with each endpoint and interface of an application instance is implemented to be as user-friendly as possible. 
+As abstract as it may sound the tool is multi-dimensionally and vertically integrated regarding the questions what, how and why towards a new person interacting with the tool by the usage of code comments, links from the documentations and uuids to be used for simple grepping from the docs till the source code. 
 
     
 
@@ -220,8 +220,8 @@ Each instance of the qto application can connect via tcp to multiple postgres da
     
 
 ### 6.1. Page load times
-Each page of the application containing less than 2000 loads for less than 0.3 seconds.
-Any new feature which does not meet this requirement should be disregarded or implemented into a clone of the application with different name ( see the cloning / forking section bellow ). 
+Each page of the application containing less than 2000 loads for less than 0.5 seconds.
+Any new feature which does not meet this requirement should be disregarded or implemented into a clone of the application with different name ( see the cloning / forking section bellow ). The qto has been operated on quite modest hardware ( check the second cheapest amazon ec2 instances for reference ), yet the page load times vary from 0.3 till 0.6 seconds for the smaller pages and up till 1.5 seconds for the pages having more than 2000 items ...
 
     
 
@@ -244,7 +244,7 @@ You could change the environment type of your current instance by issuing the fo
 ### 7.2. Oneliner for environment and version change. 
 You could create a new instance of the qto having different version ( which becomes automatically a dev environment ) by issueing the following command: 
 
-    bash src/bash/qto/qto.sh -a to-ver=0.6.5
+    bash src/bash/qto/qto.sh -a to-ver=0.6.9
 
 ## 8. USER INTERFACE FEATURES AND FUNCTIONALITIES
 
@@ -282,12 +282,14 @@ Whenever a project database meta-data is updated a new "do releoad the current p
     
 
 ## 9. SECURITY
-As of v0.6.6 the web application layer supports running only on http   with single db user access to the database. You should NOT use qto for sensible data outside of a secured intranet zone.
+
 
     
 
-### 9.1. Authentication
-As of v0.6.6 only non-authentication and basic authentication mode exist. 
+### 9.1. Authentication 
+As of version 0.6.8 the qto application supports the following 2 modes of security: 
+ - non authentication mode
+ - simple native authentication mode 
 
     
 
@@ -296,14 +298,13 @@ Any qto instance should support a non-authentication mode - that is all users ha
 
     
 
-#### 9.1.2. Basic authentication mode
-An qto instance running under basic authentication mode should support single system user per project database authentication, which must have full acess for the all the available actions via the web ui. 
-It is worth noting that each qto instance having access to data resources should meet the features and functionalities on organisation's level for data access - i.e. if instance dev has full access to the dev,tst,prd project databases there is no rationel of having basic authentication on the prd instance having access to the same dev,tst,prd databases. 
+#### 9.1.2. Simple native authentication mode
+A qto instance running under the simple native authentication mode stores the user credentials in the instance db. The passwords are encrypted via the using the Blowfish-based Unix crypt() hash function, known as "bcrypt" encrypting mechanism. 
 
     
 
-### 9.2. Authrorisation
-The SysAdmin of the System can add basic authentication users. Check the DevOps guide on how. 
+### 9.2. Authorisation
+Only the SysAdmin of the System can add basic authentication and simple native mode users, thus regular users can see only their own credentials.
 
     
 
