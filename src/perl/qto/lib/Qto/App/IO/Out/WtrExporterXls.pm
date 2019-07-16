@@ -35,6 +35,7 @@ package Qto::App::IO::Out::WtrExporterXls ;
       my $rdbms_type       = 'postgres' ; 
       my $xls_file         = '' ; 
 
+
       my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel ) ;
       my $objRdrDb = $objRdrDbsFcry->doSpawn ( $rdbms_type ) ; 
       
@@ -43,7 +44,7 @@ package Qto::App::IO::Out::WtrExporterXls ;
 
 
       ( $ret , $msg , $hsr2)  = $objRdrDb->doSelectRows( $db , $table ) ; 
-      return ( $ret , $msg ) unless $ret == 0 ; 
+      return ( $ret , $msg ) unless $ret == 200 ;
 
       my $objWtrXls    = 'Qto::App::IO::Out::WtrXls'->new( \$appConfig ) ;
       return  $objWtrXls->doBuildXlsFromHashRef ( \$objModel , $table , $hsr2 , $msr2) ;
