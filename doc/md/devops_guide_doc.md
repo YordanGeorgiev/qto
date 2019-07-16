@@ -19,8 +19,8 @@
     * [2.2.2. stop the application layer](#222-stop-the-application-layer)
     * [2.2.3. Restart OS network service](#223-restart-os-network-service)
   * [2.3. SECURITY RELATED OPERATIONS](#23-security-related-operations)
-    * [2.3.1. Add, modify and delete new users to the application in the basic qto native authentication mode ( the default one )](#231-add,-modify-and-delete-new-users-to-the-application-in-the-basic-qto-native-authentication-mode-(-the-default-one-))
-    * [2.3.2. Add, modify and delete new users to the application in the basic http mode ( the default one )](#232-add,-modify-and-delete-new-users-to-the-application-in-the-basic-http-mode-(-the-default-one-))
+    * [2.3.1. Add, modify and delete new users to the application](#231-add,-modify-and-delete-new-users-to-the-application)
+    * [2.3.2. Regular users visibility](#232-regular-users-visibility)
 * [3. BACKUP AND RESTORE](#3-backup-and-restore)
   * [3.1. BACKUP A DATABASE](#31-backup-a-database)
   * [3.2. RESTORE A DATABASE](#32-restore-a-database)
@@ -206,27 +206,25 @@ Sometimes you might just need to restart the whole network service on Ubuntu:
     sudo /etc/init.d/networking restart
 
 ### 2.3. Security related operations
-There are 3 security modes of operations in qto:
+There are 2 security modes of operations in qto:
  - none authenticative one ( no login , all can be changed by anyone )
- - basic http authentication mode ( http passwords are stored in htpasswd file
  - native authentication mode - the user credentials are stored per db
 
     
 
-#### 2.3.1. Add, modify and delete new users to the application in the basic qto native authentication mode ( the default one )
+#### 2.3.1. Add, modify and delete new users to the application
 You as the owner of the instance you are running must be aware that the requests to register to the instances you are operating will come via e-mail. 
 Simply add, update and delete users in the users table and sent the password with prompt to edit it to the new user.
 
     
 
-#### 2.3.2. Add, modify and delete new users to the application in the basic http mode ( the default one )
-Use the following http password generator:
-http://www.htaccesstools.com/htpasswd-generator/
+#### 2.3.2. Regular users visibility
+You should not worry about the possibility of regular users to access the users table data - it has been restricted for regular uses - aka only the AdminEmail configured email - aka the email of the instance owner, which should be you can have access to this data with the list users page
 
-    echo <<generated pass>> >> /cnf/sec/passwd/<<env_db>>'.htpasswd'
+    
 
 ## 3. BACKUP AND RESTORE
-You could easily add those commands to your crontab for scheduled execution - remember to add the absolution patsh of the qto.sh entry script.
+You could easily add those commands to your crontab for scheduled execution - remember to add the absolution patch of the qto.sh entry script.
 
     
 

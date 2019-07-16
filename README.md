@@ -31,13 +31,16 @@
 Why ?! Yet! Another App ?!
 
 Because work should be inspiring and not overwhelming people. 
-Because even good intentions without transparency, proper commitment, allocation and resourcing and most importantly, a mean for tracking advancement of an endeavour in open way reflecting the reality, might end-up making people less happy, when in fact a really simple solution could be applied for any bigger challenge requiring progress tracking, communication and coordination ... And tons of other reasons we all having been in project disasters know about ... Still here ?! Let's move on !
+Because even good intentions without transparency, proper commitment, allocation and resourcing and most importantly, a mean for tracking advancement of an endeavour in an open way reflecting the reality, might end-up stressing people. In fact a really simple solution could be applied for any bigger challenge requiring progress tracking, communication and coordination ... 
+And tons of other reasons we all having been in project disasters know about ... Still here ?! Let's move on !
 
     
 
 ## 2. SO, WHAT IS THIS ?!
-A generic postgres CRUDs ( s stands for search ) web based app for managing multiple databases from the same web application layer by means of simplest possible UI and/or shell tools for xls/md export, import etc. An included example application is the "qto application", which is used to manage multiple projects' issues, including itself ;o). 
-The full and extensive https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/view/features_doc must contain all the features and functionalities of this released version. This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture, which is in a way a reflection of the simple axiom in IT - "if there is one there will be many" ...
+A generic and simplistic db centric content management system, build on postgres CRUDs ( s stands for search ) and hierarchical nested data-sets. 
+Qto is a web based app for managing multiple databases from the same web application layer by means of simplest possible UI and/or shell tools for xls/md export, import etc. An included example application is the "qto application", which is used to manage multiple projects' issues, including itself ;o). 
+The full and extensive https://ec2-52-213-247-228.eu-west-1.compute.amazonaws.com/qto/view/features_doc contain all the features and functionalities of this released version. 
+This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture, which is in a way a reflection of the simple axiom in IT - "if there is one there will be many" ...
 
 
 Figure: 1 
@@ -48,16 +51,15 @@ the 7 main entities of the qto app](https://raw.githubusercontent.com/YordanGeor
     
 
 ### 2.1. What can it do to my organisation ?
-We have stumbled into real life problem in the ETL integrations of a big Scandinavian telco, which could have been solved even with the current version of the tool, although the versioning starts with the mighty zero … Of course next versions will provide much more scenarios in real-life, but this description applies to this current version, that is you can start using it as soon as you deploy your own instance ...
+With qto you could either re-use the existing items for management available from the home page or you could in less than 5 minutes per item define your own. 
 
     
 
 ### 2.2. Assumption and prerequisites
 Your organisation:
 
-- has the need to constantly update comparably small ( less than 10k rows) hierarchy tables
-- has secured intranet access to a Linux box - aka using http is not an issue
-- has full trust to the persons in the org for CRUD operations, as only basic auth over http exists
+- has the need to constantly update comparably small ( less than 10k rows) (hierarchy) tables
+- has full trust to the persons in the org for all, but users data related CRUD operations 
 - has the a need to load MANY tables into a postgres db, which might be changing constantly DDL wise
 - the API of having bigint id and uid as PK as well as default vals for nullable cols is acceptable
 - might have the need to save technical documentation in versioned md format
@@ -68,11 +70,12 @@ Your organisation:
 You could:
 
 - deploy an instance of the qto, bare metal/vm/docker install should take no more than 2h
-- demo the simple search feature ( working only with name and description cols , but you could ddl hack-it)
 - provide access to the non-technical person via http for CRUD operations
-- provide them with initial links to grasp the "semi-sql" syntax
 - quickly define LOTS of tables DDL by using the existing examples and just changing the columns
 - load initial data via xls ( less than 10k rows per sheet should be ok )
+- generate md docs format based on the qto native view docs ..
+- provide them with initial links to grasp the "semi-sql" syntax
+- demo the simple search feature ( working only with name and description cols , but you could ddl hack-it)
 
     
 
@@ -83,12 +86,22 @@ Use the "test.user@gmail.com" and "secret" credentials to login or even better t
     
 
 ## 4. DOCUMENTATION
-QTO IS about documentation, we do all the doc-fooding on our docs, which are aimed to be as up-to-date to the current release version as possible. Thus you get the following documentation set:
+
+Qto IS about documentation, we do all the doc-fooding on our docs, which are aimed to be as up-to-date to the current release version as possible. Thus you get the following documentation set:
+ - ReadMe - the initial landing readme doc for the project
+ - UserStories - the collection of user-stories used to describe "what is desired"
+ - Requirements - the structured collection of the requirements 
+ - SystemGuide - architecture and System description
+ - DevOps Guide - a guide for the developers and devops operators
+ - Installation Guide - a guide for installation of the application
+ - End-User Guide - the guide for the usage of the UI ( mainly ) for the end-users
+ - Concepts - the concepts doc 
 
     
 
 ## 5. MISSION
 Enable transperent collaboration.
+
 
     
 
@@ -135,15 +148,16 @@ Contains the specs and requirements, which can be defined at the current stage o
     
 
 ## 6. INSTALLATION AND CONFIGURATION VIA DOCKER
-This section provides the instructions to build the whole system from scratch on docker. You will need git, bash, perl and docker to complete the whole containerised deployment. 
-It should take about 30-45 min to complete depending on your network connection and host hardware specs, 75%-80% of which is the image building process which does not require shell interaction. 
+This section provides the instructions to build the whole system from scratch on docker. You will need git, bash, perl and docker to complete the whole containerised deployment and access to OS user having sudo.
+It should take about 45-60 min to complete depending on your network connection and host hardware specs, 75%-80% of which is the image building process which does not require shell interaction. 
 The target setup is such that you could edit the source code on the host machine, but both the db and the application layer will be run in the docker. 
 
     
 
 ### 6.1. Fetch the source
-Fetch the source on your local machine, which will be use to run the container onto a dir your user has full read, write and execute permissions:
+As a non-root account, having sudo fetch the source on your local machine, which will be use to run the container onto a dir your user has full read, write and execute permissions:
 
+    # do not execute as root !
     mkdir -p ~/opt/ ; cd ~/opt
     git clone https://github.com/YordanGeorgiev/qto
 

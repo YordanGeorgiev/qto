@@ -661,16 +661,16 @@ I want to be able decide which users to which projects will have access to the d
     
 
 #### 2.3.1. Users management
-As an team leader
+As the System Administrator of a Qto application instance
 In order to keep my business data secure 
-I want to be able decide which users to which projects will 
+I want to be able to add, remove and update users credentials via the web interface without having to worry that regular users will update or see each others credentials. 
 
     
 
 ##### 2.3.1.1. Add new users to a project
 As an team leader
 In order to be able to add new users into a project
-I want to be able to add them via the UI only by their e-mail address. 
+I want to be able to add them via the UI only by their e-mail address required. 
 
     
 

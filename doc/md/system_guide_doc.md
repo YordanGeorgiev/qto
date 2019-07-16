@@ -20,8 +20,8 @@
     * [3.1.2. Back-End](#312-back-end)
 * [4. SECURITY](#4-security)
   * [4.1. NON-SECURITY MODE](#41-non-security-mode)
-  * [4.2. BASIC HTTP SECURITY MODE](#42-basic-http-security-mode)
-  * [4.3. SIMPLE NATIVE SECURITY MODE ( EXPERIMENTAL )](#43-simple-native-security-mode-(-experimental-))
+  * [4.2. SIMPLE NATIVE SECURITY MODE](#42-simple-native-security-mode)
+  * [4.3. REGULAR USERS CREDENTIALS VISIBILITY](#43-regular-users-credentials-visibility)
 
 
 
@@ -140,15 +140,14 @@ In the non-security mode the application does NOT authenticate any one. Both run
 
     
 
-### 4.2. Basic http security mode
-in this mode different http passwords can be registed. The following web page can be used for that : 
-http://www.htaccesstools.com/htpasswd-generator/
+### 4.2. Simple native security mode
+This feature is experimental as of v0.6.8. It simply means that it needs much more testing in real-life scenarios to provide the level of certainty promised by it. In this mode the user credentials - email and password are stored in the users table with a blowfish encryption. And all but the login page need a match for the e-mail with the respective password. 
+Sessions are used for storing the state of the authentication, which is entirely handled by the Mojolicious web framework - all data gets serialised to json and stored Base64 encoded on the client-side, but is protected from unwanted changes with a HMAC-SHA1 signature. 
 
     
 
-### 4.3. Simple native security mode ( EXPERIMENTAL )
-This feature is experimental as of v0.6.7. It simply means that it needs much more testing in real-life scenarios to provide the level of centainty promised by it. In this mode the user credentials - email and password are stored in the users table with a blowfish encryption. And all but the login page need a match for the e-mail with the respective password. 
-Sessions are used for storing the state of the authentication, which is entirely handled by the Mojolicious web framework - all data gets serialized to json and stored Base64 encoded on the client-side, but is protected from unwanted changes with a HMAC-SHA1 signature. 
+### 4.3. Regular users credentials visibility
+The regular users do have visibility only on their own user credentials - the only one user having the users' credentials management capability is the AdminEmail configured System Administrator. 
 
     
 

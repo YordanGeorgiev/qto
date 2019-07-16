@@ -84,27 +84,24 @@ This document is part of the QTO application documentation-set, which contains t
  - End-User Guide - the guide for the usage of the UI ( mainly ) for the end-users
  - Concepts - the concepts doc 
 
-All the documents should be updated and redistributed in combination of the current version of the application and should be found under the following directories:
-doc/md
-doc/pdf
-doc/xls
-according to the file format used for the documentation storage.
+All the documents should be updated and redistributed in combination of the current version of the application and should be found under the following directory:
+doc/md.
 
     
 
 ## 2. DEPLOYABILITY
 The qto must be easily deployable on any Unix like OS. 
-Windows family based OS'es are explicitly out of the scope of the qto tool. Any qto instance should be configurable as easily as possible for the version it has.  
+Windows family based OS'es are explicitly out of the scope of the qto tool. Any qto instance should be configurable as easily as possible for its version.
 
     
 
 ### 2.1. Full deployment in less than an hour
-The full System should be ready for use by end-users in a "blank" modern Unix like OS in less than an hour. An instance running on top of Docker should be ready within 10 minutes. 
+The full System should be ready for use by end-users in a "blank" modern Unix like OS in less than an hour. An instance running on top of Docker should be ready within 50 minutes. 
 
     
 
 #### 2.1.1. A working instance deployment by simple unzip command
-The qto tool could be deployed by a simply unzip of the full package, which must have all of the documentation and scripts to provide assistance for the setup and the configuration of the tool as well as the initial data to populate the qto database. 
+The qto tool could be deployed by a simply unzip of the full package into a host having the proper binary configuration, which must have all of the documentation and scripts to provide assistance for the setup and the configuration of the tool as well as the initial data to populate the qto database. 
 
     
 
@@ -115,7 +112,7 @@ All the binaries which are required for the running of the tool must be checked 
     
 
 #### 2.1.3. Required Perl modules checker script
-All the required Perl modules, must be verifiable via a single runnable perl script. The DockerScript file should contain all the perl modules installations.
+All the required Perl modules, must be verifiable via a single runnable perl script. The DockerScript file should contain all the perl modules installations in a non-interactive manner. 
 
     
 
@@ -151,7 +148,7 @@ The interaction of the application on the shell should be designed and implement
     
 
 #### 3.1.1. Database recreation and DDL scripts run one-liners
-The developers should be able to create the database via a single oneline call 
+The developers should be able to create the database via a single oneline call.
 
     
 
@@ -168,8 +165,8 @@ The testers and the developers should be able to trigger all the unit or integra
 #### 3.1.4. Test messages user
 Each test should obey the following convention:
  - short message as descriptive within the context as possible - what is being tested
-- a short technical example of the generated entry being tested ( for example a dynamic url )
-- a uuid to search for from the Feature document what exactly is being tested within the context of the features description. 
+ - a short technical example of the generated entry being tested ( for example a dynamic url )
+ - a uuid to search for from the Feature document what exactly is being tested within the context of the features description. 
 
     
 
@@ -184,12 +181,12 @@ Crashing in normally configured and operating environment must not be tolerated,
     
 
 ### 4.2. Zero tollerance towards bugs
-All bugs and inconsistencies must be dealt with top priority by passing new features implementation.  Should the average amount of bugs increase after a release a purely bug fixing release should follow.
+All bugs and inconsistencies must be dealt with top priority by passing new features implementation.  Should the average amount of bugs increase after a release a purely bug fixing release should follow. Any reasonable refactoring could and should bypass the new features implementation. 
 
     
 
 ### 4.3. Daily backups
-Daily backups should be show-stopper for the normal operation of the application - that is if an instance is to be considered as normally operating , the daily backups of all instance project databases data and secrets should be performed automatically as indispensable part of the functioning of the application. 
+The daily backups of all instance project databases data and secrets should be performed automatically as indispensable part of the functioning of the application. 
 
     
 
@@ -255,7 +252,7 @@ The application layers should support as much as possible cross running between 
     
 
 ## 8. UI REQUIREMENTS
-
+The UI of the application must be fast, responsive, easy and pleasant to use.
 
     
 
