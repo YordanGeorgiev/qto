@@ -41,20 +41,15 @@ var actions = {
       });
 
       ws.addEventListener('open', function(event) {
-         console.log ( "opening ws")
+         console.log ( "opening ws") //todo:ysg
          ws.send('open <%= $db %>')
       })
 
       ws.addEventListener('message', function(event) {
-         console.log ( "start msging on ws")
+         console.log ( "start msging on ws") //todo:ysg
          var data = JSON.parse( event.data)
-         console.log ( data)
-         console.log ( "stop data" )
-         var items = data.dat  //alles ok // todo:ysg data.dat
-         console.log ( items )
-         console.log ( "stop items " )
+         var items = data.dat  //alles ok 
          commit('SET_ITEMS', items)
-         console.log ( "stop  msging on ws")
       })
 
        ws.send('open <%= $db %>')
