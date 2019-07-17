@@ -28,7 +28,7 @@ package Qto::App::Utils::Initiator ;
 	our $ProductBaseDir 				= '' ; 
 	our $ProductDir 					= '' ; 
 	our $ProductInstanceDir 	   = ''; 
-	our $ProductInstanceEnvironment = '' ; 
+	our $ProductInstanceEnv       = '' ; 
 	our $ProductName 					= '' ; 
 	our $ProductType 					= '' ; 
 	our $ProductVersion 				= ''; 
@@ -121,7 +121,6 @@ package Qto::App::Utils::Initiator ;
       
 		return $ProductDir;
 	}
-	#eof sub doResolveMyProductDir
 	
 
 	#
@@ -154,23 +153,22 @@ package Qto::App::Utils::Initiator ;
 	# the environment name is the dir identifying this product 
 	# instance from other product instances 
 	# ---------------------------------------------------------
-	sub doResolveMyProductInstanceEnvironment {
+	sub doResolveMyProductInstanceEnv {
 
 		my $self = shift;
 		my $msg  = ();
 
-		$ProductInstanceEnvironment 			= $ProductInstanceDir ; 
-		$ProductInstanceEnvironment 			=~ s#$ProductBaseDir\/##g ;
-		$ProductInstanceEnvironment 			=~ s#(.*?)(\/|\\)(.*)#$3#g ;
-		$ProductInstanceEnvironment 			= $self->untaint ( $ProductInstanceEnvironment ); 
+		$ProductInstanceEnv 			         = $ProductInstanceDir ; 
+		$ProductInstanceEnv 			         =~ s#$ProductBaseDir\/##g ;
+		$ProductInstanceEnv 			         =~ s#(.*?)(\/|\\)(.*)#$3#g ;
+		$ProductInstanceEnv 			         = $self->untaint ( $ProductInstanceEnv ); 
 
-		$appConfig->{ 'ProductInstanceEnvironment' } 		= $ProductInstanceEnvironment ; 
-		$self->{ 'ProductInstanceEnvironment' } 		= $ProductInstanceEnvironment ; 
-		$self->{'AppConfig'} 				= $appConfig; 
+		$appConfig->{'ProductInstanceEnv'}  = $ProductInstanceEnv ; 
+		$self->{ 'ProductInstanceEnv' } 		= $ProductInstanceEnv ; 
+		$self->{'AppConfig'} 				   = $appConfig; 
 
-		return $ProductInstanceEnvironment;
+		return $ProductInstanceEnv;
 	}
-	#eof sub doResolveMyProductInstanceEnvironment
 
 	#
 	# ---------------------------------------------------------
@@ -183,7 +181,7 @@ package Qto::App::Utils::Initiator ;
 		my $msg  = ();
 
 		#fetch the the product name from the dir struct
-		my @tokens = split /\./ , $ProductInstanceEnvironment ; 
+		my @tokens = split /\./ , $ProductInstanceEnv ; 
 		$ProductName = $tokens[0] ; 
 
 		$appConfig->{ 'ProductName' } 			= $ProductName ; 
@@ -205,7 +203,7 @@ package Qto::App::Utils::Initiator ;
 		
 		my $ProductVersion	= '' ;
 
-		my @tokens 			= split /\./ , $ProductInstanceEnvironment ; 
+		my @tokens 			= split /\./ , $ProductInstanceEnv ; 
 		$tokens [1] = $tokens [1] // '' ; 
 		$tokens [2] = $tokens [2] // '' ; 
 		$tokens [3] = $tokens [3] // '' ; 
@@ -234,7 +232,7 @@ package Qto::App::Utils::Initiator ;
 		my $self = shift;
 		my $msg  = ();
 
-		my @tokens = split /\./ , $ProductInstanceEnvironment ; 
+		my @tokens = split /\./ , $ProductInstanceEnv ; 
 		# the type of this environment - dev , test , dev , fb , prod next_line_is_templatized
 		my $ProductType = $tokens[4] ; 
 		# debug rint "\n\n ProductType : $ProductType " ; 
@@ -261,7 +259,7 @@ package Qto::App::Utils::Initiator ;
 		my $msg  = ();
 
 
-		my @tokens = split /\./ , $ProductInstanceEnvironment ; 
+		my @tokens = split /\./ , $ProductInstanceEnv ; 
 		# the Owner of this environment - dev , test , dev , fb , prod next_line_is_templatized
 		# The username of the person developin this environment 
 		$ProductOwner = $tokens[5] ; 
@@ -349,7 +347,7 @@ package Qto::App::Utils::Initiator ;
 		$ProductBaseDir 			      = $self->doResolveMyProductBaseDir();
 		$ProductDir 			         = $self->doResolveMyProductDir();
 		$ProductInstanceDir 		      = $self->doResolveMyProductInstanceDir();
-		$ProductInstanceEnvironment   = $self->doResolveMyProductInstanceEnvironment();
+		$ProductInstanceEnv   = $self->doResolveMyProductInstanceEnv();
 		$ProductName 				      = $self->doResolveMyProductName();
 		$ProductVersion 			      = $self->doResolveMyProductVersion();
 		$ProductType 				      = $self->doResolveMyProductType();
@@ -360,11 +358,7 @@ package Qto::App::Utils::Initiator ;
 
 		return $self;
 	}  
-	#eof const
 
-
-	# STOP functions
-	# =============================================================================
 
 	# -----------------------------------------------------------------------------
 	# cleans potentially suspicious dirs and files for the perl -T call

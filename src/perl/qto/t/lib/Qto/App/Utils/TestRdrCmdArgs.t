@@ -1,8 +1,8 @@
 use strict ; use warnings ; 
 
 use FindBin;
-BEGIN { unshift @INC, "$FindBin::Bin/../lib" }
-use Test::More tests => 3 ; 
+BEGIN { unshift @INC, "$FindBin::Bin/../../../../../lib" }
+use Test::More ; 
 
 use Getopt::Long;
 use Qto::App::Utils::Initiator ; 
@@ -19,18 +19,12 @@ for example:
 doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/qto/ysg-issues.dev.host-name.cnf'  ; 
 croak $m unless ( defined ( $ENV{ "qto_project" } )) ; 
 
-my $objInitiator 				= 'Qto::App::Utils::Initiator'->new();	
-my $appConfig					= {} ;
 my $msg                    = q{} ; 
-
-$appConfig                 = $objInitiator->get('AppConfig');
-
-my  $objConfigurator
-    = 'Qto::App::Utils::Configurator'->new($objInitiator->{'ConfFile'},
-    \$appConfig);
-
+my $objInitiator 				= 'Qto::App::Utils::Initiator'->new();	
+my $appConfig              = $objInitiator->get('AppConfig');
+my $ConfFile               = $objInitiator->{'ConfFile'} ; 
+my $objConfigurator        = 'Qto::App::Utils::Configurator'->new($ConfFile , \$appConfig);
 $appConfig                 = $objConfigurator->getConfHolder()  ;
-
 my $objLogger					= 'Qto::App::Utils::Logger'->new(\$appConfig);
 my $objModel               = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ; 
 my $objRdrCmdArgs 			= 'Qto::App::IO::In::RdrCmdArgs'->new(\$appConfig , \$objModel ) ; 
@@ -56,4 +50,8 @@ $msg = 'test-03 - the whole script should fail because the --do <<action>> is no
 my $cmd_out = `$cmd 2>&1 1>/dev/null` ; 
 ok ( $?  != 0  , $msg  ) ; 
 
+
+done_testing();
+
+1;
 # FILE-UUID 7bf7ee86-58f3-417a-8413-929131912912

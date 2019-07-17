@@ -1,23 +1,20 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # start HCreate
-src/perl/qto/lib/Qto/Controller/Truncate.pm
-src/perl/qto/t/lib/Qto/Controller/TestTruncate.pl
-src/perl/qto/t/lib/Qto/Controller/TestHCreate.pl
-src/perl/qto/lib/Qto/Controller/HCreate.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
-src/perl/qto/t/lib/Qto/Controller/TestCreate.pl
 src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
 # stop  HCreate
 # start login
-src/perl/qto/t/lib/Qto/Controller/TestLogin.pl
+src/perl/qto/t/lib/Qto/Controller/TestLogin.t
+src/perl/qto/lib/Qto/Controller/Login.pm
 src/perl/qto/public/poc/vuex/sabe/
 src/perl/qto/public/poc/vuex/sabe/app.js
 src/perl/qto/public/poc/vuex/sabe/index.html
 src/perl/qto/public/poc/vuex/sabe/styles.css
-src/perl/qto/lib/Qto/Controller/Login.pm
 src/perl/qto/templates/pages/login
 src/perl/qto/templates/pages/login/login.html.ep
+# stop  login
+# start websockets
 src/perl/qto/templates/pages/home/home.html.ep
 src/perl/qto/templates/controls/robust-websocket/js/robust-websocket.js.html.ep
 src/perl/qto/templates/controls/list-url-lists/js/list-url-lists.js.html.ep
@@ -26,10 +23,9 @@ src/perl/qto/public/poc/web-socket/wsclient.js
 src/perl/qto/lib/Qto.pm
 src/perl/qto/lib/Qto/Controller/WsSelect.pm
 src/perl/qto/public/poc/web-socket/web-socket.html
-# stop  login
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
-#
+# stop  websockets
 src/js/node/js-unit-tests/01-set-url-param/test/test.js
 src/js/node/js-unit-tests/01-set-url-param/package.json
 # ---
@@ -75,9 +71,9 @@ cnf/postgres/etc/postgresql/11/main/pg_hba.conf
 cnf/postgres/etc/postgresql/11/main/postgresql.conf
 # -- stop  docker deployment
 src/bash/qto/funcs/perl/run-benchmarks.func.sh
-src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.pl
-src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.pl
-src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.pl
+src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.t
+src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.t
+src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.t
 src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
@@ -182,6 +178,8 @@ src/perl/qto/public/themes/thme-blue/css/screen/site/home.css
 src/perl/qto/public/themes/thme-blue/css/print/controls/app_list_labels.css
 #---
 src/perl/qto/lib/Qto/Controller
+src/perl/qto/lib/Qto/Controller/HCreate.pm
+src/perl/qto/lib/Qto/Controller/Truncate.pm
 src/perl/qto/lib/Qto/Controller/PageFactory.pm
 src/perl/qto/lib/Qto/Controller/Export.pm
 src/perl/qto/lib/Qto/Controller/List.pm
@@ -197,25 +195,28 @@ src/perl/qto/lib/Qto/Controller/Select.pm
 src/perl/qto/lib/Qto/Controller/HSelect.pm
 src/perl/qto/lib/Qto/Controller/HLSelect.pm
 src/perl/qto/lib/Qto/Controller/Search.pm
-src/perl/qto/t/lib/Qto/Controller/TestSelect.pl
+src/perl/qto/t/lib/Qto/Controller/TestCreate.t
+src/perl/qto/t/lib/Qto/Controller/TestHCreate.t
+src/perl/qto/t/lib/Qto/Controller/TestTruncate.t
+src/perl/qto/t/lib/Qto/Controller/TestSelect.t
+src/perl/qto/t/lib/Qto/Controller/TestQuery.t
 src/perl/qto/t/lib/Qto/Controller/TestHSelect.t
 src/perl/qto/t/lib/Qto/Controller/TestHSelectWith.t
-src/perl/qto/t/lib/Qto/Controller/TestQuery.pl
-src/perl/qto/t/lib/Qto/Controller/TestSearch.pl
-src/perl/qto/t/lib/Qto/Controller/TestSelectFilter.pl
-src/perl/qto/t/lib/Qto/Controller/TestSelectLike.pl
-src/perl/qto/t/lib/Qto/Controller/TestSelectPick.pl
-src/perl/qto/t/lib/Qto/Controller/TestSelectOrder.pl
-src/perl/qto/t/lib/Qto/Controller/TestSelectHide.pl
-src/perl/qto/t/lib/Qto/Controller/TestSelectWith.pl
-src/perl/qto/t/lib/Qto/Controller/TestUpdate.pl
-src/perl/qto/t/lib/Qto/Controller/TestDelete.pl
+src/perl/qto/t/lib/Qto/Controller/TestSearch.t
+src/perl/qto/t/lib/Qto/Controller/TestSelectFilter.t
+src/perl/qto/t/lib/Qto/Controller/TestSelectLike.t
+src/perl/qto/t/lib/Qto/Controller/TestSelectPick.t
+src/perl/qto/t/lib/Qto/Controller/TestSelectOrder.t
+src/perl/qto/t/lib/Qto/Controller/TestSelectHide.t
+src/perl/qto/t/lib/Qto/Controller/TestSelectWith.t
+src/perl/qto/t/lib/Qto/Controller/TestUpdate.t
+src/perl/qto/t/lib/Qto/Controller/TestDelete.t
 src/perl/qto/t/lib/Qto/Controller/TestHSelect.t
-src/perl/qto/t/lib/Qto/Controller/TestAppLabel.pl
-src/perl/qto/t/lib/Qto/Controller/TestListAsOutputType.pl
-src/perl/qto/t/lib/Qto/Controller/TestViwWithMojoChrome.pl
-src/perl/qto/t/lib/Qto/Controller/TestMojoRoleSelenium.pl
-src/perl/qto/t/lib/Qto/Controller/TestListHide.pl
+src/perl/qto/t/lib/Qto/Controller/TestAppLabel.t
+src/perl/qto/t/lib/Qto/Controller/TestListAsOutputType.t
+src/perl/qto/t/lib/Qto/Controller/TestViewWithMojoChrome.t
+src/perl/qto/t/lib/Qto/Controller/TestMojoRoleSelenium.t
+src/perl/qto/t/lib/Qto/Controller/TestListHide.t
 src/perl/qto/t/lib/Qto/Controller/TestViewDocPage.t
 # --- 
 src/perl/qto/lib/Mojo/Chrome.pm
@@ -225,22 +226,22 @@ src/perl/qto/lib/Qto/App/UI
 src/perl/qto/lib/Qto/App/UI/Controls
 src/perl/qto/lib/Qto/App/UI/Pages/1
 # ---
-src/perl/qto/t/TestQto.pl
+src/perl/qto/t/TestQto.t
 src/perl/qto/lib/Qto/App/Cnvr
 src/perl/qto/lib/Qto/App/Cnvr/CnrHashesArrRefToHashesArrRef.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
-src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.pl
+src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
 src/perl/qto/t
-src/perl/qto/t/TestRdrCmdArgs.pl
+src/perl/qto/t/lib/Qto/App/Utils/TestRdrCmdArgs.t
 src/perl/qto/t/lib/Qto/App/Utils/OO/SetGetableChild.pm
 src/perl/qto/t/lib/Qto/App/Utils/OO/AutoLoadableChild.pm
-src/perl/qto/t/lib/Qto/App/Utils/OO/TestSetGetable.pl
-src/perl/qto/t/lib/Qto/App/Utils/OO/TestAutoLoadable.pl
-src/perl/qto/t/TestInitiator.pl
-src/perl/qto/t/lib/Qto/App/Utils/TestConfigurator.pl
-src/perl/qto/t/TestLogger.pl
-src/perl/qto/t/TestDispatcher.pl
-src/perl/qto/t/TestModel.pl
+src/perl/qto/t/lib/Qto/App/Utils/OO/TestSetGetable.t
+src/perl/qto/t/lib/Qto/App/Utils/OO/TestAutoLoadable.t
+src/perl/qto/t/lib/Qto/App/Utils/TestInitiator.t
+src/perl/qto/t/lib/Qto/App/Utils/TestConfigurator.t
+src/perl/qto/t/lib/Qto/App/Utils/TestDispatcher.t
+src/perl/qto/t/lib/Qto/App/Utils/TestLogger.t
+src/perl/qto/t/lib/Qto/App/Utils/TestModel.t
 src/perl/qto/lib/Qto/App/Mdl/Model.pm
 src/perl/qto/lib/Qto/App/IO/In/RdrCmdArgs.pm
 src/perl/qto/lib/Qto/App/IO/In/RdrEnv.pm
@@ -476,22 +477,15 @@ src/sql/pgsql/scripts/bash/list-table-cols.sh
 #----
 src/bash/qto/tests/db-to-xls.test.sh
 src/bash/qto/funcs/db-to-xls.func.sh
-src/bash/qto/helps/db-to-xls.help.sh
-doc/txt/qto/tests/db-to-xls.test.txt
-doc/txt/qto/funcs/db-to-xls.func.txt
-doc/txt/qto/helps/db-to-xls.help.txt
-#---
 #---
 src/bash/qto/funcs/perl/check-perl-syntax.func.sh
 src/bash/qto/tests/perl/check-perl-syntax.test.sh
 #----
 src/bash/qto/tests/xls-to-db.test.sh
 src/bash/qto/funcs/xls-to-db.func.sh
-src/bash/qto/helps/xls-to-db.help.sh
-doc/txt/qto/tests/xls-to-db.test.txt
-doc/txt/qto/funcs/xls-to-db.func.txt
-doc/txt/qto/helps/xls-to-db.help.txt
 #----
+src/bash/qto/funcs/perl/run-unit-tests.func.sh
+src/bash/qto/tests/perl/run-unit-tests.test.sh
 src/bash/qto/funcs/perl/run-functional-tests.func.sh
 src/bash/qto/helps/perl/run-functional-tests.help.sh
 src/bash/qto/tests/perl/run-functional-tests.test.sh

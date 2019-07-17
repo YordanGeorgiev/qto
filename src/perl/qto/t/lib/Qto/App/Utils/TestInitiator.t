@@ -1,11 +1,12 @@
 use strict ; use warnings ; 
 
 use FindBin;
-BEGIN { unshift @INC, "$FindBin::Bin/../lib" }
+BEGIN { unshift @INC, "$FindBin::Bin/../../../../../lib" }
 
 use Qto::App::Utils::Initiator ; 
-use Test::More tests => 19 ; 
 use Data::Printer ; 
+use Test::More ; 
+
 
 my $msg                    = (); 
 my $tn                     = '' ; # my test number
@@ -13,7 +14,7 @@ my $objInitiator 				= 'Qto::App::Utils::Initiator'->new();
 my $ProductBaseDir 			= $objInitiator->get('ProductBaseDir') ;
 my $ProductDir 			   = $objInitiator->get('ProductDir') ;
 my $ProductInstanceDir 		= $objInitiator->get('ProductInstanceDir');
-my $ProductInstanceEnvironment 	   = $objInitiator->get('ProductInstanceEnvironment');
+my $ProductInstanceEnv 	   = $objInitiator->get('ProductInstanceEnv');
 my $ProductName 				= $objInitiator->doResolveMyProductName();
 my $ProductVersion 			= $objInitiator->doResolveMyProductVersion();
 my $ProductType 				= $objInitiator->doResolveMyProductType();
@@ -63,7 +64,7 @@ $tn = 'test-04' ;
 my $EnvNameToCompare       = $ProductInstanceDir; 
 $EnvNameToCompare          =~ s/$ProductDir\///g  ; 
 $msg                       = "$tn ::: " . 'The environment name is defined by the version , product type and the owner' ; 
-ok ( $ProductInstanceEnvironment 		eq $EnvNameToCompare , $msg ) ; 
+ok ( $ProductInstanceEnv   eq $EnvNameToCompare , $msg ) ; 
 
 
 $tn = 'test-05' ; 
@@ -122,8 +123,8 @@ ok ( $ProductVersion 		eq $appConfig->{'ProductVersion' } , $msg );
 
 
 $tn = 'test-15' ; 
-$msg                       = "$tn ::: " . 'The value of the ProductInstanceEnvironment' ; 
-ok ( $ProductInstanceEnvironment eq $appConfig->{'ProductInstanceEnvironment'} , $msg ); 
+$msg                       = "$tn ::: " . 'The value of the ProductInstanceEnv' ; 
+ok ( $ProductInstanceEnv eq $appConfig->{'ProductInstanceEnv'} , $msg ); 
 
 $tn = 'test-16' ; 
 $msg                       = "$tn ::: " . 'The value of the ProductType from the appConfig' ; 
@@ -144,6 +145,9 @@ $tn = 'test-19' ;
 $msg                       = "$tn ::: " . 'The value of the ConfFile from the appConfig' ; 
 ok ( $ConfFile 				eq $appConfig->{'ConfFile'} , $msg ) ;
 
+done_testing(); 
+
+1; 
 # 20.
 # todo: how-to test that the method fails ?!
 # nok ( $objInitiator->doRunNonExistentMethod ) ; 

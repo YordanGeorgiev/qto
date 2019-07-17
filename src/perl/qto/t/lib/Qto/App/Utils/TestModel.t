@@ -1,10 +1,10 @@
 use strict ; use warnings ; 
 
 use FindBin;
-BEGIN { unshift @INC, "$FindBin::Bin/../lib" }
+BEGIN { unshift @INC, "$FindBin::Bin/../../../../../lib" }
 use Data::Printer ; 
 
-use Test::More tests => 6 ; 
+use Test::More ;
 use Qto::App::Utils::Initiator ; 
 use Qto::App::Utils::Logger ; 
 use Qto::App::Utils::Configurator ; 
@@ -19,19 +19,13 @@ for example:
 doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/qto/ysg-issues.dev.host-name.cnf'  ; 
 croak $m unless ( defined ( $ENV{ "qto_project" } )) ; 
 
-my $msg = ();
+my $msg                    = '' ;
 my $objInitiator 				= 'Qto::App::Utils::Initiator'->new();	
-my $appConfig					= {} ;
-
-$appConfig                 = $objInitiator->get('AppConfig');
-
-my  $objConfigurator
-    = 'Qto::App::Utils::Configurator'->new($objInitiator->{'ConfFile'},
-    \$appConfig);
-
+my $appConfig              = $objInitiator->get('AppConfig');
+my $ConfFile               = $objInitiator->{'ConfFile'} ; 
+my $objConfigurator        = 'Qto::App::Utils::Configurator'->new($ConfFile, \$appConfig);
 $appConfig                 = $objConfigurator->getConfHolder()  ;
-
-my $objModel             = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ; 
+my $objModel               = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ; 
 
 # 1.
 # -----
@@ -44,4 +38,6 @@ $msg = 'check that the appConfig is passed correctly' ;
 my $chkAppConfig  = $objModel->get('appConfig' ) ; 
 ok ( $chkAppConfig == $appConfig , $msg ) ;
 
+done_testing() ; 
 
+1;
