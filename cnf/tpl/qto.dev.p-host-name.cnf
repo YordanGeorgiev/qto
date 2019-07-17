@@ -1,4 +1,4 @@
-# file: cnf/qto.v-host-name.cnf v0.6.8
+# file: cnf/qto.v-host-name.cnf v0.6.9
 [MainSection]
 
 # qto is just a project with multiple projects support
@@ -62,4 +62,4 @@ TZ=Europe/Helsinki
 # the last entry is always ignored - this is a bug in the cnf parser 
 foo=bar
 
-# eof file: cnf/qto.dev.v-host-name.cnf v0.6.8
+# eof file: cnf/qto.dev.v-host-name.cnf v0.6.9

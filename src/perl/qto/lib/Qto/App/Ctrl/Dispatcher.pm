@@ -30,7 +30,7 @@ package Qto::App::Ctrl::Dispatcher ;
 	our $ProductBaseDir 				   = '' ; 
 	our $ProductDir 					   = '' ; 
 	our $ProductInstanceDir 			= ''; 
-	our $ProductInstanceEnvironment  = '' ; 
+	our $ProductInstanceEnv  = '' ; 
 	our $ProductName 					   = '' ; 
 	our $ProductType 					   = '' ; 
 	our $ProductVersion 				   = ''; 

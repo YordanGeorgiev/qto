@@ -23,7 +23,7 @@ package Qto::App::Ctrl::CtrlTxtToDb ;
 	our $ProductBaseDir 				   = '' ; 
 	our $ProductDir 					   = '' ; 
 	our $ProductInstanceDir 			= ''; 
-	our $ProductInstanceEnvironment  = '' ; 
+	our $ProductInstanceEnv  = '' ; 
 	our $ProductName 					   = '' ; 
 	our $ProductType 					   = '' ; 
 	our $ProductVersion 				   = ''; 

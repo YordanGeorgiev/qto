@@ -1,14 +1,9 @@
 # src/bash/qto/funcs/db-to-xls.func.sh
 
-# v1.0.9
-# ---------------------------------------------------------
-# the wrapper func for db to xls issues conversion
-# cat doc/txt/qto/funcs/db-to-xls.func.txt
-# ---------------------------------------------------------
+# v0.6.9
 doDbToXls(){
 
 	doLog "DEBUG START doDbToXls"
-	
 	
 	sleep "$sleep_interval"
 	# add your action implementation code here ... 
@@ -19,12 +14,10 @@ doDbToXls(){
    exit_code=$?
    doLog "INFO doRunQto exit_code $exit_code"
    test $exit_code -ne 0 && doExit $exit_code "failed to run qto.pl"  
-   
 
 
 	doLog "DEBUG STOP  doDbToXls"
 }
-# eof func doDbToXls
 
 
 # eof file: src/bash/qto/funcs/db-to-xls.func.sh

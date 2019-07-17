@@ -87,7 +87,7 @@ ok ( exists $appConfig->{'LogToFile'} , $msg ) ;
 #LogToFile
 #ProductBaseDir
 #ProductInstanceDir
-#ProductInstanceEnvironment
+#ProductInstanceEnv
 #ProductName
 #ProductOwner
 #ProductType

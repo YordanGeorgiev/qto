@@ -30,5 +30,7 @@ my @methods = ('get', 'set' , 'dumpFields' );
 $m = 'a child obj can run the following methods ' . @methods ; 
 can_ok($objSetGetableChild, @methods);
 
-1;
 
+done_testing();
+
+1;

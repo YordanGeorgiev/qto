@@ -20,17 +20,13 @@ doTestXlsToDb(){
    
 	# Action !!!
    export load_model='nested-set'
-   export rdbms_type='mysql'
-   # export rdbms_type='mariadb' # could be also mariadb
-   src/bash/qto/qto.sh -a xls-to-db \
-   -t Requirement,DevOps,UserStory,ItemController,ItemView,ItemModel,Tests,Feature,ExportFile,Feature,Issues,SystemGuide,ReadMe,ExportFile,Concepts
+   src/bash/qto/qto.sh -a xls-to-db -t devops_guide_doc,userstories_doc
    exit_code=$?
    sleep "$sleep_interval"
    test $exit_code -ne 0 && return
 
 	doLog "DEBUG STOP  doTestXlsToDb"
 }
-# eof func doTestXlsToDb
 
 
 # eof file: src/bash/qto/funcs/xls-to-db.test.sh

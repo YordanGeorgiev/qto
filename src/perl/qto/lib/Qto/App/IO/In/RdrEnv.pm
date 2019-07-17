@@ -78,7 +78,6 @@ package Qto::App::IO::In::RdrEnv ;
       $self = $self->doInitialize() ; 
 		return $self;
 	}  
-	#eof const
 	
    #
 	# --------------------------------------------------------

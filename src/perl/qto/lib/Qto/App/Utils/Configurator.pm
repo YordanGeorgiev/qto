@@ -33,7 +33,7 @@ package Qto::App::Utils::Configurator ;
 		, PrintDebugMsgs                 => 1
 		, PrintTraceMsgs                 => 1 
 		, LogDir                         => '%ProductInstanceDir%/dat/log/perl'
-		, ProductInstanceEnvironment     => '%ProductName%.%ProductVersion%.%ProductType%.%ProductOwner%'
+		, ProductInstanceEnv     => '%ProductName%.%ProductVersion%.%ProductType%.%ProductOwner%'
 		, LogFile                        => '%LogDir%/%ProductName%.log'
 		, LogTimeToTextSeparator         =>'###'
 		, LogToFile                      => 1
