@@ -1,39 +1,26 @@
 #!/usr/bin/env bash
 # file: src/bash/qto.sh doc at the eof file
 
-# v0.6.5
+# v0.6.9
 #------------------------------------------------------------------------------
 # the main function called
 #------------------------------------------------------------------------------
 main(){
-	doInit
-   
-   test -z "${1+x}" && actions='print-usage'
-   [ $# -eq 0 ] && $@='-usage'
+   doInit
 
-	case ${arg:-} in
-		'-usage')
-		actions="print-usage "
-		;;
-		'-help')
-		actions="print-help "
-		;;
-		'--help' )
-		actions="print-help "
-		;;
-	esac
+   args="$@"
+   test -z "$args" && args='-a print-usage'
 
-	test -z "${actions+x}" && doParseCmdArgs "$@"
+   doParseCmdArgs "$args"
    export exit_code=1 # assume a general error
 
-	doSetVars
-	doCheckReadyToStart
-	doRunActions "$@"
-	doExit 0 "# = STOP  MAIN = $run_unit "
+   doSetVars
+   doCheckReadyToStart
+   doRunActions "$args"
+   doExit 0 "# = STOP  MAIN = $run_unit "
 }
 
-
-# v0.6.5 
+# v0.6.9 
 #------------------------------------------------------------------------------
 # the "reflection" func - identify the the funcs per file
 #------------------------------------------------------------------------------
@@ -51,7 +38,7 @@ get_function_list () {
 }
 
 
-# v0.6.5 
+# v0.6.9 
 #------------------------------------------------------------------------------
 # run all the actions
 #------------------------------------------------------------------------------
@@ -60,8 +47,9 @@ doRunActions(){
 	cd $product_instance_dir
    actions_to_run=''
 
-   test -z "${actions+1}" && doPrintUsage && doExit 0 
-   daily_backup_dir=$product_instance_dir/dat/mix/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
+   test -z "${actions+1}" && doPrintUsage && doExit 0
+   test -z "${mix_data_dir:-}" && mix_data_dir=$product_instance_dir/dat/mix
+   daily_backup_dir=$mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
 	while read -d ' ' action ; do 
 		doLog "DEBUG action: \"$action\""
 
@@ -72,12 +60,10 @@ doRunActions(){
             doLog "DEBUG function_name: $function_name"
 
 				action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
-				test "$action_name" != $action && continue
+				test "$action_name" != "$action" && continue
 				
-				doLog "INFO start running action :: $action_name":"$function_name"
 				test "$action_name" == "$action" && actions_to_run=$(echo -e "$actions_to_run\n$function_name")
-				doLog "INFO stop  running action :: $action_name":"$function_name"
-
+            echo "actions_to_run: $actions_to_run"
 			done< <(get_function_list "$func_file")
 		done < <(find src/bash/qto/funcs -type f -name '*.sh')
 
@@ -95,14 +81,20 @@ doRunActions(){
 
    while read -r action_to_run ; do 
 	   cd $product_instance_dir
-      $action_to_run ;
+		doLog "INFO start running action :: $action_to_run"
+      $action_to_run
+      exit_code=$?
+		if [[ "$exit_code" != "0" ]]; then
+			exit $exit_code
+		fi
+	   doLog "INFO stop  running action :: $action_to_run":"$function_name"
    done < <(echo $actions_to_run)
-   
+  
    test -d "$daily_backup_dir" || doBackupPostgresDb
 }
 
 
-# v0.6.5 
+# v0.6.9 
 #------------------------------------------------------------------------------
 # register the run-time vars before the call of the $0
 #------------------------------------------------------------------------------
@@ -125,11 +117,10 @@ doInit(){
    export sleep_interval="${sleep_interval:=0}"
    exit_code=1
 }
-#eof doInit
 
 
 
-# v0.6.5 
+# v0.6.9 
 #------------------------------------------------------------------------------
 # parse the single letter command line args
 #------------------------------------------------------------------------------
@@ -172,7 +163,7 @@ doParseCmdArgs(){
 
 
 
-#v0.6.5 
+# v0.6.9 
 #------------------------------------------------------------------------------
 # create an example host dependant ini file
 #------------------------------------------------------------------------------
@@ -192,17 +183,21 @@ doCreateDefaultConfFile(){
 }
 
 
-#v0.6.5 
-#------------------------------------------------------------------------------
+# v0.6.9 
+# ------------------------------------------------------------------------------
 # perform the checks to ensure that all the vars needed to run are set
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 doCheckReadyToStart(){
 
    test -f ${cnf_file-} || doCreateDefaultConfFile 
 
    echo 'checking for the required binaries ...'
 	command -v zip 2>/dev/null || { echo >&2 "The zip binary is missing ! Aborting ..."; exit 1; }
+	command -v unzip 2>/dev/null || { echo >&2 "The unzip binary is missing ! Aborting ..."; exit 1; }
 	which perl 2>/dev/null || { echo >&2 "The perl binary is missing ! Aborting ..."; exit 1; }
+	which grep 2>/dev/null || { echo >&2 "The grep binary is missing ! Aborting ..."; exit 1; }
+	which sed 2>/dev/null || { echo >&2 "The sed binary is missing ! Aborting ..."; exit 1; }
+	which awk 2>/dev/null || { echo >&2 "The awk binary is missing ! Aborting ..."; exit 1; }
    echo 'ok' ; printf "\n"
 
    if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -216,13 +211,13 @@ doCheckReadyToStart(){
 trap "exit 1" TERM
 export TOP_PID=$$
 
-# v0.6.5
-#------------------------------------------------------------------------------
+# v0.6.9
+# ------------------------------------------------------------------------------
 # clean and exit with passed status and message
 # call by: 
 # export exit_code=0 ; doExit "ok msg"
 # export exit_code=1 ; doExit "NOK msg"
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 doExit(){
    exit_msg="$*"
 
@@ -237,7 +232,7 @@ doExit(){
       doLog "INFO  STOP FOR $run_unit RUN: $exit_code $exit_msg"
    fi
 
-   doCleanAfterRun
+   find $run_unit_bash_dir/tmp/.tm* -mindepth 2 -type d -exec rm -rv {} \;
 	cd $call_start_dir 
 
    #src: http://stackoverflow.com/a/9894126/65706
@@ -245,10 +240,9 @@ doExit(){
    test $exit_code -eq 0 && exit 0
    #test $exit_code -ne 0 && kill -9 "$TOP_PID"
 }
-#eof func doExit
 
 
-#v0.6.5 
+# v0.6.9 
 #------------------------------------------------------------------------------
 # echo pass params and print them to a log file and terminal
 # with timestamp and $host_name and $0 PID
@@ -274,25 +268,7 @@ doLog(){
 }
 
 
-#v0.6.5
-#------------------------------------------------------------------------------
-# cleans the unneeded during after run-time stuff
-# do put here the after cleaning code
-#------------------------------------------------------------------------------
-doCleanAfterRun(){
-   # remove the temporary dir and all the stuff bellow it
-   cmd="rm -dfvr $tmp_dir"
-   doRunCmdAndLog "$cmd"
-   rm -rdfvr $tmp_dir
-
-
-#   while read -r f ; do 
-#      test -f $f && rm -fv "$f" ; 
-#   done < <(find "$run_unit_bash_dir" -type f -name '*.bak')
-}
-
-
-#v0.6.5 
+# v0.6.9 
 #------------------------------------------------------------------------------
 # run a command and log the call and its output to the log_file
 # doPrintHelp: doRunCmdAndLog "$cmd"
@@ -312,7 +288,7 @@ doRunCmdAndLog(){
 }
 
 
-#v0.6.5 
+#v0.6.9 
 #------------------------------------------------------------------------------
 # run a command on failure exit with message
 # doPrintHelp: doRunCmdOrExit "$cmd"
@@ -343,63 +319,61 @@ doRunCmdOrExit(){
 
 }
 
+
 clearTheScreen(){
 	printf "\033[2J";printf "\033[0;0H"
 }
 
-#v0.6.5 
-#------------------------------------------------------------------------------
-# set the variables from the $0.$host_name.cnf file which has ini like syntax
-#------------------------------------------------------------------------------
+
 doSetVars(){
 
-    cd $run_unit_bash_dir
-    for i in {1..3} ; do cd .. ; done ; export product_instance_dir=`pwd`;
-    # include all the func files to fetch their funcs 
-    while read -r func_file ; do . "$func_file" ; done < <(find . -name "*func.sh")
-    # debug while read -r func_file ; do echo "$func_file" ; done < <(find . -name "*func.sh")
+   cd $run_unit_bash_dir
+   for i in {1..3} ; do cd .. ; done ; export product_instance_dir=`pwd`;
+   environment_name=$(basename "$product_instance_dir")
+   cd $product_instance_dir
+   export product_version=$(git tag | perl -ne 's/release-//g;print'|sort -nr|head -n 1)
+   if [ "$environment_name" == "$run_unit" ]; then
+      product_dir=$product_instance_dir
+   else
+       # this will be dev, stg, prd
+       export env_type=$(echo `basename "$product_instance_dir"`|cut -d'.' -f5)
+       export product_owner=$(echo `basename "$product_instance_dir"`|cut -d'.' -f6)
+       cd .. ; product_dir=`pwd`;
+   fi
 
-    # this will be dev , tst, prd
-    export env_type=$(echo `basename "$product_instance_dir"`|cut -d'.' -f5)
-    export product_owner=$(echo `basename "$product_instance_dir"`|cut -d'.' -f6)
-    export product_version=$(echo `basename "$product_instance_dir"`|cut -d'.' -f2-4)
-    environment_name=$(basename "$product_instance_dir")
+   cd .. ; product_base_dir=`pwd`;
 
-    cd ..
-    product_dir=`pwd`;
+   ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
-    cd ..
-    product_base_dir=`pwd`;
+   doLog "INFO # --------------------------------------"
+   doLog "INFO # ===     START MAIN   === $run_unit"
+   doLog "INFO # --------------------------------------"
 
-    org_dir=`pwd`
-    org_name=$(echo `basename "$org_dir"`)
+   exit_code=0
+   doLog "INFO using the following vars:"
+   cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
+   echo -e "$cmd"
 
-    cd ..
-    org_base_dir=`pwd`;
+   while read -r func_file ; do source "$func_file" ; done < <(find $product_instance_dir -name "*func.sh")
+   clearTheScreen
 
-    cd "$run_unit_bash_dir/"
-
-    ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
-
-    doLog "INFO # --------------------------------------"
-    doLog "INFO # -----------------------"
-    doLog "INFO # ===		 START MAIN   === $run_unit"
-    doLog "INFO # -----------------------"
-    doLog "INFO # --------------------------------------"
-
-    exit_code=0
-    doLog "INFO using the following vars:"
-    cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
-    echo -e "$cmd"
-
-    clearTheScreen
 }
-#eof func doSetVars
 
 
+# todo:ysg process cmd args
+process_help_cmd_args () {
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+       -h|-help) usage; exit 1 ;;
+    -v|-verbose) verbose=1 && shift ;;
+      -d|-debug) debug=1 && addSbt "-debug" && shift ;;
+              *) addResidual "$1" && shift ;;
+    esac
+  done
+}
 
 
-# v0.6.5
+# v0.6.9
 #------------------------------------------------------------------------------
 # parse the ini like $0.$host_name.cnf and set the variables
 # cleans the unneeded during after run-time stuff. Note the MainSection
@@ -465,4 +439,4 @@ main "$@"
 #----------------------------------------------------------
 #
 #
-#eof file: qto.sh v0.6.5
+#eof file: qto.sh v0.6.9
