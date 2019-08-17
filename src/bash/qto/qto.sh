@@ -175,6 +175,8 @@ doExportJsonSectionVars(){
    test -z "$section" && doExit 1 "the section in doExportJsonSectionVars is empty !!! nothing to do !!!"
    shift 1;
 
+	clearTheScreen
+	doLog "INFO exporting vars: "
    while read -r l ; do
      key=$(echo $l|cut -d'=' -f1)
      val=$(echo $l|cut -d'=' -f2)
@@ -359,6 +361,7 @@ doSetVars(){
    fi
 
    cd .. ; product_base_dir=`pwd`;
+	doParseCnfEnvVars  #qto-190818000743
 
    ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
@@ -374,6 +377,45 @@ doSetVars(){
    while read -r func_file ; do source "$func_file" ; done < <(find $product_instance_dir -name "*func.sh")
    clearTheScreen
 
+}
+
+
+#
+# ---------------------------------------------------------
+# cat cnf/qto.dev.host-name.cnf
+# [MainSection]
+# postgres_db_name     = dev_qto
+# postgres_db_host     = host-name
+# 
+# call by: doParseCnfEnvVars cnf/qto.dev.host-name.cnf
+# ---------------------------------------------------------
+doParseCnfEnvVars(){
+
+   cnf_file=${1:-};shift 1;
+
+   test -z "$cnf_file" && cnf_file="$product_instance_dir/cnf/$run_unit.$env_type.$host_name.cnf"
+
+   cnf_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$cnf_file")
+   product_instance_dir=${cnf_dir%/*}
+
+   INI_SECTION=MainSection
+
+	( set -o posix ; set ) | sort >~/vars.before
+
+	eval `sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
+		-e 's/#.*$//' \
+		-e 's/[[:space:]]*$//' \
+		-e 's/^[[:space:]]*//' \
+		-e "s|%ProductInstanceDir%|${product_instance_dir}|" \
+		-e "s/^\(.*\)=\([^\"']*\)$/export \1=\"\2\"/" \
+		< $cnf_file \
+		| sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
+
+   # and post-register for nice logging
+   ( set -o posix ; set ) | sort >~/vars.after
+
+   echo "INFO added the following vars from section: [$INI_SECTION]"
+   comm -3 ~/vars.before ~/vars.after | perl -ne 's#\s+##g;print "\n $_ "'
 }
 
 

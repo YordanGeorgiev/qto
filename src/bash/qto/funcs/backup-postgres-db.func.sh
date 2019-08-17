@@ -9,6 +9,9 @@ doBackupPostgresDb(){
 	doLog "DEBUG START doBackupPostgresDb"
    test -z ${qto_project:-} && doParseCnfEnvVars $cnf_file
    test -z "${proj_instance_dir-}" && proj_instance_dir="$product_instance_dir"
+
+   doExportJsonSectionVars cnf/env/$env_type.env.json '.env.db'
+
    test -z "${mix_data_dir-}" && mix_data_dir="$proj_instance_dir/dat/mix"
    test -z "${postgres_db_name-}" && postgres_db_name="${env_type-}"_"${run_unit//-/_}"
 
