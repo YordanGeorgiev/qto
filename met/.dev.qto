@@ -1,4 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+src/bash/qto/qto.sh
+src/bash/qto/test-qto.sh
+src/bash/qto/funcs/generate-md-docs.func.sh
 src/docker/Dockerfile.deploy-qto.0.6.9
 src/docker/Dockerfile.deploy-qto-db-host.0.6.9
 src/docker/Dockerfile.deploy-qto-app-host.0.6.9
@@ -45,7 +48,6 @@ src/perl/qto/templates/pages/view-doc/components/snackbar.html.ep
 src/perl/qto/templates/pages/view-doc/components/view-doc-items-list.xt.html.ep
 src/perl/qto/templates/pages/view-doc/components/right-click-menu.xt.html.ep
 src/perl/qto/templates/pages/view-doc/components/app-template.xt.html.ep
-src/bash/qto/funcs/generate-md-docs.func.sh
 doc/txt/qto/funcs/generate-md-docs.func.txt
 # -- start docker deployment
 src/bash/qto/funcs/remove-docker-images.func.sh
@@ -266,8 +268,6 @@ cnf/bash/.profile_opts.host-name
 # ---
 src/bash/lib/.bash_funcs.host-name
 # --
-src/bash/qto/qto.sh
-src/bash/qto/test-qto.sh
 src/bash/qto/tests/all-qto-tests.lst
 src/bash/qto/tests/rem-qto-actions.lst
 # ---

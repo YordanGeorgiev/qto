@@ -8,11 +8,16 @@ doGenerateMdDocs(){
 	doLog "DEBUG START doGenerateMdDocs"
    test -z "${proj_instance_dir-}" && proj_instance_dir="$product_instance_dir"
    test -z "${docs_root_dir-}" && docs_root_dir="$proj_instance_dir"
+
+   doExportJsonSectionVars cnf/env/$env_type.env.json '.env.app'
+
    # <<web-host>>:<<web-port>>/<<db>>/select/export_files?as=grid&od=id
    basic_url="http://${web_host:-}:${mojo_morbo_port:-}/${postgres_db_name:-}"
    furl="$basic_url"'/select/export_files?as=grid&od=id&pg-size=20'
 
    curl -s $furl | jq -r '.dat[]|.url'
+	ret=$?
+	test $ret != "0" && doExit $ret "failed to get data from the $furl"
 
    while read -r url ; do 
       file_name=$(curl -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .name'); 
