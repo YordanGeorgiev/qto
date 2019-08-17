@@ -161,26 +161,42 @@ doParseCmdArgs(){
 }
 
 
-
-
-# v0.6.9 
 #------------------------------------------------------------------------------
-# create an example host dependant ini file
+# usage example:
+# doExportJsonSectionVars cnf/env/dev.env.json '.env.virtual.docker.spark_base'
 #------------------------------------------------------------------------------
-doCreateDefaultConfFile(){
+doExportJsonSectionVars(){
 
-	echo -e "#file: $cnf_file \n\n" >> $cnf_file
-	echo -e "[MainSection] \n" >> $cnf_file
-	echo -e "#use simple var_name=var_value syntax \n">>$cnf_file
-	echo -e "#the name of this application ">>$cnf_file
-	echo -e "app_name=$run_unit\n" >> $cnf_file
-	echo -e "#the e-mails to send the package to ">>$cnf_file
-	echo -e "AdminEmail=some.email@company.com\n" >> $cnf_file
-	echo -e "#the name of this application's db" >> $cnf_file
-	echo -e "postgres_db_name=$env_type""_""$run_unit\n\n" >> $cnf_file
-	echo -e "#eof file: $cnf_file" >> $cnf_file
+   json_file="$1"
+   shift 1;
+   test -f "$json_file" || doExit 1 "the json_file: $json_file does not exist !!! Nothing to do"
 
+   section="$1"
+   test -z "$section" && doExit 1 "the section in doExportJsonSectionVars is empty !!! nothing to do !!!"
+   shift 1;
+
+   while read -r l ; do
+     key=$(echo $l|cut -d'=' -f1)
+     val=$(echo $l|cut -d'=' -f2)
+     eval "$(echo -e 'export '$key=\"\"$val\"\")"
+     echo $key : $val
+   done < <(cat "$json_file"| jq -r "$section"'|keys_unsorted[] as $key|"\($key)=\"\(.[$key])\""')
 }
+
+
+#
+#------------------------------------------------------------------------------
+# usage example:
+# doApplyShellExpansion /tmp/docker-compose.yml
+#------------------------------------------------------------------------------
+doApplyShellExpansion() {
+   declare file="$1"
+   shift 1;
+   test -f "$file" || doExit 1 "doApplyShellExpansion: the file: $file does not exist !!! Nothing to do"
+   perl -wpe 's#\${?(\w+)}?# $ENV{$1} // $& #ge;' $file
+}
+
+
 
 
 # v0.6.9 
@@ -198,6 +214,7 @@ doCheckReadyToStart(){
 	which grep 2>/dev/null || { echo >&2 "The grep binary is missing ! Aborting ..."; exit 1; }
 	which sed 2>/dev/null || { echo >&2 "The sed binary is missing ! Aborting ..."; exit 1; }
 	which awk 2>/dev/null || { echo >&2 "The awk binary is missing ! Aborting ..."; exit 1; }
+	which jq 2>/dev/null || { echo >&2 "The jq binary is missing ! Aborting ..."; exit 1; }
    echo 'ok' ; printf "\n"
 
    if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -211,20 +228,21 @@ doCheckReadyToStart(){
 trap "exit 1" TERM
 export TOP_PID=$$
 
+
 # v0.6.9
 # ------------------------------------------------------------------------------
 # clean and exit with passed status and message
-# call by: 
-# export exit_code=0 ; doExit "ok msg"
-# export exit_code=1 ; doExit "NOK msg"
+# call by:
+# doExit 0 "ok msg"
+# doExit 1 "NOK msg"
 # ------------------------------------------------------------------------------
 doExit(){
+   exit_code=$1 ; shift
    exit_msg="$*"
 
    if (( ${exit_code} != 0 )); then
       exit_msg=" ERROR --- exit_code $exit_code --- exit_msg : $exit_msg"
       >&2 echo "$exit_msg"
-      # doSendReport
       doLog "FATAL STOP FOR $run_unit RUN with: "
       doLog "FATAL exit_code: $exit_code exit_msg: $exit_msg"
    else
@@ -232,15 +250,12 @@ doExit(){
       doLog "INFO  STOP FOR $run_unit RUN: $exit_code $exit_msg"
    fi
 
-   find $run_unit_bash_dir/tmp/.tm* -mindepth 2 -type d -exec rm -rv {} \;
-	cd $call_start_dir 
+   rm -rfvr $tmp_dir #clear the tmpdir
+   cd $call_start_dir
 
-   #src: http://stackoverflow.com/a/9894126/65706
    test $exit_code -ne 0 && kill -s TERM "$TOP_PID" && exit $exit_code
    test $exit_code -eq 0 && exit 0
-   #test $exit_code -ne 0 && kill -9 "$TOP_PID"
 }
-
 
 # v0.6.9 
 #------------------------------------------------------------------------------
@@ -331,14 +346,16 @@ doSetVars(){
    for i in {1..3} ; do cd .. ; done ; export product_instance_dir=`pwd`;
    environment_name=$(basename "$product_instance_dir")
    cd $product_instance_dir
-   export product_version=$(git tag | perl -ne 's/release-//g;print'|sort -nr|head -n 1)
+   source $product_instance_dir/.env
+   export product_version=$VERSION
+   export env_type=$ENV_TYPE
    if [ "$environment_name" == "$run_unit" ]; then
       product_dir=$product_instance_dir
+      test -z "$env_type" && export env_type='dev'
    else
-       # this will be dev, stg, prd
-       export env_type=$(echo `basename "$product_instance_dir"`|cut -d'.' -f5)
-       export product_owner=$(echo `basename "$product_instance_dir"`|cut -d'.' -f6)
-       cd .. ; product_dir=`pwd`;
+      # this could be dev, tst , stg , qas , prd
+      export product_owner=$(echo `basename "$product_instance_dir"`|cut -d'.' -f6)
+      cd .. ; product_dir=`pwd`;
    fi
 
    cd .. ; product_base_dir=`pwd`;

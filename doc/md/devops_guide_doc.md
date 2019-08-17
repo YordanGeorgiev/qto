@@ -134,7 +134,7 @@ A broken windows is any peace of code or documentation which is hanging around n
     
 
 ### 2.1. RDBMS Run-state management
-
+Check the status. Stop and start of postgres. 
 
     
 
@@ -219,7 +219,8 @@ Simply add, update and delete users in the users table and sent the password wit
     
 
 #### 2.3.2. Regular users visibility
-You should not worry about the possibility of regular users to access the users table data - it has been restricted for regular uses - aka only the AdminEmail configured email - aka the email of the instance owner, which should be you can have access to this data with the list users page
+Use the following http password generator:
+http://www.htaccesstools.com/htpasswd-generator/
 
     
 
