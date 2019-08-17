@@ -17,10 +17,8 @@ doCreateFullPackage(){
 	[[ $include_file == /* ]] || include_file=$product_instance_dir/$include_file
 
    if [ ! -f "$include_file" ]; then
-      msg="the deployment file: "'"'"$include_file"'" does not exist !!!'
-      export exit_code=1 ;  
-      doExit "$msg"
-      exit 1
+      doLog "FATAL the deployment file: $include_file does not exist !!!"
+      return 1
    fi
 
    tgt_env_type=$(echo `basename "$include_file"`|cut -d'.' -f2)
@@ -66,10 +64,9 @@ doCreateFullPackage(){
 	);
 
    if [ ! $ret -eq 0 ]; then
-      msg="deleted $zip_file , because of packaging errors $! !!!"
+      doLog "FATAL deleted $zip_file , because of packaging errors $! !!!"
 	   rm -fv $zip_file
-      export exit_code=1 ;  doExit "$msg" ; 
-      exit 1
+      return 1
    fi
  
    test -z ${mix_data_dir:-} && mix_data_dir=$product_instance_dir/dat/mix

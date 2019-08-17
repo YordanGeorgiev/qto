@@ -1,9 +1,9 @@
-backup-postgres-db
+# backup-postgres-db
 # db-to-json
 # run-functional-tests
 # run-integration-tests
 # run-mysql-scripts
-#xls-to-db
+# xls-to-db
 # mojo-morbo-start
 # mojo-morbo-stop
 # increase-date
@@ -14,7 +14,7 @@ backup-postgres-db
 # gmail-txt-issues
 # increase-date
 # create-full-7z-package
-# create-full-package
+create-full-package
 # create-relative-7z-package
 # create-relative-package
 # check-perl-modules-prerequisites

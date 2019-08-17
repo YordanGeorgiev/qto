@@ -10,7 +10,9 @@ doBackupPostgresTable(){
    echo "start running : pg_dump  --verbose --data-only --table public.$tables $postgres_db_name "
    echo -e "\n --file $dump_file \n"
 
-   pg_dump  --verbose --data-only --table public.$tables $postgres_db_name \
+   PGPASSWORD="${postgres_db_useradmin_pw:-}" pg_dump -U "${postgres_db_useradmin:-}"  \
+      -h $postgres_db_host -p $postgres_db_port -w \
+      --verbose --data-only --table public.$tables $postgres_db_name \
       --file $dump_file
    echo "stop running : pg_dump  --verbose --data-only --table public.$tables $postgres_db_name \\"
    echo -e " --file $DataDir/tmp/$tables.data.sql \n"

@@ -5,21 +5,13 @@ SELECT 'create the "decadally_issues" table'
    CREATE TABLE decadally_issues (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , level          integer NULL
-    , seq            integer NULL
+    , category       varchar (30) NOT NULL DEFAULT 'category'
+    , status         varchar (20) NOT NULL DEFAULT 'status'
+    , start_time     text NOT NULL DEFAULT to_char(date_trunc('minute', now()::time),'HH24:MI')
+    , stop_time      text NOT NULL DEFAULT to_char(date_trunc('minute', now()::time),'HH24:MI')
     , prio           integer NOT NULL DEFAULT 1
-    , weight         integer NOT NULL DEFAULT 9
-    , status         varchar (20) NOT NULL DEFAULT 'status ...'
-    , category       varchar (20) NOT NULL DEFAULT 'category ...'
-    , name           varchar (100) NOT NULL DEFAULT 'name ...'
-    , description    varchar (4000)
-    , type           varchar (30) NOT NULL DEFAULT 'task'
-    , owner          varchar (20) NOT NULL DEFAULT 'unknown'
-    , start_time     timestamp NOT NULL DEFAULT DATE_TRUNC('second', NOW())
-    , stop_time      timestamp NOT NULL DEFAULT DATE_TRUNC('second', NOW())
-    , planned_hours  decimal (6,2) NULL
-    , actual_hours   decimal (6,2) NULL
-    , tags           varchar (200)
+    , name           varchar (100) NOT NULL DEFAULT 'name'
+    , description    varchar (1000)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_decadally_issues_guid PRIMARY KEY (guid)
     ) WITH (

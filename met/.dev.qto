@@ -1,4 +1,9 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+src/docker/Dockerfile.deploy-qto.0.6.9
+src/docker/Dockerfile.deploy-qto-db-host.0.6.9
+src/docker/Dockerfile.deploy-qto-app-host.0.6.9
+src/bash/qto/funcs/build-qto-docker-image.func.sh
+src/bash/qto/bootstrap-qto-docker.sh
 # start HCreate
 src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
@@ -43,17 +48,14 @@ src/perl/qto/templates/pages/view-doc/components/app-template.xt.html.ep
 src/bash/qto/funcs/generate-md-docs.func.sh
 doc/txt/qto/funcs/generate-md-docs.func.txt
 # -- start docker deployment
-src/bash/qto/funcs/build-qto-docker-image.func.sh
 src/bash/qto/funcs/remove-docker-images.func.sh
 src/bash/qto/funcs/remove-docker-containers.func.sh
-src/docker/Dockerfile.deploy-qto.0.6.8
 src/bash/qto/funcs/run-container.func.sh
 src/bash/qto/funcs/mojo-morbo-start.func.sh
 src/bash/qto/funcs/mojo-daemon-start.func.sh
 src/bash/qto/funcs/mojo-daemon-stop.func.sh
 src/bash/qto/install/docker/install-test.sh
 src/bash/qto/install/docker/docker-entry-point.sh
-src/bash/qto/bootstrap-qto-docker.sh
 src/bash/qto/bootstrap-qto-host.sh
 src/docker/Dockerfile.deploy-quick-test
 src/bash/qto/install/docker/install-admin-utils.sh
@@ -846,13 +848,10 @@ src/perl/qto/lib/auto/Qto/Controller/Home/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Truncate/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WSSelect/autosplit.ix
 dat/mix
-dat/mix/2019/2019-07/2019-07-16/
-dat/mix/2019/2019-07/2019-07-16/.DS_Store
-dat/mix/2019/2019-07/2019-07-16/sql
-dat/mix/2019/2019-07/2019-07-16/sql/dev_qto
-dat/mix/2019/2019-07/2019-07-16/sql/dev_qto/dev_qto.20190716_001118.insrt.dmp.sql
-dat/mix/2019/2019-07/2019-07-16/sql/dev_qto/dev_qto.20190716_181136.insrt.dmp.sql
-dat/mix/2019/2019-07/2019-07-16/sql/.DS_Store
-dat/mix/2019/2019-07/2019-07-16/tmp
-dat/mix/2019/2019-07/2019-07-16/xls
-dat/mix/2019/2019-07/2019-07-16/xls/qto.all.20190716_000000.xlsx
+dat/mix/2019/2019-07/2019-07-24
+dat/mix/2019/2019-07/2019-07-24/sql
+dat/mix/2019/2019-07/2019-07-24/sql/dev_qto
+dat/mix/2019/2019-07/2019-07-24/sql/dev_qto/dev_qto.20190724_114933.insrt.dmp.sql
+dat/mix/2019/2019-07/2019-07-24/tmp
+dat/mix/2019/2019-07/2019-07-24/xls
+dat/mix/2019/2019-07/2019-07-24/xls/qto.all.20190724_000000.xlsx

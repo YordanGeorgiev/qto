@@ -15,7 +15,7 @@ doBuildQtoDockerImage(){
    test -f "$product_instance_dir/src/docker/Dockerfile.deploy-$run_unit.$product_version" || \
       doExit 1 "create the src/docker/Dockerfile.deploy-$run_unit.$product_version"
 
-   # doFullCleanDocker
+   doFullCleanDocker
    doRemoveDockerContainers 
    doRemoveDockerImages          
    postgres_db_name="$env_type"'_'"$run_unit"

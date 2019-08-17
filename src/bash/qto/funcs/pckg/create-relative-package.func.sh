@@ -1,7 +1,3 @@
-#!/bin/bash
-
-
-#v0.6.5
 #------------------------------------------------------------------------------
 # creates a package from the relative file paths specified in the .env file
 #------------------------------------------------------------------------------
@@ -10,7 +6,6 @@ doCreateRelativePackage(){
 	mkdir -p $product_dir/dat/zip
 		test $? -ne 0 && doExit 2 "Failed to create $product_instance_dir/dat/zip !"
 
-	#define default vars
 	test -z ${include_file:-}         && \
 		include_file="$product_instance_dir/met/.$env_type.$run_unit"
 
@@ -57,7 +52,6 @@ doCreateRelativePackage(){
 	# note: | grep -vP "$perl_ignore_file_pattern" | grep -vP '^\s*#'
 
 
-
 	# zip MM ops -MM = --must-match
 	# All  input  patterns must match at least one file and all input files found must be readable.
 	ret=0
@@ -66,7 +60,7 @@ doCreateRelativePackage(){
    
 	ret=$? ; 
    if (( $ret != 0 )); then
-      fatal_msg1="deleted $zip_file !!!"
+      fatal_msg1="deleting $zip_file !!!"
       fatal_msg2="because of packaging errors !!!"
       rm -fv $zip_file
       doLog "FATAL $fatal_msg1"
@@ -91,4 +85,3 @@ doCreateRelativePackage(){
 
 
 }
-#eof doCreateRelativePackage
