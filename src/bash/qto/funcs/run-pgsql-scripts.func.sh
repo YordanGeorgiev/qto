@@ -15,10 +15,10 @@ doRunPgsqlScripts(){
 
    # if the calling shell did not have exported pgsql_scripts_dir var	
 	test -z "${pgsql_scripts_dir:-}" && \
-	   pgsql_scripts_dir="$product_instance_dir/src/sql/pgsql/qto"
+	   pgsql_scripts_dir="$PRODUCT_INSTANCE_DIR/src/sql/pgsql/qto"
 
    # if a relative path is passed add to the product version dir
-	[[ ${pgsql_scripts_dir:-} == /* ]] || export pgsql_scripts_dir="$product_instance_dir"/"$pgsql_scripts_dir"
+	[[ ${pgsql_scripts_dir:-} == /* ]] || export pgsql_scripts_dir="$PRODUCT_INSTANCE_DIR"/"$pgsql_scripts_dir"
    sql_script="$pgsql_scripts_dir/""00.create-db.pgsql"
    
    # run the sql save the result into a tmp log file
@@ -58,7 +58,7 @@ doRunPgsqlScripts(){
 	# run the sql scripts in alphabetical order
    while read -r sql_script ; do 
 
-		relative_sql_script=$(echo $sql_script|perl -ne "s#$product_instance_dir##g;print")
+		relative_sql_script=$(echo $sql_script|perl -ne "s#$PRODUCT_INSTANCE_DIR##g;print")
 
 		# give the poor dev a time to see what is happening
 		test -z "${is_sql_biz_as_usual_run:-}" || sleep $sleep_interval ; 

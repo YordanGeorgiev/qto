@@ -8,10 +8,8 @@
 doMojoMorboStart(){
 
 	doLog "DEBUG START doMojoMorboStart"
-
-   test -z ${qto_project:-} && \
-      source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh" && \
-      doParseCnfEnvVars "$product_instance_dir/cnf/$run_unit.$env_type.*.cnf"
+   
+   doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
 
    doMojoMorboStop 0
    
@@ -28,10 +26,10 @@ doMojoMorboStart(){
    export MOJO_LISTEN='http://*:'"$mojo_morbo_port"
    test -z "${mojo_morbo_port:-}" && export MOJO_LISTEN='http://*:3001'
 	# Action !!!
-   doLog "INFO running: morbo -w $product_instance_dir/src/perl/script/qto
-   --listen $MOJO_LISTEN $product_instance_dir/src/perl/qto/script/qto"
+   doLog "INFO running: morbo -w $PRODUCT_INSTANCE_DIR/src/perl/script/qto
+   --listen $MOJO_LISTEN $PRODUCT_INSTANCE_DIR/src/perl/qto/script/qto"
 
-   bash -c "morbo -w $product_instance_dir/src/perl/qto --listen $MOJO_LISTEN $product_instance_dir/src/perl/qto/script/qto" &
+   bash -c "morbo -w $PRODUCT_INSTANCE_DIR/src/perl/qto --listen $MOJO_LISTEN $PRODUCT_INSTANCE_DIR/src/perl/qto/script/qto" &
 	doLog "DEBUG check with netstat "
 
    # requires sudo visudoers 

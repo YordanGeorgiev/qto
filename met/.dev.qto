@@ -1,5 +1,10 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 src/bash/qto/qto.sh
+cnf/env
+cnf/env/dev.env.json
+cnf/env/tst.env.json
+cnf/env/prd.env.json
+.env
 src/bash/qto/test-qto.sh
 src/bash/qto/funcs/generate-md-docs.func.sh
 src/docker/Dockerfile.deploy-qto.0.6.9
@@ -60,7 +65,6 @@ src/bash/qto/install/docker/install-test.sh
 src/bash/qto/install/docker/docker-entry-point.sh
 src/bash/qto/bootstrap-qto-host.sh
 src/docker/Dockerfile.deploy-quick-test
-src/bash/qto/install/docker/install-admin-utils.sh
 src/bash/qto/install/docker/install-postgres.sh
 src/bash/qto/install/docker/provision-os-users.sh
 src/bash/qto/install/docker/install-perl-modules.sh
@@ -348,7 +352,6 @@ src/bash/qto/helps/mojo-hypnotoad-start.help.sh
 src/bash/qto/funcs/mojo-hypnotoad-start.func.sh
 doc/txt/qto/tests/mojo-hypnotoad-start.test.txt
 doc/txt/qto/helps/mojo-hypnotoad-start.help.txt
-doc/txt/qto/funcs/mojo-hypnotoad-start.func.txt
 # ---
 src/bash/qto/tests/mojo-hypnotoad-stop.test.sh
 src/bash/qto/helps/mojo-hypnotoad-stop.help.sh
@@ -531,21 +534,6 @@ src/bash/qto/tests/pckg/create-full-package.test.sh
 doc/txt/qto/tests/pckg/create-full-package.test.txt
 doc/txt/qto/helps/pckg/create-full-package.help.txt
 doc/txt/qto/funcs/pckg/create-full-package.func.txt
-#---
-src/bash/qto/helps/pckg/create-full-7z-package.help.sh
-src/bash/qto/funcs/pckg/create-full-7z-package.func.sh
-src/bash/qto/tests/pckg/create-full-7z-package.test.sh
-doc/txt/qto/tests/pckg/create-full-7z-package.test.txt
-doc/txt/qto/helps/pckg/create-full-7z-package.help.txt
-doc/txt/qto/funcs/pckg/create-full-7z-package.func.txt
-#---
-doc/txt/qto/funcs/pckg/create-relative-7z-package.func.txt
-doc/txt/qto/helps/pckg/create-relative-7z-package.help.txt
-doc/txt/qto/tests/pckg/create-relative-7z-package.test.txt
-src/bash/qto/funcs/pckg/create-relative-7z-package.func.sh
-src/bash/qto/helps/pckg/create-relative-7z-package.help.sh
-src/bash/qto/tests/pckg/create-relative-7z-package.test.sh
-#---
 #---
 src/bash/qto/funcs/sys/tmux/tmux-common.sh
 src/bash/qto/funcs/sys/tmux/restore-tmux-session.func.sh

@@ -35,7 +35,7 @@ croak $m unless ( defined ( $ENV{ "qto_project" } )) ;
 # p($appConfig) ; 
 # sleep 6 ; 
 # todo: remove hardcoding ...
-my $product_base_dir       = $ENV { 'product_instance_dir' } ; 
+my $product_base_dir       = $ENV { 'PRODUCT_INSTANCE_DIR' } ; 
 $product_base_dir          =~ s/(.*)([\/\\])(.*)/$1/g ; 
 $product_base_dir          =~ s/(.*)([\/\\])(.*)/$1/g ; 
 my $product_dir            = "$product_base_dir/$3" ; 
@@ -55,9 +55,9 @@ ok ( $ProductDir 				eq $product_dir , $msg ) ;
 
 $tn = 'test-03' ; 
 # 3. # if not set , set in in the shell by:
-# export product_instance_dir=/opt/csitea/qto/qto.0.2.8.dev.ysg
+# export PRODUCT_INSTANCE_DIR=/opt/csitea/qto/qto.0.2.8.dev.ysg
 $msg                       = "$tn ::: " .'The ProductInstanceDir is the next level' ; 
-ok ( $ProductInstanceDir 	eq $ENV{'product_instance_dir'} , $msg ) ; 
+ok ( $ProductInstanceDir 	eq $ENV{'PRODUCT_INSTANCE_DIR'} , $msg ) ; 
 
 
 $tn = 'test-04' ; 

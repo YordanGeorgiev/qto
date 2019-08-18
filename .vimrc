@@ -97,7 +97,7 @@ set wildignore+=**/node_modules/**
 " use perl regexes - src: http://andrewradev.com/2011/05/08/vim-regexes/
 noremap / /\v
 
-" my perl code under <<product_instance_dir>>/src/perl/<<tool-name-only-dir>>
+" my perl code under <<PRODUCT_INSTANCE_DIR>>/src/perl/<<tool-name-only-dir>>
 map <C-c><C-c> :!perl -MCarp::Always -I `pwd`/src/perl/*/ -I `pwd`/src/perl/*/lib/ -wc %
 
 " use perltidy with pre-configured mojolicious settings

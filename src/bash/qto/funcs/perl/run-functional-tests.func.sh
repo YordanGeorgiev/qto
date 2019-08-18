@@ -10,8 +10,8 @@ doRunFunctionalTests(){
   
    export QTO_ONGOING_TEST=1
    test -z ${qto_project:-} && \
-      source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh" && \
-      doParseCnfEnvVars "$product_instance_dir/cnf/$run_unit.$env_type.*.cnf"
+      source "$PRODUCT_INSTANCE_DIR/lib/bash/funcs/parse-cnf-env-vars.sh" && \
+      doParseCnfEnvVars "$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type.*.cnf"
    
    doLog "INFO START testing controllers"
    while read -r f ; do 

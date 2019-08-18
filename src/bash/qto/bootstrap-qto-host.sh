@@ -13,18 +13,18 @@ product_dir="$product_base_dir/csitea/$run_unit"
 product_tmp_install_dir="$product_base_dir"/"$run_unit"'-tmp-install'
 cd "$product_dump_dir"
 run_unit_ver=$(git tag|sort -nr|head -n 1) || run_unit_ver='0.1.9'
-product_instance_dir="$product_dir"'/'"$run_unit"'.'"$run_unit_ver"'.'"$run_unit_type"'.'"$run_unit_owner"
+PRODUCT_INSTANCE_DIR="$product_dir"'/'"$run_unit"'.'"$run_unit_ver"'.'"$run_unit_type"'.'"$run_unit_owner"
 
 mkdir -p "$product_dir" ; cd $_
 # each product instance has name, version, environment type and a single person as the owner
-mv -v $product_dump_dir "$product_instance_dir"; cd $product_instance_dir
+mv -v $product_dump_dir "$PRODUCT_INSTANCE_DIR"; cd $PRODUCT_INSTANCE_DIR
 # START -- search and replace recursively 
 
 for env in `echo dev tst prd `; do
-   cp -v "$product_instance_dir/cnf/tpl/qto.$env.p-host-name.cnf" \
-         "$product_instance_dir/cnf/qto.$env."$(hostname -s)".cnf"
-   cp -v "$product_instance_dir/cnf/tpl/qto.$env.v-host-name.cnf" \
-         "$product_instance_dir/cnf/qto.$env."$(hostname -s)".cnf"
+   cp -v "$PRODUCT_INSTANCE_DIR/cnf/tpl/qto.$env.p-host-name.cnf" \
+         "$PRODUCT_INSTANCE_DIR/cnf/qto.$env."$(hostname -s)".cnf"
+   cp -v "$PRODUCT_INSTANCE_DIR/cnf/tpl/qto.$env.v-host-name.cnf" \
+         "$PRODUCT_INSTANCE_DIR/cnf/qto.$env."$(hostname -s)".cnf"
 done
 
 export dir=.
@@ -41,8 +41,8 @@ perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;rename($o,$n) unless -e $n 
 find "$dir/" -not -path "./.git/*" -type f -exec perl -pi -e "s#$to_srch#$to_repl#g" {} \;
 find "$dir/" -not -path "./.git/*" -type f -name '*.bak' | xargs rm -f
 
-echo "GO TO YOUR product_instance_dir by"
-echo "cd $product_instance_dir"
-cd $product_instance_dir
+echo "GO TO YOUR PRODUCT_INSTANCE_DIR by"
+echo "cd $PRODUCT_INSTANCE_DIR"
+cd $PRODUCT_INSTANCE_DIR
 
 # eof file src/bash/qto/bootstrap-qto.sh

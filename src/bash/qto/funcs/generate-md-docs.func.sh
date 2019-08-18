@@ -6,8 +6,8 @@
 # ---------------------------------------------------------
 doGenerateMdDocs(){
 	doLog "DEBUG START doGenerateMdDocs"
-   test -z "${proj_instance_dir-}" && proj_instance_dir="$product_instance_dir"
-   test -z "${docs_root_dir-}" && docs_root_dir="$proj_instance_dir"
+   test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
+   test -z "${docs_root_dir-}" && docs_root_dir="$PROJ_INSTANCE_DIR"
 
    doExportJsonSectionVars cnf/env/$env_type.env.json '.env.app'
 

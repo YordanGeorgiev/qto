@@ -17,10 +17,11 @@ main(){
    doSetVars
    doCheckReadyToStart
    doRunActions "$args"
-   doExit 0 "# = STOP  MAIN = $run_unit "
+   doExit $exit_code "# = STOP  MAIN = $run_unit "
 }
 
-# v0.6.9 
+
+# v0.6.9
 #------------------------------------------------------------------------------
 # the "reflection" func - identify the the funcs per file
 #------------------------------------------------------------------------------
@@ -40,30 +41,30 @@ get_function_list () {
 
 # v0.6.9 
 #------------------------------------------------------------------------------
-# run all the actions
+# run all the actions specified by the $0 -a <<action-name>> cmd arg
 #------------------------------------------------------------------------------
 doRunActions(){
 
-	cd $product_instance_dir
+	cd $PRODUCT_INSTANCE_DIR
    actions_to_run=''
 
    test -z "${actions+1}" && doPrintUsage && doExit 0
-   test -z "${mix_data_dir:-}" && mix_data_dir=$product_instance_dir/dat/mix
+   test -z "${mix_data_dir:-}" && mix_data_dir=$PRODUCT_INSTANCE_DIR/dat/mix
    daily_backup_dir=$mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
 	while read -d ' ' action ; do 
-		doLog "DEBUG action: \"$action\""
+		# debug echo "action: \"$action\""
 
 		while read -r func_file ; do 
-         # debug doLog "DEBUG func_file: $func_file"
+         # debug echo "func_file: $func_file"
 
 			while read -r function_name ; do 
-            doLog "DEBUG function_name: $function_name"
+            # debug "function_name: $function_name"
 
 				action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
 				test "$action_name" != "$action" && continue
 				
 				test "$action_name" == "$action" && actions_to_run=$(echo -e "$actions_to_run\n$function_name")
-            echo "actions_to_run: $actions_to_run"
+            doLog " INFO actions_to_run: $actions_to_run"
 			done< <(get_function_list "$func_file")
 		done < <(find src/bash/qto/funcs -type f -name '*.sh')
 
@@ -80,7 +81,7 @@ doRunActions(){
 	done < <(echo "$actions")
 
    while read -r action_to_run ; do 
-	   cd $product_instance_dir
+	   cd $PRODUCT_INSTANCE_DIR
 		doLog "INFO start running action :: $action_to_run"
       $action_to_run
       exit_code=$?
@@ -181,7 +182,7 @@ doExportJsonSectionVars(){
      key=$(echo $l|cut -d'=' -f1)
      val=$(echo $l|cut -d'=' -f2)
      eval "$(echo -e 'export '$key=\"\"$val\"\")"
-     echo $key : $val
+     doLog "INFO $key=$val"
    done < <(cat "$json_file"| jq -r "$section"'|keys_unsorted[] as $key|"\($key)=\"\(.[$key])\""')
 }
 
@@ -242,7 +243,7 @@ doExit(){
    exit_code=$1 ; shift
    exit_msg="$*"
 
-   if (( ${exit_code} != 0 )); then
+   if (( ${exit_code:-} != 0 )); then
       exit_msg=" ERROR --- exit_code $exit_code --- exit_msg : $exit_msg"
       >&2 echo "$exit_msg"
       doLog "FATAL STOP FOR $run_unit RUN with: "
@@ -252,7 +253,7 @@ doExit(){
       doLog "INFO  STOP FOR $run_unit RUN: $exit_code $exit_msg"
    fi
 
-   rm -rfvr $tmp_dir #clear the tmpdir
+   rm -rf "$run_unit_bash_dir/tmp" #clear the tmpdir
    cd $call_start_dir
 
    test $exit_code -ne 0 && kill -s TERM "$TOP_PID" && exit $exit_code
@@ -279,8 +280,8 @@ doLog(){
 
    # define default log file none specified in cnf file
    test -z ${log_file:-} && \
-		mkdir -p $product_instance_dir/dat/log/bash && \
-			log_file="$product_instance_dir/dat/log/bash/$run_unit.`date "+%Y%m"`.log"
+		mkdir -p $PRODUCT_INSTANCE_DIR/dat/log/bash && \
+			log_file="$PRODUCT_INSTANCE_DIR/dat/log/bash/$run_unit.`date "+%Y%m"`.log"
    echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$run_unit][@$host_name] [$$] $msg " >> $log_file
 }
 
@@ -345,23 +346,23 @@ clearTheScreen(){
 doSetVars(){
 
    cd $run_unit_bash_dir
-   for i in {1..3} ; do cd .. ; done ; export product_instance_dir=`pwd`;
-   environment_name=$(basename "$product_instance_dir")
-   cd $product_instance_dir
-   source $product_instance_dir/.env
+   for i in {1..3} ; do cd .. ; done ; export PRODUCT_INSTANCE_DIR=`pwd`;
+   environment_name=$(basename "$PRODUCT_INSTANCE_DIR")
+   cd $PRODUCT_INSTANCE_DIR
+   source $PRODUCT_INSTANCE_DIR/.env
    export product_version=$VERSION
    export env_type=$ENV_TYPE
    if [ "$environment_name" == "$run_unit" ]; then
-      product_dir=$product_instance_dir
+      product_dir=$PRODUCT_INSTANCE_DIR
       test -z "$env_type" && export env_type='dev'
    else
       # this could be dev, tst , stg , qas , prd
-      export product_owner=$(echo `basename "$product_instance_dir"`|cut -d'.' -f6)
+      export product_owner=$(echo `basename "$PRODUCT_INSTANCE_DIR"`|cut -d'.' -f6)
       cd .. ; product_dir=`pwd`;
    fi
 
    cd .. ; product_base_dir=`pwd`;
-	doParseCnfEnvVars  #qto-190818000743
+	#doParseCnfEnvVars  #qto-190818000743
 
    ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
@@ -374,7 +375,7 @@ doSetVars(){
    cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
    echo -e "$cmd"
 
-   while read -r func_file ; do source "$func_file" ; done < <(find $product_instance_dir -name "*func.sh")
+   while read -r func_file ; do source "$func_file" ; done < <(find $PRODUCT_INSTANCE_DIR -name "*func.sh")
    clearTheScreen
 
 }
@@ -393,10 +394,10 @@ doParseCnfEnvVars(){
 
    cnf_file=${1:-};shift 1;
 
-   test -z "$cnf_file" && cnf_file="$product_instance_dir/cnf/$run_unit.$env_type.$host_name.cnf"
+   test -z "$cnf_file" && cnf_file="$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type.$host_name.cnf"
 
    cnf_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$cnf_file")
-   product_instance_dir=${cnf_dir%/*}
+   PRODUCT_INSTANCE_DIR=${cnf_dir%/*}
 
    INI_SECTION=MainSection
 
@@ -406,7 +407,7 @@ doParseCnfEnvVars(){
 		-e 's/#.*$//' \
 		-e 's/[[:space:]]*$//' \
 		-e 's/^[[:space:]]*//' \
-		-e "s|%ProductInstanceDir%|${product_instance_dir}|" \
+		-e "s|%ProductInstanceDir%|${PRODUCT_INSTANCE_DIR}|" \
 		-e "s/^\(.*\)=\([^\"']*\)$/export \1=\"\2\"/" \
 		< $cnf_file \
 		| sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
@@ -447,12 +448,12 @@ doParseConfFile(){
 		&& cnf_file="$run_unit_bash_dir/$run_unit.$host_name.cnf"
 	
 	# if we have perl apps they will share the same cnfiguration settings with this one
-	test -f "$product_instance_dir/cnf/$run_unit.$host_name.cnf" \
-		&& cnf_file="$product_instance_dir/cnf/$run_unit.$host_name.cnf"
+	test -f "$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$host_name.cnf" \
+		&& cnf_file="$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$host_name.cnf"
 	
    # if we have perl apps they will share the same cnfiguration settings with this one
-	test -f "$product_instance_dir/cnf/$run_unit.$env_type.$host_name.cnf" \
-		&& cnf_file="$product_instance_dir/cnf/$run_unit.$env_type.$host_name.cnf"
+	test -f "$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type.$host_name.cnf" \
+		&& cnf_file="$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type.$host_name.cnf"
 
 	# yet finally override if passed as argument to this function
 	# if the the ini file is not passed define the default host independant ini file

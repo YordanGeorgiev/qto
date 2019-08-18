@@ -11,10 +11,10 @@ doCreateFullPackage(){
    test -z ${qto_project:-} && qto_project=qto
 	#define default vars
 	test -z ${include_file:-}         && \
-		include_file="$product_instance_dir/met/.$env_type.$run_unit"
+		include_file="$PRODUCT_INSTANCE_DIR/met/.$env_type.$run_unit"
 
 	# relative file path is passed turn it to absolute one 
-	[[ $include_file == /* ]] || include_file=$product_instance_dir/$include_file
+	[[ $include_file == /* ]] || include_file=$PRODUCT_INSTANCE_DIR/$include_file
 
    if [ ! -f "$include_file" ]; then
       doLog "FATAL the deployment file: $include_file does not exist !!!"
@@ -42,8 +42,8 @@ doCreateFullPackage(){
    test $zip_file_name != $run_unit && zip_file_name="$zip_file_name"'--'"$qto_project"
 	zip_file_name="$zip_file_name.$product_version.$tgt_env_type.$timestamp.$host_name.zip"
 	zip_file="$product_dir/$zip_file_name"
-	mkdir -p $product_instance_dir/dat/$run_unit/tmp
-	echo $zip_file>$product_instance_dir/dat/$run_unit/tmp/zip_file
+	mkdir -p $PRODUCT_INSTANCE_DIR/dat/$run_unit/tmp
+	echo $zip_file>$PRODUCT_INSTANCE_DIR/dat/$run_unit/tmp/zip_file
 
 	# zip MM ops
 	# -MM  --must-match
@@ -55,10 +55,10 @@ doCreateFullPackage(){
 	set +x
 	test $ret -gt 0 && (
 		while IFS='' read f ; do (
-			test -d "$product_instance_dir/$f" && continue ; 
-			test -f "$product_instance_dir/$f" && continue ; 
-			test -f "$product_instance_dir/$f" || doLog 'ERROR not a file: "'"$f"'"' ;  
-			test -f "$product_instance_dir/$f" || ret=1 && exit 1
+			test -d "$PRODUCT_INSTANCE_DIR/$f" && continue ; 
+			test -f "$PRODUCT_INSTANCE_DIR/$f" && continue ; 
+			test -f "$PRODUCT_INSTANCE_DIR/$f" || doLog 'ERROR not a file: "'"$f"'"' ;  
+			test -f "$PRODUCT_INSTANCE_DIR/$f" || ret=1 && exit 1
 		); 
 		done < <(cat $include_file | egrep -v "$perl_ignore_file_pattern" | sed '/^#/ d')
 	);
@@ -69,7 +69,7 @@ doCreateFullPackage(){
       return 1
    fi
  
-   test -z ${mix_data_dir:-} && mix_data_dir=$product_instance_dir/dat/mix
+   test -z ${mix_data_dir:-} && mix_data_dir=$PRODUCT_INSTANCE_DIR/dat/mix
    # backup the project data dir if not running on the product itself ...
    test -d $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d") || doIncreaseDate
    # and zip the project data dir

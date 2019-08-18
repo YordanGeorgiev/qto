@@ -7,7 +7,7 @@
 # restores a tmux session
 # ---------------------------------------------------------
 doRestoreTmuxSession(){
-   source "$product_instance_dir/src/bash/qto/funcs/sys/tmux/tmux-common.sh"
+   source "$PRODUCT_INSTANCE_DIR/src/bash/qto/funcs/sys/tmux/tmux-common.sh"
    doCheckTmuxIsInstalled
    set +e
    local count=0
