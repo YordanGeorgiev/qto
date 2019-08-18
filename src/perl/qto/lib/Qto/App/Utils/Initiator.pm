@@ -133,13 +133,13 @@ package Qto::App::Utils::Initiator ;
 		my $self = shift;
 		my $msg  = ();
 		my $levels_up = 5 + $rel_levels ; 
-		my $product_instance_dir = '' ; 
+		my $PRODUCT_INSTANCE_DIR = '' ; 
 		my @DirParts = @{doGetDirParts ( $levels_up )} ; 
 		
-		$product_instance_dir 					= join( '/' , @DirParts );
-		$ProductInstanceDir 						= $product_instance_dir ; 
-		$product_instance_dir 					= $self->untaint ( $product_instance_dir); 
-		$ProductInstanceDir 						= $self->untaint ( $product_instance_dir); 
+		$PRODUCT_INSTANCE_DIR 					= join( '/' , @DirParts );
+		$ProductInstanceDir 						= $PRODUCT_INSTANCE_DIR ; 
+		$PRODUCT_INSTANCE_DIR 					= $self->untaint ( $PRODUCT_INSTANCE_DIR); 
+		$ProductInstanceDir 						= $self->untaint ( $PRODUCT_INSTANCE_DIR); 
 		$self->{'ProductInstanceDir'} 	   = $ProductInstanceDir ; 
 		$appConfig->{'ProductInstanceDir'} 	= $ProductInstanceDir ; 
 		$self->{'AppConfig'} 				   = $appConfig; 

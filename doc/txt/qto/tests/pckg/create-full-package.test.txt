@@ -6,7 +6,7 @@
 	functionality
 	
 	the create-full-package functionality is tested first agains the default
-	<<product_instance_dir>>/.<<current_environment>>.<<product_name>> relative
+	<<PRODUCT_INSTANCE_DIR>>/.<<current_environment>>.<<product_name>> relative
 	 file path list file
 
 	the create-full-package functionality is tested than against the 

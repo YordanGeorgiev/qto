@@ -11,14 +11,14 @@ doRemovePackage(){
 	
    #remove the dirs as well
    for dir in `cat "$include_file"`; do (
-       dir="$product_instance_dir/$dir"
+       dir="$PRODUCT_INSTANCE_DIR/$dir"
        test -d "$dir" && cmd="rm -fRv $dir" && doRunCmdAndLog "$cmd"
    );
    done
 
  	cmd="rm -fv $include_file" && \
  	doRunCmdAndLog "$cmd"
-	echo "rm -fvr $product_instance_dir">>"$product_dir/remove-""$environment_name".sh
+	echo "rm -fvr $PRODUCT_INSTANCE_DIR">>"$product_dir/remove-""$environment_name".sh
 	echo "rm -fv $product_dir/remove-""$environment_name".sh>>"$product_dir/remove-""$environment_name".sh
 	nohup bash "$product_dir/remove-""$environment_name".sh &
 }

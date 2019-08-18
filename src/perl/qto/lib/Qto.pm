@@ -82,8 +82,8 @@ sub doLoadAppConfig {
    $appConfig       = $objConfigurator->getConfHolder()  ;
    $objLogger        = 'Qto::App::Utils::Logger'->new(\$appConfig);
 
-	$appConfig->{'proj_instance_dir'} = $appConfig->{'ProductInstanceDir'} 
-      unless ( exists $appConfig->{'proj_instance_dir'} );
+	$appConfig->{'PROJ_INSTANCE_DIR'} = $appConfig->{'ProductInstanceDir'} 
+      unless ( exists $appConfig->{'PROJ_INSTANCE_DIR'} );
    my $currentShortHash = `git rev-parse --short HEAD` ; chomp($currentShortHash);
    $appConfig->{ 'GitShortHash' } = $currentShortHash || "" ; 
 

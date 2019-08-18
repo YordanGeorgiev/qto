@@ -118,7 +118,7 @@ Fetch the source from git hub as follows:
     
 
 ### 2.3. Run the boot-strap script
-The bootstrap script will interpolate change the git deployment dir to a "product_instance_dir" ( your instance of the qto, having the same version as this one, but running on a different host with different owner - your )
+The bootstrap script will interpolate change the git deployment dir to a "PRODUCT_INSTANCE_DIR" ( your instance of the qto, having the same version as this one, but running on a different host with different owner - your )
 
     # defiine the latest and greates product_version
     export product_version=$(cd qto;git tag|sort -nr| head -n 1;cd ..)
@@ -267,7 +267,7 @@ Fetch the source from git hub as follows:
     
 
 #### 3.2.8. run the boot-strap script
-The bootstrap script will interpolate change the git deployment dir to a "product_instance_dir" ( your instance of the qto, having the same version as this one, but running on a different host with different owner - your )
+The bootstrap script will interpolate change the git deployment dir to a "PRODUCT_INSTANCE_DIR" ( your instance of the qto, having the same version as this one, but running on a different host with different owner - your )
 
     # defiine the latest and greates product_version
     export product_version=$(cd qto;git tag|sort -nr| head -n 1;cd ..)

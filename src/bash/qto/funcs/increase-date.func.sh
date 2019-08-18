@@ -3,17 +3,14 @@
 # tommorrow is --date="+1 day"
 #
 # ---------------------------------------------------------
-# v1.1.4
 # cat doc/txt/qto/funcs/increase-date.func.txt
 # ---------------------------------------------------------
 doIncreaseDate(){
-	doLog "DEBUG START doIncreaseDate"
-   test -z ${mix_data_dir+x} && export exit_code=1 \
-      && doExit "define a project by doParseIniEnvVars <<path-to-proj-conf-file>> !!!" && exit 1
-
-   # if a relative path is passed add to the product version dir
-   [[ $mix_data_dir == /* ]] || \
-      export mix_data_dir="$product_instance_dir"/"$mix_data_dir"
+   
+   test -z "${PROJ_INSTANCE_DIR:-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
+   source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
+   doExportJsonSectionVars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
+   mix_data_dir=$PROJ_INSTANCE_DIR/dat/mix
 
    # find the latest project_daily_txt_dir
    latest_proj_daily_dir=""
@@ -57,7 +54,7 @@ doIncreaseDate(){
       $daily_data_dir 
    already exists !!!
       "
-   test -d "$daily_data_dir" && export exit_code=1 && doExit "$error_msg"
+   test -d "$daily_data_dir" && doExit 1 "$error_msg"
 
    todays_tmp_dir=$tmp_dir/$(date "+%Y-%m-%d" -d "$tgt_date")    # becauses of vboxsf !!!
    cmd="cp -vr $latest_proj_daily_dir $todays_tmp_dir/"
@@ -118,6 +115,5 @@ doIncreaseDate(){
 
 	doLog "DEBUG STOP  doIncreaseDate"
 }
-# eof func doIncreaseDate
 
 # eof file: src/bash/qto/funcs/increase-date.func.sh

@@ -7,7 +7,7 @@
 doRunIntegrationTests(){
 
 	doLog "DEBUG START doRunIntegrationTests @run-integration-tests.func.sh"
-   cd $product_instance_dir 
+   cd $PRODUCT_INSTANCE_DIR 
 
 	doLog "INFO re-start the qto app-layer just for sure"
    test -z "${qto_project:-}" && \

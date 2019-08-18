@@ -9,25 +9,25 @@ doMojoDaemonStart(){
 
 	doLog "DEBUG START doMojoDaemonStart"
 
-   test -z ${qto_project:-} && \
-      source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh" && \
-      doParseCnfEnvVars "$product_instance_dir/cnf/$run_unit.$env_type.*.cnf"
+   doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.app'
 
    doMojoDaemonStop 0
    
    # to prevent the 'failed: could not create socket: Too many open files at sys' error
    ulimit -n 4096
    
-   export MOJO_MODE="$env_type"
-   test -z "$MOJO_MODE" && export MOJO_MODE='dev'
+   export MOJO_MODE='dev'
+   test $env_type == "prd" && export MOJO_MODE='production'
+
    test -z "${mojo_daemon_port:-}" && export mojo_daemon_port='http://*:6001'
 	# Action !!!
-   cmd="$product_instance_dir/src/perl/qto/script/qto daemon -l https://[::]:$mojo_daemon_port"
+   cmd="$PRODUCT_INSTANCE_DIR/src/perl/qto/script/qto daemon -l https://[::]:$mojo_daemon_port"
    doLog "INFO running: $cmd"
    bash -c "$cmd" &
 	doLog "DEBUG check with netstat "
    netstat -tulpn | grep qto
  
+   # chk:ysg needed !?
    # if cmd arg -b is passed to the qto.sh, should not exit like ever, never because of docker
    test $run_in_backround -eq 1 && while true; do sleep 1000; done;
 

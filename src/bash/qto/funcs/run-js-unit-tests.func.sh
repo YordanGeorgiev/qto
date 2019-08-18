@@ -8,7 +8,7 @@ doRunJsUnitTests(){
 	# which chai 2>/dev/null || \
 	 #  { echo >&2 "The chai is missing - \"sudo npm install -g --save-dev chai \" ! Aborting ..."; exit 1; }
 
-	js_unit_tests_dir="$product_instance_dir/src/js/node/js-unit-tests"
+	js_unit_tests_dir="$PRODUCT_INSTANCE_DIR/src/js/node/js-unit-tests"
 	cd $js_unit_tests_dir
 	while read -r d ; do
 		echo -e "cd to dir: $d"
