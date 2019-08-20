@@ -19,7 +19,7 @@ package Qto::App::IO::Out::WtrExporterXls ;
 
    our $module_trace      = 1 ; 
    our $objModel          = {} ; 
-   our $appConfig         = {} ; 
+   our $config         = {} ; 
    our $rdbms_type        = 'postgres' ; 
 
 
@@ -36,24 +36,24 @@ package Qto::App::IO::Out::WtrExporterXls ;
       my $xls_file         = '' ; 
 
 
-      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel ) ;
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel ) ;
       my $objRdrDb = $objRdrDbsFcry->doSpawn ( $rdbms_type ) ; 
       
-      ( $ret , $msg , $msr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;
+      ( $ret , $msg , $msr2 ) = $objModel->doGetTableMeta ( $config , $db , $table ) ;
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
       ( $ret , $msg , $hsr2)  = $objRdrDb->doSelectRows( $db , $table ) ; 
       return ( $ret , $msg ) unless $ret == 200 ;
 
-      my $objWtrXls    = 'Qto::App::IO::Out::WtrXls'->new( \$appConfig ) ;
+      my $objWtrXls    = 'Qto::App::IO::Out::WtrXls'->new( \$config ) ;
       return  $objWtrXls->doBuildXlsFromHashRef ( \$objModel , $table , $hsr2 , $msr2) ;
    } 
 
 
 	sub new {
 		my $invocant   = shift ;    
-		$appConfig     = ${ shift @_ } || croak 'missing appConfig !!!' ; 
+		$config     = ${ shift @_ } || croak 'missing config !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'missing objModel !!!' ; 
 		$rdbms_type    = shift         || $rdbms_type ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
@@ -67,7 +67,7 @@ package Qto::App::IO::Out::WtrExporterXls ;
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
       return $self ; 
 	}	

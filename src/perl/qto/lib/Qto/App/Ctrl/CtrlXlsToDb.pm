@@ -2,7 +2,7 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
 
 	use strict; use warnings; use utf8 ; 
 
-	my $VERSION = '1.0.0';    
+	my $VERSION = '1.0.1';    
 
 	require Exporter;
 	our @ISA = qw(Exporter Qto::App::Utils::OO::SetGetable Qto::App::Utils::OO::AutoLoadable) ;
@@ -29,32 +29,16 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
 	our $ProductInstanceDir 			= ''; 
 	our $ProductInstanceEnv  = '' ; 
 	our $ProductName 					   = '' ; 
-	our $ProductType 					   = '' ; 
+	our $EnvType 					   = '' ; 
 	our $ProductVersion 				   = ''; 
 	our $ProductOwner 				   = '' ; 
 	our $HostName 						   = '' ; 
 	our $ConfFile 						   = '' ; 
-   our $appConfig                   = {} ; 
+   our $config                   = {} ; 
    our $rdbms_type                  = {} ; 
 	our $objLogger						   = {} ; 
    our $objRdrDirs                  = {} ;
 	our $objModel                    = {} ; 
-
-
-=head1 SYNOPSIS
-=cut 
-
-=head1 EXPORT
-
-	A list of functions that can be exported.  You can delete this section
-	if you don't export anything, such as for a purely object-oriented module.
-=cut 
-
-=head1 SUBROUTINES/METHODS
-
-	# -----------------------------------------------------------------------------
-	START SUBS 
-=cut
 
 
    # 
@@ -89,8 +73,7 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
       } 
       $xls_file               = $objModel->get( 'io.xls-file' ) ; 
      
-      my $objRdrXls           = 'Qto::App::IO::In::RdrXls'->new ( 
-            \$qto::appConfig , \@tables ) ; 
+      my $objRdrXls           = 'Qto::App::IO::In::RdrXls'->new ( \$config , \@tables ) ; 
       
       # read the xls into hash ref of hash ref
       ( $ret , $msg  ) = 
@@ -100,8 +83,7 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
 
       $msg                 = 'unknown error while inserting db tables !!!' ; 
 
-      my $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new( 
-            \$qto::appConfig  , \$objModel , \$self , $rdbms_type ) ; 
+      my $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new( \$config  , \$objModel , \$self , $rdbms_type ) ; 
       my $objWtrDb 		   = $objWtrDbsFcry->doSpawn ( "$rdbms_type" , \@tables );
 
       p($hsr3) if $module_trace == 1 ; 
@@ -124,7 +106,7 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
             $objLogger->doLogInfoMsg ( $msg ) ; 
             my $hsr2 = $hsr3->{ "$table" } ; 
             my $objCnrXlsHsr3ToDbHsr3 = 
-                  'Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$qto::appConfig , $rdbms_type ) ; 
+                  'Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$config , $rdbms_type ) ; 
             $hsr2 = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2 , $table ) ; 
             $objModel->set('hsr2' , $hsr2 );
             $objModel->set('postgres_db_name',$ENV{'postgres_db_name'}) ;
@@ -138,42 +120,24 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
       return ( $ret , $msg ) ; 
    } 
 
-	
-
-
-=head1 SUBROUTINES/METHODS
-=cut
-
-
-=head2 new
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
-=cut 
 
 	sub new {
-		my $class      = shift;    # Class name is in the first parameter
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		my $class      = shift;    
+		$config        = ${ shift @_ } || croak 'no config passed !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
-		my $self       = {};        # Anonymous hash reference holds instance attributes
-		bless( $self, $class );    # Say: $self is a $class
-      $self->doInitialize() ; 
+		my $self       = {}; bless( $self, $class );
+      $self->doInit() ; 
 		return $self;
 	}  
 
 
-   sub doInitialize {
+   sub doInit {
       my $self = shift ; 
-	   $objLogger 	= 'Qto::App::Utils::Logger'->new( \$qto::appConfig ) ;
+	   $objLogger 	= 'Qto::App::Utils::Logger'->new( \$config ) ;
       $rdbms_type = $ENV{ 'rdbms_type' } || $objModel->get( 'ctrl.rdbms-type' ) || 'postgres' ; 
-      $objRdrDirs = 'Qto::App::IO::In::RdrDirs'->new ( \$qto::appConfig , \$objModel ); 
+      $objRdrDirs = 'Qto::App::IO::In::RdrDirs'->new (); 
 	}	
 
-=head2
-	# -----------------------------------------------------------------------------
-	# overrided autoloader prints - a run-time error - perldoc AutoLoader
-	# -----------------------------------------------------------------------------
-=cut
 
 	
 

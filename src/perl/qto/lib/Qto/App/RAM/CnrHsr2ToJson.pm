@@ -29,7 +29,7 @@ package Qto::App::RAM::CnrHsr2ToJson ;
    binmode(STDERR, ':utf8');
 
    our $module_trace             = 0 ; 
-	our $appConfig						= {} ; 
+	our $config						= {} ; 
 	our $HostName 						= '' ; 
 	our $objLogger						= {} ; 
 	our $objController				= {} ; 
@@ -44,7 +44,7 @@ package Qto::App::RAM::CnrHsr2ToJson ;
 
       use Qto::App::RAM::CnrHsr2ToJson ; 
 		my $objCnrHsr2ToJson = 
-			'Qto::App::RAM::CnrHsr2ToJson'->new ( \$appConfig ) ; 
+			'Qto::App::RAM::CnrHsr2ToJson'->new ( \$config ) ; 
 =cut 
 
 =head1 EXPORT
@@ -89,7 +89,7 @@ package Qto::App::RAM::CnrHsr2ToJson ;
 	sub new {
 
 		my $invocant 			= shift ;    
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 	   $objController       = shift ; 
       $term                = shift || 'daily' ; 
 	
@@ -112,10 +112,10 @@ package Qto::App::RAM::CnrHsr2ToJson ;
       my $self          = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
        );
 
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
       
       $hsrStatus = {
            'eval'    => '01-eval'      # evaluate whether or not to do it

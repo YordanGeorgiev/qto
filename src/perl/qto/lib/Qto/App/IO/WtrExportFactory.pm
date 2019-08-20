@@ -8,7 +8,7 @@ package Qto::App::IO::WtrExportFactory ;
    use Qto::App::IO::Out::WtrExporterXls ; 
    use Qto::App::IO::Out::WtrExporterMd ; 
 
-	our $appConfig 		= {} ; 
+	our $config 		= {} ; 
 	our $objModel        = {} ; 
    our $export_type     = 'xls' ;  # the default one
 
@@ -43,13 +43,13 @@ package Qto::App::IO::WtrExportFactory ;
 
 		require $package_file;
 
-		return $objWtrExporter->new( \$appConfig , \$objModel , @args);
+		return $objWtrExporter->new( \$config , \$objModel , @args);
 	}
 	
 
 	sub new {
 		my $invocant 			= shift ;    
-		$appConfig           = ${ shift @_ } || croak 'missing appConfig !!!' ; 
+		$config           = ${ shift @_ } || croak 'missing config !!!' ; 
 		$objModel            = ${ shift @_ } || croak 'missing objModel !!!' ; 
       $export_type         = shift || $export_type ; 
 		my $class            = ref ( $invocant ) || $invocant ; 
@@ -63,7 +63,7 @@ package Qto::App::IO::WtrExportFactory ;
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
 
       return $self ; 

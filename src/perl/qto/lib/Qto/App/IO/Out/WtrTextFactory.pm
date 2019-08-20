@@ -4,7 +4,7 @@ package Qto::App::IO::Out::WtrTextFactory ;
 	
 	use Data::Printer ; 
 
-	our $appConfig 		= {} ; 
+	our $config 		= {} ; 
 	our $term			   = $ENV{'period'} || 'daily' ; 
 	our $table			   = $ENV{'tables'} || 'daily_issues' ; 
 	our $objItem			= {} ; 
@@ -32,7 +32,7 @@ package Qto::App::IO::Out::WtrTextFactory ;
 
 		require $package_file;
 
-		return $objWtrText->new( \$appConfig , $table , @args);
+		return $objWtrText->new( \$config , $table , @args);
 
 	}
 	# eof sub doInit
@@ -45,7 +45,7 @@ package Qto::App::IO::Out::WtrTextFactory ;
 	sub new {
 
 		my $invocant 			= shift ;    
-		$appConfig           = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config           = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
@@ -65,10 +65,10 @@ package Qto::App::IO::Out::WtrTextFactory ;
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
 
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
 
 
       return $self ; 

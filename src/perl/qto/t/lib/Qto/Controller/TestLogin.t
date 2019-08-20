@@ -13,8 +13,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $emsg       = '' ; # the expected msg on the ui
    my $t          = Test::Mojo->new('Qto');
    $t->ua->max_redirects(10);
-   my $appConfig  = $t->app->get('AppConfig') ; 
-   my $db_name    = $appConfig->{ 'postgres_db_name' } ; 
+   my $config  = $t->app->get('AppConfig') ; 
+   my $db_name    = $config->{ 'postgres_db_name' } ; 
    my $url        = '/' . $db_name . '/login' ; # the login url to test for 
    my $tx         = {}  ; # the transaction object 
 

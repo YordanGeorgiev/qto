@@ -25,7 +25,7 @@ package Qto::App::IO::In::CnrEncrypter ;
    use parent 'Qto::App::Utils::OO::AutoLoadable' ;
 
    our $objModel     = {} ; 
-   our $appConfig    = {} ; 
+   our $config    = {} ; 
 
 
 

@@ -15,14 +15,14 @@ my $ProductBaseDir 			= $objInitiator->get('ProductBaseDir') ;
 my $ProductDir 			   = $objInitiator->get('ProductDir') ;
 my $ProductInstanceDir 		= $objInitiator->get('ProductInstanceDir');
 my $ProductInstanceEnv 	   = $objInitiator->get('ProductInstanceEnv');
-my $ProductName 				= $objInitiator->doResolveMyProductName();
-my $ProductVersion 			= $objInitiator->doResolveMyProductVersion();
-my $ProductType 				= $objInitiator->doResolveMyProductType();
-my $ProductOwner 				= $objInitiator->doResolveMyProductOwner();
-my $ConfFile 					= $objInitiator->doResolveMyConfFile();
-my $HostName					= $objInitiator->doResolveMyHostName();
-my $appConfig					= {} ;
-$appConfig						= $objInitiator->get ('AppConfig'); 
+my $ProductName 				= $objInitiator->doResolveProductName();
+my $ProductVersion 			= $objInitiator->doResolveProductVersion();
+my $EnvType 				   = $objInitiator->doResolveEnvType();
+my $ProductOwner 				= $objInitiator->doResolveProductOwner();
+my $ConfFile 					= $objInitiator->doResolveIniConfFile();
+my $HostName					= $objInitiator->doResolveHostName();
+my $config					= {} ;
+$config						= $objInitiator->get ('AppConfig'); 
 
 use Carp ; 
 my $m = 'the qto calling shell needs always a set of pre-defined env vars,
@@ -32,7 +32,7 @@ for example:
 doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/qto/ysg-issues.dev.host-name.cnf'  ; 
 croak $m unless ( defined ( $ENV{ "qto_project" } )) ; 
 
-# p($appConfig) ; 
+# p($config) ; 
 # sleep 6 ; 
 # todo: remove hardcoding ...
 my $product_base_dir       = $ENV { 'PRODUCT_INSTANCE_DIR' } ; 
@@ -55,7 +55,7 @@ ok ( $ProductDir 				eq $product_dir , $msg ) ;
 
 $tn = 'test-03' ; 
 # 3. # if not set , set in in the shell by:
-# export PRODUCT_INSTANCE_DIR=/opt/csitea/qto/qto.0.2.8.dev.ysg
+# export PRODUCT_INSTANCE_DIR=`pwd`
 $msg                       = "$tn ::: " .'The ProductInstanceDir is the next level' ; 
 ok ( $ProductInstanceDir 	eq $ENV{'PRODUCT_INSTANCE_DIR'} , $msg ) ; 
 
@@ -83,7 +83,7 @@ $ProdTypeToCompare         =~ s/$ProductName\.//g ;
 $ProdTypeToCompare         =~ s/$ProductVersion\.//g ; 
 $ProdTypeToCompare         =~ s/([a-z]{1,3})\.(.*)/$1/g ; 
 $msg                       = "$tn ::: " . 'Should be one of the following: dev,tst,qas,prd' ; 
-ok ( $ProductType 			eq $ProdTypeToCompare , $msg ) ; 
+ok ( $EnvType 			eq $ProdTypeToCompare , $msg ) ; 
 
 
 $tn = 'test-08' ; 
@@ -97,53 +97,53 @@ ok ( $HostName 				eq "$cmd_out" , $msg ) ;
 
 
 $tn = 'test-10' ; 
-my $CnfFileToCompare       = "$ProductInstanceDir/cnf/qto." . $ProductType . '.' . $cmd_out . '.cnf' ; 
+my $CnfFileToCompare       = "$ProductInstanceDir/cnf/qto." . $EnvType . '.' . $cmd_out . '.cnf' ; 
 $msg                       = "$tn ::: " . 'The file naming convention for the configuration file: ' . "\n" . $CnfFileToCompare ; 
 ok ( $ConfFile					eq $CnfFileToCompare , $msg ) ; 
 
 
 $tn = 'test-11' ; 
-$msg                       = "$tn ::: " . 'The value of the ProductBaseDir from the appConfig ' ; 
-ok ( $ProductBaseDir 		eq $appConfig->{'ProductBaseDir'} , $msg ) ; 
+$msg                       = "$tn ::: " . 'The value of the ProductBaseDir from the config ' ; 
+ok ( $ProductBaseDir 		eq $config->{'ProductBaseDir'} , $msg ) ; 
 
 
 $tn = 'test-12' ; 
-$msg                       = "$tn ::: " . 'The value of the ProductDir from the appConfig ' ; 
-ok ( $ProductDir 				eq $appConfig->{'ProductDir'} , $msg ) ; 
+$msg                       = "$tn ::: " . 'The value of the ProductDir from the config ' ; 
+ok ( $ProductDir 				eq $config->{'ProductDir'} , $msg ) ; 
 
 
 $tn = 'test-13' ; 
-$msg                       = "$tn ::: " . 'The value of the ProductDir from the appConfig ' ; 
-ok ( $ProductInstanceDir 	eq $appConfig->{'ProductInstanceDir'} , $msg ) ; 
+$msg                       = "$tn ::: " . 'The value of the ProductDir from the config ' ; 
+ok ( $ProductInstanceDir 	eq $config->{'ProductInstanceDir'} , $msg ) ; 
 
 
 $tn = 'test-14' ; 
-$msg                       = "$tn ::: " . 'The value of the ProductVersion from the appConfig ' ; 
-ok ( $ProductVersion 		eq $appConfig->{'ProductVersion' } , $msg ); 
+$msg                       = "$tn ::: " . 'The value of the ProductVersion from the config ' ; 
+ok ( $ProductVersion 		eq $config->{'ProductVersion' } , $msg ); 
 
 
 $tn = 'test-15' ; 
 $msg                       = "$tn ::: " . 'The value of the ProductInstanceEnv' ; 
-ok ( $ProductInstanceEnv eq $appConfig->{'ProductInstanceEnv'} , $msg ); 
+ok ( $ProductInstanceEnv eq $config->{'ProductInstanceEnv'} , $msg ); 
 
 $tn = 'test-16' ; 
-$msg                       = "$tn ::: " . 'The value of the ProductType from the appConfig' ; 
-ok ( $ProductType 			eq $appConfig->{'ProductType'} , $msg ) ;
+$msg                       = "$tn ::: " . 'The value of the EnvType from the config' ; 
+ok ( $EnvType 			eq $config->{'EnvType'} , $msg ) ;
 
 
 $tn = 'test-17' ; 
-$msg                       = "$tn ::: " . 'The value of the ProductOwner from the appConfig' ; 
-ok ( $ProductOwner 			eq $appConfig->{'ProductOwner'} , $msg ) ;
+$msg                       = "$tn ::: " . 'The value of the ProductOwner from the config' ; 
+ok ( $ProductOwner 			eq $config->{'ProductOwner'} , $msg ) ;
 
 
 $tn = 'test-18' ; 
-$msg                       = "$tn ::: " . 'The value of the HostName from the appConfig' ; 
-ok ( $HostName 				eq $appConfig->{'HostName'} , $msg) ;
+$msg                       = "$tn ::: " . 'The value of the HostName from the config' ; 
+ok ( $HostName 				eq $config->{'HostName'} , $msg) ;
 
 
 $tn = 'test-19' ; 
-$msg                       = "$tn ::: " . 'The value of the ConfFile from the appConfig' ; 
-ok ( $ConfFile 				eq $appConfig->{'ConfFile'} , $msg ) ;
+$msg                       = "$tn ::: " . 'The value of the ConfFile from the config' ; 
+ok ( $ConfFile 				eq $config->{'ConfFile'} , $msg ) ;
 
 done_testing(); 
 

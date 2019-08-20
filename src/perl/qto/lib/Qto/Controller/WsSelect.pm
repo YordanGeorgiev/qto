@@ -21,7 +21,7 @@ use Time::HiRes qw(gettimeofday);
 
 
 my $clients = {};
-our $appConfig = {};
+our $config = {};
 our $rdbms_type     = 'postgres';
 
 sub doWsSelectTables {
@@ -33,18 +33,18 @@ sub doWsSelectTables {
 		my ($self, $msg) = @_;
       my $db = $msg ; 
       $db =~ s/open //g; 
-      my $appConfig = $self->app->get('AppConfig');
-      $db = toEnvName ( $db , $appConfig );
+      my $config = $self->app->get('AppConfig');
+      $db = toEnvName ( $db , $config );
       $self->tx->max_websocket_size(16777216) if $self->tx->is_websocket;
       
-      my $objModel   = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
+      my $objModel   = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
+#      # todo:ysg 
 #      #return unless ( $self->SUPER::isAuthenticated($db) == 1 );
 #      #$self->SUPER::doReloadProjDbMeta( $db , 'meta_columns' ) ;
-#      # todo:ysg 
 #
       my $ret        = 0;
       my $hsr        = {};
-      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
       my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
       ($ret, $msg, $hsr) = $objRdrDb->doSelectTablesList(\$objModel);
  

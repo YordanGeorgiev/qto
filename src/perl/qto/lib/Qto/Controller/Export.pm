@@ -18,7 +18,7 @@ use Qto::App::IO::WtrExportFactory ;
 use Qto::App::Utils::Timer ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
-our $appConfig      = {};
+our $config      = {};
 our $objLogger      = {} ;
 
 
@@ -41,16 +41,16 @@ sub doExportItems {
    my $cnt              = '' ; 
    my $dat              = '' ; 
 
-   $appConfig		 		= $self->app->get('AppConfig');
-   $db                  = toEnvName ( $db , $appConfig) ;
+   $config		 		= $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
  
    my $as               = 'xls' ; # the default form of the Export control 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
 
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $table ) ;
-   my $objCnrUrlPrms    = 'Qto::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $table ) ;
+   my $objCnrUrlPrms    = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
 
    my $pg_size = $self->req->query_params->param('pg-size') || 100000 ; 
    $objModel->set('select.web-action.pg-size' , $pg_size );  
@@ -58,7 +58,7 @@ sub doExportItems {
    return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
       unless $objCnrUrlPrms->doValidateAndSetHSelect();
 
-   my $objExportFactory = 'Qto::App::IO::WtrExportFactory'->new(\$appConfig, \$objModel , $as );
+   my $objExportFactory = 'Qto::App::IO::WtrExportFactory'->new(\$config, \$objModel , $as );
    my $objExporter      = $objExportFactory->doSpawn( $as );
    $objExporter->doExport( $db , $table ) ; 
    ($ret , $msg , $file_to_export ) = $objExporter->doExport( $db , $table ) ;

@@ -1,4 +1,17 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+src/bash/qto/qto.sh
+cnf/env
+cnf/env/dev.env.json
+cnf/env/tst.env.json
+cnf/env/prd.env.json
+.env
+src/bash/qto/test-qto.sh
+src/bash/qto/funcs/generate-md-docs.func.sh
+src/docker/Dockerfile.deploy-qto.0.6.9
+src/docker/Dockerfile.deploy-qto-db-host.0.6.9
+src/docker/Dockerfile.deploy-qto-app-host.0.6.9
+src/bash/qto/funcs/build-qto-docker-image.func.sh
+src/bash/qto/bootstrap-qto-docker.sh
 # start HCreate
 src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
@@ -40,23 +53,18 @@ src/perl/qto/templates/pages/view-doc/components/snackbar.html.ep
 src/perl/qto/templates/pages/view-doc/components/view-doc-items-list.xt.html.ep
 src/perl/qto/templates/pages/view-doc/components/right-click-menu.xt.html.ep
 src/perl/qto/templates/pages/view-doc/components/app-template.xt.html.ep
-src/bash/qto/funcs/generate-md-docs.func.sh
 doc/txt/qto/funcs/generate-md-docs.func.txt
 # -- start docker deployment
-src/bash/qto/funcs/build-qto-docker-image.func.sh
 src/bash/qto/funcs/remove-docker-images.func.sh
 src/bash/qto/funcs/remove-docker-containers.func.sh
-src/docker/Dockerfile.deploy-qto.0.6.8
 src/bash/qto/funcs/run-container.func.sh
 src/bash/qto/funcs/mojo-morbo-start.func.sh
 src/bash/qto/funcs/mojo-daemon-start.func.sh
 src/bash/qto/funcs/mojo-daemon-stop.func.sh
 src/bash/qto/install/docker/install-test.sh
 src/bash/qto/install/docker/docker-entry-point.sh
-src/bash/qto/bootstrap-qto-docker.sh
 src/bash/qto/bootstrap-qto-host.sh
 src/docker/Dockerfile.deploy-quick-test
-src/bash/qto/install/docker/install-admin-utils.sh
 src/bash/qto/install/docker/install-postgres.sh
 src/bash/qto/install/docker/provision-os-users.sh
 src/bash/qto/install/docker/install-perl-modules.sh
@@ -238,7 +246,6 @@ src/perl/qto/t/lib/Qto/App/Utils/OO/AutoLoadableChild.pm
 src/perl/qto/t/lib/Qto/App/Utils/OO/TestSetGetable.t
 src/perl/qto/t/lib/Qto/App/Utils/OO/TestAutoLoadable.t
 src/perl/qto/t/lib/Qto/App/Utils/TestInitiator.t
-src/perl/qto/t/lib/Qto/App/Utils/TestConfigurator.t
 src/perl/qto/t/lib/Qto/App/Utils/TestDispatcher.t
 src/perl/qto/t/lib/Qto/App/Utils/TestLogger.t
 src/perl/qto/t/lib/Qto/App/Utils/TestModel.t
@@ -264,8 +271,6 @@ cnf/bash/.profile_opts.host-name
 # ---
 src/bash/lib/.bash_funcs.host-name
 # --
-src/bash/qto/qto.sh
-src/bash/qto/test-qto.sh
 src/bash/qto/tests/all-qto-tests.lst
 src/bash/qto/tests/rem-qto-actions.lst
 # ---
@@ -338,7 +343,6 @@ src/perl/qto/lib/Qto/App/Utils/OO/SetGetable.pm
 src/perl/qto/lib/Qto/App/Utils/OO/AutoLoadable.pm
 src/perl/qto/lib/Qto/App/Utils/Logger.pm
 src/perl/qto/lib/Qto/App/Utils/Timer.pm
-src/perl/qto/lib/Qto/App/Utils/Configurator.pm
 # ---
 # ---
 src/bash/qto/tests/mojo-hypnotoad-start.test.sh
@@ -346,7 +350,6 @@ src/bash/qto/helps/mojo-hypnotoad-start.help.sh
 src/bash/qto/funcs/mojo-hypnotoad-start.func.sh
 doc/txt/qto/tests/mojo-hypnotoad-start.test.txt
 doc/txt/qto/helps/mojo-hypnotoad-start.help.txt
-doc/txt/qto/funcs/mojo-hypnotoad-start.func.txt
 # ---
 src/bash/qto/tests/mojo-hypnotoad-stop.test.sh
 src/bash/qto/helps/mojo-hypnotoad-stop.help.sh
@@ -529,21 +532,6 @@ src/bash/qto/tests/pckg/create-full-package.test.sh
 doc/txt/qto/tests/pckg/create-full-package.test.txt
 doc/txt/qto/helps/pckg/create-full-package.help.txt
 doc/txt/qto/funcs/pckg/create-full-package.func.txt
-#---
-src/bash/qto/helps/pckg/create-full-7z-package.help.sh
-src/bash/qto/funcs/pckg/create-full-7z-package.func.sh
-src/bash/qto/tests/pckg/create-full-7z-package.test.sh
-doc/txt/qto/tests/pckg/create-full-7z-package.test.txt
-doc/txt/qto/helps/pckg/create-full-7z-package.help.txt
-doc/txt/qto/funcs/pckg/create-full-7z-package.func.txt
-#---
-doc/txt/qto/funcs/pckg/create-relative-7z-package.func.txt
-doc/txt/qto/helps/pckg/create-relative-7z-package.help.txt
-doc/txt/qto/tests/pckg/create-relative-7z-package.test.txt
-src/bash/qto/funcs/pckg/create-relative-7z-package.func.sh
-src/bash/qto/helps/pckg/create-relative-7z-package.help.sh
-src/bash/qto/tests/pckg/create-relative-7z-package.test.sh
-#---
 #---
 src/bash/qto/funcs/sys/tmux/tmux-common.sh
 src/bash/qto/funcs/sys/tmux/restore-tmux-session.func.sh
@@ -824,7 +812,6 @@ src/perl/qto/lib/auto/Qto/App/RAM/CnrHsr2ToTxt/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/RAM/CnrJsonToHsr2/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/RAM/CnrTxtToHtml/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/UI/Controls/WtrListLabels/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/Utils/Configurator/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Utils/Initiator/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Utils/Logger/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Utils/Timer/autosplit.ix
@@ -846,13 +833,10 @@ src/perl/qto/lib/auto/Qto/Controller/Home/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Truncate/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WSSelect/autosplit.ix
 dat/mix
-dat/mix/2019/2019-07/2019-07-16/
-dat/mix/2019/2019-07/2019-07-16/.DS_Store
-dat/mix/2019/2019-07/2019-07-16/sql
-dat/mix/2019/2019-07/2019-07-16/sql/dev_qto
-dat/mix/2019/2019-07/2019-07-16/sql/dev_qto/dev_qto.20190716_001118.insrt.dmp.sql
-dat/mix/2019/2019-07/2019-07-16/sql/dev_qto/dev_qto.20190716_181136.insrt.dmp.sql
-dat/mix/2019/2019-07/2019-07-16/sql/.DS_Store
-dat/mix/2019/2019-07/2019-07-16/tmp
-dat/mix/2019/2019-07/2019-07-16/xls
-dat/mix/2019/2019-07/2019-07-16/xls/qto.all.20190716_000000.xlsx
+dat/mix/2019/2019-07/2019-07-24
+dat/mix/2019/2019-07/2019-07-24/sql
+dat/mix/2019/2019-07/2019-07-24/sql/dev_qto
+dat/mix/2019/2019-07/2019-07-24/sql/dev_qto/dev_qto.20190724_114933.insrt.dmp.sql
+dat/mix/2019/2019-07/2019-07-24/tmp
+dat/mix/2019/2019-07/2019-07-24/xls
+dat/mix/2019/2019-07/2019-07-24/xls/qto.all.20190724_000000.xlsx

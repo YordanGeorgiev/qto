@@ -19,14 +19,14 @@ package Qto::App::Db::In::Postgres::MojoPgWrapper ;
    use Qto::App::Mdl::Model ; 
 
    our $objModel        = {} ;
-   our $appConfig       = {} ;
+   our $config       = {} ;
    our $objLogger       = {} ;
    our $db              = {} ;
 
 
    sub new {
 		my $invocant   = shift ;    
-		$appConfig     = ${ shift @_ } || croak 'appConfig not passed in MojoPgWrapper !!!' ; 
+		$config        = ${ shift @_ } || croak 'config not passed in MojoPgWrapper !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in MojoPgWrapper !!!' ; 
 		$db            = shift ;    
 		my $class      = ref ( $invocant ) || $invocant ; 
@@ -42,14 +42,15 @@ package Qto::App::Db::In::Postgres::MojoPgWrapper ;
       my $db         = shift ; 
       
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
 
-      $objLogger 			      = 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
-		my $postgres_db_host    = $ENV{'postgres_db_host'} || $appConfig->{'postgres_db_host'} or croak 'postgres_db_host is not set !!!' ; 
-		my $postgres_db_port    = $ENV{'postgres_db_port'} || $appConfig->{'postgres_db_port'} or croak 'postgres_db_port is not set !!!' ; 
-		my $postgres_db_user 	= $ENV{'postgres_db_user'} || $appConfig->{'postgres_db_user'} or croak 'postgres_db_user is not set !!!' ; 
-		my $postgres_db_user_pw = $ENV{'postgres_db_user_pw'} || $appConfig->{'postgres_db_user_pw'}  or croak 'postgres_db_user_pw is not set !!!' ; 
+      $objLogger 			      = 'Qto::App::Utils::Logger'->new( \$config ) ;
+      my $dbConfig = $config->{'env'}->{'db'} ; 
+		my $postgres_db_host    = $ENV{ 'postgres_db_host' } || $dbConfig->{'postgres_db_host'} || '127.0.0.1' ;
+		my $postgres_db_port    = $ENV{ 'postgres_db_port' } || $dbConfig->{'postgres_db_port'} || '15432' ; 
+		my $postgres_db_user 	= $ENV{ 'postgres_db_user' } || $dbConfig->{'postgres_db_user'} || 'usrqtoapp' ; 
+		my $postgres_db_user_pw = $ENV{ 'postgres_db_user_pw' } || $dbConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
       my $conn_str            = 'postgresql://' . $postgres_db_user . ':' . $postgres_db_user_pw .  '@' . $postgres_db_host . ':' . $postgres_db_port . '/' . $db . '?sslmode=disable'; 
       #debug $objLogger->doLogDebugMsg ( "conn_str: $conn_str " ) ; 
       $self = 'Mojo::Pg'->new($conn_str);

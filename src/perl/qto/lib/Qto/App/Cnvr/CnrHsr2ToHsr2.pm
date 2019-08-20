@@ -1,7 +1,7 @@
 use strict ; use warnings ; 
 package Qto::App::Cnvr::CnrHsr2ToHsr2 ; 
 
-our $appConfig = {} ; 
+our $config = {} ; 
 use Data::Printer ; 
 use Carp ; 
 
@@ -12,7 +12,7 @@ our $objModel = {} ;
 	# -----------------------------------------------------------------------------
 	# filter all the elements which have the same fltr key and val, usage:
    # my $objCnrHsr2ToHsr2 = 
-   #     'Qto::App::Cnvr::CnrHsr2ToHsr2'->new ( \$appConfig , \$objModel ) ; 
+   #     'Qto::App::Cnvr::CnrHsr2ToHsr2'->new ( \$config , \$objModel ) ; 
    # p $objCnrHsr2ToHsr2->doFilter($msr2, 'table_name' , 'monthly_issues' );
 	# -----------------------------------------------------------------------------
    sub doFilter {
@@ -51,7 +51,7 @@ our $objModel = {} ;
 	sub new {
 
 		my $class      = shift;    # Class name is in the first parameter
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 
 		my $self = {}; bless( $self, $class );    # Say: $self is a $class
@@ -72,7 +72,7 @@ CnrHsr2ToHsr2
 use Qto::App::Cnvr::CnrHsr2ToHsr2 ; 
 
 my $objCnrHsr2ToHsr2 = 
-   'Qto::App::Cnvr::CnrHsr2ToHsr2'->new ( \$appConfig , \$objModel ) ; 
+   'Qto::App::Cnvr::CnrHsr2ToHsr2'->new ( \$config , \$objModel ) ; 
 my $hsr2 = $objCnrHsr2ToHsr2->doFilter($msr2, 'table_name' , 'monthly_issues' );
 
 =head1 DESCRIPTION

@@ -6,7 +6,7 @@ use Mojolicious::Sessions;
 use Data::Printer ; 
 
 our $module_trace    = 0 ; 
-our $appConfig       = {};
+our $config       = {};
 our $objLogger       = {} ;
 our $rdbms_type      = 'postgres' ; 
 
@@ -22,12 +22,12 @@ sub doReloadProjDbMeta {
    my $db                  = shift ;
    my $item                = shift || '' ; 
 
-   $appConfig		 		   = $self->app->get('AppConfig');
-   $db = toEnvName ( $db , $appConfig ) ;
+   $config		 		   = $self->app->get('AppConfig');
+   $db = toEnvName ( $db , $config ) ;
 
    # reload the columns meta data ONLY after the meta_columns has been requested
-   #return if ( exists ( $appConfig->{ $db . '.meta' } ) && $item ne 'meta_columns' ); 
-   if ( defined ( $appConfig->{ $db . '.meta' } ) ) {
+   #return if ( exists ( $config->{ $db . '.meta' } ) && $item ne 'meta_columns' ); 
+   if ( defined ( $config->{ $db . '.meta' } ) ) {
       if ( $item ne 'meta_columns' ) {
          return ; 
       }
@@ -40,15 +40,15 @@ sub doReloadProjDbMeta {
    my $msg                 = "fatal error while reloading project database meta data " ; 
    my $objModel            = {} ; 
 
-   $objModel               = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ;
+   $objModel               = 'Qto::App::Mdl::Model'->new ( \$config ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
     
-   $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig, \$objModel );
+   $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config, \$objModel );
    $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type );
    ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMeta( $db ) ; 
 
-   $appConfig->{ "$db" . '.meta' } = $msr2 ; # chk: it-181101180808
-   $self->app->set('AppConfig', $appConfig );
+   $config->{ "$db" . '.meta' } = $msr2 ; # chk: it-181101180808
+   $self->app->set('AppConfig', $config );
    $self->render('text' => $msg ) unless $ret == 0 ; 
 }
 
@@ -58,8 +58,8 @@ sub isAuthenticated {
    my $self                = shift ;
    my $db                  = shift ;
 
-   $appConfig		 		   = $self->app->get('AppConfig');
-   $db                     = toEnvName ( $db , $appConfig ) ;
+   $config		 		   = $self->app->get('AppConfig');
+   $db                     = toEnvName ( $db , $config ) ;
 
    # non-authentication mode IF the app has been stared with this env var
    return 1 if $ENV{'QTO_ONGOING_TEST'}; # no authentication when testing if desired so !!!

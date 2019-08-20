@@ -12,7 +12,7 @@ use Qto::App::Db::In::RdrDbsFcry;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::UI::WtrUIFactory ; 
 
-our $appConfig      = {};
+our $config      = {};
 our $objModel       = {} ; 
 
 sub doBuildListControl {
@@ -27,7 +27,7 @@ sub doBuildListControl {
    my $control       	= '' ; 
    my $cols             = () ; 
 
-   ( $ret , $msg , $cols) = $objModel->doGetItemsDefaultPickCols( $appConfig , $db , $table ) ;
+   ( $ret , $msg , $cols) = $objModel->doGetItemsDefaultPickCols( $config , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 		
    my $to_picks   = $objModel->get('select.web-action.pick') ; 
@@ -56,7 +56,7 @@ sub doBuildListControl {
 
 sub new {
    my $invocant 			= shift ;    
-   $appConfig           = ${ shift @_ } || croak 'appConfig not set !!!' ;
+   $config           = ${ shift @_ } || croak 'config not set !!!' ;
    $objModel            = ${ shift @_ } || croak 'objModel not set !!!' ; 
    my $class            = ref ( $invocant ) || $invocant ; 
    my $self             = {}; bless( $self, $class );    

@@ -26,7 +26,7 @@ package Qto::App::IO::In::CnrUrlPrms ;
 
    our $query_params = () ; 
    our $objModel     = {} ; 
-   our $appConfig    = {} ; 
+   our $config    = {} ; 
 
 
 sub doValidateAndSetWith {
@@ -404,7 +404,7 @@ sub doSetView {
    
 	sub new {
 		my $invocant   = shift ;    
-		$appConfig     = ${ shift @_ } || croak 'appConfig not passed in RdrPostgresDb !!!' ; 
+		$config     = ${ shift @_ } || croak 'config not passed in RdrPostgresDb !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
       $query_params  = shift || croak 'no query params passed !!!' ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
@@ -426,7 +426,7 @@ CnrUrlPrms
 
    use Qto::App::IO::In::CnrUrlPrms ; 
    my $objCnrUrlPrms = 
-      'Qto::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+      'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
 
   
 

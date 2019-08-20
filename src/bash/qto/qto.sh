@@ -39,59 +39,42 @@ get_function_list () {
 }
 
 
-# v0.6.9 
+#
 #------------------------------------------------------------------------------
-# run all the actions specified by the $0 -a <<action-name>> cmd arg
+# run only the actions passed with the -a <<action-name-arg>>
 #------------------------------------------------------------------------------
 doRunActions(){
-
-	cd $PRODUCT_INSTANCE_DIR
+	test -z ${PROJ_INSTANCE_DIR:-} && PROJ_INSTANCE_DIR=$product_instance_dir
+	daily_backup_dir="$PROJ_INSTANCE_DIR/dat/mix/"$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
+   cd $product_instance_dir
    actions_to_run=''
+   while read -d ' ' action ; do
+      while read -r func_file ; do
+         while read -r function_name ; do
+            action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
+            test "$action_name" != "$action" && continue
+            test "$action_name" == "$action" && actions_to_run=$(echo -e "$actions_to_run\n$function_name")
+         done< <(get_function_list "$func_file")
+      done < <(find "src/bash/$run_unit/funcs" -type f -name '*.sh')
 
-   test -z "${actions+1}" && doPrintUsage && doExit 0
-   test -z "${mix_data_dir:-}" && mix_data_dir=$PRODUCT_INSTANCE_DIR/dat/mix
-   daily_backup_dir=$mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
-	while read -d ' ' action ; do 
-		# debug echo "action: \"$action\""
+      [[ $action == to-ver=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeVersion $action")
+      [[ $action == to-env=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeEnvType $action")
 
-		while read -r func_file ; do 
-         # debug echo "func_file: $func_file"
+   done < <(echo "$actions")
 
-			while read -r function_name ; do 
-            # debug "function_name: $function_name"
-
-				action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
-				test "$action_name" != "$action" && continue
-				
-				test "$action_name" == "$action" && actions_to_run=$(echo -e "$actions_to_run\n$function_name")
-            doLog " INFO actions_to_run: $actions_to_run"
-			done< <(get_function_list "$func_file")
-		done < <(find src/bash/qto/funcs -type f -name '*.sh')
-
-				
-		test "$action" == 'to-dev'									&& doChangeEnvType 'dev'
-		test "$action" == 'to-tst'									&& doChangeEnvType 'tst'
-		test "$action" == 'to-stg'									&& doChangeEnvType 'stg'
-		test "$action" == 'to-qas'									&& doChangeEnvType 'qas'
-		test "$action" == 'to-prd'									&& doChangeEnvType 'prd'
-		test "$action" == 'to-src'									&& doChangeEnvType 'src'
-		[[ $action == to-ver=* ]]									&& doChangeVersion $action
-		[[ $action == to-app=* ]]									&& doCloneToApp $action
-
-	done < <(echo "$actions")
-
-   while read -r action_to_run ; do 
-	   cd $PRODUCT_INSTANCE_DIR
-		doLog "INFO start running action :: $action_to_run"
+   while read -r action_to_run ; do
+      cd $product_instance_dir
+      doLog "INFO start running action :: $action_to_run"
       $action_to_run
       exit_code=$?
-		if [[ "$exit_code" != "0" ]]; then
-			exit $exit_code
-		fi
-	   doLog "INFO stop  running action :: $action_to_run":"$function_name"
+      if [[ "$exit_code" != "0" ]]; then
+         exit $exit_code
+      fi
+      doLog "INFO stop  running action :: $action_to_run"
    done < <(echo $actions_to_run)
-  
-   test -d "$daily_backup_dir" || doBackupPostgresDb
+
+	test -d "$daily_backup_dir" || doBackupPostgresDb
+
 }
 
 

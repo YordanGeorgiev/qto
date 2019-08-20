@@ -25,14 +25,14 @@ package Qto::App::Ctrl::Dispatcher ;
 
 	our $module_trace                = 0 ; 
    our $module_test_run             = 0 ; 
-	our $appConfig						   = {} ; 
+	our $config						   = {} ; 
 	our $RunDir 						   = '' ; 
 	our $ProductBaseDir 				   = '' ; 
 	our $ProductDir 					   = '' ; 
 	our $ProductInstanceDir 			= ''; 
 	our $ProductInstanceEnv  = '' ; 
 	our $ProductName 					   = '' ; 
-	our $ProductType 					   = '' ; 
+	our $EnvType 					   = '' ; 
 	our $ProductVersion 				   = ''; 
 	our $ProductOwner 				   = '' ; 
 	our $HostName 						   = '' ; 
@@ -44,7 +44,7 @@ package Qto::App::Ctrl::Dispatcher ;
 
 =head1 SYNOPSIS
       my $objDispatcher = 
-         'Qto::App::Ctrl::Dispatcher'->new ( \$appConfig ) ; 
+         'Qto::App::Ctrl::Dispatcher'->new ( \$config ) ; 
       ( $ret , $msg ) = $objDispatcher->doRun ( $actions ) ; 
 =cut 
 
@@ -63,7 +63,7 @@ package Qto::App::Ctrl::Dispatcher ;
       use strict 'refs'; 
 
       my $objCtrlXlsToDb = 
-         'Qto::App::Ctrl::CtrlXlsToDb'->new ( \$appConfig , \$objModel) ; 
+         'Qto::App::Ctrl::CtrlXlsToDb'->new ( \$config , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlXlsToDb->doReadAndLoad ( ) ; 
       return ( $ret , $msg ) ; 
    }
@@ -74,7 +74,7 @@ package Qto::App::Ctrl::Dispatcher ;
       use strict 'refs'; 
 
       my $objCtrlTxtToDb = 
-         'Qto::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig , \$objModel) ; 
+         'Qto::App::Ctrl::CtrlTxtToDb'->new ( \$config , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlTxtToDb->doLoad () ; 
       return ( $ret , $msg ) ; 
    }
@@ -84,7 +84,7 @@ package Qto::App::Ctrl::Dispatcher ;
       my $self = shift ; 
       use strict 'refs'; 
       my $objCtrlDbToGsheet = 
-         'Qto::App::Ctrl::CtrlDbToGoogleSheet'->new ( \$appConfig , \$objModel) ; 
+         'Qto::App::Ctrl::CtrlDbToGoogleSheet'->new ( \$config , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlDbToGsheet->doReadAndLoad ( ); 
       return ( $ret , $msg ) ; 
 
@@ -96,7 +96,7 @@ package Qto::App::Ctrl::Dispatcher ;
       my $self = shift ; 
       use strict 'refs'; 
       my $objCtrlDbToTxt = 
-         'Qto::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig , \$objModel) ; 
+         'Qto::App::Ctrl::CtrlDbToTxt'->new ( \$config , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndWrite ( ) ; 
       return ( $ret , $msg ) ; 
    }
@@ -107,31 +107,34 @@ package Qto::App::Ctrl::Dispatcher ;
       my $self = shift ; 
       use strict 'refs'; 
       my $objCtrlDbToJson = 
-         'Qto::App::Ctrl::CtrlDbToJson'->new ( \$appConfig , \$objModel) ; 
+         'Qto::App::Ctrl::CtrlDbToJson'->new ( \$config , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlDbToJson->doReadAndWrite ( ) ; 
       return ( $ret , $msg ) ; 
    }
+
 
    sub doJsonToDb {
 
       my $self = shift ; 
       use strict 'refs'; 
       my $objCtrlJsonToDb = 
-         'Qto::App::Ctrl::CtrlJsonToDb'->new ( \$appConfig , \$objModel) ; 
+         'Qto::App::Ctrl::CtrlJsonToDb'->new ( \$config , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlJsonToDb->doReadAndWrite ( ) ; 
       return ( $ret , $msg ) ; 
    }
+
 
    sub doDbToXls {
       my $self = shift ; 
       use strict 'refs'; 
 
       my $objCtrlDbToXls = 
-         'Qto::App::Ctrl::CtrlDbToXls'->new ( \$appConfig , \$objModel ) ; 
+         'Qto::App::Ctrl::CtrlDbToXls'->new ( \$config , \$objModel ) ; 
       my ( $ret , $msg ) = $objCtrlDbToXls->doReadAndLoad ( ); 
       return ( $ret , $msg ) ; 
 
    }
+
 
    sub doRunActions {
 
@@ -178,55 +181,36 @@ package Qto::App::Ctrl::Dispatcher ;
       $ret = 0 ; 
       return ( $ret , $msg ) ; 
    }
-   # eof sub doRunActions
-
 	
-
-=head1 WIP
-
-	
-=cut
-
-=head1 SUBROUTINES/METHODS
-
-=cut
-
-
-=head2 new
-	# -----------------------------------------------------------------------------
-	# the constructor
-=cut 
-
-	sub new {
+   
+   sub new {
 
 		my $class      = shift;    # Class name is in the first parameter
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
       $module_test_run = shift if @_ ; 
-		my $self = {};        # Anonymous hash reference holds instance attributes
-		bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize() ; 
+		my $self = {}; bless( $self, $class );
+      $self = $self->doInit() ; 
 		return $self;
 	}  
-	#eof const
-	
+
+
    #
 	# --------------------------------------------------------
 	# intializes this object 
 	# --------------------------------------------------------
-   sub doInitialize {
+   sub doInit {
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
 
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
 
 
       return $self ; 
 	}	
-	#eof sub doInitialize
 
 =head2
 	# -----------------------------------------------------------------------------
@@ -243,7 +227,7 @@ __END__
 
 =head1 NAME
 
-UrlSniper 
+Dispatcher
 
 =head1 SYNOPSIS
 

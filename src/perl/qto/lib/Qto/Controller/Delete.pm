@@ -18,7 +18,7 @@ use Scalar::Util qw /looks_like_number/;
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $module_trace   = 0 ;
-our $appConfig      = {};
+our $config      = {};
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgre';
 
@@ -39,8 +39,8 @@ sub doDeleteById {
    my $msg              = 'unknown error during Delete item';
    my $hsr2             = {};
   
-   $appConfig		      = $self->app->get('AppConfig');
-   $db                  = toEnvName ( $db , $appConfig);
+   $config		      = $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $config);
    
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
@@ -48,9 +48,9 @@ sub doDeleteById {
    my $json = $self->req->body;
    my $perl_hash = decode_json($json) ; 
 
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
    $objCnrPostPrms = 
-      'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel );
+      'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
 
 
    unless ( $objCnrPostPrms->doValidateAndSetDelete ( $perl_hash ) == 1 ) {
@@ -65,7 +65,7 @@ sub doDeleteById {
    } 
 
    $objWtrDbsFcry
-      = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$appConfig, \$objModel );
+      = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$config, \$objModel );
    $objWtrDb = $objWtrDbsFcry->doSpawn("$rdbms_type");
    ($ret, $msg) = $objWtrDb->doDeleteById(\$objModel, $item);
 

@@ -19,14 +19,14 @@ package Qto::App::Ctrl::CtrlDbToXls ;
    use Qto::App::Mdl::Model ; 
 
 	our $module_trace                = 0 ; 
-	our $appConfig						   = {} ; 
+	our $config						   = {} ; 
 	our $objLogger						   = {} ; 
    our $rdbms_type                  = 'postgres' ; 
 	our $objModel						   = {} ; 
 
 =head1 SYNOPSIS
       my $objCtrlDbToXls = 
-         'Qto::App::Ctrl::CtrlDbToXls'->new ( \$appConfig , \$objModel ) ; 
+         'Qto::App::Ctrl::CtrlDbToXls'->new ( \$config , \$objModel ) ; 
       my ( $ret , $msg ) = $objCtrlDbToXls->doReadAndLoad ( ); 
 =cut 
 
@@ -62,21 +62,21 @@ package Qto::App::Ctrl::CtrlDbToXls ;
       my $db                     = $objModel->get( 'env.postgres_db_name' );
 	   push ( @tables , split(',',$tables ) ) ; 
 
-      my $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel  ) ; 
+      my $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel  ) ; 
       my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       ($ret, $msg , $amsr2 )     = $objRdrDb->doLoadProjDbMetaData( $db );
       return ( $ret , $msg ) unless $ret == 0 ; 
-      $appConfig->{ "$db" . '.meta' } = $amsr2 ;
+      $config->{ "$db" . '.meta' } = $amsr2 ;
 
       $objModel->set('select.web-action.pg-size' , 1000000000) ; #set the maximum size
 
       for my $table ( @tables ) { 
-         ( $ret , $msg , $msr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;
+         ( $ret , $msg , $msr2 ) = $objModel->doGetTableMeta ( $config , $db , $table ) ;
          return ( $ret , $msg ) unless $ret == 0 ; 
          ( $ret , $msg , $hsr2)  = $objRdrDb->doSelectRows( $db , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
-         my $objWtrXls    = 'Qto::App::IO::Out::WtrXls'->new( \$appConfig ) ;
+         my $objWtrXls    = 'Qto::App::IO::Out::WtrXls'->new( \$config ) ;
          ($ret , $msg , $xls_file ) = $objWtrXls->doBuildXlsFromHashRef ( \$objModel , $table , $hsr2 , $msr2) ;
          return ( $ret , $msg ) unless $ret == 0 ; 
       }
@@ -96,7 +96,7 @@ package Qto::App::Ctrl::CtrlDbToXls ;
 
 	sub new {
 		my $class   = shift;    
-		$appConfig  = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config  = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel   = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 		my $self = {}; bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize( ) ; 
@@ -108,9 +108,9 @@ package Qto::App::Ctrl::CtrlDbToXls ;
       my $self          = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
        );
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
 
       return $self ; 
 	}	

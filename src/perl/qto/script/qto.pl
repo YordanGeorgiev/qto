@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+
 package qto;
 
 use strict;
@@ -14,7 +14,7 @@ require Exporter;
 our @ISA         = qw(Exporter);
 our %EXPORT_TAGS = ('all' => [qw()]);
 our @EXPORT_OK   = (@{$EXPORT_TAGS{'all'}});
-our @EXPORT      = qw($appConfig);
+our @EXPORT      = qw($config);
 our $AUTOLOAD    = ();
 
 use Cwd qw ( abs_path );
@@ -23,6 +23,7 @@ use Carp qw< carp croak confess cluck >;
 use Encode qw< encode decode >;
 use Unicode::Normalize qw< NFD NFC >;
 use Data::Printer;
+use JSON::Parse 'json_file_to_perl';
 
 $| = 1;
 
@@ -52,7 +53,6 @@ END { close STDOUT }
 
 # use own modules ...
 use Qto::App::Utils::Initiator;
-use Qto::App::Utils::Configurator;
 use Qto::App::Utils::Logger;
 use Qto::App::Utils::Timer;
 use Qto::App::Ctrl::Dispatcher;
@@ -76,19 +76,20 @@ local $SIG{__WARN__} = sub {
 };
 
 
-our $appConfig    = {};
-our $objModel     = {};
-our $objLogger    = {};
-my $module_trace  = 0;
-my $md_file       = '';
-my $objInitiator  = {};
-my $objConfigurator       = {};
-my $xls_dir               = q{};
-my $xls_file              = q{};
-my $qto_project = q{};
-my $period                = q{};
-my $tables                = 'daily' ;
-my $rdbms_type            = 'postgre';                 #todo: parametrize to
+our $config             = {};
+our $objModel           = {};
+our $objLogger          = {};
+my $module_trace        = 0;
+my $md_file             = '';
+my $objInitiator        = {};
+my $objConfigurator     = {};
+my $xls_dir             = q{};
+my $xls_file            = q{};
+my $qto_project         = q{};
+my $period              = q{};
+my $tables              = 'daily' ;
+my $rdbms_type          = 'postgre';                 #todo: parametrize to
+
 
 #
 # the main shell entry point of the application
@@ -98,10 +99,12 @@ sub main {
   my $ret = 1;
 
   print " qto.pl START  \n ";
-  ($ret, $msg) = doInitialize();
+  ($ret, $msg) = doInit();
   doExit($ret, $msg) unless ($ret == 0);
 
-  my $objDispatcher = 'Qto::App::Ctrl::Dispatcher'->new(\$appConfig , \$objModel);
+  p $config ; 
+
+  my $objDispatcher = 'Qto::App::Ctrl::Dispatcher'->new(\$config , \$objModel);
 
   ($ret, $msg) = $objDispatcher->doRunActions($objModel->get('ctrl.actions'));
 
@@ -111,46 +114,45 @@ sub main {
 
 
 
-sub doInitialize {
+sub doInit {
 
    my $msg          = 'error during initialization !!!';
    my $ret          = 1;
    $objInitiator    = 'Qto::App::Utils::Initiator'->new();
-   $appConfig       = $objInitiator->get('AppConfig');
+   $config       = $objInitiator->get('AppConfig');
 
-   $objConfigurator = 'Qto::App::Utils::Configurator'->new(
-      $objInitiator->{'ConfFile'}, \$appConfig);
-   $appConfig       = $objConfigurator->getConfHolder()  ;
-   # p($appConfig)  ; 
+   $config = json_file_to_perl ($objInitiator->doResolveConfFile());
+   $config->{'env'}->{'run'}->{'ProductInstanceDir'} = $objInitiator->doResolveProductInstanceDir(-1);
+   $config->{'env'}->{'run'}->{'ProductName'} = $objInitiator->doResolveProductName();
+   # debug p $config ; 
+   # p($config)  ; 
 
-   $objLogger = 'Qto::App::Utils::Logger'->new(\$appConfig);
+   $objLogger = 'Qto::App::Utils::Logger'->new(\$config);
    my $m = "START MAIN";
    $objLogger->doLogInfoMsg($m);
 
-   $objModel               = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ; 
-   my $objRdrCmdArgs 	   = 'Qto::App::IO::In::RdrCmdArgs'->new(\$appConfig , \$objModel ) ; 
+   $objModel               = 'Qto::App::Mdl::Model'->new ( \$config ) ; 
+   my $objRdrCmdArgs 	   = 'Qto::App::IO::In::RdrCmdArgs'->new(\$config , \$objModel ) ; 
    $objRdrCmdArgs->doRead();
-   my $objRdrEnv 	   = 'Qto::App::IO::In::RdrEnv'->new(\$appConfig , \$objModel ) ; 
+   my $objRdrEnv 	         = 'Qto::App::IO::In::RdrEnv'->new(\$config, \$objModel ) ; 
    $objRdrEnv->doRead();
 
 
    $qto_project  = $ENV{"qto_project"};
-   $period                 = $ENV{"period"} unless $period;
-   $period                 = 'daily' unless $period;
 
-  unless ($qto_project) {
-    $msg = "set you current project by: \n";
-    $msg
+   unless ($qto_project) {
+      $msg = "set you current project by: \n";
+      $msg
       .= "doParseCnfEnvVars <<path-to-qto-project-configuration-file>>";
-    $objLogger->doLogErrorMsg($msg);
-    $objLogger->doLogFatalMsg($msg);
-    return ($ret, $msg);
-  }
+      $objLogger->doLogErrorMsg($msg);
+      $objLogger->doLogFatalMsg($msg);
+      return ($ret, $msg);
+   }
 
-  $appConfig->{'qto_project'} = $qto_project;
+   $config->{'qto_project'} = $qto_project;
 
-  $ret = 0;
-  return ($ret, $msg);
+   $ret = 0;
+   return ($ret, $msg);
 }
 
 

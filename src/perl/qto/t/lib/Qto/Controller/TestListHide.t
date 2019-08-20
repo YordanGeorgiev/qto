@@ -11,9 +11,9 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
    my $tm = '' ; # the test message for each test 
    my $t = Test::Mojo->new('Qto');
-   my $appConfig = $t->app->get('AppConfig') ; 
+   my $config = $t->app->get('AppConfig') ; 
    
-   my $db_name= $appConfig->{ 'postgres_db_name' } ; 
+   my $db_name= $config->{ 'postgres_db_name' } ; 
    my $url = '/' . $db_name . '/select-tables' ; 
 
 	$tm = "for list all the tables from the $db_name db" ; 

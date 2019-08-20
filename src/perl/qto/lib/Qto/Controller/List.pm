@@ -25,7 +25,7 @@ use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 
 our $module_trace   = 0 ; 
-our $appConfig      = {};
+our $config      = {};
 our $objLogger      = {} ;
 
 
@@ -45,14 +45,14 @@ sub doListItems {
    my $as               = 'grid' ; # the default form of the list control 
 
   
-   $appConfig		 		= $self->app->get('AppConfig');
-   $db                  = toEnvName ( $db , $appConfig) ;
+   $config		 		= $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
  
    my $list_control     = '' ; 
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item) ;
-   my $objCnrUrlPrms       = 'Qto::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ;
+   my $objCnrUrlPrms       = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    $objCnrUrlPrms->doValidateAndSetSelect();
 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
@@ -106,7 +106,7 @@ sub doBuildListPageType {
 
    $ui_type = 'page/' . $lables_pages->{ $as } ; 
 
-   $objPageFactory                  = 'Qto::Controller::PageFactory'->new(\$appConfig, \$objModel );
+   $objPageFactory                  = 'Qto::Controller::PageFactory'->new(\$config, \$objModel );
    $objPageBuilder                  = $objPageFactory->doSpawn( $ui_type );
    ( $ret , $msg , $list_control )  = $objPageBuilder->doBuildListControl( $msg , \$objModel , $db , $table , $as ) ;
 
@@ -143,7 +143,7 @@ sub doRenderPageTemplate {
    my $template_name    = $as_templates->{ $as } || 'list-grid' ; 
    my $template         = 'controls/' . $template_name . '/' . $template_name ; 
 
-   my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
 
    $self->render(
@@ -152,9 +152,9 @@ sub doRenderPageTemplate {
     , 'msg'             => $msg
     , 'item'            => $item
     , 'db' 		         => $db
-    , 'ProductType' 		=> $appConfig->{'ProductType'}
-    , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
-    , 'GitShortHash' => $appConfig->{'GitShortHash'}
+    , 'EnvType' 		=> $config->{'EnvType'}
+    , 'ProductVersion' 	=> $config->{'ProductVersion'}
+    , 'GitShortHash' => $config->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'list_control'    => $list_control
     , 'notice'          => $notice

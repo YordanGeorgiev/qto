@@ -23,14 +23,14 @@ package Qto::App::Utils::Initiator ;
    use parent 'Qto::App::Utils::OO::SetGetable' ;
    use parent 'Qto::App::Utils::OO::AutoLoadable' ;
 
-	our $appConfig						= {} ; 
+	our $config						= {} ; 
 	our $RunDir 						= '' ; 
 	our $ProductBaseDir 				= '' ; 
 	our $ProductDir 					= '' ; 
 	our $ProductInstanceDir 	   = ''; 
 	our $ProductInstanceEnv       = '' ; 
 	our $ProductName 					= '' ; 
-	our $ProductType 					= '' ; 
+	our $EnvType 					= '' ; 
 	our $ProductVersion 				= ''; 
 	our $ProductOwner 				= '' ; 
 	our $HostName 						= '' ; 
@@ -59,7 +59,7 @@ package Qto::App::Utils::Initiator ;
 	# the product base dir is the dir under which all the product
 	# instances are installed 
 	# ---------------------------------------------------------
-	sub doResolveMyProductBaseDir {
+	sub doResolveProductBaseDir {
 
 		my $self = shift;
 		my $msg  = ();
@@ -73,8 +73,8 @@ package Qto::App::Utils::Initiator ;
 		$product_base_dir 					= $self->untaint ( $product_base_dir); 
 		$ProductBaseDir 						= $self->untaint ( $product_base_dir); 
 		$self->{'ProductBaseDir'} 			= $ProductBaseDir ; 
-		$appConfig->{'ProductBaseDir'} 	= $ProductBaseDir ; 
-		$self->{'AppConfig'} 				= $appConfig; 
+		$config->{'ProductBaseDir'} 	= $ProductBaseDir ; 
+		$self->{'AppConfig'} 				= $config; 
 
 		return $ProductBaseDir;
 	}
@@ -101,13 +101,14 @@ package Qto::App::Utils::Initiator ;
 		
 		return \@DirParts ; 
 	}
-	
+
+
    #
 	# ---------------------------------------------------------
 	# the product version dir is the dir where this product 
 	# instance is situated
 	# ---------------------------------------------------------
-	sub doResolveMyProductDir {
+	sub doResolveProductDir {
 
 		my $self = shift;
 		my $msg  = ();
@@ -116,8 +117,8 @@ package Qto::App::Utils::Initiator ;
 		my @DirParts = @{doGetDirParts ( $levels_up )} ; 
 		$ProductDir = join( '/' , @DirParts );
 		$self->{'ProductDir'} 			= $ProductDir ; 
-		$appConfig->{'ProductDir'} 	= $ProductDir ; 
-		$self->{'AppConfig'} 				= $appConfig; 
+		$config->{'ProductDir'} 	= $ProductDir ; 
+		$self->{'AppConfig'} 				= $config; 
       
 		return $ProductDir;
 	}
@@ -128,9 +129,11 @@ package Qto::App::Utils::Initiator ;
 	# the product version dir is the dir where this product 
 	# instance is situated
 	# ---------------------------------------------------------
-	sub doResolveMyProductInstanceDir {
+	sub doResolveProductInstanceDir {
 
 		my $self = shift;
+      $rel_levels = shift unless ( $rel_levels ) ; 
+      $rel_levels = 0 unless $rel_levels ; 
 		my $msg  = ();
 		my $levels_up = 5 + $rel_levels ; 
 		my $PRODUCT_INSTANCE_DIR = '' ; 
@@ -141,19 +144,19 @@ package Qto::App::Utils::Initiator ;
 		$PRODUCT_INSTANCE_DIR 					= $self->untaint ( $PRODUCT_INSTANCE_DIR); 
 		$ProductInstanceDir 						= $self->untaint ( $PRODUCT_INSTANCE_DIR); 
 		$self->{'ProductInstanceDir'} 	   = $ProductInstanceDir ; 
-		$appConfig->{'ProductInstanceDir'} 	= $ProductInstanceDir ; 
-		$self->{'AppConfig'} 				   = $appConfig; 
+		$config->{'ProductInstanceDir'} 	= $ProductInstanceDir ; 
+		$self->{'AppConfig'} 				   = $config; 
 
 		return $ProductInstanceDir;
 	}
-	#eof sub doResolveMyProductInstanceDir
+
 
 	#
 	# ---------------------------------------------------------
 	# the environment name is the dir identifying this product 
 	# instance from other product instances 
 	# ---------------------------------------------------------
-	sub doResolveMyProductInstanceEnv {
+	sub doResolveProductInstanceEnv {
 
 		my $self = shift;
 		my $msg  = ();
@@ -163,19 +166,20 @@ package Qto::App::Utils::Initiator ;
 		$ProductInstanceEnv 			         =~ s#(.*?)(\/|\\)(.*)#$3#g ;
 		$ProductInstanceEnv 			         = $self->untaint ( $ProductInstanceEnv ); 
 
-		$appConfig->{'ProductInstanceEnv'}  = $ProductInstanceEnv ; 
+		$config->{'ProductInstanceEnv'}  = $ProductInstanceEnv ; 
 		$self->{ 'ProductInstanceEnv' } 		= $ProductInstanceEnv ; 
-		$self->{'AppConfig'} 				   = $appConfig; 
+		$self->{'AppConfig'} 				   = $config; 
 
 		return $ProductInstanceEnv;
 	}
+
 
 	#
 	# ---------------------------------------------------------
 	# the Product name is the name by which this Product is 
 	# identified 
 	# ---------------------------------------------------------
-	sub doResolveMyProductName {
+	sub doResolveProductName {
 
 		my $self = shift;
 		my $msg  = ();
@@ -184,11 +188,10 @@ package Qto::App::Utils::Initiator ;
 		my @tokens = split /\./ , $ProductInstanceEnv ; 
 		$ProductName = $tokens[0] ; 
 
-		$appConfig->{ 'ProductName' } 			= $ProductName ; 
-		$self->{'AppConfig'} 				= $appConfig; 
+		$config->{ 'ProductName' } 			= $ProductName ; 
+		$self->{'AppConfig'} 				= $config; 
 		return $ProductName;
 	}
-	#eof sub doResolveMyProductName
 
 
 	#
@@ -196,7 +199,7 @@ package Qto::App::Utils::Initiator ;
 	# the Product Version is a number identifying the stage 
 	# of the evolution of this product 
 	# ---------------------------------------------------------
-	sub doResolveMyProductVersion {
+	sub doResolveProductVersion {
 
 		my $self = shift;
 		my $msg  = ();
@@ -210,12 +213,12 @@ package Qto::App::Utils::Initiator ;
 		$ProductVersion 	= $tokens[1] . '.' . $tokens[2] . '.' . $tokens[3] ; 
 		#debug rint "\n\n ProductVersion : $ProductVersion " ; 
 		
-		$appConfig->{ 'ProductVersion' } 		= $ProductVersion ; 
-		$self->{'AppConfig'} 				= $appConfig; 
+		$config->{ 'ProductVersion' } 		= $ProductVersion ; 
+		$self->{'AppConfig'} 				= $config; 
 
 		return $ProductVersion;
 	}
-	#eof sub doResolveMyProductVersion
+
 
 	#
 	# ---------------------------------------------------------
@@ -227,23 +230,22 @@ package Qto::App::Utils::Initiator ;
 	# Of course you could define you own abbreviations like ...
 	# fub -> full backup
 	# ---------------------------------------------------------
-	sub doResolveMyProductType {
+	sub doResolveEnvType {
 
 		my $self = shift;
 		my $msg  = ();
 
 		my @tokens = split /\./ , $ProductInstanceEnv ; 
 		# the type of this environment - dev , test , dev , fb , prod next_line_is_templatized
-		my $ProductType = $tokens[4] ; 
-		# debug rint "\n\n ProductType : $ProductType " ; 
+		my $EnvType = $tokens[4] ; 
+		# debug rint "\n\n EnvType : $EnvType " ; 
 
-		$appConfig->{ 'ProductType' } 			= $ProductType ; 
-		$self->{ 'ProductType' } 			= $ProductType ; 
-		$self->{'AppConfig'} 				= $appConfig; 
+		$config->{ 'EnvType' } 			= $EnvType ; 
+		$self->{ 'EnvType' } 			= $EnvType ; 
+		$self->{'AppConfig'} 				= $config; 
 
-		return $ProductType;
+		return $EnvType;
 	}
-	#eof sub doResolveMyProductType
 
 
 
@@ -253,7 +255,7 @@ package Qto::App::Utils::Initiator ;
 	# responsible person for operating the current product 
 	# instance 
 	# ---------------------------------------------------------
-	sub doResolveMyProductOwner {
+	sub doResolveProductOwner {
 
 		my $self = shift;
 		my $msg  = ();
@@ -265,11 +267,10 @@ package Qto::App::Utils::Initiator ;
 		$ProductOwner = $tokens[5] ; 
 		#debug rint "\n\n ProductOwner : $ProductOwner " ; 
 
-		$appConfig->{ 'ProductOwner' } 			= $ProductOwner ; 
-		$self->{'AppConfig'} 				= $appConfig; 
+		$config->{ 'ProductOwner' } 			= $ProductOwner ; 
+		$self->{'AppConfig'} 				= $config; 
 		return $ProductOwner;
 	}
-	#eof sub doResolveMyProductOwner
 
 
 	#
@@ -277,15 +278,15 @@ package Qto::App::Utils::Initiator ;
 	# returns the host name of currently running host
 	# by using the Sys::hostname perl module
 	# ---------------------------------------------------------
-	sub doResolveMyHostName {
+	sub doResolveHostName {
 
 		my $self = shift;
 		my $msg  = ();
 
 		$HostName = hostname ; 
 		$self->set ( 'HostName' , $HostName );
-		$appConfig->{ 'HostName' }	      = $HostName ; 
-		$self->{'AppConfig'} 				= $appConfig; 
+		$config->{ 'HostName' }	      = $HostName ; 
+		$self->{'AppConfig'} 				= $config; 
 		return $HostName;
 	}
 
@@ -295,12 +296,12 @@ package Qto::App::Utils::Initiator ;
 	# returns the host name of currently running host
 	# by using the Sys::ConfFile perl module
 	# ---------------------------------------------------------
-	sub doResolveMyConfFile {
+	sub doResolveIniConfFile {
 
 		my $self 						= shift;
 		my $msg  						= ();
 		
-		my $HostName					= $self->doResolveMyHostName();
+		my $HostName					= $self->doResolveHostName();
 
 		# set the default ConfFile path if no cmd argument is provided
 		$ConfFile = "$ProductInstanceDir/cnf/$ProductName.$HostName.cnf" ; 
@@ -310,14 +311,40 @@ package Qto::App::Utils::Initiator ;
       # cnf/qto.dev.host-name.cnf
       # cnf/qto.tst.host-name.cnf
       # cnf/qto.prd.host-name.cnf
-      if ( -f "$ProductInstanceDir/cnf/$ProductName.$ProductType.$HostName.cnf" ) {
-		   $ConfFile = "$ProductInstanceDir/cnf/$ProductName.$ProductType.$HostName.cnf" 
+      if ( -f "$ProductInstanceDir/cnf/$ProductName.$EnvType.$HostName.cnf" ) {
+		   $ConfFile = "$ProductInstanceDir/cnf/$ProductName.$EnvType.$HostName.cnf" 
       }
       
 
 		$self->set('ConfFile' , $ConfFile) ; 
-		$appConfig->{'ConfFile'} 	= $ConfFile ; 
-		$self->{'AppConfig'} 		= $appConfig; 
+		$config->{'ConfFile'} 	= $ConfFile ; 
+		$self->{'AppConfig'} 		= $config; 
+
+		 
+		return $ConfFile;
+	}
+
+
+	#
+	# ---------------------------------------------------------
+	# returns the host name of currently running host
+	# by using the Sys::ConfFile perl module
+	# ---------------------------------------------------------
+	sub doResolveConfFile {
+
+		my $self 						= shift;
+		my $msg  						= ();
+		
+      # cnf/env/dev.env.json
+      # cnf/env/tst.env.json
+      # cnf/env/prd.env.json
+      if ( -f "$ProductInstanceDir/cnf/env/$EnvType.env.json" ) {
+		   $ConfFile = "$ProductInstanceDir/cnf/env/$EnvType.env.json" 
+      }
+      
+		$self->set('ConfFile' , $ConfFile) ; 
+		$config->{'ConfFile'} 	= $ConfFile ; 
+		$self->{'AppConfig'} 		= $config; 
 
 		 
 		return $ConfFile;
@@ -344,16 +371,16 @@ package Qto::App::Utils::Initiator ;
 
       # !!! important concept - src: https://stackoverflow.com/a/90721/65706
       $my_absolute_path             = abs_path( __FILE__ ); 
-		$ProductBaseDir 			      = $self->doResolveMyProductBaseDir();
-		$ProductDir 			         = $self->doResolveMyProductDir();
-		$ProductInstanceDir 		      = $self->doResolveMyProductInstanceDir();
-		$ProductInstanceEnv   = $self->doResolveMyProductInstanceEnv();
-		$ProductName 				      = $self->doResolveMyProductName();
-		$ProductVersion 			      = $self->doResolveMyProductVersion();
-		$ProductType 				      = $self->doResolveMyProductType();
-		$ProductOwner 				      = $self->doResolveMyProductOwner();
-		$HostName 					      = $self->doResolveMyHostName();
-		$ConfFile 					      = $self->doResolveMyConfFile();
+		$ProductBaseDir 			      = $self->doResolveProductBaseDir();
+		$ProductDir 			         = $self->doResolveProductDir();
+		$ProductInstanceDir 		      = $self->doResolveProductInstanceDir();
+		$ProductInstanceEnv           = $self->doResolveProductInstanceEnv();
+		$ProductName 				      = $self->doResolveProductName();
+		$ProductVersion 			      = $self->doResolveProductVersion();
+		$EnvType 				         = $self->doResolveEnvType();
+		$ProductOwner 				      = $self->doResolveProductOwner();
+		$HostName 					      = $self->doResolveHostName();
+		$ConfFile 					      = $self->doResolveIniConfFile();
 
 
 		return $self;

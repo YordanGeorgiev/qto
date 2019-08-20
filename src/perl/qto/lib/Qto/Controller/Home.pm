@@ -15,7 +15,7 @@ use Qto::App::IO::In::CnrPostPrms ;
 use Qto::App::Db::In::RdrDbsFcry ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
-our $appConfig      = {} ;
+our $config      = {} ;
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgres';
 
@@ -32,8 +32,8 @@ sub doLanding {
    my $rows_count       = 0 ; 
    my $dat              = {}  ; 
    
-   $appConfig		 		= $self->app->get('AppConfig');
-   $db                  = toEnvName ( $db , $appConfig) ;
+   $config		 		= $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db, 'home' ) ;
    
@@ -58,16 +58,16 @@ sub doRenderPageTemplate {
    my $template_name    = 'home' ; 
    my $template         = 'pages/' . $template_name . '/' . $template_name ; 
 
-   my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
 
    $self->render(
       'template'        => $template 
     , 'msg'             => $msg
     , 'db' 		         => $db
-    , 'ProductType' 		=> $appConfig->{'ProductType'}
-    , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
-    , 'GitShortHash'    => $appConfig->{'GitShortHash'}
+    , 'EnvType' 		=> $config->{'EnvType'}
+    , 'ProductVersion' 	=> $config->{'ProductVersion'}
+    , 'GitShortHash'    => $config->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'notice'          => $notice
 	) ; 

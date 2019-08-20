@@ -38,5 +38,6 @@ sudo perl -MCPAN -e 'CPAN::Shell->force(qw( install Net::Google::DataAPI::Auth::
 sudo perl -MCPAN -e 'install Net::Google::Spreadsheets::V4'
 sudo perl -MCPAN -e 'install Net::Google::Spreadsheets;'
 sudo perl -MCPAN -e 'install DBIx::ProcedureCall'
+sudo perl -MCPAN -e 'install JSON::Parse'
 # stop install perl modules
 

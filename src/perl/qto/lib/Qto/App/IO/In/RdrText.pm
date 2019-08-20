@@ -30,7 +30,7 @@ binmode(STDOUT, ':utf8');
 binmode(STDERR, ':utf8');
 
 our $module_trace      = 0;
-our $appConfig         = {};
+our $config         = {};
 our $HostName          = '';
 our $objLogger         = {};
 our $objRdrFiles    = {};
@@ -47,7 +47,7 @@ our $objController     = () ;
 
 		use Qto::App::ETL::Qto ;
 		my $objQto = 
-			'Qto::App::ETL::Qto'->new ( \$appConfig ) ; 
+			'Qto::App::ETL::Qto'->new ( \$config ) ; 
 =cut 
 
 =head1 EXPORT
@@ -344,7 +344,7 @@ sub doReadIssueFile {
 sub new {
 
   my $invocant = shift;
-  $appConfig = ${shift @_} || {'foo' => 'bar',};
+  $config = ${shift @_} || {'foo' => 'bar',};
   $objController = shift ; 
   $objController = shift ; 
   $term = shift || 'daily_issues' ;
@@ -371,11 +371,11 @@ sub doInitialize {
   my $msg = '' ; 
   my $ret = 1 ; 
 
-  %$self = (appConfig => $appConfig);
+  %$self = (config => $config);
 
-  $objLogger = 'Qto::App::Utils::Logger'->new(\$appConfig);
+  $objLogger = 'Qto::App::Utils::Logger'->new(\$config);
   $objRdrFiles
-    = 'Qto::App::Utils::IO::RdrFiles'->new(\$appConfig);
+    = 'Qto::App::Utils::IO::RdrFiles'->new(\$config);
 
   $hsrStatus = {
       'eval' => '01-eval'    # evaluate whether or not to do it

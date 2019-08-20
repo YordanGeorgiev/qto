@@ -17,7 +17,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
    our $module_trace                            = 1 ; 
    our $IsUnitTest                              = 0 ; 
-	our $appConfig 										= {} ; 
+	our $config 										= {} ; 
 	our $objLogger 										= {} ; 
 	our $objModel                                = {} ; 
    our $rdbms_type                              = 'postgres' ; 
@@ -49,7 +49,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAdminUser ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
-      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
@@ -105,7 +105,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
-      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
@@ -163,7 +163,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       ( $ret , $msg , $dbh ) 	= $self->doConnectToDbAsAppUser ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
-      my $objRdrDbsFcry 		= 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+      my $objRdrDbsFcry 		= 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
@@ -213,7 +213,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
-      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
@@ -282,7 +282,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
-      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
@@ -344,8 +344,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $dbh = q{} ; 
 
       eval { 
-		$postgres_db_user 			= $ENV{ 'postgres_db_user' }     || $appConfig->{'postgres_db_user'}    || 'ysg' ; 
-		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' }  || $appConfig->{'postgres_db_user_pw'} || 'no_pass_provided!!!' ; 
+		$postgres_db_user 			= $ENV{ 'postgres_db_user' }     || $config->{'postgres_db_user'}    || 'ysg' ; 
+		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' }  || $config->{'postgres_db_user_pw'} || 'no_pass_provided!!!' ; 
          $dbh = DBI->connect("dbi:Pg:dbname=$db;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
                     'RaiseError'          => 1
                   , 'ShowErrorStatement'  => 1
@@ -378,8 +378,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $dbh = q{} ; 
 
       eval { 
-		$postgres_db_useradmin 			= $ENV{ 'postgres_db_useradmin' }     || $appConfig->{'postgres_db_useradmin'} ;
-		$postgres_db_useradmin_pw 		= $ENV{ 'postgres_db_useradmin_pw' }  || $appConfig->{'postgres_db_useradmin_pw'} 
+		$postgres_db_useradmin 			= $ENV{ 'postgres_db_useradmin' }     || $config->{'postgres_db_useradmin'} ;
+		$postgres_db_useradmin_pw 		= $ENV{ 'postgres_db_useradmin_pw' }  || $config->{'postgres_db_useradmin_pw'} 
          || 'no_pass_provided!!!' ; 
          $dbh = DBI->connect("dbi:Pg:dbname=$db;port=$postgres_db_port", "$postgres_db_useradmin", "$postgres_db_useradmin_pw" , {
                     'RaiseError'          => 1
@@ -419,10 +419,10 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $str_val_list     = q{} ; 
       my $error_msg        = q{} ; 
 
-      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , $self ) ; 
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , $self ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 		
-      my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+      my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
 		my $update_time      = $objTimer->GetHumanReadableTime();
       
       my $dmhsr            = {} ; 
@@ -543,7 +543,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $dmhsr            = {} ; 
       my $update_time      = q{} ; 
 
-      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , $self ) ; 
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , $self ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       ( $ret , $msg , $dmhsr ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
@@ -679,7 +679,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       
       my $dmhsr            = {} ; 
 
-      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel , $self ) ; 
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel , $self ) ; 
       my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       $objLogger->doLogDebugMsg ( "upsert start for : db: $db table $table" );
@@ -712,7 +712,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       # debug p $sql_str_insrt ; 
       my $expected_amount_of_inserted_rows = keys %$hsr2; 
 
-      my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+      my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
       $update_time      = $objTimer->GetHumanReadableTime();
       foreach my $row_num ( sort ( keys %$hsr2) ) { 
          next if $row_num == 0 ; 
@@ -859,7 +859,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $update_time      = q{} ; # must have the default value now() in db
       my $dmhsr            = {} ; 
       $db = $objModel->get('postgres_db_name');
-      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel , $self ) ; 
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel , $self ) ; 
       my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
       
       binmode(STDIN,  ':utf8');
@@ -905,7 +905,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          for (1..3) { chop ( $sql_str_insrt) } ; 
          $sql_str_insrt	.= ')' ; 
 
-         my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+         my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
 		   my $update_time      = $objTimer->GetHumanReadableTime();
          foreach my $row_num ( sort ( keys %$hs_table ) ) { 
 
@@ -1006,7 +1006,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
 	sub new {
 		my $invocant 	= shift ;    
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in WtrPostgresDb !!!' ; 
       $objController = shift ;  
 		my $class      = ref ( $invocant ) || $invocant ; 
@@ -1021,18 +1021,18 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
-
-		$db 			               = $ENV{ 'postgres_db_name' }     || $appConfig->{'postgres_db_name'}    || 'prd_qto' ; 
-		$postgres_db_host 			= $ENV{ 'postgres_db_host' }     || $appConfig->{'postgres_db_host'}    || 'localhost' ;
-		$postgres_db_port 			= $ENV{ 'postgres_db_port' }     || $appConfig->{'postgres_db_port'}    || '13306' ; 
-		$postgres_db_useradmin 			= $ENV{ 'postgres_db_useradmin' }     || $appConfig->{'postgres_db_useradmin'}    || 'ysg' ; 
-		$postgres_db_useradmin_pw 		= $ENV{ 'postgres_db_useradmin_pw' }  || $appConfig->{'postgres_db_useradmin_pw'} || 'no_pass_provided!!!' ; 
-		$postgres_db_user 			= $ENV{ 'postgres_db_user' }     || $appConfig->{'postgres_db_user'}    || 'ysg' ; 
-		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' }  || $appConfig->{'postgres_db_user_pw'} || 'no_pass_provided!!!' ; 
+      my $dbConfig = $config->{'env'}->{'db'} ; 
+		$db 			               = $ENV{ 'postgres_db_name' }     || $dbConfig->{'postgres_db_name'}    || 'prd_qto' ; 
+		$postgres_db_host 			= $ENV{ 'postgres_db_host' }     || $dbConfig->{'postgres_db_host'}    || 'localhost' ;
+		$postgres_db_port 			= $ENV{ 'postgres_db_port' }     || $dbConfig->{'postgres_db_port'}    || '13306' ; 
+		$postgres_db_useradmin 			= $ENV{ 'postgres_db_useradmin' }     || $dbConfig->{'postgres_db_useradmin'}    || 'ysg' ; 
+		$postgres_db_useradmin_pw 		= $ENV{ 'postgres_db_useradmin_pw' }  || $dbConfig->{'postgres_db_useradmin_pw'} || 'no_pass_provided!!!' ; 
+		$postgres_db_user 			= $ENV{ 'postgres_db_user' }     || $dbConfig->{'postgres_db_user'}    || 'ysg' ; 
+		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' }  || $dbConfig->{'postgres_db_user_pw'} || 'no_pass_provided!!!' ; 
       
-	   $objLogger 			         = 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			         = 'Qto::App::Utils::Logger'->new( \$config ) ;
 
       return $self ; 
 	}	

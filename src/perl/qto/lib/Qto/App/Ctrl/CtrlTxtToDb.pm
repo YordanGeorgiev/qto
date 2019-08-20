@@ -18,14 +18,14 @@ package Qto::App::Ctrl::CtrlTxtToDb ;
    use Qto::App::IO::In::RdrTextFactory ; 
 	
 	our $module_trace                = 0 ; 
-	our $appConfig						   = {} ; 
+	our $config						   = {} ; 
 	our $RunDir 						   = '' ; 
 	our $ProductBaseDir 				   = '' ; 
 	our $ProductDir 					   = '' ; 
 	our $ProductInstanceDir 			= ''; 
 	our $ProductInstanceEnv  = '' ; 
 	our $ProductName 					   = '' ; 
-	our $ProductType 					   = '' ; 
+	our $EnvType 					   = '' ; 
 	our $ProductVersion 				   = ''; 
 	our $ProductOwner 				   = '' ; 
 	our $HostName 						   = '' ; 
@@ -37,7 +37,7 @@ package Qto::App::Ctrl::CtrlTxtToDb ;
 
 =head1 SYNOPSIS
       my $objCtrlTxtToDb = 
-         'Qto::App::Ctrl::CtrlTxtToDb'->new ( \$appConfig ) ; 
+         'Qto::App::Ctrl::CtrlTxtToDb'->new ( \$config ) ; 
       ( $ret , $msg ) = $objCtrlTxtToDb->doLoadIssuesFileToDb ( $issues_file ) ; 
 =cut 
 
@@ -73,7 +73,7 @@ package Qto::App::Ctrl::CtrlTxtToDb ;
    
 
       foreach my $table ( @tables ) {
-         my $objRdrTextFactory    = 'Qto::App::IO::In::RdrTextFactory'->new( \$appConfig , $self ) ; 
+         my $objRdrTextFactory    = 'Qto::App::IO::In::RdrTextFactory'->new( \$config , $self ) ; 
          my $objRdrText 			   = $objRdrTextFactory->doInit ( $table ); 
          my ( $ret , $msg , $str_issues_file ) 
                                     = $objRdrText->doReadIssueFile ( $table ) ; 
@@ -87,7 +87,7 @@ package Qto::App::Ctrl::CtrlTxtToDb ;
 
 
          p($hsr) if $module_trace == 1 ; 
-         my $objWtrDbsFcry    = 'Qto::App::Db::Out::WtrDbsFcry'->new( \$appConfig , $self ) ; 
+         my $objWtrDbsFcry    = 'Qto::App::Db::Out::WtrDbsFcry'->new( \$config , $self ) ; 
          my $objWtrDb 			   = $objWtrDbsFcry->doSpawn ( "$rdbms_type" );
          
          ( $ret , $msg )            = $objWtrDb->doInsertSqlHashData ( $hsr , $table ) ; 
@@ -125,7 +125,7 @@ package Qto::App::Ctrl::CtrlTxtToDb ;
 	sub new {
 
 		my $class      = shift;    # Class name is in the first parameter
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 
 		my $self = {};        # Anonymous hash reference holds instance attributes
@@ -143,10 +143,10 @@ package Qto::App::Ctrl::CtrlTxtToDb ;
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
 
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
 
 
       return $self ; 

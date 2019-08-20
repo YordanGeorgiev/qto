@@ -18,7 +18,7 @@ use Qto::App::Utils::Timer ;
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $module_trace   = 0 ; 
-our $appConfig      = {};
+our $config      = {};
 our $objLogger      = {} ;
 
 
@@ -34,12 +34,12 @@ sub doViewItems {
    my $view_control     = '' ; 
    my $as               = 'doc' ; 
 
-   $appConfig		 		= $self->app->get('AppConfig');
-   $db                  = toEnvName ( $db , $appConfig) ;
+   $config		 		= $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
 
-   $objModel            = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db ) ;
+   $objModel            = 'Qto::App::Mdl::Model'->new ( \$config , $db ) ;
 
    ( $ret , $msg , $view_control ) = $self->doBuildViewPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
    $self->render('text' => 'view page is presented') unless $ret == 0 ; 
@@ -70,7 +70,7 @@ sub doBuildViewPageType {
    my $page_type = $lables_pages->{ $as } || 'view-doc' ; 
    $ui_type = "page/$page_type" ;
 
-   $objPageFactory                  = 'Qto::Controller::PageFactory'->new(\$appConfig, \$objModel );
+   $objPageFactory                  = 'Qto::Controller::PageFactory'->new(\$config, \$objModel );
    $objPageBuilder                  = $objPageFactory->doSpawn( $ui_type );
    ( $ret , $msg , $view_control )  = $objPageBuilder->doBuildViewControl( $msg , \$objModel , $db , $item , $as ) ;
 
@@ -105,7 +105,7 @@ sub doRenderPageTemplate {
    my $template_name    = $as_templates->{ $as } || 'view-doc' ; 
    my $template         = 'pages/' . $template_name . '/' . $template_name ; 
 
-   my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
 
    $self->render(
@@ -114,9 +114,9 @@ sub doRenderPageTemplate {
     , 'msg'             => $msg
     , 'item'            => $item
     , 'db' 		         => $db
-    , 'ProductType' 		=> $appConfig->{'ProductType'}
-    , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
-    , 'GitShortHash'    => $appConfig->{'GitShortHash'}
+    , 'EnvType' 		=> $config->{'EnvType'}
+    , 'ProductVersion' 	=> $config->{'ProductVersion'}
+    , 'GitShortHash'    => $config->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'list_control'    => $list_control
     , 'notice'          => $notice

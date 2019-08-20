@@ -9,7 +9,7 @@ package Qto::Controller::PageFactory ;
    use Qto::Controller::ListPrintTable ; 
    use Qto::Controller::SearchGrid ; 
 
-	our $appConfig 		   = {} ; 
+	our $config 		   = {} ; 
 	our $objModel           = {} ; 
    our $ui_type            = 'page/list-grid' ; 
 
@@ -51,14 +51,14 @@ package Qto::Controller::PageFactory ;
 
 		require $package_file;
 
-		return $objPageBuilder->new( \$appConfig , \$objModel , @args);
+		return $objPageBuilder->new( \$config , \$objModel , @args);
 	}
 
 
 	sub new {
 
 		my $invocant 			= shift ;    
-		$appConfig           = ${ shift @_ } || croak 'appConfig not set !!!' ; 
+		$config           = ${ shift @_ } || croak 'config not set !!!' ; 
 		$objModel            = ${ shift @_ } || croak 'objModel not set !!!' ; 
       my $class            = ref ( $invocant ) || $invocant ; 
 		my $self             = {}; bless( $self, $class );   
@@ -71,7 +71,7 @@ package Qto::Controller::PageFactory ;
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
 
       return $self ; 

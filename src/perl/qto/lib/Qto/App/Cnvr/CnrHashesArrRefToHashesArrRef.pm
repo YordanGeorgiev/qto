@@ -4,7 +4,7 @@ package Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef ;
 use Data::Printer ; 
 use Carp ; 
 
-our $appConfig       = {} ; 
+our $config       = {} ; 
 	
 #
 # -----------------------------------------------------------------------------
@@ -169,7 +169,7 @@ sub doConvert {
 
 sub new {
    my $class      = shift;    
-   $appConfig     = ${ shift @_ } || croak "appConfig not provided !!!" ; 
+   $config     = ${ shift @_ } || croak "config not provided !!!" ; 
    my $self = {}; bless( $self, $class );    
    return $self;
 }  

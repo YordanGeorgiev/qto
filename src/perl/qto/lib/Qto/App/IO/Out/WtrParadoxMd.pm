@@ -15,7 +15,7 @@ package Qto::App::IO::Out::WtrParadoxMd ;
 
    our $module_trace       = 0 ; 
    our $IsUnitTest         = 0 ; 
-   our $appConfig          = {} ; 
+   our $config          = {} ; 
    our $objLogger          = {} ; 
    our $objModel           = {} ; 
    our $objWtrDirs         = {} ; 
@@ -47,7 +47,7 @@ package Qto::App::IO::Out::WtrParadoxMd ;
       my $nice_date  = "$year" . '-' . "$mon" . '-' . "$mday" ; 
 
       my $md_file_name       = $db. '.' . $table . '.' . $nice_datetime ; 
-      my $md_dir = $appConfig->{ 'ProductInstanceDir' } . '/dat/mix/' . "$year/$nice_month/$nice_date/tmp" ; 
+      my $md_dir = $config->{ 'ProductInstanceDir' } . '/dat/mix/' . "$year/$nice_month/$nice_date/tmp" ; 
       $objWtrDirs->doMkDir ( "$md_dir" ) ; 
       my $md_file         = "$md_dir/$md_file_name" . '.md'; 
 
@@ -127,7 +127,7 @@ package Qto::App::IO::Out::WtrParadoxMd ;
       $msg = 'STOP writing the md file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
       $msg = $md_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
   
-      my $objWtrFiles   = 'Qto::App::IO::Out::WtrFiles'->new ( \$appConfig ) ; 
+      my $objWtrFiles   = 'Qto::App::IO::Out::WtrFiles'->new ( \$config ) ; 
       ( $ret , $msg ) = $objWtrFiles->doPrintToFile ( $md_file , $str_response, 'utf8' ) ; 
       
       return ( 0 , '' , $md_file ) if -f $md_file ; 
@@ -137,7 +137,7 @@ package Qto::App::IO::Out::WtrParadoxMd ;
  
 	sub new {
 		my $class = shift;    
-		$appConfig     = ${ shift @_ } || croak 'missing appConfig !!!' ; 
+		$config     = ${ shift @_ } || croak 'missing config !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'missing objModel !!!' ; 
 		my $self = {}; bless( $self, $class ); 
       $self = $self->doInit();
@@ -148,11 +148,11 @@ package Qto::App::IO::Out::WtrParadoxMd ;
    sub doInit {
       my $self          = shift ; 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
-      $ProductInstanceDir   = $appConfig->{ 'ProductInstanceDir' } ; 
-	   $objWtrDirs       = 'Qto::App::IO::Out::WtrDirs'->new ( \$appConfig ) ; 
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+      $ProductInstanceDir   = $config->{ 'ProductInstanceDir' } ; 
+	   $objWtrDirs       = 'Qto::App::IO::Out::WtrDirs'->new ( \$config ) ; 
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
       return $self ; 
 	}	
 

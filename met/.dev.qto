@@ -246,7 +246,6 @@ src/perl/qto/t/lib/Qto/App/Utils/OO/AutoLoadableChild.pm
 src/perl/qto/t/lib/Qto/App/Utils/OO/TestSetGetable.t
 src/perl/qto/t/lib/Qto/App/Utils/OO/TestAutoLoadable.t
 src/perl/qto/t/lib/Qto/App/Utils/TestInitiator.t
-src/perl/qto/t/lib/Qto/App/Utils/TestConfigurator.t
 src/perl/qto/t/lib/Qto/App/Utils/TestDispatcher.t
 src/perl/qto/t/lib/Qto/App/Utils/TestLogger.t
 src/perl/qto/t/lib/Qto/App/Utils/TestModel.t
@@ -344,7 +343,6 @@ src/perl/qto/lib/Qto/App/Utils/OO/SetGetable.pm
 src/perl/qto/lib/Qto/App/Utils/OO/AutoLoadable.pm
 src/perl/qto/lib/Qto/App/Utils/Logger.pm
 src/perl/qto/lib/Qto/App/Utils/Timer.pm
-src/perl/qto/lib/Qto/App/Utils/Configurator.pm
 # ---
 # ---
 src/bash/qto/tests/mojo-hypnotoad-start.test.sh
@@ -814,7 +812,6 @@ src/perl/qto/lib/auto/Qto/App/RAM/CnrHsr2ToTxt/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/RAM/CnrJsonToHsr2/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/RAM/CnrTxtToHtml/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/UI/Controls/WtrListLabels/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/Utils/Configurator/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Utils/Initiator/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Utils/Logger/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Utils/Timer/autosplit.ix

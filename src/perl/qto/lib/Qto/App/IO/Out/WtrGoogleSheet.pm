@@ -27,7 +27,7 @@ package Qto::App::IO::Out::WtrGoogleSheet ;
 
    our $module_trace       = 1 ; 
    our $IsUnitTest         = 0 ; 
-   our $appConfig          = {} ; 
+   our $config          = {} ; 
    our $objLogger          = {} ; 
    our $ProductInstanceDir = {} ; 
 
@@ -229,7 +229,7 @@ package Qto::App::IO::Out::WtrGoogleSheet ;
 	sub new {
 
 		my $class = shift;    # Class name is in the first parameter
-		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
       $self = $self->doInitialize();
@@ -245,13 +245,13 @@ package Qto::App::IO::Out::WtrGoogleSheet ;
       my $self          = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
        );
 
-      #debug rint "WtrGoogleSheet::doInitialize appConfig : " . p($appConfig );
-      $ProductInstanceDir   = $appConfig->{ 'ProductInstanceDir' } ; 
+      #debug rint "WtrGoogleSheet::doInitialize config : " . p($config );
+      $ProductInstanceDir   = $config->{ 'ProductInstanceDir' } ; 
 
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
 
       return $self ; 
 	}	

@@ -15,9 +15,9 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $tm            = '' ; # the test message for each test 
    my $exp_err_msg   = '' ; 
    my $t             = Test::Mojo->new('Qto');
-   my $appConfig     = $t->app->get('AppConfig') ; 
-   my $db            = $appConfig->{ 'postgres_db_name' } || 'dev_qto' ; 
-   my $env           = $appConfig->{ 'ProductType' } || 'dev' ;  # dev , tst , prd
+   my $config     = $t->app->get('AppConfig') ; 
+   my $db            = $config->{ 'postgres_db_name' } || 'dev_qto' ; 
+   my $env           = $config->{ 'EnvType' } || 'dev' ;  # dev , tst , prd
    $url              = '/' . $db . '/update/test_update_table' ; 
 
    my $ua  = $t->ua ; 

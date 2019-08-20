@@ -14,7 +14,7 @@ use Qto::App::UI::WtrUIFactory ;
 use Qto::App::IO::In::CnrUrlPrms ; 
 
 our $module_trace   = 0 ; 
-our $appConfig      = {};
+our $config      = {};
 our $objLogger      = {} ;
 our $objModel       = {} ; 
 our $rdbms_type     = 'postgres' ; 
@@ -22,7 +22,7 @@ our $rdbms_type     = 'postgres' ;
 sub new {
 
    my $invocant 			= shift ;    
-   $appConfig           = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+   $config           = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
    $objModel            = ${ shift @_ } || croak 'missing objModel !!!' ; 
    my $class            = ref ( $invocant ) || $invocant ; 
    my $self             = {};       
@@ -46,10 +46,10 @@ sub doBuildListControl {
    my $objWtrUIFactory 	= {} ; 
    my $objUIBuilder 		= {} ; 
 
-   ( $ret , $msg , $mhsr2 ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) ;
+   ( $ret , $msg , $mhsr2 ) = $objModel->doGetTableMeta ( $config , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
 	
-   $objWtrUIFactory = 'Qto::App::UI::WtrUIFactory'->new(\$appConfig, \$objModel );
+   $objWtrUIFactory = 'Qto::App::UI::WtrUIFactory'->new(\$config, \$objModel );
    $objUIBuilder = $objWtrUIFactory->doInit('control/list-labels');
 
    ( $ret , $msg , $control ) = $objUIBuilder->doBuild() ; 

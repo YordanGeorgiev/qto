@@ -27,7 +27,7 @@ package Qto::App::RAM::CnrHsr2ToTxt ;
    binmode(STDERR, ':utf8');
 
    our $module_trace             = 0 ; 
-	our $appConfig						= {} ; 
+	our $config						= {} ; 
 	our $HostName 						= '' ; 
 	our $objLogger						= {} ; 
 	our $objController				= {} ; 
@@ -42,7 +42,7 @@ package Qto::App::RAM::CnrHsr2ToTxt ;
 
       use Qto::App::RAM::CnrHsr2ToTxt ; 
 		my $objCnrHsr2ToTxt = 
-			'Qto::App::RAM::CnrHsr2ToTxt'->new ( \$appConfig ) ; 
+			'Qto::App::RAM::CnrHsr2ToTxt'->new ( \$config ) ; 
 =cut 
 
 =head1 EXPORT
@@ -68,7 +68,7 @@ sub doConvertHashRefToStr {
   my $ret        = 1;
   my $str_issues = q{};
   my $str_activity_issues = " ";
-  my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+  my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
   my $run_time         = $objTimer->GetHumanReadableTime();
   p($hsr2) if $module_trace == 1;
   my $str_header = '# START ' . uc($term) . ' @%run_time%
@@ -225,7 +225,7 @@ sub doConvertHashRefToStr {
 	sub new {
 
 		my $invocant 			= shift ;    
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 	   $objController       = shift ; 
       $term                = shift || 'daily' ; 
 	
@@ -248,10 +248,10 @@ sub doConvertHashRefToStr {
       my $self          = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
        );
 
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
       
       $hsrStatus = {
            'eval'    => '01-eval'      # evaluate whether or not to do it

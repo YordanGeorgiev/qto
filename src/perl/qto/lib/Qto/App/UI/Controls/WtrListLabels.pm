@@ -17,7 +17,7 @@ package Qto::App::UI::Controls::WtrListLabels ;
 
    our $module_trace      = 1 ; 
    our $objModel          = {} ; 
-   our $appConfig         = {} ; 
+   our $config         = {} ; 
 
 
    #
@@ -49,7 +49,7 @@ package Qto::App::UI::Controls::WtrListLabels ;
       if ( defined ( $to_picks ) ) {
          @picks      = split ( ',' , $to_picks ); 
       } else {
-         ( $ret , $msg , $cols) = $objModel->doGetItemsDefaultPickCols( $appConfig , $db , $table ) ;
+         ( $ret , $msg , $cols) = $objModel->doGetItemsDefaultPickCols( $config , $db , $table ) ;
          return ( $ret , $msg , '' ) unless $ret == 0 ; 
          @picks      = @$cols ;
       }
@@ -120,7 +120,7 @@ package Qto::App::UI::Controls::WtrListLabels ;
 	sub new {
 
 		my $invocant 			= shift ;    
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'missing objModel !!!' ; 
       # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
@@ -140,7 +140,7 @@ package Qto::App::UI::Controls::WtrListLabels ;
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
       return $self ; 
 	}	

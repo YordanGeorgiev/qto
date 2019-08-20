@@ -12,7 +12,7 @@ package Qto::App::Db::In::Postgres::RdrHPostgresDb ;
 
    our $objModel = {} ; 
    our $objLogger = {} ; 
-   our $appConfig = {} ; 
+   our $config = {} ; 
 
    #
    # -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ package Qto::App::Db::In::Postgres::RdrHPostgresDb ;
    
 	sub new {
 		my $invocant   = shift ;    
-		$appConfig     = ${ shift @_ } || croak 'appConfig not passed in RdrPostgresDb !!!' ; 
+		$config     = ${ shift @_ } || croak 'config not passed in RdrPostgresDb !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
 		my $self       = {} ; bless( $self, $class );    # Say: $self is a $class

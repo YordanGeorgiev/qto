@@ -95,6 +95,7 @@ sub doCheckRequiredModules {
    Term::ReadKey
    Term::Prompt
    DBIx::ProcedureCall
+   JSON::Parse
   );
 
   for (@modules) {

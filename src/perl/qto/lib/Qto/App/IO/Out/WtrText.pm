@@ -30,7 +30,7 @@ binmode(STDOUT, ':utf8');
 binmode(STDERR, ':utf8');
 
 our $module_trace      = 0;
-our $appConfig         = {};
+our $config         = {};
 our $HostName          = '';
 our $objLogger         = {};
 our $objController     = {};
@@ -80,7 +80,7 @@ sub doPrintIssuesFile {
 sub new {
 
   my $invocant = shift;
-  $appConfig     = ${shift @_} || {'foo' => 'bar',};
+  $config     = ${shift @_} || {'foo' => 'bar',};
   $table         = shift || 'daily_issues' ; 
 
   # might be class or object, but in both cases invocant
@@ -103,10 +103,10 @@ sub doInitialize {
    my $msg = '' ; 
    my $ret = 1 ; 
 
-  %$self = (appConfig => $appConfig);
+  %$self = (config => $config);
 
-  $objLogger = 'Qto::App::Utils::Logger'->new(\$appConfig);
-  $objWtrFiles   = 'Qto::App::IO::Out::WtrFiles'->new ( \$appConfig ) ; 
+  $objLogger = 'Qto::App::Utils::Logger'->new(\$config);
+  $objWtrFiles   = 'Qto::App::IO::Out::WtrFiles'->new ( \$config ) ; 
 
   $hsrStatus = {
     'eval' => '01-eval'    # evaluate whether or not to do it
@@ -132,7 +132,7 @@ sub doInitialize {
 
   %inverse_hsrStatus = reverse %$hsrStatus;
 
-   my $qto_project = $appConfig->{ 'qto_project' } ; 
+   my $qto_project = $config->{ 'qto_project' } ; 
 
   
     my $objTimer = 'Qto::App::Utils::Timer'->new();
@@ -151,11 +151,11 @@ sub doInitialize {
       . "$nice_date"
       . '.txt';
 
-    my $ProductInstanceDir = $appConfig->{'ProductInstanceDir'};
+    my $ProductInstanceDir = $config->{'ProductInstanceDir'};
     $issues_file = $ProductInstanceDir . "/" . $issues_file
       unless ($issues_file =~ m/^\//g);
 
-  $appConfig->{'issues_file'} = $issues_file;
+  $config->{'issues_file'} = $issues_file;
   return $self;
 }
 

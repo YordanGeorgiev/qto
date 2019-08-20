@@ -20,7 +20,7 @@ package Qto::App::IO::In::RdrCmdArgs ;
 
 	our $module_trace                = 0 ; 
    our $module_test_run             = 0 ; 
-	our $appConfig						   = {} ; 
+	our $config						   = {} ; 
 	our $objLogger						   = {} ; 
 	our $objModel                    = {} ; 
 
@@ -73,7 +73,7 @@ package Qto::App::IO::In::RdrCmdArgs ;
 
 =head1 SYNOPSIS
       my $objRdrCmdArgs = 
-         'Qto::App::IO::In::RdrCmdArgs'->new ( \$appConfig ) ; 
+         'Qto::App::IO::In::RdrCmdArgs'->new ( \$config ) ; 
       ( $ret , $msg ) = $objRdrCmdArgs->doRun ( $actions ) ; 
 =cut 
 =head1 EXPORT
@@ -107,7 +107,7 @@ package Qto::App::IO::In::RdrCmdArgs ;
 	sub new {
 
 		my $class      = shift;    # Class name is in the first parameter
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel     = ${ shift @_ } || croak "objModel not passed !!!" ; 
       $module_test_run = shift if @_ ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
@@ -125,9 +125,9 @@ package Qto::App::IO::In::RdrCmdArgs ;
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
       return $self ; 
 	}	
 	#eof sub doInitialize

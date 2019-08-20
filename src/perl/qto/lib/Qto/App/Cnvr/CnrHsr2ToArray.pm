@@ -1,7 +1,7 @@
 use strict ; use warnings ; 
 package Qto::App::Cnvr::CnrHsr2ToArray ; 
 
-our $appConfig = {} ; 
+our $config = {} ; 
 use Data::Printer ; 
 use Carp ; 
 
@@ -46,7 +46,7 @@ our $objModel = {} ;
 
 	sub new {
 		my $class      = shift;    # Class name is in the first parameter
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 		my $self = {} ; bless( $self, $class );    # Say: $self is a $class
 		return $self;

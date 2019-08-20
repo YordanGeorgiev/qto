@@ -24,7 +24,7 @@ package Qto::App::Ctrl::CtrlJsonToDb ;
    use Qto::App::IO::In::RdrFiles ; 
 
 	our $module_trace                = 1 ; 
-	our $appConfig						   = {} ; 
+	our $config						   = {} ; 
 	our $objLogger						   = {} ; 
 	our $objModel                    = {} ; 
    our $objWtrFiles                 = {} ; 
@@ -33,7 +33,7 @@ package Qto::App::Ctrl::CtrlJsonToDb ;
 
 =head1 SYNOPSIS
       my $objCtrlJsonToDb = 
-         'Qto::App::Ctrl::CtrlJsonToDb'->new ( \$appConfig ) ; 
+         'Qto::App::Ctrl::CtrlJsonToDb'->new ( \$config ) ; 
       ( $ret , $msg ) = $objCtrlJsonToDb->doLoadIssuesFileToDb ( $items_file ) ; 
 =cut 
 
@@ -76,7 +76,7 @@ package Qto::App::Ctrl::CtrlJsonToDb ;
       # if the xls_file is not defined take the latest one from the mix data dir
       unless ( defined $in_dir  ) {
          my $mix_data_dir    = $ENV{'mix_data_dir' } ;  ; 
-         my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+         my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
 	      my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer-> GetTimeUnits(); 
          # example: /vagrant/opt/nokia/musa/dat/mix/issues/2018/2018-06/2018-06-11
          $in_dir = "$mix_data_dir/$year/$year-$mon/$year-$mon-$mday/json" ; 
@@ -88,13 +88,13 @@ package Qto::App::Ctrl::CtrlJsonToDb ;
          ( $ret , $msg , $str_file ) = $objRdrFiles->doReadFileReturnString ( $items_file , 'utf8' ) ; 
          $objModel->set('str_items' , $str_file ) ; 
          
-         my $objCnrJsonToHsr2 = 'Qto::App::RAM::CnrJsonToHsr2'->new ( \$appConfig ) ; 
+         my $objCnrJsonToHsr2 = 'Qto::App::RAM::CnrJsonToHsr2'->new ( \$config ) ; 
          ( $ret , $msg )      = $objCnrJsonToHsr2->doConvert( \$objModel ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
 
          next if ( keys %{ $objModel->get('hsr2') } == 0 ) ; 
 
-         my $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+         my $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new( \$config , \$objModel ) ; 
          my $objWtrDb 			= $objWtrDbsFcry->doSpawn ( "$rdbms_type" );
          
          ( $ret , $msg )  = $objWtrDb->doUpsertTable( \$objModel , $table ) ; 
@@ -117,7 +117,7 @@ package Qto::App::Ctrl::CtrlJsonToDb ;
 	sub new {
 
 		my $class = shift;    # Class name is in the first parameter
-		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel   = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
@@ -135,11 +135,11 @@ package Qto::App::Ctrl::CtrlJsonToDb ;
       my $self          = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
        );
 
-	   $objLogger 	   = 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
-      $objWtrFiles   = 'Qto::App::IO::Out::WtrFiles'->new ( \$appConfig ) ; 
+	   $objLogger 	   = 'Qto::App::Utils::Logger'->new( \$config ) ;
+      $objWtrFiles   = 'Qto::App::IO::Out::WtrFiles'->new ( \$config ) ; 
 
       return $self ; 
 	}	

@@ -17,7 +17,7 @@ use Qto::App::Cnvr::CnrHsr2ToArray ;
 use Qto::App::IO::In::CnrUrlPrms ; 
 
 my $module_trace    = 0 ;
-our $appConfig      = {};
+our $config      = {};
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgres';
 
@@ -39,8 +39,8 @@ sub doQueryItems {
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,'search' ) ;
    
-   $appConfig		 		= $self->app->get('AppConfig');
-   unless ( exists ( $appConfig->{ $db . '.meta' } )  ) {
+   $config		 		= $self->app->get('AppConfig');
+   unless ( exists ( $config->{ $db . '.meta' } )  ) {
       
       ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjDbMeta( $db ,'search') ; 
       unless ( $ret == 0 ) { 
@@ -48,7 +48,7 @@ sub doQueryItems {
          return ; 
       }
       else { 
-         $appConfig->{ $db . '.meta' } = $msr2 ; 
+         $config->{ $db . '.meta' } = $msr2 ; 
       }
    } 
 
@@ -61,26 +61,26 @@ sub doQueryItems {
 
 	#print STDOUT "Query.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
    $objModel->set('postgres_db_name' , $db ) ; 
 
    my $query_params = $self->req->query_params ; 
    $objCnrUrlPrms = 
-      'Qto::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+      'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    ( $ret , $msg ) = $objCnrUrlPrms->doSetQueryUrlParams('Query' );
    if ( $ret != 0 ) {
       $self->SUPER::doRenderJSON(400,$msg,'GET','','0','');
       return ; 
    } 
 
-   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
 	$objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
    ($ret, $msg , $hsr2 ) = $objRdrDb->doGlobalSrchIntoHashRef(\$objModel );
 
    if ( $ret == 0 ) {
       my $list = ();
       my $objCnrHsr2ToArray = 
-         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
+         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
       ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 , '>', 'relevancy') ;
 
       $self->SUPER::doRenderJSON(200,$msg,'GET',$msr2,$rows_count,$list);

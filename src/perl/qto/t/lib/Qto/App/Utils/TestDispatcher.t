@@ -20,21 +20,21 @@ use Qto::App::Utils::Configurator ;
 use Qto::App::Ctrl::Dispatcher ; 
 
 my $objInitiator 				= 'Qto::App::Utils::Initiator'->new();	
-my $appConfig					= {} ;
+my $config					= {} ;
 
-$appConfig                 = $objInitiator->get('AppConfig');
+$config                 = $objInitiator->get('AppConfig');
 
 my  $objConfigurator
     = 'Qto::App::Utils::Configurator'->new($objInitiator->{'ConfFile'},
-    \$appConfig);
+    \$config);
 
-$appConfig                 = $objConfigurator->getConfHolder()  ;
+$config                 = $objConfigurator->getConfHolder()  ;
 
 my $tn           = '' ;     # the test number for easier reading 
 my $actions      = 'db-to-xls' ; 
-my $objLogger	  = 'Qto::App::Utils::Logger'->new(\$appConfig);
-my $objModel     = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ; 
-my $objDispatcher= 'Qto::App::Ctrl::Dispatcher'->new(\$appConfig , \$objModel , 1);
+my $objLogger	  = 'Qto::App::Utils::Logger'->new(\$config);
+my $objModel     = 'Qto::App::Mdl::Model'->new ( \$config ) ; 
+my $objDispatcher= 'Qto::App::Ctrl::Dispatcher'->new(\$config , \$objModel , 1);
 my $functions    = $objDispatcher->doRunActions($actions);
 
 $tn = 'test-01' ; 
@@ -56,7 +56,7 @@ $actions         = 'txt-to-db' ;
 $functions       = $objDispatcher->doRunActions($actions);
 ok ( $functions eq 'doTxtToDb' , "$m" );
 
-my $ProductInstanceDir = $appConfig->{'ProductInstanceDir' } ; 
+my $ProductInstanceDir = $config->{'ProductInstanceDir' } ; 
 my $cmd = "$ProductInstanceDir/src/perl/qto/script/qto.pl -t daily_issues" ; 
 
 $tn = 'test-04' ; 

@@ -16,7 +16,7 @@ use Qto::App::Cnvr::CnrHsr2ToArray ;
 use Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
-our $appConfig          = {} ; 
+our $config          = {} ; 
 
 sub doHLSelectItems {
 
@@ -32,30 +32,30 @@ sub doHLSelectItems {
    my $rdbms_type    = 'postgres' ; 
    my $dat           = [] ;
    my $objModel      = {} ; 
-   my $appConfig     = {} ; 
+   my $config     = {} ; 
    my $objRdrDb      = {} ; 
    my $objRdrDbsFcry = {} ; 
    my $mc            = 0 ; 
  
-   $appConfig		   = $self->app->get('AppConfig');
-   $db               = toEnvName ( $db , $appConfig) ;
+   $config		   = $self->app->get('AppConfig');
+   $db               = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
 
-   $appConfig		   = $self->app->get('AppConfig');
-   $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
-   my $objCnrUrlPrms = 'Qto::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+   $config		   = $self->app->get('AppConfig');
+   $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
+   my $objCnrUrlPrms = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    
    return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
       unless $objCnrUrlPrms->doValidateAndSetHSelect();
    
-   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
    $objRdrDb 			= $objRdrDbsFcry->doSpawn("$rdbms_type");
 
    ($http_code, $msg, $dat) 	= $objRdrDb->doHSelectBranch( $db , $item );
-   my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$appConfig  ) ; 
+   my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$config  ) ; 
    $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
-   ( $ret , $msg , $met , $mc) = $objModel->doGetTableMeta($appConfig,$db,$item);
+   ( $ret , $msg , $met , $mc) = $objModel->doGetTableMeta($config,$db,$item);
    
    $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    return ; 

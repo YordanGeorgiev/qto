@@ -4,7 +4,7 @@
       <div class="app_name_tooltiptext">
          <%= " $db" =%>
          <%= " $ProductVersion " =%>
-         <%= " $ProductType " =%>
+         <%= " $EnvType " =%>
          <%= " $GitShortHash " =%>
          <%= " $page_load_time " =%>
          <a tabindex="1" href="/<%= $db =%>/login">logout</a>

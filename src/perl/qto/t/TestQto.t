@@ -25,11 +25,11 @@ my $cmd                    = '' ; # the cmd to run
 my $cmd_out                = '' ; # the output of the cmd command
 
 my $objInitiator 				= 'Qto::App::Utils::Initiator'->new();	
-my $appConfig              = $objInitiator->get('AppConfig');
+my $config              = $objInitiator->get('AppConfig');
 my $objConfigurator        = 'Qto::App::Utils::Configurator'->new(
-                                 $objInitiator->{'ConfFile'}, \$appConfig);
-$appConfig                 = $objConfigurator->getConfHolder()  ;
-my $ProductInstanceDir     = $appConfig->{'ProductInstanceDir' } ; 
+                                 $objInitiator->{'ConfFile'}, \$config);
+$config                 = $objConfigurator->getConfHolder()  ;
+my $ProductInstanceDir     = $config->{'ProductInstanceDir' } ; 
 my $DataDir                = $ENV{'DataDir'} ; 
 
 print "using the following DataDir in test : $DataDir \n" ; 
@@ -49,7 +49,7 @@ $cmd_out = `$cmd` ;
 ok ( $?  == 0  , $m ); 
 # dat/mix/2018/2018-08/2018-08-23/json/daily_issues.json
 my $mix_data_dir    = $ENV{'mix_data_dir' } ;  ;
-my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{'TimeFormat' } );
+my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'TimeFormat' } );
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
 # /vagrant/opt/nokia/musa/dat/mix/issues/2018/2018-06/2018-06-11
 my $out_dir = "$mix_data_dir/$year/$year-$mon/$year-$mon-$mday/json" ;

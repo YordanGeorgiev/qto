@@ -21,13 +21,13 @@ croak $m unless ( defined ( $ENV{ "qto_project" } )) ;
 
 my $msg                    = q{} ; 
 my $objInitiator 				= 'Qto::App::Utils::Initiator'->new();	
-my $appConfig              = $objInitiator->get('AppConfig');
+my $config              = $objInitiator->get('AppConfig');
 my $ConfFile               = $objInitiator->{'ConfFile'} ; 
-my $objConfigurator        = 'Qto::App::Utils::Configurator'->new($ConfFile , \$appConfig);
-$appConfig                 = $objConfigurator->getConfHolder()  ;
-my $objLogger					= 'Qto::App::Utils::Logger'->new(\$appConfig);
-my $objModel               = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ; 
-my $objRdrCmdArgs 			= 'Qto::App::IO::In::RdrCmdArgs'->new(\$appConfig , \$objModel ) ; 
+my $objConfigurator        = 'Qto::App::Utils::Configurator'->new($ConfFile , \$config);
+$config                 = $objConfigurator->getConfHolder()  ;
+my $objLogger					= 'Qto::App::Utils::Logger'->new(\$config);
+my $objModel               = 'Qto::App::Mdl::Model'->new ( \$config ) ; 
+my $objRdrCmdArgs 			= 'Qto::App::IO::In::RdrCmdArgs'->new(\$config , \$objModel ) ; 
 
 
 $ARGV[0] = '--do' unless $ARGV[0]  ; 
@@ -41,7 +41,7 @@ $objRdrCmdArgs->doRead() ;
 $msg = 'test-02 - ensure the actions are passed to the model' ; 
 ok ( $objModel->get('ctrl.actions') eq 'run' , $msg ) ; 
 
-my $ProductInstanceDir = $appConfig->{'ProductInstanceDir' } ; 
+my $ProductInstanceDir = $config->{'ProductInstanceDir' } ; 
 my $cmd = "$ProductInstanceDir/src/perl/qto/script/qto.pl" ; 
 
 $ARGV[0] = '' ; 

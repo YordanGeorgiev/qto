@@ -7,7 +7,7 @@ package Qto::App::UI::WtrUIFactory ;
 
    use Qto::App::UI::Controls::WtrListLabels ; 
 
-	our $appConfig 		= {} ; 
+	our $config 		= {} ; 
 	our $objModel        = {} ; 
    our $ui_type         = 'pages' ; 
 
@@ -32,14 +32,14 @@ package Qto::App::UI::WtrUIFactory ;
 
 		require $package_file;
 
-		return $objWtrControl->new( \$appConfig , \$objModel , @args);
+		return $objWtrControl->new( \$config , \$objModel , @args);
 	}
 	
 
 	sub new {
 
 		my $invocant 			= shift ;    
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'missing objModel !!!' ; 
       $ui_type          = shift || 'Pages' ; 
 		
@@ -57,7 +57,7 @@ package Qto::App::UI::WtrUIFactory ;
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
 
       return $self ; 
