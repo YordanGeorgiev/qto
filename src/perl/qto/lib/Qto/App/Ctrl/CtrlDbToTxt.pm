@@ -21,7 +21,7 @@ package Qto::App::Ctrl::CtrlDbToTxt ;
    use Qto::App::Mdl::Model ; 
 
 	our $module_trace                = 1 ; 
-	our $appConfig						   = {} ; 
+	our $config						   = {} ; 
 	our $objLogger						   = {} ; 
 	our $objModel                    = {} ; 
 	our $objFileHandler			      = {} ; 
@@ -29,7 +29,7 @@ package Qto::App::Ctrl::CtrlDbToTxt ;
 
 =head1 SYNOPSIS
       my $objCtrlDbToTxt = 
-         'Qto::App::Ctrl::CtrlDbToTxt'->new ( \$appConfig ) ; 
+         'Qto::App::Ctrl::CtrlDbToTxt'->new ( \$config ) ; 
       ( $ret , $msg ) = $objCtrlDbToTxt->doLoadIssuesFileToDb ( $issues_file ) ; 
 =cut 
 
@@ -71,18 +71,18 @@ package Qto::App::Ctrl::CtrlDbToTxt ;
 
       for my $table ( @tables ) { 
          my $issues_file = ();  
-         my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+         my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
          my $objRdrDb 			= $objRdrDbsFcry->doSpawn ( "$rdbms_type" );
 
          ( $ret , $msg )  = 
             $objRdrDb->doSelectRows( $db , $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
-         my $objWtrTextFactory = 'Qto::App::IO::Out::WtrTextFactory'->new( \$appConfig , $self ) ; 
+         my $objWtrTextFactory = 'Qto::App::IO::Out::WtrTextFactory'->new( \$config , $self ) ; 
          my $objWtrText 			= $objWtrTextFactory->doInit ( $table );
          
          my $objCnrHsr2ToTxt = 
-            'Qto::App::RAM::CnrHsr2ToTxt'->new ( \$appConfig ) ; 
+            'Qto::App::RAM::CnrHsr2ToTxt'->new ( \$config ) ; 
          ( $ret , $msg )  = $objCnrHsr2ToTxt->doPrepareHashForPrinting( \$objModel ) ; 
          return ( $ret , $msg ) if $ret != 0 ;  
          
@@ -119,7 +119,7 @@ package Qto::App::Ctrl::CtrlDbToTxt ;
 	sub new {
 
 		my $class = shift;    # Class name is in the first parameter
-		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel   = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
@@ -137,10 +137,10 @@ package Qto::App::Ctrl::CtrlDbToTxt ;
       my $self          = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
        );
 
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
 
       return $self ; 
 	}	

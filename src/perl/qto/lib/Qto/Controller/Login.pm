@@ -10,7 +10,7 @@ use Qto::App::IO::In::CnrPostPrms ;
 use Qto::App::Db::In::RdrDbsFcry ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
-our $appConfig      = {} ;
+our $config      = {} ;
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgres';
 
@@ -32,9 +32,9 @@ sub doLoginUser {
    my $rows_count       = 0 ; 
    my $msr2             = {}  ; 
    my $dat              = {}  ; 
-   $appConfig		 		= $self->app->get('AppConfig');
-   $objLogger           = 'Qto::App::Utils::Logger'->new( \$appConfig );
-   $db                  = toEnvName ( $db , $appConfig) ;
+   $config		 		= $self->app->get('AppConfig');
+   $objLogger           = 'Qto::App::Utils::Logger'->new( \$config );
+   $db                  = toEnvName ( $db , $config) ;
 	#print STDOUT "Logon.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
    my $pass             = $self->param('pass');
@@ -43,11 +43,11 @@ sub doLoginUser {
    my $redirect_url     = $self->param('redirect-url' );
    $redirect_url        = '/' . toPlainName ($db) . '/home' unless $redirect_url ;
    
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
    $objModel->set('postgres_db_name' , $db ) ; 
    $objLogger->doLogInfoMsg ( "login attempt for " . $self->setEmptyIfNull($email)) ; 
 
-   my $objCnrPostPrms   = 'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel );
+   my $objCnrPostPrms   = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
    ( $ret , $msg , $epass) = $objCnrPostPrms->doSetLoginUrlParams('Login' , $email , $pass );
 
    if ( $ret != 0 ) {
@@ -56,7 +56,7 @@ sub doLoginUser {
       return ;
    } 
 
-   $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+   $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
 	$objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
    ($http_code, $msg , $hsr ) = $objRdrDb->doNativeLogonAuth($email,$epass);
 
@@ -90,8 +90,8 @@ sub doShowLoginForm {
    my $msg              = undef ; 
    my $msg_color        = 'grey' ; 
    
-   $appConfig		 		= $self->app->get('AppConfig');
-   $db                  = toEnvName ( $db , $appConfig) ;
+   $config		 		= $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $config) ;
 
    my $redirect_url = $self->session( 'app.' . $db . '.url' ) 
          if defined $self->session( 'app.' . $db . '.url' ) ; 
@@ -99,7 +99,7 @@ sub doShowLoginForm {
    $self->session(expires => 1);
    $session->cookie_name('qto.' . $db);
    $session->default_expiration(86400);
-   my $instance_domain = $appConfig->{ 'web_host' } . ':' . $appConfig->{ 'mojo_hypnotoad_port' } . '.' . $db ;
+   my $instance_domain = $config->{ 'web_host' } . ':' . $config->{ 'mojo_hypnotoad_port' } . '.' . $db ;
    $session  = $session->cookie_domain( $instance_domain);
 
    $self->doRenderPageTemplate(200,$msg,$msg_color,$db,$redirect_url) ;
@@ -126,7 +126,7 @@ sub doRenderPageTemplate {
    my $template_name    = 'login' ; 
    my $template         = 'pages/' . $template_name . '/' . $template_name ; 
 
-   my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
 
    $self->render(
@@ -134,9 +134,9 @@ sub doRenderPageTemplate {
     , 'msg'             => $msg
     , 'msg_color'       => $msg_color
     , 'db' 		         => $db
-    , 'ProductType' 		=> $appConfig->{'ProductType'}
-    , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
-    , 'GitShortHash'    => $appConfig->{'GitShortHash'}
+    , 'EnvType' 		=> $config->{'EnvType'}
+    , 'ProductVersion' 	=> $config->{'ProductVersion'}
+    , 'GitShortHash'    => $config->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'notice'          => $notice
     , 'redirect_url'    => $redirect_url

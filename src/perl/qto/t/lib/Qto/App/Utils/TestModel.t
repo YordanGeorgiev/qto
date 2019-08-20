@@ -21,11 +21,11 @@ croak $m unless ( defined ( $ENV{ "qto_project" } )) ;
 
 my $msg                    = '' ;
 my $objInitiator 				= 'Qto::App::Utils::Initiator'->new();	
-my $appConfig              = $objInitiator->get('AppConfig');
+my $config              = $objInitiator->get('AppConfig');
 my $ConfFile               = $objInitiator->{'ConfFile'} ; 
-my $objConfigurator        = 'Qto::App::Utils::Configurator'->new($ConfFile, \$appConfig);
-$appConfig                 = $objConfigurator->getConfHolder()  ;
-my $objModel               = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ; 
+my $objConfigurator        = 'Qto::App::Utils::Configurator'->new($ConfFile, \$config);
+$config                 = $objConfigurator->getConfHolder()  ;
+my $objModel               = 'Qto::App::Mdl::Model'->new ( \$config ) ; 
 
 # 1.
 # -----
@@ -34,9 +34,9 @@ ok ( ref($objModel) eq 'Qto::App::Mdl::Model' , $msg ) ;
 
 # 2.
 # -----
-$msg = 'check that the appConfig is passed correctly' ; 
-my $chkAppConfig  = $objModel->get('appConfig' ) ; 
-ok ( $chkAppConfig == $appConfig , $msg ) ;
+$msg = 'check that the config is passed correctly' ; 
+my $chkAppConfig  = $objModel->get('config' ) ; 
+ok ( $chkAppConfig == $config , $msg ) ;
 
 done_testing() ; 
 

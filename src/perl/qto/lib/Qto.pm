@@ -23,14 +23,13 @@ use IO::Compress::Gzip 'gzip' ;
 use Mojolicious::Plugin::RenderFile ; 
 
 use Qto::App::Utils::Initiator;
-use Qto::App::Utils::Configurator;
 use Qto::App::Utils::Logger;
 use Qto::App::Mdl::Model ; 
+use JSON::Parse 'json_file_to_perl';
 
 my $module_trace 					= 0;
-our $objConfigurator				= {} ; 
 our $objInitiator 				= {};
-our $appConfig    				= {};
+our $config    				= {};
 our $objLogger 					= {};
 our $objModel                 = {};
 
@@ -66,29 +65,17 @@ sub doLoadAppConfig {
    my $msg = 'error during initialization !!!';
    my $ret = 1;
 
-   $objInitiator = 'Qto::App::Utils::Initiator'->new();
-   $appConfig    = $objInitiator->get('AppConfig');
+   $objInitiator  = 'Qto::App::Utils::Initiator'->new();
+   $config        = json_file_to_perl ($objInitiator->doResolveConfFile());
+   $config->{'env'}->{'run'}->{'ProductInstanceDir'} = $objInitiator->doResolveProductInstanceDir(-1);
+   $config->{'env'}->{'run'}->{'ProductName'} = $objInitiator->doResolveProductName();
+   $objLogger     = 'Qto::App::Utils::Logger'->new(\$config);
 
-
-   my $ConfFile = q{} ; 
-   if ( defined $ENV->{ 'conf_file' } ) {
-      $ConfFile = $ENV->{ 'conf_file' } ; 
-   } else {
-      $ConfFile = $objInitiator->{'ConfFile'} ; 
-   }
-
-   $objConfigurator  = 'Qto::App::Utils::Configurator'->new( 
-         $ConfFile, \$appConfig);
-   $appConfig       = $objConfigurator->getConfHolder()  ;
-   $objLogger        = 'Qto::App::Utils::Logger'->new(\$appConfig);
-
-	$appConfig->{'PROJ_INSTANCE_DIR'} = $appConfig->{'ProductInstanceDir'} 
-      unless ( exists $appConfig->{'PROJ_INSTANCE_DIR'} );
    my $currentShortHash = `git rev-parse --short HEAD` ; chomp($currentShortHash);
-   $appConfig->{ 'GitShortHash' } = $currentShortHash || "" ; 
+   $config->{ 'GitShortHash' } = $currentShortHash || "" ; 
 
-   p($appConfig) ; 
-   $self->set('AppConfig' , $appConfig );
+   p($config) ; 
+   $self->set('AppConfig' , $config );
    $self->set('ObjLogger', $objLogger );
 
    $msg = "START MAIN";

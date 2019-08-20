@@ -8,7 +8,7 @@ package Qto::App::IO::WtrMdFactory ;
    use Qto::App::IO::Out::WtrGitHubMd ; 
    use Qto::App::IO::Out::WtrParadoxMd ; 
 
-	our $appConfig 		= {} ; 
+	our $config 		= {} ; 
 	our $objModel        = {} ; 
    our $export_type     = 'md' ; 
 
@@ -35,13 +35,13 @@ package Qto::App::IO::WtrMdFactory ;
       }
 
 		require $package_file;
-		return $objWtrMd->new( \$appConfig , \$objModel , @args);
+		return $objWtrMd->new( \$config , \$objModel , @args);
 	}
 	
 
 	sub new {
 		my $invocant   = shift ;    
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'missing objModel !!!' ; 
       $export_type   = shift || 'Pages' ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
@@ -54,7 +54,7 @@ package Qto::App::IO::WtrMdFactory ;
    sub doInit {
       my $self = shift ; 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
       return $self ; 
 	}	

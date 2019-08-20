@@ -11,11 +11,11 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
 my $t = Test::Mojo->new('Qto');
 
-my $appConfig = $t->app->get('AppConfig') ; 
+my $config = $t->app->get('AppConfig') ; 
 
 # if the product instance id dev -> dev_qto
 # if the product instance id tst -> tst_qto
-my $db_name       = $appConfig->{ 'postgres_db_name' } ; 
+my $db_name       = $config->{ 'postgres_db_name' } ; 
 my @tables        = ( 'daily_issues' , 'weekly_issues' , 'monthly_issues' , 'yearly_issues' ) ; 
 my $ua            = $t->ua ; 
 my $res           = {} ; #a tmp result json string

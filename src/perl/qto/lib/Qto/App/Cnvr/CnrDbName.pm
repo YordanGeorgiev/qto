@@ -9,14 +9,14 @@ our @EXPORT = qw(toPlainName toEnvName );
 
 sub toEnvName {
    my $db                  = shift ; 
-   my $appConfig           = shift ; 
+   my $config           = shift ; 
    my @env_prefixes        = ( 'dev_' , 'tst_' , 'qas_' , 'prd_' );
  
    my $db_prefix           = substr($db,0,4);
    unless ( grep ( /^$db_prefix$/, @env_prefixes)) {
-      carp  "appconfig->producttype is undef " unless $appConfig->{ 'ProductType' } ;
+      carp  "appconfig->producttype is undef " unless $config->{ 'EnvType' } ;
       carp "db is undef " unless $db ; 
-      $db = $appConfig->{ 'ProductType' } . '_' . $db ; 
+      $db = $config->{ 'EnvType' } . '_' . $db ; 
    } 
    return $db ;
 }

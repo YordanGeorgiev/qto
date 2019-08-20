@@ -10,9 +10,9 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
    my $tm = '' ; # the test message for each test 
    my $t = Test::Mojo->new('Qto');
-   my $appConfig = $t->app->get('AppConfig') ; 
+   my $config = $t->app->get('AppConfig') ; 
    # if the product instance id tst -> tst_qto
-   my $db_name= $appConfig->{ 'postgres_db_name' } ; 
+   my $db_name= $config->{ 'postgres_db_name' } ; 
 	$t->get_ok('/' . $db_name . '/select-databases')->status_is(200) ; 
 
    my $url = '/' . $db_name . '/select-tables' ; 

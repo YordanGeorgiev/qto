@@ -20,16 +20,16 @@ croak $m unless ( defined ( $ENV{ "qto_project" } )) ;
 
 my $msg              = q{} ; 
 my $objInitiator 		= 'Qto::App::Utils::Initiator'->new();	
-my $appConfig        = $objInitiator->get('AppConfig');
+my $config        = $objInitiator->get('AppConfig');
 my $ConfFile         = $objInitiator->{'ConfFile'} ; 
-my  $objConfigurator = 'Qto::App::Utils::Configurator'->new($ConfFile, \$appConfig);
-$appConfig           = $objConfigurator->getConfHolder()  ;
+my  $objConfigurator = 'Qto::App::Utils::Configurator'->new($ConfFile, \$config);
+$config           = $objConfigurator->getConfHolder()  ;
 
-ok ( defined ( $appConfig ) , "test-01 the appConfig is defineD") ; 
+ok ( defined ( $config ) , "test-01 the config is defineD") ; 
 
-my $objLogger			= 'Qto::App::Utils::Logger'->new(\$appConfig);
+my $objLogger			= 'Qto::App::Utils::Logger'->new(\$config);
 my $LogFile				= $objLogger->get('LogFile') ; 
-my $LogDir           =               $appConfig->{'LogDir'} ; 
+my $LogDir           =               $config->{'LogDir'} ; 
 ok ( defined ( $LogDir) , "test-02 test that the LogDir is defined "  ); 
 
 $objLogger->doLogInfoMsg ( "START TestLogger");

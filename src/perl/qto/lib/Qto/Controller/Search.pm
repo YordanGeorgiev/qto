@@ -21,7 +21,7 @@ use Qto::App::Utils::Timer ;
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 my $module_trace        = 0 ;
-our $appConfig          = {};
+our $config          = {};
 our $objLogger          = {} ;
 our $rdbms_type         = 'postgres';
 
@@ -46,20 +46,20 @@ sub doSearchItems {
    my $notice           = '' ; 
    
 
-   $appConfig		 		= $self->app->get('AppConfig');
-   $db                  = toEnvName ( $db , $appConfig) ;
+   $config		 		= $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 ); 
    $self->SUPER::doReloadProjDbMeta( $db,'search' ) ;
    
-   $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
+   $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
    
    $objCnrUrlPrms = 
-      'Qto::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+      'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    ( $ret , $msg ) = $objCnrUrlPrms->doSetQueryUrlParams('Search' );
 
    if ( ! defined ($self->req->query_params ) or $ret != 0 ) {
    
-      my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+      my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
       my $page_load_time   = $objTimer->GetHumanReadableTime();
   
       $self->render(
@@ -68,9 +68,9 @@ sub doSearchItems {
        , 'item'            => 'search'
        , 'msg'             => ''
        , 'db' 		         => $db
-       , 'ProductType' 		=> $appConfig->{'ProductType'}
-       , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
-       , 'GitShortHash' => $appConfig->{'GitShortHash'}
+       , 'EnvType' 		=> $config->{'EnvType'}
+       , 'ProductVersion' 	=> $config->{'ProductVersion'}
+       , 'GitShortHash' => $config->{'GitShortHash'}
        , 'page_load_time'  => $page_load_time
        , 'srch_control'    => "['title']" 
        , 'notice'          => $notice
@@ -107,7 +107,7 @@ sub doBuildSearchControl {
 
    $ui_type = 'page/' . $lables_pages->{ $as } ; 
   
-   $objPageFactory                  = 'Qto::Controller::PageFactory'->new(\$appConfig, \$objModel );
+   $objPageFactory                  = 'Qto::Controller::PageFactory'->new(\$config, \$objModel );
    $objPageBuilder                  = $objPageFactory->doSpawn( $ui_type );
    ( $ret , $msg , $srch_control )  = $objPageBuilder->doBuildSearchControl( $msg , $db  , $as ) ;
 
@@ -133,7 +133,7 @@ sub doRenderPageTemplate {
    my $template_name    = $as_templates->{ $as } || 'srch-grid' ; 
    my $template         = 'controls/' . $template_name . '/' . $template_name ; 
 
-   my $objTimer         = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
+   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
 
    $self->render(
@@ -142,9 +142,9 @@ sub doRenderPageTemplate {
     , 'item'            => 'search'
     , 'msg'             => $msg
     , 'db' 		         => $db
-    , 'ProductType' 		=> $appConfig->{'ProductType'}
-    , 'ProductVersion' 	=> $appConfig->{'ProductVersion'}
-    , 'GitShortHash'    => $appConfig->{'GitShortHash'}
+    , 'EnvType' 		=> $config->{'EnvType'}
+    , 'ProductVersion' 	=> $config->{'ProductVersion'}
+    , 'GitShortHash'    => $config->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'srch_control'    => $srch_control
     , 'notice'          => $notice

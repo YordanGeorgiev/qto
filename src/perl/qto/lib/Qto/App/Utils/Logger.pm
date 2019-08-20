@@ -4,78 +4,67 @@ package Qto::App::Utils::Logger ;
 	use v5.10.0;
    use utf8 ; 
 
-	my $VERSION = '2.1.8';    
-	#doc at the end
+	my $VERSION = '2.1.9';    
 
 	require Exporter;
 	use AutoLoader  ;
    our @ISA    = qw(Exporter);
-   #our @EXPORT = qw(get set dumpFields doLogInfoMsg doLogFatalMsg doLogDebugMsg doLogTraceMsg doLogErrorMsg doLogMsg doLogWarningMsg );
 
 	use Carp qw(cluck croak);
 	use File::Path;
 	use Data::Printer ; 
-	use Qto::App::Utils::Timer ; 
+   use Qto::App::Utils::Timer ; 
 
-   our $appConfig   = {} ; 
-	our $RunDir             = q{};
-	our $LogDir             = q{};
-	our $LogFile            = q{};
-   our ( $caller_pckg, $filename, $line ) = ();
-	our $PID = "$$" ; 
+   our $config    = {} ; 
+   our $logConfig    = {} ; 
+	our $RunDir       = q{};
+	our $LogDir       = q{};
+	our $LogFile      = q{};
+	our $PID                = "$$" ; 
 	our $objTimer ; 
 	our $HostName ; 
 	our $LogTimeToTextSeparator ; 
 	our $HumanReadableTime ; 
+   our ( $caller_pckg, $filename, $line ) = ();
             
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
-
+the main perl logging module in qto 
     use Qto::App::Utils::Logger ; 
 
-    my $objLogger = Qto::App::Utils::Logger->new( \$appConfig ) ;
+    my $objLogger = Qto::App::Utils::Logger->new( \$logConfig ) ;
     ...
 
 =head1 EXPORT
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
-
-=head1 SUBROUTINES/METHODS
-
-
-=cut
-
-=head2 new
-# -----------------------------------------------------------------------------
-# the constructor
+   #our @EXPORT = qw(get set dumpFields doLogInfoMsg doLogFatalMsg doLogDebugMsg doLogTraceMsg doLogErrorMsg doLogMsg doLogWarningMsg );
 =cut 
 
 	sub new {
 
 		my $class = shift;    # Class name is in the first parameter
-		$appConfig = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
-		my $self = {};        # Anonymous hash reference holds instance attributes
-
+		$config = ${ shift @_ } || croak 'no config provided !!!' ; 
+      $logConfig = $config->{'env'}->{'log'} ; 
+		my $self = {};        
       ( $caller_pckg, $filename, $line ) = caller();
       $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
-		bless( $self, $class );    # Say: $self is a $class
+		bless( $self, $class );    
 		
-      $self = $self->doInitialize() ; 
+      $self = $self->doInit() ; 
 		return $self;
 	}  
-	#eof new
 
 
-   sub doInitialize {
+   sub doInit {
       my $self = shift ; 
    
       # if the log dir does not exist create it
-		$LogDir = $appConfig->{ 'LogDir' };
+		$LogDir = $logConfig->{ 'LogDir' };
+
+      $LogDir =~ s/\$ProductInstanceDir/$config->{'env'}->{'run'}->{'ProductInstanceDir'}/g ; 
+      $logConfig->{'LogDir'} = $LogDir ; 
+
 		# define the log dir as the current dir if not cnfigured 
 		unless ( defined( $LogDir ) ) {
 			$0 =~ m/^(.*)(\\|\/)(.*)\.([a-z]*)/;
@@ -83,73 +72,72 @@ if you don't export anything, such as for a purely object-oriented module.
 			$LogDir = $RunDir;
 		}
 
-		# if the log dir is cnfigured but it does not exist 
+		# if the log dir is configured but it does not exist 
 		if ( defined( $LogDir ) && !-d "$LogDir" ) {
 			$self->MkDir( "$LogDir" ) || cluck( " Cannot create the \$LogDir : $LogDir $! !!! " );
 		}
 
-		$LogFile = $appConfig->{ 'LogFile' };
-      croak unless $LogFile ; 
+		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $self->GetTimeUnits(); 
+		$LogFile = $logConfig->{ 'LogFile' };
+      $LogFile =~ s/\$LogDir/$LogDir/g ; 
+      $LogFile =~ s/\$ProductName/$config->{'env'}->{'run'}->{'ProductName'}/g ; 
+      $LogFile =~ s/%YYYY%/$year/g ; 
+      $LogFile =~ s/%MM%/$mon/g ; 
+      $LogFile =~ s/%DD%/$mday/g ; 
+      $LogFile =~ s/%hh%/$hour/g ; 
+
+      $logConfig->{'LogFile'} = $LogFile ;
 
 		#if the log file is not defined we create one
-		unless ( defined ( $appConfig->{ 'LogFile' } ) ) {
+		unless ( defined ( $logConfig->{ 'LogFile' } ) ) {
 			$LogFile = "$0.log";
 		}
 	
-      $appConfig->{ 'PrintConsoleMsgs' } = 1 
-         unless ( defined $appConfig->{ 'PrintConsoleMsgs' } ); 
+      $logConfig->{ 'PrintConsoleMsgs' } = 1 
+         unless ( defined $logConfig->{ 'PrintConsoleMsgs' } ); 
 
-		$appConfig->{ 'PrintErrorMsgs' } = 1
-	      unless ( defined ( ref $appConfig->{ 'PrintErrorMsgs' } )) ; 
+		$logConfig->{ 'PrintErrorMsgs' } = 1
+	      unless ( defined ( ref $logConfig->{ 'PrintErrorMsgs' } )) ; 
 
-		$appConfig->{ 'PrintDebugMsgs' } = 1
-         unless ( defined( $appConfig->{ 'PrintDebugMsgs' } ) );
+		$logConfig->{ 'PrintDebugMsgs' } = 1
+         unless ( defined( $logConfig->{ 'PrintDebugMsgs' } ) );
 
-		$appConfig->{ 'PrintInfoMsgs' } = 1
-		  unless ( defined( $appConfig->{ 'PrintInfoMsgs' } ) );
+		$logConfig->{ 'PrintInfoMsgs' } = 1
+		  unless ( defined( $logConfig->{ 'PrintInfoMsgs' } ) );
 		
-		$appConfig->{ 'PrintTraceMsgs' } = 1
-		  unless ( defined( $appConfig->{ 'PrintTraceMsgs' } ) );
+		$logConfig->{ 'PrintTraceMsgs' } = 1
+		  unless ( defined( $logConfig->{ 'PrintTraceMsgs' } ) );
 
-		$appConfig->{ 'PrintWarningMsgs' } = 1
-		  unless ( defined( $appConfig->{ 'PrintWarningMsgs' } ) );
+		$logConfig->{ 'PrintWarningMsgs' } = 1
+		  unless ( defined( $logConfig->{ 'PrintWarningMsgs' } ) );
 
-		$appConfig->{ 'LogMsgs' } = 1
-		  unless ( defined( $appConfig->{ 'LogMsgs' } ) );
+		$logConfig->{ 'LogMsgs' } = 1
+		  unless ( defined( $logConfig->{ 'LogMsgs' } ) );
 
-		$appConfig->{ 'LogTimeToTextSeparator' } = '##'
-		  unless ( defined( $appConfig->{ 'LogTimeToTextSeparator' } ) );
+		$logConfig->{ 'LogTimeToTextSeparator' } = '##'
+		  unless ( defined( $logConfig->{ 'LogTimeToTextSeparator' } ) );
 		
-		$appConfig->{ 'TimeFormat' } = 'YYYY-MM-DD hh:mm:ss'
-		  unless ( defined( $appConfig->{ 'TimeFormat' } ) );
+		$logConfig->{ 'TimeFormat' } = 'YYYY-MM-DD hh:mm:ss'
+		  unless ( defined( $logConfig->{ 'TimeFormat' } ) );
 
-		$appConfig->{ 'LogToFile' } = 1
-		  unless ( defined( $appConfig->{ 'LogToFile' } ) );
+		$logConfig->{ 'LogToFile' } = 1
+		  unless ( defined( $logConfig->{ 'LogToFile' } ) );
 
-		$appConfig->{ 'LogToFileHandle' } = 0
-		  unless ( defined( $appConfig->{ 'LogToFileHandle' } ) );
+		$logConfig->{ 'LogToFileHandle' } = 0
+		  unless ( defined( $logConfig->{ 'LogToFileHandle' } ) );
 
-		#
-		# STOP set default value if value not specified =========================
-
-		$objTimer               = 'Qto::App::Utils::Timer'->new( $appConfig->{ 'TimeFormat' } );
-		$HostName					= $appConfig->{'HostName'} ; 
-		$LogTimeToTextSeparator = $appConfig->{'LogTimeToTextSeparator'} ; 
+		$objTimer               = 'Qto::App::Utils::Timer'->new( $logConfig->{ 'TimeFormat' } );
+		$HostName					= $logConfig->{'HostName'} ; 
+		$LogTimeToTextSeparator = $logConfig->{'LogTimeToTextSeparator'} ; 
 
        %$self = (
-           appConfig => $appConfig
+           logConfig => $logConfig
          , LogFile   => $LogFile
        );
 
       return $self ; 
    }
-   # eof sub doIitialize
 
-=head2
-# -----------------------------------------------------------------------------
-# overrided autoloader prints - a run-time error - perldoc AutoLoader
-# -----------------------------------------------------------------------------
-=cut
 
 	sub AUTOLOAD {
 
@@ -163,7 +151,6 @@ if you don't export anything, such as for a purely object-oriented module.
 		};
 		goto &$AUTOLOAD;    # Restart the new routine.
 	}   
-	# eof sub AUTOLOAD
 
 
 	# -----------------------------------------------------------------------------
@@ -174,7 +161,7 @@ if you don't export anything, such as for a purely object-oriented module.
 		my $self = shift;
 		my $name = shift;
 		return $self->{ $name };
-	}    #eof sub get
+	}    
 
 
 	# -----------------------------------------------------------------------------
@@ -187,7 +174,6 @@ if you don't export anything, such as for a purely object-oriented module.
 		my $value = shift;
 		$self->{ $name } = $value;
 	}
-	# eof sub set
 
 
 	# -----------------------------------------------------------------------------
@@ -202,19 +188,14 @@ if you don't export anything, such as for a purely object-oriented module.
 
 		return $strFields;
 	}    
-	# eof sub dumpFields
 		
 
 	# -----------------------------------------------------------------------------
 	# wrap any logic here on clean up for this class
 	# -----------------------------------------------------------------------------
 	sub RunBeforeExit {
-
 		my $self = shift;
-
-		#debug rint "%$self RunBeforeExit ! \n";
 	}
-	#eof sub RunBeforeExit
 
 
 	# -----------------------------------------------------------------------------
@@ -223,16 +204,10 @@ if you don't export anything, such as for a purely object-oriented module.
 	sub DESTROY {
 		my $self = shift;
 
-		#debug rint "the DESTRUCTOR is called  \n" ;
 		$self->RunBeforeExit();
 		return;
 	}   
-	#eof sub DESTROY
 
-
-	# =============================================================================
-	# START functions
-	#
 
 	# a nice func to improve readability when completing a certain phase
 	sub flushScreen {
@@ -240,7 +215,6 @@ if you don't export anything, such as for a purely object-oriented module.
 		print "\033[2J";    
 		print "\033[0;0H";
 	}
-	#eof sub
 
 
 	#
@@ -258,11 +232,10 @@ if you don't export anything, such as for a purely object-oriented module.
 		$msg = "@_" if @_ ; 
 		my $msgType = '[FATAL]'; 
 		
-		$appConfig->{ 'PrintErrorMsgs' } = 1 ; 
+		$logConfig->{ 'PrintErrorMsgs' } = 1 ; 
 		$self->doLogMsg( $msgType, "$msg" ) ; 
 
 	}
-	# eof sub doLogErrorMsg 
 
 
 	#
@@ -281,16 +254,15 @@ if you don't export anything, such as for a purely object-oriented module.
       $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
 
 		# Do not print anything if the PrintWarningMsgs = 0
-		return if ( $appConfig->{ 'LogMsgs' } == 0 );
+		return if ( $logConfig->{ 'LogMsgs' } == 0 );
 
 		# Do not print anything if the PrintWarningMsgs = 0
-		return if ( $appConfig->{ 'PrintErrorMsgs' } == 0 );
+		return if ( $logConfig->{ 'PrintErrorMsgs' } == 0 );
 
 		$self->doLogMsg( $msgType, "$msg" )
-		  if ( $appConfig->{ 'PrintErrorMsgs' } == 1 );
+		  if ( $logConfig->{ 'PrintErrorMsgs' } == 1 );
 
 	}
-	# eof sub doLogErrorMsg 
 
 
 	# -----------------------------------------------------------------------------
@@ -311,16 +283,15 @@ if you don't export anything, such as for a purely object-oriented module.
       $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
 		
       # Do not print anything if the PrintWarningMsgs = 0
-		return if ( $appConfig->{ 'LogMsgs' } == 0 );
+		return if ( $logConfig->{ 'LogMsgs' } == 0 );
 
 		# Do not print anything if the PrintWarningMsgs = 0
-		return if ( $appConfig->{ 'PrintWarningMsgs' } == 0 );
+		return if ( $logConfig->{ 'PrintWarningMsgs' } == 0 );
 
 		$self->doLogMsg( $msgType, "$msg" )
-		  if ( $appConfig->{ 'PrintWarningMsgs' } == 1 );
+		  if ( $logConfig->{ 'PrintWarningMsgs' } == 1 );
 
 	}    
-	#eof sub doLogWarningMsg
 
 
 	#
@@ -340,16 +311,15 @@ if you don't export anything, such as for a purely object-oriented module.
       $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
 
 		# Do not print anything if the PrintWarningMsgs = 0
-		return unless ( $appConfig->{ 'LogMsgs' } == 1 );
+		return unless ( $logConfig->{ 'LogMsgs' } == 1 );
 
 		# Do not print anything if the PrintWarningMsgs = 0
-		return unless ( $appConfig->{ 'PrintInfoMsgs' } == 1 );
+		return unless ( $logConfig->{ 'PrintInfoMsgs' } == 1 );
 
 		$self->doLogMsg( $msgType, "$msg" )
-		  if ( $appConfig->{ 'PrintInfoMsgs' } == 1 );
+		  if ( $logConfig->{ 'PrintInfoMsgs' } == 1 );
 
 	}
-	# eof sub doLogInfoMsg
 
 
 	sub doLogTraceMsg {
@@ -362,21 +332,20 @@ if you don't export anything, such as for a purely object-oriented module.
       $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
 
 		# Do not print anything if the PrintDebugMsgs = 0
-		return unless ( $appConfig->{ 'PrintTraceMsgs' } == 1 );
+		return unless ( $logConfig->{ 'PrintTraceMsgs' } == 1 );
 
 		$msg = "$msg : FROM Package: $package  FileName: $filename Line: $line  ";
 
 		# Do not print anything if the PrintWarningMsgs = 0
-		return unless ( $appConfig->{ 'LogMsgs' } == 1 );
+		return unless ( $logConfig->{ 'LogMsgs' } == 1 );
 
 		# Do not print anything if the PrintWarningMsgs = 0
-		return unless ( $appConfig->{ 'PrintTraceMsgs' } == 1 );
+		return unless ( $logConfig->{ 'PrintTraceMsgs' } == 1 );
 
 		$self->doLogMsg( $msgType, "$msg" )
-		  if ( $appConfig->{ 'PrintTraceMsgs' } == 1 );
+		  if ( $logConfig->{ 'PrintTraceMsgs' } == 1 );
 
 	}
-	# eof sub doLogTraceMsg
 	 
 
 	# -----------------------------------------------------------------------------
@@ -392,16 +361,15 @@ if you don't export anything, such as for a purely object-oriented module.
       $caller_pckg =~ s/(.*)(\:{2})(.*?)/$3/g ; 
 
 		# Do not print anything if the PrintWarningMsgs = 0
-		return if ( $appConfig->{ 'LogMsgs' } == 0 );
+		return if ( $logConfig->{ 'LogMsgs' } == 0 );
 
 		# Do not print anything if the PrintWarningMsgs = 0
-		return if ( $appConfig->{ 'PrintDebugMsgs' } == 0 );
+		return if ( $logConfig->{ 'PrintDebugMsgs' } == 0 );
 
 		$self->doLogMsg( $msgType, "$msg" )
-		  if ( $appConfig->{ 'PrintDebugMsgs' } == 1 );
+		  if ( $logConfig->{ 'PrintDebugMsgs' } == 1 );
 
 	}    
-	# eof sub doLogDebugMsg
 
 
 	#
@@ -439,7 +407,6 @@ if you don't export anything, such as for a purely object-oriented module.
 
 		return $msg;
 	}
-	# eof sub doBuildMsg
 
 
 	#
@@ -456,7 +423,6 @@ if you don't export anything, such as for a purely object-oriented module.
 
 		return $msg;
 	}
-	# eof sub doBuildRunLogMsgg
 
 
 
@@ -471,21 +437,20 @@ if you don't export anything, such as for a purely object-oriented module.
 		my $msg     = shift || 'null msg passed' ; 
       
       $msg = $self->doBuildMsg( $msgType, $msg);
-		
 
 		#print to STDOUT and STDERR only if cnfigured to print to console
-		if ( $appConfig->{'PrintConsoleMsgs'} == 1 ) {
+		if ( $logConfig->{'PrintConsoleMsgs'} == 1 ) {
 			# PRINT TO STDOUT if
-			if (  $appConfig->{ 'PrintInfoMsgs' } 	== 1
-				|| $appConfig->{ 'PrintDebugMsgs' } == 1
-				|| $appConfig->{ 'PrintTraceMsgs' } == 1 ) {
+			if (  $logConfig->{ 'PrintInfoMsgs' } 	== 1
+				|| $logConfig->{ 'PrintDebugMsgs' } == 1
+				|| $logConfig->{ 'PrintTraceMsgs' } == 1 ) {
 
 
             binmode(STDOUT, ':utf8');
 				print STDOUT $msg unless ( $msgType eq '[ERROR]' ) ; 
 			}
 
-			if ( $appConfig->{ 'PrintErrorMsgs' } 
+			if ( $logConfig->{ 'PrintErrorMsgs' } 
 					&& $msgType eq '[ERROR]'	) {
 
             binmode(STDERR, ':utf8');
@@ -494,19 +459,17 @@ if you don't export anything, such as for a purely object-oriented module.
 		}
 		
 		# log to file only if cnfigured so
-		if ( $appConfig->{ 'LogToFile' } == 1 ) {
+		if ( $logConfig->{ 'LogToFile' } == 1 ) {
 					$self->doAppendToFile ( $LogFile, "$msg" );
 		} #eof if
 
 		# log to a file handle only if cnfigured to
-		if ( $appConfig->{ 'LogToFileHandle' } == 1 ) {
+		if ( $logConfig->{ 'LogToFileHandle' } == 1 ) {
 					$self->doAppendToFileHandle ( "$msg" );
 		} #eof if
-
-
 	}
-	# eof sub doLogMsg
-	
+
+
    #
 	# -----------------------------------------------------------------------------
 	# logs a message based on the cnfiguration settings 
@@ -517,11 +480,11 @@ if you don't export anything, such as for a purely object-oriented module.
 		my	$msg 		= shift || 'null uuid passed' ; 
 		 
 		$msg = $self->doBuildRunLogMsg( $msg );
-      my $RunLogFile = $appConfig->{ 'RunLogFile' } || $ENV{'run_log_file' } || "$0.log" ; 
+      my $RunLogFile = $logConfig->{ 'RunLogFile' } || $ENV{'run_log_file' } || "$0.log" ; 
 		$self->doAppendToFile ( $RunLogFile, "$msg" );
 
 	}
-	# eof sub doRunLogMsg
+
 
 	#
 	# -----------------------------------------------------------------------------
@@ -541,8 +504,8 @@ if you don't export anything, such as for a purely object-oriented module.
 		my $error_msg 			= '' ; 
 		
       # do not write anything unless log file is cnfigured or actually even passed	
-		return unless ( defined ( $appConfig->{ 'LogToFile' } ) ) ;
-		return unless ( $appConfig->{ 'LogToFile' } == 1 ) ; 
+		return unless ( defined ( $logConfig->{ 'LogToFile' } ) ) ;
+		return unless ( $logConfig->{ 'LogToFile' } == 1 ) ; 
 		return unless ( $file ) ; 
 		return unless ( $str_to_print ) ; 
    
@@ -588,9 +551,32 @@ if you don't export anything, such as for a purely object-oriented module.
 
 		return 1 ; 
 	}
-	# eof sub doAppendToFile
 
-	
+
+	# -----------------------------------------------------------------------------
+   # usage:
+	# my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $self-> GetTimeUnits(); 
+	# -----------------------------------------------------------------------------
+	sub GetTimeUnits {
+
+		my $self = shift ; 
+
+		# Purpose returns the time in yyyymmdd-format 
+		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time); 
+		#---- change 'month'- and 'year'-values to correct format ---- 
+		$sec = "0$sec" if ($sec < 10); 
+		$min = "0$min" if ($min < 10); 
+		$hour = "0$hour" if ($hour < 10);
+		$mon = $mon + 1;
+		$mon = "0$mon" if ($mon < 10); 
+		$year = $year + 1900;
+		$mday = "0$mday" if ($mday < 10); 
+
+		return ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) ; 
+
+	} 
+
+
 	#
 	# -----------------------------------------------------------------------------
 	# Create a dir or cluck why it can't
@@ -637,11 +623,8 @@ if you don't export anything, such as for a purely object-oriented module.
 		
 
 	}    
-	#eof sub
 
 
-	# STOP functions
-	# =============================================================================
 
 
 
@@ -662,14 +645,14 @@ use Logger  ;
 =head1 DESCRIPTION
 Provide a simple interface for dynamic logging... 
 
-2011.06.11-13:33:11 --- this is a simple message  
-2011.06.11-13:33:11 --- ERROR : This is an error message  
-2011.06.11-13:33:11 --- WARN : This is a warning message  
-2011.06.11-13:33:11 --- INFO : This is a info message  
-2011.06.11-13:33:11 --- DEBUG : This is a debug message  
-2011.06.11-13:33:11 --- TRACE : This is a trace message  : FROM Package: Morphus  
+2019-06-11-13:33:11 --- this is a simple message  
+2019-06-11-13:33:11 --- ERROR : This is an error message  
+2019-06-11-13:33:11 --- WARN : This is a warning message  
+2019-06-11-13:33:11 --- INFO : This is a info message  
+2019-06-11-13:33:11 --- DEBUG : This is a debug message  
+2019-06-11-13:33:11 --- TRACE : This is a trace message  : FROM Package: Morphus  
 
-- Logger does doInitialize all the cnfig values it is utilizing on doInitialize if they do not exist in the cnfig file 
+- Logger does doInit all the cnfig values it is utilizing on doInit if they do not exist in the cnfig file 
 - Logger understands the following type of msgs : DEBUG,ERROR,TRACE,INFO,WARN, SIMPLE
 - Logger prints each type of msgs into a file if cnfigured to do so
 - The TRACE type of msg does provide a file , line of file of the caller
@@ -694,33 +677,4 @@ yordan.georgiev@gmail.com
 
 
 
-
-# ---------------------------------------------------------
-# VersionHistory: 
-# ---------------------------------------------------------
-#
-2.1.7 -- 2017-04-09 18:48:17 -- ysg -- utf8 binmode for utf8 chars logging ..
-2.1.6 -- 2014-08-26 09:37:36 -- ysg -- autodie and better checks in doAppendToFile
-2.1.5 -- 2014-08-25 21:01:58 -- ysg -- added PrintToConsole settings
-2.1.4 -- 2013-03-03 20:00:58 -- ysg -- cleaned up formatting for MSG types
-2.1.3 -- 2013-03-03 20:00:58 -- ysg -- added msg prefix
-2.1.2 -- 2013-02-14 17:11:45 -- ysg -- re-factor 
-2.1.1 -- 2013-02-13 16:36:54 -- ysg -- added LogFatalError
-2.1.0 -- 2013-02-12 20:49:18 -- ysg -- log to an opened file handle
-2.0.0 -- 2012-12-26 14:54:33 -- ysg -- refactoring, LogFile as our
-1.9.1 -- 2012-12-24 14:37:53 -- ysg -- formatting 
-1.8.0 -- 2011.08.30 12:00:00 -- ysg -- Removed dependancy from FileHandler
-1.8.0 -- 2011.08.13 17:23:49 -- ysg -- new constructor
-1.7.0 -- 2011.07.02 12:00:00 -- ysg -- Removed Rotate Logs 
-1.6.0 -- 2011.07.02 12:00:00 -- ysg -- Added LogBroadCastMsg
-1.5.2 -- 2011.07.02 12:00:00 -- ysg -- Added doc in Descrption + specs for the RotateLogs feature , doInitialize
-1.5.0 -- 2011.06.25 12:00:00 -- ysg -- WIP. Added RotateLogs in Initialization
-1.4.0 -- 2011.06.11 12:00:00 -- ysg -- Separated actions of building and printing msgs. Total refactoring. Beta . 
-1.3.0 -- 2011.06.09 12:00:00 -- ysg -- Added doInitialize 
-1.2.8 -- 2011.06.07 12:00:00 -- ysg -- Added LogInfoErrorMsg print both to all possible
-1.2.8 -- 2011.06.07 12:00:00 -- ysg -- added default values if cnf values are not set 
-1.0.0 -- 2011.06.07 12:00:00 -- ysg -- Create basic methods 
-1.0.0 -- 2011.06.07 12:00:00 -- ysg -- Stolen shamelessly from several places of the Perl monks ...
-
 =cut 
-

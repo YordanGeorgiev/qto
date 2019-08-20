@@ -17,7 +17,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 
    our $module_trace                            = 0 ;  
    our $IsUnitTest                              = 0 ; 
-	our $appConfig 										= {} ; 
+	our $config 										= {} ; 
 	our $objLogger 										= {} ; 
 	our $objModel                                = {} ; 
 	our $db                        					= q{} ; 
@@ -62,7 +62,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
             $ret = 200 ; 
             $msg = "" ; 
          } else { 
-            $msg = "$email not found ! Contact " . $appConfig->{ 'AdminEmail' } . " to request access." ;  
+            $msg = "$email not found ! Contact " . $config->{ 'AdminEmail' } . " to request access." ;  
             $ret = 401 if ( scalar ( keys %$hsr ) != 1 );
          }
       };
@@ -95,10 +95,10 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
-      # debug pr $appConfig->{ $db . '.meta' }  ; 
+      # debug pr $config->{ $db . '.meta' }  ; 
 
-      $objModel->doSetDbTablesList($db ) unless exists $appConfig->{"$db" . '.meta.tables-list'} ; 
-      my @tables = @{ $appConfig->{"$db" . '.meta.tables-list'} } ; 
+      $objModel->doSetDbTablesList($db ) unless exists $config->{"$db" . '.meta.tables-list'} ; 
+      my @tables = @{ $config->{"$db" . '.meta.tables-list'} } ; 
       my $ts_qry = $qry ; 
       $ts_qry =~ s/\s+/ & /g ; # to_tsquery('english', 'The & Fat & Rats')
       my $str_sql = 'SELECT guid as guid, id as id, item as item, name as name, description as description , relevancy' ; 
@@ -476,7 +476,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          $objLogger->doLogErrorMsg ( $msg ) ; 
       }
 
-      $appConfig->{ "databases-list"} = $hsr ;
+      $config->{ "databases-list"} = $hsr ;
 
       return ( $ret , $msg , $hsr ) ; 	
    }
@@ -917,7 +917,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $columns_to_order_by_asc   = '' ; 
       my $columns_to_order_by_desc  = '' ; 
 
-      ( $ret , $msg , $cols ) = $objModel->doGetItemsDefaultPickCols ( $appConfig , $db , $table ) ; 
+      ( $ret , $msg , $cols ) = $objModel->doGetItemsDefaultPickCols ( $config , $db , $table ) ; 
       return ( 400 , $msg , undef ) unless ( $ret == 0 );
 
       ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect($table,$cols);
@@ -936,7 +936,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          WHERE 1=1 " ; 
 
       if ( defined $who ) {
-         if ( $table eq 'users' and $who ne $appConfig->{'AdminEmail'} ){
+         if ( $table eq 'users' and $who ne $config->{'AdminEmail'} ){
             $str_sql .= "AND email = '" . $who . "'"
          }
       }
@@ -1018,7 +1018,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 	
 	sub new {
 		my $invocant   = shift ;    
-		$appConfig     = ${ shift @_ } || croak 'appConfig not passed in RdrPostgresDb !!!' ; 
+		$config     = ${ shift @_ } || croak 'config not passed in RdrPostgresDb !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
       $db            = shift ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
@@ -1026,20 +1026,22 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       $self          = $self->doInit($db) ; 
 		return $self;
 	}  
-	
+
+
    sub doInit {
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
-		
-		$postgres_db_host    = $ENV{ 'postgres_db_host' } || $appConfig->{'postgres_db_host'} 		|| '127.0.0.1' ;
-		$postgres_db_port    = $ENV{ 'postgres_db_port' } || $appConfig->{'postgres_db_port'} 		|| '15432' ; 
-		$postgres_db_user 	= $ENV{ 'postgres_db_user' } || $appConfig->{'postgres_db_user'} 		|| 'usrqtoapp' ; 
-		$postgres_db_user_pw = $ENV{ 'postgres_db_user_pw' } || $appConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
+	   
+      my $dbConfig = $config->{'env'}->{'db'} ; 
+		$postgres_db_host    = $ENV{ 'postgres_db_host' } || $dbConfig->{'postgres_db_host'} 		|| '127.0.0.1' ;
+		$postgres_db_port    = $ENV{ 'postgres_db_port' } || $dbConfig->{'postgres_db_port'} 		|| '15432' ; 
+		$postgres_db_user 	= $ENV{ 'postgres_db_user' } || $dbConfig->{'postgres_db_user'} 		|| 'usrqtoapp' ; 
+		$postgres_db_user_pw = $ENV{ 'postgres_db_user_pw' } || $dbConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
 
-	   $objLogger 			   = 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			   = 'Qto::App::Utils::Logger'->new( \$config ) ;
 
       return $self ; 
 	}	
@@ -1055,7 +1057,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       $ENV{'DBI_TRACE'} = 15 ; 
       $ENV{'DBI_TRACE'} ='SQL' ; 
       
-		$pg = 'Qto::App::Db::In::Postgres::MojoPgWrapper'->new (\$appConfig, \$objModel , $db ) ; 
+		$pg = 'Qto::App::Db::In::Postgres::MojoPgWrapper'->new (\$config, \$objModel , $db ) ; 
       $pg = $pg->options( {
               'RaiseError'          => 1
             , 'ShowErrorStatement'  => 1

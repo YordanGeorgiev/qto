@@ -23,15 +23,15 @@ doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/qto/ysg-issues.dev.host-name.
 croak $m unless ( defined ( $ENV{ "qto_project" } )) ; 
 
 my $objInitiator 				= 'Qto::App::Utils::Initiator'->new(0);	
-my $appConfig					= {} ;
-$appConfig                 = $objInitiator->get('AppConfig');
+my $config					= {} ;
+$config                 = $objInitiator->get('AppConfig');
 my $objConfigurator
    = 'Qto::App::Utils::Configurator'->new($objInitiator->{'ConfFile'},
-    \$appConfig);
-$appConfig           = $objConfigurator->getConfHolder()  ;
+    \$config);
+$config           = $objConfigurator->getConfHolder()  ;
 
 my $objCnrXlsHsr3ToDbHsr3 = 
-   'Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new ( \$appConfig ) ; 
+   'Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new ( \$config ) ; 
 
 my $hsr_in     = {} ; 
 my $hsr_out    = {} ; 

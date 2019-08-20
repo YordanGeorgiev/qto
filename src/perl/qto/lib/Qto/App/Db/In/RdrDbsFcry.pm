@@ -5,7 +5,7 @@ package Qto::App::Db::In::RdrDbsFcry ;
 	use Data::Printer ; 
    use Carp ; 	
 
-	our $appConfig 		= {} ; 
+	our $config 		= {} ; 
 	our $rdbms_type      = 'postgres' ; 
 	our $objItem			= {} ; 
    our $objModel        = {} ; 
@@ -44,14 +44,14 @@ package Qto::App::Db::In::RdrDbsFcry ;
 		#}
 
 		require $package_file;
-		return $objRdrDb->new( \$appConfig , \$objModel , @args);
+		return $objRdrDb->new( \$config , \$objModel , @args);
 	}
 	
 
 	sub new {
 
 		my $invocant   = shift ;    
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
 		my $self = {}; bless( $self, $class ) ; 
@@ -63,9 +63,9 @@ package Qto::App::Db::In::RdrDbsFcry ;
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
-	   #$objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   #$objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
       return $self ; 
 	}	
 

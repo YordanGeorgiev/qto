@@ -12,7 +12,7 @@ use Qto::App::Cnvr::CnrHsr2ToArray ;
 use Qto::App::UI::WtrUIFactory ; 
 
 our $module_trace   = 0 ; 
-our $appConfig      = {};
+our $config      = {};
 our $objModel       = {} ; 
 
 
@@ -31,7 +31,7 @@ sub doBuildSearchControl {
 
 sub new {
    my $invocant 			= shift ;    
-   $appConfig           = ${ shift @_ } || croak 'missing appConfig !!!' ; 
+   $config           = ${ shift @_ } || croak 'missing config !!!' ; 
    $objModel            = ${ shift @_ } || croak 'missing objModel !!!' ; 
    my $class            = ref ( $invocant ) || $invocant ; 
    my $self             = {}; bless( $self, $class );    

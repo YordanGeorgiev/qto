@@ -15,7 +15,7 @@ package Qto::App::IO::Out::WtrXls ;
 
    our $module_trace       = 0 ; 
    our $IsUnitTest         = 0 ; 
-   our $appConfig          = {} ; 
+   our $config          = {} ; 
    our $objLogger          = {} ; 
    our $objWtrDirs     = {} ; 
    our $ProductInstanceDir = {} ; 
@@ -48,12 +48,12 @@ package Qto::App::IO::Out::WtrXls ;
       my $nice_date  = "$year" . '-' . "$mon" . '-' . "$mday" ; 
 
       my $xls_file_name       = $db. '.' . $table . '.' . $nice_datetime ; 
-      my $xls_dir = $appConfig->{ 'ProductInstanceDir' } . '/dat/mix/' . "$year/$nice_month/$nice_date/tmp" ; 
+      my $xls_dir = $config->{ 'ProductInstanceDir' } . '/dat/mix/' . "$year/$nice_month/$nice_date/tmp" ; 
       $objWtrDirs->doMkDir ( "$xls_dir" ) ; 
       my $xls_file         = '' ;
       $xls_file         = "$xls_dir/$xls_file_name" . '.xlsx' unless ( defined $objModel->get('controller'));
       if ( defined $objModel->get('controller')) {
-         $xls_file         .= $appConfig->{'ProductInstanceDir'} ;
+         $xls_file         .= $config->{'ProductInstanceDir'} ;
          $xls_file         .= '/src/perl/qto/public/dat/tmp/xls/' . $xls_file_name . '.xlsx' ;
       }
 
@@ -139,7 +139,7 @@ package Qto::App::IO::Out::WtrXls ;
 	sub new {
 
 		my $class = shift;    
-		$appConfig = ${ shift @_ } || croak 'appConfig is not provided !!!' ; 
+		$config = ${ shift @_ } || croak 'config is not provided !!!' ; 
 		my $self = {}; bless( $self, $class ); 
       $self = $self->doInit();
 		return $self;
@@ -154,14 +154,14 @@ package Qto::App::IO::Out::WtrXls ;
       my $self          = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
        );
 
-      #debug rint "WtrXls::doInit appConfig : " . p($appConfig );
-      $ProductInstanceDir   = $appConfig->{ 'ProductInstanceDir' } ; 
+      #debug rint "WtrXls::doInit config : " . p($config );
+      $ProductInstanceDir   = $config->{ 'ProductInstanceDir' } ; 
 
-	   $objWtrDirs       = 'Qto::App::IO::Out::WtrDirs'->new ( \$appConfig ) ; 
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objWtrDirs       = 'Qto::App::IO::Out::WtrDirs'->new ( \$config ) ; 
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
 
       return $self ; 
 	}	

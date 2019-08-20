@@ -16,7 +16,7 @@ use Qto::App::IO::In::CnrUrlPrms ;
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 my $module_trace    = 0 ;
-our $appConfig      = {};
+our $config      = {};
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgre';
 
@@ -43,20 +43,20 @@ sub doSelectItems {
    my $objRdrDbsFcry = {} ; 
    my $objRdrDb         = {} ; 
 
-   $appConfig		      = $self->app->get('AppConfig');
-   $db                  = toEnvName ( $db , $appConfig) ;
+   $config		      = $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db , $item) ;
 
 	# debug rint "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ; 
-   $objCnrUrlPrms       = 'Qto::App::IO::In::CnrUrlPrms'->new(\$appConfig , \$objModel , $self->req->query_params);
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $objCnrUrlPrms       = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    
    return $self->SUPER::doRenderJSON(
       $objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
          unless $objCnrUrlPrms->doValidateAndSetSelect();
 
-   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
    $objRdrDb            = $objRdrDbsFcry->doSpawn ( $rdbms_type );
    my $who     = $self->session( 'app.' . $db . '.user' );
    ($http_code, $msg, $hsr2)  = $objRdrDb->doSelectRows($db, $item,$who); # doSelect
@@ -65,9 +65,9 @@ sub doSelectItems {
       $cnt = 0 ; 
       $msg = '' ; 
       my $objCnrHsr2ToArray = 
-         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
+         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
       ( $ret , $msg , $dat , $cnt ) = $objCnrHsr2ToArray->doConvert ($hsr2);
-      ( $ret , $msg , $met , $mc)   = $objModel->doGetTableMeta($appConfig,$db,$item);
+      ( $ret , $msg , $met , $mc)   = $objModel->doGetTableMeta($config,$db,$item);
    } 
    $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
 }
@@ -91,17 +91,17 @@ sub doSelectTables {
 	my $db         = $self->stash('db');
    my $msg = 'unknown error during select-tables';
 
-   $appConfig		= $self->app->get('AppConfig');
-   $db            = toEnvName ( $db , $appConfig) ;
+   $config		= $self->app->get('AppConfig');
+   $db            = toEnvName ( $db , $config) ;
 
-   my $objModel   = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db) ;
+   my $objModel   = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db , 'meta_columns' ) ;
 
 	my $ret        = 0;
 	my $hsr2       = {};
 
-	my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+	my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
 
 	my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectTablesList(\$objModel);
@@ -110,7 +110,7 @@ sub doSelectTables {
    if ( $ret == 0 ) {
       $objModel->set('select.web-action.o', 'row_id' );
       my $objCnrHsr2ToArray = 
-         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
+         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
       ( $ret , $msg , $dat ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2') , '>' );
    }
 
@@ -166,10 +166,10 @@ sub doSelectDatabases {
    my $dat           = '' ; 
    my $cnt           = 0 ; 
 
-	$appConfig	   = $self->app->get('AppConfig');
-   my $objModel   = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ;
+	$config	   = $self->app->get('AppConfig');
+   my $objModel   = 'Qto::App::Mdl::Model'->new ( \$config ) ;
 
-   $db                  = toEnvName ( $db , $appConfig) ;
+   $db                  = toEnvName ( $db , $config) ;
 	$objModel->set('postgres_db_name' , 'postgres' ) ; 
 
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
@@ -179,7 +179,7 @@ sub doSelectDatabases {
 	my $hsr2 = {};
 
 	my $objRdrDbsFcry
-			= 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+			= 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
 
 	my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
 	($ret, $msg) = $objRdrDb->doSelectDatabasesList(\$objModel);
@@ -189,7 +189,7 @@ sub doSelectDatabases {
       my $dat = () ; # an array ref holding the converted hash ref of hash refs 
       $objModel->set('select.web-action.o', 'row_id' );
       my $objCnrHsr2ToArray = 
-         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
+         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
       ( $ret , $msg , $dat ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2'),'>');
       $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 400 or $ret == 404) {
@@ -223,17 +223,17 @@ sub doSelectMeta {
    my $dat         = '' ; 
    my $cnt         = 0;
 
-   $appConfig		= $self->app->get('AppConfig');
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig ) ;
+   $config		= $self->app->get('AppConfig');
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config ) ;
    
-   $db                  = toEnvName ( $db , $appConfig) ;
+   $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$table ) ;
    
-   $appConfig		 		= $self->app->get('AppConfig');
+   $config		 		= $self->app->get('AppConfig');
       
    if ( defined $table ) {
-      ( $ret , $msg , $met , $cnt ) = $objModel->doGetTableMeta ( $appConfig , $db , $table ) 
+      ( $ret , $msg , $met , $cnt ) = $objModel->doGetTableMeta ( $config , $db , $table ) 
    }
 
    if ( $ret == 0 ) {
@@ -241,7 +241,7 @@ sub doSelectMeta {
       my $http_code = 200 ; 
       $msg = "SELECT meta OK for table: $table " ; 
       my $objCnrHsr2ToArray = 
-         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$appConfig , \$objModel ) ; 
+         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
       ( $ret , $msg , $dat , $cnt ) = $objCnrHsr2ToArray->doConvert($met);
 
       unless ( $ret == 0 ) {

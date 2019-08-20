@@ -19,7 +19,7 @@ use Spreadsheet::ParseExcel::FmtJapan;
 
 our $module_trace       = 0;
 our $IsUnitTest         = 0;
-our $appConfig          = q{};
+our $config          = q{};
 our $objLogger          = q{};
 our $ProductInstanceDir = {};
 our @tables             = () ; 
@@ -173,9 +173,9 @@ sub doInitialize {
 
   my $self = shift;
 
-  #debug rint "ExcelHandler::doInitialize appConfig : " . p($appConfig );
-  $objLogger          = 'Qto::App::Utils::Logger'->new(\$appConfig);
-  $ProductInstanceDir = $appConfig->{'ProductInstanceDir'};
+  #debug rint "ExcelHandler::doInitialize config : " . p($config );
+  $objLogger          = 'Qto::App::Utils::Logger'->new(\$config);
+  $ProductInstanceDir = $config->{'ProductInstanceDir'};
 }
 
 
@@ -187,7 +187,7 @@ sub doInitialize {
 sub new {
 
   my $class = shift;    # Class name is in the first parameter
-  $appConfig = ${shift @_} if (@_);
+  $config = ${shift @_} if (@_);
   @tables = @{ $_[0] } ; 
    
   # Anonymous hash reference holds instance attributes

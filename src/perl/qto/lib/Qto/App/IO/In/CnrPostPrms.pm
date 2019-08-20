@@ -27,11 +27,11 @@ package Qto::App::IO::In::CnrPostPrms ;
    use parent 'Qto::App::Utils::OO::AutoLoadable' ;
 
    our $objModel     = {} ; 
-   our $appConfig    = {} ; 
+   our $config    = {} ; 
 
 	sub new {
 		my $invocant   = shift ;    
-		$appConfig     = ${ shift @_ } || croak 'appConfig not passed in RdrPostgresDb !!!' ; 
+		$config     = ${ shift @_ } || croak 'config not passed in RdrPostgresDb !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
 		my $self       = {} ; bless( $self, $class );    # Say: $self is a $class
@@ -211,7 +211,7 @@ CnrPostPrms
 =head1 SYNOPSIS 
 
    use Qto::App::IO::In::CnrPostPrms ; 
-   my $objCnrPostPrms = 'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel )
+   my $objCnrPostPrms = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel )
 
 
 =head1 DESCRIPTION

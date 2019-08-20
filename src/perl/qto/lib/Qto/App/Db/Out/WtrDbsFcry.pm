@@ -6,7 +6,7 @@ package Qto::App::Db::Out::WtrDbsFcry ;
    use Carp ; 
 
 
-	our $appConfig 		= {} ; 
+	our $config 		= {} ; 
 	our $db_type			= 'postgres' ; 
 	our $objItem			= {} ; 
 	our $objController 	= {} ; 
@@ -54,14 +54,14 @@ package Qto::App::Db::Out::WtrDbsFcry ;
 
 		require $package_file;
 
-		return $objWtrDb->new( \$appConfig , \$objModel , @args);
+		return $objWtrDb->new( \$config , \$objModel , @args);
 	}
 	
 
 	sub new {
 
 		my $invocant 			= shift ;    
-		$appConfig           = ${ shift @_ } || { 'foo' => 'bar' } ; 
+		$config              = ${ shift @_ } || croak 'config not passed !!!' ; 
 		$objModel            = ${ shift @_ } || croak 'objModel not passed !!!' ; 
       $db_type             = shift || 'postgres' ; 
 		my $class = ref ( $invocant ) || $invocant ; 
@@ -78,10 +78,10 @@ package Qto::App::Db::Out::WtrDbsFcry ;
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
 
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
 
 
       return $self ; 

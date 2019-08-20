@@ -25,7 +25,7 @@ package Qto::App::Ctrl::CtrlDbToGoogleSheet ;
    use Qto::App::Mdl::Model ; 
 
 	our $module_trace                = 0 ; 
-	our $appConfig						   = {} ; 
+	our $config						   = {} ; 
 	our $objLogger						   = {} ; 
 	our $objModel						   = {} ; 
 	our $objRdrFiles			      = {} ; 
@@ -33,7 +33,7 @@ package Qto::App::Ctrl::CtrlDbToGoogleSheet ;
 
 =head1 SYNOPSIS
       my $objCtrlDbToFile = 
-         'Qto::App::Ctrl::CtrlDbToGoogleSheet'->new ( \$appConfig ) ; 
+         'Qto::App::Ctrl::CtrlDbToGoogleSheet'->new ( \$config ) ; 
       ( $ret , $msg ) = $objCtrlDbToFile->doLoadIssuesFileToDb ( $issues_file ) ; 
 =cut 
 
@@ -148,14 +148,14 @@ package Qto::App::Ctrl::CtrlDbToGoogleSheet ;
          my $hsr                 = {} ;      # this is the data hash ref of hash reffs 
          my $mhsr                = {} ;      # this is the meta hash describing the data hash ^^
 
-         my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$appConfig , \$objModel ) ; 
+         my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
 	      my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
       
          my $db                     = $objModel->get( 'env.postgres_db_name' );
          ( $ret , $msg  )  = $objRdrDb->doSelectRows( $db, $table ) ; 
          return ( $ret , $msg ) unless $ret == 0 ; 
 
-         my $objWtrGoogleSheet    = 'Qto::App::IO::Out::WtrGoogleSheet'->new( \$appConfig ) ;
+         my $objWtrGoogleSheet    = 'Qto::App::IO::Out::WtrGoogleSheet'->new( \$config ) ;
          ( $ret , $msg )  = $objWtrGoogleSheet->doWriteGSheetFromHashRef ( 
                \$objModel , \$objGoogleService , $table , $refresh_token , $spread_sheet_id ) ; 
 
@@ -191,7 +191,7 @@ package Qto::App::Ctrl::CtrlDbToGoogleSheet ;
 	sub new {
 
 		my $class   = shift;    # Class name is in the first parameter
-		$appConfig  = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config  = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel   = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
@@ -209,11 +209,11 @@ package Qto::App::Ctrl::CtrlDbToGoogleSheet ;
       my $self          = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
        );
 
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
-      $objRdrFiles      = 'Qto::App::IO::In::RdrFiles'->new ( \$appConfig ) ;  
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
+      $objRdrFiles      = 'Qto::App::IO::In::RdrFiles'->new ( \$config ) ;  
 
       return $self ; 
 	}	

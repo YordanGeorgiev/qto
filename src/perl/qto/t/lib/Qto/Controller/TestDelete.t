@@ -14,13 +14,13 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $url           = {} ; 
    my $tm            = '' ; # the test message for each test 
    my $t             = Test::Mojo->new('Qto');
-   my $appConfig     = $t->app->get('AppConfig') ; 
+   my $config     = $t->app->get('AppConfig') ; 
    my $exp_err_msg   = '' ; 
-   my $db            = $appConfig->{ 'postgres_db_name' } ; # OBS instance specific !!!
+   my $db            = $config->{ 'postgres_db_name' } ; # OBS instance specific !!!
    my $ua            = $t->ua ; 
    my $objTimer      = {} ;
    $url              = '/' . $db . '/delete/test_delete_table' ; 
-   my $env           = $appConfig->{'ProductType' };
+   my $env           = $config->{'EnvType' };
 
    # the delete by attribute requires the following json format : 
    # the name of the attribute

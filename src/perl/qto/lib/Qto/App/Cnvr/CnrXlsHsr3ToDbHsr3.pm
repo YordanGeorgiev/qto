@@ -1,7 +1,7 @@
 use strict ; use warnings ; 
 package Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3 ; 
 
-our $appConfig = {} ; 
+our $config = {} ; 
 use Data::Printer ; 
 use Carp ; 
 
@@ -199,7 +199,7 @@ sub doPrintRow {
 	sub new {
 
 		my $class      = shift;    # Class name is in the first parameter
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
       $rdbms_type    = shift @_ || 'postgres' ; 
       if ( $rdbms_type eq 'mysql' || $rdbms_type eq 'mariadb' ) {
          $lfth          = 'LeftRank' ; 

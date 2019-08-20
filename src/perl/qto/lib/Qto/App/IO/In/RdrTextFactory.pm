@@ -4,7 +4,7 @@ package Qto::App::IO::In::RdrTextFactory ;
 	
 	use Data::Printer ; 
 
-	our $appConfig 		= {} ; 
+	our $config 		= {} ; 
 	our $term			   = $ENV{'period'} || 'daily' ; 
 	our $objItem			= {} ; 
 	our $objController 	= {} ; 
@@ -50,7 +50,7 @@ package Qto::App::IO::In::RdrTextFactory ;
 
 		require $package_file;
 
-		return $objRdrText->new( \$appConfig , $objController , $term , @args);
+		return $objRdrText->new( \$config , $objController , $term , @args);
 
 	}
 	# eof sub doInit
@@ -63,7 +63,7 @@ package Qto::App::IO::In::RdrTextFactory ;
 	sub new {
 
 		my $invocant 			= shift ;    
-		$appConfig     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
       $objController       = shift ; 
 		
       # might be class or object, but in both cases invocant
@@ -84,10 +84,10 @@ package Qto::App::IO::In::RdrTextFactory ;
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
 
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$appConfig ) ;
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
 
 
       return $self ; 

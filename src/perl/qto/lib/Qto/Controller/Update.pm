@@ -20,7 +20,7 @@ use Qto::App::IO::In::CnrPostPrms ;
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $module_trace   = 0 ;
-our $appConfig      = {};
+our $config      = {};
 our $rdbms_type     = 'postgre';
 
 
@@ -43,16 +43,16 @@ sub doUpdateById {
    my $json             = $self->req->body;
    my $perl_hash        = decode_json($json) ; 
 
-   $appConfig		      = $self->app->get('AppConfig');
-   $db                  = toEnvName ( $db , $appConfig) ;
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$appConfig , $db , $item ) ;
+   $config		      = $self->app->get('AppConfig');
+   $db                  = toEnvName ( $db , $config) ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
    
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
    
    $objCnrPostPrms = 
-      'Qto::App::IO::In::CnrPostPrms'->new(\$appConfig , \$objModel );
+      'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
    
    unless ( $objCnrPostPrms->doValidateAndSetUpdate ( $perl_hash , $item ) == 1 ) {
       my $http_code = $objCnrPostPrms->get('http_code') ; 
@@ -67,7 +67,7 @@ sub doUpdateById {
 
 
    $objWtrDbsFcry
-      = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$appConfig, \$objModel );
+      = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$config, \$objModel );
    $objWtrDb = $objWtrDbsFcry->doSpawn("$rdbms_type");
    ($ret, $msg) = $objWtrDb->doUpdateItemBySingleColToDb(\$objModel, $item);
 

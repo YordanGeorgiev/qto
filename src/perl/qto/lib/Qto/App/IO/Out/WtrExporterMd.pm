@@ -20,7 +20,7 @@ use Qto::App::IO::WtrMdFactory ;
 
 our $module_trace      = 1 ; 
 our $objModel          = {} ; 
-our $appConfig         = {} ; 
+our $config         = {} ; 
 our $export_type       = 'md' ; 
 
 
@@ -39,17 +39,17 @@ sub doExport {
    my $objRdrDb         = {} ; 
    my $dat              = {} ; 
  
-   $objRdrDbsFcry 	= 'Qto::App::Db::In::RdrDbsFcry'->new(\$appConfig, \$objModel );
+   $objRdrDbsFcry 	= 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
    $objRdrDb            = $objRdrDbsFcry->doSpawn("$export_type");
 
    ($rv, $msg, $dat) 	= $objRdrDb->doHSelectBranch($db , $table, $objModel->get('hselect.web-action.bid'));
    $http_code 				= $rv ;  
-   my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$appConfig  ) ; 
+   my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$config  ) ; 
    # p ( $dat ) ; 
    $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
 
-   #my $objWtrGitHubMd    = 'Qto::App::IO::Out::WtrGitHubMd'->new( \$appConfig , \$objModel) ;
-   my $objWtrMdFactory = 'Qto::App::IO::WtrMdFactory'->new( \$appConfig , \$objModel ) ;
+   #my $objWtrGitHubMd    = 'Qto::App::IO::Out::WtrGitHubMd'->new( \$config , \$objModel) ;
+   my $objWtrMdFactory = 'Qto::App::IO::WtrMdFactory'->new( \$config , \$objModel ) ;
    my $objWtrMd = $objWtrMdFactory->doSpawn("$export_type");
    return $objWtrMd->doWrite ( $table , $dat );
 }
@@ -57,7 +57,7 @@ sub doExport {
 
 	sub new {
 		my $invocant   = shift ;    
-		$appConfig     = ${ shift @_ } || croak 'missing appConfig !!!' ; 
+		$config     = ${ shift @_ } || croak 'missing config !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'missing objModel !!!' ; 
 		$export_type   = shift         || $export_type ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
@@ -71,7 +71,7 @@ sub doExport {
       my $self = shift ; 
 
       %$self = (
-           appConfig => $appConfig
+           config => $config
       );
       return $self ; 
 	}	
