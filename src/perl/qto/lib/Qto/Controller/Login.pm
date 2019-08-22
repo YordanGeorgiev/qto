@@ -10,9 +10,9 @@ use Qto::App::IO::In::CnrPostPrms ;
 use Qto::App::Db::In::RdrDbsFcry ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
-our $config      = {} ;
-our $objLogger      = {} ;
-our $rdbms_type     = 'postgres';
+our $config          = {} ;
+our $objLogger       = {} ;
+our $rdbms_type      = 'postgres';
 
 #
 # --------------------------------------------------------
@@ -32,7 +32,7 @@ sub doLoginUser {
    my $rows_count       = 0 ; 
    my $msr2             = {}  ; 
    my $dat              = {}  ; 
-   $config		 		= $self->app->get('AppConfig');
+   $config		 		   = $self->app->get('AppConfig');
    $objLogger           = 'Qto::App::Utils::Logger'->new( \$config );
    $db                  = toEnvName ( $db , $config) ;
 	#print STDOUT "Logon.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
@@ -52,7 +52,8 @@ sub doLoginUser {
 
    if ( $ret != 0 ) {
       $objLogger->doLogInfoMsg ( 'login failed for "' . $self->setEmptyIfNull($email) . '"') ; 
-      $self->doRenderPageTemplate($ret , 'login failed! ' . $msg , $msg_color,$db,$redirect_url);
+      $msg = 'login failed! ' . $msg ;
+      $self->doRenderPageTemplate($ret, $msg ,$msg_color,$db,$redirect_url);
       return ;
    } 
 
@@ -80,26 +81,25 @@ sub doLoginUser {
    }
    $self->doRenderPageTemplate($http_code,$msg,$msg_color,$db,$redirect_url);
 }
-#eof sub doLoginUser
 
 
 sub doShowLoginForm {
 
    my $self             = shift;
    my $db               = $self->stash('db');
-   my $msg              = undef ; 
+   my $msg              = '' ; 
    my $msg_color        = 'grey' ; 
    
-   $config		 		= $self->app->get('AppConfig');
+   $config		 		   = $self->app->get('AppConfig');
+   my $alConfig         = $config->{'env'}->{'app'} ; 
    $db                  = toEnvName ( $db , $config) ;
 
-   my $redirect_url = $self->session( 'app.' . $db . '.url' ) 
-         if defined $self->session( 'app.' . $db . '.url' ) ; 
+   my $redirect_url = $self->session( 'app.' . $db . '.url' ) if defined $self->session( 'app.' . $db . '.url' ) ; 
    my $session = Mojolicious::Sessions->new ;
    $self->session(expires => 1);
    $session->cookie_name('qto.' . $db);
    $session->default_expiration(86400);
-   my $instance_domain = $config->{ 'web_host' } . ':' . $config->{ 'mojo_hypnotoad_port' } . '.' . $db ;
+   my $instance_domain = $alConfig->{ 'web_host' } . $alConfig->{'env'}->{'app'}->{ 'mojo_hypnotoad_port' } . '.' . $db ;
    $session  = $session->cookie_domain( $instance_domain);
 
    $self->doRenderPageTemplate(200,$msg,$msg_color,$db,$redirect_url) ;
@@ -126,7 +126,7 @@ sub doRenderPageTemplate {
    my $template_name    = 'login' ; 
    my $template         = 'pages/' . $template_name . '/' . $template_name ; 
 
-   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
+   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
 
    $self->render(
@@ -134,7 +134,7 @@ sub doRenderPageTemplate {
     , 'msg'             => $msg
     , 'msg_color'       => $msg_color
     , 'db' 		         => $db
-    , 'EnvType' 		=> $config->{'EnvType'}
+    , 'EnvType' 		   => $config->{'EnvType'}
     , 'ProductVersion' 	=> $config->{'ProductVersion'}
     , 'GitShortHash'    => $config->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
@@ -173,4 +173,3 @@ sub setEmptyIfNull {
 1;
 
 __END__
-
