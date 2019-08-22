@@ -715,7 +715,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $msg = 'cannot connect to the "' . $db . '" database: '; 
       my $dbh  = undef ;
 
-      $dbh = DBI->connect("dbi:Pg:dbname=$db;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
+      $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_db_host;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
                  'RaiseError'          => 0 # otherwise it dies !!!
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1

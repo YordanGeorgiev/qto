@@ -9,7 +9,8 @@ doRunPgsqlScripts(){
 
    test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
-   doExportJsonSectionVars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
+   test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
+   doExportJsonSectionVars $PROJ_CONF_FILE '.env.db'
 	
    export tmp_log_file="$tmp_dir/.$$.log"
 	doLog "INFO START :: running pg sql scripts "	

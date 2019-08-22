@@ -12,7 +12,6 @@ SELECT 'create the "yearly_issues" table'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
     , owner          varchar (20) NOT NULL DEFAULT 'unknown'
-    , tags           varchar (200)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_yearly_issues_guid PRIMARY KEY (guid)
     ) WITH (
