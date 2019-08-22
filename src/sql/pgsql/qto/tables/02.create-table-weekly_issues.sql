@@ -14,7 +14,6 @@ SELECT 'create the "weekly_issues" table'
     , description    varchar (4000)
     , type           varchar (30) NOT NULL DEFAULT 'task'
     , owner          varchar (20) NOT NULL DEFAULT 'unknown'
-    , tags           varchar (200)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_weekly_issues_guid PRIMARY KEY (guid)
     ) WITH (

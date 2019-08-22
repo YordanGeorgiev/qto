@@ -9,7 +9,8 @@ doGenerateMdDocs(){
    test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    test -z "${docs_root_dir-}" && docs_root_dir="$PROJ_INSTANCE_DIR"
 
-   doExportJsonSectionVars cnf/env/$env_type.env.json '.env.app'
+   test -z ${PROJ_CONF_FILE-} && PROJ_CONF_FILE=$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json
+   doExportJsonSectionVars $PROJ_CONF_FILE '.env.app'
 
    # <<web-host>>:<<web-port>>/<<db>>/select/export_files?as=grid&od=id
    basic_url="http://${web_host:-}:${mojo_morbo_port:-}/${postgres_db_name:-}"

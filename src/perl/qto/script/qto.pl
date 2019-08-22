@@ -124,8 +124,13 @@ sub doInit {
    $config = json_file_to_perl ($objInitiator->doResolveConfFile());
    $config->{'env'}->{'run'}->{'ProductInstanceDir'} = $objInitiator->doResolveProductInstanceDir(-1);
    $config->{'env'}->{'run'}->{'ProductName'} = $objInitiator->doResolveProductName();
-   # debug p $config ; 
-   # p($config)  ; 
+
+   if ( defined $ENV{'PROJ_CONF_FILE'} ) {
+      my $projConfig = json_file_to_perl ($ENV{'PROJ_CONF_FILE'} );
+      $config->{'env'}->{'db'} = $projConfig->{'env'}->{'db'} ; 
+   }
+
+   p $config ; 
 
    $objLogger = 'Qto::App::Utils::Logger'->new(\$config);
    my $m = "START MAIN";

@@ -346,7 +346,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       eval { 
 		$postgres_db_user 			= $ENV{ 'postgres_db_user' }     || $config->{'postgres_db_user'}    || 'ysg' ; 
 		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' }  || $config->{'postgres_db_user_pw'} || 'no_pass_provided!!!' ; 
-         $dbh = DBI->connect("dbi:Pg:dbname=$db;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
+         $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_db_host;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
                     'RaiseError'          => 1
                   , 'ShowErrorStatement'  => 1
                   , 'PrintError'          => 1
@@ -381,7 +381,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 		$postgres_db_useradmin 			= $ENV{ 'postgres_db_useradmin' }     || $config->{'postgres_db_useradmin'} ;
 		$postgres_db_useradmin_pw 		= $ENV{ 'postgres_db_useradmin_pw' }  || $config->{'postgres_db_useradmin_pw'} 
          || 'no_pass_provided!!!' ; 
-         $dbh = DBI->connect("dbi:Pg:dbname=$db;port=$postgres_db_port", "$postgres_db_useradmin", "$postgres_db_useradmin_pw" , {
+         $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_db_host;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
                     'RaiseError'          => 1
                   , 'ShowErrorStatement'  => 1
                   , 'PrintError'          => 1
@@ -541,7 +541,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       }
       
       my $dmhsr            = {} ; 
-      my $update_time      = q{} ; 
+      my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
+		my $update_time      = $objTimer->GetHumanReadableTime();
 
       my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , $self ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
@@ -675,14 +676,15 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $rv               = 0 ;     # apperantly insert ok returns rv = 1 !!! 
       
       my $hs_headers       = {} ; 
-      my $update_time      = q{} ; # must have the default value now() in db
+      my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
+		my $update_time      = $objTimer->GetHumanReadableTime();
       
       my $dmhsr            = {} ; 
 
       my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel , $self ) ; 
       my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-      $objLogger->doLogDebugMsg ( "upsert start for : db: $db table $table" );
+      $objLogger->doLogDebugMsg ( "setart upsert for : db: $db table $table" );
 
       ( $ret , $msg , $hs_headers ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
@@ -856,7 +858,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $str_sql          = q{} ;   # this is the sql string to use for the query
       my $rv               = 0 ;     # apperantly insert ok returns rv = 1 !!! 
       my $hs_headers       = {} ; 
-      my $update_time      = q{} ; # must have the default value now() in db
+      my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
+		my $update_time      = $objTimer->GetHumanReadableTime();
       my $dmhsr            = {} ; 
       $db = $objModel->get('postgres_db_name');
       my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel , $self ) ; 
@@ -905,8 +908,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          for (1..3) { chop ( $sql_str_insrt) } ; 
          $sql_str_insrt	.= ')' ; 
 
-         my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
-		   my $update_time      = $objTimer->GetHumanReadableTime();
+         my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
+         my $update_time      = $objTimer->GetHumanReadableTime();
          foreach my $row_num ( sort ( keys %$hs_table ) ) { 
 
             next if $row_num == 0 ; 
@@ -1024,13 +1027,16 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
            config => $config
       );
       my $dbConfig = $config->{'env'}->{'db'} ; 
-		$db 			               = $ENV{ 'postgres_db_name' }     || $dbConfig->{'postgres_db_name'}    || 'prd_qto' ; 
-		$postgres_db_host 			= $ENV{ 'postgres_db_host' }     || $dbConfig->{'postgres_db_host'}    || 'localhost' ;
-		$postgres_db_port 			= $ENV{ 'postgres_db_port' }     || $dbConfig->{'postgres_db_port'}    || '13306' ; 
-		$postgres_db_useradmin 			= $ENV{ 'postgres_db_useradmin' }     || $dbConfig->{'postgres_db_useradmin'}    || 'ysg' ; 
-		$postgres_db_useradmin_pw 		= $ENV{ 'postgres_db_useradmin_pw' }  || $dbConfig->{'postgres_db_useradmin_pw'} || 'no_pass_provided!!!' ; 
-		$postgres_db_user 			= $ENV{ 'postgres_db_user' }     || $dbConfig->{'postgres_db_user'}    || 'ysg' ; 
-		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' }  || $dbConfig->{'postgres_db_user_pw'} || 'no_pass_provided!!!' ; 
+
+      p $dbConfig ; 
+      print "stp src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm \n" ; 
+		$db 			               = $dbConfig->{'postgres_db_name'}    || croak " db not set !!!" ; 
+		$postgres_db_host 			= $dbConfig->{'postgres_db_host'}    || croak "postgres_db_host not set !!!" ; 
+		$postgres_db_port 			= $dbConfig->{'postgres_db_port'}    || croak "postgres_db_port not set !!!"  ; 
+		$postgres_db_useradmin 	   = $dbConfig->{'postgres_db_useradmin'}    || croak 'no admin postgres user' ; 
+		$postgres_db_useradmin_pw  = $dbConfig->{'postgres_db_useradmin_pw'} || croak 'no_pass_provided!!!' ; 
+		$postgres_db_user 			= $dbConfig->{'postgres_db_user'}    || croak " no postgres_db_user !!!" ;  
+		$postgres_db_user_pw 		= $dbConfig->{'postgres_db_user_pw'} || croak " no postgres_db_user_pw !!!!" ;
       
 	   $objLogger 			         = 'Qto::App::Utils::Logger'->new( \$config ) ;
 
