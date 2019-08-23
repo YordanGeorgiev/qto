@@ -126,7 +126,7 @@ the main perl logging module in qto
 		$logConfig->{ 'LogToFileHandle' } = 0
 		  unless ( defined( $logConfig->{ 'LogToFileHandle' } ) );
 
-		$objTimer               = 'Qto::App::Utils::Timer'->new( $logConfig->{ 'TimeFormat' } );
+      $objTimer               = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
 		$HostName					= $logConfig->{'HostName'} ; 
 		$LogTimeToTextSeparator = $logConfig->{'LogTimeToTextSeparator'} ; 
 

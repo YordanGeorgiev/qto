@@ -15,8 +15,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $url           = {} ; 
    my $exp_err_msg   = '' ; 
    my $t             = Test::Mojo->new('Qto');
-   my $config     = $t->app->get('AppConfig') ; 
-   my $db            = $config->{ 'postgres_db_name' } ; # because each instance has it's own ...
+   my $config        = $t->app->get('AppConfig') ; 
+   my $db            = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; # because each instance has it's own ...
    my $ua            = $t->ua ; # the user agent , aka http client
    my $objTimer      = {} ;
    # the create back-end web action requires the following json format : 
@@ -40,7 +40,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $tm = 'the ret var from the response should be the same as the http code => 200'; 
    ok ( $res->{'ret'} eq 200 , $tm ) ; 
  
-   my $env = $config->{'EnvType'} . '_'; 
+   my $env = $config->{'env'}->{'ENV_TYPE'} . '_'; 
    $tm = 'return 400 on non_existent_db create call' ;
    $exp_err_msg = 'cannot connect to the "' . "$env" . 'non_existent_db" database: FATAL:  database "' . $env . 'non_existent_db" does not exist' ; 
    $url = '/non_existent_db/create/test_create_table' ; 

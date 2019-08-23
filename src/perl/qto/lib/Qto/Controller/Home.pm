@@ -58,16 +58,16 @@ sub doRenderPageTemplate {
    my $template_name    = 'home' ; 
    my $template         = 'pages/' . $template_name . '/' . $template_name ; 
 
-   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
+   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
 
    $self->render(
       'template'        => $template 
     , 'msg'             => $msg
     , 'db' 		         => $db
-    , 'EnvType' 		=> $config->{'EnvType'}
-    , 'ProductVersion' 	=> $config->{'ProductVersion'}
-    , 'GitShortHash'    => $config->{'GitShortHash'}
+    , 'EnvType' 		   => $config->{'env'}->{'ENV_TYPE'}
+    , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'} 
+    , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'notice'          => $notice
 	) ; 

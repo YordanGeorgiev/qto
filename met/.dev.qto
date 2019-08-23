@@ -264,12 +264,7 @@ src/bash/lib/.bash_funcs.host-name
 src/bash/qto/tests/all-qto-tests.lst
 src/bash/qto/tests/rem-qto-actions.lst
 # ---
-src/bash/qto/tests/db-to-gsheet.test.sh
-src/bash/qto/helps/db-to-gsheet.help.sh
 src/bash/qto/funcs/db-to-gsheet.func.sh
-doc/txt/qto/tests/db-to-gsheet.test.txt
-doc/txt/qto/helps/db-to-gsheet.help.txt
-doc/txt/qto/funcs/db-to-gsheet.func.txt
 # --- 
 doc/txt/qto/funcs/clone-project.func.txt
 doc/txt/qto/helps/clone-project.help.txt
@@ -358,7 +353,7 @@ cnf/hosts/host-name
 cnf/hosts/host-name/home
 cnf/hosts/host-name/home/ysg
 cnf/hosts/host-name/home/ysg/.muttrc
-cnf/hosts/host-name/home/ysg/.tmux.cnf
+cnf/hosts/host-name/home/ysg/.tmux.conf
 cnf/hosts/host-name/etc/pam.d/common-session-noninteractive
 cnf/hosts/host-name/etc/pam.d/common-session
 cnf/hosts/host-name/etc/security/limits.conf
@@ -618,7 +613,6 @@ cnf/hosts/host-name
 cnf/hosts/host-name/home
 cnf/hosts/host-name/home/ysg
 cnf/hosts/host-name/home/ysg/.muttrc
-cnf/hosts/host-name/home/ysg/.tmux.cnf
 LICENSE
 lib/readme.txt
 lib/bash/funcs/
@@ -763,7 +757,6 @@ src/bash/qto/funcs/admin/restart-network.func.sh
 src/bash/qto/funcs/print-stats.func.sh
 cnf/hosts/host-name/etc/fstab
 cnf/hosts/host-name/etc/network/interfaces
-cnf/hosts/host-name/home/ysg/.vimrc
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToJson/autosplit.ix

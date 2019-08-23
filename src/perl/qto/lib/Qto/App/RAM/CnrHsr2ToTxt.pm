@@ -68,7 +68,7 @@ sub doConvertHashRefToStr {
   my $ret        = 1;
   my $str_issues = q{};
   my $str_activity_issues = " ";
-  my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
+  my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
   my $run_time         = $objTimer->GetHumanReadableTime();
   p($hsr2) if $module_trace == 1;
   my $str_header = '# START ' . uc($term) . ' @%run_time%

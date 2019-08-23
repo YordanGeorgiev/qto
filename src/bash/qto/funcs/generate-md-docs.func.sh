@@ -13,25 +13,24 @@ doGenerateMdDocs(){
    doExportJsonSectionVars $PROJ_CONF_FILE '.env.app'
 
    # <<web-host>>:<<web-port>>/<<db>>/select/export_files?as=grid&od=id
-   basic_url="http://${web_host:-}:${mojo_morbo_port:-}/${postgres_db_name:-}"
+   basic_url="https://${web_host:-}:${mojo_daemon_port:-}/${postgres_db_name:-}"
    furl="$basic_url"'/select/export_files?as=grid&od=id&pg-size=20'
-
-   curl -s $furl | jq -r '.dat[]|.url'
+   curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]|.url'
 	ret=$?
 	test $ret != "0" && doExit $ret "failed to get data from the $furl"
 
    while read -r url ; do 
-      file_name=$(curl -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .name'); 
-      rel_path=$(curl -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .path');
+      file_name=$(curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .name'); 
+      rel_path=$(curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .path');
       [ "${rel_path-}" == "null" ] && rel_path=""
       mkdir -p $docs_root_dir/$rel_path
       file_path=$(echo $docs_root_dir/$rel_path/$file_name|perl -ne 's|[/]{2,5}|/|g;print')
-      echo -e "\nrunning: curl -s -o \"$file_path\" \ \n \"$basic_url/export/$url\""       
-      curl -s "$basic_url/export/$url" -o "$file_path"
+      echo -e "\nrunning: curl --cookie ~/.qto/cookies.txt --insecure -s -o \"$file_path\" \ \n \"$basic_url/export/$url\""       
+      curl --cookie ~/.qto/cookies.txt --insecure  -s "$basic_url/export/$url" -o "$file_path"
       lines=$(wc -l "$file_path"|awk '{print $1;}')
       [[ $lines -eq 0 ]] && doExit 0 "load the $url !!! the table is empty !!!"
       echo -e "$lines lines in the $file_path file \n"
-   done < <(curl -s $furl | jq -r '.dat[]|.url')
+   done < <(curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]|.url')
 	
    printf "\033[2J";printf "\033[0;0H"
 	doLog "DEBUG STOP  doGenerateMdDocs"

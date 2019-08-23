@@ -69,10 +69,11 @@ sub doLoadAppConfig {
    $config        = json_file_to_perl ($objInitiator->doResolveConfFile());
    $config->{'env'}->{'run'}->{'ProductInstanceDir'} = $objInitiator->doResolveProductInstanceDir(-1);
    $config->{'env'}->{'run'}->{'ProductName'} = $objInitiator->doResolveProductName();
+   $config->{'env'}->{'run'}->{'VERSION'} = $objInitiator->doResolveVersion();
    $objLogger     = 'Qto::App::Utils::Logger'->new(\$config);
 
    my $currentShortHash = `git rev-parse --short HEAD` ; chomp($currentShortHash);
-   $config->{ 'GitShortHash' } = $currentShortHash || "" ; 
+   $config->{'env'}->{'run'}->{ 'GitShortHash' } = $currentShortHash || "" ; 
 
    p($config) ; 
    $self->set('AppConfig' , $config );
