@@ -4,7 +4,7 @@
 doBackupPostgresTable(){
 
    mkdir -p $PRODUCT_INSTANCE_DIR/dat/mix/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/tmp
-   dump_file=$PRODUCT_INSTANCE_DIR/dat/mix/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/tmp/$tables.data.sql
+   dump_file=$PRODUCT_INSTANCE_DIR/dat/mix/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/tmp/${tables:-}.data.sql
 
 	doLog "DEBUG START doBackupPostgresTable"
    echo "start running : pg_dump  --verbose --data-only --table public.$tables $postgres_db_name "

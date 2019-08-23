@@ -142,20 +142,6 @@ sub doInit {
    my $objRdrEnv 	         = 'Qto::App::IO::In::RdrEnv'->new(\$config, \$objModel ) ; 
    $objRdrEnv->doRead();
 
-
-   $qto_project  = $ENV{"qto_project"};
-
-   unless ($qto_project) {
-      $msg = "set you current project by: \n";
-      $msg
-      .= "doParseCnfEnvVars <<path-to-qto-project-configuration-file>>";
-      $objLogger->doLogErrorMsg($msg);
-      $objLogger->doLogFatalMsg($msg);
-      return ($ret, $msg);
-   }
-
-   $config->{'qto_project'} = $qto_project;
-
    $ret = 0;
    return ($ret, $msg);
 }

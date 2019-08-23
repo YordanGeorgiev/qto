@@ -714,7 +714,6 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       # debug p $sql_str_insrt ; 
       my $expected_amount_of_inserted_rows = keys %$hsr2; 
 
-      my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
       $update_time      = $objTimer->GetHumanReadableTime();
       foreach my $row_num ( sort ( keys %$hsr2) ) { 
          next if $row_num == 0 ; 

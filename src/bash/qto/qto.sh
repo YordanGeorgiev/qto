@@ -345,7 +345,6 @@ doSetVars(){
    fi
 
    cd .. ; product_base_dir=`pwd`;
-	#doParseCnfEnvVars  #qto-190818000743
 
    ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
@@ -364,56 +363,7 @@ doSetVars(){
 }
 
 
-#
-# ---------------------------------------------------------
-# cat cnf/qto.dev.host-name.cnf
-# [MainSection]
-# postgres_db_name     = dev_qto
-# postgres_db_host     = host-name
-# 
-# call by: doParseCnfEnvVars cnf/qto.dev.host-name.cnf
-# ---------------------------------------------------------
-doParseCnfEnvVars(){
 
-   cnf_file=${1:-};shift 1;
-
-   test -z "$cnf_file" && cnf_file="$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type.$host_name.cnf"
-
-   cnf_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$cnf_file")
-   PRODUCT_INSTANCE_DIR=${cnf_dir%/*}
-
-   INI_SECTION=MainSection
-
-	( set -o posix ; set ) | sort >~/vars.before
-
-	eval `sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
-		-e 's/#.*$//' \
-		-e 's/[[:space:]]*$//' \
-		-e 's/^[[:space:]]*//' \
-		-e "s|%ProductInstanceDir%|${PRODUCT_INSTANCE_DIR}|" \
-		-e "s/^\(.*\)=\([^\"']*\)$/export \1=\"\2\"/" \
-		< $cnf_file \
-		| sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
-
-   # and post-register for nice logging
-   ( set -o posix ; set ) | sort >~/vars.after
-
-   echo "INFO added the following vars from section: [$INI_SECTION]"
-   comm -3 ~/vars.before ~/vars.after | perl -ne 's#\s+##g;print "\n $_ "'
-}
-
-
-# todo:ysg process cmd args
-process_help_cmd_args () {
-  while [[ $# -gt 0 ]]; do
-    case "$1" in
-       -h|-help) usage; exit 1 ;;
-    -v|-verbose) verbose=1 && shift ;;
-      -d|-debug) debug=1 && addSbt "-debug" && shift ;;
-              *) addResidual "$1" && shift ;;
-    esac
-  done
-}
 
 
 # v0.6.9

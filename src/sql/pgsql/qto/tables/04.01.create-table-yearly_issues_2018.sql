@@ -5,6 +5,9 @@ SELECT 'create the "yearly_issues_2018" table'
    CREATE TABLE yearly_issues_2018 (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
+    , level          integer NOT NULL DEFAULT 1
+    , weight         integer NOT NULL DEFAULT 1
+    , seq            integer NOT NULL DEFAULT 1
     , type           varchar (30) NOT NULL DEFAULT 'task'
     , category       varchar (30) NOT NULL DEFAULT 'category ...'
     , status         varchar (20) NOT NULL DEFAULT 'status ...'
