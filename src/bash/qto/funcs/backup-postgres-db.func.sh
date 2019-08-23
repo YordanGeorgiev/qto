@@ -23,7 +23,7 @@ doBackupPostgresDb(){
    PGPASSWORD="${postgres_db_useradmin_pw:-}" pg_dump -U "${postgres_db_useradmin:-}"  \
          -h $postgres_db_host -p $postgres_db_port -w --format=plain \
          $postgres_db_name   > $backup_dir/$backup_fname
-         #--column-inserts --data-only \
+         # --column-inserts --data-only \
 
    ls -1 $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/* | sort -nr
    echo -e "\n"

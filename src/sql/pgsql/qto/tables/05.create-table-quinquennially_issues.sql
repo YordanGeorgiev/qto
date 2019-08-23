@@ -6,6 +6,7 @@ SELECT 'create the "quinquennially_issues" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , category       varchar (30) NOT NULL DEFAULT 'category'
+    , type           varchar (30) NOT NULL DEFAULT 'task'
     , status         varchar (20) NOT NULL DEFAULT 'status'
     , start_time     text NOT NULL DEFAULT to_char(date_trunc('minute', now()::time),'HH24:MI')
     , stop_time      text NOT NULL DEFAULT to_char(date_trunc('minute', now()::time),'HH24:MI')
