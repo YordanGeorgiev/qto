@@ -124,6 +124,7 @@ sub doInit {
    $config = json_file_to_perl ($objInitiator->doResolveConfFile());
    $config->{'env'}->{'run'}->{'ProductInstanceDir'} = $objInitiator->doResolveProductInstanceDir(-1);
    $config->{'env'}->{'run'}->{'ProductName'} = $objInitiator->doResolveProductName();
+   $config->{'env'}->{'run'}->{'VERSION'} = $objInitiator->doResolveVersion();
 
    if ( defined $ENV{'PROJ_CONF_FILE'} ) {
       my $projConfig = json_file_to_perl ($ENV{'PROJ_CONF_FILE'} );

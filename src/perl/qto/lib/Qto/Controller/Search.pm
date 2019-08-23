@@ -59,7 +59,7 @@ sub doSearchItems {
 
    if ( ! defined ($self->req->query_params ) or $ret != 0 ) {
    
-      my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
+      my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
       my $page_load_time   = $objTimer->GetHumanReadableTime();
   
       $self->render(
@@ -133,7 +133,7 @@ sub doRenderPageTemplate {
    my $template_name    = $as_templates->{ $as } || 'srch-grid' ; 
    my $template         = 'controls/' . $template_name . '/' . $template_name ; 
 
-   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
+   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
 
    $self->render(

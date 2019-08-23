@@ -17,9 +17,9 @@ use Qto::App::Utils::Logger;
 use Qto::App::Utils::Timer ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
-our $module_trace   = 0 ; 
-our $config      = {};
-our $objLogger      = {} ;
+our $module_trace    = 0 ; 
+our $config          = {};
+our $objLogger       = {} ;
 
 
 sub doViewItems {
@@ -34,7 +34,7 @@ sub doViewItems {
    my $view_control     = '' ; 
    my $as               = 'doc' ; 
 
-   $config		 		= $self->app->get('AppConfig');
+   $config		 		   = $self->app->get('AppConfig');
    $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
@@ -105,7 +105,7 @@ sub doRenderPageTemplate {
    my $template_name    = $as_templates->{ $as } || 'view-doc' ; 
    my $template         = 'pages/' . $template_name . '/' . $template_name ; 
 
-   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
+   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
 
    $self->render(
@@ -114,9 +114,9 @@ sub doRenderPageTemplate {
     , 'msg'             => $msg
     , 'item'            => $item
     , 'db' 		         => $db
-    , 'EnvType' 		=> $config->{'EnvType'}
-    , 'ProductVersion' 	=> $config->{'ProductVersion'}
-    , 'GitShortHash'    => $config->{'GitShortHash'}
+    , 'EnvType' 			=> $config->{'env'}->{'ENV_TYPE'}
+    , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
+    , 'GitShortHash' 	=> $config->{'env'}->{'run'}->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'list_control'    => $list_control
     , 'notice'          => $notice

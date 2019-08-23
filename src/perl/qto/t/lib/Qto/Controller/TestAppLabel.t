@@ -12,6 +12,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $tm = '' ; # the test message for each test 
    my $t = Test::Mojo->new('Qto');
    my $config = $t->app->get('AppConfig') ; 
+   
    my $ua = {} ;                                # the mojo user agent 
    my $dom = {} ;                                # the mojo dom parser 
    my $url = {} ;                                # the url to build for each test 
@@ -22,19 +23,20 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    foreach my $web_action ( @web_actions ) {
       # debug p $t->ua->get($url)->result->body ; 
       # this needs to be asyncrounous with using client code as well ...
-      my $EnvType = $config->{ 'EnvType' } ; 
-      my $db_name= $config->{ 'postgres_db_name' } ; 
-      $tm = "$web_action userstories product_type: $EnvType " ; 
-      $url = '/' . $db_name . '/' . $web_action . '/userstories' ; 
+      my $env = $config->{'env'}->{'ENV_TYPE'} ; 
+      my $db  = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; # because each instance has it's own ...
+
+      $tm = "$web_action userstories product_type: $env " ; 
+      $url = '/' . $db . '/' . $web_action . '/userstories' ; 
+   
       $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
-      ok ( $dom->find('div')->[1] =~ m/$EnvType/ , $tm ) ;
+      ok ( $dom->find('div')->[1] =~ m/$env/ , $tm ) ;
 
-
-      my $GitShortHash = $config->{ 'GitShortHash' } ; 
+      my $GitShortHash = $config->{'env'}->{'run'}->{ 'GitShortHash' } ; 
       $tm = "the app label contains the short git hash of this product instance: $GitShortHash" ; 
       ok ( $dom->find('div')->[1] =~ m/$GitShortHash/ , $tm ) ;
-      
-      my $ProductVersion = $config->{ 'ProductVersion' } ; 
+     
+      my $ProductVersion = $config->{'env'}->{'run'}->{'VERSION'} ;
       $tm = "$web_action userstories product version of this product instance: $ProductVersion " ; 
       ok ( $dom->find('div')->[1] =~ m/$ProductVersion/ , $tm ) ;
    }

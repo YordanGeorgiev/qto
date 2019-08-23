@@ -25,7 +25,7 @@ use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 
 our $module_trace   = 0 ; 
-our $config      = {};
+our $config      	  = {};
 our $objLogger      = {} ;
 
 
@@ -134,6 +134,8 @@ sub doRenderPageTemplate {
       $self->res->code(200) ; 
    }
 
+	my $config = $self->app->get('AppConfig');	
+
    my $as_templates = { 
          'lbls'         => 'list-labels'
       ,  'grid'         => 'list-grid' 
@@ -143,18 +145,19 @@ sub doRenderPageTemplate {
    my $template_name    = $as_templates->{ $as } || 'list-grid' ; 
    my $template         = 'controls/' . $template_name . '/' . $template_name ; 
 
-   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
+   my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
 
+	
    $self->render(
       'template'        => $template 
     , 'as'              => $as
     , 'msg'             => $msg
     , 'item'            => $item
     , 'db' 		         => $db
-    , 'EnvType' 		=> $config->{'EnvType'}
-    , 'ProductVersion' 	=> $config->{'ProductVersion'}
-    , 'GitShortHash' => $config->{'GitShortHash'}
+    , 'EnvType' 			=> $config->{'env'}->{'ENV_TYPE'}
+    , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
+    , 'GitShortHash' 	=> $config->{'env'}->{'run'}->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'list_control'    => $list_control
     , 'notice'          => $notice

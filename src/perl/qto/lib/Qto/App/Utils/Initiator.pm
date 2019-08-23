@@ -2,7 +2,7 @@ package Qto::App::Utils::Initiator ;
 
 	use strict; use warnings;
 
-	my $VERSION = '1.2.0';    #doc at the end
+	my $VERSION = '1.2.1';    #doc at the end
 
 	require Exporter;
 	our @ISA = qw(Exporter Qto::App::Utils::OO::SetGetable Qto::App::Utils::OO::AutoLoadable) ;
@@ -149,6 +149,26 @@ package Qto::App::Utils::Initiator ;
 
 		return $ProductInstanceDir;
 	}
+
+   sub doResolveVersion {
+		my $self = shift ; 
+
+      $ProductInstanceDir = $self->doResolveProductInstanceDir() unless $ProductInstanceDir ;
+		my $file = $ProductInstanceDir . '/.env' ;
+		open my $fh, '<', $file or carp "no .env file $file in the product instance dir !!!" ;
+		
+		while( my $line = <$fh>)  {   
+			 $ProductVersion = $line;    
+			 $ProductVersion =~ s/VERSION=(.*)/$1/g;
+			 last if $ProductVersion =~ m/(\d\.){3}/g ;
+		}
+		close $fh; 
+		$self->{'VERSION'} 	   = $ProductVersion;
+		$config->{'VERSION'} 	= $ProductVersion; 
+		$self->{'AppConfig'}    = $config; 
+
+      return $ProductVersion;
+   }
 
 
 	#

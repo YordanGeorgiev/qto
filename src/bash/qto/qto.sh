@@ -243,6 +243,7 @@ doExit(){
    test $exit_code -eq 0 && exit 0
 }
 
+
 # v0.6.9 
 #------------------------------------------------------------------------------
 # echo pass params and print them to a log file and terminal
@@ -335,6 +336,7 @@ doSetVars(){
    source $PRODUCT_INSTANCE_DIR/.env
    export product_version=$VERSION
    export env_type=$ENV_TYPE
+
    if [ "$environment_name" == "$run_unit" ]; then
       product_dir=$PRODUCT_INSTANCE_DIR
       test -z "$env_type" && export env_type='dev'
@@ -363,73 +365,22 @@ doSetVars(){
 }
 
 
-
-
-
-# v0.6.9
-#------------------------------------------------------------------------------
-# parse the ini like $0.$host_name.cnf and set the variables
-# cleans the unneeded during after run-time stuff. Note the MainSection
-# courtesy of : http://mark.aufflick.com/blog/2007/11/08/parsing-ini-files-with-sed
-#------------------------------------------------------------------------------
-doParseConfFile(){
-	# set a default cnfiguration file
-	cnf_file="$run_unit_bash_dir/$run_unit.cnf"
-
-	# however if there is a host dependant cnf file override it
-	test -f "$run_unit_bash_dir/$run_unit.$host_name.cnf" \
-		&& cnf_file="$run_unit_bash_dir/$run_unit.$host_name.cnf"
-	
-	# if we have perl apps they will share the same cnfiguration settings with this one
-	test -f "$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$host_name.cnf" \
-		&& cnf_file="$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$host_name.cnf"
-	
-   # if we have perl apps they will share the same cnfiguration settings with this one
-	test -f "$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type.$host_name.cnf" \
-		&& cnf_file="$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type.$host_name.cnf"
-
-	# yet finally override if passed as argument to this function
-	# if the the ini file is not passed define the default host independant ini file
-	test -z "${1:-}" || cnf_file=$1;shift 1;
-	#debug echo "@doParseConfFile cnf_file:: $cnf_file" 
-	# coud be later on parametrized ... 
-	INI_SECTION=MainSection
-
-	eval `sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
-		-e 's/#.*$//' \
-		-e 's/[[:space:]]*$//' \
-		-e 's/^[[:space:]]*//' \
-		-e "s/^\(.*\)=\([^\"']*\)$/\1=\"\2\"/" \
-		< $cnf_file \
-		| sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
-   
-		
-}
-#eof func doParseConfFile
-
 # Action !!!
 main "$@"
 
 #
 #----------------------------------------------------------
 # Purpose:
-# a simplistic app stub with simplistic source control and 
-# cloning or morphing functionalities ...
-#----------------------------------------------------------
-#
-#----------------------------------------------------------
-# Requirements: bash , perl , ctags
-#
+# the main entry point of the app - runs shell actions 
+# -a <<run-shell-action>> which a doRunShellAction func
+# stored in the src/bash/qto/funcs/run-shell-action.func.sh
 #----------------------------------------------------------
 #
 #----------------------------------------------------------
 #  EXIT CODES
 # 0 --- Successfull completion
-# 1 --- required binary not installed 
-# 2 --- Invalid options 
-# 3 --- deployment file not found
-# 4 --- perl syntax check error
+# 1 --- error 
 #----------------------------------------------------------
 #
 #
-#eof file: qto.sh v0.6.9
+#eof file src/bash/qto/qto.sh
