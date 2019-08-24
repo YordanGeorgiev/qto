@@ -17,6 +17,7 @@ doRunFunctionalTests(){
    while read -r f ; do 
       doLog "INFO START functional test for $f"
       perl $f ;
+      test $? -ne 0 && doExit $? " the tests in the $f failed !!!"
       doLog "INFO STOP  functional test for $f"
       sleep 1
       clearTheScreen

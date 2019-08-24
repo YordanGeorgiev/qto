@@ -23,7 +23,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    foreach my $web_action ( @web_actions ) {
       # debug p $t->ua->get($url)->result->body ; 
       # this needs to be asyncrounous with using client code as well ...
-      my $env = $config->{'env'}->{'ENV_TYPE'} ; 
+      my $env = $config->{'env'}->{'run'}->{'ENV_TYPE'} ; 
       my $db  = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; # because each instance has it's own ...
 
       $tm = "$web_action userstories product_type: $env " ; 

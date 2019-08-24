@@ -14,7 +14,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $t          = Test::Mojo->new('Qto');
    $t->ua->max_redirects(10);
    my $config  = $t->app->get('AppConfig') ; 
-   my $db_name    = $config->{ 'postgres_db_name' } ; 
+   my $db_name    = $config->{'env'}->{'db'}->{'postgres_db_name'} ; 
    my $url        = '/' . $db_name . '/login' ; # the login url to test for 
    my $tx         = {}  ; # the transaction object 
 

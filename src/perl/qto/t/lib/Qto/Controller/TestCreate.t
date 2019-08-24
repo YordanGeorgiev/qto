@@ -40,7 +40,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $tm = 'the ret var from the response should be the same as the http code => 200'; 
    ok ( $res->{'ret'} eq 200 , $tm ) ; 
  
-   my $env = $config->{'env'}->{'ENV_TYPE'} ; 
+   my $env = $config->{'env'}->{'run'}->{'ENV_TYPE'} ; 
    $tm = 'return 400 on non_existent_db create call' ;
    $exp_err_msg = 'cannot connect to the "' . "$env" . '_non_existent_db" database: FATAL:  database "' . $env . '_non_existent_db" does not exist' ; 
    $url = '/non_existent_db/create/test_create_table' ; 

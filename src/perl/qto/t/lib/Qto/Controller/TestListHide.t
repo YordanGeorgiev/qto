@@ -13,17 +13,17 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $t = Test::Mojo->new('Qto');
    my $config = $t->app->get('AppConfig') ; 
    
-   my $db_name= $config->{ 'postgres_db_name' } ; 
-   my $url = '/' . $db_name . '/select-tables' ; 
+   my $db = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ;
+   my $url = '/' . $db . '/select-tables' ; 
 
-	$tm = "for list all the tables from the $db_name db" ; 
+	$tm = "for list all the tables from the $db db" ; 
    $t->get_ok($url)
       ->status_is(200) 
       ->header_is('Accept-Charset' => 'UTF-8' , $tm ) 
    ;
 
    my $ua  = $t->ua ; 
-   my $response = $ua->get('/' . $db_name . '/select-tables')->result->json ; 
+   my $response = $ua->get('/' . $db . '/select-tables')->result->json ; 
    my $list = $response->{ 'dat' } ; 
 
 # foreach table in the app db in test call db/list/table
@@ -35,7 +35,7 @@ for my $row ( @$list ) {
    my $tm = '' ; # the test msg 
 
 	$tm = 'for get the correct http status code - 200 , utf-8 and fi,en as langs' ; 
-	$url = '/' . $db_name . '/list/' . $table_name . '?hide=guid,id' ; 
+	$url = '/' . $db . '/list/' . $table_name . '?hide=guid,id' ; 
 	$t->get_ok( $url )
 		->status_is(200) 
 		 ->header_is('Accept-Charset' => 'UTF-8')
@@ -44,7 +44,7 @@ for my $row ( @$list ) {
 	$tm = 'for the hide the guid attribute , no guid: should be present' ; 
 	$t->get_ok($url)->content_unlike('/guid:/' , $tm ) ; 
 
-	$url = '/' . $db_name . '/list/' . $table_name . '?hide=update_time' ; 
+	$url = '/' . $db . '/list/' . $table_name . '?hide=update_time' ; 
 	$t->get_ok( $url )
 		->status_is(200) 
 	;

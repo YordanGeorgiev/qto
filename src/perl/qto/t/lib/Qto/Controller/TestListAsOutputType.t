@@ -9,7 +9,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
    my $tm         = '' ; # the test message for each test 
    my $t          = Test::Mojo->new('Qto');
-   my $config  = $t->app->get('AppConfig') ; 
+   my $config     = $t->app->get('AppConfig') ; 
    my $ua         = {} ;  # the mojo user agent 
    my $dom        = {} ;  # the mojo dom parser 
    my $url        = {} ;  # the url to build for each test 
@@ -19,7 +19,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
   
 
 
-   $db_name= $config->{ 'postgres_db_name' } ; 
+   $db_name= $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
    $url = '/' . $db_name . '/select-tables' ; 
 
 	$tm = "for list all the tables from the $db_name db" ; 

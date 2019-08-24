@@ -223,8 +223,6 @@ src/perl/qto/t/lib/Qto/Controller/TestDelete.t
 src/perl/qto/t/lib/Qto/Controller/TestHSelect.t
 src/perl/qto/t/lib/Qto/Controller/TestAppLabel.t
 src/perl/qto/t/lib/Qto/Controller/TestListAsOutputType.t
-src/perl/qto/t/lib/Qto/Controller/TestViewWithMojoChrome.t
-src/perl/qto/t/lib/Qto/Controller/TestMojoRoleSelenium.t
 src/perl/qto/t/lib/Qto/Controller/TestListHide.t
 src/perl/qto/t/lib/Qto/Controller/TestViewDocPage.t
 # --- 

@@ -65,7 +65,7 @@ sub doRenderPageTemplate {
       'template'        => $template 
     , 'msg'             => $msg
     , 'db' 		         => $db
-    , 'EnvType' 		   => $config->{'env'}->{'ENV_TYPE'}
+    , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
     , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'} 
     , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time

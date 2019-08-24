@@ -10,9 +10,9 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
    my $tm            = '' ; # the test message for each test 
    my $t             = Test::Mojo->new('Qto');
-   my $config     = $t->app->get('AppConfig') ; 
+   my $config        = $t->app->get('AppConfig') ; 
    my $url           = '' ; 
-   my $db            = $config->{ 'postgres_db_name' } ;  # obs instanced specific !!!
+   my $db            = $config->{'env'}->{'db'}->{'postgres_db_name'} ;  # obs instanced specific !!!
    my $dom           = {} ;
    my $ua            = $t->ua ; 
    my $response      = $ua->get('/' . $db . '/select-tables')->result->json ; 
@@ -33,7 +33,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
       ->header_is('Accept-Language' => 'fi, en'), $tm );
 
    $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
-   ok ( $dom->find('div')->[1] =~ m/$config->{'EnvType'}/ , $tm ) ;
+   ok ( $dom->find('div')->[1] =~ m/$config->{'env'}->{'run'}->{'ENV_TYPE'}/ , $tm ) ;
 
    #my @headers = $dom->find('div#lft_body')->map('all_text'); 
    #p @headers ; 
