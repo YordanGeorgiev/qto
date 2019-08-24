@@ -21,6 +21,7 @@ our $module_trace   = 0 ;
 our $config      = {};
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgre';
+#use Carp qw(cluck longmess shortmess);
 
 #
 # --------------------------------------------------------
@@ -40,10 +41,10 @@ sub doCreateById {
    my $hsr2             = {};
    my $json             = $self->req->body;
    my $perl_hash        = decode_json($json) ; 
-   $config		      = $self->app->get('AppConfig');
+   $config		         = $self->app->get('AppConfig');
    $db                  = toEnvName ( $db , $config) ;
 
-
+  
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
    

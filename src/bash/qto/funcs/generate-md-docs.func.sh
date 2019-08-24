@@ -13,7 +13,7 @@ doGenerateMdDocs(){
    doExportJsonSectionVars $PROJ_CONF_FILE '.env.app'
 
    # <<web-host>>:<<web-port>>/<<db>>/select/export_files?as=grid&od=id
-   basic_url="https://${web_host:-}:${mojo_daemon_port:-}/${postgres_db_name:-}"
+   basic_url="$protocol://${web_host:-}:${port:-}/${postgres_db_name:-}"
    furl="$basic_url"'/select/export_files?as=grid&od=id&pg-size=20'
    curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]|.url'
 	ret=$?

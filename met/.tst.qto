@@ -333,10 +333,7 @@ src/perl/qto/lib/Qto/App/Utils/Timer.pm
 # ---
 # ---
 src/bash/qto/tests/mojo-hypnotoad-start.test.sh
-src/bash/qto/helps/mojo-hypnotoad-start.help.sh
 src/bash/qto/funcs/mojo-hypnotoad-start.func.sh
-doc/txt/qto/tests/mojo-hypnotoad-start.test.txt
-doc/txt/qto/helps/mojo-hypnotoad-start.help.txt
 # ---
 src/bash/qto/tests/mojo-hypnotoad-stop.test.sh
 src/bash/qto/helps/mojo-hypnotoad-stop.help.sh
@@ -448,6 +445,7 @@ src/sql/pgsql/qto/tables/97.create-table-test_create_table.sql
 src/sql/pgsql/qto/tables/97.03.create-func-fnc_tree_traversal.sql
 src/sql/pgsql/qto/tables/98.create-table-test_update_table.sql
 src/sql/pgsql/qto/tables/99.create-table-test_hierarchy_doc.sql
+src/sql/pgsql/scripts/01.add-db-users.sql
 src/sql/pgsql/scripts/02.create-table-test_hierarchy_table.sql
 src/sql/pgsql/scripts/admin
 src/sql/pgsql/scripts/admin/check-postgres-tables-permissions.sql

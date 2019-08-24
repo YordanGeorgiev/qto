@@ -16,10 +16,6 @@ SELECT 'create the "test_update_table" table'
       OIDS=FALSE
     );
 
-insert into test_update_table ( id,seq,name,description) values (1,1,'name-1','the name should be updated to updated-name-1'); 
-insert into test_update_table ( id,seq,name,description) values (2,2,'name-2','the name attr should NOT be updated'); 
-insert into test_update_table ( id,seq,name,description) values (3,3,'name-3','the name attr should be updated to updated-name-3'); 
-insert into test_update_table ( id,seq,name,description) values (4,4,'name-4','the pw row'); 
 
 SELECT 'show the columns of the just created table'
 ; 

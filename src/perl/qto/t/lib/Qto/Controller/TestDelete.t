@@ -19,15 +19,27 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $db            = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; # OBS instance specific !!!
    my $ua            = $t->ua ; 
    my $objTimer      = {} ;
-   $url              = '/' . $db . '/delete/test_delete_table' ; 
    my $env           = $config->{'env'}->{'run'}->{'ENV_TYPE' };
 
+   #insert into test_delete_table ( id,name,description) values (1,'name-1','the name should be deleted to deleted-name-1'); 
+   #insert into test_delete_table ( id,name,description) values (2,'name-2','the name attr should NOT be deleted'); 
+   #insert into test_delete_table ( id,name,description) values (3,'name-3','the name attr should be deleted to deleted-name-3'); 
+   
+   $tm = 'can add the new 3 ids to the test_delete_table' ; 
+   $url = '/' . $db . '/create/test_delete_table' ; 
+   ok ( $t->post_ok($url => json => {"id" =>"1"})->status_is(200) , $tm );
+   ok ( $t->post_ok($url => json => {"id" =>"2"})->status_is(200) , $tm );
+   ok ( $t->post_ok($url => json => {"id" =>"3"})->status_is(200) , $tm );
+
+  $url              = '/' . $db . '/delete/test_delete_table' ; 
+
+   sleep 10 ;
    # the delete by attribute requires the following json format : 
    # the name of the attribute
    # the id which is BY DESIGN a requirement for ANY qto app table to work ... 
    # the content should be json format as follows
-   $tm = 'can create the item to delete ' ; 
-   ok ( $t->post_ok($url => json => {"attribute"=>"name", "id" =>"1", "cnt"=>"name-1-deleted"})->status_is(200) , $tm );
+   $tm = 'can delete the item to delete ' ; 
+   ok ( $t->post_ok($url => json => {"id" =>"1"})->status_is(200) , $tm );
 
    $url = '/' . $db . '/select/test_delete_table?with=id-eq-1' ; 
    $tm = 'the name-1 was deleted , no data could be retrieved for the id with value 1' ; 

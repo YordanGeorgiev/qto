@@ -5,11 +5,12 @@ doRunIntegrationTests(){
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
    doExportJsonSectionVars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
 
-   bash src/bash/qto/qto.sh -a mojo-morbo-stop  ; test $? -ne 0 && return
-   bash src/bash/qto/qto.sh -a mojo-morbo-start ; test $? -ne 0 && return
+   bash src/bash/qto/qto.sh -a mojo-morbo-stop  
+   bash src/bash/qto/qto.sh -a mojo-morbo-start 
+   #test $? -ne 0 && return
 
    doLog "INFO make a backup of the current db - inserts only "
-   bash src/bash/qto/qto.sh -a backup-postgres-db-inserts
+   #bash src/bash/qto/qto.sh -a backup-postgres-db-inserts
 	
    doLog "INFO re-create the $env_type db"
    bash src/bash/qto/qto.sh -a run-pgsql-scripts

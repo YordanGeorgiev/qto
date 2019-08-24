@@ -6,8 +6,6 @@
 # ---------------------------------------------------------
 doTestMojoMorboStop(){
 
-	doLog "DEBUG START doTestMojoMorboStop"
-	
 	sleep "$sleep_interval"
 	
    # Action !!!
@@ -17,9 +15,7 @@ doTestMojoMorboStop(){
    # usrqtoadmin ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
    sudo netstat -tulpn | grep qto
 
-	doLog "DEBUG STOP  doTestMojoMorboStop"
 }
-# eof func doTestMojoMorboStop
 
 
 # eof file: src/bash/qto/funcs/mojo-morbo-stop.test.sh

@@ -13,9 +13,6 @@ SELECT 'create the "test_delete_table" table'
       OIDS=FALSE
     );
 
-insert into test_delete_table ( id,name,description) values (1,'name-1','the name should be deleted to deleted-name-1'); 
-insert into test_delete_table ( id,name,description) values (2,'name-2','the name attr should NOT be deleted'); 
-insert into test_delete_table ( id,name,description) values (3,'name-3','the name attr should be deleted to deleted-name-3'); 
 
 SELECT 'show the columns of the just created table'
 ; 
