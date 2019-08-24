@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-   set -x 
-
    run_unit_bash_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
    cd $run_unit_bash_dir
    for i in {1..5} ; do cd .. ; done ; export PRODUCT_INSTANCE_DIR=`pwd`;

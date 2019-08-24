@@ -29,7 +29,6 @@ doGmailPackage(){
    doLog "DEBUG cnf_files is ${cnf_file+x}"
    doLog "DEBUG AdminEmail: $AdminEmail"
 
-	set -x
 	for Email in $AdminEmail; do (
 		mutt -s "${mail_msg-}::: ""$zip_file_name" -a "$zip_file"'.txt' -- "$Email" < $tmp_dir/.msg
 	);

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-set -x
 unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
 
 # Add the PostgreSQL PGP key to verify their Debian packages.

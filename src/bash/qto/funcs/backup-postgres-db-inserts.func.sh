@@ -1,10 +1,10 @@
-# src/bash/qto/funcs/backup-postgres-db.func.sh
+# file: src/bash/qto/funcs/backup-postgres-db-inserts.func.sh
 
 # v0.6.9
 # ---------------------------------------------------------
-# create a full database backup containing db create clause
+# create only data inserts backup without create db clause
 # ---------------------------------------------------------
-doBackupPostgresDb(){
+doBackupPostgresDbInserts(){
 
    test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
@@ -14,7 +14,7 @@ doBackupPostgresDb(){
    test -z "${postgres_db_name-}" && postgres_db_name="${env_type-}"_"${run_unit//-/_}"
 
    backup_dir=$mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name
-   backup_fname=$postgres_db_name.`date "+%Y%m%d_%H%M%S"`.full.dmp.sql
+   backup_fname=$postgres_db_name.`date "+%Y%m%d_%H%M%S"`.insrts.dmp.sql
    test -d $backup_dir || mkdir -p $backup_dir
 
    which nmap 2>/dev/null && nmap -Pnv -p $postgres_db_port $postgres_db_host || \
@@ -22,14 +22,13 @@ doBackupPostgresDb(){
 
    PGPASSWORD="${postgres_db_useradmin_pw:-}" pg_dump -U "${postgres_db_useradmin:-}"  \
          -h $postgres_db_host -p $postgres_db_port -w --format=plain \
+         --column-inserts --data-only \
          $postgres_db_name   > $backup_dir/$backup_fname
 
    ls -1 $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/* | sort -nr
    echo -e "\n"
    wc -l $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/* | sort -nr
    sleep 1
-
 }
 
-
-# eof file: src/bash/qto/funcs/backup-postgres-db.func.sh
+# eof file: src/bash/qto/funcs/backup-postgres-db-inserts.func.sh
