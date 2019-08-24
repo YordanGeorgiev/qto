@@ -6,7 +6,6 @@
 # bash src/bash/qto/qto.sh -a to-app=<<new_app>>
 #------------------------------------------------------------------------------
 doCloneToApp(){
-	set -x
 	tgt_app="$1"
 	prefix='to-app='
 	tgt_app=${tgt_app#$prefix}

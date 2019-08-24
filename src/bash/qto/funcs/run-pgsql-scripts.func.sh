@@ -1,8 +1,7 @@
 # file: src/bash/qto/funcs/run-pgsql-scripts.func.sh
 
-# v1.0.3
+# v0.6.5
 # ---------------------------------------------------------
-# the docs	:
 # cat doc/txt/qto/funcs/run-pgsql-scripts.func.txt
 # ---------------------------------------------------------
 doRunPgsqlScripts(){
@@ -25,30 +24,20 @@ doRunPgsqlScripts(){
    sql_script="$pgsql_scripts_dir/""00.create-db.pgsql"
    
    # run the sql save the result into a tmp log file
-   # alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -q -t -X -w -U
-   # ${postgres_db_useradmin:-} -h localhost -p15432"
    PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -v ON_ERROR_STOP=1 -q -t -X -w -U "${postgres_db_useradmin:-}" \
       -h $postgres_db_host -p $postgres_db_port -v postgres_db_name="${postgres_db_name:-}" \
       -f "$sql_script" postgres > "$tmp_log_file" 2>&1
-
    ret=$?
    doLog "INFO ret: $ret" 
    
-   # show the user what is happenning 
-   cat "$tmp_log_file"
+   cat "$tmp_log_file" # show it 
 
    test $ret -ne 0 && sleep 3
-   test $ret -ne 0 && export exit_code=1
-   test $ret -ne 0 && exit 1
-   test $ret -ne 0 && doExit "pid: $$ psql ret $ret - failed to run sql_script: $sql_script !!!"
+   test $ret -ne 0 && doExit 1 "pid: $$ psql ret $ret - failed to run sql_script: $sql_script !!!"
    test $ret -ne 0 && break
  
-	# show the developer what happened
-	cat "$tmp_log_file" 
-
-	# and save the tmp log file into the log file
-	cat "$tmp_log_file" >> $log_file
-   sleep $sleep_interval
+	cat "$tmp_log_file" # show it 
+	cat "$tmp_log_file" >> $log_file # save it
 
 	test -z "${is_sql_biz_as_usual_run:-}" || sleep 1 ; 
 	printf "\033[2J";printf "\033[0;0H"  ;    #and flush the screen
@@ -56,7 +45,6 @@ doRunPgsqlScripts(){
 	doLog "INFO should run the following sql files: "
    echo -e "\n\n"
 	find "$pgsql_scripts_dir" -type f -name "*.sql"|sort -n
-   sleep $sleep_interval
 
 	# run the sql scripts in alphabetical order
    while read -r sql_script ; do 
@@ -80,8 +68,7 @@ doRunPgsqlScripts(){
 		# show the user what is happenning 
 		cat "$tmp_log_file"
       test $ret -ne 0 && sleep 3
-      test $ret -ne 0 && export exit_code=1
-      test $ret -ne 0 && doExit "pid: $$ psql ret $ret - failed to run sql_script: $sql_script !!!"
+      test $ret -ne 0 && doExit 1 "pid: $$ psql ret $ret - failed to run sql_script: $sql_script !!!"
       test $ret -ne 0 && break
 
 		# and save the tmp log file into the script log file
@@ -97,7 +84,6 @@ doRunPgsqlScripts(){
 	printf "\033[2J";printf "\033[0;0H"  ;    #and flush the screen
 	doLog "DEBUG STOP  doRunPgsqlScripts"
 }
-# eof func doRunPgsqlScripts
 
 
 # eof file: src/bash/qto/funcs/run-pgsql-scripts.func.sh

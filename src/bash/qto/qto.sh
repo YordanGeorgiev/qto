@@ -44,26 +44,32 @@ get_function_list () {
 # run only the actions passed with the -a <<action-name-arg>>
 #------------------------------------------------------------------------------
 doRunActions(){
-	test -z ${PROJ_INSTANCE_DIR:-} && PROJ_INSTANCE_DIR=$product_instance_dir
+	test -z ${PROJ_INSTANCE_DIR:-} && PROJ_INSTANCE_DIR=$PRODUCT_INSTANCE_DIR
 	daily_backup_dir="$PROJ_INSTANCE_DIR/dat/mix/"$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
-   cd $product_instance_dir
+   cd $PRODUCT_INSTANCE_DIR
+   actions="$(echo -e "${actions}" | sed -e 's/^[[:space:]]*//')"
    actions_to_run=''
-   while read -d ' ' action ; do
+   while read -d ' ' arg_action ; do
+      # debug arg_action:$arg_action
       while read -r func_file ; do
+         # debug func_file:$func_file
          while read -r function_name ; do
+            # debug function_name:$function_name
             action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
-            test "$action_name" != "$action" && continue
-            test "$action_name" == "$action" && actions_to_run=$(echo -e "$actions_to_run\n$function_name")
+            # debug action_name: $action_name
+            test "$action_name" != "$arg_action" && continue
+            test "$action_name" == "$arg_action" && actions_to_run=$(echo -e "$actions_to_run\n$function_name")
+            # debug actions_to_run: $actions_to_run
          done< <(get_function_list "$func_file")
-      done < <(find "src/bash/$run_unit/funcs" -type f -name '*.sh')
+      done < <(find "src/bash/$run_unit/funcs" -type f -name '*.sh'|sort)
 
-      [[ $action == to-ver=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeVersion $action")
-      [[ $action == to-env=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeEnvType $action")
+      [[ $arg_action == to-ver=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeVersion $arg_action")
+      [[ $arg_action == to-env=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeEnvType $arg_action")
 
    done < <(echo "$actions")
 
    while read -r action_to_run ; do
-      cd $product_instance_dir
+      cd $PRODUCT_INSTANCE_DIR
       doLog "INFO start running action :: $action_to_run"
       $action_to_run
       exit_code=$?

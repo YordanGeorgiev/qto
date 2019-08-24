@@ -129,7 +129,6 @@ doInit(){
 # clean and exit with passed status and message
 #------------------------------------------------------------------------------
 doExit(){
-   #set -x
    exit_code=0
    exit_msg="$*"
 

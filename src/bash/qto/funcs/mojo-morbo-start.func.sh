@@ -7,10 +7,7 @@
 # ---------------------------------------------------------
 doMojoMorboStart(){
 
-	doLog "DEBUG START doMojoMorboStart"
-   
    doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
-
    doMojoMorboStop 0
    
    # to prevent the 'failed: could not create socket: Too many open files at sys' error
@@ -39,7 +36,6 @@ doMojoMorboStart(){
    # if cmd arg -b is passed to the qto.sh, should not exit like ever, never because of docker
    test $run_in_backround -eq 1 && while true; do sleep 1000; done;
 
-   doLog "DEBUG STOP  doMojoMorboStart"
 }
 
 

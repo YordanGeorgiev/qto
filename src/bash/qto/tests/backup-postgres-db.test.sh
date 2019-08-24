@@ -1,9 +1,5 @@
 # src/bash/qto/funcs/backup-postgres-db.test.sh
 
-# v1.0.9
-# ---------------------------------------------------------
-# todo: add doTestBackupPostgresDb comments ...
-# ---------------------------------------------------------
 doTestBackupPostgresDb(){
 
 	doLog "DEBUG START doTestBackupPostgresDb"
@@ -15,7 +11,7 @@ doTestBackupPostgresDb(){
    # there should be at least one file in the current daily dir which is not older than 
    while read -r f; do 
       count=$(( count + 1 ))
-   done < <(find $mix_data_dir/`date "+%Y"`/`date "+%Y-%m"`/`date "+%Y-%m-%d"`/sql/$postgres_db_name -name '*.dmp.sql' -mmin -1)
+   done < <(find $mix_data_dir/`date "+%Y"`/`date "+%Y-%m"`/`date "+%Y-%m-%d"`/sql/$postgres_db_name -name '*full.dmp.sql' -mmin -1)
 
    if [ $count -lt 1 ]; then
       msg="db dump files are not found !!!"
