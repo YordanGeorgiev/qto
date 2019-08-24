@@ -20,6 +20,10 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $env           = $config->{ 'EnvType' } || 'dev' ;  # dev , tst , prd
    $url              = '/' . $db . '/update/test_update_table' ; 
 
+#insert into test_update_table ( id,seq,name,description) values (1,1,'name-1','the name should be updated to updated-name-1'); 
+#insert into test_update_table ( id,seq,name,description) values (2,2,'name-2','the name attr should NOT be updated'); 
+#insert into test_update_table ( id,seq,name,description) values (3,3,'name-3','the name attr should be updated to updated-name-3'); 
+#insert into test_update_table ( id,seq,name,description) values (4,4,'name-4','the pw row'); 
    my $ua  = $t->ua ; 
    # the update by attribute requires the following json format : 
    # the name of the attribute

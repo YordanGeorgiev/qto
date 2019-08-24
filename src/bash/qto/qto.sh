@@ -166,7 +166,7 @@ doExportJsonSectionVars(){
    shift 1;
 
 	clearTheScreen
-	doLog "INFO exporting vars: "
+	doLog "INFO exporting vars from cnf $json_file: "
    while read -r l ; do
      key=$(echo $l|cut -d'=' -f1)
      val=$(echo $l|cut -d'=' -f2)

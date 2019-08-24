@@ -52,7 +52,7 @@ package Qto::App::IO::Out::WtrGitHubMd ;
       my $nice_date  = "$year" . '-' . "$mon" . '-' . "$mday" ; 
 
       my $md_file_name       = $db. '.' . $table . '.' . $nice_datetime ; 
-      my $md_dir = $config->{ 'ProductInstanceDir' } . '/dat/mix/' . "$year/$nice_month/$nice_date/tmp" ; 
+      my $md_dir = $config->{'env'}->{'run'}->{ 'ProductInstanceDir' } . '/dat/mix/' . "$year/$nice_month/$nice_date/tmp" ; 
       $objWtrDirs->doMkDir ( "$md_dir" ) ; 
       my $md_file         = "$md_dir/$md_file_name" . '.md'; 
 

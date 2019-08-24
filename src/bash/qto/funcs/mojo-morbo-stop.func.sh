@@ -1,4 +1,4 @@
-# src/bash/qto/funcs/mojo-morbo-stop.func.sh
+# file: src/bash/qto/funcs/mojo-morbo-stop.func.sh
 
 # ---------------------------------------------------------
 # stop any running morbo instances listenning on the wanted port
@@ -10,9 +10,6 @@ doMojoMorboStop(){
    test -z "${should_exit:-}" && should_exit=1
    test -z "${mojo_morbo_port:-}" && export mojo_morbo_port=3001
    found=0
-
-	doLog "DEBUG START doMojoMorboStop"
-   echo -e "\n"
 
       while read -r listening_on_port_pid; do 
          while read -r pid_to_kill; do 
@@ -30,8 +27,6 @@ doMojoMorboStop(){
    fi
    
    echo -e "\n"
-   doLog "DEBUG STOP  doMojoMorboStop"
 }
-# eof func doMojoMorboStop
 
 # eof file: src/bash/qto/funcs/mojo-morbo-stop.func.sh

@@ -7,7 +7,7 @@
 # ---------------------------------------------------------
 doMojoMorboStart(){
 
-   doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
+   doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.app'
    doMojoMorboStop 0
    
    # to prevent the 'failed: could not create socket: Too many open files at sys' error
@@ -22,14 +22,14 @@ doMojoMorboStart(){
 
    export MOJO_LISTEN='http://*:'"$mojo_morbo_port"
    test -z "${mojo_morbo_port:-}" && export MOJO_LISTEN='http://*:3001'
-	# Action !!!
+   
    doLog "INFO running: morbo -w $PRODUCT_INSTANCE_DIR/src/perl/script/qto
    --listen $MOJO_LISTEN $PRODUCT_INSTANCE_DIR/src/perl/qto/script/qto"
 
    bash -c "morbo -w $PRODUCT_INSTANCE_DIR/src/perl/qto --listen $MOJO_LISTEN $PRODUCT_INSTANCE_DIR/src/perl/qto/script/qto" &
 	doLog "DEBUG check with netstat "
 
-   # requires sudo visudoers 
+   # might require sudo visudoers 
    # usrqtoadmin ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
    netstat -tulpn | grep qto
  
