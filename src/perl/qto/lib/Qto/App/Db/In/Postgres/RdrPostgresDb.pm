@@ -17,7 +17,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 
    our $module_trace                            = 0 ;  
    our $IsUnitTest                              = 0 ; 
-	our $config 										= {} ; 
+	our $config 										   = {} ; 
 	our $objLogger 										= {} ; 
 	our $objModel                                = {} ; 
 	our $db                        					= q{} ; 
@@ -62,7 +62,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
             $ret = 200 ; 
             $msg = "" ; 
          } else { 
-            $msg = "$email not found ! Contact " . $config->{ 'AdminEmail' } . " to request access." ;  
+            $msg = "$email not found ! Contact " . $config->{'env'}->{ 'AdminEmail' } . " to request access." ;  
             $ret = 401 if ( scalar ( keys %$hsr ) != 1 );
          }
       };
@@ -936,7 +936,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          WHERE 1=1 " ; 
 
       if ( defined $who ) {
-         if ( $table eq 'users' and $who ne $config->{'AdminEmail'} ){
+         if ( $table eq 'users' and $who ne $config->{'env'}->{'AdminEmail'} ){
             $str_sql .= "AND email = '" . $who . "'"
          }
       }
@@ -1018,7 +1018,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 	
 	sub new {
 		my $invocant   = shift ;    
-		$config     = ${ shift @_ } || croak 'config not passed in RdrPostgresDb !!!' ; 
+		$config        = ${ shift @_ } || croak 'config not passed in RdrPostgresDb !!!' ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
       $db            = shift ; 
 		my $class      = ref ( $invocant ) || $invocant ; 
@@ -1035,11 +1035,11 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
            config => $config
       );
 	   
-      my $dbConfig = $config->{'env'}->{'db'} ; 
-		$postgres_db_host    = $ENV{ 'postgres_db_host' } || $dbConfig->{'postgres_db_host'} 		|| '127.0.0.1' ;
-		$postgres_db_port    = $ENV{ 'postgres_db_port' } || $dbConfig->{'postgres_db_port'} 		|| '15432' ; 
-		$postgres_db_user 	= $ENV{ 'postgres_db_user' } || $dbConfig->{'postgres_db_user'} 		|| 'usrqtoapp' ; 
-		$postgres_db_user_pw = $ENV{ 'postgres_db_user_pw' } || $dbConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
+      my $db_config = $config->{'env'}->{'db'} ; 
+		$postgres_db_host    = $db_config->{'postgres_db_host'} 		|| '127.0.0.1' ;
+		$postgres_db_port    = $db_config->{'postgres_db_port'} 		|| '15432' ; 
+		$postgres_db_user 	= $db_config->{'postgres_db_user'} 		|| croak 'no postgres_db_user provided !!!' ;
+		$postgres_db_user_pw = $db_config->{'postgres_db_user_pw'} 	|| croak 'no postgres_db_user_pw provided !!!' ;
 
 	   $objLogger 			   = 'Qto::App::Utils::Logger'->new( \$config ) ;
 

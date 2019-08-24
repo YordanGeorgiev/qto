@@ -102,8 +102,6 @@ sub main {
   ($ret, $msg) = doInit();
   doExit($ret, $msg) unless ($ret == 0);
 
-  p $config ; 
-
   my $objDispatcher = 'Qto::App::Ctrl::Dispatcher'->new(\$config , \$objModel);
 
   ($ret, $msg) = $objDispatcher->doRunActions($objModel->get('ctrl.actions'));
@@ -125,6 +123,7 @@ sub doInit {
    $config->{'env'}->{'run'}->{'ProductInstanceDir'} = $objInitiator->doResolveProductInstanceDir(-1);
    $config->{'env'}->{'run'}->{'ProductName'} = $objInitiator->doResolveProductName();
    $config->{'env'}->{'run'}->{'VERSION'} = $objInitiator->doResolveVersion();
+   $config->{'env'}->{'run'}->{'ENV_TYPE'} = $objInitiator->doResolveEnvType();
 
    if ( defined $ENV{'PROJ_CONF_FILE'} ) {
       my $projConfig = json_file_to_perl ($ENV{'PROJ_CONF_FILE'} );

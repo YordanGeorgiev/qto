@@ -14,13 +14,13 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $url           = {} ; 
    my $tm            = '' ; # the test message for each test 
    my $t             = Test::Mojo->new('Qto');
-   my $config     = $t->app->get('AppConfig') ; 
+   my $config        = $t->app->get('AppConfig') ; 
    my $exp_err_msg   = '' ; 
-   my $db            = $config->{ 'postgres_db_name' } ; # OBS instance specific !!!
+   my $db            = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; # OBS instance specific !!!
    my $ua            = $t->ua ; 
    my $objTimer      = {} ;
    $url              = '/' . $db . '/delete/test_delete_table' ; 
-   my $env           = $config->{'EnvType' };
+   my $env           = $config->{'env'}->{'run'}->{'ENV_TYPE' };
 
    # the delete by attribute requires the following json format : 
    # the name of the attribute
@@ -47,7 +47,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $objTimer               = 'Qto::App::Utils::Timer'->new( 'YYYYmmDDhhMMss' );
    my $id                  = $objTimer->GetHumanReadableTime();
    $url = '/' . $db . '/create/test_delete_table' ; 
-   $t->post_ok($url => json => {"id" =>$id})->status_is(200);
+   ok ($t->post_ok($url => json => {"id" =>$id})->status_is(200), $tm);
 
    $tm = 'the default name should NOT be deleted' ; 
    $url = '/' . $db . '/select/test_delete_table?with=id-eq-' . $id ; 
