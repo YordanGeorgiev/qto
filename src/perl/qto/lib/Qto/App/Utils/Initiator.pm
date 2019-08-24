@@ -30,7 +30,7 @@ package Qto::App::Utils::Initiator ;
 	our $ProductInstanceDir 	   = ''; 
 	our $ProductInstanceEnv       = '' ; 
 	our $ProductName 					= '' ; 
-	our $EnvType 					= '' ; 
+	our $EnvType 					   = '' ; 
 	our $ProductVersion 				= ''; 
 	our $ProductOwner 				= '' ; 
 	our $HostName 						= '' ; 
@@ -154,13 +154,15 @@ package Qto::App::Utils::Initiator ;
 		my $self = shift ; 
 
       $ProductInstanceDir = $self->doResolveProductInstanceDir() unless $ProductInstanceDir ;
+
 		my $file = $ProductInstanceDir . '/.env' ;
 		open my $fh, '<', $file or carp "no .env file $file in the product instance dir !!!" ;
 		
 		while( my $line = <$fh>)  {   
 			 $ProductVersion = $line;    
-			 $ProductVersion =~ s/VERSION=(.*)/$1/g;
-			 last if $ProductVersion =~ m/(\d\.){3}/g ;
+			 $ProductVersion =~ s/VERSION=(.*)$/$1/g;
+          chomp($ProductVersion);
+			 last if $ProductVersion =~ m/\d.\d.\d/g ;
 		}
 		close $fh; 
 		$self->{'VERSION'} 	   = $ProductVersion;
@@ -169,29 +171,27 @@ package Qto::App::Utils::Initiator ;
 
       return $ProductVersion;
    }
+   
+   sub doResolveEnvType {
+		my $self = shift ; 
 
+      $ProductInstanceDir = $self->doResolveProductInstanceDir() unless $ProductInstanceDir ;
+		my $file = $ProductInstanceDir . '/.env' ;
+		open my $fh, '<', $file or carp "no .env file $file in the product instance dir !!!" ;
+		
+		while( my $line = <$fh>)  {   
+			 $EnvType = $line;    
+			 $EnvType =~ s/ENV_TYPE=(.*)/$1/g;
+			 last if $EnvType =~ m/|dev|tst|stg|qas|prd|/g ;
+		}
+		close $fh; 
+      chomp($EnvType);
+		$self->{'EnvType'} 	   = $EnvType;
+		$config->{'EnvType'} 	= $EnvType; 
+		$self->{'AppConfig'}    = $config; 
 
-	#
-	# ---------------------------------------------------------
-	# the environment name is the dir identifying this product 
-	# instance from other product instances 
-	# ---------------------------------------------------------
-	sub doResolveProductInstanceEnv {
-
-		my $self = shift;
-		my $msg  = ();
-
-		$ProductInstanceEnv 			         = $ProductInstanceDir ; 
-		$ProductInstanceEnv 			         =~ s#$ProductBaseDir\/##g ;
-		$ProductInstanceEnv 			         =~ s#(.*?)(\/|\\)(.*)#$3#g ;
-		$ProductInstanceEnv 			         = $self->untaint ( $ProductInstanceEnv ); 
-
-		$config->{'ProductInstanceEnv'}  = $ProductInstanceEnv ; 
-		$self->{ 'ProductInstanceEnv' } 		= $ProductInstanceEnv ; 
-		$self->{'AppConfig'} 				   = $config; 
-
-		return $ProductInstanceEnv;
-	}
+      return $EnvType;
+   }
 
 
 	#
@@ -204,69 +204,14 @@ package Qto::App::Utils::Initiator ;
 		my $self = shift;
 		my $msg  = ();
 
-		#fetch the the product name from the dir struct
-		my @tokens = split /\./ , $ProductInstanceEnv ; 
-		$ProductName = $tokens[0] ; 
+      $ProductDir = $self->doResolveProductDir() unless $ProductDir ;
+		$ProductName = $ProductDir ; 
+		$ProductName =~ s/^(.*)[\/|\\](.*)/$2/g ; 
 
-		$config->{ 'ProductName' } 			= $ProductName ; 
+		$config->{ 'ProductName' } 		= $ProductName ; 
 		$self->{'AppConfig'} 				= $config; 
 		return $ProductName;
 	}
-
-
-	#
-	# ---------------------------------------------------------
-	# the Product Version is a number identifying the stage 
-	# of the evolution of this product 
-	# ---------------------------------------------------------
-	sub doResolveProductVersion {
-
-		my $self = shift;
-		my $msg  = ();
-		
-		my $ProductVersion	= '' ;
-
-		my @tokens 			= split /\./ , $ProductInstanceEnv ; 
-		$tokens [1] = $tokens [1] // '' ; 
-		$tokens [2] = $tokens [2] // '' ; 
-		$tokens [3] = $tokens [3] // '' ; 
-		$ProductVersion 	= $tokens[1] . '.' . $tokens[2] . '.' . $tokens[3] ; 
-		#debug rint "\n\n ProductVersion : $ProductVersion " ; 
-		
-		$config->{ 'ProductVersion' } 		= $ProductVersion ; 
-		$self->{'AppConfig'} 				= $config; 
-
-		return $ProductVersion;
-	}
-
-
-	#
-	# ---------------------------------------------------------
-	# the Product Type could be :
-	# dev -> this product instance is used for development
-	# tst -> this product instance is used for testing 
-	# qas -> this product instance is used for quality assurance
-	# prd -> this product instance is used for production
-	# Of course you could define you own abbreviations like ...
-	# fub -> full backup
-	# ---------------------------------------------------------
-	sub doResolveEnvType {
-
-		my $self = shift;
-		my $msg  = ();
-
-		my @tokens = split /\./ , $ProductInstanceEnv ; 
-		# the type of this environment - dev , test , dev , fb , prod next_line_is_templatized
-		my $EnvType = $tokens[4] ; 
-		# debug rint "\n\n EnvType : $EnvType " ; 
-
-		$config->{ 'EnvType' } 			= $EnvType ; 
-		$self->{ 'EnvType' } 			= $EnvType ; 
-		$self->{'AppConfig'} 				= $config; 
-
-		return $EnvType;
-	}
-
 
 
 	#
@@ -311,38 +256,6 @@ package Qto::App::Utils::Initiator ;
 	}
 
 
-	#
-	# ---------------------------------------------------------
-	# returns the host name of currently running host
-	# by using the Sys::ConfFile perl module
-	# ---------------------------------------------------------
-	sub doResolveIniConfFile {
-
-		my $self 						= shift;
-		my $msg  						= ();
-		
-		my $HostName					= $self->doResolveHostName();
-
-		# set the default ConfFile path if no cmd argument is provided
-		$ConfFile = "$ProductInstanceDir/cnf/$ProductName.$HostName.cnf" ; 
-
-      # override with env conf file if found one ...
-      # cnf/qto.host-name.cnf
-      # cnf/qto.dev.host-name.cnf
-      # cnf/qto.tst.host-name.cnf
-      # cnf/qto.prd.host-name.cnf
-      if ( -f "$ProductInstanceDir/cnf/$ProductName.$EnvType.$HostName.cnf" ) {
-		   $ConfFile = "$ProductInstanceDir/cnf/$ProductName.$EnvType.$HostName.cnf" 
-      }
-      
-
-		$self->set('ConfFile' , $ConfFile) ; 
-		$config->{'ConfFile'} 	= $ConfFile ; 
-		$self->{'AppConfig'} 		= $config; 
-
-		 
-		return $ConfFile;
-	}
 
 
 	#
@@ -354,35 +267,27 @@ package Qto::App::Utils::Initiator ;
 
 		my $self 						= shift;
 		my $msg  						= ();
-		
+	
+      $ProductInstanceDir  = $self->doResolveProductInstanceDir() unless $ProductInstanceDir ;
+		$EnvType 			   = $self->doResolveEnvType() unless $EnvType ;
       # cnf/env/dev.env.json
       # cnf/env/tst.env.json
       # cnf/env/prd.env.json
-      if ( -f "$ProductInstanceDir/cnf/env/$EnvType.env.json" ) {
-		   $ConfFile = "$ProductInstanceDir/cnf/env/$EnvType.env.json" 
-      }
-      
+		$ConfFile = "$ProductInstanceDir/cnf/env/$EnvType.env.json"  ;
+      print "\$ConfFile::$ConfFile\n";
+      croak "cannot find the ConfFile::$ConfFile !!!" unless -f $ConfFile ;
+
 		$self->set('ConfFile' , $ConfFile) ; 
 		$config->{'ConfFile'} 	= $ConfFile ; 
 		$self->{'AppConfig'} 		= $config; 
 
-		 
 		return $ConfFile;
 	}
 
 
-=head2 new
-	# -----------------------------------------------------------------------------
-	# the constructor
-=cut 
-
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
 	sub new {
 		
 		my $invocant = shift;    
-		# might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
       $rel_levels = shift || 0 ; 
 
@@ -394,13 +299,11 @@ package Qto::App::Utils::Initiator ;
 		$ProductBaseDir 			      = $self->doResolveProductBaseDir();
 		$ProductDir 			         = $self->doResolveProductDir();
 		$ProductInstanceDir 		      = $self->doResolveProductInstanceDir();
-		$ProductInstanceEnv           = $self->doResolveProductInstanceEnv();
 		$ProductName 				      = $self->doResolveProductName();
-		$ProductVersion 			      = $self->doResolveProductVersion();
 		$EnvType 				         = $self->doResolveEnvType();
+		$ProductVersion 			      = $self->doResolveVersion();
 		$ProductOwner 				      = $self->doResolveProductOwner();
 		$HostName 					      = $self->doResolveHostName();
-		$ConfFile 					      = $self->doResolveIniConfFile();
 
 
 		return $self;

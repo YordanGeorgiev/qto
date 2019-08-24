@@ -29,7 +29,7 @@ use JSON::Parse 'json_file_to_perl';
 
 my $module_trace 					= 0;
 our $objInitiator 				= {};
-our $config    				= {};
+our $config    				   = {};
 our $objLogger 					= {};
 our $objModel                 = {};
 
@@ -70,6 +70,7 @@ sub doLoadAppConfig {
    $config->{'env'}->{'run'}->{'ProductInstanceDir'} = $objInitiator->doResolveProductInstanceDir(-1);
    $config->{'env'}->{'run'}->{'ProductName'} = $objInitiator->doResolveProductName();
    $config->{'env'}->{'run'}->{'VERSION'} = $objInitiator->doResolveVersion();
+   $config->{'env'}->{'run'}->{'ENV_TYPE'} = $objInitiator->doResolveEnvType();
    $objLogger     = 'Qto::App::Utils::Logger'->new(\$config);
 
    my $currentShortHash = `git rev-parse --short HEAD` ; chomp($currentShortHash);

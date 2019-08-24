@@ -4,6 +4,7 @@ cnf/env
 cnf/env/dev.env.json
 cnf/env/tst.env.json
 cnf/env/prd.env.json
+.vimrc
 .env
 src/bash/qto/test-qto.sh
 src/bash/qto/funcs/generate-md-docs.func.sh
@@ -256,17 +257,6 @@ src/perl/qto/lib/Qto/App/IO/In/RdrEnv.pm
 src/bash/qto/tests/new-qto-tests.lst
 # ---
 src/bash/qto/tests/run-qto-tests.lst
-.vimrc
-cnf/tpl
-cnf/tpl/qto.dev.p-host-name.cnf
-cnf/tpl/qto.dev.v-host-name.cnf
-cnf/tpl/qto.tst.p-host-name.cnf
-cnf/tpl/qto.tst.v-host-name.cnf
-cnf/tpl/qto.prd.p-host-name.cnf
-cnf/tpl/qto.prd.v-host-name.cnf
-cnf/tpl/qto.p-host-name.cnf
-cnf/tpl/qto.v-host-name.cnf
-# ---
 cnf/bash/.profile_opts.host-name
 # ---
 src/bash/lib/.bash_funcs.host-name
@@ -274,12 +264,7 @@ src/bash/lib/.bash_funcs.host-name
 src/bash/qto/tests/all-qto-tests.lst
 src/bash/qto/tests/rem-qto-actions.lst
 # ---
-src/bash/qto/tests/db-to-gsheet.test.sh
-src/bash/qto/helps/db-to-gsheet.help.sh
 src/bash/qto/funcs/db-to-gsheet.func.sh
-doc/txt/qto/tests/db-to-gsheet.test.txt
-doc/txt/qto/helps/db-to-gsheet.help.txt
-doc/txt/qto/funcs/db-to-gsheet.func.txt
 # --- 
 doc/txt/qto/funcs/clone-project.func.txt
 doc/txt/qto/helps/clone-project.help.txt
@@ -368,7 +353,7 @@ cnf/hosts/host-name
 cnf/hosts/host-name/home
 cnf/hosts/host-name/home/ysg
 cnf/hosts/host-name/home/ysg/.muttrc
-cnf/hosts/host-name/home/ysg/.tmux.cnf
+cnf/hosts/host-name/home/ysg/.tmux.conf
 cnf/hosts/host-name/etc/pam.d/common-session-noninteractive
 cnf/hosts/host-name/etc/pam.d/common-session
 cnf/hosts/host-name/etc/security/limits.conf
@@ -628,7 +613,6 @@ cnf/hosts/host-name
 cnf/hosts/host-name/home
 cnf/hosts/host-name/home/ysg
 cnf/hosts/host-name/home/ysg/.muttrc
-cnf/hosts/host-name/home/ysg/.tmux.cnf
 LICENSE
 lib/readme.txt
 lib/bash/funcs/
@@ -747,7 +731,6 @@ src/bash/qto/helps/run-data-load-tests.help.sh
 doc/txt/qto/funcs/run-data-load-tests.func.txt
 # ---
 src/bash/qto/funcs/run-js-unit-tests.func.sh
-src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrHPostgresDb.pm
 src/perl/qto/lib/Qto/Controller/ViewDoc.pm
 src/perl/qto/public/dat/tmp/xls/1
 src/perl/qto/templates/controls/site/app_name_tooltip.html.ep
@@ -774,7 +757,6 @@ src/bash/qto/funcs/admin/restart-network.func.sh
 src/bash/qto/funcs/print-stats.func.sh
 cnf/hosts/host-name/etc/fstab
 cnf/hosts/host-name/etc/network/interfaces
-cnf/hosts/host-name/home/ysg/.vimrc
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToJson/autosplit.ix
@@ -785,7 +767,6 @@ src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlTxtToDb/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlXlsToDb/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/Dispatcher/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Db/In/Postgres/MojoPgWrapper/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/Db/In/Postgres/RdrHPostgresDb/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Db/In/Postgres/RdrPostgresDb/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Db/Out/Postgres/WtrPostgresDb/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/In/CnrEncrypter/autosplit.ix
@@ -833,10 +814,19 @@ src/perl/qto/lib/auto/Qto/Controller/Home/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Truncate/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WSSelect/autosplit.ix
 dat/mix
-dat/mix/2019/2019-07/2019-07-24
-dat/mix/2019/2019-07/2019-07-24/sql
-dat/mix/2019/2019-07/2019-07-24/sql/dev_qto
-dat/mix/2019/2019-07/2019-07-24/sql/dev_qto/dev_qto.20190724_114933.insrt.dmp.sql
-dat/mix/2019/2019-07/2019-07-24/tmp
-dat/mix/2019/2019-07/2019-07-24/xls
-dat/mix/2019/2019-07/2019-07-24/xls/qto.all.20190724_000000.xlsx
+dat/mix/2019/2019-08/2019-08-22
+dat/mix/2019/2019-08/2019-08-22/xls
+dat/mix/2019/2019-08/2019-08-22/xls/qto.all.20190822_000000.xlsx
+dat/mix/2019/2019-08/2019-08-22/tmp
+dat/mix/2019/2019-08/2019-08-22/tmp/release_issues.data.sql
+dat/mix/2019/2019-08/2019-08-22/tmp/problems.data.sql
+dat/mix/2019/2019-08/2019-08-22/sql
+dat/mix/2019/2019-08/2019-08-22/sql/dev_qto
+dat/mix/2019/2019-08/2019-08-22/sql/dev_qto/dev_qto.20190822_205727.insrt.dmp.sql
+dat/mix/2019/2019-08/2019-08-22/sql/dev_qto/dev_qto.20190822_103955.insrt.dmp.sql
+dat/mix/2019/2019-08/2019-08-22/sql/dev_qto/dev_qto.20190822_214336.insrt.dmp.sql
+dat/mix/2019/2019-08/2019-08-22/sql/dev_qto/dev_qto.20190822_220130.insrt.dmp.sql
+dat/mix/2019/2019-08/2019-08-22/sql/dev_qto/dev_qto.20190822_215217.insrt.dmp.sql
+dat/mix/2019/2019-08/2019-08-22/sql/dev_qto/dev_qto.20190822_220204.insrt.dmp.sql
+dat/mix/2019/2019-08/2019-08-22/sql/dev_qto/dev_qto.20190822_130902.insrt.dmp.sql
+dat/mix/2019/2019-08/2019-08-22/sql/dev_qto/dev_qto.20190822_214015.insrt.dmp.sql

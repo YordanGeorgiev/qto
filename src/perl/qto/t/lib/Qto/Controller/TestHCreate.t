@@ -15,8 +15,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $url           = {} ; 
    my $exp_err_msg   = '' ; 
    my $t             = Test::Mojo->new('Qto');
-   my $config     = $t->app->get('AppConfig') ; 
-   my $db            = $config->{ 'postgres_db_name' } ; # because each instance has it's own ...
+   my $config        = $t->app->get('AppConfig') ; 
+   my $db            = $config->{'env'}->{'db'}->{'postgres_db_name'} ; # because each instance has it's own ...
    my $ua            = $t->ua ; # the user agent , aka http client
    my $objTimer      = {} ;
    my $id            = undef ; # an id to test
@@ -41,7 +41,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $tm            = 'the string "not_an_integer" should not qualify for an id ...' ; 
    $id            = 'not_an_integer' ; 
    $exp_err_msg   = 'the id must be a whole positive number, but not_an_integer was provided !' ;
-   $db            = $config->{ 'postgres_db_name' } ; 
+   $db            = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
    $url           = '/' . $db . '/hcreate/test_hcreate_table' ; 
    ok ($t->post_ok($url => json => {"id"=> $id ,"seq"=>1})
       ->json_is({"ret" => 400

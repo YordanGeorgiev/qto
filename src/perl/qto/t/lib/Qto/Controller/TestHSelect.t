@@ -10,9 +10,9 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
    my $tm            = '' ; # the test message for each test 
    my $t             = Test::Mojo->new('Qto');
-   my $config     = $t->app->get('AppConfig') ; 
+   my $config        = $t->app->get('AppConfig') ; 
    # if the product instance id tst -> tst_qto
-   my $db            = $config->{ 'postgres_db_name' } ; 
+   my $db            = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
 
    $tm = '01. the select-databases route returns the list of the dbs in this server' ; 
 	ok ( $t->get_ok('/' . $db . '/select-databases')->status_is(200) , $tm ) ; 
@@ -27,8 +27,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
       , $tm )
    ;
 
-   #$tm = 'status 404 is returned  when the database provided does not exist' ; 
-   #$url = '/non_existent_db/hselect/daily_issues/0' ; 
+   $tm = 'status 404 is returned  when the database provided does not exist' ; 
+   $url = '/non_existent_db/hselect/daily_issues/0' ; 
 	#ok ( $t->get_ok($url)->status_is(404)  , $tm ) ; 
    
    #$tm = 'status 404 is returned  when the table  provided does not exist' ; 

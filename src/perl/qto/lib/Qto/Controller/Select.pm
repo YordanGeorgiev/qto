@@ -15,10 +15,10 @@ use Qto::App::Cnvr::CnrHsr2ToArray ;
 use Qto::App::IO::In::CnrUrlPrms ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
-my $module_trace    = 0 ;
-our $config      = {};
-our $objLogger      = {} ;
-our $rdbms_type     = 'postgre';
+my $module_trace     = 0 ;
+our $config          = {};
+our $objLogger       = {} ;
+our $rdbms_type      = 'postgre';
 
 #
 # --------------------------------------------------------

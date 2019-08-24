@@ -1025,17 +1025,15 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       %$self = (
            config => $config
       );
-      my $dbConfig = $config->{'env'}->{'db'} ; 
+      my $db_config = $config->{'env'}->{'db'} ; 
 
-      p $dbConfig ; 
-      print "stp src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm \n" ; 
-		$db 			               = $dbConfig->{'postgres_db_name'}    || croak " db not set !!!" ; 
-		$postgres_db_host 			= $dbConfig->{'postgres_db_host'}    || croak "postgres_db_host not set !!!" ; 
-		$postgres_db_port 			= $dbConfig->{'postgres_db_port'}    || croak "postgres_db_port not set !!!"  ; 
-		$postgres_db_useradmin 	   = $dbConfig->{'postgres_db_useradmin'}    || croak 'no admin postgres user' ; 
-		$postgres_db_useradmin_pw  = $dbConfig->{'postgres_db_useradmin_pw'} || croak 'no_pass_provided!!!' ; 
-		$postgres_db_user 			= $dbConfig->{'postgres_db_user'}    || croak " no postgres_db_user !!!" ;  
-		$postgres_db_user_pw 		= $dbConfig->{'postgres_db_user_pw'} || croak " no postgres_db_user_pw !!!!" ;
+		$db 			               = $db_config->{'postgres_db_name'}    || croak " db not set !!!" ; 
+		$postgres_db_host 			= $db_config->{'postgres_db_host'}    || croak "postgres_db_host not set !!!" ; 
+		$postgres_db_port 			= $db_config->{'postgres_db_port'}    || croak "postgres_db_port not set !!!"  ; 
+		$postgres_db_useradmin 	   = $db_config->{'postgres_db_useradmin'}    || croak 'no admin postgres user' ; 
+		$postgres_db_useradmin_pw  = $db_config->{'postgres_db_useradmin_pw'} || croak 'no_pass_provided!!!' ; 
+		$postgres_db_user 			= $db_config->{'postgres_db_user'}    || croak " no postgres_db_user !!!" ;  
+		$postgres_db_user_pw 		= $db_config->{'postgres_db_user_pw'} || croak " no postgres_db_user_pw !!!!" ;
       
 	   $objLogger 			         = 'Qto::App::Utils::Logger'->new( \$config ) ;
 

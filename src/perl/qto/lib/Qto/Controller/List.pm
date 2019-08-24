@@ -45,14 +45,14 @@ sub doListItems {
    my $as               = 'grid' ; # the default form of the list control 
 
   
-   $config		 		= $self->app->get('AppConfig');
+   $config		 		   = $self->app->get('AppConfig');
    $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
  
    my $list_control     = '' ; 
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ;
-   my $objCnrUrlPrms       = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
+   my $objCnrUrlPrms    = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    $objCnrUrlPrms->doValidateAndSetSelect();
 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
