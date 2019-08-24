@@ -6,7 +6,6 @@ SELECT 'create the "problems" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , prio           integer NOT NULL DEFAULT 1
-    , level          integer NOT NULL DEFAULT 1
     , status         varchar (20) NOT NULL DEFAULT 'status ...'
     , category       varchar (20) NOT NULL DEFAULT 'category ...'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'

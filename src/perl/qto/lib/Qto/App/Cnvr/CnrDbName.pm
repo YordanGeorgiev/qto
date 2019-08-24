@@ -16,7 +16,7 @@ sub toEnvName {
    unless ( grep ( /^$db_prefix$/, @env_prefixes)) {
       carp  "appconfig->producttype is undef " unless $config->{'env'}{ 'ENV_TYPE' } ;
       carp "db is undef " unless $db ; 
-      $db = $config->{'env'}->{ 'ENV_TYPE' } . '_' . $db ; 
+      $db = $config->{'env'}->{'run'}->{'ENV_TYPE'} . '_' . $db ; 
    } 
    return $db ;
 }

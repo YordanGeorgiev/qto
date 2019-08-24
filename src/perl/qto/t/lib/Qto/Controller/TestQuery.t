@@ -12,18 +12,18 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $tm = '' ; # the test message for each test 
    my $t = Test::Mojo->new('Qto');
    my $config = $t->app->get('AppConfig') ; 
-   my $db_name= $config->{ 'postgres_db_name' } ; 
-   my $url = '/' . $db_name . '/query?for=' ; 
+   my $db= $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
+   my $url = '/' . $db . '/query?for=' ; 
 
    $tm = "not at all for query param specified "; 
    ok ( $t->get_ok($url)->status_is(400) , $tm ) ;
   
    $tm = 'not at all for query param specified ' ; 
-   $url = '/' . $db_name . '/query' ; 
+   $url = '/' . $db . '/query' ; 
    ok ( $t->get_ok($url)->status_is(400) , $tm ) ;
 
    $tm = 'some foo query param is specified ' ; 
-   $url = '/' . $db_name . '/query?for=meta-data' ; 
+   $url = '/' . $db . '/query?for=meta-data' ; 
    ok ( $t->get_ok($url)->status_is(200) , $tm ) ;
 
    my $ua  = $t->ua ; 
@@ -38,7 +38,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    ok (ref($mshr2) eq 'HASH' , $tm) ; 
    
    $tm = 'some foo query param is specified ' ; 
-   $url = '/' . $db_name . '/query?for=чичковитечервенотиквеничета' ; 
+   $url = '/' . $db . '/query?for=чичковитечервенотиквеничета' ; 
    ok ( $t->get_ok($url)->status_is(204) , $tm ) ;
 
 done_testing();
