@@ -28,7 +28,7 @@ var mutations = {
 var actions = {
    loadItems ({ commit }) {
       var webhost = window.location.href.split("/")[2]
-      var ws = new RobustWebSocket("ws://" + webhost + "/ws-select-items", undefined , {
+      var ws = new RobustWebSocket("<%= $WsProtocol %>" + "://" + webhost + "/ws-select-items", undefined , {
          timeout: 5000,
          shouldReconnect: function(event, ws) {
          if (event.code === 1008 || event.code === 1011) return

@@ -65,6 +65,7 @@ sub doRenderPageTemplate {
       'template'        => $template 
     , 'msg'             => $msg
     , 'db' 		         => $db
+    , 'WsProtocol' 	   => $config->{'env'}->{'app'}->{'ws_protocol'}
     , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
     , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'} 
     , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}
