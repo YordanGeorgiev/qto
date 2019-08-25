@@ -7,7 +7,7 @@ doCreateRelativePackage(){
 		test $? -ne 0 && doExit 2 "Failed to create $PRODUCT_INSTANCE_DIR/dat/zip !"
 
 	test -z ${include_file:-}         && \
-		include_file="$PRODUCT_INSTANCE_DIR/met/.$env_type.$run_unit"
+		include_file="$PRODUCT_INSTANCE_DIR/met/.$env_type.$RUN_UNIT"
 
 	# relative file path is passed turn it to absolute one 
 	[[ $include_file == /* ]] || include_file=$PRODUCT_INSTANCE_DIR/$include_file

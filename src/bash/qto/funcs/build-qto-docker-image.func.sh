@@ -8,25 +8,26 @@ doBuildQtoDockerImage(){
 
    doLog "DEBUG START doBuildQtoDockerImage"
 
-   test -z ${qto_project:-} && \
-      source "$PRODUCT_INSTANCE_DIR/lib/bash/funcs/parse-cnf-env-vars.sh" && \
-      doParseCnfEnvVars "$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type."$(hostname -s)'.cnf'
+   # todo:ysg
+   #test -z ${qto_project:-} && \
+   #   source "$PRODUCT_INSTANCE_DIR/lib/bash/funcs/parse-cnf-env-vars.sh" && \
+   #   doParseCnfEnvVars "$PRODUCT_INSTANCE_DIR/cnf/$RUN_UNIT.$env_type."$(hostname -s)'.cnf'
 
-   test -f "$PRODUCT_INSTANCE_DIR/src/docker/Dockerfile.deploy-$run_unit.$product_version" || \
-      doExit 1 "create the src/docker/Dockerfile.deploy-$run_unit.$product_version"
+   test -f "$PRODUCT_INSTANCE_DIR/src/docker/Dockerfile.deploy-$RUN_UNIT.$product_version" || \
+      doExit 1 "create the src/docker/Dockerfile.deploy-$RUN_UNIT.$product_version"
 
    doFullCleanDocker
    doRemoveDockerContainers 
    doRemoveDockerImages          
-   postgres_db_name="$env_type"'_'"$run_unit"
-   cp -v "$PRODUCT_INSTANCE_DIR/src/docker/Dockerfile.deploy-$run_unit.$product_version" "$PRODUCT_INSTANCE_DIR/Dockerfile"
+   postgres_db_name="$env_type"'_'"$RUN_UNIT"
+   cp -v "$PRODUCT_INSTANCE_DIR/src/docker/Dockerfile.deploy-$RUN_UNIT.$product_version" "$PRODUCT_INSTANCE_DIR/Dockerfile"
 
    # for quick tests uncomment ^^^ and use this one : 
    # cp -v "$PRODUCT_INSTANCE_DIR/src/docker/Dockerfile.deploy-quick-test" "$PRODUCT_INSTANCE_DIR/Dockerfile"
 
    # Action !!!
    docker build \
-   --build-arg PRODUCT_INSTANCE_DIR=/opt/csitea/$run_unit/$environment_name \
+   --build-arg PRODUCT_INSTANCE_DIR=/opt/csitea/$RUN_UNIT/$environment_name \
    --build-arg postgres_db_name=$postgres_db_name \
    --build-arg TZ=${TZ:-} \
    --build-arg host_host_name=$(hostname -s) \

@@ -16,8 +16,8 @@ doLogTestRunEntry(){
    case "$1" in
      INIT)
          # cat doc/txt/qto/funcs/log-test-run-entry.func.txt
-         component_name=$run_unit
-         test -z "$component_name" && component_name="$run_unit_tester"
+         component_name=$RUN_UNIT
+         test -z "$component_name" && component_name="$RUN_UNIT_tester"
          test -z "$test_run_report_line" && test_run_report_line='   '
          test -z "$test_run_report_file" \
          && test_run_report_file="$PRODUCT_INSTANCE_DIR/dat/tests/$component_name"'.test-run-report.'`date "+%Y%m%d_%H%M%S"`'.txt'

@@ -11,7 +11,7 @@ doCreateFullPackage(){
    test -z ${qto_project:-} && qto_project=qto
 	#define default vars
 	test -z ${include_file:-}         && \
-		include_file="$PRODUCT_INSTANCE_DIR/met/.$env_type.$run_unit"
+		include_file="$PRODUCT_INSTANCE_DIR/met/.$env_type.$RUN_UNIT"
 
 	# relative file path is passed turn it to absolute one 
 	[[ $include_file == /* ]] || include_file=$PRODUCT_INSTANCE_DIR/$include_file
@@ -39,18 +39,18 @@ doCreateFullPackage(){
 	timestamp=`date "+%Y%m%d_%H%M%S"`
 	# the last token of the include_file with . token separator - thus no points in names
 	zip_file_name=$(echo $include_file | rev | cut -d'.' -f 1 | rev)
-   test $zip_file_name != $run_unit && zip_file_name="$zip_file_name"'--'"$qto_project"
+   test $zip_file_name != $RUN_UNIT && zip_file_name="$zip_file_name"'--'"$qto_project"
 	zip_file_name="$zip_file_name.$product_version.$tgt_env_type.$timestamp.$host_name.zip"
 	zip_file="$product_dir/$zip_file_name"
-	mkdir -p $PRODUCT_INSTANCE_DIR/dat/$run_unit/tmp
-	echo $zip_file>$PRODUCT_INSTANCE_DIR/dat/$run_unit/tmp/zip_file
+	mkdir -p $PRODUCT_INSTANCE_DIR/dat/$RUN_UNIT/tmp
+	echo $zip_file>$PRODUCT_INSTANCE_DIR/dat/$RUN_UNIT/tmp/zip_file
 
 	# zip MM ops
 	# -MM  --must-match
 	# All  input  patterns must match at least one file and all input files found must be readable.
 	set -x ; ret=1
 	cat $include_file | egrep -v "$perl_ignore_file_pattern" | sed '/^#/ d' | perl -ne 's|\n|\000|g;print'| \
-	xargs -0 -I "{}" zip -MM $zip_file "$org_name/$run_unit/$environment_name/{}"
+	xargs -0 -I "{}" zip -MM $zip_file "$org_name/$RUN_UNIT/$environment_name/{}"
 	ret=$? 
 	set +x
 	test $ret -gt 0 && (
@@ -73,13 +73,13 @@ doCreateFullPackage(){
    # backup the project data dir if not running on the product itself ...
    test -d $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d") || doIncreaseDate
    # and zip the project data dir
-   if [ ! $run_unit == $qto_project ]; then
+   if [ ! $RUN_UNIT == $qto_project ]; then
       cd $mix_data_dir
       for i in {1..3} ; do cd .. ; done ;
       zip -r $zip_file $qto_project/dat/mix/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
 	   cd $org_base_dir
    else 
-      zip -r $zip_file $org_name/$run_unit/$environment_name/dat/mix/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
+      zip -r $zip_file $org_name/$RUN_UNIT/$environment_name/dat/mix/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
    fi
 
    msg="created the following full development package:"

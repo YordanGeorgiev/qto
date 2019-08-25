@@ -3,21 +3,29 @@
 
 # v0.6.9
 #------------------------------------------------------------------------------
-# the main function called
+# the main shell entry point of the qto application
 #------------------------------------------------------------------------------
 main(){
    doInit
 
-   args="$@"
-   test -z "$args" && args='-a print-usage'
+   is_daemon=0
 
-   doParseCmdArgs "$args"
-   export exit_code=1 # assume a general error
+	while getopts "a:d:t:" opt; do
+		 case $opt in
+			  a) actions+=("$OPTARG ");;
+			  t) table+=("$OPTARG ");;
+			  d) is_daemon+=("$OPTARG ");;
+			  \?) doExit 2 "Invalid option: -$OPTARG";;
+			  :) doExit 2 "Option -$OPTARG requires an argument."
+		 esac
+	done
+	shift $((OPTIND -1))
 
    doSetVars
    doCheckReadyToStart
-   doRunActions "$args"
-   doExit $exit_code "# = STOP  MAIN = $run_unit "
+   test -z "${actions:-}" && actions=' print-usage '
+   doRunActions "$actions"
+   doExit $exit_code "# = STOP  MAIN = $RUN_UNIT "
 }
 
 
@@ -44,24 +52,25 @@ get_function_list () {
 # run only the actions passed with the -a <<action-name-arg>>
 #------------------------------------------------------------------------------
 doRunActions(){
+   actions=$1 ; shift 1
 	test -z ${PROJ_INSTANCE_DIR:-} && PROJ_INSTANCE_DIR=$PRODUCT_INSTANCE_DIR
 	daily_backup_dir="$PROJ_INSTANCE_DIR/dat/mix/"$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
    cd $PRODUCT_INSTANCE_DIR
-   actions="$(echo -e "${actions}" | sed -e 's/^[[:space:]]*//')"
+   actions="$(echo -e "${actions}" | sed -e 's/^[[:space:]]*//')" #or how-to trim leading space
    actions_to_run=''
    while read -d ' ' arg_action ; do
-      # debug arg_action:$arg_action
+      # debug  arg_action:$arg_action
       while read -r func_file ; do
-         # debug func_file:$func_file
+         # debug func func_file:$func_file
          while read -r function_name ; do
-            # debug function_name:$function_name
+            # debug  function_name:$function_name
             action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
-            # debug action_name: $action_name
+            # debug  action_name: $action_name
             test "$action_name" != "$arg_action" && continue
             test "$action_name" == "$arg_action" && actions_to_run=$(echo -e "$actions_to_run\n$function_name")
             # debug actions_to_run: $actions_to_run
          done< <(get_function_list "$func_file")
-      done < <(find "src/bash/$run_unit/funcs" -type f -name '*.sh'|sort)
+      done < <(find "src/bash/$RUN_UNIT/funcs" -type f -name '*.sh'|sort)
 
       [[ $arg_action == to-ver=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeVersion $arg_action")
       [[ $arg_action == to-env=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeEnvType $arg_action")
@@ -102,52 +111,10 @@ doInit(){
    mkdir -p "$tmp_dir"
    ( set -o posix ; set )| sort >"$tmp_dir/vars.before"
    my_name_ext=`basename $0`
-   run_unit=${my_name_ext%.*}
+   RUN_UNIT=${my_name_ext%.*}
    host_name=$(hostname -s)
    export sleep_interval="${sleep_interval:=0}"
-   exit_code=1
-}
-
-
-
-# v0.6.9 
-#------------------------------------------------------------------------------
-# parse the single letter command line args
-#------------------------------------------------------------------------------
-doParseCmdArgs(){
-
-   run_in_backround=0
-   while getopts ":a:b:c:d:i:h:t:" opt; do
-     case $opt in
-      a)
-         actions="${actions:-}""$OPTARG "
-         ;;
-      b)
-         run_in_backround=1
-         ;;
-      c)
-         export run_unit="$OPTARG "
-         ;;
-      d)
-         export tgt_date="$OPTARG"
-         ;;
-      i)
-         include_file="$OPTARG"
-         ;;
-      h)
-         doPrintHelp
-         ;;
-      t)
-         export tables="$OPTARG"
-         ;;
-      \?)
-         doExit 2 "Invalid option: -$OPTARG"
-         ;;
-      :)
-         doExit 2 "Option -$OPTARG requires an argument."
-         ;;
-     esac
-   done
+   export exit_code=1
 }
 
 
@@ -235,11 +202,11 @@ doExit(){
    if (( ${exit_code:-} != 0 )); then
       exit_msg=" ERROR --- exit_code $exit_code --- exit_msg : $exit_msg"
       >&2 echo "$exit_msg"
-      doLog "FATAL STOP FOR $run_unit RUN with: "
+      doLog "FATAL STOP FOR $RUN_UNIT RUN with: "
       doLog "FATAL exit_code: $exit_code exit_msg: $exit_msg"
    else
-      doLog "INFO  STOP FOR $run_unit RUN with: "
-      doLog "INFO  STOP FOR $run_unit RUN: $exit_code $exit_msg"
+      doLog "INFO  STOP FOR $RUN_UNIT RUN with: "
+      doLog "INFO  STOP FOR $RUN_UNIT RUN: $exit_code $exit_msg"
    fi
 
    rm -rf "$run_unit_bash_dir/tmp" #clear the tmpdir
@@ -266,13 +233,13 @@ doLog(){
    [[ $type_of_msg == INFO ]] && type_of_msg="INFO "
 
    # print to the terminal if we have one
-   test -t 1 && echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$run_unit][@$host_name] [$$] $msg "
+   test -t 1 && echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$RUN_UNIT][@$host_name] [$$] $msg "
 
    # define default log file none specified in cnf file
    test -z ${log_file:-} && \
 		mkdir -p $PRODUCT_INSTANCE_DIR/dat/log/bash && \
-			log_file="$PRODUCT_INSTANCE_DIR/dat/log/bash/$run_unit.`date "+%Y%m"`.log"
-   echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$run_unit][@$host_name] [$$] $msg " >> $log_file
+			log_file="$PRODUCT_INSTANCE_DIR/dat/log/bash/$RUN_UNIT.`date "+%Y%m"`.log"
+   echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$RUN_UNIT][@$host_name] [$$] $msg " >> $log_file
 }
 
 
@@ -343,7 +310,7 @@ doSetVars(){
    export product_version=$VERSION
    export env_type=$ENV_TYPE
 
-   if [ "$environment_name" == "$run_unit" ]; then
+   if [ "$environment_name" == "$RUN_UNIT" ]; then
       product_dir=$PRODUCT_INSTANCE_DIR
       test -z "$env_type" && export env_type='dev'
    else
@@ -357,7 +324,7 @@ doSetVars(){
    ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
    doLog "INFO # --------------------------------------"
-   doLog "INFO # ===     START MAIN   === $run_unit"
+   doLog "INFO # ===     START MAIN   === $RUN_UNIT"
    doLog "INFO # --------------------------------------"
 
    exit_code=0
