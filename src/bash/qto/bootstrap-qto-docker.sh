@@ -3,7 +3,7 @@
 set -x
 set -eu -o pipefail # fail on error , debug all lines
 run_unit_bash_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
-cd $run_unit_bash_dir
+cd _bash_dir
 for i in {1..3} ; do cd .. ; done ; export PRODUCT_INSTANCE_DIR=`pwd`;
 export run_unit=$(echo `basename "$PRODUCT_INSTANCE_DIR"`|cut -d'.' -f1)
 export env_type=$(echo `basename "$PRODUCT_INSTANCE_DIR"`|cut -d'.' -f5)
@@ -42,11 +42,11 @@ cd $PRODUCT_INSTANCE_DIR
 
 source "$PRODUCT_INSTANCE_DIR/lib/bash/funcs/parse-cnf-env-vars.sh"
 
-cp -v "$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type.$host_host_name.cnf" \
-      "$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type."$(hostname -s)".cnf"
+cp -v "$PRODUCT_INSTANCE_DIR/cnf/.$env_type.$host_host_name.cnf" \
+      "$PRODUCT_INSTANCE_DIR/cnf/.$env_type."$(hostname -s)".cnf"
 
-doParseCnfEnvVars "$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type."$(hostname -s)".cnf"
-echo "doParseCnfEnvVars $PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type.$(hostname -s).cnf" \
+doParseCnfEnvVars "$PRODUCT_INSTANCE_DIR/cnf/.$env_type."$(hostname -s)".cnf"
+echo "doParseCnfEnvVars $PRODUCT_INSTANCE_DIR/cnf/.$env_type.$(hostname -s).cnf" \
    >> /home/usrqtoadmin/.bashrc
 
 bash $PRODUCT_INSTANCE_DIR/src/bash/qto/qto.sh -a restart-postgres

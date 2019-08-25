@@ -5,14 +5,15 @@ SELECT 'create the "quinquennially_issues" table'
    CREATE TABLE quinquennially_issues (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , category       varchar (30) NOT NULL DEFAULT 'category'
-    , type           varchar (30) NOT NULL DEFAULT 'task'
-    , status         varchar (20) NOT NULL DEFAULT 'status'
+    , category       varchar (30) NOT NULL DEFAULT 'category...'
+    , type           varchar (30) NOT NULL DEFAULT 'task...'
+    , status         varchar (20) NOT NULL DEFAULT 'status...'
+    , prio           integer NOT NULL DEFAULT 1
+    , name           varchar (100) NOT NULL DEFAULT 'name...'
+    , description    varchar (1000)
     , start_time     text NOT NULL DEFAULT to_char(date_trunc('minute', now()::time),'HH24:MI')
     , stop_time      text NOT NULL DEFAULT to_char(date_trunc('minute', now()::time),'HH24:MI')
-    , prio           integer NOT NULL DEFAULT 1
-    , name           varchar (100) NOT NULL DEFAULT 'name'
-    , description    varchar (1000)
+    , owner          varchar (100) NOT NULL DEFAULT 'none'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_quinquennially_issues_guid PRIMARY KEY (guid)
     ) WITH (

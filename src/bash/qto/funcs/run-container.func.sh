@@ -6,9 +6,9 @@ doRunContainer(){
 
    test -z ${qto_project:-} && \
       source "$PRODUCT_INSTANCE_DIR/lib/bash/funcs/parse-cnf-env-vars.sh" && \
-      doParseCnfEnvVars $PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type.$host_name.cnf
+      doParseCnfEnvVars $PRODUCT_INSTANCE_DIR/cnf/$RUN_UNIT.$env_type.$host_name.cnf
 
-   tgt_PRODUCT_INSTANCE_DIR='/opt/csitea/'"$run_unit/$environment_name"
+   tgt_PRODUCT_INSTANCE_DIR='/opt/csitea/'"$RUN_UNIT/$environment_name"
    chmod 777 $PRODUCT_INSTANCE_DIR/src/bash/qto/install/docker/docker-entry-point.sh
 
    container_name='qto-container-'$(date "+%Y%m%d_%H%M%S")

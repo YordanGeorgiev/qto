@@ -7,9 +7,11 @@
 doRunUnitTests(){
   
    export QTO_ONGOING_TEST=1
-   test -z ${qto_project:-} && \
-      source "$PRODUCT_INSTANCE_DIR/lib/bash/funcs/parse-cnf-env-vars.sh" && \
-      doParseCnfEnvVars "$PRODUCT_INSTANCE_DIR/cnf/$run_unit.$env_type.*.cnf"
+   set -x
+   doExit 1 "todo fix configuration"
+   # test -z ${qto_project:-} && \
+    #  source "$PRODUCT_INSTANCE_DIR/lib/bash/funcs/parse-cnf-env-vars.sh" && \
+    #  doParseCnfEnvVars "$PRODUCT_INSTANCE_DIR/cnf/$RUN_UNIT.$env_type.*.cnf"
    
    doLog "INFO START unit tests"
    while read -r f ; do 

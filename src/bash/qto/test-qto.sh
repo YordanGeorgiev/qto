@@ -21,7 +21,7 @@ main(){
    doInit
   	doSetVars
 	doRunTests "$@"
-  	doExit 0 "# = STOP  MAIN = $run_unit_tester "
+  	doExit 0 "# = STOP  MAIN = $RUN_UNIT_TESTER "
 
 }
 #eof main
@@ -117,7 +117,7 @@ doInit(){
    mkdir -p "$tmp_dir"
    ( set -o posix ; set ) | sort >"$tmp_dir/vars.before"
    my_name_ext=`basename $0`
-   run_unit_tester=${my_name_ext%.*}
+   RUN_UNIT_TESTER=${my_name_ext%.*}
    host_name=$(hostname -s)
    export sleep_interval=${sleep_interval:=0}   # to slow down during debuging export sleep_iterval=3
 }
@@ -144,11 +144,11 @@ doExit(){
       exit_msg=" ERROR --- exit_code $exit_code --- exit_msg : $exit_msg"
       >&2 echo "$exit_msg"
       # doSendReport
-      doLog "FATAL STOP FOR $run_unit_tester RUN with: "
+      doLog "FATAL STOP FOR $RUN_UNIT_TESTER RUN with: "
       doLog "FATAL exit_code: $exit_code exit_msg: $exit_msg"
    else
-      doLog "INFO  STOP FOR $run_unit_tester RUN with: "
-      doLog "INFO  STOP FOR $run_unit_tester RUN: $exit_code $exit_msg"
+      doLog "INFO  STOP FOR $RUN_UNIT_TESTER RUN with: "
+      doLog "INFO  STOP FOR $RUN_UNIT_TESTER RUN: $exit_code $exit_msg"
    fi
 
    doCleanAfterRun
@@ -180,8 +180,8 @@ doLog(){
    # define default log file none specified in cnf file
    test -z $log_file && \
 		mkdir -p $PRODUCT_INSTANCE_DIR/dat/log/bash && \
-			log_file="$PRODUCT_INSTANCE_DIR/dat/log/bash/$run_unit_tester.`date "+%Y%m"`.log"
-   echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S"` [$run_unit_tester][@$host_name] [$$] $msg " >> $log_file
+			log_file="$PRODUCT_INSTANCE_DIR/dat/log/bash/$RUN_UNIT_TESTER.`date "+%Y%m"`.log"
+   echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S"` [$RUN_UNIT_TESTER][@$host_name] [$$] $msg " >> $log_file
 }
 #eof func doLog
 
@@ -300,7 +300,7 @@ doSetVars(){
 
 	doLog "INFO # --------------------------------------"
 	doLog "INFO # -----------------------"
-	doLog "INFO # ===		 START MAIN   === $run_unit_tester"
+	doLog "INFO # ===		 START MAIN   === $RUN_UNIT_TESTER"
 	doLog "INFO # -----------------------"
 	doLog "INFO # --------------------------------------"
 		
@@ -323,15 +323,15 @@ doSetVars(){
 #------------------------------------------------------------------------------
 doParseConfFile(){
 	# set a default cnfiguration file
-	cnf_file="$wrap_bash_dir/$run_unit_tester.cnf"
+	cnf_file="$wrap_bash_dir/$RUN_UNIT_TESTER.cnf"
 
 	# however if there is a host dependant cnf file override it
-	test -f "$wrap_bash_dir/$run_unit_tester.$host_name.cnf" \
-		&& cnf_file="$wrap_bash_dir/$run_unit_tester.$host_name.cnf"
+	test -f "$wrap_bash_dir/$RUN_UNIT_TESTER.$host_name.cnf" \
+		&& cnf_file="$wrap_bash_dir/$RUN_UNIT_TESTER.$host_name.cnf"
 	
 	# if we have perl apps they will share the same cnfiguration settings with this one
-	test -f "$PRODUCT_INSTANCE_DIR/$run_unit_tester.$host_name.cnf" \
-		&& cnf_file="$PRODUCT_INSTANCE_DIR/$run_unit_tester.$host_name.cnf"
+	test -f "$PRODUCT_INSTANCE_DIR/$RUN_UNIT_TESTER.$host_name.cnf" \
+		&& cnf_file="$PRODUCT_INSTANCE_DIR/$RUN_UNIT_TESTER.$host_name.cnf"
 
 	# yet finally override if passed as argument to this function
 	# if the the ini file is not passed define the default host independant ini file
