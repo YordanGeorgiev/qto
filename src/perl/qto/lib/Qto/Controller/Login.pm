@@ -99,7 +99,7 @@ sub doShowLoginForm {
    $self->session(expires => 1);
    $session->cookie_name('qto.' . $db);
    $session->default_expiration(86400);
-   my $instance_domain = $alConfig->{ 'web_host' } . $alConfig->{'env'}->{'app'}->{ 'mojo_hypnotoad_port' } . '.' . $db ;
+   my $instance_domain = $alConfig->{ 'web_host' } . $alConfig->{'env'}->{'app'}->{ 'port' } . '.' . $db ;
    $session  = $session->cookie_domain( $instance_domain);
 
    $self->doRenderPageTemplate(200,$msg,$msg_color,$db,$redirect_url) ;
