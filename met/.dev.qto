@@ -510,12 +510,9 @@ src/bash/qto/tests/dev/morph-dir.test.sh
 doc/txt/qto/funcs/morph-dir.func.txt
 doc/txt/qto/tests/morph-dir.test.txt
 #---
-src/bash/qto/helps/pckg/create-full-package.help.sh
 src/bash/qto/funcs/pckg/create-full-package.func.sh
 src/bash/qto/tests/pckg/create-full-package.test.sh
-doc/txt/qto/tests/pckg/create-full-package.test.txt
 doc/txt/qto/helps/pckg/create-full-package.help.txt
-doc/txt/qto/funcs/pckg/create-full-package.func.txt
 #---
 src/bash/qto/funcs/sys/tmux/tmux-common.sh
 src/bash/qto/funcs/sys/tmux/restore-tmux-session.func.sh

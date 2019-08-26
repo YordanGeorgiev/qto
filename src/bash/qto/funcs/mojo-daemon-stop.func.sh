@@ -7,10 +7,9 @@
 doMojoDaemonStop(){
    should_exit=${1:-}
    test -z "${should_exit:-}" && should_exit=1
-   test -z "${mojo_daemon_port:-}" && export mojo_daemon_port=3001
+   test -z "${mojo_daemon_port:-}" && export mojo_daemon_port=443
    found=0
 
-	doLog "DEBUG START doMojoDaemonStop"
    echo -e "\n"
 
       while read -r listening_on_port_pid; do 
@@ -29,7 +28,6 @@ doMojoDaemonStop(){
    fi
    
    echo -e "\n"
-   doLog "DEBUG STOP  doMojoDaemonStop"
 }
 
 # eof file: src/bash/qto/funcs/mojo-daemon-stop.func.sh

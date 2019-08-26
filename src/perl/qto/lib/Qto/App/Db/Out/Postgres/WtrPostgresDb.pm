@@ -343,21 +343,26 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $msg = q{} ; 
       my $dbh = q{} ; 
 
-      eval { 
-		$postgres_db_user 			= $ENV{ 'postgres_db_user' }     || $config->{'postgres_db_user'}    || 'ysg' ; 
-		$postgres_db_user_pw 		= $ENV{ 'postgres_db_user_pw' }  || $config->{'postgres_db_user_pw'} || 'no_pass_provided!!!' ; 
-         $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_db_host;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
-                    'RaiseError'          => 1
-                  , 'ShowErrorStatement'  => 1
-                  , 'PrintError'          => 1
-                  , 'AutoCommit'          => 1
-                  , 'pg_utf8_strings'     => 1
-         } ) 
-      };
+      $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_db_host;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
+                 'RaiseError'          => 0 # otherwise it dies !!!
+               , 'ShowErrorStatement'  => 1
+               , 'PrintError'          => 1
+               , 'AutoCommit'          => 1
+               , 'pg_utf8_strings'     => 1
+      }) ; 
+      
+      if ( defined $dbh  ) {
+         $ret = 0 ; $msg = "" ; 
+      } else {
+         $msg .= DBI->errstr ; 
+      }
+
+      return ( $ret , $msg , $dbh ) ; 
 
       if ($@) {
          $ret = 400 ; 
          $msg = 'cannot connect to the "' . $db . '" database: ' . DBI->errstr ; 
+         print "$msg !!! \n" ; 
          return ( $ret , $msg , undef ) ; 
       }
 

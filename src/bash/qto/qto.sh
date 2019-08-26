@@ -319,7 +319,7 @@ doSetVars(){
       cd .. ; product_dir=`pwd`;
    fi
 
-   cd .. ; product_base_dir=`pwd`;
+   cd .. ; product_base_dir=`pwd`; org_name=$(basename `pwd`)
 
    ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 

@@ -27,3 +27,4 @@ tags
 **/*.swo
 cnf/*.cnf
 **/hypnotoad.pid
+cnf/env/amz.env.json
