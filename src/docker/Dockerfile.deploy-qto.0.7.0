@@ -1,0 +1,129 @@
+# vim:set ft=dockerfile:
+FROM ubuntu:18.04
+
+ARG TZ=$TZ
+ARG ENV_TYPE=$ENV_TYPE
+ARG USER=$USER
+ARG UID=$UID
+ARG GROUP=$GROUP
+ARG GID=$GID
+ARG PRODUCT_INSTANCE_DIR=$PRODUCT_INSTANCE_DIR
+ARG postgres_db_name=$postgres_db_name
+ARG postgres_db_useradmin=$postgres_db_useradmin
+ARG root_pwd=$root_pwd
+ARG app_user_pwd=$app_user_pwd
+
+# obs !!! todo: parametrize qto-190616104728
+RUN echo "root:$root_pwd" | chpasswd
+RUN echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /root/.bashrc
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone 
+# install the most basic binaries
+RUN apt-get update && apt-get install -y wget curl sudo perl zip unzip gnupg2 gnupg1 git bash jq vim
+
+# start :: add the application user
+RUN set -x ; addgroup --gid "$GID" "$GROUP" && \
+    adduser \
+		 --gid $GID \
+		 --shell "/bin/bash" \
+		 --home "/home/$USER" \
+		 --uid $UID \
+		 "$USER" && exit 0 ; exit 1
+
+RUN echo "$USER"':'"$app_user_pwd" | chpasswd
+RUN echo "$USER ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+# stop :: add the application user
+
+
+# install support binaries 
+RUN apt-get clean && apt-get update && apt-get install -y nmap perl net-tools exuberant-ctags mutt curl wget libwww-curl-perl libdbd-pgsql libxml-atom-perl libxml-atom-perl tar gzip graphviz python-setuptools python-dev build-essential gpgsm nodejs lsof libssl1.0-dev procps node-gyp nodejs-dev npm awscli
+
+#
+# start ::: install postgres 
+# Add the PostgreSQL PGP key to verify their Debian packages.
+# It should be the same key as https://www.postgresql.org/media/keys/ACCC4CF8.asc
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+# add the PostgreSQL's repository
+RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main"' \
+   > /etc/apt/sources.list.d/pgdg.list
+
+# add the most basic binaries
+RUN apt-get clean && apt-get update && apt-get install -f -y postgresql-server-dev-11 postgresql-client-11 postgresql-contrib-11
+
+## ensure the postresql starts on boot 
+RUN sudo update-rc.d postgresql enable
+
+RUN mkdir -p /etc/postgresql/11/main/ && mkdir -p /var/lib/postgresql/11/main
+
+RUN echo "postgres:postgres" | chpasswd
+RUN echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /var/lib/postgresql/.bashrc
+
+
+## add the uuid generation capability enabling extensions
+RUN /etc/init.d/postgresql restart && \
+sudo -u postgres psql -c "CREATE USER usrqtoadmin WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS PASSWORD 'usrqtoadmin';" && \
+sudo -u postgres psql -c "grant all privileges on database postgres to usrqtoadmin ;" && \
+sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";' && \
+sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "pgcrypto";' && \
+sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "dblink";' 
+
+ENV psql_cnf_dir='/etc/postgresql/11/main'
+RUN cp -v $psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf.orig.bak && \
+   cp -v $PRODUCT_INSTANCE_DIR/cnf/postgres/$psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf && \
+   chown postgres:postres $psql_cnf_dir
+
+RUN sudo cp -v $psql_cnf_dir/postgresql.conf $psql_cnf_dir/postgresql.conf.orig && \
+   sudo cp -v $PRODUCT_INSTANCE_DIR/cnf/postgres/$psql_cnf_dir/postgresql.conf $psql_cnf_dir/postgresql.conf
+
+RUN chown -R postgres:postgres "/etc/postgresql" && \
+    chown -R postgres:postgres "/var/lib/postgresql" && \
+    chown -R postgres:postgres "/etc/postgresql/11/main/pg_hba.conf" && \
+    chown -R postgres:postgres "/etc/postgresql/11/main/postgresql.conf"
+
+# add VOLUMEs to allow backup of config, logs and databases
+# VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
+
+# :: stop install postgres 
+
+# :: start install perl modules
+RUN apt-get update && apt-get install -y cpanminus && apt-get install -y liblocal-lib-perl
+
+USER $USER
+# set the default command to run when starting the container
+#RUN perl -MCPAN -Mlocal::lib -e 'install Data::Printer' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Term::Prompt' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Email::Valid' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Excel::Writer::XLSX' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Spreadsheet::ParseExcel' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Spreadsheet::XLSX' && \
+#   perl -MCPAN -Mlocal::lib -e 'install DBD::Pg' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Tie::Hash::DBD' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Text::CSV_XS' && \
+#   perl -MCPAN -Mlocal::lib -e 'install File::Copy::Recursive' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Test::Trap' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Test::Most' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Tie::Hash::DBD' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Scalar::Util::Numeric' && \
+#   perl -MCPAN -Mlocal::lib -e 'install IPC::System::Simple' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Mojo::Pg' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Mojolicious::Plugin::BasicAuthPlus' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Mojolicious::Plugin::StaticCache' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Mojolicious::Plugin::RenderFile' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Mojolicious::Plugin::Authentication' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Mojo::JWT' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Authen::Passphrase::BlowfishCrypt' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Net::Google::DataAPI::Auth::OAuth2' && \
+#   perl -MCPAN -Mlocal::lib -e 'CPAN::Shell->force(qw( install Net::Google::DataAPI::Auth::OAuth2));' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Net::Google::Spreadsheets::V4' && \
+#   perl -MCPAN -Mlocal::lib -e 'install Net::Google::Spreadsheets;' && \
+#   perl -MCPAN -Mlocal::lib -e 'install DBIx::ProcedureCall' && \
+#   perl -MCPAN -Mlocal::lib -e 'install JSON::Parse' 
+
+# stop ::: install perl modules
+
+USER $USER
+WORKDIR $PRODUCT_INSTANCE_DIR
+
+# CMD ["bash","-c","while true; do sleep 1; done;"]
+CMD bash -c $PRODUCT_INSTANCE_DIR/src/bash/qto/install/docker/docker-entry-point.sh

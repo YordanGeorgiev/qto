@@ -27,7 +27,7 @@ echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /var/lib/postgresql/.b
 /etc/init.d/postgresql restart
 sudo -u postgres psql -c "CREATE USER usrqtoadmin WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS PASSWORD 'usrqtoadmin';"
 sudo -u postgres psql -c "grant all privileges on database postgres to usrqtoadmin ;"
-sudo -u postgres createdb -O postgres postres
+sudo -u postgres createdb -O postgres postgres
 sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";'
 sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "pgcrypto";'
 sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "dblink";' 

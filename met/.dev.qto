@@ -11,11 +11,10 @@ doc/cheats/qto-cheat-sheet.sh
 doc/cheats/qto-psql-cheat.sql
 src/bash/qto/test-qto.sh
 src/bash/qto/funcs/generate-md-docs.func.sh
-src/docker/Dockerfile.deploy-qto.0.6.9
-src/docker/Dockerfile.deploy-qto-db-host.0.6.9
-src/docker/Dockerfile.deploy-qto-app-host.0.6.9
-src/bash/qto/funcs/build-qto-docker-image.func.sh
-src/bash/qto/bootstrap-qto-docker.sh
+src/docker/Dockerfile.deploy-qto.0.7.0
+src/docker/Dockerfile.deploy-qto-db-host.0.7.0
+src/docker/Dockerfile.deploy-qto-app-host.0.7.0
+src/bash/qto/funcs/build-docker-image.func.sh
 # start HCreate
 src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
@@ -75,7 +74,7 @@ src/bash/qto/install/docker/install-perl-modules.sh
 src/bash/qto/install/docker/
 src/bash/qto/funcs/admin/restart-postgres.func.sh
 src/bash/qto/funcs/full-clean-docker.func.sh
-src/bash/qto/tests/build-qto-docker-image.test.sh
+src/bash/qto/tests/build-docker-image.test.sh
 src/sql/pgsql/scripts/admin/grant-permissions.sql
 src/bash/qto/funcs/admin/restart-postgres.func.sh
 cnf/postgres/etc/postgresql/11/main
@@ -229,9 +228,6 @@ src/perl/qto/t/lib/Qto/Controller/TestListAsOutputType.t
 src/perl/qto/t/lib/Qto/Controller/TestListHide.t
 src/perl/qto/t/lib/Qto/Controller/TestViewDocPage.t
 # --- 
-src/perl/qto/lib/Mojo/Chrome.pm
-src/perl/qto/lib/Test/Mojo/Role/Chrome.pm
-# ---
 src/perl/qto/lib/Qto/App/UI
 src/perl/qto/lib/Qto/App/UI/Controls
 src/perl/qto/lib/Qto/App/UI/Pages/1

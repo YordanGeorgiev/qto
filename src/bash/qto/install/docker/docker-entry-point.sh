@@ -1,33 +1,21 @@
-!/usr/bin/env bash
+#!/usr/bin/env bash
 
-   RUN_UNIT_bash_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
-   cd $RUN_UNIT_bash_dir
-   for i in {1..5} ; do cd .. ; done ; export PRODUCT_INSTANCE_DIR=`pwd`;
-   export RUN_UNIT=$(echo `basename "$PRODUCT_INSTANCE_DIR"`|cut -d'.' -f1)
-   export env_type=$(echo `basename "$PRODUCT_INSTANCE_DIR"`|cut -d'.' -f5)
+RUN_UNIT_bash_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
+cd $RUN_UNIT_bash_dir
+for i in {1..5} ; do cd .. ; done ; export PRODUCT_INSTANCE_DIR=`pwd`;
+source $PRODUCT_INSTANCE_DIR/.env
 
-   sudo sh /etc/init.d/postgresql start &
+# comment out the sudo right from the app user
+perl -pi -e 's/^(.*)'"$USER"'(.*$\n)/\#$1'"$USER"'$2/gm' /etc/sudoers
 
-   test -f "$PRODUCT_INSTANCE_DIR/cnf/$RUN_UNIT.$env_type.$host_host_name.cnf" && \
-      cp -v "$PRODUCT_INSTANCE_DIR/cnf/$RUN_UNIT.$env_type.$host_host_name.cnf" \
-            "$PRODUCT_INSTANCE_DIR/cnf/$RUN_UNIT.$env_type."$(hostname -s)'.cnf'
-      
-   test -z ${qto_project:-} && \
-      source "$PRODUCT_INSTANCE_DIR/lib/bash/funcs/parse-cnf-env-vars.sh" && \
-      doParseCnfEnvVars "$PRODUCT_INSTANCE_DIR/cnf/$RUN_UNIT.$env_type."$(hostname -s)'.cnf'
+sudo sh /etc/init.d/postgresql start 
+bash $PRODUCT_INSTANCE_DIR/src/bash/qto/qto.sh -a run-pgsql-scripts
 
-	sleep "$sleep_interval"
-   export MOJO_MODE="$env_type"
-   test -z "$MOJO_MODE" && export MOJO_MODE='dev'
-   test -z "${mojo_morbo_port:-}" && export mojo_morbo_port='3001'
 
-   export MOJO_LISTEN='http://*:'"$mojo_morbo_port"
-   test -z "${mojo_morbo_port:-}" && export MOJO_LISTEN='http://*:3001'
+# todo:ysg 
+# run the DDL scripts 
+# laad the data 
 
-   echo INFO running: morbo -w $PRODUCT_INSTANCE_DIR/src/perl/script/qto
-   echo --listen $MOJO_LISTEN $PRODUCT_INSTANCE_DIR/src/perl/qto/script/qto
-
-   morbo -w $PRODUCT_INSTANCE_DIR/src/perl/qto --listen $MOJO_LISTEN $PRODUCT_INSTANCE_DIR/src/perl/qto/script/qto &
-   while true; do sleep 1000; done;
-
-# eof file:src/bash/scripts/docker-entry-point.sh 
+bash $PRODUCT_INSTANCE_DIR/src/bash/qto/qto.sh -a mojo-morbo-start
+   
+while true; do sleep 1000; done;

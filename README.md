@@ -175,7 +175,7 @@ In the qto realm each deployment INSTANCE is "self-aware" of the type of environ
 This step will take 80% of the time. It is non-interactive, that is the whole image building should succeed at once. 
 
     # build the docker image
-    clear ; bash src/bash/qto/qto.sh -a build-qto-docker-image
+    clear ; bash src/bash/qto/qto.sh -a build-docker-image
 
 ### 6.4. Run the container
 Run a container of the already build image issue the following command:
