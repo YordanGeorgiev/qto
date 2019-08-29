@@ -120,7 +120,7 @@ doInit(){
 
 #------------------------------------------------------------------------------
 # usage example:
-# doExportJsonSectionVars cnf/env/dev.env.json '.env.virtual.docker.spark_base'
+# doExportJsonSectionVars cnf/env/dev.env.json '.env.app'
 #------------------------------------------------------------------------------
 doExportJsonSectionVars(){
 

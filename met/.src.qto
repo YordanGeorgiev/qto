@@ -14,7 +14,7 @@ src/bash/qto/funcs/generate-md-docs.func.sh
 src/docker/Dockerfile.deploy-qto.0.6.9
 src/docker/Dockerfile.deploy-qto-db-host.0.6.9
 src/docker/Dockerfile.deploy-qto-app-host.0.6.9
-src/bash/qto/funcs/build-qto-docker-image.func.sh
+src/bash/qto/funcs/build-docker-image.func.sh
 src/bash/qto/bootstrap-qto-docker.sh
 # start HCreate
 src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
@@ -75,7 +75,7 @@ src/bash/qto/install/docker/install-perl-modules.sh
 src/bash/qto/install/docker/
 src/bash/qto/funcs/admin/restart-postgres.func.sh
 src/bash/qto/funcs/full-clean-docker.func.sh
-src/bash/qto/tests/build-qto-docker-image.test.sh
+src/bash/qto/tests/build-docker-image.test.sh
 src/sql/pgsql/scripts/admin/grant-permissions.sql
 src/bash/qto/funcs/admin/restart-postgres.func.sh
 cnf/postgres/etc/postgresql/11/main

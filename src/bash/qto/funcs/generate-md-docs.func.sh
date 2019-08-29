@@ -15,6 +15,7 @@ doGenerateMdDocs(){
    # <<web-host>>:<<web-port>>/<<db>>/select/export_files?as=grid&od=id
    basic_url="$ht_protocol://${web_host:-}:${port:-}/${postgres_db_name:-}"
    furl="$basic_url"'/select/export_files?as=grid&od=id&pg-size=20'
+   echo "running: curl --cookie ~/.qto/cookies.txt --insecure  -s $furl \| jq -r '.dat[]|.url'"
    curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]|.url'
 	ret=$?
 	test $ret != "0" && doExit $ret "failed to get data from the $furl"
