@@ -689,7 +689,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel , $self ) ; 
       my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-      $objLogger->doLogDebugMsg ( "setart upsert for : db: $db table $table" );
+      $objLogger->doLogDebugMsg ( "start upsert for : db: $db table $table" );
 
       ( $ret , $msg , $hs_headers ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
