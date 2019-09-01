@@ -38,9 +38,9 @@
   * [5.1. DIRS NAMING CONVENTIONS](#51-dirs-naming-conventions)
   * [5.2. ROOT DIRS NAMING CONVENTIONS](#52-root-dirs-naming-conventions)
 * [6. SOURCE CODE MANAGEMENT](#6-source-code-management)
-  * [6.1. AIM FOR TRACEABILITY BETWEEN USER-STORIES, REQUIREMENTS, FEATURES AND FUNCTIONALITIES](#61-aim-for-traceability-between-user-stories,-requirements,-features-and-functionalities)
-  * [6.2. ZERO TOLERANCE FOR BUGS](#62-zero-tolerance-for-bugs)
-  * [6.3. FEATURE DEVELOPMENT IN A FEATURE BRANCH](#63-feature-development-in-a-feature-branch)
+  * [6.1. CONFIGURE AND USE GIT ALWAYS BY USING SSH IDENTITIES](#61-configure-and-use-git-always-by-using-ssh-identities)
+  * [6.2. AIM FOR TRACEABILITY BETWEEN USER-STORIES, REQUIREMENTS, FEATURES AND FUNCTIONALITIES](#62-aim-for-traceability-between-user-stories,-requirements,-features-and-functionalities)
+  * [6.3. ZERO TOLERANCE FOR BUGS](#63-zero-tolerance-for-bugs)
   * [6.4. ALWAYS START WITH A TEST UNIT CREATION](#64-always-start-with-a-test-unit-creation)
   * [6.5. BRANCH FOR DEVELOPMENT - DEV](#65-branch-for-development--dev)
   * [6.6. TESTING AND INTEGRATIONS IN THE TST BRANCH](#66-testing-and-integrations-in-the-tst-branch)
@@ -360,20 +360,50 @@ The qto is a derivative of the wrapp tool - this means that development and depl
 
     
 
-### 6.1. Aim for traceability between user-stories, requirements, features and functionalities
+### 6.1. Configure and use git ALWAYS by using ssh identities
+You probably have access to different corporate and public git repositories. Use your personal ssh identity file you use in GitHub to push to the qto project. The following code snippet demonstrates how you could preserve your existing git configurations ( even on corporate / intra boxes ) , but use ALWAYS the personal identity to push to the qto...
+
+    # create the company identity file
+    ssh-keygen -t rsa -b 4096 -C "first.last@corp.com"
+    # save private key to ~/.ssh/id_rsa.corp, 
+    cat ~/.ssh/id_rsa.corp.pub # copy paste this string into your corp web ui security ssh keys
+    
+    # create your private identify file
+    ssh-keygen -t rsa -b 4096 -C "me@gmail.com"
+    # save private key to ~/.ssh/id_rsa.me, note the public key ~/.ssh/id_rsa.me.pub
+    cat ~/.ssh/id_rsa.me.pub # copy paste this one into your githubs, private keys
+    
+    # clone company internal repo as follows
+    GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.corp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
+    git clone git@git.in.corp.com:corp/project.git
+    
+    export git_msg="my commit msg with my corporate identity, explicitly provide author"
+    git add --all ; git commit -m "$git_msg" --author "MeFirst MeLast <first.last@corp.com>"
+    GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.corp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
+    git push 
+    # and verify 
+    clear ; git log --pretty --format='%h %ae %<(15)%an ::: %s
+    
+    # clone public repo as follows
+    GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.corp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
+    git clone git@github.com:acoolprojectowner/coolproject.git
+    
+    export git_msg="my commit msg with my personal identity, again author "
+    git add --all ; git commit -m "$git_msg" --author "MeFirst MeLast <first.last@gmail.com>"
+    GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.me -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
+    git push ; 
+    # and verify 
+    clear ; git log --pretty --format='%h %ae %<(15)%an ::: %s'
+
+### 6.2. Aim for traceability between user-stories, requirements, features and functionalities
 Once the issues are defined and you start working on your own branch which is named by the issue-id aim to map one on one each test in your code with each listed requirement in confluence and / or JIRA. 
 
     
 
-### 6.2. Zero tolerance for bugs
+### 6.3. Zero tolerance for bugs
 As soon as bugs are identified and reproduceable, register them as issues and resolve them with prior 1.
 After resolution, think about the root cause of the bug, the mear fact that the bug occurred tells that something in the way of working has to be improved , what ?!
 Bugs are like broken windows the more you have them the faster the value of your building will be down to zero. 
-
-    
-
-### 6.3. Feature development in a feature branch
-You start the development in your own feature branch named : dev--&lt;&lt;issue-id&gt;&gt;-&lt;&lt;short-and-descriptive-name&gt;&gt;.
 
     
 
