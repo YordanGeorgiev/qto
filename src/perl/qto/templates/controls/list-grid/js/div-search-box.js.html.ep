@@ -15,7 +15,7 @@ Vue.component('div_search_box', {
   fetchSSDataForDbs: function (url_params) { // only data logic here !!!
 		if ( typeof url_params === "undefined" ) { url_params = { as:"grid" } }
 
-      return axios.get(("/prd_qto/select-databases") , { params: url_params } )
+      return axios.get(("/<%== $db =%>/select-databases") , { params: url_params } )
       .then(response => {
          return response.data.dat.map(obj => obj.datname);
       })

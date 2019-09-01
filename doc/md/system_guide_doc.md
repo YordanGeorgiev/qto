@@ -86,7 +86,7 @@ The multi-instance setup refers to the capability of any installed and setup ins
 Figure: 1
 qto multi-instance setup
 ![Figure: 1
-qto multi-instance setup](https://github.com/YordanGeorgiev/qto/blob/v0.6.6/doc/img/system_guide/multi-env-setup.png?raw=true)
+qto multi-instance setup](https://github.com/YordanGeorgiev/qto/blob/master/doc/img/system_guide/multi-env-setup.png?raw=true)
 
     
 

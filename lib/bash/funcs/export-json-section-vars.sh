@@ -6,10 +6,12 @@ doExportJsonSectionVars(){
 
    json_file="$1"
    shift 1;
-   test -f "$json_file" || exit 1 "the json_file: $json_file does not exist !!! Nothing to do"
+   test -f "$json_file" || echo "the json_file: $json_file does not exist !!! Nothing to do"
+   test -f "$json_file" || exit 1 
 
    section="$1"
-   test -z "$section" && exit 1 "the section in doExportJsonSectionVars is empty !!! nothing to do !!!"
+   test -z "$section" && echo "the section in doExportJsonSectionVars is empty !!! nothing to do !!!"
+   test -z "$section" && exit 1 
    shift 1;
 
 	printf "\033[2J";printf "\033[0;0H"
