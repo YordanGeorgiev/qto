@@ -37,7 +37,7 @@ if(!String.linkifyItems) {
          var strPattern = '(('+itm + ')(-)' + '(\\d{1,18}))' // qto-190611021615
          var rgxPattern = new RegExp(strPattern,'igm')
 			var uri = window.location.href.split('/').slice(0, 3).join('/')
-         me = me.replace(rgxPattern, '<a href="' + uri+'/qto/list/$2?with=id-eq-$4">$&</a>')
+         me = me.replace(rgxPattern, '<a href="' + uri+'/<%= $db =%>/list/$2?with=id-eq-$4">$&</a>')
       })
       return me
    };

@@ -135,6 +135,7 @@ table#grid tbody tr td:nth-child(2){
 .cls_tbltooltip .cls_tbltooltiptext {
   visibility: hidden;
   width: 70%;
+  min-height: 45px;
   height: auto;
   background-color: white;
   color: dark-grey;
