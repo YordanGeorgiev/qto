@@ -160,6 +160,9 @@ button.gridOpenBtn {
    background: #ABF ;
    color: white;
    padding: 5px;
+   text-align: right;
+   float:right;
+   width: 35px;
    border: 2px solid #ABF;
    border-left-color: #ABF;
    border-left-style: none;
