@@ -1,45 +1,22 @@
 #!/bin/bash
-# file: src/bash/qto/bootstrap-qto.sh
 
-set -eu -o pipefail # fail on error , debug all lines
+set -eu -o pipefail 
 
-run_unit='qto'
-run_unit_type='dev'
-run_unit_owner=$USER || 'ysg'
+RUN_UNIT='qto'
+run_unit_owner=$USER || exit 1
 unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
 product_base_dir=$(cd $unit_run_dir/../../../..; echo `pwd`)
-product_dump_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
-product_dir="$product_base_dir/csitea/" 
+product_dir="$product_base_dir/$RUN_UNIT" 
 product_tmp_install_dir="$product_base_dir"/""'-tmp-install'
-cd "$product_dump_dir"
-run_unit_ver=$(git tag|sort -nr|head -n 1) || run_unit_ver='0.1.9'
-PRODUCT_INSTANCE_DIR="$product_dir"'/'""'.'"_ver"'.'"_type"'.'"_owner"
+source "$product_dir/.env"
+PRODUCT_INSTANCE_DIR="$product_dir/$RUN_UNIT.$VERSION.$ENV_TYPE.$run_unit_owner"
 
-mkdir -p "$product_dir" ; cd $_
-# each product instance has name, version, environment type and a single person as the owner
-mv -v $product_dump_dir "$PRODUCT_INSTANCE_DIR"; cd $PRODUCT_INSTANCE_DIR
-# START -- search and replace recursively 
+test -d "$PRODUCT_INSTANCE_DIR" && \
+   mv -v "$PRODUCT_INSTANCE_DIR" "$PRODUCT_INSTANCE_DIR"."$(date '+%Y%m%d_%H%M%S')"
 
-for env in `echo dev tst prd `; do
-   cp -v "$PRODUCT_INSTANCE_DIR/cnf/tpl/qto.$env.p-host-name.cnf" \
-         "$PRODUCT_INSTANCE_DIR/cnf/qto.$env."$(hostname -s)".cnf"
-   cp -v "$PRODUCT_INSTANCE_DIR/cnf/tpl/qto.$env.v-host-name.cnf" \
-         "$PRODUCT_INSTANCE_DIR/cnf/qto.$env."$(hostname -s)".cnf"
-done
+mv -v "$product_dir" "$product_dir"'_'
+mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$PRODUCT_INSTANCE_DIR"; 
 
-export dir=.
-export to_srch="p-host-name"
-export to_repl="$(hostname -s)"
-
-#-- search and replace in file and dir paths excludding the .git dir
-find "$dir/"  -not -path "./.git/*" -type d |\
-perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;`mkdir -p $n` ;'
-find "$dir/"  -not -path "./.git/*" -type f |\
-perl -nle '$o=$_;s#'"$to_srch"'#'"$to_repl"'#g;$n=$_;rename($o,$n) unless -e $n ;'
-
-#-- search and replace in file contents excludging the .git dir
-find "$dir/" -not -path "./.git/*" -type f -exec perl -pi -e "s#$to_srch#$to_repl#g" {} \;
-find "$dir/" -not -path "./.git/*" -type f -name '*.bak' | xargs rm -f
 
 echo "GO TO YOUR PRODUCT_INSTANCE_DIR by"
 echo "cd $PRODUCT_INSTANCE_DIR"
