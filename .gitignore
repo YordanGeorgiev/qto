@@ -1,3 +1,8 @@
+# do not remove those !!!
+cnf/env/dev.env.json.bak
+cnf/env/tst.env.json.bak
+cnf/env/qas.env.json.bak
+cnf/env/prd.env.json.bak
 **/*.zip
 **/*.log
 **/*.tdy
@@ -27,4 +32,3 @@ tags
 **/*.swo
 cnf/*.cnf
 **/hypnotoad.pid
-cnf/env/amz.env.json

@@ -3,7 +3,10 @@ src/bash/qto/qto.sh
 cnf/env
 cnf/env/dev.env.json
 cnf/env/tst.env.json
+cnf/env/qas.env.json
 cnf/env/prd.env.json
+src/bash/qto/funcs/scramble-confs.func.sh
+src/bash/qto/funcs/unscramble-confs.func.sh
 .vimrc
 .env
 doc/cheats/

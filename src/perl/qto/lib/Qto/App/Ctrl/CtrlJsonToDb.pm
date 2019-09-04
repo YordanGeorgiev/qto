@@ -73,9 +73,9 @@ package Qto::App::Ctrl::CtrlJsonToDb ;
       my $in_dir = $objModel->get('io.in-dir');
       $objRdrFiles= 'Qto::App::IO::In::RdrFiles'->new();
       
-      # if the xls_file is not defined take the latest one from the mix data dir
       unless ( defined $in_dir  ) {
-         my $mix_data_dir    = $ENV{'mix_data_dir' } ;  ; 
+         my $ProjInstanceDir = $ENV{'PROJ_INSTANCE_DIR' } || $config->{'env'}->{'run'}->{'ProductInstanceDir'} ; 
+         my $mix_data_dir    = "$ProjInstanceDir/dat/mix" ;  ; 
          my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{ 'TimeFormat' } );
 	      my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer-> GetTimeUnits(); 
          # example: /vagrant/opt/nokia/musa/dat/mix/issues/2018/2018-06/2018-06-11
@@ -109,29 +109,19 @@ package Qto::App::Ctrl::CtrlJsonToDb ;
 =cut
 
 
-=head2 new
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
-=cut 
 	sub new {
 
-		my $class = shift;    # Class name is in the first parameter
-		$config = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		my $class = shift;    
+		$config = ${ shift @_ } || croak "no config !!!" ; 
 		$objModel   = ${ shift @_ } || croak 'objModel not passed !!!' ; 
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize( ) ; 
+      $self = $self->doInit( ) ; 
 		return $self;
 	}  
-	#eof const
 
 
-   #
-	# --------------------------------------------------------
-	# intializes this object 
-	# --------------------------------------------------------
-   sub doInitialize {
+   sub doInit {
       my $self          = shift ; 
 
       %$self = (
@@ -143,7 +133,6 @@ package Qto::App::Ctrl::CtrlJsonToDb ;
 
       return $self ; 
 	}	
-	#eof sub doInitialize
 
 
 
