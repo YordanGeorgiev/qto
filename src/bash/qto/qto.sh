@@ -34,16 +34,16 @@ main(){
 # the "reflection" func - identify the the funcs per file
 #------------------------------------------------------------------------------
 get_function_list () {
-    env -i PATH=/bin:/usr/bin:/usr/local/bin bash --noprofile --norc -c '
-    source "'"$1"'"
-    typeset -f |
-    grep '\''^[^{} ].* () $'\'' |
-    awk "{print \$1}" |
-    while read -r function_name; do
-        type "$function_name" | head -n 1 | grep -q "is a function$" || continue
-        echo "$function_name"
-    done
-'
+   env -i PATH=/bin:/usr/bin:/usr/local/bin bash --noprofile --norc -c '
+      source "'"$1"'"
+      typeset -f |
+      grep '\''^[^{} ].* () $'\'' |
+      awk "{print \$1}" |
+      while read -r function_name; do
+         type "$function_name" | head -n 1 | grep -q "is a function$" || continue
+            echo "$function_name"
+            done
+            '
 }
 
 
@@ -53,24 +53,24 @@ get_function_list () {
 #------------------------------------------------------------------------------
 doRunActions(){
    actions=$1 ; shift 1
-	test -z ${PROJ_INSTANCE_DIR:-} && PROJ_INSTANCE_DIR=$PRODUCT_INSTANCE_DIR
-	daily_backup_dir="$PROJ_INSTANCE_DIR/dat/mix/"$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
-   cd $PRODUCT_INSTANCE_DIR
-   actions="$(echo -e "${actions}" | sed -e 's/^[[:space:]]*//')" #or how-to trim leading space
-   actions_to_run=''
-   while read -d ' ' arg_action ; do
-      # debug  arg_action:$arg_action
-      while read -r func_file ; do
-         # debug func func_file:$func_file
-         while read -r function_name ; do
-            # debug  function_name:$function_name
-            action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
-            # debug  action_name: $action_name
-            test "$action_name" != "$arg_action" && continue
-            test "$action_name" == "$arg_action" && actions_to_run=$(echo -e "$actions_to_run\n$function_name")
-            # debug actions_to_run: $actions_to_run
-         done< <(get_function_list "$func_file")
-      done < <(find "src/bash/$RUN_UNIT/funcs" -type f -name '*.sh'|sort)
+      test -z ${PROJ_INSTANCE_DIR:-} && PROJ_INSTANCE_DIR=$PRODUCT_INSTANCE_DIR
+      daily_backup_dir="$PROJ_INSTANCE_DIR/dat/mix/"$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
+      cd $PRODUCT_INSTANCE_DIR
+      actions="$(echo -e "${actions}" | sed -e 's/^[[:space:]]*//')" #or how-to trim leading space
+      actions_to_run=''
+      while read -d ' ' arg_action ; do
+# debug  arg_action:$arg_action
+         while read -r func_file ; do
+# debug func func_file:$func_file
+            while read -r function_name ; do
+# debug  function_name:$function_name
+               action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
+# debug  action_name: $action_name
+                  test "$action_name" != "$arg_action" && continue
+                  test "$action_name" == "$arg_action" && actions_to_run=$(echo -e "$actions_to_run\n$function_name")
+# debug actions_to_run: $actions_to_run
+                  done< <(get_function_list "$func_file")
+                  done < <(find "src/bash/$RUN_UNIT/funcs" -type f -name '*.sh'|sort)
 
       [[ $arg_action == to-ver=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeVersion $arg_action")
       [[ $arg_action == to-env=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeEnvType $arg_action")

@@ -17,6 +17,8 @@ test -d "$PRODUCT_INSTANCE_DIR" && \
 mv -v "$product_dir" "$product_dir"'_'
 mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$PRODUCT_INSTANCE_DIR"; 
 
+cp -v $PRODUCT_INSTANCE_DIR/cnf/git/hooks/* $PRODUCT_INSTANCE_DIR/.git/hooks/
+chmod 770 $PRODUCT_INSTANCE_DIR/.git/hooks/*
 
 echo "GO TO YOUR PRODUCT_INSTANCE_DIR by"
 echo "cd $PRODUCT_INSTANCE_DIR"
