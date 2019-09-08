@@ -1,17 +1,26 @@
 -- \c dev_qto
+-- SELECT ''''||:postgres_db_user_pw||'''';
+
+\set pw :'postgres_db_user_pw'
+\echo :postgres_db_user_pw postgres_db_user_pw;
+\echo :pw pw;
+
+ALTER ROLE usrqtoapp WITH PASSWORD :'postgres_db_user_pw' LOGIN ;
+-- CREATE ROLE usrqtoapp WITH PASSWORD :'postgres_db_user_pw' LOGIN ;
+/*
 DO
 $do$
 BEGIN
    IF NOT EXISTS (
-      SELECT                       -- SELECT list can stay empty for this
+      SELECT 
       FROM   pg_catalog.pg_roles
       WHERE  rolname = 'usrqtoapp') THEN
-
-		CREATE ROLE usrqtoapp WITH PASSWORD 'usrqtoapp' LOGIN ;
+		   CREATE ROLE usrqtoapp WITH PASSWORD :'postgres_db_user_pw' LOGIN ;
    END IF;
 END
 $do$;
-ALTER ROLE usrqtoapp WITH PASSWORD 'usrqtoapp' LOGIN ;
+ALTER ROLE usrqtoapp WITH PASSWORD  LOGIN ;
+*/
 
 -- to enable this for newly created relations too, then set the default permissions:
 ALTER DEFAULT PRIVILEGES IN SCHEMA public 
@@ -21,7 +30,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 
 GRANT SELECT ON ALL TABLES IN SCHEMA PUBLIC TO usrqtoapp;
 GRANT SELECT ON ALL TABLES IN SCHEMA pg_catalog TO usrqtoapp;
-GRANT ALL PRIVILEGES ON DATABASE :postgres_db_name TO usrqtoapp ; 
+GRANT ALL PRIVILEGES ON DATABASE :"postgres_db_name" TO usrqtoapp ; 
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO usrqtoapp ;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO usrqtoapp ; 
 GRANT SELECT, INSERT, UPDATE, DELETE , REFERENCES ON ALL TABLES IN SCHEMA public TO usrqtoapp ;

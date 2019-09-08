@@ -16,8 +16,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $exp_err_msg   = '' ; 
    my $t             = Test::Mojo->new('Qto');
    my $config     = $t->app->get('AppConfig') ; 
-   my $db            = $config->{ 'postgres_db_name' } || 'dev_qto' ; 
-   my $env           = $config->{ 'EnvType' } || 'dev' ;  # dev , tst , prd
+   my $db            = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
+   my $env           = $config->{'env'}->{ 'ENV_TYPE' } ;
    $url              = '/' . $db . '/update/test_update_table' ; 
 
 #insert into test_update_table ( id,seq,name,description) values (1,1,'name-1','the name should be updated to updated-name-1'); 
@@ -55,12 +55,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    ok ( $res->{'ret'} eq 200 , $tm ) ; 
    # debug p $res ; 
 
-   
-   $exp_err_msg = 'update failed :: cannot connect to the "' . $env . '_non_existent_db" database: FATAL:  database "' . $env . '_non_existent_db" does not exist' ; 
-   $exp_err_msg = 'update failed :: FATAL:  database "dev_non_existent_db" does not exist' ;
+   $exp_err_msg = 'update failed :: FATAL:  database "' . $env . '_non_existent_db" does not exist' ;
    $url = '/non_existent_db/update/test_update_table' ; 
-
-
    $tm = "the correct expected error message on non_existent_db is provided" ; 
    ok ($t->post_ok($url => json => {"attribute"=>"name", "id" =>"1", "cnt"=>"name-1-updated"})
       ->json_is({"ret" => 400 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . $url , "msg" => "$exp_err_msg"}), $tm );
