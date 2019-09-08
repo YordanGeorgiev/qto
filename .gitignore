@@ -1,8 +1,9 @@
-# do not remove those !!!
+# start :: do not remove those !!!
 cnf/env/dev.env.json.bak
 cnf/env/tst.env.json.bak
 cnf/env/qas.env.json.bak
 cnf/env/prd.env.json.bak
+# stop  :: do not remove those !!!
 **/*.zip
 **/*.log
 **/*.tdy

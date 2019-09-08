@@ -14,7 +14,7 @@ doChangeEnvType(){
 
 	test "$tgt_env" == "$env_type" && return
 	# remove everything from the tgt product version dir - no extra files allowed !!!
-	test -d $tgt_PRODUCT_INSTANCE_DIR && \
+	mkdir -p $tgt_PRODUCT_INSTANCE_DIR && test -d $tgt_PRODUCT_INSTANCE_DIR && \
       mv -v $tgt_PRODUCT_INSTANCE_DIR $tgt_PRODUCT_INSTANCE_DIR.$(date "+%Y%m%d_%H%M%S")
 	test $? -eq 0  || doExit 1 "cannot write to $tgt_PRODUCT_INSTANCE_DIR !"
 	
