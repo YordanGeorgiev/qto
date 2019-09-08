@@ -73,8 +73,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    ok ( $res->{'ret'} eq 200 , $tm ) ; 
 
    $tm = 'present the correct msg when non_existent_db is provided' ; 
-   $exp_err_msg = 'FATAL:  database "dev_non_existent_db" does not exist while deleting the "name" attribute value for the following id: 1' ;
-   $exp_err_msg = 'FATAL:  database "dev_non_existent_db" does not exist' ; 
+   $exp_err_msg = 'FATAL:  database "' . $env . '_non_existent_db" does not exist' ; 
    $url = '/non_existent_db/delete/test_delete_table' ; 
    ok ( $t->post_ok($url => json => {"attribute"=>"name", "id" =>"1", "cnt"=>"name-1-deleted"})
       ->json_is({"ret" => 400 , "req" => 'POST http://' . $t->tx->local_address . ':' . $t->tx->remote_port . '/non_existent_db/delete/test_delete_table' , "msg" => "$exp_err_msg"}),$tm);

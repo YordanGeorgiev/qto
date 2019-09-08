@@ -391,7 +391,8 @@ doc/txt/qto/helps/txt-to-db.help.txt
 src/sql/pgsql
 src/sql/pgsql/qto
 src/sql/pgsql/qto/00.create-db.pgsql
-src/sql/pgsql/qto/01.create-qto-app-user.sql
+src/bash/qto/funcs/run-pgsql-scripts.func.sh
+src/sql/pgsql/qto/01.create-qto-app-user.pgsql
 src/sql/pgsql/qto/funcs
 src/sql/pgsql/qto/funcs/01.create-func-fns_update_time.sql
 src/sql/pgsql/qto/funcs/02.create-func-f_concat_ws.sql
@@ -643,7 +644,6 @@ src/bash/qto/helps/remove-package-files.help.sh
 doc/txt/qto/tests/remove-package-files.test.txt
 doc/txt/qto/helps/remove-package-files.help.txt
 doc/txt/qto/funcs/remove-package-files.func.txt
-src/bash/qto/funcs/run-pgsql-scripts.func.sh
 src/bash/qto/tests/run-pgsql-scripts.test.sh
 src/bash/qto/helps/run-pgsql-scripts.help.sh
 doc/txt/qto/tests/run-pgsql-scripts.test.txt
@@ -808,4 +808,6 @@ src/perl/qto/lib/auto/Qto/Controller/WSSelect/autosplit.ix
 dat/mix
 src/bash/qto/scripts/todo-copy-paste.sh
 src/bash/qto/funcs/backup-postgres-db-inserts.func.sh
+cnf/git/hooks/pre-commit
+cnf/git/hooks/pre-push
 src/sql/pgsql/scripts/bash/copy-tables.sh

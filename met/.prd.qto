@@ -808,4 +808,6 @@ src/perl/qto/lib/auto/Qto/Controller/WSSelect/autosplit.ix
 dat/mix
 src/bash/qto/scripts/todo-copy-paste.sh
 src/bash/qto/funcs/backup-postgres-db-inserts.func.sh
+cnf/git/hooks/pre-commit
+cnf/git/hooks/pre-push
 src/sql/pgsql/scripts/bash/copy-tables.sh
