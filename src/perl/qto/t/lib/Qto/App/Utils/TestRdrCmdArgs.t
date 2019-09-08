@@ -1,31 +1,25 @@
 use strict ; use warnings ; 
 
-use FindBin;
-BEGIN { unshift @INC, "$FindBin::Bin/../../../../../lib" }
-use Test::More ; 
-
+use FindBin; BEGIN { unshift @INC, "$FindBin::Bin/../../../../../lib" }
 use Getopt::Long;
-use Qto::App::Utils::Initiator ; 
-use Qto::App::Utils::Logger ; 
+use Test::More ; 
 use Data::Printer ; 
-use Qto::App::Utils::Configurator ; 
+use Test::Mojo ; 
+use JSON::Parse 'json_file_to_perl';
+
+use Qto::App::Utils::Initiator ; 
 use Qto::App::IO::In::RdrCmdArgs ; 
 
 use Carp ; 
-my $m = 'the qto calling shell needs always a set of pre-defined env vars,
-thus you need to define your issue tracker project by :
-doParseCnfEnvVars <<path-to-your-qto-projects-cnf-files>>/<<qto-cnf-file>>
-for example:
-doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/qto/ysg-issues.dev.host-name.cnf'  ; 
-croak $m unless ( defined ( $ENV{ "qto_project" } )) ; 
-
+my $m                      = 'the tst msg' ; 
 my $msg                    = q{} ; 
-my $objInitiator 				= 'Qto::App::Utils::Initiator'->new();	
-my $config              = $objInitiator->get('AppConfig');
-my $ConfFile               = $objInitiator->{'ConfFile'} ; 
-my $objConfigurator        = 'Qto::App::Utils::Configurator'->new($ConfFile , \$config);
-$config                 = $objConfigurator->getConfHolder()  ;
-my $objLogger					= 'Qto::App::Utils::Logger'->new(\$config);
+my $objInitiator 		      = 'Qto::App::Utils::Initiator'->new();	
+my $config                 = $objInitiator->get('AppConfig');
+$config                    = json_file_to_perl ($objInitiator->doResolveConfFile());
+$config->{'env'}->{'run'}->{'ProductInstanceDir'} = $objInitiator->doResolveProductInstanceDir(-1);
+$config->{'env'}->{'run'}->{'ProductName'} = $objInitiator->doResolveProductName();
+$config->{'env'}->{'run'}->{'VERSION'} = $objInitiator->doResolveVersion();
+$config->{'env'}->{'run'}->{'ENV_TYPE'} = $objInitiator->doResolveEnvType();
 my $objModel               = 'Qto::App::Mdl::Model'->new ( \$config ) ; 
 my $objRdrCmdArgs 			= 'Qto::App::IO::In::RdrCmdArgs'->new(\$config , \$objModel ) ; 
 
@@ -41,7 +35,7 @@ $objRdrCmdArgs->doRead() ;
 $msg = 'test-02 - ensure the actions are passed to the model' ; 
 ok ( $objModel->get('ctrl.actions') eq 'run' , $msg ) ; 
 
-my $ProductInstanceDir = $config->{'ProductInstanceDir' } ; 
+my $ProductInstanceDir = $config->{'env'}->{'run'}->{'ProductInstanceDir' } ; 
 my $cmd = "$ProductInstanceDir/src/perl/qto/script/qto.pl" ; 
 
 $ARGV[0] = '' ; 

@@ -45,6 +45,7 @@ src/perl/qto/lib/Qto/Controller/Home.pm
 src/perl/qto/public/poc/web-socket/wsclient.js
 src/perl/qto/lib/Qto.pm
 src/perl/qto/lib/Qto/Controller/WsSelect.pm
+src/perl/qto/t/lib/Qto/Controller/TestWSSelect.t.wip
 src/perl/qto/public/poc/web-socket/web-socket.html
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
@@ -213,7 +214,7 @@ src/perl/qto/lib/Qto/Controller/Select.pm
 src/perl/qto/lib/Qto/Controller/HSelect.pm
 src/perl/qto/lib/Qto/Controller/HLSelect.pm
 src/perl/qto/lib/Qto/Controller/Search.pm
-src/perl/qto/t/lib/Qto/Controller/TestCreate.t
+src/perl/qto/t/lib/Qto/Controller/TestCreate.t.todo
 src/perl/qto/t/lib/Qto/Controller/TestHCreate.t
 src/perl/qto/t/lib/Qto/Controller/TestTruncate.t
 src/perl/qto/t/lib/Qto/Controller/TestSelect.t
@@ -529,10 +530,9 @@ src/bash/qto/funcs/pckg/create-relative-package.func.sh
 src/bash/qto/tests/pckg/create-relative-package.test.sh
 met
 met/.dev.qto
-met/.src.qto
 met/.tst.qto
+met/.qas.qto
 met/.prd.qto
-met/.git.qto
 doc/txt/qto/helps/dev/clone-to-app.help.txt
 src/bash/qto/funcs/dev/clone-to-app.func.sh
 src/bash/qto/tests/dev/clone-to-app.test.sh
@@ -736,8 +736,8 @@ src/perl/qto/public/poc/modal-dialog/modal-01/index.html
 src/perl/qto/public/poc/modal-dialog/modal-02/index.html
 # ---
 met/.dev.qto
-met/.src.qto
 met/.tst.qto
+met/.qas.qto
 met/.prd.qto
 src/bash/qto/deploy-start-minio.sh
 # ---

@@ -21,7 +21,7 @@ doRunFunctionalTests(){
       doLog "INFO STOP  functional test for $f"
       sleep 1
       clearTheScreen
-   done < <(find src/perl/qto/t/lib/Qto/Controller/ -type f |sort)
+   done < <(find src/perl/qto/t/lib/Qto/Controller/ -type f -name '*.t' |sort)
 
    export QTO_ONGOING_TEST=0
 }

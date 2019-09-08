@@ -342,22 +342,24 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $ret = 1 ; 
       my $msg = q{} ; 
       my $dbh = q{} ; 
+      eval {
+         $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_db_host;port=$postgres_db_port", 
+                  "$postgres_db_user", "$postgres_db_user_pw" , {
+                    'RaiseError'          => 0 # otherwise it dies !!!
+                  , 'ShowErrorStatement'  => 1
+                  , 'PrintError'          => 1
+                  , 'AutoCommit'          => 1
+                  , 'pg_utf8_strings'     => 1
+         }) ; 
+      };
 
-      $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_db_host;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
-                 'RaiseError'          => 0 # otherwise it dies !!!
-               , 'ShowErrorStatement'  => 1
-               , 'PrintError'          => 1
-               , 'AutoCommit'          => 1
-               , 'pg_utf8_strings'     => 1
-      }) ; 
-      
       if ( defined $dbh  ) {
          $ret = 0 ; $msg = "" ; 
       } else {
+         $ret = 400 ; 
          $msg .= DBI->errstr ; 
+         return ( $ret , $msg , $dbh ) ; 
       }
-
-      return ( $ret , $msg , $dbh ) ; 
 
       if ($@) {
          $ret = 400 ; 

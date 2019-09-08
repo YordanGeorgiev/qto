@@ -1,0 +1,63 @@
+use strict ; use warnings ; 
+use Test::Most ; 
+use Test::Mojo;
+use Data::Printer ; 
+use FindBin;
+
+die_on_fail;
+
+BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
+
+   $ENV{'MOJO_EVENTEMITTER_DEBUG'} =1 ;
+   $ENV{'MOJO_USERAGENT_DEBUG'} =1 ; 
+
+   my $tm = '' ; # the test message for each test 
+   my $t = Test::Mojo->new('Qto');
+   my $config = $t->app->get('AppConfig') ; 
+   my $db = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
+	$t->get_ok('/' . $db . '/select-databases')->status_is(200) ; 
+
+   my $protocol = $config->{'env'}->{'app'}->{'ws_protocol'} ; 
+   my $web_host = $config->{'env'}->{'app'}->{'web_host'} ; 
+   my $port = $config->{'env'}->{'app'}->{'port'} ; 
+   my $url = "$protocol://$web_host" . ':' . "$port/$db/ws-select-tables" ; 
+   # $t->websocket_ok($url) ; 
+   #my $tx = $ua->build_websocket_tx($url);
+
+	use Mojo::UserAgent;
+	use Mojo::IOLoop;
+	 
+	# Open WebSocket to echo service
+	my $ua = Mojo::UserAgent->new;
+	$ua->websocket($url => sub {
+	  my ($ua, $tx) = @_;
+	 
+	  # Check if WebSocket handshake was successful
+	  print 'WebSocket handshake failed!' and return unless $tx->is_websocket ;
+	 
+	  # Wait for WebSocket to be closed
+	  $tx->on(finish => sub {
+		 my ($tx, $code, $reason) = @_;
+		 print "WebSocket closed with status $code.";
+	  });
+	 
+	  # Close WebSocket after receiving one message
+	  $tx->on(message => sub {
+		 my ($tx, $msg) = @_;
+		 print "WebSocket message: $msg";
+		 $tx->finish;
+	  });
+	 
+	  # Send a message to the server
+	  $tx->send('Hi!');
+	});
+	 
+	# Start event loop if necessary
+	Mojo::IOLoop->start unless Mojo::IOLoop->is_running;
+
+
+   # my $ua  = $t->ua ; 
+   #my $response = $ua->websocket_ok(('/' . $db . '/ws-select-tables') ;
+   #my $list = $response->{ 'dat' } ; 
+
+done_testing();
