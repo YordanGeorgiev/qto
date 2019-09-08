@@ -30,12 +30,14 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $url = '/' . $db . '/truncate/test_hcreate_table' ; 
    ok ( $t->get_ok($url )->status_is(200) , $tm ) ;
 	
-   my $table_name = 'non_existent_table' ; 
-	$url = '/' . $db . '/hcreate/' . $table_name ;
-   ok ( $t->post_ok($url => json => {"id" =>0,"seq"=>1,"item"=>'test_hcreate_table'})->status_is(400) , $tm );
+   my $table  = 'non_existent_table' ; 
+   $db            = $config->{'env'}->{'db'}->{'postgres_db_name'} ; # because each instance has it's own ...
+	$url = '/' . $db . '/hcreate/' . $table ; 
+   ok ( $t->post_ok($url => json => {"id" =>0,"seq"=>1,"item"=>$table})->status_is(400) , $tm );
 
 	$db = 'non_existent_db' ; 
 	$url = '/' . $db . '/hcreate/test_hcreate_table' ;
+   print "testing url:$url" ; 
    ok ( $t->post_ok($url => json => {"id" =>0,"seq"=>1,"item"=>'test_hcreate_table'})->status_is(400) , $tm );
    
    $tm            = 'the string "not_an_integer" should not qualify for an id ...' ; 

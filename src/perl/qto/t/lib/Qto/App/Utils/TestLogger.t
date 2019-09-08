@@ -11,13 +11,7 @@ use Qto::App::Utils::Initiator ;
 use Qto::App::Utils::Logger ; 
 use JSON::Parse 'json_file_to_perl';
 
-my $m = 'the qto calling shell needs always a set of pre-defined env vars,
-thus you need to define your issue tracker project by :
-doParseCnfEnvVars <<path-to-your-qto-projects-cnf-files>>/<<qto-cnf-file>>
-for example:
-doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/qto/ysg-issues.dev.host-name.cnf'  ; 
-croak $m unless ( defined ( $ENV{ "qto_project" } )) ; 
-
+my $m = 'the tst msg' ; 
 my $msg              = q{} ; 
 my $objInitiator 		= 'Qto::App::Utils::Initiator'->new();	
 my $config           = $objInitiator->get('AppConfig');

@@ -49,8 +49,7 @@ package Qto::App::IO::In::CnrEncrypter ;
    sub match_passphrase_against_crypto_hash {
       my $self = shift  ;
       my ($crypto_hash, $passphrase) = @_;
-      return Authen::Passphrase::BlowfishCrypt
-            ->from_rfc2307($crypto_hash)->match($passphrase);
+      return Authen::Passphrase::BlowfishCrypt->from_rfc2307($crypto_hash)->match($passphrase);
    }
 1;
 

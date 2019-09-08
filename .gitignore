@@ -33,3 +33,6 @@ tags
 **/*.swo
 cnf/*.cnf
 **/hypnotoad.pid
+src/terraform/csitea/.terraform
+src/terraform/csitea/.terraform/**
+src/terraform/csitea/terraform.tfstate

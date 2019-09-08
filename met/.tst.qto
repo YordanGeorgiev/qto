@@ -1,9 +1,16 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 src/bash/qto/qto.sh
+src/bash/qto/funcs/init-aws-instance.func.sh
+src/terraform
+src/terraform/qto
+src/terraform/tpl/csitea/main.tf.tpl
 cnf/env
 cnf/env/dev.env.json
 cnf/env/tst.env.json
+cnf/env/qas.env.json
 cnf/env/prd.env.json
+src/bash/qto/funcs/scramble-confs.func.sh
+src/bash/qto/funcs/unscramble-confs.func.sh
 .vimrc
 .env
 doc/cheats/
@@ -38,6 +45,7 @@ src/perl/qto/lib/Qto/Controller/Home.pm
 src/perl/qto/public/poc/web-socket/wsclient.js
 src/perl/qto/lib/Qto.pm
 src/perl/qto/lib/Qto/Controller/WsSelect.pm
+src/perl/qto/t/lib/Qto/Controller/TestWSSelect.t.wip
 src/perl/qto/public/poc/web-socket/web-socket.html
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
@@ -206,7 +214,7 @@ src/perl/qto/lib/Qto/Controller/Select.pm
 src/perl/qto/lib/Qto/Controller/HSelect.pm
 src/perl/qto/lib/Qto/Controller/HLSelect.pm
 src/perl/qto/lib/Qto/Controller/Search.pm
-src/perl/qto/t/lib/Qto/Controller/TestCreate.t
+src/perl/qto/t/lib/Qto/Controller/TestCreate.t.todo
 src/perl/qto/t/lib/Qto/Controller/TestHCreate.t
 src/perl/qto/t/lib/Qto/Controller/TestTruncate.t
 src/perl/qto/t/lib/Qto/Controller/TestSelect.t
@@ -453,7 +461,6 @@ src/sql/pgsql/scripts/admin/list-table-columns.sql
 src/sql/pgsql/scripts/admin/list-table-priviledges.sql
 src/sql/pgsql/scripts/admin/rank-srch.sql
 src/sql/pgsql/scripts/admin/upsert_item_trigger.sql
-src/sql/pgsql/scripts/app
 src/sql/pgsql/scripts/bash
 src/sql/pgsql/scripts/bash/list-postgres-tables.sh
 src/sql/pgsql/scripts/bash/list-table-cols.sh
@@ -523,10 +530,9 @@ src/bash/qto/funcs/pckg/create-relative-package.func.sh
 src/bash/qto/tests/pckg/create-relative-package.test.sh
 met
 met/.dev.qto
-met/.src.qto
 met/.tst.qto
+met/.qas.qto
 met/.prd.qto
-met/.git.qto
 doc/txt/qto/helps/dev/clone-to-app.help.txt
 src/bash/qto/funcs/dev/clone-to-app.func.sh
 src/bash/qto/tests/dev/clone-to-app.test.sh
@@ -573,7 +579,6 @@ src/bash/qto/tests/generate-action-files.test.sh
 src/perl/qto/public/dat/img/qto/concepts_doc/what-is-is.png
 src/perl/qto/public/poc/web-socket/web-socket-add-div.html
 #---
-doc/pdf
 README.md
 doc/md
 doc/md/concepts_doc.md
@@ -621,7 +626,6 @@ src/bash/qto/funcs/log-test-run-entry.func.sh
 src/bash/qto/tests/log-test-run-entry.test.sh
 src/bash/qto/helps/log-test-run-entry.help.sh
 dat/tests/1
-doc/xls
 #---
 src/bash/qto/tests/check-perl-modules-prerequisites.test.sh
 src/bash/qto/funcs/check-perl-modules-prerequisites.func.sh
@@ -721,7 +725,6 @@ doc/txt/qto/funcs/run-data-load-tests.func.txt
 # ---
 src/bash/qto/funcs/run-js-unit-tests.func.sh
 src/perl/qto/lib/Qto/Controller/ViewDoc.pm
-src/perl/qto/public/dat/tmp/xls/1
 src/perl/qto/templates/controls/site/app_name_tooltip.html.ep
 # ---
 # -- 
@@ -733,8 +736,8 @@ src/perl/qto/public/poc/modal-dialog/modal-01/index.html
 src/perl/qto/public/poc/modal-dialog/modal-02/index.html
 # ---
 met/.dev.qto
-met/.src.qto
 met/.tst.qto
+met/.qas.qto
 met/.prd.qto
 src/bash/qto/deploy-start-minio.sh
 # ---
@@ -803,8 +806,6 @@ src/perl/qto/lib/auto/Qto/Controller/Home/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Truncate/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WSSelect/autosplit.ix
 dat/mix
-dat/mix/2019/2019-08/2019-08-24/xls/qto.all.20190824_000000.xlsx
-dat/mix/2019/2019-08/2019-08-24/sql/dev_qto/dev_qto.20190824_143407.full.dmp.sql
 src/bash/qto/scripts/todo-copy-paste.sh
 src/bash/qto/funcs/backup-postgres-db-inserts.func.sh
 src/sql/pgsql/scripts/bash/copy-tables.sh

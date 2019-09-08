@@ -58,7 +58,7 @@ sub isAuthenticated {
    my $self                = shift ;
    my $db                  = shift ;
 
-   $config		 		   = $self->app->get('AppConfig');
+   $config		 		      = $self->app->get('AppConfig');
    $db                     = toEnvName ( $db , $config ) ;
 
    # non-authentication mode IF the app has been stared with this env var

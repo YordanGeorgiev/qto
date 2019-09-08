@@ -7,28 +7,15 @@ use Test::More tests => 5 ;
 use Getopt::Long;
 use Data::Printer ; 
 use Carp ; 
-my $m = 'the qto calling shell needs always a set of pre-defined env vars,
-thus you need to define your issue tracker project by :
-doParseCnfEnvVars <<path-to-your-qto-projects-cnf-files>>/<<qto-cnf-file>>
-for example:
-doParseCnfEnvVars /vagrant/var/csitea/cnf/projects/qto/ysg-issues.dev.host-name.cnf'  ; 
-croak $m unless ( defined ( $ENV{ "qto_project" } )) ; 
-
 use Qto::App::Utils::Initiator ; 
 use Qto::App::Utils::Logger ; 
-use Qto::App::Utils::Configurator ; 
 use Qto::App::Ctrl::Dispatcher ; 
+use Test::Mojo ; 
 
-my $objInitiator 				= 'Qto::App::Utils::Initiator'->new();	
-my $config					= {} ;
-
-$config                 = $objInitiator->get('AppConfig');
-
-my  $objConfigurator
-    = 'Qto::App::Utils::Configurator'->new($objInitiator->{'ConfFile'},
-    \$config);
-
-$config                 = $objConfigurator->getConfHolder()  ;
+my $m          = 'the msg' ; 
+my $t          = Test::Mojo->new('Qto');
+$t->ua->max_redirects(10);
+my $config  = $t->app->get('AppConfig') ; 
 
 my $tn           = '' ;     # the test number for easier reading 
 my $actions      = 'db-to-xls' ; 
@@ -56,7 +43,7 @@ $actions         = 'txt-to-db' ;
 $functions       = $objDispatcher->doRunActions($actions);
 ok ( $functions eq 'doTxtToDb' , "$m" );
 
-my $ProductInstanceDir = $config->{'ProductInstanceDir' } ; 
+my $ProductInstanceDir = $config->{'env'}->{'run'}->{'ProductInstanceDir' } ; 
 my $cmd = "$ProductInstanceDir/src/perl/qto/script/qto.pl -t daily_issues" ; 
 
 $tn = 'test-04' ; 
