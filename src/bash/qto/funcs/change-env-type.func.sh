@@ -9,7 +9,7 @@ doChangeEnvType(){
    prefix='to-env='
    tgt_env=${tgt_env#$prefix}
 
-	tgt_environment_name=$(echo $environment_name | perl -ne "s/$env_type/$tgt_env/g;print")
+	tgt_environment_name=$(echo $environment_name | perl -ne "s/$ENV_TYPE/$tgt_env/g;print")
 	tgt_PRODUCT_INSTANCE_DIR=$product_dir/$tgt_environment_name
 
 	test "$tgt_env" == "$env_type" && return

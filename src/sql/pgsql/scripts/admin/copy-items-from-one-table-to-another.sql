@@ -6,6 +6,13 @@ WHERE 1=1 AND status='09-done'
 ON CONFLICT (id) DO UPDATE
 SET guid = excluded.guid ,id = excluded.id ,prio = excluded.prio ,status = excluded.status ,category = excluded.category ,name = excluded.name ,description = excluded.description ,type = excluded.type ,owner = excluded.owner ,update_time = excluded.update_time
 ;
+INSERT INTO yearly_issues (guid,id,prio,status,category,name,description,type,owner,update_time )
+SELECT guid,id,prio,status,category,name,description,type,owner,update_time 
+FROM monthly_issues  
+WHERE 1=1 AND status='09-done'
+ON CONFLICT (id) DO UPDATE
+SET guid = excluded.guid ,id = excluded.id ,prio = excluded.prio ,status = excluded.status ,category = excluded.category ,name = excluded.name ,description = excluded.description ,type = excluded.type ,owner = excluded.owner ,update_time = excluded.update_time
+;
 
 -- and then delete them from the source table 
 DELETE FROM release_issues 

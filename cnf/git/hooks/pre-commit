@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 
+# do not code which introduces regression bugs !!!
+clear ; ./src/bash/qto/qto.sh -a run-unit-tests
+clear ; ./src/bash/qto/qto.sh -a run-functional-tests
 clear ; ./src/bash/qto/qto.sh -a scramble-confs
