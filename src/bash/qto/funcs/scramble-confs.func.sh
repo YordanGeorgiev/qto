@@ -16,11 +16,12 @@ doScrambleConfs(){
 			#p $data ; 
 			# basically scramble the passwords
 			$data->{'env'}->{'aws'}->{'access_key'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
-			$data->{'env'}->{'db'}->{'secret_key'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
+			$data->{'env'}->{'aws'}->{'secret_key'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'db'}->{'postgres_db_user_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'db'}->{'postgres_db_useradmin_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'db'}->{'root_pwd'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'db'}->{'app_user_pwd'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
+			$data->{'env'}->{'AdminEmail'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
          my $json = JSON->new->allow_nonref;
 			open my $fh, ">", $ARGV[0];
 			print $fh $json->pretty->encode($data);
