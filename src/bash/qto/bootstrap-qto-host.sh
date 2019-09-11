@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
-
 do_create_multi_env_dir(){
+   set -x
    test -d "$PRODUCT_INSTANCE_DIR" && \
       mv -v "$PRODUCT_INSTANCE_DIR" "$PRODUCT_INSTANCE_DIR"."$(date '+%Y%m%d_%H%M%S')"
 
@@ -16,13 +16,12 @@ do_create_multi_env_dir(){
    cd $PRODUCT_INSTANCE_DIR
 }
 
-
-
-
 main(){
    do_set_vars "$@"
    do_check_install_prereqs
+   #do_check_install_postgres
    do_create_multi_env_dir
+   do_check_git_hooks
 }
 
 do_set_vars(){
@@ -65,13 +64,63 @@ EOF_DOC
 }
 
 do_check_install_prereqs(){
-      do_check_install_chromium_headless
-      do_check_install_phantom_js
-      do_check_install_perl_modules
-      do_check_git_hooks
-      cd $call_start_dir
+   do_check_install_ubuntu_packages
+   do_check_install_chromium_headless
+   do_check_install_phantom_js
+   do_check_install_perl_modules
+   cd $call_start_dir
 }
 
+do_check_install_ubuntu_packages(){
+   
+   #eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
+   packages=$(cat << EOF_PACKAGES
+      build-essential
+      git
+      vim
+      perl
+      zip
+      jq
+      unzip
+      exuberant-ctags
+      mutt
+      curl
+      wget
+      libdbd-pgsql
+      tar
+      gzip
+      graphviz
+      python-selenium chromium-chromedriver
+      python-selenium
+      python-setuptools 
+      python-dev 
+      gpgsm
+      nodejs
+      lsof
+      libssl-dev
+      libtest-www-selenium-perl
+      libxml-atom-perl
+      libxml-atom-perl
+      libwww-curl-perl
+EOF_PACKAGES
+)
+      
+   while read -r package ; do 
+      test "$(sudo dpkg -s $package | grep Status)" == "Status: install ok installed" || {
+         sudo apt-get install -y $package 
+      }
+   done < <(echo "$packages");
+      
+
+}
+
+# qto-release_issues-190911215406
+#do_check_install_postgres(){
+      #minio
+      #mc
+      #postgresql-11.3
+
+#}
 
 do_check_install_phantom_js(){
    which phantomjs 2>/dev/null || { 
@@ -99,8 +148,8 @@ do_check_install_chromium_headless(){
 
 do_check_install_perl_modules(){
 
-   eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
-   local perl_modules=$(cat << EOF
+   #eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
+   modules=$(cat << EOF_MODULES
       JSON  
       Data::Printer
       Test::Most 
@@ -161,28 +210,29 @@ do_check_install_perl_modules(){
       Term::Prompt
       DBIx::ProcedureCall
       JSON::Parse
-EOF
-   
+EOF_MODULES
+)
       
-      while read -r module ; do perl -e modules="$modules; use $module ; " ; done ; 
+      while read -r module ; do 
+         use_modules="${use_modules:-} use $module ; " 
+      done < <(echo "$modules");
       
-         perl -e "$modules" || {
-         echo "deploying modules. This WILL take couple of min, but ONLY ONCE !!!"
-         curl -L http://cpanmin.us | perl - -l ~/perl5 App::cpanminus local::lib
-         eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
-         echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bashrc
-         cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
-         export PERL_MM_USE_DEFAULT=1
-         modules=""
-         while read -r module ; do modules="$modules $module " ; done ; 
-         cmd="cpanm $modules"
-         $cmd
-         sudo curl -L cpanmin.us | perl - Mojolicious
+      perl -e "$use_modules" || {
+      echo "deploying modules. This WILL take couple of min, but ONLY ONCE !!!"
+      curl -L http://cpanmin.us | perl - -l ~/perl5 App::cpanminus local::lib
+      eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
+      echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bashrc
+      cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+      export PERL_MM_USE_DEFAULT=1
+      while read -r module ; do cpanm_modules="$cpanm_modules $module " ; done < <("$modules")
+      cmd="cpanm $modules"
+      $cmd
+      sudo curl -L cpanmin.us | perl - Mojolicious
    }
 }
 
 do_check_git_hooks(){
-   test $(grep -c 'run-functional-tests' $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit) -lt 1 && {
+   test $(grep -c 'run-functional-tests' "$PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit") -lt 1 && {
       echo "
          ./src/bash/qto/qto.sh -a run-functional-tests
       " >> $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit
