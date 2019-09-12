@@ -1,9 +1,10 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 src/bash/qto/qto.sh
+src/bash/qto/funcs/check-init-terraform.func.sh
 src/bash/qto/funcs/init-aws-instance.func.sh
 src/terraform
 src/terraform/qto
-src/terraform/tpl/csitea/main.tf.tpl
+src/terraform/tpl/qto/main.tf.tpl
 cnf/env
 cnf/env/dev.env.json
 cnf/env/tst.env.json
