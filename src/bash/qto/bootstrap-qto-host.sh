@@ -104,7 +104,8 @@ do_check_install_ubuntu_packages(){
       libwww-curl-perl
 EOF_PACKAGES
 )
-      
+
+   sudo apt-get update      
    while read -r package ; do 
       test "$(sudo dpkg -s $package | grep Status)" == "Status: install ok installed" || {
          sudo apt-get install -y $package 
