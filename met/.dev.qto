@@ -75,7 +75,7 @@ src/bash/qto/funcs/mojo-daemon-start.func.sh
 src/bash/qto/funcs/mojo-daemon-stop.func.sh
 src/bash/qto/install/docker/install-test.sh
 src/bash/qto/install/docker/docker-entry-point.sh
-src/bash/qto/bootstrap-qto-host.sh
+src/bash/qto/bootstrap-qto-host-on-ubuntu.sh
 src/docker/Dockerfile.deploy-quick-test
 src/bash/qto/install/docker/install-postgres.sh
 src/bash/qto/install/docker/provision-os-users.sh
