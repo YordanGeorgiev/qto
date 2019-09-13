@@ -12,7 +12,6 @@ doInitAwdInstance(){
 	public_key=$(cat echo $public_key_path)
 	main_tf_file="$PRODUCT_INSTANCE_DIR/src/terraform/qto/main.tf"   
 
-
 	# search and replace the variables from the configuration file to the tpl file
    perl -pi -e 's|\$access_key|'"$access_key"'|g' "$main_tf_file"
    perl -pi -e 's|\$secret_key|'"$secret_key"'|g' "$main_tf_file"
@@ -29,8 +28,6 @@ doInitAwdInstance(){
    terraform plan
 	test $? -ne 0 && doExit 1 "terraform plan failed"
 	
-	# import the deployment key first ?!
-	# nope terraform import aws_key_pair."aws_key_pair-$ENV_TYPE" "$key_name"
 	terraform apply -auto-approve
 	
 	rm -v "$main_tf_file"

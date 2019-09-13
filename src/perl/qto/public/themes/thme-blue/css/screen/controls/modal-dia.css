@@ -8,6 +8,7 @@
 }
 .form-container {
    margin-bottom: 5%;
+   padding: 0% 0% 0% 0%;
 }
 label, input, select, textarea {
    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -20,9 +21,9 @@ label, input, select, textarea {
 }
 label {
    display: inline-block;
-   width: 100px;
+   width: 17%;
    text-align: right;
-   margin-right: 20px;
+   margin-right: 3%;
 }
 input.minput[type="text"]{
    background-color: #F0FFFF;
@@ -88,10 +89,10 @@ button:hover , button:focus , button:active{
 }
 
 .modal-container {
-  width: 55%;
-  height: 80%;
-  margin: 10px auto ;
+  width: 56%;
+  height: auto;
   min-height: 100px;
+  margin: 10px auto ;
   padding: 10px 20px 5px 40px ;
   background-color: #fff;
   border-radius: 2px;

@@ -186,7 +186,7 @@ package Qto::App::IO::Out::WtrGitHubMd ;
 					my $title_link					= '' ; 
 					$title_link					   = lc ($title_data ) ; 
 					$title_link					   =~ s/ /-/g ; 
-					$title_link					   =~ s/[\<\>\?\!\:]//g ; 
+					$title_link					   =~ s/[\<\>\?\!\:,]//g ; 
 					$title_link					   =~ s/&gt;//g ; 
 					$title_link					   =~ s/&lt;//g ; 
 					$title_link					   =~ s/\-\-/-/g ; 
