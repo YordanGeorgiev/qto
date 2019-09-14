@@ -1,16 +1,5 @@
 #! /usr/bin/env bash
 
-do_create_multi_env_dir(){
-   test -d "$PRODUCT_INSTANCE_DIR" && \
-      mv -v "$PRODUCT_INSTANCE_DIR" "$PRODUCT_INSTANCE_DIR"."$(date '+%Y%m%d_%H%M%S')"
-
-   mv -v "$product_dir" "$product_dir"'_'
-   mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$PRODUCT_INSTANCE_DIR"; 
-   source ~/.bashrc 
-   echo "reload your bash GO TO YOUR PRODUCT_INSTANCE_DIR by"
-   echo "cd $PRODUCT_INSTANCE_DIR"
-   cd $PRODUCT_INSTANCE_DIR
-}
 
 main(){
    do_set_vars "$@"
@@ -21,11 +10,13 @@ main(){
    do_provision_postgres
    do_create_multi_env_dir
    do_set_chmods
+   do_finilize
 }
 
 do_copy_git_hooks(){
 	cp -v $unit_run_dir/../../../cnf/git/hooks/* $unit_run_dir/../../../.git/hooks/
 }
+
 do_set_chmods(){
    find $PRODUCT_INSTANCE_DIR -type f -name '*.sh' -exec chmod 770 {} \;
 }
@@ -123,7 +114,7 @@ EOF_PACKAGES
 )
 
    sudo apt-get update      
-	# sudo apt-get upgrade
+	# sudo apt-get upgrade # probably not a good idea, but if yes ... this is the place ...
    while read -r package ; do 
       test "$(sudo dpkg -s $package | grep Status)" == "Status: install ok installed" || {
          sudo apt-get install -y $package 
@@ -261,8 +252,9 @@ EOF_MODULES
       export PERL_MB_OPT="--install_base \"~/perl5\"" 
       export PERL_MM_OPT="INSTALL_BASE=~/perl5"
       while read -r module ; do cpanm_modules="$cpanm_modules $module " ; done < <("$modules")
-      cmd="cpanm $modules"
-      $cmd || bash $0 # quite often the perl modules passes trough on the second run ...
+      cmd="cpanm $modules" 
+      # quite often the perl modules passes trough on the second run ...
+      $cmd || bash "$unit_run_dir/$RUN_UNIT"'.sh'
       sudo curl -L cpanmin.us | perl - Mojolicious
 
       # nasty workaround for the "Moo complainings" in the Net::Google::DataAPI::Oauth2 module
@@ -318,7 +310,6 @@ do_provision_postgres(){
    # echo "postgres:postgres" | chpasswd  # probably not needed ...
    echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bashrc
    
-   set -x
    sudo /etc/init.d/postgresql restart
    sudo -u postgres psql -c \
       "CREATE USER "$postgres_db_useradmin" WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS 
@@ -343,6 +334,44 @@ do_provision_postgres(){
       sudo chown -R postgres:postgres "/etc/postgresql/11/main/pg_hba.conf" && \
       sudo chown -R postgres:postgres "/etc/postgresql/11/main/postgresql.conf"
 
+   sudo /etc/init.d/postgresql restart
+}
+
+do_create_multi_env_dir(){
+   test -d "$PRODUCT_INSTANCE_DIR" && \
+      mv -v "$PRODUCT_INSTANCE_DIR" "$PRODUCT_INSTANCE_DIR"."$(date '+%Y%m%d_%H%M%S')"
+
+   mv -v "$product_dir" "$product_dir"'_'
+   mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$PRODUCT_INSTANCE_DIR"; 
+   source ~/.bashrc 
+   printf "\033[2J";printf "\033[0;0H"
+   echo -e "\n\n"
+   echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+   echo "DONE"
+   echo "NEXT you must RELOAD your bash and go to the PRODUCT_INSTANCE_DIR by: "
+   echo "bash ; cd $PRODUCT_INSTANCE_DIR"
+   echo "bash src/bash/qto/qto.sh -a check-perl-syntax"
+   echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+}
+
+do_create_multi_env_dir(){
+   test -d "$PRODUCT_INSTANCE_DIR" && \
+      mv -v "$PRODUCT_INSTANCE_DIR" "$PRODUCT_INSTANCE_DIR"."$(date '+%Y%m%d_%H%M%S')"
+
+   mv -v "$product_dir" "$product_dir"'_'
+   mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$PRODUCT_INSTANCE_DIR"; 
+}
+
+do_finilize(){
+   source ~/.bashrc 
+   printf "\033[2J";printf "\033[0;0H"
+   echo -e "\n\n"
+   echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+   echo "DONE"
+   echo "NEXT you must RELOAD your bash and go to the PRODUCT_INSTANCE_DIR by: "
+   echo "bash ; cd $PRODUCT_INSTANCE_DIR"
+   echo "bash src/bash/qto/qto.sh -a check-perl-syntax"
+   echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 }
 
 main "$@"
