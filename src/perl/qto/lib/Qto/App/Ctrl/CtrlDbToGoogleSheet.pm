@@ -11,6 +11,12 @@ package Qto::App::Ctrl::CtrlDbToGoogleSheet ;
    use utf8 ;
    use Carp ;
    use Data::Printer ; 
+   # workarounds the use Moo annoying warning ...
+   BEGIN {
+      no warnings 'deprecated';
+      require Net::Google::DataAPI::Auth::OAuth2 ; 
+      use warnings 'deprecated';
+   }
    no warnings 'deprecated';
    use Net::Google::DataAPI::Auth::OAuth2 ; 
    use warnings 'deprecated';

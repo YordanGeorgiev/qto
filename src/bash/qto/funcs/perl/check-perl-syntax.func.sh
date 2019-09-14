@@ -35,17 +35,18 @@ doCheckPerlSyntax(){
 		find . -name '*.pm' -exec perl -MAutoSplit -e 'autosplit($ARGV[0], $ARGV[1], 0, 1, 1)' {} \;
 		
          c=0
+         #feel free to adjust to 5, more might get you the "Out of memory!" error
+         amount_of_perl_syntax_checks_to_run_in_parallel=1
 			# foreach perl file check the syntax by setting the correct INC dirs	
 			while read -r file ; do 
-            # run in a chunk of 3
-            c=$((c+1)) ; test $c -eq 3 && sleep 1 && export c=0 ;
+            c=$((c+1)) ; test $c -eq $amount_of_perl_syntax_checks_to_run_in_parallel && sleep 1 && export c=0 ;
             (
-               echo perl -MCarp::Always -I `pwd` -I `pwd`/lib -wc "$file";
+               echo -e "\n ::: running: cd src/perl/qto ; perl -MCarp::Always -I `pwd` -I `pwd`/lib -wc \"$file\" ; cd -"
                perl -MCarp::Always -I `pwd` -I `pwd`/lib -wc "$file"
                #ret=$? ;  # probably not needed ... better just to spit out the error for the
                #test $ret -ne 0 && break 2 ; 
             )&
-			done < <(find "." -type f \( -name "*.pl" -or -name "*.pm" \))
+			done < <(find "." -type f \( -name "*.pl" -or -name "*.pm" -or -name '*.t' \))
 
 			test $ret -ne 0 && break ; 
 		
