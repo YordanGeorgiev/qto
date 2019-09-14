@@ -1,10 +1,10 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+src/bash/qto/bootstrap-qto-host-on-ubuntu.sh
 src/bash/qto/qto.sh
 src/bash/qto/funcs/check-init-terraform.func.sh
 src/bash/qto/funcs/init-aws-instance.func.sh
 src/terraform
-src/terraform/qto
-src/terraform/tpl/csitea/main.tf.tpl
+src/terraform/tpl/qto/main.tf.tpl
 cnf/env
 cnf/env/dev.env.json
 cnf/env/tst.env.json
@@ -23,11 +23,8 @@ src/docker/Dockerfile.deploy-qto.0.7.1
 src/docker/Dockerfile.deploy-qto-db-host.0.7.1
 src/docker/Dockerfile.deploy-qto-app-host.0.7.1
 src/bash/qto/funcs/build-docker-image.func.sh
-# start HCreate
-src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
 src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
-# stop  HCreate
 # start login
 src/perl/qto/t/lib/Qto/Controller/TestLogin.t
 src/perl/qto/lib/Qto/Controller/Login.pm
@@ -75,7 +72,6 @@ src/bash/qto/funcs/mojo-daemon-start.func.sh
 src/bash/qto/funcs/mojo-daemon-stop.func.sh
 src/bash/qto/install/docker/install-test.sh
 src/bash/qto/install/docker/docker-entry-point.sh
-src/bash/qto/bootstrap-qto-host.sh
 src/docker/Dockerfile.deploy-quick-test
 src/bash/qto/install/docker/install-postgres.sh
 src/bash/qto/install/docker/provision-os-users.sh
@@ -241,7 +237,6 @@ src/perl/qto/lib/Qto/App/UI
 src/perl/qto/lib/Qto/App/UI/Controls
 src/perl/qto/lib/Qto/App/UI/Pages/1
 # ---
-src/perl/qto/t/TestQto.t
 src/perl/qto/lib/Qto/App/Cnvr
 src/perl/qto/lib/Qto/App/Cnvr/CnrHashesArrRefToHashesArrRef.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
@@ -618,19 +613,10 @@ cnf/readme.txt
 src/readme.txt
 #---
 doc/txt/qto/funcs/log-test-run-entry.func.txt
-doc/txt/qto/tests/log-test-run-entry.test.txt
-doc/txt/qto/helps/log-test-run-entry.help.txt
 src/bash/qto/funcs/log-test-run-entry.func.sh
 src/bash/qto/tests/log-test-run-entry.test.sh
-src/bash/qto/helps/log-test-run-entry.help.sh
 dat/tests/1
 #---
-src/bash/qto/tests/check-perl-modules-prerequisites.test.sh
-src/bash/qto/funcs/check-perl-modules-prerequisites.func.sh
-src/bash/qto/helps/check-perl-modules-prerequisites.help.sh
-doc/txt/qto/funcs/check-perl-modules-prerequisites.func.txt
-doc/txt/qto/tests/check-perl-modules-prerequisites.test.txt
-doc/txt/qto/helps/check-perl-modules-prerequisites.help.txt
 doc/txt/qto/funcs/clone-to-app.func.txt
 doc/txt/qto/tests/clone-to-app.test.txt
 src/bash/qto/helps/clone-to-app.help.sh

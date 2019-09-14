@@ -1,17 +1,13 @@
 #! /usr/bin/env bash
 
 do_create_multi_env_dir(){
-   set -x
    test -d "$PRODUCT_INSTANCE_DIR" && \
       mv -v "$PRODUCT_INSTANCE_DIR" "$PRODUCT_INSTANCE_DIR"."$(date '+%Y%m%d_%H%M%S')"
 
    mv -v "$product_dir" "$product_dir"'_'
    mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$PRODUCT_INSTANCE_DIR"; 
-
-   cp -v $PRODUCT_INSTANCE_DIR/cnf/git/hooks/* $PRODUCT_INSTANCE_DIR/.git/hooks/
-   chmod 770 $PRODUCT_INSTANCE_DIR/.git/hooks/*
-
-   echo "GO TO YOUR PRODUCT_INSTANCE_DIR by"
+   source ~/.bashrc 
+   echo "reload your bash GO TO YOUR PRODUCT_INSTANCE_DIR by"
    echo "cd $PRODUCT_INSTANCE_DIR"
    cd $PRODUCT_INSTANCE_DIR
 }
@@ -19,9 +15,29 @@ do_create_multi_env_dir(){
 main(){
    do_set_vars "$@"
    do_check_install_prereqs
-   #do_check_install_postgres
+   do_setup_vim
+   do_copy_git_hooks
+   do_check_setup_bash
    do_create_multi_env_dir
-   do_check_git_hooks
+   do_set_chmods
+}
+
+do_copy_git_hooks(){
+	cp -v $unit_run_dir/../../../cnf/git/hooks/* $unit_run_dir/.git/hooks/
+}
+do_set_chmods(){
+   find $PRODUCT_INSTANCE_DIR -type f -name '*.sh' -exec chmod 770 {} \;
+}
+
+do_setup_vim(){
+	cp -v $unit_run_dir/../../../.vimrc ~/.vimrc
+}
+
+do_check_setup_bash(){
+   test "$(grep -c 'PS1' ~/.bashrc)" -eq 0 && { 
+      echo 'export PS1="`date "+%F %T"` \u@\h  \w \n\n  "' >> ~/.bashrc
+   }
+   echo bash ok
 }
 
 do_set_vars(){
@@ -31,8 +47,7 @@ do_set_vars(){
    unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
    product_base_dir=$(cd $unit_run_dir/../../../..; echo `pwd`)
    product_dir="$product_base_dir/$RUN_UNIT" 
-   product_tmp_install_dir="$product_base_dir"/""'-tmp-install'
-   source "$product_dir/.env"
+   source "$unit_run_dir/../../../.env"
    PRODUCT_INSTANCE_DIR="$product_dir/$RUN_UNIT.$VERSION.$ENV_TYPE.$run_unit_owner"
 }
 
@@ -41,7 +56,7 @@ usage(){
 cat << EOF_DOC
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
       $RUN_UNIT PURPOSE: 
-      bootstrap the qto app
+      bootstrap the qto app on a clean ubuntu bionic 18.04 host
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
      
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -55,7 +70,7 @@ cat << EOF_DOC
 
       Note: when run for first time the required modules for the testing
       will be installed for the current OS user - and that WILL take 
-		couple of minutes
+		at least 10 minutes
 
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -65,10 +80,10 @@ EOF_DOC
 
 do_check_install_prereqs(){
    do_check_install_ubuntu_packages
+   do_check_install_postgres
    do_check_install_chromium_headless
    do_check_install_phantom_js
    do_check_install_perl_modules
-   cd $call_start_dir
 }
 
 do_check_install_ubuntu_packages(){
@@ -106,6 +121,7 @@ EOF_PACKAGES
 )
 
    sudo apt-get update      
+	# sudo apt-get upgrade
    while read -r package ; do 
       test "$(sudo dpkg -s $package | grep Status)" == "Status: install ok installed" || {
          sudo apt-get install -y $package 
@@ -115,13 +131,22 @@ EOF_PACKAGES
 
 }
 
-# qto-release_issues-190911215406
-#do_check_install_postgres(){
-      #minio
-      #mc
-      #postgresql-11.3
+# qto-190911215406 - minio , mc
+do_check_install_postgres(){
+	which psql 2>/dev/null || {
+		sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
+		wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add -
+		sudo apt-get update
+		sudo apt-get install -y postgresql postgresql-contrib libpq-dev pgadmin3
+	}
 
-#}
+	which psql 2>/dev/null || {
+		echo "FATAL failed to install postgres !!!" ; exit 1
+	}
+	echo "check the postgres version:"
+	sudo -u postgres psql postgres -c "SELECT version();" | grep PostgreSQL
+
+}
 
 do_check_install_phantom_js(){
    which phantomjs 2>/dev/null || { 
@@ -153,6 +178,7 @@ do_check_install_perl_modules(){
    modules=$(cat << EOF_MODULES
       JSON  
       Data::Printer
+      Email::Valid
       Test::Most 
       Data::Printer 
       FindBin
@@ -201,50 +227,45 @@ do_check_install_perl_modules(){
       Authen::Passphrase::BlowfishCrypt
       Selenium::Remote::Driver
       Selenium::Chrome
-      Net::Google::DataAPI::Auth::OAuth2
-      Net::Google::Spreadsheets::V4
-      Net::Google::Spreadsheets
-      Net::Google::DataAPI::Auth::OAuth2
-      Net::Google::Spreadsheets::V4
-      Net::Google::Spreadsheets
       Term::ReadKey
       Term::Prompt
       DBIx::ProcedureCall
       JSON::Parse
+      Net::Google::DataAPI::Auth::OAuth2
+      Net::Google::Spreadsheets::V4
+      Net::Google::Spreadsheets
 EOF_MODULES
 )
       
-      while read -r module ; do 
-         use_modules="${use_modules:-} use $module ; " 
-      done < <(echo "$modules");
-      
-      perl -e "$use_modules" || {
+   while read -r module ; do 
+      use_modules="${use_modules:-} use $module ; " 
+   done < <(echo "$modules");
+   
+   perl -e "$use_modules" || {
       echo "deploying modules. This WILL take couple of min, but ONLY ONCE !!!"
-      curl -L http://cpanmin.us | perl - -l ~/perl5 App::cpanminus local::lib
+      curl -L http://cpanmin.us | perl - --self-upgrade -l ~/perl5 App::cpanminus local::lib
       eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
-      echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bashrc
+      test "$(grep -c 'Mlocal::lib' ~/.bashrc)" -eq 0 && \
+       echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bashrc
       cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
       export PERL_MM_USE_DEFAULT=1
+      perl -MCPAN -e 'CPAN::Shell->force(qw( install Net::Google::DataAPI));'
+      PATH="~/perl5/bin${PATH:+:${PATH}}"; export PATH;
+      export PERL5LIB="~/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
+      export PERL_LOCAL_LIB_ROOT="~/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+      export PERL_MB_OPT="--install_base \"~/perl5\"" 
+      export PERL_MM_OPT="INSTALL_BASE=~/perl5"
       while read -r module ; do cpanm_modules="$cpanm_modules $module " ; done < <("$modules")
       cmd="cpanm $modules"
       $cmd
       sudo curl -L cpanmin.us | perl - Mojolicious
+
+      # nasty workaround for the "Moo complainings" in the Net::Google::DataAPI::Oauth2 module
+      find ~ -type f -name OAuth2.pm -exec perl -pi -e \
+         "s/use Any::Moose;/no warnings 'deprecated'; use Any::Moose; use warnings 'deprecated';/g" {} \;
    }
 }
 
-do_check_git_hooks(){
-   test $(grep -c 'run-functional-tests' "$PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit") -lt 1 && {
-      echo "
-         ./src/bash/qto/qto.sh -a run-functional-tests
-      " >> $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit
-   }
-   test $(grep -c 'un-scramble-confs.sh' $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit) -lt 1 && {
-      echo "
-         $PRODUCT_INSTANCE_DIR/scripts/testing/ua-at-teser/un-scramble-confs.sh
-      " >> $PRODUCT_INSTANCE_DIR/.git/hooks/pre-push
-   }
-
-}
 
 # ------------------------------------------------------------------------------
 # clean and exit with passed status and message
@@ -283,4 +304,6 @@ do_log(){
 
 
 main "$@"
+
+
 # eof file src/bash/qto/bootstrap-qto.sh

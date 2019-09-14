@@ -17,4 +17,3 @@ doCreateCtags(){
 
 	popd
 }
-#eof func doCreateCtags

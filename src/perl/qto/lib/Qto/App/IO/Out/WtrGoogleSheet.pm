@@ -8,20 +8,23 @@ package Qto::App::IO::Out::WtrGoogleSheet ;
    use POSIX qw(strftime);
    use Data::Printer ; 
    use Carp ; 
-
    use Text::CSV_XS;
-   use Net::Google::Spreadsheets::V4;
-
-   use Net::Google::DataAPI::Auth::OAuth2;
-    
    use Term::Prompt;
-   use Net::Google::DataAPI::Auth::OAuth2;
-   use Net::Google::Spreadsheets;
    use Data::Printer ; 
+   BEGIN {
+      no warnings 'deprecated';
+      require Net::Google::DataAPI::Auth::OAuth2;
+      require Net::Google::Spreadsheets::V4;
+      require Net::Google::Spreadsheets;
+      use warnings 'deprecated';
+   }
    
-   use utf8;
-
-
+   # work around the annoying use Moo instead warning ...
+   no warnings 'deprecated';
+   use Net::Google::DataAPI::Auth::OAuth2;
+   use Net::Google::Spreadsheets::V4;
+   use Net::Google::Spreadsheets;
+   use warnings 'deprecated';
 	use Qto::App::Utils::Logger ;
    use Qto::App::Utils::Timer ; 
 

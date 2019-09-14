@@ -98,9 +98,9 @@ for my $table ( @tables ) {
 
    # feature-id: d4592c2e-60a4-4078-b499-743423d66d94
 	foreach my $row ( @list ) {
-		$tm = "\n".'test-06 only rows having BOTH name and description containing the string "add" ' ; 
+		$tm = "\n".'test-06 only rows having either name and description containing the string "add" ' ; 
       $tm .= "in the \n $table table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ; 	
-		ok ( $row->{'name'} =~ m/add/g or $row->{'description'} , $tm ) ; 
+		ok ( $row->{'name'} =~ m/add/g or $row->{'description'} =~ m/add/g , $tm ) ; 
 	}
 	
    $url_params = '?like-by=name&like-val=add&like-by=description&like-val=the' ; # choose a word which most probably WILL occur
