@@ -18,12 +18,13 @@ main(){
    do_setup_vim
    do_copy_git_hooks
    do_check_setup_bash
+   do_provision_postgres
    do_create_multi_env_dir
    do_set_chmods
 }
 
 do_copy_git_hooks(){
-	cp -v $unit_run_dir/../../../cnf/git/hooks/* $unit_run_dir/.git/hooks/
+	cp -v $unit_run_dir/../../../cnf/git/hooks/* $unit_run_dir/../../../.git/hooks/
 }
 do_set_chmods(){
    find $PRODUCT_INSTANCE_DIR -type f -name '*.sh' -exec chmod 770 {} \;
@@ -49,6 +50,7 @@ do_set_vars(){
    product_dir="$product_base_dir/$RUN_UNIT" 
    source "$unit_run_dir/../../../.env"
    PRODUCT_INSTANCE_DIR="$product_dir/$RUN_UNIT.$VERSION.$ENV_TYPE.$run_unit_owner"
+   product_instance_dir=$unit_run_dir/../../.. # OBS different than this one ^^^
 }
 
 usage(){
@@ -145,6 +147,9 @@ do_check_install_postgres(){
 	}
 	echo "check the postgres version:"
 	sudo -u postgres psql postgres -c "SELECT version();" | grep PostgreSQL
+
+   ## ensure the postresql starts on boot 
+   sudo update-rc.d postgresql enable
 
 }
 
@@ -257,7 +262,7 @@ EOF_MODULES
       export PERL_MM_OPT="INSTALL_BASE=~/perl5"
       while read -r module ; do cpanm_modules="$cpanm_modules $module " ; done < <("$modules")
       cmd="cpanm $modules"
-      $cmd
+      $cmd || bash $0 # quite often the perl modules passes trough on the second run ...
       sudo curl -L cpanmin.us | perl - Mojolicious
 
       # nasty workaround for the "Moo complainings" in the Net::Google::DataAPI::Oauth2 module
@@ -302,8 +307,45 @@ do_log(){
    test -t 1 && echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$RUN_UNIT][@$host_name] [$$] $msg "
 }
 
+do_provision_postgres(){
+
+   source $product_instance_dir/lib/bash/funcs/export-json-section-vars.sh
+   doExportJsonSectionVars $product_instance_dir/cnf/env/$ENV_TYPE.env.json '.env.db'
+
+   sudo mkdir -p /etc/postgresql/11/main/
+   sudo mkdir -p /var/lib/postgresql/11/main
+
+   # echo "postgres:postgres" | chpasswd  # probably not needed ...
+   echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bashrc
+   
+   set -x
+   sudo /etc/init.d/postgresql restart
+   sudo -u postgres psql -c \
+      "CREATE USER "$postgres_db_useradmin" WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS 
+      PASSWORD '"$postgres_db_useradmin_pw"';"
+   sudo -u postgres psql -c "grant all privileges on database postgres to "$postgres_db_useradmin" ;"
+   sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";'
+   sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "pgcrypto";'
+   sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "dblink";' 
+
+   psql_cnf_dir='/etc/postgresql/11/main'
+   test -f $psql_cnf_dir/pg_hba.conf && \
+      sudo cp -v $psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf.orig.bak && \
+      sudo cp -v $product_instance_dir/cnf/postgres/$psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf && \
+      sudo chown postgres:postgres $psql_cnf_dir
+
+   test -f $psql_cnf_dir/postgresql.conf && \
+      sudo cp -v $psql_cnf_dir/postgresql.conf $psql_cnf_dir/postgresql.conf.orig && \
+      sudo cp -v $product_instance_dir/cnf/postgres/$psql_cnf_dir/postgresql.conf $psql_cnf_dir/postgresql.conf
+
+   sudo chown -R postgres:postgres "/etc/postgresql" && \
+      sudo chown -R postgres:postgres "/var/lib/postgresql" && \
+      sudo chown -R postgres:postgres "/etc/postgresql/11/main/pg_hba.conf" && \
+      sudo chown -R postgres:postgres "/etc/postgresql/11/main/postgresql.conf"
+
+}
 
 main "$@"
 
 
-# eof file src/bash/qto/bootstrap-qto.sh
+# eof file src/bash/qto/bootstrap-qto-host-on-ubuntu.sh
