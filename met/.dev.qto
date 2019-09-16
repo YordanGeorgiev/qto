@@ -43,7 +43,7 @@ src/perl/qto/lib/Qto/Controller/Home.pm
 src/perl/qto/public/poc/web-socket/wsclient.js
 src/perl/qto/lib/Qto.pm
 src/perl/qto/lib/Qto/Controller/WsSelect.pm
-src/perl/qto/t/lib/Qto/Controller/TestWSSelect.t.wip
+src/perl/qto/t/lib/Qto/Controller/TestWSSelect.t
 src/perl/qto/public/poc/web-socket/web-socket.html
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm

@@ -348,8 +348,11 @@ do_create_multi_env_dir(){
    echo -e "\n\n"
    echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
    echo "DONE"
-   echo "NEXT you must RELOAD your bash and go to the PRODUCT_INSTANCE_DIR by: "
-   echo "bash ; cd $PRODUCT_INSTANCE_DIR"
+   echo "# next you MUST reload the new environment variables by:"
+   echo "  source ~/.bashrc ; "
+   echo "# and go to your PRODUCT_INSTANCE_DIR by: "
+   echo " cd $PRODUCT_INSTANCE_DIR"
+   echo "# you could than check the consistency of the Application Layer by:"
    echo "bash src/bash/qto/qto.sh -a check-perl-syntax"
    echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 }
