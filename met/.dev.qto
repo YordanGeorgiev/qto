@@ -43,7 +43,7 @@ src/perl/qto/lib/Qto/Controller/Home.pm
 src/perl/qto/public/poc/web-socket/wsclient.js
 src/perl/qto/lib/Qto.pm
 src/perl/qto/lib/Qto/Controller/WsSelect.pm
-src/perl/qto/t/lib/Qto/Controller/TestWSSelect.t
+src/perl/qto/t/lib/Qto/Controller/TestWSSelect.t.wip
 src/perl/qto/public/poc/web-socket/web-socket.html
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
@@ -180,6 +180,7 @@ src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/qto/lib/Qto/App/Db/In/Postgres/MojoPgWrapper.pm
 src/perl/qto/lib/Qto/App/UI/WtrUIFactory.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrEncrypter.pm
+src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
 src/perl/qto/lib/Qto/App/IO/WtrExportFactory.pm
 src/perl/qto/lib/Qto/App/IO/WtrMdFactory.pm
 src/perl/qto/lib/Qto/App/IO/Out/WtrExporterXls.pm
@@ -334,12 +335,8 @@ src/perl/qto/lib/Qto/App/Utils/Timer.pm
 # ---
 src/bash/qto/tests/mojo-hypnotoad-start.test.sh
 src/bash/qto/funcs/mojo-hypnotoad-start.func.sh
-# ---
 src/bash/qto/tests/mojo-hypnotoad-stop.test.sh
-src/bash/qto/helps/mojo-hypnotoad-stop.help.sh
 src/bash/qto/funcs/mojo-hypnotoad-stop.func.sh
-doc/txt/qto/tests/mojo-hypnotoad-stop.test.txt
-doc/txt/qto/helps/mojo-hypnotoad-stop.help.txt
 doc/txt/qto/funcs/mojo-hypnotoad-stop.func.txt
 # ---
 src/perl/qto/script
@@ -794,3 +791,4 @@ src/bash/qto/funcs/backup-postgres-db-inserts.func.sh
 cnf/git/hooks/pre-commit
 cnf/git/hooks/pre-push
 src/sql/pgsql/scripts/bash/copy-tables.sh
+lib/bash/funcs/find-me.sh

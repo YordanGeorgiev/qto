@@ -1,35 +1,25 @@
-# src/bash/qto/funcs/mojo-hypnotoad-stop.func.sh
-
-# v1.0.9
+# 
 # ---------------------------------------------------------
 # cat doc/txt/qto/funcs/mojo-hypnotoad-stop.func.txt
 # ---------------------------------------------------------
 doMojoHypnotoadStop(){
 
    doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
-   should_exit=${1:-}
-   test -z "${should_exit:-}" && should_exit=1
    test -z "${mojo_hypnotoad_port:-}" && export mojo_hypnotoad_port=8080
-   found=0
 
-	doLog "INFO mojo_hypnotoad_port: $mojo_hypnotoad_port"
-	doLog "DEBUG START doMojoHypnotoadStop"
-	
    while read -r child_of_1_pid; do 
+      echo from the child_of_1_pid : $child_of_1_pid
+      
       while read -r listening_on_port_pid; do 
+         echo and the listening_on_port_pid: $listening_on_port_pid
+         
          while read -r pid_to_kill; do 
             echo killing the following pid_to_kill  $pid_to_kill; 
-            kill -9 $pid_to_kill
-            found=1
-         done < <(ps -ef | grep $child_of_1_pid|grep qto|grep -v grep|awk '{print $2}'); 
-      echo listening_on_port_pid: $listening_on_port_pid
+            sudo kill -9 $pid_to_kill
+
+         done < <(ps -ef | grep $child_of_1_pid|grep $RUN_UNIT |grep -v grep|awk '{print $2}'); 
       done < <(lsof -i:${mojo_hypnotoad_port:-} -t|grep $child_of_1_pid)
-   echo child_of_1_pid : $child_of_1_pid
-   done < <(pgrep -P 1); 
+   done < <(pgrep -P 1)
 
-	doLog "DEBUG STOP  doMojoHypnotoadStop"
 }
-# eof func doMojoHypnotoadStop
 
-
-# eof file: src/bash/qto/funcs/mojo-hypnotoad-stop.func.sh
