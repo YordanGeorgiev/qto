@@ -1,9 +1,15 @@
 # doc/txt/qto/func/mojo-hypnotoad-stop.func.txt
 
-	doMojoHypnotoadStop
+	doMojoHypnotoadStop <<should_exit>>
+
+   where should_exit is 1 or 0
 	
 	# Purpose:
 	# ------------------------------------------------------
-	to stop all running instances of the qto mojo app
+	to stop all running instances of the qto mojo app 
+   running on the same mojo_hypnotoad_port ... 
+
+   Caveat: will NOT stop running hypnotoad processes running 
+   on different port by definition
 
 # eof file: doc/txt/qto/func/mojo-hypnotoad-stop.func.txt

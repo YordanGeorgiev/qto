@@ -334,12 +334,8 @@ src/perl/qto/lib/Qto/App/Utils/Timer.pm
 # ---
 src/bash/qto/tests/mojo-hypnotoad-start.test.sh
 src/bash/qto/funcs/mojo-hypnotoad-start.func.sh
-# ---
 src/bash/qto/tests/mojo-hypnotoad-stop.test.sh
-src/bash/qto/helps/mojo-hypnotoad-stop.help.sh
 src/bash/qto/funcs/mojo-hypnotoad-stop.func.sh
-doc/txt/qto/tests/mojo-hypnotoad-stop.test.txt
-doc/txt/qto/helps/mojo-hypnotoad-stop.help.txt
 doc/txt/qto/funcs/mojo-hypnotoad-stop.func.txt
 # ---
 src/perl/qto/script

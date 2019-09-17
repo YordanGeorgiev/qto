@@ -1,17 +1,15 @@
 #div_search_box {
-  display: block; 
-  position: absolute ; 
   margin-top: 0% ; 
   margin-left: 5%;
-  margin-bottom: 2% ; 
+  margin-bottom: 5px;
   -webkit-font-smoothing: antialiased;
   width: 35%;
+  display: block;
 }
 
 #div_frm_srch {
    position:relative;
    width: 100%;
-   float: center;
    padding: 2% 10% 0% 1%;
    margin: 1% 5% 1% 7%;
    clear: both;
