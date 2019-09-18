@@ -130,7 +130,7 @@ sub doInit {
       $config->{'env'}->{'db'} = $projConfig->{'env'}->{'db'} ; 
    }
 
-   p $config ; 
+   p $config ; # not a debug print !!!
 
    $objLogger = 'Qto::App::Utils::Logger'->new(\$config);
    my $m = "START MAIN";

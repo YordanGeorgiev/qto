@@ -189,7 +189,7 @@ sub doPrintRow {
    # debug p $rid ; 
    # debug rint " stop  rid \n" ; 
    # debug rint "start row: \n" ; 
-   p $row ; 
+   p $row ; # not a debug print !!!
    # debug rint "stop  row: \n" ; 
 
 }
