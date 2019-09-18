@@ -8,7 +8,7 @@ main(){
    do_copy_git_hooks
    do_check_setup_bash
    do_provision_postgres
-   do_create_multi_env_dir
+   #do_create_multi_env_dir
    do_set_chmods
    do_finilize
 }
@@ -26,8 +26,8 @@ do_setup_vim(){
 }
 
 do_check_setup_bash(){
-   test "$(grep -c 'PS1' ~/.bashrc)" -eq 0 && { 
-      echo 'export PS1="`date "+%F %T"` \u@\h  \w \n\n  "' >> ~/.bashrc
+   test "$(grep -c 'PS1' ~/.bash_profile)" -eq 0 && { 
+      echo 'export PS1="`date "+%F %T"` \u@\h  \w \n\n  "' >> ~/.bash_profile
    }
    echo bash ok
 }
@@ -81,7 +81,7 @@ do_check_install_prereqs(){
 
 do_check_install_ubuntu_packages(){
    
-   #eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
+   eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
    packages=$(cat << EOF_PACKAGES
       build-essential
       git
@@ -241,8 +241,9 @@ EOF_MODULES
       echo "deploying modules. This WILL take couple of min, but ONLY ONCE !!!"
       curl -L http://cpanmin.us | perl - --self-upgrade -l ~/perl5 App::cpanminus local::lib
       eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
-      test "$(grep -c 'Mlocal::lib' ~/.bashrc)" -eq 0 && \
-       echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bashrc
+      test "$(grep -c 'Mlocal::lib' ~/.bash_profile)" -eq 0 && \
+      echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bash_profile
+      echo 'source ~/.bash_profile' >> ~/.bashrc
       cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
       export PERL_MM_USE_DEFAULT=1
       perl -MCPAN -e 'CPAN::Shell->force(qw( install Net::Google::DataAPI));'
@@ -251,7 +252,7 @@ EOF_MODULES
       export PERL_LOCAL_LIB_ROOT="~/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
       export PERL_MB_OPT="--install_base \"~/perl5\"" 
       export PERL_MM_OPT="INSTALL_BASE=~/perl5"
-      while read -r module ; do cpanm_modules="$cpanm_modules $module " ; done < <("$modules")
+      while read -r module ; do cpanm_modules="${cpanm_modules:-} $module " ; done < <(echo "$modules")
       cmd="cpanm $modules" 
       # quite often the perl modules passes trough on the second run ...
       $cmd || bash "$unit_run_dir/$RUN_UNIT"'.sh'
@@ -308,7 +309,7 @@ do_provision_postgres(){
    sudo mkdir -p /var/lib/postgresql/11/main
 
    # echo "postgres:postgres" | chpasswd  # probably not needed ...
-   echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bashrc
+   echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bash_profile
    
    sudo /etc/init.d/postgresql restart
    sudo -u postgres psql -c \
@@ -343,18 +344,6 @@ do_create_multi_env_dir(){
 
    mv -v "$product_dir" "$product_dir"'_'
    mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$PRODUCT_INSTANCE_DIR"; 
-   source ~/.bashrc 
-   printf "\033[2J";printf "\033[0;0H"
-   echo -e "\n\n"
-   echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-   echo "DONE"
-   echo "# next you MUST reload the new environment variables by:"
-   echo "  source ~/.bashrc ; "
-   echo "# and go to your PRODUCT_INSTANCE_DIR by: "
-   echo " cd $PRODUCT_INSTANCE_DIR"
-   echo "# you could than check the consistency of the Application Layer by:"
-   echo "bash src/bash/qto/qto.sh -a check-perl-syntax"
-   echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 }
 
 do_create_multi_env_dir(){
@@ -366,13 +355,16 @@ do_create_multi_env_dir(){
 }
 
 do_finilize(){
-   source ~/.bashrc 
+   source ~/.bash_profile 
    printf "\033[2J";printf "\033[0;0H"
    echo -e "\n\n"
    echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
    echo "DONE"
-   echo "NEXT you must RELOAD your bash and go to the PRODUCT_INSTANCE_DIR by: "
-   echo "bash ; cd $PRODUCT_INSTANCE_DIR"
+   echo "# next you MUST reload the new environment variables by:"
+   echo " source ~/.bash_profile ; "
+   echo "# and go to your PRODUCT_INSTANCE_DIR by: "
+   echo " cd $PRODUCT_INSTANCE_DIR"
+   echo "# you could than check the consistency of the Application Layer by:"
    echo "bash src/bash/qto/qto.sh -a check-perl-syntax"
    echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 }
