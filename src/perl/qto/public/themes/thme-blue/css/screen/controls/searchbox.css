@@ -3,13 +3,12 @@
   margin-left: 5%;
   margin-bottom: 5px;
   -webkit-font-smoothing: antialiased;
-  width: 35%;
-  display: block;
+  width: 25%;
+  display:inline;
 }
 
 #div_frm_srch {
    position:relative;
-   width: 100%;
    padding: 2% 10% 0% 1%;
    margin: 1% 5% 1% 7%;
    clear: both;
@@ -68,7 +67,7 @@ input[type="text"] {
   border: 1px solid #eeeeee;
   height: auto;
   overflow: auto;
-  width: 80%;
+  width: 50%;
   background-color: white;
   min-width: 41%;
 }

@@ -6,9 +6,10 @@
 }
 
 #pager {
-   width: 50%;
+   width: 60%;
    display:inline;
    height: 30px;
+   float: right;
 }
 #page_counter{
    font-size: 80% ;
@@ -113,18 +114,17 @@ th:focus {
 #srch_pgr_container{
    display: flex;
    flex-direction: row;
-   align-items: center;
 }
 
 .cls_img_but {
 	background-color: transparent;
 	border: 2px solid transparent ; 
-	border-radius: 3px;
+	border-radius: 2px;
    border-top-left-radius: 45%;
    border-top-right-radius: 45%;
    border-bottom-left-radius: 45%;
    border-bottom-right-radius: 45%;
-   margin: 3px;
+   margin: 1px;
 }
 .cls_img_but:hover {
    background-color: #D3D3D3;
