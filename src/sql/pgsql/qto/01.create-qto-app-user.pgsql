@@ -5,8 +5,8 @@
 \echo :postgres_db_user_pw postgres_db_user_pw;
 \echo :pw pw;
 
-ALTER ROLE usrqtoapp WITH PASSWORD :'postgres_db_user_pw' LOGIN ;
--- CREATE ROLE usrqtoapp WITH PASSWORD :'postgres_db_user_pw' LOGIN ;
+-- ALTER ROLE usrqtoapp WITH PASSWORD :'postgres_db_user_pw' LOGIN ;
+CREATE ROLE usrqtoapp WITH PASSWORD :'postgres_db_user_pw' LOGIN ;
 /*
 DO
 $do$
