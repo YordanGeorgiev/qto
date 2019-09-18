@@ -24,7 +24,7 @@ doMojoDaemonStart(){
    netstat -tulpn | grep qto
  
    # if cmd arg -b is passed to the qto.sh, should not exit like ever, never because of docker
-   test $run_in_backround -eq 1 && while true; do sleep 1000; done;
+   # test ${run_in_backround:-} -eq 1 && while true; do sleep 1000; done;
 
 }
 
