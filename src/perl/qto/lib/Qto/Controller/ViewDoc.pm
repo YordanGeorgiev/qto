@@ -59,9 +59,8 @@ sub doBuildViewControl {
    my $to_hides   = $objModel->get('view.web-action.hide') ; 
    my @hides      = split ( ',' , $to_hides ) if defined ( $to_hides ) ; 
 
-   print "control is \"$control\"\n" ; 
-   # todo:syg 
-   #
+   #debug rint "control is \"$control\"\n" ; 
+   
    unless ( defined ( $to_picks )) {
        
       if ( defined ( $cols )) {

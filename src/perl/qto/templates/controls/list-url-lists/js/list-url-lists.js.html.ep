@@ -18,7 +18,7 @@ var mutations = {
    SET_ITEMS (state, items) {
       state.items = items
    },
-   DELETE_TODO: (state, payload) => {
+   DELETE_ITEM: (state, payload) => {
       var index = state.items.findIndex(todo => todo.id === payload);
       state.items.splice(index, 1);
    }
@@ -27,8 +27,9 @@ var mutations = {
 
 var actions = {
    loadItems ({ commit }) {
-      var webhost = window.location.href.split("/")[2]
-      var ws = new RobustWebSocket("<%= $WsProtocol %>" + "://" + webhost + "/ws-select-items", undefined , {
+      var web_host_port = window.location.href.split("/")[2]
+      var ws_protocol = (window.location.href.split(":")[0] === 'https') ? 'wss' : 'ws';
+      var ws = new RobustWebSocket( ws_protocol + "://" + web_host_port + "/ws-select-items", undefined , {
          timeout: 5000,
          shouldReconnect: function(event, ws) {
          if (event.code === 1008 || event.code === 1011) return
@@ -39,12 +40,12 @@ var actions = {
       });
 
       ws.addEventListener('open', function(event) {
-         console.log ( "opening ws") //todo:ysg
+         // debug console.log ( "opening ws")
          ws.send('open <%= $db %>')
       })
 
       ws.addEventListener('message', function(event) {
-         console.log ( "start msging on ws") //todo:ysg
+         // debug console.log ( "start msging on ws")
          var data = JSON.parse( event.data)
          var items = data.dat  //alles ok 
          commit('SET_ITEMS', items)
@@ -58,7 +59,7 @@ var actions = {
          context.commit("ADD_ITEM", payload)
      },
      deleteItem: (context, payload) => {
-         context.commit("DELETE_TODO", payload)
+         context.commit("DELETE_ITEM", payload)
      }
  }
 

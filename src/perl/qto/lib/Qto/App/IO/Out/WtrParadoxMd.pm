@@ -68,8 +68,8 @@ package Qto::App::IO::Out::WtrParadoxMd ;
          $row_id++ ; 
 
       foreach my $col_name ( @col_names ) {
-            p( $row );
-            p $row->{ $col_name } ; 
+            # rint ( $row );
+            # rint $row->{ $col_name } ; 
             if ( !defined ( $row )  or !defined ( $row->{ $col_name } ) or $row->{ $col_name } eq 'NULL' ) {
                $row->{ $col_name } = '' ; 
             }

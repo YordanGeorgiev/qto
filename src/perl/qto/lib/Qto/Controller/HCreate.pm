@@ -43,11 +43,8 @@ sub doHCreateById {
    my $id               = $perl_hash->{'id'};
    my $seq              = $perl_hash->{'seq'}; # the sequence of the hierarchy item
    
-   # todo:ysg !!!
-   # return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-
    $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
-   $config		      = $self->app->get('AppConfig');
+   $config		         = $self->app->get('AppConfig');
    $db                  = toEnvName ( $db , $config) ;
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;

@@ -24,7 +24,6 @@ our $rdbms_type     = 'postgres';
 my $clients = {};
 our $config = {};
 
-# todo:ysg  - authentication !!!
 sub doWsSelectTables {
 
    my $self          = shift ; 
@@ -32,7 +31,7 @@ sub doWsSelectTables {
    
 	$self->on('message' => sub {
 		my ($self, $msg) = @_;
-		print "WsSelect.pm msg: $msg \n";
+		# debug print "WsSelect.pm msg: $msg \n";
       my $db = $msg ; 
       $db =~ s/open //g; 
       my $config = $self->app->get('AppConfig');
