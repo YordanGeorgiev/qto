@@ -1,14 +1,17 @@
 #div_search_box {
+  display: block; 
+  position: absolute ; 
   margin-top: 0% ; 
   margin-left: 5%;
-  margin-bottom: 5px;
+  margin-bottom: 2% ; 
   -webkit-font-smoothing: antialiased;
-  width: 25%;
-  display:inline;
+  width: 35%;
 }
 
 #div_frm_srch {
    position:relative;
+   width: 100%;
+   float: center;
    padding: 2% 10% 0% 1%;
    margin: 1% 5% 1% 7%;
    clear: both;
@@ -67,7 +70,7 @@ input[type="text"] {
   border: 1px solid #eeeeee;
   height: auto;
   overflow: auto;
-  width: 50%;
+  width: 80%;
   background-color: white;
   min-width: 41%;
 }
