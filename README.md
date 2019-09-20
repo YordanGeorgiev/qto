@@ -1,12 +1,12 @@
 #  README
 * [1. WHY](#1-why)
-* [2. SO, WHAT IS THIS ?!](#2-so,-what-is-this-)
+* [2. SO, WHAT IS THIS ?!](#2-so-what-is-this-)
   * [2.1. WHAT CAN IT DO TO MY ORGANISATION ?](#21-what-can-it-do-to-my-organisation-)
   * [2.2. ASSUMPTION AND PREREQUISITES](#22-assumption-and-prerequisites)
   * [2.3. PROPOSED CAPABILITIES](#23-proposed-capabilities)
 * [3. DEMO](#3-demo)
-* [4. MISSION](#4-mission)
-* [5. DOCUMENTATION](#5-documentation)
+* [4. DOCUMENTATION](#4-documentation)
+* [5. MISSION](#5-mission)
   * [5.1. THE INSTALLATIONS DOC](#51-the-installations-doc)
   * [5.2. THE CONCEPTS DOC](#52-the-concepts-doc)
   * [5.3. THE USERSTORIES DOC](#53-the-userstories-doc)
@@ -28,18 +28,16 @@
     
 
 ## 1. WHY
-Why ?! Yet! Another App ?! ...
+Why ?! Yet! Another App ?! ... 
 
-Software development is prohibitively expensive. This application will provide your organisation with the answers who does/did what, when, how and why in open manner, but ONLY if your organisation has the courage and commitment to do it.  In fact it could be used not only in software development projects , but in  ANY type of project in ANY field ...
-Because work should be inspiring and not overwhelming and stressing people. Because even good intentions without transparency, proper commitment, resource allocations and most importantly, tools and way of working for tracking advancement of an endeavour in an open way reflecting the reality, might end-up wasting people's health, time and money. So this is the app to provide this simple solution for progress tracking, communication and coordination ... 
+Software development is prohibitively expensive. In fact any endeavour with group of people aiming towards common goal in any field is expensive, even solely based on persons' time spent. This application will provide your organisation with the answers who does/did what, when, how and why in open manner, but ONLY if your organisation has the courage and commitment to do it.  
 And tons of other reasons we all having been in project disasters know about ... Still here ?! Let's move on !
 
     
 
 ## 2. SO, WHAT IS THIS ?!
-A generic and simplistic db centric content management system, build on postgres CRUDs ( s stands for search ) and hierarchical nested data-sets. 
-Qto is a web based app for managing multiple databases from the same web application layer by means of simplest possible UI and/or shell tools for xls/md export, import etc. An included example application is the "qto application", which is used to manage multiple projects' issues, including itself ;o). 
-The full and extensive https://qto.fi/qto/view/features_doc contains all the features and functionalities of this released version. 
+A generic and simplistic db centric content management system, build on postgres CRUDs ( s stands for search ) and hierarchical nested data-sets for managing multiple multiple databases from the same web application.An included example application is the "qto application", which is used to manage multiple projects' issues, including itself ;o). 
+The full and extensive https://qto.fi/qto/view/features_doc contains all the features and functionalities of THIS released version. 
 This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture, which is in a way a reflection of the simple axiom in IT - "if there is one there will be many" ...
 
 
@@ -85,13 +83,7 @@ Use the "test.user@gmail.com" and "secret" credentials to login or even better t
 
     
 
-## 4. MISSION
-Enable transperent collaboration.
-
-
-    
-
-## 5. DOCUMENTATION
+## 4. DOCUMENTATION
 
 Qto IS about documentation, we do all the doc-fooding on our docs, which are aimed to be as up-to-date to the current release version as possible. Thus you get the following documentation set:
  - ReadMe - the initial landing readme doc for the project
@@ -102,6 +94,12 @@ Qto IS about documentation, we do all the doc-fooding on our docs, which are aim
  - Installation Guide - a guide for installation of the application
  - End-User Guide - the guide for the usage of the UI ( mainly ) for the end-users
  - Concepts - the concepts doc 
+
+    
+
+## 5. MISSION
+Enable transperent collaboration.
+
 
     
 

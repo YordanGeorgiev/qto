@@ -2,26 +2,33 @@
 * [1. INTRO](#1-intro)
   * [1.1. PURPOSE](#11-purpose)
   * [1.2. AUDIENCE](#12-audience)
-* [2. ARCHITECTURE](#2-architecture)
-  * [2.1. IOCM ARCHITECTURE DEFINITION](#21-iocm-architecture-definition)
-    * [2.1.1. The Control components](#211-the-control-components)
-    * [2.1.2. The Model components](#212-the-model-components)
-    * [2.1.3. The Input Components](#213-the-input-components)
-    * [2.1.4. The Output Components](#214-the-output-components)
-    * [2.1.5. The Converter Components](#215-the-converter-components)
-  * [2.2. MULTI-INSTANCE SETUP](#22-multi-instance-setup)
-    * [2.2.1. Multi-environment naming convention](#221-multi-environment-naming-convention)
-  * [2.3. SOFWARE ARCHITECTURE](#23-sofware-architecture)
-    * [2.3.1. Front-End](#231-front-end)
-    * [2.3.2. Back-End](#232-back-end)
-* [3. APPLICATION CONTROL FLOW ](#3-application-control-flow-)
-  * [3.1. SHELL CONTROL FLOW](#31-shell-control-flow)
-    * [3.1.1. Front-End](#311-front-end)
-    * [3.1.2. Back-End](#312-back-end)
-* [4. SECURITY](#4-security)
-  * [4.1. NON-SECURITY MODE](#41-non-security-mode)
-  * [4.2. SIMPLE NATIVE SECURITY MODE](#42-simple-native-security-mode)
-  * [4.3. REGULAR USERS CREDENTIALS VISIBILITY](#43-regular-users-credentials-visibility)
+* [2. THE QTO SYSTEM INFRASTRUCTURE](#2-the-qto-system-infrastructure)
+  * [2.1. SYSTEM ARCHITECTURAL OVERVIEW BY SIWA DIA](#21-system-architectural-overview-by-siwa-dia)
+  * [2.2. INFRASTRUCTURAL COMPONENTS](#22-infrastructural-components)
+    * [2.2.1. End-user clients](#221-end-user-clients)
+    * [2.2.2. Application Layer and databases hosted in AWS](#222-application-layer-and-databases-hosted-in-aws)
+    * [2.2.3. Local Development and testing](#223-local-development-and-testing)
+    * [2.2.4. GitHub](#224-github)
+* [3. ARCHITECTURE](#3-architecture)
+  * [3.1. IOCM ARCHITECTURE DEFINITION](#31-iocm-architecture-definition)
+    * [3.1.1. The Control components](#311-the-control-components)
+    * [3.1.2. The Model components](#312-the-model-components)
+    * [3.1.3. The Input Components](#313-the-input-components)
+    * [3.1.4. The Output Components](#314-the-output-components)
+    * [3.1.5. The Converter Components](#315-the-converter-components)
+  * [3.2. MULTI-INSTANCE SETUP](#32-multi-instance-setup)
+    * [3.2.1. Multi-environment naming convention](#321-multi-environment-naming-convention)
+  * [3.3. SOFWARE ARCHITECTURE](#33-sofware-architecture)
+    * [3.3.1. Front-End](#331-front-end)
+    * [3.3.2. Back-End](#332-back-end)
+* [4. APPLICATION CONTROL FLOW ](#4-application-control-flow-)
+  * [4.1. SHELL CONTROL FLOW](#41-shell-control-flow)
+    * [4.1.1. Front-End](#411-front-end)
+    * [4.1.2. Back-End](#412-back-end)
+* [5. SECURITY](#5-security)
+  * [5.1. NON-SECURITY MODE](#51-non-security-mode)
+  * [5.2. BASIC HTTP SECURITY MODE](#52-basic-http-security-mode)
+  * [5.3. SIMPLE NATIVE SECURITY MODE ( EXPERIMENTAL )](#53-simple-native-security-mode-(-experimental-))
 
 
 
@@ -43,111 +50,156 @@ Architects and System designers of a potential or current system, comprised on d
 
     
 
-## 2. ARCHITECTURE
+## 2. THE QTO SYSTEM INFRASTRUCTURE
+This section describes the current system infrastructure
+
+    
+
+### 2.1. System architectural overview by SIWA dia
+The following diagram implements the Simpliest Possible Way of describing Architecture principle - it's sole purpose is to quickly provide an overview of the existing infrasture built with the help of the qto application. 
+
+
+Figure 1:
+The qto insfrastructure
+![Figure 1:
+The qto insfrastructure](https://raw.githubusercontent.com/YordanGeorgiev/qto/v0.7.1/doc/img/system_guide/qto-infra.jpg)
+
+    
+
+### 2.2. Infrastructural components
 
 
     
 
-### 2.1. IOCM architecture definition
+#### 2.2.1. End-user clients
+The end-users can access any qto application via their browsers. All of the functionalities are available in mobile browsers ( smart-phones or tablets not older than 2 years)
+
+    
+
+#### 2.2.2. Application Layer and databases hosted in AWS
+Both the application layer and the database(s) are hosted on the same amazon ec2 host ( this will change in the future, as the architecture supports dbs in RDS or in separate hosts)
+
+    
+
+#### 2.2.3. Local Development and testing
+The development and testing are done in an ubuntu 18.04 vm running on top of mac - the binary configuration for the vm in described in the bootstrap script.
+You could also develelop and test in other Unix-like OS('s) - GentOs, MacOS etc, as long as you could figure out how-to install and provision postgres , the required OS binaries and the Perl modules for the application layer. 
+
+    
+
+#### 2.2.4. GitHub
+The source code for the qto project is hosted in GitHub:
+https://github.com/YordanGeorgiev/qto
+
+
+    
+
+## 3. ARCHITECTURE
+
+
+    
+
+### 3.1. IOCM architecture definition
 The Input-Output Control Model architecture is and application architecture providing the highest possible abstraction for almost any software artefact, by dividing its main executing components based on their abstract responsibilities - Input, Output , Control and Model. 
 
     
 
-#### 2.1.1. The Control components
+#### 3.1.1. The Control components
 The Control components control the control flow in the application. The instantiate the Models and pass them to the Readers , Converters and Writers for output. 
 
     
 
-#### 2.1.2. The Model components
+#### 3.1.2. The Model components
 The model components model the DATA of the application - that is no configuration, nor control flow nor anything else should be contained wihin the model. 
 Should you encounter data, which is not modelled yet , you should expand the Model and NOT provide different data storage and passing techniques elsewhere in the code base ... 
 
     
 
-#### 2.1.3. The Input Components
+#### 3.1.3. The Input Components
 The Input Components are generally named as "Readers". Their responsibility is to read the application data into Model(s). 
 
     
 
-#### 2.1.4. The Output Components
+#### 3.1.4. The Output Components
 The Output Components are generally named as "Writers" Their responsibility is to write the already processed data from the Models into the output media . 
 
     
 
-#### 2.1.5. The Converter Components
+#### 3.1.5. The Converter Components
 The Converters apply usually the business logic for converting the input data from the Models into the app specific data back to the Models. 
 
     
 
-### 2.2. Multi-instance setup
+### 3.2. Multi-instance setup
 The multi-instance setup refers to the capability of any installed and setup instance of the qto application to "know" its version , environment type  - development , testing and production ) and owner.
 
 
-Figure: 1
+Figure: 2
 qto multi-instance setup
-![Figure: 1
+![Figure: 2
 qto multi-instance setup](https://github.com/YordanGeorgiev/qto/blob/master/doc/img/system_guide/multi-env-setup.png?raw=true)
 
     
 
-#### 2.2.1. Multi-environment naming convention
+#### 3.2.1. Multi-environment naming convention
 Each database used by the qto application has an &lt;&lt;environment abbreviation&gt;&gt; suffix referring to its environment type. Running application layers against different db versions should be supported as much as possible.  
 
     
 
-### 2.3. Sofware architecture
+### 3.3. Sofware architecture
 
 
     
 
-#### 2.3.1. Front-End
+#### 3.3.1. Front-End
 The Mojolicious Web Framework runs on top of a perl instance, which serves the back-end requests and passes back and forth json, as well as the ui Mojo templates dynamically, which combined with the vue template create the generic ui. 
 
     
 
-#### 2.3.2. Back-End
+#### 3.3.2. Back-End
 The id's of the tables which ARE VISIBLE to the end users ui are big integers, which are formed by the concatenation of the year, month, day, hour, minutes and second in which the row in the table is created. 
 
     
 
-## 3. APPLICATION CONTROL FLOW 
+## 4. APPLICATION CONTROL FLOW 
 This section provides a generic control flow description for the shell based and ui based control flows. 
 
     
 
-### 3.1. Shell control flow
+### 4.1. Shell control flow
 The shell control flow is based on the control model input output architecture. 
 
     
 
-#### 3.1.1. Front-End
+#### 4.1.1. Front-End
 The Mojolicious Web Framework runs on top of a perl instance, which serves the back-end requests and passes back and forth json, as well as the ui Mojo templates dynamically, which combined with the vue template create the generic ui. 
 
     
 
-#### 3.1.2. Back-End
+#### 4.1.2. Back-End
 The id's of the tables which ARE VISIBLE to the end users ui are big integers, which are formed by the concatenation of the year, month, day, hour, minutes and second in which the row in the table is created. 
 
     
 
-## 4. SECURITY
+## 5. SECURITY
 This section provides an overview of the security of a system operating the qto application. 
 
     
 
-### 4.1. Non-security mode
+### 5.1. Non-security mode
 In the non-security mode the application does NOT authenticate any one. Both runs over https and ht
 
     
 
-### 4.2. Simple native security mode
-This feature is experimental as of v0.6.8. It simply means that it needs much more testing in real-life scenarios to provide the level of certainty promised by it. In this mode the user credentials - email and password are stored in the users table with a blowfish encryption. And all but the login page need a match for the e-mail with the respective password. 
-Sessions are used for storing the state of the authentication, which is entirely handled by the Mojolicious web framework - all data gets serialised to json and stored Base64 encoded on the client-side, but is protected from unwanted changes with a HMAC-SHA1 signature. 
+### 5.2. Basic http security mode
+in this mode different http passwords can be registed. The following web page can be used for that : 
+http://www.htaccesstools.com/htpasswd-generator/
 
     
 
-### 4.3. Regular users credentials visibility
-The regular users do have visibility only on their own user credentials - the only one user having the users' credentials management capability is the AdminEmail configured System Administrator. 
+### 5.3. Simple native security mode ( EXPERIMENTAL )
+This feature is experimental as of v0.6.7. It simply means that it needs much more testing in real-life scenarios to provide the level of centainty promised by it. In this mode the user credentials - email and password are stored in the users table with a blowfish encryption. And all but the login page need a match for the e-mail with the respective password. 
+Sessions are used for storing the state of the authentication, which is entirely handled by the Mojolicious web framework - all data gets serialized to json and stored Base64 encoded on the client-side, but is protected from unwanted changes with a HMAC-SHA1 signature. 
 
     
 

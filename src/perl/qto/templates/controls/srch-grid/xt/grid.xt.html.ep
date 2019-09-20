@@ -2,15 +2,13 @@
       <div id="div_grid_tmpl" style="overflow-x: auto;" >
          <modal :id="cid" v-if="showModal" v-on:close="showModal = false" >
          </modal>
-         <div id="srch_pgr_container">
          <div_search_box id="div_search_box" />
          <div id="pager">
-         <btn-play-prev-10 id="btnPlayPrev10" v-on:clickedBtnPlayPrev10="goToPrevPage10" tabindex="3"></btn-play-prev-10>
-         <btn-play-prev id="btnPlayPrev" v-on:clickedBtnPlayPrev="goToPrevPage" tabindex="3"></btn-play-prev>
-         <span id="page_counter" v-for> {{this.$parent.pageNum}} / {{this.$parent.pagesCount }}</span>
-         <btn-play-next id="btnPlayNext" v-on:clickedBtnPlayNext="goToNextPage" tabindex="3"></btn-play-next>
          <btn-play-next-10 id="btnPlayNext10" v-on:clickedBtnPlayNext10="goToNextPage10" tabindex="3"></btn-play-next-10>
-         </div>
+         <btn-play-next id="btnPlayNext" v-on:clickedBtnPlayNext="goToNextPage" tabindex="3"></btn-play-next>
+         <div id="page_counter"><span v-for> {{this.$parent.pageNum}} / {{this.$parent.pagesCount }}</span></div>
+         <btn-play-prev id="btnPlayPrev" v-on:clickedBtnPlayPrev="goToPrevPage" tabindex="3"></btn-play-prev>
+         <btn-play-prev-10 id="btnPlayPrev10" v-on:clickedBtnPlayPrev10="goToPrevPage10" tabindex="3"></btn-play-prev-10>
          </div>
 			<table id="grid" style="clear:both" >
 			 <thead>

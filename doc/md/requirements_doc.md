@@ -30,7 +30,7 @@
   * [5.3. PROJECTS DATABASES SCALABILITY](#53-projects-databases-scalability)
 * [6. PERFORMANCE](#6-performance)
   * [6.1. PAGE LOAD MAXIMUM TIME](#61-page-load-maximum-time)
-  * [6.2. LOGIN, LOGOUT](#62-login,-logout)
+  * [6.2. LOGIN, LOGOUT](#62-login-logout)
 * [7. MULTI-INSTANCE OPERABILITY AND DEPLOYABILITY](#7-multi-instance-operability-and-deployability)
   * [7.1. ENVIRONMENT TYPE SELF-AWARENESS](#71-environment-type-self-awareness)
   * [7.2. CROSS RUNNING BETWEEN INSTANCES OF DIFFERENT TYPES](#72-cross-running-between-instances-of-different-types)
