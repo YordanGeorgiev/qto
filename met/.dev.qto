@@ -383,8 +383,8 @@ doc/txt/qto/helps/txt-to-db.help.txt
 # the postgres DDL scripts
 src/sql/pgsql
 src/sql/pgsql/qto
-src/sql/pgsql/qto/00.create-db.pgsql
 src/bash/qto/funcs/run-pgsql-scripts.func.sh
+src/sql/pgsql/qto/00.create-db.pgsql
 src/sql/pgsql/qto/01.create-qto-app-user.pgsql
 src/sql/pgsql/qto/funcs
 src/sql/pgsql/qto/funcs/01.create-func-fns_update_time.sql

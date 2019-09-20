@@ -20,6 +20,9 @@ BEGIN
 END
 $do$;
 ALTER ROLE usrqtoapp WITH PASSWORD  LOGIN ;
+
+-- how-to perform this one in a one-liner from sudo os usr ?!
+-- sudo su - postgres -c "psql -d prd_ysg -c "ALTER ROLE usrqtoadmin WITH PASSWORD 'usrqtoadmin' LOGIN;"
 */
 
 -- to enable this for newly created relations too, then set the default permissions:
