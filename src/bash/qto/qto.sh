@@ -75,6 +75,7 @@ do_run_actions(){
 
       [[ $arg_action == to-ver=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeVersion $arg_action")
       [[ $arg_action == to-env=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeEnvType $arg_action")
+      [[ $arg_action == to-app=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoCloneToApp $arg_action")
 
       done < <(echo "$actions")
 
@@ -364,6 +365,11 @@ main "$@"
 # stored in the src/bash/qto/funcs/run-shell-action.func.sh
 #----------------------------------------------------------
 #
+# ${var+blahblah}: if var is defined, 'blahblah' is substituted for the expression, else null is
+# substituted
+# ${var-blahblah}: if var is defined, it is itself substituted, else 'blahblah' is substituted
+# ${var?blahblah}: if var is defined, it is substituted, else the function exists with 'blahblah' as
+# an error message.
 #----------------------------------------------------------
 #  EXIT CODES
 # 0 --- Successfull completion
