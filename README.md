@@ -1,7 +1,7 @@
 #  README
 * [1. WHY](#1-why)
 * [2. SO, WHAT IS THIS ?!](#2-so-what-is-this-)
-  * [2.1. WHAT CAN IT DO TO MY ORGANISATION ?](#21-what-can-it-do-to-my-organisation-)
+  * [2.1. WHAT CAN IT DO TO FOR ME AND/OR MY ORGANISATION ?](#21-what-can-it-do-to-for-me-and/or-my-organisation-)
   * [2.2. ASSUMPTION AND PREREQUISITES](#22-assumption-and-prerequisites)
   * [2.3. PROPOSED CAPABILITIES](#23-proposed-capabilities)
 * [3. DEMO](#3-demo)
@@ -31,7 +31,7 @@
 Why ?! Yet! Another App ?! ... 
 
 Software development is prohibitively expensive. In fact any endeavour with group of people aiming towards common goal in any field is expensive, even solely based on persons' time spent. This application will provide your organisation with the answers who does/did what, when, how and why in open manner, but ONLY if your organisation has the courage and commitment to do it.  
-And tons of other reasons we all having been in project disasters know about ... Still here ?! Let's move on !
+Moreover this application will provide you with the means to define your own business logic ... Still here ?! Let's move on !
 
     
 
@@ -48,8 +48,8 @@ the 7 main entities of the qto app](https://raw.githubusercontent.com/YordanGeor
 
     
 
-### 2.1. What can it do to my organisation ?
-With qto you could either re-use the existing items for management available from the home page or you could in less than 5 minutes per item define your own. 
+### 2.1. What can it do to for me and/or my organisation ?
+With qto you could either re-use the existing items for management available from the home page or you could in less than 5 minutes per item define your own - that is create entirely new data-driven application.
 
     
 

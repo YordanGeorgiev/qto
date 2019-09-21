@@ -1,3 +1,21 @@
+@media screen (max-width: 639px) {
+   .boxes{
+      flex-flow: column nowrap;
+      align-items:center;
+   }
+   .left{
+      min-width: 100%;
+   }
+   .right{
+      min-width: 100%;
+   }
+}
+@media screen (min-width: 640px) {
+   .boxes{
+      flex-flow: row nowrap;
+   }
+}
+
 #div_central_panel{
    padding: 0;
 }
@@ -6,19 +24,31 @@ body{
   padding: 1% 1% 40% 2%;
 }
 
-#grid-container{
-   margin:0;
-   display: grid;
-    grid-column-gap: 20%;
+.boxes{
+   display:flex;
+   justify-content:space-between;
+   align-items:center;
 }
-#left{
-   grid-column-start: 1;
-   grid-column-end: 1;
+
+
+.col{
+   display:flex;
+   flex-flow: column nowrap;
 }
-#right{
-   grid-column-start: 3;
-   grid-column-end: 3;
-} 
+
+.left{
+   flex: 0 1 auto;
+   min-width: 50%;
+   align-self:flex-start;
+   justify-content:space-between;
+}
+.right{
+   flex: 0 1 auto;
+   align-self:flex-start;
+   min-width: 50%;
+   align-items:center;
+   justify-content:space-between;
+}
 
 h1{
   font-size:1.5em;
@@ -27,16 +57,16 @@ h1{
 
 ul{
    list-style: none; 
-   width: 270px;
+   width: 220px;
 }
 
 .cls_lst_item {
-   margin: 2px 2px 2px 20px;
+   margin: 2px 2px 2px 2px;
    line-height: 3;
    position:relative;
-    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 0, 0, 0.1) inset;
+       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 0, 0, 0.1) inset;
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 0, 0, 0.1) inset;
    font-weight: bold ; 
    border-radius: 7px;
 	border: 1px solid #CDCDCD;

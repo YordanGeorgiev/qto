@@ -1,15 +1,15 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+cnf/env
+cnf/env/dev.env.json
+cnf/env/tst.env.json
+cnf/env/qas.env.json
+cnf/env/prd.env.json
 src/bash/qto/bootstrap-qto-host-on-ubuntu.sh
 src/bash/qto/qto.sh
 src/bash/qto/funcs/check-init-terraform.func.sh
 src/bash/qto/funcs/init-aws-instance.func.sh
 src/terraform
 src/terraform/tpl/qto/main.tf.tpl
-cnf/env
-cnf/env/dev.env.json
-cnf/env/tst.env.json
-cnf/env/qas.env.json
-cnf/env/prd.env.json
 src/bash/qto/funcs/scramble-confs.func.sh
 src/bash/qto/funcs/unscramble-confs.func.sh
 .vimrc

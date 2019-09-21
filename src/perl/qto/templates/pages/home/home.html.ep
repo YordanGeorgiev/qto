@@ -12,8 +12,8 @@
 	</div>
 
    <template id="list-items">
-		<div id="grid-container">
-		  <div id="left">
+		<div class="boxes">
+		  <div class="col left">
 			  <ul class="cls_items">
 					<li v-for="item in items" v-if="!item.endsWith('_doc')"
 						 class="cls_lst_item"
@@ -22,7 +22,7 @@
 						<a :href="'/<%= $db %>/list/' + item"> list {{item}} </a></li>
 			  </ul>
 		  </div>
-		  <div id="right">
+		  <div class="col right">
 			  <ul class="cls_items">
 					<li v-for="item in items" v-if="item.endsWith('_doc')"
 						 class="cls_lst_item"

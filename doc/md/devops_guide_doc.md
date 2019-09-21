@@ -91,7 +91,7 @@ Of course you are free to not follow these principles, the less you follow them 
     
 
 ### 1.1. Personal responsibility
-Any given instance of the qto should have ONE and only ONE person which is responsible at the end for the functioning of THIS instance - so think carefully before attempting to take ownership for an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instance. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no service level agreement, nor even promise to help. 
+Any given instance of the qto should have ONE and only ONE person which is responsible at the end for the functioning of THE instance - so think carefully before attempting to take ownership of an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instance. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no Service Level Agreement, not even promise to help. 
 
     
 
@@ -125,6 +125,7 @@ Things should be as simple as possible, but not simpler - if Einstein said it it
 
 ### 1.7. Do not allow broken windows
 A broken windows is any peace of code or documentation which is hanging around not included in the integration tests suite and not matching the most up-to-date standards for work deliverables. Either bring it up to the standard level or get rid of it. 
+As soon as you find a bug, write a test for it.
 
     
 

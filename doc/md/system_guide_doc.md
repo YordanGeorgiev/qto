@@ -27,8 +27,7 @@
     * [4.1.2. Back-End](#412-back-end)
 * [5. SECURITY](#5-security)
   * [5.1. NON-SECURITY MODE](#51-non-security-mode)
-  * [5.2. BASIC HTTP SECURITY MODE](#52-basic-http-security-mode)
-  * [5.3. SIMPLE NATIVE SECURITY MODE ( EXPERIMENTAL )](#53-simple-native-security-mode-(-experimental-))
+  * [5.2. SIMPLE NATIVE SECURITY MODE ( BETA )](#52-simple-native-security-mode-(-beta-))
 
 
 
@@ -41,7 +40,7 @@
     
 
 ### 1.1. Purpose
-The purpose of this guide is to provide description of the qto systems and application architecture.
+The purpose of this guide is to provide description of the qto system and application architecture.
 
     
 
@@ -51,7 +50,7 @@ Architects and System designers of a potential or current system, comprised on d
     
 
 ## 2. THE QTO SYSTEM INFRASTRUCTURE
-This section describes the current system infrastructure
+This section describes the current system infrastructure.
 
     
 
@@ -167,17 +166,19 @@ This section provides a generic control flow description for the shell based and
     
 
 ### 4.1. Shell control flow
-The shell control flow is based on the control model input output architecture. 
+The shell control flow is based on the control model input output architecture. The usual pattern is to call a single &lt;&lt;doSomeAction&gt;&gt; shell function, which is stored in a some-action.func.sh file and loaded dynamically based on this naming convention. Maximun of 2 level nesting is used in the functional calls, that is once an shell action is evoked it could call only 1 funtion, which might or might be not a shell action function , BUT not more, to address unneeded complexity written in bash. 
 
     
 
 #### 4.1.1. Front-End
-The Mojolicious Web Framework runs on top of a perl instance, which serves the back-end requests and passes back and forth json, as well as the ui Mojo templates dynamically, which combined with the vue template create the generic ui. 
+The Mojolicious Web Framework runs on top of a perl instance, which serves the back-end requests and passes back and forth json, as well as the ui Mojo templates dynamically, which combined with the vue template create the generic ui loaded in modern html 5, web sockets and ajax capable browsers.
+That said the html,js , vue code is mixed with some perl Mojolicious template code several times per file unit and the logic of building the file units into html pages in defined by the Mojolicious templating system, but once one could grasp the concept the developing of the front-end is more or less html,javascript , vue centric. 
 
     
 
 #### 4.1.2. Back-End
 The id's of the tables which ARE VISIBLE to the end users ui are big integers, which are formed by the concatenation of the year, month, day, hour, minutes and second in which the row in the table is created. 
+The primary keys are however GUID's to provide the underlying expandability for cross-domain, cross-db data transfers. 
 
     
 
@@ -187,19 +188,13 @@ This section provides an overview of the security of a system operating the qto 
     
 
 ### 5.1. Non-security mode
-In the non-security mode the application does NOT authenticate any one. Both runs over https and ht
+In the non-security mode the application does NOT authenticate any one. Both run over https and http. Of course if you use http all the traffic will be in plain text ...
 
     
 
-### 5.2. Basic http security mode
-in this mode different http passwords can be registed. The following web page can be used for that : 
-http://www.htaccesstools.com/htpasswd-generator/
-
-    
-
-### 5.3. Simple native security mode ( EXPERIMENTAL )
-This feature is experimental as of v0.6.7. It simply means that it needs much more testing in real-life scenarios to provide the level of centainty promised by it. In this mode the user credentials - email and password are stored in the users table with a blowfish encryption. And all but the login page need a match for the e-mail with the respective password. 
-Sessions are used for storing the state of the authentication, which is entirely handled by the Mojolicious web framework - all data gets serialized to json and stored Base64 encoded on the client-side, but is protected from unwanted changes with a HMAC-SHA1 signature. 
+### 5.2. Simple native security mode ( beta )
+This feature is still considered beta mode, due to it's complexity and potential risks for bugs ... In this mode the authentication is performed against the project defined in the login page ( where project is actually the database to which the application layer can connect to ). This means that one user can have access to multiple project databases and be authenticated agains some of them thus being able to navigate with the same browser from project to project. In this mode the user credentials - email and password are stored in the users table with a blowfish encryption.
+Sessions are used for storing the state of the authentication, which is handled by the Mojolicious web framework - all data gets serialized to json and stored Base64 encoded on the client-side, but is protected from unwanted changes with a HMAC-SHA1 signature. 
 
     
 
