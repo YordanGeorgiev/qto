@@ -3,6 +3,9 @@
 # how-to export the documentation of the desired db. 
 clear ; bash src/bash/qto/qto.sh -a generate-md-docs
 
+# how-to run sql as the postgres user
+clear ; sudo su - postgres -c "psql -d postgres -c \"drop database dev_qto\""
+
 # how-to load xls sheets into tables , obs - do_truncate_tables=1 WILL truncate the postgres tables
 export do_truncate_tables=0 ; clear ; perl src/perl/qto/script/qto.pl --do xls-to-db --tables system_guide_doc
 
