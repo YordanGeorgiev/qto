@@ -16,6 +16,13 @@
 			%= submit_button 'submit', class=>"btn", value=>' GO '
 		% end 
 	</div>
+   <div id="login_app_tooltip">
+      <%= " $db" =%>
+      <%= " $ProductVersion " =%>
+      <%= " $EnvType " =%>
+      <%= " $GitShortHash " =%>
+      <%= " $page_load_time " =%>
+   </div>
 % end
 
 

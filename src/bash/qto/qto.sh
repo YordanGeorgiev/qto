@@ -25,8 +25,8 @@ main(){
    do_check_ready_to_start
    test -z "${actions:-}" && actions=' print-usage '
    do_run_actions "$actions"
-   do_check_git_hooks
-   doExit $exit_code "# = STOP  MAIN = $RUN_UNIT "
+   test -d $PRODUCT_INSTANCE_DIR/.git/hooks/ && do_check_git_hooks
+   doExit $exit_code "# ::: STOP  MAIN :::  $RUN_UNIT "
 }
 
 
@@ -326,7 +326,7 @@ do_set_vars(){
    ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
    doLog "INFO # --------------------------------------"
-   doLog "INFO # ===     START MAIN   === $RUN_UNIT"
+   doLog "INFO #       ::: START MAIN ::: $RUN_UNIT"
    doLog "INFO # --------------------------------------"
 
    exit_code=0
@@ -339,12 +339,21 @@ do_set_vars(){
 
 }
 
+
 do_check_git_hooks(){
+
+   # check deploy the pre-commit and pre-push hooks
+   if [[ ! -f $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit || ! -f $PRODUCT_INSTANCE_DIR/.git/hooks/pre-push ]];then
+      cp -v $PRODUCT_INSTANCE_DIR/cnf/git/hooks/* $PRODUCT_INSTANCE_DIR/.git/hooks/
+   fi
+
+   # if the hooks exists, but someone DELIBERATELY AND EXPLICITLY removed the run-functional-tests - RE-ADD them
    test "$(grep -c 'run-functional-tests' $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit)" -lt 1 && {
       echo "
          ./src/bash/qto/qto.sh -a run-functional-tests
       " >> $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit
    }
+   # if the hooks exists, but someone DELIBERATELY AND EXPLICITLY removed the unscramble confs re-add them
    test "$(grep -c 'unscramble-confs' $PRODUCT_INSTANCE_DIR/.git/hooks/pre-push)" -lt 1 && {
       echo "
          ./src/bash/qto/qto.sh -a unscramble-confs

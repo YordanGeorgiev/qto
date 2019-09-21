@@ -41,7 +41,7 @@ sub doLoginUser {
    my $epass            = undef ; 
    my $email            = $self->param('email' );
    my $redirect_url     = $self->param('redirect-url' );
-   $redirect_url        = '/' . toPlainName ($db) . '/home' unless $redirect_url ;
+   $redirect_url        = '/' . $db . '/home' unless $redirect_url ;
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
    $objModel->set('postgres_db_name' , $db ) ; 
@@ -53,6 +53,7 @@ sub doLoginUser {
    if ( $ret != 0 ) {
       $objLogger->doLogInfoMsg ( 'login failed for "' . $self->setEmptyIfNull($email) . '"') ; 
       $msg = 'login failed! ' . $msg ;
+      $redirect_url = '/' . $db . '/login' ; 
       $self->doRenderPageTemplate($ret, $msg ,$msg_color,$db,$redirect_url);
       return ;
    } 
@@ -92,16 +93,17 @@ sub doShowLoginForm {
    
    $config		 		   = $self->app->get('AppConfig');
    my $alConfig         = $config->{'env'}->{'app'} ; 
-   $db                  = toEnvName ( $db , $config) ;
+   my $instance_domain  = $alConfig->{ 'web_host' } . $alConfig->{ 'port' } . '.' . $db ;
+   my $proj             = toEnvName ( $db , $config) ;
 
+   my $sessions = () ; 
+   $sessions = Mojolicious::Sessions->new  ;
+   $sessions->load($self);
+   $sessions->cookie_name('qto.' . $db) unless $sessions->cookie_name ;
+   $sessions->default_expiration(86400);
+   $sessions->cookie_domain( $instance_domain) unless $sessions->cookie_domain( $instance_domain);
    my $redirect_url = $self->session( 'app.' . $db . '.url' ) if defined $self->session( 'app.' . $db . '.url' ) ; 
-   my $session = Mojolicious::Sessions->new ;
-   $self->session(expires => 1);
-   $session->cookie_name('qto.' . $db);
-   $session->default_expiration(86400);
-   my $instance_domain = $alConfig->{ 'web_host' } . $alConfig->{'env'}->{'app'}->{ 'port' } . '.' . $db ;
-   $session  = $session->cookie_domain( $instance_domain);
-
+   $self->session( 'app.' . $db . '.user' => undef);
    $self->doRenderPageTemplate(200,$msg,$msg_color,$db,$redirect_url) ;
    return ;
 }
@@ -134,9 +136,9 @@ sub doRenderPageTemplate {
     , 'msg'             => $msg
     , 'msg_color'       => $msg_color
     , 'db' 		         => $db
-    , 'EnvType' 		   => $config->{'EnvType'}
-    , 'ProductVersion' 	=> $config->{'ProductVersion'}
-    , 'GitShortHash'    => $config->{'GitShortHash'}
+    , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
+    , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
+    , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'notice'          => $notice
     , 'redirect_url'    => $redirect_url
