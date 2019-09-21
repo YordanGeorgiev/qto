@@ -10,6 +10,8 @@ our @EXPORT = qw(toPlainName toEnvName );
 sub toEnvName {
    my $db                  = shift ; 
    my $config              = shift ; 
+
+   return undef unless ( $db or $config ) ;
    my @env_prefixes        = ( 'dev_' , 'tst_' , 'qas_' , 'prd_' );
  
    my $db_prefix           = substr($db,0,4);

@@ -66,9 +66,8 @@ sub isAuthenticated {
 
    # basic native authentication mode if NOT started with this env var
    unless ( defined ( $self->session( 'app.' . $db . '.user')) ) {
-      my $pdb                 = toPlainName ( $db ) ;
-      my $url = '/' . $pdb . '/login' ;
-      $self->session( 'app.' . $db . '.msg' => 'please login to ' . $pdb);
+      my $url = '/' . toPlainName($db) . '/login' ;
+      $self->session( 'app.' . $db . '.msg' => 'please login to ' . $db);
       $self->session( 'app.' . $db . '.url' => $self->req->url->to_abs );
       $self->redirect_to( $url );
       return 0 ;

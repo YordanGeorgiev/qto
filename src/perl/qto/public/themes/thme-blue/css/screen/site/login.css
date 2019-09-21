@@ -1,6 +1,17 @@
 #div_central_panel{
    padding: 0;
 }
+#login_app_tooltip {
+   position: absolute;
+   z-index: 10;
+   top: 95%;
+   left: 10px;
+   width: auto;
+   text-align: left;
+   border-radius: 7px;
+   padding: 7px 10px 7px 10px ;
+   color: grey ;
+}
 body{
   margin: 0 auto 0 auto;  
   text-align:center;

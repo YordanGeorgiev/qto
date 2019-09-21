@@ -14,8 +14,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $t          = Test::Mojo->new('Qto');
    $t->ua->max_redirects(10);
    my $config  = $t->app->get('AppConfig') ; 
-   my $db_name    = $config->{'env'}->{'db'}->{'postgres_db_name'} ; 
-   my $url        = '/' . $db_name . '/login' ; # the login url to test for 
+   my $db    = $config->{'env'}->{'db'}->{'postgres_db_name'} ; 
+   my $url        = '/' . $db . '/login' ; # the login url to test for 
    my $tx         = {}  ; # the transaction object 
 
    $tm = "the email posted should not be empty"; 
@@ -72,8 +72,26 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
    $tm = "a successfull result redirects to the home page";
    $tx = $t->ua->post( $url => 'form'  => {'email' =>'test.user@gmail.com', 'pass' => 'secret'});
-   ok ( $tx->result->dom->all_text =~ "$db_name home" , $tm );
+   ok ( $tx->result->dom->all_text =~ "$db home" , $tm );
    printf "\n";
    # debug p $tx->result->dom ;
+  
+   # check that the product version , and the short hash are on the page
+   my $env = $config->{'env'}->{'run'}->{'ENV_TYPE'} ; 
+   my $dom = {} ;                                # the mojo dom parser 
+
+   $tm = "login product_type: $env " ; 
+   $url = '/' . $db . '/login' ; 
+
+   $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
+   ok ( $dom->find('div')->[2] =~ m/$env/ , $tm ) ;
+
+   my $GitShortHash = $config->{'env'}->{'run'}->{ 'GitShortHash' } ; 
+   $tm = "the app label contains the short git hash of this product instance: $GitShortHash" ; 
+   ok ( $dom->find('div')->[2] =~ m/$GitShortHash/ , $tm ) ;
+  
+   my $ProductVersion = $config->{'env'}->{'run'}->{'VERSION'} ;
+   $tm = "login product version of this product instance: $ProductVersion " ; 
+   ok ( $dom->find('div')->[2] =~ m/$ProductVersion/ , $tm ) ;
 
 done_testing();

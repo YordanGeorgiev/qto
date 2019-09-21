@@ -68,9 +68,9 @@ sub doSearchItems {
        , 'item'            => 'search'
        , 'msg'             => ''
        , 'db' 		         => $db
-       , 'EnvType' 		=> $config->{'EnvType'}
-       , 'ProductVersion' 	=> $config->{'ProductVersion'}
-       , 'GitShortHash' => $config->{'GitShortHash'}
+       , 'EnvType' 		=> $config->{'env'}->{'run'}->{'ENV_TYPE'}
+       , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
+       , 'GitShortHash' => $config->{'env'}->{'run'}->{'GitShortHash'}
        , 'page_load_time'  => $page_load_time
        , 'srch_control'    => "['title']" 
        , 'notice'          => $notice
@@ -142,9 +142,9 @@ sub doRenderPageTemplate {
     , 'item'            => 'search'
     , 'msg'             => $msg
     , 'db' 		         => $db
-    , 'EnvType' 		=> $config->{'EnvType'}
-    , 'ProductVersion' 	=> $config->{'ProductVersion'}
-    , 'GitShortHash'    => $config->{'GitShortHash'}
+    , 'EnvType' 		=> $config->{'env'}->{'run'}->{'ENV_TYPE'}
+    , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
+    , 'GitShortHash' => $config->{'env'}->{'run'}->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'srch_control'    => $srch_control
     , 'notice'          => $notice
