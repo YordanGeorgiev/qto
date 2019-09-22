@@ -1,12 +1,13 @@
 # file: doc/cheats/qto-cheat-sheet.sh
 
+sudo -u postgres psql -c "ALTER USER "$postgres_db_useradmin" WITH SUPERUSER CREATEROLE 
+      CREATEDB REPLICATION BYPASSRLS PASSWORD '"$postgres_db_useradmin_pw"';"
 # caveat-01: do not use ? char in passwords - it breaks the ui of the doc pages
 # caveat-02: escape the ! char in passwords - does not work in the shell
 # caveats: do not use ? char in passwords ( breaks the ui ), escape the ! char 
 sudo su - postgres -c \
-   "psql --port 15432 -d postgres -c \"ALTER ROLE usrqtoadmin WITH PASSWORD 'foo-bar\!' LOGIN \""
-sudo su - postgres -c \
-   "psql --port 15432 -d postgres -c \"ALTER ROLE usrqtoapp WITH PASSWORD 'foo-bar\!' LOGIN \""
+   "psql --port 15432 -d tst_qto -c \"ALTER ROLE usrqtoapp WITH PASSWORD 'foo-bar\!' LOGIN \""
+sudo -u postgres psql -x -c "select * from pg_user where usename='usrqtoadmin'"
 
 # how-to export the documentation of the desired db. 
 clear ; bash src/bash/qto/qto.sh -a generate-md-docs
