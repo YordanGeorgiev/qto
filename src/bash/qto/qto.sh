@@ -340,11 +340,15 @@ do_set_vars(){
 }
 
 
+# basically there are very few reason why you should be able to change the src code
+# on a non-working instance, thus to prevent regression tests each commit runs them
+# locally 
 do_check_git_hooks(){
 
    # check deploy the pre-commit and pre-push hooks
    if [[ ! -f $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit || ! -f $PRODUCT_INSTANCE_DIR/.git/hooks/pre-push ]];then
       cp -v $PRODUCT_INSTANCE_DIR/cnf/git/hooks/* $PRODUCT_INSTANCE_DIR/.git/hooks/
+      chmod 770 $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit/*
    fi
 
    # if the hooks exists, but someone DELIBERATELY AND EXPLICITLY removed the run-functional-tests - RE-ADD them
