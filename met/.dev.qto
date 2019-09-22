@@ -407,8 +407,7 @@ src/sql/pgsql/qto/tables/22.1.create-table-features_doc.sql
 src/sql/pgsql/qto/tables/22.create-table-features.sql
 src/sql/pgsql/qto/tables/23.1.create-table-concepts_doc.sql
 src/sql/pgsql/qto/tables/23.create-table-concepts.sql
-src/sql/pgsql/qto/tables/24.1.create-table-system_guide_doc.sql
-src/sql/pgsql/qto/tables/24.create-table-system_guide.sql
+src/sql/pgsql/qto/tables/24.create-table-system_guide_doc.sql
 src/sql/pgsql/qto/tables/25.1.create-table-installations_doc.sql
 src/sql/pgsql/qto/tables/25.create-table-installations.sql
 src/sql/pgsql/qto/tables/26.create-table-release_history.sql
