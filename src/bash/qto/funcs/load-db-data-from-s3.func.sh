@@ -14,6 +14,6 @@ doLoadDbDataFromS3(){
    # configure psql to access the db of THIS instance
    PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} \
       --port $postgres_db_port --host $postgres_db_host -d $postgres_db_name < \
-         "$PRODUCT_INSTANCE_DIR/dat/sql/prd_qto.latest.insrts.dmp.sql"
+         "$PRODUCT_INSTANCE_DIR/dat/sql/$ENV_TYPE"'_'"$RUN_UNIT"'.latest.insrts.dmp.sql'
 
 }
