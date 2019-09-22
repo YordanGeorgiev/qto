@@ -368,17 +368,6 @@ src/bash/qto/helps/db-to-txt.help.sh
 doc/txt/qto/tests/db-to-txt.test.txt
 doc/txt/qto/funcs/db-to-txt.func.txt
 doc/txt/qto/helps/db-to-txt.help.txt
-#---
-src/bash/qto/tests/txt-to-db.test.sh
-src/bash/qto/tests/txt-to-db
-src/bash/qto/tests/txt-to-db/txt-to-db-daily.test.sh
-src/bash/qto/tests/txt-to-db/txt-to-db-weekly.test.sh
-src/bash/qto/tests/txt-to-db/txt-to-db-monthly.test.sh
-src/bash/qto/funcs/txt-to-db.func.sh
-src/bash/qto/helps/txt-to-db.help.sh
-doc/txt/qto/tests/txt-to-db.test.txt
-doc/txt/qto/funcs/txt-to-db.func.txt
-doc/txt/qto/helps/txt-to-db.help.txt
 # ---
 # the postgres DDL scripts
 src/sql/pgsql

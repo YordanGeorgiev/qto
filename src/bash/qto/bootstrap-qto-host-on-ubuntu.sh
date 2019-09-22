@@ -8,7 +8,8 @@ main(){
    do_copy_git_hooks
    do_check_setup_bash
    do_provision_postgres
-   #do_create_multi_env_dir
+   do_setup_tmux
+   do_create_multi_env_dir
    do_set_chmods
    do_finilize
 }
@@ -26,8 +27,8 @@ do_setup_vim(){
 }
 
 do_check_setup_bash(){
-   test "$(grep -c 'PS1' ~/.bash_profile)" -eq 0 && { 
-      echo 'export PS1="`date "+%F %T"` \u@\h  \w \n\n  "' >> ~/.bash_profile
+   test "$(grep -c 'PS1' ~/.bash_opts)" -eq 0 && { 
+      echo 'export PS1="`date "+%F %T"` \u@\h  \w \n\n  "' >> ~/.bash_opts
    }
    echo bash ok
 }
@@ -241,9 +242,9 @@ EOF_MODULES
       echo "deploying modules. This WILL take couple of min, but ONLY ONCE !!!"
       curl -L http://cpanmin.us | perl - --self-upgrade -l ~/perl5 App::cpanminus local::lib
       eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
-      test "$(grep -c 'Mlocal::lib' ~/.bash_profile)" -eq 0 && \
-      echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bash_profile
-      echo 'source ~/.bash_profile' >> ~/.bashrc
+      test "$(grep -c 'Mlocal::lib' ~/.bash_opts)" -eq 0 && \
+      echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bash_opts
+      echo 'source ~/.bash_opts' >> ~/.bashrc
       cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
       export PERL_MM_USE_DEFAULT=1
       perl -MCPAN -e 'CPAN::Shell->force(qw( install Net::Google::DataAPI));'
@@ -309,7 +310,7 @@ do_provision_postgres(){
    sudo mkdir -p /var/lib/postgresql/11/main
 
    # echo "postgres:postgres" | chpasswd  # probably not needed ...
-   echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bash_profile
+   echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bash_opts
    
    sudo /etc/init.d/postgresql restart
    sudo -u postgres psql -c \
@@ -346,6 +347,16 @@ do_create_multi_env_dir(){
    mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$PRODUCT_INSTANCE_DIR"; 
 }
 
+
+# well 
+do_setup_tmux(){
+   test -f ~/.tmux.conf && cp -v  ~/.tmux.conf ~/.tmux.conf.orig
+   cp -v $product_dir/cnf/hosts/host-name/home/ysg/.tmux.conf ~/
+   mkdir -p ~/.tmux/plugins
+   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tmux-copycat
+}
+
 do_create_multi_env_dir(){
    test -d "$PRODUCT_INSTANCE_DIR" && \
       mv -v "$PRODUCT_INSTANCE_DIR" "$PRODUCT_INSTANCE_DIR"."$(date '+%Y%m%d_%H%M%S')"
@@ -355,13 +366,13 @@ do_create_multi_env_dir(){
 }
 
 do_finilize(){
-   source ~/.bash_profile 
+   source ~/.bash_opts 
    printf "\033[2J";printf "\033[0;0H"
    echo -e "\n\n"
    echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
    echo "DONE"
    echo "# next you MUST reload the new environment variables by:"
-   echo " source ~/.bash_profile ; "
+   echo " source ~/.bash_opts ; "
    echo "# and go to your PRODUCT_INSTANCE_DIR by: "
    echo " cd $PRODUCT_INSTANCE_DIR"
    echo "# you could than check the consistency of the Application Layer by:"

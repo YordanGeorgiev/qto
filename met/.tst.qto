@@ -1,15 +1,15 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+cnf/env
+cnf/env/dev.env.json
+cnf/env/tst.env.json
+cnf/env/qas.env.json
+cnf/env/prd.env.json
 src/bash/qto/bootstrap-qto-host-on-ubuntu.sh
 src/bash/qto/qto.sh
 src/bash/qto/funcs/check-init-terraform.func.sh
 src/bash/qto/funcs/init-aws-instance.func.sh
 src/terraform
 src/terraform/tpl/qto/main.tf.tpl
-cnf/env
-cnf/env/dev.env.json
-cnf/env/tst.env.json
-cnf/env/qas.env.json
-cnf/env/prd.env.json
 src/bash/qto/funcs/scramble-confs.func.sh
 src/bash/qto/funcs/unscramble-confs.func.sh
 .vimrc
@@ -180,6 +180,7 @@ src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/qto/lib/Qto/App/Db/In/Postgres/MojoPgWrapper.pm
 src/perl/qto/lib/Qto/App/UI/WtrUIFactory.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrEncrypter.pm
+src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm
 src/perl/qto/lib/Qto/App/IO/WtrExportFactory.pm
 src/perl/qto/lib/Qto/App/IO/WtrMdFactory.pm
 src/perl/qto/lib/Qto/App/IO/Out/WtrExporterXls.pm
@@ -367,25 +368,14 @@ src/bash/qto/helps/db-to-txt.help.sh
 doc/txt/qto/tests/db-to-txt.test.txt
 doc/txt/qto/funcs/db-to-txt.func.txt
 doc/txt/qto/helps/db-to-txt.help.txt
-#---
-src/bash/qto/tests/txt-to-db.test.sh
-src/bash/qto/tests/txt-to-db
-src/bash/qto/tests/txt-to-db/txt-to-db-daily.test.sh
-src/bash/qto/tests/txt-to-db/txt-to-db-weekly.test.sh
-src/bash/qto/tests/txt-to-db/txt-to-db-monthly.test.sh
-src/bash/qto/funcs/txt-to-db.func.sh
-src/bash/qto/helps/txt-to-db.help.sh
-doc/txt/qto/tests/txt-to-db.test.txt
-doc/txt/qto/funcs/txt-to-db.func.txt
-doc/txt/qto/helps/txt-to-db.help.txt
 # ---
 # the postgres DDL scripts
 src/sql/pgsql
 src/sql/pgsql/qto
-src/sql/pgsql/qto/00.create-db.pgsql
-src/bash/qto/funcs/run-pgsql-scripts.func.sh
-src/sql/pgsql/qto/01.create-qto-app-user.pgsql
 src/sql/pgsql/qto/funcs
+src/bash/qto/funcs/run-pgsql-scripts.func.sh
+src/sql/pgsql/qto/00.create-db.pgsql
+src/sql/pgsql/qto/01.create-qto-app-user.pgsql
 src/sql/pgsql/qto/funcs/01.create-func-fns_update_time.sql
 src/sql/pgsql/qto/funcs/02.create-func-f_concat_ws.sql
 src/sql/pgsql/qto/tables
@@ -432,6 +422,7 @@ src/sql/pgsql/qto/tables/33.create-table-links.sql
 src/sql/pgsql/qto/tables/34.create-table-users.sql
 src/sql/pgsql/qto/tables/35.create-table-release_issues.sql
 src/sql/pgsql/qto/tables/50.create-table-tst_paging.sql
+src/sql/pgsql/qto/tables/89.create-table-test_xls_to_db_table.sql
 src/sql/pgsql/qto/tables/90.create-table-test_truncate_table.sql
 src/sql/pgsql/qto/tables/91.create-table-test_empty_table.sql
 src/sql/pgsql/qto/tables/93.create-table-benchmarks.sql
@@ -626,7 +617,6 @@ doc/txt/qto/funcs/remove-package-files.func.txt
 src/bash/qto/tests/run-pgsql-scripts.test.sh
 src/bash/qto/helps/run-pgsql-scripts.help.sh
 doc/txt/qto/tests/run-pgsql-scripts.test.txt
-doc/txt/qto/helps/run-pgsql-scripts.help.txt
 doc/txt/qto/funcs/run-pgsql-scripts.func.txt
 tags
 # ---
@@ -652,6 +642,8 @@ doc/dot/devops/shell-action-control-flow-diagram.dot
 doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
 doc/img/system_guide/multi-env-setup.png
+doc/img/system_guide/qto-infra.jpg
+doc/img/system_guide/qto-infra.xml
 doc/gliffy/multi-env-setup.gliffy
 # --- the application data
 src/bash/qto/funcs/db-to-json.func.sh
@@ -672,7 +664,6 @@ src/bash/qto/funcs/backup-postgres-db.func.sh
 src/bash/qto/funcs/backup-postgres-db-inserts.func.sh
 src/bash/qto/funcs/backup-postgres-table.func.sh
 src/bash/qto/tests/backup-postgres-db.test.sh
-# ---
 src/bash/qto/scripts/pre-push
 license.txt
 # ---
@@ -790,3 +781,5 @@ src/bash/qto/funcs/backup-postgres-db-inserts.func.sh
 cnf/git/hooks/pre-commit
 cnf/git/hooks/pre-push
 src/sql/pgsql/scripts/bash/copy-tables.sh
+lib/bash/funcs/find-me.sh
+lib/bash/funcs/find-me.sh
