@@ -203,7 +203,12 @@ sub doSetRoutes {
    
    my $self = shift ; 
    my $r = $self->routes;
-   
+  
+   $r->get('/')->to(
+      controller   => 'Index'
+    , action       => 'doServeIndex'
+     );
+
    $r->get('/:db/home')->to(
      controller   => 'Home'
    , action       => 'doLanding'

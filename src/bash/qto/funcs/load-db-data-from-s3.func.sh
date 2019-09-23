@@ -8,8 +8,8 @@ doLoadDbDataFromS3(){
    mkdir -p $PRODUCT_INSTANCE_DIR/dat/sql/
 
    # fetch the db inserts data from the s3 bucket - to be parametrized for env ...
-   wget -O "$PRODUCT_INSTANCE_DIR/dat/sql/prd_qto.latest.insrts.dmp.sql" \
-      "https://s3-$aws_region.amazonaws.com/$bucket/prd_qto.latest.insrts.dmp.sql"
+   wget -O "$PRODUCT_INSTANCE_DIR/dat/sql/"$ENV_TYPE'_'$RUN_UNIT".latest.insrts.dmp.sql" \
+      "https://s3-$aws_region.amazonaws.com/$bucket/"$ENV_TYPE"_$RUN_UNIT"'.latest.insrts.dmp.sql'
 
    # configure psql to access the db of THIS instance
    PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} \
