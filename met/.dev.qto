@@ -4,6 +4,8 @@ cnf/env/dev.env.json
 cnf/env/tst.env.json
 cnf/env/qas.env.json
 cnf/env/prd.env.json
+src/perl/qto/public/index.html
+src/perl/qto/lib/Qto/Controller/Index.pm
 src/bash/qto/bootstrap-qto-host-on-ubuntu.sh
 src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
 src/bash/qto/funcs/load-db-data-from-s3.func.sh
