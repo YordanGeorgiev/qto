@@ -83,6 +83,12 @@ sub doLoadAppConfig {
    $msg = "START MAIN";
    $objLogger->doLogInfoMsg($msg);
 
+   $self->config(
+      hypnotoad => {
+         listen  => ['https://*:443?cert=/etc/letsencrypt/live/qto.fi/fullchain.crt&key=/etc/letsencrypt/live/qto.fi/privkey.key'],
+         workers => 5
+                }
+      );
 }
 
 
@@ -203,12 +209,12 @@ sub doSetRoutes {
    
    my $self = shift ; 
    my $r = $self->routes;
-  
+   
    $r->get('/')->to(
-      controller   => 'Index'
-    , action       => 'doServeIndex'
-     );
-
+     controller   => 'Index'
+   , action       => 'doServeIndex'
+   );
+   
    $r->get('/:db/home')->to(
      controller   => 'Home'
    , action       => 'doLanding'

@@ -4,12 +4,12 @@
 main(){
    do_set_vars "$@"
    do_check_install_prereqs
-   do_setup_vim
-   do_copy_git_hooks
-   do_check_setup_bash
-   do_provision_postgres
-   do_setup_tmux
-   do_create_multi_env_dir
+   #do_setup_vim
+   #do_copy_git_hooks
+   #do_check_setup_bash
+   #do_provision_postgres
+   #do_setup_tmux
+   #do_create_multi_env_dir
    do_set_chmods
    do_finilize
 }
@@ -27,10 +27,7 @@ do_setup_vim(){
 }
 
 do_check_setup_bash(){
-   test "$(grep -c 'PS1' ~/.bash_opts)" -eq 0 && { 
-      echo 'export PS1="`date "+%F %T"` \u@\h  \w \n\n  "' >> ~/.bash_opts
-   }
-   echo bash ok
+   echo 'export PS1="`date "+%F %T"` \u@\h  \w \n\n  "' >> ~/.bash_opts
 }
 
 do_set_vars(){
@@ -73,10 +70,10 @@ EOF_DOC
 }
 
 do_check_install_prereqs(){
-   do_check_install_ubuntu_packages
-   do_check_install_postgres
-   do_check_install_chromium_headless
-   do_check_install_phantom_js
+   #do_check_install_ubuntu_packages
+   #do_check_install_postgres
+   #do_check_install_chromium_headless
+   #do_check_install_phantom_js
    do_check_install_perl_modules
 }
 
@@ -171,7 +168,7 @@ do_check_install_chromium_headless(){
 
 do_check_install_perl_modules(){
 
-   #eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
+   eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
    modules=$(cat << EOF_MODULES
       JSON  
       Data::Printer
@@ -233,36 +230,38 @@ do_check_install_perl_modules(){
       Net::Google::Spreadsheets
 EOF_MODULES
 )
-      
-   while read -r module ; do 
-      use_modules="${use_modules:-} use $module ; " 
-   done < <(echo "$modules");
    
+   while read -r module ; do
+      use_modules="${use_modules:-} use $module ; "
+   done < <(echo "$modules");
+
+   test -f ~/.bash_opts && source ~/.bash_opts
    perl -e "$use_modules" || {
       echo "deploying modules. This WILL take couple of min, but ONLY ONCE !!!"
       curl -L http://cpanmin.us | perl - --self-upgrade -l ~/perl5 App::cpanminus local::lib
-      eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
-      test "$(grep -c 'Mlocal::lib' ~/.bash_opts)" -eq 0 && \
-      echo 'eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' >> ~/.bash_opts
+      eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
+      test "$(grep -c 'Mlocal::lib' ~/.bashrc)" -eq 0 && \
+      echo 'eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)' >> ~/.bash_opts
       echo 'source ~/.bash_opts' >> ~/.bashrc
       cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
-      export PERL_MM_USE_DEFAULT=1
-      perl -MCPAN -e 'CPAN::Shell->force(qw( install Net::Google::DataAPI));'
-      PATH="~/perl5/bin${PATH:+:${PATH}}"; export PATH;
-      export PERL5LIB="~/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
-      export PERL_LOCAL_LIB_ROOT="~/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
-      export PERL_MB_OPT="--install_base \"~/perl5\"" 
-      export PERL_MM_OPT="INSTALL_BASE=~/perl5"
-      while read -r module ; do cpanm_modules="${cpanm_modules:-} $module " ; done < <(echo "$modules")
-      cmd="cpanm $modules" 
-      # quite often the perl modules passes trough on the second run ...
-      $cmd || bash "$unit_run_dir/$RUN_UNIT"'.sh'
-      sudo curl -L cpanmin.us | perl - Mojolicious
+      #export PERL_MM_USE_DEFAULT=1
+      #PATH="~/perl5/bin${PATH:+:${PATH}}"; export PATH;
+      #export PERL5LIB="~/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
+      #export PERL_LOCAL_LIB_ROOT="~/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+      #export PERL_MB_OPT="--install_base \"~/perl5\""
+      #export PERL_MM_OPT="INSTALL_BASE=~/perl5"
 
-      # nasty workaround for the "Moo complainings" in the Net::Google::DataAPI::Oauth2 module
-      find ~ -type f -name OAuth2.pm -exec perl -pi -e \
-         "s/use Any::Moose;/no warnings 'deprecated'; use Any::Moose; use warnings 'deprecated';/g" {} \;
-   }
+      #todo:ysgperl -MCPAN -e 'CPAN::Shell->force(qw( install Net::Google::DataAPI));'
+		while read -r module ; do cpanm_modules="${cpanm_modules:-} $module " ; done < <(echo "$modules")
+		cmd="cpanm $modules" 
+		# quite often the perl modules passes trough on the second run ...
+		$cmd || bash "$unit_run_dir/$RUN_UNIT"'.sh'
+		sudo curl -L cpanmin.us | perl - Mojolicious
+
+		# nasty workaround for the "Moo complainings" in the Net::Google::DataAPI::Oauth2 module
+		find ~ -type f -name OAuth2.pm -exec perl -pi -e \
+			"s/use Any::Moose;/no warnings 'deprecated'; use Any::Moose; use warnings 'deprecated';/g" {} \;
+		}
 }
 
 
@@ -366,7 +365,6 @@ do_create_multi_env_dir(){
 }
 
 do_finilize(){
-   source ~/.bash_opts 
    printf "\033[2J";printf "\033[0;0H"
    echo -e "\n\n"
    echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
