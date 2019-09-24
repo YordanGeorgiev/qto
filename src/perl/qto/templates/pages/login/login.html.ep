@@ -10,11 +10,12 @@
 	<div class="box">
 		<h4> <span style="color:<%= $msg_color =%>;"> <%= $msg =%> </span> </h4>
 		%= form_for 'login' => (method => 'POST') => begin
-			%= text_field 'email', id => 'email', class=>"email", value=>'your.email@company.com',focused=>"this.document.execCommand('selectAll',false,null);"
-			%= password_field 'pass', id => 'pass', class=>"email", value=>'email',focused=>"this.document.execCommand('selectAll',false,null);"
+			%= text_field 'email', id => 'email', class=>"email", value=>'test.user@gmail.com',focused=>"this.document.execCommand('selectAll',false,null);"
+			%= password_field 'pass', id => 'pass', class=>"email", value=>'secret',focused=>"this.document.execCommand('selectAll',false,null);"
          <input type="hidden" id="url" name="redirect-url" value="<%= $redirect_url =%>">
 			%= submit_button 'submit', class=>"btn", value=>' GO '
 		% end 
+      <p><a href="https://github.com/YordanGeorgiev/qto">github</a></p>
 	</div>
    <div id="login_app_tooltip">
       <%= " $db" =%>
@@ -23,6 +24,7 @@
       <%= " $GitShortHash " =%>
       <%= " $page_load_time " =%>
    </div>
+  
 % end
 
 

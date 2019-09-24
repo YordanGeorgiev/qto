@@ -36,82 +36,113 @@ variable "public_key_path" {
   default = "$ssh_key_pair_file"
 }
 
-# VPC Resource
-resource "aws_vpc" "vpc-$ENV_TYPE" {
+// VPC Resource
+resource "aws_vpc" "$ENV_TYPE-vpc" {
   cidr_block = "10.0.0.0/16"
   enable_dns_support = true
   enable_dns_hostnames = true
 }
 
-resource "aws_eip" "ip-test-env" {
-  instance = "${aws_instance.qto-$ENV_TYPE.id}"
+resource "aws_eip" "$ENV_TYPE-ip-test" {
+  instance = "${aws_instance.$ENV_TYPE-qto-inst.id}"
   vpc      = true
 }
 
-# subnets.tf
-resource "aws_subnet" "subnet-$ENV_TYPE" {
-  cidr_block = "${cidrsubnet(aws_vpc.vpc-$ENV_TYPE.cidr_block, 3, 1)}"
-  vpc_id = "${aws_vpc.vpc-$ENV_TYPE.id}"
+// subnets
+resource "aws_subnet" "$ENV_TYPE-subnet" {
+  cidr_block = "${cidrsubnet(aws_vpc.$ENV_TYPE-vpc.cidr_block, 3, 1)}"
+  vpc_id = "${aws_vpc.$ENV_TYPE-vpc.id}"
   availability_zone = "$availability_zone"
 }
 
 
 //security.tf
-resource "aws_security_group" "ingress-all-test" {
+resource "aws_security_group" "sgr_qto_web" {
 name = "allow-all-sg"
-vpc_id = "${aws_vpc.vpc-$ENV_TYPE.id}"
-ingress {
-    cidr_blocks = [
-      "0.0.0.0/0"
-    ]
-from_port = 22
-    to_port = 22
-    protocol = "tcp"
+vpc_id = "${aws_vpc.$ENV_TYPE-vpc.id}"
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-// Terraform removes the default rule
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 8081
+    to_port     = 8081
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 8082
+    to_port     = 8082
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+
   egress {
-   from_port = 0
-   to_port = 0
-   protocol = "-1"
-   cidr_blocks = ["0.0.0.0/0"]
- }
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+
+
 }
 
 
-//internet gateway
-resource "aws_internet_gateway" "gw-$ENV_TYPE" {
-	vpc_id = "${aws_vpc.vpc-$ENV_TYPE.id}"
+resource "aws_internet_gateway" "$ENV_TYPE-gw" {
+	vpc_id = "${aws_vpc.$ENV_TYPE-vpc.id}"
 }
 
-resource "aws_route_table" "route-table-$ENV_TYPE" {
-	vpc_id = "${aws_vpc.vpc-$ENV_TYPE.id}"
+resource "aws_route_table" "$ENV_TYPE-route-table" {
+	vpc_id = "${aws_vpc.$ENV_TYPE-vpc.id}"
 	route {
 		cidr_block = "0.0.0.0/0"
-		gateway_id = "${aws_internet_gateway.gw-$ENV_TYPE.id}"
+		gateway_id = "${aws_internet_gateway.$ENV_TYPE-gw.id}"
 	}
 }
 
 resource "aws_route_table_association" "subnet-association" {
-  subnet_id      = "${aws_subnet.subnet-$ENV_TYPE.id}"
-  route_table_id = "${aws_route_table.route-table-$ENV_TYPE.id}"
+  subnet_id      = "${aws_subnet.$ENV_TYPE-subnet.id}"
+  route_table_id = "${aws_route_table.$ENV_TYPE-route-table.id}"
 }
 
-resource "aws_key_pair" "aws_key_pair-$ENV_TYPE" {
+resource "aws_key_pair" "$ENV_TYPE-aws_key_pair" {
   key_name   = "id_rsa.ysg.pub"
   public_key = "$public_key"
 }
 
-resource "aws_instance" "qto-$ENV_TYPE" {
+resource "aws_instance" "$ENV_TYPE-qto-inst" {
 	ami           = "${data.aws_ami.ubuntu.id}"
 	instance_type = "t2.micro"
-  	subnet_id      = "${aws_subnet.subnet-$ENV_TYPE.id}"
+  	subnet_id      = "${aws_subnet.$ENV_TYPE-subnet.id}"
    associate_public_ip_address = "true"
-   //id of the security group which has ports open to all the IPs
-	security_groups = ["${aws_security_group.ingress-all-test.id}"]
+	security_groups = ["${aws_security_group.sgr_qto_web.id}"]
 	key_name      = "id_rsa.ysg.pub"
 
   tags = {
-    Name = "qto-ec2-$ENV_TYPE"
+    Name = "$ENV_TYPE-qto-ec2"
   }
 }
 
