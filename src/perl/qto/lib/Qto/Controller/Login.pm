@@ -23,7 +23,7 @@ sub doLoginUser {
    my $self             = shift;
    my $db               = $self->stash('db');
    my $ret              = 1 ; 
-   my $msg              = 'unknown error during global text search ';
+   my $msg              = undef;
    my $msg_color        = 'red' ;
    my $objRdrDbsFcry    = {} ; 
    my $objRdrDb         = {} ; 
@@ -104,11 +104,12 @@ sub doShowLoginForm {
    $sessions->cookie_domain( $instance_domain) unless $sessions->cookie_domain( $instance_domain);
    my $redirect_url = $self->session( 'app.' . $db . '.url' ) if defined $self->session( 'app.' . $db . '.url' ) ; 
    $self->session( 'app.' . $db . '.user' => undef);
-   $self->doRenderPageTemplate(200,$msg,$msg_color,$db,$redirect_url) ;
+   $self->doRenderPageTemplate(200,$msg,$msg_color,$proj,$redirect_url) ;
    return ;
 }
 
 
+# $self->doRenderPageTemplate($ret, $msg ,$msg_color,$db,$redirect_url);
 sub doRenderPageTemplate {
    
    my $self             = shift ; 
@@ -120,6 +121,7 @@ sub doRenderPageTemplate {
 
    my $notice           = '' ;
 
+   say "doRenderPageTemplate msg: $msg \n" ; 
    $msg = "$db login" unless $msg ; 
    $msg = $self->session( 'app.' , $db . '.msg' ) if defined $self->session( 'app.' . $db . '.msg' ) ;
 
@@ -147,20 +149,6 @@ sub doRenderPageTemplate {
    return ; 
 }
 
-
-sub doRender {
-   my $self       = shift ; 
-   my $http_code  = shift ; 
-   my $msg        = shift ; 
-
-   $self->res->headers->content_type('application/json; charset=utf-8');
-   $self->res->code($http_code);
-   $self->render( 'json' =>  { 
-         'ret'   => $http_code
-        ,'msg'   => $msg
-   });
-
-}
 
 
 sub setEmptyIfNull {

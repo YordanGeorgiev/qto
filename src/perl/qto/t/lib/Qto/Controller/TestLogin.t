@@ -75,6 +75,12 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    ok ( $tx->result->dom->all_text =~ "$db home" , $tm );
    printf "\n";
    # debug p $tx->result->dom ;
+   
+   $tm = "non registered user"; 
+   ok ( $t->post_ok( $url => 'form'  => {'email' =>'not.registered.user@gmail.com', 'pass' => 'invalid'})->status_is(401) , $tm );
+   $tx = $t->ua->post( $url => 'form'  => {'email' =>'not.registered.user@gmail.com', 'pass' => 'invalid'});
+   ok ( $tx->result->dom->all_text =~ 'not.registered.user@gmail.com not registered' , $tm );
+   printf "\n";
   
    # check that the product version , and the short hash are on the page
    my $env = $config->{'env'}->{'run'}->{'ENV_TYPE'} ; 
