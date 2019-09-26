@@ -121,7 +121,6 @@ sub doRenderPageTemplate {
 
    my $notice           = '' ;
 
-   say "doRenderPageTemplate msg: $msg \n" ; 
    $msg = "$db login" unless $msg ; 
    $msg = $self->session( 'app.' , $db . '.msg' ) if defined $self->session( 'app.' . $db . '.msg' ) ;
 

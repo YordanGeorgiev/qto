@@ -3,13 +3,17 @@
 
 main(){
    do_set_vars "$@"
-   do_check_install_prereqs
-   #do_setup_vim
-   #do_copy_git_hooks
-   #do_check_setup_bash
-   #do_provision_postgres
-   #do_setup_tmux
-   #do_create_multi_env_dir
+   do_check_setup_bash
+   do_setup_vim
+   do_check_install_ubuntu_packages
+   do_check_install_postgres
+   do_provision_postgres
+   do_check_install_chromium_headless
+   do_check_install_phantom_js
+   do_check_install_perl_modules
+   do_copy_git_hooks
+   do_setup_tmux
+   do_create_multi_env_dir
    do_set_chmods
    do_finilize
 }
@@ -27,7 +31,9 @@ do_setup_vim(){
 }
 
 do_check_setup_bash(){
-   echo 'export PS1="`date "+%F %T"` \u@\h  \w \n\n  "' >> ~/.bash_opts
+   cp -v $unit_run_dir/../../../cnf/bash/.profile_opts.host-name ~/.profile_opts.$(hostname -s)
+   cp -v $unit_run_dir/../../../cnf/bash/.bash_opts.host-name $bash_opts_file
+   echo "source $bash_opts_file" >> ~/.bashrc
 }
 
 do_set_vars(){
@@ -40,6 +46,7 @@ do_set_vars(){
    source "$unit_run_dir/../../../.env"
    PRODUCT_INSTANCE_DIR="$product_dir/$RUN_UNIT.$VERSION.$ENV_TYPE.$run_unit_owner"
    product_instance_dir=$unit_run_dir/../../.. # OBS different than this one ^^^
+   bash_opts_file=~/.bash_opts.$(hostname -s)
 }
 
 usage(){
@@ -69,17 +76,10 @@ cat << EOF_DOC
 EOF_DOC
 }
 
-do_check_install_prereqs(){
-   #do_check_install_ubuntu_packages
-   #do_check_install_postgres
-   #do_check_install_chromium_headless
-   #do_check_install_phantom_js
-   do_check_install_perl_modules
-}
 
+# qto-190911215406 - minio , mc
 do_check_install_ubuntu_packages(){
    
-   eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
    packages=$(cat << EOF_PACKAGES
       build-essential
       git
@@ -119,10 +119,8 @@ EOF_PACKAGES
       }
    done < <(echo "$packages");
       
-
 }
 
-# qto-190911215406 - minio , mc
 do_check_install_postgres(){
 	which psql 2>/dev/null || {
 		sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
@@ -168,10 +166,11 @@ do_check_install_chromium_headless(){
 
 do_check_install_perl_modules(){
 
-   eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`
+
    modules=$(cat << EOF_MODULES
       JSON  
       Data::Printer
+      Carp::Always
       Email::Valid
       Test::Most 
       Data::Printer 
@@ -180,11 +179,8 @@ do_check_install_perl_modules(){
       IPC::System::Simple 
       Mojolicious 
       IO::Socket::SSL  
-      Mojo::Phantom 
       URL::Encode
       ExtUtils::Installed
-      Carp::Always
-      Data::Printer
       File::Copy
       File::Find
       File::Path
@@ -194,9 +190,7 @@ do_check_install_perl_modules(){
       Spreadsheet::ParseExcel::FmtJapan
       Text::CSV_XS
       Module::Build::Tiny
-      Carp::Always
       URL::Encode
-      Carp::Always
       Data::Printer
       File::Copy::Recursive
       Spreadsheet::ParseExcel
@@ -217,6 +211,7 @@ do_check_install_perl_modules(){
       Mojolicious::Plugin::Authentication
       Mojo::JWT
       Mojo::Pg
+      Mojo::Phantom 
       Test::Mojo
       Authen::Passphrase::BlowfishCrypt
       Selenium::Remote::Driver
@@ -230,33 +225,24 @@ do_check_install_perl_modules(){
       Net::Google::Spreadsheets
 EOF_MODULES
 )
-   
+  
+      set -x
    while read -r module ; do
       use_modules="${use_modules:-} use $module ; "
    done < <(echo "$modules");
 
-   test -f ~/.bash_opts && source ~/.bash_opts
    perl -e "$use_modules" || {
       echo "deploying modules. This WILL take couple of min, but ONLY ONCE !!!"
-      curl -L http://cpanmin.us | perl - --self-upgrade -l ~/perl5 App::cpanminus local::lib
-      eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
-      test "$(grep -c 'Mlocal::lib' ~/.bashrc)" -eq 0 && \
-      echo 'eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)' >> ~/.bash_opts
-      echo 'source ~/.bash_opts' >> ~/.bashrc
-      cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
-      #export PERL_MM_USE_DEFAULT=1
-      #PATH="~/perl5/bin${PATH:+:${PATH}}"; export PATH;
-      #export PERL5LIB="~/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
-      #export PERL_LOCAL_LIB_ROOT="~/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
-      #export PERL_MB_OPT="--install_base \"~/perl5\""
-      #export PERL_MM_OPT="INSTALL_BASE=~/perl5"
-
-      #todo:ysgperl -MCPAN -e 'CPAN::Shell->force(qw( install Net::Google::DataAPI));'
+      curl -L http://cpanmin.us | sudo perl - --self-upgrade -l ~/perl5 App::cpanminus \
+         && sudo chown -R $USER:$(id -gn) ~/.cpanm && sudo chown -R $USER:$(id -gn) ~/perl5
+      ~/perl5/bin/cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+      curl -L cpanmin.us | perl - Mojolicious
+      test "$(grep -c 'Mlocal::lib' $bash_opts_file)" -eq 0 && \
+         echo 'eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)' >> $bash_opts_file
 		while read -r module ; do cpanm_modules="${cpanm_modules:-} $module " ; done < <(echo "$modules")
-		cmd="cpanm $modules" 
-		# quite often the perl modules passes trough on the second run ...
-		$cmd || bash "$unit_run_dir/$RUN_UNIT"'.sh'
-		sudo curl -L cpanmin.us | perl - Mojolicious
+		cpanm --force --local-lib=~/perl5 'Net::Google::DataAPI' # does not install otherwise !!!
+		cmd="cpanm --local-lib=~/perl5 $modules"
+      $cmd
 
 		# nasty workaround for the "Moo complainings" in the Net::Google::DataAPI::Oauth2 module
 		find ~ -type f -name OAuth2.pm -exec perl -pi -e \
@@ -309,7 +295,7 @@ do_provision_postgres(){
    sudo mkdir -p /var/lib/postgresql/11/main
 
    # echo "postgres:postgres" | chpasswd  # probably not needed ...
-   echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bash_opts
+   echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bashrc
    
    sudo /etc/init.d/postgresql restart
    sudo -u postgres psql -c \
@@ -347,7 +333,7 @@ do_create_multi_env_dir(){
 }
 
 
-# well 
+# later on multiser support ...
 do_setup_tmux(){
    test -f ~/.tmux.conf && cp -v  ~/.tmux.conf ~/.tmux.conf.orig
    cp -v $product_dir/cnf/hosts/host-name/home/ysg/.tmux.conf ~/
@@ -370,7 +356,7 @@ do_finilize(){
    echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
    echo "DONE"
    echo "# next you MUST reload the new environment variables by:"
-   echo " source ~/.bash_opts ; "
+   echo " source ~/.bash_opts.$(hostname -s) ; "
    echo "# and go to your PRODUCT_INSTANCE_DIR by: "
    echo " cd $PRODUCT_INSTANCE_DIR"
    echo "# you could than check the consistency of the Application Layer by:"
@@ -380,5 +366,3 @@ do_finilize(){
 
 main "$@"
 
-
-# eof file src/bash/qto/bootstrap-qto-host-on-ubuntu.sh
