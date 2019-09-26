@@ -17,8 +17,8 @@ my $ProductInstanceDir 		= $objInitiator->get('ProductInstanceDir');
 my $ProductName 				= $objInitiator->doResolveProductName();
 my $EnvType 				   = $objInitiator->doResolveEnvType();
 my $HostName					= $objInitiator->doResolveHostName();
-my $config					   = {} ;
-$config						   = $objInitiator->get ('AppConfig'); 
+my $init_config					   = {} ;
+$init_config						   = $objInitiator->get ('AppConfig'); 
 
 use Carp ; 
 
@@ -40,8 +40,6 @@ ok ( $ProductDir 				eq $product_dir , $msg ) ;
 
 
 $tn = 'test-03' ; 
-# 3. # if not set , set in in the shell by:
-# export PRODUCT_INSTANCE_DIR=`pwd`
 $msg                       = "$tn ::: " .'The ProductInstanceDir is the next level' ; 
 ok ( $ProductInstanceDir 	eq $ENV{'PRODUCT_INSTANCE_DIR'} , $msg ) ; 
 
@@ -52,42 +50,35 @@ ok ( $ProductName          eq 'qto' , $msg ) ;
 
 
 $tn = 'test-05' ; 
-$msg                       = "$tn ::: " . 'The product version should be the same as the git tag command' ; 
-my $ProductVersion 			= $objInitiator->doResolveVersion();
-my $ProductVerChmp         = `git tag|sort -nr|head -n 1` ; chomp($ProductVerChmp) ; 
-ok ( $ProductVersion 		eq $ProductVerChmp , $msg) ; 
-
-$tn = 'test-06' ; 
 my $cmd_out						= `hostname -s` ; chomp ( $cmd_out ) ; 
 $msg                       = "$tn ::: " . 'The hostname of this machine' ; 
 ok ( $HostName 				eq "$cmd_out" , $msg ) ;
 
 
+$tn = 'test-06' ; 
+$msg                       = "$tn ::: " . 'The value of the ProductBaseDir from the init_config ' ; 
+ok ( $ProductBaseDir 		eq $init_config->{'ProductBaseDir'} , $msg ) ; 
+
+
 $tn = 'test-07' ; 
-$msg                       = "$tn ::: " . 'The value of the ProductBaseDir from the config ' ; 
-ok ( $ProductBaseDir 		eq $config->{'ProductBaseDir'} , $msg ) ; 
+$msg                       = "$tn ::: " . 'The value of the ProductDir from the init_config ' ; 
+ok ( $ProductDir 				eq $init_config->{'ProductDir'} , $msg ) ; 
 
 
 $tn = 'test-08' ; 
-$msg                       = "$tn ::: " . 'The value of the ProductDir from the config ' ; 
-ok ( $ProductDir 				eq $config->{'ProductDir'} , $msg ) ; 
+$msg                       = "$tn ::: " . 'The value of the ProductDir from the init_config ' ; 
+ok ( $ProductInstanceDir 	eq $init_config->{'ProductInstanceDir'} , $msg ) ; 
 
 
 $tn = 'test-09' ; 
-$msg                       = "$tn ::: " . 'The value of the ProductDir from the config ' ; 
-ok ( $ProductInstanceDir 	eq $config->{'ProductInstanceDir'} , $msg ) ; 
+$msg                       = "$tn ::: " . 'The value of the EnvType from the init_config' ; 
+ok ( $EnvType 			      eq $init_config->{'EnvType'} , $msg ) ;
 
 
 
 $tn = 'test-10' ; 
-$msg                       = "$tn ::: " . 'The value of the EnvType from the config' ; 
-ok ( $EnvType 			eq $config->{'EnvType'} , $msg ) ;
-
-
-
-$tn = 'test-11' ; 
-$msg                       = "$tn ::: " . 'The value of the HostName from the config' ; 
-ok ( $HostName 				eq $config->{'HostName'} , $msg) ;
+$msg                       = "$tn ::: " . 'The value of the HostName from the init_config' ; 
+ok ( $HostName 				eq $init_config->{'HostName'} , $msg) ;
 
 done_testing(); 
 

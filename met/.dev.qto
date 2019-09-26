@@ -776,6 +776,8 @@ src/perl/qto/lib/auto/Qto/Controller/WebSocketPoc/autosplit.ix
 src/perl/qto/lib/auto/SetGetableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HCreate/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Home/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/Index/
+src/perl/qto/lib/auto/Qto/Controller/Index/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Truncate/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WSSelect/autosplit.ix
 dat/mix

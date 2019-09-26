@@ -83,12 +83,14 @@ sub doLoadAppConfig {
    $msg = "START MAIN";
    $objLogger->doLogInfoMsg($msg);
 
+   if ( $config->{'env'}->{'ENV_TYPE'} eq 'prd' ) {
    $self->config(
       hypnotoad => {
          listen  => ['https://*:443?cert=/etc/letsencrypt/live/qto.fi/fullchain.crt&key=/etc/letsencrypt/live/qto.fi/privkey.key'],
          workers => 5
                 }
       );
+   }
 }
 
 
@@ -102,6 +104,7 @@ sub doRegisterPlugins {
    
    $self->plugin('BasicAuthPlus');
    $self->plugin('RenderFile');
+   # $self->plugin('Config');
 }
 
 #

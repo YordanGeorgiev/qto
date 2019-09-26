@@ -43,10 +43,6 @@ resource "aws_vpc" "$ENV_TYPE-vpc" {
   enable_dns_hostnames = true
 }
 
-resource "aws_eip" "$ENV_TYPE-ip-test" {
-  instance = "${aws_instance.$ENV_TYPE-qto-inst.id}"
-  vpc      = true
-}
 
 // subnets
 resource "aws_subnet" "$ENV_TYPE-subnet" {
@@ -57,8 +53,8 @@ resource "aws_subnet" "$ENV_TYPE-subnet" {
 
 
 //security.tf
-resource "aws_security_group" "sgr_qto_web" {
-name = "allow-all-sg"
+resource "aws_security_group" "$ENV_TYPE-sgr_qto_web" {
+name = "$ENV_TYPE-sgr_qto_web"
 vpc_id = "${aws_vpc.$ENV_TYPE-vpc.id}"
 
   ingress {
@@ -138,7 +134,7 @@ resource "aws_instance" "$ENV_TYPE-qto-inst" {
 	instance_type = "t2.micro"
   	subnet_id      = "${aws_subnet.$ENV_TYPE-subnet.id}"
    associate_public_ip_address = "true"
-	security_groups = ["${aws_security_group.sgr_qto_web.id}"]
+	security_groups = ["${aws_security_group.$ENV_TYPE-sgr_qto_web.id}"]
 	key_name      = "id_rsa.ysg.pub"
 
   tags = {
@@ -146,3 +142,7 @@ resource "aws_instance" "$ENV_TYPE-qto-inst" {
   }
 }
 
+resource "aws_eip" "$ENV_TYPE-ip-test" {
+  instance = "${aws_instance.$ENV_TYPE-qto-inst.id}"
+  vpc      = true
+}
