@@ -8,32 +8,14 @@ main(){
    do_check_install_ubuntu_packages
    do_check_install_postgres
    do_provision_postgres
+   do_check_install_perl_modules
    do_check_install_chromium_headless
    do_check_install_phantom_js
-   do_check_install_perl_modules
    do_copy_git_hooks
    do_setup_tmux
    do_create_multi_env_dir
    do_set_chmods
    do_finalize
-}
-
-do_copy_git_hooks(){
-	cp -v $unit_run_dir/../../../cnf/git/hooks/* $unit_run_dir/../../../.git/hooks/
-}
-
-do_set_chmods(){
-   find $PRODUCT_INSTANCE_DIR -type f -name '*.sh' -exec chmod 770 {} \;
-}
-
-do_setup_vim(){
-	cp -v $unit_run_dir/../../../.vimrc ~/.vimrc
-}
-
-do_check_setup_bash(){
-   cp -v $unit_run_dir/../../../cnf/bash/.profile_opts.host-name ~/.profile_opts.$(hostname -s)
-   cp -v $unit_run_dir/../../../cnf/bash/.bash_opts.host-name $bash_opts_file
-   echo "source $bash_opts_file" >> ~/.bashrc
 }
 
 do_set_vars(){
@@ -47,6 +29,25 @@ do_set_vars(){
    PRODUCT_INSTANCE_DIR="$product_dir/$app_name.$VERSION.$ENV_TYPE.$app_name_owner"
    product_instance_dir=$unit_run_dir/../../.. # OBS different than this one ^^^
    bash_opts_file=~/.bash_opts.$(hostname -s)
+   cd $product_instance_dir
+}
+
+do_check_setup_bash(){
+   cp -v $unit_run_dir/../../../cnf/bash/.profile_opts.host-name ~/.profile_opts.$(hostname -s)
+   cp -v $unit_run_dir/../../../cnf/bash/.bash_opts.host-name $bash_opts_file
+   echo "source $bash_opts_file" >> ~/.bashrc
+}
+
+do_setup_vim(){
+	cp -v $unit_run_dir/../../../.vimrc ~/.vimrc
+}
+
+do_copy_git_hooks(){
+	cp -v $unit_run_dir/../../../cnf/git/hooks/* $unit_run_dir/../../../.git/hooks/
+}
+
+do_set_chmods(){
+   find $PRODUCT_INSTANCE_DIR -type f -name '*.sh' -exec chmod 770 {} \;
 }
 
 usage(){
@@ -54,7 +55,7 @@ usage(){
 cat << EOF_DOC
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
       $app_name PURPOSE: 
-      bootstrap the qto app on a clean ubuntu bionic 18.04 host
+      a generic deployer for ubuntu packages and perl modules
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
      
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -79,37 +80,8 @@ EOF_DOC
 
 # qto-190911215406 - minio , mc
 do_check_install_ubuntu_packages(){
-   
-   packages=$(cat << EOF_PACKAGES
-      build-essential
-      git
-      vim
-      perl
-      zip
-      jq
-      unzip
-      exuberant-ctags
-      mutt
-      curl
-      wget
-      libdbd-pgsql
-      tar
-      gzip
-      graphviz
-      python-selenium chromium-chromedriver
-      python-selenium
-      python-setuptools 
-      python-dev 
-      gpgsm
-      nodejs
-      lsof
-      libssl-dev
-      libtest-www-selenium-perl
-      libxml-atom-perl
-      libxml-atom-perl
-      libwww-curl-perl
-EOF_PACKAGES
-)
+  
+   packages="$(cat src/bash/deployer/qto/cnf/bin/ubuntu-18.04.lst)"
 
    sudo apt-get update      
 	# sudo apt-get upgrade # probably not a good idea, but if yes ... this is the place ...
@@ -166,65 +138,7 @@ do_check_install_chromium_headless(){
 
 do_check_install_perl_modules(){
 
-
-   modules=$(cat << EOF_MODULES
-      JSON  
-      Data::Printer
-      Carp::Always
-      Email::Valid
-      Test::Most 
-      Data::Printer 
-      FindBin
-      JSON::Parse 
-      IPC::System::Simple 
-      Mojolicious 
-      IO::Socket::SSL  
-      URL::Encode
-      ExtUtils::Installed
-      File::Copy
-      File::Find
-      File::Path
-      Excel::Writer::XLSX
-      Spreadsheet::ParseExcel
-      Spreadsheet::XLSX
-      Spreadsheet::ParseExcel::FmtJapan
-      Text::CSV_XS
-      Module::Build::Tiny
-      URL::Encode
-      Data::Printer
-      File::Copy::Recursive
-      Spreadsheet::ParseExcel
-      Spreadsheet::XLSX
-      JSON
-      Text::CSV_XS
-      Test::Trap
-      Test::More
-      Test::Most
-      DBD::Pg
-      Tie::Hash::DBD
-      Scalar::Util::Numeric
-      IPC::System::Simple
-      Time::HiRes
-      Mojolicious::Plugin::BasicAuthPlus
-      Mojolicious::Plugin::StaticCache
-      Mojolicious::Plugin::RenderFile
-      Mojolicious::Plugin::Authentication
-      Mojo::JWT
-      Mojo::Pg
-      Mojo::Phantom 
-      Test::Mojo
-      Authen::Passphrase::BlowfishCrypt
-      Selenium::Remote::Driver
-      Selenium::Chrome
-      Term::ReadKey
-      Term::Prompt
-      DBIx::ProcedureCall
-      JSON::Parse
-      Net::Google::DataAPI::Auth::OAuth2
-      Net::Google::Spreadsheets::V4
-      Net::Google::Spreadsheets
-EOF_MODULES
-)
+   modules="$(cat src/bash/deployer/qto/cnf/bin/perl-modules.lst)"
   
    while read -r module ; do
       use_modules="${use_modules:-} use $module ; "
