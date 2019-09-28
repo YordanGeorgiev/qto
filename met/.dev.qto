@@ -4,8 +4,9 @@ cnf/env/dev.env.json
 cnf/env/tst.env.json
 cnf/env/qas.env.json
 cnf/env/prd.env.json
-src/perl/qto/public/index.html
-src/perl/qto/lib/Qto/Controller/Index.pm
+src/bash/deployer/run.sh
+src/bash/deployer/qto/cnf/bin/ubuntu-18.04.lst
+src/bash/deployer/qto/cnf/bin/perl-modules.lst
 src/bash/qto/bootstrap-qto-host-on-ubuntu.sh
 src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
 src/bash/qto/funcs/load-db-data-from-s3.func.sh
@@ -45,9 +46,11 @@ src/perl/qto/templates/pages/login/login.html.ep
 # stop  login
 # start websockets
 src/perl/qto/templates/pages/home/home.html.ep
+src/perl/qto/public/index.html
 src/perl/qto/templates/controls/robust-websocket/js/robust-websocket.js.html.ep
 src/perl/qto/templates/controls/list-url-lists/js/list-url-lists.js.html.ep
 src/perl/qto/lib/Qto/Controller/Home.pm
+src/perl/qto/lib/Qto/Controller/Index.pm
 src/perl/qto/public/poc/web-socket/wsclient.js
 src/perl/qto/lib/Qto.pm
 src/perl/qto/lib/Qto/Controller/WsSelect.pm
