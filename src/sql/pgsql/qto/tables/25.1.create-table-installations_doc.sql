@@ -1,4 +1,4 @@
---DROP TABLE IF EXISTS installations_doc CASCADE;
+     -- DROP TABLE IF EXISTS installations_doc CASCADE;
 
 SELECT 'create the "installations_doc" table'
 ; 

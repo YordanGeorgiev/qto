@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS meta_columns ; 
+     -- DROP TABLE IF EXISTS meta_columns ; 
 
 SELECT 'create the "meta_columns" table'
 ; 

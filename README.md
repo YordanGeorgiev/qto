@@ -113,13 +113,10 @@ You need an aws account, capable of deploying micro instances. The costs for run
 ### 5.2. Configure your aws credentials - aws keys and  ssh keys
 Generate NEW aws access- and secret-keys https://console.aws.amazon.com/iam/home?region=&lt;&lt;YOUR-AWS-REGION&gt;&gt;#/security_credentials. 
 Store the keys in the qto's development environment configuration file - the cnf/env/dev.env.json file.
-
-Create the a NEW public private key pair ( do not overwrite you existing one !! ) as follows 
-ssh-keygen -t rsa -b 4096 -C "your.name@your.org"
-
 When the file path is suggested append a different string to avoid overwriting the default private key path!!!
 
-    
+    #create the a NEW public private key pair ( do not overwrite you existing one !! ) as follows 
+    ssh-keygen -t rsa -b 4096 -C "your.name@your.org"
 
 ### 5.3. Initialise the aws infrastructure
 To initialise the git aws infrastructure you need to clone the qto source code locally first. 
@@ -143,22 +140,23 @@ You should see a listing of your aws instances one of which should be named dev-
 ### 5.5. Provision and start the qto application
 The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND perl modules as well as perform the needed configurations and provisions to enable start of the web server WITHOUT manual configuration. 
 
-    # run the bootstrap script 
-    ./qto/src/bash/qto/bootstrap-qto-host-on-ubuntu.sh && source ~/.bash_opts.$(hostname -s) 
+    # run the bootstrap script and reload the bash env
+    ./qto/src/bash/qto/bootstrap-qto-host-on-ubuntu.sh && source ~/.bash_opts.$(hostname -s)
     
-    # go to the product instance dir as shown by the script output at the end:
-    # this is just example: 
+    # go to the product instance dir as suggested by the script output
+    cat qto/.env && source qto/.env && cd qto/qto.$VERSION.$ENV_TYPE.$USER/
+    
     
     # ensure application layer consistency, run db ddl's and load data from s3
     ./src/bash/qto/qto.sh -a check-perl-syntax
-    ./src/bash/qto/qto.sh -a run-pgsql-scripts
+    ./src/bash/qto/qto.sh -a run-qto-db-ddl
     ./src/bash/qto/qto.sh -a load-db-data-from-s3
 
 ### 5.6. Access the qto application from the web
 The qto web application is available at the following address
 http://&lt;&lt;just-copied-IPv4-Public-IP&gt;&gt;:8080
 
-If you associate a DNS name with this ip you could already use it as well. 
+If you associate a DNS name with this ip you could already use it as well. You could run the production version of the app over https ( check the [doc/cheats](doc/cheats/qto-cheat-sheet.sh) for example how-to generate a free ssl cerftificate from Let's encrypt ).
 
 
     
@@ -184,13 +182,13 @@ In the qto realm each deployment INSTANCE is "self-aware" of the type of environ
     bash qto/src/bash/qto/bootstrap-qto-host.sh
     
     # cd to the product instance dir as suggested by the script
-    
+    cat qto/.env && source qto/.env && cd qto/qto.$VERSION.$ENV_TYPE.$USER/
 
 ### 6.3. Build the qto image
 This step will take 80% of the time. It is non-interactive, that is the whole image building should succeed at once. 
 
     # build the docker image
-    clear ; bash src/bash/qto/qto.sh -a build-qto-docker-image
+    clear ; ./src/bash/qto/qto.sh -a build-qto-docker-image
 
 ### 6.4. Run the container
 Run a container of the already build image issue the following command:

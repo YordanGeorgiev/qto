@@ -1,4 +1,3 @@
--- DROP FUNCTION fnc_tree_traversal ;
 CREATE OR REPLACE FUNCTION "fnc_tree_traversal" (INT,INT) RETURNS SETOF test_hcreate_table AS '
 DECLARE
 	pid ALIAS FOR $1;

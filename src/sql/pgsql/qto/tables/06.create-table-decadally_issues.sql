@@ -1,4 +1,4 @@
--- DROP TABLE IF EXISTS decadally_issues ; 
+      -- DROP TABLE IF EXISTS decadally_issues ; 
 
 SELECT 'create the "decadally_issues" table'
 ; 

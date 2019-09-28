@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS test_xls_to_db_table CASCADE;
+    -- DROP TABLE IF EXISTS test_xls_to_db_table CASCADE;
 
 SELECT 'create the "test_xls_to_db_table" table'
 ; 

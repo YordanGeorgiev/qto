@@ -20,8 +20,6 @@ doLoadDbDataFromS3(){
       --port $postgres_db_port --host $postgres_db_host -d $postgres_db_name < \
          "$PRODUCT_INSTANCE_DIR/dat/sql/$ENV_TYPE"'_'"$RUN_UNIT"'.latest.insrts.dmp.sql'
 
-   # avoid the run of the daily backup during the bootstrapping / initial deployment phase
-   test -f $PRODUCT_INSTANCE_DIR/dat/tmp/boostrapping && \
-      rm -v $PRODUCT_INSTANCE_DIR/dat/tmp/boostrapping
+   test -f $PRODUCT_INSTANCE_DIR/dat/tmp/bootstrapping && rm -v $PRODUCT_INSTANCE_DIR/dat/tmp/bootstrapping
 
 }

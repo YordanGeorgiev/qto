@@ -1,5 +1,5 @@
 -- START create table test_hierarchy_doc
-DROP TABLE IF EXISTS test_hierarchy_doc ; 
+-- DROP TABLE IF EXISTS test_hierarchy_doc ; 
 
 SELECT 'create the "test_hierarchy_doc" table' as "---"
 ;

@@ -1,4 +1,4 @@
--- DROP TABLE IF EXISTS test_empty_table ; 
+     -- DROP TABLE IF EXISTS test_empty_table ; 
 
 SELECT 'create the "test_empty_table" table'
 ;

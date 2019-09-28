@@ -422,7 +422,7 @@ As the qto supports loading data for multiple instances of itself - dev,tst,prd 
 #### 3.4.2. Create the database and run the DDL scrripts
 
 
-    bash src/bash/qto/qto.sh -a run-pgsql-scripts
+    bash src/bash/qto/qto.sh -a run-qto-db-ddl
 
 #### 3.4.3. Start the mojo and hypno servers
 The morbo dev server is listening on the 3000 port by default and the hypnotoad on the 8080 by default. You will need to use either one when loading the tables in the next step. 

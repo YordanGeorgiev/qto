@@ -1,4 +1,4 @@
--- DROP TABLE IF EXISTS quinquennially_issues ; 
+      -- DROP TABLE IF EXISTS quinquennially_issues ; 
 
 SELECT 'create the "quinquennially_issues" table'
 ; 

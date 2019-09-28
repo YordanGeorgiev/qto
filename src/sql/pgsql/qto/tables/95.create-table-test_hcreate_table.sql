@@ -1,5 +1,4 @@
--- START create table test_hcreate_table
-DROP TABLE IF EXISTS test_hcreate_table ; 
+   -- DROP TABLE IF EXISTS test_hcreate_table CASCADE;
 
 SELECT 'create the "test_hcreate_table" table' as "---"
 ;

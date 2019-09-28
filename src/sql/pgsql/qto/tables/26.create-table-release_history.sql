@@ -1,4 +1,4 @@
--- DROP TABLE IF EXISTS release_history ; 
+     -- DROP TABLE IF EXISTS release_history ; 
 
 SELECT 'create the "release_history" table'
 ; 

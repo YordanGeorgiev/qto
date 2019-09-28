@@ -1,4 +1,4 @@
--- DROP TABLE IF EXISTS test_truncate_table ; 
+     -- DROP TABLE IF EXISTS test_truncate_table ; 
 
 SELECT 'create the "test_truncate_table" table'
 ;
