@@ -141,16 +141,13 @@ You should see a listing of your aws instances one of which should be named dev-
 The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND perl modules as well as perform the needed configurations and provisions to enable start of the web server WITHOUT manual configuration. 
 
     # run the bootstrap script and reload the bash env
-    ./qto/src/bash/qto/bootstrap-qto-host-on-ubuntu.sh && source ~/.bash_opts.$(hostname -s)
+    ./qto/src/bash/deployer/run.sh && source ~/.bash_opts.$(hostname -s)
     
     # go to the product instance dir as suggested by the script output
     cat qto/.env && source qto/.env && cd qto/qto.$VERSION.$ENV_TYPE.$USER/
     
-    
     # ensure application layer consistency, run db ddl's and load data from s3
-    ./src/bash/qto/qto.sh -a check-perl-syntax
-    ./src/bash/qto/qto.sh -a run-qto-db-ddl
-    ./src/bash/qto/qto.sh -a load-db-data-from-s3
+    ./src/bash/qto/qto.sh -a check-perl-syntax -a run-qto-db-ddl -a load-db-data-from-s3
 
 ### 5.6. Access the qto application from the web
 The qto web application is available at the following address

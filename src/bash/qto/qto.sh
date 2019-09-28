@@ -1,20 +1,19 @@
 #!/usr/bin/env bash
 # file: src/bash/qto.sh doc at the eof file
 
-# v0.7.1
 #------------------------------------------------------------------------------
 # the main shell entry point of the qto application
 #------------------------------------------------------------------------------
 main(){
    do_init
 
-   is_daemon=0
+   is_daemon=0;actions=''
 
 	while getopts "a:d:t:" opt; do
 		 case $opt in
-			  a) actions+=("$OPTARG ");;
-			  t) table+=("$OPTARG ");;
-			  d) is_daemon+=("$OPTARG ");;
+			  a) actions="${actions}$OPTARG ";;
+			  t) table=("$OPTARG ");;
+			  d) is_daemon=("$OPTARG ");;
 			  \?) doExit 2 "Invalid option: -$OPTARG";;
 			  :) doExit 2 "Option -$OPTARG requires an argument."
 		 esac
@@ -30,7 +29,6 @@ main(){
 }
 
 
-# v0.7.1
 #------------------------------------------------------------------------------
 # the "reflection" func - identify the the funcs per file
 #------------------------------------------------------------------------------
@@ -53,14 +51,14 @@ get_function_list () {
 # run only the actions passed with the -a <<action-name-arg>>
 #------------------------------------------------------------------------------
 do_run_actions(){
-   actions=$1 ; shift 1
+   actions=$1
       test -z ${PROJ_INSTANCE_DIR:-} && PROJ_INSTANCE_DIR=$PRODUCT_INSTANCE_DIR
       daily_backup_dir="$PROJ_INSTANCE_DIR/dat/mix/"$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
       cd $PRODUCT_INSTANCE_DIR
-      actions="$(echo -e "${actions}" | sed -e 's/^[[:space:]]*//')" #or how-to trim leading space
-      actions_to_run=''
+      actions="$(echo -e "${actions}"|sed -e 's/^[[:space:]]*//')" #or how-to trim leading space
+      functions_to_run=''
       while read -d ' ' arg_action ; do
-         # debug  arg_action:$arg_action
+         #debug arg_action:$arg_action ; sleep 2
          while read -r func_file ; do
             # debug func func_file:$func_file
             while read -r function_name ; do
@@ -68,27 +66,29 @@ do_run_actions(){
                action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
                # debug  action_name: $action_name
                test "$action_name" != "$arg_action" && continue
-               test "$action_name" == "$arg_action" && actions_to_run=$(echo -e "$actions_to_run\n$function_name")
-               # debug actions_to_run: $actions_to_run
+               test "$action_name" == "$arg_action" && functions_to_run="${functions_to_run}$function_name "
+               #debug functions_to_run: $functions_to_run ; sleep 3
             done< <(get_function_list "$func_file")
          done < <(find "src/bash/$RUN_UNIT/funcs" -type f -name '*.sh'|sort)
 
-      [[ $arg_action == to-ver=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeVersion $arg_action")
-      [[ $arg_action == to-env=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoChangeEnvType $arg_action")
-      [[ $arg_action == to-app=* ]] && actions_to_run=$(echo -e "$actions_to_run\ndoCloneToApp $arg_action")
+      [[ $arg_action == to-ver=* ]] && functions_to_run=$(echo -e "$functions_to_run\ndoChangeVersion $arg_action")
+      [[ $arg_action == to-env=* ]] && functions_to_run=$(echo -e "$functions_to_run\ndoChangeEnvType $arg_action")
+      [[ $arg_action == to-app=* ]] && functions_to_run=$(echo -e "$functions_to_run\ndoCloneToApp $arg_action")
 
       done < <(echo "$actions")
 
-   while read -r action_to_run ; do
+   functions_to_run="$(echo -e "${functions_to_run}"|sed -e 's/^[[:space:]]*//')"
+   while read -d ' ' run_func ; do
+      #debug functions_to_run: $functions_to_run ; sleep 3
       cd $PRODUCT_INSTANCE_DIR
-      doLog "INFO start running action :: $action_to_run"
-      $action_to_run
+      doLog "INFO START ::: running action :: $run_func"
+      $run_func
       exit_code=$?
       if [[ "$exit_code" != "0" ]]; then
          exit $exit_code
       fi
-      doLog "INFO stop  running action :: $action_to_run"
-   done < <(echo $actions_to_run)
+      doLog "INFO STOP ::: running function :: $run_func"
+   done < <(echo "$functions_to_run")
 
 	test -d "$daily_backup_dir" || {
       test -f $PRODUCT_INSTANCE_DIR/dat/tmp/bootstrapping || doBackupPostgresDb
@@ -97,7 +97,6 @@ do_run_actions(){
 }
 
 
-# v0.7.1 
 #------------------------------------------------------------------------------
 # register the run-time vars before the call of the $0
 #------------------------------------------------------------------------------
@@ -147,7 +146,6 @@ doExportJsonSectionVars(){
 }
 
 
-#
 #------------------------------------------------------------------------------
 # usage example:
 # do_apply_shell_expansion /tmp/docker-compose.yml
@@ -162,7 +160,6 @@ do_apply_shell_expansion() {
 
 
 
-# v0.7.1 
 # ------------------------------------------------------------------------------
 # perform the checks to ensure that all the vars needed to run are set
 # ------------------------------------------------------------------------------
@@ -192,7 +189,6 @@ trap "exit 1" TERM
 export TOP_PID=$$
 
 
-# v0.7.1
 # ------------------------------------------------------------------------------
 # clean and exit with passed status and message
 # call by:
@@ -221,7 +217,6 @@ doExit(){
 }
 
 
-# v0.7.1 
 #------------------------------------------------------------------------------
 # echo pass params and print them to a log file and terminal
 # with timestamp and $host_name and $0 PID
@@ -247,7 +242,6 @@ doLog(){
 }
 
 
-# v0.7.1 
 #------------------------------------------------------------------------------
 # run a command and log the call and its output to the log_file
 # doPrintHelp: doRunCmdAndLog "$cmd"

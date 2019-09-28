@@ -11,8 +11,9 @@ doLoadDbDataFromS3(){
 
    mkdir -p $PRODUCT_INSTANCE_DIR/dat/sql/
 
-   # fetch the db inserts data from the s3 bucket - to be parametrized for env ...
-   echo wget -O "$PRODUCT_INSTANCE_DIR/dat/sql/"$ENV_TYPE'_'$RUN_UNIT".latest.insrts.dmp.sql" \
+   echo "fetch the db inserts data from the s3 bucket from the following url: "
+   echo "https://s3-$AWS_DEFAULT_REGION.amazonaws.com/$bucket/"$ENV_TYPE"_$RUN_UNIT"'.latest.insrts.dmp.sql'
+   wget -O "$PRODUCT_INSTANCE_DIR/dat/sql/"$ENV_TYPE'_'$RUN_UNIT".latest.insrts.dmp.sql" \
       "https://s3-$AWS_DEFAULT_REGION.amazonaws.com/$bucket/"$ENV_TYPE"_$RUN_UNIT"'.latest.insrts.dmp.sql'
 
    # configure psql to access the db of THIS instance
