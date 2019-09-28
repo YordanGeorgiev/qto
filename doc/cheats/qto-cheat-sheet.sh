@@ -33,15 +33,5 @@ doExportJsonSectionVars $PROIJ_INSTANCE_DIR/cnf/env/prd.env.json '.env.db'
 # set the authentication for the psql 
 alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} --host $postgres_db_host --port $postgres_db_port"
 
-# how to add files to the git 
-git add --all; GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg" \
-git commit -m "$git_msg" --author "Yordan Georgiev <yordan.georgiev@gmail.com" # --amend
-GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg" git push
-GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg" git pull
-
-# OBS AMMEND AND git push FORCE !!
-git add --all ; GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg " git commit -am "$git_msg" \
-   --author "Yordan Georgiev <yordan.georgiev@gmail.com>" --amend && \
-GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg " git push --force
 
 # eof file: doc/cheats/qto-cheat-sheet.sh
