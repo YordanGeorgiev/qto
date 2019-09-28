@@ -61,7 +61,7 @@ The following diagram implements the Simpliest Possible Way of describing Archit
 Figure 1:
 The qto insfrastructure
 ![Figure 1:
-The qto insfrastructure](https://raw.githubusercontent.com/YordanGeorgiev/qto/v0.7.1/doc/img/system_guide/qto-infra.jpg)
+The qto insfrastructure](https://github.com/YordanGeorgiev/qto/blob/master/doc/img/system_guide/qto-infra.jpg?raw=true)
 
     
 

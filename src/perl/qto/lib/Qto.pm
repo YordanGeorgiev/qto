@@ -115,15 +115,16 @@ sub doSetHooks {
   
    my $self = shift ; 
 
-#  # comment out to debug 
-#	my $before_render_debug = 0 ; 
-#   if ( $before_render_debug == 1 ) {
-#      $self->hook ( 'before_render' => sub {
-#         my ($c, $args) = @_;
-#         # debug r $c ; 
-#         # debug r ( $c->req->url->to_abs . '?' . $c->req->url->query ) ; 
-#      });
-#   }
+   if ( $ENV{ 'MOJO_LOG_LEVEL' } eq 'developent' ){
+      my $before_render_debug = 0 ; 
+      if ( $before_render_debug == 1 ) {
+         $self->hook ( 'before_render' => sub {
+            my ($c, $args) = @_;
+            # debug r $c ; 
+            # debug r ( $c->req->url->to_abs . '?' . $c->req->url->query ) ; 
+         });
+      }
+   }
 
 
    $self->hook(after_dispatch => sub {
@@ -176,14 +177,11 @@ sub doSetHooks {
 	$self->hook( 'after_render' => sub {
 	  my ($c, $output, $format) = @_;
 
-	  # Check if "gzip => 1" has been set in the stash
-	  # return unless $c->stash->{gzip};
-
-	  # Check if user agent accepts gzip compression
+	  # check if user agent accepts gzip compression
 	  return unless ($c->req->headers->accept_encoding // '') =~ /gzip/i;
 	  $c->res->headers->append( 'Vary' => 'Accept-Encoding');
 
-	  # Compress content with gzip
+	  # compress content with gzip
 	  $c->res->headers->content_encoding('gzip');
 	  gzip $output, \my $compressed;
 	  $$output = $compressed;

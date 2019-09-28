@@ -226,7 +226,6 @@ do_check_install_perl_modules(){
 EOF_MODULES
 )
   
-      set -x
    while read -r module ; do
       use_modules="${use_modules:-} use $module ; "
    done < <(echo "$modules");
@@ -351,16 +350,15 @@ do_create_multi_env_dir(){
 }
 
 do_finilize(){
+
+   mkdir -p $unit_run_dir/../../../dat/tmp/ ; touch $unit_run_dir/../../../dat/tmp/bootstrapping
    printf "\033[2J";printf "\033[0;0H"
    echo -e "\n\n"
    echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
    echo "DONE"
-   echo "# next you MUST reload the new environment variables by:"
-   echo " source ~/.bash_opts.$(hostname -s) ; "
-   echo "# and go to your PRODUCT_INSTANCE_DIR by: "
+   echo -e "\n"
+   echo "# go to your PRODUCT_INSTANCE_DIR by: "
    echo " cd $PRODUCT_INSTANCE_DIR"
-   echo "# you could than check the consistency of the Application Layer by:"
-   echo "bash src/bash/qto/qto.sh -a check-perl-syntax"
    echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 }
 

@@ -6,13 +6,13 @@
   * [2.3. PROPOSED CAPABILITIES](#23-proposed-capabilities)
 * [3. DEMO](#3-demo)
 * [4. DOCUMENTATION](#4-documentation)
-* [5. MISSION](#5-mission)
-  * [5.1. THE INSTALLATIONS DOC](#51-the-installations-doc)
-  * [5.2. THE CONCEPTS DOC](#52-the-concepts-doc)
-  * [5.3. THE USERSTORIES DOC](#53-the-userstories-doc)
-  * [5.4. THE DEVOPS GUIDE DOC](#54-the-devops-guide-doc)
-  * [5.5. THE ENDUSER GUIDE DOC](#55-the-enduser-guide-doc)
-  * [5.6. THE REQUIREMENTS DOC](#56-the-requirements-doc)
+* [5. AUTOMATED FULL DEPLOYMENT ON AWS  IN 35 MINUTES](#5-automated-full-deployment-on-aws-in-35-minutes)
+  * [5.1. PREREQUISITES](#51-prerequisites)
+  * [5.2. CONFIGURE YOUR AWS CREDENTIALS - AWS KEYS AND  SSH KEYS](#52-configure-your-aws-credentials--aws-keys-and-ssh-keys)
+  * [5.3. INITIALISE THE AWS INFRASTRUCTURE](#53-initialise-the-aws-infrastructure)
+  * [5.4. ACCESS THE AWS HOST VIA SSH AND FETCH THE SOURCE CODE FROM GITHUB](#54-access-the-aws-host-via-ssh-and-fetch-the-source-code-from-github)
+  * [5.5. PROVISION AND START THE QTO APPLICATION](#55-provision-and-start-the-qto-application)
+  * [5.6. ACCESS THE QTO APPLICATION FROM THE WEB](#56-access-the-qto-application-from-the-web)
 * [6. INSTALLATION AND CONFIGURATION VIA DOCKER](#6-installation-and-configuration-via-docker)
   * [6.1. FETCH THE SOURCE](#61-fetch-the-source)
   * [6.2. RUN THE BOOTSTRAP SCRIPT](#62-run-the-bootstrap-script)
@@ -30,15 +30,17 @@
 ## 1. WHY
 Why ?! Yet! Another App ?! ... 
 
-Software development is prohibitively expensive. In fact any endeavour with group of people aiming towards common goal in any field is expensive, even solely based on persons' time spent. This application will provide your organisation with the answers who does/did what, when, how and why in open manner, but ONLY if your organisation has the courage and commitment to do it.  
-Moreover this application will provide you with the means to define your own business logic ... Still here ?! Let's move on !
+Software development is prohibitively expensive. In fact any endeavour with group of people aiming towards common goal in any field is expensive, even solely based on persons' time spent. 
+If you have a great idea for a web application, but you want to keep a full vertical control on the stack, avoid the initial costs and efforts of setting up the infrastructure and just focus on the data and business logic of your application, you must read further ...
+If you want to simply manage your (software) endeavour the qto application will provide your organisation with the answers who does/did what, when, how and why in open manner, but ONLY if your organisation has the courage and commitment to do it.  
+Still here ?! Let's move on !
 
     
 
 ## 2. SO, WHAT IS THIS ?!
-A generic and simplistic db centric content management system, build on postgres CRUDs ( s stands for search ) and hierarchical nested data-sets for managing multiple multiple databases from the same web application.An included example application is the "qto application", which is used to manage multiple projects' issues, including itself ;o). 
+A generic and simplistic db centric content management system, build on postgres CRUDs ( s stands for search ) and hierarchical nested data-sets MULTIPLE databases from the same web application.An included example application is the "qto application", which is used to manage multiple projects' issues, including itself ;o). 
 The full and extensive https://qto.fi/qto/view/features_doc contains all the features and functionalities of THIS released version. 
-This application is the reflection of the best practices and principles for tens of years in IT resulting into a product of the Multi-environment instance architecture, which is in a way a reflection of the simple axiom in IT - "if there is one there will be many" ...
+
 
 
 Figure: 1 
@@ -65,27 +67,27 @@ Your organisation:
     
 
 ### 2.3. Proposed capabilities
-You could:
-
-- deploy an instance of the qto, bare metal/vm/docker install should take no more than 2h
+- deploy an instance of the qto, bare metal/vm/docker install should take no more than 40min
 - provide access to the non-technical person via http for CRUD operations
 - quickly define LOTS of tables DDL by using the existing examples and just changing the columns
+- search the data from the db via the global search feature 
 - load initial data via xls ( less than 10k rows per sheet should be ok )
-- generate md docs format based on the qto native view docs ..
 - provide them with initial links to grasp the "semi-sql" syntax
-- demo the simple search feature ( working only with name and description cols , but you could ddl hack-it)
+- generate md docs format based on the qto native view docs programatically
 
     
 
 ## 3. DEMO
 You can check the following https://qto.fi/qto/view/enduser_guide_doc of the web app, additionally every doc bellow has it's "it-doc" link aka the "native" qto document format …
-Use the "test.user@gmail.com" and "secret" credentials to login or even better try to login with your own e-mail and request access from the admin e-mail displayed to the error msg ...
+Use the "test.user@gmail.com" and "secret" credentials to login ( simple click of the login button would do it as well ;o) OR even better try to login with your own e-mail and request access from the admin e-mail displayed to the error msg ...
+Still here ?! Interested to get your own instance up-and-running in the cloud exposed to the Internet ?!
+Follow simply the instructions in the next section.
 
     
 
 ## 4. DOCUMENTATION
 
-Qto IS about documentation, we do all the doc-fooding on our docs, which are aimed to be as up-to-date to the current release version as possible. Thus you get the following documentation set:
+Qto IS about documentation , which are aimed to be as up-to-date to the current release version as possible. Thus you get the following documentation set:
  - ReadMe - the initial landing readme doc for the project
  - UserStories - the collection of user-stories used to describe "what is desired"
  - Requirements - the structured collection of the requirements 
@@ -94,54 +96,70 @@ Qto IS about documentation, we do all the doc-fooding on our docs, which are aim
  - Installation Guide - a guide for installation of the application
  - End-User Guide - the guide for the usage of the UI ( mainly ) for the end-users
  - Concepts - the concepts doc 
+Check the doc/md directory where the generated from the db documents residue in md format.
 
     
 
-## 5. MISSION
-Enable transperent collaboration.
-
-
-    
-
-### 5.1. The Installations doc
-Contains the tasks and activities to perform to get a fully operational instance of the qto application:
- - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/installations_doc.md
- - https://qto.fi/qto/view/installations_doc
+## 5. AUTOMATED FULL DEPLOYMENT ON AWS  IN 35 MINUTES
+This section WILL provide you will with ALL required steps to get a fully functional instance of the qto application in aws in about 35 min with 3 commands.
 
     
 
-### 5.2. The Concepts doc
-General level concepts of the application. 
- - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/concepts_doc.md
- - https://qto.fi/qto/view/concepts_doc
+### 5.1. Prerequisites
+You need an aws account, capable of deploying micro instances. The costs for running the qto.fi is about 15 USD per month ( aka this aws deployment expense to Amazon would be less than a dollar ), but if you are going to use a free account, which does not allow the instantiation of the ami's specified in the src/terraform/tpl/qto/main.tf.tpl file, you should modify the template file to accommodate that. 
 
     
 
-### 5.3. The UserStories doc
-Naturally contains the userstories of the app. 
-- in https://github.com/YordanGeorgiev/qto/blob/master/doc/md/userstories_doc.md 
-- https://qto.fi/qto/view/userstories_doc
+### 5.2. Configure your aws credentials - aws keys and  ssh keys
+Generate NEW aws access- and secret-keys https://console.aws.amazon.com/iam/home?region=&lt;&lt;YOUR-AWS-REGION&gt;&gt;#/security_credentials. 
+Store the keys in the qto's development environment configuration file - the cnf/env/dev.env.json file.
+
+Create the a NEW public private key pair ( do not overwrite you existing one !! ) as follows 
+ssh-keygen -t rsa -b 4096 -C "your.name@your.org"
+
+When the file path is suggested append a different string to avoid overwriting the default private key path!!!
 
     
 
-### 5.4. The DevOps Guide doc
-Contains content on how to develop the application + general devops info.
-- https://github.com/YordanGeorgiev/qto/blob/master/doc/md/devops_guide_doc.md
-- https://qto.fi/qto/view/devops_guide_doc
+### 5.3. Initialise the aws infrastructure
+To initialise the git aws infrastructure you need to clone the qto source code locally first. 
 
+    mkdir -p ~/opt/; cd ~/opt; git clone https://github.com/YordanGeorgiev/qto
     
+    # todo TEST THAT !!!
+    clear ; bash ~/opt/qto/src/bash/qto/qto.sh -a init-aws-instance
 
-### 5.5. The EndUser Guide doc
-The enduser guide contains mostly UI usage instructions:
- - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/enduser_guide_doc.md
- - https://qto.fi/qto/view/concepts_doc
+### 5.4. Access the aws host via ssh and fetch the source code from GitHub
+To access the aws host via ssh you need to copy the provided elastic ip which was created by the terraform script. In your browser go to the following url:
+https://eu-west-1.console.aws.amazon.com/ec2/v2/home?region=&lt;&lt;YOUR-AWS-REGION&gt;&gt;#Instances:sort=instanceId
+You should see a listing of your aws instances one of which should be named dev-qto-ec2 ( that is the development instance of the qto application). Click on it's checkbox. Search for the "IPv4 Public IP" string and copy the value of the ip.
 
+    # run locally 
+    ssh -i <<path-to-your-private-key-file>> ubuntu@<<just-copied-IPv4-Public-IP>>
     
+    # on the aws server
+    mkdir -p ~/opt/; cd ~/opt; git clone https://github.com/YordanGeorgiev/qto && cd ~/opt ;
 
-### 5.6. The Requirements doc
-Contains the specs and requirements, which can be defined at the current stage of the development:
- - https://github.com/YordanGeorgiev/qto/blob/master/doc/md/requirements_doc.md
- - https://qto.fi/qto/view/requirements_doc
+### 5.5. Provision and start the qto application
+The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND perl modules as well as perform the needed configurations and provisions to enable start of the web server WITHOUT manual configuration. 
+
+    # run the bootstrap script 
+    ./qto/src/bash/qto/bootstrap-qto-host-on-ubuntu.sh && source ~/.bash_opts.$(hostname -s) 
+    
+    # go to the product instance dir as shown by the script output at the end:
+    # this is just example: 
+    
+    # ensure application layer consistency, run db ddl's and load data from s3
+    ./src/bash/qto/qto.sh -a check-perl-syntax
+    ./src/bash/qto/qto.sh -a run-pgsql-scripts
+    ./src/bash/qto/qto.sh -a load-db-data-from-s3
+
+### 5.6. Access the qto application from the web
+The qto web application is available at the following address
+http://&lt;&lt;just-copied-IPv4-Public-IP&gt;&gt;:8080
+
+If you associate a DNS name with this ip you could already use it as well. 
+
 
     
 

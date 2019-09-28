@@ -117,8 +117,8 @@ mkdir -p ~/.aws/s3cmd/ ; cat << EOF03 > ~/.aws/s3cmd/minio_local.s3cfg
   host_bucket = org-bucket
   bucket_location = local_region
   use_https = True
-  access_key =  N9Z4W68XW0YM7P9MF6WG
-  secret_key = R2g5sRfT1xou2xfaMoq+pQrLLIB8+erOVRhtNg2F
+  AWS_ACCESS_KEY_ID =  N9Z4W68XW0YM7P9MF6WG
+  AWS_SECRET_ACCESS_KEY = R2g5sRfT1xou2xfaMoq+pQrLLIB8+erOVRhtNg2F
   signature_v2 = False
 EOF03
 
