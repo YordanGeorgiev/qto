@@ -369,18 +369,12 @@ src/bash/qto/helps/increase-date.help.sh
 doc/txt/qto/tests/increase-date.test.txt
 doc/txt/qto/funcs/increase-date.func.txt
 # ---
-src/bash/qto/tests/db-to-txt.test.sh
-src/bash/qto/funcs/db-to-txt.func.sh
-src/bash/qto/helps/db-to-txt.help.sh
-doc/txt/qto/tests/db-to-txt.test.txt
-doc/txt/qto/funcs/db-to-txt.func.txt
-doc/txt/qto/helps/db-to-txt.help.txt
-# ---
 # the postgres DDL scripts
 src/sql/pgsql
 src/sql/pgsql/qto
 src/sql/pgsql/qto/funcs
 src/bash/qto/funcs/run-pgsql-scripts.func.sh
+src/bash/qto/funcs/run-qto-db-ddl.func.sh
 src/sql/pgsql/qto/00.create-db.pgsql
 src/sql/pgsql/qto/01.create-qto-app-user.pgsql
 src/sql/pgsql/qto/funcs/01.create-func-fns_update_time.sql
@@ -621,7 +615,6 @@ doc/txt/qto/tests/remove-package-files.test.txt
 doc/txt/qto/helps/remove-package-files.help.txt
 doc/txt/qto/funcs/remove-package-files.func.txt
 src/bash/qto/tests/run-pgsql-scripts.test.sh
-src/bash/qto/helps/run-pgsql-scripts.help.sh
 doc/txt/qto/tests/run-pgsql-scripts.test.txt
 doc/txt/qto/funcs/run-pgsql-scripts.func.txt
 tags

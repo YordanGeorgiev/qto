@@ -243,7 +243,7 @@ You restore a database by first running the pgsql scripts of the project databas
     # obs you have to have the shell vars pre-loaded !!!
     # clear; doParseCnfEnvVars <<path-to-cnf-file>>
     
-    bash src/bash/qto/qto.sh -a run-pgsql-scripts
+    bash src/bash/qto/qto.sh -a run-qto-db-ddl
     psql 
     
     psql -d $postgres_db_name < dat/mix/sql/pgsql/dbdumps/dev_qto/dev_qto.20180813_202202.insrt.dmp.sql

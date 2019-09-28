@@ -1,9 +1,5 @@
 # src/bash/qto/funcs/run-pgsql-scripts.test.sh
 
-# v1.1.0
-# ---------------------------------------------------------
-# docs cat doc/txt/qto/tests/run-pgsql-scripts.test.txt
-# ---------------------------------------------------------
 doTestRunPgsqlScripts(){
 
 	doLog "DEBUG START doTestRunPgsqlScripts"
@@ -31,7 +27,6 @@ doTestRunPgsqlScripts(){
    exit_code=$?
    doLog "DEBUG STOP  doTestRunPgsqlScripts"
 }
-# eof func doTestRunPgsqlScripts
 
 
 # eof file: src/bash/qto/funcs/run-pgsql-scripts.test.sh

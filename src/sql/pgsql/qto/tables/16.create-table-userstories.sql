@@ -1,4 +1,4 @@
--- DROP TABLE IF EXISTS userstories CASCADE;
+      -- DROP TABLE IF EXISTS userstories CASCADE;
 
 SELECT 'create the "userstories" table'
 ; 

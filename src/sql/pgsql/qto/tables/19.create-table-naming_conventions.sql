@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS naming_conventions ; 
+     -- DROP TABLE IF EXISTS naming_conventions ; 
 
 SELECT 'create the "naming_conventions" table'
 ; 
