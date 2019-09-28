@@ -90,7 +90,9 @@ do_run_actions(){
       doLog "INFO stop  running action :: $action_to_run"
    done < <(echo $actions_to_run)
 
-	test -d "$daily_backup_dir" || doBackupPostgresDb
+	test -d "$daily_backup_dir" || {
+      test -f $PRODUCT_INSTANCE_DIR/dat/tmp/bootstrapping || doBackupPostgresDb
+   }
 
 }
 

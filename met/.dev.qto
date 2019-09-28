@@ -71,7 +71,6 @@ doc/txt/qto/funcs/generate-md-docs.func.txt
 src/bash/qto/funcs/remove-docker-images.func.sh
 src/bash/qto/funcs/remove-docker-containers.func.sh
 src/bash/qto/funcs/run-container.func.sh
-src/bash/qto/funcs/mojo-morbo-start.func.sh
 src/bash/qto/funcs/mojo-daemon-start.func.sh
 src/bash/qto/funcs/mojo-daemon-stop.func.sh
 src/bash/qto/install/docker/install-test.sh
@@ -337,8 +336,8 @@ src/perl/qto/lib/Qto/App/Utils/Logger.pm
 src/perl/qto/lib/Qto/App/Utils/Timer.pm
 # ---
 # ---
-src/bash/qto/tests/mojo-hypnotoad-start.test.sh
 src/bash/qto/funcs/mojo-hypnotoad-start.func.sh
+src/bash/qto/tests/mojo-hypnotoad-start.test.sh
 src/bash/qto/tests/mojo-hypnotoad-stop.test.sh
 src/bash/qto/funcs/mojo-hypnotoad-stop.func.sh
 doc/txt/qto/funcs/mojo-hypnotoad-stop.func.txt
@@ -626,12 +625,10 @@ tags
 # ----
 cnf/perl/.perltidyrc
 # ---
+src/bash/qto/funcs/mojo-morbo-start.func.sh
 src/bash/qto/tests/mojo-morbo-start.test.sh
-src/bash/qto/helps/mojo-morbo-start.help.sh
 doc/txt/qto/tests/mojo-morbo-start.test.txt
-doc/txt/qto/helps/mojo-morbo-start.help.txt
 doc/txt/qto/funcs/mojo-morbo-start.func.txt
-# ---
 src/bash/qto/funcs/mojo-morbo-stop.func.sh
 src/bash/qto/tests/mojo-morbo-stop.test.sh
 # ---

@@ -10,7 +10,7 @@ doMojoHypnotoadStart(){
    export MOJO_MODE='production'
 
    cd src/perl/qto/script
-   hypnotoad qto --forground 
+   hypnotoad qto &
    cd $PRODUCT_INSTANCE_DIR
 }
 
