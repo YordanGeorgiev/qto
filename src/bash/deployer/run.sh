@@ -3,32 +3,38 @@
 
 main(){
    do_set_vars "$@"
-   do_check_setup_bash
+	if [[ $app_to_deploy == '--help' ]]; then
+		usage
+	fi
+#   do_check_setup_bash
    do_setup_vim
    do_check_install_ubuntu_packages
-   do_check_install_postgres
-   do_provision_postgres
-   do_check_install_perl_modules
-   do_check_install_chromium_headless
-   do_check_install_phantom_js
-   do_copy_git_hooks
-   do_setup_tmux
-   do_create_multi_env_dir
-   do_set_chmods
-   do_finalize
+#   do_check_install_postgres
+#   do_provision_postgres
+#   do_check_install_perl_modules
+#   do_check_install_chromium_headless
+#   do_check_install_phantom_js
+#   do_copy_git_hooks
+#   do_setup_tmux
+#   do_create_multi_env_dir
+#   do_set_chmods
+#   do_finalize
 }
 
 do_set_vars(){
    set -eu -o pipefail 
-   app_name='qto'
+   app_to_deploy=${1:-} || 'qto'
+   maybe_echo=${2:-} || ''
    app_name_owner=$USER || exit 1
    unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
    product_base_dir=$(cd $unit_run_dir/../../../..; echo `pwd`)
-   product_dir="$product_base_dir/$app_name" 
+   product_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
+   app_name=$(basename $product_dir)
    source "$unit_run_dir/../../../.env"
    PRODUCT_INSTANCE_DIR="$product_dir/$app_name.$VERSION.$ENV_TYPE.$app_name_owner"
    product_instance_dir=$unit_run_dir/../../.. # OBS different than this one ^^^
-   bash_opts_file=~/.bash_opts.$(hostname -s)
+   host_name="$(hostname -s)"
+   bash_opts_file=~/.bash_opts.$host_name
    cd $product_instance_dir
 }
 
@@ -39,7 +45,7 @@ do_check_setup_bash(){
 }
 
 do_setup_vim(){
-	cp -v $unit_run_dir/../../../.vimrc ~/.vimrc
+	$maybe_echo cp -v $unit_run_dir/../../../.vimrc ~/.vimrc
 }
 
 do_copy_git_hooks(){
@@ -52,20 +58,25 @@ do_set_chmods(){
 
 usage(){
 
-cat << EOF_DOC
+	cat << EOF_USAGE
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-      $app_name PURPOSE: 
-      a generic deployer for ubuntu packages and perl modules
+      $app_name deployer PURPOSE: 
+      a generic deployer for os packages, perl modules and custom vim,tmux
+      settings
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
      
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-      $app_name USAGE:
+      $app_name deployer USAGE:
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-      $0 
+      # just the deploy the qto packages
+      ./src/bash/deployer/run.sh
 
-      example call
-      clear ; bash $0 
+      # deploy actually another tool
+      ./src/bash/deployer/run.sh another-tool
+
+      # do not actually install but only print what will be installed
+      ./src/bash/deployer/run.sh qto echo
 
       Note: when run for first time the required modules for the testing
       will be installed for the current OS user - and that WILL take 
@@ -74,20 +85,24 @@ cat << EOF_DOC
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-EOF_DOC
+EOF_USAGE
+	do_exit 0 'usage displayed'
 }
 
 
 # qto-190911215406 - minio , mc
 do_check_install_ubuntu_packages(){
-  
-   packages="$(cat src/bash/deployer/qto/cnf/bin/ubuntu-18.04.lst)"
+   
+   packages_list_file="src/bash/deployer/$app_to_deploy/cnf/bin/ubuntu-18.04.lst"
+   err_msg="the packages list file: $packages_list_file does not exist !"
+   test -f $packages_list_file || do_exit 1 "$err_msg"
+   packages="$(cat $packages_list_file)"
 
    sudo apt-get update      
 	# sudo apt-get upgrade # probably not a good idea, but if yes ... this is the place ...
    while read -r package ; do 
       test "$(sudo dpkg -s $package | grep Status)" == "Status: install ok installed" || {
-         sudo apt-get install -y $package 
+         $maybe_echo sudo apt-get install -y $package 
       }
    done < <(echo "$packages");
       
@@ -177,14 +192,14 @@ do_exit(){
    if (( ${exit_code:-} != 0 )); then
       exit_msg=" ERROR --- exit_code $exit_code --- exit_msg : $exit_msg"
       >&2 echo "$exit_msg"
-      do_log "FATAL STOP FOR $app_name RUN with: "
+      do_log "FATAL STOP FOR $app_to_deploy deployer RUN with: "
       do_log "FATAL exit_code: $exit_code exit_msg: $exit_msg"
    else
-      do_log "INFO  STOP FOR $app_name RUN with: "
-      do_log "INFO  STOP FOR $app_name RUN: $exit_code $exit_msg"
+      do_log "INFO  STOP FOR $app_to_deploy deployer RUN with: "
+      do_log "INFO  STOP FOR $app_to_deploy deployer RUN: $exit_code $exit_msg"
    fi
 
-   test $exit_code -eq 0 && exit 0
+   exit $exit_code
 }
 
 #------------------------------------------------------------------------------
@@ -196,11 +211,11 @@ do_exit(){
 do_log(){
    type_of_msg=$(echo $*|cut -d" " -f1)
    msg="$(echo $*|cut -d" " -f2-)"
-   test -t 1 && echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$app_name][@$host_name] [$$] $msg "
-   mkdir -p $PRODUCT_INSTANCE_DIR/dat/log/bash && \
-      log_file="$PRODUCT_INSTANCE_DIR/dat/log/bash/$app_name.`date "+%Y%m"`.log"
-   echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$app_name][@$host_name] [$$] $msg " >> $log_file
+   [[ -t 1 ]] && echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [$app_name][@$host_name] [$$] $msg "
+   log_dir="$product_dir/dat/log/bash" ; mkdir -p $log_dir && log_file="$log_dir/$app_name.`date "+%Y%m"`.log"
+   echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [$app_name][@$host_name] [$$] $msg " >> $log_file
 }
+
 
 do_provision_postgres(){
 
