@@ -1,4 +1,4 @@
-     -- DROP TABLE IF EXISTS tst_paging ; 
+            -- DROP TABLE IF EXISTS tst_paging ; 
 
 SELECT 'create the "tst_paging" table'
 ; 

@@ -1,4 +1,4 @@
-      -- DROP TABLE IF EXISTS goals ; 
+             -- DROP TABLE IF EXISTS goals ; 
 
 SELECT 'create the "goals" table'
 ; 

@@ -1,4 +1,4 @@
-     -- DROP TABLE IF EXISTS meta_tables ; 
+            -- DROP TABLE IF EXISTS meta_tables ; 
 
 SELECT 'create the "meta_tables" table'
 ; 

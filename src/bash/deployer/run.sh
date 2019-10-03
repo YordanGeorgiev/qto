@@ -9,16 +9,16 @@ main(){
    do_check_setup_bash
    do_setup_vim
    do_check_install_ubuntu_packages
-#   do_check_install_postgres
-#   do_provision_postgres
-#   do_check_install_perl_modules
-#   do_check_install_chromium_headless
-#   do_check_install_phantom_js
-#   do_copy_git_hooks
-#   do_setup_tmux
-#   do_create_multi_env_dir
-#   do_set_chmods
-#   do_finalize
+   do_check_install_postgres
+   do_provision_postgres
+   do_check_install_perl_modules
+   do_check_install_chromium_headless
+   do_check_install_phantom_js
+   do_copy_git_hooks
+   do_setup_tmux
+   do_set_chmods
+   #do_create_multi_env_dir
+   #do_finalize
 }
 
 do_set_vars(){
@@ -30,7 +30,8 @@ do_set_vars(){
    product_base_dir=$(cd $unit_run_dir/../../../..; echo `pwd`)
    product_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
    product_instance_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
-   app_name=$(dirname $product_dir|cut -d'.' -f1)
+   app_name=$(basename $product_dir|cut -d'.' -f1)
+   app_to_deploy=$(basename $product_dir|cut -d'.' -f1)
    source "$unit_run_dir/../../../.env"
    PRODUCT_INSTANCE_DIR="$product_dir/$app_name.$VERSION.$ENV_TYPE.$app_name_owner"
    bash_opts_file=~/.bash_opts.$(hostname -s)
@@ -39,13 +40,18 @@ do_set_vars(){
 }
 
 do_check_setup_bash(){
-   cp -v $unit_run_dir/../../../cnf/bash/.profile_opts.host-name ~/.profile_opts.$(hostname -s)
-   cp -v $unit_run_dir/../../../cnf/bash/.bash_opts.host-name $bash_opts_file
-   echo "source $bash_opts_file" >> ~/.bashrc
+   cp -v $product_instance_dir/cnf/bash/.profile_opts.host-name ~/.profile_opts.$(hostname -s)
+   cp -v $product_instance_dir/cnf/bash/.bash_opts.host-name $bash_opts_file
+   if [[ -f ~/.bashrc ]]; then
+      found=$(grep -c "$bash_opts_file" ~/.bashrc)
+      if [[ $found -eq 0 ]]; then 
+         echo "source $bash_opts_file" >> ~/.bashrc
+      fi
+   fi
 }
 
 do_setup_vim(){
-	$maybe_echo cp -v $unit_run_dir/../../../.vimrc ~/.vimrc
+	cp -v $unit_run_dir/../../../.vimrc ~/.vimrc
 }
 
 do_copy_git_hooks(){
@@ -53,7 +59,7 @@ do_copy_git_hooks(){
 }
 
 do_set_chmods(){
-   find $PRODUCT_INSTANCE_DIR -type f -name '*.sh' -exec chmod 770 {} \;
+   find $product_instance_dir -type f -name '*.sh' -exec chmod 770 {} \;
 }
 
 usage(){
@@ -211,15 +217,9 @@ do_exit(){
 do_log(){
    type_of_msg=$(echo $*|cut -d" " -f1)
    msg="$(echo $*|cut -d" " -f2-)"
-<<<<<<< HEAD
-   [[ -t 1 ]] && echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$app_name][@$host_name] [$$] $msg "
-   log_dir=$product_dir/dat/log/bash ; mkdir -p $log_dir ; log_file="$log_dir/$app_name.`date "+%Y%m"`.log"
-   echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$app_name][@$host_name] [$$] $msg " >> $log_file
-=======
    [[ -t 1 ]] && echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [$app_name][@$host_name] [$$] $msg "
    log_dir="$product_dir/dat/log/bash" ; mkdir -p $log_dir && log_file="$log_dir/$app_name.`date "+%Y%m"`.log"
    echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [$app_name][@$host_name] [$$] $msg " >> $log_file
->>>>>>> 1516da496b61467291b78e7220f01e87737fc1d5
 }
 
 
@@ -235,9 +235,19 @@ do_provision_postgres(){
    echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bashrc
    
    sudo /etc/init.d/postgresql restart
-   sudo -u postgres psql -c \
-      "CREATE USER "$postgres_db_useradmin" WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS 
-      PASSWORD '"$postgres_db_useradmin_pw"';"
+   sudo -u postgres psql -c "
+	DO \$\$DECLARE r record;
+		BEGIN
+			IF NOT EXISTS (
+				SELECT 
+				FROM   pg_catalog.pg_roles
+				WHERE  rolname = '"$postgres_db_useradmin"') THEN
+					CREATE ROLE "$postgres_db_useradmin" WITH PASSWORD '"$postgres_db_useradmin_pw"' LOGIN ;
+			END IF;
+		END\$\$;
+	ALTER ROLE "$postgres_db_useradmin" WITH PASSWORD  '"$postgres_db_useradmin_pw"' LOGIN ; 
+"
+   
    sudo -u postgres psql -c "grant all privileges on database postgres to "$postgres_db_useradmin" ;"
    sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";'
    sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "pgcrypto";'
@@ -275,8 +285,8 @@ do_setup_tmux(){
    test -f ~/.tmux.conf && cp -v  ~/.tmux.conf ~/.tmux.conf.orig
    cp -v $product_dir/cnf/hosts/host-name/home/ysg/.tmux.conf ~/
    mkdir -p ~/.tmux/plugins
-   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tmux-copycat
+   test -d ~/.tmux/plugins/tpm || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+   test -d ~/.tmux/plugins/tmux-copycat || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tmux-copycat
 }
 
 do_create_multi_env_dir(){
