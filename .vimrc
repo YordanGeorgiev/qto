@@ -97,7 +97,7 @@ set wildignore+=**/node_modules/**
 " use perl regexes - src: http://andrewradev.com/2011/05/08/vim-regexes/
 noremap / /\v
 
-" my perl code under <<PRODUCT_INSTANCE_DIR>>/src/perl/<<tool-name-only-dir>>
+" my perl code under <<product_instance_dir>>/src/perl/<<tool-name-only-dir>>
 map <C-c><C-c> :!perl -MCarp::Always -I `pwd`/src/perl/*/ -I `pwd`/src/perl/*/lib/ -wc %
 
 " use perltidy with pre-configured mojolicious settings
@@ -298,5 +298,24 @@ let perl_sync_dist=250
 " VersionHistory
 " ---------------------------------------------------------
 " export version=1.2.8
+"
+" 1.2.8 --- 2019-03-02 15:30:30 --- ysg --- add easy completion , registers
+" 1.2.7 --- 2018-12-22 11:30:30 --- ysg --- add folding
+" 1.2.6 --- 2018-03-25 10:53:02 --- ysg --- add smartcom.vim plugin
+" 1.2.5 --- 2018-03-07 22:23:17 --- ysg --- open vim straight into func
+" 1.2.4 --- 2017-09-12 13:38:01 --- ysg --- how-to open files by patterns
+" 1.2.3 --- 2017-08-18 15:59:08 --- ysg --- more search related tips & tricks in docs
+" 1.2.2 --- 2017-05-27 22:45:14 --- ysg --- combine all src related confs and helps 
+" 1.2.1 --- 2017-02-02 23:28:38 --- ysg --- search recursively in files of types example
+" 1.2.0 --- 2016-12-16 13:34:28 --- ysg --- F5 for recursive word under cursor srch
+" 1.1.9 --- 2016-12-07 15:58:49 --- ysg --- tabs into spaces ... 
+" 1.1.7 --- 2016-11-01 05:00:09 --- ysg --- various optimizations
+" 1.1.7 --- 2016-10-31 09:59:57 --- ysg --- added recursive file search
+" 1.1.5 --- 2016-08-19 14:17:42 --- ysg --- highlight the current line
+" 1.1.4 --- 2016-07-22 08:43:04 --- ysg --- removed annoying swap file msg
+" 1.1.3 --- 2013-04-24 14:18:12 --- ysg --- added the filetype plugin on
+" 1.1.2 --- 2012-12-26 11:42:26 --- ysg --- re-formatting
+" 1.1.0 --- 2012-12-25 10:56:12 --- ysg --- to vim syntax, new settings
+" 1.0.0 --- 2012-12-24 14:22:52 --- ysg --- Initial creation from source
 "
 " eof file: ~/.vimrc

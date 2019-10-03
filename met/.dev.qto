@@ -5,6 +5,7 @@ cnf/env/tst.env.json
 cnf/env/qas.env.json
 cnf/env/prd.env.json
 src/bash/deployer/run.sh
+src/bash/deployer/test-deployer-run.sh
 src/bash/deployer/qto/cnf/bin/ubuntu-18.04.lst
 src/bash/deployer/qto/cnf/bin/perl-modules.lst
 src/bash/qto/bootstrap-qto-host-on-ubuntu.sh
