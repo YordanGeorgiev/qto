@@ -5,7 +5,7 @@
 # bash src/bash/qto/qto.sh -a to-prd
 # ---------------------------------------------------------
 doChangeEnvType(){
-   tgt_env="$1"
+   tgt_env="${1:-}"
    prefix='to-env='
    tgt_env=${tgt_env#$prefix}
 

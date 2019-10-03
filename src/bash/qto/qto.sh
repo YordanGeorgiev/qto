@@ -78,7 +78,7 @@ do_run_actions(){
       done < <(echo "$actions")
 
    functions_to_run="$(echo -e "${functions_to_run}"|sed -e 's/^[[:space:]]*//')"
-   while read -d ' ' run_func ; do
+   while read -r run_func ; do
       #debug functions_to_run: $functions_to_run ; sleep 3
       cd $PRODUCT_INSTANCE_DIR
       doLog "INFO START ::: running action :: $run_func"
