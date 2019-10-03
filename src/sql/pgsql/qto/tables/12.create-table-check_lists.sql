@@ -1,4 +1,4 @@
-            -- DROP TABLE IF EXISTS check_lists ; 
+              -- DROP TABLE IF EXISTS check_lists ; 
 
 SELECT 'create the "check_lists" table'
 ; 

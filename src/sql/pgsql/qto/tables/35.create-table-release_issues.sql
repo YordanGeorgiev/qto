@@ -1,4 +1,4 @@
-           -- DROP TABLE IF EXISTS release_issues ; 
+             -- DROP TABLE IF EXISTS release_issues ; 
 
 SELECT 'create the "release_issues" table'
 ; 

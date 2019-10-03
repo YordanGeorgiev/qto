@@ -11,14 +11,14 @@ main(){
    do_check_install_ubuntu_packages
    do_check_install_postgres
    do_provision_postgres
+   do_check_install_phantom_js
    do_check_install_perl_modules
    do_check_install_chromium_headless
-   do_check_install_phantom_js
    do_copy_git_hooks
    do_setup_tmux
    do_set_chmods
-   #do_create_multi_env_dir
-   #do_finalize
+   do_create_multi_env_dir
+   do_finalize
 }
 
 do_set_vars(){
@@ -40,14 +40,9 @@ do_set_vars(){
 }
 
 do_check_setup_bash(){
-   cp -v $product_instance_dir/cnf/bash/.profile_opts.host-name ~/.profile_opts.$(hostname -s)
+   cp -v $product_instance_dir/cnf/bash/.profile_opts.host-name ~/.profile_opts.$host_name
    cp -v $product_instance_dir/cnf/bash/.bash_opts.host-name $bash_opts_file
-   if [[ -f ~/.bashrc ]]; then
-      found=$(grep -c "$bash_opts_file" ~/.bashrc)
-      if [[ $found -eq 0 ]]; then 
-         echo "source $bash_opts_file" >> ~/.bashrc
-      fi
-   fi
+   echo "source $bash_opts_file" >> ~/.bashrc
 }
 
 do_setup_vim(){
@@ -158,7 +153,7 @@ do_check_install_chromium_headless(){
 }
 
 do_check_install_perl_modules(){
-
+   cd $product_instance_dir
    modules="$(cat src/bash/deployer/qto/cnf/bin/perl-modules.lst)"
   
    while read -r module ; do
@@ -225,6 +220,8 @@ do_log(){
 
 do_provision_postgres(){
 
+   source $product_instance_dir/src/bash/qto/funcs/scramble-confs.func.sh
+   doScrambleConfs
    source $product_instance_dir/lib/bash/funcs/export-json-section-vars.sh
    doExportJsonSectionVars $product_instance_dir/cnf/env/$ENV_TYPE.env.json '.env.db'
 
@@ -242,10 +239,12 @@ do_provision_postgres(){
 				SELECT 
 				FROM   pg_catalog.pg_roles
 				WHERE  rolname = '"$postgres_db_useradmin"') THEN
-					CREATE ROLE "$postgres_db_useradmin" WITH PASSWORD '"$postgres_db_useradmin_pw"' LOGIN ;
+					CREATE ROLE "$postgres_db_useradmin" WITH SUPERUSER CREATEROLE 
+               CREATEDB REPLICATION BYPASSRLS PASSWORD '"$postgres_db_useradmin_pw"' LOGIN ;
 			END IF;
 		END\$\$;
-	ALTER ROLE "$postgres_db_useradmin" WITH PASSWORD  '"$postgres_db_useradmin_pw"' LOGIN ; 
+	ALTER ROLE "$postgres_db_useradmin" WITH SUPERUSER CREATEROLE 
+   CREATEDB REPLICATION BYPASSRLS PASSWORD  '"$postgres_db_useradmin_pw"' LOGIN ; 
 "
    
    sudo -u postgres psql -c "grant all privileges on database postgres to "$postgres_db_useradmin" ;"
@@ -300,14 +299,20 @@ do_create_multi_env_dir(){
 do_finalize(){
 
    mkdir -p $unit_run_dir/../../../dat/tmp/ ; touch $unit_run_dir/../../../dat/tmp/bootstrapping
-   printf "\033[2J";printf "\033[0;0H"
-   echo -e "\n\n"
-   echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-   echo "DONE"
-   echo -e "\n"
-   echo "# go to your PRODUCT_INSTANCE_DIR by: "
-   echo " cd $PRODUCT_INSTANCE_DIR"
-   echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+   printf "\033[2J";printf "\033[0;0H" ; echo -e "\n\n"
+
+   cat << EOF_FIN
+   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+   DONE 
+   IMPORTANT !!!
+   now reload the bash shell by :
+bash
+
+   and go to your PRODUCT_INSTANCE_DIR by: 
+cd $PRODUCT_INSTANCE_DIR"
+   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+EOF_FIN
+
 }
 
 main "$@"

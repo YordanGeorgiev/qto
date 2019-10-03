@@ -1,4 +1,4 @@
-            -- DROP TABLE IF EXISTS principles ; 
+              -- DROP TABLE IF EXISTS principles ; 
 
 SELECT 'create the "principles" table'
 ; 

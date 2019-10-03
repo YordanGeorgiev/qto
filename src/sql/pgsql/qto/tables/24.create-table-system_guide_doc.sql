@@ -1,4 +1,4 @@
-             -- DROP TABLE IF EXISTS system_guide_doc CASCADE;
+               -- DROP TABLE IF EXISTS system_guide_doc CASCADE;
 
 SELECT 'create the "system_guide_doc" table'
 ; 

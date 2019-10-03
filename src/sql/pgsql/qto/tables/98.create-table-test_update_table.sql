@@ -1,4 +1,4 @@
-        -- DROP TABLE IF EXISTS test_update_table CASCADE ; 
+          -- DROP TABLE IF EXISTS test_update_table CASCADE ; 
 
 SELECT 'create the "test_update_table" table'
 ;

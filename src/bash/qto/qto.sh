@@ -74,8 +74,6 @@ do_run_actions(){
       [[ $arg_action == to-ver=* ]] && run_funcs="$(echo -e "$run_funcs\ndoChangeVersion $arg_action")"
       [[ $arg_action == to-env=* ]] && run_funcs="$(echo -e "$run_funcs\ndoChangeEnvType $arg_action")"
       [[ $arg_action == to-app=* ]] && run_funcs="$(echo -e "$run_funcs\ndoCloneToApp $arg_action")"
-      echo \$run_funcs $run_funcs 
-      sleep 10
       done < <(echo "$actions")
 
    run_funcs="$(echo -e "${run_funcs}"|sed -e 's/^[[:space:]]*//')"
