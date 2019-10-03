@@ -9,16 +9,16 @@ main(){
    do_check_setup_bash
    do_setup_vim
    do_check_install_ubuntu_packages
-   do_check_install_postgres
-   do_provision_postgres
-   do_check_install_perl_modules
-   do_check_install_chromium_headless
-   do_check_install_phantom_js
-   do_copy_git_hooks
-   do_setup_tmux
-   do_create_multi_env_dir
-   do_set_chmods
-   do_finalize
+#   do_check_install_postgres
+#   do_provision_postgres
+#   do_check_install_perl_modules
+#   do_check_install_chromium_headless
+#   do_check_install_phantom_js
+#   do_copy_git_hooks
+#   do_setup_tmux
+#   do_create_multi_env_dir
+#   do_set_chmods
+#   do_finalize
 }
 
 do_set_vars(){
@@ -211,10 +211,17 @@ do_exit(){
 do_log(){
    type_of_msg=$(echo $*|cut -d" " -f1)
    msg="$(echo $*|cut -d" " -f2-)"
+<<<<<<< HEAD
    [[ -t 1 ]] && echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$app_name][@$host_name] [$$] $msg "
    log_dir=$product_dir/dat/log/bash ; mkdir -p $log_dir ; log_file="$log_dir/$app_name.`date "+%Y%m"`.log"
    echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$app_name][@$host_name] [$$] $msg " >> $log_file
+=======
+   [[ -t 1 ]] && echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [$app_name][@$host_name] [$$] $msg "
+   log_dir="$product_dir/dat/log/bash" ; mkdir -p $log_dir && log_file="$log_dir/$app_name.`date "+%Y%m"`.log"
+   echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [$app_name][@$host_name] [$$] $msg " >> $log_file
+>>>>>>> 1516da496b61467291b78e7220f01e87737fc1d5
 }
+
 
 do_provision_postgres(){
 
