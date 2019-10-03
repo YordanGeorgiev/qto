@@ -1,4 +1,4 @@
-              -- DROP TABLE IF EXISTS readme CASCADE;
+                -- DROP TABLE IF EXISTS readme CASCADE;
 
 SELECT 'create the "readme" table'
 ; 

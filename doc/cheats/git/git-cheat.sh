@@ -1,6 +1,7 @@
 # how to add files to the git 
-git add --all; GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg" \
-git commit -m "$git_msg" --author "Yordan Georgiev <yordan.georgiev@gmail.com" # --amend
+clear ; git log --pretty --format='%h %ae %<(15)%an ::: %s'
+alias git='GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg" git'
+git add --all ; git commit -m "$git_msg" --author "Yordan Georgiev <yordan.georgiev@gmail.com" # --amend
 GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg" git push
 GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg" git pull
 

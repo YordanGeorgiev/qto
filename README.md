@@ -11,16 +11,18 @@
   * [5.2. CONFIGURE YOUR AWS CREDENTIALS - AWS KEYS AND  SSH KEYS](#52-configure-your-aws-credentials--aws-keys-and-ssh-keys)
   * [5.3. INITIALISE THE AWS INFRASTRUCTURE](#53-initialise-the-aws-infrastructure)
   * [5.4. ACCESS THE AWS HOST VIA SSH AND FETCH THE SOURCE CODE FROM GITHUB](#54-access-the-aws-host-via-ssh-and-fetch-the-source-code-from-github)
-  * [5.5. PROVISION AND START THE QTO APPLICATION](#55-provision-and-start-the-qto-application)
-  * [5.6. ACCESS THE QTO APPLICATION FROM THE WEB](#56-access-the-qto-application-from-the-web)
-* [6. INSTALLATION AND CONFIGURATION VIA DOCKER](#6-installation-and-configuration-via-docker)
-  * [6.1. FETCH THE SOURCE](#61-fetch-the-source)
-  * [6.2. RUN THE BOOTSTRAP SCRIPT](#62-run-the-bootstrap-script)
-  * [6.3. BUILD THE QTO IMAGE](#63-build-the-qto-image)
-  * [6.4. RUN THE CONTAINER](#64-run-the-container)
-  * [6.5. VERIFY THAT THE WHOLE SYSTEM WORKS](#65-verify-that-the-whole-system-works)
-* [7. ACKNOWLEDGEMENTS](#7-acknowledgements)
-* [8. LICENSE](#8-license)
+  * [5.5. BOOTSTRAP, DEPLOY AND PROVISION THE APPLICATION](#55-bootstrap-deploy-and-provision-the-application)
+  * [5.6. START THE WEB SERVER](#56-start-the-web-server)
+* [6. LICENSE](#6-license)
+  * [6.1. ACCESS THE QTO APPLICATION FROM THE WEB](#61-access-the-qto-application-from-the-web)
+* [7. INSTALLATION AND CONFIGURATION VIA DOCKER](#7-installation-and-configuration-via-docker)
+  * [7.1. FETCH THE SOURCE](#71-fetch-the-source)
+  * [7.2. RUN THE BOOTSTRAP SCRIPT](#72-run-the-bootstrap-script)
+  * [7.3. BUILD THE QTO IMAGE](#73-build-the-qto-image)
+  * [7.4. RUN THE CONTAINER](#74-run-the-container)
+  * [7.5. VERIFY THAT THE WHOLE SYSTEM WORKS](#75-verify-that-the-whole-system-works)
+* [8. ACKNOWLEDGEMENTS](#8-acknowledgements)
+* [9. LICENSE](#9-license)
 
 
 
@@ -124,7 +126,7 @@ To initialise the git aws infrastructure you need to clone the qto source code l
     mkdir -p ~/opt/; cd ~/opt; git clone https://github.com/YordanGeorgiev/qto
     
     # todo TEST THAT !!!
-    clear ; bash ~/opt/qto/src/bash/qto/qto.sh -a init-aws-instance
+    clear ; bash ~/opt/qto/src/bash/qto/qto.sh -a init-aws-instance &
 
 ### 5.4. Access the aws host via ssh and fetch the source code from GitHub
 To access the aws host via ssh you need to copy the provided elastic ip which was created by the terraform script. In your browser go to the following url:
@@ -135,13 +137,16 @@ You should see a listing of your aws instances one of which should be named dev-
     ssh -i <<path-to-your-private-key-file>> ubuntu@<<just-copied-IPv4-Public-IP>>
     
     # on the aws server
-    mkdir -p ~/opt/; cd ~/opt; git clone https://github.com/YordanGeorgiev/qto && cd ~/opt ;
+    mkdir -p ~/opt; cd $_ ; git clone https://github.com/YordanGeorgiev/qto.git ; cd ~/opt
 
-### 5.5. Provision and start the qto application
+### 5.5. Bootstrap, deploy and provision the application
 The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND perl modules as well as perform the needed configurations and provisions to enable start of the web server WITHOUT manual configuration. 
 
     # run the bootstrap script and reload the bash env
-    ./qto/src/bash/deployer/run.sh && source ~/.bash_opts.$(hostname -s)
+    ./qto/src/bash/deployer/run.sh
+    
+    # IMPORT reload the bash shell
+    bash
     
     # go to the product instance dir as suggested by the script output
     cat qto/.env && source qto/.env && cd qto/qto.$VERSION.$ENV_TYPE.$USER/
@@ -149,7 +154,19 @@ The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND perl
     # ensure application layer consistency, run db ddl's and load data from s3
     ./src/bash/qto/qto.sh -a check-perl-syntax -a run-qto-db-ddl -a load-db-data-from-s3
 
-### 5.6. Access the qto application from the web
+### 5.6. Start the web server
+Start the hypnotoad web server by issuing the following command
+
+    ./src/bash/qto/qto.sh -a mojo-hypnotoad-start
+
+## 6. LICENSE
+All the trademarks mentioned in the documentation and in the source code belong to their owners. This application uses the Perl Artistic license, check the license.txt file or the following link : https://dev.perl.org/licenses/artistic.html
+
+Should any trademark attribution be missing, mistaken or erroneous, please contact us as soon as possible for rectification.
+
+    
+
+### 6.1. Access the qto application from the web
 The qto web application is available at the following address
 http://&lt;&lt;just-copied-IPv4-Public-IP&gt;&gt;:8080
 
@@ -158,7 +175,7 @@ If you associate a DNS name with this ip you could already use it as well. You c
 
     
 
-## 6. INSTALLATION AND CONFIGURATION VIA DOCKER
+## 7. INSTALLATION AND CONFIGURATION VIA DOCKER
 Skip this section if you do not want to be a full stack devops / sysadmin operator on the qto application ...
 This section provides the instructions to build the whole system from scratch on docker. You will need git, bash, perl and docker to complete the whole containerised deployment and access to OS user having sudo.
 It should take about 45-60 min to complete depending on your network connection and host hardware specs, 75%-80% of which is the image building process which does not require shell interaction. 
@@ -166,14 +183,14 @@ The target setup is such that you could edit the source code on the host machine
 
     
 
-### 6.1. Fetch the source
+### 7.1. Fetch the source
 As a non-root account, having sudo fetch the source on your local machine, which will be use to run the container onto a dir your user has full read, write and execute permissions:
 
     # do not execute as root !
     mkdir -p ~/opt/ ; cd ~/opt
     git clone https://github.com/YordanGeorgiev/qto
 
-### 6.2. Run the bootstrap script
+### 7.2. Run the bootstrap script
 In the qto realm each deployment INSTANCE is "self-aware" of the type of environment it represents -  dev, tst , prd. To bootstrap to the dev environment run the following command:
 
     bash qto/src/bash/qto/bootstrap-qto-host.sh
@@ -181,19 +198,19 @@ In the qto realm each deployment INSTANCE is "self-aware" of the type of environ
     # cd to the product instance dir as suggested by the script
     cat qto/.env && source qto/.env && cd qto/qto.$VERSION.$ENV_TYPE.$USER/
 
-### 6.3. Build the qto image
+### 7.3. Build the qto image
 This step will take 80% of the time. It is non-interactive, that is the whole image building should succeed at once. 
 
     # build the docker image
     clear ; ./src/bash/qto/qto.sh -a build-qto-docker-image
 
-### 6.4. Run the container
+### 7.4. Run the container
 Run a container of the already build image issue the following command:
 
     bash src/bash/qto/qto.sh -a run-container
     # read the actual command to attach to the container if needed
 
-### 6.5. Verify that the whole system works
+### 7.5. Verify that the whole system works
 To verify the list ui point your local machine browser to the following uri:
 http://localhost:3001/qto/list/release_issues
 
@@ -204,7 +221,7 @@ Note that you deployed a development environment type ( aka dev ) instance. Read
 
     
 
-## 7. ACKNOWLEDGEMENTS
+## 8. ACKNOWLEDGEMENTS
 This project would NOT have been possible without the work of the people working on the following frameworks/languages/OS communities listed in no particular order.
  - Perl
  - Mojolicious
@@ -216,7 +233,7 @@ Deep gratitudes and thanks to all those people ! This application aims to contai
 
     
 
-## 8. LICENSE
+## 9. LICENSE
 All the trademarks mentioned in the documentation and in the source code belong to their owners. This application uses the Perl Artistic license, check the license.txt file or the following link : https://dev.perl.org/licenses/artistic.html
 
 Should any trademark attribution be missing, mistaken or erroneous, please contact us as soon as possible for rectification.

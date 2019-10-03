@@ -1,4 +1,4 @@
-             -- DROP TABLE IF EXISTS features_doc CASCADE;
+               -- DROP TABLE IF EXISTS features_doc CASCADE;
 
 SELECT 'create the "features_doc" table'
 ; 

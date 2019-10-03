@@ -7,11 +7,11 @@
   * [2.1. FULL DEPLOYMENT IN LESS THAN AN HOUR](#21-full-deployment-in-less-than-an-hour)
     * [2.1.1. A working instance deployment by simple unzip command](#211-a-working-instance-deployment-by-simple-unzip-command)
     * [2.1.2. Binary prerequisites check script](#212-binary-prerequisites-check-script)
-    * [2.1.3. Required Perl modules checker script](#213-required-perl-modules-checker-script)
+    * [2.1.3. Required Perl modules installation](#213-required-perl-modules-installation)
     * [2.1.4. Installation documentation](#214-installation-documentation)
   * [2.2. A FULL APPLICATION CLONE SHOULD BE READY FOR LESS THAN 5 MINUTES](#22-a-full-application-clone-should-be-ready-for-less-than-5-minutes)
-    * [2.2.1. Shell script for postgres db creation](#221-shell-script-for-postgres-db-creation)
-    * [2.2.2. One liner for single restore](#222-one-liner-for-single-restore)
+    * [2.2.1. Shell script for postgres db creation and initial data load](#221-shell-script-for-postgres-db-creation-and-initial-data-load)
+    * [2.2.2. One liner for single restore for both full db and inserts only](#222-one-liner-for-single-restore-for-both-full-db-and-inserts-only)
 * [3. USER-FRIENDLINESS](#3-user-friendliness)
   * [3.1. ONELINER SHELL CALLS](#31-oneliner-shell-calls)
     * [3.1.1. Database recreation and DDL scripts run one-liners](#311-database-recreation-and-ddl-scripts-run-one-liners)
@@ -96,7 +96,7 @@ Windows family based OS'es are explicitly out of the scope of the qto tool. Any 
     
 
 ### 2.1. Full deployment in less than an hour
-The full System should be ready for use by end-users in a "blank" modern Unix like OS in less than an hour. An instance running on top of Docker should be ready within 50 minutes. 
+The full System should be ready for use by end-users in the latest Ubuntu LTE OS in less than an hour. The whole deployment process MUST BE as automated as possible.
 
     
 
@@ -111,8 +111,8 @@ All the binaries which are required for the running of the tool must be checked 
 
     
 
-#### 2.1.3. Required Perl modules checker script
-All the required Perl modules, must be verifiable via a single runnable perl script. The DockerScript file should contain all the perl modules installations in a non-interactive manner. 
+#### 2.1.3. Required Perl modules installation
+All the required Perl modules must be part of the deployer script. The Perl modules should be installed as non-root user.
 
     
 
@@ -126,13 +126,13 @@ A DevOps operator should be able to perform an application clone ( having app-na
 
     
 
-#### 2.2.1. Shell script for postgres db creation
+#### 2.2.1. Shell script for postgres db creation and initial data load
 The creation of the Postgres database of a qto project should be doable via a single shell call. 
 
     
 
-#### 2.2.2. One liner for single restore
-The full data example of a cloned from the qto db should be loadable with a single shell call. _
+#### 2.2.2. One liner for single restore for both full db and inserts only
+The full database should be loadable form a db dump either from a full dump or from the db-inserts dump only.
 
     
 

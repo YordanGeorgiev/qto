@@ -1,6 +1,4 @@
 doRunPgsqlScripts(){
-   # generate new passwords while bootstrapping for first time the application
-   test -f $PRODUCT_INSTANCE_DIR/dat/tmp/bootstrapping && doScrambleConfs
    test -z "${PROJ_INSTANCE_DIR-}" && export PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
    test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"

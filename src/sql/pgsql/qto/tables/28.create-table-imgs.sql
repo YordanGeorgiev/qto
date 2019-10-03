@@ -1,4 +1,4 @@
-           -- DROP TABLE IF EXISTS imgs CASCADE;
+             -- DROP TABLE IF EXISTS imgs CASCADE;
 
 SELECT 'create the "imgs" table'
 ; 
