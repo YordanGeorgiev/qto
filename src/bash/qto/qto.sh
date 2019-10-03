@@ -56,7 +56,7 @@ do_run_actions(){
       daily_backup_dir="$PROJ_INSTANCE_DIR/dat/mix/"$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
       cd $PRODUCT_INSTANCE_DIR
       actions="$(echo -e "${actions}"|sed -e 's/^[[:space:]]*//')" #or how-to trim leading space
-      functions_to_run=''
+      run_funcs=''
       while read -d ' ' arg_action ; do
          #debug arg_action:$arg_action ; sleep 2
          while read -r func_file ; do
@@ -66,20 +66,21 @@ do_run_actions(){
                action_name=`echo $(basename $func_file)|sed -e 's/.func.sh//g'`
                # debug  action_name: $action_name
                test "$action_name" != "$arg_action" && continue
-               test "$action_name" == "$arg_action" && functions_to_run="${functions_to_run}$function_name "
-               #debug functions_to_run: $functions_to_run ; sleep 3
+               test "$action_name" == "$arg_action" && run_funcs="$(echo -e "${run_funcs}\n$function_name")"
+               #debug run_funcs: $run_funcs ; sleep 3
             done< <(get_function_list "$func_file")
          done < <(find "src/bash/$RUN_UNIT/funcs" -type f -name '*.sh'|sort)
 
-      [[ $arg_action == to-ver=* ]] && functions_to_run=$(echo -e "$functions_to_run\ndoChangeVersion $arg_action")
-      [[ $arg_action == to-env=* ]] && functions_to_run=$(echo -e "$functions_to_run\ndoChangeEnvType $arg_action")
-      [[ $arg_action == to-app=* ]] && functions_to_run=$(echo -e "$functions_to_run\ndoCloneToApp $arg_action")
-
+      [[ $arg_action == to-ver=* ]] && run_funcs="$(echo -e "$run_funcs\ndoChangeVersion $arg_action")"
+      [[ $arg_action == to-env=* ]] && run_funcs="$(echo -e "$run_funcs\ndoChangeEnvType $arg_action")"
+      [[ $arg_action == to-app=* ]] && run_funcs="$(echo -e "$run_funcs\ndoCloneToApp $arg_action")"
+      echo \$run_funcs $run_funcs 
+      sleep 10
       done < <(echo "$actions")
 
-   functions_to_run="$(echo -e "${functions_to_run}"|sed -e 's/^[[:space:]]*//')"
+   run_funcs="$(echo -e "${run_funcs}"|sed -e 's/^[[:space:]]*//')"
    while read -r run_func ; do
-      #debug functions_to_run: $functions_to_run ; sleep 3
+      #debug run_funcs: $run_funcs ; sleep 3
       cd $PRODUCT_INSTANCE_DIR
       doLog "INFO START ::: running action :: $run_func"
       $run_func
@@ -88,7 +89,7 @@ do_run_actions(){
          exit $exit_code
       fi
       doLog "INFO STOP ::: running function :: $run_func"
-   done < <(echo "$functions_to_run")
+   done < <(echo "$run_funcs")
 
 	test -d "$daily_backup_dir" || {
       test -f $PRODUCT_INSTANCE_DIR/dat/tmp/bootstrapping || doBackupPostgresDb

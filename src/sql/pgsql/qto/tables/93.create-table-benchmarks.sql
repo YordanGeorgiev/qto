@@ -1,4 +1,4 @@
-    -- DROP TABLE IF EXISTS benchmarks ; 
+           -- DROP TABLE IF EXISTS benchmarks ; 
 
 SELECT 'create the "benchmarks" table'
 ; 

@@ -300,9 +300,25 @@ do_provision_postgres(){
    echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bashrc
    
    sudo /etc/init.d/postgresql restart
+   #sudo -u postgres psql -c \
+   #   "CREATE USER "$postgres_db_useradmin" WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS 
+   #   PASSWORD '"$postgres_db_useradmin_pw"';"
    sudo -u postgres psql -c \
-      "CREATE USER "$postgres_db_useradmin" WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS 
-      PASSWORD '"$postgres_db_useradmin_pw"';"
+"
+DO \$\$DECLARE r record;
+BEGIN
+   IF NOT EXISTS (
+      SELECT 
+      FROM   pg_catalog.pg_roles
+      WHERE  rolname = '"$postgres_db_useradmin"') THEN
+		   CREATE ROLE "$postgres_db_useradmin" WITH PASSWORD '"$postgres_db_useradmin_pw"' LOGIN ;
+   END IF;
+END\$\$;
+ALTER ROLE "$postgres_db_useradmin" WITH PASSWORD  '"$postgres_db_useradmin_pw"' LOGIN ;
+"
+
+
+
    sudo -u postgres psql -c "grant all privileges on database postgres to "$postgres_db_useradmin" ;"
    sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";'
    sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "pgcrypto";'

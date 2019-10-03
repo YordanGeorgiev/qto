@@ -1,4 +1,4 @@
-     -- DROP TABLE IF EXISTS devops_guide_doc CASCADE;
+            -- DROP TABLE IF EXISTS devops_guide_doc CASCADE;
 
 SELECT 'create the "devops_guide_doc" table'
 ; 

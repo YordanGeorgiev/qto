@@ -1,4 +1,4 @@
-      -- DROP TABLE IF EXISTS problems ; 
+             -- DROP TABLE IF EXISTS problems ; 
 
 SELECT 'create the "problems" table'
 ; 
