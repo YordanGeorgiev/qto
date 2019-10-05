@@ -32,4 +32,6 @@ EOF
       git add $file
 	done < <(find $PRODUCT_INSTANCE_DIR/cnf/env/ -type f| grep -v '.bak')
 
+   for env in `echo dev tst qas prd`; do cp -v met/.dev.qto met/.$env.qto ; done ;
+
 }

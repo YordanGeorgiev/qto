@@ -1,4 +1,4 @@
-              -- DROP TABLE IF EXISTS userstories_doc CASCADE;
+                -- DROP TABLE IF EXISTS userstories_doc CASCADE;
 
 SELECT 'create the "userstories_doc" table'
 ; 

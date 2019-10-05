@@ -1,4 +1,4 @@
-              -- DROP TABLE IF EXISTS monthly_issues ; 
+                -- DROP TABLE IF EXISTS monthly_issues ; 
 
 SELECT 'create the "monthly_issues" table'
 ; 

@@ -1,4 +1,4 @@
-             -- DROP TABLE IF EXISTS users ; 
+               -- DROP TABLE IF EXISTS users ; 
 
 SELECT 'create the "users" table'
 ; 

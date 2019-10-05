@@ -4,7 +4,13 @@ cnf/env/dev.env.json
 cnf/env/tst.env.json
 cnf/env/qas.env.json
 cnf/env/prd.env.json
+src/bash/deployer/run.sh
+src/bash/deployer/test-deployer-run.sh
+src/bash/deployer/qto/cnf/bin/ubuntu-18.04.lst
+src/bash/deployer/qto/cnf/bin/perl-modules.lst
 src/bash/qto/bootstrap-qto-host-on-ubuntu.sh
+src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
+src/bash/qto/funcs/load-db-data-from-s3.func.sh
 src/bash/qto/qto.sh
 src/bash/qto/funcs/check-init-terraform.func.sh
 src/bash/qto/funcs/init-aws-instance.func.sh
@@ -15,13 +21,17 @@ src/bash/qto/funcs/unscramble-confs.func.sh
 .vimrc
 .env
 doc/cheats/
+doc/cheats/git/git-cheat.sh
+doc/cheats/ssh/pkk.sh
+doc/cheats/os/
+doc/cheats/os/users-mngmnt.sh
 doc/cheats/qto-cheat-sheet.sh
 doc/cheats/qto-psql-cheat.sql
 src/bash/qto/test-qto.sh
 src/bash/qto/funcs/generate-md-docs.func.sh
-src/docker/Dockerfile.deploy-qto.0.7.1
-src/docker/Dockerfile.deploy-qto-db-host.0.7.1
-src/docker/Dockerfile.deploy-qto-app-host.0.7.1
+src/docker/Dockerfile.deploy-qto.0.7.2
+src/docker/Dockerfile.deploy-qto-db-host.0.7.2
+src/docker/Dockerfile.deploy-qto-app-host.0.7.2
 src/bash/qto/funcs/build-docker-image.func.sh
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
 src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
@@ -37,9 +47,11 @@ src/perl/qto/templates/pages/login/login.html.ep
 # stop  login
 # start websockets
 src/perl/qto/templates/pages/home/home.html.ep
+src/perl/qto/public/index.html
 src/perl/qto/templates/controls/robust-websocket/js/robust-websocket.js.html.ep
 src/perl/qto/templates/controls/list-url-lists/js/list-url-lists.js.html.ep
 src/perl/qto/lib/Qto/Controller/Home.pm
+src/perl/qto/lib/Qto/Controller/Index.pm
 src/perl/qto/public/poc/web-socket/wsclient.js
 src/perl/qto/lib/Qto.pm
 src/perl/qto/lib/Qto/Controller/WsSelect.pm
@@ -67,7 +79,6 @@ doc/txt/qto/funcs/generate-md-docs.func.txt
 src/bash/qto/funcs/remove-docker-images.func.sh
 src/bash/qto/funcs/remove-docker-containers.func.sh
 src/bash/qto/funcs/run-container.func.sh
-src/bash/qto/funcs/mojo-morbo-start.func.sh
 src/bash/qto/funcs/mojo-daemon-start.func.sh
 src/bash/qto/funcs/mojo-daemon-stop.func.sh
 src/bash/qto/install/docker/install-test.sh
@@ -333,8 +344,8 @@ src/perl/qto/lib/Qto/App/Utils/Logger.pm
 src/perl/qto/lib/Qto/App/Utils/Timer.pm
 # ---
 # ---
-src/bash/qto/tests/mojo-hypnotoad-start.test.sh
 src/bash/qto/funcs/mojo-hypnotoad-start.func.sh
+src/bash/qto/tests/mojo-hypnotoad-start.test.sh
 src/bash/qto/tests/mojo-hypnotoad-stop.test.sh
 src/bash/qto/funcs/mojo-hypnotoad-stop.func.sh
 doc/txt/qto/funcs/mojo-hypnotoad-stop.func.txt
@@ -362,18 +373,12 @@ src/bash/qto/helps/increase-date.help.sh
 doc/txt/qto/tests/increase-date.test.txt
 doc/txt/qto/funcs/increase-date.func.txt
 # ---
-src/bash/qto/tests/db-to-txt.test.sh
-src/bash/qto/funcs/db-to-txt.func.sh
-src/bash/qto/helps/db-to-txt.help.sh
-doc/txt/qto/tests/db-to-txt.test.txt
-doc/txt/qto/funcs/db-to-txt.func.txt
-doc/txt/qto/helps/db-to-txt.help.txt
-# ---
 # the postgres DDL scripts
 src/sql/pgsql
 src/sql/pgsql/qto
 src/sql/pgsql/qto/funcs
 src/bash/qto/funcs/run-pgsql-scripts.func.sh
+src/bash/qto/funcs/run-qto-db-ddl.func.sh
 src/sql/pgsql/qto/00.create-db.pgsql
 src/sql/pgsql/qto/01.create-qto-app-user.pgsql
 src/sql/pgsql/qto/funcs/01.create-func-fns_update_time.sql
@@ -407,8 +412,7 @@ src/sql/pgsql/qto/tables/22.1.create-table-features_doc.sql
 src/sql/pgsql/qto/tables/22.create-table-features.sql
 src/sql/pgsql/qto/tables/23.1.create-table-concepts_doc.sql
 src/sql/pgsql/qto/tables/23.create-table-concepts.sql
-src/sql/pgsql/qto/tables/24.1.create-table-system_guide_doc.sql
-src/sql/pgsql/qto/tables/24.create-table-system_guide.sql
+src/sql/pgsql/qto/tables/24.create-table-system_guide_doc.sql
 src/sql/pgsql/qto/tables/25.1.create-table-installations_doc.sql
 src/sql/pgsql/qto/tables/25.create-table-installations.sql
 src/sql/pgsql/qto/tables/26.create-table-release_history.sql
@@ -615,7 +619,6 @@ doc/txt/qto/tests/remove-package-files.test.txt
 doc/txt/qto/helps/remove-package-files.help.txt
 doc/txt/qto/funcs/remove-package-files.func.txt
 src/bash/qto/tests/run-pgsql-scripts.test.sh
-src/bash/qto/helps/run-pgsql-scripts.help.sh
 doc/txt/qto/tests/run-pgsql-scripts.test.txt
 doc/txt/qto/funcs/run-pgsql-scripts.func.txt
 tags
@@ -623,12 +626,10 @@ tags
 # ----
 cnf/perl/.perltidyrc
 # ---
+src/bash/qto/funcs/mojo-morbo-start.func.sh
 src/bash/qto/tests/mojo-morbo-start.test.sh
-src/bash/qto/helps/mojo-morbo-start.help.sh
 doc/txt/qto/tests/mojo-morbo-start.test.txt
-doc/txt/qto/helps/mojo-morbo-start.help.txt
 doc/txt/qto/funcs/mojo-morbo-start.func.txt
-# ---
 src/bash/qto/funcs/mojo-morbo-stop.func.sh
 src/bash/qto/tests/mojo-morbo-stop.test.sh
 # ---
@@ -773,8 +774,9 @@ src/perl/qto/lib/auto/Qto/Controller/WebSocketPoc/autosplit.ix
 src/perl/qto/lib/auto/SetGetableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HCreate/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Home/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/Index/
+src/perl/qto/lib/auto/Qto/Controller/Index/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Truncate/autosplit.ix
-src/perl/qto/lib/auto/Qto/Controller/WSSelect/autosplit.ix
 dat/mix
 src/bash/qto/scripts/todo-copy-paste.sh
 src/bash/qto/funcs/backup-postgres-db-inserts.func.sh
