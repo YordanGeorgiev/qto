@@ -1,4 +1,4 @@
-                 -- DROP TABLE IF EXISTS features CASCADE;
+                   -- DROP TABLE IF EXISTS features CASCADE;
 
 SELECT 'create the "features" table'
 ; 

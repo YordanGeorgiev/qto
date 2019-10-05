@@ -1,4 +1,4 @@
-             -- DROP TABLE IF EXISTS export_files ; 
+               -- DROP TABLE IF EXISTS export_files ; 
 
 SELECT 'create the "export_files" table'
 ; 

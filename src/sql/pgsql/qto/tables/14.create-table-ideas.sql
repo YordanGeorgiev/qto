@@ -1,4 +1,4 @@
-               -- DROP TABLE IF EXISTS ideas ; 
+                 -- DROP TABLE IF EXISTS ideas ; 
 
 SELECT 'create the "ideas" table'
 ; 

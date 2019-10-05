@@ -1,4 +1,4 @@
-                -- DROP TABLE IF EXISTS daily_issues ; 
+                  -- DROP TABLE IF EXISTS daily_issues ; 
 
 SELECT 'create the "daily_issues" table'
 ; 
