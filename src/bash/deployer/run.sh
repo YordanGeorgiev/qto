@@ -299,20 +299,14 @@ do_create_multi_env_dir(){
 do_finalize(){
 
    mkdir -p $unit_run_dir/../../../dat/tmp/ ; touch $unit_run_dir/../../../dat/tmp/bootstrapping
-   printf "\033[2J";printf "\033[0;0H" ; echo -e "\n\n"
-
-   cat << EOF_FIN
-   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-   DONE 
-   IMPORTANT !!!
-   now reload the bash shell by :
-bash
-
-   and go to your PRODUCT_INSTANCE_DIR by: 
-cd $PRODUCT_INSTANCE_DIR"
-   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-EOF_FIN
-
+   printf "\033[2J";printf "\033[0;0H"
+   echo -e "\n\n"
+   echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+   echo "DONE"
+   echo -e "\n"
+   echo "# go to your PRODUCT_INSTANCE_DIR by: "
+   echo " cd $PRODUCT_INSTANCE_DIR"
+   echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 }
 
 main "$@"
