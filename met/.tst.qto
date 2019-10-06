@@ -5,6 +5,8 @@ cnf/env/tst.env.json
 cnf/env/qas.env.json
 cnf/env/prd.env.json
 src/bash/deployer/run.sh
+src/bash/qto/funcs/provision-db-admin.func.sh
+src/bash/qto/funcs/provision-app-user.func.sh
 src/bash/deployer/test-deployer-run.sh
 src/bash/deployer/qto/cnf/bin/ubuntu-18.04.lst
 src/bash/deployer/qto/cnf/bin/perl-modules.lst
@@ -777,6 +779,7 @@ src/perl/qto/lib/auto/Qto/Controller/Home/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Index/
 src/perl/qto/lib/auto/Qto/Controller/Index/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Truncate/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/WSSelect/autosplit.ix
 dat/mix
 src/bash/qto/scripts/todo-copy-paste.sh
 src/bash/qto/funcs/backup-postgres-db-inserts.func.sh

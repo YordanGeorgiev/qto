@@ -1,37 +1,29 @@
 # file: doc/cheats/qto-cheat-sheet.sh
 
+# start load env vars
+export PROJ_INSTANCE_DIR=`pwd`  # or could be any qto proj
+export PROJ_CONF_FILE=`pwd`/cnf/env/prd.env.json  # or could be any qto proj's conf file
+source lib/bash/funcs/export-json-section-vars.sh
+doExportJsonSectionVars $PROJ_INSTANCE_DIR/cnf/env/prd.env.json '.env.db'
+alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} --host $postgres_db_host --port $postgres_db_port"
 
-sudo -u postgres psql -c "ALTER USER "$postgres_db_useradmin" WITH SUPERUSER CREATEROLE 
-      CREATEDB REPLICATION BYPASSRLS PASSWORD '"$postgres_db_useradmin_pw"';"
-# caveat-01: do not use ? char in passwords - it breaks the ui of the doc pages
-# caveat-02: escape the ! char in passwords - does not work in the shell
-# caveats: do not use ? char in passwords ( breaks the ui ), escape the ! char 
-sudo su - postgres -c \
-   "psql --port 15432 -d tst_qto -c \"ALTER ROLE usrqtoapp WITH PASSWORD 'foo-bar\!' LOGIN \""
-sudo -u postgres psql -x -c "select * from pg_user where usename='usrqtoadmin'"
-
-# how-to export the documentation of the desired db. 
-clear ; bash src/bash/qto/qto.sh -a generate-md-docs
-
-# how-to run sql as the postgres user
-clear ; sudo su - postgres -c "psql -d postgres -c \"drop database dev_qto\""
-clear ; sudo su - postgres -c "psql -d postgres -c \"create database dev_qto\""
+./src/bash/qto/qto.sh -a provision-db-admin # change the db-admin pw
+./src/bash/qto/qto.sh -a provision-app-user # change the app user pw
 
 # how-to load xls sheets into tables , obs - do_truncate_tables=1 WILL truncate the postgres tables
 export do_truncate_tables=0 ; clear ; perl src/perl/qto/script/qto.pl --do xls-to-db --tables system_guide_doc
 
-# source the env vars loading function:
-source lib/bash/funcs/export-json-section-vars.sh
+clear ; ./src/bash/qto/qto.sh -a backup-postgres-db-inserts
+clear ; ./src/bash/qto/qto.sh -a backup-postgres-table -t readme_doc
 
-# optional stop if the env vars from a different project must be loaded ..
-export PROJ_INSTANCE_DIR=`pwd`
-export PROJ_CONF_FILE=`pwd`/cnf/env/dev.env.json
+export docs_root_dir=`pwd` # or could be any qto proj dir
+clear ; ./src/bash/qto/qto.sh -a generate-md-docs  # export the documentation of the desired db
 
-# load the env vars from a section
-doExportJsonSectionVars $PROIJ_INSTANCE_DIR/cnf/env/prd.env.json '.env.db'
+./src/bash/qto/qto.sh -a mojo-hypnotoad-start # start the hypnotoad web server
 
-# set the authentication for the psql 
-alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} --host $postgres_db_host --port $postgres_db_port"
 
+# how-to run sql as the postgres user
+clear ; sudo su - postgres -c "psql -d postgres -c \"drop database dev_qto\""
+clear ; sudo su - postgres -c "psql -d postgres -c \"create database dev_qto\""
 
 # eof file: doc/cheats/qto-cheat-sheet.sh
