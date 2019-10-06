@@ -1,4 +1,4 @@
-                -- DROP TABLE IF EXISTS yearly_issues_2018 ; 
+ --DROP TABLE IF EXISTS yearly_issues_2018 ; 
 
 SELECT 'create the "yearly_issues_2018" table'
 ; 

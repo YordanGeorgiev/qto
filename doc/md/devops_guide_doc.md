@@ -28,12 +28,11 @@
   * [3.4. RESTORE A DATABASE TABLE](#34-restore-a-database-table)
 * [4. USAGE SCENARIOS](#4-usage-scenarios)
   * [4.1. RUN INCREASE-DATE ACTION](#41-run-increase-date-action)
-  * [4.2. RUN XLS-TO-DB ACTION](#42-run-xls-to-db-action)
-  * [4.3. RUN DB-TO-TXT ACTION](#43-run-db-to-txt-action)
-  * [4.4. LOAD XLS ISSUES TO DB AND FROM DB TO TXT FILES](#44-load-xls-issues-to-db-and-from-db-to-txt-files)
-  * [4.5. RUN THE QTO FILE TO DB LOAD](#45-run-the-qto-file-to-db-load)
-  * [4.6. VERIFY THE INSERTED DATA FROM THE DB](#46-verify-the-inserted-data-from-the-db)
-  * [4.7. RUN THE HTTP://&LT;&LT;WEB-HOST&GT;&GT;:&LT;&LT;WEB-PORT&GT;&GT;/&LT;&LT;PROJ-DB&GT;&GT;/GET/&LT;&LT;TABLE&GT;&GT;/&LT;&LT;GUID&GT;&GT; ROUTE](#47-run-the-http//web-hostweb-port/proj-db/get/table/guid-route)
+  * [4.2. RUN DB-TO-TXT ACTION](#42-run-db-to-txt-action)
+  * [4.3. LOAD XLS ISSUES TO DB AND FROM DB TO TXT FILES](#43-load-xls-issues-to-db-and-from-db-to-txt-files)
+  * [4.4. RUN THE QTO FILE TO DB LOAD](#44-run-the-qto-file-to-db-load)
+  * [4.5. VERIFY THE INSERTED DATA FROM THE DB](#45-verify-the-inserted-data-from-the-db)
+  * [4.6. RUN THE HTTP://&LT;&LT;WEB-HOST&GT;&GT;:&LT;&LT;WEB-PORT&GT;&GT;/&LT;&LT;PROJ-DB&GT;&GT;/GET/&LT;&LT;TABLE&GT;&GT;/&LT;&LT;GUID&GT;&GT; ROUTE](#46-run-the-http//web-hostweb-port/proj-db/get/table/guid-route)
 * [5. NAMING CONVENTIONS](#5-naming-conventions)
   * [5.1. DIRS NAMING CONVENTIONS](#51-dirs-naming-conventions)
   * [5.2. ROOT DIRS NAMING CONVENTIONS](#52-root-dirs-naming-conventions)
@@ -276,21 +275,12 @@ Each time the day changes by running the increase-date action you will be able t
 
     bash src/bash/qto/qto.sh -a increase-date
 
-### 4.2. Run xls-to-db action
-You insert the date of the daily , weekly , monthly or yearly issues from the daily input excel file(s) by running the xls-to-db action. 
-If you have the guid column with uuid's than this will be upsert and not bare insert.
-You should be able to update only non-nullable column by reducing the number of columns in your xls sheet.
-
-    
-    export do_truncate_tables=1 ;
-    bash src/bash/qto/qto.sh -a xls-to-db
-
-### 4.3. Run db-to-txt action
+### 4.2. Run db-to-txt action
 The db-to-txt action converts your db tables into txt files by using "smart" formatting rules. This feature is deprecated and should work only for tables having the same attributes set as the "issues" tables. 
 
     bash src/bash/qto/qto.sh -a db-to-txt
 
-### 4.4. Load xls issues to db and from db to txt files
+### 4.3. Load xls issues to db and from db to txt files
 to load xls issues to db and from db to txt files
 
     bash src/bash/qto/qto.sh -a xls-to-db -a db-to-txt 
@@ -299,7 +289,7 @@ to load xls issues to db and from db to txt files
     for period in `echo daily weekly monthly yearly`; do export period=$period ; 
     bash src/bash/qto/qto.sh -a xls-to-db -a db-to-txt ; done ;
 
-### 4.5. Run the qto file to db load
+### 4.4. Run the qto file to db load
 Run the qto file to db load 
 
     # ensure the following actions will be tested
@@ -313,13 +303,13 @@ Run the qto file to db load
     
     
 
-### 4.6. Verify the inserted data from the db
+### 4.5. Verify the inserted data from the db
 Verify the inserted data from the db as follows:
 
     # check that the rows where inserted
     echo 'SELECT * FROM issue ; ' | psql -d dev_qto
 
-### 4.7. Run the http://&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;proj-db&gt;&gt;/get/&lt;&lt;table&gt;&gt;/&lt;&lt;guid&gt;&gt; route
+### 4.6. Run the http://&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;proj-db&gt;&gt;/get/&lt;&lt;table&gt;&gt;/&lt;&lt;guid&gt;&gt; route
 Load a table with guid's.
 Check a single item with your browser, for example:
 http://doc-pub-host:3000/dev_stockit_issues/get/companies/727cf807-c9f1-446b-a7fc-65f9dc53ed2d

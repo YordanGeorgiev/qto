@@ -1,4 +1,4 @@
-                   -- DROP TABLE IF EXISTS concepts CASCADE;
+ --DROP TABLE IF EXISTS concepts CASCADE;
 
 SELECT 'create the "concepts" table'
 ; 
