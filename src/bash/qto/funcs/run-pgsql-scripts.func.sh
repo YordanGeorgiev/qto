@@ -15,7 +15,7 @@ doRunPgsqlScripts(){
 
 		relative_sql_script=$(echo $sql_script|perl -ne "s|$PROJ_INSTANCE_DIR\/||g;print")
 		doLog "INFO START ::: running $relative_sql_script" ; echo -e '\n\n'
-      perl -pi -e 's|-- DROP| DROP|g' $sql_script # drop and create the objects
+      perl -pi -e 's|-- DROP|DROP|g' $sql_script # drop and create the objects
 
       PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -v ON_ERROR_STOP=1 -q -t -X -w \
          -h $postgres_db_host -p $postgres_db_port -U "${postgres_db_useradmin:-}" \

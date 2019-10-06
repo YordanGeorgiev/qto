@@ -1,4 +1,4 @@
-                 -- DROP TABLE IF EXISTS requirements CASCADE;
+  --DROP TABLE IF EXISTS requirements CASCADE;
 
 SELECT 'create the "requirements" table'
 ; 

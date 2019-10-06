@@ -26,3 +26,5 @@
    libxml-atom-perl
    libxml-atom-perl
    libwww-curl-perl
+   npm
+   nodejs

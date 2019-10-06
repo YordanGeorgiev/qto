@@ -1,4 +1,4 @@
-               -- DROP TABLE IF EXISTS enduser_guide CASCADE;
+--DROP TABLE IF EXISTS enduser_guide CASCADE;
 
 SELECT 'create the "enduser_guide" table'
 ; 
