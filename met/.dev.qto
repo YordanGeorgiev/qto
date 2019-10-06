@@ -10,7 +10,6 @@ src/bash/qto/funcs/provision-app-user.func.sh
 src/bash/deployer/test-deployer-run.sh
 src/bash/deployer/qto/cnf/bin/ubuntu-18.04.lst
 src/bash/deployer/qto/cnf/bin/perl-modules.lst
-src/bash/qto/bootstrap-qto-host-on-ubuntu.sh
 src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
 src/bash/qto/funcs/load-db-data-from-s3.func.sh
 src/bash/qto/qto.sh
