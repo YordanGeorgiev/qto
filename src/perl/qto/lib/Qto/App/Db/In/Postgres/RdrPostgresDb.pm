@@ -1071,7 +1071,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 		return $pg ; 
 	}
 
-   sub doHSelectBranch {
+   sub doHiSelectBranch {
 
       my $self          = shift ; 
       my $db            = shift || croak 'no db passed !!!' ; 
@@ -1081,7 +1081,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
    
       my $rv            = 1  ;
       my $ret           = 1 ; 
-      my $msg           = 'unknown error occured in RdrPostgresDb::doHSelectBranch' ; 
+      my $msg           = 'unknown error occured in RdrPostgresDb::doHiSelectBranch' ; 
       my $pg            = {} ; 
       my $sql           = {} ; 
       my $hsr2          = {} ; 
@@ -1152,7 +1152,10 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
             $where_clause_with
 				ORDER BY seq
 			" ; 
+         p $sql ; 
+         # todo:ysg 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
+         p $hsr2 ; 
       };
       if ( $@ ) {
          $rv               = 404 ; 

@@ -47,12 +47,12 @@ sub doHLSelectItems {
    my $objCnrUrlPrms = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    
    return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
-      unless $objCnrUrlPrms->doValidateAndSetHSelect();
+      unless $objCnrUrlPrms->doValidateAndSetHiSelect();
    
    $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
    $objRdrDb 			= $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-   ($http_code, $msg, $dat) 	= $objRdrDb->doHSelectBranch( $db , $item );
+   ($http_code, $msg, $dat) 	= $objRdrDb->doHiSelectBranch( $db , $item );
    my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$config  ) ; 
    $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
    ( $ret , $msg , $met , $mc) = $objModel->doGetTableMeta($config,$db,$item);

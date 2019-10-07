@@ -52,7 +52,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
  
    my $env = $config->{'env'}->{'run'}->{'ENV_TYPE'} ; 
    $tm = 'return 400 on non_existent_db create call' ;
-   $exp_err_msg = 'cannot connect to the "' . "$env" . '_non_existent_db" database: FATAL:  database "' . $env . '_non_existent_db" does not exist' ; 
+   $exp_err_msg = 'FATAL:  database "' . $env . '_non_existent_db" does not exist';
    $url = '/non_existent_db/create/test_create_table' ; 
    ok ($t->post_ok($url => json => {"id"=> $id })
       ->json_is({

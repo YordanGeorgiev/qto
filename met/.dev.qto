@@ -1,5 +1,11 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 cnf/env
+src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
+src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
+src/perl/qto/lib/Qto/Controller/HiCreate.pm
+src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
+src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
+src/sql/pgsql/qto/tables/95.create-table-test_hi_create_table_doc.sql
 cnf/env/dev.env.json
 cnf/env/tst.env.json
 cnf/env/qas.env.json
@@ -35,7 +41,6 @@ src/docker/Dockerfile.deploy-qto-db-host.0.7.2
 src/docker/Dockerfile.deploy-qto-app-host.0.7.2
 src/bash/qto/funcs/build-docker-image.func.sh
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
-src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
 # start login
 src/perl/qto/t/lib/Qto/Controller/TestLogin.t
 src/perl/qto/lib/Qto/Controller/Login.pm
@@ -207,7 +212,6 @@ src/perl/qto/public/themes/thme-blue/css/screen/site/home.css
 src/perl/qto/public/themes/thme-blue/css/print/controls/app_list_labels.css
 #---
 src/perl/qto/lib/Qto/Controller
-src/perl/qto/lib/Qto/Controller/HCreate.pm
 src/perl/qto/lib/Qto/Controller/Truncate.pm
 src/perl/qto/lib/Qto/Controller/PageFactory.pm
 src/perl/qto/lib/Qto/Controller/Export.pm
@@ -221,16 +225,15 @@ src/perl/qto/lib/Qto/Controller/Create.pm
 src/perl/qto/lib/Qto/Controller/Update.pm
 src/perl/qto/lib/Qto/Controller/Delete.pm
 src/perl/qto/lib/Qto/Controller/Select.pm
-src/perl/qto/lib/Qto/Controller/HSelect.pm
+src/perl/qto/lib/Qto/Controller/HiSelect.pm
 src/perl/qto/lib/Qto/Controller/HLSelect.pm
 src/perl/qto/lib/Qto/Controller/Search.pm
-src/perl/qto/t/lib/Qto/Controller/TestCreate.t.todo
-src/perl/qto/t/lib/Qto/Controller/TestHCreate.t
+src/perl/qto/t/lib/Qto/Controller/TestCreate.t
 src/perl/qto/t/lib/Qto/Controller/TestTruncate.t
 src/perl/qto/t/lib/Qto/Controller/TestSelect.t
 src/perl/qto/t/lib/Qto/Controller/TestQuery.t
-src/perl/qto/t/lib/Qto/Controller/TestHSelect.t
-src/perl/qto/t/lib/Qto/Controller/TestHSelectWith.t
+src/perl/qto/t/lib/Qto/Controller/TestHiSelect.t
+src/perl/qto/t/lib/Qto/Controller/TestHiSelectWith.t
 src/perl/qto/t/lib/Qto/Controller/TestSearch.t
 src/perl/qto/t/lib/Qto/Controller/TestSelectFilter.t
 src/perl/qto/t/lib/Qto/Controller/TestSelectLike.t
@@ -240,7 +243,7 @@ src/perl/qto/t/lib/Qto/Controller/TestSelectHide.t
 src/perl/qto/t/lib/Qto/Controller/TestSelectWith.t
 src/perl/qto/t/lib/Qto/Controller/TestUpdate.t
 src/perl/qto/t/lib/Qto/Controller/TestDelete.t
-src/perl/qto/t/lib/Qto/Controller/TestHSelect.t
+src/perl/qto/t/lib/Qto/Controller/TestHiSelect.t
 src/perl/qto/t/lib/Qto/Controller/TestAppLabel.t
 src/perl/qto/t/lib/Qto/Controller/TestListAsOutputType.t
 src/perl/qto/t/lib/Qto/Controller/TestListHide.t
@@ -252,8 +255,6 @@ src/perl/qto/lib/Qto/App/UI/Pages/1
 # ---
 src/perl/qto/lib/Qto/App/Cnvr
 src/perl/qto/lib/Qto/App/Cnvr/CnrHashesArrRefToHashesArrRef.pm
-src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
-src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
 src/perl/qto/t
 src/perl/qto/t/lib/Qto/App/Utils/TestRdrCmdArgs.t
 src/perl/qto/t/lib/Qto/App/Utils/OO/SetGetableChild.pm
@@ -432,9 +433,9 @@ src/sql/pgsql/qto/tables/90.create-table-test_truncate_table.sql
 src/sql/pgsql/qto/tables/91.create-table-test_empty_table.sql
 src/sql/pgsql/qto/tables/93.create-table-benchmarks.sql
 src/sql/pgsql/qto/tables/94.create-table-test_item.sql
-src/sql/pgsql/qto/tables/95.create-table-test_hcreate_table.sql
 src/sql/pgsql/qto/tables/96.create-table-test_delete_table.sql
 src/sql/pgsql/qto/tables/97.create-table-test_create_table.sql
+src/sql/pgsql/qto/tables/97.10.create-table-test_hi_create_table_doc.sql
 src/sql/pgsql/qto/tables/97.03.create-func-fnc_tree_traversal.sql
 src/sql/pgsql/qto/tables/98.create-table-test_update_table.sql
 src/sql/pgsql/qto/tables/99.create-table-test_hierarchy_doc.sql
@@ -764,7 +765,7 @@ src/perl/qto/lib/auto/Qto/Controller/Create/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Delete/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Export/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HLSelect/autosplit.ix
-src/perl/qto/lib/auto/Qto/Controller/HSelect/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/HiSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/List/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Query/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Search/autosplit.ix
@@ -773,7 +774,7 @@ src/perl/qto/lib/auto/Qto/Controller/Update/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/View/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WebSocketPoc/autosplit.ix
 src/perl/qto/lib/auto/SetGetableChild/autosplit.ix
-src/perl/qto/lib/auto/Qto/Controller/HCreate/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/HiCreate/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Home/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Index/
 src/perl/qto/lib/auto/Qto/Controller/Index/autosplit.ix
