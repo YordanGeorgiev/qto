@@ -1,4 +1,4 @@
-package Qto::Controller::HCreate ; 
+package Qto::Controller::HiCreate ; 
 use strict ; use warnings ; 
 
 require Exporter; our @ISA = qw(Exporter Mojo::Base Qto::Controller::BaseController);
@@ -23,34 +23,37 @@ our $rdbms_type     = 'postgre';
 
 #
 # --------------------------------------------------------
-# HCreate - create an item in a hierachichal table
+# HiCreate - create an item in a hierachichal table
 # --------------------------------------------------------
-sub doHCreateById {
+sub doHiCreate {
 
    my $self             = shift;
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
    my $objCnrPostPrms   = {} ; 
-   my $objWtrDbsFcry = {} ; 
+   my $objWtrDbsFcry    = {} ; 
    my $objWtrDb         = {} ; 
    my $ret              = 1;
    my $dat              = {} ;
    my $http_code        = 400 ;
-   my $msg              = 'unknown error during HCreate item';
+   my $msg              = 'unknown error during HiCreate item';
    my $hsr2             = {};
    my $json             = $self->req->body;
    my $perl_hash        = decode_json($json) ; 
-   my $id               = $perl_hash->{'id'};
-   my $seq              = $perl_hash->{'seq'}; # the sequence of the hierarchy item
-   
-   $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
+   my $seq              = $perl_hash->{'seq'} || 2 ; 
+   my $level            = $perl_hash->{'level'} || 1 ;
+
+
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
+   $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
+
    $config		         = $self->app->get('AppConfig');
    $db                  = toEnvName ( $db , $config) ;
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
    $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel);
-   
-   unless ( $objCnrPostPrms->chkHCreateHasValidParams( $perl_hash ) == 1 ) {
+
+   unless ( $objCnrPostPrms->chkHiCreateHasValidParams( $perl_hash ) == 1 ) {
       my $http_code = $objCnrPostPrms->get('http_code') ; 
       $msg = $objCnrPostPrms->get('msg') ; 
       $self->res->code($http_code ) ;
@@ -65,7 +68,7 @@ sub doHCreateById {
 
    $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$config, \$objModel );
    $objWtrDb = $objWtrDbsFcry->doSpawn("$rdbms_type");
-   ($http_code, $msg,$dat) = $objWtrDb->doHInsertRow($db,$item,$id,$seq);
+   ($http_code, $msg,$dat) = $objWtrDb->doHiInsertRow($db,$item,$level,$seq);
 
    $self->res->code($http_code);
    $self->render( 'json' =>  { 

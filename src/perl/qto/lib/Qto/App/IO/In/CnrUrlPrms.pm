@@ -353,7 +353,7 @@ sub doValidateAndSetSeq {
 }
 
 
-sub doValidateAndSetHSelect {
+sub doValidateAndSetHiSelect {
    my $self          = shift ; 
    return 
          $self->doValidateAndSetBranchId() 

@@ -144,12 +144,12 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
    }
   
  
-   sub doHInsertRow {
+   sub doHiInsertRow {
    
 		my $self 					= shift ; 
       my $db               	= shift ; 
       my $table            	= shift ; 
-      my $id               	= shift ; 
+      my $level               = shift ;
       my $seq              	= shift ; 
 
       my $ret              	= 0 ; 
@@ -162,7 +162,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       
       ( $ret , $msg , $dbh ) 	= $self->doConnectToDbAsAppUser ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
-
+      
       my $objRdrDbsFcry 		= 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
@@ -173,8 +173,88 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       }
 
       eval {
-         $sth = $dbh->prepare("select fnc_tree_traversal(?, ?)");
-			$hsr = $dbh->selectcol_arrayref("SELECT fnc_tree_traversal(?, ?)" , {} , $id,$seq);
+         # jump todo:ysg 
+         # seq is here the sequence of the ORIGIN of the click
+         my $child_seq = $seq + 1 ; 
+         # debug print "level: $level is the DESIRED UI LEVEL\n" ; 
+         # debug print "seq: $seq \n" ;
+         no warnings 'exiting' ; 
+         $str_sql = 'DO $$
+         ' . " 
+            DECLARE parentId bigint;
+            DECLARE parentRgt bigint;
+            DECLARE mayBeSiblingLvl bigint;
+            DECLARE prevRgt bigint;
+            DECLARE nextSeq bigint;
+            DECLARE prevLvl bigint ;
+            DECLARE newLft bigint;
+            DECLARE newRgt bigint;
+            DECLARE uiLvl bigint DEFAULT '$level';
+            BEGIN
+               nextSeq := ($seq+1);
+               IF prevLvl = 0 THEN
+                  uiLvl = 1;
+               END IF;
+
+               parentId := (SELECT max(id) from $table WHERE 1=1 AND seq < $seq and level=($level-1));
+               parentRgt := (SELECT rgt from $table WHERE 1=1 AND id = parentId);
+               mayBeSiblingLvl := (SELECT max(level) from $table WHERE 1=1 AND seq = nextSeq AND level=$level);
+               prevRgt := (SELECT rgt from $table WHERE 1=1 AND seq = $seq);
+               prevLvl := (SELECT level from $table WHERE 1=1 AND seq = $seq);
+
+               IF prevLvl < uiLvl THEN 
+                  IF mayBeSiblingLvl is NULL THEN 
+                     UPDATE $table set rgt=(rgt+2) WHERE ( rgt >= prevRgt OR id=0);
+                     INSERT INTO $table(level, seq, lft, rgt) VALUES (uiLvl, $child_seq, prevRgt, prevRgt+1);
+                     UPDATE $table set description = concat (cast (parentId as text), cast(parentRgt as text))
+                     WHERE seq=$child_seq ;
+                  ELSE 
+                     UPDATE $table set rgt=rgt+2 WHERE ( rgt >= parentRgt OR id=0);
+                     UPDATE $table set seq=seq+1 WHERE seq > $seq;
+                     INSERT INTO $table(level, seq, lft, rgt) VALUES (uiLvl, $child_seq, prevRgt+1, prevRgt+2);
+                     UPDATE $table set description = concat (cast (parentId as text), cast(parentRgt as text))
+                     WHERE seq=$child_seq ;
+                  END IF;
+               END IF;
+               
+               IF prevLvl = uiLvl THEN 
+                  IF mayBeSiblingLvl is NULL THEN 
+                     UPDATE $table set rgt=rgt+2 WHERE ( rgt >= parentRgt OR id=0);
+                     INSERT INTO $table(level, seq, lft, rgt) VALUES (uiLvl, $child_seq, prevRgt+1, prevRgt+2);
+                     UPDATE $table set description = concat (cast (parentId as text), cast(parentRgt as text))
+                     WHERE seq=$child_seq ;
+                  ELSE 
+                     UPDATE $table set rgt=rgt+2 WHERE rgt >= parentRgt;
+                     UPDATE $table set lft=lft+2 WHERE rgt < parentRgt AND seq > $seq;
+                     UPDATE $table set rgt=rgt+2 WHERE rgt < parentRgt AND seq > $seq;
+                     UPDATE $table set seq=seq+1 WHERE seq > $seq;
+                     INSERT INTO $table(level, seq, lft, rgt) VALUES (uiLvl, $child_seq, prevRgt+1, prevRgt+2);
+                     UPDATE $table set description = concat (cast (parentId as text), cast(parentRgt as text))
+                     WHERE seq=$child_seq ;
+                  END IF;
+               END IF;
+               
+               IF prevLvl > uiLvl THEN 
+                  IF mayBeSiblingLvl is NULL THEN 
+                     UPDATE $table set rgt=rgt+2 WHERE ( rgt >= parentRgt OR id=0);
+                     INSERT INTO $table(level, seq, lft, rgt) VALUES (uiLvl, $child_seq, parentRgt, parentRgt+1);
+                     UPDATE $table set description = concat (cast (parentId as text), cast(parentRgt as text))
+                     WHERE seq=$child_seq ;
+                  ELSE 
+                     UPDATE $table set rgt=rgt+2 WHERE rgt >= parentRgt;
+                     UPDATE $table set seq=seq+1 WHERE seq > $seq;
+                     INSERT INTO $table(level, seq, lft, rgt) VALUES (uiLvl, $child_seq, prevRgt+1, prevRgt+2);
+                     UPDATE $table set description = concat (cast (parentId as text), cast(parentRgt as text))
+                     WHERE seq=$child_seq ;
+                  END IF;
+               END IF;
+         " . '
+         END ; $$ ';
+         $sth = $dbh->prepare($str_sql);  
+         # print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
+         # todo:ysg 
+         $sth->execute() ;
+         use warnings 'exiting' ; 
       };
       binmode(STDOUT, ':utf8');
 

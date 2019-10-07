@@ -253,8 +253,8 @@ sub doSetRoutes {
    
    
    $r->get('/:db/hselect/:item')->to(
-     controller   => 'HSelect'
-   , action       => 'doHSelectItems'
+     controller   => 'HiSelect'
+   , action       => 'doHiSelectItems'
    );
    
    $r->get('/:db/hlselect/:item')->to(
@@ -267,9 +267,9 @@ sub doSetRoutes {
    , action       => 'doCreateById'
    );
    
-   $r->post('/:db/hcreate/:item')->to(
-     controller   => 'HCreate'
-   , action       => 'doHCreateById'
+   $r->post('/:db/hicreate/:item')->to(
+     controller   => 'HiCreate'
+   , action       => 'doHiCreate'
    );
    
    $r->post('/:db/delete/:item')->to(
