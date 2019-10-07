@@ -10,7 +10,7 @@ main(){
    do_setup_vim
    do_check_install_ubuntu_packages
    do_check_install_postgres
-    do_provision_postgres
+   do_provision_postgres
    do_check_install_phantom_js
    do_check_install_perl_modules
    do_check_install_chromium_headless
@@ -23,6 +23,7 @@ main(){
 
 do_set_vars(){
    set -eu -o pipefail 
+   set +e
    app_to_deploy=${1:-} || 'qto'
    maybe_echo=${2:-} || ''
    app_name_owner=$USER || exit 1
@@ -32,6 +33,7 @@ do_set_vars(){
    product_instance_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
    app_name=$(basename $product_dir|cut -d'.' -f1)
    app_to_deploy=$(basename $product_dir|cut -d'.' -f1)
+   echo 'ENV_TYPE=dev'>>"$unit_run_dir/../../../.env" # you should ALWAYS bootstrap a dev instance
    source "$unit_run_dir/../../../.env"
    PRODUCT_INSTANCE_DIR="$product_dir/$app_name.$VERSION.$ENV_TYPE.$app_name_owner"
    bash_opts_file=~/.bash_opts.$(hostname -s)
@@ -220,8 +222,12 @@ do_log(){
 
 do_provision_postgres(){
 
+   perl -pi -e 's|PRODUCT_INSTANCE_DIR|product_instance_dir|g' \
+      $product_instance_dir/src/bash/qto/funcs/scramble-confs.func.sh
    source $product_instance_dir/src/bash/qto/funcs/scramble-confs.func.sh
    doScrambleConfs
+   perl -pi -e 's|product_instance_dir|PRODUCT_INSTANCE_DIR|g' \
+      $product_instance_dir/src/bash/qto/funcs/scramble-confs.func.sh
    source $product_instance_dir/lib/bash/funcs/export-json-section-vars.sh
    doExportJsonSectionVars $product_instance_dir/cnf/env/$ENV_TYPE.env.json '.env.db'
 
