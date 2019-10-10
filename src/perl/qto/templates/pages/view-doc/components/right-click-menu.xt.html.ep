@@ -26,6 +26,18 @@
 			<a @click="openInPrintPreview($event)"><img src="../../themes/thme-blue/img/controls/pdf-print-preview.png" 
 				class="context-menu-icon"  width="18"> pdf print preview </a>
 		 </context-menu-item>
+		 <context-menu-item>
+			<a @click="addNewSiblingNode($event)"><img src="../../themes/thme-blue/img/controls/add-sibling-node.png" 
+				class="context-menu-icon"  width="18"> add new sibling node </a>
+		 </context-menu-item>
+		 <context-menu-item>
+			<a @click="addNewParentNode($event)"><img src="../../themes/thme-blue/img/controls/add-parent-node.png" 
+				class="context-menu-icon"  width="18"> add new parent node </a>
+		 </context-menu-item>
+		 <context-menu-item>
+			<a @click="addNewChildNode($event)"><img src="../../themes/thme-blue/img/controls/add-child-node.png" 
+				class="context-menu-icon"  width="18"> add new child node </a>
+		 </context-menu-item>
 	  </ul>
 	</div>
 </template>

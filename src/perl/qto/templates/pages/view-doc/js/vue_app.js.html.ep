@@ -124,6 +124,9 @@
          }
          , showContextMenu (context,payload) {
             var e = payload ; 
+            // todo:ysg 
+            console.log ("payload")
+            console.log ( payload)
             var id = String(e.target.id).split('-')[1]
             if ( typeof ( id ) === "undefined" ) { alert ( "showContextMenu id undef" ) ; return }
             e.preventDefault();
