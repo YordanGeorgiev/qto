@@ -16,7 +16,8 @@
                <a :id="'title-'+ item.id" :href="'#<%= $item =%>-' + item.id" 
                   :title="'level:' + item.level + ' :: seq: ' + item.seq "
                   class="cls-context-menu-link">{{item.logical_order}}</a>
-               <rgx-input :id="'inp_name-' + item.id" :cnt="item.name" class="cls_title">{{item.name}}</rgx-input>
+               <rgx-input :id="'inp_name-' + item.id + '-lvl-' + item.level + '-seq-' + item.seq" 
+                  :cnt="item.name" class="cls_title">{{item.name}}</rgx-input>
             </h3>
             <div class="cls_tbltooltip">
                <rgx-textarea v-html="item.description" :formats="item.formats" class="cls_desc" :id="'dsc_description-' + item.id">

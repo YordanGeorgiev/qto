@@ -77,5 +77,71 @@ const ContextMenu = Vue.component('context-menu', {
          uri = uri.setUriParam("as","print-doc") 
          window.location.href = uri
 	   }
+	   , addNewSiblingNode: function (e) {
+         var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var uri = window.location.href.replace('/view/', '/hicreate/')
+         uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
+         console.log ( "id: " + String(id))
+         console.log ( "axious should call uri: " + uri )
+         var lvl = id.split('-')[3]
+         var sq = id.split('-')[5]
+         axios.post(uri, {
+             level: lvl,
+             seq: sq
+         })
+         .then(function (response) {
+            console.log(response);
+         })
+         .catch(function (error) {
+            console.log(error);
+          });
+	   }
+	   , addNewParentNode: function (e) {
+         var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var uri = window.location.href.replace('/view/', '/hicreate/')
+         uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
+         console.log ( "id: " + String(id))
+         console.log ( "axious should call uri: " + uri )
+         var lvl = id.split('-')[3]-1
+         var sq = id.split('-')[5]
+         axios.post(uri, {
+             level: lvl,
+             seq: sq
+         })
+         .then(function (response) {
+            console.log(response);
+         })
+         .catch(function (error) {
+            console.log(error);
+          });
+	   }
+	   , addNewChildNode: function (e) {
+         var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var uri = window.location.href.replace('/view/', '/hicreate/')
+         uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
+         console.log ( "id: " + String(id))
+         console.log ( "axious should call uri: " + uri )
+         var lvl = id.split('-')[3]+1
+         var sq = id.split('-')[5]
+         axios.post(uri, {
+             level: lvl,
+             seq: sq
+         })
+         .then(function (response) {
+            console.log(response);
+         })
+         .catch(function (error) {
+            console.log(error);
+          });
+	   }
 	}
 });
