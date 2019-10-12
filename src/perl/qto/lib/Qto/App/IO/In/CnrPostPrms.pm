@@ -86,15 +86,15 @@ sub chkHiCreateHasValidParams {
    my $isValid       = 0 ; 
    my $errors        = 0 ; 
    my $http_code     = 400 ; 
-   my $seq           = $perl_hash->{'seq'} || 2 ; 
-   my $level         = $perl_hash->{'level'} || 1 ; 
+   my $oid           = $perl_hash->{'oid'} || 0;
+   my $level_alpha   = $perl_hash->{'lvlalpha'} || 0;
 
-   unless ( isint $seq && $seq >= 1) { # the seq must start from 1 and not 0 !!! by definition
-      $msg           = 'the seq must be a whole positive number, but ' . $seq . ' was provided !' ; 
+   unless ( isint $oid && $oid >= 0) { # the oid must start from 0 by definition !!!
+      $msg           = 'the origin id must be a whole positive number or 0 , but ' . $oid . ' was provided !' ; 
       $errors++ ;
    } 
-   unless ( isint $level && $level >= 1) { # the level must start from 1 and not 0 !!! by definition
-      $msg           = 'the level must be a whole positive number, but ' . $level . ' was provided !' ; 
+   unless ( $level_alpha == -1 or $level_alpha == 0 or $level_alpha == 1 ) { # the level must start from 1 and not 0 !!! by definition
+      $msg           = 'the level alpha must be a whole positive number, but ' . $level_alpha . ' was provided !' ; 
       $errors++ ;
    } 
 

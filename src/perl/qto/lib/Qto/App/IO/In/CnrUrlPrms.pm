@@ -343,7 +343,7 @@ sub doValidateAndSetSeq {
    } else {
       $isValid = 1 ; 
       $http_code = 200 ; 
-      $objModel->set('hselect.web-action.seq' , $query_params->param('seq') );
+      $objModel->set('hiselect.web-action.seq' , $query_params->param('seq') );
       $query_params->remove('seq') ; 
    }
    
@@ -395,7 +395,7 @@ sub doSetView {
    $objModel->set('view.web-action.bid' , $query_params->param('bid') );
    $query_params->remove('bid') ; 
    
-   $objModel->set('hselect.web-action.seq' , $query_params->param('seq') );
+   $objModel->set('hiselect.web-action.seq' , $query_params->param('seq') );
    $query_params->remove('seq') ; 
    
    $ret = 200 ; $msg = '' ; 

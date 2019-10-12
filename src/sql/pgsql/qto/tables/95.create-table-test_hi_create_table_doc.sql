@@ -7,7 +7,7 @@ SELECT 'create the "test_hi_create_table_doc" table' as "---"
 -- src: https://github.com/werc/TreeTraversal
    CREATE TABLE test_hi_create_table_doc (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
-    , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
+    , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISSMS') as bigint) 
     , level          integer NOT NULL DEFAULT 1
     , seq            integer NOT NULL DEFAULT 1
     , lft            integer NOT NULL DEFAULT 1

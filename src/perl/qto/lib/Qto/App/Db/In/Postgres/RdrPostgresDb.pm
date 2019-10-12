@@ -236,8 +236,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $db               = shift ; 
       my $table            = shift ; 
 
-      my $bid           = $objModel->get( 'hselect.web-action.bid' ) || 0 ; 
-      my $seq           = $objModel->get( 'hselect.web-action.seq' ) || undef ; 
+      my $bid           = $objModel->get( 'hiselect.web-action.bid' ) || 0 ; 
+      my $seq           = $objModel->get( 'hiselect.web-action.seq' ) || undef ; 
 
       my $where_clause_bid = '' , 
 		my $ret              = 400 ; 
@@ -1076,8 +1076,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $self          = shift ; 
       my $db            = shift || croak 'no db passed !!!' ; 
       my $table         = shift || croak 'no table passed !!!' ; 
-      my $bid           = $objModel->get( 'hselect.web-action.bid' ) || 0 ; 
-      my $seq           = $objModel->get( 'hselect.web-action.seq' ) || undef ; 
+      my $bid           = $objModel->get( 'hiselect.web-action.bid' ) || 0 ; 
+      my $seq           = $objModel->get( 'hiselect.web-action.seq' ) || undef ; 
    
       my $rv            = 1  ;
       my $ret           = 1 ; 
@@ -1152,10 +1152,9 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
             $where_clause_with
 				ORDER BY seq
 			" ; 
-         p $sql ; 
-         # todo:ysg 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
-         p $hsr2 ; 
+         # todo:ysg 
+         # debug p $hsr2 ; 
       };
       if ( $@ ) {
          $rv               = 404 ; 

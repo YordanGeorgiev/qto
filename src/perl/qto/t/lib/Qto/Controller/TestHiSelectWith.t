@@ -39,7 +39,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
       next unless ( grep( /^$table_name$/, @tables_to_check ) ) ;
 
       $tm = 'the return code for the ' . $table_name . ' is correct' ; 
-      $url = '/' . $db . '/hselect/' . $table_name  . '?bid=0&with=description-like-name' ; 
+      $url = '/' . $db . '/hiselect/' . $table_name  . '?bid=0&with=description-like-name' ; 
       
       ok ($t->get_ok($url)
          ->status_is(200) 
@@ -61,7 +61,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
 
 
-      $url = '/' . $db . '/hselect/' . $table_name  . '?bid=0&with=level-in-1,2' ; 
+      $url = '/' . $db . '/hiselect/' . $table_name  . '?bid=0&with=level-in-1,2' ; 
       
       ok ($t->get_ok($url)
          ->status_is(200) 

@@ -42,7 +42,7 @@ sub doExport {
    $objRdrDbsFcry 	= 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
    $objRdrDb            = $objRdrDbsFcry->doSpawn("$export_type");
 
-   ($rv, $msg, $dat) 	= $objRdrDb->doHiSelectBranch($db , $table, $objModel->get('hselect.web-action.bid'));
+   ($rv, $msg, $dat) 	= $objRdrDb->doHiSelectBranch($db , $table, $objModel->get('hiselect.web-action.bid'));
    $http_code 				= $rv ;  
    my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$config  ) ; 
    # p ( $dat ) ; 

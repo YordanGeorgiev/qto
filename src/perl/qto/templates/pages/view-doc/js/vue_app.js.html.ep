@@ -31,8 +31,8 @@
            , SET_SNACKBAR_SHOW: (state, showSnackBar) => {
                state.showSnackBar = showSnackBar
            }
-           , SET_CONTEXT_MENU_SHOW: (state, showContextMenu, e) => {
-               state.showContextMenu = showContextMenu
+           , SET_CONTEXT_MENU_SHOW: (state, payload, showContextMenu) => {
+               state.showContextMenu = true
            }
            , SET_SNACKBAR_MSG: (state, msg) => {
                state.msg = msg
@@ -47,6 +47,9 @@
                var index = state.items.findIndex(item => item.id === payload);
                state.items.splice(index, 1);
            }
+           , CREATE_ITEM: (state, payload) => {
+               state.showRgtMenu = false
+           }
            , UPDATE_ITEM: (state, payload) => {
                var arr = payload.eid.split('-')
                var dbid = arr[1]
@@ -54,24 +57,30 @@
                var col = dsc_col.split('_')[1]
                var citems = state.items
                var index = citems.findIndex(item => item.id == dbid)
+               var item = citems[index]
                if ( col === 'description' ) {
-                  state.items[index].description = payload.newVal
+                  item.description = payload.newVal
                } else if ( col === 'src' ) {
-                  state.items[index].src = payload.newVal
+                  item.src = payload.newVal
                } else if ( col === 'name' ) {
-                  state.items[index].name = payload.newVal
+                  item.name = payload.newVal
                } else {
                   console.error ( "unknown col for dbid: " + String(dbid ) )
                }
+               citems[index] = item
+               state.items = citems
                // qto-190602195122 this should not be needed !!! vuex model not used properly ?!
                document.getElementById(payload.eid).value = payload.newVal
            }
     };
 
+   // where the backend calls are issued
+   // Instead of mutating the state, actions commit mutations.
+   // actions can contain arbitrary asynchronous operations
     var actions = {
          loadItems ({ commit }) {
             var url_params = getUrlParams()  
-				var url = (window.location.pathname).replace("/view/" , "/hselect/")
+				var url = (window.location.pathname).replace("/view/" , "/hiselect/")
             getServerData(url , url_params)
             .then( response => {
                if ( response.status === 204 ) {
@@ -107,8 +116,8 @@
          , loadSnackBar: (context, showSnackBar) => {
             context.commit('SET_SNACKBAR_SHOW', showSnackBar)
          }
-         , loadContextMenu: (context, showContextMenu,id) => {
-            context.commit('SET_CONTEXT_MENU_SHOW', showContextMenu, id)
+         , loadContextMenu: (context, id, showContextMenu) => {
+            context.commit('SET_CONTEXT_MENU_SHOW', id, showContextMenu)
          }
          , loadSnackBarMsg: (context, msg) => {
             context.commit("SET_SNACKBAR_MSG", msg)
@@ -123,12 +132,13 @@
             commit('SET_SNACKBAR_SHOW', false )
          }
          , showContextMenu (context,payload) {
-            var e = payload ; 
+            var e = payload ; // the mouse event
             // todo:ysg 
-            console.log ("payload")
-            console.log ( payload)
+            // console.log ( "START e:")
+            // console.log ( e )
+            // console.log ( "STOP e@SET_CONTEXT_MENU_SHOW:")
             var id = String(e.target.id).split('-')[1]
-            if ( typeof ( id ) === "undefined" ) { alert ( "showContextMenu id undef" ) ; return }
+            if ( typeof ( id ) === "undefined" ) { console.error( "showContextMenu id undef" ) ; return }
             e.preventDefault();
             var menu = document.getElementById("div-context-menu");
             menu.cid = id
@@ -136,7 +146,7 @@
             menu.style.top = e.pageY + 'px'
             menu.style.display = 'block'
             menu.style.zIndex = 101
-            context.commit('SET_CONTEXT_MENU_SHOW', true , id)
+            context.commit('SET_CONTEXT_MENU_SHOW', payload, true )
          }
          , addItem: (context, payload) => {
             context.commit("ADD_ITEM", payload)
@@ -144,12 +154,51 @@
          , deleteItem: (context, payload) => {
             context.commit("DELETE_ITEM", payload)
          }
+         , createItem: (context,payload) => {
+               // todo:ysg
+               console.log ( "payload:")
+               console.log ( payload)
+               console.log ( "payload@createItem")
+               var uri = window.location.href.replace('/view/', '/hicreate/')
+               uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
+               //var oidV = payload.oid
+               //var lvlalphaV= payload.lvlalpha
+               axios.post(uri, {
+                  oid: payload.oid,
+                  lvlalpha: payload.lvlalpha
+               })
+               .then(response => { 
+                  if ( typeof response.status != "undefined" && response.status === 200 ) {
+                     context.commit("CREATE_ITEM", payload)
+                     actions.loadItems(context)
+                  } else {
+                     if ( typeof error.response.data.msg != "undefined" ) { 
+                        context.commit('SET_SNACKBAR_SHOW', true)
+                        context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
+                     }
+                     console.error ( error.response )
+                  }
+               })
+               .catch(error => {
+                  console.error ( error ) 
+                  if ( typeof error.response.data.msg != "undefined" ) { 
+                     console.error ( error.response.data.msg )
+                     context.commit('SET_SNACKBAR_SHOW', true)
+                     context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
+                  }
+                  // payload.newVal = payload.oldData
+                  //context.commit("CREATE_ITEM", payload)
+               }) 
+         }
          , updateItem: (context,payload) => {
             var arr = payload.eid.split('-')
             var dbid = arr[1]
             var dsc_col = arr[0]
             var col = dsc_col.split('_')[1]
             var newCnt = payload.newVal
+            // todo:ysg
+            // console.log("updateItem payload:" )
+            // console.log(payload )
             newCnt = ( newCnt == "" ? "null" : newCnt ) //empty cell is treated as null
             axios.post('/<%= $db =%>/update/<%= $item =%>', {
                   attribute: col ,
@@ -201,7 +250,10 @@
          , 'context-menu': ContextMenu
       }
 		, computed: {
-         cshowSnackBar: {
+         items() {
+                return this.$store.getters.getItems;
+         }
+         , cshowSnackBar: {
 				get: function() {
 					return this.$store.getters.getSnackBarShow ;
 				}
@@ -214,7 +266,7 @@
 					return this.$store.getters.getContextMenu ;
 				}
 				, set: function(newVal,id) {
-         		this.$store.dispatch("loadContextMenu", newVal, id);
+         		this.$store.dispatch("loadContextMenu", id, newVal);
 				}
          }
 			, cmsg: {
@@ -247,7 +299,7 @@
       })
       , created: function () {
          this.$store.dispatch('loadItems')
-         this.$store.dispatch("loadContextMenu", false, 0);
+         this.$store.dispatch("loadContextMenu", 0, false);
          this.$store.dispatch("loadSnackBar" , false);
          this.$store.dispatch("loadSnackBarInfinity", false);
          this.$store.dispatch("loadRgtMenuShow", false);
@@ -255,13 +307,13 @@
       , methods: {
          addItem: function() {
             this.$store.dispatch("addItem", this);
-            //this.newId ++;
-            //this.name = "";
+         }
+         , createItem: function(e) {
+            this.$store.dispatch("createItem", this);
+            this.$store.dispatch('loadItems')
          }
          , updateItem: function(e) {
             this.$store.dispatch("updateItem", e);
-            //this.newId ++;
-            //this.name = "";
          }
          , hideSnackBar: function() {
             this.$store.dispatch("hideSnackBar", this);

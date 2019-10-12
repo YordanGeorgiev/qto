@@ -17,7 +17,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
    our $module_trace                            = 1 ; 
    our $IsUnitTest                              = 0 ; 
-	our $config 										= {} ; 
+	our $config 										   = {} ; 
 	our $objLogger 										= {} ; 
 	our $objModel                                = {} ; 
    our $rdbms_type                              = 'postgres' ; 
@@ -149,8 +149,11 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 		my $self 					= shift ; 
       my $db               	= shift ; 
       my $table            	= shift ; 
-      my $level               = shift ;
-      my $seq              	= shift ; 
+      my $origin_id           = shift ; 
+      my $level_alpha         = shift ;
+
+      print "origin_id : $origin_id \n\n" ; 
+      # print "level_alpha : $level_alpha \n\n" ; 
 
       my $ret              	= 0 ; 
       my $res              	= undef ;  # the result from FOUND in the func
@@ -174,85 +177,74 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
       eval {
          # jump todo:ysg 
-         # seq is here the sequence of the ORIGIN of the click
-         my $child_seq = $seq + 1 ; 
-         # debug print "level: $level is the DESIRED UI LEVEL\n" ; 
-         # debug print "seq: $seq \n" ;
+         # UPDATE $table set description = concat (cast ('originLvl < tgtLvl parentRgt' as text), cast(parentRgt as text))
+         # WHERE seq=tgtSeq;
+         # UPDATE $table set src = concat (cast ('originLvl < tgtLvl: tgtLvl' as text), cast(tgtLvl as text))
+         # WHERE seq=tgtSeq;
          no warnings 'exiting' ; 
+         $level_alpha='+ ' . "$level_alpha" if $level_alpha >= 0 ;
          $str_sql = 'DO $$
          ' . " 
-            DECLARE parentId bigint;
-            DECLARE parentRgt bigint;
-            DECLARE mayBeSiblingLvl bigint;
-            DECLARE prevRgt bigint;
-            DECLARE nextSeq bigint;
-            DECLARE prevLvl bigint ;
+            DECLARE originSeq bigint;
+            DECLARE tgtSeq bigint DEFAULT 1;
+            DECLARE tgtLvl bigint DEFAULT 1;
+            DECLARE level_alpha bigint DEFAULT 0;
+            DECLARE originLvl bigint;
+            DECLARE originRgt bigint DEFAULT 2;
+            DECLARE originLft bigint DEFAULT 1;
+            DECLARE parentRgt bigint DEFAULT 2;
+            DECLARE parentLft bigint DEFAULT 1;
+            DECLARE siblingRgt bigint;
+            DECLARE parentLvl int DEFAULT 0;
             DECLARE newLft bigint;
             DECLARE newRgt bigint;
-            DECLARE uiLvl bigint DEFAULT '$level';
+            DECLARE mayBeSiblingLvl bigint;
+            DECLARE mayBeNxtSeq bigint;
+
             BEGIN
-               nextSeq := ($seq+1);
-               IF prevLvl = 0 THEN
-                  uiLvl = 1;
+               originSeq := (SELECT seq from $table WHERE 1=1 AND id=$origin_id);
+               originLvl := (SELECT level from $table WHERE id=$origin_id);
+               tgtSeq := (originSeq+1);
+               IF originSeq = 1 THEN 
+                  parentLvl := (0);
+                  parentRgt := (0);
+               ELSE 
+                  tgtLvl := (originLvl$level_alpha);
+                  parentLvl := (tgtLvl-1);
                END IF;
 
-               parentId := (SELECT max(id) from $table WHERE 1=1 AND seq < $seq and level=($level-1));
-               parentRgt := (SELECT rgt from $table WHERE 1=1 AND id = parentId);
-               mayBeSiblingLvl := (SELECT max(level) from $table WHERE 1=1 AND seq = nextSeq AND level=$level);
-               prevRgt := (SELECT rgt from $table WHERE 1=1 AND seq = $seq);
-               prevLvl := (SELECT level from $table WHERE 1=1 AND seq = $seq);
+               parentRgt := (SELECT max(rgt) from $table WHERE 1=1 AND level=parentLvl and seq <= originSeq );
+               parentLft := (SELECT max(lft) from $table WHERE 1=1 AND level=parentLvl and seq <= originSeq );
+               originRgt := (SELECT rgt from $table WHERE id = $origin_id);
+               originLft := (SELECT lft from $table WHERE id = $origin_id);
+               mayBeSiblingLvl := (SELECT max(level) from $table WHERE 1=1 AND seq = tgtSeq AND level=tgtLvl);
+               mayBeNxtSeq := (SELECT seq from $table WHERE 1=1 AND seq = tgtSeq);
+               UPDATE $table set seq=(seq+1) WHERE seq >= tgtSeq;
 
-               IF prevLvl < uiLvl THEN 
-                  IF mayBeSiblingLvl is NULL THEN 
-                     UPDATE $table set rgt=(rgt+2) WHERE ( rgt >= prevRgt OR id=0);
-                     INSERT INTO $table(level, seq, lft, rgt) VALUES (uiLvl, $child_seq, prevRgt, prevRgt+1);
-                     UPDATE $table set description = concat (cast (parentId as text), cast(parentRgt as text))
-                     WHERE seq=$child_seq ;
+               CASE
+               WHEN originLvl < tgtLvl THEN 
+                  UPDATE $table set lft=(lft+2) WHERE seq >= tgtSeq ;
+                  UPDATE $table set rgt=(rgt+2) WHERE rgt > originLft;
+                  INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, parentLft+1, parentLft+2);
+               WHEN originLvl = tgtLvl THEN 
+                  UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
+                  UPDATE $table set lft=(lft+2) WHERE seq >= tgtSeq ;
+                  INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, originRgt+1, originRgt+2);
+               WHEN originLvl > tgtLvl THEN 
+                  IF mayBeNxtSeq is NULL THEN 
+                     siblingRgt := (SELECT max(rgt) from $table WHERE 1=1 AND level=tgtLvl and seq <= originSeq );
+                     UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
+                     INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, siblingRgt+1, siblingRgt+2);
                   ELSE 
-                     UPDATE $table set rgt=rgt+2 WHERE ( rgt >= parentRgt OR id=0);
-                     UPDATE $table set seq=seq+1 WHERE seq > $seq;
-                     INSERT INTO $table(level, seq, lft, rgt) VALUES (uiLvl, $child_seq, prevRgt+1, prevRgt+2);
-                     UPDATE $table set description = concat (cast (parentId as text), cast(parentRgt as text))
-                     WHERE seq=$child_seq ;
+                     siblingRgt := (SELECT max(rgt) from $table WHERE 1=1 AND level=tgtLvl and seq <= originSeq );
+                     UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
+                     INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, siblingRgt+1, siblingRgt+2);
+                     UPDATE $table set lft=(lft+2) WHERE lft >= tgtLvl ;
                   END IF;
-               END IF;
-               
-               IF prevLvl = uiLvl THEN 
-                  IF mayBeSiblingLvl is NULL THEN 
-                     UPDATE $table set rgt=rgt+2 WHERE ( rgt >= parentRgt OR id=0);
-                     INSERT INTO $table(level, seq, lft, rgt) VALUES (uiLvl, $child_seq, prevRgt+1, prevRgt+2);
-                     UPDATE $table set description = concat (cast (parentId as text), cast(parentRgt as text))
-                     WHERE seq=$child_seq ;
-                  ELSE 
-                     UPDATE $table set rgt=rgt+2 WHERE rgt >= parentRgt;
-                     UPDATE $table set lft=lft+2 WHERE rgt < parentRgt AND seq > $seq;
-                     UPDATE $table set rgt=rgt+2 WHERE rgt < parentRgt AND seq > $seq;
-                     UPDATE $table set seq=seq+1 WHERE seq > $seq;
-                     INSERT INTO $table(level, seq, lft, rgt) VALUES (uiLvl, $child_seq, prevRgt+1, prevRgt+2);
-                     UPDATE $table set description = concat (cast (parentId as text), cast(parentRgt as text))
-                     WHERE seq=$child_seq ;
-                  END IF;
-               END IF;
-               
-               IF prevLvl > uiLvl THEN 
-                  IF mayBeSiblingLvl is NULL THEN 
-                     UPDATE $table set rgt=rgt+2 WHERE ( rgt >= parentRgt OR id=0);
-                     INSERT INTO $table(level, seq, lft, rgt) VALUES (uiLvl, $child_seq, parentRgt, parentRgt+1);
-                     UPDATE $table set description = concat (cast (parentId as text), cast(parentRgt as text))
-                     WHERE seq=$child_seq ;
-                  ELSE 
-                     UPDATE $table set rgt=rgt+2 WHERE rgt >= parentRgt;
-                     UPDATE $table set seq=seq+1 WHERE seq > $seq;
-                     INSERT INTO $table(level, seq, lft, rgt) VALUES (uiLvl, $child_seq, prevRgt+1, prevRgt+2);
-                     UPDATE $table set description = concat (cast (parentId as text), cast(parentRgt as text))
-                     WHERE seq=$child_seq ;
-                  END IF;
-               END IF;
+               END CASE;
          " . '
          END ; $$ ';
          $sth = $dbh->prepare($str_sql);  
-         # print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
-         # todo:ysg 
          $sth->execute() ;
          use warnings 'exiting' ; 
       };
