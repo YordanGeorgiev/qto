@@ -40,9 +40,10 @@ sub doHiCreate {
    my $hsr2             = {};
    my $json             = $self->req->body;
    my $perl_hash        = decode_json($json) ; 
-   my $seq              = $perl_hash->{'seq'} || 2 ; 
-   my $level            = $perl_hash->{'level'} || 1 ;
+   my $oid              = $perl_hash->{'oid'} || 0 ;
+   my $level_alpha      = $perl_hash->{'lvlalpha'} || 0;
 
+   p $perl_hash ; 
 
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
@@ -68,7 +69,7 @@ sub doHiCreate {
 
    $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$config, \$objModel );
    $objWtrDb = $objWtrDbsFcry->doSpawn("$rdbms_type");
-   ($http_code, $msg,$dat) = $objWtrDb->doHiInsertRow($db,$item,$level,$seq);
+   ($http_code, $msg,$dat) = $objWtrDb->doHiInsertRow($db,$item,$oid,$level_alpha);
 
    $self->res->code($http_code);
    $self->render( 'json' =>  { 

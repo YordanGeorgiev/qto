@@ -84,64 +84,24 @@ const ContextMenu = Vue.component('context-menu', {
          }
          var uri = window.location.href.replace('/view/', '/hicreate/')
          uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
-         console.log ( "id: " + String(id))
-         console.log ( "axious should call uri: " + uri )
-         var lvl = id.split('-')[3]
-         var sq = id.split('-')[5]
-         axios.post(uri, {
-             level: lvl,
-             seq: sq
-         })
-         .then(function (response) {
-            console.log(response);
-         })
-         .catch(function (error) {
-            console.log(error);
-          });
+         var payload = {oid:id, lvlalpha:0};
+         this.$store.dispatch("createItem", payload);
 	   }
 	   , addNewParentNode: function (e) {
          var id = e.target.parentElement.parentElement.parentElement.cid
          if ( typeof ( id ) == "undefined" ) { //img clicked
             id = e.target.parentElement.parentElement.parentElement.parentElement.cid
          }
-         var uri = window.location.href.replace('/view/', '/hicreate/')
-         uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
-         console.log ( "id: " + String(id))
-         console.log ( "axious should call uri: " + uri )
-         var lvl = id.split('-')[3]-1
-         var sq = id.split('-')[5]
-         axios.post(uri, {
-             level: lvl,
-             seq: sq
-         })
-         .then(function (response) {
-            console.log(response);
-         })
-         .catch(function (error) {
-            console.log(error);
-          });
+         var payload = {oid:id, lvlalpha:-1};
+         this.$store.dispatch("createItem", payload);
 	   }
 	   , addNewChildNode: function (e) {
          var id = e.target.parentElement.parentElement.parentElement.cid
          if ( typeof ( id ) == "undefined" ) { //img clicked
             id = e.target.parentElement.parentElement.parentElement.parentElement.cid
          }
-         var uri = window.location.href.replace('/view/', '/hicreate/')
-         uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
-         console.log ( "id: " + String(id))
-         console.log ( "axious should call uri: " + uri )
-         var lvl = id.split('-')[3]+1
-         var sq = id.split('-')[5]
-         axios.post(uri, {
-             level: lvl,
-             seq: sq
-         })
-         .then(function (response) {
-            console.log(response);
-         })
-         .catch(function (error) {
-            console.log(error);
-          });
+         var payload = {oid:id, lvlalpha:1};
+         this.$store.dispatch("createItem", payload);
 	   }
 	}
 });

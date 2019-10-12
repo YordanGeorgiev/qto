@@ -252,7 +252,7 @@ sub doSetRoutes {
    );
    
    
-   $r->get('/:db/hselect/:item')->to(
+   $r->get('/:db/hiselect/:item')->to(
      controller   => 'HiSelect'
    , action       => 'doHiSelectItems'
    );

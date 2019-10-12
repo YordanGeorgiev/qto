@@ -28,11 +28,11 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    ;
 
    $tm = 'status 404 is returned  when the database provided does not exist' ; 
-   $url = '/non_existent_db/hselect/daily_issues/0' ; 
+   $url = '/non_existent_db/hiselect/daily_issues/0' ; 
 	#ok ( $t->get_ok($url)->status_is(404)  , $tm ) ; 
    
    #$tm = 'status 404 is returned  when the table  provided does not exist' ; 
-   #$url = '/non_existent_db/hselect/daily_issues/0' ; 
+   #$url = '/non_existent_db/hiselect/daily_issues/0' ; 
 	#ok ( $t->get_ok($url)->status_is(404)  , $tm ) ; 
 
    
@@ -49,7 +49,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
       next unless ( grep( /^$table_name$/, @tables_to_check ) ) ;
 
       $tm = 'the return code for the ' . $table_name . ' is correct' ; 
-      $url = '/' . $db . '/hselect/' . $table_name  ; 
+      $url = '/' . $db . '/hiselect/' . $table_name  ; 
       ok ($t->get_ok($url)
          ->status_is(200) 
          ->header_is('Accept-Charset' => 'UTF-8')
@@ -65,7 +65,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
       ok ( $res->{'msg'} eq "" , $tm) ; 
 
       $tm = 'return 400 if non-integer is passed for the seq url parameter' ; 
-      $url = '/' . $db . '/hselect/' . $table_name . '?bid=non_integer' ; 
+      $url = '/' . $db . '/hiselect/' . $table_name . '?bid=non_integer' ; 
       ok ($t->get_ok($url)->status_is(400) , $tm );
 
       $res = $ua->get($url)->result->json ; 

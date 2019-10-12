@@ -1,11 +1,16 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 cnf/env
+src/perl/qto/public/poc/vuex/sabe/
+src/perl/qto/public/poc/vuex/sabe/app.js
+src/perl/qto/public/poc/vuex/sabe/index.html
+src/perl/qto/public/poc/vuex/sabe/styles.css
 src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
 src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
+src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/qto/lib/Qto/Controller/HiCreate.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
-src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
 src/sql/pgsql/qto/tables/95.create-table-test_hi_create_table_doc.sql
+src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
 cnf/env/dev.env.json
 cnf/env/tst.env.json
 cnf/env/qas.env.json
@@ -44,10 +49,6 @@ src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
 # start login
 src/perl/qto/t/lib/Qto/Controller/TestLogin.t
 src/perl/qto/lib/Qto/Controller/Login.pm
-src/perl/qto/public/poc/vuex/sabe/
-src/perl/qto/public/poc/vuex/sabe/app.js
-src/perl/qto/public/poc/vuex/sabe/index.html
-src/perl/qto/public/poc/vuex/sabe/styles.css
 src/perl/qto/templates/pages/login
 src/perl/qto/templates/pages/login/login.html.ep
 # stop  login
@@ -193,7 +194,6 @@ src/perl/qto/lib/Qto/App/UI/Controls/WtrListLabels.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrDbName.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToHsr2.pm
-src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/qto/lib/Qto/App/Db/In/Postgres/MojoPgWrapper.pm
 src/perl/qto/lib/Qto/App/UI/WtrUIFactory.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrEncrypter.pm
