@@ -50,7 +50,7 @@
 		 </context-menu-item>
 		 <context-menu-item>
 			<a @click="addNewParentNode($event)">
-            <img src="../../themes/thme-blue/img/controls/add-parent-node.png" 
+            <img src="../../themes/thme-blue/img/controls/lvl-up.png" 
 				class="context-menu-icon"  width="18">
          add new parent node
          </a>
