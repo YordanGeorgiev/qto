@@ -50,7 +50,7 @@
 		 </context-menu-item>
 		 <context-menu-item>
 			<a @click="addNewParentNode($event)">
-            <img src="../../themes/thme-blue/img/controls/lvl-up.png" 
+            <img src="../../themes/thme-blue/img/controls/add-parent-node.png" 
 				class="context-menu-icon"  width="18">
          add new parent node
          </a>
@@ -60,6 +60,13 @@
             <img src="../../themes/thme-blue/img/controls/add-child-node.png" 
 				class="context-menu-icon"  width="18">
          add new child node
+         </a>
+		 </context-menu-item>
+		 <context-menu-item>
+			<a @click="deleteNode($event)">
+            <img src="../../themes/thme-blue/img/controls/trash-bin.png" 
+				class="context-menu-icon"  width="18">
+         remove node
          </a>
 		 </context-menu-item>
 	  </ul>

@@ -44,6 +44,7 @@
                state.showRgtMenu = showRgtMenu
            }
            , DELETE_ITEM: (state, payload) => {
+               state.showRgtMenu = false
                var index = state.items.findIndex(item => item.id === payload);
                state.items.splice(index, 1);
            }
@@ -81,7 +82,7 @@
          loadItems ({ commit }) {
             var url_params = getUrlParams()  
 				var url = (window.location.pathname).replace("/view/" , "/hiselect/")
-            getServerData(url , url_params)
+            axios.get(url , { params: url_params} )
             .then( response => {
                if ( response.status === 204 ) {
                   var warningMsg = response.statusText
@@ -109,9 +110,18 @@
                   	commit('SET_RGT_MENU_SHOW', isNotAPrintDoc )
                   	commit('SET_ITEMS', items)
                   	commit('SET_SNACKBAR_SHOW', false)
+                     return data
 						}
 					}
 				})
+            .catch(function(error) {
+               console.error ( error ) 
+               commit('SET_SNACKBAR_MSG', error) 
+               commit('SET_SNACKBAR_SHOW', true )
+               commit('SET_ITEMS', [] )
+               console.error( error.toString) 
+            }) 
+
          }
          , loadSnackBar: (context, showSnackBar) => {
             context.commit('SET_SNACKBAR_SHOW', showSnackBar)
@@ -129,40 +139,58 @@
             context.commit("SET_RGT_MENU_SHOW", showRgtMenu)
          }
          , hideSnackBar ({ commit }) {
-            commit('SET_SNACKBAR_SHOW', false )
+            context.commit('SET_SNACKBAR_SHOW', false )
          }
          , showContextMenu (context,payload) {
             var e = payload ; // the mouse event
-            // todo:ysg 
-            // console.log ( "START e:")
-            // console.log ( e )
-            // console.log ( "STOP e@SET_CONTEXT_MENU_SHOW:")
             var id = String(e.target.id).split('-')[1]
             if ( typeof ( id ) === "undefined" ) { console.error( "showContextMenu id undef" ) ; return }
+            e.target.disabled = true
             e.preventDefault();
-            var menu = document.getElementById("div-context-menu");
+            var menu = document.getElementById("div-context-menu")
             menu.cid = id
             menu.style.left = e.pageX + 'px'
             menu.style.top = e.pageY + 'px'
             menu.style.display = 'block'
             menu.style.zIndex = 101
             context.commit('SET_CONTEXT_MENU_SHOW', payload, true )
+            e.target.disabled = false
          }
          , addItem: (context, payload) => {
             context.commit("ADD_ITEM", payload)
          }
-         , deleteItem: (context, payload) => {
-            context.commit("DELETE_ITEM", payload)
+         , deleteItem: (context,payload) => {
+               var uri = window.location.href.replace('/view/', '/hidelete/')
+               uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
+
+               axios.delete(uri, {data:{
+                  oid: payload.oid
+               }})
+               .then(response => { 
+                  if ( typeof response.status != "undefined" && response.status === 200 ) {
+                     context.commit("DELETE_ITEM", payload)
+                     var items = actions.loadItems(context)
+                     context.commit('SET_ITEMS', items)
+                  } else {
+                     if ( typeof error.response.data.msg != "undefined" ) { 
+                        context.commit('SET_SNACKBAR_SHOW', true)
+                        context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
+                     }
+                     console.error ( error.response )
+                  }
+               })
+               .catch(error => {
+                  console.error ( error ) 
+                  if ( typeof error.response.data.msg != "undefined" ) { 
+                     console.error ( error.response.data.msg )
+                     context.commit('SET_SNACKBAR_SHOW', true)
+                     context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
+                  }
+               }) 
          }
          , createItem: (context,payload) => {
-               // todo:ysg
-               console.log ( "payload:")
-               console.log ( payload)
-               console.log ( "payload@createItem")
                var uri = window.location.href.replace('/view/', '/hicreate/')
                uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
-               //var oidV = payload.oid
-               //var lvlalphaV= payload.lvlalpha
                axios.post(uri, {
                   oid: payload.oid,
                   lvlalpha: payload.lvlalpha
@@ -196,9 +224,6 @@
             var dsc_col = arr[0]
             var col = dsc_col.split('_')[1]
             var newCnt = payload.newVal
-            // todo:ysg
-            // console.log("updateItem payload:" )
-            // console.log(payload )
             newCnt = ( newCnt == "" ? "null" : newCnt ) //empty cell is treated as null
             axios.post('/<%= $db =%>/update/<%= $item =%>', {
                   attribute: col ,

@@ -157,6 +157,7 @@ src/perl/qto/public/themes/thme-blue/css/screen/controls/right-click-menu.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/qto/public/themes/thme-blue/img/controls/
+src/perl/qto/public/themes/thme-blue/img/controls/lvl-up.png
 src/perl/qto/public/themes/thme-blue/img/controls/tack.png
 src/perl/qto/public/themes/thme-blue/img/controls/home.png
 src/perl/qto/public/themes/thme-blue/img/controls/srch.png

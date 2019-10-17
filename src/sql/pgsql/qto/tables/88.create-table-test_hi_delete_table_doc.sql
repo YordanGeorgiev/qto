@@ -1,11 +1,11 @@
--- DROP TABLE IF EXISTS test_hi_create_table_doc CASCADE;
+-- DROP TABLE IF EXISTS test_hi_delete_table_doc CASCADE;
 
-SELECT 'create the "test_hi_create_table_doc" table' as "---"
+SELECT 'delete the "test_hi_delete_table_doc" table' as "---"
 ;
 
 -- src: http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/
 -- src: https://github.com/werc/TreeTraversal
-   CREATE TABLE test_hi_create_table_doc (
+   CREATE TABLE test_hi_delete_table_doc (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISSMS') as bigint) 
     , level          integer NOT NULL DEFAULT 1
@@ -16,24 +16,24 @@ SELECT 'create the "test_hi_create_table_doc" table' as "---"
     , description    varchar (4000) NULL
     , formats        varchar (200) NULL 
     , src            varchar (4000) NULL
-    , CONSTRAINT pk_test_hi_create_table_doc_guid PRIMARY KEY (guid)
+    , CONSTRAINT pk_test_hi_delete_table_doc_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
     );
 
--- STOP  create table test_hi_create_table_doc
+-- STOP  delete table test_hi_delete_table_doc
 -- --------------------------------------------------------
 
--- INSERT INTO test_hi_create_table_doc ( id,level,seq,lft,rgt,name) 
-  --                      values ( 0,0,1,1,2,'test_hi_create_table_doc');
+-- INSERT INTO test_hi_delete_table_doc ( id,level,seq,lft,rgt,name) 
+  --                      values ( 0,0,1,1,2,'test_hi_delete_table_doc');
 
 
-SELECT 'show the columns of the just created table' as "---"
+SELECT 'show the columns of the just deleted table' as "---"
 ; 
 
    SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute
-   WHERE  attrelid = 'public.test_hi_create_table_doc'::regclass
+   WHERE  attrelid = 'public.test_hi_delete_table_doc'::regclass
    AND    attnum > 0
    AND    NOT attisdropped
    ORDER  BY attnum

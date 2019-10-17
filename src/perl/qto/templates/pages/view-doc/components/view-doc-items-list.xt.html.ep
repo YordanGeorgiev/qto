@@ -10,13 +10,14 @@
       <div id="lft_body">
          <div v-for="item in items" @click="hideContextMenu()">
             <h3 tabindex="2" :ref="'<%= $item =%>-' + item.id" :id="'h<%= $item =%>-' + item.id" class="title" 
-               @contextmenu = "showContextMenu($event,item.id)">
+               @contextmenu = "showContextMenu($event,item.id+'-lvl-'+item.level+'-seq-'+item.seq)">
                <a :id="'<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" class="permalink scroll"
                   :href="'#<%= $item =%>-' + item.id">#</a>
                <a :id="'title-'+ item.id" :href="'#<%= $item =%>-' + item.id" 
                   :title="'level:' + item.level + ' :: seq: ' + item.seq "
                   class="cls-context-menu-link">{{item.logical_order}}</a>
                <rgx-input :id="'inp_name-' + item.id + '-lvl-' + item.level + '-seq-' + item.seq" 
+                  :ref="'inp_name-' + item.id + '-lvl-' + item.level + '-seq-' + item.seq"
                   :cnt="item.name" class="cls_title">{{item.name}}</rgx-input>
             </h3>
             <div class="cls_tbltooltip">
