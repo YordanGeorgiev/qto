@@ -1,4 +1,4 @@
---DROP TABLE IF EXISTS installations CASCADE;
+---- DROP TABLE IF EXISTS installations CASCADE;
 
 SELECT 'create the "installations" table'
 ; 

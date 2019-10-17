@@ -1,4 +1,4 @@
---DROP TABLE IF EXISTS test_hi_create_table_doc CASCADE ; 
+-- DROP TABLE IF EXISTS test_hi_create_table_doc CASCADE ; 
 
 SELECT 'create the "test_hi_create_table_doc" table' as "---"
 ;

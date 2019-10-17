@@ -110,6 +110,34 @@ sub chkHiCreateHasValidParams {
    return $isValid ; 
 }
 
+# 1 -> has , 0 -> does not have
+sub chkHiDeleteHasValidParams {
+
+   my $self          = shift ; 
+   my $perl_hash     = shift ; 
+   my $msg           = '' ; 
+   my $isValid       = 0 ; 
+   my $errors        = 0 ; 
+   my $http_code     = 400 ; 
+   my $oid           = $perl_hash->{'oid'} || 0;
+
+   unless ( isint $oid && $oid >= 0) { # the oid must start from 0 by definition !!!
+      $msg           = 'the origin id must be a whole positive number or 0 , but ' . $oid . ' was provided !' ; 
+      $errors++ ;
+   } 
+
+   if ( $errors ) {
+      $http_code = 400 ; 
+      $self->set('msg' , $msg ) ; 
+   } else {
+      $isValid = 1 ;
+      $http_code = 200 ;
+   }
+
+   $self->set('http_code' , $http_code ) ; 
+   return $isValid ; 
+}
+
 
 sub doValidateAndSetCreate {
 

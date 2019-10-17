@@ -1,4 +1,4 @@
- --DROP TABLE IF EXISTS confs ; 
+ ---- DROP TABLE IF EXISTS confs ; 
 
 SELECT 'create the "confs" table'
 ; 

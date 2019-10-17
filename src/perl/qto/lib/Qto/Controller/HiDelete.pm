@@ -1,4 +1,4 @@
-package Qto::Controller::HiCreate ; 
+package Qto::Controller::HiDelete ;
 use strict ; use warnings ; 
 
 require Exporter; our @ISA = qw(Exporter Mojo::Base Qto::Controller::BaseController);
@@ -23,9 +23,9 @@ our $rdbms_type     = 'postgre';
 
 #
 # --------------------------------------------------------
-# HiCreate - create an item in a hierachichal table
+# HiDelete - delete an item from hierachichal table
 # --------------------------------------------------------
-sub doHiCreate {
+sub doHiDelete {
 
    my $self             = shift;
    my $item             = $self->stash('item');
@@ -41,7 +41,6 @@ sub doHiCreate {
    my $json             = $self->req->body;
    my $perl_hash        = decode_json($json) ; 
    my $oid              = $perl_hash->{'oid'} || 0 ;
-   my $level_alpha      = $perl_hash->{'lvlalpha'} || 0;
 
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
@@ -52,7 +51,7 @@ sub doHiCreate {
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
    $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel);
 
-   unless ( $objCnrPostPrms->chkHiCreateHasValidParams( $perl_hash ) == 1 ) {
+   unless ( $objCnrPostPrms->chkHiDeleteHasValidParams( $perl_hash ) == 1 ) {
       my $http_code = $objCnrPostPrms->get('http_code') ; 
       $msg = $objCnrPostPrms->get('msg') ; 
       $self->res->code($http_code ) ;
@@ -67,7 +66,7 @@ sub doHiCreate {
 
    $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$config, \$objModel );
    $objWtrDb = $objWtrDbsFcry->doSpawn("$rdbms_type");
-   ($http_code, $msg,$dat) = $objWtrDb->doHiInsertRow($db,$item,$oid,$level_alpha);
+   ($http_code, $msg,$dat) = $objWtrDb->doHiDeleteRow($db,$item,$oid);
 
    $self->res->code($http_code);
    $self->render( 'json' =>  { 

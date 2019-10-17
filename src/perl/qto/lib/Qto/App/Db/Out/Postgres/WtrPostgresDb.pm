@@ -142,6 +142,91 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
       return ( $ret , $msg ) ; 
    }
+ 
+   sub doHiDeleteRow {
+   
+		my $self 					= shift ; 
+      my $db               	= shift ; 
+      my $table            	= shift ; 
+      my $origin_id           = shift ; 
+
+      my $ret              	= 0 ; 
+      my $res              	= undef ;  # the result from FOUND in the func
+      my $msg              	= '' ; 
+      my $dbh              	= {} ;         # this is the database handle
+      my $hsr              	= {} ;         # the hash reference keeping the data
+      my $sth              	= {} ;         # the statement handle
+      my $str_sql         	 	= q{} ;        # this is the sql string to use for the query
+      
+      ( $ret , $msg , $dbh ) 	= $self->doConnectToDbAsAppUser ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+      
+      my $objRdrDbsFcry 		= 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
+      my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
+
+      if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
+         $ret = 400 ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
+         return ( $ret , $msg ) ; 
+      }
+
+      eval {
+         no warnings 'exiting' ; 
+         $str_sql = 'DO $$
+         ' . " 
+            DECLARE originSeq bigint;
+            DECLARE tgtSeq bigint DEFAULT 1;
+            DECLARE tgtLvl bigint DEFAULT 1;
+            DECLARE originLvl bigint;
+            DECLARE originRgt bigint DEFAULT 2;
+            DECLARE originLft bigint DEFAULT 1;
+            DECLARE parentRgt bigint DEFAULT 2;
+            DECLARE parentLft bigint DEFAULT 1;
+            DECLARE siblingRgt bigint;
+            DECLARE parentLvl int DEFAULT 0;
+            DECLARE newLft bigint;
+            DECLARE newRgt bigint;
+            DECLARE mayBeSiblingLvl bigint;
+            DECLARE mayBeNxtSeq bigint;
+            DECLARE widthRgtLft bigint;
+            DECLARE rgtMinus bigint;
+            DECLARE lftMinus bigint;
+
+            BEGIN
+               originSeq := (SELECT seq from $table WHERE 1=1 AND id=$origin_id);
+               originLft := (SELECT lft from $table WHERE 1=1 AND id=$origin_id);
+               originRgt := (SELECT rgt from $table WHERE 1=1 AND id=$origin_id);
+
+               widthRgtLft := (originRgt - originLft + 1);
+               rgtMinus := (originRgt - widthRgtLft);
+               lftMinus := (originLft - widthRgtLft);
+               tgtSeq := (originSeq-1);
+
+               DELETE FROM $table WHERE id=$origin_id ;
+               UPDATE $table SET seq = seq-1 where seq > originSeq;
+               UPDATE $table SET rgt = rgt -widthRgtLft WHERE rgt > originRgt;
+               UPDATE $table SET lft = lft -widthRgtLft WHERE lft > originRgt;
+         " . '
+         END ; $$ ';
+               #DELETE FROM $table WHERE lft <= originLft AND rgt <= originRgt ;
+         $sth = $dbh->prepare($str_sql);  
+         $sth->execute() ;
+         use warnings 'exiting' ; 
+      };
+      binmode(STDOUT, ':utf8');
+
+      unless ( defined ( $DBI::errstr ) ) {
+         $msg = '' ; 
+         $ret = 200 ;
+      } else {
+         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $msg = "$DBI::errstr" ; 
+      }
+			
+	
+		$dbh->disconnect ;
+      return ( $ret , $msg , $hsr) ; 
+   }
   
  
    sub doHiInsertRow {

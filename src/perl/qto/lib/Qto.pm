@@ -272,9 +272,14 @@ sub doSetRoutes {
    , action       => 'doHiCreate'
    );
    
-   $r->post('/:db/delete/:item')->to(
+   $r->delete('/:db/delete/:item')->to(
      controller   => 'Delete'
    , action       => 'doDeleteById'
+   );
+   
+   $r->delete('/:db/hidelete/:item')->to(
+     controller   => 'HiDelete'
+   , action       => 'doHiDelete'
    );
    
    $r->get('/:db/truncate/:item')->to(

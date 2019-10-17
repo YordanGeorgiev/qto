@@ -10,7 +10,7 @@ main(){
    do_setup_vim
    do_check_install_ubuntu_packages
    do_check_install_postgres
-    do_provision_postgres
+   do_provision_postgres
    do_check_install_phantom_js
    do_check_install_perl_modules
    do_check_install_chromium_headless
@@ -42,7 +42,9 @@ do_set_vars(){
 do_check_setup_bash(){
    cp -v $product_instance_dir/cnf/bash/.profile_opts.host-name ~/.profile_opts.$host_name
    cp -v $product_instance_dir/cnf/bash/.bash_opts.host-name $bash_opts_file
-   echo "source $bash_opts_file" >> ~/.bashrc
+   # or how-to append a string to file if not found there
+   grep "source $bash_opts_file" ~/.bashrc || \
+      echo "source $bash_opts_file" | tee -a ~/.bashrc
 }
 
 do_setup_vim(){
