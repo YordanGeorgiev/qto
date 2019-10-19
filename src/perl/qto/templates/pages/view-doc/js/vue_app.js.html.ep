@@ -75,7 +75,7 @@
            }
     };
 
-   // where the backend calls are issued
+   // where the backend calls should be issued
    // Instead of mutating the state, actions commit mutations.
    // actions can contain arbitrary asynchronous operations
     var actions = {
@@ -156,9 +156,6 @@
             context.commit('SET_CONTEXT_MENU_SHOW', payload, true )
             e.target.disabled = false
          }
-         , addItem: (context, payload) => {
-            context.commit("ADD_ITEM", payload)
-         }
          , deleteItem: (context,payload) => {
                var uri = window.location.href.replace('/view/', '/hidelete/')
                uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
@@ -171,7 +168,6 @@
                      context.commit("DELETE_ITEM", payload)
                      var items = actions.loadItems(context)
                      context.commit('SET_ITEMS', items)
-                     window.scrollTo(payload.x-10, payload.y)
                   } else {
                      if ( typeof error.response.data.msg != "undefined" ) { 
                         context.commit('SET_SNACKBAR_SHOW', true)
@@ -188,6 +184,7 @@
                      context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
                   }
                }) 
+               window.scrollTo(payload.x, payload.y)
          }
          , createItem: (context,payload) => {
                var uri = window.location.href.replace('/view/', '/hicreate/')
@@ -256,7 +253,7 @@
                context.commit("UPDATE_ITEM", payload)
             }) 
          }
-   }
+   } //eof actions
 
     var store = new Vuex.Store({
            state: state,
