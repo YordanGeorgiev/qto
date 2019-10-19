@@ -100,6 +100,7 @@ const ContextMenu = Vue.component('context-menu', {
          if ( typeof ( id ) == "undefined" ) { //img clicked
             id = e.target.parentElement.parentElement.parentElement.parentElement.cid
          }
+         console.log("addNewChildNode")
          var payload = {oid:id, lvlalpha:1};
          this.$store.dispatch("createItem", payload);
 	   }

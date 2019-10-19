@@ -47,7 +47,8 @@ var actions = {
       ws.addEventListener('message', function(event) {
          // debug console.log ( "start msging on ws")
          var data = JSON.parse( event.data)
-         var items = data.dat  //alles ok 
+         var items = data.dat
+         // console.log ( items ) ;
          commit('SET_ITEMS', items)
       })
 
@@ -77,7 +78,7 @@ Vue.component("list-items", {
    },
    computed: {
       items() {
-         return this.$store.getters.getItems;
+         return this.$store.getters.getItems ;
       }
    },
    methods: {

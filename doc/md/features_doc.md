@@ -5,18 +5,17 @@
   * [1.3. RELATED DOCUMENTATION](#13-related-documentation)
 * [2. DEPLOYABILITY](#2-deployability)
   * [2.1. FULL DEPLOYMENT IN LESS THAN AN HOUR](#21-full-deployment-in-less-than-an-hour)
-  * [2.2. EASY DOCKER BASED DEPLOYMENT](#22-easy-docker-based-deployment)
+  * [2.2. EASY DOCKER BASED DEPLOYMENT ( DEPRECATING )](#22-easy-docker-based-deployment-(-deprecating-))
     * [2.2.1. New version deployment by simple unzip](#221-new-version-deployment-by-simple-unzip)
     * [2.2.2. Oneliner for prerequisite binaries check](#222-oneliner-for-prerequisite-binaries-check)
-    * [2.2.3. Oneliner for Perl modules check](#223-oneliner-for-perl-modules-check)
-    * [2.2.4. Installation documentation](#224-installation-documentation)
-  * [2.3. A FULL APPLICATION CLONE SHOULD BE READY FOR LESS THAN 5 MINUTES](#23-a-full-application-clone-should-be-ready-for-less-than-5-minutes)
+    * [2.2.3. Installation documentation](#223-installation-documentation)
+  * [2.3. A FULL APPLICATION CLONE IN LESS THAN 5 MINUTES](#23-a-full-application-clone-in-less-than-5-minutes)
     * [2.3.1. Shell script for postgres db creation](#231-shell-script-for-postgres-db-creation)
-    * [2.3.2. One liner for single restore](#232-one-liner-for-single-restore)
+    * [2.3.2. One liner for single restore and / or load](#232-one-liner-for-single-restore-and-/-or-load)
 * [3. USER-FRIENDLINESS](#3-user-friendliness)
   * [3.1. ONELINER SHELL CALLS](#31-oneliner-shell-calls)
     * [3.1.1. Database recreation and DDL scripts run one-liners](#311-database-recreation-and-ddl-scripts-run-one-liners)
-  * [3.2. TABLE(S) LOAD VIA AA SINGLE ONE-LINER](#32-table(s)-load-via-aa-single-one-liner)
+  * [3.2. TABLE(S) LOAD VIA A SINGLE ONE-LINER](#32-table(s)-load-via-a-single-one-liner)
     * [3.2.1. Testing one-liner call](#321-testing-one-liner-call)
     * [3.2.2. Test messages user](#322-test-messages-user)
 * [4. RELIABILITY AND STABILITY](#4-reliability-and-stability)
@@ -34,13 +33,17 @@
   * [7.1. ENVIRONMENT TYPE SELF-AWARENESS](#71-environment-type-self-awareness)
   * [7.2. ONELINER FOR ENVIRONMENT AND VERSION CHANGE. ](#72-oneliner-for-environment-and-version-change-)
 * [8. USER INTERFACE FEATURES AND FUNCTIONALITIES](#8-user-interface-features-and-functionalities)
-  * [8.1. CRUDS](#81-cruds)
+  * [8.1. LIST PAGE FEATURES](#81-list-page-features)
     * [8.1.1. Execution time](#811-execution-time)
-    * [8.1.2. Visual indication](#812-visual-indication)
-  * [8.2. CLARITY ON ERRORS](#82-clarity-on-errors)
-    * [8.2.1. Meta data referesh](#821-meta-data-referesh)
+    * [8.1.2. List page features](#812-list-page-features)
+    * [8.1.3. Visual indication](#813-visual-indication)
+  * [8.2. VIEW PAGE FEATURES](#82-view-page-features)
+    * [8.2.1. CRUD in the view doc page ( beta )](#821-crud-in-the-view-doc-page-(-beta-))
+    * [8.2.2. Add an item in the doc view page UI ( beta)](#822-add-an-item-in-the-doc-view-page-ui-(-beta))
+    * [8.2.3. Update item](#823-update-item)
+    * [8.2.4. Delete item ( beta )](#824-delete-item-(-beta-))
 * [9. SECURITY](#9-security)
-  * [9.1. AUTHENTICATION ](#91-authentication-)
+  * [9.1. AUTHENTICATION](#91-authentication)
     * [9.1.1. Non-athentication mode](#911-non-athentication-mode)
     * [9.1.2. Simple native authentication mode](#912-simple-native-authentication-mode)
   * [9.2. AUTHORISATION](#92-authorisation)
@@ -70,9 +73,9 @@ This document could be of interest for any potential and actual users of the app
 
 ### 1.3. Related documentation
 This document is part of the qto application documentation-set, which contains the following documents:
- - ReadMe - the initial readme file of the project
- - Concepts - contains the concepts of the application
- - UserStories - the collection of userstories used to describe "what is desired"
+ - readme - the initial readme file of the project
+ - concepts_doc - contains the concepts of the application
+ - userstories_doc - the collection of userstories used to describe "what is desired"
  - SystemGuide - architecture and System description
  - DevOps Guide - a guide for the developers and devops operators
  - Installation Guide - a guide for installation of the application
@@ -82,7 +85,6 @@ This document is part of the qto application documentation-set, which contains t
 
 All the documents should be updated and redistributed in combination of the current version of the appilication and should be found under the following directories:
 doc/md
-doc/pdf
 doc/xls
 according to the file format used for the documentation storage.
 
@@ -99,9 +101,9 @@ The installations instructions are done for Ubuntu 18.04 LTS, yet should you fee
 
     
 
-### 2.2. Easy docker based deployment
+### 2.2. Easy docker based deployment ( deprecating )
+This feature is being deprecated ... yet you could quickly implement it by changing the Dockerfiles versions ..
 By following the installation instructions in the readme you can  deploy on any docker running Unix-like OS the qto application running on a docker and Ubuntu 18.04 LTS with initially loaded database and data. 
-The docker deployment deploys a dev environment instance only as of v0.6.5. 
 
     
 
@@ -115,28 +117,23 @@ All the binaries which are required for the running of the tool must be checked 
 
     
 
-#### 2.2.3. Oneliner for Perl modules check
-All the required Perl modules, must be verifiable via a single runnable perl script. 
-
-    
-
-#### 2.2.4. Installation documentation
+#### 2.2.3. Installation documentation
 The installation of the required mysql and postgres db must be documented in the DevOps guide, which should have both markdown and pdf versions in the doc directory of the deployment package. 
 
     
 
-### 2.3. A full application clone should be ready for less than 5 minutes
-A DevOps operator should be able to perform an application clone of the qto application in less than 5 minutes. 
+### 2.3. A full application clone in less than 5 minutes
+A DevOps operator is able to perform an application clone of the qto application in less than 5 minutes. 
 
     
 
 #### 2.3.1. Shell script for postgres db creation
-The creation of the postgres database should be doable via a single shell call. 
+The creation of the postgres database is doable via a single shell call. 
 
     
 
-#### 2.3.2. One liner for single restore
-The full data example of a cloned from the qto db should be loadable with a single shell call. 
+#### 2.3.2. One liner for single restore and / or load
+A qto db clone can be loaded via a single oneliner.
 
     
 
@@ -156,13 +153,13 @@ The developers should be able to create the database via a single oneline call
 
     
 
-### 3.2. Table(s) load via aa single one-liner
+### 3.2. Table(s) load via a single one-liner
 The developers should be able to load a table to the database via a single oneline call 
 
     
 
 #### 3.2.1. Testing one-liner call
-The testers and the developers should be able to trigger all the unit or integration tests via a single one-line call. 
+The testers and the developers is able to trigger all the unit or integration tests via a single one-line call. 
 
     
 
@@ -190,7 +187,7 @@ The application supports fully configurable logging to STDOUT and STDERR , logfi
     
 
 ### 4.3. Full backup to the cloud in less than 5 minutes
-A full backup of the software, configuration and data for the qto and/or another project database is doable in less than 5 minutes. The backup should be easily searchable from the cloud as well. 
+A full backup for the data for the qto and/or another project database is doable in less than 5 minutes. 
 
     
 
@@ -200,12 +197,12 @@ A full backup of the software, configuration and data for the qto and/or another
     
 
 ### 5.1. Feature scalability
-The addition of new features is scalable, as most of the components have been implemented according to the SOLID principle. 
+The addition of new features is scalable, as almost all of the components have been implemented according to the SOLID principle. 
 
     
 
 ### 5.2. Setup scalability
-The creation of instances running on docker is 3 lines, the full setup on blank OS is well documented and semi-automated
+The creation of instances running on docker is 3 lines, the full setup on blank OS is well documented and automated to the point of running 5 one-liners to have checks on whether or not a phase has completed successfully.
 
     
 
@@ -226,7 +223,7 @@ Any new feature which does not meet this requirement should be disregarded or im
     
 
 ### 6.2. Login, logout
-Every login and logout operation MUST complete in less than 0.3 seconds in modern network environments
+Every login and logout operation completes in less than 0.3 seconds in modern network environments.
 
     
 
@@ -244,20 +241,15 @@ You could change the environment type of your current instance by issuing the fo
 ### 7.2. Oneliner for environment and version change. 
 You could create a new instance of the qto having different version ( which becomes automatically a dev environment ) by issueing the following command: 
 
-    bash src/bash/qto/qto.sh -a to-ver=0.6.9
+    bash src/bash/qto/qto.sh -a to-ver=0.7.4
 
 ## 8. USER INTERFACE FEATURES AND FUNCTIONALITIES
 
 
     
 
-### 8.1. CRUDs
-The System provides the needed UI interfaces to Create , Update , Delete and Search items in the system for the users having the privileges for those actions
-Any modelled item in the database must be capable for:
- - create 
- - update
- - delete
- - search
+### 8.1. List page features
+
 
     
 
@@ -266,18 +258,45 @@ The full execution time of any crud operation ( create,update,delete,search) fro
 
     
 
-#### 8.1.2. Visual indication
+#### 8.1.2. List page features
+The System provides the needed UI interfaces to Create , Update , Delete and Search items in the system for the users having the privileges for those actions.
+
+    
+
+#### 8.1.3. Visual indication
 The System should not show ok messages , but only error messages, yet the UI should be as responsive that the end-user would easily undertand when an item has been created,updated or deleted.
 
     
 
-### 8.2. Clarity on errors
-The UI must present every error in a clear and concise way, so that the end-user would understand that an error has occured, however no msgs should be displayed when the data is saved properly. 
+### 8.2. View page features
+
 
     
 
-#### 8.2.1. Meta data referesh
-Whenever a project database meta-data is updated a new "do releoad the current page" should be pushed on all the clients having currently session in the application ...
+#### 8.2.1. CRUD in the view doc page ( beta )
+The Qto application provides the needed UI interfaces to Create , Update , Delete items in the view documents UI for the users having the privileges for those actions.
+
+    
+
+#### 8.2.2. Add an item in the doc view page UI ( beta)
+Users with the write privileges for the document can add an item in the doc view page just by right clicking on the title and selecting one of the 3 options:
+ - add sibling node - add an item which is on the same level in the hierarchy 
+ - add parent node - add an item which is on 1 level up in the hierarchy
+ - add child node - add and item which is on 1 level bellow in the hierarchy
+The new item appears straight after the origin title it was requested from.
+
+    
+
+#### 8.2.3. Update item
+You can:
+- update item title content
+- update item description
+- update item src code if visible ( if not has to be added via the db )
+
+    
+
+#### 8.2.4. Delete item ( beta )
+You can right click on an item and choose the remove node from the right click men.
 
     
 
@@ -286,8 +305,8 @@ Whenever a project database meta-data is updated a new "do releoad the current p
 
     
 
-### 9.1. Authentication 
-As of version 0.6.8 the qto application supports the following 2 modes of security: 
+### 9.1. Authentication
+The qto application supports the following 2 modes of security: 
  - non authentication mode
  - simple native authentication mode 
 
@@ -314,7 +333,7 @@ Only the SysAdmin of the System can add basic authentication and simple native m
     
 
 ### 10.1. Documentation completeness
-Each running instance  has the following documentation set :
+Each running instance has the following documentation set :
  - ReadMe
  - Features and Functionalities doc
  - End User Guide
@@ -322,7 +341,7 @@ Each running instance  has the following documentation set :
  - SystemGuide
  - UserStories document
  - Installation and Configuration Guide
-in at least the md and pdf file formats.
+In both "native qto format" and md file format in the doc/md directory of the project.
 
     
 

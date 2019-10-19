@@ -19,7 +19,7 @@
 						 class="cls_lst_item"
 						 @click="toggleItem(item.id)"
 						 @dblclick="deleteItem(item.id)">
-						<a :href="'/<%= $db %>/list/' + item"> list {{item}} </a></li>
+						<a :href="'/<%= $db %>/list/' + item"> {{item}} </a></li>
 			  </ul>
 		  </div>
 		  <div class="col right">
@@ -28,7 +28,7 @@
 						 class="cls_lst_item"
 						 @click="toggleItem(item.id)"
 						 @dblclick="deleteItem(item.id)">
-						<a :href="'/<%= $db %>/view/' + item"> view {{item}} </a></li>
+						<a :href="'/<%= $db %>/view/' + item"> {{item}} </a></li>
 			  </ul>
 		  </div>
 		</div>
