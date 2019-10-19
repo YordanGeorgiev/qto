@@ -84,7 +84,9 @@ const ContextMenu = Vue.component('context-menu', {
          }
          var uri = window.location.href.replace('/view/', '/hicreate/')
          uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
-         var payload = {oid:id, lvlalpha:0};
+         var x = event.clientX
+         var y = event.clientY
+         var payload = {oid:id, lvlalpha:0,x:x,y:y};
          this.$store.dispatch("createItem", payload);
 	   }
 	   , addNewParentNode: function (e) {
@@ -92,7 +94,9 @@ const ContextMenu = Vue.component('context-menu', {
          if ( typeof ( id ) == "undefined" ) { //img clicked
             id = e.target.parentElement.parentElement.parentElement.parentElement.cid
          }
-         var payload = {oid:id, lvlalpha:-1};
+         var x = event.clientX
+         var y = event.clientY
+         var payload = {oid:id, lvlalpha:-1,x:x,y:y};
          this.$store.dispatch("createItem", payload);
 	   }
 	   , addNewChildNode: function (e) {
@@ -100,8 +104,9 @@ const ContextMenu = Vue.component('context-menu', {
          if ( typeof ( id ) == "undefined" ) { //img clicked
             id = e.target.parentElement.parentElement.parentElement.parentElement.cid
          }
-         console.log("addNewChildNode")
-         var payload = {oid:id, lvlalpha:1};
+         var x = event.clientX
+         var y = event.clientY
+         var payload = {oid:id, lvlalpha:1,x:x,y:y};
          this.$store.dispatch("createItem", payload);
 	   }
 	   , deleteNode: function (e) {
@@ -111,7 +116,7 @@ const ContextMenu = Vue.component('context-menu', {
          }
          var x = event.clientX
          var y = event.clientY
-         var payload = {oid:id,x:y,y:y};
+         var payload = {oid:id,x:x,y:y};
          this.$store.dispatch("deleteItem", payload);
 	   }
 	}
