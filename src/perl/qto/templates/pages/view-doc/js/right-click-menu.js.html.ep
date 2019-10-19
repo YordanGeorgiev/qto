@@ -109,8 +109,9 @@ const ContextMenu = Vue.component('context-menu', {
          if ( typeof ( id ) == "undefined" ) { //img clicked
             id = e.target.parentElement.parentElement.parentElement.parentElement.cid
          }
-         console.log("right-click-menu.js.html.ep deleteNode")
-         var payload = {oid:id};
+         var x = event.clientX
+         var y = event.clientY
+         var payload = {oid:id,x:y,y:y};
          this.$store.dispatch("deleteItem", payload);
 	   }
 	}
