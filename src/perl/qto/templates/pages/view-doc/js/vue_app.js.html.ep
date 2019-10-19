@@ -163,7 +163,7 @@
                var uri = window.location.href.replace('/view/', '/hidelete/')
                uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
 
-               axios.delete(uri, {data:{
+               axios.delete(uri, { data:{
                   oid: payload.oid
                }})
                .then(response => { 
@@ -171,6 +171,7 @@
                      context.commit("DELETE_ITEM", payload)
                      var items = actions.loadItems(context)
                      context.commit('SET_ITEMS', items)
+                     window.scrollTo(payload.x-10, payload.y)
                   } else {
                      if ( typeof error.response.data.msg != "undefined" ) { 
                         context.commit('SET_SNACKBAR_SHOW', true)
