@@ -17,7 +17,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
    our $module_trace                            = 1 ; 
    our $IsUnitTest                              = 0 ; 
-	our $config 										= {} ; 
+	our $config 										   = {} ; 
 	our $objLogger 										= {} ; 
 	our $objModel                                = {} ; 
    our $rdbms_type                              = 'postgres' ; 
@@ -142,15 +142,13 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
       return ( $ret , $msg ) ; 
    }
-  
  
-   sub doHInsertRow {
+   sub doHiDeleteRow {
    
 		my $self 					= shift ; 
       my $db               	= shift ; 
       my $table            	= shift ; 
-      my $id               	= shift ; 
-      my $seq              	= shift ; 
+      my $origin_id           = shift ; 
 
       my $ret              	= 0 ; 
       my $res              	= undef ;  # the result from FOUND in the func
@@ -162,7 +160,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       
       ( $ret , $msg , $dbh ) 	= $self->doConnectToDbAsAppUser ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
-
+      
       my $objRdrDbsFcry 		= 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
@@ -173,8 +171,167 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       }
 
       eval {
-         $sth = $dbh->prepare("select fnc_tree_traversal(?, ?)");
-			$hsr = $dbh->selectcol_arrayref("SELECT fnc_tree_traversal(?, ?)" , {} , $id,$seq);
+         no warnings 'exiting' ; 
+         $str_sql = 'DO $$
+         ' . " 
+            DECLARE originSeq bigint;
+            DECLARE tgtSeq bigint DEFAULT 1;
+            DECLARE tgtLvl bigint DEFAULT 1;
+            DECLARE originLvl bigint;
+            DECLARE originRgt bigint DEFAULT 2;
+            DECLARE originLft bigint DEFAULT 1;
+            DECLARE parentRgt bigint DEFAULT 2;
+            DECLARE parentLft bigint DEFAULT 1;
+            DECLARE siblingRgt bigint;
+            DECLARE parentLvl int DEFAULT 0;
+            DECLARE newLft bigint;
+            DECLARE newRgt bigint;
+            DECLARE mayBeSiblingLvl bigint;
+            DECLARE mayBeNxtSeq bigint;
+            DECLARE widthRgtLft bigint;
+            DECLARE rgtMinus bigint;
+            DECLARE lftMinus bigint;
+
+            BEGIN
+               originSeq := (SELECT seq from $table WHERE 1=1 AND id=$origin_id);
+               originLft := (SELECT lft from $table WHERE 1=1 AND id=$origin_id);
+               originRgt := (SELECT rgt from $table WHERE 1=1 AND id=$origin_id);
+
+               widthRgtLft := (originRgt - originLft + 1);
+               rgtMinus := (originRgt - widthRgtLft);
+               lftMinus := (originLft - widthRgtLft);
+               tgtSeq := (originSeq-1);
+
+               DELETE FROM $table WHERE id=$origin_id ;
+               UPDATE $table SET seq = seq-1 where seq > originSeq;
+               UPDATE $table SET rgt = rgt -widthRgtLft WHERE rgt > originRgt;
+               UPDATE $table SET lft = lft -widthRgtLft WHERE lft > originRgt;
+         " . '
+         END ; $$ ';
+               #DELETE FROM $table WHERE lft <= originLft AND rgt <= originRgt ;
+         $sth = $dbh->prepare($str_sql);  
+         $sth->execute() ;
+         use warnings 'exiting' ; 
+      };
+      binmode(STDOUT, ':utf8');
+
+      unless ( defined ( $DBI::errstr ) ) {
+         $msg = '' ; 
+         $ret = 200 ;
+      } else {
+         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $msg = "$DBI::errstr" ; 
+      }
+			
+	
+		$dbh->disconnect ;
+      return ( $ret , $msg , $hsr) ; 
+   }
+  
+ 
+   sub doHiInsertRow {
+   
+		my $self 					= shift ; 
+      my $db               	= shift ; 
+      my $table            	= shift ; 
+      my $origin_id           = shift ; 
+      my $level_alpha         = shift ;
+
+      print "origin_id : $origin_id \n\n" ; 
+      # print "level_alpha : $level_alpha \n\n" ; 
+
+      my $ret              	= 0 ; 
+      my $res              	= undef ;  # the result from FOUND in the func
+      my $msg              	= '' ; 
+      my $dbh              	= {} ;         # this is the database handle
+      my $hsr              	= {} ;         # the hash reference keeping the data
+      my $sth              	= {} ;         # the statement handle
+      my $str_sql         	 	= q{} ;        # this is the sql string to use for the query
+      
+      ( $ret , $msg , $dbh ) 	= $self->doConnectToDbAsAppUser ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+      
+      my $objRdrDbsFcry 		= 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
+      my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
+
+      if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
+         $ret = 400 ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
+         return ( $ret , $msg ) ; 
+      }
+
+      eval {
+         # jump todo:ysg 
+         # UPDATE $table set description = concat (cast ('originLvl < tgtLvl parentRgt' as text), cast(parentRgt as text))
+         # WHERE seq=tgtSeq;
+         # UPDATE $table set src = concat (cast ('originLvl < tgtLvl: tgtLvl' as text), cast(tgtLvl as text))
+         # WHERE seq=tgtSeq;
+         no warnings 'exiting' ; 
+         $level_alpha='+ ' . "$level_alpha" if $level_alpha >= 0 ;
+         $str_sql = 'DO $$
+         ' . " 
+            DECLARE originSeq bigint;
+            DECLARE tgtSeq bigint DEFAULT 1;
+            DECLARE tgtLvl bigint DEFAULT 1;
+            DECLARE level_alpha bigint DEFAULT 0;
+            DECLARE originLvl bigint;
+            DECLARE originRgt bigint DEFAULT 2;
+            DECLARE originLft bigint DEFAULT 1;
+            DECLARE parentRgt bigint DEFAULT 2;
+            DECLARE parentLft bigint DEFAULT 1;
+            DECLARE siblingRgt bigint;
+            DECLARE parentLvl int DEFAULT 0;
+            DECLARE newLft bigint;
+            DECLARE newRgt bigint;
+            DECLARE mayBeSiblingLvl bigint;
+            DECLARE mayBeNxtSeq bigint;
+
+            BEGIN
+               originSeq := (SELECT seq from $table WHERE 1=1 AND id=$origin_id);
+               originLvl := (SELECT level from $table WHERE id=$origin_id);
+               tgtSeq := (originSeq+1);
+               IF originSeq = 1 THEN 
+                  parentLvl := (0);
+                  parentRgt := (0);
+               ELSE 
+                  tgtLvl := (originLvl$level_alpha);
+                  parentLvl := (tgtLvl-1);
+               END IF;
+
+               parentRgt := (SELECT max(rgt) from $table WHERE 1=1 AND level=parentLvl and seq <= originSeq );
+               parentLft := (SELECT max(lft) from $table WHERE 1=1 AND level=parentLvl and seq <= originSeq );
+               originRgt := (SELECT rgt from $table WHERE id = $origin_id);
+               originLft := (SELECT lft from $table WHERE id = $origin_id);
+               mayBeSiblingLvl := (SELECT max(level) from $table WHERE 1=1 AND seq = tgtSeq AND level=tgtLvl);
+               mayBeNxtSeq := (SELECT seq from $table WHERE 1=1 AND seq = tgtSeq);
+               UPDATE $table set seq=(seq+1) WHERE seq >= tgtSeq;
+
+               CASE
+               WHEN originLvl < tgtLvl THEN 
+                  UPDATE $table set lft=(lft+2) WHERE seq >= tgtSeq ;
+                  UPDATE $table set rgt=(rgt+2) WHERE rgt > originLft;
+                  INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, parentLft+1, parentLft+2);
+               WHEN originLvl = tgtLvl THEN 
+                  UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
+                  UPDATE $table set lft=(lft+2) WHERE seq >= tgtSeq ;
+                  INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, originRgt+1, originRgt+2);
+               WHEN originLvl > tgtLvl THEN 
+                  IF mayBeNxtSeq is NULL THEN 
+                     siblingRgt := (SELECT max(rgt) from $table WHERE 1=1 AND level=tgtLvl and seq <= originSeq );
+                     UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
+                     INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, siblingRgt+1, siblingRgt+2);
+                  ELSE 
+                     siblingRgt := (SELECT max(rgt) from $table WHERE 1=1 AND level=tgtLvl and seq <= originSeq );
+                     UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
+                     INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, siblingRgt+1, siblingRgt+2);
+                     UPDATE $table set lft=(lft+2) WHERE lft >= tgtLvl ;
+                  END IF;
+               END CASE;
+         " . '
+         END ; $$ ';
+         $sth = $dbh->prepare($str_sql);  
+         $sth->execute() ;
+         use warnings 'exiting' ; 
       };
       binmode(STDOUT, ':utf8');
 

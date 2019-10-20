@@ -8,7 +8,7 @@
     * [2.2.1. End-user clients](#221-end-user-clients)
     * [2.2.2. Application Layer and databases hosted in AWS](#222-application-layer-and-databases-hosted-in-aws)
     * [2.2.3. Local Development and testing](#223-local-development-and-testing)
-    * [2.2.4. GitHub](#224-github)
+    * [2.2.4. Source code in GitHub](#224-source-code-in-github)
 * [3. ARCHITECTURE](#3-architecture)
   * [3.1. IOCM ARCHITECTURE DEFINITION](#31-iocm-architecture-definition)
     * [3.1.1. The Control components](#311-the-control-components)
@@ -45,7 +45,7 @@ The purpose of this guide is to provide description of the qto system and applic
     
 
 ### 1.2. Audience
-Architects and System designers of a potential or current system, comprised on deployed and operating qto instances. Developers and devops operators.
+Target audience of this document is comprised of the architects and System designers of a potential or current system, comprised on deployed and operating qto instances. Developers and devops operators.
 
     
 
@@ -55,7 +55,7 @@ This section describes the current system infrastructure.
     
 
 ### 2.1. System architectural overview by SIWA dia
-The following diagram implements the Simpliest Possible Way of describing Architecture principle - it's sole purpose is to quickly provide an overview of the existing infrasture built with the help of the qto application. 
+The following diagram implements the Simplest Possible Way of describing Architecture principle - it's sole purpose is to quickly provide an overview of the existing infrastructure built with the help of the qto application as well as provide visual tool for communication related to the application. 
 
 
 Figure 1:
@@ -76,19 +76,20 @@ The end-users can access any qto application via their browsers. All of the func
     
 
 #### 2.2.2. Application Layer and databases hosted in AWS
-Both the application layer and the database(s) are hosted on the same amazon ec2 host ( this will change in the future, as the architecture supports dbs in RDS or in separate hosts)
+Both the application layer and the database(s) are hosted on the same amazon ec2 host ( this will change in the future, as the architecture supports databases hosting in RDS or in separate hosts with TCP data channel)
 
     
 
 #### 2.2.3. Local Development and testing
 The development and testing are done in an ubuntu 18.04 vm running on top of mac - the binary configuration for the vm in described in the bootstrap script.
-You could also develelop and test in other Unix-like OS('s) - GentOs, MacOS etc, as long as you could figure out how-to install and provision postgres , the required OS binaries and the Perl modules for the application layer. 
+You could also develop and test in other Unix-like OS('s) - GentOs, MacOS etc, as long as you could figure out how-to install and provision postgres , the required OS binaries and the Perl modules for the application layer, as the provided deployment script has been aimed and tested only for the latest Ubuntu LTS.
 
     
 
-#### 2.2.4. GitHub
-The source code for the qto project is hosted in GitHub:
+#### 2.2.4. Source code in GitHub
+The source code for the qto project is hosted in GitHub with the most open licensing possible:
 https://github.com/YordanGeorgiev/qto
+
 
 
     

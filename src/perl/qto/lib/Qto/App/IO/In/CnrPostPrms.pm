@@ -78,7 +78,7 @@ package Qto::App::IO::In::CnrPostPrms ;
    }
 
 # 1 -> has , 0 -> does not have
-sub chkHCreateHasValidParams {
+sub chkHiCreateHasValidParams {
 
    my $self          = shift ; 
    my $perl_hash     = shift ; 
@@ -86,15 +86,15 @@ sub chkHCreateHasValidParams {
    my $isValid       = 0 ; 
    my $errors        = 0 ; 
    my $http_code     = 400 ; 
-   my $id            = $perl_hash->{'id'} ; 
-   my $seq           = $perl_hash->{'seq'} ; 
+   my $oid           = $perl_hash->{'oid'} || 0;
+   my $level_alpha   = $perl_hash->{'lvlalpha'} || 0;
 
-   unless ( isint $id && $id >= 0) {
-      $msg           = 'the id must be a whole positive number, but ' . $id . ' was provided !' ; 
+   unless ( isint $oid && $oid >= 0) { # the oid must start from 0 by definition !!!
+      $msg           = 'the origin id must be a whole positive number or 0 , but ' . $oid . ' was provided !' ; 
       $errors++ ;
    } 
-   unless ( isint $seq && $seq >= 1) { # the seq must start from 1 and not 0 !!! by definition
-      $msg           = 'the seq must be a whole positive number, but ' . $seq . ' was provided !' ; 
+   unless ( $level_alpha == -1 or $level_alpha == 0 or $level_alpha == 1 ) { # the level must start from 1 and not 0 !!! by definition
+      $msg           = 'the level alpha must be a whole positive number, but ' . $level_alpha . ' was provided !' ; 
       $errors++ ;
    } 
 
@@ -104,7 +104,34 @@ sub chkHCreateHasValidParams {
    } else {
       $isValid = 1 ;
       $http_code = 200 ;
-      $objModel->set('hcreate.web-action.id' , $id ) ; 
+   }
+
+   $self->set('http_code' , $http_code ) ; 
+   return $isValid ; 
+}
+
+# 1 -> has , 0 -> does not have
+sub chkHiDeleteHasValidParams {
+
+   my $self          = shift ; 
+   my $perl_hash     = shift ; 
+   my $msg           = '' ; 
+   my $isValid       = 0 ; 
+   my $errors        = 0 ; 
+   my $http_code     = 400 ; 
+   my $oid           = $perl_hash->{'oid'} || 0;
+
+   unless ( isint $oid && $oid >= 0) { # the oid must start from 0 by definition !!!
+      $msg           = 'the origin id must be a whole positive number or 0 , but ' . $oid . ' was provided !' ; 
+      $errors++ ;
+   } 
+
+   if ( $errors ) {
+      $http_code = 400 ; 
+      $self->set('msg' , $msg ) ; 
+   } else {
+      $isValid = 1 ;
+      $http_code = 200 ;
    }
 
    $self->set('http_code' , $http_code ) ; 

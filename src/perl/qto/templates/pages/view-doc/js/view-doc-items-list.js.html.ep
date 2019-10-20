@@ -9,8 +9,11 @@
            , 'rgx-input': RgxInput
       }
       , methods: {
-         toggleItem: function(id) {
-            this.$store.dispatch("toggleItem", id);
+         createItem: function(id) {
+            this.$store.dispatch("createItem", id);
+         }
+         , updateItem: function(id) {
+            this.$store.dispatch("updateItem", id);
          }
          , deleteItem: function(id) {
             this.$store.dispatch("deleteItem", id);

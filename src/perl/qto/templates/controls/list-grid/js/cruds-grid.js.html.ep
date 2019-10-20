@@ -216,9 +216,9 @@
                var arr = id.split('-')
                var dbid = arr[2]
                
-               axios.post('/<%= $db =%>/delete/<%= $item =%>', {
+               axios.delete('/<%= $db =%>/delete/<%= $item =%>', { data: {
                      id: dbid 
-               })
+               }})
                .then( 
                   response => {
                      var url_params = this.getUrlParams();
