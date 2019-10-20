@@ -3,6 +3,7 @@ doProvisionDbAdmin(){
    test -z "${PROJ_INSTANCE_DIR-}" && export PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
    test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
+
    doExportJsonSectionVars $PROJ_CONF_FILE '.env.db'
    doLog "INFO using PROJ_INSTANCE_DIR: $PROJ_INSTANCE_DIR" ; doLog "INFO using PROJ_CONF_FILE: $PROJ_CONF_FILE"
 
@@ -11,8 +12,23 @@ doProvisionDbAdmin(){
 
    # echo "postgres:postgres" | chpasswd  # probably not needed ...
    echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bashrc
-  
-   echo "postgres:$postgres_usr_pw" | sudo chpasswd
+
+   # for reference the manual way of doing things automated with expect bellow
+   #echo "copy-paste: $postgres_usr_pw"
+   #sudo -u postgres psql -c "\password" 
+   # the OS password could / should be different
+   sudo -u root echo "postgres:$postgres_usr_pw" | sudo chpasswd
+
+   expect <<- EOF_EXPECT
+      set timeout -1
+      spawn sudo -u postgres psql -c "\\\password"
+      expect "Enter new password: "
+      send -- "$postgres_usr_pw\r"
+      expect "Enter it again: "
+      send -- "$postgres_usr_pw\r"
+      expect eof
+EOF_EXPECT
+
    cd /tmp/
    sudo -u postgres PGPASSWORD=$postgres_usr_pw psql --port $postgres_db_port --host $postgres_db_host -c "
 	DO \$\$DECLARE r record;

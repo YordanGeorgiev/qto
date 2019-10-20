@@ -15,13 +15,14 @@
           * [1.3.1.2.1. Update item's title](#13121-update-item's-title)
           * [1.3.1.2.2. Update item's description](#13122-update-item's-description)
           * [1.3.1.2.3. Update item's src_code](#13123-update-item's-src_code)
+      * [1.3.1.3. Delete item](#1313-delete-item)
     * [1.3.2. Right menu navigation](#132-right-menu-navigation)
       * [1.3.2.1. Open close of right menu](#1321-open-close-of-right-menu)
       * [1.3.2.2. Search in the right menu](#1322-search-in-the-right-menu)
       * [1.3.2.3. Links in the right menu](#1323-links-in-the-right-menu)
     * [1.3.3. Left menu navigation](#133-left-menu-navigation)
   * [1.4. SEARCH](#14-search)
-  * [1.5. GLOBAL SEARCH MODAL DIALOG UI](#15-global-search-modal-dialog-ui)
+  * [1.5. LOBAL SEARCH MODAL DIALOG UI](#15-lobal-search-modal-dialog-ui)
   * [1.6. SEARCH-AUTOCOMPLETE ON MODAL SEARCH DIALOG](#16-search-autocomplete-on-modal-search-dialog)
   * [1.7. ITEMS MOVE](#17-items-move)
   * [1.8. MOBILE UI](#18-mobile-ui)
@@ -259,10 +260,7 @@ I want to be able to list all or part of the project's database table via a sing
 #### 1.3.1. hierarchical items management
 As an the ui user
 In order to manage the hierarchical items in the application
-I want to be able to manage by actions (list, create, update, delete, search) ANY hierarchical items of the application in from a hierarchical doc format
-
- - by their id
- - by their sequence
+I want to be able to manage by actions (list, create, update, delete, search) ANY hierarchical items of the application in from a hierarchical doc format by simply right clicking on their titles and choosing from the menut the action which must have both image and text to indicate more 
 
     
 
@@ -288,6 +286,11 @@ I want to be able to update item's descrption by simply clicking in it and start
 
 ###### 1.3.1.2.3. Update item's src_code
 I want to be able to update item's src_code by simply clicking in it and starting to type the new contents ...
+
+    
+
+##### 1.3.1.3. Delete item
+I want to be able to delete an item by right clicking it's title and choosing delete item.
 
     
 
@@ -334,7 +337,7 @@ I want to have a pop-up search SearchBox with dimmed background providing with i
 
     
 
-### 1.5. global search modal dialog ui
+### 1.5. lobal search modal dialog ui
 As an UI user 
 In order to have the best possible search experience
 I want to be able to search from a modal dialog UI which will pop-up on a dimmed background after the search-box is focused .. 
