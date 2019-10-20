@@ -107,7 +107,6 @@ Vue.component('demo-grid', {
 
     },
     createNewItem (dbid) {
-		console.log ( "from createItem dbid: " + dbid )
 		axios.post('/dev_qto/create/monthly_issues', {
 			 id: dbid
 		})

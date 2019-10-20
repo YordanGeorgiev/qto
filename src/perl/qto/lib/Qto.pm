@@ -75,6 +75,16 @@ sub doLoadAppConfig {
 
    my $currentShortHash = `git rev-parse --short HEAD` ; chomp($currentShortHash);
    $config->{'env'}->{'run'}->{ 'GitShortHash' } = $currentShortHash || "" ; 
+   my $port = $config->{'env'}->{'app'}->{ 'port' };
+   my $protocol = $config->{'env'}->{'app'}->{ 'ht_protocol' };
+   my $num_of_workers = $config->{'env'}->{'app'}->{ 'num_of_workers' } || 5 ; 
+   my $listen = '' ;
+
+   if ( $protocol eq 'https') {
+      $listen = 'https://*:'.$port.'?cert=/etc/letsencrypt/live/qto.fi/fullchain.crt&key=/etc/letsencrypt/live/qto.fi/privkey.key';
+   } else {
+      $listen = 'http://*:'.$port;
+   }
 
    p($config) ; 
    $self->set('AppConfig' , $config );
@@ -83,14 +93,12 @@ sub doLoadAppConfig {
    $msg = "START MAIN";
    $objLogger->doLogInfoMsg($msg);
 
-   if ( $config->{'env'}->{'ENV_TYPE'} eq 'prd' ) {
    $self->config(
       hypnotoad => {
-         listen  => ['https://*:443?cert=/etc/letsencrypt/live/qto.fi/fullchain.crt&key=/etc/letsencrypt/live/qto.fi/privkey.key'],
-         workers => 5
-                }
+         listen  => [$listen],
+         workers => $num_of_workers
+         }
       );
-   }
 }
 
 
@@ -252,9 +260,9 @@ sub doSetRoutes {
    );
    
    
-   $r->get('/:db/hselect/:item')->to(
-     controller   => 'HSelect'
-   , action       => 'doHSelectItems'
+   $r->get('/:db/hiselect/:item')->to(
+     controller   => 'HiSelect'
+   , action       => 'doHiSelectItems'
    );
    
    $r->get('/:db/hlselect/:item')->to(
@@ -267,14 +275,19 @@ sub doSetRoutes {
    , action       => 'doCreateById'
    );
    
-   $r->post('/:db/hcreate/:item')->to(
-     controller   => 'HCreate'
-   , action       => 'doHCreateById'
+   $r->post('/:db/hicreate/:item')->to(
+     controller   => 'HiCreate'
+   , action       => 'doHiCreate'
    );
    
-   $r->post('/:db/delete/:item')->to(
+   $r->delete('/:db/delete/:item')->to(
      controller   => 'Delete'
    , action       => 'doDeleteById'
+   );
+   
+   $r->delete('/:db/hidelete/:item')->to(
+     controller   => 'HiDelete'
+   , action       => 'doHiDelete'
    );
    
    $r->get('/:db/truncate/:item')->to(

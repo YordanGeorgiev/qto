@@ -48,7 +48,6 @@ for my $table ( @tables ) {
 	}
 
 
-
 	print "test a string like \n" ; 
 	$url_params = '?like-by=category&like-val=feature' ; 
 	print "\n running url: /$db" . '/select/' . $table . $url_params . "\n" ; 	

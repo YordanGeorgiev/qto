@@ -77,5 +77,47 @@ const ContextMenu = Vue.component('context-menu', {
          uri = uri.setUriParam("as","print-doc") 
          window.location.href = uri
 	   }
+	   , addNewSiblingNode: function (e) {
+         var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var uri = window.location.href.replace('/view/', '/hicreate/')
+         uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
+         var x = event.clientX
+         var y = event.clientY
+         var payload = {oid:id, lvlalpha:0,x:x,y:y};
+         this.$store.dispatch("createItem", payload);
+	   }
+	   , addNewParentNode: function (e) {
+         var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var x = event.clientX
+         var y = event.clientY
+         var payload = {oid:id, lvlalpha:-1,x:x,y:y};
+         this.$store.dispatch("createItem", payload);
+	   }
+	   , addNewChildNode: function (e) {
+         var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var x = event.clientX
+         var y = event.clientY
+         var payload = {oid:id, lvlalpha:1,x:x,y:y};
+         this.$store.dispatch("createItem", payload);
+	   }
+	   , deleteNode: function (e) {
+         var id = e.target.parentElement.parentElement.parentElement.cid
+         if ( typeof ( id ) == "undefined" ) { //img clicked
+            id = e.target.parentElement.parentElement.parentElement.parentElement.cid
+         }
+         var x = event.clientX
+         var y = event.clientY
+         var payload = {oid:id,x:x,y:y};
+         this.$store.dispatch("deleteItem", payload);
+	   }
 	}
 });

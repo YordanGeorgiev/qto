@@ -4,14 +4,15 @@
   * [1.2. AUDIENCE](#12-audience)
   * [1.3. RELATED DOCUMENTATION](#13-related-documentation)
 * [2. DEPLOYABILITY](#2-deployability)
-  * [2.1. FULL DEPLOYMENT IN LESS THAN AN HOUR](#21-full-deployment-in-less-than-an-hour)
-    * [2.1.1. A working instance deployment by simple unzip command](#211-a-working-instance-deployment-by-simple-unzip-command)
-    * [2.1.2. Binary prerequisites check script](#212-binary-prerequisites-check-script)
-    * [2.1.3. Required Perl modules installation](#213-required-perl-modules-installation)
-    * [2.1.4. Installation documentation](#214-installation-documentation)
-  * [2.2. A FULL APPLICATION CLONE SHOULD BE READY FOR LESS THAN 5 MINUTES](#22-a-full-application-clone-should-be-ready-for-less-than-5-minutes)
-    * [2.2.1. Shell script for postgres db creation and initial data load](#221-shell-script-for-postgres-db-creation-and-initial-data-load)
-    * [2.2.2. One liner for single restore for both full db and inserts only](#222-one-liner-for-single-restore-for-both-full-db-and-inserts-only)
+  * [2.1. AUTOMATED AWS DEPLOYMENT IN LESS THAN AN HOUR](#21-automated-aws-deployment-in-less-than-an-hour)
+  * [2.2. FULL DEPLOYMENT IN LESS THAN AN HOUR](#22-full-deployment-in-less-than-an-hour)
+    * [2.2.1. A working instance deployment by simple unzip command](#221-a-working-instance-deployment-by-simple-unzip-command)
+    * [2.2.2. Binary prerequisites check script](#222-binary-prerequisites-check-script)
+    * [2.2.3. Required Perl modules installation](#223-required-perl-modules-installation)
+    * [2.2.4. Installation documentation](#224-installation-documentation)
+  * [2.3. A FULL APPLICATION CLONE SHOULD BE READY FOR LESS THAN 5 MINUTES](#23-a-full-application-clone-should-be-ready-for-less-than-5-minutes)
+    * [2.3.1. Shell script for postgres db creation and initial data load](#231-shell-script-for-postgres-db-creation-and-initial-data-load)
+    * [2.3.2. One liner for single restore for both full db and inserts only](#232-one-liner-for-single-restore-for-both-full-db-and-inserts-only)
 * [3. USER-FRIENDLINESS](#3-user-friendliness)
   * [3.1. ONELINER SHELL CALLS](#31-oneliner-shell-calls)
     * [3.1.1. Database recreation and DDL scripts run one-liners](#311-database-recreation-and-ddl-scripts-run-one-liners)
@@ -39,13 +40,19 @@
     * [8.1.1. Execution time](#811-execution-time)
     * [8.1.2. Visual indication](#812-visual-indication)
   * [8.2. CLARITY ON ERRORS](#82-clarity-on-errors)
+  * [8.3. REQUIREMENTS PER UI PAGE TYPE](#83-requirements-per-ui-page-type)
+    * [8.3.1. Login page requirements](#831-login-page-requirements)
+    * [8.3.2. List page requirements](#832-list-page-requirements)
+    * [8.3.3. View page requirements](#833-view-page-requirements)
 * [9. SECURITY](#9-security)
   * [9.1. AUTHENTICATION](#91-authentication)
     * [9.1.1. Non-authentication mode](#911-non-authentication-mode)
-    * [9.1.2. Basic authentication mode ( to be deprecated )](#912-basic-authentication-mode-(-to-be-deprecated-))
-    * [9.1.3. Simple Native authentication ( experimental )](#913-simple-native-authentication-(-experimental-))
-    * [9.1.4. JSON web token authentication](#914-json-web-token-authentication)
-  * [9.2. AUTHRORISATION](#92-authrorisation)
+    * [9.1.2. Simple Native authentication mode](#912-simple-native-authentication-mode)
+      * [9.1.2.1. User email and password matching for login success](#9121-user-email-and-password-matching-for-login-success)
+      * [9.1.2.2. Blowfish encryption for the passwords](#9122-blowfish-encryption-for-the-passwords)
+          * [9.1.2.2.1. Passwords sensibility](#91221-passwords-sensibility)
+    * [9.1.3. JSON web token authentication](#913-json-web-token-authentication)
+  * [9.2. AUTHORISATION](#92-authorisation)
 * [10. DOCUMENTATION](#10-documentation)
   * [10.1. DOCUMENTATION COMPLETENESS](#101-documentation-completeness)
   * [10.2. DOCUMENTATION AND CODE BASE SYNCHRONIZATION](#102-documentation-and-code-base-synchronization)
@@ -69,7 +76,7 @@ The purpose of this document is to present the requirements set to the qto appli
     
 
 ### 1.2. Audience
-This document could be of interest for any potential and actual users of the application. Product Owners, Developers and Architects working on the application MUST read and understand this document at least to the extend of their own contribution for the application. 
+This document is aimed for any potential and actual users of the qto application. Product Owners, Developers and Architects working on the application MUST read and understand this document at least to the extend of their own contribution for the application. 
 
     
 
@@ -95,43 +102,48 @@ Windows family based OS'es are explicitly out of the scope of the qto tool. Any 
 
     
 
-### 2.1. Full deployment in less than an hour
+### 2.1. Automated AWS deployment in less than an hour
+The qto system should be automatically deployable to aws in less than an hour, so that the deployment operator should execute no more than 5 documented commands.
+
+    
+
+### 2.2. Full deployment in less than an hour
 The full System should be ready for use by end-users in the latest Ubuntu LTE OS in less than an hour. The whole deployment process MUST BE as automated as possible.
 
     
 
-#### 2.1.1. A working instance deployment by simple unzip command
+#### 2.2.1. A working instance deployment by simple unzip command
 The qto tool could be deployed by a simply unzip of the full package into a host having the proper binary configuration, which must have all of the documentation and scripts to provide assistance for the setup and the configuration of the tool as well as the initial data to populate the qto database. 
 
     
 
-#### 2.1.2. Binary prerequisites check script
+#### 2.2.2. Binary prerequisites check script
 All the binaries which are required for the running of the tool must be checked by a user-friendly binaries prerequisites check script. 
 
 
     
 
-#### 2.1.3. Required Perl modules installation
+#### 2.2.3. Required Perl modules installation
 All the required Perl modules must be part of the deployer script. The Perl modules should be installed as non-root user.
 
     
 
-#### 2.1.4. Installation documentation
+#### 2.2.4. Installation documentation
 The installation of the required Postgres db must be documented in the DevOps guide, which should have the markdown version in the doc directory of the deployment package.
 
     
 
-### 2.2. A full application clone should be ready for less than 5 minutes
+### 2.3. A full application clone should be ready for less than 5 minutes
 A DevOps operator should be able to perform an application clone ( having app-name changed to new-app-name etc. ) of the Qto application in less than 5 minutes. 
 
     
 
-#### 2.2.1. Shell script for postgres db creation and initial data load
+#### 2.3.1. Shell script for postgres db creation and initial data load
 The creation of the Postgres database of a qto project should be doable via a single shell call. 
 
     
 
-#### 2.2.2. One liner for single restore for both full db and inserts only
+#### 2.3.2. One liner for single restore for both full db and inserts only
 The full database should be loadable form a db dump either from a full dump or from the db-inserts dump only.
 
     
@@ -201,17 +213,17 @@ A full backup of the software, configuration and data for the qto and/or another
     
 
 ## 5. SCALABILITY
- 
+
 
     
 
 ### 5.1. Feature scalability
-The addition of new features should be as scalable as possible. 
+The addition of new features should be as scalable as possible. The UI and control flow should be as generic as possible.
 
     
 
 ### 5.2. Setup scalability
-The creation of new instances of the application should be as easy as possible. 
+The creation of new instances of the application should be as easy and automated as possible. 
 
     
 
@@ -281,6 +293,26 @@ The UI must present every error in a clear and concise way, so that the end-user
 
     
 
+### 8.3. Requirements per UI page type
+
+
+    
+
+#### 8.3.1. Login page requirements
+All login error msgs should be clear and displayed with red colour. 
+
+    
+
+#### 8.3.2. List page requirements
+
+
+    
+
+#### 8.3.3. View page requirements
+
+
+    
+
 ## 9. SECURITY
 A well operated instance of the qto application should have security corresponding to the data sensitivity it is operating on. 
 
@@ -299,27 +331,37 @@ Any qto instance should support a non-authentication mode - that is all users ha
 
     
 
-#### 9.1.2. Basic authentication mode ( to be deprecated )
-An qto instance running under basic authentication mode should support single system user per project database authentication, which must have full access for the all the available actions via the web ui. 
-It is worth noting that each qto instance having access to data resources should meet the requirements on organisation's level for data access - i.e. if instance dev has full access to the dev, tst, prd project databases there is no reason of having basic authentication on the prd instance having access to the same dev, tst, prd databases.
+#### 9.1.2. Simple Native authentication mode
 
-    
-
-#### 9.1.3. Simple Native authentication ( experimental )
-The application must match the passwords via blowfish encryption and store the authentication details into the session of default of 10h.
-Users should login with email and password. Users' names and other personal data MUST NOT be tracked by the application. 
 All registered users should have access to all but users related data. 
-Unregistered users should have access to the login page only. 
+
 If a user is not registered the error msg to the login should prompt him which e-mail to contact to be registered ( which will be the e-mail of the product owner instance ). 
-All login error msgs should be clear and displayed with red colour. 
-The regular users should see only their credentials. Only the admin user should see all the users credentials , but with the passwords encrypted.
+
 If the admin user is able to impersonate another user it must simply mean that he/she has done that on purpose ( aka maliciously )
 The sessions of different dev, tst and prod app layer instances should not intermix within the multiple open processes / threads of the same browser of the same user.
 
 
     
 
-#### 9.1.4. JSON web token authentication
+##### 9.1.2.1. User email and password matching for login success
+
+Users should login with email and password. Users' names and other personal data MUST NOT be tracked by the application. 
+Unregistered users should have access to the login page only. 
+
+    
+
+##### 9.1.2.2. Blowfish encryption for the passwords
+The application must match the passwords via blowfish encryption and store the authentication details into the session of default of 10h.
+
+    
+
+###### 9.1.2.2.1. Passwords sensibility
+
+The regular users should see only their credentials. Only the admin user should see all the users credentials , but with the passwords encrypted.
+
+    
+
+#### 9.1.3. JSON web token authentication
 The qto application should support native web tokens based authentication, by using as login a valid user e-mail and password, stored in the qto instance database. 
 
 The qto should support SSO authentication as described in the following RFC's. 
@@ -328,7 +370,7 @@ https://tools.ietf.org/html/rfc6749#section-5.1
 
     
 
-### 9.2. Authrorisation
+### 9.2. Authorisation
 The Qto application should have authorisation as described in the RFC 6749.
 
     

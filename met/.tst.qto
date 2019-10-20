@@ -1,5 +1,19 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 cnf/env
+src/perl/qto/public/poc/vuex/sabe/
+src/perl/qto/public/poc/vuex/sabe/app.js
+src/perl/qto/public/poc/vuex/sabe/index.html
+src/perl/qto/public/poc/vuex/sabe/styles.css
+src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
+src/perl/qto/t/lib/Qto/Controller/TestHiDelete.t
+src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
+src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
+src/perl/qto/lib/Qto/Controller/HiCreate.pm
+src/perl/qto/lib/Qto/Controller/HiDelete.pm
+src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
+src/sql/pgsql/qto/tables/95.create-table-test_hi_create_table_doc.sql
+src/sql/pgsql/qto/tables/88.create-table-test_hi_delete_table_doc.sql
+src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
 cnf/env/dev.env.json
 cnf/env/tst.env.json
 cnf/env/qas.env.json
@@ -10,7 +24,6 @@ src/bash/qto/funcs/provision-app-user.func.sh
 src/bash/deployer/test-deployer-run.sh
 src/bash/deployer/qto/cnf/bin/ubuntu-18.04.lst
 src/bash/deployer/qto/cnf/bin/perl-modules.lst
-src/bash/qto/bootstrap-qto-host-on-ubuntu.sh
 src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
 src/bash/qto/funcs/load-db-data-from-s3.func.sh
 src/bash/qto/qto.sh
@@ -36,14 +49,9 @@ src/docker/Dockerfile.deploy-qto-db-host.0.7.2
 src/docker/Dockerfile.deploy-qto-app-host.0.7.2
 src/bash/qto/funcs/build-docker-image.func.sh
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
-src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
 # start login
 src/perl/qto/t/lib/Qto/Controller/TestLogin.t
 src/perl/qto/lib/Qto/Controller/Login.pm
-src/perl/qto/public/poc/vuex/sabe/
-src/perl/qto/public/poc/vuex/sabe/app.js
-src/perl/qto/public/poc/vuex/sabe/index.html
-src/perl/qto/public/poc/vuex/sabe/styles.css
 src/perl/qto/templates/pages/login
 src/perl/qto/templates/pages/login/login.html.ep
 # stop  login
@@ -97,6 +105,14 @@ src/sql/pgsql/scripts/admin/grant-permissions.sql
 src/bash/qto/funcs/admin/restart-postgres.func.sh
 cnf/postgres/etc/postgresql/11/main
 cnf/postgres/etc/postgresql/11/main/pg_hba.conf
+cnf/nginx/
+cnf/nginx/etc
+cnf/nginx/etc/nginx
+cnf/nginx/etc/nginx/nginx.conf
+cnf/nginx/etc/nginx/sites-enabled
+cnf/nginx/etc/nginx/sites-enabled/qto.conf
+cnf/nginx/etc/nginx/nginx.conf
+cnf/nginx/etc/nginx/sites-enabled/qto.conf
 cnf/postgres/etc/postgresql/11/main/postgresql.conf
 # -- stop  docker deployment
 src/bash/qto/funcs/perl/run-benchmarks.func.sh
@@ -152,6 +168,7 @@ src/perl/qto/public/themes/thme-blue/css/screen/controls/right-click-menu.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/qto/public/themes/thme-blue/img/controls/
+src/perl/qto/public/themes/thme-blue/img/controls/lvl-up.png
 src/perl/qto/public/themes/thme-blue/img/controls/tack.png
 src/perl/qto/public/themes/thme-blue/img/controls/home.png
 src/perl/qto/public/themes/thme-blue/img/controls/srch.png
@@ -166,6 +183,9 @@ src/perl/qto/public/themes/thme-blue/img/controls/play-next-10.png
 src/perl/qto/public/themes/thme-blue/img/controls/play-prev.png
 src/perl/qto/public/themes/thme-blue/img/controls/play-prev-10.png
 src/perl/qto/public/themes/thme-blue/img/controls/trash-bin.png
+src/perl/qto/public/themes/thme-blue/img/controls/add-child-node.png
+src/perl/qto/public/themes/thme-blue/img/controls/add-parent-node.png
+src/perl/qto/public/themes/thme-blue/img/controls/add-sibling-node.png
 src/perl/qto/public/themes/thme-blue/img/controls/pdf-print-preview.png
 # --
 src/perl/qto/templates/controls/list-labels/list-labels.html.ep
@@ -189,7 +209,6 @@ src/perl/qto/lib/Qto/App/UI/Controls/WtrListLabels.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToArray.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrDbName.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToHsr2.pm
-src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/qto/lib/Qto/App/Db/In/Postgres/MojoPgWrapper.pm
 src/perl/qto/lib/Qto/App/UI/WtrUIFactory.pm
 src/perl/qto/lib/Qto/App/IO/In/CnrEncrypter.pm
@@ -208,7 +227,6 @@ src/perl/qto/public/themes/thme-blue/css/screen/site/home.css
 src/perl/qto/public/themes/thme-blue/css/print/controls/app_list_labels.css
 #---
 src/perl/qto/lib/Qto/Controller
-src/perl/qto/lib/Qto/Controller/HCreate.pm
 src/perl/qto/lib/Qto/Controller/Truncate.pm
 src/perl/qto/lib/Qto/Controller/PageFactory.pm
 src/perl/qto/lib/Qto/Controller/Export.pm
@@ -222,16 +240,15 @@ src/perl/qto/lib/Qto/Controller/Create.pm
 src/perl/qto/lib/Qto/Controller/Update.pm
 src/perl/qto/lib/Qto/Controller/Delete.pm
 src/perl/qto/lib/Qto/Controller/Select.pm
-src/perl/qto/lib/Qto/Controller/HSelect.pm
+src/perl/qto/lib/Qto/Controller/HiSelect.pm
 src/perl/qto/lib/Qto/Controller/HLSelect.pm
 src/perl/qto/lib/Qto/Controller/Search.pm
-src/perl/qto/t/lib/Qto/Controller/TestCreate.t.todo
-src/perl/qto/t/lib/Qto/Controller/TestHCreate.t
+src/perl/qto/t/lib/Qto/Controller/TestCreate.t
 src/perl/qto/t/lib/Qto/Controller/TestTruncate.t
 src/perl/qto/t/lib/Qto/Controller/TestSelect.t
 src/perl/qto/t/lib/Qto/Controller/TestQuery.t
-src/perl/qto/t/lib/Qto/Controller/TestHSelect.t
-src/perl/qto/t/lib/Qto/Controller/TestHSelectWith.t
+src/perl/qto/t/lib/Qto/Controller/TestHiSelect.t
+src/perl/qto/t/lib/Qto/Controller/TestHiSelectWith.t
 src/perl/qto/t/lib/Qto/Controller/TestSearch.t
 src/perl/qto/t/lib/Qto/Controller/TestSelectFilter.t
 src/perl/qto/t/lib/Qto/Controller/TestSelectLike.t
@@ -241,7 +258,7 @@ src/perl/qto/t/lib/Qto/Controller/TestSelectHide.t
 src/perl/qto/t/lib/Qto/Controller/TestSelectWith.t
 src/perl/qto/t/lib/Qto/Controller/TestUpdate.t
 src/perl/qto/t/lib/Qto/Controller/TestDelete.t
-src/perl/qto/t/lib/Qto/Controller/TestHSelect.t
+src/perl/qto/t/lib/Qto/Controller/TestHiSelect.t
 src/perl/qto/t/lib/Qto/Controller/TestAppLabel.t
 src/perl/qto/t/lib/Qto/Controller/TestListAsOutputType.t
 src/perl/qto/t/lib/Qto/Controller/TestListHide.t
@@ -253,8 +270,6 @@ src/perl/qto/lib/Qto/App/UI/Pages/1
 # ---
 src/perl/qto/lib/Qto/App/Cnvr
 src/perl/qto/lib/Qto/App/Cnvr/CnrHashesArrRefToHashesArrRef.pm
-src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
-src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
 src/perl/qto/t
 src/perl/qto/t/lib/Qto/App/Utils/TestRdrCmdArgs.t
 src/perl/qto/t/lib/Qto/App/Utils/OO/SetGetableChild.pm
@@ -398,34 +413,27 @@ src/sql/pgsql/qto/tables/09.create-table-questions.sql
 src/sql/pgsql/qto/tables/10.create-table-problems.sql
 src/sql/pgsql/qto/tables/11.create-table-principles.sql
 src/sql/pgsql/qto/tables/12.create-table-check_lists.sql
-src/sql/pgsql/qto/tables/13.1.create-table-requirements_doc.sql
-src/sql/pgsql/qto/tables/13.create-table-requirements.sql
+src/sql/pgsql/qto/tables/13.create-table-requirements_doc.sql
 src/sql/pgsql/qto/tables/14.create-table-ideas.sql
 src/sql/pgsql/qto/tables/15.create-table-skills.sql
-src/sql/pgsql/qto/tables/16.1.create-table-userstories_doc.sql
-src/sql/pgsql/qto/tables/16.create-table-userstories.sql
+src/sql/pgsql/qto/tables/16.create-table-userstories_doc.sql
 src/sql/pgsql/qto/tables/17.create-table-meta_tables.sql
 src/sql/pgsql/qto/tables/18.create-table-meta_columns.sql
 src/sql/pgsql/qto/tables/19.create-table-naming_conventions.sql
 src/sql/pgsql/qto/tables/20.create-table-goals.sql
-src/sql/pgsql/qto/tables/21.1.create-table-devops_guide_doc.sql
-src/sql/pgsql/qto/tables/21.create-table-devops_guide.sql
-src/sql/pgsql/qto/tables/22.1.create-table-features_doc.sql
-src/sql/pgsql/qto/tables/22.create-table-features.sql
-src/sql/pgsql/qto/tables/23.1.create-table-concepts_doc.sql
-src/sql/pgsql/qto/tables/23.create-table-concepts.sql
+src/sql/pgsql/qto/tables/21.create-table-devops_guide_doc.sql
+src/sql/pgsql/qto/tables/22.create-table-features_doc.sql
+src/sql/pgsql/qto/tables/23.create-table-concepts_doc.sql
 src/sql/pgsql/qto/tables/24.create-table-system_guide_doc.sql
-src/sql/pgsql/qto/tables/25.1.create-table-installations_doc.sql
-src/sql/pgsql/qto/tables/25.create-table-installations.sql
+src/sql/pgsql/qto/tables/25.create-table-installations_doc.sql
 src/sql/pgsql/qto/tables/26.create-table-release_history.sql
 src/sql/pgsql/qto/tables/28.create-table-imgs.sql
-src/sql/pgsql/qto/tables/29.1.create-table-enduser_guide_doc.sql
-src/sql/pgsql/qto/tables/29.create-table-enduser_guide.sql
-src/sql/pgsql/qto/tables/31.1.create-table-readme_doc.sql
-src/sql/pgsql/qto/tables/31.create-table-readme.sql
+src/sql/pgsql/qto/tables/29.create-table-enduser_guide_doc.sql
+src/sql/pgsql/qto/tables/31.create-table-readme_doc.sql
 src/sql/pgsql/qto/tables/32.create-table-export_files.sql
 src/sql/pgsql/qto/tables/33.create-table-links.sql
 src/sql/pgsql/qto/tables/34.create-table-users.sql
+src/sql/pgsql/qto/tables/35.create-table-security_checklist_doc.sql
 src/sql/pgsql/qto/tables/35.create-table-release_issues.sql
 src/sql/pgsql/qto/tables/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/tables/89.create-table-test_xls_to_db_table.sql
@@ -433,9 +441,9 @@ src/sql/pgsql/qto/tables/90.create-table-test_truncate_table.sql
 src/sql/pgsql/qto/tables/91.create-table-test_empty_table.sql
 src/sql/pgsql/qto/tables/93.create-table-benchmarks.sql
 src/sql/pgsql/qto/tables/94.create-table-test_item.sql
-src/sql/pgsql/qto/tables/95.create-table-test_hcreate_table.sql
 src/sql/pgsql/qto/tables/96.create-table-test_delete_table.sql
 src/sql/pgsql/qto/tables/97.create-table-test_create_table.sql
+src/sql/pgsql/qto/tables/97.10.create-table-test_hi_create_table_doc.sql
 src/sql/pgsql/qto/tables/97.03.create-func-fnc_tree_traversal.sql
 src/sql/pgsql/qto/tables/98.create-table-test_update_table.sql
 src/sql/pgsql/qto/tables/99.create-table-test_hierarchy_doc.sql
@@ -724,6 +732,8 @@ cnf/hosts/host-name/etc/fstab
 cnf/hosts/host-name/etc/network/interfaces
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/WsSelect/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/HiDelete/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToJson/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToXls/autosplit.ix
@@ -765,7 +775,7 @@ src/perl/qto/lib/auto/Qto/Controller/Create/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Delete/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Export/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HLSelect/autosplit.ix
-src/perl/qto/lib/auto/Qto/Controller/HSelect/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/HiSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/List/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Query/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Search/autosplit.ix
@@ -774,7 +784,7 @@ src/perl/qto/lib/auto/Qto/Controller/Update/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/View/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WebSocketPoc/autosplit.ix
 src/perl/qto/lib/auto/SetGetableChild/autosplit.ix
-src/perl/qto/lib/auto/Qto/Controller/HCreate/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/HiCreate/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Home/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Index/
 src/perl/qto/lib/auto/Qto/Controller/Index/autosplit.ix
@@ -787,4 +797,4 @@ cnf/git/hooks/pre-commit
 cnf/git/hooks/pre-push
 src/sql/pgsql/scripts/bash/copy-tables.sh
 lib/bash/funcs/find-me.sh
-lib/bash/funcs/find-me.sh
+cnf/bash/.bash_opts.host-name

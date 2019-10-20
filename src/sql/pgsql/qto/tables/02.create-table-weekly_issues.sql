@@ -1,4 +1,4 @@
-  --DROP TABLE IF EXISTS weekly_issues ; 
+  ---- DROP TABLE IF EXISTS weekly_issues ; 
 
 SELECT 'create the "weekly_issues" table'
 ; 
