@@ -236,8 +236,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $db               = shift ; 
       my $table            = shift ; 
 
-      my $bid           = $objModel->get( 'hselect.web-action.bid' ) || 0 ; 
-      my $seq           = $objModel->get( 'hselect.web-action.seq' ) || undef ; 
+      my $bid           = $objModel->get( 'hiselect.web-action.bid' ) || 0 ; 
+      my $seq           = $objModel->get( 'hiselect.web-action.seq' ) || undef ; 
 
       my $where_clause_bid = '' , 
 		my $ret              = 400 ; 
@@ -1071,17 +1071,17 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 		return $pg ; 
 	}
 
-   sub doHSelectBranch {
+   sub doHiSelectBranch {
 
       my $self          = shift ; 
       my $db            = shift || croak 'no db passed !!!' ; 
       my $table         = shift || croak 'no table passed !!!' ; 
-      my $bid           = $objModel->get( 'hselect.web-action.bid' ) || 0 ; 
-      my $seq           = $objModel->get( 'hselect.web-action.seq' ) || undef ; 
+      my $bid           = $objModel->get( 'hiselect.web-action.bid' ) || 0 ; 
+      my $seq           = $objModel->get( 'hiselect.web-action.seq' ) || undef ; 
    
       my $rv            = 1  ;
       my $ret           = 1 ; 
-      my $msg           = 'unknown error occured in RdrPostgresDb::doHSelectBranch' ; 
+      my $msg           = 'unknown error occured in RdrPostgresDb::doHiSelectBranch' ; 
       my $pg            = {} ; 
       my $sql           = {} ; 
       my $hsr2          = {} ; 
@@ -1153,6 +1153,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 				ORDER BY seq
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
+         # todo:ysg 
+         # debug p $hsr2 ; 
       };
       if ( $@ ) {
          $rv               = 404 ; 

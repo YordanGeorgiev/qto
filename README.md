@@ -64,8 +64,8 @@ With qto you will gain the following capabilities:
 - search the data from the db via the global search feature 
 - load initial data via xls ( less than 10k rows per sheet should be ok )
 - provide them with initial links to grasp the "semi-sql" syntax
-- define multiple md docs structure by xls loads to db
-- generate md docs format based on the qto native view docs programatically
+- create and update multiple hierarchical documents via the view doc interface
+- load hierarchical docs via xls, export them to md format ( programatically ) or pdf
 - lots of automated sysadmin capabilities ( check the docs in the doc/md dir )
 
     

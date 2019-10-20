@@ -1,4 +1,4 @@
-  --DROP TABLE IF EXISTS skills ; 
+  ---- DROP TABLE IF EXISTS skills ; 
 
 SELECT 'create the "skills" table'
 ; 

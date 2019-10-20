@@ -1,4 +1,4 @@
---DROP TABLE IF EXISTS export_files ; 
+---- DROP TABLE IF EXISTS export_files ; 
 
 SELECT 'create the "export_files" table'
 ; 
@@ -8,7 +8,6 @@ SELECT 'create the "export_files" table'
     , url            varchar (200) NOT NULL DEFAULT 'url...'
     , path           varchar (50) NULL DEFAULT 'rel-path-from-doc-root' 
     , name           varchar (100) NOT NULL DEFAULT 'the-export-file-name'
-    , extension      varchar (50) NOT NULL DEFAULT 'the-file-extension' 
     , description    varchar (200) NOT NULL DEFAULT 'description...'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_export_files_guid PRIMARY KEY (guid)

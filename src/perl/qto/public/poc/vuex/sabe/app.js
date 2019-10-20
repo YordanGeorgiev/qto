@@ -7,6 +7,7 @@ var getters = {
 	getItems: state => state.items
 }
 
+ // where the state is mutated
  var mutations = {
         ADD_ITEM: (state, payload) => {
             var newItem = {
@@ -28,7 +29,10 @@ var getters = {
             state.items.splice(index, 1);
         }
  };
-
+   
+   // where the backend calls are issued
+   // Instead of mutating the state, actions commit mutations.
+   // Actions can contain arbitrary asynchronous operations
    var actions = {
 		loadItems ({ commit }) {
 			axios
@@ -39,7 +43,10 @@ var getters = {
 			})
 		  },
         addItem: (context, payload) => {
-            context.commit("ADD_ITEM", payload)
+            var loadFromBackEnd = "nok"
+            if ( loadFromBackEnd === 'ok' ) {
+               context.commit("ADD_ITEM", payload)
+            }
         },
         toggleItem: (context, payload) => {
             context.commit("TOGGLE_ITEM", payload)

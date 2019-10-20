@@ -50,13 +50,14 @@ sub doWsSelectTables {
         push ( @arr ,  $hsr->{$key}->{'table_name'} ) 
 				if ( defined ($hsr->{$key}->{'is_menu'} ) && $hsr->{$key}->{'is_menu'} == 1  );
       }  
+      my @sorted = sort @arr;
 
       my $id = int (gettimeofday * 1000);
       $clients->{$id} = $self->tx;
 
       foreach my $id (keys %$clients) {
          $clients->{$id}->send({json => {
-            dat => \@arr
+            dat => \@sorted
           }});
       }
 

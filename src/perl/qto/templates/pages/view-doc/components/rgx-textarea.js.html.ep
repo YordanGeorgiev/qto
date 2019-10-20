@@ -30,7 +30,9 @@
           onBlur(ev) {
               var el = ev.target
               var newVal  = ev.target.value
-              var payload = {'eid': this.$el.id, 'newVal': newVal, 'oldData': this.oldData}
+              var x = event.clientX
+              var y = event.clientY
+              var payload = {'eid': this.$el.id, 'newVal': newVal, 'oldData': this.oldData, 'x': x, 'y': y}
          	  this.$store.dispatch("updateItem", payload);
               this.$el.style.height = "auto";
      		     this.autogrow() 
