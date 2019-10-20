@@ -15,13 +15,14 @@
 * [3. USER-FRIENDLINESS](#3-user-friendliness)
   * [3.1. ONELINER SHELL CALLS](#31-oneliner-shell-calls)
     * [3.1.1. Database recreation and DDL scripts run one-liners](#311-database-recreation-and-ddl-scripts-run-one-liners)
-  * [3.2. TABLE(S) LOAD VIA A SINGLE ONE-LINER](#32-table(s)-load-via-a-single-one-liner)
+  * [3.2. TABLES LOAD VIA A SINGLE ONE-LINER](#32-tables-load-via-a-single-one-liner)
     * [3.2.1. Testing one-liner call](#321-testing-one-liner-call)
     * [3.2.2. Test messages user](#322-test-messages-user)
 * [4. RELIABILITY AND STABILITY](#4-reliability-and-stability)
   * [4.1. DAILY BACKUPS](#41-daily-backups)
   * [4.2. LOGGING](#42-logging)
   * [4.3. FULL BACKUP TO THE CLOUD IN LESS THAN 5 MINUTES](#43-full-backup-to-the-cloud-in-less-than-5-minutes)
+  * [4.4. STABILITY BASED ON OPERATIONAL EXPERIENCE ON THE CLOUD SINCE 2019](#44-stability-based-on-operational-experience-on-the-cloud-since-2019)
 * [5. SCALABILITY](#5-scalability)
   * [5.1. FEATURE SCALABILITY](#51-feature-scalability)
   * [5.2. SETUP SCALABILITY](#52-setup-scalability)
@@ -153,8 +154,8 @@ The developers should be able to create the database via a single oneline call
 
     
 
-### 3.2. Table(s) load via a single one-liner
-The developers should be able to load a table to the database via a single oneline call 
+### 3.2. Tables load via a single one-liner
+The developers should be able to load one or many tables to the database via a single oneline call.
 
     
 
@@ -164,7 +165,7 @@ The testers and the developers is able to trigger all the unit or integration te
     
 
 #### 3.2.2. Test messages user
-Each test should obey the following convention:
+Each test obeys the following convention:
  - short message as descriptive within the context as possible - what is being tested
 - a short technical example of the generated entry being tested ( for example a dynamic url )
 - a uuid to search for from the Feature document what exactly is being tested within the context of the features description. 
@@ -188,6 +189,11 @@ The application supports fully configurable logging to STDOUT and STDERR , logfi
 
 ### 4.3. Full backup to the cloud in less than 5 minutes
 A full backup for the data for the qto and/or another project database is doable in less than 5 minutes. 
+
+    
+
+### 4.4. Stability based on operational experience on the cloud since 2019
+The main qto application instance has been up-and-running since the beginning of 2019 with receiving new versions in an average of 2 weeks per sprint.
 
     
 

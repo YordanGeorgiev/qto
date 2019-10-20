@@ -48,10 +48,9 @@
   * [9.1. AUTHENTICATION](#91-authentication)
     * [9.1.1. Non-authentication mode](#911-non-authentication-mode)
     * [9.1.2. Simple Native authentication mode](#912-simple-native-authentication-mode)
-      * [9.1.2.1. name ...](#9121-name-)
-      * [9.1.2.2. User email and password matching for login success](#9122-user-email-and-password-matching-for-login-success)
-      * [9.1.2.3. Blowfish encryption for the passwords](#9123-blowfish-encryption-for-the-passwords)
-          * [9.1.2.3.1. Passwords sensibility](#91231-passwords-sensibility)
+      * [9.1.2.1. User email and password matching for login success](#9121-user-email-and-password-matching-for-login-success)
+      * [9.1.2.2. Blowfish encryption for the passwords](#9122-blowfish-encryption-for-the-passwords)
+          * [9.1.2.2.1. Passwords sensibility](#91221-passwords-sensibility)
     * [9.1.3. JSON web token authentication](#913-json-web-token-authentication)
   * [9.2. AUTHORISATION](#92-authorisation)
 * [10. DOCUMENTATION](#10-documentation)
@@ -219,12 +218,12 @@ A full backup of the software, configuration and data for the qto and/or another
     
 
 ### 5.1. Feature scalability
-The addition of new features should be as scalable as possible. 
+The addition of new features should be as scalable as possible. The UI and control flow should be as generic as possible.
 
     
 
 ### 5.2. Setup scalability
-The creation of new instances of the application should be as easy as possible. 
+The creation of new instances of the application should be as easy and automated as possible. 
 
     
 
@@ -344,24 +343,19 @@ The sessions of different dev, tst and prod app layer instances should not inter
 
     
 
-##### 9.1.2.1. name ...
-
-
-    
-
-##### 9.1.2.2. User email and password matching for login success
+##### 9.1.2.1. User email and password matching for login success
 
 Users should login with email and password. Users' names and other personal data MUST NOT be tracked by the application. 
 Unregistered users should have access to the login page only. 
 
     
 
-##### 9.1.2.3. Blowfish encryption for the passwords
+##### 9.1.2.2. Blowfish encryption for the passwords
 The application must match the passwords via blowfish encryption and store the authentication details into the session of default of 10h.
 
     
 
-###### 9.1.2.3.1. Passwords sensibility
+###### 9.1.2.2.1. Passwords sensibility
 
 The regular users should see only their credentials. Only the admin user should see all the users credentials , but with the passwords encrypted.
 

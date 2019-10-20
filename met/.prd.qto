@@ -105,6 +105,14 @@ src/sql/pgsql/scripts/admin/grant-permissions.sql
 src/bash/qto/funcs/admin/restart-postgres.func.sh
 cnf/postgres/etc/postgresql/11/main
 cnf/postgres/etc/postgresql/11/main/pg_hba.conf
+cnf/nginx/
+cnf/nginx/etc
+cnf/nginx/etc/nginx
+cnf/nginx/etc/nginx/nginx.conf
+cnf/nginx/etc/nginx/sites-enabled
+cnf/nginx/etc/nginx/sites-enabled/qto.conf
+cnf/nginx/etc/nginx/nginx.conf
+cnf/nginx/etc/nginx/sites-enabled/qto.conf
 cnf/postgres/etc/postgresql/11/main/postgresql.conf
 # -- stop  docker deployment
 src/bash/qto/funcs/perl/run-benchmarks.func.sh
@@ -415,17 +423,13 @@ src/sql/pgsql/qto/tables/19.create-table-naming_conventions.sql
 src/sql/pgsql/qto/tables/20.create-table-goals.sql
 src/sql/pgsql/qto/tables/21.create-table-devops_guide_doc.sql
 src/sql/pgsql/qto/tables/22.create-table-features_doc.sql
-src/sql/pgsql/qto/tables/23.1.create-table-concepts_doc.sql
-src/sql/pgsql/qto/tables/23.create-table-concepts.sql
+src/sql/pgsql/qto/tables/23.create-table-concepts_doc.sql
 src/sql/pgsql/qto/tables/24.create-table-system_guide_doc.sql
-src/sql/pgsql/qto/tables/25.1.create-table-installations_doc.sql
-src/sql/pgsql/qto/tables/25.create-table-installations.sql
+src/sql/pgsql/qto/tables/25.create-table-installations_doc.sql
 src/sql/pgsql/qto/tables/26.create-table-release_history.sql
 src/sql/pgsql/qto/tables/28.create-table-imgs.sql
-src/sql/pgsql/qto/tables/29.1.create-table-enduser_guide_doc.sql
-src/sql/pgsql/qto/tables/29.create-table-enduser_guide.sql
-src/sql/pgsql/qto/tables/31.1.create-table-readme_doc.sql
-src/sql/pgsql/qto/tables/31.create-table-readme.sql
+src/sql/pgsql/qto/tables/29.create-table-enduser_guide_doc.sql
+src/sql/pgsql/qto/tables/31.create-table-readme_doc.sql
 src/sql/pgsql/qto/tables/32.create-table-export_files.sql
 src/sql/pgsql/qto/tables/33.create-table-links.sql
 src/sql/pgsql/qto/tables/34.create-table-users.sql
@@ -728,6 +732,8 @@ cnf/hosts/host-name/etc/fstab
 cnf/hosts/host-name/etc/network/interfaces
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/WsSelect/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/HiDelete/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToJson/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToXls/autosplit.ix
@@ -791,4 +797,4 @@ cnf/git/hooks/pre-commit
 cnf/git/hooks/pre-push
 src/sql/pgsql/scripts/bash/copy-tables.sh
 lib/bash/funcs/find-me.sh
-lib/bash/funcs/find-me.sh
+cnf/bash/.bash_opts.host-name

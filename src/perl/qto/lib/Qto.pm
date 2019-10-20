@@ -76,9 +76,15 @@ sub doLoadAppConfig {
    my $currentShortHash = `git rev-parse --short HEAD` ; chomp($currentShortHash);
    $config->{'env'}->{'run'}->{ 'GitShortHash' } = $currentShortHash || "" ; 
    my $port = $config->{'env'}->{'app'}->{ 'port' };
+   my $protocol = $config->{'env'}->{'app'}->{ 'ht_protocol' };
    my $num_of_workers = $config->{'env'}->{'app'}->{ 'num_of_workers' } || 5 ; 
+   my $listen = '' ;
 
-   my $listen = 'https://*:'.$port.'?cert=/etc/letsencrypt/live/qto.fi/fullchain.crt&key=/etc/letsencrypt/live/qto.fi/privkey.key';
+   if ( $protocol eq 'https') {
+      $listen = 'https://*:'.$port.'?cert=/etc/letsencrypt/live/qto.fi/fullchain.crt&key=/etc/letsencrypt/live/qto.fi/privkey.key';
+   } else {
+      $listen = 'http://*:'.$port;
+   }
 
    p($config) ; 
    $self->set('AppConfig' , $config );
@@ -87,14 +93,12 @@ sub doLoadAppConfig {
    $msg = "START MAIN";
    $objLogger->doLogInfoMsg($msg);
 
-   if ( -f '/etc/letsencrypt/live/qto.fi/fullchain.crt' ) {
    $self->config(
       hypnotoad => {
          listen  => [$listen],
          workers => $num_of_workers
          }
       );
-   }
 }
 
 

@@ -4,8 +4,9 @@
   * [1.2. AUDIENCE](#12-audience)
   * [1.3. RELATED DOCUMENTATION](#13-related-documentation)
 * [2. CORE CONCEPTS](#2-core-concepts)
-  * [2.1. TRUST AND CLARITY](#21-trust-and-clarity)
-  * [2.2. PERSONAL RESPONSIBILITY](#22-personal-responsibility)
+  * [2.1. FULL REUSABILITY OF BUSINESS OBJECT](#21-full-reusability-of-business-object)
+  * [2.2. TRUST AND CLARITY](#22-trust-and-clarity)
+  * [2.3. PERSONAL RESPONSIBILITY](#23-personal-responsibility)
 * [3. BUSINESS LOGIC](#3-business-logic)
   * [3.1. PROJECTS MANAGEMENT](#31-projects-management)
   * [3.2. INCREASE THE DATE FOR ALL PROJECTS](#32-increase-the-date-for-all-projects)
@@ -13,8 +14,9 @@
     * [3.3.1. Categories](#331-categories)
     * [3.3.2. Issues status](#332-issues-status)
     * [3.3.3. Issues management via time intervals](#333-issues-management-via-time-intervals)
-  * [3.4. PROBLEMS](#34-problems)
-  * [3.5. QUESTIONS](#35-questions)
+  * [3.4. QUESTIONS](#34-questions)
+  * [3.5. IDEAS](#35-ideas)
+  * [3.6. IDEAS](#36-ideas)
 * [4. DEFINITIONS](#4-definitions)
   * [4.1. RELEASE](#41-release)
 
@@ -61,12 +63,17 @@ All the documents should be updated and redistributed in combination of the curr
 
     
 
-### 2.1. Trust and clarity
+### 2.1. Full reusability of business object
+The qto is fully generic - that is ANY of the entities in the business logic of the qto INSTANCE APPLICATION could be replaced with the one suitable for your organisation.
+
+    
+
+### 2.2. Trust and clarity
 
 
     
 
-### 2.2. Personal responsibility
+### 2.3. Personal responsibility
 You should assign 0 or 1 persons responsible for an issue at a time. Of course if you keep tool long an issue to be assigned to nobody it simply means that you are not fully committed to its completion. 
 
     
@@ -89,8 +96,9 @@ to increase the date for all the projects at once use the following oneliner.
     
 
 ### 3.3. Issues / Issue items / items
-Issue item is the shortest possible description of task , activity , note or anything requiring distinguishable and prerferable measurable action or producing verfifiable outcome.
+Issue item is the shortest possible description of task , activity , note or anything requiring distinguishable and preferably measurable action or producing verifiable outcome.
 Issues could be of different types - tasks, activities, notes etc. 
+Each issue MUST BE assigned to one and only one person.
 
     
 
@@ -126,13 +134,18 @@ So that in the end of each previous time period you could go trough the issues o
 
     
 
-### 3.4. Problems
+### 3.4. Questions
 Sometimes during the workings of your project you encounter problems, which are complex enough not to allows the definition of an issue. In those cases it would be more rational to just register the problem, discuss it or review it later on, and define the issue as soon as the problem domain is understood and even possible issue solution could be proposed
 
     
 
-### 3.5. Questions
-Sometimes during the workings of your project you might be simply asking questions, which are complex enough not to allows the definition of an issue. In those cases it would be more rational to just register the question, discuss it or review it later on, and define the issue(s) addressing this question later on. 
+### 3.5. Ideas
+Your organisation might collect, sort and evaluate ideas so that they could be later one used as the row data for issues ( aka concrete work descriptions to be followed).
+
+    
+
+### 3.6. Ideas
+Your organisation might record 
 
     
 
@@ -141,7 +154,7 @@ This section contains definitions of terms within the context of the Issue-Track
 
     
 
-### 4.1. release
+### 4.1. Release
 An issue-tracker release is the artifact you can download from the following GitHub page:
 https://github.com/YordanGeorgiev/issue-tracker/releases
 The word is also used for the actual release of the latest source code into a working instance available in the web ... 
