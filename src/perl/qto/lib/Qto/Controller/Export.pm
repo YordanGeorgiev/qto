@@ -56,7 +56,7 @@ sub doExportItems {
    $objModel->set('select.web-action.pg-size' , $pg_size );  
  
    return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
-      unless $objCnrUrlPrms->doValidateAndSetHSelect();
+      unless $objCnrUrlPrms->doValidateAndSetHiSelect();
 
    my $objExportFactory = 'Qto::App::IO::WtrExportFactory'->new(\$config, \$objModel , $as );
    my $objExporter      = $objExportFactory->doSpawn( $as );

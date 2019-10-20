@@ -18,7 +18,7 @@ my $config = $t->app->get('AppConfig') ;
 # if the product instance id tst -> tst_qto
 my $db = $config->{'env'}->{'db'}->{'postgres_db_name'} ; 
 my @tables = ( 'installations_doc' , 'requirements_doc' , 'devops_guide_doc' , 'userstories_doc' ) ; 
-my @web_actions = ( 'select' , 'hselect' ) ; 
+my @web_actions = ( 'select' , 'hiselect' ) ; 
 my $ua = $t->ua ; 
 my $res = {} ; #a tmp result json string
 my $tm = '' ; 

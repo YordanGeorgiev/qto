@@ -1,4 +1,5 @@
 doScrambleConfs(){
+   eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
 
    while read -r file ; do
       cp -v $file $file.bak
@@ -30,8 +31,6 @@ EOF
 )
 		perl -e "$script" $file
       git add $file
-	done < <(find $PRODUCT_INSTANCE_DIR/cnf/env/ -type f| grep -v '.bak')
-
-   for env in `echo dev tst qas prd`; do cp -v met/.dev.qto met/.$env.qto ; done ;
+	done < <(find cnf/env/ -type f| grep -v '.bak')
 
 }

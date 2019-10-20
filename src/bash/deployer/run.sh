@@ -10,10 +10,11 @@ main(){
    do_setup_vim
    do_check_install_ubuntu_packages
    do_check_install_postgres
-   do_provision_postgres
+   do_check_install_chromium_headless
    do_check_install_phantom_js
    do_check_install_perl_modules
-   do_check_install_chromium_headless
+   do_provision_postgres
+   do_provision_nginx
    do_copy_git_hooks
    do_setup_tmux
    do_set_chmods
@@ -44,7 +45,9 @@ do_set_vars(){
 do_check_setup_bash(){
    cp -v $product_instance_dir/cnf/bash/.profile_opts.host-name ~/.profile_opts.$host_name
    cp -v $product_instance_dir/cnf/bash/.bash_opts.host-name $bash_opts_file
-   echo "source $bash_opts_file" >> ~/.bashrc
+   # or how-to append a string to file if not found there
+   grep "source $bash_opts_file" ~/.bashrc || \
+      echo "source $bash_opts_file" | tee -a ~/.bashrc
 }
 
 do_setup_vim(){
@@ -179,6 +182,14 @@ do_check_install_perl_modules(){
 		find ~ -type f -name OAuth2.pm -exec perl -pi -e \
 			"s/use Any::Moose;/no warnings 'deprecated'; use Any::Moose; use warnings 'deprecated';/g" {} \;
 		}
+
+      # create the symlink to the hypnotoad
+      export tgt_path=$HOME/perl5/bin/hypnotoad
+      export link_path=/usr/local/sbin/hypnotoad
+      sudo mkdir -p `dirname $link_path`
+      sudo test -L $link_path && unlink $link_path
+      sudo ln -s $tgt_path $link_path
+      ls -la $link_path;
 }
 
 
@@ -222,14 +233,10 @@ do_log(){
 
 do_provision_postgres(){
 
-   perl -pi -e 's|PRODUCT_INSTANCE_DIR|product_instance_dir|g' \
-      $product_instance_dir/src/bash/qto/funcs/scramble-confs.func.sh
-   source $product_instance_dir/src/bash/qto/funcs/scramble-confs.func.sh
-   doScrambleConfs
-   perl -pi -e 's|product_instance_dir|PRODUCT_INSTANCE_DIR|g' \
-      $product_instance_dir/src/bash/qto/funcs/scramble-confs.func.sh
    source $product_instance_dir/lib/bash/funcs/export-json-section-vars.sh
    doExportJsonSectionVars $product_instance_dir/cnf/env/$ENV_TYPE.env.json '.env.db'
+   source $product_instance_dir/src/bash/qto/funcs/scramble-confs.func.sh
+   doScrambleConfs
 
    sudo mkdir -p /etc/postgresql/11/main/
    sudo mkdir -p /var/lib/postgresql/11/main
@@ -274,6 +281,13 @@ do_provision_postgres(){
       sudo chown -R postgres:postgres "/etc/postgresql/11/main/postgresql.conf"
 
    sudo /etc/init.d/postgresql restart
+}
+
+do_provision_nginx(){
+   sudo cp -v $product_instance_dir/cnf/nginx/etc/nginx/nginx.conf /etc/nginx/nginx.conf
+   sudo cp -v $product_instance_dir/cnf/nginx/etc/nginx/sites-enabled/qto.conf \
+      /etc/nginx/sites-enabled/qto.conf
+   sudo ln -s /etc/nginx/sites-available/qto.conf /etc/nginx/sites-enabled/qto
 }
 
 do_create_multi_env_dir(){
