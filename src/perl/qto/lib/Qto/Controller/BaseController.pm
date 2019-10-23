@@ -6,7 +6,7 @@ use Mojolicious::Sessions;
 use Data::Printer ; 
 
 our $module_trace    = 0 ; 
-our $config       = {};
+our $config          = {};
 our $objLogger       = {} ;
 our $rdbms_type      = 'postgres' ; 
 

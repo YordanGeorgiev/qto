@@ -23,4 +23,3 @@ doRunBenchmarks(){
 }
 
 
-# eof file: src/bash/qto/funcs/run-benchmarks.func.sh
