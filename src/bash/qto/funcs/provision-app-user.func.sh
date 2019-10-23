@@ -1,4 +1,4 @@
-doProvisionDbAdmin(){
+doProvisionAppUser(){
 
    source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/export-json-section-vars.sh
    doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$ENV_TYPE.env.json '.env.db'
@@ -9,7 +9,7 @@ doProvisionDbAdmin(){
       -v postgres_db_user_pw="${postgres_db_user_pw:-}" \
       -v postgres_db_name="${postgres_db_name:-}" -c "
 DO
-$do$
+\$do$
 BEGIN
    IF NOT EXISTS (
       SELECT 
@@ -18,7 +18,7 @@ BEGIN
 		   CREATE ROLE "$postgres_db_user" WITH PASSWORD '"$postgres_db_user_pw"' LOGIN ;
    END IF;
 END
-$do$;
+\$do$;
 ALTER ROLE "$postgres_db_user" WITH PASSWORD  '"$postgres_db_user_pw"' LOGIN ;
 
 ALTER DEFAULT PRIVILEGES IN SCHEMA public 

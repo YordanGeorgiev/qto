@@ -90,7 +90,7 @@ do_run_actions(){
    done < <(echo "$run_funcs")
 
 	test -d "$daily_backup_dir" || {
-      test -f $PRODUCT_INSTANCE_DIR/dat/tmp/bootstrapping || doBackupPostgresDb
+      test -f $PRODUCT_INSTANCE_DIR/bootstrapping || doBackupPostgresDb
    }
 
 }
