@@ -11,8 +11,6 @@ src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
 src/perl/qto/lib/Qto/Controller/HiCreate.pm
 src/perl/qto/lib/Qto/Controller/HiDelete.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
-src/sql/pgsql/qto/tables/95.create-table-test_hi_create_table_doc.sql
-src/sql/pgsql/qto/tables/88.create-table-test_hi_delete_table_doc.sql
 src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
 cnf/env/dev.env.json
 cnf/env/tst.env.json
@@ -343,8 +341,6 @@ src/perl/qto/lib/Qto/App/Mdl/Model.pm
 src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToDb.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToTxt.pm
-src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToJson.pm
-src/perl/qto/lib/Qto/App/Ctrl/CtrlJsonToDb.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlTxtToDb.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToGoogleSheet.pm
@@ -433,14 +429,16 @@ src/sql/pgsql/qto/tables/31.create-table-readme_doc.sql
 src/sql/pgsql/qto/tables/32.create-table-export_files.sql
 src/sql/pgsql/qto/tables/33.create-table-links.sql
 src/sql/pgsql/qto/tables/34.create-table-users.sql
-src/sql/pgsql/qto/tables/35.create-table-security_checklist_doc.sql
 src/sql/pgsql/qto/tables/35.create-table-release_issues.sql
+src/sql/pgsql/qto/tables/36.create-table-security_checklist_doc.sql
 src/sql/pgsql/qto/tables/50.create-table-tst_paging.sql
+src/sql/pgsql/qto/tables/88.create-table-test_hi_delete_table_doc.sql
 src/sql/pgsql/qto/tables/89.create-table-test_xls_to_db_table.sql
 src/sql/pgsql/qto/tables/90.create-table-test_truncate_table.sql
 src/sql/pgsql/qto/tables/91.create-table-test_empty_table.sql
 src/sql/pgsql/qto/tables/93.create-table-benchmarks.sql
 src/sql/pgsql/qto/tables/94.create-table-test_item.sql
+src/sql/pgsql/qto/tables/95.create-table-test_hi_create_table_doc.sql
 src/sql/pgsql/qto/tables/96.create-table-test_delete_table.sql
 src/sql/pgsql/qto/tables/97.create-table-test_create_table.sql
 src/sql/pgsql/qto/tables/97.10.create-table-test_hi_create_table_doc.sql
@@ -657,8 +655,6 @@ doc/img/system_guide/qto-infra.jpg
 doc/img/system_guide/qto-infra.xml
 doc/gliffy/multi-env-setup.gliffy
 # --- the application data
-src/bash/qto/funcs/db-to-json.func.sh
-src/bash/qto/tests/db-to-json.test.sh
 # ---
 src/perl/qto/public/poc/
 src/perl/qto/public/poc/list-lable
@@ -734,10 +730,8 @@ src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WsSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HiDelete/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToJson/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToXls/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlJsonToDb/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlTxtToDb/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlXlsToDb/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/Dispatcher/autosplit.ix

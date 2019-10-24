@@ -18,8 +18,6 @@ package Qto::App::Ctrl::Dispatcher ;
    use Qto::App::Ctrl::CtrlTxtToDb ; 
    use Qto::App::Ctrl::CtrlXlsToDb ; 	
    use Qto::App::Ctrl::CtrlDbToTxt ; 
-   use Qto::App::Ctrl::CtrlDbToJson ; 
-   use Qto::App::Ctrl::CtrlJsonToDb ; 
    use Qto::App::Ctrl::CtrlDbToXls ; 
    use Qto::App::Ctrl::CtrlDbToGoogleSheet ; 
 
@@ -98,17 +96,6 @@ package Qto::App::Ctrl::Dispatcher ;
       my $objCtrlDbToTxt = 
          'Qto::App::Ctrl::CtrlDbToTxt'->new ( \$config , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndWrite ( ) ; 
-      return ( $ret , $msg ) ; 
-   }
-
-
-   sub doJsonToDb {
-
-      my $self = shift ; 
-      use strict 'refs'; 
-      my $objCtrlJsonToDb = 
-         'Qto::App::Ctrl::CtrlJsonToDb'->new ( \$config , \$objModel) ; 
-      my ( $ret , $msg ) = $objCtrlJsonToDb->doReadAndWrite ( ) ; 
       return ( $ret , $msg ) ; 
    }
 
