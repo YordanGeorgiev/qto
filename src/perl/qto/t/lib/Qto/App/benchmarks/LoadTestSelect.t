@@ -12,8 +12,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../../qto/lib" }
    my $t = Test::Mojo->new('Qto');
    my $config = $t->app->get('AppConfig') ; 
    # if the product instance id tst -> tst_qto
-   my $db_name= $config->{ 'postgres_db_name' } ; 
-   my $url = '/' . $db_name . '/select-tables' ; 
+   my $proj_name= $config->{'env'}->{'app'}->{ 'proj_name' } ; 
+   my $url = '/' . $proj_name . '/select-tables' ; 
 
    $t->get_ok($url)
       ->status_is(200) 
@@ -37,7 +37,7 @@ for (0 .. 500) {
   # debug print "get $url run-". "$_" . "\n" ; 
   push @uas, my $ua = $t->ua ;
   $ua->get($url => $d->begin);
-  $ua->get('/' . $db_name . '/select-tables' => $d->begin );
+  $ua->get('/' . $proj_name . '/select-tables' => $d->begin );
 }
 
 $d->wait;

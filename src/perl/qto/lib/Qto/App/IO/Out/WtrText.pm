@@ -132,9 +132,6 @@ sub doInitialize {
 
   %inverse_hsrStatus = reverse %$hsrStatus;
 
-   my $qto_project = $config->{ 'qto_project' } ; 
-
-  
     my $objTimer = 'Qto::App::Utils::Timer'->new();
     my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst)
       = $objTimer->GetTimeUnits();
@@ -143,17 +140,13 @@ sub doInitialize {
 
     $table =~ s/_/-/g ; 
     $issues_file
-      = $ENV{'mix_data_dir'}
-      . "/$year/$nice_month/$nice_date/$qto_project"
+      = $ENV{'PROJ_INSTANCE_DIR'}
+      . "/$year/$nice_month/$nice_date/"
       . '.'
       . "$table"
       . '.'
       . "$nice_date"
       . '.txt';
-
-    my $ProductInstanceDir = $config->{'ProductInstanceDir'};
-    $issues_file = $ProductInstanceDir . "/" . $issues_file
-      unless ($issues_file =~ m/^\//g);
 
   $config->{'issues_file'} = $issues_file;
   return $self;

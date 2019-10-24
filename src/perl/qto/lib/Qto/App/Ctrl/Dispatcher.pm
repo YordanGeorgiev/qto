@@ -102,17 +102,6 @@ package Qto::App::Ctrl::Dispatcher ;
    }
 
 
-   sub doDbToJson {
-
-      my $self = shift ; 
-      use strict 'refs'; 
-      my $objCtrlDbToJson = 
-         'Qto::App::Ctrl::CtrlDbToJson'->new ( \$config , \$objModel) ; 
-      my ( $ret , $msg ) = $objCtrlDbToJson->doReadAndWrite ( ) ; 
-      return ( $ret , $msg ) ; 
-   }
-
-
    sub doJsonToDb {
 
       my $self = shift ; 
