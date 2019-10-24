@@ -15,7 +15,7 @@
 				<tr> <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }" tabindex="3" v-on:keyup.enter="sortBy(key)" :id="'th-'+key">{{ key }}<span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span></th></tr>
 			 </thead>
 			 <tbody>
-				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" :title="entry[key]" tabindex="3"><button tabindex="3" :id="'btn-modal-'+entry[key]" v-on:click="showModalDialog($event)" @keydown.esc="showModal = false" :title="'open id-' + entry[key]">open</button></div><div v-else class="cls_tbltooltip"><div v-if="key == 'description'" class="cls_tbltooltiptext" v-html="lnkMayBe(entry[key])">{{lnkMayBe(entry[key])}}</div><linkable :content.sync="entry[key]" v-bind:cnt.sync="entry[key]" :id="key+'-'+entry.id">{{entry[key]}}</linkable></div></td></tr>
+				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div v-if="key === 'id' || key === 'guid'" :title="entry[key]" tabindex="3"><button tabindex="3" :id="'btn-modal-'+entry[key]" v-on:click="showModalDialog($event)" @keydown.esc="showModal = false" :title="'open id-' + entry[key]">open</button></div><div v-else class="cls_tbltooltip"><div v-if="key == 'description'" class="cls_tbltooltiptext" v-html="lnkMayBe(entry[key])">{{lnkMayBe(entry[key])}}</div><linkable :content.sync="entry[0] + entry[key]" v-bind:cnt.sync="entry[key]" :id="key+'-'+entry.id">{{entry[key]}}</linkable></div></td></tr>
 			 </tbody>
 		  </table>
       </div>

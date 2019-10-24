@@ -45,7 +45,7 @@ This document is aimed for everyone, who shall, will or even would like to insta
     
 
 ### 1.4. Master storage and storage format
-The master storage of this document is the master branch of the qto release you are interested in. The main storage format is Markdown. 
+The master storage of this document is the master branch of the latest qto release. The main storage format is Markdown. 
 
     
 
@@ -60,7 +60,7 @@ The qto provides a mean for tracking of this documentation contents to the sourc
     
 
 ## 2. AUTOMATED FULL DEPLOYMENT ON AWS  IN 35 MINUTES
-This section WILL provide you will with ALL required steps to get a fully functional instance of the qto application in aws in about 35 min with 3 commands. Do just copy paste the commands into your shell and not cd into different directories - this deploymet has been tested more than 30 times succesfully by exactly reproducting those steps. 
+This section WILL provide you will with ALL required steps to get a fully functional instance of the qto application in aws in about 35 min with 3 commands. Do just copy paste the commands into your shell and not cd into different directories - this deployment has been tested more than 30 times successfully by exactly reproducing those steps, yet the variables in such a complex deployment are many, thus should you encounter new issues do directly contact the owner of the instance you got this deployment package, that is the person owning the github repository you fetched the source code from.
 
     
 
@@ -100,7 +100,7 @@ The run of the following "shell actions" will create the qto database and load i
     source $(find . -name '.env') && cd qto/qto.$VERSION.$ENV_TYPE.$USER
     
     # ensure application layer consistency, run db ddl's and load data from s3
-    ./src/bash/qto/qto.sh -a check-perl-syntax -a run-qto-db-ddl -a load-db-data-from-s3
+    touch bootrapping &&  ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3 && rm -v bootrapping
 
 ### 2.5. Configure your aws credentials - aws keys and  ssh keys
 Generate NEW aws access- and secret-keys https://console.aws.amazon.com/iam/home?region=&lt;&lt;YOUR-AWS-REGION&gt;&gt;#/security_credentials. 
@@ -143,7 +143,7 @@ The run of the following "shell actions" will create the qto database and load i
     source $(find . -name '.env') && cd qto/qto.$VERSION.$ENV_TYPE.$USER
     
     # ensure application layer consistency, run db ddl's and load data from s3
-    ./src/bash/qto/qto.sh -a check-perl-syntax -a run-qto-db-ddl -a load-db-data-from-s3
+    touch bootrapping &&  ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3 && rm -v bootrapping
 
 ### 2.10. Start the web server
 Start the hypnotoad web server by issuing the following command

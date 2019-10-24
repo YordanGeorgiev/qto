@@ -374,7 +374,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
    sub doSelectTablesList {
 
       my $self             = shift ; 
-      my $objModel         = ${shift @_ } ; 
+      my $db               = shift ; 
 
       my $msg              = q{} ;         
       my $ret              = 1 ;          # this is the return value from this method 
@@ -496,7 +496,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $hsr2 = {} ; 
       my $msg  = () ; 
 
-      ($ret, $msg, $hsr2) = $self->doSelectTablesList(\$objModel);
+      ($ret, $msg, $hsr2) = $self->doSelectTablesList($db);
       return 0 unless $ret == 0 ;  # aka the table does not exist 
 
 

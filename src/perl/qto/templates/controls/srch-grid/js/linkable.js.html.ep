@@ -30,7 +30,6 @@
 				var el = ev.target
        }
        , calcVarCharWidth(width,col) {
-				console.log ( "calcVarCharWidth: width: " + width + " col: " + col )
             if ( typeof width !== "undefined" ) {
                if ( width < 3 ) {
                   return 30
@@ -84,19 +83,13 @@
                if ( (meta[prop])["attribute_name"] !== col ) {
                   continue ;
                } else {
-						console.log ( "col: " + col )
                   if ( typeof ((meta[prop])["width"]) != "undefined" && (meta[prop])["width"] != null ) {
-								console.log ( Number((meta[prop])["width"] )	)
-								console.log ( meta[prop] )
                         maxWidth = this.calcVarCharWidth(Number((meta[prop])["width"]),col)         
-								console.log ( "01-maxWidth: " + String(maxWidth))
                   } else {
                      if ( (meta[prop])["data_type"].indexOf("char") === -1) {
                         maxWidth = this.calcWidth()
-								console.log ( "02-maxWidth: " + String(maxWidth))
                      } else {
                         maxWidth = this.calcVarCharWidth(Number((meta[prop])["char_max_length"]),col)         
-								console.log ( "03-maxWidth: " + String(maxWidth))
                      }
                   }
                }

@@ -372,6 +372,23 @@ main "$@"
 # -a <<run-shell-action>> which a doRunShellAction func
 # stored in the src/bash/qto/funcs/run-shell-action.func.sh
 #----------------------------------------------------------
+# a vars
+# ${VAR:=default_value}
+# var=10 ; if ! ${var+false};then echo "is set";else echo "NOT set";fi # prints is set
+# unset var ; if ! ${var+false};then echo "is set";else echo "NOT set";fi # prints NOT set
+# +--------------------+----------------------+-----------------+-----------------+
+# |                    |       parameter      |     parameter   |    parameter    |
+# |                    |   Set and Not Null   |   Set But Null  |      Unset      |
+# +--------------------+----------------------+-----------------+-----------------+
+# | ${parameter:-word} | substitute parameter | substitute word | substitute word |
+# | ${parameter-word}  | substitute parameter | substitute null | substitute word |
+# | ${parameter:=word} | substitute parameter | assign word     | assign word     |
+# | ${parameter=word}  | substitute parameter | substitute null | assign word     |
+# | ${parameter:?word} | substitute parameter | error, exit     | error, exit     |
+# | ${parameter?word}  | substitute parameter | substitute null | error, exit     |
+# | ${parameter:+word} | substitute word      | substitute null | substitute null |
+# | ${parameter+word}  | substitute word      | substitute word | substitute null |
+# +--------------------+----------------------+-----------------+-----------------+
 #
 # ${var+blahblah}: if var is defined, 'blahblah' is substituted for the expression, else null is
 # substituted

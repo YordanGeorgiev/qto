@@ -11,7 +11,7 @@ doRunDataLoadTests(){
    doLog "INFO START test the Select Controller "
    doLog " $postgres_db_name/select-tables"
    doLog " $postgres_db_name/select/<<table-name>>"
-   test_script='src/perl/qto/t/lib/Qto/Controller/LoadTestSelect.pl'
+   test_script='src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.t'
    doLog "INFO START $test_script"
    perl src/perl/qto/t/lib/Qto/Controller/LoadTestSelect.pl
    test $? -ne 0 && return
