@@ -15,6 +15,8 @@ main(){
    do_check_install_perl_modules
    do_provision_postgres
    do_provision_nginx
+   do_provision_certbot
+   do_provision_https
    do_copy_git_hooks
    do_setup_tmux
    do_set_chmods
@@ -285,10 +287,37 @@ do_provision_postgres(){
 
 do_provision_nginx(){
    sudo cp -v $product_instance_dir/cnf/nginx/etc/nginx/nginx.conf /etc/nginx/nginx.conf
-   sudo cp -v $product_instance_dir/cnf/nginx/etc/nginx/sites-enabled/qto.conf \
-      /etc/nginx/sites-enabled/qto.conf
-   sudo ln -s /etc/nginx/sites-available/qto.conf /etc/nginx/sites-enabled/qto
+   sudo cp -v $product_instance_dir/cnf/nginx/etc/nginx/sites-available/qto.conf \
+      /etc/nginx/sites-available/qto.conf
+   sudo ln -fs /etc/nginx/sites-available/qto.conf /etc/nginx/sites-enabled/qto.conf
+   ls -la /etc/nginx/sites-enabled/qto.conf
+   set -x
+   sudo service nginx restart
+   test $? -ne 0 && exit 1
+   set +x
 }
+
+do_provision_certbot(){
+
+   sudo apt-get update
+   sudo apt-get install software-properties-common
+   sudo add-apt-repository universe
+   expect <<- EOF_EXPECT
+      set timeout -1
+      sudo add-apt-repository ppa:certbot/certbot
+      expect "Press [ENTER] to continue or Ctrl-c to cancel adding it."
+      send -- "\r"
+      expect eof
+EOF_EXPECT
+   sudo apt-get install -y certbot python-certbot-nginx
+
+}
+
+do_provision_https(){
+   #src: https://medium.com/@mightywomble/how-to-set-up-nginx-reverse-proxy-with-lets-encrypt-8ef3fd6b79e5
+   sudo certbot --nginx -d dev.qto.fi #todo:ysg fix hardcoded  - add -d tst.qto -d prd.qto -d qto
+}
+
 
 do_create_multi_env_dir(){
    test -d "$PRODUCT_INSTANCE_DIR" && \

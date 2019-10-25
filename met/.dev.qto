@@ -108,9 +108,8 @@ cnf/nginx/etc
 cnf/nginx/etc/nginx
 cnf/nginx/etc/nginx/nginx.conf
 cnf/nginx/etc/nginx/sites-enabled
-cnf/nginx/etc/nginx/sites-enabled/qto.conf
 cnf/nginx/etc/nginx/nginx.conf
-cnf/nginx/etc/nginx/sites-enabled/qto.conf
+cnf/nginx/etc/nginx/sites-available/qto.conf
 cnf/postgres/etc/postgresql/11/main/postgresql.conf
 # -- stop  docker deployment
 src/bash/qto/funcs/perl/run-benchmarks.func.sh
