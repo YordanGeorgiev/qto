@@ -12,5 +12,9 @@ doMojoHypnotoadStart(){
    cd src/perl/qto/script
    hypnotoad qto &
    cd $PRODUCT_INSTANCE_DIR
+   set -x
+   sudo service nginx restart
+   test $? -ne 0 && exit 1
+   set +x
 }
 

@@ -58,38 +58,70 @@ resource "aws_security_group" "$ENV_TYPE-sgr_qto_web" {
 name = "$ENV_TYPE-sgr_qto_web"
 vpc_id = "${aws_vpc.$ENV_TYPE-vpc.id}"
 
+  // hypnotoad dev
   ingress {
-    from_port   = 80
-    to_port     = 80
+    from_port   = 8078
+    to_port     = 8078
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  // hypnotoad tst
+  ingress {
+    from_port   = 8079
+    to_port     = 8079
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  // hypnotoad prd
   ingress {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  // ngix dev
   ingress {
-    from_port   = 8081
-    to_port     = 8081
+    from_port   = 78
+    to_port     = 78
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  // ngix tst
   ingress {
-    from_port   = 8082
-    to_port     = 8082
+    from_port   = 79
+    to_port     = 79
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
+  // ngix prd
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  // https nginx dev
+  ingress {
+    from_port   = 441
+    to_port     = 441
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  // https nginx tst
+  ingress {
+    from_port   = 442
+    to_port     = 442
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  // https nginx prd
   ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
+  // ssh
   ingress {
     from_port   = 22
     to_port     = 22
