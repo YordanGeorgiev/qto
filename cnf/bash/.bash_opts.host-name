@@ -1,12 +1,11 @@
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+# wget -O ~/.bash_opts.`hostname -s` https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/.bash_opts.host-name
 export HISTSIZE=9999
 export HISTFILESIZE=10000
 
-# Avoid duplicates
+# Avoid duplicates in the bash history
 export HISTCONTROL=ignoredups:erasedups
 # When the shell exits, append to the history file instead of overwriting it
-shopt -s histappend
-shopt -s direxpand # enable
+shopt -s histappend ; shopt -s direxpand 
 
 # change the terminal title
 export PROMPT_COMMAND='printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD}"'
@@ -17,31 +16,16 @@ export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; histor
 # Ctrl + X,E will open always vim
 export EDITOR=vim
 
-
-# start linux brew
-export PATH="$HOME/.linuxbrew/bin:$PATH"
-export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-
-export EDITOR=vim
 # set a nice prompt
-export PS1=" \u@\h [\d \t] [\w] $ \n\n  "
+export PS1='`date "+%F %T"` \u@\h  \w \n\n  '
 
 # enable ctrl + s for forward searching in the history
 stty -ixon 
 
 ts=$(date "+%Y%m%d_%H%M%S")
-network_backup_dir='/vagrant/csitea/hosts/'`hostname -s`'/home/'"$USER"
-mkdir -p "$network_backup_dir" || \
-   echo "FAILED TO CREATE network_backup_dir: $network_backup_dir !!!"
-
-if [ -d "$network_backup_dir" ]; then 
-   cp -v ~/.bash_history "$network_backup_dir"'/.bash_history.'"$ts"
-   cp -v ~/.tmux-session "$network_backup_dir"'/.tmux-session.'"$ts"
-fi
 
 # # show a disk usage report
-df -a -h | tail -n +2   | perl -nle 'm/(.*)\s+(\d{1,2}%\s+(.*))/g;printf "%-20s %-15s %-70s \n","$2",$3,$1' | sort -nr
+df -a -h | tail -n +2|perl -nle 'm/(.*)\s+(\d{1,2}%\s+(.*))/g;printf "%-20s %-15s %-70s \n","$2",$3,$1' | sort -nr
 
-# usage:
-# wget -O ~/.bash_opts.`hostname -s` https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/.bash_opts.host-name
+# because hypnotoad
+export PATH=$PATH:$HOME/perl5/bin/

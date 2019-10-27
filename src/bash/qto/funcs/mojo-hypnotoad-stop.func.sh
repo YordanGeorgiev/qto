@@ -1,4 +1,5 @@
-# 
+# file: src/bash/qto/funcs/mojo-hypnotoad-stop.func.sh
+#
 # ---------------------------------------------------------
 # cat doc/txt/qto/funcs/mojo-hypnotoad-stop.func.txt
 # ---------------------------------------------------------
@@ -21,5 +22,6 @@ doMojoHypnotoadStop(){
       done < <(lsof -i:${mojo_hypnotoad_port:-} -t|grep $child_of_1_pid)
    done < <(pgrep -P 1)
 
+   service nginx stop
 }
 

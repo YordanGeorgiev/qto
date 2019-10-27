@@ -89,9 +89,7 @@ do_run_actions(){
       doLog "INFO STOP ::: running function :: $run_func"
    done < <(echo "$run_funcs")
 
-	test -d "$daily_backup_dir" || {
-      test -f $PRODUCT_INSTANCE_DIR/bootstrapping || doBackupPostgresDb
-   }
+	test -d "$daily_backup_dir" || doBackupPostgresDb
 
 }
 

@@ -6,22 +6,20 @@ main(){
 	if [[ $app_to_deploy == '--help' ]]; then
 		usage
 	fi
-   do_check_setup_bash
-   do_setup_vim
-   do_check_install_ubuntu_packages
-   do_check_install_postgres
-   do_check_install_chromium_headless
-   do_check_install_phantom_js
-   do_check_install_perl_modules
-   do_provision_postgres
+#   do_check_setup_bash
+#   do_setup_vim
+#   do_check_install_ubuntu_packages
+#   do_check_install_postgres
+#   do_check_install_chromium_headless
+#   do_check_install_phantom_js
+#   do_check_install_perl_modules
+#   do_provision_postgres
+#   do_copy_git_hooks
+#   do_setup_tmux
+#   do_set_chmods
+#   do_create_multi_env_dir
    do_provision_nginx
-   do_provision_certbot
-   do_provision_https
-   do_copy_git_hooks
-   do_setup_tmux
-   do_set_chmods
-   do_create_multi_env_dir
-   do_finalize
+#   do_finalize
 }
 
 do_set_vars(){
@@ -285,37 +283,16 @@ do_provision_postgres(){
    sudo /etc/init.d/postgresql restart
 }
 
+
 do_provision_nginx(){
    sudo cp -v $product_instance_dir/cnf/nginx/etc/nginx/nginx.conf /etc/nginx/nginx.conf
-   sudo cp -v $product_instance_dir/cnf/nginx/etc/nginx/sites-available/qto.conf \
-      /etc/nginx/sites-available/qto.conf
-   sudo ln -fs /etc/nginx/sites-available/qto.conf /etc/nginx/sites-enabled/qto.conf
-   ls -la /etc/nginx/sites-enabled/qto.conf
-   set -x
-   sudo service nginx restart
-   test $? -ne 0 && exit 1
-   set +x
-}
-
-do_provision_certbot(){
-
-   sudo apt-get update
-   sudo apt-get install software-properties-common
-   sudo add-apt-repository universe
-   expect <<- EOF_EXPECT
-      set timeout -1
-      sudo add-apt-repository ppa:certbot/certbot
-      expect "Press [ENTER] to continue or Ctrl-c to cancel adding it."
-      send -- "\r"
-      expect eof
-EOF_EXPECT
-   sudo apt-get install -y certbot python-certbot-nginx
-
-}
-
-do_provision_https(){
-   #src: https://medium.com/@mightywomble/how-to-set-up-nginx-reverse-proxy-with-lets-encrypt-8ef3fd6b79e5
-   sudo certbot --nginx -d dev.qto.fi #todo:ysg fix hardcoded  - add -d tst.qto -d prd.qto -d qto
+   while read -r f ; do \
+      file_name=$(basename $f)
+      sudo test -f /etc/nginx/sites-enabled/$file_name && sudo rm -v /etc/nginx/sites-enabled/$file_name
+      sudo cp -v $f /etc/nginx/sites-available/$file_name ; 
+      sudo ln -fs /etc/nginx/sites-available/$file_name /etc/nginx/sites-enabled/$file_name
+      sudo ls -la /etc/nginx/sites-enabled/$file_name
+   done < <(find $product_instance_dir/cnf/nginx/etc/nginx/sites-available/ -type f -name '*localhost.conf')
 }
 
 
