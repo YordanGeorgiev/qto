@@ -5,19 +5,18 @@ doProvisionDbAdmin(){
    test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
 
    doExportJsonSectionVars $PROJ_CONF_FILE '.env.db'
-   doLog "INFO using PROJ_INSTANCE_DIR: $PROJ_INSTANCE_DIR" ; doLog "INFO using PROJ_CONF_FILE: $PROJ_CONF_FILE"
+   doLog "INFO using PROJ_INSTANCE_DIR: $PROJ_INSTANCE_DIR" ; 
+   doLog "INFO using PROJ_CONF_FILE: $PROJ_CONF_FILE"
 
    sudo mkdir -p /etc/postgresql/11/main/
    sudo mkdir -p /var/lib/postgresql/11/main
 
-   # echo "postgres:postgres" | chpasswd  # probably not needed ...
    echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bashrc
 
-   # for reference the manual way of doing things automated with expect bellow
-   #echo "copy-paste: $postgres_usr_pw"
-   #sudo -u postgres psql -c "\password" 
-   # the OS password could / should be different
-   sudo -u root echo "postgres:$postgres_usr_pw" | sudo chpasswd
+   # uncomment to run manually
+   # echo "copy-paste: $postgres_usr_pw"
+   # sudo -u postgres psql -c "\password"  ; exit ;
+   sudo -u root echo "postgres:$postgres_os_usr_pw" | sudo chpasswd
 
    expect <<- EOF_EXPECT
       set timeout -1
