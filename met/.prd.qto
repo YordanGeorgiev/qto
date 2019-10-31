@@ -1,5 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 cnf/env
+src/bash/deployer/provision-vagrant-repo.sh
 src/perl/qto/public/poc/vuex/sabe/
 src/perl/qto/public/poc/vuex/sabe/app.js
 src/perl/qto/public/poc/vuex/sabe/index.html
@@ -14,11 +15,11 @@ src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
 src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
 cnf/env/dev.env.json
 cnf/env/tst.env.json
-cnf/env/qas.env.json
 cnf/env/prd.env.json
 src/bash/deployer/run.sh
 src/bash/qto/funcs/provision-db-admin.func.sh
 src/bash/qto/funcs/provision-app-user.func.sh
+src/bash/qto/funcs/provision-https.func.sh
 src/bash/deployer/test-deployer-run.sh
 src/bash/deployer/qto/cnf/bin/ubuntu-18.04.lst
 src/bash/deployer/qto/cnf/bin/perl-modules.lst
@@ -106,11 +107,13 @@ cnf/postgres/etc/postgresql/11/main/pg_hba.conf
 cnf/nginx/
 cnf/nginx/etc
 cnf/nginx/etc/nginx
-cnf/nginx/etc/nginx/nginx.conf
-cnf/nginx/etc/nginx/sites-enabled
-cnf/nginx/etc/nginx/sites-enabled/qto.conf
-cnf/nginx/etc/nginx/nginx.conf
-cnf/nginx/etc/nginx/sites-enabled/qto.conf
+cnf/nginx/etc/nginx/sites-available/
+cnf/nginx/etc/nginx/sites-available/dev.localhost.conf
+cnf/nginx/etc/nginx/sites-available/tst.localhost.conf
+cnf/nginx/etc/nginx/sites-available/prd.localhost.conf
+cnf/nginx/etc/nginx/sites-available/dev.site.conf
+cnf/nginx/etc/nginx/sites-available/tst.site.conf
+cnf/nginx/etc/nginx/sites-available/prd.site.conf
 cnf/postgres/etc/postgresql/11/main/postgresql.conf
 # -- stop  docker deployment
 src/bash/qto/funcs/perl/run-benchmarks.func.sh
@@ -359,7 +362,6 @@ src/perl/qto/lib/Qto/App/Utils/Timer.pm
 # ---
 src/bash/qto/funcs/mojo-hypnotoad-start.func.sh
 src/bash/qto/tests/mojo-hypnotoad-start.test.sh
-src/bash/qto/tests/mojo-hypnotoad-stop.test.sh
 src/bash/qto/funcs/mojo-hypnotoad-stop.func.sh
 doc/txt/qto/funcs/mojo-hypnotoad-stop.func.txt
 # ---
@@ -728,7 +730,6 @@ cnf/hosts/host-name/etc/fstab
 cnf/hosts/host-name/etc/network/interfaces
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
-src/perl/qto/lib/auto/Qto/Controller/WsSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HiDelete/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToXls/autosplit.ix
@@ -783,7 +784,6 @@ src/perl/qto/lib/auto/Qto/Controller/Home/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Index/
 src/perl/qto/lib/auto/Qto/Controller/Index/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Truncate/autosplit.ix
-src/perl/qto/lib/auto/Qto/Controller/WSSelect/autosplit.ix
 dat/mix
 src/bash/qto/scripts/todo-copy-paste.sh
 src/bash/qto/funcs/backup-postgres-db-inserts.func.sh

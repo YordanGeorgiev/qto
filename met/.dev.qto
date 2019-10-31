@@ -1,5 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 cnf/env
+src/bash/deployer/provision-vagrant-repo.sh
 src/perl/qto/public/poc/vuex/sabe/
 src/perl/qto/public/poc/vuex/sabe/app.js
 src/perl/qto/public/poc/vuex/sabe/index.html
