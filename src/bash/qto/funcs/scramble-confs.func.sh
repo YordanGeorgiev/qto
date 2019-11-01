@@ -19,6 +19,7 @@ doScrambleConfs(){
 			$data->{'env'}->{'aws'}->{'AWS_ACCESS_KEY_ID'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'aws'}->{'AWS_SECRET_ACCESS_KEY'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'db'}->{'postgres_usr_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
+			$data->{'env'}->{'db'}->{'postgres_os_usr_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'db'}->{'postgres_db_user_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'db'}->{'postgres_db_useradmin_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'db'}->{'root_pwd'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 

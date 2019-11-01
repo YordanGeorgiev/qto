@@ -6,20 +6,20 @@ main(){
 	if [[ $app_to_deploy == '--help' ]]; then
 		usage
 	fi
-   do_check_setup_bash
-   do_setup_vim
-   do_check_install_ubuntu_packages
-   do_check_install_postgres
-   do_check_install_chromium_headless
-   do_check_install_phantom_js
-   do_check_install_perl_modules
-   do_provision_postgres
-   do_copy_git_hooks
-   do_setup_tmux
-   do_set_chmods
-   do_create_multi_env_dir
+#do_check_setup_bash
+#do_setup_vim
+#do_check_install_ubuntu_packages
+#do_check_install_postgres
+#do_check_install_chromium_headless
+#do_check_install_phantom_js
+#do_check_install_perl_modules
+#do_provision_postgres
+#do_copy_git_hooks
+#do_setup_tmux
+#do_set_chmods
+#do_create_multi_env_dir
    do_provision_nginx
-   do_finalize
+#do_finalize
 }
 
 do_set_vars(){
@@ -271,7 +271,9 @@ do_provision_postgres(){
 
 
 do_provision_nginx(){
+   set -x
    sudo cp -v $product_instance_dir/cnf/nginx/etc/nginx/nginx.conf /etc/nginx/nginx.conf
+   test -f /etc/nginx/sites-enabled/default && rm -v /etc/nginx/sites-enabled/default
    while read -r f ; do \
       file_name=$(basename $f)
       sudo test -f /etc/nginx/sites-enabled/$file_name && sudo rm -v /etc/nginx/sites-enabled/$file_name

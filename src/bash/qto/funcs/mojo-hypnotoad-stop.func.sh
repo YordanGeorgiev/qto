@@ -22,6 +22,6 @@ doMojoHypnotoadStop(){
       done < <(lsof -i:${mojo_hypnotoad_port:-} -t|grep $child_of_1_pid)
    done < <(pgrep -P 1)
 
-   service nginx stop
+   sudo service nginx stop
 }
 
