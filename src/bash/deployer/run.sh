@@ -238,34 +238,20 @@ do_provision_postgres(){
    source $product_instance_dir/src/bash/qto/funcs/scramble-confs.func.sh
    doScrambleConfs
 
-   sudo mkdir -p /etc/postgresql/11/main/
-   sudo mkdir -p /var/lib/postgresql/11/main
+   sudo mkdir -p /etc/postgresql/12/main/
+   sudo mkdir -p /var/lib/postgresql/12/main
 
    # echo "postgres:postgres" | chpasswd  # probably not needed ...
    echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bashrc
    
    sudo /etc/init.d/postgresql restart
-   sudo -u postgres psql -c "
-	DO \$\$DECLARE r record;
-		BEGIN
-			IF NOT EXISTS (
-				SELECT 
-				FROM   pg_catalog.pg_roles
-				WHERE  rolname = '"$postgres_db_useradmin"') THEN
-					CREATE ROLE "$postgres_db_useradmin" WITH SUPERUSER CREATEROLE 
-               CREATEDB REPLICATION BYPASSRLS PASSWORD '"$postgres_db_useradmin_pw"' LOGIN ;
-			END IF;
-		END\$\$;
-	ALTER ROLE "$postgres_db_useradmin" WITH SUPERUSER CREATEROLE 
-   CREATEDB REPLICATION BYPASSRLS PASSWORD  '"$postgres_db_useradmin_pw"' LOGIN ; 
-"
    
    sudo -u postgres psql -c "grant all privileges on database postgres to "$postgres_db_useradmin" ;"
    sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";'
    sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "pgcrypto";'
    sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "dblink";' 
 
-   psql_cnf_dir='/etc/postgresql/11/main'
+   psql_cnf_dir='/etc/postgresql/12/main'
    test -f $psql_cnf_dir/pg_hba.conf && \
       sudo cp -v $psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf.orig.bak && \
       sudo cp -v $product_instance_dir/cnf/postgres/$psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf && \
@@ -277,8 +263,8 @@ do_provision_postgres(){
 
    sudo chown -R postgres:postgres "/etc/postgresql" && \
       sudo chown -R postgres:postgres "/var/lib/postgresql" && \
-      sudo chown -R postgres:postgres "/etc/postgresql/11/main/pg_hba.conf" && \
-      sudo chown -R postgres:postgres "/etc/postgresql/11/main/postgresql.conf"
+      sudo chown -R postgres:postgres "/etc/postgresql/12/main/pg_hba.conf" && \
+      sudo chown -R postgres:postgres "/etc/postgresql/12/main/postgresql.conf"
 
    sudo /etc/init.d/postgresql restart
 }
