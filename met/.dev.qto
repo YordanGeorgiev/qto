@@ -102,8 +102,8 @@ src/bash/qto/funcs/full-clean-docker.func.sh
 src/bash/qto/tests/build-docker-image.test.sh
 src/sql/pgsql/scripts/admin/grant-permissions.sql
 src/bash/qto/funcs/admin/restart-postgres.func.sh
-cnf/postgres/etc/postgresql/11/main
-cnf/postgres/etc/postgresql/11/main/pg_hba.conf
+cnf/postgres/etc/postgresql/12/main
+cnf/postgres/etc/postgresql/12/main/pg_hba.conf
 cnf/nginx/
 cnf/nginx/etc
 cnf/nginx/etc/nginx
@@ -114,7 +114,7 @@ cnf/nginx/etc/nginx/sites-available/prd.localhost.conf
 cnf/nginx/etc/nginx/sites-available/dev.site.conf
 cnf/nginx/etc/nginx/sites-available/tst.site.conf
 cnf/nginx/etc/nginx/sites-available/prd.site.conf
-cnf/postgres/etc/postgresql/11/main/postgresql.conf
+cnf/postgres/etc/postgresql/12/main/postgresql.conf
 # -- stop  docker deployment
 src/bash/qto/funcs/perl/run-benchmarks.func.sh
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.t
