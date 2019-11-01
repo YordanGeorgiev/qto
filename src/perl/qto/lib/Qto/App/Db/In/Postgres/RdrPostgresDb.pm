@@ -594,7 +594,6 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
              , a.attnotnull as not_null
              , com.description as comment
              , coalesce(i.indisprimary,false) as is_primary_key
-             , def.adsrc as default_value
              , meta_columns.skip_in_list as skip_in_list
              , meta_columns.width as width
          FROM pg_attribute a 
@@ -626,9 +625,9 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ; 
          $mhsr2 = $sth->fetchall_hashref( 'rowid' ) ; 
-         # debug rint "RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;
-         # debug pr $mhsr2 ; 
-         # debug rint "STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
+         print "RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;
+         p $mhsr2 ; 
+         print "STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
       };
       if ( $@ or !scalar(%$mhsr2)) { 
          $msg = " failed to get the project database: " . $db . " meta data ! " ; 

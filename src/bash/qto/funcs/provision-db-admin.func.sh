@@ -8,11 +8,7 @@ doProvisionDbAdmin(){
    doLog "INFO using PROJ_INSTANCE_DIR: $PROJ_INSTANCE_DIR" ; 
    doLog "INFO using PROJ_CONF_FILE: $PROJ_CONF_FILE"
 
-   sudo mkdir -p /etc/postgresql/11/main/
-   sudo mkdir -p /var/lib/postgresql/11/main
-
    echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bashrc
-
    # uncomment to run manually
    # echo "copy-paste: $postgres_usr_pw"
    # sudo -u postgres psql -c "\password"  ; exit ;

@@ -58,6 +58,27 @@ resource "aws_security_group" "$ENV_TYPE-sgr_qto_web" {
 name = "$ENV_TYPE-sgr_qto_web"
 vpc_id = "${aws_vpc.$ENV_TYPE-vpc.id}"
 
+  // morbo dev
+  ingress {
+    from_port   = 3001
+    to_port     = 3001
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  // morbo tst
+  ingress {
+    from_port   = 3002
+    to_port     = 3002
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  // morbo prd
+  ingress {
+    from_port   = 3003
+    to_port     = 3003
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   // hypnotoad dev
   ingress {
     from_port   = 8078
