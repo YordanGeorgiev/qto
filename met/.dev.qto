@@ -653,7 +653,8 @@ doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
 doc/img/system_guide/multi-env-setup.png
 doc/img/system_guide/qto-infra.jpg
-doc/img/system_guide/qto-infra.xml
+doc/img/system_guide/qto-infra.drawio
+doc/gliffy/qto-infra.xml
 doc/gliffy/multi-env-setup.gliffy
 # --- the application data
 # ---
