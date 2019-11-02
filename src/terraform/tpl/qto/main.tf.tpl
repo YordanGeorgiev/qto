@@ -88,8 +88,8 @@ vpc_id = "${aws_vpc.$ENV_TYPE-vpc.id}"
   }
   // hypnotoad tst
   ingress {
-    from_port   = 8079
-    to_port     = 8079
+    from_port   = 8082
+    to_port     = 8082
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -109,8 +109,8 @@ vpc_id = "${aws_vpc.$ENV_TYPE-vpc.id}"
   }
   // ngix tst
   ingress {
-    from_port   = 79
-    to_port     = 79
+    from_port   = 82
+    to_port     = 82
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

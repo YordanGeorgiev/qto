@@ -1,6 +1,8 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 cnf/env
-src/bash/deployer/provision-vagrant-repo.sh
+cnf/env/dev.env.json
+cnf/env/tst.env.json
+cnf/env/prd.env.json
 src/perl/qto/public/poc/vuex/sabe/
 src/perl/qto/public/poc/vuex/sabe/app.js
 src/perl/qto/public/poc/vuex/sabe/index.html
@@ -13,9 +15,6 @@ src/perl/qto/lib/Qto/Controller/HiCreate.pm
 src/perl/qto/lib/Qto/Controller/HiDelete.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
 src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
-cnf/env/dev.env.json
-cnf/env/tst.env.json
-cnf/env/prd.env.json
 src/bash/deployer/run.sh
 src/bash/qto/funcs/provision-db-admin.func.sh
 src/bash/qto/funcs/provision-app-user.func.sh
@@ -107,7 +106,7 @@ cnf/postgres/etc/postgresql/12/main/pg_hba.conf
 cnf/nginx/
 cnf/nginx/etc
 cnf/nginx/etc/nginx
-cnf/nginx/etc/nginx/sites-available/
+cnf/nginx/etc/nginx/nginx.conf
 cnf/nginx/etc/nginx/sites-available/dev.localhost.conf
 cnf/nginx/etc/nginx/sites-available/tst.localhost.conf
 cnf/nginx/etc/nginx/sites-available/prd.localhost.conf
