@@ -271,8 +271,12 @@ do_provision_postgres(){
 
 
 do_provision_nginx(){
-   set -x
+
+   test -f /etc/nginx/nginx.conf || sudo apt-get install -y nginx
+   test -f /etc/nginx/nginx.conf && sudo cp -v /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
    sudo cp -v $product_instance_dir/cnf/nginx/etc/nginx/nginx.conf /etc/nginx/nginx.conf
+   
+   sudo rm -v /etc/nginx/sites-enabled/*
    test -f /etc/nginx/sites-enabled/default && rm -v /etc/nginx/sites-enabled/default
    while read -r f ; do \
       file_name=$(basename $f)
@@ -281,6 +285,12 @@ do_provision_nginx(){
       sudo ln -fs /etc/nginx/sites-available/$file_name /etc/nginx/sites-enabled/$file_name
       sudo ls -la /etc/nginx/sites-enabled/$file_name
    done < <(find $product_instance_dir/cnf/nginx/etc/nginx/sites-available/ -type f -name '*localhost.conf')
+
+   sudo service nginx restart
+   sudo service nginx status
+   
+   find /var/log/nginx/
+
 }
 
 
