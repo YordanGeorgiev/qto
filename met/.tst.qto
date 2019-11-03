@@ -1,4 +1,5 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+src/bash/deployer/run.sh
 cnf/env
 cnf/env/dev.env.json
 cnf/env/tst.env.json
@@ -15,7 +16,6 @@ src/perl/qto/lib/Qto/Controller/HiCreate.pm
 src/perl/qto/lib/Qto/Controller/HiDelete.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
 src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
-src/bash/deployer/run.sh
 src/bash/qto/funcs/provision-db-admin.func.sh
 src/bash/qto/funcs/provision-app-user.func.sh
 src/bash/qto/funcs/provision-https.func.sh
@@ -106,7 +106,8 @@ cnf/nginx/
 cnf/nginx/etc
 cnf/nginx/etc/nginx
 cnf/nginx/etc/nginx/nginx.conf
-cnf/nginx/etc/nginx/sites-available/%env%.site.conf
+cnf/nginx/etc/nginx/sites-available/%env%.https-site.conf
+cnf/nginx/etc/nginx/sites-available/%env%.https-site.conf
 cnf/nginx/etc/nginx/sites-available/tst.localhost.cnf
 cnf/nginx/etc/nginx/sites-available/prd.localhost.cnf
 cnf/nginx/etc/nginx/sites-available/dev.localhost.cnf
@@ -710,7 +711,6 @@ src/perl/qto/public/poc/modal-dialog/modal-02/index.html
 # ---
 met/.dev.qto
 met/.tst.qto
-met/.qas.qto
 met/.prd.qto
 src/bash/qto/deploy-start-minio.sh
 # ---
