@@ -6,7 +6,7 @@
   * [2.3. PROPOSED CAPABILITIES](#23-proposed-capabilities)
 * [3. DEMO](#3-demo)
 * [4. DOCUMENTATION](#4-documentation)
-* [5. AUTOMATED DEPLOYMENT LOCALLY AND AWS IN 35 MINUTES](#5-automated-deployment-locally-and-aws-in-35-minutes)
+* [5. AUTOMATED DEPLOYMENT LOCALLY AND ON AWS IN 35 MINUTES](#5-automated-deployment-locally-and-on-aws-in-35-minutes)
 * [6. ACKNOWLEDGEMENTS](#6-acknowledgements)
 * [7. LICENSE](#7-license)
 
@@ -93,8 +93,8 @@ Check the doc/md directory where the generated from the db documents residue in 
 
     
 
-## 5. AUTOMATED DEPLOYMENT LOCALLY AND AWS IN 35 MINUTES
-The installation guide https://github.com/YordanGeorgiev/qto/blob/master/doc/md/installations_doc.md contains the instructions on how-to deploy both a local instance AND and an aws instance exposed to the Internet in 35 minutes for instance.
+## 5. AUTOMATED DEPLOYMENT LOCALLY AND ON AWS IN 35 MINUTES
+The installation guide https://github.com/YordanGeorgiev/qto/blob/master/doc/md/installations_doc.md contains the instructions on how-to deploy both a local instance AND and an aws instance exposed to the Internet in 35 minutes for instance from scratch on top of the Amazon latest ubuntu 18.04 ami, so that you can have 100% control on your binary configuration on your infrastructure.
 
     
 

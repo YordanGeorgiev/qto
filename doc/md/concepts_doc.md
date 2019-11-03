@@ -9,14 +9,13 @@
   * [2.3. PERSONAL RESPONSIBILITY](#23-personal-responsibility)
 * [3. BUSINESS LOGIC](#3-business-logic)
   * [3.1. PROJECTS MANAGEMENT](#31-projects-management)
-  * [3.2. INCREASE THE DATE FOR ALL PROJECTS](#32-increase-the-date-for-all-projects)
-  * [3.3. ISSUES / ISSUE ITEMS / ITEMS](#33-issues-/-issue-items-/-items)
-    * [3.3.1. Categories](#331-categories)
-    * [3.3.2. Issues status](#332-issues-status)
-    * [3.3.3. Issues management via time intervals](#333-issues-management-via-time-intervals)
-  * [3.4. QUESTIONS](#34-questions)
-  * [3.5. IDEAS](#35-ideas)
-  * [3.6. IDEAS](#36-ideas)
+  * [3.2. ISSUES / ISSUE ITEMS / ITEMS](#32-issues-/-issue-items-/-items)
+    * [3.2.1. Categories](#321-categories)
+    * [3.2.2. Issues status](#322-issues-status)
+    * [3.2.3. Issues management via time intervals](#323-issues-management-via-time-intervals)
+  * [3.3. QUESTIONS](#33-questions)
+  * [3.4. IDEAS](#34-ideas)
+  * [3.5. PROBLEMS](#35-problems)
 * [4. DEFINITIONS](#4-definitions)
   * [4.1. RELEASE](#41-release)
 
@@ -90,25 +89,20 @@ You must pre-set the configuration variables of an issue-tracker project each ti
 
     
 
-### 3.2. Increase the date for all projects
-to increase the date for all the projects at once use the following oneliner.
-
-    
-
-### 3.3. Issues / Issue items / items
+### 3.2. Issues / Issue items / items
 Issue item is the shortest possible description of task , activity , note or anything requiring distinguishable and preferably measurable action or producing verifiable outcome.
 Issues could be of different types - tasks, activities, notes etc. 
 Each issue MUST BE assigned to one and only one person.
 
     
 
-#### 3.3.1. Categories
+#### 3.2.1. Categories
 Each issue item could be categorized under one and only one category. One category might have 1 or more issues. 
 The categories could contain letters ,numbers, dashes
 
     
 
-#### 3.3.2. Issues status
+#### 3.2.2. Issues status
 You could define whatever statuses you like. As issue-tracker has been built to develop itself ( how sarcastic could that be ;o), that is for tracing the progress of a software project the following "default" statuses have been used: 
 01-eval - for evaluate the issue
 02-todo - for decided to do the issue
@@ -121,7 +115,7 @@ You could define whatever statuses you like. As issue-tracker has been built to 
 
     
 
-#### 3.3.3. Issues management via time intervals
+#### 3.2.3. Issues management via time intervals
 The issues are basically organised into the following periods:
  - daily
  - weekly
@@ -134,18 +128,18 @@ So that in the end of each previous time period you could go trough the issues o
 
     
 
-### 3.4. Questions
+### 3.3. Questions
 Sometimes during the workings of your project you encounter problems, which are complex enough not to allows the definition of an issue. In those cases it would be more rational to just register the problem, discuss it or review it later on, and define the issue as soon as the problem domain is understood and even possible issue solution could be proposed
 
     
 
-### 3.5. Ideas
+### 3.4. Ideas
 Your organisation might collect, sort and evaluate ideas so that they could be later one used as the row data for issues ( aka concrete work descriptions to be followed).
 
     
 
-### 3.6. Ideas
-Your organisation might record 
+### 3.5. Problems
+Quite often the row input material for the issues are the problems encountered - the better you collect, describe and prioritise the list of problems to tackle the better you will be able to organise the issues to be completed. 
 
     
 

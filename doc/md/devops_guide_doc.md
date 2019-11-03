@@ -50,6 +50,7 @@
   * [7.2. E-MAIL COMMUNICATION](#72-e-mail-communication)
   * [7.3. CHAT / IRC](#73-chat-/-irc)
   * [7.4. DOCUMENTATION](#74-documentation)
+  * [7.5. ISSUES MANAGEMENT](#75-issues-management)
 * [8. FEATURE IMPLEMENTATION WORKFLOW](#8-feature-implementation-workflow)
   * [8.1. ISSUE CREATION](#81-issue-creation)
   * [8.2. USER-STORY CREATION](#82-user-story-creation)
@@ -455,6 +456,22 @@ Should you want a quicker respond than 2 hours use thre chat tool
 Undocumented feature is not a feature. 
 
     
+
+### 7.5. Issues management
+At the end of the month you should move the completed issues to the yearly_issues table as follows:
+
+
+    psql -d tst_qto -c "
+    INSERT INTO yearly_issues
+    ( guid  , id  , type  , category  , status  , prio  , name  , description  , owner  , update_time)
+    SELECT
+    guid  , id  , type  , category  , status  , prio  , name  , description  , owner  , update_time
+    FROM monthly_issues WHERE 1=1 and status='09-done'
+    ON CONFLICT (id) DO UPDATE
+    SET
+    guid = excluded.guid ,id = excluded.id ,type = excluded.type ,category = excluded.category ,status = excluded.status ,prio = excluded.prio, name = excluded.name ,description = excluded.description ,owner = excluded.owner ,update_time = excluded.update_time
+    ;
+    "
 
 ## 8. FEATURE IMPLEMENTATION WORKFLOW
 This section describes the common workflow for implementing a feature. 

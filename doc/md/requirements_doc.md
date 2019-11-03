@@ -13,6 +13,7 @@
   * [2.3. A FULL APPLICATION CLONE SHOULD BE READY FOR LESS THAN 5 MINUTES](#23-a-full-application-clone-should-be-ready-for-less-than-5-minutes)
     * [2.3.1. Shell script for postgres db creation and initial data load](#231-shell-script-for-postgres-db-creation-and-initial-data-load)
     * [2.3.2. One liner for single restore for both full db and inserts only](#232-one-liner-for-single-restore-for-both-full-db-and-inserts-only)
+  * [2.4. SINGLETON CONFIGURATION ](#24-singleton-configuration-)
 * [3. USER-FRIENDLINESS](#3-user-friendliness)
   * [3.1. ONELINER SHELL CALLS](#31-oneliner-shell-calls)
     * [3.1.1. Database recreation and DDL scripts run one-liners](#311-database-recreation-and-ddl-scripts-run-one-liners)
@@ -145,6 +146,11 @@ The creation of the Postgres database of a qto project should be doable via a si
 
 #### 2.3.2. One liner for single restore for both full db and inserts only
 The full database should be loadable form a db dump either from a full dump or from the db-inserts dump only.
+
+    
+
+### 2.4. Singleton configuration 
+Whenever there is a configuration entry indicating part of the configuration of an application instance it should be stored in 1 and only 1 place in the configuration file of the instance, so that any person not familiar with the internal logic of the application could find all the configuration entries in one and only one place including the secrets.
 
     
 
