@@ -3,23 +3,23 @@
 
 main(){
    do_set_vars "$@"
-	if [[ $app_to_deploy == '--help' ]]; then
-		usage
-	fi
-#do_check_setup_bash
-#do_setup_vim
-#do_check_install_ubuntu_packages
-#do_check_install_postgres
-#do_check_install_chromium_headless
-#do_check_install_phantom_js
-#do_check_install_perl_modules
-#do_provision_postgres
-#do_copy_git_hooks
-#do_setup_tmux
-#do_set_chmods
-#do_create_multi_env_dir
+#	if [[ $app_to_deploy == '--help' ]]; then
+#		usage
+#	fi
+#   do_check_setup_bash
+#   do_setup_vim
+#   do_check_install_ubuntu_packages
+#   do_check_install_postgres
+#   do_check_install_chromium_headless
+#   do_check_install_phantom_js
+#   do_check_install_perl_modules
+#   do_provision_postgres
+#   do_copy_git_hooks
+#   do_setup_tmux
+#   do_set_chmods
+#   do_create_multi_env_dir
    do_provision_nginx
-#do_finalize
+   do_finalize
 }
 
 do_set_vars(){
@@ -246,7 +246,6 @@ do_provision_postgres(){
    
    sudo /etc/init.d/postgresql restart
    
-   sudo -u postgres psql -c "grant all privileges on database postgres to "$postgres_db_useradmin" ;"
    sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";'
    sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "pgcrypto";'
    sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "dblink";' 
@@ -274,20 +273,31 @@ do_provision_nginx(){
 
    test -f /etc/nginx/nginx.conf || sudo apt-get install -y nginx
    test -f /etc/nginx/nginx.conf && sudo cp -v /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
-   sudo cp -v $product_instance_dir/cnf/nginx/etc/nginx/nginx.conf /etc/nginx/nginx.conf
-   
    sudo rm -v /etc/nginx/sites-enabled/*
+   sudo rm -v /etc/nginx/sites-available/*
    test -f /etc/nginx/sites-enabled/default && rm -v /etc/nginx/sites-enabled/default
-   while read -r f ; do \
-      file_name=$(basename $f)
-      sudo test -f /etc/nginx/sites-enabled/$file_name && sudo rm -v /etc/nginx/sites-enabled/$file_name
-      sudo cp -v $f /etc/nginx/sites-available/$file_name ; 
-      sudo ln -fs /etc/nginx/sites-available/$file_name /etc/nginx/sites-enabled/$file_name
-      sudo ls -la /etc/nginx/sites-enabled/$file_name
-   done < <(find $product_instance_dir/cnf/nginx/etc/nginx/sites-available/ -type f -name '*localhost.conf')
+
+   sudo cp -v $product_instance_dir/cnf/nginx/etc/nginx/nginx.conf /etc/nginx/nginx.conf
+
+   source $product_instance_dir/lib/bash/funcs/export-json-section-vars.sh
+   for env in `echo dev tst prd`; do \
+
+      doExportJsonSectionVars $product_instance_dir/cnf/env/$env.env.json '.env.app'
+      sudo cp -v $product_instance_dir/cnf/nginx/etc/nginx/sites-available/%env%.http-site.conf \
+         /etc/nginx/sites-available/$env.http-site.conf
+      sudo perl -pi -e 's|\%nginx_port\%|'"$nginx_port"'|g' "/etc/nginx/sites-available/$env.http-site.conf"
+      sudo perl -pi -e 's|\%https_port\%|'"$https_port"'|g' "/etc/nginx/sites-available/$env.http-site.conf"
+      sudo perl -pi -e 's|\%mojo_hypnotoad_port\%|'"$mojo_hypnotoad_port"'|g' "/etc/nginx/sites-available/$env.http-site.conf"
+      sudo perl -pi -e 's|\%web_host\%|'"$web_host"'|g' "/etc/nginx/sites-available/$env.http-site.conf"
+      sudo perl -pi -e 's|\%port\%|'"$port"'|g' "/etc/nginx/sites-available/$env.http-site.conf"
+      
+      sudo ln -fs /etc/nginx/sites-available/$env.http-site.conf /etc/nginx/sites-enabled/$env.http-site.conf
+      sudo ls -la /etc/nginx/sites-enabled/$env.http-site.conf
+   done ;
 
    sudo service nginx restart
    sudo service nginx status
+   doExportJsonSectionVars $product_instance_dir/cnf/env/$ENV_TYPE.env.json '.env.app'
    
    find /var/log/nginx/
 

@@ -87,8 +87,6 @@ doc/txt/qto/funcs/generate-md-docs.func.txt
 src/bash/qto/funcs/remove-docker-images.func.sh
 src/bash/qto/funcs/remove-docker-containers.func.sh
 src/bash/qto/funcs/run-container.func.sh
-src/bash/qto/funcs/mojo-daemon-start.func.sh
-src/bash/qto/funcs/mojo-daemon-stop.func.sh
 src/bash/qto/install/docker/install-test.sh
 src/bash/qto/install/docker/docker-entry-point.sh
 src/docker/Dockerfile.deploy-quick-test
@@ -103,17 +101,15 @@ src/sql/pgsql/scripts/admin/grant-permissions.sql
 src/bash/qto/funcs/admin/restart-postgres.func.sh
 cnf/postgres/etc/postgresql/12/main
 cnf/postgres/etc/postgresql/12/main/pg_hba.conf
+cnf/postgres/etc/postgresql/12/main/postgresql.conf
 cnf/nginx/
 cnf/nginx/etc
 cnf/nginx/etc/nginx
 cnf/nginx/etc/nginx/nginx.conf
-cnf/nginx/etc/nginx/sites-available/dev.localhost.conf
-cnf/nginx/etc/nginx/sites-available/tst.localhost.conf
-cnf/nginx/etc/nginx/sites-available/prd.localhost.conf
-cnf/nginx/etc/nginx/sites-available/dev.site.conf
-cnf/nginx/etc/nginx/sites-available/tst.site.conf
-cnf/nginx/etc/nginx/sites-available/prd.site.conf
-cnf/postgres/etc/postgresql/12/main/postgresql.conf
+cnf/nginx/etc/nginx/sites-available/%env%.site.conf
+cnf/nginx/etc/nginx/sites-available/tst.localhost.cnf
+cnf/nginx/etc/nginx/sites-available/prd.localhost.cnf
+cnf/nginx/etc/nginx/sites-available/dev.localhost.cnf
 # -- stop  docker deployment
 src/bash/qto/funcs/perl/run-benchmarks.func.sh
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.t
@@ -524,7 +520,6 @@ src/bash/qto/tests/pckg/create-relative-package.test.sh
 met
 met/.dev.qto
 met/.tst.qto
-met/.qas.qto
 met/.prd.qto
 doc/txt/qto/helps/dev/clone-to-app.help.txt
 src/bash/qto/funcs/dev/clone-to-app.func.sh
@@ -653,7 +648,7 @@ doc/img/readme/what-is-is.png
 doc/img/devops/shell-action-control-flow-diagram.png
 doc/img/system_guide/multi-env-setup.png
 doc/img/system_guide/qto-infra.jpg
-doc/img/system_guide/qto-infra.xml
+doc/img/system_guide/qto-infra.drawio
 doc/gliffy/multi-env-setup.gliffy
 # --- the application data
 # ---
