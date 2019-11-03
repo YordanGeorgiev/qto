@@ -309,7 +309,7 @@ do_set_vars(){
       product_dir=$PRODUCT_INSTANCE_DIR
       test -z "$env_type" && export env_type='dev'
    else
-      # this could be dev, tst , stg , qas , prd
+      # this could be dev, tst , prd
       export product_owner=$(echo `basename "$PRODUCT_INSTANCE_DIR"`|cut -d'.' -f6)
       cd .. ; product_dir=`pwd`;
    fi
