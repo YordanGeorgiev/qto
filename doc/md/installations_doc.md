@@ -21,8 +21,15 @@
   * [2.12. ACCESS THE QTO APPLICATION FROM THE WEB](#212-access-the-qto-application-from-the-web)
   * [2.13. CONFIGURE DNS AND HTTPS](#213-configure-dns-and-https)
   * [2.14. PROVISION QTO USERS](#214-provision-qto-users)
-* [3. POTENTIAL PROBLEMS](#3-potential-problems)
-  * [3.1. THE POSTGRES ADMIN USER PASSWORD IS WRONG](#31-the-postgres-admin-user-password-is-wrong)
+* [3. CREATE THE TESTING AND INSTANCE](#3-create-the-testing-and-instance)
+  * [3.1. CREATE THE TST PRODUCT INSTANCE](#31-create-the-tst-product-instance)
+  * [3.2. PROVISION THE TST DATABASE](#32-provision-the-tst-database)
+* [4. CREATE THE PRODUCTION INSTANCE](#4-create-the-production-instance)
+  * [4.1. FORK THE PRODUCTION INSTANCE](#41-fork-the-production-instance)
+  * [4.2. PROVISION THE PRD DATABASE](#42-provision-the-prd-database)
+* [5. POTENTIAL PROBLEMS AND TROUBLESHOOTING](#5-potential-problems-and-troubleshooting)
+  * [5.1. THE POSTGRES ADMIN USER PASSWORD IS WRONG](#51-the-postgres-admin-user-password-is-wrong)
+  * [5.2. CANNOT LOGIN AT ALL IN THE WEB INTERFACE WITH THE ADMIN USER](#52-cannot-login-at-all-in-the-web-interface-with-the-admin-user)
 
 
 
@@ -76,7 +83,7 @@ You need an aws account, capable of deploying micro instances. The costs for run
 
 ### 2.2. Target setup
 The target setup is a system comprised of dev, tst, qas and prd instances of qto locally and dev, tst , qas and prd instances in aws. 
-The following diagram illustrates that setup. 
+The following diagram illustrates that setup. Naturally you will be deploying only the dev.&lt;&lt;site&gt;&gt;.com when doing the installation for first time - in the spirit of qto - you will be moving fast and destroying in dev, re-inforcing skills in tst and do it at once in prd ...
 
 
 Figure 1: 
@@ -190,14 +197,56 @@ Open the cnf/env/dev.env.json, change the env-&gt;AdminEmail with an e-mail you 
     # the start action performs restart as well, if the web servers are running
     ./src/bash/qto/qto.sh -a mojo-hypnotoad-start
 
-## 3. POTENTIAL PROBLEMS
+## 3. CREATE THE TESTING AND INSTANCE
+If you re-visit the target architecture picture, the actions so far have been only the installations of the dev instance - which wi
+
+    
+
+### 3.1. create the tst product instance
+./src/bash/qto/qto.sh -a to-env=tst
+
+    
+
+### 3.2. Provision the tst database
 
 
     
 
-### 3.1. The postgres admin user password is wrong
+## 4. CREATE THE PRODUCTION INSTANCE
+The creation of this one should succeed at once, as it is perform exactly in the same way as the creation of the testing ( tst ) instance.
+
+    
+
+### 4.1. Fork the production instance
+./src/bash/qto/qto.sh -a to-env=prd
+
+    
+
+### 4.2. Provision the prd database
+
+
+    
+
+## 5. POTENTIAL PROBLEMS AND TROUBLESHOOTING
+
+
+    
+
+### 5.1. The postgres admin user password is wrong
 This error is somewhat mystical and has occurred several time - the most probable root cause for it is execution of the steps in wrong order - basically the db security is passed from OS root to postgres user to qto admin to qto app, thus to fix it issue the following command, which will basically re-provision your postgres.
 You would need to restart the web server after executing this command.
 
      ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
+
+### 5.2. Cannot login at all in the web interface with the admin user
+The password hashing in the users table is activated ALWAYS on blur even that the ui is not showing it ( yes , that is more of a bug, than a feature.
+The solution is to restart the application layer WITHOUT any authentication, change the admin user password from the ui and restart the application layer with authentication once again.
+
+    export QTO_ONGOING_TEST=0
+    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
+    
+    # now change the AdminEmail user password from the UI
+    export QTO_ONGOING_TEST=1
+    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
+    
 

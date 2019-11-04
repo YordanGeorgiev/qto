@@ -62,7 +62,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
             $ret = 200 ; 
             $msg = "" ; 
          } else { 
-            $msg = "$email not registered! Contact " . $config->{'env'}->{ 'AdminEmail' } . " to request access." ;  
+            $msg = "$email not registered! Contact " . $config->{'env'}->{'db'}->{'AdminEmail'} . " to request access." ;  
             $ret = 401 if ( scalar ( keys %$hsr ) != 1 );
          }
       };
@@ -930,7 +930,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       
       ($ret , $msg , $columns_to_order_by_desc ) = $self->doSetColToOrderByDesc(\$objModel,$table,$cols);
       return ( 400 , $msg , undef ) unless ( $ret == 0 );
-     
+    
+      my $admin_user_email = $config->{'env'}->{'db'}->{'AdminEmail'} ; 
       $str_sql = " 
          SELECT 
          $columns_to_select , count(*) OVER () as rows_count
@@ -938,7 +939,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          WHERE 1=1 " ; 
 
       if ( defined $who ) {
-         if ( $table eq 'users' and $who ne $config->{'env'}->{'AdminEmail'} ){
+         if ( $table eq 'users' and $who ne $admin_user_email ){
             $str_sql .= "AND email = '" . $who . "'"
          }
       }
