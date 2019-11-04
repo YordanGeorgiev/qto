@@ -106,7 +106,7 @@ cnf/nginx/
 cnf/nginx/etc
 cnf/nginx/etc/nginx
 cnf/nginx/etc/nginx/nginx.conf
-cnf/nginx/etc/nginx/sites-available/%env%.https-site.conf
+cnf/nginx/etc/nginx/sites-available/%env%.http-site.conf
 cnf/nginx/etc/nginx/sites-available/%env%.https-site.conf
 cnf/nginx/etc/nginx/sites-available/tst.localhost.cnf
 cnf/nginx/etc/nginx/sites-available/prd.localhost.cnf

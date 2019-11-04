@@ -3,21 +3,21 @@
 
 main(){
    do_set_vars "$@"
-#	if [[ $app_to_deploy == '--help' ]]; then
-#		usage
-#	fi
-#   do_check_setup_bash
-#   do_setup_vim
-#   do_check_install_ubuntu_packages
-#   do_check_install_postgres
-#   do_check_install_chromium_headless
-#   do_check_install_phantom_js
-#   do_check_install_perl_modules
-#   do_provision_postgres
-#   do_copy_git_hooks
-#   do_setup_tmux
-#   do_set_chmods
-#   do_create_multi_env_dir
+	if [[ $app_to_deploy == '--help' ]]; then
+		usage
+	fi
+   do_check_setup_bash
+   do_setup_vim
+   do_check_install_ubuntu_packages
+   do_check_install_postgres
+   do_check_install_chromium_headless
+   do_check_install_phantom_js
+   do_check_install_perl_modules
+   do_provision_postgres
+   do_copy_git_hooks
+   do_setup_tmux
+   do_set_chmods
+   do_create_multi_env_dir
    do_provision_nginx
    do_finalize
 }
@@ -34,7 +34,9 @@ do_set_vars(){
    product_instance_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
    app_name=$(basename $product_dir|cut -d'.' -f1)
    app_to_deploy=$(basename $product_dir|cut -d'.' -f1)
-   echo 'ENV_TYPE=dev'>>"$unit_run_dir/../../../.env" # you should ALWAYS bootstrap a dev instance
+   # you should ALWAYS bootstrap a dev instance, use -a to-env=tst , -a to-env=prd
+   perl -pi 's|ENV_TYPE=tst|ENV_TYPE=dev|g' "$unit_run_dir/.env"
+   perl -pi 's|ENV_TYPE=prd|ENV_TYPE=dev|g' "$unit_run_dir/.env"
    source "$unit_run_dir/../../../.env"
    PRODUCT_INSTANCE_DIR="$product_dir/$app_name.$VERSION.$ENV_TYPE.$app_name_owner"
    bash_opts_file=~/.bash_opts.$(hostname -s)
