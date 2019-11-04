@@ -9,6 +9,7 @@ doChangeEnvType(){
    prefix='to-env='
    tgt_env=${tgt_env#$prefix}
 
+
 	tgt_environment_name=$(echo $environment_name | perl -ne "s/$ENV_TYPE/$tgt_env/g;print")
 	tgt_PRODUCT_INSTANCE_DIR=$product_dir/$tgt_environment_name
 
@@ -26,6 +27,4 @@ doChangeEnvType(){
 	cp -v $zip_file $tgt_PRODUCT_INSTANCE_DIR
 
    perl -pi -e 's|'$env_type'|'$tgt_env'|g' $tgt_PRODUCT_INSTANCE_DIR/.env
-
-	doLog "DEBUG STOP  doChangeEnvType"
 }

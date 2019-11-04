@@ -21,6 +21,7 @@ doRunPgsqlScripts(){
       set -x
       PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -v ON_ERROR_STOP=1 -q -t -X -w \
          -h $postgres_db_host -p $postgres_db_port -U "${postgres_db_useradmin:-}" \
+         -v AdminEmail="${AdminEmail:-}" \
          -v postgres_db_name="$postgres_db_name" -f "$sql_script" "$postgres_db_name" > "$tmp_log_file" 2>&1
       ret=$?
       set +x

@@ -18,7 +18,8 @@ EOF_EXPECT
    #src: https://medium.com/@mightywomble/how-to-set-up-nginx-reverse-proxy-with-lets-encrypt-8ef3fd6b79e5
    echo put in the backgroup and run the following command 
    echo sudo certbot --nginx -d $web_host #todo:ysg fix hardcoded  - add -d tst.qto -d prd.qto -d qto
-   #sleep 1000
+   # todo: add expect automation
+   sleep 1000
    
    source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/export-json-section-vars.sh
    for env in `echo dev tst prd`; do \
