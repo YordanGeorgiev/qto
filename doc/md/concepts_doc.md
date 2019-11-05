@@ -18,6 +18,7 @@
   * [3.5. PROBLEMS](#35-problems)
 * [4. DEFINITIONS](#4-definitions)
   * [4.1. RELEASE](#41-release)
+  * [4.2. NAME ...](#42-name-)
 
 
 
@@ -152,6 +153,11 @@ This section contains definitions of terms within the context of the Issue-Track
 An issue-tracker release is the artifact you can download from the following GitHub page:
 https://github.com/YordanGeorgiev/issue-tracker/releases
 The word is also used for the actual release of the latest source code into a working instance available in the web ... 
+
+    
+
+### 4.2. name ...
+
 
     
 

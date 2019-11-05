@@ -101,6 +101,8 @@ sub doShowLoginForm {
    $sessions->load($self);
    $sessions->cookie_name('qto.' . $db) unless $sessions->cookie_name ;
    $sessions->default_expiration(86400);
+   $sessions = $sessions->secure(0);
+   $sessions = $sessions->samesite('Strict');
    $sessions->cookie_domain( $instance_domain) unless $sessions->cookie_domain( $instance_domain);
    my $redirect_url = $self->session( 'app.' . $db . '.url' ) if defined $self->session( 'app.' . $db . '.url' ) ; 
    $self->session( 'app.' . $db . '.user' => undef);

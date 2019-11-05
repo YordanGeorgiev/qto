@@ -1,12 +1,14 @@
 #  QTO DEVOPS GUIDE
 * [1. GUIDING PRINCIPLE'S](#1-guiding-principle's)
-  * [1.1. PERSONAL RESPONSIBILITY](#11-personal-responsibility)
-  * [1.2. ATTEMPT FOR 100% TEST COVERAGE TO ACHIEVE RELIABILITY](#12-attempt-for-100%-test-coverage-to-achieve-reliability)
-  * [1.3. IT SHOULD JUST WORK](#13-it-should-just-work)
-  * [1.4. NAMING CONVENTIONS](#14-naming-conventions)
-  * [1.5. BE USER-FRIENDLY TO ALL](#15-be-user-friendly-to-all)
-  * [1.6. AIM FOR SIMPLICITY](#16-aim-for-simplicity)
-  * [1.7. DO NOT ALLOW BROKEN WINDOWS](#17-do-not-allow-broken-windows)
+  * [1.1. USE COMMON SENSE](#11-use-common-sense)
+  * [1.2. PERSONAL RESPONSIBILITY](#12-personal-responsibility)
+  * [1.3. ATTEMPT FOR 100% TEST COVERAGE TO ACHIEVE RELIABILITY](#13-attempt-for-100%-test-coverage-to-achieve-reliability)
+  * [1.4. IT SHOULD JUST WORK](#14-it-should-just-work)
+  * [1.5. NAMING CONVENTIONS](#15-naming-conventions)
+  * [1.6. BE USER-FRIENDLY TO ALL](#16-be-user-friendly-to-all)
+  * [1.7. AIM FOR SIMPLICITY](#17-aim-for-simplicity)
+  * [1.8. DO NOT ALLOW BROKEN WINDOWS](#18-do-not-allow-broken-windows)
+  * [1.9. DO NOT ADD A COMMIT WITHOUT PASSING ALL THE REGRESSION TESTS](#19-do-not-add-a-commit-without-passing-all-the-regression-tests)
 * [2. MAINTENANCE AND OPERATIONS](#2-maintenance-and-operations)
   * [2.1. RDBMS RUN-STATE MANAGEMENT](#21-rdbms-run-state-management)
     * [2.1.1. To check the status of the postgreSql](#211-to-check-the-status-of-the-postgresql)
@@ -90,42 +92,52 @@ Of course you are free to not follow these principles, the less you follow them 
 
     
 
-### 1.1. Personal responsibility
+### 1.1. Use common sense
+Use common sense when applying all those principles.
+
+    
+
+### 1.2. Personal responsibility
 Any given instance of the qto should have ONE and only ONE person which is responsible at the end for the functioning of THE instance - so think carefully before attempting to take ownership of an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instance. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no Service Level Agreement, not even promise to help. 
 
     
 
-### 1.2. Attempt for 100% test coverage to achieve reliability
+### 1.3. Attempt for 100% test coverage to achieve reliability
 The more you increase your test coverage the greater the confidence that the code will work as expected. 
 Do not write a single function without first implementing the testing call for that function - this has been proven really, really difficult, yet the more features are added the less the time wasted in troubleshooting of bugs and un-expected behaviour when proper testing is implemented. 
-Testing ensures the consistency and future expandability of the functionalities. 
+Testing ensures the consistency and future expandability of the functionalities. Our velocity increases with the WORKING features and functionalities added over time. ANYTHING, which is not working, or not even sure about how it should be working MUST be [fixed](fixed/deleted.) 
 
     
 
-### 1.3. It should just work
+### 1.4. It should just work
 Any instance of the qto should simply work as promised - no less, no more. 
 Any instance is the combination of code, configurations, binaries in the System and data - that is the instance you are using should just work for the set of functionalities promised. 
 
     
 
-### 1.4. Naming conventions
+### 1.5. Naming conventions
 All the names used in the code and the configurations MUST BE human readable and expandable - that is name the objects from the greater realm to the smaller - for example &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; , because the concept of operational IT environments ( dev , test , qas , prd ) is broader than the concept of a application databases ... 
 
     
 
-### 1.5. Be user-friendly to all
+### 1.6. Be user-friendly to all
 Especially to technical personnel, as you cannot achieve user-friendliness for the end-users unless your developers and technical personnel are happy while interacting with your artefacts. 
 
     
 
-### 1.6. Aim for simplicity
+### 1.7. Aim for simplicity
 Things should be as simple as possible, but not simpler - if Einstein said it it makes sense - having lost so much time in endless loops of IT complexity - the older we get the more it gets more rational. 
 
     
 
-### 1.7. Do not allow broken windows
+### 1.8. Do not allow broken windows
 A broken windows is any peace of code or documentation which is hanging around not included in the integration tests suite and not matching the most up-to-date standards for work deliverables. Either bring it up to the standard level or get rid of it. 
 As soon as you find a bug, write a test for it.
+
+    
+
+### 1.9. Do not add a commit without passing ALL the regression tests
+Even in your personal branch. Really. Because after the application has surpassed the mark of having 200 000 lines of code the complexity added to a "broken machine" WILL NOT justify the breaking of an existing feature. If you do not consider the feature / functionality tested as important than feel free to REMOVE it ( both implementations AND tests ) in that very same commit.
 
     
 

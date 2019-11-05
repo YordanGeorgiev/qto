@@ -8,4 +8,4 @@ clear ; ./src/bash/qto/qto.sh -a run-functional-tests
 clear ; ./src/bash/qto/qto.sh -a scramble-confs
 
 # update the meta include file for each env from the dev env
-for env in `echo dev tst qas prd` ; do cp -v met/.dev.qto met/.$env.qto ; done ;
+for env in `echo dev tst prd` ; do cp -v met/.dev.qto met/.$env.qto ; done ;

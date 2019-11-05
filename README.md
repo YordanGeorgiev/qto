@@ -59,7 +59,7 @@ Your organisation:
 With qto you will gain the following capabilities:
 - instance deployment to bare metal/vm install, which should take no more than 40min
 - provide db based authentication and restricted access to the app via http(s)
-- provide access to the non-technical person via http(s) for CRUD operations
+- provide access to the non-technical person via http and/or https for CRUD operations
 - quickly define LOTS of tables DDL by using the existing examples and just changing the columns
 - search the data from the db via the global search feature 
 - load initial data via xls ( less than 10k rows per sheet should be ok )
@@ -106,7 +106,7 @@ This project would NOT have been possible without the work of the people working
  - Vue
  - FreeBSD
 
-Deep gratitudes and thanks to all those people ! This application aims to contain the best practices of our former colleagues and collaborators and fellow travellers in life, which also deserve huge thanks for their support and contributions ! We tend to incorporate and re-use a lot of code snippets from the Stackoverflow and Codepen sites, should you consider that you were the author of those code snippets and you deserve mentioning of the source please let us know ...
+Deep gratitudes and thanks to all those people ! This application aims to contain the best practices of our former colleagues and collaborators and fellow travellers in life, which also deserve huge thanks for their support and contributions!!! We tend to incorporate and re-use a lot of code snippets from the Stackoverflow and Codepen sites, should you consider that you were the author of those code snippets and you deserve mentioning of the source please let us know ...
 
     
 

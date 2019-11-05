@@ -1,9 +1,24 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
-src/bash/deployer/run.sh
 cnf/env
 cnf/env/dev.env.json
 cnf/env/tst.env.json
 cnf/env/prd.env.json
+# start ::: deployment
+src/bash/deployer/run.sh
+src/bash/deployer/export-json-section-vars.func.sh
+src/bash/deployer/check-setup-bash.func.sh
+src/bash/deployer/check-install-ubuntu-packages.func.sh
+src/bash/deployer/check-install-postgres.func.sh
+src/bash/deployer/check-install-chromium-headless.func.sh
+src/bash/deployer/check-install-phantom-js.func.sh
+src/bash/deployer/check-install-perl-modules.func.sh
+src/bash/deployer/provision-postgres.func.sh
+src/bash/deployer/provision-nginx.func.sh
+src/bash/deployer/scramble-confs.func.sh
+src/bash/deployer/test-deployer-run.sh
+src/bash/deployer/qto/cnf/bin/ubuntu-18.04.lst
+src/bash/deployer/qto/cnf/bin/perl-modules.lst
+# stop  ::: deployment
 src/perl/qto/public/poc/vuex/sabe/
 src/perl/qto/public/poc/vuex/sabe/app.js
 src/perl/qto/public/poc/vuex/sabe/index.html
@@ -19,9 +34,6 @@ src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
 src/bash/qto/funcs/provision-db-admin.func.sh
 src/bash/qto/funcs/provision-app-user.func.sh
 src/bash/qto/funcs/provision-https.func.sh
-src/bash/deployer/test-deployer-run.sh
-src/bash/deployer/qto/cnf/bin/ubuntu-18.04.lst
-src/bash/deployer/qto/cnf/bin/perl-modules.lst
 src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
 src/bash/qto/funcs/load-db-data-from-s3.func.sh
 src/bash/qto/qto.sh
@@ -725,6 +737,7 @@ cnf/hosts/host-name/etc/network/interfaces
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HiDelete/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/WsSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToXls/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlTxtToDb/autosplit.ix

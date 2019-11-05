@@ -9,8 +9,8 @@ do_set_vars(){
    unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
    product_base_dir=$(cd $unit_run_dir/../../../..; echo `pwd`)
    product_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
-	product_instance_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
-   cd $product_instance_dir
+	DEPLOY_DIR=$(cd $unit_run_dir/../../..; echo `pwd`)
+   cd $DEPLOY_DIR
    source "$unit_run_dir/../../../.env"
 }
 
