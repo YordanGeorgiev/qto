@@ -16,7 +16,7 @@ doProvisionDbAdmin(){
 
    expect <<- EOF_EXPECT
       set timeout -1
-      spawn sudo -u postgres psql -c "\\\password"
+      spawn sudo -u postgres psql --port $postgres_db_port -c "\\\password"
       expect "Enter new password: "
       send -- "$postgres_usr_pw\r"
       expect "Enter it again: "

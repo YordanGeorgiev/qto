@@ -260,8 +260,6 @@ An error message is shown if you do not use existing operator.
          , 'ge' => '>='
          , 'le' => '<='
          , 'like' => 'like'
-    
-    
 
 ##### 4.1.6.5. Filtering with "like"
 The filtering with the like operator translates to the SQL "like" operator- the "like-by=&lt;&lt;attr&gt;&gt;&like-val=&lt;&lt;val&gt;&gt; filtering, where &lt;&lt;attr&gt;&gt; stands for the name of the attribute to use the like operator. 
@@ -292,7 +290,7 @@ The default and most convenient table paging size is 7, because it allows quick 
     
 
 ### 4.5. Paging - setting the item table's page number
-If the result-set requested is larger than the page size you can go to the next page number by using the "&page-num=&lt;&lt;page-num&gt;&gt;" url parameter. 
+If the result-set requested is larger than the page size you can go to the next page number by using the "&pg-num=&lt;&lt;page-num&gt;&gt;" url parameter. 
 You could go to the next page number by clicking on the links just bellow the quick search textbox. The table control has UI for setting the table page number. 
 The pager shows 10 pages at a "pager page" so getting to the end of hundreds of pages ( depending of course on your page size ) is comparably easy. 
 You could quickly use the / char shortcut to focus to the quick search box and from there use the tab to quickly navigate to the desired page number. 

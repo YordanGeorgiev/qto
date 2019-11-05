@@ -46,7 +46,7 @@
            , DELETE_ITEM: (state, payload) => {
                state.showRgtMenu = false
                var index = state.items.findIndex(item => item.id === payload);
-               state.items.splice(index, 1);
+               state.items = state.items.splice(index, 1);
            }
            , CREATE_ITEM: (state, payload) => {
                state.showRgtMenu = false
@@ -143,6 +143,10 @@
          }
          , showContextMenu (context,payload) {
             var e = payload ; // the mouse event
+            console.log ( e ) 
+            console.log ( "stop of e ")
+            console.log ( payload )
+            console.log ( "stop payload " )
             var id = String(e.target.id).split('-')[1]
             if ( typeof ( id ) === "undefined" ) { console.error( "showContextMenu id undef" ) ; return }
             e.target.disabled = true
@@ -166,8 +170,7 @@
                .then(response => { 
                   if ( typeof response.status != "undefined" && response.status === 200 ) {
                      context.commit("DELETE_ITEM", payload)
-                     var items = actions.loadItems(context)
-                     context.commit('SET_ITEMS', items)
+                     actions.loadItems(context)
                   } else {
                      if ( typeof error.response.data.msg != "undefined" ) { 
                         context.commit('SET_SNACKBAR_SHOW', true)
@@ -184,7 +187,6 @@
                      context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
                   }
                }) 
-               window.scrollTo(payload.x, payload.y)
          }
          , createItem: (context,payload) => {
                var uri = window.location.href.replace('/view/', '/hicreate/')
@@ -212,8 +214,6 @@
                      context.commit('SET_SNACKBAR_SHOW', true)
                      context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
                   }
-                  // payload.newVal = payload.oldData
-                  //context.commit("CREATE_ITEM", payload)
                }) 
          }
          , updateItem: (context,payload) => {
@@ -232,6 +232,7 @@
                if ( typeof response.status != "undefined" && response.status === 200 ) {
                   newCnt = ( newCnt == "null" ? "" : newCnt )
                   context.commit("UPDATE_ITEM", payload)
+                  actions.loadItems(context)
                } else {
                   if ( typeof error.response.data.msg != "undefined" ) { 
                      context.commit('SET_SNACKBAR_SHOW', true)

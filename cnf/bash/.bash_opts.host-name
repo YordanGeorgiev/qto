@@ -22,8 +22,6 @@ export PS1='`date "+%F %T"` \u@\h  \w \n\n  '
 # enable ctrl + s for forward searching in the history
 stty -ixon 
 
-ts=$(date "+%Y%m%d_%H%M%S")
-
 # # show a disk usage report
 df -a -h | tail -n +2|perl -nle 'm/(.*)\s+(\d{1,2}%\s+(.*))/g;printf "%-20s %-15s %-70s \n","$2",$3,$1' | sort -nr
 
