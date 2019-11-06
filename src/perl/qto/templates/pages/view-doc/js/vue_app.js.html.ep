@@ -68,10 +68,10 @@
                } else {
                   console.error ( "unknown col for dbid: " + String(dbid ) )
                }
-               citems[index] = item
-               state.items = citems
                // qto-190602195122 this should not be needed !!! vuex model not used properly ?!
                document.getElementById(payload.eid).value = payload.newVal
+               citems[index] = item
+               state.items = citems
            }
     };
 
