@@ -78,13 +78,7 @@ sub doLoadAppConfig {
    my $port = $config->{'env'}->{'app'}->{ 'port' };
    my $protocol = $config->{'env'}->{'app'}->{ 'ht_protocol' };
    my $num_of_workers = $config->{'env'}->{'app'}->{ 'num_of_workers' } || 5 ; 
-   my $listen = '' ;
-
-   if ( $protocol eq 'https') {
-      $listen = 'https://*:'.$port.'?cert=/etc/letsencrypt/live/qto.fi/fullchain.crt&key=/etc/letsencrypt/live/qto.fi/privkey.key';
-   } else {
-      $listen = 'http://*:'.$port;
-   }
+   my $listen = 'http://*:'.$port;
 
    p($config) ; 
    $self->set('AppConfig' , $config );

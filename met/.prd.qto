@@ -1,4 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+src/perl/qto/public/poc/css-tree/
+src/perl/qto/public/poc/css-tree/01
+src/perl/qto/public/poc/css-tree/01/index.html
 cnf/env
 cnf/env/dev.env.json
 cnf/env/tst.env.json
@@ -177,6 +180,10 @@ src/perl/qto/public/themes/thme-blue/css/screen/controls/right-click-menu.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/qto/public/themes/thme-blue/img/controls/
+src/perl/qto/public/themes/thme-blue/img/controls/document.png
+src/perl/qto/public/themes/thme-blue/img/controls/folder-horizontal.png
+src/perl/qto/public/themes/thme-blue/img/controls/toggle-small-expand.png
+src/perl/qto/public/themes/thme-blue/img/controls/toggle-small.png
 src/perl/qto/public/themes/thme-blue/img/controls/lvl-up.png
 src/perl/qto/public/themes/thme-blue/img/controls/tack.png
 src/perl/qto/public/themes/thme-blue/img/controls/home.png
@@ -433,8 +440,10 @@ src/sql/pgsql/qto/tables/23.create-table-concepts_doc.sql
 src/sql/pgsql/qto/tables/24.create-table-system_guide_doc.sql
 src/sql/pgsql/qto/tables/25.create-table-installations_doc.sql
 src/sql/pgsql/qto/tables/26.create-table-release_history.sql
+src/sql/pgsql/qto/tables/27.create-table-nix_book_doc.sql
 src/sql/pgsql/qto/tables/28.create-table-imgs.sql
 src/sql/pgsql/qto/tables/29.create-table-enduser_guide_doc.sql
+src/sql/pgsql/qto/tables/30.create-table-maintenance_guide_doc.sql
 src/sql/pgsql/qto/tables/31.create-table-readme_doc.sql
 src/sql/pgsql/qto/tables/32.create-table-export_files.sql
 src/sql/pgsql/qto/tables/33.create-table-links.sql
