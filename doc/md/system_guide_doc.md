@@ -27,7 +27,7 @@
     * [4.1.2. Back-End](#412-back-end)
 * [5. SECURITY](#5-security)
   * [5.1. NON-SECURITY MODE](#51-non-security-mode)
-  * [5.2. SIMPLE NATIVE SECURITY MODE ( BETA )](#52-simple-native-security-mode-(-beta-))
+  * [5.2. SIMPLE NATIVE SECURITY MODE](#52-simple-native-security-mode)
 
 
 
@@ -193,8 +193,8 @@ In the non-security mode the application does NOT authenticate any one. Both run
 
     
 
-### 5.2. Simple native security mode ( beta )
-This feature is still considered beta mode, due to it's complexity and potential risks for bugs ... In this mode the authentication is performed against the project defined in the login page ( where project is actually the database to which the application layer can connect to ). This means that one user can have access to multiple project databases and be authenticated agains some of them thus being able to navigate with the same browser from project to project. In this mode the user credentials - email and password are stored in the users table with a blowfish encryption.
+### 5.2. Simple native security mode
+In this mode the authentication is performed against the project defined in the login page ( where project is actually the database to which the application layer can connect to ). This means that one user can have access to multiple project databases and be authenticated agains some of them thus being able to navigate with the same browser from project to project. In this mode the user credentials - email and password are stored in the users table with a blowfish encryption.
 Sessions are used for storing the state of the authentication, which is handled by the Mojolicious web framework - all data gets serialized to json and stored Base64 encoded on the client-side, but is protected from unwanted changes with a HMAC-SHA1 signature. 
 
     

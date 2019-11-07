@@ -11,7 +11,7 @@
     * [2.2.3. Required Perl modules installation](#223-required-perl-modules-installation)
     * [2.2.4. Installation documentation](#224-installation-documentation)
   * [2.3. A FULL APPLICATION CLONE SHOULD BE READY FOR LESS THAN 5 MINUTES](#23-a-full-application-clone-should-be-ready-for-less-than-5-minutes)
-    * [2.3.1. Shell script for postgres db creation and initial data load](#231-shell-script-for-postgres-db-creation-and-initial-data-load)
+    * [2.3.1. Single shell call for postgres db creation and initial data load](#231-single-shell-call-for-postgres-db-creation-and-initial-data-load)
     * [2.3.2. One liner for single restore for both full db and inserts only](#232-one-liner-for-single-restore-for-both-full-db-and-inserts-only)
   * [2.4. SINGLETON CONFIGURATION ](#24-singleton-configuration-)
 * [3. USER-FRIENDLINESS](#3-user-friendliness)
@@ -54,6 +54,10 @@
           * [9.1.2.2.1. Passwords sensibility](#91221-passwords-sensibility)
     * [9.1.3. JSON web token authentication](#913-json-web-token-authentication)
   * [9.2. AUTHORISATION](#92-authorisation)
+  * [9.3. ROLE-BASED ACCESS CONTROL](#93-role-based-access-control)
+    * [9.3.1. Traditional Unix permissions model per project database](#931-traditional-unix-permissions-model-per-project-database)
+      * [9.3.1.1. Traditional Unix permissions model to tables](#9311-traditional-unix-permissions-model-to-tables)
+      * [9.3.1.2. Traditional Unix permissions model to table rows](#9312-traditional-unix-permissions-model-to-table-rows)
 * [10. DOCUMENTATION](#10-documentation)
   * [10.1. DOCUMENTATION COMPLETENESS](#101-documentation-completeness)
   * [10.2. DOCUMENTATION AND CODE BASE SYNCHRONIZATION](#102-documentation-and-code-base-synchronization)
@@ -139,7 +143,7 @@ A DevOps operator should be able to perform an application clone ( having app-na
 
     
 
-#### 2.3.1. Shell script for postgres db creation and initial data load
+#### 2.3.1. Single shell call for postgres db creation and initial data load
 The creation of the Postgres database of a qto project should be doable via a single shell call. 
 
     
@@ -381,6 +385,26 @@ The Qto application should have authorisation as described in the RFC 6749.
 
     
 
+### 9.3. Role-based Access control
+The Application must restrict the system access ONLY to authorized users. 
+
+    
+
+#### 9.3.1. Traditional Unix permissions model per project database
+The application must provide NON-ENFORCEABLE traditional permissions model for tables and/or table rows. The "non-enforceable" means that no overhead work must be enforced on organisations not-using the model at all - that is the default permissions will be 775  -  meaning that the authenticated users must be able to both list(execute) and write to all the tables and rows in the project database(s), however so that the rest of the non-registered users must be able to list and read all tables and their rows.
+
+    
+
+##### 9.3.1.1. Traditional Unix permissions model to tables
+The application must provide the means for project owners to define custom read, write, execute ( list ) permissions on tables to per project database for table objects.
+
+    
+
+##### 9.3.1.2. Traditional Unix permissions model to table rows
+The application must provide the means for project owners to define custom read, write, execute ( list ) permissions on tables to per project database for table rows.
+
+    
+
 ## 10. DOCUMENTATION
 
 
@@ -389,11 +413,12 @@ The Qto application should have authorisation as described in the RFC 6749.
 ### 10.1. Documentation completeness
 Each running instance MUST have the following documentation set :
  - End User Guide 
- - DevOps Guide doc
- - Requirements doc
- - System Guide doc
- - UserStories doc
- - Installation and Configuration Guide doc
+- Installation and Configuration Guide doc
+- DevOps Guide doc
+- Requirements doc
+- System Guide doc
+- UserStories doc
+- Maintenance and Operations Guide doc
 
 in the following formats: 
  - native qto view-doc page format ( as soon as the instance is up-and-running )
