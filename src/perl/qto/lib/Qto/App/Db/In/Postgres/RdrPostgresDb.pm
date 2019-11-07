@@ -1,6 +1,6 @@
 package Qto::App::Db::In::Postgres::RdrPostgresDb ; 
 
-   use strict ; use warnings ; use utf8 ; 
+   #use strict ; use warnings ; use utf8 ; use feature qw(say);
 
    require Exporter; 
    use AutoLoader ; 
@@ -619,15 +619,17 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          ORDER BY rowid
          ;      
          " ; 
-      # debug rint "RdrPostgresDb.pm :: doLoadProjDbMetaData $str_sql \n STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
+         # debug rint "START ::: RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;
+         # p $str_sql; 
+         # debug rint "STOP  ::: RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;   
       
       eval { 
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ; 
          $mhsr2 = $sth->fetchall_hashref( 'rowid' ) ; 
-         print "RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;
-         p $mhsr2 ; 
-         print "STOP RdrPostgresDb.pm :: doLoadProjDbMetaData" ;   
+         #say "START ::: RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;
+         #p $mhsr2 ; 
+         #say "STOP  ::: RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;   
       };
       if ( $@ or !scalar(%$mhsr2)) { 
          $msg = " failed to get the project database: " . $db . " meta data ! " ; 

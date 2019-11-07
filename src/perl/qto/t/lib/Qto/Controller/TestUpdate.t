@@ -18,17 +18,34 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $config     = $t->app->get('AppConfig') ; 
    my $db            = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
    my $env           = $config->{'env'}->{ 'ENV_TYPE' } ;
-   $url              = '/' . $db . '/update/test_update_table' ; 
 
+   $ENV{'QTO_ONGOING_TEST'} = 1;
 #insert into test_update_table ( id,seq,name,description) values (1,1,'name-1','the name should be updated to updated-name-1'); 
 #insert into test_update_table ( id,seq,name,description) values (2,2,'name-2','the name attr should NOT be updated'); 
 #insert into test_update_table ( id,seq,name,description) values (3,3,'name-3','the name attr should be updated to updated-name-3'); 
-#insert into test_update_table ( id,seq,name,description) values (4,4,'name-4','the pw row'); 
+#insert into test_update_table ( id,seq,name,description) values (4,4,'name-4','the password testing row'); 
    my $ua  = $t->ua ; 
+
+
+   $tm = 'the table is truncated' ; 
+   $url = '/' . $db . '/truncate/test_update_table' ; 
+   ok ( $t->get_ok($url )->status_is(200) , $tm ) ;
+
+	for (1..5) { 
+      my $id             = $_ ;
+      $url = '/' . $db . '/create/test_update_table' ; 
+      ok ( $t->post_ok($url => json => {"id" => "$id" })->status_is(200) , $tm );
+
+      $tm = 'the a new row has been created with the new id: ' . $id . " with the default name " ; 
+      $res = $ua->get('/' . $db . '/select/test_update_table?with=id-eq-' . $id )->result->json ; 
+      ok ( $res->{'dat'}[0]->{'name'} eq 'name...' , $tm ) ; 
+   }
+
    # the update by attribute requires the following json format : 
    # the name of the attribute
    # the id which is BY DESIGN a requirement for ANY qto app table to work ... 
    # the content should be json format as follows
+   $url              = '/' . $db . '/update/test_update_table' ; 
    $tm = 'ok case with valid json format, id , attributed and cnt ' ; 
    ok ( $t->post_ok($url => json => {"attribute"=>"name", "id" =>"1", "cnt"=>"name-1-updated"})->status_is(200), $tm);
 
@@ -49,7 +66,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    
    $tm = 'the name-2 should NOT be updated' ; 
    $res = $ua->get('/' . $db . '/select/test_update_table?with=id-eq-2' )->result->json ; 
-   ok ( $res->{'dat'}[0]->{'name'} eq 'name-2' , $tm ) ; 
+   ok ( $res->{'dat'}[0]->{'name'} eq 'name...' , $tm ) ; 
    
    $tm = 'the ret var from the response should be the same as the http code => 200'; 
    ok ( $res->{'ret'} eq 200 , $tm ) ; 
@@ -78,7 +95,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    
    $url = '/' . $db . '/update/test_update_table' ; 
 $exp_err_msg = 
-' the update failed ! :: ERROR:  invalid input syntax for integer: "should be integer but string passed"
+' the update failed ! :: ERROR:  invalid input syntax for type integer: "should be integer but string passed"
 LINE 3:          SET seq = \'should be integer but string passed\'
                            ^ while updating the "seq" attribute value for the following id: 1' ;
    $t->post_ok($url => json => {"attribute"=>"seq", "id" =>"1", "cnt"=>"should be integer but string passed"})
