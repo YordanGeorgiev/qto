@@ -34,4 +34,5 @@ EOF
       git add $file
 	done < <(find cnf/env/ -type f| grep -v '.bak')
 
+   for env in `echo dev tst prd`; do cp -v met/.dev.qto met/.$env.qto ; done ;
 }
