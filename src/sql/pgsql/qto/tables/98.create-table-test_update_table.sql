@@ -1,4 +1,4 @@
-             -- DROP TABLE IF EXISTS test_update_table CASCADE ; 
+--DROP TABLE IF EXISTS test_update_table CASCADE ; 
 
 SELECT 'create the "test_update_table" table'
 ;
@@ -8,7 +8,7 @@ SELECT 'create the "test_update_table" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , seq            integer NULL
-    , name           varchar (200) NOT NULL
+    , name           varchar (200) NOT NULL DEFAULT 'name...'
     , password       varchar (200) NULL
     , description    varchar (4000)
     , CONSTRAINT pk_test_update_table_guid PRIMARY KEY (guid)
