@@ -1,7 +1,11 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
-src/perl/qto/public/poc/css-tree/
+src/perl/qto/public/poc/css-tree
 src/perl/qto/public/poc/css-tree/01
 src/perl/qto/public/poc/css-tree/01/index.html
+src/perl/qto/public/poc/css-tree/02
+src/perl/qto/public/poc/css-tree/02/index.html
+src/perl/qto/public/poc/css-tree/03
+src/perl/qto/public/poc/css-tree/03/index.html
 cnf/env
 cnf/env/dev.env.json
 cnf/env/tst.env.json
@@ -60,7 +64,7 @@ src/bash/qto/funcs/generate-md-docs.func.sh
 src/docker/Dockerfile.deploy-qto.0.7.2
 src/docker/Dockerfile.deploy-qto-db-host.0.7.2
 src/docker/Dockerfile.deploy-qto-app-host.0.7.2
-src/bash/qto/funcs/build-docker-image.func.sh
+erc/bash/qto/funcs/build-docker-image.func.sh
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
 # start login
 src/perl/qto/t/lib/Qto/Controller/TestLogin.t
