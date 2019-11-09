@@ -443,7 +443,6 @@ src/sql/pgsql/qto/tables/22.create-table-features_doc.sql
 src/sql/pgsql/qto/tables/23.create-table-concepts_doc.sql
 src/sql/pgsql/qto/tables/24.create-table-system_guide_doc.sql
 src/sql/pgsql/qto/tables/25.create-table-installations_doc.sql
-src/sql/pgsql/qto/tables/26.create-table-release_history.sql
 src/sql/pgsql/qto/tables/27.create-table-nix_book_doc.sql
 src/sql/pgsql/qto/tables/28.create-table-imgs.sql
 src/sql/pgsql/qto/tables/29.create-table-enduser_guide_doc.sql
