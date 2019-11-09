@@ -32,10 +32,11 @@ sub doLanding {
    my $rows_count       = 0 ; 
    my $dat              = {}  ; 
    
-   $config		 		= $self->app->get('AppConfig');
+   $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db, 'home' ) ;
+   $self->SUPER::doBuildLeftMenu();
    
    my $http_code        = 200  ; 
 

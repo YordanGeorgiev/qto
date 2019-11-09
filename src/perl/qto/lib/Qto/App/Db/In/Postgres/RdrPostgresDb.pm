@@ -384,10 +384,6 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
       
-      if ( defined $objModel->get('postgres_db_name') ) {
-		   $db = $objModel->get('postgres_db_name');
-      }
-      
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
@@ -417,10 +413,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       # debug rint "$str_sql \n stop RdrPostgresDb.pm" ; 
 
       $sth->execute() or $objLogger->error ( "$DBI::errstr" ) ;
-
       $hsr = $sth->fetchall_hashref( 'row_id' ) ; 
       
-      $objModel->set('hsr2' , $hsr);
       binmode(STDOUT, ':utf8');
 
       $msg = DBI->errstr ; 
@@ -434,6 +428,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 
       return ( $ret , $msg , $hsr ) ; 	
    }
+
 
    sub doSelectDatabasesList {
 

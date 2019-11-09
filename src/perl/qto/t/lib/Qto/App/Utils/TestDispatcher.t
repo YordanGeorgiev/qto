@@ -15,7 +15,7 @@ use Test::Mojo ;
 my $m          = 'the msg' ; 
 my $t          = Test::Mojo->new('Qto');
 $t->ua->max_redirects(10);
-my $config  = $t->app->get('AppConfig') ; 
+my $config  = $t->app->config ; 
 
 my $tn           = '' ;     # the test number for easier reading 
 my $actions      = 'db-to-xls' ; 

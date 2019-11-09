@@ -11,7 +11,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
 my $t = Test::Mojo->new('Qto');
 
-my $config = $t->app->get('AppConfig') ; 
+my $config = $t->app->config ; 
 
 # if the product instance id dev -> dev_qto
 # if the product instance id tst -> tst_qto

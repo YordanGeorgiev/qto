@@ -32,7 +32,8 @@ sub doLoginUser {
    my $rows_count       = 0 ; 
    my $msr2             = {}  ; 
    my $dat              = {}  ; 
-   $config		 		   = $self->app->get('AppConfig');
+
+   $config		         = $self->app->config ; 
    $objLogger           = 'Qto::App::Utils::Logger'->new( \$config );
    $db                  = toEnvName ( $db , $config) ;
 	#print STDOUT "Logon.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
@@ -91,7 +92,7 @@ sub doShowLoginForm {
    my $msg              = '' ; 
    my $msg_color        = 'grey' ; 
    
-   $config		 		   = $self->app->get('AppConfig');
+   my $config		         = $self->app->config ; 
    my $alConfig         = $config->{'env'}->{'app'} ; 
    my $instance_domain  = $alConfig->{ 'web_host' } . $alConfig->{ 'port' } . '.' . $db ;
    my $proj             = toEnvName ( $db , $config) ;

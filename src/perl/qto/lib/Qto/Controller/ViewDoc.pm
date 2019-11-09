@@ -67,7 +67,7 @@ sub doBuildViewControl {
          foreach my $col ( @$cols ) {
            $control = $control . ",'" . $col . "'" unless (grep /$col/, @hides) ; 
          }
-         $control = "['id'," . substr($control, 1) . ']' ; 
+         $control = "['id'," . substr($control, 1) . ']' if ( defined $control && length $control > 0 );
       }
 	} 
 	else {

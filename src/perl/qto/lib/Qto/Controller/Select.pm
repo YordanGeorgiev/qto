@@ -43,7 +43,7 @@ sub doSelectItems {
    my $objRdrDbsFcry = {} ; 
    my $objRdrDb         = {} ; 
 
-   $config		      = $self->app->get('AppConfig');
+   my $config		      = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db , $item) ;
@@ -91,7 +91,7 @@ sub doSelectTables {
 	my $db         = $self->stash('db');
    my $msg = 'unknown error during select-tables';
 
-   $config		= $self->app->get('AppConfig');
+   $config		= $self->app->config;
    $db            = toEnvName ( $db , $config) ;
 
    my $objModel   = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
@@ -104,14 +104,14 @@ sub doSelectTables {
 	my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
 
 	my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
-	($ret, $msg) = $objRdrDb->doSelectTablesList(\$objModel);
+	($ret, $msg,$hsr2) = $objRdrDb->doSelectTablesList($db);
 
    my $dat = [] ; # an array ref holding the converted hash ref of hash refs 
    if ( $ret == 0 ) {
       $objModel->set('select.web-action.o', 'row_id' );
       my $objCnrHsr2ToArray = 
          'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
-      ( $ret , $msg , $dat ) = $objCnrHsr2ToArray->doConvert($objModel->get('hsr2') , '>' );
+      ( $ret , $msg , $dat ) = $objCnrHsr2ToArray->doConvert($hsr2 , '>' );
    }
 
       $self->res->headers->content_type('application/json; charset=utf-8');
@@ -166,7 +166,7 @@ sub doSelectDatabases {
    my $dat           = '' ; 
    my $cnt           = 0 ; 
 
-	$config	   = $self->app->get('AppConfig');
+	$config	   = $self->app->config;
    my $objModel   = 'Qto::App::Mdl::Model'->new ( \$config ) ;
 
    $db                  = toEnvName ( $db , $config) ;
@@ -223,14 +223,14 @@ sub doSelectMeta {
    my $dat         = '' ; 
    my $cnt         = 0;
 
-   $config		= $self->app->get('AppConfig');
+   $config		= $self->app->config;
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config ) ;
    
    $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$table ) ;
    
-   $config		 		= $self->app->get('AppConfig');
+   $config		 		= $self->app->config;
       
    if ( defined $table ) {
       ( $ret , $msg , $met , $cnt ) = $objModel->doGetTableMeta ( $config , $db , $table ) 

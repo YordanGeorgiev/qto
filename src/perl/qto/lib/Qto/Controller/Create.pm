@@ -41,7 +41,8 @@ sub doCreateById {
    my $hsr2             = {};
    my $json             = $self->req->body;
    my $perl_hash        = decode_json($json) ; 
-   $config		         = $self->app->get('AppConfig');
+
+   $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
 
   

@@ -9,7 +9,7 @@ die_on_fail ;
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
 my $t       = Test::Mojo->new('Qto');
-my $config  = $t->app->get('AppConfig') ; 
+my $config  = $t->app->config ; 
 my $db      = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
 my $ua      = $t->ua ; 
 my $res     = {} ; #a tmp result json string

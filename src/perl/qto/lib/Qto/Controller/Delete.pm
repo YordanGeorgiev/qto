@@ -39,7 +39,7 @@ sub doDeleteById {
    my $msg              = 'unknown error during Delete item';
    my $hsr2             = {};
   
-   $config		      = $self->app->get('AppConfig');
+   $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config);
    
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );

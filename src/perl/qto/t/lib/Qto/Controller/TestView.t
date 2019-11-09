@@ -16,7 +16,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $exp_msg    = {} ;                   # the expected text to check 
    my $response   = {} ; 
    my $t          = Test::Mojo->new('Qto');
-   my $config     = $t->app->get('AppConfig') ; 
+   my $config     = $t->app->config ; 
    my $db         = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
 
 	$t->get_ok('/' . $db . '/select-databases')->status_is(200) ; 
