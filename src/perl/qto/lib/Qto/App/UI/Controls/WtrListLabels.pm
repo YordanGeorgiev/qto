@@ -113,30 +113,19 @@ package Qto::App::UI::Controls::WtrListLabels ;
       return ( $ret , $msg , $row )  ; 
    }
 
-   #
-	# -----------------------------------------------------------------------------
-	# the constructor 
-	# -----------------------------------------------------------------------------
-	sub new {
 
+	sub new {
 		my $invocant 			= shift ;    
 		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'missing objModel !!!' ; 
-      # might be class or object, but in both cases invocant
 		my $class = ref ( $invocant ) || $invocant ; 
-
 		my $self = {};        # Anonymous hash reference holds instance attributes
 		bless( $self, $class );    # Say: $self is a $class
-      $self = $self->doInitialize() ; 
-
+      $self = $self->doInit() ; 
 		return $self;
 	}  
 	
-   #
-	# --------------------------------------------------------
-	# intializes this object 
-	# --------------------------------------------------------
-   sub doInitialize {
+   sub doInit {
       my $self = shift ; 
 
       %$self = (
@@ -144,9 +133,7 @@ package Qto::App::UI::Controls::WtrListLabels ;
       );
       return $self ; 
 	}	
-	#eof sub doInitialize
    
-
 
 1;
 

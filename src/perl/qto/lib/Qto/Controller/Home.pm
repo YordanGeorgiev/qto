@@ -14,10 +14,11 @@ use Qto::App::Utils::Timer ;
 use Qto::App::IO::In::CnrPostPrms ; 
 use Qto::App::Db::In::RdrDbsFcry ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
+use Qto::App::Mdl::Model ; 
 
-our $config      = {} ;
-our $objLogger      = {} ;
-our $rdbms_type     = 'postgres';
+our $config          = {} ;
+our $objLogger       = {} ;
+our $rdbms_type      = 'postgres';
 
 #
 # --------------------------------------------------------
@@ -31,16 +32,20 @@ sub doLanding {
    my $msg              = '' ;
    my $rows_count       = 0 ; 
    my $dat              = {}  ; 
+   my $left_menu        = '' ;
    
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
+
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db, 'home' ) ;
-   $self->SUPER::doBuildLeftMenu();
+
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
+   ($ret,$msg,$left_menu) = $self->SUPER::doBuildLeftMenu(\$objModel, $db );
    
    my $http_code        = 200  ; 
 
-   $self->doRenderPageTemplate($http_code,$msg,$db);
+   $self->doRenderPageTemplate($http_code,$msg,$db,$left_menu);
 }
 
 
@@ -51,6 +56,8 @@ sub doRenderPageTemplate {
    my $http_code        = shift ; 
    my $msg              = shift ;
    my $db               = shift ; 
+   my $left_menu        = shift ; 
+
    my $notice           = '' ;
 
    $msg = "$db home" unless $msg ; 
@@ -72,6 +79,7 @@ sub doRenderPageTemplate {
     , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'notice'          => $notice
+    , 'left_menu'       => $left_menu
 	) ; 
 
    return ; 

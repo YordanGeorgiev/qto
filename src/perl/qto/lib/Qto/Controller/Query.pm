@@ -38,21 +38,8 @@ sub doQueryItems {
 
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,'search' ) ;
-   
    $config		         = $self->app->config ; 
-
-# todo: save to remove ?! responsibility handled by the base controller ??!!
-#   unless ( exists ( $config->{ $db . '.meta' } )  ) {
-#      
-#      ( $ret , $msg , $msr2 ) = $self->SUPER::doReloadProjDbMeta( $db ,'search') ; 
-#      unless ( $ret == 0 ) { 
-#         $self->render('text' => $msg ) unless $ret == 0 ; 
-#         return ; 
-#      }
-#      else { 
-#         $config->{ $db . '.meta' } = $msr2 ; 
-#      }
-#   } 
+   
 
    my $objCnrUrlPrms  = {} ; 
    my $objRdrDbsFcry = {} ; 
@@ -136,8 +123,7 @@ sub doGetRsMeta {
 }; 
       return $msr2 ; 
 }
+
+
 1;
-
 __END__
-
-# feature-guid: ecd424d7-e5bd-45f1-90c8-10fae1316bf9

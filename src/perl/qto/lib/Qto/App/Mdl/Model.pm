@@ -30,7 +30,7 @@ our $objLogger       = {} ;
       my $mhr2          = {} ; 
       my $c             = 0 ; 
       my $ret           = 1 ; 
-      my $cols = $config->{ "$db" . '.meta' } ; 
+      my $cols = $config->{ "$db" . '.meta-columns' } ; 
       my @hides = split(/,/,$self->get('select.web-action.hide')) if ( defined $self->get('select.web-action.hide') );
 
 
@@ -84,7 +84,7 @@ our $objLogger       = {} ;
       my $table         = shift || $self->get('table_name');
       my $col           = shift ; 
    
-      my $cols = $config->{ "$db" . '.meta' } ; 
+      my $cols = $config->{ "$db" . '.meta-columns' } ; 
       foreach my $key ( keys %$cols ) {
          my $row = $cols->{ $key } ; 
          next unless $table eq $row->{ 'table_name' } ; 
@@ -101,7 +101,7 @@ our $objLogger       = {} ;
       my %tables     = () ;
       my @tbls       = () ;
    
-      my $cols = $config->{ "$db" . '.meta' } ; 
+      my $cols = $config->{ "$db" . '.meta-columns' } ; 
       foreach my $key ( keys %$cols ) {
          my $row = $cols->{ $key } ; 
          my $table = $row->{ 'table_name' } ; 

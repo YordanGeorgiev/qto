@@ -65,9 +65,9 @@ package Qto::App::Ctrl::CtrlDbToXls ;
       my $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel  ) ; 
       my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-      ($ret, $msg , $amsr2 )     = $objRdrDb->doLoadProjDbMetaData( $db );
+      ($ret, $msg , $amsr2 )     = $objRdrDb->doLoadProjDbMetaColsData( $db );
       return ( $ret , $msg ) unless $ret == 0 ; 
-      $config->{ "$db" . '.meta' } = $amsr2 ;
+      $config->{ "$db" . '.meta-columns' } = $amsr2 ;
 
       $objModel->set('select.web-action.pg-size' , 1000000000) ; #set the maximum size
 
