@@ -15,7 +15,7 @@ use Carp ;
 my $m          = 'the m' ; 
 my $t          = Test::Mojo->new('Qto');
 $t->ua->max_redirects(10);
-my $config  = $t->app->get('AppConfig') ; 
+my $config  = $t->app->config ; 
 my $objModel               = 'Qto::App::Mdl::Model'->new ( \$config ) ; 
 
 # 1.

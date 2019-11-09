@@ -19,7 +19,7 @@ use Carp ;
 my $m          = 'the msg' ; 
 my $t          = Test::Mojo->new('Qto');
 $t->ua->max_redirects(10);
-my $config  = $t->app->get('AppConfig') ; 
+my $config  = $t->app->config ; 
 
 my $objCnrXlsHsr3ToDbHsr3 = 
    'Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new ( \$config ) ; 

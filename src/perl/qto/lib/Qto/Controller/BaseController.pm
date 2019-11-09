@@ -15,6 +15,15 @@ use Qto::App::Db::In::RdrDbsFcry ;
 use Qto::App::Cnvr::CnrHsr2ToHsr2 ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
+# 
+# call-by : $self->SUPER::doBuildLeftMenu($http_code,$msg,$http_method,$met,$cnt,$dat);
+#
+sub doBuildLeftMenu {
+
+   my $self          = shift ; 
+   $config	         = $self->app->config;
+}
+
 
 sub doReloadProjDbMeta {
 
@@ -22,16 +31,11 @@ sub doReloadProjDbMeta {
    my $db                  = shift ;
    my $item                = shift || '' ; 
 
-   $config		 		   = $self->app->get('AppConfig');
-   $db = toEnvName ( $db , $config ) ;
+   $config		 		      = $self->app->config ;
+   $db                     = toEnvName ( $db , $config ) ;
 
    # reload the columns meta data ONLY after the meta_columns has been requested
-   #return if ( exists ( $config->{ $db . '.meta' } ) && $item ne 'meta_columns' ); 
-   if ( defined ( $config->{ $db . '.meta' } ) ) {
-      if ( $item ne 'meta_columns' ) {
-         return ; 
-      }
-   }
+   return if ( exists ($config->{ $db . '.meta' }) && $item ne 'meta_columns' );
 
    my $objRdrDbsFcry       = {} ; 
    my $objRdrDb            = {} ; 
@@ -48,7 +52,7 @@ sub doReloadProjDbMeta {
    ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMeta( $db ) ; 
 
    $config->{ "$db" . '.meta' } = $msr2 ; # chk: it-181101180808
-   $self->app->set('AppConfig', $config );
+	$self->app->config($config);
    $self->render('text' => $msg ) unless $ret == 0 ; 
 }
 
@@ -58,7 +62,7 @@ sub isAuthenticated {
    my $self                = shift ;
    my $db                  = shift ;
 
-   $config		 		      = $self->app->get('AppConfig');
+   $config		            = $self->app->config ; 
    $db                     = toEnvName ( $db , $config ) ;
 
    # non-authentication mode IF the app has been stared with this env var

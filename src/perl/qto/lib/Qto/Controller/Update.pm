@@ -43,7 +43,7 @@ sub doUpdateById {
    my $json             = $self->req->body;
    my $perl_hash        = decode_json($json) ; 
 
-   $config		      = $self->app->get('AppConfig');
+   $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
    $objModel->set('postgres_db_name' , $db ) ; 

@@ -52,7 +52,7 @@ var actions = {
          commit('SET_ITEMS', items)
       })
 
-       ws.send('open <%= $db %>')
+       // ws.send('open <%= $db %>')
 
 
      },

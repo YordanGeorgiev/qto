@@ -45,7 +45,7 @@ sub doListItems {
    my $as               = 'grid' ; # the default form of the list control 
 
   
-   $config		 		   = $self->app->get('AppConfig');
+   $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
@@ -134,7 +134,7 @@ sub doRenderPageTemplate {
       $self->res->code(200) ; 
    }
 
-	my $config = $self->app->get('AppConfig');	
+   my $config		         = $self->app->config ; 
 
    my $as_templates = { 
          'lbls'         => 'list-labels'

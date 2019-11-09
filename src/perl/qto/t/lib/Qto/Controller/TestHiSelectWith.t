@@ -10,7 +10,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
    my $tm            = '' ; # the test message for each test 
    my $t             = Test::Mojo->new('Qto');
-   my $config        = $t->app->get('AppConfig') ; 
+   my $config        = $t->app->config ; 
    my $db            = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
 
    $tm = '01. the select-databases route returns the list of the dbs in this server' ; 

@@ -37,12 +37,12 @@ sub doHLSelectItems {
    my $objRdrDbsFcry = {} ; 
    my $mc            = 0 ; 
  
-   $config		   = $self->app->get('AppConfig');
+   $config		      = $self->app->config ; 
    $db               = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
 
-   $config		   = $self->app->get('AppConfig');
+   $config		   = $self->app->config;
    $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
    my $objCnrUrlPrms = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    

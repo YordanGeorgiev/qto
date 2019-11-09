@@ -34,7 +34,8 @@ sub doWsSelectTables {
 		# debug print "WsSelect.pm msg: $msg \n";
       my $db = $msg ; 
       $db =~ s/open //g; 
-      my $config = $self->app->get('AppConfig');
+
+      $config		         = $self->app->config ; 
       $db = toEnvName ( $db , $config );
       $self->tx->max_websocket_size(16777216) if $self->tx->is_websocket;
       
@@ -43,7 +44,7 @@ sub doWsSelectTables {
       my $hsr        	= {};
       my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
       my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
-      ($ret, $msg, $hsr) = $objRdrDb->doSelectTablesList(\$objModel);
+      ($ret, $msg, $hsr) = $objRdrDb->doSelectTablesList($db);
  
       my @arr = () ;  
       foreach my $key ( keys %$hsr ) {

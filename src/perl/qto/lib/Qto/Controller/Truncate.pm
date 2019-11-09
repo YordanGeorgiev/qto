@@ -38,7 +38,7 @@ sub doTruncateItem {
    my $msg              = 'unknown error during Truncate item';
    my $hsr2             = {};
   
-   $config		      = $self->app->get('AppConfig');
+   $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config);
    
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );

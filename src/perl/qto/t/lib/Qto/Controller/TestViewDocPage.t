@@ -10,7 +10,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
    my $tm            = '' ; # the test message for each test 
    my $t             = Test::Mojo->new('Qto');
-   my $config        = $t->app->get('AppConfig') ; 
+   my $config        = $t->app->config ; 
    my $url           = '' ; 
    my $db            = $config->{'env'}->{'db'}->{'postgres_db_name'} ;  # obs instanced specific !!!
    my $dom           = {} ;

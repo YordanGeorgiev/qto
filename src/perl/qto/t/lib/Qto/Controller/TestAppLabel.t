@@ -11,7 +11,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
    my $tm = '' ; # the test message for each test 
    my $t = Test::Mojo->new('Qto');
-   my $config = $t->app->get('AppConfig') ; 
+   my $config = $t->app->config ; 
    
    my $ua = {} ;                                # the mojo user agent 
    my $dom = {} ;                                # the mojo dom parser 

@@ -17,7 +17,6 @@
 			  <ul class="cls_items">
 					<li v-for="item in items" v-if="!item.endsWith('_doc')"
 						 class="cls_lst_item"
-						 @click="toggleItem(item.id)"
 						 @dblclick="deleteItem(item.id)">
 						<a :href="'/<%= $db %>/list/' + item"> {{item}} </a></li>
 			  </ul>
@@ -26,7 +25,6 @@
 			  <ul class="cls_items">
 					<li v-for="item in items" v-if="item.endsWith('_doc')"
 						 class="cls_lst_item"
-						 @click="toggleItem(item.id)"
 						 @dblclick="deleteItem(item.id)">
 						<a :href="'/<%= $db %>/view/' + item"> {{item}} </a></li>
 			  </ul>

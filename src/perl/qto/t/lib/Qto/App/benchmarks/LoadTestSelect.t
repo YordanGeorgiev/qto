@@ -10,7 +10,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../../qto/lib" }
 
    my $tm = '' ; # the test message for each test 
    my $t = Test::Mojo->new('Qto');
-   my $config = $t->app->get('AppConfig') ; 
+   my $config = $t->app->config ; 
    # if the product instance id tst -> tst_qto
    my $proj_name= $config->{'env'}->{'app'}->{ 'proj_name' } ; 
    my $url = '/' . $proj_name . '/select-tables' ; 

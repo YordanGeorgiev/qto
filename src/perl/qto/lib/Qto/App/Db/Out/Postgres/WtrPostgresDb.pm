@@ -261,11 +261,6 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       }
 
       eval {
-         # jump todo:ysg 
-         # UPDATE $table set description = concat (cast ('originLvl < tgtLvl parentRgt' as text), cast(parentRgt as text))
-         # WHERE seq=tgtSeq;
-         # UPDATE $table set src = concat (cast ('originLvl < tgtLvl: tgtLvl' as text), cast(tgtLvl as text))
-         # WHERE seq=tgtSeq;
          no warnings 'exiting' ; 
          $level_alpha='+ ' . "$level_alpha" if $level_alpha >= 0 ;
          $str_sql = 'DO $$

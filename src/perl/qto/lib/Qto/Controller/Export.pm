@@ -41,7 +41,7 @@ sub doExportItems {
    my $cnt              = '' ; 
    my $dat              = '' ; 
 
-   $config		 		= $self->app->get('AppConfig');
+   $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$item ) ;

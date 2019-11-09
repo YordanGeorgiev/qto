@@ -81,18 +81,18 @@ sub doLoadAppConfig {
    my $listen = 'http://*:'.$port;
 
    p($config) ; 
-   $self->set('AppConfig' , $config );
+   # todo: remove $self->set('AppConfig' , $config );
    $self->set('ObjLogger', $objLogger );
+
+   $config->{'hypnotoad'} = {
+      listen  => [$listen],
+      workers => $num_of_workers
+      } ;
+
+   $self = $self->config( $config );
 
    $msg = "START MAIN";
    $objLogger->doLogInfoMsg($msg);
-
-   $self->config(
-      hypnotoad => {
-         listen  => [$listen],
-         workers => $num_of_workers
-         }
-      );
 }
 
 

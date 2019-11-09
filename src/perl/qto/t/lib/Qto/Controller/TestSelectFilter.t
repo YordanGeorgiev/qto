@@ -9,7 +9,7 @@ die_on_fail ;
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
 my $t       = Test::Mojo->new('Qto') ;
-my $config  = $t->app->get('AppConfig') ; 
+my $config  = $t->app->config ; 
 my $db      = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
 my @tables  = ( 'daily_issues' , 'weekly_issues' , 'monthly_issues' , 'yearly_issues' ) ; 
 my $ua      = $t->ua ; 
@@ -20,7 +20,6 @@ $res        = $ua->get('/' . $db . '/select-tables')->result->json ;
 my $list    = $res->{'dat'} ; 
 my @tables_to_check = ( 'monthly_issues' , 'yearly_issues' ) ; 
 
-   
 # foreach table in the app db in test call db/select/table
 for my $row ( @$list ) {
 
