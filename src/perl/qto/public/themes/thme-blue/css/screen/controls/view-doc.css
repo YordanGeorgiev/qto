@@ -126,7 +126,7 @@ textarea.cls_src:hover, textarea.cls_src:focus , textarea.cls_src:hover,  textar
   display:block;
   transition: 0.3s;
 }
-.rgt_side_nav a:hover , .rgt_side_nav a:active{
+.rgt_side_nav a:hover , .rgt_side_nav a:active, .rgt_side_nav a:focus {
    color: #FFFFE0;
    font-weight: bold;
    background-color: #D3D3D3;
