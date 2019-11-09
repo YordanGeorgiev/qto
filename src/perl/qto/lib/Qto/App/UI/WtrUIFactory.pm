@@ -6,6 +6,7 @@ package Qto::App::UI::WtrUIFactory ;
    use Carp ; 
 
    use Qto::App::UI::Controls::WtrListLabels ; 
+   use Qto::App::UI::Controls::WtrLeftMenu ; 
 
 	our $config 		= {} ; 
 	our $objModel        = {} ; 
@@ -25,6 +26,10 @@ package Qto::App::UI::WtrUIFactory ;
 		if ( $ui_type eq 'control/list-labels' ) {
 		   $package_file     = "Qto/App/UI/Controls/WtrListLabels.pm" ; 
 		   $objWtrControl    = "Qto::App::UI::Controls::WtrListLabels" ; 
+		}
+		elsif ( $ui_type eq 'control/left-menu' ) {
+		   $package_file     = "Qto/App/UI/Controls/WtrLeftMenu.pm" ; 
+		   $objWtrControl    = "Qto::App::UI::Controls::WtrLeftMenu" ; 
 		}
 		else {
 	      croak "not implemented !!!" ; 	

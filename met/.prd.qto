@@ -419,7 +419,6 @@ src/sql/pgsql/qto/funcs/01.create-func-fns_update_time.sql
 src/sql/pgsql/qto/funcs/02.create-func-f_concat_ws.sql
 src/sql/pgsql/qto/tables
 src/sql/pgsql/qto/tables/01.create-table-daily_issues.sql
-src/sql/pgsql/qto/tables/02.create-table-weekly_issues.sql
 src/sql/pgsql/qto/tables/03.create-table-monthly_issues.sql
 src/sql/pgsql/qto/tables/04.01.create-table-yearly_issues_2018.sql
 src/sql/pgsql/qto/tables/04.create-table-yearly_issues.sql
@@ -443,7 +442,6 @@ src/sql/pgsql/qto/tables/22.create-table-features_doc.sql
 src/sql/pgsql/qto/tables/23.create-table-concepts_doc.sql
 src/sql/pgsql/qto/tables/24.create-table-system_guide_doc.sql
 src/sql/pgsql/qto/tables/25.create-table-installations_doc.sql
-src/sql/pgsql/qto/tables/26.create-table-release_history.sql
 src/sql/pgsql/qto/tables/27.create-table-nix_book_doc.sql
 src/sql/pgsql/qto/tables/28.create-table-imgs.sql
 src/sql/pgsql/qto/tables/29.create-table-enduser_guide_doc.sql

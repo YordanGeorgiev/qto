@@ -95,7 +95,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
-      # debug pr $config->{ $db . '.meta' }  ; 
+      # debug pr $config->{ $db . '.meta-columns' }  ; 
 
       $objModel->doSetDbTablesList($db ) unless exists $config->{"$db" . '.meta.tables-list'} ; 
       my @tables = @{ $config->{"$db" . '.meta.tables-list'} } ; 
@@ -369,6 +369,45 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 		}
 
    } 
+   
+   
+   sub doLoadProjDbMetaTables  {
+
+      my $self          = shift ; 
+      my $db            = shift || croak 'no db passed !!!' ; 
+   
+      my $rv            = 1  ;
+      my $ret           = 1 ; 
+      my $msg           = 'unknown error occured in RdrPostgresDb::doLoadProjDbMetaTables' ; 
+      my $pg            = {} ; 
+      my $sql           = {} ; 
+      my $hsr2          = {} ; 
+
+		$pg = $self->doInitPg($db);
+
+      eval {
+			$sql = " 
+            SELECT node.*
+            FROM items_doc AS node, items_doc AS parent
+            WHERE node.lft BETWEEN parent.lft AND parent.rgt
+            AND parent.id = 0
+            ORDER BY node.lft;
+			" ; 
+         $hsr2 = $pg->db->query("$sql")->hashes ; 
+         # debug pr $hsr2 ; 
+         # print "STOP ::: RdrPostgresDb.pm items_doc \n" ; 
+      };
+      if ( $@ ) {
+         $rv               = 404 ; 
+         $msg              = DBI->errstr ; 
+         $objLogger->doLogErrorMsg ( $msg ) ;
+         return ( $rv , $msg ) ; 
+      }
+
+      $rv               = 200 ; 
+      $msg              = '' ; 
+      return ( $rv , $msg , $hsr2 ) ; 
+   }
 
  
    sub doSelectTablesList {
@@ -562,7 +601,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
    # regardless on wether or not the custom meta data in meta_tables and meta_columns
    # tables are defined !!!
    # -----------------------------------------------------------------------------
-   sub doLoadProjDbMeta {
+   sub doLoadProjDbMetaCols {
 
       my $self             = shift ; 
       my $db               = shift ; 
@@ -614,17 +653,17 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          ORDER BY rowid
          ;      
          " ; 
-         # debug rint "START ::: RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;
+         # debug rint "START ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;
          # p $str_sql; 
-         # debug rint "STOP  ::: RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;   
+         # debug rint "STOP  ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;   
       
       eval { 
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ; 
          $mhsr2 = $sth->fetchall_hashref( 'rowid' ) ; 
-         #say "START ::: RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;
+         #say "START ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;
          #p $mhsr2 ; 
-         #say "STOP  ::: RdrPostgresDb.pm :: doLoadProjDbMetaData \n" ;   
+         #say "STOP  ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;   
       };
       if ( $@ or !scalar(%$mhsr2)) { 
          $msg = " failed to get the project database: " . $db . " meta data ! " ; 
@@ -1150,7 +1189,6 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 				ORDER BY seq
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
-         # todo:ysg 
          # debug p $hsr2 ; 
       };
       if ( $@ ) {

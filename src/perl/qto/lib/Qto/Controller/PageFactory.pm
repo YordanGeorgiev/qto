@@ -56,7 +56,6 @@ package Qto::Controller::PageFactory ;
 
 
 	sub new {
-
 		my $invocant 			= shift ;    
 		$config           = ${ shift @_ } || croak 'config not set !!!' ; 
 		$objModel            = ${ shift @_ } || croak 'objModel not set !!!' ; 
