@@ -274,7 +274,7 @@ package Qto::App::Utils::Initiator ;
       # cnf/env/tst.env.json
       # cnf/env/prd.env.json
 		$ConfFile = "$ProductInstanceDir/cnf/env/$EnvType.env.json"  ;
-      print "\$ConfFile::$ConfFile\n";
+      # debug print "\$ConfFile::$ConfFile\n";
       croak "cannot find the ConfFile::$ConfFile !!!" unless -f $ConfFile ;
 
 		$self->set('ConfFile' , $ConfFile) ; 

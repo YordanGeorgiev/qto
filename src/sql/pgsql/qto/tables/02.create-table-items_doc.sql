@@ -9,11 +9,11 @@ SELECT 'create the "items_doc" table'
     , seq            integer NULL
     , lft            bigint  NULL
     , rgt            bigint  NULL
-    , type           varchar (100) NOT NULL DEFAULT 'folder'
-    , url            varchar (2048) NOT NULL DEFAULT '#'
-    , title          varchar (100) NOT NULL DEFAULT 'url...'
+    , type           varchar (10) NOT NULL DEFAULT 'folder'
+    , url            varchar (30) NOT NULL DEFAULT '#' -- 2048 is the absolute max
+    , title          varchar (50) NOT NULL DEFAULT 'url...'
     , name           varchar (100) NOT NULL DEFAULT 'name...'
-    , status         varchar (20) NOT NULL DEFAULT 'status...'
+    , status         varchar (10) NOT NULL DEFAULT 'status...'
     , src            varchar (4000)
     , description    varchar (4000)
     , item_id        integer NULL -- the future hook for the table name in the url
@@ -27,10 +27,10 @@ SELECT 'create the "items_doc" table'
 
    create unique index idx_uniq_items_doc_id on items_doc (id);
 
-insert into items_doc ( id , level , seq , lft , rgt , name) values ( 0 , 0, 1, 1, 8, 'ITEMS DOC' );
-insert into items_doc ( id , level , seq , lft , rgt , name) values ( 1 , 1, 2, 2, 3, 'lists' );
-insert into items_doc ( id , level , seq , lft , rgt , name) values ( 2 , 1, 3, 4, 5, 'docs' );
-insert into items_doc ( id , level , seq , lft , rgt , name) values ( 3 , 1, 4, 6, 7, 'labels' );
+-- insert into items_doc ( id , level , seq , lft , rgt , name) values ( 0 , 0, 1, 1, 8, 'ITEMS DOC' );
+-- insert into items_doc ( id , level , seq , lft , rgt , name) values ( 1 , 1, 2, 2, 3, 'lists' );
+-- insert into items_doc ( id , level , seq , lft , rgt , name) values ( 2 , 1, 3, 4, 5, 'docs' );
+-- insert into items_doc ( id , level , seq , lft , rgt , name) values ( 3 , 1, 4, 6, 7, 'labels' );
 
 
 SELECT 'show the columns of the just created table'

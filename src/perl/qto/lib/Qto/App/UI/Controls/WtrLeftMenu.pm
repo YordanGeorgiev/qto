@@ -63,7 +63,8 @@ package Qto::App::UI::Controls::WtrLeftMenu ;
       my $title      = $row->{'title'};
       $title         = $name unless ( defined $title ) ;
       my $ctrlid     = 'lck' . '-' . $name . '-' . $id ;  # the check ctrl id of the left menu
-=poc
+=pod
+and this is how the static output should look like
      <li>
        <label for="menu-1"><a href="#">menu-1</a></label>
        <input tabindex="1" type="checkbox" checked id="menu-1" />
@@ -105,13 +106,15 @@ package Qto::App::UI::Controls::WtrLeftMenu ;
    sub doDocLink {
       my $db         = shift ; 
       my $row        = shift ; 
+      
+      my $cnf        = $config->{'env'}->{'app'} ; 
       my $id         = $row->{'id'};
-      my $url        = $row->{'url'} ;
+      my $base_url   = $cnf->{'ht_protocol'} . '://' . $cnf->{'web_host'} . ':' . $cnf->{'port'} ; 
+      $base_url      = $base_url . '/' . $cnf->{'postgres_db_name'} ;
+      my $url        = $base_url . '/' . $row->{'url'} ;
       my $title      = $row->{'title'};
       my $name       = $row->{'name'};
       
-      $url        = '/' . $db . '/' . $url  unless ( $url eq 'home' or $url eq 'login' );
-
       return '<li class="file"><a href="' . $url . '">' . $title . '</a></li>' ; 
    }
    
@@ -121,13 +124,14 @@ package Qto::App::UI::Controls::WtrLeftMenu ;
       my $row  = shift ; 
    }
 
+
 	sub new {
-		my $invocant 			= shift ;    
-		$config              = ${ shift @_ } || croak "undef config passed !!!" ; 
+		my $invocant   = shift ;    
+		$config        = ${ shift @_ } || croak "undef config passed !!!" ; 
 		$objModel      = ${ shift @_ } || croak 'missing objModel !!!' ; 
-		my $class = ref ( $invocant ) || $invocant ; 
-		my $self = {};  bless( $self, $class );
-      $self = $self->doInit() ; 
+		my $class      = ref ( $invocant ) || $invocant ; 
+		my $self       = {};  bless( $self, $class );
+      $self          = $self->doInit() ; 
 		return $self;
 	}  
 

@@ -21,22 +21,22 @@ use Qto::App::UI::WtrUIFactory ;
 #
 sub doBuildLeftMenu {
 
-   my $self             = shift ; 
-   my $objModel         = ${ shift @_ } ;
-   my $db               = shift ; 
+   my $self                = shift ; 
+   my $objModel            = ${ shift @_ } ;
+   my $db                  = shift ; 
 
-   my $ret              = 1 ; 
-   my $msg              = 'error while building the left menu occurred !' ; 
-   my $left_menu        = '' ;
+   my $ret                 = 1 ; 
+   my $msg                 = 'error while building the left menu occurred !' ; 
+   my $left_menu           = '' ;
 
-   my $config	                 = $self->app->config;
-   my $objWtrUIFactory          = 'Qto::App::UI::WtrUIFactory'->new(\$config, \$objModel );
-   my $objUIBuilder             = $objWtrUIFactory->doInit('control/left-menu');
-   my $hsr2                     = $self->app->config($db . '.meta-tables');
-   p $hsr2 ; 
-   print "stop doBuildLeftMenu \n" ; 
+   my $config	            = $self->app->config;
+   my $objWtrUIFactory     = 'Qto::App::UI::WtrUIFactory'->new(\$config, \$objModel );
+   my $objUIBuilder        = $objWtrUIFactory->doInit('control/left-menu');
+   my $hsr2                = $self->app->config($db . '.meta-tables');
+                           # debug pr $hsr2 ; 
+                           # debug rint "stop doBuildLeftMenu \n" ; 
+                           
    ( $ret , $msg , $left_menu ) = $objUIBuilder->doBuild($db,$hsr2);
-
    return ( $ret , $msg , $left_menu );
 }
 
@@ -52,6 +52,7 @@ sub doReloadProjDbMeta {
    $self->doReloadProjDbMetaColumns($db,$item);
    $self->doReloadProjDbMetaTables($db,$item);
 }
+
 
 sub doReloadProjDbMetaColumns {
 
@@ -95,7 +96,7 @@ sub doReloadProjDbMetaTables {
    $db                     = toEnvName ( $db , $config ) ;
 
    # reload the columns meta data ONLY after the meta_columns has been requested
-   return if ( exists ($config->{ $db . '.meta-tables' }) && $item ne 'meta_columns' );
+   return if ( exists ($config->{ $db . '.meta-tables' }) && $item ne 'items_doc' );
 
    my $objRdrDbsFcry       = {} ; 
    my $objRdrDb            = {} ; 

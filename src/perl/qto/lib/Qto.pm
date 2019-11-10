@@ -80,8 +80,7 @@ sub doLoadAppConfig {
    my $num_of_workers = $config->{'env'}->{'app'}->{ 'num_of_workers' } || 5 ; 
    my $listen = 'http://*:'.$port;
 
-   p($config) ; 
-   # todo: remove $self->set('AppConfig' , $config );
+   # debug pr ($config) ; 
    $self->set('ObjLogger', $objLogger );
 
    $config->{'hypnotoad'} = {
@@ -90,9 +89,11 @@ sub doLoadAppConfig {
       } ;
 
    $self = $self->config( $config );
+   # 
+   $self->renderer->cache->max_keys(0);
 
    $msg = "START MAIN";
-   $objLogger->doLogInfoMsg($msg);
+   #$objLogger->doLogInfoMsg($msg);
 }
 
 
