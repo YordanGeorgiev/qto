@@ -50,6 +50,7 @@
            }
            , CREATE_ITEM: (state, payload) => {
                state.showRgtMenu = false
+               state.items = state.items.push(payload);
            }
            , UPDATE_ITEM: (state, payload) => {
                var arr = payload.eid.split('-')

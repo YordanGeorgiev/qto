@@ -16,15 +16,15 @@
     * [2.2.1. Add, modify and delete new users to the application](#221-add-modify-and-delete-new-users-to-the-application)
     * [2.2.2. Regular users visibility](#222-regular-users-visibility)
 * [3. BACKUP AND RESTORE](#3-backup-and-restore)
-  * [3.1. BACKUP A DATABASE](#31-backup-a-database)
-  * [3.2. RESTORE A DATABASE](#32-restore-a-database)
+  * [3.1. LOAD DATABASE CONNECTIVITY CONFIGURATION SECURELY](#31-load-database-connectivity-configuration-securely)
+  * [3.2. BACKUP A DATABASE](#32-backup-a-database)
   * [3.3. BACKUP A DATABASE TABLE](#33-backup-a-database-table)
-  * [3.4. RESTORE A DATABASE TABLE](#34-restore-a-database-table)
+  * [3.4. RESTORE A DATABASE](#34-restore-a-database)
+  * [3.5. RESTORE A DATABASE TABLE](#35-restore-a-database-table)
 * [4. USAGE SCENARIOS](#4-usage-scenarios)
   * [4.1. RUN INCREASE-DATE ACTION](#41-run-increase-date-action)
   * [4.2. VERIFY THE INSERTED DATA FROM THE DB](#42-verify-the-inserted-data-from-the-db)
   * [4.3. LOAD XLS ISSUES TO DB AND FROM DB TO TXT FILES](#43-load-xls-issues-to-db-and-from-db-to-txt-files)
-  * [4.4. RUN THE HTTP://&LT;&LT;WEB-HOST&GT;&GT;:&LT;&LT;WEB-PORT&GT;&GT;/&LT;&LT;PROJ-DB&GT;&GT;/GET/&LT;&LT;TABLE&GT;&GT;/&LT;&LT;GUID&GT;&GT; ROUTE](#44-run-the-http//web-hostweb-port/proj-db/get/table/guid-route)
 * [5. NAMING CONVENTIONS](#5-naming-conventions)
   * [5.1. DIRS NAMING CONVENTIONS](#51-dirs-naming-conventions)
   * [5.2. ROOT DIRS NAMING CONVENTIONS](#52-root-dirs-naming-conventions)
@@ -65,8 +65,8 @@
   * [8.19. DEPLOYMENT TO THE TEST ENVIRONMENT](#819-deployment-to-the-test-environment)
   * [8.20. CHECK THAT ALL THE FILES IN THE DEPLOYMENT PACKAGE ARE THE SAME AS THOSE IN THE LATEST COMMIT OF THE DEV GIT BRANCH. ](#820-check-that-all-the-files-in-the-deployment-package-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
   * [8.21. RESTART THE APPLICATION LAYER](#821-restart-the-application-layer)
-* [9. SYSTEM ADMINISTRATION AND MAINTENANCE OPERATIONS](#9-system-administration-and-maintenance-operations)
-  * [9.1. KNOWN ISSUES AND WORKAROUNDS](#91-known-issues-and-workarounds)
+* [9. KNOWN ISSUES AND WORKAROUNDS](#9-known-issues-and-workarounds)
+  * [9.1. MORBO IS STUCK](#91-morbo-is-stuck)
     * [9.1.1. Morbo is stuck](#911-morbo-is-stuck)
     * [9.1.2. Probable root cause](#912-probable-root-cause)
     * [9.1.3. Known solution and workaround](#913-known-solution-and-workaround)
@@ -190,14 +190,36 @@ You could easily add those commands to your crontab for scheduled execution - re
 
     
 
-### 3.1. Backup a database
-You backup a database with the following one-liner. 
+### 3.1. Load database connectivity configuration securely
+Qto provides you with the means and tools to work on tens of databases, yet one at the time. Thus once you open a shell to run the tools you must have the connectivity to the database you want to work on. 
+
+     # source the db configuration setting func
+    source lib/bash/funcs/export-json-section-vars.sh
+    
+    # load the product instance configuration details by calling that func 
+    doExportJsonSectionVars cnf/env/tst.env.json '.env.db'
+    
+    # set the psql alias having all the connectivity details for the instance db
+    alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} --port $postgres_db_port --host $postgres_db_host"
+    
+    # now you can run any psql 
+    psql -d my_db -c "\dl"
+
+### 3.2. Backup a database
+You backup a database ( all the objects, roles and data ) with the following one-liner. 
 
     # obs you must have the shell vars pre-loaded !!! Note dev, tst or prd instances !
     # clear; doParseCnfEnvVars cnf/qto.prd.host-name.cnf
     bash src/bash/qto/qto.sh -a backup-postgres-db
 
-### 3.2. Restore a database
+### 3.3. Backup a database table
+You backup a database table with the following one-liner. Noe 
+
+    # obs you have to have the shell vars pre-loaded !!!
+    # clear; doParseCnfEnvVars <<path-to-cnf-file>>
+    bash src/bash/qto/qto.sh -a backup-postgres-table -t my_table
+
+### 3.4. Restore a database
 You restore a database by first running the pgsql scripts of the project database and than restoring the insert data 
 
     # obs you have to have the shell vars pre-loaded !!!
@@ -208,18 +230,10 @@ You restore a database by first running the pgsql scripts of the project databas
     
     psql -d $postgres_db_name < dat/mix/sql/pgsql/dbdumps/dev_qto/dev_qto.20180813_202202.insrt.dmp.sql
 
-### 3.3. Backup a database table
-You backup a database table with the following one-liner. Noe 
-
-    # obs you have to have the shell vars pre-loaded !!!
-    # clear; doParseCnfEnvVars <<path-to-cnf-file>>
-    bash src/bash/qto/qto.sh -a backup-postgres-table -t my_table
-
-### 3.4. Restore a database table
+### 3.5. Restore a database table
 You restore a database table by first running the pgsql scripts of the project database or ONLY for that table and than restoring the insert data from the table insert file.
 
     # obs you have to have the shell vars pre-loaded !!!
-    # clear; doParseCnfEnvVars <<path-to-cnf-file>>
     # re-apply the table ddl
     psql -d $postgres_db_name < src/sql/pgsql/dev_qto/13.create-table-requirements.sql
     
@@ -250,23 +264,6 @@ to load xls issues to db and from db to txt files
     # or run for all the periods
     for period in `echo daily weekly monthly yearly`; do export period=$period ; 
     bash src/bash/qto/qto.sh -a xls-to-db -a db-to-txt ; done ;
-
-### 4.4. Run the http://&lt;&lt;web-host&gt;&gt;:&lt;&lt;web-port&gt;&gt;/&lt;&lt;proj-db&gt;&gt;/get/&lt;&lt;table&gt;&gt;/&lt;&lt;guid&gt;&gt; route
-Load a table with guid's.
-Check a single item with your browser, for example:
-http://doc-pub-host:3000/dev_stockit_issues/get/companies/727cf807-c9f1-446b-a7fc-65f9dc53ed2d
-
-    # load the items
-    while read -r f; do 
-    export xls_file=$f; 
-    bash src/bash/qto/qto.sh -a xls-to-db  ; 
-    done < <(find $proj_txt_dir -type f)
-    
-    # verify the data
-    psql -d $db_name -c "SELECT * FROM company_eps "
-    
-    
-    
 
 ## 5. NAMING CONVENTIONS
 
@@ -556,12 +553,12 @@ Well just chain the both commands.
 
     bash src/bash/qto/qto.sh -a mojo-morbo-stop ; bash src/bash/qto/qto.sh -a mojo-morbo-start
 
-## 9. SYSTEM ADMINISTRATION AND MAINTENANCE OPERATIONS
+## 9. KNOWN ISSUES AND WORKAROUNDS
 
 
     
 
-### 9.1. Known issues and workarounds
+### 9.1. Morbo is stuck
 
 
     
