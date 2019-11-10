@@ -1,23 +1,21 @@
+/* main courtesy goes to Erik Terwan - https://codepen.io/erikterwan/pen/grOZxx*/
 a {
   text-decoration: none;
   color: #232323;
   transition: color 0.3s ease;
 }
-
 a:hover {
   color: tomato;
 }
-
 #left_menu_toggle {
   display: block;
-  position: relative;
+  position: relative ;
   top: 30px;
   left: 14px;
   z-index: 1;
   -webkit-user-select: none;
   user-select: none;
 }
-
 #left_menu_toggle input {
   display: block;
   width: 35px;
@@ -30,7 +28,6 @@ a:hover {
   z-index: 2; /* and place it over the hamburger */
   -webkit-touch-callout: none;
 }
-
 #left_menu_toggle span {
   display: block;
   width: 23px;
@@ -45,33 +42,25 @@ a:hover {
               background 0.5s cubic-bezier(0.99,0.2,0.05,1.0),
               opacity 0.55s ease;
 }
-
 #left_menu_toggle span:first-child {
   transform-origin: 0% 0%;
 }
-
 #left_menu_toggle span:nth-last-child(2) {
   transform-origin: 0% 100%;
 }
-
 #left_menu_toggle input:checked ~ span {
   opacity: 1;
   transform: rotate(45deg) translate(0px, -1px);
   background: #232323;
 }
-
 #left_menu_toggle input:checked ~ span:nth-last-child(3) {
   opacity: 0; /* hide the middle one */
   transform: rotate(0deg) scale(0.2, 0.2);
 }
 
-/*
- * Ohyeah and the last one shoold go the other direction
- */
 #left_menu_toggle input:checked ~ span:nth-last-child(2) {
   transform: rotate(-45deg) translate(0, -1px);
 }
-
 #left_menu {
   position: absolute;
   width: 300px;
@@ -86,23 +75,18 @@ a:hover {
   transform: translate(-100%, 0);
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
 }
-
 #left_menu li {
-  padding: 5px 0;
+  padding: 3px 0;
 }
-
 /** And let's slide it in from the left  */
 #left_menu_toggle input:checked ~ ol {
   transform: none;
 }
-
 /** start explorer */
 *{margin:0;padding:0;}
-
 input{
    font-size:1em;
 }
-
 ol.tree{
 	padding-left:30px;
 }
@@ -111,7 +95,6 @@ li {
 	color:#fff;position:
 	relative;margin-left:-15px;
 }
-
 li input {
 	width:2em;
 	height:2em;
@@ -122,7 +105,6 @@ li input {
 	cursor:pointer;
    font-size:1em;
 }
-
 li input + ol{
 	height:1em;
 	margin:-16px 0 0 -44px;
@@ -159,7 +141,6 @@ li.file a:focus {
 	color:#FF0066;
 	background-color: #82CAFA;
 }
-
 li input:checked + ol {
 	height:auto;margin:-21px 0 0 -44px;padding:25px 0 0 80px;
 	background:url("../../../../../themes/thme-blue/img/controls/toggle-small.png") no-repeat 40px 5px;
@@ -176,7 +157,6 @@ li input:checked + ol > li{
 li input:checked + ol > li:first-child{
 	margin:0 0 0.125em;
 }
-
 li label {
 	padding-left:37px;
 	cursor:pointer;
@@ -205,4 +185,3 @@ li label a:focus {
 	color:#FF0066;
 	background-color: #82CAFA;
 }
-/** stop  expl */

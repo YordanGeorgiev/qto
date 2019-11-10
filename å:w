@@ -7,18 +7,18 @@ SELECT 'create the "items_doc" table'
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , level          integer NULL
     , seq            integer NULL
-    , type           varchar (10) NOT NULL DEFAULT 'doc'
+    , lft            bigint  NULL
+    , rgt            bigint  NULL
+    , type           varchar (10) NOT NULL DEFAULT 'folder'
     , url            varchar (50) NOT NULL DEFAULT '#' -- 2048 is the absolute max
-    , title          varchar (50) NOT NULL DEFAULT 'link-title...'
-    , name           varchar (100) NOT NULL DEFAULT 'doc-title...'
-    , status         varchar (10) NOT NULL DEFAULT '02-todo'
+    , title          varchar (50) NOT NULL DEFAULT 'url...'
+    , name           varchar (100) NOT NULL DEFAULT 'name...'
+    , status         varchar (10) NOT NULL DEFAULT 'status...'
+    , src            varchar (4000)
     , description    varchar (4000)
     , item_id        integer NULL -- the future hook for the table name in the url
     , prio           integer NOT NULL DEFAULT 1
-    , src            varchar (4000)
     , formats        text NULL
-    , lft            bigint  NULL
-    , rgt            bigint  NULL
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_items_doc_guid PRIMARY KEY (guid)
     ) WITH (
