@@ -4,16 +4,17 @@
   * [1.2. AUDIENCE](#12-audience)
   * [1.3. RELATED DOCUMENTATION](#13-related-documentation)
 * [2. DEPLOYABILITY](#2-deployability)
-  * [2.1. AUTOMATED AWS DEPLOYMENT IN LESS THAN AN HOUR](#21-automated-aws-deployment-in-less-than-an-hour)
-  * [2.2. FULL DEPLOYMENT IN LESS THAN AN HOUR](#22-full-deployment-in-less-than-an-hour)
-    * [2.2.1. A working instance deployment by simple unzip command](#221-a-working-instance-deployment-by-simple-unzip-command)
-    * [2.2.2. Binary prerequisites check script](#222-binary-prerequisites-check-script)
-    * [2.2.3. Required Perl modules installation](#223-required-perl-modules-installation)
-    * [2.2.4. Installation documentation](#224-installation-documentation)
-  * [2.3. A FULL APPLICATION CLONE SHOULD BE READY FOR LESS THAN 5 MINUTES](#23-a-full-application-clone-should-be-ready-for-less-than-5-minutes)
-    * [2.3.1. Single shell call for postgres db creation and initial data load](#231-single-shell-call-for-postgres-db-creation-and-initial-data-load)
-    * [2.3.2. One liner for single restore for both full db and inserts only](#232-one-liner-for-single-restore-for-both-full-db-and-inserts-only)
-  * [2.4. SINGLETON CONFIGURATION ](#24-singleton-configuration-)
+  * [2.1. DEVOPS DEPLOYABILITY NO LONGER THAN A WEEK RELEASE CYCLE](#21-devops-deployability-no-longer-than-a-week-release-cycle)
+  * [2.2. AUTOMATED AWS DEPLOYMENT IN LESS THAN AN HOUR](#22-automated-aws-deployment-in-less-than-an-hour)
+  * [2.3. FULL DEPLOYMENT IN LESS THAN AN HOUR](#23-full-deployment-in-less-than-an-hour)
+    * [2.3.1. A working instance deployment by simple unzip command](#231-a-working-instance-deployment-by-simple-unzip-command)
+    * [2.3.2. Binary prerequisites check script](#232-binary-prerequisites-check-script)
+    * [2.3.3. Required Perl modules installation](#233-required-perl-modules-installation)
+    * [2.3.4. Installation documentation](#234-installation-documentation)
+  * [2.4. A FULL APPLICATION CLONE SHOULD BE READY FOR LESS THAN 5 MINUTES](#24-a-full-application-clone-should-be-ready-for-less-than-5-minutes)
+    * [2.4.1. Single shell call for postgres db creation and initial data load](#241-single-shell-call-for-postgres-db-creation-and-initial-data-load)
+    * [2.4.2. One liner for single restore for both full db and inserts only](#242-one-liner-for-single-restore-for-both-full-db-and-inserts-only)
+  * [2.5. SINGLETON CONFIGURATION ](#25-singleton-configuration-)
 * [3. USER-FRIENDLINESS](#3-user-friendliness)
   * [3.1. ONELINER SHELL CALLS](#31-oneliner-shell-calls)
     * [3.1.1. Database recreation and DDL scripts run one-liners](#311-database-recreation-and-ddl-scripts-run-one-liners)
@@ -107,53 +108,58 @@ Windows family based OS'es are explicitly out of the scope of the qto tool. Any 
 
     
 
-### 2.1. Automated AWS deployment in less than an hour
+### 2.1. DevOps deployability no longer than a week release cycle
+The qto system should provide the CI  infrastructure for the capability to perform frequent releases, with release cycles no longer than a week. For larger releases 2 weeks cycle are acceptable too, with no more than 3 larger releases in a row.
+
+    
+
+### 2.2. Automated AWS deployment in less than an hour
 The qto system should be automatically deployable to aws in less than an hour, so that the deployment operator should execute no more than 5 documented commands.
 
     
 
-### 2.2. Full deployment in less than an hour
+### 2.3. Full deployment in less than an hour
 The full System should be ready for use by end-users in the latest Ubuntu LTE OS in less than an hour. The whole deployment process MUST BE as automated as possible.
 
     
 
-#### 2.2.1. A working instance deployment by simple unzip command
+#### 2.3.1. A working instance deployment by simple unzip command
 The qto tool could be deployed by a simply unzip of the full package into a host having the proper binary configuration, which must have all of the documentation and scripts to provide assistance for the setup and the configuration of the tool as well as the initial data to populate the qto database. 
 
     
 
-#### 2.2.2. Binary prerequisites check script
+#### 2.3.2. Binary prerequisites check script
 All the binaries which are required for the running of the tool must be checked by a user-friendly binaries prerequisites check script. 
 
 
     
 
-#### 2.2.3. Required Perl modules installation
+#### 2.3.3. Required Perl modules installation
 All the required Perl modules must be part of the deployer script. The Perl modules should be installed as non-root user.
 
     
 
-#### 2.2.4. Installation documentation
+#### 2.3.4. Installation documentation
 The installation of the required Postgres db must be documented in the DevOps guide, which should have the markdown version in the doc directory of the deployment package.
 
     
 
-### 2.3. A full application clone should be ready for less than 5 minutes
+### 2.4. A full application clone should be ready for less than 5 minutes
 A DevOps operator should be able to perform an application clone ( having app-name changed to new-app-name etc. ) of the Qto application in less than 5 minutes. 
 
     
 
-#### 2.3.1. Single shell call for postgres db creation and initial data load
+#### 2.4.1. Single shell call for postgres db creation and initial data load
 The creation of the Postgres database of a qto project should be doable via a single shell call. 
 
     
 
-#### 2.3.2. One liner for single restore for both full db and inserts only
+#### 2.4.2. One liner for single restore for both full db and inserts only
 The full database should be loadable form a db dump either from a full dump or from the db-inserts dump only.
 
     
 
-### 2.4. Singleton configuration 
+### 2.5. Singleton configuration 
 Whenever there is a configuration entry indicating part of the configuration of an application instance it should be stored in 1 and only 1 place in the configuration file of the instance, so that any person not familiar with the internal logic of the application could find all the configuration entries in one and only one place including the secrets.
 
     
