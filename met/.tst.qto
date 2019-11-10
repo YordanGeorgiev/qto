@@ -1,4 +1,5 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/qto/lib/Qto/Controller/Home.pm
 src/perl/qto/lib/Qto/App/UI/Controls/WtrLeftMenu.pm
 src/perl/qto/lib/Qto/Controller/View.pm
@@ -185,7 +186,6 @@ src/perl/qto/public/themes/thme-blue/css/screen/controls/table.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/modal-dia.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/pager.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/list-grid.css
-src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/right-click-menu.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/searchbox.css
