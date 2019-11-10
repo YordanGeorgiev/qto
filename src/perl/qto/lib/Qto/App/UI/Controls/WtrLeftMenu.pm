@@ -109,7 +109,8 @@ and this is how the static output should look like
       
       my $cnf        = $config->{'env'}->{'app'} ; 
       my $id         = $row->{'id'};
-      my $base_url   = $cnf->{'ht_protocol'} . '://' . $cnf->{'web_host'} . ':' . $cnf->{'port'} ; 
+      my $port       = $cnf->{'https_port'} if $cnf->{'ht_protocol'} eq 'https';
+      my $base_url   = $cnf->{'ht_protocol'} . '://' . $cnf->{'web_host'} . ':' . $port ; 
       $base_url      = $base_url . '/' . $cnf->{'postgres_db_name'} ;
       my $url        = $base_url . '/' . $row->{'url'} ;
       my $title      = $row->{'title'};
