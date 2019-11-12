@@ -1,6 +1,6 @@
 package Qto::App::Db::In::Postgres::RdrPostgresDb ; 
 
-   #use strict ; use warnings ; use utf8 ; use feature qw(say);
+   use strict ; use warnings ; use utf8 ; use feature qw(say);
 
    require Exporter; 
    use AutoLoader ; 

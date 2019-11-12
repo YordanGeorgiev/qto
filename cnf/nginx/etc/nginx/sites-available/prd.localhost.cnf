@@ -39,11 +39,11 @@
 server {
 
   listen 443 ssl;
-  server_name dev.qto.fi;
+  server_name %web_host%;
   server_tokens off;
 
-  ssl_certificate /etc/letsencrypt/live/dev.qto.fi/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/dev.qto.fi/privkey.pem;
+  ssl_certificate /etc/letsencrypt/live/%web_host%/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/%web_host%/privkey.pem;
 
   location / {
     proxy_pass http://127.0.0.1:8080;
