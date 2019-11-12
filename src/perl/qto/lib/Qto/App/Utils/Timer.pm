@@ -21,8 +21,7 @@ package Qto::App::Utils::Timer ;
 		
 		my $invocant = shift;    
 		my $class = ref ( $invocant ) || $invocant ; 
-
-		$TimeFormat = shift if ( @_ ) ; 
+		$TimeFormat = shift || 'YYYY-MM-DD hh:mm:ss' ;
 		my $self = {};        
 		bless( $self, $class );    
 		return $self;
@@ -56,9 +55,10 @@ package Qto::App::Utils::Timer ;
 	sub GetHumanReadableTime {
 
 		my $self = shift ; 
-		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $self->GetTimeUnits(); 
+		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = ();
+		($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $self->GetTimeUnits(); 
 
-		my $HumanReadableTime = () ; 
+		my $HumanReadableTime = '';
 		$HumanReadableTime = $TimeFormat ;  
 		$HumanReadableTime =~ s/YYYY/$year/ ; 
 		$HumanReadableTime =~ s/MM/$mon/ ; 

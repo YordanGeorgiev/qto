@@ -42,18 +42,21 @@ sub doListItems {
    my $msr2             = {} ; 
    my $ret              = 1 ; 
    my $msg              = '' ; 
+   my $left_menu        = '' ; 
    my $as               = 'grid' ; # the default form of the list control 
+   my $list_control     = '' ; 
 
   
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
+   
  
-   my $list_control     = '' ; 
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ;
    my $objCnrUrlPrms    = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    $objCnrUrlPrms->doValidateAndSetSelect();
+   ($ret,$msg,$left_menu) = $self->SUPER::doBuildLeftMenu(\$objModel, $db );
 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
    ( $ret , $msg , $list_control ) = $self->doBuildListPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
@@ -61,7 +64,7 @@ sub doListItems {
 
 
    $msg = $self->doSetPageMsg ( $ret , $msg ) ; 
-   $self->doRenderPageTemplate( $ret , $msg , $as, $db , $item , $list_control ) ; 
+   $self->doRenderPageTemplate( $ret , $msg , $as, $db , $item , $list_control, $left_menu) ; 
 }
 
 
@@ -126,6 +129,7 @@ sub doRenderPageTemplate {
    my $db               = shift ; 
    my $item             = shift ; 
    my $list_control     = shift ; 
+   my $left_menu        = shift ; 
    my $notice           = '' ;
 
    unless ( $ret == 0 ) {
@@ -161,6 +165,7 @@ sub doRenderPageTemplate {
     , 'page_load_time'  => $page_load_time
     , 'list_control'    => $list_control
     , 'notice'          => $notice
+    , 'left_menu'       => $left_menu
 	) ; 
 
    return ; 
