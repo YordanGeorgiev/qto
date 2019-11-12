@@ -121,9 +121,9 @@ sub doRenderPageTemplate {
    my $msg_color        = shift || 'red' ;
    my $db               = shift ; 
    my $redirect_url     = shift ; 
-
    my $notice           = '' ;
 
+   $config		         = $self->app->config ; 
    $msg = "$db login" unless $msg ; 
    $msg = $self->session( 'app.' , $db . '.msg' ) if defined $self->session( 'app.' . $db . '.msg' ) ;
 
@@ -134,6 +134,7 @@ sub doRenderPageTemplate {
 
    my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
+   my $ProductVersion   = $config->{'env'}->{'run'}->{'VERSION'} ;
 
    $self->render(
       'template'        => $template 
@@ -141,7 +142,7 @@ sub doRenderPageTemplate {
     , 'msg_color'       => $msg_color
     , 'db' 		         => $db
     , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
-    , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
+    , 'ProductVersion' 	=> $ProductVersion
     , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'notice'          => $notice

@@ -8,13 +8,13 @@ a:hover {
   color: tomato;
 }
 #left_menu_toggle {
-  display: block;
-  position: relative ;
-  top: 30px;
-  left: 14px;
-  z-index: 1;
-  -webkit-user-select: none;
-  user-select: none;
+   user-select: none;
+   -webkit-user-select: none;
+   display: inline-block;
+   position: fixed; 
+   z-index: 10; 
+   left: 2%;
+   top: 2%;
 }
 #left_menu_toggle input {
   display: block;

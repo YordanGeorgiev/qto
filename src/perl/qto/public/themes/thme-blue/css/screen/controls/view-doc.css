@@ -6,13 +6,12 @@ body {
    margin: 8% 2% 3% 2%;
 }
 #div_open_rgt_menu {
-  position: absolute;
-  top: 10px;
-  right: 15px; ;
+  position: fixed;
+  top: 2%;
+  right: 2%;
   z-index: 1; 
   float:right;
   font-size: 25px;
-  padding: 1% 2% 2% 0%;
   color: #a9a9a9;
 }
 #content {   
