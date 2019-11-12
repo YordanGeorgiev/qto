@@ -1,4 +1,5 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+# start ::: left-menu
 src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/qto/lib/Qto/Controller/Home.pm
 src/perl/qto/lib/Qto/App/UI/Controls/WtrLeftMenu.pm
@@ -21,6 +22,7 @@ cnf/env
 cnf/env/dev.env.json
 cnf/env/tst.env.json
 cnf/env/prd.env.json
+# stop  ::: left-menu
 # start ::: deployment
 src/bash/deployer/run.sh
 src/bash/deployer/export-json-section-vars.func.sh
@@ -50,7 +52,6 @@ src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
 src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
 src/bash/qto/funcs/provision-db-admin.func.sh
 src/bash/qto/funcs/provision-app-user.func.sh
-src/bash/qto/funcs/provision-https.func.sh
 src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
 src/bash/qto/funcs/load-db-data-from-s3.func.sh
 src/bash/qto/qto.sh
@@ -130,16 +131,19 @@ src/bash/qto/funcs/admin/restart-postgres.func.sh
 cnf/postgres/etc/postgresql/12/main
 cnf/postgres/etc/postgresql/12/main/pg_hba.conf
 cnf/postgres/etc/postgresql/12/main/postgresql.conf
+# -- stop  docker deployment
+# start ::: provision https
 cnf/nginx/
 cnf/nginx/etc
 cnf/nginx/etc/nginx
 cnf/nginx/etc/nginx/nginx.conf
+src/bash/qto/funcs/provision-https.func.sh
 cnf/nginx/etc/nginx/sites-available/%env%.http-site.conf
 cnf/nginx/etc/nginx/sites-available/%env%.https-site.conf
 cnf/nginx/etc/nginx/sites-available/tst.localhost.cnf
 cnf/nginx/etc/nginx/sites-available/prd.localhost.cnf
 cnf/nginx/etc/nginx/sites-available/dev.localhost.cnf
-# -- stop  docker deployment
+# stop  ::: provision https
 src/bash/qto/funcs/perl/run-benchmarks.func.sh
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.t
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.t

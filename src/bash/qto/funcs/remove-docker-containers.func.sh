@@ -26,6 +26,3 @@ doRemoveDockerContainers(){
 
 	doLog "INFO STOP  removing all docker containers"
 }
-
-
-# eof file: src/bash/qto/funcs/remove-all-docker-containers.func.sh
