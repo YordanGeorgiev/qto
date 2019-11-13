@@ -102,6 +102,7 @@ Vue.component('div_search_box', {
   }
   , template: ` <searchbox :dblist="pdblist" :tblist="ptblist" :collist="pcollist" />`
   , mounted() {
+      document.getElementById("inp_srch_box").focus();
       // focus the search textbox on forward slash, but only when not in textarea ...
       window.addEventListener('keyup', function(event) {
          if (event.key === "/" ) { 

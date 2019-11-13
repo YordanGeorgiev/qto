@@ -1,4 +1,8 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+cnf/env
+cnf/env/dev.env.json
+cnf/env/tst.env.json
+cnf/env/prd.env.json
 # start ::: left-menu
 src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/qto/lib/Qto/Controller/Home.pm
@@ -18,10 +22,6 @@ src/perl/qto/public/poc/css-tree/01
 src/perl/qto/public/poc/css-tree/01/index.html
 src/perl/qto/public/poc/css-tree/02
 src/perl/qto/public/poc/css-tree/02/index.html
-cnf/env
-cnf/env/dev.env.json
-cnf/env/tst.env.json
-cnf/env/prd.env.json
 # stop  ::: left-menu
 # start ::: deployment
 src/bash/deployer/run.sh

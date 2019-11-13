@@ -44,6 +44,7 @@ sub doSearchItems {
    my $as               = 'grid' ; 
    my $srch_control     = 'srch-grid' ; 
    my $notice           = '' ; 
+   my $left_menu        = '' ; 
    
 
    $config		         = $self->app->config ; 
@@ -52,6 +53,7 @@ sub doSearchItems {
    $self->SUPER::doReloadProjDbMeta( $db,'search' ) ;
    
    $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
+   ($ret,$msg,$left_menu) = $self->SUPER::doBuildLeftMenu(\$objModel, $db );
    
    $objCnrUrlPrms = 
       'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
@@ -74,6 +76,7 @@ sub doSearchItems {
        , 'page_load_time'  => $page_load_time
        , 'srch_control'    => "['title']" 
        , 'notice'          => $notice
+       , 'left_menu'       => $left_menu
       ) ; 
       return ; 
    }  else {
@@ -82,7 +85,7 @@ sub doSearchItems {
       ( $ret , $msg , $srch_control ) = $self->doBuildSearchControl ( \$objModel , $msg , $db , $as  ) ; 
       
       #$msg = $self->doSetPageMsg ( $ret , $msg ) ; 
-      $self->doRenderPageTemplate( \$objModel , $msg , $db , $srch_control , $as) ; 
+      $self->doRenderPageTemplate( \$objModel , $msg , $db , $srch_control , $as, $left_menu) ; 
    }
 
 }
@@ -125,6 +128,7 @@ sub doRenderPageTemplate {
    my $db               = shift ; 
    my $srch_control     = shift ; 
    my $as               = shift || 'grid' ; 
+   my $left_menu        = shift ;
    my $notice           = '' ; 
    my $as_templates = { 
         'grid'          => 'srch-grid' 
@@ -148,6 +152,7 @@ sub doRenderPageTemplate {
     , 'page_load_time'  => $page_load_time
     , 'srch_control'    => $srch_control
     , 'notice'          => $notice
+    , 'left_menu'          => $left_menu
 	) ; 
 
    return ; 

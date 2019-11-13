@@ -68,6 +68,7 @@
          , fetchServerSideDataToUI: function(url_params) {
 
                if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
+               if ( url_params.has("for") === false) { return; }
 
                this.fetchServerSideData(url_params)
                .then( response => {

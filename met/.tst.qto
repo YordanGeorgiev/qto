@@ -1,4 +1,8 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+cnf/env
+cnf/env/dev.env.json
+cnf/env/tst.env.json
+cnf/env/prd.env.json
 # start ::: left-menu
 src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/qto/lib/Qto/Controller/Home.pm
@@ -18,10 +22,6 @@ src/perl/qto/public/poc/css-tree/01
 src/perl/qto/public/poc/css-tree/01/index.html
 src/perl/qto/public/poc/css-tree/02
 src/perl/qto/public/poc/css-tree/02/index.html
-cnf/env
-cnf/env/dev.env.json
-cnf/env/tst.env.json
-cnf/env/prd.env.json
 # stop  ::: left-menu
 # start ::: deployment
 src/bash/deployer/run.sh
@@ -138,7 +138,6 @@ cnf/nginx/etc
 cnf/nginx/etc/nginx
 cnf/nginx/etc/nginx/nginx.conf
 src/bash/qto/funcs/provision-https.func.sh
-cnf/nginx/etc/nginx/sites-available/%env%.http-site.conf
 cnf/nginx/etc/nginx/sites-available/%env%.https-site.conf
 cnf/nginx/etc/nginx/sites-available/tst.localhost.cnf
 cnf/nginx/etc/nginx/sites-available/prd.localhost.cnf
@@ -757,6 +756,7 @@ cnf/hosts/host-name/etc/fstab
 cnf/hosts/host-name/etc/network/interfaces
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
+src/perl/qto/lib/auto/Qto/App/UI/Controls/WtrLeftMenu/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HiDelete/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WsSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToTxt/autosplit.ix
