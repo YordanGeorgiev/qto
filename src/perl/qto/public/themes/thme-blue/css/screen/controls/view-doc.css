@@ -210,6 +210,9 @@ padding: 3% 0% 2% 0%;
   display: inline-block;
   width: 100%;
 }
+.cls_tbltooltip a:link{
+  color: blue;
+}
 .cls_tbltooltip .cls_tbltooltiptext {
   visibility: hidden;
   height: auto;

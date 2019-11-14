@@ -42,7 +42,7 @@ sub doBuildViewControl {
    my $ret           	= 1 ; 
    my $control       	= '' ; 
    my $mhsr2 				= {};
-   my $objRdrDbsFcry = {} ; 
+   my $objRdrDbsFcry    = {} ; 
    my $objRdrDb 			= {} ; 
    my $objWtrUIFactory 	= {} ; 
    my $objUIBuilder 		= {} ; 
