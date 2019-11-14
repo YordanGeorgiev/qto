@@ -1,6 +1,10 @@
 /* main courtesy of this adaptation code goes to:
       * Ryan Seddon - https://www.thecssninja.com/demo/css_tree/ AND
       * Erik Terwan - https://codepen.io/erikterwan/pen/grOZxx */
+#app_label {
+padding: 10% 0% 0% 0%;
+font-size: 80%;
+}
 .cls_fa, .cls_da {
   text-decoration: none;
   color: #232323;

@@ -8,5 +8,8 @@
    <ol id="left_menu" class="tree">
          <%== " $left_menu" =%>
    </ol>
+   <div id="app_label">
+      <p><%= " $db" =%><%= " $ProductVersion " =%> <%= " $EnvType " =%><%= " $GitShortHash " =%> @<%= " $page_load_time " =%><a tabindex="1" href="/<%= $db =%>/login">logout</a></p>
+   </div>
   </div>
 </div>
