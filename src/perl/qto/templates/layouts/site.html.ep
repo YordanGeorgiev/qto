@@ -4,15 +4,17 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/site.css?v=<%= $ProductVersion =%>" />
-  <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/controls/left-menu.css?v=<%= $ProductVersion =%>" />
+   % unless ( substr($template_name,-13) eq 'login.html.ep' ) {
+     <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/site.css?v=<%= $ProductVersion =%>" />
+     <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/controls/left-menu.css?v=<%= $ProductVersion =%>" />
+   % }
   <%= content 'cnt_header_css' %>
 </head>
 <body>
 
-% unless ( substr($template_name,-13) eq 'login.html.ep' ) {
-   %= include 'controls/left-menu/left-menu'
-% }
+   % unless ( substr($template_name,-13) eq 'login.html.ep' ) {
+      %= include 'controls/left-menu/left-menu'
+   % }
 
    <%= content 'cnt_body_controls' %>
    <div id="js_libs">

@@ -3,6 +3,15 @@ cnf/env
 cnf/env/dev.env.json
 cnf/env/prd.env.json
 cnf/env/tst.env.json
+# start login
+src/perl/qto/public/themes/thme-blue/css/screen/site/login.css
+src/perl/qto/templates/pages/login/login.html.ep
+src/perl/qto/templates/layouts/site.html.ep
+src/perl/qto/t/lib/Qto/Controller/TestLogin.t
+src/perl/qto/lib/Qto/Controller/Login.pm
+src/perl/qto/templates/pages/login
+src/perl/qto/templates/layouts/login.html.ep
+# stop  login
 # start ::: left-menu
 src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/qto/lib/Qto/Controller/Home.pm
@@ -77,12 +86,6 @@ src/docker/Dockerfile.deploy-qto-db-host.0.7.2
 src/docker/Dockerfile.deploy-qto-app-host.0.7.2
 src/bash/qto/funcs/build-docker-image.func.sh
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
-# start login
-src/perl/qto/t/lib/Qto/Controller/TestLogin.t
-src/perl/qto/lib/Qto/Controller/Login.pm
-src/perl/qto/templates/pages/login
-src/perl/qto/templates/pages/login/login.html.ep
-# stop  login
 # start websockets
 src/perl/qto/templates/pages/home/home.html.ep
 src/perl/qto/public/index.html
@@ -147,9 +150,7 @@ src/bash/qto/funcs/perl/run-benchmarks.func.sh
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.t
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.t
 src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.t
-src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
-src/perl/qto/templates/layouts/login.html.ep
 src/perl/qto/templates/layouts/home.html.ep
 src/perl/qto/templates/js/global/get-url-params.func.js.html.ep
 src/perl/qto/templates/js/global/get-server-data.func.js.html.ep
@@ -250,7 +251,6 @@ src/perl/qto/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/qto/public/themes/thme-blue/css/screen/site/site.css
 src/perl/qto/public/themes/thme-blue/css/screen/site/snackbar.css
 src/perl/qto/public/themes/thme-blue/css/screen/site/view.css
-src/perl/qto/public/themes/thme-blue/css/screen/site/login.css
 src/perl/qto/public/themes/thme-blue/css/screen/site/home.css
 src/perl/qto/public/themes/thme-blue/css/print/controls/app_list_labels.css
 #---
@@ -287,7 +287,7 @@ src/perl/qto/t/lib/Qto/Controller/TestSelectWith.t
 src/perl/qto/t/lib/Qto/Controller/TestUpdate.t
 src/perl/qto/t/lib/Qto/Controller/TestDelete.t
 src/perl/qto/t/lib/Qto/Controller/TestHiSelect.t
-src/perl/qto/t/lib/Qto/Controller/TestAppLabel.t
+src/perl/qto/t/lib/Qto/Controller/TestAppLabel.todo
 src/perl/qto/t/lib/Qto/Controller/TestListAsOutputType.t
 src/perl/qto/t/lib/Qto/Controller/TestListHide.t
 src/perl/qto/t/lib/Qto/Controller/TestViewDocPage.t

@@ -1,18 +1,25 @@
-/* main courtesy goes to Erik Terwan - https://codepen.io/erikterwan/pen/grOZxx*/
-a {
+/* main courtesy of this adaptation code goes to:
+      * Ryan Seddon - https://www.thecssninja.com/demo/css_tree/ AND
+      * Erik Terwan - https://codepen.io/erikterwan/pen/grOZxx */
+.cls_fa, .cls_da {
   text-decoration: none;
   color: #232323;
   transition: color 0.3s ease;
 }
-a:hover {
-  color: tomato;
+.cls_fa a:hover, .cls_da a:hover, .cls_fa a:focus, .cls_da a:focus {
+	color:#FF0066;
+	background-color: #82CAFA;
+}
+li label a:focus {
+	color:#FF0066;
+	background-color: #82CAFA;
 }
 #left_menu_toggle {
    user-select: none;
    -webkit-user-select: none;
    display: inline-block;
    position: fixed; 
-   z-index: 10; 
+   z-index: 100; /* should go over everything */
    left: 2%;
    top: 2%;
 }
@@ -178,10 +185,6 @@ li label a:hover{
 	background-color: #82CAFA;
 }
 li label a:active {
-	color:#FF0066;
-	background-color: #82CAFA;
-}
-li label a:focus {
 	color:#FF0066;
 	background-color: #82CAFA;
 }

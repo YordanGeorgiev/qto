@@ -89,7 +89,7 @@ and this is how the static output should look like
 
       return  '
       <li>
-       <label for="' . $ctrlid . '"><a href="#">' . $title . '</a></label>
+       <label for="' . $ctrlid . '"><a class="cls_fa" href="#">' . $title . '</a></label>
        <input tabindex="1" type="checkbox" checked id="' . $ctrlid . '" />
        <ol><li>
       ' ; 
@@ -117,7 +117,7 @@ and this is how the static output should look like
       my $title      = $row->{'title'};
       my $name       = $row->{'name'};
       
-      return '<li class="file"><a href="' . $url . '">' . $title . '</a></li>' ; 
+      return '<li class="file"><a class="cls_da" href="' . $url . '">' . $title . '</a></li>' ; 
    }
    
    
