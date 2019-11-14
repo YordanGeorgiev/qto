@@ -23,7 +23,7 @@ sub doLoginUser {
    my $self             = shift;
    my $db               = $self->stash('db');
    my $ret              = 1 ; 
-   my $msg              = undef;
+   my $msg              = "$db login";
    my $msg_color        = 'red' ;
    my $objRdrDbsFcry    = {} ; 
    my $objRdrDb         = {} ; 
@@ -89,7 +89,7 @@ sub doShowLoginForm {
 
    my $self             = shift;
    my $db               = $self->stash('db');
-   my $msg              = '' ; 
+   my $msg              = "$db   login"; 
    my $msg_color        = 'grey' ; 
    
    my $config		         = $self->app->config ; 
@@ -125,7 +125,6 @@ sub doRenderPageTemplate {
 
    $config		         = $self->app->config ; 
    $msg = "$db login" unless $msg ; 
-   $msg = $self->session( 'app.' , $db . '.msg' ) if defined $self->session( 'app.' . $db . '.msg' ) ;
 
    $self->res->code($http_code) ; 
 

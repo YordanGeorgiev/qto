@@ -1,9 +1,28 @@
-/* courtesy of: https://codepen.io/erikterwan/pen/mOWgop
+/* courtesy for efect to: https://codepen.io/erikterwan/pen/mOWgop
  * */
 body {
   background: #C0C0C0;
   margin: 0 30% 0 30%;  
   text-align:center;
+}
+input[type="submit"]{
+  border: solid 2px white;
+  background:#68F925;
+  width:125px;
+  padding-top:5px;
+  padding-bottom:5px;
+  color:white;
+  border-radius:4px;
+  margin-top:20px;
+  margin-bottom:20px;
+  float:left;
+  margin-left:30%;
+  font-weight:800;
+  font-size:0.8em;
+}
+input[type="submit"]:hover{
+  background:#2CC06B; 
+  color:yellow;
 }
 canvas {
    position: absolute;
@@ -61,23 +80,4 @@ h1{
   padding: 8px;
   width:250px;
   font-size:1em;
-}
-input[type="submit"]{
-  background:#2ecc71;
-  width:125px;
-  padding-top:5px;
-  padding-bottom:5px;
-  color:white;
-  border-radius:4px;
-  border: #27ae60 1px solid;
-  margin-top:20px;
-  margin-bottom:20px;
-  float:left;
-  margin-left:30%;
-  font-weight:800;
-  font-size:0.8em;
-}
-input[type="submit"]:hover{
-  background:#2CC06B; 
-  color:yellow;
 }
