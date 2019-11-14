@@ -6,7 +6,7 @@
 
 
 % content_for cnt_body_controls  => begin
-
+<div id="div_center">
 	<div id="box">
 		<h4> <span style="color:<%= $msg_color =%>;"> <%= $msg =%> </span> </h4>
 		%= form_for 'login' => (method => 'POST') => begin
@@ -16,16 +16,15 @@
 			%= submit_button 'submit', class=>"btn", value=>' GO '
 		% end 
       <p><a href="https://github.com/YordanGeorgiev/qto">github</a></p>
+
 	</div>
-   <div id="login_app_tooltip">
-      <%= " $db" =%>
-      <%= " $ProductVersion " =%>
-      <%= " $EnvType " =%>
-      <%= " $GitShortHash " =%>
-      <%= " $page_load_time " =%>
-   </div>
+</div>
 	<canvas id="canvas">
 	</canvas>
+   <div id="login_app_tooltip">
+      <p><%= " $db" =%> ::: <%= " $ProductVersion " =%> ::: <%= " $EnvType " =%> ::: <%= " $GitShortHash " =%>
+      <%= "@ $page_load_time " =%></p>
+   </div>
 <script>
 "use strict";
 

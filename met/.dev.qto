@@ -1,8 +1,9 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 cnf/env
-cnf/env/dev.env.json
-cnf/env/prd.env.json
+.env
 cnf/env/tst.env.json
+cnf/env/prd.env.json
+cnf/env/dev.env.json
 # start login
 src/perl/qto/public/themes/thme-blue/css/screen/site/login.css
 src/perl/qto/templates/pages/login/login.html.ep
@@ -71,7 +72,6 @@ src/terraform/tpl/qto/main.tf.tpl
 src/bash/qto/funcs/scramble-confs.func.sh
 src/bash/qto/funcs/unscramble-confs.func.sh
 .vimrc
-.env
 doc/cheats/
 doc/cheats/git/git-cheat.sh
 doc/cheats/ssh/pkk.sh
