@@ -93,7 +93,7 @@ sub doBuildListPageType {
    my $objModel         = ${ shift @_ } ; 
    my $db               = shift ; 
    my $table            = shift ; 
-   my $as               = shift ; 
+   my $as               = shift ;  # grid, # print-table , lbls
 
    my $ui_type          = 'page/list-grid' ; 
    my $ret              = 1 ; 

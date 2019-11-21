@@ -1,0 +1,109 @@
+   Vue.component('cruds-grid-sf', {
+     template: '#grid-template',
+     props: {
+       data: { type: Array, twoWay: true}
+       , columns: Array
+       , filterKey: String
+       , showModal: false
+       , cid: null
+       , refss: null
+     },
+     data: function () {
+       var sortOrders = {}
+       this.columns.forEach(function (key) {
+         sortOrders[key] = 1
+       })
+       return {
+         sortKey: '',
+         sortOrders: sortOrders
+       }
+     }
+	  , computed: {
+		  filteredData: {		
+			 get: function () {
+				var sortKey = this.sortKey
+				var filterKey = this.filterKey && this.filterKey.toLowerCase()
+				var order = this.sortOrders[sortKey] || 1
+				var data = this.data
+				if (filterKey) {
+				  data = data.filter(function (row) {
+					 return Object.keys(row).some(function (key) {
+						return String(row[key]).toLowerCase().indexOf(filterKey) > -1
+					 })
+				  })
+				}
+				if (sortKey) {
+				  data = data.slice().sort(function (a, b) {
+					 a = a[sortKey]
+					 b = b[sortKey] 
+					 if ( (!isNaN(parseFloat(a)) && isFinite(a)) && (!isNaN(parseFloat(b)) && isFinite(b)) ) {
+						return (a-b) * order
+					 } else {
+						return (a === b ? 0 : a > b ? 1 : -1) * order
+					 }
+				  })
+				}
+				return data
+			},
+			set: function(data) {
+				this.data = data
+			}
+		}
+	  },
+     filters: {
+       capitalize: function (str) {
+         return str.charAt(0).toUpperCase() + str.slice(1)
+       }
+     },
+     methods: {
+       showModalDialog: function (e) {
+           this.showModal = true
+           this.cid = e.target.id.replace("btn-modal-","dia-") ; 
+       }
+       , sortBy: function (key) {
+            this.sortKey = key
+            this.sortOrders[key] = this.sortOrders[key] * -1
+       }
+       , setAscSortBy: function (key) {
+            this.sortKey = key
+            this.sortOrders[key] = 1 ; 
+       }
+       , setDescSortBy: function (key) {
+            this.sortKey = key
+            this.sortOrders[key] = -1 ;
+       }
+		 , deleteItem: function (id){
+       	   this.$parent.deleteItem(id);
+		 }
+       , updateItem: function (content,id,oldValue) {
+            this.$parent.updateItem(content,id,oldValue);
+       }
+       , createNewItem: function (id) {
+            this.$parent.createNewItem(id);
+       }
+		 , goToPrevPage10: function (id){
+       	   this.$parent.goToPrevPage10(id);
+       }
+		 , goToPrevPage: function (id){
+       	   this.$parent.goToPrevPage(id);
+       }
+		 , goToNextPage: function (id){
+       	   this.$parent.goToNextPage(id);
+       }
+		 , goToNextPage10: function (id){
+       	   this.$parent.goToNextPage10(id);
+       }
+       , lnkMayBe: function(cnt) {
+         var lnkMayBe = (cnt == null) ? '' :cnt 
+         if ( this.formats != null ) {
+           var titles = JSON.parse(this.formats).lnktitles
+           titles.map ( title => lnkMayBe = String(lnkMayBe).linkifyOne(title) )	
+         } else {
+           lnkMayBe = String(lnkMayBe).linkify()
+         }
+         lnkMayBe = lnkMayBe.linkifyItems()
+         return (typeof(lnkMayBe) != "undefined") ? lnkMayBe : ''
+       }
+	 }
+   })
+

@@ -1,0 +1,15 @@
+	<script type="text/x-template" id="grid-template">
+      <div id="div_grid_tmpl" style="overflow-x: auto;" >
+			<table id="grid">
+			 <thead>
+				<tr>
+				  <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }" tabindex="3" 
+              v-on:keyup.enter="sortBy(key)" :id="'th-'+key">{{ key }}<span class="arrow"
+              :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span></th></tr>
+			 </thead>
+			 <tbody>
+				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><editable tabindex="3" :content.sync="entry[key]" v-bind:cnt.sync="entry[key]" :id="key+'-'+entry.id+'-'" v-on:update="updateItem"></editable></div></td></tr>
+			 </tbody>
+		  </table>
+      </div>
+	</script>

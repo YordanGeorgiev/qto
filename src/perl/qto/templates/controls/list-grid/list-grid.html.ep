@@ -48,6 +48,7 @@
    %= include 'js/global/set-url-param.func.js'
    %= include 'js/global/linkifies.func.js'
    %= include 'js/global/on-load.funcs.js'
+   %= include 'controls/list-grid/js/div-search-box.js'
 
     if ( document.getElementById("spn_msg") ) {
 

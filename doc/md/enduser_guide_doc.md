@@ -7,29 +7,27 @@
   * [1.5. VERSION CONTROL](#15-version-control)
   * [1.6. PROCESS](#16-process)
 * [2. INITIAL CONCEPTS](#2-initial-concepts)
-  * [2.1. SUPPORT FOR DIFFERENT PROJECTS](#21-support-for-different-projects)
-    * [2.1.1. Change projects via url](#211-change-projects-via-url)
-    * [2.1.2. Switch projects by the :to operator in the search-box](#212-switch-projects-by-the-to-operator-in-the-search-box)
-    * [2.1.3. Switch items by using the :for operator in the search-box](#213-switch-items-by-using-the-for-operator-in-the-search-box)
+    * [2.1. Switch projects by the :to operator in the search-box](#21-switch-projects-by-the-to-operator-in-the-search-box)
+    * [2.2. Switch items by using the :for operator in the search-box](#22-switch-items-by-using-the-for-operator-in-the-search-box)
 * [3. LOGIN](#3-login)
   * [3.1. OWN PASSWORD CHANGE](#31-own-password-change)
+  * [3.2. YOUR SECURITY](#32-your-security)
+  * [3.3. LOGOUT FROM THE APPLICATION](#33-logout-from-the-application)
 * [4. THE HOME PAGE](#4-the-home-page)
   * [4.1. THE LEFT MENU](#41-the-left-menu)
-  * [4.2. THE HOME ICON](#42-the-home-icon)
+  * [4.2. LIST ITEMS ](#42-list-items-)
 * [5. THE LIST PAGE](#5-the-list-page)
-  * [5.1. LIST ITEMS ](#51-list-items-)
+  * [5.1. VIEWING TABLES FROM DIFFERENT PROJECTS ( DATABASES )](#51-viewing-tables-from-different-projects-(-databases-))
     * [5.1.1. Viewing the full content of the items](#511-viewing-the-full-content-of-the-items)
-    * [5.1.2. Successful execution for list items](#512-successful-execution-for-list-items)
-    * [5.1.3. Error handling for non-existent db on list-items](#513-error-handling-for-non-existent-db-on-list-items)
-    * [5.1.4. Error handling for non-existent item table](#514-error-handling-for-non-existent-item-table)
-    * [5.1.5. Error handling for non-existent column](#515-error-handling-for-non-existent-column)
-    * [5.1.6. Listing url syntax](#516-listing-url-syntax)
-      * [5.1.6.1. The "pick" url param](#5161-the-"pick"-url-param)
-      * [5.1.6.2. The "hide" url param](#5162-the-"hide"-url-param)
-      * [5.1.6.3. The "with=col-operator-value" filter](#5163-the-"with=col-operator-value"-filter)
-      * [5.1.6.4. The "where=col-operator-value" filter](#5164-the-"where=col-operator-value"-filter)
-      * [5.1.6.5. Filtering with "like"](#5165-filtering-with-"like")
+    * [5.1.2. Viewing the list page](#512-viewing-the-list-page)
+    * [5.1.3. Listing url syntax](#513-listing-url-syntax)
+      * [5.1.3.1. The "pick" url param](#5131-the-"pick"-url-param)
+      * [5.1.3.2. The "hide" url param](#5132-the-"hide"-url-param)
+      * [5.1.3.3. The "with=col-operator-value" filter](#5133-the-"with=col-operator-value"-filter)
+      * [5.1.3.4. The "where=col-operator-value" filter](#5134-the-"where=col-operator-value"-filter)
+      * [5.1.3.5. Filtering with "like"](#5135-filtering-with-"like")
   * [5.2. SORTING AN ITEM TABLE](#52-sorting-an-item-table)
+      * [5.2.1. The 'as' url syntax for printing the listing page](#521-the-'as'-url-syntax-for-printing-the-listing-page)
   * [5.3. QUICK FILTERING AN ITEM TABLE](#53-quick-filtering-an-item-table)
   * [5.4. SETTING THE ITEM TABLE PAGING SIZE](#54-setting-the-item-table-paging-size)
   * [5.5. PAGING - SETTING THE ITEM TABLE'S PAGE NUMBER](#55-paging--setting-the-item-table's-page-number)
@@ -41,7 +39,7 @@
     * [5.7.4. Keyboard navigation on the edit form](#574-keyboard-navigation-on-the-edit-form)
   * [5.8. NEW ITEM CREATION (CREATE)](#58-new-item-creation-(create))
     * [5.8.1. Successful execution](#581-successful-execution)
-    * [5.8.2. Error handling on db create error](#582-error-handling-on-db-create-error)
+    * [5.8.2. Error handling on list page click create new item action](#582-error-handling-on-list-page-click-create-new-item-action)
   * [5.9. ITEM EDIT (UPDATE)](#59-item-edit-(update))
     * [5.9.1. Form edit](#591-form-edit)
     * [5.9.2. In-line edit ( UPDATE )](#592-in-line-edit-(-update-))
@@ -51,14 +49,12 @@
       * [5.9.2.4. Error handling on db update error](#5924-error-handling-on-db-update-error)
       * [5.9.2.5. Nulls handling](#5925-nulls-handling)
   * [5.10. ITEM DELETION ( DELETE )](#510-item-deletion-(-delete-))
-    * [5.10.1. Successful execution](#5101-successful-execution)
-    * [5.10.2. Error handling on delete error](#5102-error-handling-on-delete-error)
   * [5.11. LIST AS PRINT-TABLE PAGE](#511-list-as-print-table-page)
 * [6. THE VIEW AS DOC PAGE](#6-the-view-as-doc-page)
   * [6.1. NORMAL PAGE LOAD](#61-normal-page-load)
-  * [6.2. ERROR HANDLING FOR PAGE-LOAD](#62-error-handling-for-page-load)
-  * [6.3. THE RIGHT CLICK MENU](#63-the-right-click-menu)
-  * [6.4. ITEMS INTERLINKING](#64-items-interlinking)
+  * [6.2. ITEMS INTERLINKING](#62-items-interlinking)
+  * [6.3. THE RIGHT TABLE OF CONTENTS MENU](#63-the-right-table-of-contents-menu)
+  * [6.4. THE RIGHT CLICK MENU](#64-the-right-click-menu)
 * [7. THE EXPORT URI](#7-the-export-uri)
   * [7.1. EXPORT BRANCH TO XLS](#71-export-branch-to-xls)
   * [7.2. EXPORT BRANCH TO MD](#72-export-branch-to-md)
@@ -111,28 +107,12 @@ This section provides initial concepts for new users to quickly grasp the basics
 
     
 
-### 2.1. Support for different projects
-You could access multiple projects by accessing their project databases as the first URI path component provided that the web server has tcp access to those databases. 
-
-    
-
-#### 2.1.1. Change projects via url
-The following 2 different databases are actually the tst and dev databases of the qto, but of course the database names could be any valid other database names:
-
-https://qto.fi/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
-
-https://qto.fi/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
-
-Note if you hover with the mouse pointer on top of the upper left corner of the page the name of the project database you are in is shown.
-
-    
-
-#### 2.1.2. Switch projects by the :to operator in the search-box
+#### 2.1. Switch projects by the :to operator in the search-box
 If you type the ":to &lt;&lt;database-name&gt;&gt;" you will get a drop down which will list the projects databases , to which your instance has access to, by choosing the database from the list and hitting enter you will be redirected to the same url by on the different database.
 
     
 
-#### 2.1.3. Switch items by using the :for operator in the search-box
+#### 2.2. Switch items by using the :for operator in the search-box
 If you type the ":to &lt;&lt;database-name&gt;&gt;" you will get a drop down which will list the projects databases , to which your instance has access to, by choosing the database from the list and hitting enter you will be redirected to the same url by on the different database.
 
     
@@ -145,6 +125,19 @@ You need to sent e-mail to the administrator of the qto application ( just try t
 ### 3.1. Own password change
 After you have the password from the administrator change it immidiately after login from the &lt;&lt;app&gt;&gt;/list/users page. You can see only your own password - once you have updated it it gets stored encrypted in the database and even the user administrator cannot read it in clear text. 
 
+
+    
+
+### 3.2. Your Security
+Every user except the administrator can see ONLY his/her own user details. Even the instance administrator cannot see your password, but of course he/she can reset it for you.
+The qto by itself DOES NOT store any personal details for tracking you on the web, nor will it sell your personal data. Like NEVER! In fact we recommend providing as little personal data as possible - even by not using real personal names.
+
+    
+
+### 3.3. Logout from the application
+You can logout from the application from the left menu. Click the upper right button to open the left menu and click the bottom "logout" link. This will clear your session for ONLY this project as well.
+
+
     
 
 ## 4. THE HOME PAGE
@@ -155,22 +148,12 @@ The home page is marked as transitional, that is it's core purpose and function 
     
 
 ### 4.1. The left menu
-Everything in qto could be accessed from an url. The left menu contains the UI in an file explorer like user-interface providing the links to the most often used pages.
+Everything in qto could be accessed from an url. The left menu contains the UI in an file explorer like user-interface providing the links to the most often used pages. 
+At the bottom of the left menu you can find the details of the instance you are using currently, as well as the logout link.
 
     
 
-### 4.2. The home icon
-The home icon is accessible from every page from the top left corner. It also contains information on the current qto project and it's version you are and the page load time.
-
-    
-
-## 5. THE LIST PAGE
-The list page presents part or the whole content of a database by the means of UI controls - dynamic html table, forms etc. 
-In the context of the qto's parley the "listing" is the ui list of control/(s) you get by using the following URL format:
-
-    http://<<web-host>>:<<web-port>>/<<proj-db-name>>/list/<<item>>?as&<<ui-type>>&<<listing-params>>
-
-### 5.1. List items 
+### 4.2. List items 
 The common listing syntax components are as follows:
 - web-host is the web-host the qto's web instances is accessible from
 - web-port - the web port the instance is accessible from 
@@ -178,58 +161,56 @@ The common listing syntax components are as follows:
 - list - is the name of the action to perform 
 - item is the name of the item which ui controls you want to list ( could be issues, problems, questions, etc.
 - ?&lt;&lt;params&gt;&gt; the additional url parameters used to control the look and behaviour of the listing action, should the url params be omitted the full content of the item table with default ui look and behaviour are displayed. 
+Example for a list page : 
+https://qto.fi/qto/list/monthly_issues
 
-    http://host-name:3000/qto/list/monthly_issues
+    
+
+## 5. THE LIST PAGE
+The list page presents part or the whole content of a database by the means of UI controls - dynamic html table, forms etc. 
+In the context of the qto's parley the "listing" is the ui list of control/(s) you get by using the following URL format:
+
+    
+
+### 5.1. Viewing tables from different projects ( databases )
+Each project in qto is actually stored in it's own database, to the access for example the dev_qto, tst_qto and prd_qto projects( which could be any names, but in this example just happen to be the dev, tst and prd databases for qto ) you should simply add the db name as the first url part:
+https://qto.fi:441/dev_qto/list/release_issues
+https://qto.fi:442/tst_qto/list/release_issues
+https://qto.fi:443/prd_qto/list/release_issues
+
+    
 
 #### 5.1.1. Viewing the full content of the items
-You can quickly view the full content of each cell of the listing table by hovering with the mouse on top of it. Note that all the links in the content are replaced with clickable links in the tooltip as well as the internal links such as the following one : enduser_guide_doc-190214225314( which just refer to the upper title in this document.
+You can quickly view the full content of each cell of the listing table by hovering with the mouse on top of it. Note that all the links in the content are replaced with clickable links in the tooltip as well as the internal links such as the following one : enduser_guide_doc-190214224315 ( which just refer to next item in this document).
 
     
 
-#### 5.1.2. Successful execution for list items
+#### 5.1.2. Viewing the list page
 You can use the pick=col1, col2, col3 url parameter to select for only desired attributes.
 You could filter the result the same way the filters for the select page work ( see bellow ). 
+Should there be errors in the loading of the page, they will be displayed in a msg at the top of the page.
 
     
 
-#### 5.1.3. Error handling for non-existent db on list-items
-If the db provided in the url pattern does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out. Example url:
-https://qto.fi/non_existent/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
+#### 5.1.3. Listing url syntax
+The listing url syntax mimics the sql select clause syntax, yet in much more simplified form. 
 
     
 
-#### 5.1.4. Error handling for non-existent item table
-If the item table requested does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out. Example:
-https://qto.fi/qto/list/non_existent_table?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
-
-    
-
-#### 5.1.5. Error handling for non-existent column
-If the column requested does not exist an error is shown in the top of the page in a visually distinctive manner, after which the msg fades out.
-Example:
-https://qto.fi/qto/list/yearly_issues?as=grid&pick=NON_EXISTENT,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
-
-    
-
-#### 5.1.6. Listing url syntax
-The listing url syntax mimics the sql select clause syntax, yet in much more simplified form.
-
-    
-
-##### 5.1.6.1. The "pick" url param
+##### 5.1.3.1. The "pick" url param
 You can use the pick=col1,col2,col3 url parameter to select for only desired attributes to be show in the ui control used for listing.
 The following url demonstrates this syntax:
-https://qto.fi/prd_qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
+https://qto.fi/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
-##### 5.1.6.2. The "hide" url param
+##### 5.1.3.2. The "hide" url param
 If you do not specify any attribute to pick, you could hide specific attributes by using the "hide=col1,col2,col3" syntax.
 https://qto.fi/qto/list/yearly_issues?hide=description
 
     
 
-##### 5.1.6.3. The "with=col-operator-value" filter
+##### 5.1.3.3. The "with=col-operator-value" filter
 You can filter the result of the query by using the "with=col-operator-value". The following examples demonstrates, which operators are supported.
 An error message is shown if you do not use existing operator. 
 The following url demonstrates this syntax:
@@ -253,7 +234,7 @@ Note when going to the next page that all the rows' status is 09-done
     
     
 
-##### 5.1.6.4. The "where=col-operator-value" filter
+##### 5.1.3.4. The "where=col-operator-value" filter
 You can filter the result of the query by using the "where=col-operator-value", which works exactly as the with operator, thus the following examples demonstrates, which operators are supported.
 An error message is shown if you do not use existing operator. 
 
@@ -272,10 +253,10 @@ An error message is shown if you do not use existing operator.
          , 'le' => '<='
          , 'like' => 'like'
 
-##### 5.1.6.5. Filtering with "like"
+##### 5.1.3.5. Filtering with "like"
 The filtering with the like operator translates to the SQL "like" operator- the "like-by=&lt;&lt;attr&gt;&gt;&like-val=&lt;&lt;val&gt;&gt; filtering, where &lt;&lt;attr&gt;&gt; stands for the name of the attribute to use the like operator. 
 Example:
-https://qto.fi/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
+https://qto.fi/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name&page-size=5&page-num=1&where=status-eq-09-done
 
     # this example url will list all the monthly_issues items having the "bug" string in their "name" attribute:
     http://host-name:3000/qto/list/monthly_issues?as=grid&like-by=name&like-val=bug
@@ -283,7 +264,12 @@ https://qto.fi/qto/list/yearly_issues?as=grid&pick=id,status,name,description&pa
 ### 5.2. Sorting an item table
 The listed table is sortable by clicking on the columns OR by navigating with the tab key on the keyboard on a column and hitting Enter. 
 The sorted column is visually shown as the active one on page load:
-https://qto.fi/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1&where=status-eq-09-done
+https://qto.fi/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name&page-size=5&page-num=1&where=status-eq-09-done
+
+    
+
+##### 5.2.1. The 'as' url syntax for printing the listing page
+By default the url syntax of the list page has the "as=grid" default listing format, if you replace it with the "as=print-table" url parameter you will get a bare listing of the data ( all other sorting and paging parameters work as well ) , which you could use for printing as well.
 
     
 
@@ -345,8 +331,8 @@ You could open the edit form with the keyboard while your cursors is on the id b
 A new item could be added to the table in the ui and thus in the db table by clicking the plus button above the table ( which uses the google material design ui ). 
 The new button has a fixed position, thus available during scrolling as well from the same position. 
 The new button changes it's appears when focused via the keyboard, and can be pressed when in focus by hitting enter with the keyboard. 
-To practice new items' creations and deletions to get comfortable on the app's behaviour please use first the development instances of the qto project: 
-enduser_guide_doc-190214224310:8080/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
+To practice new items' creations and deletions to get comfortable on the app's behaviour you could use the following table: 
+https://qto.fi/qto/list/test_create_table?as=grid&pick=id,name&page-size=5&page-num=1&od=id
 
     
 
@@ -355,7 +341,7 @@ After clicking the plus button the System adds the new row into the database tab
 
     
 
-#### 5.8.2. Error handling on db create error
+#### 5.8.2. Error handling on list page click create new item action
 If any error occurs while the creation an error msg is presented clearly with fading effect, which returns the error msg from the database. 
 On invalid input the data is not created to the database and nothing is stored. 
 
@@ -412,15 +398,7 @@ Nulls handling is somewhat problematic in ui. For now the behaviour by conventio
 You could delete items by clicking the delete button with the trash icon in the beginning of every item. 
 To practice new items' creations and deletions to get comfortable on the app's behaviour please use first the development instances of the qto project: 
 https://qto.fi/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
-
-    
-
-#### 5.10.1. Successful execution
-If the deletion is successful the item is removed both from the ui and from the database. No msg is presented the table just got smaller ! ...
-
-    
-
-#### 5.10.2. Error handling on delete error
+If the deletion is successful the item is removed both from the ui and from the database. No msg is presented.
 The usual way if an error has occurred during the delete the error msg is displayed in the top centre  area of the list page.
 
     
@@ -439,32 +417,13 @@ The view page presents the data of a database table, having nested-set hierarchi
 
 ### 6.1. Normal page load
 When the page is loaded all the content of the document is presented / according to the urls params / which are applying the same filtering as in the list page , but on the hierarchical data-set …
-The right menu, containing the table of contents of the document can be opened and closed and scrolled separately
-
-
-
-
-When the page is loaded all the content of the document is presented / according to the urls params / which are applying the same filtering as in the list page , but on the hierarchical data-set …
-The right menu, containing the table of contents of the document can be opened and closed and scrolled separately
-
-
-    <<web-host>>:<<web-port>>/<<database>>/view/<<table-name>>?as=doc
-
-### 6.2. Error handling for page-load
+The right menu, containing the table of contents of the document can be opened and closed and scrolled separately.
 Should there be an error a dynamic snackbar is presented with the error message. The snackbar hides itself by default after 3.9 seconds ( set by default , but it could be pinned to the page by the user to view it properly / send it further). 
 Whenever an error occurs the show right menu button does not occur and no document is presented
 
-    <<web-host>>:<<web-port>>/<<database>>/view/<<table-name>>?as=doc
-
-### 6.3. The right click menu
-You open and close the right click menu from the upper menu icon. The right click menu presents the structure of the document.You could navigate with the keyboard trough the right menu links too. 
-Note that when you click on a link on the right menu the title of the item you clicked on is scrolled to the top of the page.
-Right click on the title items presents the context menu containing several different options to perform on a branch of the document. 
-Note, that you can quickly navigate with the tab key on the keyboard once the right menu is open and selected ( aka you have to click on it ), you can hit enter once reaching the desired section of the document.
-
     
 
-### 6.4. Items interlinking
+### 6.2. Items interlinking
 The items interlinking works both in the list-grid and in the view-doc pages ( the description ).
 Any &lt;&lt;item&gt;&gt;-&lt;&lt;id&gt;&gt; where &lt;&lt;id&gt;&gt; is a whole number is converted into the jump to the anchor of that exact item id of that &lt;&lt;item&gt;&gt;. 
 For example :
@@ -477,13 +436,30 @@ for example: principles-1805311658
 
     
 
+### 6.3. The right table of contents menu
+You open and close the right click menu from the upper menu icon. The right click menu presents the structure of the document.You could navigate with the keyboard trough the right menu links too. 
+Note that when you click on a link on the right menu the title of the item you clicked on is scrolled to the top of the page.
+Right click on the title items presents the context menu containing several different options to perform on a branch of the document. 
+Note, that you can quickly navigate with the tab key on the keyboard once the right menu is open and selected ( aka you have to click on it ), you can hit enter once reaching the desired section of the document.
+
+    
+
+### 6.4. The right click menu
+If you right click on a title you could : 
+  - drill down - i.e. view the current title and it's tree as a separate document altogether
+  - view the current title and it's tree as pdf printable document convenient for printing as well ... 
+
+    
+
 ## 7. THE EXPORT URI
 The export url follows the same syntax naming conventions as the list page , but instead of presenting a list with the data it exports it in the specified with "as" url parameter format. 
+You can use all the export actions from the right click menu of the view doc page.
 
     <<web-host>>:<<web-port>>/<<database>>/export/<<table-name>>?as=xls
 
 ### 7.1. Export branch to xls
 To export data via the export url you could apply any of the listing parameters and replace the list web action with the export one and the as=&lt;&lt;control&gt; to the as=xls and the application will present you with a save file dialog with the desired data. 
+You can use the export to xls from the right click menu.
 
     <<web-host>>:<<web-port>>/<<database>>/export/<<table-name>>?as=xls
 

@@ -4,15 +4,6 @@ cnf/env
 cnf/env/tst.env.json
 cnf/env/prd.env.json
 cnf/env/dev.env.json
-# start login
-src/perl/qto/public/themes/thme-blue/css/screen/site/login.css
-src/perl/qto/templates/pages/login/login.html.ep
-src/perl/qto/templates/layouts/site.html.ep
-src/perl/qto/t/lib/Qto/Controller/TestLogin.t
-src/perl/qto/lib/Qto/Controller/Login.pm
-src/perl/qto/templates/pages/login
-src/perl/qto/templates/layouts/login.html.ep
-# stop  login
 # start ::: left-menu
 src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/qto/lib/Qto/Controller/Home.pm
@@ -33,6 +24,13 @@ src/perl/qto/public/poc/css-tree/01/index.html
 src/perl/qto/public/poc/css-tree/02
 src/perl/qto/public/poc/css-tree/02/index.html
 # stop  ::: left-menu
+# start login
+src/perl/qto/public/themes/thme-blue/css/screen/site/login.css
+src/perl/qto/templates/pages/login/login.html.ep
+src/perl/qto/t/lib/Qto/Controller/TestLogin.t
+src/perl/qto/lib/Qto/Controller/Login.pm
+src/perl/qto/templates/pages/login
+# stop  login
 # start ::: deployment
 src/bash/deployer/run.sh
 src/bash/deployer/export-json-section-vars.func.sh
@@ -150,8 +148,12 @@ src/bash/qto/funcs/perl/run-benchmarks.func.sh
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.t
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.t
 src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.t
+src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
+src/perl/qto/templates/layouts/list.html.ep.bak
+src/perl/qto/templates/layouts/list.html.ep
 src/perl/qto/templates/layouts/home.html.ep
+src/perl/qto/templates/layouts/login.html.ep
 src/perl/qto/templates/js/global/get-url-params.func.js.html.ep
 src/perl/qto/templates/js/global/get-server-data.func.js.html.ep
 src/perl/qto/templates/js/global/on-load.funcs.js.html.ep
@@ -159,7 +161,6 @@ src/perl/qto/templates/js/global/set-url-param.func.js.html.ep
 src/perl/qto/templates/js/global/linkifies.func.js.html.ep
 src/perl/qto/templates/js/global/isNullOrEmpty.func.js.html.ep
 src/perl/qto/t/lib/Qto/Controller/TestView.t
-src/perl/qto/templates/layouts/list.html.ep
 src/perl/qto/templates/controls/list-grid/list-grid.html.ep
 src/perl/qto/templates/controls/srch-grid/srch-grid.html.ep
 src/perl/qto/templates/controls/list-grid/js/div-search-box.js.html.ep
@@ -219,8 +220,16 @@ src/perl/qto/public/themes/thme-blue/img/controls/add-sibling-node.png
 src/perl/qto/public/themes/thme-blue/img/controls/pdf-print-preview.png
 # --
 src/perl/qto/templates/controls/list-labels/list-labels.html.ep
-src/perl/qto/templates/controls/list-print-table/list-print-table.html.ep
 # ---
+src/perl/qto/templates/controls/list-print-table
+src/perl/qto/templates/controls/list-print-table/js
+src/perl/qto/templates/controls/list-print-table/js/cruds-grid.js.html.ep
+src/perl/qto/templates/controls/list-print-table/js/cruds-grid-sf.js.html.ep
+src/perl/qto/templates/controls/list-print-table/js/editable.js.html.ep
+src/perl/qto/templates/controls/list-print-table/js/global-msg.js.html.ep
+src/perl/qto/templates/controls/list-print-table/list-print-table.html.ep
+src/perl/qto/templates/controls/list-print-table/xt
+src/perl/qto/templates/controls/list-print-table/xt/grid.xt.html.ep
 # --- 
 src/perl/qto/public/poc/right-click-menu/right-click-menu.html
 src/perl/qto/public/poc/right-click-menu/right-click-menu.css

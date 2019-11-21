@@ -6,28 +6,33 @@
     * [1.2.2. Table UI](#122-table-ui)
     * [1.2.3. Mobile UI](#123-mobile-ui)
   * [1.3. THE LIST PAGE UI](#13-the-list-page-ui)
-    * [1.3.1. Items listing](#131-items-listing)
-    * [1.3.2. Items editing](#132-items-editing)
-      * [1.3.2.1. Items editing inline](#1321-items-editing-inline)
-      * [1.3.2.2. Items editing via a modal dialog](#1322-items-editing-via-a-modal-dialog)
-    * [1.3.3. Items creation](#133-items-creation)
-    * [1.3.4. Items deletion](#134-items-deletion)
-    * [1.3.5. Items export](#135-items-export)
-    * [1.3.6. Items import](#136-items-import)
+    * [1.3.1. Search in the list page](#131-search-in-the-list-page)
+    * [1.3.2. Items listing](#132-items-listing)
+    * [1.3.3. Items editing](#133-items-editing)
+      * [1.3.3.1. Items editing inline](#1331-items-editing-inline)
+      * [1.3.3.2. Items editing via a modal dialog](#1332-items-editing-via-a-modal-dialog)
+    * [1.3.4. Items creation](#134-items-creation)
+    * [1.3.5. Items deletion](#135-items-deletion)
+    * [1.3.6. Items export](#136-items-export)
+    * [1.3.7. Items import](#137-items-import)
   * [1.4. THE VIEW PAGE UI](#14-the-view-page-ui)
-    * [1.4.1. Hierarchical items management](#141-hierarchical-items-management)
-      * [1.4.1.1. Add Item](#1411-add-item)
-      * [1.4.1.2. Update item](#1412-update-item)
-          * [1.4.1.2.1. Update item's title](#14121-update-item's-title)
-          * [1.4.1.2.2. Update item's description](#14122-update-item's-description)
-          * [1.4.1.2.3. Update item's src_code](#14123-update-item's-src_code)
-          * [1.4.1.2.4. Move item in the hierarchy](#14124-move-item-in-the-hierarchy)
-      * [1.4.1.3. Delete item](#1413-delete-item)
-    * [1.4.2. Right menu navigation](#142-right-menu-navigation)
-      * [1.4.2.1. Open close of right menu](#1421-open-close-of-right-menu)
-      * [1.4.2.2. Search in the right menu](#1422-search-in-the-right-menu)
-      * [1.4.2.3. Links in the right menu](#1423-links-in-the-right-menu)
-    * [1.4.3. Left menu navigation](#143-left-menu-navigation)
+    * [1.4.1. View page navigation](#141-view-page-navigation)
+      * [1.4.1.1. Title numbers link navigation and sharing](#1411-title-numbers-link-navigation-and-sharing)
+      * [1.4.1.2. Title numbers link navigation and sharing](#1412-title-numbers-link-navigation-and-sharing)
+    * [1.4.2. Search in the view page ](#142-search-in-the-view-page-)
+    * [1.4.3. Hierarchical items management](#143-hierarchical-items-management)
+      * [1.4.3.1. Add Item](#1431-add-item)
+      * [1.4.3.2. Update item](#1432-update-item)
+          * [1.4.3.2.1. Update item's title](#14321-update-item's-title)
+          * [1.4.3.2.2. Update item's description](#14322-update-item's-description)
+          * [1.4.3.2.3. Update item's src_code](#14323-update-item's-src_code)
+          * [1.4.3.2.4. Move item in the hierarchy](#14324-move-item-in-the-hierarchy)
+      * [1.4.3.3. Delete item](#1433-delete-item)
+    * [1.4.4. Right menu navigation](#144-right-menu-navigation)
+      * [1.4.4.1. Open and close of right menu](#1441-open-and-close-of-right-menu)
+      * [1.4.4.2. Search in the right menu](#1442-search-in-the-right-menu)
+      * [1.4.4.3. Links in the right menu](#1443-links-in-the-right-menu)
+    * [1.4.5. Left menu navigation](#145-left-menu-navigation)
   * [1.5. SEARCH UI](#15-search-ui)
     * [1.5.1. Global search from the list page](#151-global-search-from-the-list-page)
     * [1.5.2. Global search from the view page](#152-global-search-from-the-view-page)
@@ -174,35 +179,42 @@ I want to be able to list all or part of the project's database table via a sing
 
     
 
-#### 1.3.1. Items listing
+#### 1.3.1. Search in the list page
+As an UI user of the qto application
+In order to be able to quickly and effortlessly search the content of the loaded document in the list page
+I want to be able to focus the search-box with a single shortcut / click on the left menu, so that after typing 3 letters the left menu will get filtered by the search string and the table content will get filtered as well.
+
+    
+
+#### 1.3.2. Items listing
 As an qto ui user 
 In order to be able to quickly see as much items ( issues, problems, ideas etc. ) 
 I want to list the items in a web page according to the filtering criteria I might have specified earlier on … 
 
     
 
-#### 1.3.2. Items editing
+#### 1.3.3. Items editing
 aAs an UI user of the qto application 
 In order to update the application data via the UI 
 I wan to to be able to edit the data for ANY of the items in the application I have access to. 
 
     
 
-##### 1.3.2.1. Items editing inline
+##### 1.3.3.1. Items editing inline
 As an UI user of the qto application 
 In order to be able to quickly update the items data in a listing UI
 I wan to to be able to edit it Excel table like by quickly navigating trough an grid and type the new values to update.
 
     
 
-##### 1.3.2.2. Items editing via a modal dialog
+##### 1.3.3.2. Items editing via a modal dialog
 As an UI user of the qto application 
 In order to be able update the application data via the UI by using a more familiar form-like interface
 I want to to be able to edit the data for any item by clicking on an edit button, and filling the fields of a form
 
     
 
-#### 1.3.3. Items creation
+#### 1.3.4. Items creation
 As an UI user of the application 
 I order to create new items in the application 
 I want to be able to create them via the UI 
@@ -210,7 +222,7 @@ by clicking "create new button" and filling as few as possible data entries and 
 
     
 
-#### 1.3.4. Items deletion
+#### 1.3.5. Items deletion
 As an UI user of the application 
 I order to delete existing items in the project
 I want to  be able to delete them via the UI 
@@ -218,14 +230,14 @@ by clicking a "delete " button and confirming the deletion for the item
 
     
 
-#### 1.3.5. Items export
+#### 1.3.6. Items export
 As an UI user of the application 
 I order to export the data  of the items in the application 
 I want to be able to perform every possible export in the UI from a single button click or a single url access. 
 
     
 
-#### 1.3.6. Items import
+#### 1.3.7. Items import
 As an UI user of the application 
 I order to import data  of the items in the application 
 I want to  be able to perform every possible import in the UI from a single button click and pointing to the file path of a file
@@ -239,50 +251,78 @@ I want to be able to list all or part of the project's database table via a sing
 
     
 
-#### 1.4.1. Hierarchical items management
+#### 1.4.1. View page navigation
+As an UI user 
+In order to quickly grasp the content of a view doc 
+I want to be able to quickly and effortlessly navigate the view doc page.
+
+    
+
+##### 1.4.1.1. Title numbers link navigation and sharing
+As an UI user 
+In order to read the the current item in the top of the screen and to be able to refer it exactly with a link 
+I want to be able on click the system to move it on the top of the screen and to change the url pointing to the exactly chosen item.
+
+    
+
+##### 1.4.1.2. Title numbers link navigation and sharing
+As an UI user 
+In order to read the the current item in the top of the screen and to be able to refer it exactly with a link 
+I want to be able on click the system to move it on the top of the screen and to change the url so that when the link is copied one could refer to it by sending it.
+
+    
+
+#### 1.4.2. Search in the view page 
+As an UI user of the qto application
+In order to be able to quickly and effortlessly search the content of the loaded document in the view doc page
+I want to be able to focus the search-box with a single shortcut / click on the left menu, so that after typing 3 letters the left menu will get filtered by the search string.
+
+    
+
+#### 1.4.3. Hierarchical items management
 As an the ui user
 In order to manage the hierarchical items in the application
 I want to be able to manage by actions (list, create, update, delete, search) ANY hierarchical items of the application in from a hierarchical doc format by simply right clicking on their titles and choosing from the menut the action which must have both image and text to indicate more 
 
     
 
-##### 1.4.1.1. Add Item
+##### 1.4.3.1. Add Item
 I want to be able to add items to the view page by simply right clicking the upper title of the item and selecting add item
 
     
 
-##### 1.4.1.2. Update item
+##### 1.4.3.2. Update item
 I want to be able to update items data to the view page
 
     
 
-###### 1.4.1.2.1. Update item's title
+###### 1.4.3.2.1. Update item's title
 I want to be able to update item's title by simply clicking in it and starting to type the new contents ...
 
     
 
-###### 1.4.1.2.2. Update item's description
+###### 1.4.3.2.2. Update item's description
 I want to be able to update item's descrption by simply clicking in it and starting to type the new contents ...
 
     
 
-###### 1.4.1.2.3. Update item's src_code
+###### 1.4.3.2.3. Update item's src_code
 I want to be able to update item's src_code by simply clicking in it and starting to type the new contents ...
 
     
 
-###### 1.4.1.2.4. Move item in the hierarchy
+###### 1.4.3.2.4. Move item in the hierarchy
 In order to quickly edit the structure of a hierarchical doc 
 I want to be able to move item by drag and drop from the left menu
 
     
 
-##### 1.4.1.3. Delete item
+##### 1.4.3.3. Delete item
 I want to be able to delete an item by right clicking it's title and choosing delete item.
 
     
 
-#### 1.4.2. Right menu navigation
+#### 1.4.4. Right menu navigation
 As an the ui user
 In order to navigate quickly in the document structure
 I want to be able to see the document structure by clicking a right menu 
@@ -290,28 +330,28 @@ I want to be able to see the document structure by clicking a right menu
 
     
 
-##### 1.4.2.1. Open close of right menu
+##### 1.4.4.1. Open and close of right menu
 As an the ui user
 In order to navigate quickly in the document structure
 I want to be able to open and close the right menu quickly from both it's top and the bottom
 
     
 
-##### 1.4.2.2. Search in the right menu
+##### 1.4.4.2. Search in the right menu
 As an the ui user
 In order to navigate quickly in the document structure
 I want to be able filter quickly the right menu items by the means of right menu quick srch/filtering box which will filter the items containing the string I am typing for dynamically
 
     
 
-##### 1.4.2.3. Links in the right menu
+##### 1.4.4.3. Links in the right menu
 As an the ui user
 In order to navigate quickly in the document structure by levels
 I want to be able to simply click on the links ( level 1 , level-2 , level-3 etc. ) which will open the document
 
     
 
-#### 1.4.3. Left menu navigation
+#### 1.4.5. Left menu navigation
 As a QTO application UI user
 In order to be able to quickly jump to a different document / listing 
 I want to be able to click on the uppler left corner of the view page and access the hierarchichal project sturecture of the whole project from the left menu 

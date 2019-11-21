@@ -2,200 +2,45 @@
 % layout 'list';
 
 % content_for cnt_header_css => begin
-   <link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/list-rgrid.css" />
-   <link rel="stylesheet" type="text/css" media="print"  href="../../themes/thme-blue/css/print/controls/list-rgrid.css" />
+  <title> list <%= " $item " =%>  <%= "as $as in " =%> <%= "$db " =%> </title> 
+   <link rel="stylesheet" type="text/css" media="screen"  
+      href="../../themes/thme-blue/css/screen/controls/pager.css?v=<%= $ProductVersion =%>" />
+   <link rel="stylesheet" type="text/css" media="screen"  
+      href="../../themes/thme-blue/css/screen/controls/searchbox.css?v=<%= $ProductVersion =%>" />
+   <link rel="stylesheet" type="text/css" media="screen"  
+      href="../../themes/thme-blue/css/screen/controls/table.css?v=<%= $ProductVersion =%>" />
+   <link rel="stylesheet" type="text/css" media="screen"  
+      href="../../themes/thme-blue/css/screen/controls/modal-dia.css?v=<%= $ProductVersion =%>" />
+   <link rel="stylesheet" type="text/css" media="screen" 
+      href="../../themes/thme-blue/css/screen/controls/list-grid.css?v=<%= $ProductVersion =%>" />
 % end
 
-% content_for cnt_body_controls => begin
-   <div id="dev_central_panel" >
-		<script type="text/x-template" id="grid-template">
-      <div id="div_grid_tmpl" style="overflow-x: auto;">
-			<table id="egrid" tabindex="1" style="clear:both">
-			 <thead>
-				<tr>
-				  <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }" tabindex="1" v-on:keyup.enter="sortBy(key)" :id="'th-'+key">{{ key }}<span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span></th></tr>
-			 </thead>
-			 <tbody>
-				<tr v-for="(entry,index) in filteredData" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div tabindex="1">{{entry[key]}}</div></td></tr>
-			 </tbody>
-		  </table>
-      </div>
-		</script>
+% content_for cnt_body_controls  => begin
+   %= include 'controls/list-print-table/xt/grid.xt'
 
-		<div id="cruds-grid" tabindex="-1">
-		  <cruds-grid-sf
-			 :data.sync="gridData"
-			 :columns="gridColumns"
-			 :filter-key="searchQuery">
-		  </cruds-grid-sf>
-      </div>
-      </div>
+   <div id="dev_central_panel" >
+
+     <div id="cruds-grid">
+
+         <cruds-grid-sf :data.sync="gridData" :columns="gridColumns" :filter-key="globalSrch"></cruds-grid-sf>
+
+     </div>
+
    </div>
 
-<script>
-   
-
-
-   function setMsgVisuals(txt){
-      document.getElementById("div_msg").innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
-      document.getElementById("div_msg").style.display="inline";
-      document.getElementById("div_msg").style['box-shadow'] = "0 0 10px red";   
-      document.getElementById("div_msg").style['background-color'] = "#FFFF00";   
-      fadeAwayDiv();
-   }
-
-   function fadeAwayDiv(){
-      var div_msg_style = document.getElementById('div_msg').style; div_msg_style.opacity = 1; // fade the err msg
-      (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,1550)})();
-   }
-
-if ( document.getElementById("spn_msg") ) {
-   Vue.component('cruds-grid-sf', {
-     template: '#grid-template',
-     props: {
-       data: {type: Array, twoWay: true}
-       , columns: Array
-       , filterKey: String
-     },
-     data: function () {
-       var sortOrders = {}
-       this.columns.forEach(function (key) {
-         sortOrders[key] = 1
-       })
-       return {
-         sortKey: '',
-         sortOrders: sortOrders
-       }
-     },
-	  computed: {
-		 filteredData: {		
-			 get: function () {
-				var sortKey = this.sortKey
-				var filterKey = this.filterKey && this.filterKey.toLowerCase()
-				var order = this.sortOrders[sortKey] || 1
-				var data = this.data
-				if (filterKey) {
-				  data = data.filter(function (row) {
-					 return Object.keys(row).some(function (key) {
-						return String(row[key]).toLowerCase().indexOf(filterKey) > -1
-					 })
-				  })
-				}
-				if (sortKey) {
-				  data = data.slice().sort(function (a, b) {
-					 a = a[sortKey]
-					 b = b[sortKey] 
-					 if ( (!isNaN(parseFloat(a)) && isFinite(a)) && (!isNaN(parseFloat(b)) && isFinite(b)) ) {
-						return (a-b) * order
-					 } else {
-						return (a === b ? 0 : a > b ? 1 : -1) * order
-					 }
-				  })
-				}
-				return data
-			},
-			set: function(data) {
-				this.data = data
-			}
-		}
-	  },
-     filters: {
-       capitalize: function (str) {
-         return str.charAt(0).toUpperCase() + str.slice(1)
-       }
-     },
-     methods: {
-       sortBy: function (key) {
-         this.sortKey = key
-         this.sortOrders[key] = this.sortOrders[key] * -1
-       }
-       , setAscSortBy: function (key) {
-         this.sortKey = key
-         this.sortOrders[key] = 1 ; 
-       }
-       , setDescSortBy: function (key) {
-         this.sortKey = key
-         this.sortOrders[key] = -1 ;
-       }
-	 }
-   })
-
-
-   var gruds_crid = new Vue({
-     el: '#cruds-grid',
-     data: {
-       searchQuery: '',
-       gridColumns: <%== $list_control =%>,
-       gridData: [],
-       pageSize: 15,
-       pageNum: 1,
-       pagesCount: 0,
-       UrlParams:{ as:"table" },
-       pageSizes: ['5', '7', '10','15','20','30','50','100']
-		},
-     	methods: {
-         getUrlParams: function (){
-            var url_params = new URLSearchParams();
-            if( window.location.toString().indexOf("?") != -1) {
-               window.location.search.split('?')[1].split('#')[0].replace("pick=","pick=id,").replace(/([^=&]+)=([^&]*)/g, 
-                  function(m, key, value) {
-                     var attr = decodeURIComponent(key)
-                     var val = decodeURIComponent(value)
-                     url_params.append(attr,val);
-               });
-            } else {
-               url_params = { as:"etable" }; 
-            }
-            return url_params ; 
-         }
-	      , fetchServerSideData: function (url_params){
-            if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
-
-            return axios.get((window.location.pathname).replace("/list/" , "/select/") , { params: url_params } )
-            .then(response => { 
-               return response.data ; 
-            })
-            .catch(function(error) {
-               setMsgVisuals(error.response.data.msg);
-            }) 
-         }
-         , fetchServerSideDataToUI: function(url_params) {
-            if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
-            this.fetchServerSideData(url_params)
-            .then( data => {
-               this.gridData = data.dat ; 
-               this.pageSize = url_params.get('pg-size') || 5 ; 
-               this.pageNum = url_params.get('pg-num') || 1 ; 
-               var totalRSsize = data.met ; 
-               var remainder = totalRSsize % this.pageSize
-               var toAdd = 1 // pg-size 10 , total-rs-size 30 => 3 and not 4
-               if ( remainder == 0 ) { toAdd = 0  }
-               this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
-
-               var oa = url_params.get("oa")
-               var od = url_params.get("od")
-
-               if ( oa !== null ) {
-                  this.$children[0].setAscSortBy( oa ) ; 
-               } else if ( od !== null ) {
-                  this.$children[0].setDescSortBy( od ) ; 
-               } else {
-                  this.$children[0].setAscSortBy("id")
-               }
-            })
-            .catch(function(error) {
-               if (typeof error !== 'undefined') {
-                 var errMsg = error.toString() 
-                 setMsgVisuals(errMsg);
-               }
-            }) 
-	  	   }
-     }
-     , mounted() {
-	      this.fetchServerSideDataToUI();
-	  }
-   });
-}
-
-</script>
 % end
+% content_for js_scripts => begin
+
+   %= include 'js/global/get-url-params.func.js'
+   %= include 'js/global/set-url-param.func.js'
+   %= include 'js/global/linkifies.func.js'
+
+    if ( document.getElementById("spn_msg") ) {
+
+         %= include 'controls/list-print-table/js/editable.js'
+         %= include 'controls/list-print-table/js/cruds-grid-sf.js'
+         %= include 'controls/list-print-table/js/cruds-grid.js'
+    }
+% end
+
+

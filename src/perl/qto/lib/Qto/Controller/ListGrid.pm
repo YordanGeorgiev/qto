@@ -26,6 +26,7 @@ sub doBuildListControl {
    my $ret           	= 1 ; 
    my $control       	= '' ; 
    my $cols             = () ; 
+   my $as               = shift || 'grid' ; 
 
    ( $ret , $msg , $cols) = $objModel->doGetItemsDefaultPickCols( $config , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
@@ -45,6 +46,7 @@ sub doBuildListControl {
 	} 
 	else {
    	$control = "['id'," ; # it is just the js array definining the cols
+   	$control = "[" if $as eq 'print-table' ; 
 		foreach my $to_pick ( @picks ) {
          unless ( grep (/^$to_pick$/,@hides)) {
             $control .= "'" . $to_pick . "' , " unless ( $to_pick eq 'id' );
