@@ -35,7 +35,7 @@ package Qto::Controller::PageFactory ;
 		}
 		elsif ( $ui_type eq 'page/list-print-table' ) {
 		   $package_file     = "Qto/Controller/ListPrintTable.pm" ; 
-		   $objPageBuilder   = "Qto::Controller::ListPrintTable" ; 
+		   $objPageBuilder   = "Qto::Controller::ListGrid" ; 
 		}
 		elsif ( $ui_type eq 'page/srch-grid' ) {
 		   $package_file     = "Qto/Controller/SearchGrid.pm" ; 

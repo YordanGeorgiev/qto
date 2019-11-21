@@ -5,7 +5,7 @@
   * [1.3. ATTEMPT FOR 100% TEST COVERAGE TO ACHIEVE RELIABILITY](#13-attempt-for-100%-test-coverage-to-achieve-reliability)
   * [1.4. IT SHOULD JUST WORK](#14-it-should-just-work)
   * [1.5. NAMING CONVENTIONS](#15-naming-conventions)
-  * [1.6. BE USER-FRIENDLY TO ALL](#16-be-user-friendly-to-all)
+  * [1.6. BE FRIENDLY TO ALL](#16-be-friendly-to-all)
   * [1.7. AIM FOR SIMPLICITY](#17-aim-for-simplicity)
   * [1.8. DO NOT ALLOW BROKEN WINDOWS](#18-do-not-allow-broken-windows)
   * [1.9. DO NOT ADD A COMMIT WITHOUT PASSING ALL THE REGRESSION TESTS](#19-do-not-add-a-commit-without-passing-all-the-regression-tests)
@@ -17,7 +17,9 @@
   * [2.5. VERIFY THE INSERTED DATA FROM THE DB](#25-verify-the-inserted-data-from-the-db)
   * [2.6. DIRS NAMING CONVENTIONS](#26-dirs-naming-conventions)
 * [3. NAMING CONVENTIONS](#3-naming-conventions)
-  * [3.1. ROOT DIRS NAMING CONVENTIONS](#31-root-dirs-naming-conventions)
+  * [3.1. PRODUCT INSTANCE DIRECTORIES](#31-product-instance-directories)
+  * [3.2. ROOT DIRS NAMING CONVENTIONS](#32-root-dirs-naming-conventions)
+  * [3.3. DABASE NAMING CONVENTIONS](#33-dabase-naming-conventions)
 * [4. SOURCE CODE MANAGEMENT](#4-source-code-management)
   * [4.1. CONFIGURE AND USE GIT ALWAYS BY USING SSH IDENTITIES](#41-configure-and-use-git-always-by-using-ssh-identities)
   * [4.2. AIM FOR TRACEABILITY BETWEEN USER-STORIES, REQUIREMENTS, FEATURES AND FUNCTIONALITIES](#42-aim-for-traceability-between-user-stories-requirements-features-and-functionalities)
@@ -101,7 +103,7 @@ All the names used in the code and the configurations MUST BE human readable and
 
     
 
-### 1.6. Be user-friendly to all
+### 1.6. Be friendly to all
 Especially to technical personnel, as you cannot achieve user-friendliness for the end-users unless your developers and technical personnel are happy while interacting with your artefacts. 
 
     
@@ -113,7 +115,7 @@ Things should be as simple as possible, but not simpler - if Einstein said it it
 
 ### 1.8. Do not allow broken windows
 A broken windows is any peace of code or documentation which is hanging around not included in the integration tests suite and not matching the most up-to-date standards for work deliverables. Either bring it up to the standard level or get rid of it. 
-As soon as you find a bug, write a test for it.
+As soon as you find a bug, write a test for it, if you can't create the needed testing setup invest in time developing the needed skills.
 
     
 
@@ -178,13 +180,23 @@ The dir structure should be logical and a person navigating to a dir should almo
 
     
 
-### 3.1. Root Dirs naming conventions
+### 3.1. Product instance directories
+
+
+    
+
+### 3.2. Root Dirs naming conventions
 The root dirs and named as follows:
 bin - contains the produced binaries for the project
 cnf - for the configuration
 dat - for the data of the app
 lib - for any external libraries used
 src - for the source code of the actual projects and subprojects
+
+    
+
+### 3.3. Dabase naming conventions
+Each database must start with it's environment prefix - dev, tst or prd. And yes this is so fundamentally in-build into qto that changing this naming convention will definitely destroy your application.
 
     
 
@@ -343,7 +355,7 @@ Create the feature branch by using the following naming convention:
 
     git branch -a
     * dev
-    dev--it-18050801-add-order-by-in-select-ctrlr
+    dev--qto-18050801-add-order-by-in-select-ctrlr
     master
     prd
     tst

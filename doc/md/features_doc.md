@@ -5,7 +5,7 @@
   * [1.3. RELATED DOCUMENTATION](#13-related-documentation)
 * [2. DEPLOYABILITY](#2-deployability)
   * [2.1. FULL DEPLOYMENT IN LESS THAN AN HOUR](#21-full-deployment-in-less-than-an-hour)
-  * [2.2. EASY DOCKER BASED DEPLOYMENT ( DEPRECATING )](#22-easy-docker-based-deployment-(-deprecating-))
+  * [2.2. EASY DOCKER BASED FULL DEPLOYMENT ( DEPRECATING )](#22-easy-docker-based-full-deployment-(-deprecating-))
     * [2.2.1. New version deployment by simple unzip](#221-new-version-deployment-by-simple-unzip)
     * [2.2.2. Oneliner for prerequisite binaries check](#222-oneliner-for-prerequisite-binaries-check)
     * [2.2.3. Installation documentation](#223-installation-documentation)
@@ -75,13 +75,14 @@ This document could be of interest for any potential and actual users of the app
 ### 1.3. Related documentation
 This document is part of the qto application documentation-set, which contains the following documents:
  - readme - the initial readme file of the project
+ - enduser_guide_doc - the end users guide - mostly ui usage and concepts
  - concepts_doc - contains the concepts of the application
  - userstories_doc - the collection of userstories used to describe "what is desired"
- - SystemGuide - architecture and System description
- - DevOps Guide - a guide for the developers and devops operators
- - Installation Guide - a guide for installation of the application
- - Features and Functionalities - description of the current features and functionalities
- - Requirements - description of the Requirements for the application
+ - system_guide_doc - architecture and System description
+ - devops_guide_doc - a guide for the developers and devops operators
+ - installation_guide_doc - a guide for installation of the application
+ - features_doc - description of the current features and functionalities
+ - requirements_doc - description of the Requirements for the application
 
 
 All the documents should be updated and redistributed in combination of the current version of the appilication and should be found under the following directories:
@@ -102,9 +103,8 @@ The installations instructions are done for Ubuntu 18.04 LTS, yet should you fee
 
     
 
-### 2.2. Easy docker based deployment ( deprecating )
-This feature is being deprecated ... yet you could quickly implement it by changing the Dockerfiles versions ..
-By following the installation instructions in the readme you can  deploy on any docker running Unix-like OS the qto application running on a docker and Ubuntu 18.04 LTS with initially loaded database and data. 
+### 2.2. Easy docker based full deployment ( deprecating )
+This feature is being deprecated ... yet you could quickly re-implement it by changing the Dockerfiles versions .. By following the installation instructions in the installations_doc you can deploy on any docker running Unix-like OS the qto application running on a docker and Ubuntu 18.04 LTS with initially loaded database and data. 
 
     
 

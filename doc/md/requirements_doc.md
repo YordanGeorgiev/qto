@@ -15,12 +15,15 @@
     * [2.4.1. Single shell call for postgres db creation and initial data load](#241-single-shell-call-for-postgres-db-creation-and-initial-data-load)
     * [2.4.2. One liner for single restore for both full db and inserts only](#242-one-liner-for-single-restore-for-both-full-db-and-inserts-only)
   * [2.5. SINGLETON CONFIGURATION ](#25-singleton-configuration-)
-* [3. USER-FRIENDLINESS](#3-user-friendliness)
-  * [3.1. ONELINER SHELL CALLS](#31-oneliner-shell-calls)
-    * [3.1.1. Database recreation and DDL scripts run one-liners](#311-database-recreation-and-ddl-scripts-run-one-liners)
-    * [3.1.2. Table(s) load via aa single one-liner](#312-table(s)-load-via-aa-single-one-liner)
-    * [3.1.3. Testing one-liner call](#313-testing-one-liner-call)
-    * [3.1.4. Test messages user](#314-test-messages-user)
+* [3. USABILITY](#3-usability)
+  * [3.1. UI USABILITY](#31-ui-usability)
+    * [3.1.1. Login page usability](#311-login-page-usability)
+    * [3.1.2. Landing / home page usability](#312-landing-/-home-page-usability)
+    * [3.1.3. View page usability](#313-view-page-usability)
+  * [3.2. ONELINER SHELL CALLS](#32-oneliner-shell-calls)
+    * [3.2.1. Database recreation and DDL scripts run one-liners](#321-database-recreation-and-ddl-scripts-run-one-liners)
+    * [3.2.2. Table(s) load via aa single one-liner](#322-table(s)-load-via-aa-single-one-liner)
+    * [3.2.3. Testing one-liner call](#323-testing-one-liner-call)
 * [4. RELIABILITY AND STABILITY](#4-reliability-and-stability)
   * [4.1. ZERO TOLLERANCE TOWARDS CRASHING](#41-zero-tollerance-towards-crashing)
   * [4.2. ZERO TOLLERANCE TOWARDS BUGS](#42-zero-tollerance-towards-bugs)
@@ -164,37 +167,49 @@ Whenever there is a configuration entry indicating part of the configuration of 
 
     
 
-## 3. USER-FRIENDLINESS
+## 3. USABILITY
 The interaction with each endpoint and interface of an application instance should be as user-friendly as possible. 
 As abstract as it may sound the tool must be multi-dimensionally and vertically integrated regarding the questions what, how and why towards a new person interacting with the tool by the usage of code comments , links from the documentations and uuids to be used for simple greping from the docs till the source code. 
 
     
 
-### 3.1. Oneliner shell calls
+### 3.1. UI usability
+The interaction of with the application UI must be as effortlessly, quickly and user-friendly as possible.
+
+    
+
+#### 3.1.1. Login page usability
+The login page must contain clearly on which instance a user is logging in. The login must be executable both with enter and click of the GO button. The login page must load in less than 0.3s. The login after that to the home / landing page must not take more than 0.5 seconds. The error msgs must be as concise, but clear and explanatory as possible.
+
+    
+
+#### 3.1.2. Landing / home page usability
+The landing / home page must clearly indicate that the user has logged in. It must contain clear UI element(s) to indicate where to go from here. The landing page might contain some additional informative content.
+
+    
+
+#### 3.1.3. View page usability
+The view page must load in less than 0.3 s. The 
+
+    
+
+### 3.2. Oneliner shell calls
 The interaction of the application on the shell should be designed and implemented so that most of the features and bigger entry points should be accessible via one-liners on the shell - for example the testers should be able to lunch all the unit-tests via a single one line call. The integration tests should be triggerable via single oneline call. 
 
     
 
-#### 3.1.1. Database recreation and DDL scripts run one-liners
+#### 3.2.1. Database recreation and DDL scripts run one-liners
 The developers should be able to create the database via a single oneline call.
 
     
 
-#### 3.1.2. Table(s) load via aa single one-liner
+#### 3.2.2. Table(s) load via aa single one-liner
 The developers should be able to load a table to the database via a single oneline call.
 
     
 
-#### 3.1.3. Testing one-liner call
+#### 3.2.3. Testing one-liner call
 The testers and the developers should be able to trigger all the unit or integration tests via a single one-line call. 
-
-    
-
-#### 3.1.4. Test messages user
-Each test should obey the following convention:
- - short message as descriptive within the context as possible - what is being tested
- - a short technical example of the generated entry being tested ( for example a dynamic url )
- - a uuid to search for from the Feature document what exactly is being tested within the context of the features description. 
 
     
 

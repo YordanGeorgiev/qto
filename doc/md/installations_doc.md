@@ -146,13 +146,13 @@ When the file path is suggested append a different string to avoid overwriting t
     ssh-keygen -t rsa -b 4096 -C "your.name@your.org"
 
 ### 3.4. Initialise the aws infrastructure
-To initialise the git aws infrastructure you need to clone the qto source code locally first. 
+To initialise the git aws infrastructure you need to clone the qto source code locally first. If you are repeating this task all over you might need to remove from the aws web ui your pem keys and potential out of your dedicated resources VPC's and elastic IP's.
 
     # apply the infra terraform in the src/terraform/tpl/qto/main.tf.tpl 
     clear ; bash ~/opt/qto/src/bash/qto/qto.sh -a init-aws-instance
 
 ### 3.5. Set the ip address for the host in DNS ( optional ) 
-If you have registered your own DNS name you should configure now the public ip address found in the amamazon ec2 instances section of the newly created host to the dns name you have registered with your DNS provider, as it usually takes some time for the DNS to replicate ( with the qto.fi domain it takes about 5 min, even hours are suggested to be reserved ...).
+If you have registered your own DNS name you should configure now the public ip address found in the amamazon ec2 instances section of the newly created host to the dns name you have registered with your DNS provider, as it usually takes some time for the DNS to replicate ( with the qto.fi domain it takes about 5 min max, some DNS providers suggest even hours to be reserved, your mileage might vary...).
 If you do not have a registered DNS, you could either use directly the ip address or the dns name provided by amazon in the ec2 settings of the newly created host, in this case you should configure the same DNS in the cnf/etc/dev.env.json file ( env-&gt;app-&gt;web_host variable ) for ngix to be able to pick it in its own configuration.
 
     
@@ -218,7 +218,7 @@ Open the cnf/env/dev.env.json, change the env-&gt;AdminEmail with an e-mail you 
     ./src/bash/qto/qto.sh -a mojo-hypnotoad-start
 
 ## 4. CREATE THE TESTING INSTANCE
-If you re-visit the target architecture picture, the actions so far have been only the installations of the dev instance - which you should have be now up and running. 
+If you re-visit the target architecture picture(@installations_doc-10), the actions so far have been only the installations of the dev instance - which you should have be now up and running. 
 Qto is design around the idea of developing in dev ( aka doing things for first time and possibly with some errors ), testing in tst ( more of a testing and configuration allowed, but not developing with minor errors and prd ( where no errors are allowed and everything should go smoothly ). 
 Thus by now you have achieved only the dev instance deployment
 
