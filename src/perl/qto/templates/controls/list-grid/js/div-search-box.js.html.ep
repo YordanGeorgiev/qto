@@ -83,6 +83,7 @@ Vue.component('div_search_box', {
       })
 	 }
   , fetchSSDataForColsUI: function (url_params) { // only UI logic here !!!
+		if ( typeof url_params === "undefined" ) { return; }
       var self = this
       return this.fetchSSDataForCols()
       .then( response => {

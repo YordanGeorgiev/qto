@@ -150,7 +150,6 @@ src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.t
 src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.t
 src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
-src/perl/qto/templates/layouts/list.html.ep.bak
 src/perl/qto/templates/layouts/list.html.ep
 src/perl/qto/templates/layouts/home.html.ep
 src/perl/qto/templates/layouts/login.html.ep

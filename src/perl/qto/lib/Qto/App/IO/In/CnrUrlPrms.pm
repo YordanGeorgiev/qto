@@ -111,10 +111,11 @@ sub doSetQueryUrlParams {
    my $ret           = 0 ; 
    my $msg           = '' ; 
    my $qry           = $query_params->param('for') ; 
-
-   if ( !defined ( $qry ) or $qry eq "" ) {
-      $msg = "nothing to search for, the for url parameter is undefined the $controller route" ; 
-      $ret = 400 ; 
+   
+   if ( !defined ( $qry ) or $qry eq '' ) {
+      $msg = "initial search load";
+      $ret = 100 ; 
+      return ( $ret , $msg ) ; 
    } else {
       $objModel->set($controller . '.web-action.for' , $qry );
       $query_params->remove('for') ; 
