@@ -68,20 +68,14 @@
          , fetchServerSideDataToUI: function(url_params) {
 
                if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
-               if ( url_params.has("for") === false) { return; }
-
+               if ( typeof url_params.get('for') == null ){ hideControlsOnError() ; return ; }
+               document.getElementById('inp_srch_box').value = url_params.get('for') ; 
                this.fetchServerSideData(url_params)
                .then( response => {
-                  if ( response.status === 204 ) {
-                     var warningMsg = response.statusText
-                     setMsgVisuals(warningMsg,'div_notice','Warning','search');
-                     return ;
-                  } else if ( response.status === 404 || response.status === 400) {
-                     var errorMsg = response.statusText + ": " + response.data.msg
-                     setMsgVisuals(errorMsg,'div_msg','Error','search');
-                     return ;
-                  } else {
-                     var data = response.data
+                  if ( response.status === 200 ) {
+                     var data = response.data 
+                     if ( response.data.dat == null ) { hideControlsOnError() ;return ; }
+
                      var dataType = (typeof data)
                      if ( dataType === 'undefined' ) {
                         var msg = 'unexpected error occurred while fetching data !!!'
@@ -89,9 +83,6 @@
                      } else if ( dataType === 'string' ) {
                         setMsgVisuals(data,'div_msg','Error','search');
                      } else {
-                        if ( data.dat[0].name === 'init' ) {
-                           hideControlsOnError()
-                        }
                         this.gridData = data.dat ; 
 								this.gridMeta = data.met
                         var totalRSsize = data.cnt ; 
@@ -113,6 +104,19 @@
                            this.$children[0].setAscSortBy("id")
                         }
                      }
+                     return ;
+                  } else if ( response.status === 204) {
+                     var warningMsg = response.statusText
+                     setMsgVisuals(warningMsg,'div_notice','Warning','search');
+                     return ;
+                  } else if ( response.status === 404 || response.status === 400) {
+                     var errorMsg = response.statusText + ": " + response.data.msg
+                     setMsgVisuals(errorMsg,'div_msg','Error','search');
+                     return ;
+                  } else {
+                     var errorMsg = response.statusText + ": " + response.data.msg
+                     setMsgVisuals(errorMsg,'div_msg','Error','search');
+                     return ;
                   }
                })
             .catch(function(error) {

@@ -59,6 +59,8 @@ sub doListItems {
    ($ret,$msg,$left_menu) = $self->SUPER::doBuildLeftMenu(\$objModel, $db );
 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
+   my @allowed_as = ('grid','lbls','print-table');
+   $as = 'grid' unless ( grep ( /^$as$/, @allowed_as)) ;
    ( $ret , $msg , $list_control ) = $self->doBuildListPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
 
 

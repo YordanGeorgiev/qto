@@ -14,10 +14,11 @@ use parent qw(Qto::Controller::BaseController);
 use Qto::App::Db::In::RdrDbsFcry;
 use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 use Qto::App::IO::In::CnrUrlPrms ; 
 
 my $module_trace    = 0 ;
-our $config      = {};
+our $config         = {};
 our $objLogger      = {} ;
 our $rdbms_type     = 'postgres';
 
@@ -39,8 +40,8 @@ sub doQueryItems {
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,'search' ) ;
    $config		         = $self->app->config ; 
+   $db                  = toEnvName ( $db , $config) ;
    
-
    my $objCnrUrlPrms  = {} ; 
    my $objRdrDbsFcry = {} ; 
    my $objRdrDb         = {} ; 
@@ -57,24 +58,31 @@ sub doQueryItems {
    $objCnrUrlPrms = 
       'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    ( $ret , $msg ) = $objCnrUrlPrms->doSetQueryUrlParams('Query' );
-   if ( $ret != 0 ) {
-      $self->SUPER::doRenderJSON(400,$msg,'GET','','0','');
-      return ; 
-   } 
-
-   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
-	$objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
-   ($ret, $msg , $hsr2 ) = $objRdrDb->doGlobalSrchIntoHashRef(\$objModel );
 
    if ( $ret == 0 ) {
-      my $list = ();
-      my $objCnrHsr2ToArray = 
-         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
-      ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 , '>', 'relevancy') ;
 
-      $self->SUPER::doRenderJSON(200,$msg,'GET',$msr2,$rows_count,$list);
+      $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
+      $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
+      ($ret, $msg , $hsr2 ) = $objRdrDb->doGlobalSrchIntoHashRef(\$objModel );
+
+      if ( $ret == 0 ) {
+         my $list = ();
+         my $objCnrHsr2ToArray = 
+            'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
+         ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 , '>', 'relevancy') ;
+         $self->SUPER::doRenderJSON(200,$msg,'GET',$msr2,$rows_count,$list);
+      } elsif ( $ret == 204 ) {
+         $self->SUPER::doRenderJSON(204,$msg,'GET','','0','');
+      } elsif ( $ret == 100 ) {
+         $self->SUPER::doRenderJSON(200,$msg,'GET',(),'0',());
+      } else {
+         $self->SUPER::doRenderJSON(400,$msg,'GET','','0','');
+      }
+
    } elsif ( $ret == 204 ) {
       $self->SUPER::doRenderJSON(204,$msg,'GET','','0','');
+   } elsif ( $ret == 100 ) {
+      $self->SUPER::doRenderJSON(200,$msg,'GET',(),'0',());
    } else {
       $self->SUPER::doRenderJSON(400,$msg,'GET','','0','');
    }

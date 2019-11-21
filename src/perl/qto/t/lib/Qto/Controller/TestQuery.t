@@ -16,11 +16,11 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $url = '/' . $db . '/query?for=' ; 
 
    $tm = "not at all for query param specified "; 
-   ok ( $t->get_ok($url)->status_is(400) , $tm ) ;
+   ok ( $t->get_ok($url)->status_is(200) , $tm ) ;
   
    $tm = 'not at all for query param specified ' ; 
    $url = '/' . $db . '/query' ; 
-   ok ( $t->get_ok($url)->status_is(400) , $tm ) ;
+   ok ( $t->get_ok($url)->status_is(200) , $tm ) ;
 
    $tm = 'some foo query param is specified ' ; 
    $url = '/' . $db . '/query?for=meta-data' ; 
