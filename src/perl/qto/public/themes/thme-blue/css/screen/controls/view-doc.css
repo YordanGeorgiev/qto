@@ -60,6 +60,20 @@ textarea.cls_title:hover, textarea.cls_title:focus , textarea.cls_src:hover,  te
    caret-color: red;
    resize: none;
 }
+div.cls_desc {
+   clear: both;
+   width: 75% ;
+   white-space: pre-wrap;
+	display: block;
+	float: left; 
+   font-size:16px;
+   border:3px solid #FFFFFF ; 
+   border-radius: 7px;
+	word-wrap: break-word;
+   overflow: hidden;
+   padding: 10px 10px 10px 10px ;
+   margin-top: 5px;
+}
 textarea.cls_desc {
    clear: both;
    width: 75% ;
