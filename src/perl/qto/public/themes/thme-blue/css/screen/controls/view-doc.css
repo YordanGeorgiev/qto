@@ -195,6 +195,18 @@ textarea.cls_src:hover, textarea.cls_src:focus , textarea.cls_src:hover,  textar
 		font-size: 12%;
 	}
 }
+@media print{
+  @page { margin: 2%; size: A4 }
+	body { margin: 1.6cm; zoom: .7;}
+	footer {
+		position: fixed;
+		bottom: 1;
+	}
+	header {
+		position: fixed;
+		top: 1;
+	}
+}
 .cls_doc_img {
    clear: both;
    font-size: 80%;
