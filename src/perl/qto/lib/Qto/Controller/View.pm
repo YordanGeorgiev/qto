@@ -43,6 +43,9 @@ sub doViewItems {
    ($ret,$msg,$left_menu) = $self->SUPER::doBuildLeftMenu(\$objModel, $db );
 
 
+   my $url_params = $self->req->params->to_hash ; # hash reference
+   $self->stash('url_params' => $url_params) ;
+
    ( $ret , $msg , $view_control ) = $self->doBuildViewPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
    $self->render('text' => 'view page is presented') unless $ret == 0 ; 
    $self->doRenderPageTemplate( $ret , $msg , $as, $db , $item , $view_control , $left_menu) if $ret == 0 ;

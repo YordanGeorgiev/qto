@@ -27,3 +27,6 @@ df -a -h | tail -n +2|perl -nle 'm/(.*)\s+(\d{1,2}%\s+(.*))/g;printf "%-20s %-15
 
 # because hypnotoad
 export PATH=$PATH:$HOME/perl5/bin/
+
+# because headless chrome
+export PATH=$PATH:/opt/google/chrome/

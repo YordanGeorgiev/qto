@@ -38,11 +38,13 @@
     * [8.1.1. Execution time](#811-execution-time)
     * [8.1.2. List page features](#812-list-page-features)
     * [8.1.3. Visual indication](#813-visual-indication)
+    * [8.1.4. Print to pdf](#814-print-to-pdf)
   * [8.2. VIEW PAGE FEATURES](#82-view-page-features)
     * [8.2.1. CRUD in the view doc page ( beta )](#821-crud-in-the-view-doc-page-(-beta-))
     * [8.2.2. Add an item in the doc view page UI ( beta)](#822-add-an-item-in-the-doc-view-page-ui-(-beta))
     * [8.2.3. Update item](#823-update-item)
     * [8.2.4. Delete item ( beta )](#824-delete-item-(-beta-))
+    * [8.2.5. Print to pdf](#825-print-to-pdf)
 * [9. SECURITY](#9-security)
   * [9.1. AUTHENTICATION](#91-authentication)
     * [9.1.1. Non-athentication mode](#911-non-athentication-mode)
@@ -85,9 +87,9 @@ This document is part of the qto application documentation-set, which contains t
  - requirements_doc - description of the Requirements for the application
 
 
-All the documents should be updated and redistributed in combination of the current version of the appilication and should be found under the following directories:
+All the documents are updated and redistributed in combination of the current version of the application and could be found under the following directories:
 doc/md
-doc/xls
+doc/pdf
 according to the file format used for the documentation storage.
 
     
@@ -274,6 +276,11 @@ The System should not show ok messages , but only error messages, yet the UI sho
 
     
 
+#### 8.1.4. Print to pdf
+You can print any of the queries from the list page by adding / changing the as url parameter from as=grid to as=print-table. Use the browser print to pdf feature to save the listing page into a pdf file.
+
+    
+
 ### 8.2. View page features
 
 
@@ -303,6 +310,11 @@ You can:
 
 #### 8.2.4. Delete item ( beta )
 You can right click on an item and choose the remove node from the right click men.
+
+    
+
+#### 8.2.5. Print to pdf
+You can print any view doc by choosing right click view as pdf and choosing print to pdf file from the browser. Check the generate-pdf-docs shell action to automate this for each document configured in the export_files table.
 
     
 

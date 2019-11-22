@@ -79,6 +79,7 @@ doc/cheats/qto-cheat-sheet.sh
 doc/cheats/qto-psql-cheat.sql
 src/bash/qto/test-qto.sh
 src/bash/qto/funcs/generate-md-docs.func.sh
+src/bash/qto/funcs/generate-pdf-docs.func.sh
 src/docker/Dockerfile.deploy-qto.0.7.2
 src/docker/Dockerfile.deploy-qto-db-host.0.7.2
 src/docker/Dockerfile.deploy-qto-app-host.0.7.2

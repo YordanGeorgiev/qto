@@ -4,6 +4,8 @@ use FindBin;
 use Data::Printer ; 
 use Test::Most ; 
 use Test::Mojo;
+use Test::More;
+use Test::Mojo::WithRoles qw/Phantom/;
 
 die_on_fail;
 
@@ -32,7 +34,22 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    #$tm = 'the query text is added to the search box' ; 
    #my $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
    #ok ( $dom->at('#inp_srch_box')->text == 'meta-data' );
-   
+
+ 
+ 
+# but 
+# Can't call method "server" on an undefined value at
+# /home/ysg/perl5/lib/perl5/Mojo/Server/Daemon.pm line 55
+# error is issues ?!
+#my $ti = Test::Mojo::WithRoles->new;
+#$ti->phantom_ok($url => <<'JS');
+#	  var text = page.evaluate(function(){
+#		 return document.getElementById('inp_srch_box').innerHTML;
+#	  });
+#	  perl.is(text, 'meta-data', 'the srch box exists and it is populated');
+#JS
+
+
    $tm = 'can find the search-box ' ; 
    $url = '/' . $db . '/search' ; 
    ok ( $t->get_ok($url)->status_is(200) , $tm ) ;

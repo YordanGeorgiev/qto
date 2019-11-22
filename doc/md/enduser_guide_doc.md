@@ -55,6 +55,7 @@
   * [6.2. ITEMS INTERLINKING](#62-items-interlinking)
   * [6.3. THE RIGHT TABLE OF CONTENTS MENU](#63-the-right-table-of-contents-menu)
   * [6.4. THE RIGHT CLICK MENU](#64-the-right-click-menu)
+  * [6.5. PRINT TO PDF](#65-print-to-pdf)
 * [7. THE EXPORT URI](#7-the-export-uri)
   * [7.1. EXPORT BRANCH TO XLS](#71-export-branch-to-xls)
   * [7.2. EXPORT BRANCH TO MD](#72-export-branch-to-md)
@@ -448,6 +449,11 @@ Note, that you can quickly navigate with the tab key on the keyboard once the ri
 If you right click on a title you could : 
   - drill down - i.e. view the current title and it's tree as a separate document altogether
   - view the current title and it's tree as pdf printable document convenient for printing as well ... 
+
+    
+
+### 6.5. Print to pdf
+You can print any view doc page by right clicking the root or any item and choosing print preview and utilising the browser save to pdf file feature. ( This can be automated for all pdf docs as well - chk the generate-pdf-docs shell action)
 
     
 
