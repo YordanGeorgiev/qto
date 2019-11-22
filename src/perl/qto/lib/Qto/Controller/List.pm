@@ -56,7 +56,7 @@ sub doListItems {
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ;
    my $objCnrUrlPrms    = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    $objCnrUrlPrms->doValidateAndSetSelect();
-   ($ret,$msg,$left_menu) = $self->SUPER::doBuildLeftMenu(\$objModel, $db );
+   ($ret,$msg,$left_menu) = $self->SUPER::doBuildLeftMenu(\$objModel, $db ) unless ( $as eq 'print-table');
 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
    my @allowed_as = ('grid','lbls','print-table');

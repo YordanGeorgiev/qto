@@ -21,9 +21,16 @@
                   :cnt="item.name" class="cls_title">{{item.name}}</rgx-input>
             </h3>
             <div class="cls_tbltooltip">
-               <rgx-textarea v-html="item.description" :formats="item.formats" class="cls_desc" :id="'dsc_description-' + item.id">
+               <rgx-textarea v-if="_self.$el.baseURI.indexOf('as=print-doc') === -1" 
+                  v-html="item.description" :formats="item.formats" class="cls_desc" 
+                  :id="'dsc_description-' + item.id">
                </rgx-textarea>
-               <div class="cls_tbltooltiptext" v-html="lnkMayBe(item.description)">
+               <div v-if="_self.$el.baseURI.indexOf('as=print-doc') !== -1" 
+                  v-html="lnkMayBe(item.description)" :formats="item.formats" 
+                  class="cls_desc" :id="'dsc_description-' + item.id">
+               </div>
+               <div v-if="_self.$el.baseURI.indexOf('as=print-doc') === -1"
+                  class="cls_tbltooltiptext" v-html="lnkMayBe(item.description)">
                </div>
             </div>
 				<p v-if="item.src">
