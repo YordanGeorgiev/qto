@@ -1107,11 +1107,13 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 		return $pg ; 
 	}
 
+
    sub doHiSelectBranch {
 
       my $self          = shift ; 
       my $db            = shift || croak 'no db passed !!!' ; 
       my $table         = shift || croak 'no table passed !!!' ; 
+
       my $bid           = $objModel->get( 'hiselect.web-action.bid' ) || 0 ; 
       my $seq           = $objModel->get( 'hiselect.web-action.seq' ) || undef ; 
    
@@ -1160,7 +1162,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 
       eval {
 			$sql = " 
-				SELECT $columns_to_select 
+				SELECT *
             , img_id
             , img_item_guid
             , img_name
@@ -1169,8 +1171,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
             , img_description
             FROM ( 
                SELECT node.* FROM $table AS node, $table AS parent 
-               WHERE 1=1 AND node.lft 
-               BETWEEN parent.lft AND parent.rgt
+               WHERE 1=1 
+               AND ( node.lft >= parent.lft AND node.lft <= parent.rgt )
                $where_clause_bid
                )  AS dyn_sql 
             LEFT JOIN ( 
@@ -1189,7 +1191,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 				ORDER BY seq
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
-         # debug p $hsr2 ; 
+         # debug p $sql; 
       };
       if ( $@ ) {
          $rv               = 404 ; 

@@ -278,7 +278,6 @@ src/perl/qto/lib/Qto/Controller/Update.pm
 src/perl/qto/lib/Qto/Controller/Delete.pm
 src/perl/qto/lib/Qto/Controller/Select.pm
 src/perl/qto/lib/Qto/Controller/HiSelect.pm
-src/perl/qto/lib/Qto/Controller/HLSelect.pm
 src/perl/qto/lib/Qto/Controller/Search.pm
 src/perl/qto/t/lib/Qto/Controller/TestCreate.t
 src/perl/qto/t/lib/Qto/Controller/TestTruncate.t
@@ -806,7 +805,6 @@ src/perl/qto/lib/auto/Qto/App/Utils/Timer/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Create/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Delete/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Export/autosplit.ix
-src/perl/qto/lib/auto/Qto/Controller/HLSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HiSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/List/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Query/autosplit.ix
