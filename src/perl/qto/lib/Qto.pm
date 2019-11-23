@@ -259,12 +259,8 @@ sub doSetRoutes {
      controller   => 'HiSelect'
    , action       => 'doHiSelectItems'
    );
-   
-   $r->get('/:db/hlselect/:item')->to(
-     controller   => 'HLSelect'
-   , action       => 'doHLSelectItems'
-   );
-   
+  
+    
    $r->post('/:db/create/:item')->to(
      controller   => 'Create'
    , action       => 'doCreateById'

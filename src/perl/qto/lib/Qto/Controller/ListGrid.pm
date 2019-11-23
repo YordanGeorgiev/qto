@@ -27,6 +27,7 @@ sub doBuildListControl {
    my $control       	= '' ; 
    my $cols             = () ; 
    my $as               = shift || 'grid' ; 
+   my @hides            = () ; 
 
    ( $ret , $msg , $cols) = $objModel->doGetItemsDefaultPickCols( $config , $db , $table ) ;
    return ( $ret , $msg , '' ) unless $ret == 0 ; 
@@ -34,10 +35,13 @@ sub doBuildListControl {
    my $to_picks   = $objModel->get('select.web-action.pick') ; 
    my @picks      = split ( ',' , $to_picks ) if defined ( $to_picks ) ; 
    my $to_hides   = $objModel->get('select.web-action.hide') ; 
-   my @hides      = split ( ',' , $to_hides ) if defined ( $to_hides ) ; 
+   
+   @hides      = split ( ',' , $to_hides ) if defined ( $to_hides ) ; 
+   push ( @hides , 'level' , 'seq' , 'lft','rgt' ) if $table =~ m/^.*_doc/g ; 
 
    unless ( defined ( $to_picks )) {
 		foreach my $col ( @$cols ) {
+         @hides = grep {$_ ne $col} @hides; # advanced user must pick explicitly dangerous level,seq,lft,rgts
          $control = $control . ",'" . $col . "'" unless ( grep (/^$col$/,@hides )) ; 
       }
       if ( defined ( $control) && length $control > 0  ) {
@@ -48,6 +52,7 @@ sub doBuildListControl {
    	$control = "['id'," ; # it is just the js array definining the cols
    	$control = "[" if $as eq 'print-table' ; 
 		foreach my $to_pick ( @picks ) {
+         @hides = grep {$_ ne $to_pick} @hides; # advanced user must pick explicitly dangerous level,seq,lft,rgts
          unless ( grep (/^$to_pick$/,@hides)) {
             $control .= "'" . $to_pick . "' , " unless ( $to_pick eq 'id' );
          }

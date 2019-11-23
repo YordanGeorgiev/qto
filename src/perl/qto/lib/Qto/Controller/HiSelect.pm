@@ -34,6 +34,7 @@ sub doHiSelectItems {
    my $objModel      = {} ; 
    my $objRdrDb      = {} ; 
    my $objRdrDbsFcry = {} ; 
+   my $mc               = {}; # the meta-counter of the meta-data
  
    $config		      = $self->app->config ; 
    $db               = toEnvName ( $db , $config) ;
@@ -42,6 +43,7 @@ sub doHiSelectItems {
 
    $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
    my $objCnrUrlPrms = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
+   ( $ret , $msg , $met , $mc)   = $objModel->doGetTableMeta($config,$db,$item);
   
    return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
       unless $objCnrUrlPrms->doValidateAndSetHiSelect();
@@ -51,7 +53,6 @@ sub doHiSelectItems {
    $objRdrDb 			= $objRdrDbsFcry->doSpawn("$rdbms_type");
 
    ($http_code, $msg, $dat) 	= $objRdrDb->doHiSelectBranch( $db , $item );
-
    my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$config  ) ; 
    $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
 

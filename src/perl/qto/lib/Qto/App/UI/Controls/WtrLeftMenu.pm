@@ -100,7 +100,7 @@ and this is how the static output should look like
       my $row        = shift ; 
       my $id         = $row->{'id'};
       return '' if $id eq 0 ; 
-      return '</ol></li>' . "\n" ; # todo:ysg remove new line
+      return '</ol></li>' ;
    }
    
    sub doDocLink {
