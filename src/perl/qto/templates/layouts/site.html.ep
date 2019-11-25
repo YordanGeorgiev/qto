@@ -15,9 +15,17 @@
 </header>
 
    % unless ( substr($template_name,-13) eq 'login.html.ep' ) {
-      % unless ( defined(stash('url_params')) && stash('url_params')->{'as'} eq 'print-doc' ) {
+      % if ( !defined(stash('url_params'))) {
          %= include 'controls/left-menu/left-menu'
-      % }
+      % } else {
+         % if ( !defined(stash('url_params')->{'as'}) ) {
+            %= include 'controls/left-menu/left-menu'
+         % } else {
+            % unless ( stash('url_params')->{'as'} eq 'print-doc')  {
+               %= include 'controls/left-menu/left-menu'
+            % }
+         % }
+      % } 
    % }
 
    <%= content 'cnt_body_controls' %>

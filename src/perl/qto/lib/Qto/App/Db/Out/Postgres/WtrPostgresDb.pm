@@ -237,9 +237,6 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $origin_id           = shift ; 
       my $level_alpha         = shift ;
 
-      print "origin_id : $origin_id \n\n" ; 
-      # print "level_alpha : $level_alpha \n\n" ; 
-
       my $ret              	= 0 ; 
       my $res              	= undef ;  # the result from FOUND in the func
       my $msg              	= '' ; 

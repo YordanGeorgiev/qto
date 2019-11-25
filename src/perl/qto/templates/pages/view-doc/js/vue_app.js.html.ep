@@ -51,6 +51,8 @@
            , CREATE_ITEM: (state, payload) => {
                state.showRgtMenu = false
                state.items = state.items.push(payload);
+               console.log ( state.items )
+               console.log ( state.payload)
            }
            , UPDATE_ITEM: (state, payload) => {
                var arr = payload.eid.split('-')
@@ -144,10 +146,6 @@
          }
          , showContextMenu (context,payload) {
             var e = payload ; // the mouse event
-            console.log ( e ) 
-            console.log ( "stop of e ")
-            console.log ( payload )
-            console.log ( "stop payload " )
             var id = String(e.target.id).split('-')[1]
             if ( typeof ( id ) === "undefined" ) { console.error( "showContextMenu id undef" ) ; return }
             e.target.disabled = true
@@ -198,8 +196,8 @@
                })
                .then(response => { 
                   if ( typeof response.status != "undefined" && response.status === 200 ) {
-                     context.commit("CREATE_ITEM", payload)
-                     actions.loadItems(context)
+                     console.log ( context ) //todo:ysg
+                     context.dispatch('loadItems')
                   } else {
                      if ( typeof error.response.data.msg != "undefined" ) { 
                         context.commit('SET_SNACKBAR_SHOW', true)
