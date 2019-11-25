@@ -114,6 +114,8 @@ const ContextMenu = Vue.component('context-menu', {
          if ( typeof ( id ) == "undefined" ) { //img clicked
             id = e.target.parentElement.parentElement.parentElement.parentElement.cid
          }
+         console.log ( id) ;
+         console.log ( "id")
          var x = event.clientX
          var y = event.clientY
          var payload = {oid:id,x:x,y:y};
