@@ -13,7 +13,7 @@
                @contextmenu = "showContextMenu($event,item.id+'-lvl-'+item.level+'-seq-'+item.seq)">
                <a :id="'<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" class="permalink scroll"
                   :href="'#<%= $item =%>-' + item.id">#</a>
-               <a :id="'title-'+ item.id" :href="'#<%= $item =%>-' + item.id" 
+               <a :id="'title-'+ item.seq" :href="'#<%= $item =%>-' + item.id" 
                   :title="'level:' + item.level + ' :: seq: ' + item.seq "
                   class="cls-context-menu-link">{{item.logical_order}}</a>
                <rgx-input :id="'inp_name-' + item.id + '-lvl-' + item.level + '-seq-' + item.seq" 
@@ -49,7 +49,7 @@
         </div>
          <div id="rgt_toc">
             <div v-for="item in items">
-               <div :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event,item.id)">
+               <div :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event,item.id+'-lvl-'+item.level+'-seq-'+item.seq)">
                   <a :id="'rml_<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" 
                      class="permalink scroll" :href="'#<%= $item =%>-' + item.id">
                      #
