@@ -34,6 +34,7 @@
   * [5.1. FEATURE SCALABILITY](#51-feature-scalability)
   * [5.2. SETUP SCALABILITY](#52-setup-scalability)
   * [5.3. PROJECTS DATABASES SCALABILITY](#53-projects-databases-scalability)
+  * [5.4. QTO CLONES SCALABILITY](#54-qto-clones-scalability)
 * [6. PERFORMANCE](#6-performance)
   * [6.1. PAGE LOAD MAXIMUM TIME](#61-page-load-maximum-time)
   * [6.2. LOGIN, LOGOUT](#62-login-logout)
@@ -45,10 +46,12 @@
     * [8.1.1. Execution time](#811-execution-time)
     * [8.1.2. Visual indication](#812-visual-indication)
   * [8.2. CLARITY ON ERRORS](#82-clarity-on-errors)
-  * [8.3. REQUIREMENTS PER UI PAGE TYPE](#83-requirements-per-ui-page-type)
-    * [8.3.1. Login page requirements](#831-login-page-requirements)
-    * [8.3.2. List page requirements](#832-list-page-requirements)
-    * [8.3.3. View page requirements](#833-view-page-requirements)
+  * [8.3. INFORMATION SEARCH](#83-information-search)
+    * [8.3.1. Global project search](#831-global-project-search)
+    * [8.3.2. Quick search per page](#832-quick-search-per-page)
+    * [8.3.3. Login page requirements](#833-login-page-requirements)
+    * [8.3.4. List page requirements](#834-list-page-requirements)
+    * [8.3.5. View page requirements](#835-view-page-requirements)
 * [9. SECURITY](#9-security)
   * [9.1. AUTHENTICATION](#91-authentication)
     * [9.1.1. Non-authentication mode](#911-non-authentication-mode)
@@ -85,7 +88,7 @@ The purpose of this document is to present the requirements set to the qto appli
     
 
 ### 1.2. Audience
-This document is aimed for any potential and actual users of the qto application. Product Owners, Developers and Architects working on the application MUST read and understand this document at least to the extend of their own contribution for the application. 
+This document is aimed for any potential and actual developers of the qto application. Product Owners, Developers and Architects working on the application MUST read and understand this document at least to the extend of their own contribution for the application. 
 
     
 
@@ -93,15 +96,19 @@ This document is aimed for any potential and actual users of the qto application
 This document is part of the QTO application documentation-set, which contains the following documents:
  - ReadMe - the initial landing readme doc for the project
  - UserStories - the collection of user-stories used to describe "what is desired"
+ - End-User Guide - the guide for the usage of the UI ( mainly ) for the end-users
  - Requirements - the structured collection of the requirements 
  - SystemGuide - architecture and System description
  - DevOps Guide - a guide for the developers and devops operators
  - Installation Guide - a guide for installation of the application
- - End-User Guide - the guide for the usage of the UI ( mainly ) for the end-users
  - Concepts - the concepts doc 
 
-All the documents should be updated and redistributed in combination of the current version of the application and should be found under the following directory:
-doc/md.
+You can access all the latest  qto documentation from qto site: 
+https://qto.fi
+in it's native format.
+All the documents are updated and redistributed in combination of the current version of the application in both md and pdf file format and can be found under the following directories:
+ - doc/md
+ - doc/pdf
 
     
 
@@ -189,7 +196,7 @@ The landing / home page must clearly indicate that the user has logged in. It mu
     
 
 #### 3.1.3. View page usability
-The view page must load in less than 0.3 s. The 
+The view page must load in less than 0.3 s. 
 
     
 
@@ -263,6 +270,11 @@ Each instance of the qto application must be able to connect to one or many proj
 
     
 
+### 5.4. QTO clones scalability
+The qto application must support cloning - that is "forking" into new applications with different names.
+
+    
+
 ## 6. PERFORMANCE
 
 
@@ -324,22 +336,32 @@ The UI must present every error in a clear and concise way, so that the end-user
 
     
 
-### 8.3. Requirements per UI page type
-
+### 8.3. Information search
+The UI must enable easy to use and effective search for the end-users
 
     
 
-#### 8.3.1. Login page requirements
+#### 8.3.1. Global project search
+The UI must support global per project ( i.e. single project database ) text search from all but the login page
+
+    
+
+#### 8.3.2. Quick search per page
+Each information on each different type of search must be filterable from the omni search box - both the page content and the auxiliary left and/or right menu.
+
+    
+
+#### 8.3.3. Login page requirements
 All login error msgs should be clear and displayed with red colour. 
 
     
 
-#### 8.3.2. List page requirements
+#### 8.3.4. List page requirements
 
 
     
 
-#### 8.3.3. View page requirements
+#### 8.3.5. View page requirements
 
 
     

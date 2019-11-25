@@ -5,8 +5,7 @@ SELECT 'create the "ideas" table'
    CREATE TABLE ideas (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , seq            integer NULL
-    , prio           integer NULL
+    , prio           integer NULL default 0
     , status         varchar (20) NOT NULL DEFAULT '01-eval'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000) NOT NULL DEFAULT 'description ...'
