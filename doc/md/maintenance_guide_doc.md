@@ -3,18 +3,18 @@
   * [1.1. ATTEMPT FOR 100% TEST COVERAGE TO ACHIEVE RELIABILITY](#11-attempt-for-100%-test-coverage-to-achieve-reliability)
   * [1.2. PERSONAL RESPONSIBILITY](#12-personal-responsibility)
 * [2. COMMON OPERATIONS](#2-common-operations)
-    * [2.1. To check the status of the postgreSql](#21-to-check-the-status-of-the-postgresql)
-    * [2.2. To stop the postgreSql](#22-to-stop-the-postgresql)
-    * [2.3. To start the postgreSql](#23-to-start-the-postgresql)
-    * [2.4. to check the port on which it is listening ](#24-to-check-the-port-on-which-it-is-listening-)
-    * [2.5. Check the postgres status](#25-check-the-postgres-status)
-  * [2.1. APPLICATION LAYER RUN-STATE MANAGEMENT](#21-application-layer-run-state-management)
-    * [2.1.1. start the application layer](#211-start-the-application-layer)
-    * [2.1.2. stop the application layer](#212-stop-the-application-layer)
-    * [2.1.3. Restart OS network service](#213-restart-os-network-service)
-  * [2.2. SECURITY RELATED OPERATIONS](#22-security-related-operations)
-    * [2.2.1. Add, modify and delete new users to the application](#221-add-modify-and-delete-new-users-to-the-application)
-    * [2.2.2. Regular users visibility](#222-regular-users-visibility)
+  * [2.1. TO CHECK THE STATUS OF THE POSTGRESQL](#21-to-check-the-status-of-the-postgresql)
+  * [2.2. TO STOP THE POSTGRESQL](#22-to-stop-the-postgresql)
+  * [2.3. TO START THE POSTGRESQL](#23-to-start-the-postgresql)
+  * [2.4. TO CHECK THE PORT ON WHICH IT IS LISTENING ](#24-to-check-the-port-on-which-it-is-listening-)
+  * [2.5. CHECK THE POSTGRES STATUS](#25-check-the-postgres-status)
+  * [2.6. APPLICATION LAYER RUN-STATE MANAGEMENT](#26-application-layer-run-state-management)
+    * [2.6.1. start the application layer](#261-start-the-application-layer)
+    * [2.6.2. stop the application layer](#262-stop-the-application-layer)
+    * [2.6.3. Restart OS network service](#263-restart-os-network-service)
+  * [2.7. SECURITY RELATED OPERATIONS](#27-security-related-operations)
+    * [2.7.1. Add, modify and delete new users to the application](#271-add-modify-and-delete-new-users-to-the-application)
+    * [2.7.2. Regular users visibility](#272-regular-users-visibility)
 * [3. BACKUP AND RESTORE](#3-backup-and-restore)
   * [3.1. LOAD DATABASE CONNECTIVITY CONFIGURATION SECURELY](#31-load-database-connectivity-configuration-securely)
   * [3.2. BACKUP A DATABASE](#32-backup-a-database)
@@ -99,22 +99,22 @@ Any given instance of the qto should have ONE and only ONE person which is respo
 
     
 
-#### 2.1. To check the status of the postgreSql
+### 2.1. To check the status of the postgreSql
 To check the status of the postgreSql issue:
 
     sudo /etc/init.d/postgresql status
 
-#### 2.2. To stop the postgreSql
+### 2.2. To stop the postgreSql
 To stop the postgreSql issues:
 
     sudo /etc/init.d/postgresql stop
 
-#### 2.3. To start the postgreSql
+### 2.3. To start the postgreSql
 To start the postgreSql issues:
 
     sudo /etc/init.d/postgresql start
 
-#### 2.4. to check the port on which it is listening 
+### 2.4. to check the port on which it is listening 
 To check the port on which it is listening issue:
 
 
@@ -124,7 +124,7 @@ To check the port on which it is listening issue:
     sudo netstat -tulntp | grep -i postgres
     # tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      8095/postgres
 
-#### 2.5. Check the postgres status
+### 2.5. Check the postgres status
 Check the postgres status.
 Check the port to which the Postgres is running with this command:
 
@@ -138,14 +138,14 @@ Check the port to which the Postgres is running with this command:
     # check on which ports it is runnning
     sudo netstat -plunt |grep postgres
 
-### 2.1. Application Layer run-state management
+### 2.6. Application Layer run-state management
 Remember to cd to the product instance dir you are going to work on for example: 
 cd /vagrant/opt/csitea/qto/qto.0.6.5.dev.ysg
 All the examples bellow are assuming you've done that in advance. 
 
     
 
-#### 2.1.1. start the application layer
+#### 2.6.1. start the application layer
 To start the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern 
 
     # start hypnotoad ( does the stop as well )
@@ -153,7 +153,7 @@ To start the application layer in development mode use the morbo command ( debug
     # start morbo
     bash src/bash/qto/qto.sh -a mojo-morbo-start
 
-#### 2.1.2. stop the application layer
+#### 2.6.2. stop the application layer
 To stop the application layer in development mode use the morbo command ( debug output will be shown ) , to start it in production mode use the hypnotoad pattern. Note that the morbo command does not stop any running morbo on OTHER product instance dir, but the hypnotoad does stop all - aka hypntotoad as the binary of production must be running only on 1 and only one instance on a host.
 
     # only stop hypno
@@ -161,25 +161,25 @@ To stop the application layer in development mode use the morbo command ( debug 
     # only stop morbo
     bash src/bash/qto/qto.sh -a mojo-morbo-stop
 
-#### 2.1.3. Restart OS network service
+#### 2.6.3. Restart OS network service
 Sometimes you might just need to restart the whole network service on Ubuntu:
 
     sudo /etc/init.d/networking restart
 
-### 2.2. Security related operations
+### 2.7. Security related operations
 There are 2 security modes of operations in qto:
  - none authenticative one ( no login , all can be changed by anyone )
  - native authentication mode - the user credentials are stored per db
 
     
 
-#### 2.2.1. Add, modify and delete new users to the application
+#### 2.7.1. Add, modify and delete new users to the application
 You as the owner of the instance you are running must be aware that the requests to register to the instances you are operating will come via e-mail. 
 Simply add, update and delete users in the users table and sent the password with prompt to edit it to the new user.
 
     
 
-#### 2.2.2. Regular users visibility
+#### 2.7.2. Regular users visibility
 Use the following http password generator:
 http://www.htaccesstools.com/htpasswd-generator/
 
@@ -295,35 +295,28 @@ You probably have access to different corporate and public git repositories. Use
 
     # create the company identity file
     ssh-keygen -t rsa -b 4096 -C "first.last@corp.com"
+    
     # save private key to ~/.ssh/id_rsa.corp, 
-    cat ~/.ssh/id_rsa.corp.pub # copy paste this string into your corp web ui security ssh keys
+    cat ~/.ssh/id_rsa.corp.pub 
+    
+    # copy paste this string into your corp web ui security ssh keys
     
     # create your private identify file
     ssh-keygen -t rsa -b 4096 -C "me@gmail.com"
     # save private key to ~/.ssh/id_rsa.me, note the public key ~/.ssh/id_rsa.me.pub
     cat ~/.ssh/id_rsa.me.pub # copy paste this one into your githubs, private keys
     
-    # clone company internal repo as follows
-    GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.corp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
+    # set alias for the git command to avoid overtyping ...
+    alias git='GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg " git'
+    
+    # clone a repo 
     git clone git@git.in.corp.com:corp/project.git
     
     export git_msg="my commit msg with my corporate identity, explicitly provide author"
     git add --all ; git commit -m "$git_msg" --author "MeFirst MeLast <first.last@corp.com>"
-    GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.corp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
     git push 
     # and verify 
     clear ; git log --pretty --format='%h %ae %<(15)%an ::: %s
-    
-    # clone public repo as follows
-    GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.corp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
-    git clone git@github.com:acoolprojectowner/coolproject.git
-    
-    export git_msg="my commit msg with my personal identity, again author "
-    git add --all ; git commit -m "$git_msg" --author "MeFirst MeLast <first.last@gmail.com>"
-    GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.me -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
-    git push ; 
-    # and verify 
-    clear ; git log --pretty --format='%h %ae %<(15)%an ::: %s'
 
 ### 6.2. Aim for traceability between user-stories, requirements, features and functionalities
 Once the issues are defined and you start working on your own branch which is named by the issue-id aim to map one on one each test in your code with each listed requirement in confluence and / or JIRA. 
@@ -418,8 +411,7 @@ As in other places the main principle to follow is "use common sense" , thus try
     
 
 ### 8.1. Issue creation
-Even if you do not have a defined documentation artifact - create a new issue, which could be the start for a an action affecting the run-state, configuration , data , features and functionalities or other aspects of the qto application. 
-An issue could be a bug, a request for a feature or even simply an undefined combination of problems and solution which could quickly be formalized by defining a new requirement, another issue, feature-request
+Even if you do not have a defined documentation artifact - create a new issue, which could be the start for a an action affecting the run-state, configuration , data , features and functionalities or other aspects of the qto application. An issue could be a bug, a request for a feature or even simply an undefined combination of problems and solution which could quickly be formalized by defining a new requirement, another issue, feature-request
 
     
 
