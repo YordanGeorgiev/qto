@@ -13,6 +13,7 @@ main(){
    do_check_install_chromium_headless
    do_check_install_phantom_js
    do_check_install_perl_modules
+   do_check_install_python_modules
    do_provision_postgres
    do_provision_nginx
    do_copy_git_hooks
