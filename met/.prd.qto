@@ -1,4 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+#
+src/python/generate-docx.py
+#
 cnf/env
 .env
 cnf/env/tst.env.json
@@ -40,11 +43,13 @@ src/bash/deployer/check-install-postgres.func.sh
 src/bash/deployer/check-install-chromium-headless.func.sh
 src/bash/deployer/check-install-phantom-js.func.sh
 src/bash/deployer/check-install-perl-modules.func.sh
+src/bash/deployer/check-install-python-modules.func.sh
 src/bash/deployer/provision-postgres.func.sh
 src/bash/deployer/provision-nginx.func.sh
 src/bash/deployer/scramble-confs.func.sh
 src/bash/deployer/test-deployer-run.sh
 src/bash/deployer/qto/cnf/bin/ubuntu-18.04.lst
+src/bash/deployer/qto/cnf/bin/python-modules.lst
 src/bash/deployer/qto/cnf/bin/perl-modules.lst
 # stop  ::: deployment
 src/perl/qto/public/poc/vuex/sabe/
@@ -80,6 +85,7 @@ doc/cheats/qto-psql-cheat.sql
 src/bash/qto/test-qto.sh
 src/bash/qto/funcs/generate-md-docs.func.sh
 src/bash/qto/funcs/generate-pdf-docs.func.sh
+src/bash/qto/funcs/generate-msft-docs.func.sh
 src/docker/Dockerfile.deploy-qto.0.7.2
 src/docker/Dockerfile.deploy-qto-db-host.0.7.2
 src/docker/Dockerfile.deploy-qto-app-host.0.7.2
@@ -451,6 +457,7 @@ src/sql/pgsql/qto/tables/15.create-table-skills.sql
 src/sql/pgsql/qto/tables/16.create-table-userstories_doc.sql
 src/sql/pgsql/qto/tables/17.create-table-meta_tables.sql
 src/sql/pgsql/qto/tables/18.create-table-meta_columns.sql
+src/sql/pgsql/qto/tables/18.1.create-table-meta_cols.sql
 src/sql/pgsql/qto/tables/19.create-table-naming_conventions.sql
 src/sql/pgsql/qto/tables/20.create-table-goals.sql
 src/sql/pgsql/qto/tables/21.create-table-devops_guide_doc.sql
