@@ -62,6 +62,7 @@ def buildDoc(table,tableData):
             heading = doc.add_heading( title , row['level'])
             heading.style = doc.styles[level]
             p = doc.add_paragraph(row['description'])
+            # https://stackoverflow.com/a/16859266/65706
             #if row['img_relative_path']:
             #    ip = document.add_paragraph()
             #    r = p.add_run()

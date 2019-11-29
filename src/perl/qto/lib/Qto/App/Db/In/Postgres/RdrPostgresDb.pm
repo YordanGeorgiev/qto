@@ -1167,6 +1167,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
             , img_item_guid
             , img_name
             , img_relative_path
+            , img_http_path
             , img_style
             , img_description
             FROM ( 
@@ -1181,6 +1182,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
                , imgs.item_guid     as img_item_guid
                , imgs.name          as img_name
                , imgs.relative_path as img_relative_path
+               , imgs.http_path     as img_http_path
                , imgs.style         as img_style
                , imgs.description   as img_description
                FROM imgs
