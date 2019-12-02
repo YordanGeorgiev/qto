@@ -71,13 +71,3 @@ EOF
 #, yearly_issues.guid, yearly_issues.id, yearly_issues.type, yearly_issues.category, yearly_issues.status, yearly_issues.prio, yearly_issues.name, yearly_issues.description, yearly_issues.owner, yearly_issues.update_time
 #guid = excluded.guid ,id = excluded.id ,type = excluded.type ,category = excluded.category ,status = excluded.status ,prio = excluded.prio ,name = excluded.name ,description = excluded.description ,owner = excluded.owner ,update_time = excluded.update_time
 
- INSERT INTO yearly_issues 
-( guid  , id  , type  , category  , status  , prio  , name  , description  , owner  , update_time)
- SELECT 
-	guid  , id  , type  , category  , status  , prio  , name  , description  , owner  , update_time 
-FROM monthly_issues WHERE 1=1 and status='09-done'
-ON CONFLICT (id) DO UPDATE
-SET 
-	guid = excluded.guid ,id = excluded.id ,type = excluded.type ,category = excluded.category ,status = excluded.status ,prio = excluded.prio, name = excluded.name ,description = excluded.description ,owner = excluded.owner ,update_time = excluded.update_time 
-;
-

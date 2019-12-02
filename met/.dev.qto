@@ -1,5 +1,16 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 #
+src/js/
+src/js/node
+src/js/node/js-unit-tests
+src/js/node/js-unit-tests/01-set-url-param
+src/js/node/js-unit-tests/01-set-url-param/package.json
+src/js/node/js-unit-tests/01-set-url-param/test
+src/js/node/js-unit-tests/01-set-url-param/test/test.js
+src/js/node/package.json
+src/js/node/package-lock.json
+src/js/node/scrap-html.js
+#
 src/python/generate-docx.py
 src/python/append-to-docx.py
 #

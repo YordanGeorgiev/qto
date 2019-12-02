@@ -1,0 +1,16 @@
+{
+  "name": "qto",
+  "version": "0.7.7",
+  "description": "qto",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "ysg",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "chrome-launcher": "^0.12.0",
+    "chrome-remote-interface": "^0.28.0"
+  }
+}
