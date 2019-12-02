@@ -21,9 +21,11 @@ clear ; ./src/bash/qto/qto.sh -a generate-md-docs  # export the documentation of
 
 ./src/bash/qto/qto.sh -a mojo-hypnotoad-start # start the hypnotoad web server
 
-
 # how-to run sql as the postgres user
 clear ; sudo su - postgres -c "psql -d postgres -c \"drop database dev_qto\""
 clear ; sudo su - postgres -c "psql -d postgres -c \"create database dev_qto\""
+
+# get all the id's from the back-end api
+mojo get 'http://host-name:8082/tst_qto/hiselect/requirements_doc?bid=0' |jq '.dat[]|.id'
 
 # eof file: doc/cheats/qto-cheat-sheet.sh

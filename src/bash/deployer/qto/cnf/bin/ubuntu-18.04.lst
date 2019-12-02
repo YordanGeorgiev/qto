@@ -27,6 +27,5 @@
    libxml-atom-perl
    libwww-curl-perl
    npm
-   nodejs
    expect
    nginx

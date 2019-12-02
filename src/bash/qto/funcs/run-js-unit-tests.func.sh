@@ -5,6 +5,7 @@
 doRunJsUnitTests(){
 	which mocha 2>/dev/null || \
 		{ echo >&2 "The mocha is missing - \"sudo npm install -g --save-dev mocha \" ! Aborting ..."; exit 1; }
+   # sudo npm install -g --save-dev chrome-remote-interface
 	# which chai 2>/dev/null || \
 	 #  { echo >&2 "The chai is missing - \"sudo npm install -g --save-dev chai \" ! Aborting ..."; exit 1; }
 

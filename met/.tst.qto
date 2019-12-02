@@ -1,6 +1,18 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 #
+src/js/
+src/js/node
+src/js/node/js-unit-tests
+src/js/node/js-unit-tests/01-set-url-param
+src/js/node/js-unit-tests/01-set-url-param/package.json
+src/js/node/js-unit-tests/01-set-url-param/test
+src/js/node/js-unit-tests/01-set-url-param/test/test.js
+src/js/node/package.json
+src/js/node/package-lock.json
+src/js/node/scrap-html.js
+#
 src/python/generate-docx.py
+src/python/append-to-docx.py
 #
 cnf/env
 .env
@@ -475,6 +487,7 @@ src/sql/pgsql/qto/tables/33.create-table-links.sql
 src/sql/pgsql/qto/tables/34.create-table-users.sql
 src/sql/pgsql/qto/tables/35.create-table-release_issues.sql
 src/sql/pgsql/qto/tables/36.create-table-security_checklist_doc.sql
+src/sql/pgsql/qto/tables/37.definitions_dictionary.sql
 src/sql/pgsql/qto/tables/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/tables/88.create-table-test_hi_delete_table_doc.sql
 src/sql/pgsql/qto/tables/89.create-table-test_xls_to_db_table.sql
