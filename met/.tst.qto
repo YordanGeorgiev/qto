@@ -147,6 +147,7 @@ src/bash/qto/funcs/admin/restart-postgres.func.sh
 src/bash/qto/funcs/full-clean-docker.func.sh
 src/bash/qto/tests/build-docker-image.test.sh
 src/sql/pgsql/scripts/admin/grant-permissions.sql
+src/sql/pgsql/scripts/meta/populate-meta-data-table.sql
 src/bash/qto/funcs/admin/restart-postgres.func.sh
 cnf/postgres/etc/postgresql/12/main
 cnf/postgres/etc/postgresql/12/main/pg_hba.conf

@@ -53,7 +53,7 @@ package Qto::App::Ctrl::CtrlDbToXls ;
       my $ret                 = 1 ; 
       my $msg                 = 'unknown error while loading db issues to xls file' ; 
       my @tables              = ();
-      my $tables              = $objModel->get( 'ctrl.tables' ) || 'daily_issues' ; 
+      my $tables              = $objModel->get( 'ctrl.tables' );
       my $hsr2                = {} ;      # this is the data hash ref of hash reffs 
       my $msr2                = {} ;      # this is the meta hash describing the data hash ^^
       my $amsr2               = {} ;      # this is the meta hash describing the data hash ^^
@@ -65,8 +65,9 @@ package Qto::App::Ctrl::CtrlDbToXls ;
       my $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel  ) ; 
       my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-      ($ret, $msg , $amsr2 )     = $objRdrDb->doLoadProjDbMetaColsData( $db );
+      ($ret, $msg , $amsr2 )     = $objRdrDb->doLoadProjDbMetaCols( $db );
       return ( $ret , $msg ) unless $ret == 0 ; 
+      
       $config->{ "$db" . '.meta-columns' } = $amsr2 ;
 
       $objModel->set('select.web-action.pg-size' , 1000000000) ; #set the maximum size
@@ -75,7 +76,7 @@ package Qto::App::Ctrl::CtrlDbToXls ;
          ( $ret , $msg , $msr2 ) = $objModel->doGetTableMeta ( $config , $db , $table ) ;
          return ( $ret , $msg ) unless $ret == 0 ; 
          ( $ret , $msg , $hsr2)  = $objRdrDb->doSelectRows( $db , $table ) ; 
-         return ( $ret , $msg ) unless $ret == 0 ; 
+         return ( $ret , $msg ) unless $ret == 200 ; 
          my $objWtrXls    = 'Qto::App::IO::Out::WtrXls'->new( \$config ) ;
          ($ret , $msg , $xls_file ) = $objWtrXls->doBuildXlsFromHashRef ( \$objModel , $table , $hsr2 , $msr2) ;
          return ( $ret , $msg ) unless $ret == 0 ; 

@@ -5,6 +5,7 @@ SELECT 'create the "meta_cols" table'
    CREATE TABLE meta_cols (
       guid              UUID NOT NULL DEFAULT gen_random_uuid()
     , id                bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
+    , table_name        varchar (100) NOT NULL DEFAULT 'src_table_name...'
     , prio              integer NOT NULL DEFAULT 1
     , ordinal_number    integer NOT NULL DEFAULT 1
     , src_table_name        varchar (100) NOT NULL DEFAULT 'src_table_name...'

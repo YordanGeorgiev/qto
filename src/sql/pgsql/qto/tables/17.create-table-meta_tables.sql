@@ -9,6 +9,7 @@ SELECT 'create the "meta_tables" table'
     , is_menu        integer NOT NULL DEFAULT 1
     , name           varchar (200) NOT NULL DEFAULT 'name...'
     , description    varchar (4000)
+    , doc_guid       UUID NOT NULL DEFAULT gen_random_uuid()
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_meta_tables_guid PRIMARY KEY (guid)
     ) WITH (
