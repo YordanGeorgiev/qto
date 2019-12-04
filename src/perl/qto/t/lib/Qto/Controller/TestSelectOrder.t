@@ -7,6 +7,7 @@ use FindBin;
 die_on_fail ; 
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
+   $ENV{'QTO_ONGOING_TEST'} = 1;
 
 my $t = Test::Mojo->new('Qto');
 #$t->get_ok('/')->status_is(200) ; 
@@ -16,7 +17,7 @@ my $config = $t->app->config ;
 # if the product instance id dev -> dev_qto
 # if the product instance id tst -> tst_qto
 my $db = $config->{'env'}->{'db'}->{'postgres_db_name'} ; 
-my @tables = ( 'daily_issues' , 'weekly_issues' , 'monthly_issues' , 'yearly_issues' ) ; 
+my @tables = ( 'monthly_issues' , 'yearly_issues' ) ; 
 my $ua  = $t->ua ; 
 my $res = {} ; #a tmp result json string
 my $tm = '' ; 

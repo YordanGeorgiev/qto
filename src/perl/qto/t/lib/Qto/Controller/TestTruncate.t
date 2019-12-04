@@ -10,6 +10,7 @@ die_on_fail ;
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
+   $ENV{'QTO_ONGOING_TEST'} = 1;
    my $res           = {} ; # the result set for a call
    my $url           = {} ; 
    my $tm            = '' ; # the test message for each test 

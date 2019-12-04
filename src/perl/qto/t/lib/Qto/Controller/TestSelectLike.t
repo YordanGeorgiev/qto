@@ -7,6 +7,7 @@ use FindBin;
 die_on_fail ; 
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
+   $ENV{'QTO_ONGOING_TEST'} = 1;
 
 my $t = Test::Mojo->new('Qto');
 #$t->get_ok('/')->status_is(200) ; 

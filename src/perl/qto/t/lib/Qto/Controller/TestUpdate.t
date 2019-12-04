@@ -7,6 +7,7 @@ use FindBin;
 use Mojo::UserAgent;
 
 die_on_fail ; 
+   $ENV{'QTO_ONGOING_TEST'} = 1 ;
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
@@ -19,7 +20,6 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $db            = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
    my $env           = $config->{'env'}->{ 'ENV_TYPE' } ;
 
-   $ENV{'QTO_ONGOING_TEST'} = 1;
 #insert into test_update_table ( id,seq,name,description) values (1,1,'name-1','the name should be updated to updated-name-1'); 
 #insert into test_update_table ( id,seq,name,description) values (2,2,'name-2','the name attr should NOT be updated'); 
 #insert into test_update_table ( id,seq,name,description) values (3,3,'name-3','the name attr should be updated to updated-name-3'); 

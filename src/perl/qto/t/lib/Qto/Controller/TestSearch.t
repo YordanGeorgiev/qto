@@ -8,6 +8,7 @@ use Test::More;
 use Test::Mojo::WithRoles qw/Phantom/;
 
 die_on_fail;
+   $ENV{'QTO_ONGOING_TEST'} = 1;
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
