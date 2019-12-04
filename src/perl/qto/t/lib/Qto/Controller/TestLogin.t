@@ -8,6 +8,7 @@ use Test::Mojo;
 die_on_fail;
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
+   $ENV{'QTO_ONGOING_TEST'} = 1;
 
    my $tm         = '' ; # the test message for each test 
    my $emsg       = '' ; # the expected msg on the ui
