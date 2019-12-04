@@ -8,7 +8,7 @@ SELECT 'create the "definitions_dictionary" table'
     , name           varchar (100) NOT NULL DEFAULT 'name...'
     , description    varchar (4000) DEFAULT 'description...'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
-    , runtime        varchar (20) NULL DEFAULT 'runtime...'
+    , listing_id     varchar (20) NULL DEFAULT 'runtime...'
     , CONSTRAINT pk_definitions_dictionary_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
