@@ -42,7 +42,7 @@ sub doLoginUser {
    my $epass            = undef ; 
    my $email            = $self->param('email' );
    my $redirect_url     = $self->param('redirect-url' );
-   $redirect_url        = '/' . $db . '/home' unless $redirect_url ;
+   $redirect_url        = '/' . $db . '/search' unless $redirect_url ;
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
    $objModel->set('postgres_db_name' , $db ) ; 

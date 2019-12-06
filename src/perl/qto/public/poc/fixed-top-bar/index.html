@@ -1,0 +1,255 @@
+<html>
+<head>
+   <title>fixed-top-bar</title>
+</head>
+<style>
+
+a {
+  text-decoration: none;
+  color: gray;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+/*   border: 1px solid red; */
+}
+
+.fixed-nav-bar {
+  position: fixed;
+  align-items: flex-end;
+  justify-content: flex-end;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 40px;
+  background-color: white;
+  box-shadow: 0px 0px 10px gray;
+  display: flex;
+  line-height: 50px;
+}
+
+nav .link {
+  flex: 1;
+  max-width: max-content;
+  margin-right: 40px;
+}
+
+.page-container {
+  margin-top: 50px;
+  margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.page-container > .post {
+  flex: 1;
+  max-width: 500px;
+}
+
+.post > .link {
+  text-align: center;
+  font-family: courier;
+  font-size: 2.5em;
+  font-weight: lighter;
+  margin: 50px 0px;
+}
+
+a:hover {
+  color: black;
+}
+
+
+</style>
+<body>
+
+<nav class="fixed-nav-bar">
+   <a class="link" href="#">archive</a>
+   <a class="link" href="#">projects</a>
+</nav>
+
+<pre>
+USERSTORIES AND SCENARIOS
+1. COMMON UI PERSPECTIVE
+1.1.  UI Performance
+1.2.  Form factors
+1.2.1.  Desktop UI
+1.2.2.  Table UI
+1.2.3.  Mobile UI
+1.3.  The Omni-search feature
+1.3.1.  List as grid page quick filtering
+1.3.2.  View page quick filtering
+1.3.3.  Search results page quick filtering
+1.4.  The left menu UI - organising the structure of the project
+1.4.1.  Managing listings from the left menu
+1.4.2.  Managing documents from the left menu
+1.4.3.  Managing folders on the left menu
+1.5.  The list page UI
+1.5.1.  Search in the list page
+1.5.2.  Items listing
+1.5.3.  Items editing
+1.5.3.1.   Items editing inline
+1.5.3.2.   Items editing via a modal dialog
+1.5.4.  Items creation
+1.5.5.  Items deletion
+1.5.6.  Items export
+1.5.7.  Items import
+1.6.  The view page UI
+1.6.1.  View page navigation
+1.6.1.1.   Title numbers link navigation and sharing
+1.6.1.2.   Title numbers link navigation and sharing
+1.6.2.  View doc page print preview
+1.6.2.1.   Disable editing in print preview mode but keep the links
+1.6.2.2.   Disable the right and left menus in print preview mode
+1.6.3.  Search in the view page
+1.6.4.  Hierarchical items management
+1.6.4.1.   Add Item
+1.6.4.2.   Update item
+1.6.4.2.1.   Update item's title
+1.6.4.2.2.   Update item's description
+1.6.4.2.3.   Update item's src_code
+1.6.4.2.4.   Move item in the hierarchy
+1.6.4.3.   Delete item
+1.6.5.  Right TOC menu navigation
+1.6.5.1.   Open and close of right menu
+1.6.5.2.   Search in the right menu
+1.6.5.3.   Links in the right menu
+1.6.6.  Left menu navigation
+1.7.  The global search page / the search UI
+1.7.1.  Global search from the list page
+1.7.2.  Global search from the view page
+1.7.3.  Global search modal dialog ui
+1.7.3.1.   Search-autocomplete on modal search dialog
+1.8.  The notes page / UI
+1.9.  The chat page / UI
+1.10.  Multi-project aware UI
+1.10.1.  Items data transfer between different projects
+1.11.  Items management
+1.11.1.  Items move
+1.12.  Issues import from Google calendar
+1.13.  Access issues data from Google sheet ( deprecating )
+2. TEAM LEADER BIZ PERSPECTIVE
+2.1.  Roles management
+2.2.  Projects management
+2.2.1.  Users management in a project
+2.2.2.  Users access management
+2.2.2.1.   Grant access per project
+2.2.2.2.   Personal data handling minimization
+2.3.  Security Management
+2.4.  Time management
+3. TEAM MEMBER BIZ PERSPECTIVE
+3.1.  Issues management
+3.1.1.  Remove existing issues
+3.1.2.  Search for existing issues
+3.1.3.  Track issues progress
+3.1.4.  Track issues history
+3.2.  Items management
+3.3.  Issues management
+3.3.1.  Update existing Items
+3.3.2.  Remove existing Items
+3.3.3.  Search for existing Items
+3.3.4.  Track Items progress
+3.3.5.  Track Items history
+3.4.  Track issues relations
+3.5.  Items management
+3.6.  Measure success
+3.7.  Monitor success
+3.8.  Track issues relations
+3.9.  Time management
+3.9.1.  time centric planning
+3.9.2.  time centric reporting
+3.10.  Project's persons issue combinations
+4. PROJECT OBSERVER BIZ PERSPECTIVE
+4.1.  Projects observation
+4.2.  Measure success
+4.3.  Issues observation
+4.4.  Monitor success
+5. SYSADMIN PERSPECTIVE
+5.1.  System deployability
+5.2.  Time management
+5.3.  System stability
+5.4.  Generic CRUDS for items
+5.5.  System reliability
+5.6.  Project's persons issue combinations
+5.7.  Ease of use
+6. PROJECT OBSERVER BIZ PERSPECTIVE
+6.1.  Security
+6.2.  Projects observation
+6.2.1.  Who logged in and out when
+6.3.  Issues observation
+6.3.1.  Who changed what and why
+7. ETL AND INTEGRATIONS PERSPECTIVE
+7.1.  Database userstories
+7.1.1.  Database to json files data load
+7.1.2.  Database metadata export
+7.2.  System deployability
+7.3.  System performance
+7.4.  Json files to db data load
+7.5.  System stability
+7.6.  System reliability
+7.7.  Xls-to-postgres-db hierarchical data load
+7.7.1.  error reporting in xls-to-postgres-db hierarchical data load
+7.8.  Ease of use
+7.9.  Security
+7.10.  Project deployment
+7.11.  System verifiability and testability
+8. DEVOPS PERSPECTIVE
+8.1.  Clarity and brevity of the end to end tests
+8.2.  Databases - local to remote and remote to local sync
+8.2.1.  Abort end-to-end tests on single test fail
+8.3.  Database to json files data load
+8.4.  Logging
+8.5.  Json files to db data load
+8.5.1.  Control flow logging
+8.6.  Xls-to-postgres-db hierarchical data load
+8.6.1.  Log entries format configuration
+8.7.  Xls-to-postgres-db hierarchical data load
+8.7.1.  Single entry point for end to end tests
+8.7.2.  Tool run log to human readable description
+8.8.  Application's source code and documentation integrity
+8.9.  System deployment
+8.9.1.  Userstories to test case relations
+8.9.2.  UUID trackability for test files and userstories
+8.10.  System verifiability and testability
+8.10.1.  Components start run message print
+8.10.2.  Tool exit with exit code and exit message
+8.10.3.  Execution path tracing by UUID's
+8.11.  Logging
+8.11.1.  Issues directories naming conventions
+8.11.2.  Issues files naming conventions
+8.11.3.  Issues files history
+8.11.4.  Issues files naming conventions
+8.12.  Application's source code and documentation integrity
+8.12.1.  Issues files naming conventions for the project
+8.13.  Configuration management
+8.13.1.  a single route to copy paste the appConfig in json format
+8.13.2.  Issues files naming conventions for current date
+8.13.3.  Issues files naming conventions for the time frame
+8.14.  Issues transformations
+8.14.1.  Load by txt-to-db action
+8.14.1.1.   Load issues file from file system to db
+8.14.2.  Load issues by db-to-xls action
+8.14.3.  Load issues by xls-to-db action
+8.14.3.1.   Load issues by xls-to-db action for insert or upset
+8.14.3.2.   Load issues by xls-to-db action by truncating or not the loadable table
+8.14.4.  Load issues by db-to-txt
+8.14.4.1.   xls-to-db action load sort by issues prio attribute
+8.14.5.  Load issues file from db to file system
+8.15.  issues file filtering
+8.16.  Single shell call for projects switching
+8.17.  Issues publishing from shell calls
+8.17.1.  Issues publishing in e-mail format
+8.17.2.  Issues handling in google sheet format
+8.17.3.  Issues publishing in google calendar format
+8.18.  Issues transformations
+9. UI DEVELOPER PERSPECTIVE
+9.1.  Easy setup for testability
+9.2.  Code traceability by uuid
+9.3.  Single shell call for projects switching
+9.4.  Issues publishing from shell calls
+9.5.  Metadata handling
+9.6.  Easy setup for testability
+»
+</pre>
+</body>
+</html>

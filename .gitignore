@@ -1,4 +1,7 @@
 # start :: do not remove those like EVER NEVER !!!
+cnf/env/tst.env.json
+cnf/env/prd.env.json
+cnf/env/dev.env.json
 cnf/env/dev.env.json.bak
 cnf/env/tst.env.json.bak
 cnf/env/qas.env.json.bak

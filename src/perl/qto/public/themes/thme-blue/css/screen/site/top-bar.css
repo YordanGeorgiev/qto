@@ -1,0 +1,113 @@
+/* start omnisrch */
+input[type="text"] {
+   font-size: 15px;
+} 
+#inp_srch_box {
+   min-width: 41%;
+   border: 1px solid #dadada;
+	box-shadow: 2px 2px 2px #C0C0C0;
+	-webkit-box-shadow: 2px 2px 2px #C0C0C0;
+	-moz-box-shadow: 2px 2px 2px #C0C0C0;
+   border-radius: 4px;
+   line-height: 18px;
+   margin-left: 10%;
+   margin-top: 5px;
+}
+#inp_srch_box:focus{
+   width: 45%;
+   outline: none;
+   box-shadow: 0 0 0px #9ecaed;
+   padding: 2px 4px; 
+   line-height: 22px; 
+   border: 2px solid #9ecaed;
+	box-shadow: 3px 3px 3px #C0C0C0;
+	-webkit-box-shadow: 3px 3px 3px #C0C0C0;
+	-moz-box-shadow: 3px 3px 3px #C0C0C0;
+}
+#inp_srch_box:hover {
+   width: 45%;
+   outline: none;
+   padding: 2px 4px; 
+   line-height: 22px; 
+   border: 2px solid #9ecaed;
+	box-shadow: 3px 3px 3px #C0C0C0;
+	-webkit-box-shadow: 3px 3px 3px #C0C0C0;
+	-moz-box-shadow: 3px 3px 3px #C0C0C0;
+}
+.cls_img_but {
+	background-color: transparent;
+	border: 2px solid transparent ; 
+	border-radius: 3px;
+   border-top-left-radius: 45%;
+   border-top-right-radius: 45%;
+   border-bottom-left-radius: 45%;
+   border-bottom-right-radius: 45%;
+   margin: 3px;
+}
+.cls_img_but:hover {
+   background-color: #D3D3D3;
+	border: 2px solid #CDCDCD;
+	border-radius: 3px;
+	box-shadow: 1px 1px 10px #C0C0C0;
+	-webkit-box-shadow: 1px 1px 10px #C0C0C0;
+	-moz-box-shadow: 1px 1px 10px #C0C0C0;
+   border-top-left-radius: 45%;
+   border-top-right-radius: 45%;
+   border-bottom-left-radius: 45%;
+   border-bottom-right-radius: 45%;
+   margin: 3px;
+}
+.cls_img_but:focus {
+   background-color: #D3D3D3;
+	border: 2px solid #CDCDCD;
+	border-radius: 3px;
+	box-shadow: 1px 1px 10px #C0C0C0;
+	-webkit-box-shadow: 1px 1px 10px #C0C0C0;
+	-moz-box-shadow: 1px 1px 10px #C0C0C0;
+   border-top-left-radius: 45%;
+   border-top-right-radius: 45%;
+   border-bottom-left-radius: 45%;
+   border-bottom-right-radius: 45%;
+   margin: 3px;
+}
+/* omnisrch */
+*, *:before, *:after {
+  box-sizing: inherit;
+/*   border: 1px solid red; */
+}
+.fixed-nav-bar {
+  position: fixed;
+  align-items: flex-start;
+  justify-content: flex-start;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+  height: 40px;
+  background-color: white;
+  box-shadow: 0px 0px 10px gray;
+  display: flex;
+}
+nav .top-bar-link {
+  flex: 1;
+  max-width: max-content;
+  margin-right: 40px;
+}
+.page-container {
+  margin-top: 50px;
+  margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
+}
+.page-container > .post {
+  flex: 1;
+  max-width: 500px;
+}
+.post > .link {
+  text-align: center;
+  font-family: courier;
+  font-size: 2.5em;
+  font-weight: lighter;
+  margin: 50px 0px;
+}
+

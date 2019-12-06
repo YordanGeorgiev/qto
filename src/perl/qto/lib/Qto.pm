@@ -220,8 +220,8 @@ sub doSetRoutes {
    );
    
    $r->get('/:db/home')->to(
-     controller   => 'Home'
-   , action       => 'doLanding'
+     controller   => 'Search'
+   , action       => 'doSearchItems'
    );
    
    $r->get('/:db/login')->to(

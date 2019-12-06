@@ -8,7 +8,7 @@ SELECT 'create the "items_doc" table'
     , level          integer NULL
     , seq            integer NULL
     , type           varchar (10) NOT NULL DEFAULT 'doc'
-    , url            varchar (50) NOT NULL DEFAULT '#' -- 2048 is the absolute max
+    , url            varchar (2048) NOT NULL DEFAULT '#' -- 2048 is the absolute max
     , title          varchar (50) NOT NULL DEFAULT 'link-title...'
     , name           varchar (100) NOT NULL DEFAULT 'doc-title...'
     , status         varchar (10) NOT NULL DEFAULT '02-todo'

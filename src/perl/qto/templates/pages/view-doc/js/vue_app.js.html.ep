@@ -273,6 +273,7 @@
            'view-doc-items-list': ViewDocItemsList
          , 'snackbar': SnackBar
          , 'context-menu': ContextMenu
+         , 'inp-srch-box': OmniSrchBox
       }
 		, computed: {
          items() {
@@ -329,6 +330,9 @@
          this.$store.dispatch("loadSnackBarInfinity", false);
          this.$store.dispatch("loadRgtMenuShow", false);
       }
+      , mounted: function () {
+         document.getElementById("inp_srch_box").focus();
+      }
       , methods: {
          addItem: function() {
             this.$store.dispatch("addItem", this);
@@ -347,6 +351,10 @@
          , showContextMenu: function (e) {
             this.$store.dispatch("showContextMenu",e);
          }
+         , onSrchEnter: function(e){
+            console.log ( "onSrchEnter called !!!")
+            // window.location.href = encodeURI(uri) // and redirect !!!
+         } 
      }
      , updated: function() {
          this.$nextTick(function() {
@@ -361,10 +369,12 @@
    });
    app.updater = "page_load"
 
-   function openRightMenu() {
-     document.getElementById("rgt_menu").style.width = "27%";
+   function openRightMenu(){
+     var el = document.getElementById("rgt_menu")
+     if ( el.style.width == "27%" ) {
+         el.style.width = "0%"
+     } else {
+         el.style.width = "27%"
+     }
    }
 
-   function closeRightMenu() {
-     document.getElementById("rgt_menu").style.width = "0";
-   }

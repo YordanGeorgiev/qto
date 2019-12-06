@@ -1,8 +1,9 @@
  <template id="app-template">
    <div>
+      <inp-srch-box>
+      </inp-srch-box>
       <context-menu :active="cshowContextMenu"></context-menu>
       %= include 'pages/view-doc/components/snackbar'
-      <div id="div_open_rgt_menu" v-if="cRgtMenuShow" onclick="openRightMenu()"> ☰ </div>
       <view-doc-items-list />
    </div>
   </template>
