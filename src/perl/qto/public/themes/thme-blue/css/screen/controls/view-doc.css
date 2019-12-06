@@ -7,9 +7,9 @@ body {
 }
 #div_open_rgt_menu {
   position: fixed;
-  top: 2%;
-  right: 2%;
-  z-index: 1; 
+  top: 1%;
+  right: 1%;
+  z-index: 100;
   float:right;
   font-size: 25px;
   color: #a9a9a9;
@@ -30,7 +30,7 @@ body {
    transition: margin-right .5s;
 }
 h1, h2, h3, h4, h5, h6 {
-   padding: 10px 0px 10px 0px;
+   padding: 0px 0px 0px 0px;
    float: left;
    clear: left;
    font-size: 16px;
@@ -40,6 +40,12 @@ h1, h2, h3, h4, h5, h6 {
    line-height: 1.5em;
    width: 100% ;
 }
+/*
+.cls-context-menu {
+   padding: 10px 0px 10px 0px;
+}
+*/
+
 textarea.cls_title {
    width: 74% ;
    font-size: 16px;
@@ -122,8 +128,8 @@ textarea.cls_src:hover, textarea.cls_src:focus , textarea.cls_src:hover,  textar
 }
 .permalink {
    display: block;
-   height: 20px; /*same height as header*/
-   margin-top: -20px; /*same height as header*/
+   height: 30px; /*same height as header*/
+   margin-top: -30px; /*same height as header*/
    visibility: hidden;
 }
 .permalink: hover {

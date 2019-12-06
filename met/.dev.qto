@@ -1,5 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 #
+src/perl/qto/public/poc/fixed-top-bar/index.html
+src/perl/qto/public/themes/thme-blue/css/screen/site/top-bar.css
 src/js/
 src/js/node
 src/js/node/js-unit-tests
@@ -21,7 +23,6 @@ cnf/env/prd.env.json
 cnf/env/dev.env.json
 # start ::: left-menu
 src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
-src/perl/qto/lib/Qto/Controller/Home.pm
 src/perl/qto/lib/Qto/App/UI/Controls/WtrLeftMenu.pm
 src/perl/qto/lib/Qto/Controller/View.pm
 src/perl/qto/lib/Qto/Controller/BaseController.pm
@@ -104,7 +105,6 @@ src/docker/Dockerfile.deploy-qto-app-host.0.7.2
 src/bash/qto/funcs/build-docker-image.func.sh
 src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
 # start websockets
-src/perl/qto/templates/pages/home/home.html.ep
 src/perl/qto/public/index.html
 src/perl/qto/templates/controls/robust-websocket/js/robust-websocket.js.html.ep
 src/perl/qto/templates/controls/list-url-lists/js/list-url-lists.js.html.ep
@@ -112,7 +112,7 @@ src/perl/qto/lib/Qto/Controller/Index.pm
 src/perl/qto/public/poc/web-socket/wsclient.js
 src/perl/qto/lib/Qto.pm
 src/perl/qto/lib/Qto/Controller/WsSelect.pm
-src/perl/qto/t/lib/Qto/Controller/TestWSSelect.t.wip
+src/perl/qto/t/lib/Qto/Controller/TestWSSelect.t.todo
 src/perl/qto/public/poc/web-socket/web-socket.html
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
@@ -125,6 +125,7 @@ src/perl/qto/templates/pages/view-doc/view-doc.html.ep
 src/perl/qto/templates/pages/view-doc/js/view-doc-items-list.js.html.ep
 src/perl/qto/templates/pages/view-doc/js/snackbar.js.html.ep
 src/perl/qto/templates/pages/view-doc/js/vue_app.js.html.ep
+src/perl/qto/templates/pages/view-doc/js/inp-srch-box.js.html.ep
 src/perl/qto/templates/pages/view-doc/components/rgx-textarea.js.html.ep
 src/perl/qto/templates/pages/view-doc/components/rgx-input.js.html.ep
 src/perl/qto/templates/pages/view-doc/components/snackbar.html.ep
@@ -171,7 +172,6 @@ src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.t
 src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
 src/perl/qto/templates/layouts/list.html.ep
-src/perl/qto/templates/layouts/home.html.ep
 src/perl/qto/templates/layouts/login.html.ep
 src/perl/qto/templates/js/global/get-url-params.func.js.html.ep
 src/perl/qto/templates/js/global/get-server-data.func.js.html.ep
@@ -220,7 +220,6 @@ src/perl/qto/public/themes/thme-blue/img/controls/toggle-small-expand.png
 src/perl/qto/public/themes/thme-blue/img/controls/toggle-small.png
 src/perl/qto/public/themes/thme-blue/img/controls/lvl-up.png
 src/perl/qto/public/themes/thme-blue/img/controls/tack.png
-src/perl/qto/public/themes/thme-blue/img/controls/home.png
 src/perl/qto/public/themes/thme-blue/img/controls/srch.png
 src/perl/qto/public/themes/thme-blue/img/controls/pg-sizer.png
 src/perl/qto/public/themes/thme-blue/img/controls/github-md.png
@@ -279,7 +278,6 @@ src/perl/qto/public/themes/thme-blue/css/screen/controls/app_list_labels.css
 src/perl/qto/public/themes/thme-blue/css/screen/site/site.css
 src/perl/qto/public/themes/thme-blue/css/screen/site/snackbar.css
 src/perl/qto/public/themes/thme-blue/css/screen/site/view.css
-src/perl/qto/public/themes/thme-blue/css/screen/site/home.css
 src/perl/qto/public/themes/thme-blue/css/print/controls/app_list_labels.css
 #---
 src/perl/qto/lib/Qto/Controller
@@ -314,7 +312,7 @@ src/perl/qto/t/lib/Qto/Controller/TestSelectWith.t
 src/perl/qto/t/lib/Qto/Controller/TestUpdate.t
 src/perl/qto/t/lib/Qto/Controller/TestDelete.t
 src/perl/qto/t/lib/Qto/Controller/TestHiSelect.t
-src/perl/qto/t/lib/Qto/Controller/TestAppLabel.todo
+src/perl/qto/t/lib/Qto/Controller/TestAppLabel.t
 src/perl/qto/t/lib/Qto/Controller/TestListAsOutputType.t
 src/perl/qto/t/lib/Qto/Controller/TestListHide.t
 src/perl/qto/t/lib/Qto/Controller/TestViewDocPage.t
@@ -413,7 +411,6 @@ src/perl/qto/lib/Qto/App/Utils/OO/AutoLoadable.pm
 src/perl/qto/lib/Qto/App/Utils/Logger.pm
 src/perl/qto/lib/Qto/App/Utils/Timer.pm
 # ---
-# ---
 src/bash/qto/funcs/mojo-hypnotoad-start.func.sh
 src/bash/qto/tests/mojo-hypnotoad-start.test.sh
 src/bash/qto/funcs/mojo-hypnotoad-stop.func.sh
@@ -438,9 +435,6 @@ cnf/readme.txt
 # ---
 src/bash/qto/tests/increase-date.test.sh
 src/bash/qto/funcs/increase-date.func.sh
-src/bash/qto/helps/increase-date.help.sh
-doc/txt/qto/tests/increase-date.test.txt
-doc/txt/qto/funcs/increase-date.func.txt
 # ---
 # the postgres DDL scripts
 src/sql/pgsql
@@ -657,9 +651,6 @@ src/bash/qto/tests/pckg/gmail-package.test.sh
 cnf
 cnf/hosts
 cnf/hosts/host-name
-cnf/hosts/host-name/home
-cnf/hosts/host-name/home/ysg
-cnf/hosts/host-name/home/ysg/.muttrc
 LICENSE
 lib/readme.txt
 lib/bash/funcs/
@@ -836,7 +827,6 @@ src/perl/qto/lib/auto/Qto/Controller/View/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WebSocketPoc/autosplit.ix
 src/perl/qto/lib/auto/SetGetableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HiCreate/autosplit.ix
-src/perl/qto/lib/auto/Qto/Controller/Home/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Index/
 src/perl/qto/lib/auto/Qto/Controller/Index/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Truncate/autosplit.ix
@@ -848,3 +838,7 @@ cnf/git/hooks/pre-push
 src/sql/pgsql/scripts/bash/copy-tables.sh
 lib/bash/funcs/find-me.sh
 cnf/bash/.bash_opts.host-name
+dat/src/perl/qto/public/themes/thme-blue/img/controls/home.png
+dat/src/perl/qto/lib/Qto/Controller/Home.pm
+dat/src/perl/qto/templates/pages/home/home.html.ep
+dat/src/perl/qto/public/themes/thme-blue/css/screen/site/home.css

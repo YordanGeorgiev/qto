@@ -44,9 +44,6 @@
          <p style="padding-bottom: 50%"></p>
       </div>
       <div tabindex="3" id="rgt_menu" class="rgt_side_nav">
-        <div id="div_close_btn_top">
-         <a tabindex="3" href="javascript:void(0)" id="close_btn_top" onclick="closeRightMenu()">&times;</a>
-        </div>
          <div id="rgt_toc">
             <div v-for="item in items">
                <div :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event,item.id+'-lvl-'+item.level+'-seq-'+item.seq)">
@@ -60,7 +57,7 @@
                </div>
             </div>
          </div>
-       <a href="javascript:void(0)" id="close_btn_bottom" onclick="closeRightMenu()"> &raquo;</a>
+       <a href="javascript:void(0)" id="close_btn_bottom" onclick="openRightMenu()"> &raquo;</a>
        <p style="padding-bottom: 10%"></p>
       </div>
    </div>

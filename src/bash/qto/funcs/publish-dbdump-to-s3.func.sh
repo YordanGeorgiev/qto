@@ -25,8 +25,10 @@ EOF_CREDENTIALS
 EOF_CONFIG
 
    aws configure list
-   aws s3 cp $dump_file s3://$bucket/"$ENV_TYPE"'_'"$RUN_UNIT"'.latest.insrts.dmp.sql' \
+   set -x
+   aws s3 cp "$dump_file" s3://$bucket/"$ENV_TYPE"'_'"$RUN_UNIT"'.latest.insrts.dmp.sql' \
       --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+   set +x
 
    cp -v ~/.aws/config.bak ~/.aws/config
    cp -v ~/.aws/credentials.bak ~/.aws/credentials

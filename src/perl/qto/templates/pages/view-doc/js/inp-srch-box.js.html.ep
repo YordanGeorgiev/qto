@@ -1,0 +1,48 @@
+const OmniSrchBox = Vue.component('omni-srch-box', {
+	template: `
+   <div>
+      <nav class="fixed-nav-bar">
+         <input id="inp_srch_box" tabindex="1" type="text" @keyup.enter="onOmniSrchEnter">
+         <button id="but_srch" class="cls_img_but" tabindex="1" type="submit" v-on:click="onOmniSrchEnter">
+            <sub><img src="../../themes/thme-blue/img/controls/srch.png" /></sub>
+         </button>
+      </nav>
+   </div>
+`
+	, props: {
+	   icon: ''
+	}
+	, computed: {
+   }
+	, methods: {
+      onOmniSrchEnter: function (e) {
+			var gs = e.srcElement.value
+			var uri = window.location.toString()
+			const url = document.createElement('a')
+			url.setAttribute('href', window.location.toString())
+			var db = uri.split("/")[3]
+			uri = ( uri.indexOf('?') == -1 ) ? uri + '?' : uri
+			uri = uri.replace(/([&]{0,1}pg-num=([0-9]+))+/gi , "") 
+			uri = uri + '&pg-num=1'
+			uri = uri.replace(/([&]{0,1}pg-size=([0-9]+))+/gi , "") 
+			uri = uri + '&pg-size=7'
+			uri = url.protocol + "//" + url.hostname + ':' + url.port + '/' 
+			uri = uri + db + '/search' + url.search
+			uri = ( uri.indexOf('?') == -1 ) ? uri + '?' : uri
+			uri = uri.replace(/([&]{0,1}pick=([a-zA-Z\,0-9_]+))+/gi , "") 
+			uri = uri.replace(/([&]{0,1}for=([a-zA-Z0-9_%\-]+))+/gi , "" ) 
+			uri = uri.replace(/([&]{0,1}with=([a-zA-Z_%\-0-9]+))+/gi , "") 
+			uri = uri.replace(/([&]{0,1}like-by=([a-zA-Z_0-9%]+))+/gi , "") 
+			uri = uri.replace(/([&]{0,1}like-val=([a-zA-Z_0-9%]+))+/gi , "") 
+			uri = uri.replace(/([&]{0,1}pg-num=([0-9]+))+/gi , "") 
+			uri = uri.replace(/([&]{0,1}pg-size=([0-9]+))+/gi , "") 
+			uri = uri.replace(/([&]{0,1}open=([a-zA-Z0-9_%\-]+))+/gi , "" ) 
+			uri = uri.replace(/([&]{0,1}oa=([a-zA-Z_0-9%]+))+/gi , "") 
+			uri = uri.replace(/([&]{0,1}od=([a-zA-Z_0-9%]+))+/gi , "") 
+			uri = uri + '&for=' + gs
+         uri = ( uri.endsWith('?') ) ? uri.slice(0, -1) : uri
+         uri = ( uri.includes('&od=relevancy') ) ? uri + '&od=relevancy' : uri 
+         window.location.href = encodeURI(uri) // and redirect !!!
+      }
+	}
+});
