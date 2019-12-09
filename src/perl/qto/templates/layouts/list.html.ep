@@ -9,9 +9,12 @@
   <meta http-equiv="Expires" content="0" />
   <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/site.css?v=<%= $ProductVersion =%>" />
   <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/controls/left-menu.css?v=<%= $ProductVersion =%>" />
+  <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/top-bar.css?v=<%= $ProductVersion =%>" />
   <%= content 'cnt_header_css' %>
 </head>
 <body>
+   <nav class="fixed-nav-bar">
+   </nav>
    %= include 'controls/left-menu/left-menu'
 	<div id="div_msg"> <%== $msg %></div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>

@@ -13,7 +13,7 @@
 
 
 % content_for cnt_body_controls  => begin
-   <div id="div_open_rgt_menu" v-if="cRgtMenuShow" onclick="openRightMenu()"> ☰ </div>
+   <div id="div_open_rgt_menu" v-if="cRgtMenuShow" class="no-print" onclick="openRightMenu()"> ☰ </div>
    <div id="div_central_panel">
       <div class="container">
       </div>
@@ -38,7 +38,6 @@
    %= include 'pages/view-doc/js/right-click-menu.js'
    %= include 'pages/view-doc/components/rgx-textarea.js'
    %= include 'pages/view-doc/components/rgx-input.js'
-   %= include 'pages/view-doc/components/inp-srch-box.js'
    %= include 'pages/view-doc/js/inp-srch-box.js'
    %= include 'pages/view-doc/js/view-doc-items-list.js'
    %= include 'pages/view-doc/js/vue_app.js'

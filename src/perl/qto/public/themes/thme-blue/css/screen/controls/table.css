@@ -1,3 +1,4 @@
+
 #div_grid_tmpl {
 	padding: 1% 1% 1% 1% ; 
 	max-width: 100%;
@@ -5,14 +6,14 @@
    display: block;
 }
 
-table#grid {
+#gruds-grid {
 	table-layout: fixed; 
    max-width: 96% ; 
 	border: 4px solid #F0F8FF ; 
 	border-radius: 9px;
 	background-color: #fff;
 	border-collapse:separate;
-   margin-top: 1%;
+   margin-top: 10%;
 }
 
 #grid {
@@ -20,11 +21,14 @@ table#grid {
    max-width: 98% ; 
 }
 th {
+	resize: both; 
+	max-width: 500px; /* why percentages do not work here !!! */
+	padding: 5px 5px;
+	white-space:pre-wrap;
 	background-color: #339aff ; 
 	color: rgba(255,255,255,0.66);
 	cursor: pointer;
 	user-select: none;
-   font-size: 90% ;
 }
 .arrow {
 	display: inline-block;
@@ -75,7 +79,7 @@ tr:selected{
 	overflow: auto;
 }
 
-th, td {
+td {
 	resize: both; 
 	max-width: 500px; /* why percentages do not work here !!! */
 	padding: 10px 10px;

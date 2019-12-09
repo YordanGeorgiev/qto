@@ -1,7 +1,7 @@
 const OmniSrchBox = Vue.component('omni-srch-box', {
 	template: `
    <div>
-      <nav class="fixed-nav-bar">
+      <nav class="fixed-nav-bar no-print">
          <input id="inp_srch_box" tabindex="1" type="text" @keyup.enter="onOmniSrchEnter">
          <button id="but_srch" class="cls_img_but" tabindex="1" type="submit" v-on:click="onOmniSrchEnter">
             <sub><img src="../../themes/thme-blue/img/controls/srch.png" /></sub>

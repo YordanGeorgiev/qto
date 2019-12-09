@@ -78,6 +78,7 @@ do_set_vars(){
    # ALWAYS !!! bootstrap a dev instance, for tst and prd use -a to-env=tst , -a to-env=prd 
    perl -pi -e 's|ENV_TYPE=tst|ENV_TYPE=dev|g' "$DEPLOY_DIR/.env"
    perl -pi -e 's|ENV_TYPE=prd|ENV_TYPE=dev|g' "$DEPLOY_DIR/.env"
+   source "$DEPLOY_DIR/.env"
    PRODUCT_INSTANCE_DIR="$product_dir/$APP_TO_DEPLOY.$VERSION.$ENV_TYPE.$app_owner"
    bash_opts_file=~/.bash_opts.$(hostname -s)
    host_name="$(hostname -s)"
