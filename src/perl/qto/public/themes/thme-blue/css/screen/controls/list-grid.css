@@ -1,8 +1,8 @@
 body {
    padding: 1% 1% 40% 1%;
 }
-#dev_central_panel{
-   padding: 0;
+#div_central_panel{
+   margin-top: 1%;
 }
 #btnNew{
    position: fixed;
@@ -159,10 +159,11 @@ table#grid tbody tr td:nth-child(2){
 button.gridOpenBtn {
    background: #ABF ;
    color: white;
-   padding: 5px;
+   padding: 10 0 10 0px;
+   margin: 3px;
    text-align: right;
    float:right;
-   width: 35px;
+   width: auto;
    border: 2px solid #ABF;
    border-left-color: #ABF;
    border-left-style: none;

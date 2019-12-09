@@ -125,6 +125,7 @@ src/perl/qto/templates/pages/view-doc/view-doc.html.ep
 src/perl/qto/templates/pages/view-doc/js/view-doc-items-list.js.html.ep
 src/perl/qto/templates/pages/view-doc/js/snackbar.js.html.ep
 src/perl/qto/templates/pages/view-doc/js/vue_app.js.html.ep
+src/perl/qto/templates/pages/view-doc/js/inp-srch-box.js.html.ep
 src/perl/qto/templates/pages/view-doc/components/rgx-textarea.js.html.ep
 src/perl/qto/templates/pages/view-doc/components/rgx-input.js.html.ep
 src/perl/qto/templates/pages/view-doc/components/snackbar.html.ep
