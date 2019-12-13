@@ -1,6 +1,6 @@
 <template id="view-doc-items-list">
    <div id="content">
-      <div v-if="_self.$el.baseURI.indexOf('as=print-doc') !== -1" class="cls_print_toc" v-for="item in items">
+      <div v-if="_self.$el.baseURI.indexOf('as=print-doc') !== -1" class="cls_print_toc" v-for="item in filteredItems">
          <div v-if="_self.$el.baseURI.indexOf('as=print-doc') !== -1" tabindex="2" :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event,item.id)">
             <a :id="'tlp_<%= $item =%>-' + item.id"  
                :href="'#<%= $item =%>-' + item.id" class="scroll"> {{item.logical_order}} {{item.name}} </a>
@@ -8,7 +8,7 @@
       </div>
          <div class="cls_page_breaker"></div>
       <div id="lft_body">
-         <div v-for="item in items" @click="hideContextMenu()">
+         <div v-for="item in filteredItems" @click="hideContextMenu()">
             <h3 :ref="'<%= $item =%>-' + item.id" :id="'h<%= $item =%>-' + item.id" class="title" 
                @contextmenu = "showContextMenu($event,item.id+'-lvl-'+item.level+'-seq-'+item.seq)">
                <a :id="'<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" class="permalink scroll"
@@ -45,7 +45,7 @@
       </div>
       <div tabindex="3" id="rgt_menu" class="rgt_side_nav">
          <div id="rgt_toc">
-            <div v-for="item in items">
+            <div v-for="item in filteredItems">
                <div :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event,item.id+'-lvl-'+item.level+'-seq-'+item.seq)">
                   <a :id="'rml_<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" 
                      class="permalink scroll" :href="'#<%= $item =%>-' + item.id">

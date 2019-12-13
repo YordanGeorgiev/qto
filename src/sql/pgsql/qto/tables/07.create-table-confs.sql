@@ -1,15 +1,15 @@
- ---- DROP TABLE IF EXISTS confs ; 
+-- DROP TABLE IF EXISTS confs ; 
 
 SELECT 'create the "confs" table'
 ; 
    CREATE TABLE confs (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , seq            integer NULL
     , prio           integer NULL
-    , category       varchar (30) NOT NULL DEFAULT 'category ...'
+    , env            varchar (50)
+    , sys            varchar (50)
     , name           varchar (200) NOT NULL DEFAULT 'name ...'
-    , value          varchar (200)
+    , value          varchar (400)
     , description    varchar (400)
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_confs_guid PRIMARY KEY (guid)

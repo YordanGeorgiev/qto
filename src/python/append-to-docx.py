@@ -45,11 +45,11 @@ def getTableData(url):
     try:
         with urllib.request.urlopen(url) as url:
             data = json.loads(url.read().decode())
-            # debug print(data)
+            print(data['dat'])
+            print(data['met'])
+            return data['dat'], data['met']
     except (Exception) as error:
         print(error)
-    finally:
-        return data['dat'], data['met']
 
 
 def buildDoc(table,tableData):
@@ -73,8 +73,10 @@ def buildDoc(table,tableData):
             src.style = doc.styles['Body Text 3']
         if ( row['formats'] ):
             if (not( str(row['formats']).strip() == "")):
+                print ("formats: " + row['formats'])
                 formats = json.loads(row['formats'])
                 listing_url = formats['listing-url']
+                print ("listing_url: " + listing_url)
                 listingData , met = getTableData(listing_url)
                 #for style in doc.styles:
                     #print ( style )
@@ -92,15 +94,27 @@ def buildDoc(table,tableData):
                         if ( not ( key == 'id' or key == 'guid' )): 
                             if ( ikey == 0 ):
                                 cells = doc_table.add_row().cells
+                                thkey = 0
+                                for th in sorted (met.keys()): # this is the title row
+                                    mthrow = met[str(th)]
+                                    ky = mthrow['attribute_name']
+                                    print ( "lrow.keys:")
+                                    print ( "ky: " + str(ky))
+                                    print(lrow.keys())
+                                    if ( (not ( ky in lrow.keys() )) or ky == 'id' or ky == 'guid'):
+                                        continue
+                                    else:
+                                        cells[thkey].text = str(ky)
+                                        thkey=thkey+1
                             #print ( str(lrow[key]) ) # the value cells[0].text = lrow[key]
                             cells[ikey].text = str(lrow[key])
                             ikey = ikey + 1
-        if row['img_http_path']:
+        if row['img_relative_path']:
             ip = doc.add_paragraph()
             r = ip.add_run()
             r.add_text(row['img_name'])
             r.add_text("\n")
-            r.add_picture(row['img_http_path'], width = Cm(15.0))
+            r.add_picture(row['img_relative_path'], width = Cm(15.0))
 
     doc.save(full_path)
     return 0

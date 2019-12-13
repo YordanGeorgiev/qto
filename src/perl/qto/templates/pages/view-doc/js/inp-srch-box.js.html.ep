@@ -2,7 +2,7 @@ const OmniSrchBox = Vue.component('omni-srch-box', {
 	template: `
    <div>
       <nav class="fixed-nav-bar no-print">
-         <input id="inp_srch_box" tabindex="1" type="text" @keyup.enter="onOmniSrchEnter">
+         <input id="inp_srch_box" tabindex="1" type="text" @keyup.enter="onOmniSrchEnter" @input="onChange">
          <button id="but_srch" class="cls_img_but" tabindex="1" type="submit" v-on:click="onOmniSrchEnter">
             <sub><img src="../../themes/thme-blue/img/controls/srch.png" /></sub>
          </button>
@@ -15,7 +15,10 @@ const OmniSrchBox = Vue.component('omni-srch-box', {
 	, computed: {
    }
 	, methods: {
-      onOmniSrchEnter: function (e) {
+      onChange: function (e) {
+         this.$store.dispatch("loadFilteredItems", e.srcElement.value);
+      }
+      , onOmniSrchEnter: function (e) {
 			var gs = e.srcElement.value
 			var uri = window.location.toString()
 			const url = document.createElement('a')

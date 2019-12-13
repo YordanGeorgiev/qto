@@ -1,5 +1,6 @@
    var state = {
       items: []
+      , filteredItems: []
       , showSnackBar: false
       , showContextMenu: false
       , msg : ''
@@ -9,6 +10,7 @@
 
    var getters = {
       getItems: state => state.items
+      , getFilteredItems: state => state.filteredItems
       , getSnackBarShow: state => state.showSnackBar
       , getContextMenu: state => state.showContextMenu
       , getSnackBarMsg: state => state.msg
@@ -27,6 +29,9 @@
            }
            , SET_ITEMS: (state, items) => {
                state.items = items
+           }
+           , SET_FILTERED_ITEMS: (state, fitems) => {
+               state.filteredItems = fitems
            }
            , SET_SNACKBAR_SHOW: (state, showSnackBar) => {
                state.showSnackBar = showSnackBar
@@ -69,8 +74,6 @@
                } else {
                   console.error ( "unknown col for dbid: " + String(dbid ) )
                }
-               // qto-190602195122 this should not be needed !!! vuex model not used properly ?!
-               document.getElementById(payload.eid).value = payload.newVal
                citems[index] = item
                state.items = citems
            }
@@ -88,14 +91,16 @@
                if ( response.status === 204 ) {
                   var warningMsg = response.statusText
                   console.warn ( warningMsg ) 
-                  commit('SET_ITEMS', [] )
                   commit('SET_SNACKBAR_MSG', warningMsg ) 
                   commit('SET_SNACKBAR_SHOW', true)
+                  commit('SET_ITEMS', [] )
+                  commit('SET_FILTERED_ITEMS', [] )
                } else if ( response.status === 404 || response.status === 400) {
                   var errorMsg = response.statusText + ": " + response.data.msg
                   commit('SET_SNACKBAR_MSG', errorMsg ) 
                   commit('SET_SNACKBAR_SHOW', true )
                   commit('SET_ITEMS', [] )
+                  commit('SET_FILTERED_ITEMS', [] )
                   console.error( errorMsg ) 
                } else {
                   var data = response.data
@@ -106,12 +111,12 @@
                   	commit('SET_SNACKBAR_SHOW', true)
                   	commit('SET_SNACKBAR_MSG', errorMsg ) 
                   } else {
-                  	items = data.dat  //alles ok
+                  	var items = data.dat  //alles ok
                      var isNotAPrintDoc = ( document.location.search.indexOf('as=print-doc')<=0 ? true : false )
+                  	commit('SET_SNACKBAR_SHOW', false)
                   	commit('SET_RGT_MENU_SHOW', isNotAPrintDoc )
                   	commit('SET_ITEMS', items)
-                  	commit('SET_SNACKBAR_SHOW', false)
-                     return data
+                  	commit('SET_FILTERED_ITEMS', items)
 						}
 					}
 				})
@@ -120,9 +125,32 @@
                commit('SET_SNACKBAR_MSG', error) 
                commit('SET_SNACKBAR_SHOW', true )
                commit('SET_ITEMS', [] )
+               commit('SET_FILTERED_ITEMS', [] )
                console.error( error.toString) 
             }) 
 
+         }
+         , loadFilteredItems: (context,search) => {
+            if ( typeof (search ) == "undefined"){
+               context.commit('SET_FILTERED_ITEMS', state.items)
+               return
+            }
+            if ( typeof(state.items) !== "undefined") {
+               var fltrItems = state.items.filter(function (el) {
+                  if ( typeof(el.name) !== "undefined" && el.name != null && el.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 ){
+                     return true
+                  } else if ( typeof(el.description) !== "undefined" && el.description != null) {
+                     if ( el.description.toLowerCase().indexOf(search.toLowerCase()) !== -1){
+                        return true
+                     }
+                  } else {
+                     return false
+                  }
+               });
+               context.commit('SET_FILTERED_ITEMS', fltrItems)
+            } else {
+               context.commit('SET_FILTERED_ITEMS', state.items)
+            }
          }
          , loadSnackBar: (context, showSnackBar) => {
             context.commit('SET_SNACKBAR_SHOW', showSnackBar)
@@ -139,7 +167,7 @@
          , loadRgtMenuShow: (context, showRgtMenu) => {
             context.commit("SET_RGT_MENU_SHOW", showRgtMenu)
          }
-         , hideSnackBar ({ commit }) {
+         , hideSnackBar (context) {
             context.commit('SET_SNACKBAR_SHOW', false )
          }
          , showContextMenu (context,payload) {
@@ -170,7 +198,8 @@
                      var index = state.items.findIndex(item => String(item.id) === payload.oid )
                      if ( index !== -1 ) { seq = state.items[index].seq -1 }
                      context.commit("DELETE_ITEM", payload)
-                     context.dispatch('loadItems')
+                     actions.loadItems(context)
+                     // todo:remove context.dispatch('loadItems')
                      var elToScrollTo = document.getElementById("title-" + seq)
                      elToScrollTo.scrollIntoView(true);
                   } else {
@@ -199,7 +228,8 @@
                })
                .then(response => { 
                   if ( typeof response.status != "undefined" && response.status === 200 ) {
-                     context.dispatch('loadItems')
+                     //todo remove when save context.dispatch('loadItems')
+                     actions.loadItems(context)
                   } else {
                      if ( typeof error.response.data.msg != "undefined" ) { 
                         context.commit('SET_SNACKBAR_SHOW', true)
@@ -255,7 +285,8 @@
                context.commit("UPDATE_ITEM", payload)
             }) 
          }
-   } //eof actions
+   } 
+   //eof actions
 
     var store = new Vuex.Store({
            state: state,
@@ -276,10 +307,7 @@
          , 'inp-srch-box': OmniSrchBox
       }
 		, computed: {
-         items() {
-                return this.$store.getters.getItems;
-         }
-         , cshowSnackBar: {
+         cshowSnackBar: {
 				get: function() {
 					return this.$store.getters.getSnackBarShow ;
 				}
@@ -322,6 +350,7 @@
          position: 'top-center'
          , ctimeout: 3900
          , updater: ''
+         , search: ''
       })
       , created: function () {
          this.$store.dispatch('loadItems')
@@ -351,10 +380,6 @@
          , showContextMenu: function (e) {
             this.$store.dispatch("showContextMenu",e);
          }
-         , onSrchEnter: function(e){
-            console.log ( "onSrchEnter called !!!")
-            // window.location.href = encodeURI(uri) // and redirect !!!
-         } 
      }
      , updated: function() {
          this.$nextTick(function() {
