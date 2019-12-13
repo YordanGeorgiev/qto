@@ -3,6 +3,9 @@
          items() {
             return this.$store.getters.getItems;
          }
+         , filteredItems() {
+            return this.$store.getters.getFilteredItems;
+         }
       }
       , components: {
            'rgx-textarea': RgxTextArea
