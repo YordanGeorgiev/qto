@@ -484,6 +484,7 @@ src/sql/pgsql/qto/tables/35.create-table-release_issues.sql
 src/sql/pgsql/qto/tables/36.create-table-security_checklist_doc.sql
 src/sql/pgsql/qto/tables/37.definitions_dictionary.sql
 src/sql/pgsql/qto/tables/50.create-table-tst_paging.sql
+src/sql/pgsql/qto/tables/66.create-table-logs.sql
 src/sql/pgsql/qto/tables/88.create-table-test_hi_delete_table_doc.sql
 src/sql/pgsql/qto/tables/89.create-table-test_xls_to_db_table.sql
 src/sql/pgsql/qto/tables/90.create-table-test_truncate_table.sql
