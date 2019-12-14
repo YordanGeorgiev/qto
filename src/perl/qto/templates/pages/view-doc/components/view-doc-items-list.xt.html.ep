@@ -1,7 +1,7 @@
 <template id="view-doc-items-list">
    <div id="content">
       <div v-if="_self.$el.baseURI.indexOf('as=print-doc') !== -1" class="cls_print_toc" v-for="item in filteredItems">
-         <div v-if="_self.$el.baseURI.indexOf('as=print-doc') !== -1" tabindex="2" :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event,item.id)">
+         <div v-if="_self.$el.baseURI.indexOf('as=print-doc') !== -1" tabindex="2" :id="'tll_<%= $item =%>-' + item.id">
             <a :id="'tlp_<%= $item =%>-' + item.id"  
                :href="'#<%= $item =%>-' + item.id" class="scroll"> {{item.logical_order}} {{item.name}} </a>
          </div>
@@ -9,13 +9,13 @@
          <div class="cls_page_breaker"></div>
       <div id="lft_body">
          <div v-for="item in filteredItems" @click="hideContextMenu()">
-            <h3 :ref="'<%= $item =%>-' + item.id" :id="'h<%= $item =%>-' + item.id" class="title" 
-               @contextmenu = "showContextMenu($event,item.id+'-lvl-'+item.level+'-seq-'+item.seq)">
+            <h3 :ref="'<%= $item =%>-' + item.id" :id="'h<%= $item =%>-' + item.id" class="title">
                <a :id="'<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" class="permalink scroll"
                   :href="'#<%= $item =%>-' + item.id">#</a>
                <a :id="'title-'+ item.seq" :href="'#<%= $item =%>-' + item.id" 
                   :title="'level:' + item.level + ' :: seq: ' + item.seq "
-                  class="cls-context-menu-link">{{item.logical_order}}</a>
+                  class="cls-context-menu-link" @contextmenu = "showContextMenu($event,item.id+'-lvl-'+item.level+'-seq-'+item.seq)">
+                  {{item.logical_order}}</a>
                <rgx-input :id="'inp_name-' + item.id + '-lvl-' + item.level + '-seq-' + item.seq" 
                   :ref="'inp_name-' + item.id + '-lvl-' + item.level + '-seq-' + item.seq"
                   :cnt="item.name" class="cls_title">{{item.name}}</rgx-input>

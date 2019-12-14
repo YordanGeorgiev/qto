@@ -96,20 +96,20 @@
                   commit('SET_ITEMS', [] )
                   commit('SET_FILTERED_ITEMS', [] )
                } else if ( response.status === 404 || response.status === 400) {
-                  var errorMsg = response.statusText + ": " + response.data.msg
-                  commit('SET_SNACKBAR_MSG', errorMsg ) 
+                  var errMsg = response.statusText + ": " + response.data.msg
+                  commit('SET_SNACKBAR_MSG', errMsg ) 
                   commit('SET_SNACKBAR_SHOW', true )
                   commit('SET_ITEMS', [] )
                   commit('SET_FILTERED_ITEMS', [] )
-                  console.error( errorMsg ) 
+                  console.error( errMsg ) 
                } else {
                   var data = response.data
                   var dataType = (typeof data)
                   if ( dataType === 'undefined' ) {
-                     var errorMsg = 'unexpected error occurred while fetching data !!!'
-                     console.error( errorMsg ) 
+                     var errMsg = 'unexpected err occurred while fetching data !!!'
+                     console.error( errMsg ) 
                   	commit('SET_SNACKBAR_SHOW', true)
-                  	commit('SET_SNACKBAR_MSG', errorMsg ) 
+                  	commit('SET_SNACKBAR_MSG', errMsg ) 
                   } else {
                   	var items = data.dat  //alles ok
                      var isNotAPrintDoc = ( document.location.search.indexOf('as=print-doc')<=0 ? true : false )
@@ -120,13 +120,13 @@
 						}
 					}
 				})
-            .catch(function(error) {
-               console.error ( error ) 
-               commit('SET_SNACKBAR_MSG', error) 
+            .catch(function(err) {
+               console.error ( err ) 
+               commit('SET_SNACKBAR_MSG', err) 
                commit('SET_SNACKBAR_SHOW', true )
                commit('SET_ITEMS', [] )
                commit('SET_FILTERED_ITEMS', [] )
-               console.error( error.toString) 
+               console.error( err.toString) 
             }) 
 
          }
@@ -199,23 +199,23 @@
                      if ( index !== -1 ) { seq = state.items[index].seq -1 }
                      context.commit("DELETE_ITEM", payload)
                      actions.loadItems(context)
-                     // todo:remove context.dispatch('loadItems')
                      var elToScrollTo = document.getElementById("title-" + seq)
                      elToScrollTo.scrollIntoView(true);
                   } else {
-                     if ( typeof error.response.data.msg != "undefined" ) { 
+                     if ( typeof err.response.data.msg != "undefined" ) { 
                         context.commit('SET_SNACKBAR_SHOW', true)
-                        context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
+                        context.commit('SET_SNACKBAR_MSG', err.response.data.msg.split("::")[0]) 
                      }
-                     console.error ( error.response )
+                     console.error ( err.response )
+                     console.error ( err.stack )
                   }
                })
-               .catch(error => {
-                  console.error ( error ) 
-                  if ( typeof error.response.data.msg != "undefined" ) { 
-                     console.error ( error.response.data.msg )
+               .catch(err => {
+                  console.error ( err ) 
+                  if ( typeof err.response.data.msg != "undefined" ) { 
+                     console.error ( err.response.data.msg )
                      context.commit('SET_SNACKBAR_SHOW', true)
-                     context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
+                     context.commit('SET_SNACKBAR_MSG', err.response.data.msg.split("::")[0]) 
                   }
                }) 
          }
@@ -228,23 +228,26 @@
                })
                .then(response => { 
                   if ( typeof response.status != "undefined" && response.status === 200 ) {
-                     //todo remove when save context.dispatch('loadItems')
                      actions.loadItems(context)
                   } else {
-                     if ( typeof error.response.data.msg != "undefined" ) { 
-                        context.commit('SET_SNACKBAR_SHOW', true)
-                        context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
+                     console.error(err)
+                     if ( typeof err.response.data.msg != "undefined" ) { 
+                        context.commit('SET_SNACKBAR_MSG', err.response.data.msg.split("::")[0]) 
+                     } else {
+                        context.commit('SET_SNACKBAR_MSG', err) 
                      }
-                     console.error ( error.response )
+                     context.commit('SET_SNACKBAR_SHOW', true)
                   }
                })
-               .catch(error => {
-                  console.error ( error ) 
-                  if ( typeof error.response.data.msg != "undefined" ) { 
-                     console.error ( error.response.data.msg )
-                     context.commit('SET_SNACKBAR_SHOW', true)
-                     context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
+               .catch(err => {
+                  console.error(err) 
+                  if ( typeof err.response.data.msg != "undefined" ) { 
+                     console.error(err.response.data.msg )
+                     context.commit('SET_SNACKBAR_MSG', err.response.data.msg.split("::")[0]) 
+                  } else {
+                     context.commit('SET_SNACKBAR_MSG', err) 
                   }
+                  context.commit('SET_SNACKBAR_SHOW', true)
                }) 
          }
          , updateItem: (context,payload) => {
@@ -265,24 +268,24 @@
                   context.commit("UPDATE_ITEM", payload)
                   actions.loadItems(context)
                } else {
-                  if ( typeof error.response.data.msg != "undefined" ) { 
+                  if ( typeof err.response.data.msg != "undefined" ) { 
                      context.commit('SET_SNACKBAR_SHOW', true)
-                     context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
+                     context.commit('SET_SNACKBAR_MSG', err.response.data.msg.split("::")[0]) 
                   }
-                  console.error ( error.response )
+                  console.error ( err.response )
                   payload.newVal = payload.oldData
                   context.commit("UPDATE_ITEM", payload)
                }
             })
-            .catch(error => {
-               console.error ( error ) 
-               if ( typeof error.response.data.msg != "undefined" ) { 
-                  console.error ( error.response.data.msg )
-                  context.commit('SET_SNACKBAR_SHOW', true)
-                  context.commit('SET_SNACKBAR_MSG', error.response.data.msg.split("::")[0]) 
+            .catch(err => {
+               console.error(err) 
+               if ( typeof err.response.data.msg != "undefined" ) { 
+                  console.error(err.response.data.msg )
+                  context.commit('SET_SNACKBAR_MSG', err.response.data.msg.split("::")[0]) 
+               } else {
+                  context.commit('SET_SNACKBAR_MSG', err) 
                }
-               payload.newVal = payload.oldData
-               context.commit("UPDATE_ITEM", payload)
+               context.commit('SET_SNACKBAR_SHOW', true)
             }) 
          }
    } 

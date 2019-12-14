@@ -299,28 +299,37 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
                UPDATE $table set seq=(seq+1) WHERE seq >= tgtSeq;
 
                CASE
-               WHEN originLvl < tgtLvl THEN 
-                  UPDATE $table set lft=(lft+2) WHERE seq >= tgtSeq ;
-                  UPDATE $table set rgt=(rgt+2) WHERE rgt > originLft;
-                  INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, parentLft+1, parentLft+2);
-               WHEN originLvl = tgtLvl THEN 
-                  UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
-                  UPDATE $table set lft=(lft+2) WHERE seq >= tgtSeq ;
-                  INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, originRgt+1, originRgt+2);
-               WHEN originLvl > tgtLvl THEN 
-                  IF mayBeNxtSeq is NULL THEN 
-                     siblingRgt := (SELECT max(rgt) from $table WHERE 1=1 AND level=tgtLvl and seq <= originSeq );
+                  WHEN originLvl < tgtLvl THEN 
+                     UPDATE $table set lft=(lft+2) WHERE seq >= tgtSeq ;
+                     UPDATE $table set rgt=(rgt+2) WHERE rgt > originLft;
+                     INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, parentLft+1, parentLft+2);
+                  WHEN originLvl = tgtLvl THEN 
                      UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
-                     INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, siblingRgt+1, siblingRgt+2);
-                  ELSE 
-                     siblingRgt := (SELECT max(rgt) from $table WHERE 1=1 AND level=tgtLvl and seq <= originSeq );
-                     UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
-                     INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, siblingRgt+1, siblingRgt+2);
-                     UPDATE $table set lft=(lft+2) WHERE lft >= tgtLvl ;
-                  END IF;
+                     UPDATE $table set lft=(lft+2) WHERE seq >= tgtSeq ;
+                     INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, originRgt+1, originRgt+2);
+                  WHEN originLvl > tgtLvl THEN 
+                     IF mayBeNxtSeq is NULL THEN 
+                        siblingRgt := (SELECT max(rgt) from $table WHERE 1=1 AND level=tgtLvl and seq <= originSeq );
+                        UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
+                        INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, siblingRgt+1, siblingRgt+2);
+                     ELSE 
+                        siblingRgt := (SELECT max(rgt) from $table WHERE 1=1 AND level=tgtLvl and seq <= originSeq );
+                        UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
+                        INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, siblingRgt+1, siblingRgt+2);
+                        UPDATE $table set lft=(lft+2) WHERE lft >= tgtLvl ;
+                     END IF;
+                  ELSE
+                     INSERT INTO logs (id,name, description) values (cast (to_char((current_timestamp + interval '1' second), 
+                        'YYMMDDHH12MISSMSUS') as numeric(25)),'originLvl: ', cast(originLvl as char)) ;
+                     INSERT INTO logs (id,name, description) values (cast (to_char((current_timestamp + interval '2' second), 
+                        'YYMMDDHH12MISSMSUS') as numeric(25)),'tgtLvl: ', cast(tgtLvl as char)) ;
+                     INSERT INTO logs (id,name, description) values (cast (to_char((current_timestamp + interval '3' second), 
+                        'YYMMDDHH12MISSMSUS') as numeric(25)),'MSG: ', 'broken hierachy in table $table') ;
                END CASE;
          " . '
          END ; $$ ';
+         # debug rint "$str_sql"; 
+         
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ;
          use warnings 'exiting' ; 
