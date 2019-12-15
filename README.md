@@ -1,14 +1,27 @@
 #  README
-[[_TOC_]]
+* [1. WHY](#1-why)
+* [2. SO, WHAT IS THIS ?!](#2-so-what-is-this-)
+  * [2.1. WHAT CAN IT DO TO FOR ME AND/OR MY ORGANISATION ?](#21-what-can-it-do-to-for-me-and/or-my-organisation-)
+  * [2.2. ASSUMPTION AND PREREQUISITES](#22-assumption-and-prerequisites)
+  * [2.3. PROPOSED CAPABILITIES](#23-proposed-capabilities)
+* [3. DEMO](#3-demo)
+* [4. DOCUMENTATION](#4-documentation)
+* [5. AUTOMATED DEPLOYMENT LOCALLY AND ON AWS IN 35 MINUTES](#5-automated-deployment-locally-and-on-aws-in-35-minutes)
+* [6. ACKNOWLEDGEMENTS](#6-acknowledgements)
+* [7. LICENSE](#7-license)
+
+
+
 
     
 
 ## 1. WHY
-Why ?! Yet! Another App ?! ... 
+Why ?! Yet !!  Another App ?! ... ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿ 
 
-Software development is prohibitively expensive. In fact any endeavour with group of people aiming towards common goal in any field is expensive, even solely based on persons' time spent. 
-If you have a great idea for a web application, but you want to keep a full vertical control on the stack, avoid the initial costs and efforts of setting up the infrastructure and just focus on the data and business logic of your application, you must read further ...
-If you want to simply manage your (software) endeavour the qto application will provide your organisation with the answers who does/did what, when, how and why in open manner, but ONLY if your organisation has the courage and commitment to do it.  
+Software development is prohibitively expensive. In fact any endeavour with team of people aiming towards common goal in any field is expensive, even solely based on persons' time spent. 
+
+If you want to concentrate to your project, but have a fast, efficient and simple to use tool to manage your projects, you must read further ...
+
 Still here ?! Let's move on !
 
     
@@ -27,19 +40,17 @@ the 7 main entities of the qto app](https://raw.githubusercontent.com/YordanGeor
     
 
 ### 2.1. What can it do to for me and/or my organisation ?
-With qto you could either re-use the existing items for management available from the home page or you could in less than 5 minutes per item define your own - that is create entirely new data-driven application.
+Manage your projects with scale and to the finest granularity of your choice.
 
     
 
 ### 2.2. Assumption and prerequisites
 Your organisation:
-
-- needs a data driven web app with secure access via https
-- has the need to constantly update comparably small ( less than 10k rows) (hierarchy) tables
-- has full trust to the persons in the org for all, but users data related CRUD operations 
-- has the a need to load MANY tables into a postgres db, which might be changing constantly DDL wise
-- the API of having bigint id and uid as PK as well as default vals for nullable cols is acceptable
+- needs to setup quickly teams and projects for tracking issues, tasks, problems, documentation
+- has full trust to the persons per teams for all (except users related data) add, update, delete operations 
 - might have the need to save technical documentation in versioned md format
+- might have the need to constantly update comparably small ( less than 10k rows) (hierarchy) tables
+- needs to keep track vertically of documentation and generate pdf, docx and md files out of it
 
     
 
@@ -69,15 +80,15 @@ Follow simply the instructions in the next section.
 ## 4. DOCUMENTATION
 
 Qto IS about documentation , which are aimed to be as up-to-date to the current release version as possible. Thus you get the following documentation set:
- - ReadMe - the initial landing readme doc for the project
- - UserStories - the collection of user-stories used to describe "what is desired"
- - Requirements - the structured collection of the requirements 
- - SystemGuide - architecture and System description
- - DevOps Guide - a guide for the developers and devops operators
- - Installation Guide - a guide for installation of the application
- - End-User Guide - the guide for the usage of the UI ( mainly ) for the end-users
- - Concepts - the concepts doc 
-Check the doc/md directory where the generated from the db documents residue in md format.
+ - readme_doc-0 - the initial landing readme doc for the project
+ - userstories_doc-0 - the collection of user-stories used to describe "what is desired"
+ - requirements_doc-0 - the structured collection of the requirements 
+ - system_guide_doc-0 - architecture and System description
+ - devops_guide_doc-0 - a guide for the developers and devops operators
+ - installations_doc-0 - a guide for installation of the application
+ - enduser_guide_doc-0 - the guide for the usage of the UI ( mainly ) for the end-users
+ - concepts_doc-0 - the concepts doc 
+Check the doc/md or doc/pdf directories where the generated from the db documents residue in md or pdf format.
 
     
 
@@ -102,6 +113,9 @@ Deep gratitudes and thanks to all those people ! This application aims to contai
 All the trademarks mentioned in the documentation and in the source code belong to their owners. This application uses the Perl Artistic license, check the license.txt file or the following link : https://dev.perl.org/licenses/artistic.html
 
 Should any trademark attribution be missing, mistaken or erroneous, please contact us as soon as possible for rectification.
+
+Usual commercial products licensing conditions usually end-up here, you will get the regular "we do not take responsibility if you mess your data / infrastructure with our code" clause ... - qto is designed from the ground-up differently - read features_doc-191215115117
+
 
     
 

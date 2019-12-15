@@ -35,9 +35,9 @@
 				<p v-if="item.src">
            		<rgx-textarea v-html="item.src" class="cls_src" :id="'src_src-' + item.id"></rgx-textarea>
 				</p>
-            <div v-if="item.img_relative_path" class="cls_doc_img">
+            <div v-if="item.img_http_path" class="cls_doc_img">
                <p class="cls_fig"> {{ item.img_name }}  </p>
-               <img :src="item.img_relative_path" :style="item.img_style"></img>
+               <img :src="item.img_http_path" :style="item.img_style"></img>
             </div>
          </div>
          <p style="padding-bottom: 50%"></p>

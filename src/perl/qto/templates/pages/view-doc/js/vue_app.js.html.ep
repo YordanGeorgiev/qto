@@ -199,7 +199,10 @@
                      var index = state.items.findIndex(item => String(item.id) === payload.oid )
                      if ( index !== -1 ) { seq = state.items[index].seq -1 }
                      context.commit("DELETE_ITEM", payload)
-                     actions.loadItems(context)
+                     // todo:ysg 
+                     // console.log ( context )
+                     //actions.loadItems(context)
+                     context.dispatch("loadItems")
                      var elToScrollTo = document.getElementById("title-" + seq)
                      if ( typeof(elToScrollTo) != "undefined" ) { elToScrollTo.scrollIntoView(true)}
                   } else {
@@ -229,7 +232,9 @@
                })
                .then(response => { 
                   if ( typeof response.status != "undefined" && response.status === 200 ) {
-                     actions.loadItems(context)
+                     // todo:ysg
+                     //actions.loadItems(context)
+                     context.dispatch("loadItems")
                   } else {
                      console.error(err)
                      if ( typeof err.response.data.msg != "undefined" ) { 

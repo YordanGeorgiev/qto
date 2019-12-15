@@ -28,7 +28,7 @@ doGenerateMdDocs(){
       [ "${rel_path-}" == "null/md" ] && rel_path=""
       mkdir -p $docs_root_dir/$rel_path
       file_path=$(echo $docs_root_dir/$rel_path/$file_name|perl -ne 's|[/]{2,5}|/|g;print')
-      url="$url"'?as=md'
+      url="$url"'?as=md&type=msft'
       echo -e "\nrunning: curl --cookie ~/.qto/cookies.txt --insecure -s -o \"$file_path\" \ \n \"$basic_url/export/$url\""       
       curl --cookie ~/.qto/cookies.txt --insecure  -s "$basic_url/export/$url" -o "$file_path"
       lines=$(wc -l "$file_path"|awk '{print $1;}')

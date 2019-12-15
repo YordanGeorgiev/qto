@@ -1,5 +1,72 @@
 #  FEATURES AND FUNCTIONALITIES 
-[[_TOC_]]
+* [1. INTRO](#1-intro)
+  * [1.1. PURPOSE](#11-purpose)
+  * [1.2. AUDIENCE](#12-audience)
+  * [1.3. RELATED DOCUMENTATION](#13-related-documentation)
+  * [1.4. RELATED PROCESS AND WAY OF WORKING](#14-related-process-and-way-of-working)
+* [2. DEPLOYABILITY](#2-deployability)
+  * [2.1. FULL DEPLOYMENT IN LESS THAN AN HOUR](#21-full-deployment-in-less-than-an-hour)
+  * [2.2. EASY DOCKER BASED FULL DEPLOYMENT ( DEPRECATING )](#22-easy-docker-based-full-deployment-(-deprecating-))
+    * [2.2.1. New version deployment by simple unzip](#221-new-version-deployment-by-simple-unzip)
+    * [2.2.2. Oneliner for prerequisite binaries check](#222-oneliner-for-prerequisite-binaries-check)
+    * [2.2.3. Installation documentation](#223-installation-documentation)
+  * [2.3. A FULL APPLICATION CLONE IN LESS THAN 5 MINUTES](#23-a-full-application-clone-in-less-than-5-minutes)
+    * [2.3.1. Shell script for postgres db creation](#231-shell-script-for-postgres-db-creation)
+    * [2.3.2. One liner for single restore and / or load](#232-one-liner-for-single-restore-and-/-or-load)
+* [3. USER-FRIENDLINESS](#3-user-friendliness)
+  * [3.1. ONELINER SHELL CALLS](#31-oneliner-shell-calls)
+    * [3.1.1. Database recreation and DDL scripts run one-liners](#311-database-recreation-and-ddl-scripts-run-one-liners)
+  * [3.2. TABLES LOAD VIA A SINGLE ONE-LINER](#32-tables-load-via-a-single-one-liner)
+    * [3.2.1. Testing one-liner call](#321-testing-one-liner-call)
+    * [3.2.2. Test messages user](#322-test-messages-user)
+* [4. STABILITY AND RELIABILITY](#4-stability-and-reliability)
+  * [4.1. ABSENCE OF APPLICATION CRASHING](#41-absence-of-application-crashing)
+  * [4.2. DAILY BACKUPS](#42-daily-backups)
+  * [4.3. LOGGING](#43-logging)
+  * [4.4. FULL BACKUP TO THE CLOUD IN LESS THAN 5 MINUTES](#44-full-backup-to-the-cloud-in-less-than-5-minutes)
+  * [4.5. STABILITY BASED ON ACTUAL RUNNING IN THE CLOUD SINCE 2019-01-01](#45-stability-based-on-actual-running-in-the-cloud-since-2019-01-01)
+* [5. SCALABILITY](#5-scalability)
+  * [5.1. FEATURE SCALABILITY](#51-feature-scalability)
+  * [5.2. MULTI-INSTANCE SCALABILITY](#52-multi-instance-scalability)
+  * [5.3. DOCUMENTATION GENERATION AND DATA EXPORT](#53-documentation-generation-and-data-export)
+  * [5.4. PROJECTS DATABASES SCALABILITY](#54-projects-databases-scalability)
+* [6. PERFORMANCE](#6-performance)
+  * [6.1. PAGE LOAD TIMES](#61-page-load-times)
+  * [6.2. LOGIN, LOGOUT](#62-login-logout)
+  * [6.3. AJAX CALLS TO BACK-END](#63-ajax-calls-to-back-end)
+* [7. DEPLOYABILITY](#7-deployability)
+  * [7.1. NEW HOSTS BINARY PROVISIONING](#71-new-hosts-binary-provisioning)
+  * [7.2. ONELINER FOR VERSION CHANGE ON PROVISIONED HOST](#72-oneliner-for-version-change-on-provisioned-host)
+  * [7.3. ONELINER FOR ENVIRONMENT CHANGE](#73-oneliner-for-environment-change)
+* [8. WEB USER INTERFACE FEATURES AND FUNCTIONALITIES](#8-web-user-interface-features-and-functionalities)
+  * [8.1. SINGLE CODE BASE FOR ALL DEVICE FORMATS](#81-single-code-base-for-all-device-formats)
+  * [8.2. LIST PAGE FEATURES AND FUNCTIONALITIES](#82-list-page-features-and-functionalities)
+    * [8.2.1. List page performance](#821-list-page-performance)
+    * [8.2.2. Navigating the list page](#822-navigating-the-list-page)
+    * [8.2.3. Managing items - full CRUD](#823-managing-items--full-crud)
+    * [8.2.4. Quick search and filtering items](#824-quick-search-and-filtering-items)
+    * [8.2.5. Visual indication](#825-visual-indication)
+    * [8.2.6. Print to pdf](#826-print-to-pdf)
+    * [8.2.7. Items interlinking](#827-items-interlinking)
+  * [8.3. VIEW PAGE FEATURES](#83-view-page-features)
+    * [8.3.1. Managing items ( beta )](#831-managing-items-(-beta-))
+      * [8.3.1.1. Add an item in the doc view page UI ( beta)](#8311-add-an-item-in-the-doc-view-page-ui-(-beta))
+      * [8.3.1.2. Update item ( beta )](#8312-update-item-(-beta-))
+      * [8.3.1.3. Delete item ( beta )](#8313-delete-item-(-beta-))
+      * [8.3.1.4. Print to pdf](#8314-print-to-pdf)
+    * [8.3.2. Print to pdf](#832-print-to-pdf)
+* [9. SECURITY](#9-security)
+  * [9.1. AUTHENTICATION](#91-authentication)
+    * [9.1.1. Non-athentication mode](#911-non-athentication-mode)
+    * [9.1.2. Simple native authentication mode](#912-simple-native-authentication-mode)
+  * [9.2. AUTHORISATION](#92-authorisation)
+* [10. DOCUMENTATION](#10-documentation)
+  * [10.1. DOCUMENTATION SET](#101-documentation-set)
+  * [10.2. DOCUMENTATION FORMATS](#102-documentation-formats)
+  * [10.3. DOCUMENTATION AND CODE BASE SYNCHRONIZATION](#103-documentation-and-code-base-synchronization)
+
+
+
 
     
 
@@ -35,6 +102,12 @@ All the documents are updated and redistributed in combination of the current ve
 doc/md
 doc/pdf
 according to the file format used for the documentation storage.
+
+    
+
+### 1.4. Related process and way of working
+Read this document carefully - it IS the contract between you AND the qto instance of your instance, such there be any inconsistencies between the promised features and functionalities in this document and the ACTUAL behaviour of your instance create an issue to the instance owner, describing clearly what the inconsistencies are.
+If you are the instance owner, and the issue has clearly arisen from the source code of qto instance you derived your instance from create an issue to the source qto instance owner into his/her own qto instance.
 
     
 

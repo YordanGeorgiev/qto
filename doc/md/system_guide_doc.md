@@ -1,5 +1,36 @@
 #  QTO SYSTEM GUIDE
-[[_TOC_]]
+* [1. INTRO](#1-intro)
+  * [1.1. PURPOSE](#11-purpose)
+  * [1.2. AUDIENCE](#12-audience)
+* [2. THE QTO SYSTEM INFRASTRUCTURE](#2-the-qto-system-infrastructure)
+  * [2.1. SYSTEM ARCHITECTURAL OVERVIEW BY SIWA DIA](#21-system-architectural-overview-by-siwa-dia)
+  * [2.2. INFRASTRUCTURAL COMPONENTS](#22-infrastructural-components)
+    * [2.2.1. End-user clients](#221-end-user-clients)
+    * [2.2.2. Application Layer and databases hosted in AWS](#222-application-layer-and-databases-hosted-in-aws)
+    * [2.2.3. Local Development and testing](#223-local-development-and-testing)
+    * [2.2.4. Source code in GitHub](#224-source-code-in-github)
+* [3. ARCHITECTURE](#3-architecture)
+  * [3.1. IOCM ARCHITECTURE DEFINITION](#31-iocm-architecture-definition)
+    * [3.1.1. The Control components](#311-the-control-components)
+    * [3.1.2. The Model components](#312-the-model-components)
+    * [3.1.3. The Input Components](#313-the-input-components)
+    * [3.1.4. The Output Components](#314-the-output-components)
+    * [3.1.5. The Converter Components](#315-the-converter-components)
+  * [3.2. MULTI-INSTANCE SETUP](#32-multi-instance-setup)
+    * [3.2.1. Multi-environment naming convention](#321-multi-environment-naming-convention)
+  * [3.3. SOFWARE ARCHITECTURE](#33-sofware-architecture)
+    * [3.3.1. Front-End](#331-front-end)
+    * [3.3.2. Back-End](#332-back-end)
+* [4. APPLICATION CONTROL FLOW ](#4-application-control-flow-)
+  * [4.1. SHELL CONTROL FLOW](#41-shell-control-flow)
+    * [4.1.1. Front-End](#411-front-end)
+    * [4.1.2. Back-End](#412-back-end)
+* [5. SECURITY](#5-security)
+  * [5.1. NON-SECURITY MODE](#51-non-security-mode)
+  * [5.2. SIMPLE NATIVE SECURITY MODE](#52-simple-native-security-mode)
+
+
+
 
     
 

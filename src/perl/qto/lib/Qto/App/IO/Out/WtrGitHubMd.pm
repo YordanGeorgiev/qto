@@ -40,6 +40,7 @@ package Qto::App::IO::Out::WtrGitHubMd ;
       my $self             = shift ; 
       my $table            = shift ; 
       my $ahs2             = shift ; 
+      my $md_dialect       = shift || 'github' ; 
       my $msg              = ''  ; 
       my $ret              = 1 ; 
       my $str_response     = '' ; 
@@ -64,8 +65,8 @@ package Qto::App::IO::Out::WtrGitHubMd ;
       my $row_id = 0 ; 
       my @col_names = ('id' , 'name' , 'description' , 'img_relative_path', 'src')  ;
       
-      #my $str_toc = $self->doBuildTOC($table,$ahs2);
-      my $str_toc = '[[_TOC_]]';
+      my $str_toc = $self->doBuildTOC($table,$ahs2);
+      $str_toc = '[[_TOC_]]' if ( $md_dialect eq 'msft' );
 
       foreach my $row ( @$ahs2 ) {
          my $id = $row->{ 'id' } ; 

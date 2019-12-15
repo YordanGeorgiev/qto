@@ -1,5 +1,43 @@
 #  MAINTENANCE GUIDE
-[[_TOC_]]
+* [1. GUIDING PRINCIPLE'S](#1-guiding-principle's)
+  * [1.1. PERSONAL RESPONSIBILITY](#11-personal-responsibility)
+* [2. RUN-TIMES STATES CHANGES](#2-run-times-states-changes)
+  * [2.1. CHECK THE STATUS OF THE POSTGRESQL](#21-check-the-status-of-the-postgresql)
+  * [2.2. STOP THE POSTGRESQL](#22-stop-the-postgresql)
+  * [2.3. START THE POSTGRESQL](#23-start-the-postgresql)
+  * [2.4. CHECK THE PORT ON WHICH IT IS LISTENING ](#24-check-the-port-on-which-it-is-listening-)
+  * [2.5. CHECK THE POSTGRES STATUS](#25-check-the-postgres-status)
+  * [2.6. APPLICATION LAYER RUN-STATE MANAGEMENT](#26-application-layer-run-state-management)
+    * [2.6.1. Start the application layer](#261-start-the-application-layer)
+    * [2.6.2. Stop the application layer](#262-stop-the-application-layer)
+    * [2.6.3. Restart OS network service](#263-restart-os-network-service)
+  * [2.7. SECURITY RELATED OPERATIONS](#27-security-related-operations)
+    * [2.7.1. Add, modify and delete new users to the application](#271-add-modify-and-delete-new-users-to-the-application)
+    * [2.7.2. Regular users visibility](#272-regular-users-visibility)
+* [3. BACKUP AND RESTORE PROJECTS DATA](#3-backup-and-restore-projects-data)
+  * [3.1. LOAD DATABASE CONNECTIVITY CONFIGURATION SECURELY](#31-load-database-connectivity-configuration-securely)
+  * [3.2. BACKUP A DATABASE](#32-backup-a-database)
+  * [3.3. BACKUP A DATABASE TABLE](#33-backup-a-database-table)
+  * [3.4. RESTORE A DATABASE](#34-restore-a-database)
+  * [3.5. RESTORE A DATABASE TABLE](#35-restore-a-database-table)
+* [4. SHELL ACTIONS](#4-shell-actions)
+  * [4.1. RUN INCREASE-DATE ACTION](#41-run-increase-date-action)
+  * [4.2. LOAD XLS SHEET TO DB A DOC TABLE](#42-load-xls-sheet-to-db-a-doc-table)
+* [5. NAMING CONVENTIONS](#5-naming-conventions)
+  * [5.1. DIRS NAMING CONVENTIONS](#51-dirs-naming-conventions)
+  * [5.2. ROOT DIRS NAMING CONVENTIONS](#52-root-dirs-naming-conventions)
+* [6. SOURCE CODE MANAGEMENT](#6-source-code-management)
+  * [6.1. CONFIGURE AND USE GIT ALWAYS BY USING SSH IDENTITIES](#61-configure-and-use-git-always-by-using-ssh-identities)
+  * [6.2. AIM FOR E2E TRACEABILITY](#62-aim-for-e2e-traceability)
+  * [6.3. RESTART THE APPLICATION LAYER](#63-restart-the-application-layer)
+* [7. KNOWN ISSUES AND WORKAROUNDS](#7-known-issues-and-workarounds)
+  * [7.1. MORBO IS STUCK](#71-morbo-is-stuck)
+    * [7.1.1. Symptoms](#711-symptoms)
+    * [7.1.2. Probable root cause](#712-probable-root-cause)
+    * [7.1.3. Known solution and workaround](#713-known-solution-and-workaround)
+
+
+
 
     
 
