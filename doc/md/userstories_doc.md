@@ -1,186 +1,5 @@
 #  USERSTORIES AND SCENARIOS
-* [1. COMMON UI PERSPECTIVE](#1-common-ui-perspective)
-  * [1.1. UI PERFORMANCE](#11-ui-performance)
-  * [1.2. FORM FACTORS](#12-form-factors)
-    * [1.2.1. Desktop UI](#121-desktop-ui)
-    * [1.2.2. Table UI](#122-table-ui)
-    * [1.2.3. Mobile UI](#123-mobile-ui)
-  * [1.3. THE OMNI-SEARCH FEATURE](#13-the-omni-search-feature)
-    * [1.3.1. List as grid page quick filtering](#131-list-as-grid-page-quick-filtering)
-    * [1.3.2. View page quick filtering](#132-view-page-quick-filtering)
-    * [1.3.3. Search results page quick filtering](#133-search-results-page-quick-filtering)
-  * [1.4. THE LEFT MENU UI - ORGANISING THE STRUCTURE OF THE PROJECT](#14-the-left-menu-ui--organising-the-structure-of-the-project)
-    * [1.4.1. Managing listings from the left menu](#141-managing-listings-from-the-left-menu)
-    * [1.4.2. Managing documents from the left menu](#142-managing-documents-from-the-left-menu)
-    * [1.4.3. Managing folders on the left menu](#143-managing-folders-on-the-left-menu)
-  * [1.5. THE LIST PAGE UI](#15-the-list-page-ui)
-    * [1.5.1. Search in the list page](#151-search-in-the-list-page)
-    * [1.5.2. Items listing](#152-items-listing)
-    * [1.5.3. Items editing](#153-items-editing)
-      * [1.5.3.1. Items editing inline](#1531-items-editing-inline)
-      * [1.5.3.2. Items editing via a modal dialog](#1532-items-editing-via-a-modal-dialog)
-    * [1.5.4. Items creation](#154-items-creation)
-    * [1.5.5. Items deletion](#155-items-deletion)
-    * [1.5.6. Items export](#156-items-export)
-    * [1.5.7. Items import](#157-items-import)
-  * [1.6. THE VIEW PAGE UI](#16-the-view-page-ui)
-    * [1.6.1. View page navigation](#161-view-page-navigation)
-      * [1.6.1.1. Title numbers link navigation and sharing](#1611-title-numbers-link-navigation-and-sharing)
-      * [1.6.1.2. Title numbers link navigation and sharing](#1612-title-numbers-link-navigation-and-sharing)
-    * [1.6.2. View doc page print preview](#162-view-doc-page-print-preview)
-      * [1.6.2.1. Disable editing in print preview mode but keep the links](#1621-disable-editing-in-print-preview-mode-but-keep-the-links)
-      * [1.6.2.2. Disable the right and left menus in print preview mode](#1622-disable-the-right-and-left-menus-in-print-preview-mode)
-    * [1.6.3. Search in the view page ](#163-search-in-the-view-page-)
-    * [1.6.4. Hierarchical items management](#164-hierarchical-items-management)
-      * [1.6.4.1. Add Item](#1641-add-item)
-      * [1.6.4.2. Update item](#1642-update-item)
-          * [1.6.4.2.1. Update item's title](#16421-update-item's-title)
-          * [1.6.4.2.2. Update item's description](#16422-update-item's-description)
-          * [1.6.4.2.3. Update item's src_code](#16423-update-item's-src_code)
-          * [1.6.4.2.4. Move item in the hierarchy](#16424-move-item-in-the-hierarchy)
-      * [1.6.4.3. Delete item](#1643-delete-item)
-    * [1.6.5. Right TOC menu navigation](#165-right-toc-menu-navigation)
-      * [1.6.5.1. Open and close of right menu](#1651-open-and-close-of-right-menu)
-      * [1.6.5.2. Search in the right menu](#1652-search-in-the-right-menu)
-      * [1.6.5.3. Links in the right menu](#1653-links-in-the-right-menu)
-    * [1.6.6. Left menu navigation](#166-left-menu-navigation)
-  * [1.7. THE GLOBAL SEARCH PAGE / THE SEARCH UI](#17-the-global-search-page-/-the-search-ui)
-    * [1.7.1. Global search from the list page](#171-global-search-from-the-list-page)
-    * [1.7.2. Global search from the view page](#172-global-search-from-the-view-page)
-    * [1.7.3. Global search modal dialog ui](#173-global-search-modal-dialog-ui)
-      * [1.7.3.1. Search-autocomplete on modal search dialog](#1731-search-autocomplete-on-modal-search-dialog)
-  * [1.8. THE NOTES PAGE / UI](#18-the-notes-page-/-ui)
-  * [1.9. THE CHAT PAGE / UI](#19-the-chat-page-/-ui)
-  * [1.10. MULTI-PROJECT AWARE UI](#110-multi-project-aware-ui)
-    * [1.10.1. Items data transfer between different projects](#1101-items-data-transfer-between-different-projects)
-  * [1.11. ITEMS MANAGEMENT](#111-items-management)
-    * [1.11.1. Items move](#1111-items-move)
-  * [1.12. ISSUES IMPORT FROM GOOGLE CALENDAR](#112-issues-import-from-google-calendar)
-  * [1.13. ACCESS ISSUES DATA FROM GOOGLE SHEET ( DEPRECATING )](#113-access-issues-data-from-google-sheet-(-deprecating-))
-* [2. TEAM LEADER BIZ PERSPECTIVE](#2-team-leader-biz-perspective)
-  * [2.1. ROLES MANAGEMENT](#21-roles-management)
-  * [2.2. PROJECTS MANAGEMENT](#22-projects-management)
-    * [2.2.1. Users management in a project](#221-users-management-in-a-project)
-    * [2.2.2. Users access management](#222-users-access-management)
-      * [2.2.2.1. Grant access per project](#2221-grant-access-per-project)
-      * [2.2.2.2. Personal data handling minimization](#2222-personal-data-handling-minimization)
-  * [2.3. SECURITY MANAGEMENT](#23-security-management)
-  * [2.4. TIME MANAGEMENT](#24-time-management)
-* [3. TEAM MEMBER BIZ PERSPECTIVE](#3-team-member-biz-perspective)
-  * [3.1. ISSUES MANAGEMENT](#31-issues-management)
-    * [3.1.1. Remove existing issues](#311-remove-existing-issues)
-    * [3.1.2. Search for existing issues](#312-search-for-existing-issues)
-    * [3.1.3. Track issues progress](#313-track-issues-progress)
-    * [3.1.4. Track issues history](#314-track-issues-history)
-  * [3.2. ITEMS MANAGEMENT](#32-items-management)
-  * [3.3. ISSUES MANAGEMENT](#33-issues-management)
-    * [3.3.1. Update existing Items](#331-update-existing-items)
-    * [3.3.2. Remove existing Items](#332-remove-existing-items)
-    * [3.3.3. Search for existing Items](#333-search-for-existing-items)
-    * [3.3.4. Track Items progress](#334-track-items-progress)
-    * [3.3.5. Track Items history](#335-track-items-history)
-  * [3.4. TRACK ISSUES RELATIONS](#34-track-issues-relations)
-  * [3.5. ITEMS MANAGEMENT](#35-items-management)
-  * [3.6. MEASURE SUCCESS](#36-measure-success)
-  * [3.7. MONITOR SUCCESS](#37-monitor-success)
-  * [3.8. TRACK ISSUES RELATIONS](#38-track-issues-relations)
-  * [3.9. TIME MANAGEMENT](#39-time-management)
-    * [3.9.1. time centric planning](#391-time-centric-planning)
-    * [3.9.2. time centric reporting](#392-time-centric-reporting)
-  * [3.10. PROJECT'S PERSONS ISSUE COMBINATIONS](#310-project's-persons-issue-combinations)
-* [4. PROJECT OBSERVER BIZ PERSPECTIVE](#4-project-observer-biz-perspective)
-  * [4.1. PROJECTS OBSERVATION](#41-projects-observation)
-  * [4.2. MEASURE SUCCESS](#42-measure-success)
-  * [4.3. ISSUES OBSERVATION](#43-issues-observation)
-  * [4.4. MONITOR SUCCESS](#44-monitor-success)
-* [5. SYSADMIN PERSPECTIVE](#5-sysadmin-perspective)
-  * [5.1. SYSTEM DEPLOYABILITY](#51-system-deployability)
-  * [5.2. TIME MANAGEMENT](#52-time-management)
-  * [5.3. SYSTEM STABILITY](#53-system-stability)
-  * [5.4. GENERIC CRUDS FOR ITEMS](#54-generic-cruds-for-items)
-  * [5.5. SYSTEM RELIABILITY](#55-system-reliability)
-  * [5.6. PROJECT'S PERSONS ISSUE COMBINATIONS](#56-project's-persons-issue-combinations)
-  * [5.7. EASE OF USE](#57-ease-of-use)
-* [6. PROJECT OBSERVER BIZ PERSPECTIVE](#6-project-observer-biz-perspective)
-  * [6.1. SECURITY](#61-security)
-  * [6.2. PROJECTS OBSERVATION](#62-projects-observation)
-    * [6.2.1. Who logged in and out when](#621-who-logged-in-and-out-when)
-  * [6.3. ISSUES OBSERVATION](#63-issues-observation)
-    * [6.3.1. Who changed what and why](#631-who-changed-what-and-why)
-* [7. ETL AND INTEGRATIONS PERSPECTIVE](#7-etl-and-integrations-perspective)
-  * [7.1. SYSTEM DEPLOYABILITY](#71-system-deployability)
-  * [7.2. DATABASE TO JSON FILES DATA LOAD](#72-database-to-json-files-data-load)
-  * [7.3. SYSTEM PERFORMANCE](#73-system-performance)
-  * [7.4. JSON FILES TO DB DATA LOAD](#74-json-files-to-db-data-load)
-  * [7.5. SYSTEM STABILITY](#75-system-stability)
-  * [7.6. SYSTEM RELIABILITY](#76-system-reliability)
-  * [7.7. XLS-TO-POSTGRES-DB HIERARCHICAL DATA LOAD](#77-xls-to-postgres-db-hierarchical-data-load)
-    * [7.7.1. error reporting in xls-to-postgres-db hierarchical data load ](#771-error-reporting-in-xls-to-postgres-db-hierarchical-data-load-)
-  * [7.8. EASE OF USE](#78-ease-of-use)
-  * [7.9. SECURITY](#79-security)
-  * [7.10. PROJECT DEPLOYMENT](#710-project-deployment)
-  * [7.11. SYSTEM VERIFIABILITY AND TESTABILITY](#711-system-verifiability-and-testability)
-* [8. DEVOPS PERSPECTIVE](#8-devops-perspective)
-  * [8.1. CLARITY AND BREVITY OF THE END TO END TESTS](#81-clarity-and-brevity-of-the-end-to-end-tests)
-  * [8.2. DATABASES - LOCAL TO REMOTE AND REMOTE TO LOCAL SYNC](#82-databases--local-to-remote-and-remote-to-local-sync)
-    * [8.2.1. Abort end-to-end tests on single test fail](#821-abort-end-to-end-tests-on-single-test-fail)
-  * [8.3. DATABASE TO JSON FILES DATA LOAD](#83-database-to-json-files-data-load)
-  * [8.4. LOGGING](#84-logging)
-  * [8.5. JSON FILES TO DB DATA LOAD](#85-json-files-to-db-data-load)
-    * [8.5.1. Control flow logging](#851-control-flow-logging)
-  * [8.6. XLS-TO-POSTGRES-DB HIERARCHICAL DATA LOAD](#86-xls-to-postgres-db-hierarchical-data-load)
-    * [8.6.1. Log entries format configuration](#861-log-entries-format-configuration)
-  * [8.7. XLS-TO-POSTGRES-DB HIERARCHICAL DATA LOAD](#87-xls-to-postgres-db-hierarchical-data-load)
-    * [8.7.1. Single entry point for end to end tests](#871-single-entry-point-for-end-to-end-tests)
-    * [8.7.2. Tool run log to human readable description](#872-tool-run-log-to-human-readable-description)
-  * [8.8. APPLICATION'S SOURCE CODE AND DOCUMENTATION INTEGRITY](#88-application's-source-code-and-documentation-integrity)
-  * [8.9. SYSTEM DEPLOYMENT](#89-system-deployment)
-    * [8.9.1. Userstories to test case relations](#891-userstories-to-test-case-relations)
-    * [8.9.2. UUID trackability for test files and userstories](#892-uuid-trackability-for-test-files-and-userstories)
-  * [8.10. SYSTEM VERIFIABILITY AND TESTABILITY](#810-system-verifiability-and-testability)
-    * [8.10.1. Components start run message print](#8101-components-start-run-message-print)
-    * [8.10.2. Tool exit with exit code and exit message](#8102-tool-exit-with-exit-code-and-exit-message)
-    * [8.10.3. Execution path tracing by UUID's](#8103-execution-path-tracing-by-uuid's)
-  * [8.11. LOGGING](#811-logging)
-    * [8.11.1. Issues directories naming conventions](#8111-issues-directories-naming-conventions)
-    * [8.11.2. Issues files naming conventions](#8112-issues-files-naming-conventions)
-    * [8.11.3. Issues files history](#8113-issues-files-history)
-    * [8.11.4. Issues files naming conventions](#8114-issues-files-naming-conventions)
-  * [8.12. APPLICATION'S SOURCE CODE AND DOCUMENTATION INTEGRITY](#812-application's-source-code-and-documentation-integrity)
-    * [8.12.1. Issues files naming conventions for the  project](#8121-issues-files-naming-conventions-for-the-project)
-  * [8.13. CONFIGURATION MANAGEMENT](#813-configuration-management)
-    * [8.13.1. a single route to copy paste the appConfig in json format](#8131-a-single-route-to-copy-paste-the-appconfig-in-json-format)
-    * [8.13.2. Issues files naming conventions for current date](#8132-issues-files-naming-conventions-for-current-date)
-    * [8.13.3. Issues files naming conventions for the time frame](#8133-issues-files-naming-conventions-for-the-time-frame)
-  * [8.14. ISSUES TRANSFORMATIONS](#814-issues-transformations)
-    * [8.14.1. 
-Load by txt-to-db action](#8141-
-load-by-txt-to-db-action)
-      * [8.14.1.1. Load issues file from file system to db](#81411-load-issues-file-from-file-system-to-db)
-    * [8.14.2. Load issues by db-to-xls action](#8142-load-issues-by-db-to-xls-action)
-    * [8.14.3. Load issues by xls-to-db action](#8143-load-issues-by-xls-to-db-action)
-      * [8.14.3.1. Load issues by xls-to-db action for insert or upset](#81431-load-issues-by-xls-to-db-action-for-insert-or-upset)
-      * [8.14.3.2. Load issues by xls-to-db action by truncating or not the loadable table](#81432-load-issues-by-xls-to-db-action-by-truncating-or-not-the-loadable-table)
-    * [8.14.4. Load issues by db-to-txt](#8144-load-issues-by-db-to-txt)
-      * [8.14.4.1. xls-to-db action load sort by issues prio attribute](#81441-xls-to-db-action-load-sort-by-issues-prio-attribute)
-    * [8.14.5. Load issues file from db to file system](#8145-load-issues-file-from-db-to-file-system)
-  * [8.15. ISSUES FILE FILTERING](#815-issues-file-filtering)
-  * [8.16. SINGLE SHELL CALL FOR PROJECTS SWITCHING](#816-single-shell-call-for-projects-switching)
-  * [8.17. ISSUES PUBLISHING FROM SHELL CALLS](#817-issues-publishing-from-shell-calls)
-    * [8.17.1. Issues publishing in e-mail format](#8171-issues-publishing-in-e-mail-format)
-    * [8.17.2. Issues handling in google sheet format](#8172-issues-handling-in-google-sheet-format)
-    * [8.17.3. Issues publishing in google calendar format](#8173-issues-publishing-in-google-calendar-format)
-  * [8.18. ISSUES TRANSFORMATIONS](#818-issues-transformations)
-* [9. UI DEVELOPER PERSPECTIVE](#9-ui-developer-perspective)
-  * [9.1. EASY SETUP FOR TESTABILITY](#91-easy-setup-for-testability)
-  * [9.2. CODE TRACEABILITY BY UUID](#92-code-traceability-by-uuid)
-  * [9.3. SINGLE SHELL CALL FOR PROJECTS SWITCHING](#93-single-shell-call-for-projects-switching)
-  * [9.4. ISSUES PUBLISHING FROM SHELL CALLS](#94-issues-publishing-from-shell-calls)
-  * [9.5. METADATA HANDLING](#95-metadata-handling)
-  * [9.6. EASY SETUP FOR TESTABILITY](#96-easy-setup-for-testability)
-
-
-
+[[_TOC_]]
 
     
 
@@ -205,21 +24,21 @@ I want to be able to use it with different form factor devices
 
     
 
-#### 1.2.1. Desktop UI
+#### 1.2.1. Desktop PC form factor UI
 As an UI user of the qto application 
 In order to be able to use it fully on the work-place
 I want to it to work primarily on Desktop for every UI feature
 
     
 
-#### 1.2.2. Table UI
+#### 1.2.2. Tablets form factor UI
 As an UI user of the qto application 
 In order to be able to access it quickly on the go 
 I want to  be able to use the same UI on an advanced tablets
 
     
 
-#### 1.2.3. Mobile UI
+#### 1.2.3. Advanced Mobile phones form factor UI
 As an UI user of the qto application 
 In order to be able to access it quickly on the go
 I want to  be able to use the same UI on an advanced mobile phones. 
@@ -228,25 +47,29 @@ I want to  be able to use the same UI on an advanced mobile phones.
 
 ### 1.3. The Omni-search feature
 As an UI user of the qto application
-In order to have a consistent experience around all the user interfaces for search and get quickly to the information on EACH page 
-I want to be able to perform quick filtering on ALL the UI elements from the page from a single omin search-box placed at the top bar of the screen
+In order to have a consistent experience around all the user interfaces for search and get quickly to the information on EACH page and/or each table of the database
+I want to be able to perform quick filtering on ALL the UI elements from the page from a single omni search-box placed at the top bar of the screen.
 
     
 
 #### 1.3.1. List as grid page quick filtering
 As an UI user of the qto application
 In order to get quickly to the information on the listing as grid page
-I want to be able to perform quick filtering on both the grid and the left menu
+I want to be able to perform quick filtering on both the grid and the left menu.
 
     
 
 #### 1.3.2. View page quick filtering
-
+As an UI user of the qto application
+In order to get quickly to the information on the view page
+I want to be able to perform quick filtering on both the information on the view page and the left menu.
 
     
 
 #### 1.3.3. Search results page quick filtering
-
+As an UI user of the qto application
+In order to get quickly to the information on the search as grid page
+I want to be able to perform quick filtering on both the grid and the left and right menu.
 
     
 
@@ -339,14 +162,24 @@ by clicking a "delete " button and confirming the deletion for the item
 #### 1.5.6. Items export
 As an UI user of the application 
 I order to export the data  of the items in the application 
-I want to be able to perform every possible export in the UI from a single button click or a single url access. 
+I want to be able to perform the following data export from a single button click on the UI or a single url access:
+ - export to md docs ( github , azure )
+ - export to pdf docs
+ - export to xls files
+ - export to msft docx docs
+ - export to json dump files 
 
     
 
 #### 1.5.7. Items import
 As an UI user of the application 
 I order to import data  of the items in the application 
-I want to  be able to perform every possible import in the UI from a single button click and pointing to the file path of a file
+I want to  be able to perform the following data imports in the UI from a single button click and pointing to the file path of a file
+ - import from md docs
+ - import from pdf docs
+ - import from xls files
+ - import from msft docx docs
+ - import from json dump files 
 
     
 
@@ -378,6 +211,13 @@ I want to be able on click the system to move it on the top of the screen and to
 
     
 
+##### 1.6.1.3. Access items by theirs ids
+As an UI user
+In order to be able to quickly access the content of a particular item
+I want the System to be capable to scroll to it on the top of the view port of the page after I have clicked a link to it.
+
+    
+
 #### 1.6.2. View doc page print preview
 As an UI user
 In order to be able to share the documents of a qto application in pdf format or even physically print them
@@ -400,7 +240,7 @@ In order to have as clean and easily printable document as possible in a pdf for
 #### 1.6.3. Search in the view page 
 As an UI user of the qto application
 In order to be able to quickly and effortlessly search the content of the loaded document in the view doc page
-I want to be able to focus the search-box with a single shortcut / click on the left menu, so that after typing 3 letters the left menu will get filtered by the search string.
+I want to be able to focus the search-box with a single shortcut / click and the document to be filtered by the content of the input search box.
 
     
 
@@ -443,7 +283,7 @@ I want to be able to move item by drag and drop from the left menu
     
 
 ##### 1.6.4.3. Delete item
-I want to be able to delete an item by right clicking it's title and choosing delete item.
+I want to be able to delete an item by right clicking it's title and choosing delete item, so that the System will scroll the page directly the part of the document a deleted the item from.
 
     
 
@@ -480,6 +320,27 @@ I want to be able to simply click on the links ( level 1 , level-2 , level-3 etc
 As a QTO application UI user
 In order to be able to quickly jump to a different document / listing 
 I want to be able to click on the upper left corner of the view page and access the hierarchichal project structure of the whole project from the left menu.
+
+    
+
+#### 1.6.7. Hierarchy management
+As a qto application UI user 
+In order to be able to fully manage the content of any item doc 
+I want to be able to fully reshuffle any part of the hierarchy in the doc from the user interface.
+
+    
+
+##### 1.6.7.1. Single item move in the hierarchy
+As a qto application UI user 
+In order to be able to move a single item anywhere in the hierarchy
+I want to be able to move it by drag and drop on the left side of the document.
+
+    
+
+##### 1.6.7.2. Single brach move in the hierarchy
+As a qto application UI user 
+In order to be able to move a single item and all it's descendants anywhere in the hierarchy
+I want to be able to move it by drag and drop on the left side of the document.
 
     
 
@@ -942,17 +803,29 @@ I want to have a nice user experience while using the qto application.
 
     
 
-### 7.1. System deployability
-As the SysAdmin 
-In order to be able to provide access to a new database driven application to my organization
-I want to be able to deploy an instance of the qto application and spawn a new project out of it in less than a hour from a clean Linux host including AWS.
+### 7.1. Database userstories
+
 
     
 
-### 7.2. Database to json files data load
+#### 7.1.1. Database to json files data load
 As the ETL and Integration Specialist 
 In order to be able to quickly move all the project data into a different storage format 
 I want to be able to export the project db data into json files - one per table via a single shell call. 
+
+    
+
+#### 7.1.2. Database metadata export
+As the ETL and Integration Specialists
+In order to be able to show, communicate and store the meta-data of my application
+I want to be able to export the project's database meta-data into an xls file.
+
+    
+
+### 7.2. System deployability
+As the SysAdmin 
+In order to be able to provide access to a new database driven application to my organization
+I want to be able to deploy an instance of the qto application and spawn a new project out of it in less than a hour from a clean Linux host including AWS.
 
     
 

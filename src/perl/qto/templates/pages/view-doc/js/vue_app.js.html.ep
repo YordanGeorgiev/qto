@@ -267,8 +267,6 @@
                if ( typeof response.status != "undefined" && response.status === 200 ) {
                   newCnt = ( newCnt == "null" ? "" : newCnt )
                   context.commit("UPDATE_ITEM", payload)
-                  actions.loadItems(context)
-                  actions.loadFilteredItems(context,this.search);
                } else {
                   if ( typeof err.response.data.msg != "undefined" ) { 
                      context.commit('SET_SNACKBAR_SHOW', true)

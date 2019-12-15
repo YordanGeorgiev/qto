@@ -1,71 +1,5 @@
 #  QTO DEVOPS GUIDE
-* [1. GUIDING PRINCIPLE'S](#1-guiding-principle's)
-  * [1.1. USE COMMON SENSE](#11-use-common-sense)
-  * [1.2. PERSONAL RESPONSIBILITY](#12-personal-responsibility)
-  * [1.3. ATTEMPT FOR 100% TEST COVERAGE TO ACHIEVE RELIABILITY](#13-attempt-for-100%-test-coverage-to-achieve-reliability)
-  * [1.4. IT SHOULD JUST WORK](#14-it-should-just-work)
-  * [1.5. NAMING CONVENTIONS](#15-naming-conventions)
-  * [1.6. BE FRIENDLY TO ALL](#16-be-friendly-to-all)
-  * [1.7. AIM FOR SIMPLICITY](#17-aim-for-simplicity)
-  * [1.8. DO NOT ALLOW BROKEN WINDOWS](#18-do-not-allow-broken-windows)
-  * [1.9. DO NOT ADD A COMMIT WITHOUT PASSING ALL THE REGRESSION TESTS](#19-do-not-add-a-commit-without-passing-all-the-regression-tests)
-* [2. SYSADMIN ETL OPERATIONS](#2-sysadmin-etl-operations)
-  * [2.1. BACKUP A DATABASE TABLE](#21-backup-a-database-table)
-  * [2.2. RUN INCREASE-DATE ACTION](#22-run-increase-date-action)
-  * [2.3. LOAD XLS ISSUES TO DB AND FROM DB TO TXT FILES](#23-load-xls-issues-to-db-and-from-db-to-txt-files)
-  * [2.4. RUN THE QTO FILE TO DB LOAD](#24-run-the-qto-file-to-db-load)
-  * [2.5. VERIFY THE INSERTED DATA FROM THE DB](#25-verify-the-inserted-data-from-the-db)
-  * [2.6. DIRS NAMING CONVENTIONS](#26-dirs-naming-conventions)
-* [3. NAMING CONVENTIONS](#3-naming-conventions)
-  * [3.1. PRODUCT INSTANCE DIRECTORIES](#31-product-instance-directories)
-  * [3.2. ROOT DIRS NAMING CONVENTIONS](#32-root-dirs-naming-conventions)
-  * [3.3. DABASE NAMING CONVENTIONS](#33-dabase-naming-conventions)
-* [4. SOURCE CODE MANAGEMENT](#4-source-code-management)
-  * [4.1. CONFIGURE AND USE GIT ALWAYS BY USING SSH IDENTITIES](#41-configure-and-use-git-always-by-using-ssh-identities)
-  * [4.2. AIM FOR TRACEABILITY BETWEEN USER-STORIES, REQUIREMENTS, FEATURES AND FUNCTIONALITIES](#42-aim-for-traceability-between-user-stories-requirements-features-and-functionalities)
-  * [4.3. ZERO TOLERANCE FOR BUGS, ESPECIALLY CRASHES](#43-zero-tolerance-for-bugs-especially-crashes)
-  * [4.4. ALWAYS START WITH A TEST UNIT CREATION](#44-always-start-with-a-test-unit-creation)
-  * [4.5. BRANCH FOR COMMON DEVELOPMENT - DEV](#45-branch-for-common-development--dev)
-  * [4.6. INTEGRATION TESTING IN THE TST BRANCH](#46-integration-testing-in-the-tst-branch)
-  * [4.7. PRODUCTION IN THE PRD BRANCH](#47-production-in-the-prd-branch)
-  * [4.8. MASTER BRANCH - THE SINGLE TRUTH FOR CURRENT STABLE VERSION OF THE SOFTWARE](#48-master-branch--the-single-truth-for-current-stable-version-of-the-software)
-* [5. WAY OF WORKING](#5-way-of-working)
-  * [5.1. DEFINITION OF DONE](#51-definition-of-done)
-  * [5.2. CHAT / IRC](#52-chat-/-irc)
-  * [5.3. E-MAIL COMMUNICATION](#53-e-mail-communication)
-  * [5.4. DOCUMENTATION](#54-documentation)
-  * [5.5. ISSUES MANAGEMENT](#55-issues-management)
-* [6. FEATURE IMPLEMENTATION WORKFLOW](#6-feature-implementation-workflow)
-  * [6.1. ISSUE CREATION](#61-issue-creation)
-  * [6.2. USER-STORY CREATION](#62-user-story-creation)
-  * [6.3. REQUIREMENTS CREATION](#63-requirements-creation)
-  * [6.4. PROBLEM REGISTRATION](#64-problem-registration)
-  * [6.5. FEATURE BRANCH CREATION](#65-feature-branch-creation)
-  * [6.6. CREATE A TEST-ENTRY POINT](#66-create-a-test-entry-point)
-  * [6.7. IMPLEMENTATION OF PROOF OF CONCEPT](#67-implementation-of-proof-of-concept)
-  * [6.8. PROTOTYPE IMPLEMENTATION](#68-prototype-implementation)
-  * [6.9. UNIT AND / OR INTEGRATION TEST CREATION](#69-unit-and-/-or-integration-test-creation)
-  * [6.10. IMPLEMENTATION ](#610-implementation-)
-  * [6.11. DEPLOYMENT AND TEST TO THE TEST ENVIRONMENT](#611-deployment-and-test-to-the-test-environment)
-  * [6.12. DEPLOYMENT AND TEST TO THE PRODUCTION ENVIRONMENT](#612-deployment-and-test-to-the-production-environment)
-  * [6.13. QUALITY ASSURANCE ITERATION](#613-quality-assurance-iteration)
-  * [6.14. DOD CHECK-LIST WALKTHROUGH](#614-dod-check-list-walkthrough)
-  * [6.15. THE FEATURE OR FUNCTIONALITY CURRENT DESCRIPTION IS ADDED IN THE DOCS](#615-the-feature-or-functionality-current-description-is-added-in-the-docs)
-  * [6.16. THE RELATED REQUIREMENT IS ADDED IN THE REQUIREMENTS DOCUMENT](#616-the-related-requirement-is-added-in-the-requirements-document)
-  * [6.17. AT LEAST 2 TIMES PASSED FUNCTIONAL AND JS TESTS RUN ](#617-at-least-2-times-passed-functional-and-js-tests-run-)
-  * [6.18. AT LEAST 2 TIMES PASSED INTEGRATION TESTS  IN EACH ENVIRONMENT INSTANCE](#618-at-least-2-times-passed-integration-tests-in-each-environment-instance)
-  * [6.19. DEPLOYMENT TO THE TEST ENVIRONMENT](#619-deployment-to-the-test-environment)
-  * [6.20. CHECK THAT ALL THE FILES IN THE DEPLOYMENT PACKAGE ARE THE SAME AS THOSE IN THE LATEST COMMIT OF THE DEV GIT BRANCH. ](#620-check-that-all-the-files-in-the-deployment-package-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
-  * [6.21. RESTART THE APPLICATION LAYER](#621-restart-the-application-layer)
-* [7. KNOWS ISSUES AND WORKAROUNDS](#7-knows-issues-and-workarounds)
-  * [7.1. ALL TESTS FAIL WITH THE 302 ERROR](#71-all-tests-fail-with-the-302-error)
-  * [7.2. MORBO IS STUCK](#72-morbo-is-stuck)
-    * [7.2.1. Problem description](#721-problem-description)
-    * [7.2.2. Probable root cause](#722-probable-root-cause)
-    * [7.2.3. Kill processes](#723-kill-processes)
-
-
-
+[[_TOC_]]
 
     
 
@@ -124,7 +58,7 @@ Even in your personal branch. Really. Because after the application has surpasse
 
     
 
-## 2. SYSADMIN ETL OPERATIONS
+## 2. ETL OPERATIONS
 
 
     
@@ -209,20 +143,13 @@ The qto is a derivative of the wrapp tool - this means that development and depl
 You probably have access to different corporate and public git repositories. Use your personal ssh identity file you use in GitHub to push to the qto project. The following code snippet demonstrates how you could preserve your existing git configurations ( even on corporate / intra boxes ) , but use ALWAYS the personal identity to push to the qto...
 
     # create the company identity file
-    ssh-keygen -t rsa -b 4096 -C "first.last@corp.com"
+    ssh-keygen -t rsa -b 4096 -C "first.last@corp.com" -f ~/.ssh/id_rsa.corp.`hostname -s`
     
-    # save private key to ~/.ssh/id_rsa.corp, 
-    cat ~/.ssh/id_rsa.corp.pub 
-    
-    # copy paste this string into your corp web ui security ssh keys
-    
-    # create your private identify file
-    ssh-keygen -t rsa -b 4096 -C "me@gmail.com"
-    # save private key to ~/.ssh/id_rsa.me, note the public key ~/.ssh/id_rsa.me.pub
-    cat ~/.ssh/id_rsa.me.pub # copy paste this one into your githubs, private keys
+    ~/.ssh/id_rsa.corp.`hostname -s` 
+    # copy paste this one into your githubs, private keys
     
     # set alias for the git command to avoid overtyping ...
-    alias git='GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg " git'
+    alias git='GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.corp.`hostname -s` " git'
     
     # clone a repo 
     git clone git@git.in.corp.com:corp/project.git
@@ -230,6 +157,7 @@ You probably have access to different corporate and public git repositories. Use
     export git_msg="my commit msg with my corporate identity, explicitly provide author"
     git add --all ; git commit -m "$git_msg" --author "MeFirst MeLast <first.last@corp.com>"
     git push 
+    
     # and verify 
     clear ; git log --pretty --format='%h %ae %<(15)%an ::: %s
 
@@ -325,17 +253,17 @@ As in other places the main principle to follow is "use common sense" , thus try
 
     
 
-### 6.1. Issue creation
-Even if you do not have a defined documentation artifact - create a new issue, which could be the start for a an action affecting the run-state, configuration , data , features and functionalities or other aspects of the qto application. 
-An issue could be a bug, a request for a feature or even simply an undefined combination of problems and solution which could quickly be formalized by defining a new requirement, another issue, feature-request
+### 6.1. Problem registration
+Should you have problems or bugs, or even questions register them first into the qto application. Problems are often hint from the reality on the actual work, which has to be performed, yet problems are not yet issues. Issues are meant to be derived from problems in structured way, so that the deliverable of each issue must be testable and distinguishable, as well as the work.
+The reason the problem registration is on top of this subsection is the fact that bugs and problems should be dealt with higher priority, to minimise the technical debt of the application.
 
     
 
 ### 6.2. User-Story creation
 Use the following template while creating the user story:
 As an &lt;&lt;role&gt;&gt;
-In order to &lt;&lt;achieve something&gt;&gt; 
-I wanto to be able &lt;&lt;action-description&gt;&gt; 
+In order to &lt;&lt;achieve something/ bring value by&gt;&gt; 
+I want to to be able to &lt;&lt;action-description&gt;&gt; 
 
     
 
@@ -344,8 +272,9 @@ Depending on the size and agility of your organisation formal requirements exist
 
     
 
-### 6.4. Problem registration
-Problems are usually entities which last for longer time period. 
+### 6.4. Issue creation
+Even if you do not have a defined documentation artefact - create a new issue, which could be the start for a an action affecting the run-state, configuration , data , features and functionalities or other aspects of the qto application. 
+An issue could be a bug, a request for a feature or even simply an undefined combination of problems and solution which could quickly be formalised by defining a new requirement, another issue, feature-request
 
     
 
@@ -357,10 +286,8 @@ Create the feature branch by using the following naming convention:
     * dev
     dev--qto-18050801-add-order-by-in-select-ctrlr
     master
-    prd
-    tst
-    remotes/origin/dev
-    remotes/origin/master
+    ...
+    
     
 
 ### 6.6. Create a test-entry point
@@ -368,13 +295,13 @@ Even the smallest proof of concept needs a small test-entry point. Start always 
 
     
 
-### 6.7. Implementation of Proof of Concept
+### 6.7. Implementation of Proof of Concept ( optional )
 Aim to create a small POC for the new concept, feature or functionality - for example a page having a lot of hardcoding, which constrains the scope for ONLY this new thing. 
 Strive however to use the same naming convention, and implement with future integrations within the end truly dynamic code. 
 
     
 
-### 6.8. Prototype implementation
+### 6.8. Prototype implementation ( optional )
 The same instructions as the POC apply, but the prototype contains a certain and broader level of integration with the dynamic parts of the System.
 
     
@@ -385,12 +312,12 @@ Strive to create always unit and / or integration test(s).
     
 
 ### 6.10. Implementation 
-Implement by quick unit test runs. Constantly improve both the code , configuration changes and the test code. 
+Implement by quick unit test runs. Constantly improve both the code , configuration changes and the test code. Think about re-usability and scalability during implementation, but do not overgeneralise.
 
     
 
 ### 6.11. Deployment and test to the test environment
-Deploy to the test environment. 
+Deploy to the test environment a new instance with the current version as follows:
 
     # deploy to the tst environment
     bash src/bash/qto/qto.sh -a to-tst
@@ -416,9 +343,33 @@ Perform the DoD checklist as follows.
     
 
 ### 6.15. The feature or functionality current description is added in the docs
-The feature or functionality current description is added in the Features and Functionalities document. 
+The feature or functionality current description is added in the Features and Functionalities document. Check also the end user guide - it might to be changed as well. It might pay off to revisit the ReadMe as well, which is the landing and more of a "selling" point.
 
     
+
+#### 6.15.1. Regenerate the md docs
+
+
+    # instead of the product instance dir you could also use different documents root 
+    export docs_root_dir=/hos/opt/csitea/qto/qto.0.7.7.dev.ysg
+    # Action !!!
+    bash src/bash/qto/qto.sh -a generate-md-docs
+
+#### 6.15.2. Regenerate the pdf docs
+Regenerate the pdf docs by issuing the following one-liner
+
+    # instead of the product instance dir you could also use different documents root 
+    export docs_root_dir=/hos/opt/csitea/qto/qto.0.7.7.dev.ysg
+    
+    bash src/bash/qto/qto.sh -a generate-pdf-docs
+
+#### 6.15.3. Regenerate the msft docs
+Regenerate the Microsoft docx files by issuing the following shell one-liner:
+
+    # instead of the product instance dir you could also use different documents root 
+    export docs_root_dir=/hos/opt/csitea/qto/qto.0.7.7.dev.ysg
+    # Action !!!
+    bash src/bash/qto/qto.sh -a generate-msft-docs
 
 ### 6.16. The related requirement is added in the requirements document
 The related requirement is added in the requirements document - there might be one or more requirements added. 
@@ -515,4 +466,12 @@ List the running perl processes which run the morbo and kill the instances
     
     # be carefull what to kill 
     kill -9 <<proc-I-know-is-the-one-to-kill>>
+
+### 7.3. The page looks broken - probably the new css is not re-loaded
+This problem is quite oftenly experienced and a real time-burner, so keep those shortcuts bellow in mind. 
+To apply the newest css do a hard reload in Chrome with the shortcut COMMAND + SHIFT + R.
+The other option is to keep the SHIFT button and press the reload button the Chrome address bar ( this one has been buggy from time to time as well. ... )
+
+    COMMAND + SHIFT + R
+    SHIT + CLICK ON RELOAD BUTTON
 
