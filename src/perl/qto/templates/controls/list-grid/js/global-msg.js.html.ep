@@ -48,12 +48,12 @@
       return txt
    }
 
-   function fadeAwayDiv(toFade) {
-      if ( typeof toFade === 'undefined' && toFade != null ) { toFade='div_msg' }
-      if ( typeof document.getElementById(toFade) !== "undefined" && document.getElementById(toFade) != null){ 
-         var div_msg_style = document.getElementById(toFade).style; div_msg_style.opacity = 1; 
-         (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,300)})();
-         setStyleProp(toFade,'z-index','0')
+   function fadeAwayDiv(fadable) {
+      if ( typeof fadable === 'undefined' && fadable != null ) { fadable='div_msg' }
+      if ( typeof document.getElementById(fadable) !== "undefined" && document.getElementById(fadable) != null){ 
+         var div_msg_style = document.getElementById(fadable).style; div_msg_style.opacity = 1; 
+         (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,1000)})();
+         setStyleProp(fadable,'z-index','10000')
       }
    }
    function hideControlsOnError() {

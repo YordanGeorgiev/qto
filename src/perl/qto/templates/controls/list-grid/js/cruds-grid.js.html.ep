@@ -2,7 +2,7 @@
      el: '#cruds-grid',
      data: {
         globalSrch: ''
-      , gridColumns: <%== $list_control =%>
+      , gridColumns: <%== defined($list_control) ? $list_control : "['name']" =%>
       , gridData: []
       , gridMeta: []
       , pageSize: 7
@@ -58,6 +58,7 @@
             })
             .catch(function(err) {
                console.error(err) 
+               //setMsgVisuals(err,'div_msg');
                return err.response;
             }) 
          }
@@ -85,14 +86,14 @@
                   return ;
                } else if ( response.status === 404 || response.status === 400) {
                   var errMsg = response.statusText + ": " + response.data.msg
-                  setMsgVisuals(errMsg,'div_msg','err');
+                  console.error(errMsg)
+                  setMsgVisuals(errMsg,'div_msg','Error');
                   return ;
                } else {
                   var data = response.data
-                  var dataType = (typeof data)
-                  if ( dataType === 'undefined' ) {
-                     var msg = 'unexpected err occurred while fetching data !!!'
-                     setMsgVisuals(data)
+                  if ( typeof(data) === 'undefined' ) {
+                     var msg = 'unexpected error occurred while fetching data !!! No data received !!!'
+                     setMsgVisuals(msg)
                   } else {
                      this.gridData = data.dat
                      this.showPageSizer = true
@@ -123,7 +124,7 @@
                  setMsgVisuals(errMsg);
                } else {
                  var msg = 'unknown err while fetching grid data occured !'
-                 setMsgVisuals(msg,'div_msg','err');
+                 setMsgVisuals(msg,'div_msg','Error');
                } 
             }) 
 	  	   }
@@ -137,7 +138,7 @@
                .catch(function (err) {
                   if (typeof err !== 'undefined') {
                     var errMsg = err.response.data.msg
-                    throw new err(errMsg);
+                    throw new Error(errMsg);
                   }
                });
          }

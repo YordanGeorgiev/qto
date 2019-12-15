@@ -35,6 +35,7 @@ const OmniSrchBox = Vue.component('omni-srch-box', {
    }
 	, methods: {
       onChange: function (e) {
+         this.$parent.search = e.srcElement.value;
          this.$store.dispatch("loadFilteredItems", e.srcElement.value);
       }
       , onOmniSrchEnter: function (e) {

@@ -1,8 +1,6 @@
 /* start omnisrch */
-input[type="text"] {
-   font-size: 15px;
-} 
 #inp_srch_box {
+   font-size: 15px;
    min-width: 41%;
    border: 1px solid #dadada;
 	box-shadow: 2px 2px 2px #C0C0C0;
