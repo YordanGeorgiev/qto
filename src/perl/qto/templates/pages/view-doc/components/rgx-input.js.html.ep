@@ -1,5 +1,5 @@
   const RgxInput = Vue.component ('rgx-input', {
-     template: `<textarea rows="1" v-bind:id="id" @blur="onBlur" v-html="cnt" v-on:keyup.esc="revertChange"></textarea>`,
+     template: `<textarea v-on:keyup.tab="this.document.execCommand('selectAll',false,null);" rows="1" v-bind:id="id" @blur="onBlur" v-html="cnt" v-on:keyup.esc="revertChange"></textarea>`,
      props: {
 		   id: {}
          , cnt: {

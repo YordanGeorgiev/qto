@@ -295,8 +295,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
                originRgt := (SELECT rgt from $table WHERE id = $origin_id);
                originLft := (SELECT lft from $table WHERE id = $origin_id);
                mayBeSiblingLvl := (SELECT max(level) from $table WHERE 1=1 AND seq = tgtSeq AND level=tgtLvl);
-               mayBeNxtSeq := (SELECT seq from $table WHERE 1=1 AND seq = tgtSeq);
                UPDATE $table set seq=(seq+1) WHERE seq >= tgtSeq;
+               mayBeNxtSeq := (SELECT seq from $table WHERE 1=1 AND seq = tgtSeq);
 
                CASE
                   WHEN originLvl < tgtLvl THEN 
