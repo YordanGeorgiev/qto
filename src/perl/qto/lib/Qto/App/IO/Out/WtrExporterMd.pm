@@ -28,6 +28,7 @@ sub doExport {
    my $self = shift ; 
    my $db               = shift ; 
    my $table            = shift ; 
+   my $md_dialect       = shift || 'github' ;
    my $rv               = 1 ; 
    my $msg              = '' ; 
    my $http_code        = 400 ; 
@@ -51,7 +52,7 @@ sub doExport {
    #my $objWtrGitHubMd    = 'Qto::App::IO::Out::WtrGitHubMd'->new( \$config , \$objModel) ;
    my $objWtrMdFactory = 'Qto::App::IO::WtrMdFactory'->new( \$config , \$objModel ) ;
    my $objWtrMd = $objWtrMdFactory->doSpawn("$export_type");
-   return $objWtrMd->doWrite ( $table , $dat );
+   return $objWtrMd->doWrite ( $table , $dat , $md_dialect);
 }
 
 

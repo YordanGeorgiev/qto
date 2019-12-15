@@ -48,6 +48,8 @@ sub doExportItems {
  
    my $as               = 'xls' ; # the default form of the Export control 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
+   my $md_dialect       = 'github' ; # the default type of mark-down dialect ( because of Microsoft ... )
+   $md_dialect          = $self->req->query_params->param('type') || $md_dialect ; # decide which type of list page to build
 
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $table ) ;
    my $objCnrUrlPrms    = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
@@ -61,7 +63,7 @@ sub doExportItems {
    my $objExportFactory = 'Qto::App::IO::WtrExportFactory'->new(\$config, \$objModel , $as );
    my $objExporter      = $objExportFactory->doSpawn( $as );
    $objExporter->doExport( $db , $table ) ; 
-   ($ret , $msg , $file_to_export ) = $objExporter->doExport( $db , $table ) ;
+   ($ret , $msg , $file_to_export ) = $objExporter->doExport( $db , $table , $md_dialect) ;
 
    unless ( $ret == 0 ) {
       $self->render('text' => "$msg" );

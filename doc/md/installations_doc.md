@@ -1,5 +1,43 @@
 #  QTO INSTALLATIONS AND CONFIGURATION GUIDE
-[[_TOC_]]
+* [1. INTRODUCTION](#1-introduction)
+  * [1.1. PURPOSE](#11-purpose)
+  * [1.2. DOCUMENT STATUS](#12-document-status)
+  * [1.3. AUDIENCE](#13-audience)
+  * [1.4. MASTER STORAGE AND STORAGE FORMAT](#14-master-storage-and-storage-format)
+  * [1.5. VERSION CONTROL](#15-version-control)
+  * [1.6. PROCESS](#16-process)
+* [2. TARGET SETUP](#2-target-setup)
+* [3. LOCAL DEPLOYMENT](#3-local-deployment)
+  * [3.1. PREREQUISITES](#31-prerequisites)
+  * [3.2. TARGET SETUP](#32-target-setup)
+  * [3.3. BOOTSTRAP AND DEPLOY THE APPLICATION LOCALLY](#33-bootstrap-and-deploy-the-application-locally)
+  * [3.4. PROVISION THE APPLICATION LOCALLY](#34-provision-the-application-locally)
+* [4. AWS DEPLOYMENT](#4-aws-deployment)
+  * [4.1. PREREQUISITES](#41-prerequisites)
+  * [4.2. CONFIGURE THE ADMINEMAIL](#42-configure-the-adminemail)
+  * [4.3. CONFIGURE YOUR AWS CREDENTIALS - AWS KEYS AND  SSH KEYS](#43-configure-your-aws-credentials--aws-keys-and-ssh-keys)
+  * [4.4. INITIALISE THE AWS INFRASTRUCTURE](#44-initialise-the-aws-infrastructure)
+  * [4.5. SET THE IP ADDRESS FOR THE HOST IN DNS ( OPTIONAL ) ](#45-set-the-ip-address-for-the-host-in-dns-(-optional-)-)
+  * [4.6. ACCESS THE AWS HOST VIA SSH AND FETCH THE SOURCE CODE FROM GITHUB](#46-access-the-aws-host-via-ssh-and-fetch-the-source-code-from-github)
+  * [4.7. BOOTSTRAP AND DEPLOY THE APPLICATION ON THE AWS INSTANCE](#47-bootstrap-and-deploy-the-application-on-the-aws-instance)
+  * [4.8. PROVISION THE APPLICATION IN THE AWS INSTANCE](#48-provision-the-application-in-the-aws-instance)
+  * [4.9. START THE WEB SERVER](#49-start-the-web-server)
+  * [4.10. ACCESS THE QTO APPLICATION FROM THE WEB](#410-access-the-qto-application-from-the-web)
+  * [4.11. CONFIGURE DNS AND HTTPS](#411-configure-dns-and-https)
+  * [4.12. PROVISION THE QTO USERS](#412-provision-the-qto-users)
+* [5. CREATE THE TESTING INSTANCE](#5-create-the-testing-instance)
+  * [5.1. CREATE THE TST PRODUCT INSTANCE](#51-create-the-tst-product-instance)
+  * [5.2. PROVISION THE TST DATABASE](#52-provision-the-tst-database)
+* [6. CREATE THE PRODUCTION INSTANCE](#6-create-the-production-instance)
+  * [6.1. FORK THE PRODUCTION INSTANCE](#61-fork-the-production-instance)
+  * [6.2. PROVISION THE PRD DATABASE](#62-provision-the-prd-database)
+* [7. PROVISION HTTPS ( ONLY IF DNS IS CONFIGURED )](#7-provision-https-(-only-if-dns-is-configured-))
+* [8. POTENTIAL PROBLEMS AND TROUBLESHOOTING](#8-potential-problems-and-troubleshooting)
+  * [8.1. THE POSTGRES ADMIN USER PASSWORD IS WRONG](#81-the-postgres-admin-user-password-is-wrong)
+  * [8.2. CANNOT LOGIN AT ALL IN THE WEB INTERFACE WITH THE ADMIN USER](#82-cannot-login-at-all-in-the-web-interface-with-the-admin-user)
+
+
+
 
     
 

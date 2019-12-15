@@ -1,5 +1,22 @@
 #  QTO APPLICATION CONCEPTS
-[[_TOC_]]
+* [1. INTRO](#1-intro)
+  * [1.1. PURPOSE](#11-purpose)
+  * [1.2. AUDIENCE](#12-audience)
+  * [1.3. RELATED DOCUMENTATION](#13-related-documentation)
+* [2. BUSINESS LOGIC](#2-business-logic)
+  * [2.1. PROJECTS MANAGEMENT](#21-projects-management)
+  * [2.2. ISSUES / ISSUE ITEMS / ITEMS](#22-issues-/-issue-items-/-items)
+    * [2.2.1. Categories](#221-categories)
+    * [2.2.2. Issues status](#222-issues-status)
+    * [2.2.3. Issues management via time intervals](#223-issues-management-via-time-intervals)
+  * [2.3. QUESTIONS](#23-questions)
+  * [2.4. IDEAS](#24-ideas)
+  * [2.5. PROBLEMS](#25-problems)
+* [3. DEFINITIONS](#3-definitions)
+  * [3.1. RELEASE](#31-release)
+
+
+
 
     
 
