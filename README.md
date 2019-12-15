@@ -1,17 +1,5 @@
 #  README
-* [1. WHY](#1-why)
-* [2. SO, WHAT IS THIS ?!](#2-so-what-is-this-)
-  * [2.1. WHAT CAN IT DO TO FOR ME AND/OR MY ORGANISATION ?](#21-what-can-it-do-to-for-me-and/or-my-organisation-)
-  * [2.2. ASSUMPTION AND PREREQUISITES](#22-assumption-and-prerequisites)
-  * [2.3. PROPOSED CAPABILITIES](#23-proposed-capabilities)
-* [3. DEMO](#3-demo)
-* [4. DOCUMENTATION](#4-documentation)
-* [5. AUTOMATED DEPLOYMENT LOCALLY AND ON AWS IN 35 MINUTES](#5-automated-deployment-locally-and-on-aws-in-35-minutes)
-* [6. ACKNOWLEDGEMENTS](#6-acknowledgements)
-* [7. LICENSE](#7-license)
-
-
-
+[[_TOC_]]
 
     
 
