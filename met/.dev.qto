@@ -161,6 +161,7 @@ cnf/nginx/etc/nginx
 cnf/nginx/etc/nginx/nginx.conf
 src/bash/qto/funcs/provision-https.func.sh
 cnf/nginx/etc/nginx/sites-available/%env%.https-site.conf
+cnf/nginx/etc/nginx/sites-available/%env%.http-site.conf
 cnf/nginx/etc/nginx/sites-available/tst.localhost.cnf
 cnf/nginx/etc/nginx/sites-available/prd.localhost.cnf
 cnf/nginx/etc/nginx/sites-available/dev.localhost.cnf
@@ -483,6 +484,7 @@ src/sql/pgsql/qto/tables/34.create-table-users.sql
 src/sql/pgsql/qto/tables/35.create-table-release_issues.sql
 src/sql/pgsql/qto/tables/36.create-table-security_checklist_doc.sql
 src/sql/pgsql/qto/tables/37.definitions_dictionary.sql
+src/sql/pgsql/qto/tables/37.create-table-onboarding_guide_doc.sql
 src/sql/pgsql/qto/tables/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/tables/66.create-table-logs.sql
 src/sql/pgsql/qto/tables/88.create-table-test_hi_delete_table_doc.sql

@@ -73,7 +73,7 @@
                   return ;
                } else if ( response.status === 404 || response.status === 400) {
                   var errMsg = response.statusText + ": " + response.data.msg
-                  setMsgVisuals(errMsg,'div_msg','err');
+                  setMsgVisuals(errMsg,'div_msg','Error');
                   return ;
                } else {
                   var data = response.data
@@ -93,7 +93,6 @@
                      if ( remainder == 0 ) { toAdd = 0  }
                      this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
                      var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa') ;
-
                      if ( oa !== null ) {
                         this.$children[0].setAscSortBy( oa ) ; 
                      } else if ( typeof url_params.get("od") != 'undefined' ) {
@@ -111,7 +110,7 @@
                  setMsgVisuals(errMsg);
                } else {
                  var msg = 'unknown err while fetching grid data occured !'
-                 setMsgVisuals(msg,'div_msg','err');
+                 setMsgVisuals(msg,'div_msg','Error');
                } 
             }) 
 	  	   }

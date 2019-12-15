@@ -42,16 +42,13 @@ html, body {
    border-bottom-right-radius: 45%;
    margin: 3px;
 }
-
 .app_name_tooltip:hover .app_name_tooltiptext {
    visibility: visible;
 }
-
 html body div#div_msg {
 	 position: absolute; 
-    top: 2%; 
-	 bottom: 95%; 
-    left: 25%;
+    top: 6%; 
+    left: 12%;
 	 z-index: 0; 
 	 font-size: 90%;
 	 min-width: 50%; 
@@ -62,7 +59,7 @@ html body div#div_msg {
 	 text-align: center; 
     vertical-align: center;
 	 border-radius: 4px;
-    line-height: 25px; /* <-- adjust this */
+    line-height: 25px;
 }
 html body div#div_msg span#spn_err_msg {
 	color: #FF0000 ; 

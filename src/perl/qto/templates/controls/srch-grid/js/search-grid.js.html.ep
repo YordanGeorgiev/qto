@@ -68,20 +68,20 @@
          , fetchServerSideDataToUI: function(url_params) {
 
                if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
-               if ( typeof url_params.get('for') == null ){ hideControlsOnerr() ; return ; }
+               if ( typeof url_params.get('for') == null ){ hideControlsOnError() ; return ; }
                document.getElementById('inp_srch_box').value = url_params.get('for') ; 
                this.fetchServerSideData(url_params)
                .then( response => {
                   if ( response.status === 200 ) {
                      var data = response.data 
-                     if ( response.data.dat == null ) { hideControlsOnerr() ;return ; }
+                     if ( response.data.dat == null ) { hideControlsOnError() ;return ; }
 
                      var dataType = (typeof data)
                      if ( dataType === 'undefined' ) {
                         var msg = 'unexpected err occurred while fetching data !!!'
-                        setMsgVisuals(data,'div_msg','err','search');
+                        setMsgVisuals(data,'div_msg','Error','search');
                      } else if ( dataType === 'string' ) {
-                        setMsgVisuals(data,'div_msg','err','search');
+                        setMsgVisuals(data,'div_msg','Error','search');
                      } else {
                         this.gridData = data.dat ; 
 								this.gridMeta = data.met
@@ -111,11 +111,11 @@
                      return ;
                   } else if ( response.status === 404 || response.status === 400) {
                      var errMsg = response.statusText + ": " + response.data.msg
-                     setMsgVisuals(errMsg,'div_msg','err','search');
+                     setMsgVisuals(errMsg,'div_msg','Error','search');
                      return ;
                   } else {
                      var errMsg = response.statusText + ": " + response.data.msg
-                     setMsgVisuals(errMsg,'div_msg','err','search');
+                     setMsgVisuals(errMsg,'div_msg','Error','search');
                      return ;
                   }
                })
@@ -125,7 +125,7 @@
                  setMsgVisuals(errMsg);
                } else {
                  var msg = 'unknown err while fetching grid data for search occured !'
-                 setMsgVisuals(msg,'div_msg','err');
+                 setMsgVisuals(msg,'div_msg','Error');
                } 
             }) 
 	  	   }
