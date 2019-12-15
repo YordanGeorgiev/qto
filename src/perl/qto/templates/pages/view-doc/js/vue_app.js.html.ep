@@ -172,8 +172,9 @@
          }
          , showContextMenu (context,payload) {
             var e = payload ; // the mouse event
-            var id = String(e.target.id).split('-')[1]
+            var id = String(e.target.id).split('-')[1] //toc title
             if ( typeof ( id ) === "undefined" ) { console.error( "showContextMenu id undef" ) ; return }
+            if ( e.target.hasAttribute("name")){ id = String(e.target.name).split('-')[1] } // logical_order link
             e.target.disabled = true
             e.preventDefault();
             var menu = document.getElementById("div-context-menu")
@@ -200,7 +201,7 @@
                      context.commit("DELETE_ITEM", payload)
                      actions.loadItems(context)
                      var elToScrollTo = document.getElementById("title-" + seq)
-                     elToScrollTo.scrollIntoView(true);
+                     if ( typeof(elToScrollTo) != "undefined" ) { elToScrollTo.scrollIntoView(true)}
                   } else {
                      if ( typeof err.response.data.msg != "undefined" ) { 
                         context.commit('SET_SNACKBAR_SHOW', true)
@@ -357,17 +358,29 @@
       })
       , created: function () {
          this.$store.dispatch('loadItems')
-         this.$store.dispatch("loadContextMenu", 0, false);
-         this.$store.dispatch("loadSnackBar" , false);
-         this.$store.dispatch("loadSnackBarInfinity", false);
-         this.$store.dispatch("loadRgtMenuShow", false);
+         this.$store.dispatch("loadContextMenu", 0, false)
+         this.$store.dispatch("loadSnackBar" , false)
+         this.$store.dispatch("loadSnackBarInfinity", false)
+         this.$store.dispatch("loadRgtMenuShow", false)
       }
       , mounted: function () {
-         document.getElementById("inp_srch_box").focus();
+         setTimeout(()=>{ this.scrollToHash() },1500);
       }
       , methods: {
          addItem: function() {
             this.$store.dispatch("addItem", this);
+         }
+         , scrollToHash: function() {
+            this.$nextTick(() => {
+               var eid = window.location.hash.split('#')[1]
+               if ( typeof(eid) !== "undefined" && eid != null){
+                  var elToClick = document.getElementById(eid)
+                  if ( typeof(elToClick) !== "undefined" && elToClick != null) { 
+                     elToClick.scrollIntoView(true)
+                     elToClick.click()
+                  }
+               }
+            })
          }
          , createItem: function(e) {
             this.$store.dispatch("createItem", this);

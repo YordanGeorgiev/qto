@@ -1,5 +1,5 @@
   const RgxTextArea = Vue.component ('rgx-textarea', {
-     template: `<textarea v-bind:id="id" @blur="onBlur" v-html="ccnt" v-on:keyup.esc="revertChange"></textarea>`,
+     template: `<textarea v-on:keyup.tab="this.document.execCommand('selectAll',false,null);" v-bind:id="id" @blur="onBlur" v-html="ccnt" v-on:keyup.esc="revertChange"></textarea>`,
      props: {
 		   id: {}
          , formats: {

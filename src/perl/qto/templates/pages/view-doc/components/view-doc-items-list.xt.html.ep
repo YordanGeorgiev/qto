@@ -12,10 +12,9 @@
             <h3 :ref="'<%= $item =%>-' + item.id" :id="'h<%= $item =%>-' + item.id" class="title">
                <a :id="'<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" class="permalink scroll"
                   :href="'#<%= $item =%>-' + item.id">#</a>
-               <a :id="'title-'+ item.seq" :href="'#<%= $item =%>-' + item.id" 
-                  :title="'level:' + item.level + ' :: seq: ' + item.seq "
-                  class="cls-context-menu-link" @contextmenu = "showContextMenu($event,item.id+'-lvl-'+item.level+'-seq-'+item.seq)">
-                  {{item.logical_order}}</a>
+               <a :name="'sll_<%= $item =%>-' + item.id" :id="'title-'+item.seq" :href="'#<%= $item =%>-' + item.id" 
+               :title="'<%= $item =%>-'+item.id+'-level:'+item.level+' :: seq: ' + item.seq "
+               @contextmenu = "showContextMenu($event)" class="cls-context-menu-link">{{item.logical_order}}</a>
                <rgx-input :id="'inp_name-' + item.id + '-lvl-' + item.level + '-seq-' + item.seq" 
                   :ref="'inp_name-' + item.id + '-lvl-' + item.level + '-seq-' + item.seq"
                   :cnt="item.name" class="cls_title">{{item.name}}</rgx-input>
@@ -46,7 +45,7 @@
       <div tabindex="3" id="rgt_menu" class="rgt_side_nav">
          <div id="rgt_toc">
             <div v-for="item in filteredItems">
-               <div :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event,item.id+'-lvl-'+item.level+'-seq-'+item.seq)">
+               <div :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event)">
                   <a :id="'rml_<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" 
                      class="permalink scroll" :href="'#<%= $item =%>-' + item.id">
                      #

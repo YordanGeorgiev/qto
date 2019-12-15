@@ -12,7 +12,26 @@ const OmniSrchBox = Vue.component('omni-srch-box', {
 	, props: {
 	   icon: ''
 	}
-	, computed: {
+	, mounted: function(){
+      document.getElementById("inp_srch_box").focus();
+      window.addEventListener('keyup', function(event) {
+         if (event.key === "/" ) { 
+            var focusedElement = document.activeElement;
+            if ( typeof focusedElement !== "undefined" ) {
+               if ( typeof focusedElement.getAttribute("contenteditable") === "undefined" ) {
+                  return;
+               } else {
+                  if ( focusedElement.getAttribute("class") == "cls_desc") {
+                     return ;
+                  } else {
+                     document.getElementById("inp_srch_box").focus();
+                  }
+               }
+          } else {
+               document.getElementById("inp_srch_box").focus();
+          }
+         }
+      });
    }
 	, methods: {
       onChange: function (e) {
