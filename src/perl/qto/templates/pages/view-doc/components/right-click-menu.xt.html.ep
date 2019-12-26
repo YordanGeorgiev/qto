@@ -10,14 +10,14 @@
 			<a @click="openItem($event)">
             <img src="../../themes/thme-blue/img/controls/open-book.png" 
 				class="context-menu-icon" :id="'rgt_clk_open_a-'+cid" width="18"> 
-         open & dive 
+         open as doc
          </a>
 		 </context-menu-item>
 		 <context-menu-item>
 			<a @click="openInList($event)">
             <img src="../../themes/thme-blue/img/controls/open-in-listing.png" 
 				class="context-menu-icon"  width="18">
-         open in list
+         open as list
          </a>
 		 </context-menu-item>
 		 <context-menu-item>

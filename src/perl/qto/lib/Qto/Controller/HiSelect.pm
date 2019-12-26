@@ -26,6 +26,7 @@ sub doHiSelectItems {
    my $msg           = '' ; 
    my $http_code     = 400 ; 
    my $http_method   = 'GET' ; 
+   my $meta_cols           = {} ; 
    my $met           = {} ; 
    my $ret           = 1 ; 
    my $cnt           = 0 ; 
@@ -43,7 +44,7 @@ sub doHiSelectItems {
 
    $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
    my $objCnrUrlPrms = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
-   ( $ret , $msg , $met , $mc)   = $objModel->doGetTableMeta($config,$db,$item);
+   ( $ret , $msg , $meta_cols , $mc)   = $objModel->doGetTableMeta($config,$db,$item);
   
    return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
       unless $objCnrUrlPrms->doValidateAndSetHiSelect();
@@ -55,7 +56,12 @@ sub doHiSelectItems {
    ($http_code, $msg, $dat) 	= $objRdrDb->doHiSelectBranch( $db , $item );
    my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$config  ) ; 
    $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
-
+   
+   my $meta_tables  = $self->app->config($db . '.meta-tables');
+   $met = {
+        'meta_cols' => $meta_cols
+      , 'meta_tables' => $meta_tables
+      };
    $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    return ; 
 }

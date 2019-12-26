@@ -1,9 +1,12 @@
+# file: ~/.bash_opts.host-name
+# usage:
 # wget -O ~/.bash_opts.`hostname -s` https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/.bash_opts.host-name
 export HISTSIZE=9999
 export HISTFILESIZE=10000
 
-# Avoid duplicates in the bash history
-export HISTCONTROL=ignoredups:erasedups
+# Avoid duplicates, do not store commands starting with space
+export HISTCONTROL=ignoredups:erasedups:ignorespace
+
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend ; shopt -s direxpand 
 
@@ -11,22 +14,21 @@ shopt -s histappend ; shopt -s direxpand
 export PROMPT_COMMAND='printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD}"'
 
 # After each command, append to the history file and reread it
-export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -n; history -w; history -c; history -r"
 
 # Ctrl + X,E will open always vim
 export EDITOR=vim
 
 # set a nice prompt
-export PS1='`date "+%F %T"` \u@\h  \w \n\n  '
+export PS1=" \u@\h [\d \t] [\w] $ \n\n  "
 
 # enable ctrl + s for forward searching in the history
 stty -ixon 
 
+ts=$(date "+%Y%m%d_%H%M%S")
+
+export PATH=$PATH:/opt/google/chrome
 # # show a disk usage report
 df -a -h | tail -n +2|perl -nle 'm/(.*)\s+(\d{1,2}%\s+(.*))/g;printf "%-20s %-15s %-70s \n","$2",$3,$1' | sort -nr
 
-# because hypnotoad
-export PATH=$PATH:$HOME/perl5/bin/
 
-# because headless chrome
-export PATH=$PATH:/opt/google/chrome/

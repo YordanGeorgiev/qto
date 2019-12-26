@@ -84,7 +84,7 @@
                   } else {
                      this.gridData = data.dat
                      this.showPageSizer = true
-                     this.gridMeta = data.met
+                     this.gridMeta = data.met.meta_cols
                      var totalRSsize = data.cnt ; 
                      this.pageSize = url_params.get('pg-size');
                      this.pageNum = url_params.get('pg-num');

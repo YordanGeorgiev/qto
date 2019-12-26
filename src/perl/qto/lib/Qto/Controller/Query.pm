@@ -41,6 +41,8 @@ sub doQueryItems {
    $self->SUPER::doReloadProjDbMeta( $db,'search' ) ;
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
+   my $tables_meta      = $self->app->config($db . '.meta-tables');
+   my $met              = { 'meta_cols'=>$msr2 , 'meta_tables' => $tables_meta};
    
    my $objCnrUrlPrms  = {} ; 
    my $objRdrDbsFcry = {} ; 
@@ -70,7 +72,7 @@ sub doQueryItems {
          my $objCnrHsr2ToArray = 
             'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
          ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 , '>', 'relevancy') ;
-         $self->SUPER::doRenderJSON(200,$msg,'GET',$msr2,$rows_count,$list);
+         $self->SUPER::doRenderJSON(200,$msg,'GET',$met,$rows_count,$list);
       } elsif ( $ret == 204 ) {
          $self->SUPER::doRenderJSON(204,$msg,'GET','','0','');
       } elsif ( $ret == 100 ) {

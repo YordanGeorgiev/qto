@@ -18,6 +18,12 @@ li label a:focus {
 	color:#FF0066;
 	background-color: #82CAFA;
 }
+
+#chk_left_menu input {
+  width: 30px;
+  height: 30px;
+}
+
 #left_menu_toggle {
    user-select: none;
    -webkit-user-select: none;
@@ -32,7 +38,7 @@ li label a:focus {
   width: 35px;
   height: 29px;
   position: absolute;
-  top: -2px;
+  top: -15px;
   left: -5px;
   cursor: pointer;
   opacity: 0; /* hide this */
