@@ -1,7 +1,7 @@
 /* start omnisrch */
 #inp_srch_box {
    font-size: 15px;
-   min-width: 41%;
+   width: 41%;
    border: 1px solid #dadada;
 	box-shadow: 2px 2px 2px #C0C0C0;
 	-webkit-box-shadow: 2px 2px 2px #C0C0C0;
@@ -9,10 +9,11 @@
    border-radius: 4px;
    line-height: 18px;
    margin-left: 10%;
-   margin-top: 5px;
+   margin-top: 17px;
 }
-#inp_srch_box:focus{
-   width: 45%;
+#inp_srch_box:focus {
+   width: 60%;
+   margin-top: 17px;
    outline: none;
    box-shadow: 0 0 0px #9ecaed;
    padding: 2px 4px; 
@@ -23,6 +24,7 @@
 	-moz-box-shadow: 3px 3px 3px #C0C0C0;
 }
 #inp_srch_box:hover {
+   margin-top: 17px;
    width: 45%;
    outline: none;
    padding: 2px 4px; 

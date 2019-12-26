@@ -83,17 +83,17 @@
                      } else if ( dataType === 'string' ) {
                         setMsgVisuals(data,'div_msg','Error','search');
                      } else {
-                        this.gridData = data.dat ; 
-								this.gridMeta = data.met
+                        this.gridData = data.dat
+								this.gridMeta = data.met.meta_cols
                         var totalRSsize = data.cnt ; 
-                        this.pageSize = url_params.get('pg-size');
-                        this.pageNum = url_params.get('pg-num');
-                        this.urlParamFor = url_params.get('for');
+                        this.pageSize = url_params.get('pg-size')
+                        this.pageNum = url_params.get('pg-num')
+                        this.urlParamFor = url_params.get('for')
                         var remainder = totalRSsize % this.pageSize
                         var toAdd = 1 // example: pg-size 10 , total-rs-size 30 => 3 and not 4
                         if ( remainder == 0 ) { toAdd = 0  }
                         this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
-                        var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa') ;
+                        var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa');
 
                         if ( oa !== null ) {
                            this.$children[0].setAscSortBy( oa ) ; 

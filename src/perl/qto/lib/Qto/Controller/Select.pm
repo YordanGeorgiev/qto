@@ -37,6 +37,7 @@ sub doSelectItems {
    my $msg              = 'unknown error during Select item';
    my $hsr2             = {};
    my $met              = {}; # the meta-data of the this item
+   my $meta_cols        = {}; # the meta-data of the this item
    my $mc               = {}; # the meta-counter of the meta-data
    my $cnt              = 0 ; 
    my $objCnrUrlPrms    = {} ; 
@@ -67,8 +68,13 @@ sub doSelectItems {
       my $objCnrHsr2ToArray = 
          'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
       ( $ret , $msg , $dat , $cnt ) = $objCnrHsr2ToArray->doConvert ($hsr2);
-      ( $ret , $msg , $met , $mc)   = $objModel->doGetTableMeta($config,$db,$item);
+      ( $ret , $msg , $meta_cols , $mc)   = $objModel->doGetTableMeta($config,$db,$item);
    } 
+   my $tables_meta  = $self->app->config($db . '.meta-tables');
+   $met = {
+        'meta_cols' => $meta_cols
+      , 'meta_tables' => $tables_meta
+      };
    $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
 }
 
@@ -216,7 +222,8 @@ sub doSelectMeta {
    my $table       = $self->stash('item') || undef ; 
    my $ret         = 0;
    my $msg         = 'unknown error during Select item';
-   my $met         = '' ; 
+   my $met         = {} ;
+   my $cols_meta   = '' ; 
    my $rdbms_type  = 'postgres';
    my $http_method = 'GET';
    my $http_code   = '400';
@@ -229,11 +236,10 @@ sub doSelectMeta {
    $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$table ) ;
-   
    $config		 		= $self->app->config;
       
    if ( defined $table ) {
-      ( $ret , $msg , $met , $cnt ) = $objModel->doGetTableMeta ( $config , $db , $table ) 
+      ( $ret , $msg , $cols_meta , $cnt ) = $objModel->doGetTableMeta ( $config , $db , $table ) 
    }
 
    if ( $ret == 0 ) {
@@ -242,12 +248,16 @@ sub doSelectMeta {
       $msg = "SELECT meta OK for table: $table " ; 
       my $objCnrHsr2ToArray = 
          'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
-      ( $ret , $msg , $dat , $cnt ) = $objCnrHsr2ToArray->doConvert($met);
+      ( $ret , $msg , $dat , $cnt ) = $objCnrHsr2ToArray->doConvert($cols_meta);
 
       unless ( $ret == 0 ) {
          $http_code = 400 ; $dat = '' ; $cnt = 0 ; 
       }
-      my $met = $met ; 
+      my $tables_meta  = $self->app->config($db . '.meta-tables');
+      $met = {
+         'meta_cols' => $dat
+       , 'meta_tables' => $tables_meta
+      };
       $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 400 or $ret == 404 ) {
       $http_code = 400 ; 
