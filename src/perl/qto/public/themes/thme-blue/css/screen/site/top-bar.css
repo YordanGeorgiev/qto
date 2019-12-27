@@ -9,11 +9,11 @@
    border-radius: 4px;
    line-height: 18px;
    margin-left: 10%;
-   margin-top: 17px;
+   margin-top: 7px;
 }
 #inp_srch_box:focus {
    width: 60%;
-   margin-top: 17px;
+   margin-top: 7px;
    outline: none;
    box-shadow: 0 0 0px #9ecaed;
    padding: 2px 4px; 
@@ -24,7 +24,7 @@
 	-moz-box-shadow: 3px 3px 3px #C0C0C0;
 }
 #inp_srch_box:hover {
-   margin-top: 17px;
+   margin-top: 7px;
    width: 45%;
    outline: none;
    padding: 2px 4px; 
@@ -33,42 +33,6 @@
 	box-shadow: 3px 3px 3px #C0C0C0;
 	-webkit-box-shadow: 3px 3px 3px #C0C0C0;
 	-moz-box-shadow: 3px 3px 3px #C0C0C0;
-}
-.cls_img_but {
-	background-color: transparent;
-	border: 2px solid transparent ; 
-	border-radius: 3px;
-   border-top-left-radius: 45%;
-   border-top-right-radius: 45%;
-   border-bottom-left-radius: 45%;
-   border-bottom-right-radius: 45%;
-   margin: 3px;
-}
-.cls_img_but:hover {
-   background-color: #D3D3D3;
-	border: 2px solid #CDCDCD;
-	border-radius: 3px;
-	box-shadow: 1px 1px 10px #C0C0C0;
-	-webkit-box-shadow: 1px 1px 10px #C0C0C0;
-	-moz-box-shadow: 1px 1px 10px #C0C0C0;
-   border-top-left-radius: 45%;
-   border-top-right-radius: 45%;
-   border-bottom-left-radius: 45%;
-   border-bottom-right-radius: 45%;
-   margin: 3px;
-}
-.cls_img_but:focus {
-   background-color: #D3D3D3;
-	border: 2px solid #CDCDCD;
-	border-radius: 3px;
-	box-shadow: 1px 1px 10px #C0C0C0;
-	-webkit-box-shadow: 1px 1px 10px #C0C0C0;
-	-moz-box-shadow: 1px 1px 10px #C0C0C0;
-   border-top-left-radius: 45%;
-   border-top-right-radius: 45%;
-   border-bottom-left-radius: 45%;
-   border-bottom-right-radius: 45%;
-   margin: 3px;
 }
 /* omnisrch */
 *, *:before, *:after {
