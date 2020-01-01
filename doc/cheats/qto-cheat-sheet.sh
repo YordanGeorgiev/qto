@@ -18,6 +18,7 @@ clear ; ./src/bash/qto/qto.sh -a backup-postgres-table -t readme_doc
 
 export docs_root_dir=`pwd` # or could be any qto proj dir
 clear ; ./src/bash/qto/qto.sh -a generate-md-docs  # export the documentation of the desired db
+clear ; ./src/bash/qto/qto.sh -a generate-pdf-docs  # export the documentation of the desired db
 
 ./src/bash/qto/qto.sh -a mojo-hypnotoad-start # start the hypnotoad web server
 
@@ -25,7 +26,10 @@ clear ; ./src/bash/qto/qto.sh -a generate-md-docs  # export the documentation of
 clear ; sudo su - postgres -c "psql -d postgres -c \"drop database dev_qto\""
 clear ; sudo su - postgres -c "psql -d postgres -c \"create database dev_qto\""
 
-# get all the id's from the back-end api
-mojo get 'http://host-name:8082/tst_qto/hiselect/requirements_doc?bid=0' |jq '.dat[]|.id'
+# get the id,guid,name from the back-end api
+mojo get 'http://host-name:8082/tst_qto/hiselect/requirements_doc?bid=0' |jq '.dat[]|.id,.guid,.name'
+mojo get 'http://host-name:8082/tst_qto/hiselect/requirements_doc?bid=0&oa=seq' |jq '.dat[]|{id,guid,name} '
+
+psql -d dev_qto -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public TO usrdevqtoapp; GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO usrdevqtoapp;"
 
 # eof file: doc/cheats/qto-cheat-sheet.sh

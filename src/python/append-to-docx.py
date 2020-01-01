@@ -45,9 +45,9 @@ def getTableData(url):
     try:
         with urllib.request.urlopen(url) as url:
             data = json.loads(url.read().decode())
-            print(data['dat'])
-            print(data['met'])
-            return data['dat'], data['met']
+            # print(data['dat'])
+            print(data['met']['meta_cols'])
+            return data['dat'], data['met']['meta_cols']
     except (Exception) as error:
         print(error)
 
