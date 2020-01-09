@@ -70,35 +70,29 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $tm = "both email and pass are filled in and the pass matches - see users create table";
    ok ( $t->post_ok( $url => 'form'  => {'email' =>'test.user@gmail.com', 'pass' => 'secret'}) , $tm );
    printf "\n";
-
-   $tm = "a successfull result redirects to the home page";
-   $tx = $t->ua->post( $url => 'form'  => {'email' =>'test.user@gmail.com', 'pass' => 'secret'});
-   ok ( $tx->result->dom->all_text =~ "$db home" , $tm );
-   printf "\n";
-   # debug p $tx->result->dom ;
    
    $tm = "non registered user"; 
    ok ( $t->post_ok( $url => 'form'  => {'email' =>'not.registered.user@gmail.com', 'pass' => 'invalid'})->status_is(401) , $tm );
    $tx = $t->ua->post( $url => 'form'  => {'email' =>'not.registered.user@gmail.com', 'pass' => 'invalid'});
    ok ( $tx->result->dom->all_text =~ 'not.registered.user@gmail.com not registered' , $tm );
    printf "\n";
+
+   $tm = "a successfull result redirects to the home page";
+   $tx = $t->ua->post( $url => 'form'  => {'email' =>'test.user@gmail.com', 'pass' => 'secret'});
+   ok ( $tx->result->dom->all_text =~ "search $db" , $tm );
+   printf "\n";
+   # debug p $tx->result->dom ;
+   
   
    # check that the product version , and the short hash are on the page
    my $env = $config->{'env'}->{'run'}->{'ENV_TYPE'} ; 
    my $dom = {} ;                                # the mojo dom parser 
 
-   $tm = "login product_type: $env " ; 
-   $url = '/' . $db . '/login' ; 
-
-   $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
-   ok ( $dom->find('div')->[2] =~ m/$env/ , $tm ) ;
-
+   $dom = Mojo::DOM->new($tx->result->dom->all_text) ; 
+   # p $tx->result->dom->all_text;
    my $GitShortHash = $config->{'env'}->{'run'}->{ 'GitShortHash' } ; 
-   $tm = "the app label contains the short git hash of this product instance: $GitShortHash" ; 
-   ok ( $dom->find('div')->[2] =~ m/$GitShortHash/ , $tm ) ;
-  
    my $ProductVersion = $config->{'env'}->{'run'}->{'VERSION'} ;
    $tm = "login product version of this product instance: $ProductVersion " ; 
-   ok ( $dom->find('div')->[2] =~ m/$ProductVersion/ , $tm ) ;
+   ok ( $tx->result->dom->all_text =~ m/$db $ProductVersion  $env  $GitShortHash/ , $tm ) ;
 
 done_testing();
