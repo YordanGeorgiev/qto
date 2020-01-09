@@ -2,6 +2,7 @@
 % layout 'list';
 
 % content_for cnt_header_css => begin
+   <title> search <%= " $db " =%> </title> 
    <link rel="stylesheet" type="text/css" media="screen"  
       href="../../themes/thme-blue/css/screen/controls/pager.css?v=<%= $ProductVersion =%>" />
    <link rel="stylesheet" type="text/css" media="screen"  

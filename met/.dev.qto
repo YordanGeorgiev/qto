@@ -1,6 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
-src/tpl/code-generator/code-generator.sh
-src/tpl/code-generator/test-code-generator.sh
+src/tpl/psql-code-generator
+src/tpl/psql-code-generator/psql-code-generator.sh
+src/tpl/psql-code-generator/test-psql-code-generator.sh
 #
 src/perl/qto/public/poc/fixed-top-bar/index.html
 src/perl/qto/public/themes/thme-blue/css/screen/site/top-bar.css

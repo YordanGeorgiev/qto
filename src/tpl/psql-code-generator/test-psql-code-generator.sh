@@ -10,8 +10,8 @@ main(){
 
 do_run_test_01(){
   echo $1 ; shift 
-  to_tst='code-generator - a script for generating code'
-  out=`echo $(bash src/tpl/code-generator/code-generator.sh)|grep -c "$to_tst"`
+  to_tst='psql-code-generator - a script for generating code'
+  out=`echo $(bash src/tpl/psql-code-generator/psql-code-generator.sh)|grep -c "$to_tst"`
   test $out -eq 1 && echo     test-01 ok
   test $out -eq 0 && echo     test-01 failed
   echo -e "\n\n"
@@ -22,8 +22,8 @@ do_run_test_01(){
 
 do_run_test_02(){
   echo $1 ; shift 
-  to_tst='code-generator - a script for generating code'
-  out=`echo $(bash src/tpl/code-generator/code-generator.sh dev_qto)|grep -c "$to_tst"`
+  to_tst='psql-code-generator - a script for generating code'
+  out=`echo $(bash src/tpl/psql-code-generator/psql-code-generator.sh dev_qto)|grep -c "$to_tst"`
   test $out -eq 1 && echo     test-02 ok
   test $out -eq 0 && echo     test-02 failed
   echo -e "\n\n"
@@ -34,7 +34,7 @@ do_run_test_02(){
 
 do_run_test_03(){
   echo $1 ; shift 
-  bash src/tpl/code-generator/code-generator.sh dev_qto release_issues monthly_issues
+  bash src/tpl/psql-code-generator/psql-code-generator.sh dev_qto release_issues monthly_issues
   sleep 1
   #clearTheScreen
 }
