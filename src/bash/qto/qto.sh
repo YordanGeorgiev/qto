@@ -307,13 +307,10 @@ do_set_vars(){
 
    if [ "$environment_name" == "$RUN_UNIT" ]; then
       product_dir=$PRODUCT_INSTANCE_DIR
-      test -z "$env_type" && export env_type='dev'
    else
-      # this could be dev, tst , prd
-      export product_owner=$(echo `basename "$PRODUCT_INSTANCE_DIR"`|cut -d'.' -f6)
       cd .. ; product_dir=`pwd`;
    fi
-
+   test -z "$env_type" && export env_type='dev'
    cd .. ; product_base_dir=`pwd`; org_name=$(basename `pwd`)
 
    ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"

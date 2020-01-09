@@ -453,6 +453,10 @@ src/sql/pgsql/qto/tables/03.create-table-monthly_issues.sql
 src/sql/pgsql/qto/tables/04.01.create-table-yearly_issues_2018.sql
 src/sql/pgsql/qto/tables/04.create-table-yearly_issues.sql
 src/sql/pgsql/qto/tables/05.create-table-quinquennially_issues.sql
+src/sql/pgsql/qto/tables/05.01.create-table-his_quinquennially_issues.sql
+src/sql/pgsql/qto/tables/05.02.create-table-update-trigger.quinquennially_issues.sql
+src/sql/pgsql/qto/tables/05.03.create-table-insert-trigger.quinquennially_issues.sql
+src/sql/pgsql/qto/tables/05.04.create-table-delete-trigger.quinquennially_issues.sql
 src/sql/pgsql/qto/tables/06.create-table-decadally_issues.sql
 src/sql/pgsql/qto/tables/07.create-table-confs.sql
 src/sql/pgsql/qto/tables/09.create-table-questions.sql

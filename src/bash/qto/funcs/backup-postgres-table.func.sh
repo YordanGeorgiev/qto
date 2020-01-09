@@ -10,7 +10,7 @@ doBackupPostgresTable(){
 
    test -z ${table:-} && doExit 1 "no table defined to backup !!!"
 	table="$(echo -e "${table}" | sed -e 's/[[:space:]]*$//')" #or how-to to trin leading space
-   dump_dir=$PRODUCT_INSTANCE_DIR/dat/mix/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/tmp
+   dump_dir=$PROJ_INSTANCE_DIR/dat/mix/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/tmp
    mkdir -p $dump_dir || doExit 1 "cannot create the dump_dir: $dump_dir"
    dump_file=$dump_dir/${postgres_db_name:-}.${table:-}.data.sql
 
