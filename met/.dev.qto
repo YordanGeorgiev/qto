@@ -1,4 +1,6 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+src/tpl/code-generator/code-generator.sh
+src/tpl/code-generator/test-code-generator.sh
 #
 src/perl/qto/public/poc/fixed-top-bar/index.html
 src/perl/qto/public/themes/thme-blue/css/screen/site/top-bar.css
@@ -451,12 +453,14 @@ src/sql/pgsql/qto/tables
 src/sql/pgsql/qto/tables/01.create-table-daily_issues.sql
 src/sql/pgsql/qto/tables/03.create-table-monthly_issues.sql
 src/sql/pgsql/qto/tables/04.01.create-table-yearly_issues_2018.sql
+src/sql/pgsql/qto/tables/04.01.create-table-yearly_issues_2019.sql
 src/sql/pgsql/qto/tables/04.create-table-yearly_issues.sql
-src/sql/pgsql/qto/tables/05.create-table-quinquennially_issues.sql
+src/sql/pgsql/qto/tables/05.00.create-table-quinquennially_issues.sql
 src/sql/pgsql/qto/tables/05.01.create-table-his_quinquennially_issues.sql
 src/sql/pgsql/qto/tables/05.02.create-table-update-trigger.quinquennially_issues.sql
 src/sql/pgsql/qto/tables/05.03.create-table-insert-trigger.quinquennially_issues.sql
 src/sql/pgsql/qto/tables/05.04.create-table-delete-trigger.quinquennially_issues.sql
+src/sql/pgsql/qto/tables/05.05.create-table-quinquennially_issues_2020.sql
 src/sql/pgsql/qto/tables/06.create-table-decadally_issues.sql
 src/sql/pgsql/qto/tables/07.create-table-confs.sql
 src/sql/pgsql/qto/tables/09.create-table-questions.sql
@@ -516,9 +520,6 @@ src/sql/pgsql/scripts/admin/list-table-columns.sql
 src/sql/pgsql/scripts/admin/list-table-priviledges.sql
 src/sql/pgsql/scripts/admin/rank-srch.sql
 src/sql/pgsql/scripts/admin/upsert_item_trigger.sql
-src/sql/pgsql/scripts/bash
-src/sql/pgsql/scripts/bash/list-postgres-tables.sh
-src/sql/pgsql/scripts/bash/list-table-cols.sh
 #----
 src/bash/qto/tests/db-to-xls.test.sh
 src/bash/qto/funcs/db-to-xls.func.sh
