@@ -8,7 +8,7 @@ use FindBin;
 die_on_fail ; 
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
-   $ENV{'QTO_ONGOING_TEST'} = 1;
+   $ENV{'QTO_NO_AUTH'} = 1;
 
    my $tm = '' ; # the test message for each test 
    my $t = Test::Mojo->new('Qto');

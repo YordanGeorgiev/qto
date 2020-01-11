@@ -7,7 +7,7 @@ use FindBin;
 use Mojo::UserAgent;
 
 die_on_fail ; 
-   $ENV{'QTO_ONGOING_TEST'} = 1 ;
+   $ENV{'QTO_NO_AUTH'} = 1 ;
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 

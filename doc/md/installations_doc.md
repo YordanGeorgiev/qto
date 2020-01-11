@@ -290,11 +290,11 @@ You would need to restart the web server after executing this command.
 The password hashing in the users table is activated ALWAYS on blur even that the ui is not showing it ( yes , that is more of a bug, than a feature.
 The solution is to restart the application layer WITHOUT any authentication, change the admin user password from the ui and restart the application layer with authentication once again.
 
-    export QTO_ONGOING_TEST=0
+    export QTO_NO_AUTH=0
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
     
     # now change the AdminEmail user password from the UI
-    export QTO_ONGOING_TEST=1
+    export QTO_NO_AUTH=1
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
     
 

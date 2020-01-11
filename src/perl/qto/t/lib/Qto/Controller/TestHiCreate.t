@@ -10,7 +10,7 @@ use Mojo::UserAgent;
 die_on_fail ; 
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
-   $ENV{'QTO_ONGOING_TEST'} = 1;
+   $ENV{'QTO_NO_AUTH'} = 1;
 # relies on the following table:
 # psql -d dev_qto < src/sql/pgsql/qto/tables/95.create-table-test_hi_create_table_doc.sql ;
 # clear ; perl -MCarp=verbose src/perl/qto/t/lib/Qto/Controller/TestCreate.t

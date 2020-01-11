@@ -127,7 +127,7 @@ sub isAuthenticated {
    $db                     = toEnvName ( $db , $config ) ;
 
    # non-authentication mode IF the app has been stared with this env var
-   return 1 if $ENV{'QTO_ONGOING_TEST'}; # no authentication when testing if desired so !!!
+   return 1 if $ENV{'QTO_NO_AUTH'}; # no authentication when testing if desired so !!!
 
    # basic native authentication mode if NOT started with this env var
    unless ( defined ( $self->session( 'app.' . $db . '.user')) ) {

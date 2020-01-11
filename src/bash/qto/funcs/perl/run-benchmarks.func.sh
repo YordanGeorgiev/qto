@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doRunBenchmarks(){
   
-   export QTO_ONGOING_TEST=1
+   export QTO_NO_AUTH=1
    test -z ${qto_project:-} && \
       source "$PRODUCT_INSTANCE_DIR/lib/bash/funcs/parse-cnf-env-vars.sh" && \
       doParseCnfEnvVars "$PRODUCT_INSTANCE_DIR/cnf/$RUN_UNIT.$env_type.*.cnf"
@@ -19,7 +19,7 @@ doRunBenchmarks(){
       clearTheScreen
    done < <(find src/perl/qto/t/lib/Qto/App/benchmarks -type f -name '*.pl'|sort)
 
-   export QTO_ONGOING_TEST=0
+   export QTO_NO_AUTH=0
 }
 
 

@@ -229,6 +229,11 @@ sub doSetRoutes {
    , action       => 'doShowLoginForm'
    );
    
+   $r->get('/:db/logon')->to(
+     controller   => 'Logon'
+   , action       => 'doShowLogon'
+   );
+   
    $r->post('/:db/login')->to(
      controller   => 'Login'
    , action       => 'doLoginUser'
