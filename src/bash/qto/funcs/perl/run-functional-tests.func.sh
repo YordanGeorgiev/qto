@@ -5,7 +5,7 @@
 # ---------------------------------------------------------
 doRunFunctionalTests(){
 	
-   export QTO_ONGOING_TEST=1
+   export QTO_NO_AUTH=1
    test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
    doExportJsonSectionVars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
@@ -20,5 +20,5 @@ doRunFunctionalTests(){
       clearTheScreen
    done < <(find src/perl/qto/t/lib/Qto/Controller -type f -name '*.t' |sort)
 
-   export QTO_ONGOING_TEST=0
+   export QTO_NO_AUTH=0
 }

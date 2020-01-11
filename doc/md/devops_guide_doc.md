@@ -447,13 +447,13 @@ The related requirement is added in the requirements document - there might be o
     
 
 ### 6.17. At least 2 times passed functional and js tests run 
-Use the following shell actions ( Note that since v0.6.7 as authentication is required for most of the web-actions the QTO_ONGOING_TEST environmental variable has to be set to 1 to run those separately) :
+Use the following shell actions ( Note that since v0.6.7 as authentication is required for most of the web-actions the QTO_NO_AUTH environmental variable has to be set to 1 to run those separately) :
 
     bash src/bash/qto/qto.sh -a run-js-tests
     bash src/bash/qto/qto.sh -a run-functional-tests
 
 ### 6.18. At least 2 times passed integration tests  in each environment instance
-At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. Since v0.6.7 as authentication is required for most of the web-actions the QTO_ONGOING_TEST environmental variable has to be set to 1 to run those separately. 
+At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. Since v0.6.7 as authentication is required for most of the web-actions the QTO_NO_AUTH environmental variable has to be set to 1 to run those separately. 
 
     bash src/bash/qto/qto.sh -a run-integration-tests
 
@@ -491,7 +491,7 @@ Well just chain the both commands.
  This one is actually a bug ... all the tests not requiring non-authentication mode should set it in advance ...
 
     # disable authentication during testing
-    export QTO_ONGOING_TEST=1
+    export QTO_NO_AUTH=1
     
     # call the test once again
     perl src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
