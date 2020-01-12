@@ -12,14 +12,16 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 my $t       = Test::Mojo->new('Qto') ;
 my $config  = $t->app->config ; 
 my $db      = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
-my @tables  = ( 'daily_issues' , 'weekly_issues' , 'monthly_issues' , 'yearly_issues' ) ; 
+use Qto::App::Utils::Timer ; 
+my $objTimer = 'Qto::App::Utils::Timer'->new;
+my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
+my @tables_to_check = ("monthly_issues_$year$mon" , "yearly_issues_$year" );
 my $ua      = $t->ua ; 
 my $res     = {} ; #a tmp result json string
 my $tm      = '' ; 
 
 $res        = $ua->get('/' . $db . '/select-tables')->result->json ; 
 my $list    = $res->{'dat'} ; 
-my @tables_to_check = ( 'monthly_issues' , 'yearly_issues' ) ; 
 
 # foreach table in the app db in test call db/select/table
 for my $row ( @$list ) {

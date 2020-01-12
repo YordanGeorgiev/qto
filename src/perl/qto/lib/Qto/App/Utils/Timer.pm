@@ -109,7 +109,7 @@ Timer
 
 =head1 SYNOPSIS
 
-use Timer  ; 
+use Qto::App::Utils::Timer ; 
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer-> GetTimeUnits(); 
 
 

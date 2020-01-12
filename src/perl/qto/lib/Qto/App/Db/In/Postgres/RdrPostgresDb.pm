@@ -27,9 +27,10 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 	our $postgres_db_user_pw	 					   = q{} ; 
 	our $web_host 											= q{} ; 
 
-   sub doNativeLogonAuth  {
+   sub doNativeLoginAuth  {
 
       my $self             = shift ; 
+      my $db               = shift ; 
       my $email            = shift ; 
       my $password         = shift ; 
       my $msg              = q{} ;         
@@ -40,22 +41,18 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
       
-      if ( defined $objModel->get('postgres_db_name') ) {
-		   $db = $objModel->get('postgres_db_name');
-      }
-      
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
       eval { 
          $str_sql = "
             SELECT id,email, password from users WHERE 1=1
-            AND email ='$email'
+            AND email = ?
          ;
          " ; 
 
          $sth = $dbh->prepare($str_sql);  
-         $sth->execute() or $objLogger->error ( "$DBI::errstr" ) ;
+         $sth->execute($email) or $objLogger->error ( "$DBI::errstr" ) ;
          $hsr = $sth->fetchall_hashref( 'id' ) ; 
 
          if ( scalar ( keys %$hsr ) == 1 ) {

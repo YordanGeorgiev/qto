@@ -239,6 +239,11 @@ sub doSetRoutes {
    , action       => 'doLoginUser'
    );
    
+   $r->post('/:db/logon')->to(
+     controller   => 'Logon'
+   , action       => 'doLogonUser'
+   );
+   
    $r->get('/:db/search')->to(
      controller   => 'Search'
    , action       => 'doSearchItems'

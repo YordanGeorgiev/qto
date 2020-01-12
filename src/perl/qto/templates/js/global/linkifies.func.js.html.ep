@@ -23,7 +23,7 @@ if(!String.linkifyOne) {
 }
 if(!String.linkifyItems) {
    String.prototype.linkifyItems = function(){
-      var docItems = ['readme_doc','userstories_doc', 'deployment_guide_doc', 'enduser_guide_doc', 'system_guide_doc', 'concepts_doc','installations_doc','features_doc','requirements_doc','devops_guide_doc','maintenance_guide_doc'];
+      var docItems = ['readme_doc','userstories_doc', 'deployment_guide_doc', 'enduser_guide_doc', 'system_guide_doc', 'concepts_doc','installations_doc','features_doc','requirements_doc','devops_guide_doc','maintenance_guide_doc','security_checklist_doc'];
       var me = ( typeof(this) === "undefined" ) ? '' : this
       docItems.map ( itm => { 
          var strPattern = '(('+itm+')(-)' + '(\\d{1,18}))' // example: yearly_issues-190215124643

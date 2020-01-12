@@ -49,7 +49,7 @@ sub doLoginUser {
    $objLogger->doLogInfoMsg ( "login attempt for " . $self->setEmptyIfNull($email)) ; 
 
    my $objCnrPostPrms   = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
-   ( $ret , $msg , $epass) = $objCnrPostPrms->doSetLoginUrlParams('Login' , $email , $pass );
+   ( $ret , $msg , $epass) = $objCnrPostPrms->doValidateLoginParams('Login' , $email , $pass );
 
    if ( $ret != 0 ) {
       $objLogger->doLogInfoMsg ( 'login failed for "' . $self->setEmptyIfNull($email) . '"') ; 
@@ -61,7 +61,7 @@ sub doLoginUser {
 
    $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
 	$objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
-   ($http_code, $msg , $hsr ) = $objRdrDb->doNativeLogonAuth($email,$epass);
+   ($http_code, $msg , $hsr ) = $objRdrDb->doNativeLoginAuth($db,$email,$epass);
 
    if ( $http_code == 200 ) {
       my $objCnrEncrypter  = 'Qto::App::IO::In::CnrEncrypter'->new();
@@ -85,6 +85,10 @@ sub doLoginUser {
 }
 
 
+#
+# --------------------------------------------------------
+# called after the users get only the login page
+# --------------------------------------------------------
 sub doShowLoginForm {
 
    my $self             = shift;
@@ -92,7 +96,7 @@ sub doShowLoginForm {
    my $msg              = "$db   login"; 
    my $msg_color        = 'grey' ; 
    
-   my $config		         = $self->app->config ; 
+   my $config		      = $self->app->config ; 
    my $alConfig         = $config->{'env'}->{'app'} ; 
    my $instance_domain  = $alConfig->{ 'web_host' } . $alConfig->{ 'port' } . '.' . $db ;
    my $proj             = toEnvName ( $db , $config) ;

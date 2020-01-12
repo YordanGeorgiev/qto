@@ -29,19 +29,54 @@ package Qto::App::IO::In::CnrPostPrms ;
    our $objModel     = {} ; 
    our $config    = {} ; 
 
-	sub new {
-		my $invocant   = shift ;    
-		$config     = ${ shift @_ } || croak 'config not passed in RdrPostgresDb !!!' ; 
-		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
-		my $class      = ref ( $invocant ) || $invocant ; 
-		my $self       = {} ; bless( $self, $class );    # Say: $self is a $class
-		return $self;
-	}  
-
-   sub doSetLoginUrlParams {
+   
+   
+   sub hasValidLogonParams {
 
       my $self             = shift ; 
+      my $email            = shift ; 
+      my $pass             = shift ; 
       my $Controller       = shift || 'Logon' ; 
+      my $controller       = lc ( $Controller ) ; 
+      my $is_valid         = 1 ; 
+      my $is_not_valid     = 0 ;
+      my $msg              = 'unknown error occured during logon post params validation' ; 
+      my $epass            = undef ; # the encrypted hash
+
+
+      if ( !defined ( $email ) or $email eq '' ) {
+         $self->set('msg',"empty email ! "); 
+         return $is_not_valid ;
+      } elsif ( length ( $email ) > 100 ) {
+         $self->set('msg',"the email: $email is too long ");
+         return $is_not_valid ;
+      } elsif ( !Email::Valid->address($email) ){
+         $self->set('msg',"$email is not a valid email! ");
+         return $is_not_valid ;
+      } else {
+         $self->set('msg',"the email: $email is valid");
+      }
+
+      if ( !defined ( $pass ) or $pass eq '' ) {
+         $self->set('msg'," empty password ! " ); 
+         return $is_not_valid ;
+      } elsif ( length ($pass) > 100 ) {
+         $self->set('msg',"the password: $pass is too long ");
+         return $is_not_valid ;
+      } else {
+         my $objCnrEncrypter = 'Qto::App::IO::In::CnrEncrypter'->new();
+         $epass = $objCnrEncrypter->make_crypto_hash($pass ) ; 
+         $self->set('epass',$epass);
+         $self->set('msg'," " ) ; 
+         return $is_valid ; 
+      }
+   } 
+
+   # ret = 0 - ok , ret != 0 -> fail
+   sub doValidateLoginParams {
+
+      my $self             = shift ; 
+      my $Controller       = shift || 'Loging' ; 
       my $email            = shift ; 
       my $pass             = shift ; 
       my $controller       = lc ( $Controller ) ; 
@@ -75,10 +110,11 @@ package Qto::App::IO::In::CnrPostPrms ;
       }
 
       return ( $ret , $msg , $epass ) ; 
-   }
+   } 
+
 
 # 1 -> has , 0 -> does not have
-sub chkHiCreateHasValidParams {
+sub hasValidHiCreateParams {
 
    my $self          = shift ; 
    my $perl_hash     = shift ; 
@@ -226,6 +262,14 @@ sub doValidateAndSetDelete {
    return $isValid ; 
 }
 
+sub new {
+   my $invocant   = shift ;    
+   $config        = ${ shift @_ } || croak 'config not passed in RdrPostgresDb !!!' ; 
+   $objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
+   my $class      = ref ( $invocant ) || $invocant ; 
+   my $self       = {} ; bless( $self, $class );    # Say: $self is a $class
+   return $self;
+}  
 
 1;
 
