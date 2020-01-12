@@ -17,7 +17,10 @@ my $config = $t->app->config ;
 # if the product instance id dev -> dev_qto
 # if the product instance id tst -> tst_qto
 my $db = $config->{'env'}->{'db'}->{'postgres_db_name'} ; 
-my @tables = ( 'monthly_issues' , 'yearly_issues' ) ; 
+use Qto::App::Utils::Timer ; 
+my $objTimer = 'Qto::App::Utils::Timer'->new;
+my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
+my @tables  = ("monthly_issues_$year$mon" , "yearly_issues_$year" );
 my $ua  = $t->ua ; 
 my $res = {} ; #a tmp result json string
 my $tm = '' ; 

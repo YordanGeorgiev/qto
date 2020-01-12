@@ -29,7 +29,10 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $ua  = $t->ua ; 
    my $response = $ua->get('/' . $db . '/select-tables')->result->json ; 
    my $list = $response->{ 'dat' } ; 
-   my @tables_to_check = ( 'monthly_issues' , 'yearly_issues' ) ; 
+   use Qto::App::Utils::Timer ; 
+   my $objTimer = 'Qto::App::Utils::Timer'->new;
+   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
+   my @tables_to_check = ("monthly_issues_$year$mon" , "yearly_issues_$year" );
 
 # foreach table in the app db in test call db/select/table
 for my $row ( @$list ) {

@@ -52,7 +52,7 @@ sub doHiCreate {
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
    $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel);
 
-   unless ( $objCnrPostPrms->chkHiCreateHasValidParams( $perl_hash ) == 1 ) {
+   unless ( $objCnrPostPrms->hasValidHiCreateParams( $perl_hash ) == 1 ) {
       my $http_code = $objCnrPostPrms->get('http_code') ; 
       $msg = $objCnrPostPrms->get('msg') ; 
       $self->res->code($http_code ) ;

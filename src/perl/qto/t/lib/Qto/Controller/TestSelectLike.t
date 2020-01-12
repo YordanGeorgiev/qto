@@ -17,18 +17,20 @@ my $config = $t->app->config ;
 # if the product instance id dev -> dev_qto
 # if the product instance id tst -> tst_qto
 my $db= $config->{'env'}->{'db'}->{'postgres_db_name'} ; 
-my @tables = ( 'monthly_issues' , 'yearly_issues' ) ; 
 my $ua  = $t->ua ; 
 my $res = {} ; #a tmp result json string
 my $tm = '' ; 
-my @tables_to_scan = ('monthly_issues' , 'yearly_issues' );
+
+use Qto::App::Utils::Timer ; 
+my $objTimer = 'Qto::App::Utils::Timer'->new;
+my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
+my @tables = ("monthly_issues_$year$mon" , "yearly_issues_$year" );
 
 $res = $ua->get('/' . $db . '/select-tables')->result->json ; 
 
 # foreach table in the app db in test call db/select/table
 for my $table ( @tables ) {
    	
-   next unless  grep ( /^$table$/, @tables_to_scan ) ;
 	# test a like by select of integers	
 	my $url_params = '?like-by=status&like-val=todo' ; 
 	$t->get_ok('/' . $db . '/select/' . $table . $url_params )
@@ -50,7 +52,7 @@ for my $table ( @tables ) {
 
 
 	print "test a string like \n" ; 
-	$url_params = '?like-by=category&like-val=feature' ; 
+	$url_params = '?like-by=type&like-val=task' ; 
 	print "\n running url: /$db" . '/select/' . $table . $url_params . "\n" ; 	
    $res = $ua->get('/' . $db . '/select/' . $table . $url_params )->result->json ; 
 	@list = @{$res->{'dat'}} ; 
@@ -58,7 +60,7 @@ for my $table ( @tables ) {
    # feature-guid: 3c43addf-bc2a-4eed-b4a5-040e9bd9dc75
 	foreach my $row ( @list ) {
 		$tm = "all the retrieved rows of the the table: $table: " . substr ( $row->{'name'} , 0, 30 ) . ' ...' ;
-		ok ( $row->{'category'} =~ m/feature/g , $tm ) ; 
+		ok ( $row->{'type'} =~ m/task/g , $tm ) ; 
 	}
 
    #
