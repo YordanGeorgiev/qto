@@ -39,23 +39,31 @@
     * [2.6.2. View doc page print preview](#262-view-doc-page-print-preview)
       * [2.6.2.1. Disable editing in print preview mode but keep the links](#2621-disable-editing-in-print-preview-mode-but-keep-the-links)
       * [2.6.2.2. Disable the right and left menus in print preview mode](#2622-disable-the-right-and-left-menus-in-print-preview-mode)
-    * [2.6.3. Search in the view page ](#263-search-in-the-view-page-)
+    * [2.6.3. Quick search in the view page ](#263-quick-search-in-the-view-page-)
     * [2.6.4. Hierarchical items management](#264-hierarchical-items-management)
       * [2.6.4.1. Add Item](#2641-add-item)
       * [2.6.4.2. Update item](#2642-update-item)
           * [2.6.4.2.1. Update item's title](#26421-update-item's-title)
           * [2.6.4.2.2. Update item's description](#26422-update-item's-description)
+              * [2.6.4.2.2.1. Add interlinking in description](#264221-add-interlinking-in-description)
           * [2.6.4.2.3. Update item's src_code](#26423-update-item's-src_code)
-          * [2.6.4.2.4. Move item in the hierarchy](#26424-move-item-in-the-hierarchy)
       * [2.6.4.3. Delete item](#2643-delete-item)
-    * [2.6.5. Right TOC menu navigation](#265-right-toc-menu-navigation)
-      * [2.6.5.1. Open and close of right menu](#2651-open-and-close-of-right-menu)
+    * [2.6.5. Move item in the hierarchy by drag and drop](#265-move-item-in-the-hierarchy-by-drag-and-drop)
+      * [2.6.5.1. Move item in the hierarchy](#2651-move-item-in-the-hierarchy)
       * [2.6.5.2. Search in the right menu](#2652-search-in-the-right-menu)
       * [2.6.5.3. Links in the right menu](#2653-links-in-the-right-menu)
     * [2.6.6. Left menu navigation](#266-left-menu-navigation)
     * [2.6.7. Hierarchy management](#267-hierarchy-management)
-      * [2.6.7.1. Single item move in the hierarchy](#2671-single-item-move-in-the-hierarchy)
-      * [2.6.7.2. Single brach move in the hierarchy](#2672-single-brach-move-in-the-hierarchy)
+      * [2.6.7.1. Single item move in the hierarchy ](#2671-single-item-move-in-the-hierarchy-)
+      * [2.6.7.2. Single item move in the hierarchy ](#2672-single-item-move-in-the-hierarchy-)
+    * [2.6.8. Pictures management in the view doc page](#268-pictures-management-in-the-view-doc-page)
+      * [2.6.8.1. Add picture](#2681-add-picture)
+      * [2.6.8.2. Edit picture](#2682-edit-picture)
+      * [2.6.8.3. Delete picture](#2683-delete-picture)
+    * [2.6.9. Multimedia links management](#269-multimedia-links-management)
+      * [2.6.9.1. Edit embedded multimedia link](#2691-edit-embedded-multimedia-link)
+      * [2.6.9.2. Edit embedded multimedia link](#2692-edit-embedded-multimedia-link)
+      * [2.6.9.3. Delete embedded multimedia link](#2693-delete-embedded-multimedia-link)
   * [2.7. THE GLOBAL SEARCH PAGE / THE SEARCH UI](#27-the-global-search-page-/-the-search-ui)
     * [2.7.1. Global search from the list page](#271-global-search-from-the-list-page)
     * [2.7.2. Global search from the view page](#272-global-search-from-the-view-page)
@@ -65,19 +73,21 @@
   * [2.9. THE CHAT PAGE / UI](#29-the-chat-page-/-ui)
   * [2.10. MULTI-PROJECT AWARE UI](#210-multi-project-aware-ui)
     * [2.10.1. Items data transfer between different projects](#2101-items-data-transfer-between-different-projects)
-  * [2.11. ITEMS MANAGEMENT](#211-items-management)
-    * [2.11.1. Items move](#2111-items-move)
-  * [2.12. ISSUES IMPORT FROM GOOGLE CALENDAR](#212-issues-import-from-google-calendar)
-  * [2.13. ACCESS ISSUES DATA FROM GOOGLE SHEET ( DEPRECATING )](#213-access-issues-data-from-google-sheet-(-deprecating-))
+    * [2.10.2. Items move](#2102-items-move)
+  * [2.11. ISSUES IMPORT FROM GOOGLE CALENDAR](#211-issues-import-from-google-calendar)
 * [3. TEAM LEADER BIZ PERSPECTIVE](#3-team-leader-biz-perspective)
   * [3.1. ROLES MANAGEMENT](#31-roles-management)
   * [3.2. PROJECTS MANAGEMENT](#32-projects-management)
-    * [3.2.1. Users management in a project](#321-users-management-in-a-project)
-    * [3.2.2. Users access management](#322-users-access-management)
-      * [3.2.2.1. Grant access per project](#3221-grant-access-per-project)
-      * [3.2.2.2. Personal data handling minimization](#3222-personal-data-handling-minimization)
-  * [3.3. SECURITY MANAGEMENT](#33-security-management)
-  * [3.4. TIME MANAGEMENT](#34-time-management)
+  * [3.3. USERS MANAGEMENT IN A PROJECT](#33-users-management-in-a-project)
+    * [3.3.1. Users access management](#331-users-access-management)
+      * [3.3.1.1. Grant access per project](#3311-grant-access-per-project)
+      * [3.3.1.2. Personal data handling minimization](#3312-personal-data-handling-minimization)
+  * [3.4. SECURITY MANAGEMENT](#34-security-management)
+  * [3.5. SECURE ACCESS TO DATA](#35-secure-access-to-data)
+    * [3.5.1. Role based secure access to data per table for role](#351-role-based-secure-access-to-data-per-table-for-role)
+    * [3.5.2. Role based secure access to data per row](#352-role-based-secure-access-to-data-per-row)
+  * [3.6. TIME MANAGEMENT](#36-time-management)
+    * [3.6.1. Closing of a period](#361-closing-of-a-period)
 * [4. TEAM MEMBER BIZ PERSPECTIVE](#4-team-member-biz-perspective)
   * [4.1. ISSUES MANAGEMENT](#41-issues-management)
     * [4.1.1. Remove existing issues](#411-remove-existing-issues)
@@ -495,7 +505,7 @@ In order to have as clean and easily printable document as possible in a pdf for
 
     
 
-#### 2.6.3. Search in the view page 
+#### 2.6.3. Quick search in the view page 
 As an UI user of the qto application
 In order to be able to quickly and effortlessly search the content of the loaded document in the view doc page
 I want to be able to focus the search-box with a single shortcut / click and the document to be filtered by the content of the input search box, by highlighting the search item.
@@ -529,23 +539,24 @@ I want to be able to update item's descrption by simply clicking in it and start
 
     
 
+####### 2.6.4.2.2.1. Add interlinking in description
+
+
+    
+
 ###### 2.6.4.2.3. Update item's src_code
 I want to be able to update item's src_code by simply clicking in it and starting to type the new contents ...
 
     
 
-###### 2.6.4.2.4. Move item in the hierarchy
-In order to quickly edit the structure of a hierarchical doc 
-I want to be able to move item by drag and drop from the left menu
-
-    
-
 ##### 2.6.4.3. Delete item
-I want to be able to delete an item by right clicking it's title and choosing delete item, so that the System will scroll the page directly the part of the document a deleted the item from.
+As an UI user of the qto application
+In order to quickly edit the structure of a hierarchical doc 
+I want to be able to move item by drag and drop from the left menu.
 
     
 
-#### 2.6.5. Right TOC menu navigation
+#### 2.6.5. Move item in the hierarchy by drag and drop
 As an the ui user
 In order to navigate quickly in the document structure
 I want to be able to see the document structure by clicking a right menu containing the Table of Contents of this document with a clickable links.
@@ -553,10 +564,10 @@ I want to be able to see the document structure by clicking a right menu contain
 
     
 
-##### 2.6.5.1. Open and close of right menu
-As an the ui user
-In order to navigate quickly in the document structure
-I want to be able to open and close the right menu quickly from both it's top and the bottom
+##### 2.6.5.1. Move item in the hierarchy
+As an UI user of the qto application
+In order to quickly edit the structure of a hierarchical doc 
+I want to be able to move item by drag and drop from the left menu.
 
     
 
@@ -575,30 +586,76 @@ I want to be able to simply click on the links ( level 1 , level-2 , level-3 etc
     
 
 #### 2.6.6. Left menu navigation
-As a QTO application UI user
+As an UI user of the qto application 
 In order to be able to quickly jump to a different document / listing 
-I want to be able to click on the upper left corner of the view page and access the hierarchichal project structure of the whole project from the left menu.
+I want to be able to click on the upper left corner of the view page and access the hierarchical project structure of the whole project from the left menu.
 
     
 
 #### 2.6.7. Hierarchy management
-As a qto application UI user 
-In order to be able to fully manage the content of any item doc 
-I want to be able to fully reshuffle any part of the hierarchy in the doc from the user interface.
+As an UI user of the qto application 
+In order to be able to quickly jump to a different document / listing 
+I want to be able to click on the upper left corner of the view page and access the hierarchical project structure of the whole project from the left menu.
 
     
 
-##### 2.6.7.1. Single item move in the hierarchy
+##### 2.6.7.1. Single item move in the hierarchy 
 As a qto application UI user 
 In order to be able to move a single item anywhere in the hierarchy
 I want to be able to move it by drag and drop on the left side of the document.
 
     
 
-##### 2.6.7.2. Single brach move in the hierarchy
+##### 2.6.7.2. Single item move in the hierarchy 
 As a qto application UI user 
 In order to be able to move a single item and all it's descendants anywhere in the hierarchy
 I want to be able to move it by drag and drop on the left side of the document.
+
+    
+
+#### 2.6.8. Pictures management in the view doc page
+
+
+    
+
+##### 2.6.8.1. Add picture
+As a qto application UI user 
+In order to have pictures in the documents
+I want to be able to add pictures by ...
+
+    
+
+##### 2.6.8.2. Edit picture
+As a qto application UI user 
+In order to have pictures in the documents
+I want to be able to add pictures by ...
+
+    
+
+##### 2.6.8.3. Delete picture
+As a qto application UI user 
+In order to have pictures in the documents
+I want to be able to delete pictures by ...
+
+    
+
+#### 2.6.9. Multimedia links management
+
+
+    
+
+##### 2.6.9.1. Edit embedded multimedia link
+
+
+    
+
+##### 2.6.9.2. Edit embedded multimedia link
+
+
+    
+
+##### 2.6.9.3. Delete embedded multimedia link
+
 
     
 
@@ -667,31 +724,17 @@ I want to be able to move items data from one project to another via the UI in a
 
     
 
-### 2.11. Items management
-As an UI user of the application 
-In order to be able to manage multiple different items and entities 
-I want to be able to perform multiple actions on items easily and efficiently.
-
-    
-
-#### 2.11.1. Items move
+#### 2.10.2. Items move
 As an UI user of the application 
 I order to move the items into different tables
 I want to  be able to move them from a button in the listing page by specifying the target table
 
     
 
-### 2.12. Issues import from Google calendar
+### 2.11. Issues import from Google calendar
 As the UI user of an qto instance 
 In order to be able to visualise and manage my  start- and stop_time having issues better 
 I want to  be able to import my Google calendar issues into my qto profile on an qto instance
-
-    
-
-### 2.13. Access issues data from Google sheet ( deprecating )
-As the biz user  of the issue tracker tool 
-In order to be able to share and edit the data with multiple users authenticated within the Google eco system
-I want to be able to access , edit and update the issues data from google sheet.
 
     
 
@@ -719,45 +762,74 @@ I want to  be able to create , update and remove projects.
 
     
 
-#### 3.2.1. Users management in a project
+### 3.3. Users management in a project
 As an team leader
 In order to be able to efficiently allocate human resources to a project
 I want to be able manage ( create , update , delete and search ) users for each project.
 
     
 
-#### 3.2.2. Users access management
+#### 3.3.1. Users access management
 As a team leader 
 In order provide the persons and programs access to my project
 I want to provide read, write access to the data and execute access ( run DDL's) per table
 
     
 
-##### 3.2.2.1. Grant access per project
+##### 3.3.1.1. Grant access per project
 As a team leader 
 In order to enroll authenticated users into the project I am responsible to 
 I want to be able to grant them with access by only writing their e-mail into a text field and clicking invite button. 
 
     
 
-##### 3.2.2.2. Personal data handling minimization
+##### 3.3.1.2. Personal data handling minimization
 As a team leader 
-In order to avoid legal obligations and complex procedures while handling personal data
-I want to be able to handle the interpersonal exchange of data by collecting ONLY the e-mail of the persons or programs participating in the project
+In order to avoid legal obligations and complex procedures, while handling personal data
+I want to be able to handle the interpersonal exchange of data by collecting ONLY the e-mail of the persons or programs participating in the project.
 
     
 
-### 3.3. Security Management
+### 3.4. Security Management
 As an team leader
 In order to keep my business data secure 
 I want to be able decide which users to which projects will have access to the data my qto application has access to. 
 
     
 
-### 3.4. Time management
+### 3.5. Secure access to data
+As the team leader of a qto project
+In order 
+I want to be able to grant separate read, write and execute access per table and role
+
+    
+
+#### 3.5.1. Role based secure access to data per table for role
+As the team leader of a qto project
+In order to restrict the certain operations to certain tables for the authenticated roles
+I want to be able to grant separate read, write and execute access per table and role.
+
+    
+
+#### 3.5.2. Role based secure access to data per row
+As the team leader of a qto project
+In order 
+I want to be able to grant separate read, write and execute access per table and role
+
+    
+
+### 3.6. Time management
 As an team leader
-In order to be able the maximize the performance of the team for qto used periods 
-I wanto to be able to manage time efficiently 
+In order to be able the maximise the performance of the team for qto used periods 
+I want to to be able to manage time efficiently 
+by accessing a simple page containing its value and the period it is related to.
+
+    
+
+#### 3.6.1. Closing of a period
+As the team leader of a qto project
+In order to keep track the history of 
+I want to to be able to manage time efficiently 
 by accessing a simple page containing its value and the period it is related to.
 
     

@@ -15,16 +15,16 @@
 * [4. AWS DEPLOYMENT](#4-aws-deployment)
   * [4.1. PREREQUISITES](#41-prerequisites)
   * [4.2. CONFIGURE THE ADMINEMAIL](#42-configure-the-adminemail)
-  * [4.3. CONFIGURE YOUR AWS CREDENTIALS - AWS KEYS AND  SSH KEYS](#43-configure-your-aws-credentials--aws-keys-and-ssh-keys)
+  * [4.3. CONFIGURE YOUR AWS CREDENTIALS - AWS KEYS](#43-configure-your-aws-credentials--aws-keys)
   * [4.4. INITIALISE THE AWS INFRASTRUCTURE](#44-initialise-the-aws-infrastructure)
   * [4.5. SET THE IP ADDRESS FOR THE HOST IN DNS ( OPTIONAL ) ](#45-set-the-ip-address-for-the-host-in-dns-(-optional-)-)
   * [4.6. ACCESS THE AWS HOST VIA SSH AND FETCH THE SOURCE CODE FROM GITHUB](#46-access-the-aws-host-via-ssh-and-fetch-the-source-code-from-github)
   * [4.7. BOOTSTRAP AND DEPLOY THE APPLICATION ON THE AWS INSTANCE](#47-bootstrap-and-deploy-the-application-on-the-aws-instance)
   * [4.8. PROVISION THE APPLICATION IN THE AWS INSTANCE](#48-provision-the-application-in-the-aws-instance)
-  * [4.9. START THE WEB SERVER](#49-start-the-web-server)
+  * [4.9. EDIT THE CONFIGURATION FILE AND START THE WEB SERVER](#49-edit-the-configuration-file-and-start-the-web-server)
   * [4.10. ACCESS THE QTO APPLICATION FROM THE WEB](#410-access-the-qto-application-from-the-web)
   * [4.11. CONFIGURE DNS AND HTTPS](#411-configure-dns-and-https)
-  * [4.12. PROVISION THE QTO USERS](#412-provision-the-qto-users)
+  * [4.12. PROVISION THE QTO WEB USERS](#412-provision-the-qto-web-users)
 * [5. CREATE THE TESTING INSTANCE](#5-create-the-testing-instance)
   * [5.1. CREATE THE TST PRODUCT INSTANCE](#51-create-the-tst-product-instance)
   * [5.2. PROVISION THE TST DATABASE](#52-provision-the-tst-database)
@@ -116,6 +116,8 @@ The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND perl
  - install and provision the nginx proxy server 
 Check the main method in the run.sh and uncomment entities you do not want to install locally, should you have any ...
 
+
+
     # in the shell of your local Ubuntu box
     mkdir -p ~/opt; cd $_ ; git clone https://github.com/YordanGeorgiev/qto.git ; cd ~/opt
     
@@ -134,6 +136,7 @@ The run of the following "shell actions" will create the qto database and load i
 
 ## 4. AWS DEPLOYMENT
 This section WILL provide you will with ALL required steps to get a fully functional instance of the qto application in aws in about 35 min with automated shell commands. Do just copy paste the commands into your shell. Do NOT cd into different directories - this deployment has been tested more than 30 times successfully by exactly reproducing those steps, yet the variables in such a complex deployment are many, thus should you encounter new issues do directly contact the owner of the instance you got this deployment package from, that is the person owning the GitHub repository you fetched the source code from.
+This installation is not truly idempotent, meaning that not all infra resources with the same names are deleted - you might need to go and manually delete objects from the AWS admin console, IF you are running this installation for more than 2 times on the same environments.
 
     
 
@@ -148,16 +151,15 @@ The bootstrapping script simply replaces the demo "test.user@gmail.com" with the
 
     
 
-### 4.3. Configure your aws credentials - aws keys and  ssh keys
+### 4.3. Configure your aws credentials - aws keys
 Generate NEW aws access- and secret-keys https://console.aws.amazon.com/iam/home?region=&lt;&lt;YOUR-AWS-REGION&gt;&gt;#/security_credentials. 
 Store the keys in the qto's development environment configuration file - the cnf/env/dev.env.json file.
-When the file path is suggested append a different string to avoid overwriting the default private key path!!!
 
-    #create the a NEW public private key pair ( do not overwrite you existing one !! ) as follows 
-    ssh-keygen -t rsa -b 4096 -C "your.name@your.org"
+
+    
 
 ### 4.4. Initialise the aws infrastructure
-To initialise the git aws infrastructure you need to clone the qto source code locally first. If you are repeating this task all over you might need to remove from the aws web ui your pem keys and potential out of your dedicated resources VPC's and elastic IP's.
+To initialise the git aws infrastructure you need to clone the qto source code locally first. If you are repeating this task all over you might need to remove from the aws web ui  duplicating VPC's and elastic IP's.
 
     # apply the infra terraform in the src/terraform/tpl/qto/main.tf.tpl 
     clear ; bash ~/opt/qto/src/bash/qto/qto.sh -a init-aws-instance
@@ -174,7 +176,7 @@ https://eu-west-1.console.aws.amazon.com/ec2/v2/home?region=&lt;&lt;YOUR-AWS-REG
 You should see a listing of your aws instances one of which should be named dev-qto-ec2 ( that is the development instance of the qto application). Click on it's checkbox. Search for the "IPv4 Public IP" string and copy the value of the ip.
 
     # run locally 
-    ssh -i <<path-to-your-private-key-file>> ubuntu@<<just-copied-IPv4-Public-IP>>
+    ssh -i ~/.ssh/id_rsa.dev.qto ubuntu@<<just-copied-IPv4-Public-IP>>
     
     # on the aws server
     mkdir -p ~/opt; cd $_ ; git clone https://github.com/YordanGeorgiev/qto.git ; cd ~/opt
@@ -186,9 +188,10 @@ The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND perl
  - install and provision postgres
  - install and provision the nginx proxy server
 
+Copy paste the full command bellow - this is IMPORTANT !!!
 
-    # run the bootstrap script and IMPORTANT !!! reload the bash shell
-    ./qto/src/bash/deployer/run.sh ; bash ; 
+    # run the bootstrap script and IMPORTANT !!! reload the bash shell 
+    bash ./qto/src/bash/deployer/run.sh ; bash ; 
 
 ### 4.8. Provision the application in the aws instance
 The run of the following "shell actions" will create the qto database and load it with a snapshot of it's data from a sql dump stored in s3. 
@@ -199,9 +202,11 @@ The run of the following "shell actions" will create the qto database and load i
     # ensure application layer consistency, run db ddl's and load data from s3
     ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3 && rm -v bootstrapping
 
-### 4.9. Start the web server
+### 4.9. Edit the configuration file and start the web server
+You would have to set the web_host variable in the configuration files to the ip address or DNS name if you have configured one for this ip address, otherwise your nginx configuration will be broken ...
 The following command will both start the Mojolicious hyphotoad server initiating the qto application layer and the nginx reverse proxy, which will listen on the app-&gt;port port defined in the cnf/env/dev.env.json file.
 
+    # start the web server
     ./src/bash/qto/qto.sh -a mojo-hypnotoad-start
 
 ### 4.10. Access the qto application from the web
@@ -212,10 +217,6 @@ The qto web application is available at the following address
 http://&lt;&lt;just-copied-IPv4-Public-IP&gt;&gt;:78 should redirect you to the dev_qto/login page - via the nginx proxy ( SAFE )
 
 
-
-
-
-
     
 
 ### 4.11. Configure DNS and HTTPS
@@ -223,7 +224,7 @@ Configure the DNS server name in the UI of your DNS provider.
 
     
 
-### 4.12. Provision the qto users
+### 4.12. Provision the qto web users
 Open the cnf/env/dev.env.json, change the env-&gt;AdminEmail with an e-mail you have access to. Restart the web servers as shown bellow. Login via the 
 
     # the start action performs restart as well, if the web servers are running
@@ -234,7 +235,7 @@ If you re-visit the target architecture picture(@installations_doc-10), the acti
 Qto is design around the idea of developing in dev ( aka doing things for first time and possibly with some errors ), testing in tst ( more of a testing and configuration allowed, but not developing with minor errors and prd ( where no errors are allowed and everything should go smoothly ). 
 Thus by now you have achieved only the dev instance deployment
 
-     
+    
 
 ### 5.1. Create the tst product instance
 The tst product instance has 
@@ -281,8 +282,8 @@ If you have configured DNS you could provision https for the nginx server by iss
     
 
 ### 8.1. The postgres admin user password is wrong
-This error is probably a bug during the deployment - the most probable root cause for it is execution of the steps in wrong order - basically the db security is passed from OS root to postgres user to qto admin to qto app, thus to fix it issue the following command, which will basically re-provision your postgres.
-You would need to restart the web server after executing this command.
+This error might be a bug during the deployment  - basically the db security is passed from OS root to postgres user to qto admin to qto app, thus to fix it issue the following command, which will basically re-provision your postgres.
+You would need to also restart the web server after executing this command.
 
      ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
 
@@ -290,11 +291,11 @@ You would need to restart the web server after executing this command.
 The password hashing in the users table is activated ALWAYS on blur even that the ui is not showing it ( yes , that is more of a bug, than a feature.
 The solution is to restart the application layer WITHOUT any authentication, change the admin user password from the ui and restart the application layer with authentication once again.
 
-    export QTO_NO_AUTH=0
+    export QTO_ONGOING_TEST=0
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
     
     # now change the AdminEmail user password from the UI
-    export QTO_NO_AUTH=1
+    export QTO_ONGOING_TEST=1
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
     
 

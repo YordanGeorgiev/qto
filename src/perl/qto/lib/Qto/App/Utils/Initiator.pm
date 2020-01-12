@@ -370,8 +370,7 @@ use Initiator  ;
 
 
 =head1 DESCRIPTION
-the main purpose is to initiate minimum needed environment for the operation 
-of the whole application - man app cnfig hash 
+get the absolute paths of the application during run-time
 
 =head2 EXPORT
 
@@ -391,15 +390,6 @@ yordan.georgiev@gmail.com
 
 
 
-
-# ---------------------------------------------------------
-# VersionHistory: 
-# ---------------------------------------------------------
-#
-1.3.0 --- 2017-11-22 22:26:56 -- Improved Tests
-1.2.0 --- 2014-09-11 20:44:26 -- tests on Windows 
-1.1.0 --- 2014-08-27 11:29:25 -- tests passed with Test::More
-1.0.0 --- 2014-08-25 08:25:15 -- refactored away from main calling script
 
 =cut 
 

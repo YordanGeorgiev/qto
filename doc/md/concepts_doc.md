@@ -26,27 +26,26 @@
     
 
 ### 1.1. Purpose
-The purpose of this document is to present the concepts and the business logic of the Issue-Tracker application for this current version.
+The purpose of this document is to present the concepts and the business logic of the qto application for this current version.
 
     
 
 ### 1.2. Audience
-This document could be of interest for any potential and actual users of the application. Keyusers must read, understand and even be able to present and explain the contents of this document. 
+This document could be of interest for any potential and actual users of the application. Key-users must read, understand and even be able to present and explain the contents of this document. 
 Developers and Architects working on the application MUST read and understand this document at least to the extend of their own contribution for the application. 
 
     
 
 ### 1.3. Related documentation
 This document is part of the qto application documentation-set, which contains the following documents:
- - ReadMe - the initial readme file of the project
- - Concepts - contains the concepts of the application
- - UserStories - the collection of userstories used to describe "what is desired"
- - SystemGuide - architecture and System description
- - DevOps Guide - a guide for the developers and devops operators
- - Maintenance Guide - a maintenance and operations guide
- - Installation Guide - a guide for installation of the application
- - Features and Functionalities - description of the current features and functionalities
- - Requirements - description of the Requirements for the application
+ - readme_doc-0 - the initial landing readme doc for the project
+ - userstories_doc-0 - the collection of user-stories used to describe "what is desired"
+ - requirements_doc-0 - the structured collection of the requirements 
+ - system_guide_doc-0 - architecture and System description
+ - devops_guide_doc-0 - a guide for the developers and devops operators
+ - installations_doc-0 - a guide for installation of the application
+ - enduser_guide_doc-0 - the guide for the usage of the UI ( mainly ) for the end-users
+ - concepts_doc-0 - the concepts doc 
 
 All the documents should be updated and redistributed in combination of the current version of the application and should be found under the doc/md directory.
 
@@ -60,8 +59,8 @@ All the documents should be updated and redistributed in combination of the curr
 
 ### 2.1. Projects management
 You can manage multiple projects with the qto tool. Each project has its own data directories, database storage and configurations. You could also have different environments named dev, tst, prd for each project separately. 
-As the tool is backwards compatible you could have different instances of the issue-tracker projects with different versions ( and set of features ) operating against different project ( each one in its own version).
-You must pre-set the configuration variables of an issue-tracker project each time you start working on a project from the shell
+As the tool is backwards compatible you could have different instances of the qto projects with different versions ( and set of features ) operating against different project ( each one in its own version).
+You must pre-set the configuration variables of an qto project each time you start working on a project from the shell
 
     
 
@@ -79,7 +78,7 @@ The categories could contain letters ,numbers, dashes
     
 
 #### 2.2.2. Issues status
-You could define whatever statuses you like. As issue-tracker has been built to develop itself ( how sarcastic could that be ;o), that is for tracing the progress of a software project the following "default" statuses have been used: 
+You could define whatever statuses you like. As qto has been built to develop itself ( how sarcastic could that be ;o), that is for tracing the progress of a software project the following "default" statuses have been used: 
 01-eval - for evaluate the issue
 02-todo - for decided to do the issue
 03-wip - for the issue is being in work in progress mode
@@ -87,16 +86,15 @@ You could define whatever statuses you like. As issue-tracker has been built to 
 05-tst - for the issue is being in testing like mode
 06-onhold - for the issue is being kept onhold for the time period
 07-qas - for the issue is being quality assured 
-09-done - for the issue is being done / completed. 
+09-done - for the issue is being done / completed
 
     
 
 #### 2.2.3. Issues management via time intervals
-The issues are basically organised into the following periods:
- - daily
- - weekly
- - monthly
- - yearly
+The issues are basically organised into the following time intervals:
+ - release_issues - the issues to be handled till the next release ( usually, but not always a 2 weeks period)
+ - monthly_issues - the issues to be handled during the next month
+ - yearly - the issues to be handled during the next year
  - quinquennially
  - decadally
 
@@ -120,7 +118,7 @@ Quite often the row input material for the issues are the problems encountered -
     
 
 ## 3. DEFINITIONS
-This section contains definitions of terms within the context of the Issue-Tracker application.
+This section contains definitions of terms within the context of the qto application.
 
     
 

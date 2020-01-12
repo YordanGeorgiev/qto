@@ -7,9 +7,8 @@ package Qto::App::IO::In::RdrFiles ;
 	our @ISA = qw(Exporter Qto::App::Utils::OO::SetGetable Qto::App::Utils::OO::AutoLoadable) ;
 	our $AUTOLOAD =();
 	use AutoLoader;
-   use Carp ;
+   use Carp qw(cluck carp);
    use Getopt::Long;
-	use File::Path qw(make_path) ;
 	use File::Compare;
 	use IO::File;
 	use File::Find;
@@ -43,19 +42,24 @@ package Qto::App::IO::In::RdrFiles ;
       my $ret        = 1 ; 
       my $s          = q{} ; 
 
+      $msg .= " can not read the file $file !!!";
       $msg = " the file : $file does not exist !!!" ; 
-      cluck ( $msg ) unless -e $file ; 
+      unless ( -e $file ) {
+         cluck ( $msg ) ; 
+         return ( $ret , "$msg ::: $! !!!" , undef ) 
+      }
 
       $msg = " the file : $file is not actually a file !!!" ; 
-      cluck ( $msg ) unless -f $file ; 
+      unless ( -f $file ) {
+         cluck ( $msg ) ; 
+         return ( $ret , "$msg ::: $! !!!" , undef ) 
+      }
 
       $msg = " the file : $file is not readable !!!" ; 
-      cluck ( $msg ) unless -r $file ; 
-
-      $msg .= "can not read the file $file !!!";
-
-      return ( $ret , "$msg ::: $! !!!" , undef ) 
-         unless ((-e $file) && (-f $file) && (-r $file));
+      unless ( -r $file ) {
+         cluck ( $msg ) ; 
+         return ( $ret , "$msg ::: $! !!!" , undef ) 
+      }
 
       $msg = '' ; 
 

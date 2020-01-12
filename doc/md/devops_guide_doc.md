@@ -10,12 +10,10 @@
   * [1.8. DO NOT ALLOW BROKEN WINDOWS](#18-do-not-allow-broken-windows)
   * [1.9. DO NOT ADD A COMMIT WITHOUT PASSING ALL THE REGRESSION TESTS](#19-do-not-add-a-commit-without-passing-all-the-regression-tests)
 * [2. ETL OPERATIONS](#2-etl-operations)
-  * [2.1. BACKUP A DATABASE TABLE](#21-backup-a-database-table)
+  * [2.1. DB DATA BACKUP AND RESTORE](#21-db-data-backup-and-restore)
   * [2.2. RUN INCREASE-DATE ACTION](#22-run-increase-date-action)
-  * [2.3. LOAD XLS ISSUES TO DB AND FROM DB TO TXT FILES](#23-load-xls-issues-to-db-and-from-db-to-txt-files)
-  * [2.4. RUN THE QTO FILE TO DB LOAD](#24-run-the-qto-file-to-db-load)
-  * [2.5. VERIFY THE INSERTED DATA FROM THE DB](#25-verify-the-inserted-data-from-the-db)
-  * [2.6. DIRS NAMING CONVENTIONS](#26-dirs-naming-conventions)
+  * [2.3. LOAD XLS ISSUES TO DB AND FROM DB](#23-load-xls-issues-to-db-and-from-db)
+  * [2.4. DIRS NAMING CONVENTIONS](#24-dirs-naming-conventions)
 * [3. NAMING CONVENTIONS](#3-naming-conventions)
   * [3.1. PRODUCT INSTANCE DIRECTORIES](#31-product-instance-directories)
   * [3.2. ROOT DIRS NAMING CONVENTIONS](#32-root-dirs-naming-conventions)
@@ -29,44 +27,60 @@
   * [4.6. INTEGRATION TESTING IN THE TST BRANCH](#46-integration-testing-in-the-tst-branch)
   * [4.7. PRODUCTION IN THE PRD BRANCH](#47-production-in-the-prd-branch)
   * [4.8. MASTER BRANCH - THE SINGLE TRUTH FOR CURRENT STABLE VERSION OF THE SOFTWARE](#48-master-branch--the-single-truth-for-current-stable-version-of-the-software)
-* [5. WAY OF WORKING](#5-way-of-working)
-  * [5.1. DEFINITION OF DONE](#51-definition-of-done)
-  * [5.2. CHAT / IRC](#52-chat-/-irc)
-  * [5.3. E-MAIL COMMUNICATION](#53-e-mail-communication)
-  * [5.4. DOCUMENTATION](#54-documentation)
-  * [5.5. ISSUES MANAGEMENT](#55-issues-management)
-* [6. FEATURE IMPLEMENTATION WORKFLOW](#6-feature-implementation-workflow)
-  * [6.1. PROBLEM REGISTRATION](#61-problem-registration)
-  * [6.2. USER-STORY CREATION](#62-user-story-creation)
-  * [6.3. REQUIREMENTS CREATION](#63-requirements-creation)
-  * [6.4. ISSUE CREATION](#64-issue-creation)
-  * [6.5. FEATURE BRANCH CREATION](#65-feature-branch-creation)
-  * [6.6. CREATE A TEST-ENTRY POINT](#66-create-a-test-entry-point)
-  * [6.7. IMPLEMENTATION OF PROOF OF CONCEPT ( OPTIONAL )](#67-implementation-of-proof-of-concept-(-optional-))
-  * [6.8. PROTOTYPE IMPLEMENTATION ( OPTIONAL )](#68-prototype-implementation-(-optional-))
-  * [6.9. UNIT AND / OR INTEGRATION TEST CREATION](#69-unit-and-/-or-integration-test-creation)
-  * [6.10. IMPLEMENTATION ](#610-implementation-)
-  * [6.11. DEPLOYMENT AND TEST TO THE TEST ENVIRONMENT](#611-deployment-and-test-to-the-test-environment)
-  * [6.12. DEPLOYMENT AND TEST TO THE PRODUCTION ENVIRONMENT](#612-deployment-and-test-to-the-production-environment)
-  * [6.13. QUALITY ASSURANCE ITERATION](#613-quality-assurance-iteration)
-  * [6.14. DOD CHECK-LIST WALKTHROUGH](#614-dod-check-list-walkthrough)
-  * [6.15. THE FEATURE OR FUNCTIONALITY CURRENT DESCRIPTION IS ADDED IN THE DOCS](#615-the-feature-or-functionality-current-description-is-added-in-the-docs)
-    * [6.15.1. Regenerate the md docs](#6151-regenerate-the-md-docs)
-    * [6.15.2. Regenerate the pdf docs](#6152-regenerate-the-pdf-docs)
-    * [6.15.3. Regenerate the msft docs](#6153-regenerate-the-msft-docs)
-  * [6.16. THE RELATED REQUIREMENT IS ADDED IN THE REQUIREMENTS DOCUMENT](#616-the-related-requirement-is-added-in-the-requirements-document)
-  * [6.17. AT LEAST 2 TIMES PASSED FUNCTIONAL AND JS TESTS RUN ](#617-at-least-2-times-passed-functional-and-js-tests-run-)
-  * [6.18. AT LEAST 2 TIMES PASSED INTEGRATION TESTS  IN EACH ENVIRONMENT INSTANCE](#618-at-least-2-times-passed-integration-tests-in-each-environment-instance)
-  * [6.19. DEPLOYMENT TO THE TEST ENVIRONMENT](#619-deployment-to-the-test-environment)
-  * [6.20. CHECK THAT ALL THE FILES IN THE DEPLOYMENT PACKAGE ARE THE SAME AS THOSE IN THE LATEST COMMIT OF THE DEV GIT BRANCH. ](#620-check-that-all-the-files-in-the-deployment-package-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
-  * [6.21. RESTART THE APPLICATION LAYER](#621-restart-the-application-layer)
-* [7. KNOWS ISSUES AND WORKAROUNDS](#7-knows-issues-and-workarounds)
-  * [7.1. ALL TESTS FAIL WITH THE 302 ERROR](#71-all-tests-fail-with-the-302-error)
-  * [7.2. MORBO IS STUCK](#72-morbo-is-stuck)
-    * [7.2.1. Problem description](#721-problem-description)
-    * [7.2.2. Probable root cause](#722-probable-root-cause)
-    * [7.2.3. Kill processes](#723-kill-processes)
-  * [7.3. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#73-the-page-looks-broken--probably-the-new-css-is-not-re-loaded)
+* [5. SOURCE CODE STYLING](#5-source-code-styling)
+  * [5.1. SPACES AND NOT TABS](#51-spaces-and-not-tabs)
+  * [5.2. PERL SOURCE CODE STYLING](#52-perl-source-code-styling)
+    * [5.2.1. Spacing after variable asignments](#521-spacing-after-variable-asignments)
+    * [5.2.2. Set 3 spaces for a tab](#522-set-3-spaces-for-a-tab)
+    * [5.2.3. Empty lines](#523-empty-lines)
+* [6. WAY OF WORKING](#6-way-of-working)
+  * [6.1. CHAT / IRC](#61-chat-/-irc)
+  * [6.2. DEFINITION OF DONE](#62-definition-of-done)
+  * [6.3. E-MAIL COMMUNICATION](#63-e-mail-communication)
+  * [6.4. DOCUMENTATION](#64-documentation)
+  * [6.5. ISSUES MANAGEMENT](#65-issues-management)
+* [7. TESTING](#7-testing)
+  * [7.1. CHECKING THE PERL SYNTAX](#71-checking-the-perl-syntax)
+  * [7.2. RUNNING UNIT TESTS](#72-running-unit-tests)
+  * [7.3. RUNNING FUNCTIONAL TESTS](#73-running-functional-tests)
+  * [7.4. RUNNING INTEGRATION TESTS](#74-running-integration-tests)
+  * [7.5. USER-STORY CREATION](#75-user-story-creation)
+* [8. FEATURE IMPLEMENTATION WORKFLOW](#8-feature-implementation-workflow)
+  * [8.1. PROBLEM REGISTRATION](#81-problem-registration)
+  * [8.2. REQUIREMENTS CREATION](#82-requirements-creation)
+  * [8.3. ISSUE CREATION](#83-issue-creation)
+  * [8.4. FEATURE BRANCH CREATION](#84-feature-branch-creation)
+  * [8.5. CREATE A TEST-ENTRY POINT](#85-create-a-test-entry-point)
+  * [8.6. IMPLEMENTATION OF PROOF OF CONCEPT ( OPTIONAL )](#86-implementation-of-proof-of-concept-(-optional-))
+  * [8.7. PROTOTYPE IMPLEMENTATION ( OPTIONAL )](#87-prototype-implementation-(-optional-))
+  * [8.8. UNIT AND / OR INTEGRATION TEST CREATION](#88-unit-and-/-or-integration-test-creation)
+  * [8.9. IMPLEMENTATION ](#89-implementation-)
+  * [8.10. DEPLOYMENT AND TEST TO THE TEST ENVIRONMENT](#810-deployment-and-test-to-the-test-environment)
+  * [8.11. DEPLOYMENT AND TEST TO THE PRODUCTION ENVIRONMENT](#811-deployment-and-test-to-the-production-environment)
+  * [8.12. QUALITY ASSURANCE ITERATION](#812-quality-assurance-iteration)
+  * [8.13. DOD CHECK-LIST WALKTHROUGH](#813-dod-check-list-walkthrough)
+  * [8.14. THE FEATURE OR FUNCTIONALITY CURRENT DESCRIPTION IS ADDED IN THE DOCS](#814-the-feature-or-functionality-current-description-is-added-in-the-docs)
+    * [8.14.1. Regenerate the md docs](#8141-regenerate-the-md-docs)
+    * [8.14.2. Regenerate the pdf docs](#8142-regenerate-the-pdf-docs)
+    * [8.14.3. Regenerate the msft docs](#8143-regenerate-the-msft-docs)
+  * [8.15. THE RELATED REQUIREMENT IS ADDED IN THE REQUIREMENTS DOCUMENT](#815-the-related-requirement-is-added-in-the-requirements-document)
+  * [8.16. AT LEAST 2 TIMES PASSED FUNCTIONAL AND JS TESTS RUN ](#816-at-least-2-times-passed-functional-and-js-tests-run-)
+  * [8.17. AT LEAST 2 TIMES PASSED INTEGRATION TESTS  IN EACH ENVIRONMENT INSTANCE](#817-at-least-2-times-passed-integration-tests-in-each-environment-instance)
+  * [8.18. DEPLOYMENT TO THE TEST ENVIRONMENT](#818-deployment-to-the-test-environment)
+  * [8.19. CHECK THAT ALL THE FILES IN THE DEPLOYMENT PACKAGE ARE THE SAME AS THOSE IN THE LATEST COMMIT OF THE DEV GIT BRANCH. ](#819-check-that-all-the-files-in-the-deployment-package-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
+  * [8.20. RESTART THE APPLICATION LAYER](#820-restart-the-application-layer)
+* [9. SECURITY](#9-security)
+  * [9.1. AUTHENTICATION](#91-authentication)
+    * [9.1.1. Session based native authentication](#911-session-based-native-authentication)
+    * [9.1.2. JWT based native authentication](#912-jwt-based-native-authentication)
+* [10. KNOWS ISSUES AND WORKAROUNDS](#10-knows-issues-and-workarounds)
+  * [10.1. AUTHORISATION](#101-authorisation)
+  * [10.2. ALL TESTS FAIL WITH THE 302 ERROR](#102-all-tests-fail-with-the-302-error)
+  * [10.3. MORBO IS STUCK](#103-morbo-is-stuck)
+    * [10.3.1. Problem description](#1031-problem-description)
+    * [10.3.2. Probable root cause](#1032-probable-root-cause)
+    * [10.3.3. Kill processes](#1033-kill-processes)
+  * [10.4. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#104-the-page-looks-broken--probably-the-new-css-is-not-re-loaded)
 
 
 
@@ -85,7 +99,8 @@ Use common sense when applying all those principles. Of course they are not engr
     
 
 ### 1.2. Personal responsibility
-Any given instance of the qto should have ONE and only ONE person which is responsible at the end for the functioning of THE instance - so think carefully before attempting to take ownership of an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instance. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no Service Level Agreement, not even promise to help. 
+Any given instance of the qto should have ONE and only ONE person which is responsible at the end for the functioning of THE instance - so think carefully before attempting to take ownership of an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instance. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no Service Level Agreement, only openly stated attempt to assist when possible.
+Qto is design to make version updates fully vertically integrated and as automated as possible, yet YOU will be responsible for increasing the versions, taking backups, applying database migrations and so on ... 
 
     
 
@@ -133,11 +148,10 @@ Even in your personal branch. Really. Because after the application has surpasse
 
     
 
-### 2.1. Backup a database table
-You backup a database table with the following one-liner. Noe 
+### 2.1. Db data backup and restore
+Check maintenance_guide_doc-23
 
-    # obs you have to have the shell vars pre-loaded !!!
-    bash src/bash/qto/qto.sh -a backup-postgres-table -t my_table
+    
 
 ### 2.2. Run increase-date action
 You track the issues of your projects by storing them into xls files in "daily" proj_txt dirs. 
@@ -145,36 +159,14 @@ Each time the day changes by running the increase-date action you will be able t
 
     bash src/bash/qto/qto.sh -a increase-date
 
-### 2.3. Load xls issues to db and from db to txt files
-to load xls issues to db and from db to txt files
+### 2.3. Load xls issues to db and from db
+To load xls issues to db run the following one-liner:
 
-    bash src/bash/qto/qto.sh -a xls-to-db -a db-to-txt 
-    
-    # or run for all the periods
-    for period in `echo daily weekly monthly yearly`; do export period=$period ; 
-    bash src/bash/qto/qto.sh -a xls-to-db -a db-to-txt ; done ;
-
-### 2.4. Run the qto file to db load
-Run the qto file to db load 
-
-    # ensure the following actions will be tested
-    cat src/bash/qto/tests/run-qto-tests.lst | grep -v '#'
-    # output should be if not correct
-    check-perl-syntax
-    run-qto
-    
-    # test those uncommented actions
-    bash src/bash/qto/test-qto.sh
+    bash src/bash/qto/qto.sh -a xls-to-db
     
     
 
-### 2.5. Verify the inserted data from the db
-Verify the inserted data from the db as follows:
-
-    # check that the rows where inserted
-    echo 'SELECT * FROM issue ; ' | psql -d dev_qto
-
-### 2.6. Dirs naming conventions
+### 2.4. Dirs naming conventions
 The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
 
     
@@ -271,24 +263,57 @@ Once the business has approved a new version - it should be moved to the master 
 
     
 
-## 5. WAY OF WORKING
+## 5. SOURCE CODE STYLING
+This section is going to be the one to be debated and hated the most ...
+
+    
+
+### 5.1. Spaces and not tabs
+
+
+    
+
+### 5.2. Perl source code styling
+
+
+    
+
+#### 5.2.1. Spacing after variable asignments
+You might want to use spacing after variable assignments if you have a lot of variables assigned ... it improves the readability of the code ....
+
+    
+
+#### 5.2.2. Set 3 spaces for a tab
+Why ????!!!!!
+Because 2 is too little and 4 is too much and line legth of 80 to 100 is too small to be wasted or packed with too much stuff ... 
+Also 3 is a magical number ...
+
+    
+
+#### 5.2.3. Empty lines
+Empty lines improve readability, when used in a standard way: 
+Use 2 empty lines between functions and 1 empty line between logical blocks within functions.
+
+    
+
+## 6. WAY OF WORKING
 This section describes the way of working within a team working on the qto project. 
 The work on the qto project is conducted by using the Scrum methodology, thus the Scrum
 
     
 
-### 5.1. Definition of Done
+### 6.1. Chat / IRC
+Should you want a quicker respond than 2 hours use a chat tool. Do not expect people to answer you straight away, it takes 5 to 20 min to reach the most productive flow state, thus not answering your question might be the more productive option from the point of view of the organisation.
+
+    
+
+### 6.2. Definition of Done
 Each issue must have a tangible artifact. An issue without tangible artifact is a thought thrown in the air.
 The DoD must be iterated and updated during each Sprint Review. 
 
     
 
-### 5.2. Chat / IRC
-Should you want a quicker respond than 2 hours use a chat tool. Do not expect people to answer you straight away, it takes 5 to 20 min to reach the most productive flow state, thus not answering your question might be the more productive option from the point of view of the organisation.
-
-    
-
-### 5.3. E-mail communication
+### 6.3. E-mail communication
 Do not use e-mail communication for code style, testing, developing etc. Issues which could be achieved with the code review interface of the source code management system. 
 Before writing an e-mail think first could you find a way to avoid writing it at all. 
 Do not expect answer of your e-mail within 2 hours. 
@@ -296,12 +321,12 @@ Use e-mail when you have to get an written evidence on agreed matters, which mig
 
     
 
-### 5.4. Documentation
+### 6.4. Documentation
 Undocumented feature is not a feature. 
 
     
 
-### 5.5. Issues management
+### 6.5. Issues management
 At the end of the month you should move the completed issues to the yearly_issues table as follows:
 
 
@@ -317,19 +342,33 @@ At the end of the month you should move the completed issues to the yearly_issue
     ;
     "
 
-## 6. FEATURE IMPLEMENTATION WORKFLOW
-This section describes the common workflow for implementing a feature. 
-As in other places the main principle to follow is "use common sense" , thus try to follow this workflow for feature implementation, but challenge it as soon as it defies the common sense. 
+## 7. TESTING
+Why the testing section is before the coding one ??!!!
+Because in order for you to be able to add more functionalities to the qto application you MUST first understand how to ensure that you are not causing regression bugs - aka the application "works" according to one of the main principle - it must just work, no more and no less.
 
     
 
-### 6.1. Problem registration
-Should you have problems or bugs, or even questions register them first into the qto application. Problems are often hint from the reality on the actual work, which has to be performed, yet problems are not yet issues. Issues are meant to be derived from problems in structured way, so that the deliverable of each issue must be testable and distinguishable, as well as the work.
-The reason the problem registration is on top of this subsection is the fact that bugs and problems should be dealt with higher priority, to minimise the technical debt of the application.
+### 7.1. Checking the perl syntax
+Before running any tests check the perl syntax ... as follows:
 
-    
+     bash src/bash/qto/qto.sh -a check-perl-snt
 
-### 6.2. User-Story creation
+### 7.2. Running unit tests
+
+
+     bash src/bash/qto/qto.sh -a run-unit-tests
+
+### 7.3. Running functional tests
+
+
+     bash src/bash/qto/qto.sh -a run-functional-tests
+
+### 7.4. Running integration tests
+
+
+     bash src/bash/qto/qto.sh -a run-integration-tests
+
+### 7.5. User-Story creation
 Use the following template while creating the user story:
 As an &lt;&lt;role&gt;&gt;
 In order to &lt;&lt;achieve something/ bring value by&gt;&gt; 
@@ -337,18 +376,30 @@ I want to to be able to &lt;&lt;action-description&gt;&gt;
 
     
 
-### 6.3. Requirements creation
+## 8. FEATURE IMPLEMENTATION WORKFLOW
+This section describes the common workflow for implementing a feature. 
+As in other places the main principle to follow is "use common sense" , thus try to follow this workflow for feature implementation, but challenge it as soon as it defies the common sense. 
+
+    
+
+### 8.1. Problem registration
+Should you have problems or bugs, or even questions register them first into the qto application. Problems are often hint from the reality on the actual work, which has to be performed, yet problems are not yet issues. Issues are meant to be derived from problems in structured way, so that the deliverable of each issue must be testable and distinguishable, as well as the work.
+The reason the problem registration is on top of this subsection is the fact that bugs and problems should be dealt with higher priority, to minimise the technical debt of the application.
+
+    
+
+### 8.2. Requirements creation
 Depending on the size and agility of your organisation formal requirements exist.
 
     
 
-### 6.4. Issue creation
+### 8.3. Issue creation
 Even if you do not have a defined documentation artefact - create a new issue, which could be the start for a an action affecting the run-state, configuration , data , features and functionalities or other aspects of the qto application. 
 An issue could be a bug, a request for a feature or even simply an undefined combination of problems and solution which could quickly be formalised by defining a new requirement, another issue, feature-request
 
     
 
-### 6.5. Feature branch creation
+### 8.4. Feature branch creation
 Create the feature branch by using the following naming convention:
  - dev--&lt;&lt;short-feature-title&gt;&gt;
 
@@ -360,33 +411,33 @@ Create the feature branch by using the following naming convention:
     
     
 
-### 6.6. Create a test-entry point
+### 8.5. Create a test-entry point
 Even the smallest proof of concept needs a small test-entry point. Start always with the testing and the testing scalability in mind. 
 
     
 
-### 6.7. Implementation of Proof of Concept ( optional )
+### 8.6. Implementation of Proof of Concept ( optional )
 Aim to create a small POC for the new concept, feature or functionality - for example a page having a lot of hardcoding, which constrains the scope for ONLY this new thing. 
 Strive however to use the same naming convention, and implement with future integrations within the end truly dynamic code. 
 
     
 
-### 6.8. Prototype implementation ( optional )
+### 8.7. Prototype implementation ( optional )
 The same instructions as the POC apply, but the prototype contains a certain and broader level of integration with the dynamic parts of the System.
 
     
 
-### 6.9. Unit and / or integration test creation
+### 8.8. Unit and / or integration test creation
 Strive to create always unit and / or integration test(s).
 
     
 
-### 6.10. Implementation 
+### 8.9. Implementation 
 Implement by quick unit test runs. Constantly improve both the code , configuration changes and the test code. Think about re-usability and scalability during implementation, but do not overgeneralise.
 
     
 
-### 6.11. Deployment and test to the test environment
+### 8.10. Deployment and test to the test environment
 Deploy to the test environment a new instance with the current version as follows:
 
     # deploy to the tst environment
@@ -397,27 +448,27 @@ Deploy to the test environment a new instance with the current version as follow
     bash src/bash/qto/qto.sh -a run-integration-tests
     bash src/bash/qto/qto.sh -a run-functional-tests
 
-### 6.12. Deployment and test to the production environment
+### 8.11. Deployment and test to the production environment
 Repeat the same to the production environment. As the current version is usually work in progress your stable version will be one level bellow and thanks to the architecture of the tool you could test in the production environment ( as soon as you have proper configuration ).
 
     
 
-### 6.13. Quality assurance iteration
+### 8.12. Quality assurance iteration
 This phase might be longer depending on the feature. Some of the features stay in quality assurance mode EVEN if they have been deployed to production.
 
     
 
-### 6.14. DoD check-list walkthrough
+### 8.13. DoD check-list walkthrough
 Perform the DoD checklist as follows.
 
     
 
-### 6.15. The feature or functionality current description is added in the docs
+### 8.14. The feature or functionality current description is added in the docs
 The feature or functionality current description is added in the Features and Functionalities document. Check also the end user guide - it might to be changed as well. It might pay off to revisit the ReadMe as well, which is the landing and more of a "selling" point.
 
     
 
-#### 6.15.1. Regenerate the md docs
+#### 8.14.1. Regenerate the md docs
 
 
     # instead of the product instance dir you could also use different documents root 
@@ -425,7 +476,7 @@ The feature or functionality current description is added in the Features and Fu
     # Action !!!
     bash src/bash/qto/qto.sh -a generate-md-docs
 
-#### 6.15.2. Regenerate the pdf docs
+#### 8.14.2. Regenerate the pdf docs
 Regenerate the pdf docs by issuing the following one-liner
 
     # instead of the product instance dir you could also use different documents root 
@@ -433,7 +484,7 @@ Regenerate the pdf docs by issuing the following one-liner
     
     bash src/bash/qto/qto.sh -a generate-pdf-docs
 
-#### 6.15.3. Regenerate the msft docs
+#### 8.14.3. Regenerate the msft docs
 Regenerate the Microsoft docx files by issuing the following shell one-liner:
 
     # instead of the product instance dir you could also use different documents root 
@@ -441,23 +492,23 @@ Regenerate the Microsoft docx files by issuing the following shell one-liner:
     # Action !!!
     bash src/bash/qto/qto.sh -a generate-msft-docs
 
-### 6.16. The related requirement is added in the requirements document
+### 8.15. The related requirement is added in the requirements document
 The related requirement is added in the requirements document - there might be one or more requirements added. 
 
     
 
-### 6.17. At least 2 times passed functional and js tests run 
-Use the following shell actions ( Note that since v0.6.7 as authentication is required for most of the web-actions the QTO_NO_AUTH environmental variable has to be set to 1 to run those separately) :
+### 8.16. At least 2 times passed functional and js tests run 
+Use the following shell actions ( Note that since v0.6.7 as authentication is required for most of the web-actions the QTO_ONGOING_TEST environmental variable has to be set to 1 to run those separately) :
 
     bash src/bash/qto/qto.sh -a run-js-tests
     bash src/bash/qto/qto.sh -a run-functional-tests
 
-### 6.18. At least 2 times passed integration tests  in each environment instance
-At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. Since v0.6.7 as authentication is required for most of the web-actions the QTO_NO_AUTH environmental variable has to be set to 1 to run those separately. 
+### 8.17. At least 2 times passed integration tests  in each environment instance
+At least 2 times passed unit tests run in each environment instance - run the unit tests at least twice per environment. Should the run behave differently start all over from dev. Since v0.6.7 as authentication is required for most of the web-actions the QTO_ONGOING_TEST environmental variable has to be set to 1 to run those separately. 
 
     bash src/bash/qto/qto.sh -a run-integration-tests
 
-### 6.19. Deployment to the test environment
+### 8.18. Deployment to the test environment
 Deploy to the test environment as shown in the code snippet bellow. Re-run the tests via the tests shell actions. 
 
     # deploy to the tst environment
@@ -467,7 +518,7 @@ Deploy to the test environment as shown in the code snippet bellow. Re-run the t
     cd ../qto.<<version>>.tst.<<owner>>
     
 
-### 6.20. Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. 
+### 8.19. Check that all the files in the deployment package are the same as those in the latest commit of the dev git branch. 
 Deploy to the test environment as follows:
 
     # deploy to the tst environment
@@ -477,31 +528,69 @@ Deploy to the test environment as follows:
     cd ../qto.<<version>>.tst.<<owner>>
     
 
-### 6.21. restart the application layer
+### 8.20. restart the application layer
 Well just chain the both commands. 
 
     bash src/bash/qto/qto.sh -a mojo-morbo-stop ; bash src/bash/qto/qto.sh -a mojo-morbo-start
 
-## 7. KNOWS ISSUES AND WORKAROUNDS
+## 9. SECURITY
 
 
     
 
-### 7.1. All tests fail with the 302 error
+### 9.1. Authentication
+You might want to refresh the following security related links from time while reading this section:
+
+http://self-issued.info/docs/draft-jones-json-web-token-06.html
+https://metacpan.org/pod/Mojo::JWT
+https://tools.ietf.org/html/rfc6749#section-1.5
+
+    
+
+#### 9.1.1. Session based native authentication
+The session based authentication works basically as follows:
+ - non-authenticated users requests a resource from the application layer
+ - the application layer , runs the controller specified in the route
+ - each controller is derived from the BasedController, which has the isAuthenticated metho
+ - which returns 1 or 0 based on Mojo::Session stored data
+
+So as of v0.7.8 - no roles, no permissions are implemented - the users are either authenticated or not. Once authenticated they can CRUD anything they have access to from the UI
+
+    
+
+#### 9.1.2. JWT based native authentication
+Theory chk the following links:
+http://self-issued.info/docs/draft-jones-json-web-token-06.html
+https://metacpan.org/pod/Mojo::JWT
+https://tools.ietf.org/html/rfc6749#section-1.5
+
+    
+
+## 10. KNOWS ISSUES AND WORKAROUNDS
+
+
+    
+
+### 10.1. Authorisation
+
+
+    
+
+### 10.2. All tests fail with the 302 error
  This one is actually a bug ... all the tests not requiring non-authentication mode should set it in advance ...
 
     # disable authentication during testing
-    export QTO_NO_AUTH=1
+    export QTO_ONGOING_TEST=1
     
     # call the test once again
     perl src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
 
-### 7.2. Morbo is stuck
+### 10.3. Morbo is stuck
 
 
     
 
-#### 7.2.1. Problem description
+#### 10.3.1. Problem description
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -515,7 +604,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 7.2.2. Probable root cause
+#### 10.3.2. Probable root cause
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -529,7 +618,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 7.2.3. Kill processes
+#### 10.3.3. Kill processes
 List the running perl processes which run the morbo and kill the instances
 
     ps -ef | grep -i perl
@@ -537,7 +626,7 @@ List the running perl processes which run the morbo and kill the instances
     # be carefull what to kill 
     kill -9 <<proc-I-know-is-the-one-to-kill>>
 
-### 7.3. The page looks broken - probably the new css is not re-loaded
+### 10.4. The page looks broken - probably the new css is not re-loaded
 This problem is quite oftenly experienced and a real time-burner, so keep those shortcuts bellow in mind. 
 To apply the newest css do a hard reload in Chrome with the shortcut COMMAND + SHIFT + R.
 The other option is to keep the SHIFT button and press the reload button the Chrome address bar ( this one has been buggy from time to time as well. ... )

@@ -1,4 +1,8 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+# security
+src/perl/qto/lib/Qto/App/Sec/Guardian.pm
+src/perl/qto/t/lib/Qto/App/Sec/TestGuardian.t
+# eof security
 src/tpl/psql-code-generator
 src/tpl/psql-code-generator/psql-code-generator.sh
 src/tpl/psql-code-generator/test-psql-code-generator.sh
@@ -15,7 +19,6 @@ src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/qto/lib/Qto/App/UI/Controls/WtrLeftMenu.pm
 src/perl/qto/lib/Qto/Controller/View.pm
 src/perl/qto/lib/Qto/Controller/BaseController.pm
-src/sql/pgsql/qto/tables/02.create-table-items_doc.sql
 src/perl/qto/templates/controls/left-menu
 src/perl/qto/templates/controls/left-menu/left-menu.html.ep
 src/perl/qto/public/themes/thme-blue/css/screen/controls/left-menu.css
@@ -49,6 +52,7 @@ src/bash/deployer/check-install-phantom-js.func.sh
 src/bash/deployer/check-install-perl-modules.func.sh
 src/bash/deployer/check-install-python-modules.func.sh
 src/bash/deployer/provision-postgres.func.sh
+src/bash/deployer/provision-ssh-keys.func.sh
 src/bash/deployer/provision-nginx.func.sh
 src/bash/deployer/scramble-confs.func.sh
 src/bash/deployer/test-deployer-run.sh
@@ -436,13 +440,17 @@ src/bash/qto/funcs/run-pgsql-scripts.func.sh
 src/bash/qto/funcs/run-qto-db-ddl.func.sh
 src/sql/pgsql/qto/00.create-db.pgsql
 src/sql/pgsql/qto/01.create-qto-app-user.pgsql
+src/sql/pgsql/qto/tables/02.create-table-items_doc.sql
 src/sql/pgsql/qto/funcs/01.create-func-fns_update_time.sql
 src/sql/pgsql/qto/funcs/02.create-func-f_concat_ws.sql
 src/sql/pgsql/qto/tables
+src/sql/pgsql/qto/tables/2020/2020-01
+src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2018.sql
+src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2019.sql
+src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql
+src/sql/pgsql/qto/tables/2020/2020-01/create-table-monthly_issues_202001.sql
 src/sql/pgsql/qto/tables/01.create-table-daily_issues.sql
 src/sql/pgsql/qto/tables/03.create-table-monthly_issues.sql
-src/sql/pgsql/qto/tables/04.01.create-table-yearly_issues_2018.sql
-src/sql/pgsql/qto/tables/04.01.create-table-yearly_issues_2019.sql
 src/sql/pgsql/qto/tables/04.create-table-yearly_issues.sql
 src/sql/pgsql/qto/tables/05.00.create-table-quinquennially_issues.sql
 src/sql/pgsql/qto/tables/05.01.create-table-his_quinquennially_issues.sql

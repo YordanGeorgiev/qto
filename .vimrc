@@ -3,6 +3,8 @@
 " main principle - Don't put any lines in your vimrc that you don't understand !!!
 " enable syntax hightlighting
 
+set backspace=2 " backspace work l
+
 " adjust the backspace behaviour 
 set backspace=indent,eol,start
 
@@ -15,7 +17,7 @@ set winheight=92
 " set the brightest possible colorscheme
 colorscheme elflord
 " colorscheme Tomorrow-Night-Blue
-
+    
 " v1.1.9
 " the num of spaces for a tab - 4 is too much , 2 is too little
 " convert tabs into spaces
@@ -215,7 +217,7 @@ filetype plugin on
 " :so ~/.vimrc
 " ---------------------------------------------------------
 "
-" g/srch/#
+" how-to search g/to-srch/#
 " how-to jump back and fortch visited code locations- Ctrl + O , Ctrl + I
 " how-to search for file / dir names starting with SomeStr
 " how-to srch for the word under the cursor forward - *
@@ -232,6 +234,9 @@ filetype plugin on
 " how-to jump to marks in the current file - in normal - 'A , 'B
 " how-to delete all the marks :delmarks A-Z0-9
 " how-to open the previous file - Ctrl + ^
+" how-to delete a letter in Normal mode - dl
+" how-to move by words back and forth - b , w
+" how-to delete a word from back to forth ( aka Alt + Backspace in most uis) - db
 " :delm! | delm A-Z0-9
 " how-to open a filename somewhere under the current root
 " :args **/*file-name*
