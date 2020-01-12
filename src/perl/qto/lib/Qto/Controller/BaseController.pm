@@ -176,3 +176,42 @@ sub doRenderJSON {
 
 __END__
 
+=head1 NAME
+
+BaseController
+
+=head1 SYNOPSIS
+
+require Exporter;
+our @ISA = qw(Exporter Mojo::Base Qto::Controller::BaseController);
+our $AUTOLOAD =();
+our $ModuleDebug = 0 ; 
+use AutoLoader;
+
+use parent qw(Qto::Controller::BaseController);
+
+
+=head1 DESCRIPTION
+the parent for all Qto application controllers
+
+=head2 EXPORT
+
+
+=head1 SEE ALSO
+
+
+Qto::Controller::BaseController ; 
+https://mojolicious.org/perldoc/Mojolicious/Controller
+
+
+=head1 AUTHOR
+
+yordan.georgiev@gmail.com
+
+=head1 
+
+
+
+
+=cut 
+

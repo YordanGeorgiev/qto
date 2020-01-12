@@ -14,7 +14,7 @@ LANGUAGE plpgsql VOLATILE
 -- VOLATILE says the function has side effects.
 ;
 
-DROP TRIGGER IF EXISTS trg_his_before_update_on_quinquennially_issues on "public"."quinquennially_issues"
+-- DROP TRIGGER IF EXISTS trg_his_before_update_on_quinquennially_issues on "public"."quinquennially_issues"
 ;
 
 CREATE TRIGGER trg_his_before_update_on_quinquennially_issues

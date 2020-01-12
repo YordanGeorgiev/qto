@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS items_doc CASCADE;
+-- DROP TABLE IF EXISTS items_doc CASCADE;
 
 SELECT 'create the "items_doc" table'
 ; 

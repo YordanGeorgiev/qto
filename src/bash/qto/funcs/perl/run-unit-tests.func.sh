@@ -1,8 +1,8 @@
-# src/bash/qto/funcs/run-unit-tests.func.sh
+# file: src/bash/qto/funcs/run-unit-tests.func.sh
 
-# v0.6.9
+# v0.7.8
 # ---------------------------------------------------------
-# implement the calls to all the unit tests
+# call all the unit tests - fail if even one fails ...
 # ---------------------------------------------------------
 doRunUnitTests(){
   
@@ -12,10 +12,11 @@ doRunUnitTests(){
    doExportJsonSectionVars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
    doExportJsonSectionVars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.app'
    
-   doLog "INFO START unit tests"
+   doLog "INFO START running the unit tests"
    while read -r f ; do 
       doLog "INFO START unit test for $f"
-      perl $f ;
+      perl $f
+      test $? -ne 0 && doExit $? " the tests in the $f failed !!!"
       doLog "INFO STOP  unit test for $f"
       sleep 1
       clearTheScreen
@@ -24,5 +25,3 @@ doRunUnitTests(){
    export QTO_NO_AUTH=0
 }
 
-
-# eof file: src/bash/qto/funcs/run-unit-tests.func.sh

@@ -18,23 +18,31 @@
   * [3.1. LOAD DATABASE CONNECTIVITY CONFIGURATION SECURELY](#31-load-database-connectivity-configuration-securely)
   * [3.2. BACKUP A DATABASE](#32-backup-a-database)
   * [3.3. BACKUP A DATABASE TABLE](#33-backup-a-database-table)
-  * [3.4. RESTORE A DATABASE](#34-restore-a-database)
-  * [3.5. RESTORE A DATABASE TABLE](#35-restore-a-database-table)
+  * [3.4. BACKUP ONLY THE DATABASE TABLES INSERT DATA](#34-backup-only-the-database-tables-insert-data)
+  * [3.5. RESTORE A DATABASE](#35-restore-a-database)
+    * [3.5.1. Restore a database from full database backup](#351-restore-a-database-from-full-database-backup)
+    * [3.5.2. Restore a database from db inserts file](#352-restore-a-database-from-db-inserts-file)
+  * [3.6. RESTORE A DATABASE TABLE](#36-restore-a-database-table)
 * [4. SHELL ACTIONS](#4-shell-actions)
   * [4.1. RUN INCREASE-DATE ACTION](#41-run-increase-date-action)
   * [4.2. LOAD XLS SHEET TO DB A DOC TABLE](#42-load-xls-sheet-to-db-a-doc-table)
-* [5. NAMING CONVENTIONS](#5-naming-conventions)
-  * [5.1. DIRS NAMING CONVENTIONS](#51-dirs-naming-conventions)
-  * [5.2. ROOT DIRS NAMING CONVENTIONS](#52-root-dirs-naming-conventions)
-* [6. SOURCE CODE MANAGEMENT](#6-source-code-management)
-  * [6.1. CONFIGURE AND USE GIT ALWAYS BY USING SSH IDENTITIES](#61-configure-and-use-git-always-by-using-ssh-identities)
-  * [6.2. AIM FOR E2E TRACEABILITY](#62-aim-for-e2e-traceability)
-  * [6.3. RESTART THE APPLICATION LAYER](#63-restart-the-application-layer)
-* [7. KNOWN ISSUES AND WORKAROUNDS](#7-known-issues-and-workarounds)
-  * [7.1. MORBO IS STUCK](#71-morbo-is-stuck)
-    * [7.1.1. Symptoms](#711-symptoms)
-    * [7.1.2. Probable root cause](#712-probable-root-cause)
-    * [7.1.3. Known solution and workaround](#713-known-solution-and-workaround)
+* [5. BULK ISSUES MANAGEMENT](#5-bulk-issues-management)
+    * [5.1. Opening a monthly period](#51-opening-a-monthly-period)
+  * [5.1. CLOSING A MONTHLY PERIOD](#51-closing-a-monthly-period)
+  * [5.2. PUBLISH THE RELEASE ISSUES](#52-publish-the-release-issues)
+  * [5.3. DIRS NAMING CONVENTIONS](#53-dirs-naming-conventions)
+* [6. NAMING CONVENTIONS](#6-naming-conventions)
+  * [6.1. NAMING CONVENTIONS FOR DIRECTORIES](#61-naming-conventions-for-directories)
+  * [6.2. ROOT DIRS NAMING CONVENTIONS](#62-root-dirs-naming-conventions)
+* [7. SOURCE CODE MANAGEMENT](#7-source-code-management)
+  * [7.1. CONFIGURE AND USE GIT ALWAYS BY USING SSH IDENTITIES](#71-configure-and-use-git-always-by-using-ssh-identities)
+  * [7.2. AIM FOR E2E TRACEABILITY](#72-aim-for-e2e-traceability)
+  * [7.3. RESTART THE APPLICATION LAYER](#73-restart-the-application-layer)
+* [8. KNOWN ISSUES AND WORKAROUNDS](#8-known-issues-and-workarounds)
+  * [8.1. MORBO IS STUCK](#81-morbo-is-stuck)
+    * [8.1.1. Symptoms](#811-symptoms)
+    * [8.1.2. Probable root cause](#812-probable-root-cause)
+    * [8.1.3. Known solution and workaround](#813-known-solution-and-workaround)
 
 
 
@@ -186,16 +194,48 @@ You backup a database table with the following one-liner. Noe
     # clear; doParseCnfEnvVars <<path-to-cnf-file>>
     bash src/bash/qto/qto.sh -a backup-postgres-table -t my_table
 
-### 3.4. Restore a database
-You restore a database by first running the pgsql scripts of the project database and than restoring the insert data 
+### 3.4. Backup only the database tables insert data
+
 
     # obs you have to have the shell vars pre-loaded !!!
     bash src/bash/qto/qto.sh -a backup-postgres-db-inserts
+
+### 3.5. Restore a database
+You restore a database by first running the pgsql scripts of the project database and than restoring the insert data 
+
+    psql -d $postgres_db_name < \
+    dat/mix/sql/pgsql/dbdumps/dev_qto/dev_qto.20180813_202202.insrt.dmp.sql
+
+#### 3.5.1. Restore a database from full database backup
+You restore a database by basically creating first the empty database and applying the dump file to that database. Practice this several times in dev before going to tst !!! 
+
+    # if you DO HAVE THE DB - probably not a bad idea to first backup it !!!
+    # bash src/bash/qto/qto.sh -a backup-postgres-db
+    # psql -d postgres -c "CREATE DATABASE dev_qto;"
+    # drop it if it was there ...
+    # psql -d postgres -c "DROP DATABASE dev_qto;"
+    
+    # create the db
+    psql -d postgres -c "CREATE DATABASE dev_qto;"
+    
+    psql -d dev_qto < dat/mix/2020/2020-01/2020-01-11/sql/tst_qto/tst_qto.20200111_195947.full.dmp.sql
+
+#### 3.5.2. Restore a database from db inserts file
+This type of restore assumes you are 100% sure that the schema you took the db inserts backup from is the same as the schema you are applying the db inserts to, which should be the case when you are restoring data from the same qto version db. In qto we do not believe in migrations, which is a totally different discussion, but if you do not have the same schema you WILL HAVE errors and you ARE basically on your own, because you ended-up here by basically NOT taking regularly backups and not applying regular updates and that is YOUR fault and not the fault of the product instance owner you are getting the qto source from ....
+
+    # if you DO HAVE THE DB - probably not a bad idea to first backup it !!!
+    # bash src/bash/qto/qto.sh -a backup-postgres-db
+    # psql -d postgres -c "CREATE DATABASE dev_qto;"
+    # drop it if it was there ...
+    # psql -d postgres -c "DROP DATABASE dev_qto;"
+    
+    
+    bash src/bash/qto/qto.sh -a run-qto-db-ddl
     
     psql -d $postgres_db_name < \
     dat/mix/sql/pgsql/dbdumps/dev_qto/dev_qto.20180813_202202.insrt.dmp.sql
 
-### 3.5. Restore a database table
+### 3.6. Restore a database table
 You restore a database table by first running the pgsql scripts of the project database or ONLY for that table and than restoring the insert data from the table insert file.
 
     # re-apply the table ddl
@@ -221,17 +261,77 @@ To load xls issues to db and from db to txt files
     # check that the rows where inserted
      psql -d dev_qto -c "SELECT * FROM requirements_doc;"
 
-## 5. NAMING CONVENTIONS
-
+## 5. BULK ISSUES MANAGEMENT
+By bulk issues management herewith is meant the bulk handling via sql to the issues items via the psql binary, which IS basically just moving data from table to table provided they have the same set of columns. 
 
     
 
-### 5.1. Dirs naming conventions
+#### 5.1. Opening a monthly period
+Each monthly period is basically a table with the naming convention monthly_issues_YYYYMM for example the monthly period for the year 2020 January will be the monthly_issues_202001. 
+To create the table you need to basically copy the monthly_issues table to the one with the period at the end and replace the monthly issues with the monthly_issues_&lt;&lt;yyyymm&gt;&gt; string and run the table as follows.
+
+    # copy the table
+    cp -v src/sql/pgsql/qto/tables/03.create-table-monthly_issues.sql \ src/sql/pgsql/qto/tables/2020/2020-01/create-table-monthly_issues_202001.sql
+    
+    # source the env vars loading func  
+    source lib/bash/funcs/export-json-section-vars.sh
+    
+    # load the env vars
+    doExportJsonSectionVars cnf/env/dev.env.json '.env.db'
+    psql -d dev_qto < src/sql/pgsql/qto/tables/2020/2020-01/create-table-monthly_issues_202001.sql
+    
+    # generate the sql for moving the data between the two tables
+    bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues monthly_issues_202001
+    
+    # copy paste the generated code as follows to "save" it into the $sql_code bash variable
+    IFS='' read -r -d '' sql_code <<"EOF_CODE"
+         INSERT INTO monthly_issues_202001                                                                                                                             ( guid , id , type , category , status , prio , name , description , owner , update_time )
+          SELECT guid , id , type , category , status , prio , name , description , owner , update_time
+          FROM monthly_issues
+          ON CONFLICT (id) DO UPDATE SET
+          guid = excluded.guid, id = excluded.id, type = excluded.type, category = excluded.category, status = excluded.status, prio = excluded.prio, name = exclu
+    ded.name, description = excluded.description, owner = excluded.owner, update_time = excluded.update_time;
+    EOF_CODE
+    
+    # run the sql code by pointing to the bash variable
+    psql -d tst_qto -c "$sql_code"
+
+### 5.1. Closing a monthly period
+Closing a monthly period would simply mean to ensure that all the done issues will be moved to the release_issues table
+
+    bash src/tpl/psql-code-generator/psql-code-generator.sh dev_qto monthly_issues_202001 release_issues
+    IFS='' read -r -d '' sql_code <<"EOF_CODE"
+          INSERT INTO release_issues
+          ( guid , id , type , category , status , prio , name , description , owner , update_time )
+          SELECT guid , id , type , category , status , prio , name , description , owner , update_time
+          FROM monthly_issues_202001
+          ON CONFLICT (id) DO UPDATE SET
+          guid = excluded.guid, id = excluded.id, type = excluded.type, category = excluded.category, status = excluded.status, prio = excluded.prio, name = excluded.name, description = excluded.description, owner = excluded.owner, update_time = excluded.update_time;
+    EOF_CODE
+    psql -d tst_qto -c "$sql_code"
+    psql -d tst_qto -c "delete from release_issues where status <> '09-done';"
+
+### 5.2. Publish the release issues
+You publish the release issues by moving all the issues with '09-done' status to the release_issues table
+
+    
+
+### 5.3. Dirs naming conventions
 The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
 
     
 
-### 5.2. Root Dirs naming conventions
+## 6. NAMING CONVENTIONS
+
+
+    
+
+### 6.1. Naming conventions for directories
+The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
+
+    
+
+### 6.2. Root Dirs naming conventions
 The root dirs and named as follows:
 bin - contains the produced binaries for the project
 cnf - for the configuration
@@ -241,12 +341,12 @@ src - for the source code of the actual projects and subprojects
 
     
 
-## 6. SOURCE CODE MANAGEMENT
+## 7. SOURCE CODE MANAGEMENT
 The qto is a derivative of the wrapp tool - this means that development and deployment process must be integrated into a single pipeline. 
 
     
 
-### 6.1. Configure and use git ALWAYS by using ssh identities
+### 7.1. Configure and use git ALWAYS by using ssh identities
 You probably have access to different corporate and public git repositories. Use your personal ssh identity file you use in GitHub to push to the qto project. The following code snippet demonstrates how you could preserve your existing git configurations ( even on corporate / intra boxes ) , but use ALWAYS the personal identity to push to the qto...
 
     # create the company identity file
@@ -274,29 +374,29 @@ You probably have access to different corporate and public git repositories. Use
     # and verify 
     clear ; git log --pretty --format='%h %ae %<(15)%an ::: %s
 
-### 6.2. Aim for e2e traceability
+### 7.2. Aim for e2e traceability
 Aim for traceability between user-stories, requirements, features and functionalities
 Once the issues are defined and you start working on your own branch which is named by the issue-id aim to map one on one each test in your code with each listed requirement in qto.
 
     
 
-### 6.3. Restart the application layer
+### 7.3. Restart the application layer
 Well just chain the both commands. 
 
     # start does actually re-start always 
     bash src/bash/qto/qto.sh -a mojo-morbo-start 
 
-## 7. KNOWN ISSUES AND WORKAROUNDS
+## 8. KNOWN ISSUES AND WORKAROUNDS
 
 
     
 
-### 7.1. Morbo is stuck
+### 8.1. Morbo is stuck
 
 
     
 
-#### 7.1.1. Symptoms
+#### 8.1.1. Symptoms
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -310,7 +410,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 7.1.2. Probable root cause
+#### 8.1.2. Probable root cause
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -324,7 +424,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 7.1.3. Known solution and workaround
+#### 8.1.3. Known solution and workaround
 List the running perl processes which run the morbo and kill the instances
 
     ps -ef | grep -i perl

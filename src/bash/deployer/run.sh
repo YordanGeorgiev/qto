@@ -7,18 +7,19 @@ main(){
 		usage
 	fi
    do_source_funtions
-   do_check_setup_bash
-   do_check_install_ubuntu_packages
-   do_check_install_postgres
-   do_check_install_chromium_headless
-   do_check_install_phantom_js
-   do_check_install_perl_modules
-   do_check_install_python_modules
-   do_provision_postgres
-   do_provision_nginx
-   do_copy_git_hooks
-   do_set_chmods
-   do_create_multi_env_dir
+#   do_check_setup_bash
+#   do_check_install_ubuntu_packages
+#   do_check_install_postgres
+#   do_check_install_chromium_headless
+#   do_check_install_phantom_js
+#   do_check_install_perl_modules
+#   do_check_install_python_modules
+#   do_provision_postgres
+#   do_provision_nginx
+   do_provision_ssh_keys
+#   do_copy_git_hooks
+#   do_set_chmods
+#   do_create_multi_env_dir
    do_finalize
 }
 
@@ -60,6 +61,7 @@ do_source_funtions(){
    source $DEPLOY_DIR/src/bash/deployer/check-install-chromium-headless.func.sh
    source $DEPLOY_DIR/src/bash/deployer/provision-postgres.func.sh
    source $DEPLOY_DIR/src/bash/deployer/provision-nginx.func.sh
+   source $DEPLOY_DIR/src/bash/deployer/provision-ssh-keys.func.sh
    source $DEPLOY_DIR/src/bash/deployer/scramble-confs.func.sh
 }
 
