@@ -11,7 +11,7 @@ doBackupPostgresDbInserts(){
    doExportJsonSectionVars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
 
    mix_data_dir="$PROJ_INSTANCE_DIR/dat/mix"
-   test -z "${postgres_db_name-}" && postgres_db_name="${env_type-}"_"${run_unit//-/_}"
+   test -z "${postgres_db_name-}" && postgres_db_name="${env_type-}"_"${RUN_UNIT//-/_}"
 
    backup_dir=$mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name
    backup_fname=$postgres_db_name.`date "+%Y%m%d_%H%M%S"`.insrts.dmp.sql

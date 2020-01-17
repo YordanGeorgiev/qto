@@ -33,7 +33,11 @@ sub doBuildLeftMenu {
    my $objWtrUIFactory     = 'Qto::App::UI::WtrUIFactory'->new(\$config, \$objModel );
    my $objUIBuilder        = $objWtrUIFactory->doInit('control/left-menu');
    my $hsr2                = $self->app->config($db . '.meta-tables');
-                           # debug pr $hsr2 ; 
+   my $items_lst           = "" ; 
+   #p $hsr2 ; 
+   #foreach my $key ( sort keys %$hsr2 ) {
+   #   $items_lst .= 
+   #}
                            # debug rint "stop doBuildLeftMenu \n" ; 
                            
    ( $ret , $msg , $left_menu ) = $objUIBuilder->doBuild($db,$hsr2);
@@ -64,7 +68,7 @@ sub doReloadProjDbMetaColumns {
    $db                     = toEnvName ( $db , $config ) ;
 
    # reload the columns meta data ONLY after the meta_columns has been requested
-   return if ( exists ($config->{ $db . '.meta-columns' }) && $item ne 'meta_columns' );
+   return if ( exists ($config->{ $db . '.meta-columns' }) && $item ne 'meta_columns' && $item ne 'meta_tables' && $item ne 'items_doc');
 
    my $objRdrDbsFcry       = {} ; 
    my $objRdrDb            = {} ; 
@@ -96,11 +100,12 @@ sub doReloadProjDbMetaTables {
    $db                     = toEnvName ( $db , $config ) ;
 
    # reload the columns meta data ONLY after the meta_columns has been requested
-   return if ( exists ($config->{ $db . '.meta-tables' }) && $item ne 'items_doc' );
+   return if ( exists ($config->{ $db . '.meta-tables' }) && $item ne 'meta_columns' && $item ne 'meta_tables' && $item ne 'items_doc');
 
    my $objRdrDbsFcry       = {} ; 
    my $objRdrDb            = {} ; 
    my $msr2                = {} ; 
+   my $hsr                 = {} ; 
    my $ret                 = 1 ; 
    my $msg                 = "fatal error while reloading project database meta data " ; 
    my $objModel            = {} ; 
@@ -113,6 +118,15 @@ sub doReloadProjDbMetaTables {
    ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMetaTables( $db ) ; 
 
    $config->{ "$db" . '.meta-tables' } = $msr2 ; # chk: it-181101180808
+
+
+   ($ret, $msg, $hsr) = $objRdrDb->doSelectTablesList($db);
+   my @tables_lst          = ();
+   foreach my $rowid ( sort keys %$hsr ){
+      push (@tables_lst, $hsr->{$rowid}->{'table_name'});
+   }
+   $config->{ "$db" . '.tables-list' } = \@tables_lst ; 
+
 	$self->app->config($config);
    $self->render('text' => $msg ) unless $ret == 0 ; 
 }

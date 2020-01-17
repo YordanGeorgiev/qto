@@ -428,10 +428,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
            ROW_NUMBER () OVER (ORDER BY table_name) as row_id
          , table_name 
          , table_schema 
-         , meta_tables.is_menu
       FROM information_schema.tables
-      LEFT JOIN meta_tables on 
-      meta_tables.name = table_name
       WHERE 1=1 
       AND table_type = 'BASE TABLE' 
       AND table_schema = 'public' 

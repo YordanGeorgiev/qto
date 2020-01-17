@@ -60,6 +60,8 @@ sub doBuildListControl {
 		for (1..3) { chop ( $control ) } ;
    	$control .= ']' ;
 	}
+
+   $control = "null" unless $control ; # qto-191219140539
    return ( $ret , $msg , $control ) ; 
 }
 

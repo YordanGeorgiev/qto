@@ -18,7 +18,7 @@ main(){
    do_print=0; do_build_cols_lst_excluded
    do_print=0; do_generate_psql_html_with_perl_code_example
    do_print=1; do_generate_psql_select_all
-   do_print=1; do_generate_psql_select_into_another_table
+   do_print=1; do_run_sql=1; do_generate_psql_select_into_another_table
    do_exit 0
 }
 
@@ -46,6 +46,11 @@ EOF_SELECT_INTO_ANOTHER_TABLE_PERL_CODE
       echo "::: start $msg"
       perl -e "$perl_code" | tee /tmp/$postgres_db_name.select-$table_name_01-into-$table_name_02.sql
       echo -e ":::  stop $msg \n\n"
+      if [[ $do_run_sql -eq 1 ]]; then
+         PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} \
+            --port $postgres_db_port --host $postgres_db_host -t -d ${postgres_db_name:-} \
+            < /tmp/$postgres_db_name.select-$table_name_01-into-$table_name_02.sql
+      fi
    fi
 }
 

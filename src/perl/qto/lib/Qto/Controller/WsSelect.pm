@@ -48,8 +48,7 @@ sub doWsSelectTables {
  
       my @arr = () ;  
       foreach my $key ( keys %$hsr ) {
-        push ( @arr ,  $hsr->{$key}->{'table_name'} ) 
-				if ( defined ($hsr->{$key}->{'is_menu'} ) && $hsr->{$key}->{'is_menu'} == 1  );
+        push ( @arr ,  $hsr->{$key}->{'table_name'} ) ;
       }  
       my @sorted = sort @arr;
 

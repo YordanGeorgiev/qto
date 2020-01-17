@@ -6,10 +6,8 @@ SELECT 'create the "meta_tables" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , prio           integer NOT NULL DEFAULT 1
-    , is_menu        integer NOT NULL DEFAULT 1
     , name           varchar (200) NOT NULL DEFAULT 'name...'
-    , description    varchar (4000)
-    , doc_guid       UUID NOT NULL DEFAULT gen_random_uuid()
+    , description    varchar (4000) DEFAULT 'description...'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_meta_tables_guid PRIMARY KEY (guid)
     ) WITH (
