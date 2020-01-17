@@ -44,7 +44,7 @@ sub doListItems {
    my $msg              = '' ; 
    my $left_menu        = '' ; 
    my $as               = 'grid' ; # the default form of the list control 
-   my $list_control     = '' ; 
+   my $list_control     = 'null' ; 
 
   
    $config		         = $self->app->config ; 
@@ -99,7 +99,7 @@ sub doBuildListPageType {
 
    my $ui_type          = 'page/list-grid' ; 
    my $ret              = 1 ; 
-   my $list_control     = '' ; 
+   my $list_control     = 'null' ; 
    my $objPageBuilder   = {} ; 
    my $objPageFactory   = {} ; 
 
@@ -153,7 +153,12 @@ sub doRenderPageTemplate {
 
    my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
-
+   my @items_arr           = @{$config->{$db . '.tables-list'}};
+   my $items_lst           = '';
+   foreach my $table ( @items_arr ){
+      $items_lst .= "'" . "$table" . "'," ;
+   }
+   $items_lst = substr($items_lst, 0, -1);
 	
    $self->render(
       'template'        => $template 
@@ -168,6 +173,7 @@ sub doRenderPageTemplate {
     , 'list_control'    => $list_control
     , 'notice'          => $notice
     , 'left_menu'       => $left_menu
+    , 'items_lst'       => $items_lst
 	) ; 
 
    return ; 
