@@ -2,62 +2,60 @@ use strict ; use warnings ;
 
 package Qto::App::Utils::OO::SetGetable ; 
 
-	require Exporter;
-	our @ISA = qw(Exporter);
-	our $AUTOLOAD =();
-	our $ModuleDebug = 0 ; 
-   use Carp qw /carp cluck croak confess/ ; 
-
-   our @EXPORT_OK = qw(get set dumpFields);  # symbols to export on request
-   our $module_trace = 0 ; 
-	# -----------------------------------------------------------------------------
-	# return a field's value - aka the "getter"
-   # chk: http://perldoc.perl.org/Carp.html
-	# -----------------------------------------------------------------------------
-	sub get {
-
-		my $self = shift;
-		my $name = shift;
-
-      if ( $module_trace == 1 ) {
-         print STDERR "\@TRYING to get an undef name" unless ( defined ($name)  ) ; 
-         print STDERR "\@TRYING to get an undefined value" unless ( defined ($self->{ $name })  ); 
-      }
-
-		return $self->{ $name };
-	}    
+require Exporter;
+our @ISA = qw(Exporter);
+our $AUTOLOAD =();
+our @EXPORT_OK = qw(get set dumpFields);  # symbols to export on request
+our $module_trace = 0 ; 
 
 
-	# -----------------------------------------------------------------------------
-	# set a field's value - aka the "setter"
-	# -----------------------------------------------------------------------------
-	sub set {
+# -----------------------------------------------------------------------------
+# return a field's value - aka the "getter"
+# -----------------------------------------------------------------------------
+sub get {
 
-		my $self  = shift;
-		my $name  = shift;
-		my $value = shift;
+   my $self = shift;
+   my $name = shift;
 
-      if ( $module_trace == 1 ) {
-         print STDERR "\@TRYING to set an undef name" unless ( defined ($name)  ) ; 
-         print STDERR "\@TRYING to set an undefined value" unless ( defined ( $value )   ) ; 
-      }
+   if ( $module_trace == 1 ) {
+      print STDERR "\@TRYING to get an undef name" unless ( defined ($name)  ) ; 
+      print STDERR "\@TRYING to get an undefined value" unless ( defined ($self->{ $name })  ); 
+   }
 
-		$self->{ "$name" } = $value;
-	}
-	# eof sub set
+   return $self->{ $name };
+}    
 
-   # -----------------------------------------------------------------------------
-	# return the fields of this obj instance
-	# -----------------------------------------------------------------------------
-	sub dumpFields {
-		my $self      = shift;
-		my $strFields = ();
-		foreach my $key ( keys %$self ) {
-			$strFields .= " $key = $self->{$key} \n ";
-		}
 
-		return $strFields;
-	}    
+# -----------------------------------------------------------------------------
+# set a field's value - aka the "setter"
+# -----------------------------------------------------------------------------
+sub set {
+
+   my $self  = shift;
+   my $name  = shift;
+   my $value = shift;
+
+   if ( $module_trace == 1 ) {
+      print STDERR "\@TRYING to set an undef name" unless ( defined ($name)  ) ; 
+      print STDERR "\@TRYING to set an undefined value" unless ( defined ( $value )   ) ; 
+   }
+
+   $self->{ "$name" } = $value;
+}
+
+
+# -----------------------------------------------------------------------------
+# return the fields of this obj instance
+# -----------------------------------------------------------------------------
+sub dumpFields {
+   my $self      = shift;
+   my $strFields = ();
+   foreach my $key ( keys %$self ) {
+      $strFields .= " $key = $self->{$key} \n ";
+   }
+
+   return $strFields;
+}    
 
    
 1;
@@ -79,7 +77,6 @@ package SetGetableChild ;
 	require Exporter;
 	our @ISA = qw(Exporter  Qto::App::Utils::OO::SetGetable);
 	our $AUTOLOAD =();
-	our $ModuleDebug = 0 ; 
 	use AutoLoader;
    use base qw(Qto::App::Utils::OO::SetGetable);
 
