@@ -172,6 +172,7 @@
          }
          , showContextMenu (context,payload) {
             var e = payload ; // the mouse event
+            var lvl = String(e.srcElement.title).split('-')[3]
             var id = String(e.target.id).split('-')[1] //toc title
             if ( typeof ( id ) === "undefined" ) { console.error( "showContextMenu id undef" ) ; return }
             if ( e.target.hasAttribute("name")){ id = String(e.target.name).split('-')[1] } // logical_order link
@@ -183,6 +184,11 @@
             menu.style.top = e.pageY + 'px'
             menu.style.display = 'block'
             menu.style.zIndex = 101
+            if ( lvl < 2) { //hide the add new-parent-node context menu item on level < 2
+               document.getElementById("add-new-parent-node").style.display="none"
+            } else {
+               document.getElementById("add-new-parent-node").style.display="block"
+            }
             context.commit('SET_CONTEXT_MENU_SHOW', payload, true )
             e.target.disabled = false
          }
