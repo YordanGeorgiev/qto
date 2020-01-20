@@ -26,6 +26,55 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 	our $postgres_db_user 							   = q{} ; 
 	our $postgres_db_user_pw	 					   = q{} ; 
 	our $web_host 											= q{} ; 
+   
+   sub doNativeLogonAuth  {
+
+      my $self             = shift ; 
+      my $db               = shift ; 
+      my $email            = shift ; 
+      my $password         = shift ; 
+      my $msg              = q{} ;         
+      my $ret              = 401 ;        # 401 Unauthorized http code
+      my $debug_msg        = q{} ; 
+      my $hsr              = undef ;      # the hash reference containing the user details
+      my $sth              = {} ;         # this is the statement handle
+      my $dbh              = {} ;         # this is the database handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+      eval { 
+         $str_sql = "
+            SELECT users.id, email, password 
+            FROM users 
+            WHERE 1=1
+            AND status > 0
+            AND email = ?
+         ;
+         " ; 
+
+         $sth = $dbh->prepare($str_sql);  
+         $sth->execute($email) or $objLogger->error ( "$DBI::errstr" ) ;
+         $hsr = $sth->fetchall_hashref( 'id' ) ; 
+
+         if ( scalar ( keys %$hsr ) == 1 ) {
+            $ret = 200 ; 
+            $msg = "" ; 
+         } else { 
+            $msg = "$email not registered! Contact " . $config->{'env'}->{'db'}->{'AdminEmail'} . " to request access." ;  
+            $ret = 401 if ( scalar ( keys %$hsr ) != 1 );
+         }
+      };
+      if ( $@ ) { 
+         my $tmsg = "$@" ; 
+         $msg = DBI->errstr ; 
+         $objLogger->doLogErrorMsg ( "$tmsg" ) ;
+      }
+
+      $dbh->disconnect();
+      return ( $ret , $msg , $hsr ) ; 	
+   }
 
    sub doNativeLoginAuth  {
 
@@ -46,7 +95,9 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 
       eval { 
          $str_sql = "
-            SELECT id,email, password from users WHERE 1=1
+            SELECT id,email, password from users 
+            WHERE 1=1
+            AND status > 0
             AND email = ?
          ;
          " ; 

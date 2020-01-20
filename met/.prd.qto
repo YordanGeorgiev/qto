@@ -483,11 +483,12 @@ src/sql/pgsql/qto/tables/30.create-table-maintenance_guide_doc.sql
 src/sql/pgsql/qto/tables/31.create-table-readme_doc.sql
 src/sql/pgsql/qto/tables/32.create-table-export_files.sql
 src/sql/pgsql/qto/tables/33.create-table-links.sql
-src/sql/pgsql/qto/tables/34.create-table-users.sql
-src/sql/pgsql/qto/tables/35.create-table-roles.sql
-src/sql/pgsql/qto/tables/36.create-table-security_checklist_doc.sql
-src/sql/pgsql/qto/tables/37.definitions_dictionary.sql
+src/sql/pgsql/qto/tables/34.create-table-roles.sql
+src/sql/pgsql/qto/tables/35.create-table-users.sql
+src/sql/pgsql/qto/tables/36.create-table-user_roles.sql
 src/sql/pgsql/qto/tables/38.create-table-onboarding_guide_doc.sql
+src/sql/pgsql/qto/tables/39.create-table-security_checklist_doc.sql
+src/sql/pgsql/qto/tables/40.definitions_dictionary.sql
 src/sql/pgsql/qto/tables/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/tables/66.create-table-logs.sql
 src/sql/pgsql/qto/tables/88.create-table-test_hi_delete_table_doc.sql
@@ -805,6 +806,7 @@ src/perl/qto/lib/auto/Qto/App/UI/Controls/WtrListLabels/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Utils/Initiator/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Utils/Logger/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Utils/Timer/autosplit.ix
+src/perl/qto/lib/auto/Qto/App/Utils/OO/SetGetableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/UI/Controls/WtrLeftMenu/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HiDelete/autosplit.ix
@@ -820,7 +822,6 @@ src/perl/qto/lib/auto/Qto/Controller/Select/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Update/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/View/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WebSocketPoc/autosplit.ix
-src/perl/qto/lib/auto/SetGetableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HiCreate/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Index/
 src/perl/qto/lib/auto/Qto/Controller/Index/autosplit.ix

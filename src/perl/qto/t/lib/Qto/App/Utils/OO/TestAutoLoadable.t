@@ -6,7 +6,6 @@ use FindBin;
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../../lib" }
 BEGIN { unshift @INC, "$FindBin::Bin/" }
 
-use Qto::App::Utils::Initiator ; 
 use Qto::App::Utils::OO::AutoLoadable ; 
 use Test::More tests => 2 ; 
 use Data::Printer ; 

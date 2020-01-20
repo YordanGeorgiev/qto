@@ -58,7 +58,7 @@ sub doLogonUser {
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db ) ;
    my $objCnrPostPrms   = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
    
-   if ( $objCnrPostPrms->hasValidLogonParams($email , $pass , 'Logon') == 0) {
+   unless ( $objCnrPostPrms->hasValidLogonParams($email , $pass , 'Logon') ) {
       $http_code = 400 ; 
       $msg = "login failed! " . $objCnrPostPrms->get('msg');
    } 

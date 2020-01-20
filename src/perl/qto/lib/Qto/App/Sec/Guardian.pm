@@ -21,8 +21,6 @@ our $config          = {} ;
 our $objLogger       = {} ;
 our $rdbms_type      = 'postgres';
 
-my $config        = {} ;  # the app config
-
 # --------------------------------------------------------
 # called after the users presses the login button
 # --------------------------------------------------------
