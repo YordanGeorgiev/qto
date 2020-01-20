@@ -933,7 +933,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          FROM $table 
          WHERE 1=1 " ; 
       
-      print "$str_sql \n" . 'vim +873 `find . -name RdrPostgresDb.pm`' . "\n" ; 
+      # print "$str_sql \n" . 'vim +873 `find . -name RdrPostgresDb.pm`' . "\n" ; 
 
       $ret = 0 ; 
       eval { 
