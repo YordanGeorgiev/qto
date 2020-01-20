@@ -1,4 +1,6 @@
-  ---- DROP TABLE IF EXISTS security_checklist_doc CASCADE;
+-- file: src/sql/pgsql/qto/tables/39.create-table-security_checklist_doc.sql
+-- v0.7.8
+-- DROP TABLE IF EXISTS security_checklist_doc CASCADE;
 
 SELECT 'create the "security_checklist_doc" table'
 ; 
