@@ -1,4 +1,7 @@
----- DROP TABLE IF EXISTS roles ; 
+-- file: src/sql/pgsql/qto/tables/35.create-table-roles.sql
+-- v0.7.8
+
+DROP TABLE IF EXISTS roles ; 
 
 SELECT 'create the "roles" table'
 ; 
@@ -6,8 +9,7 @@ SELECT 'create the "roles" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , name           varchar (100) NOT NULL DEFAULT 'name...'
-    , email          varchar (200) UNIQUE NOT NULL DEFAULT 'email...'
-    , password       varchar (200) NOT NULL DEFAULT 'password...'
+    , level          smallint NOT NULL DEFAULT 1000 -- the anonymous role
     , description    varchar (200) NULL DEFAULT 'description...'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_roles_guid PRIMARY KEY (guid)
@@ -17,8 +19,29 @@ SELECT 'create the "roles" table'
 
 create unique index idx_roles_uniq_id on roles (id);
 
-INSERT INTO public.roles (guid, id, name, email, password, description, update_time) VALUES ('2660a6e9-9e6b-4faa-8264-27a92872657b', 190707231513, 'test user', 'test.user@gmail.com', '{CRYPT}$2a$08$/Z3BoSd2cOO1Enb4xckj9Ocl/8dWGzUxlyaI0fDLveDSEPHQh6XiG', NULL, '2019-07-07 23:20:20');
-INSERT INTO public.roles (guid, id, name, email, password, description, update_time) VALUES ('02d16010-20af-4b0d-be86-cdf116a7d8c7', 190709193352, 'ysg', :'AdminEmail', '{CRYPT}$2a$08$/Z3BoSd2cOO1Enb4xckj9Ocl/8dWGzUxlyaI0fDLveDSEPHQh6XiG', 'the product instance owner', '2019-07-09 19:34:29');
+
+INSERT INTO roles 
+   ( guid , id , name , level , description )
+VALUES
+   ( '71eea083-d818-4557-89fe-29eb950881aa' , '0' , 'PRODUCT_INSTANCE_OWNER', 0 , 'the product instance owner')
+; 
+INSERT INTO roles 
+   ( guid , id , name , level , description )
+VALUES
+   ( '71eea083-d818-4557-89fe-29eb950881ab' , '1' , 'ANONYMOUS', 1000 , 'Any non-registered user having access to the instance')
+; 
+INSERT INTO roles 
+   ( guid , id , name , level , description )
+VALUES
+   ( '71eea083-d818-4557-89fe-29eb950881ad' , '2' , 'READER', 7 , 'Has the right to read content')
+; 
+INSERT INTO roles 
+   ( guid , id , name , level , description )
+VALUES
+   ( '71eea083-d818-4557-89fe-29eb950881ac' , '3' , 'EDITOR', 2 , 'Has generally the right to edit content')
+; 
+
+
 
 
 SELECT 'show the columns of the just created table'

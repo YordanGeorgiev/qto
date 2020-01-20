@@ -1,4 +1,6 @@
-  ---- DROP TABLE IF EXISTS definitions_dictionary CASCADE;
+-- file: src/sql/pgsql/qto/tables/40.definitions_dictionary.sql
+-- v0.7.8
+-- DROP TABLE IF EXISTS definitions_dictionary CASCADE;
 
 SELECT 'create the "definitions_dictionary" table'
 ; 
