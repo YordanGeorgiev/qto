@@ -13,7 +13,9 @@ const OmniSrchBox = Vue.component('omni-srch-box', {
 	   icon: ''
 	}
 	, mounted: function(){
+
       document.getElementById("inp_srch_box").focus();
+      // focus the global omnibox with the / shortcut, but ONLY if not in a title, or description
       window.addEventListener('keyup', function(event) {
          if (event.key === "/" ) { 
             var focusedElement = document.activeElement;
@@ -21,8 +23,8 @@ const OmniSrchBox = Vue.component('omni-srch-box', {
                if ( typeof focusedElement.getAttribute("contenteditable") === "undefined" ) {
                   return;
                } else {
-                  if ( focusedElement.getAttribute("class") == "cls_desc") {
-                     return ;
+                  if ( ['cls_desc','cls_title','cls_src'].includes(focusedElement.getAttribute("class"))) {
+                     return ;  
                   } else {
                      document.getElementById("inp_srch_box").focus();
                   }
