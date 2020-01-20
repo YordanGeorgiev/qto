@@ -1,15 +1,18 @@
 <div id="div_left_menu" role="navigation">
   <div id="left_menu_toggle">
-    <input id="chk_left_menu" type="checkbox" />
+    <input id="chk_left_menu" type="checkbox" /> 
     <span></span>
     <span></span>
     <span></span>
     
-   <ol id="left_menu" class="tree">
+   <ol id="left_menu" class="tree"> 
+    <div id="div_logout"><a alt="logout" tabindex="1" href="/<%= $db =%>/login">
+      <img alt="logout" src="../../themes/thme-blue/img/controls/logout.png" /></a>
+    </div>
          <%== " $left_menu" =%>
    </ol>
    <div id="app_label">
-      <p><%= " $db" =%><%= " $ProductVersion " =%> <%= " $EnvType " =%><%= " $GitShortHash " =%> @<%= " $page_load_time " =%><a tabindex="1" href="/<%= $db =%>/login">logout</a></p>
+      <p><%= " $db" =%><%= " $ProductVersion " =%> <%= " $EnvType " =%><%= " $GitShortHash " =%> @<%= " $page_load_time " =%></p>
    </div>
   </div>
 </div>

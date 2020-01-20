@@ -209,6 +209,7 @@ src/perl/qto/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/searchbox.css
 src/perl/qto/public/themes/thme-blue/img/controls/
 src/perl/qto/public/themes/thme-blue/img/controls/document.png
+src/perl/qto/public/themes/thme-blue/img/controls/logout.png
 src/perl/qto/public/themes/thme-blue/img/controls/folder-horizontal.png
 src/perl/qto/public/themes/thme-blue/img/controls/toggle-small-expand.png
 src/perl/qto/public/themes/thme-blue/img/controls/toggle-small.png
