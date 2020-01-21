@@ -1,8 +1,8 @@
 #  REQUIREMENTS
-* [1. INTRO](#1-intro)
-  * [1.1. PURPOSE](#11-purpose)
+* [1. INTRO /](#1-intro-/)
+  * [1.1. INTRO](#11-intro)
   * [1.2. AUDIENCE](#12-audience)
-  * [1.3. RELATED DOCUMENTATION](#13-related-documentation)
+  * [1.3. RELATED DOCUMENTATION/](#13-related-documentation/)
 * [2. DEPLOYABILITY](#2-deployability)
   * [2.1. DEVOPS DEPLOYABILITY NO LONGER THAN A WEEK RELEASE CYCLE](#21-devops-deployability-no-longer-than-a-week-release-cycle)
   * [2.2. AUTOMATED AWS DEPLOYMENT IN LESS THAN AN HOUR](#22-automated-aws-deployment-in-less-than-an-hour)
@@ -35,7 +35,6 @@
   * [4.4. ONELINER SHELL CALLS](#44-oneliner-shell-calls)
     * [4.4.1. Database recreation and DDL scripts run one-liners](#441-database-recreation-and-ddl-scripts-run-one-liners)
     * [4.4.2. Table(s) load via aa single one-liner](#442-table(s)-load-via-aa-single-one-liner)
-      * [4.4.2.1. name ...](#4421-name-)
 * [5. SCALABILITY](#5-scalability)
   * [5.1. FEATURE SCALABILITY](#51-feature-scalability)
   * [5.2. SETUP SCALABILITY](#52-setup-scalability)
@@ -76,6 +75,15 @@
       * [10.1.2.2. Blowfish encryption for the passwords](#10122-blowfish-encryption-for-the-passwords)
           * [10.1.2.2.1. Passwords sensibility](#101221-passwords-sensibility)
     * [10.1.3. JSON web token authentication](#1013-json-web-token-authentication)
+      * [10.1.3.1. Login](#10131-login)
+      * [10.1.3.2. Must be stateless and thus horizontally scalable](#10132-must-be-stateless-and-thus-horizontally-scalable)
+      * [10.1.3.3. Must not use permanent cookies](#10133-must-not-use-permanent-cookies)
+      * [10.1.3.4. Must not use localStore, but Authorisation header](#10134-must-not-use-localstore-but-authorisation-header)
+      * [10.1.3.5. Must have arymetric signature](#10135-must-have-arymetric-signature)
+      * [10.1.3.6. The tokens must be self-contained](#10136-the-tokens-must-be-self-contained)
+      * [10.1.3.7. Tokens expiration](#10137-tokens-expiration)
+      * [10.1.3.8. Must support whitelisting](#10138-must-support-whitelisting)
+      * [10.1.3.9. Must support black-listing](#10139-must-support-black-listing)
   * [10.2. AUTHORISATION](#102-authorisation)
   * [10.3. ROLE-BASED ACCESS CONTROL](#103-role-based-access-control)
     * [10.3.1. Traditional Unix permissions model per project database](#1031-traditional-unix-permissions-model-per-project-database)
@@ -85,21 +93,19 @@
   * [11.1. DOCUMENTATION COMPLETENESS](#111-documentation-completeness)
   * [11.2. DOCUMENTATION AND CODE BASE SYNCHRONIZATION](#112-documentation-and-code-base-synchronization)
     * [11.2.1. Requirements push](#1121-requirements-push)
-* [12. WORKING PRINCIPLES](#12-working-principles)
-  * [12.1. PERSONAL RESPONSIBILITY](#121-personal-responsibility)
 
 
 
 
     
 
-## 1. INTRO
+## 1. INTRO /
 
 
     
 
-### 1.1. Purpose
-The purpose of this document is to present the requirements set to the qto application for the version of this instance.
+### 1.1. INTRO
+
 
     
 
@@ -108,7 +114,7 @@ This document is aimed for any potential and actual developers of the qto applic
 
     
 
-### 1.3. Related documentation
+### 1.3. Related documentation/
 This document is part of the QTO application documentation-set, which contains the following documents:
  - ReadMe - the initial landing readme doc for the project
  - UserStories - the collection of user-stories used to describe "what is desired"
@@ -293,11 +299,6 @@ The developers should be able to load a table to the database via a single oneli
 
     
 
-##### 4.4.2.1. name ...
-
-
-    
-
 ## 5. SCALABILITY
 
 
@@ -435,27 +436,27 @@ The qto application should support a single shell call json file to table import
     
 
 ### 9.2. Data export
-The qto application should support export to different data formats on both the server and the client sides.
+The qto application must support export to different data formats via both the web interface or terminal access.
 
     
 
 #### 9.2.1. Export to pdf
-Any user having tcp access to an up-and-running qto instance must be able to export all or single item doc from that or another qto instance with tcp / ip connectivity into pdf files into a pre-configurable docs root directory.
+Any user having tcp access to an up-and-running qto instance must be able to export all or single item doc from that or another qto instance with tcp / ip connectivity into pdf files into a pre-configurable docs root directory both via ui or from an automation script.
 
     
 
 #### 9.2.2. Export to md
-Any user having tcp access to an up-and-running qto instance must be able to export all or single item doc from that or another qto instance with tcp / ip connectivity into md files into a pre-configurable docs root directory.
+Any user having tcp access to an up-and-running qto instance must be able to export all or single item doc from that or another qto instance with tcp / ip connectivity into md files into a pre-configurable docs root directory both via ui or from an automation script.
 
     
 
 #### 9.2.3. Export to xls
-Any user having tcp access to an up-and-running qto instance must be able to export all or single item doc from that or another qto instance with tcp / ip connectivity into Microsoft xls files into a pre-configurable docs root directory.
+Any user having tcp access to an up-and-running qto instance must be able to export all or single item doc from that or another qto instance with tcp / ip connectivity into Microsoft xls files into a pre-configurable docs root directory both via ui or from an automation script.
 
     
 
 #### 9.2.4. Export to Microsoft docx
-Any user having an up-and-running qto instance must be able to export all or single item doc from that or another qto instance with tcp / ip connectivity into Microsoft docx files into a pre-configurable docs root directory.
+Any user having an up-and-running qto instance must be able to export all or single item doc from that or another qto instance with tcp / ip connectivity into Microsoft docx files into a pre-configurable docs root directory both via ui or from an automation script.
 
     
 
@@ -466,6 +467,7 @@ Any user having an up-and-running qto instance must be able to export all or sin
 
 ## 10. SECURITY
 A well operated instance of the qto application should have security corresponding to the data sensitivity it is operating on. 
+For complete walkthrough of instance security check the following document: security_checklist_doc-0
 
 
     
@@ -518,6 +520,60 @@ The qto application should support native web tokens based authentication, by us
 The qto should support SSO authentication as described in the following RFC's. 
 The Users should be authenticated by means of the most simplest OAauth2.0 authentication flow: 
 https://tools.ietf.org/html/rfc6749#section-5.1
+
+    
+
+##### 10.1.3.1. Login
+The login must be done against email and password over https. Should the email and the pass not match, a 401 http code ( UnAuthorised ) must be returned.
+
+    
+
+##### 10.1.3.2. Must be stateless and thus horizontally scalable
+The JSON web token authentication must be stateless to enable both process ( aka run-time ) and hosts scalability. The JWT must be signed with private key against tampering.
+Token verification must be done without db lookup and only in-memory. 
+Neither sticky sessions should be used ... 
+
+    
+
+##### 10.1.3.3. Must not use permanent cookies
+Because permanent cookies might be hacked by js scripts which are running in the same browser instance ...
+
+Must use HttpOnly cookies: 
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
+
+    
+
+##### 10.1.3.4. Must not use localStore, but Authorisation header
+But rather some combination of httpOnly session and JWT , same-origin
+Than CORS will not be an issue - https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS , must stay operational even if.
+
+    
+
+##### 10.1.3.5. Must have arymetric signature
+The JSON web tokens must be viewable from the other parties by . Must support public and private key decoding
+
+    
+
+##### 10.1.3.6. The tokens must be self-contained
+The tokens must be self-contained, i.e. the token must carry all the user data needed for the authorisation in is payload, but MUST not expose the site to XSS.
+The tokens must be set in the Authorisation header.
+
+    
+
+##### 10.1.3.7. Tokens expiration
+The tokens could request refresh tokens once the expiration time is close.
+
+    
+
+##### 10.1.3.8. Must support whitelisting
+Whitelisting is the practice of explicitly allowing some identified entities access to a particular privilege, service, mobility, access or recognition.
+A qto admin must be able to revoke access to user token or by username or by token id.
+
+    
+
+##### 10.1.3.9. Must support black-listing
+Blacklisting is the action of a group or authority, compiling a blacklist (or black list) of people, countries or other entities to be avoided or distrusted as not being acceptable to those making the list.[1] A blacklist can list people to be discriminated against, refused employment, or censored.
+A qto admin must be able to revoke access from specific users and specific user tokens.
 
     
 
@@ -575,16 +631,6 @@ Each running instance MUST have its required documentation set up-to-date for it
 
 #### 11.2.1. Requirements push
 Whenever a project database meta-data is updated a new "do reload the current page" should be pushed on all the clients having currently session in the application …
-
-    
-
-## 12. WORKING PRINCIPLES
-
-
-    
-
-### 12.1. Personal responsibility
-The whole design of the application as well as each system containing a running instance of it must support the principle for "personal responsibility" - aka for each error and / or faulty behaviour a concrete person must be available to whom the issue will be assigned. 
 
     
 

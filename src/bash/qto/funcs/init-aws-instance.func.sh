@@ -9,7 +9,9 @@ doInitAwdInstance(){
    cp -v $PRODUCT_INSTANCE_DIR/src/terraform/tpl/qto/main.tf.tpl \
       $PRODUCT_INSTANCE_DIR/src/terraform/qto/main.tf
    
-	public_key=$(cat echo $public_key_path)
+	pem_key=$(cat ${pem_key_fpath:-})
+   public_key=$(cat $pem_key_fpath_pub)
+   key_name=$(basename ${pem_key_fpath:-})
 	main_tf_file="$PRODUCT_INSTANCE_DIR/src/terraform/qto/main.tf"   
 
 	# search and replace the variables from the configuration file to the tpl file
@@ -19,7 +21,9 @@ doInitAwdInstance(){
    perl -pi -e 's|\$AWS_DEFAULT_REGION|'"$AWS_DEFAULT_REGION"'|g' "$main_tf_file"
    perl -pi -e 's|\$availability_zone|'"$availability_zone"'|g' "$main_tf_file"
    perl -pi -e 's|\$ssh_key_pair_file|'"$ssh_key_pair_file"'|g' "$main_tf_file"
-   perl -pi -e 's|\$public_key_path|'"$public_key_path"'|g' "$main_tf_file"
+   perl -pi -e 's|\$pem_key_fpath|'"$pem_key_fpath"'|g' "$main_tf_file"
+   perl -pi -e 's|\$pem_key_fpath_pub|'"$pem_key_fpath_pub"'|g' "$main_tf_file"
+   perl -pi -e 's|\$pem_key|'"$pem_key"'|g' "$main_tf_file"
    perl -pi -e 's|\$public_key|'"$public_key"'|g' "$main_tf_file"
    perl -pi -e 's|\$key_name|'"$key_name"'|g' "$main_tf_file"
 

@@ -10,46 +10,47 @@
 * [2. INITIAL CONCEPTS](#2-initial-concepts)
   * [2.1. ACCESSING MULTIPLE APPLICATIONS FROM THE SAME UI](#21-accessing-multiple-applications-from-the-same-ui)
   * [2.2. SWITCH PROJECTS BY THE :TO OPERATOR IN THE SEARCH-BOX](#22-switch-projects-by-the-to-operator-in-the-search-box)
-* [3. LOGIN](#3-login)
-  * [3.1. ACCESSING MULTIPLE APPLICATIONS FROM THE SAME UI](#31-accessing-multiple-applications-from-the-same-ui)
-  * [3.2. OWN PASSWORD CHANGE](#32-own-password-change)
-  * [3.3. SWITCH ITEMS BY USING THE :FOR OPERATOR IN THE SEARCH-BOX](#33-switch-items-by-using-the-for-operator-in-the-search-box)
-  * [3.4. IMPORTANT PEACE OF INFORMATION ABOUT YOUR SECURITY](#34-important-peace-of-information-about-your-security)
-  * [3.5. LOGOUT FROM THE APPLICATION](#35-logout-from-the-application)
+* [3. LOGIN & LOGOUT](#3-login-&-logout)
+  * [3.1. LOGIN TO A QTO INSTANCE](#31-login-to-a-qto-instance)
+  * [3.2. LOGOUT FROM A QTO INSTANCE](#32-logout-from-a-qto-instance)
+  * [3.3. ACCESSING MULTIPLE APPLICATIONS FROM THE SAME UI](#33-accessing-multiple-applications-from-the-same-ui)
+  * [3.4. OWN PASSWORD CHANGE](#34-own-password-change)
+  * [3.5. SWITCH ITEMS BY USING THE :FOR OPERATOR IN THE SEARCH-BOX](#35-switch-items-by-using-the-for-operator-in-the-search-box)
+  * [3.6. IMPORTANT PEACE OF INFORMATION ABOUT YOUR SECURITY](#36-important-peace-of-information-about-your-security)
+  * [3.7. VIEWING TABLES FROM DIFFERENT PROJECTS ( DATABASES )](#37-viewing-tables-from-different-projects-(-databases-))
 * [4. THE LIST PAGE](#4-the-list-page)
-  * [4.1. VIEWING TABLES FROM DIFFERENT PROJECTS ( DATABASES )](#41-viewing-tables-from-different-projects-(-databases-))
-    * [4.1.1. Viewing the full content of the items](#411-viewing-the-full-content-of-the-items)
-    * [4.1.2. Viewing the list page](#412-viewing-the-list-page)
-    * [4.1.3. Listing url syntax](#413-listing-url-syntax)
-      * [4.1.3.1. The "pick" url param](#4131-the-"pick"-url-param)
-      * [4.1.3.2. The "hide" url param](#4132-the-"hide"-url-param)
-      * [4.1.3.3. The "with=col-operator-value" filter](#4133-the-"with=col-operator-value"-filter)
-      * [4.1.3.4. The "where=col-operator-value" filter](#4134-the-"where=col-operator-value"-filter)
-      * [4.1.3.5. Filtering with "like"](#4135-filtering-with-"like")
-  * [4.2. SORTING AN ITEM TABLE](#42-sorting-an-item-table)
-    * [4.2.1. The 'as' url syntax for printing the listing page](#421-the-'as'-url-syntax-for-printing-the-listing-page)
-  * [4.3. QUICK FILTERING AN ITEM TABLE](#43-quick-filtering-an-item-table)
-  * [4.4. SETTING THE ITEM TABLE PAGING SIZE](#44-setting-the-item-table-paging-size)
-  * [4.5. PAGING - SETTING THE ITEM TABLE'S PAGE NUMBER](#45-paging--setting-the-item-table's-page-number)
-  * [4.6. ITEM TABLE PAGING](#46-item-table-paging)
-  * [4.7. KEYBOARD USABILITY IN THE LIST PAGE](#47-keyboard-usability-in-the-list-page)
-    * [4.7.1. Navigability of the list page with the keyboard](#471-navigability-of-the-list-page-with-the-keyboard)
-    * [4.7.2. Focus the quick search box](#472-focus-the-quick-search-box)
-    * [4.7.3. Undo the edit on a cell](#473-undo-the-edit-on-a-cell)
-    * [4.7.4. Keyboard navigation on the edit form](#474-keyboard-navigation-on-the-edit-form)
-  * [4.8. NEW ITEM CREATION (CREATE)](#48-new-item-creation-(create))
-    * [4.8.1. Successful execution](#481-successful-execution)
-    * [4.8.2. Error handling on list page click create new item action](#482-error-handling-on-list-page-click-create-new-item-action)
-  * [4.9. ITEM EDIT (UPDATE)](#49-item-edit-(update))
-    * [4.9.1. Form edit](#491-form-edit)
-    * [4.9.2. In-line edit ( UPDATE )](#492-in-line-edit-(-update-))
-      * [4.9.2.1. Table columns resizing](#4921-table-columns-resizing)
-      * [4.9.2.2. Contents for the table's cells](#4922-contents-for-the-table's-cells)
-      * [4.9.2.3. Successful execution](#4923-successful-execution)
-      * [4.9.2.4. Error handling on db update error](#4924-error-handling-on-db-update-error)
-      * [4.9.2.5. Nulls handling](#4925-nulls-handling)
-  * [4.10. ITEM DELETION ( DELETE )](#410-item-deletion-(-delete-))
-  * [4.11. LIST AS PRINT-TABLE PAGE](#411-list-as-print-table-page)
+    * [4.1. Viewing the full content of the items](#41-viewing-the-full-content-of-the-items)
+    * [4.2. Viewing the list page](#42-viewing-the-list-page)
+    * [4.3. Listing url syntax](#43-listing-url-syntax)
+      * [4.3.1. The "pick" url param](#431-the-"pick"-url-param)
+      * [4.3.2. The "hide" url param](#432-the-"hide"-url-param)
+      * [4.3.3. The "with=col-operator-value" filter](#433-the-"with=col-operator-value"-filter)
+      * [4.3.4. The "where=col-operator-value" filter](#434-the-"where=col-operator-value"-filter)
+      * [4.3.5. Filtering with "like"](#435-filtering-with-"like")
+  * [4.1. SORTING AN ITEM TABLE](#41-sorting-an-item-table)
+    * [4.1.1. The 'as' url syntax for printing the listing page](#411-the-'as'-url-syntax-for-printing-the-listing-page)
+  * [4.2. QUICK FILTERING AN ITEM TABLE](#42-quick-filtering-an-item-table)
+  * [4.3. SETTING THE ITEM TABLE PAGING SIZE](#43-setting-the-item-table-paging-size)
+  * [4.4. PAGING - SETTING THE ITEM TABLE'S PAGE NUMBER](#44-paging--setting-the-item-table's-page-number)
+  * [4.5. ITEM TABLE PAGING](#45-item-table-paging)
+  * [4.6. KEYBOARD USABILITY IN THE LIST PAGE](#46-keyboard-usability-in-the-list-page)
+    * [4.6.1. Navigability of the list page with the keyboard](#461-navigability-of-the-list-page-with-the-keyboard)
+    * [4.6.2. Focus the quick search box](#462-focus-the-quick-search-box)
+    * [4.6.3. Undo the edit on a cell](#463-undo-the-edit-on-a-cell)
+    * [4.6.4. Keyboard navigation on the edit form](#464-keyboard-navigation-on-the-edit-form)
+  * [4.7. NEW ITEM CREATION (CREATE)](#47-new-item-creation-(create))
+    * [4.7.1. Successful execution](#471-successful-execution)
+    * [4.7.2. Error handling on list page click create new item action](#472-error-handling-on-list-page-click-create-new-item-action)
+  * [4.8. ITEM EDIT (UPDATE)](#48-item-edit-(update))
+    * [4.8.1. Form edit](#481-form-edit)
+    * [4.8.2. In-line edit ( UPDATE )](#482-in-line-edit-(-update-))
+      * [4.8.2.1. Table columns resizing](#4821-table-columns-resizing)
+      * [4.8.2.2. Contents for the table's cells](#4822-contents-for-the-table's-cells)
+      * [4.8.2.3. Successful execution](#4823-successful-execution)
+      * [4.8.2.4. Error handling on db update error](#4824-error-handling-on-db-update-error)
+      * [4.8.2.5. Nulls handling](#4825-nulls-handling)
+  * [4.9. ITEM DELETION ( DELETE )](#49-item-deletion-(-delete-))
+  * [4.10. LIST AS PRINT-TABLE PAGE](#410-list-as-print-table-page)
 * [5. THE VIEW DOC PAGE](#5-the-view-doc-page)
   * [5.1. LOADING THE VIEW DOC PAGE](#51-loading-the-view-doc-page)
   * [5.2. USING THE TOC MENU](#52-using-the-toc-menu)
@@ -134,38 +135,52 @@ If you type the ":to &lt;&lt;database-name&gt;&gt;" you will get a drop down whi
 
     
 
-## 3. LOGIN
+## 3. LOGIN & LOGOUT
 You need to sent e-mail to the administrator of the qto application ( just try to login with your e-mail and you will get his/her e-mail in the error msg ). 
 This section provides initial concepts for new users to quickly grasp the basics of the qto application.
+Important you MUST have cookies enabled otherwise you will not be able to use the qto instance ( if that sounded too technical more than 99% of all the browsers have by default their cookies enabled, if you use regular web services such as Google, Facebook, Instagram you probably have your cookies enabled ... )
 
     
 
-### 3.1. Accessing multiple applications from the same UI
+### 3.1. Login to a qto instance
+Type the login url of the qto instance you have access to, for example: https://qto.fi/qto/login. Type your email and password and hit enter or click the login button. 
+Should you need access the e-mail of the product instance owner - that is the person, who could grant you access will be displayed in the error msg. 
+
+    
+
+### 3.2. Logout from a qto instance
+You logout from any qto instance by opening first the left menu from the upper left corner and clicking the logout img. This will clear your session cookie. The qto application DOES NOT plant any tracking cookies, nor use any analytics to save or track your web behaviour. We usually recommend to use a real e-mail address to register to the qto application, and not even provide your first and / or last name simply to protect your privacy. 
+
+    
+
+### 3.3. Accessing multiple applications from the same UI
 If you type the ":to &lt;&lt;database-name&gt;&gt;" you will get a drop down which will list the projects databases , to which your instance has access to, by choosing the database from the list and hitting enter you will be redirected to the same url by on the different database.
 
     
 
-### 3.2. Own password change
+### 3.4. Own password change
 After you have the password from the administrator change it immidiately after login from the &lt;&lt;app&gt;&gt;/list/users page. You can see only your own password - once you have updated it it gets stored encrypted in the database and even the user administrator cannot read it in clear text. 
 
 
     
 
-### 3.3. Switch items by using the :for operator in the search-box
+### 3.5. Switch items by using the :for operator in the search-box
 If you type the ":to &lt;&lt;database-name&gt;&gt;" you will get a drop down which will list the projects databases , to which your instance has access to, by choosing the database from the list and hitting enter you will be redirected to the same url by on the different database.
 
     
 
-### 3.4. Important peace of information about YOUR Security
+### 3.6. Important peace of information about YOUR Security
 Every user except the administrator can see ONLY his/her own user details. Even the instance administrator cannot see your password, but of course he/she can reset it for you.
 The qto by itself DOES NOT store any personal details for tracking you on the web, nor will it sell your personal data. Like NEVER! In fact we recommend providing as little personal data as possible - even by not using real personal names.
 The qto application users http session to identify you and technically user tracking could have been implemented to gain some user data, yet from the source code of the application AND from the application documentation is evident that any such attempts, have not been planned, done, nor there are any attempts for the foreseeable future.
 
     
 
-### 3.5. Logout from the application
-You can logout from the application from the left menu. Click the upper right button to open the left menu and click the bottom "logout" link. This will clear your session for ONLY this project as well.
-
+### 3.7. Viewing tables from different projects ( databases )
+Each project in qto is actually stored in it's own database, to the access for example the dev_qto, tst_qto and prd_qto projects( which could be any names, but in this example just happen to be the dev, tst and prd databases for qto ) you should simply add the db name as the first url part:
+https://qto.fi:441/dev_qto/list/release_issues
+https://qto.fi:442/tst_qto/list/release_issues
+https://qto.fi:443/prd_qto/list/release_issues
 
     
 
@@ -175,45 +190,37 @@ In the context of the qto's parley the "listing" is the ui list of control/(s) y
 
     
 
-### 4.1. Viewing tables from different projects ( databases )
-Each project in qto is actually stored in it's own database, to the access for example the dev_qto, tst_qto and prd_qto projects( which could be any names, but in this example just happen to be the dev, tst and prd databases for qto ) you should simply add the db name as the first url part:
-https://qto.fi:441/dev_qto/list/release_issues
-https://qto.fi:442/tst_qto/list/release_issues
-https://qto.fi:443/prd_qto/list/release_issues
-
-    
-
-#### 4.1.1. Viewing the full content of the items
+#### 4.1. Viewing the full content of the items
 You can quickly view the full content of each cell of the listing table by hovering with the mouse on top of it. Note that all the links in the content are replaced with clickable links in the tooltip as well as the internal links such as the following one : enduser_guide_doc-190214224315 ( which just refer to next item in this document).
 
     
 
-#### 4.1.2. Viewing the list page
+#### 4.2. Viewing the list page
 You can use the pick=col1, col2, col3 url parameter to select for only desired attributes.
 You could filter the result the same way the filters for the select page work ( see bellow ). 
 Should there be errors in the loading of the page, they will be displayed in a msg at the top of the page.
 
     
 
-#### 4.1.3. Listing url syntax
+#### 4.3. Listing url syntax
 The listing url syntax mimics the sql select clause syntax, yet in much more simplified form. 
 
     
 
-##### 4.1.3.1. The "pick" url param
+##### 4.3.1. The "pick" url param
 You can use the pick=col1,col2,col3 url parameter to select for only desired attributes to be show in the ui control used for listing.
 The following url demonstrates this syntax:
 https://qto.fi/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
-##### 4.1.3.2. The "hide" url param
+##### 4.3.2. The "hide" url param
 If you do not specify any attribute to pick, you could hide specific attributes by using the "hide=col1,col2,col3" syntax.
 https://qto.fi/qto/list/yearly_issues?hide=description
 
     
 
-##### 4.1.3.3. The "with=col-operator-value" filter
+##### 4.3.3. The "with=col-operator-value" filter
 You can filter the result of the query by using the "with=col-operator-value". The following examples demonstrates, which operators are supported.
 An error message is shown if you do not use existing operator. 
 The following url demonstrates this syntax:
@@ -237,7 +244,7 @@ Note when going to the next page that all the rows' status is 09-done
     
     
 
-##### 4.1.3.4. The "where=col-operator-value" filter
+##### 4.3.4. The "where=col-operator-value" filter
 You can filter the result of the query by using the "where=col-operator-value", which works exactly as the with operator, thus the following examples demonstrates, which operators are supported.
 An error message is shown if you do not use existing operator. 
 
@@ -256,7 +263,7 @@ An error message is shown if you do not use existing operator.
          , 'le' => '<='
          , 'like' => 'like'
 
-##### 4.1.3.5. Filtering with "like"
+##### 4.3.5. Filtering with "like"
 The filtering with the like operator translates to the SQL "like" operator- the "like-by=&lt;&lt;attr&gt;&gt;&like-val=&lt;&lt;val&gt;&gt; filtering, where &lt;&lt;attr&gt;&gt; stands for the name of the attribute to use the like operator. 
 Example:
 https://qto.fi/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name&page-size=5&page-num=1&where=status-eq-09-done
@@ -264,32 +271,32 @@ https://qto.fi/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name&p
     # this example url will list all the monthly_issues items having the "bug" string in their "name" attribute:
     http://host-name:3000/qto/list/monthly_issues?as=grid&like-by=name&like-val=bug
 
-### 4.2. Sorting an item table
+### 4.1. Sorting an item table
 The listed table is sortable by clicking on the columns OR by navigating with the tab key on the keyboard on a column and hitting Enter. 
 The sorted column is visually shown as the active one on page load:
 https://qto.fi/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
-#### 4.2.1. The 'as' url syntax for printing the listing page
+#### 4.1.1. The 'as' url syntax for printing the listing page
 By default the url syntax of the list page has the "as=grid" default listing format, if you replace it with the "as=print-table" url parameter you will get a bare listing of the data ( all other sorting and paging parameters work as well ) , which you could use for printing as well.
 
     
 
-### 4.3. Quick filtering an item table
+### 4.2. Quick filtering an item table
 You can filter the already presented part of the result set in the page by using the search textbox. This is only an ui type of filtering for the already loaded data. This type of filtering is different compared to the url parameters filtering by using the with url param syntax and it filters the already fetched from the db data-set, whereas the with=&lt;&lt;attribute&gt;&gt;&lt;&lt;operator&gt;&gt;&lt;&lt;value&gt;&gt; filtering does filter on the database side.
 You could focus the quick search textbox by pressing the forward slash on your keyboard. 
 The quick search box works instantaneously, thus hitting enter is not needed. 
 
     
 
-### 4.4. Setting the item table paging size
+### 4.3. Setting the item table paging size
 You can set the page size of the result set to be fetched from the database by using the "&page-size=&lt;&lt;page-size&gt;&gt;" url parameter or by clicking on the page sizes links bellow the table.
 The default and most convenient table paging size is 7, because it allows quick paging of a small result-set without scrolling on the screen ...  
 
     
 
-### 4.5. Paging - setting the item table's page number
+### 4.4. Paging - setting the item table's page number
 If the result-set requested is larger than the page size you can go to the next page number by using the "&pg-num=&lt;&lt;page-num&gt;&gt;" url parameter. 
 You could go to the next page number by clicking on the links just bellow the quick search textbox. The table control has UI for setting the table page number. 
 The pager shows 10 pages at a "pager page" so getting to the end of hundreds of pages ( depending of course on your page size ) is comparably easy. 
@@ -297,40 +304,40 @@ You could quickly use the / char shortcut to focus to the quick search box and f
 
     
 
-### 4.6. Item table paging
+### 4.5. Item table paging
 The table paging is decided by the pg-num=&lt;&lt;page-number&gt;&gt; and the pg-size=&lt;&lt;page-size&gt;&gt; url operators. 
 
     
 
-### 4.7. Keyboard usability in the list page
+### 4.6. Keyboard usability in the list page
 The order of all the ui elements of the list-as-grid page has been arranged so that the user could cycle trough the whole page by accessing all the elements quickly.
 Power-users will find it extremely convenient to cycle and edit small tables.
 
     
 
-#### 4.7.1. Navigability of the list page with the keyboard
+#### 4.6.1. Navigability of the list page with the keyboard
 
 You can quickly traverse the cells of the table via the tab key, which does go over the non-editable items too ( the id's ) , so that you could quickly scroll the table as scrolling when the editable is in focus does not work. 
 The whole table is easily scrollable whenever the cursor is on non-editable part of the table ( the id's column ) and whenever the last rows must be edited the page is scrolled so that the rows are situated in the middle and not the bottom of the screen. 
 
     
 
-#### 4.7.2. Focus the quick search box
+#### 4.6.2. Focus the quick search box
 You could focus the quick search by typing / IF you are not editing a cell. Thus the paging on the next cell is quite handy - as you could easily jump onto the quick search and with couple of tabs navigate to the next page. 
 
     
 
-#### 4.7.3. Undo the edit on a cell
+#### 4.6.3. Undo the edit on a cell
 If you were on a cell and types some text without leaving it, but you change your mind you could simply press the Esc key, which will restore the original content of the cell and you could proceed by tab to the next cell. 
 
     
 
-#### 4.7.4. Keyboard navigation on the edit form
+#### 4.6.4. Keyboard navigation on the edit form
 You could open the edit form with the keyboard while your cursors is on the id button of the item in the grid ( Note that the colour of the button text has to change also. By hitting enter the edit form will open witch the title id selected, from there you could cycle with the tab on each control of the form, thus each time the focus leaves a control the data updated or not is saved to the database. You could close the form by hitting enter when the close button is selected. 
 
     
 
-### 4.8. New item creation (CREATE)
+### 4.7. New item creation (CREATE)
 A new item could be added to the table in the ui and thus in the db table by clicking the plus button above the table ( which uses the google material design ui ). 
 The new button has a fixed position, thus available during scrolling as well from the same position. 
 The new button changes it's appears when focused via the keyboard, and can be pressed when in focus by hitting enter with the keyboard. 
@@ -339,65 +346,65 @@ https://qto.fi/qto/list/test_create_table?as=grid&pick=id,name&page-size=5&page-
 
     
 
-#### 4.8.1. Successful execution
+#### 4.7.1. Successful execution
 After clicking the plus button the System adds the new row into the database table and presents it into the table ui AS THE FIRST ROW to emphasise the created row - that is the existing sort of the table is changed to the id column. Note that if you had a defined sorting order before the addition of the new item, it has been replaced by the "order by the latest created" sorting order. 
 
     
 
-#### 4.8.2. Error handling on list page click create new item action
+#### 4.7.2. Error handling on list page click create new item action
 If any error occurs while the creation an error msg is presented clearly with fading effect, which returns the error msg from the database. 
 On invalid input the data is not created to the database and nothing is stored. 
 
     
 
-### 4.9. Item edit (UPDATE)
+### 4.8. Item edit (UPDATE)
 There are 2 ways to edit an item of the qto application :
  - inline edit
  - form edit
 
     
 
-#### 4.9.1. Form edit
+#### 4.8.1. Form edit
 You open the form to edit an item from the id button on the left. A modal dialog containing the filled in details of the item appears. You could either simply cycle via the keyboard trough the items, or edit some of the item details, as soon as any of the controls in the form is selected, after leaving the control the data is saved straight to the database. 
 
     
 
-#### 4.9.2. In-line edit ( UPDATE )
+#### 4.8.2. In-line edit ( UPDATE )
 The grid can be edited inline so that the data is updated to the database. White space in the cells is preserved. 
 To practice new items' creations updates and deletions to get comfortable on the app's behaviour please use first the development instances of the qto project: 
 https://qto.fi/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
 
     
 
-##### 4.9.2.1. Table columns resizing
+##### 4.8.2.1. Table columns resizing
 You can resize the columns of the tables to a max size of 500 pixels by dragging only one text area. Note however that the textarea will NOT be resized bigger than the maximum width of the current column … 
 For the visual outlook of the table a certain default values for certain columns' contents widths are assumed.
 
     
 
-##### 4.9.2.2. Contents for the table's cells
+##### 4.8.2.2. Contents for the table's cells
 The table's cells should accept any UTF-8 characters including html entities. The textarea's width should adjust automatically till the width of the widest cell in the table column.
 
     
 
-##### 4.9.2.3. Successful execution
+##### 4.8.2.3. Successful execution
 If the single cell inline-edit is successful no msg is presented and the data is updated to the database storage.
 If the updated cell was part of the currently sorted column the ui is automatically adjusted to the new sort order ( for example if a numeric sort was applied and the cell had value of 9 with 1..9 range and the smallest to greatest was currently active if the new update is 1 the item will appear in the top of the listing.
 
     
 
-##### 4.9.2.4. Error handling on db update error
+##### 4.8.2.4. Error handling on db update error
 If any error occurs while updating an error msg is presented clearly with fading effect, which returns the error msg from the database. 
 On invalid input the data is not updated to the database and the old value in the cell is restored.
 
     
 
-##### 4.9.2.5. Nulls handling
+##### 4.8.2.5. Nulls handling
 Nulls handling is somewhat problematic in ui. For now the behaviour by convention is to leave a nullable record in the database as null, whether the cell of the ui table is left empty ( white space chars are also considered empty)
 
     
 
-### 4.10. Item deletion ( DELETE )
+### 4.9. Item deletion ( DELETE )
 You could delete items by clicking the delete button with the trash icon in the beginning of every item. 
 To practice new items' creations and deletions to get comfortable on the app's behaviour please use first the development instances of the qto project: 
 https://qto.fi/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
@@ -406,7 +413,7 @@ The usual way if an error has occurred during the delete the error msg is displa
 
     
 
-### 4.11. List as print-table page
+### 4.10. List as print-table page
 The list as print-table page is aimed at producing quickly refined result-set from the database for a further copy paste on to another html page ( wiki etc. )  or even print to paper. 
 It has all the functionalities as the list as "table" page, without the filtering from the quick search box and without the ui for the pager and page-sizer -the url params for paging and page-sizing work, however. All the url params work as in the grid listing page. 
 https://qto.fi/qto/list/yearly_issues?as=print-table&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03

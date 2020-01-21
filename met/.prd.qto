@@ -12,6 +12,16 @@ src/perl/qto/lib/Qto/Controller/Logon.pm
 src/perl/qto/templates/pages/login
 src/perl/qto/lib/Qto/App/Sec/Guardian.pm
 src/perl/qto/t/lib/Qto/App/Sec/TestGuardian.t
+# 
+doc/docx/concepts.docx
+doc/docx/devops.guide.docx
+doc/docx/enduser.guide.docx
+doc/docx/requirements.docx
+doc/docx/userstories.docx
+doc/img/system_guide/what-is-system.jpg
+src/perl/qto/lib/auto/Qto/App/Sec/Guardian/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/Logon/autosplit.ix
+src/sql/pgsql/qto/tables/2020/2020-02/create-table-monthly_issues_202002.sql
 # eof security
 src/tpl/psql-code-generator
 src/tpl/psql-code-generator/psql-code-generator.sh
@@ -453,6 +463,7 @@ src/sql/pgsql/qto/tables/04.create-table-yearly_issues.sql
 src/sql/pgsql/qto/tables/05.00.create-table-quinquennially_issues.sql
 src/sql/pgsql/qto/tables/05.01.create-table-his_quinquennially_issues.sql
 src/sql/pgsql/qto/tables/05.02.create-table-update-trigger.quinquennially_issues.sql
+src/sql/pgsql/qto/tables/05.02.create-triggers_for_quinquennially_issues.sql
 src/sql/pgsql/qto/tables/05.03.create-table-insert-trigger.quinquennially_issues.sql
 src/sql/pgsql/qto/tables/05.04.create-table-delete-trigger.quinquennially_issues.sql
 src/sql/pgsql/qto/tables/05.05.create-table-quinquennially_issues_2020.sql

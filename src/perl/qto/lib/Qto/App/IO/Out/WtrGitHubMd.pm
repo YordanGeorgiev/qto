@@ -66,7 +66,7 @@ package Qto::App::IO::Out::WtrGitHubMd ;
       my @col_names = ('id' , 'name' , 'description' , 'img_relative_path', 'src')  ;
       
       my $str_toc = $self->doBuildTOC($table,$ahs2);
-      $str_toc = '[[_TOC_]]' if ( $md_dialect eq 'msft' );
+      #$str_toc = '[[_TOC_]]' if ( $md_dialect eq 'msft' );
 
       foreach my $row ( @$ahs2 ) {
          my $id = $row->{ 'id' } ; 

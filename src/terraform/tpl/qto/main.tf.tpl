@@ -34,7 +34,7 @@ variable "availability_zone" {
 
 variable "public_key_path" {
   description = "Public key path"
-  default = "$ssh_key_pair_file"
+  default = "$pem_key_fpath_pub"
 }
 
 // VPC Resource
@@ -179,7 +179,7 @@ resource "aws_route_table_association" "subnet-association" {
 }
 
 resource "aws_key_pair" "$ENV_TYPE-aws_key_pair" {
-  key_name   = "id_rsa.ysg.pub"
+  key_name   = "$key_name"
   public_key = "$public_key"
 }
 
@@ -189,7 +189,7 @@ resource "aws_instance" "$ENV_TYPE-qto-inst" {
   	subnet_id      = "${aws_subnet.$ENV_TYPE-subnet.id}"
    associate_public_ip_address = "true"
 	security_groups = ["${aws_security_group.$ENV_TYPE-sgr_qto_web.id}"]
-	key_name      = "id_rsa.ysg.pub"
+	key_name      = "$key_name"
 
   tags = {
     Name = "$ENV_TYPE-qto-ec2"

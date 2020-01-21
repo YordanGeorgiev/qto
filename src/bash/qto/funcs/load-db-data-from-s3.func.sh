@@ -22,5 +22,10 @@ doLoadDbDataFromS3(){
          "$PRODUCT_INSTANCE_DIR/dat/sql/$ENV_TYPE"'_'"$RUN_UNIT"'.latest.insrts.dmp.sql'
 
    test -f $PRODUCT_INSTANCE_DIR/dat/tmp/bootstrapping && rm -v $PRODUCT_INSTANCE_DIR/dat/tmp/bootstrapping
+   test -f $PRODUCT_INSTANCE_DIR/bootstrapping && rm -v $PRODUCT_INSTANCE_DIR/bootstrapping
+
+   # grant the needed select 
+   psql -d "$postgres_db_name" -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public 
+      TO $postgres_db_user; GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user"
 
 }
