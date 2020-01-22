@@ -1,6 +1,6 @@
 <div id="div_left_menu" role="navigation">
   <div id="left_menu_toggle">
-    <input id="chk_left_menu" type="checkbox" onclick="document.body.style.opacity='0.2';this.parentElement.style.opacity='1'" /> 
+    <input id="chk_left_menu" type="checkbox" /> 
     <span></span>
     <span></span>
     <span></span>
