@@ -4,15 +4,7 @@
     <span></span>
     <span></span>
     <span></span>
-    
-   <ol id="left_menu" class="tree"> 
-    <div id="div_logout"><a alt="logout" tabindex="1" href="/<%= $db =%>/login">
-      <img alt="logout" src="../../themes/thme-blue/img/controls/logout.png" /></a>
-    </div>
-         <%== " $left_menu" =%>
-   </ol>
-   <div id="app_label">
-      <p><%= " $db" =%><%= " $ProductVersion " =%> <%= " $EnvType " =%><%= " $GitShortHash " =%> @<%= " $page_load_time " =%></p>
+   <div id="lft_menu">
    </div>
   </div>
 </div>

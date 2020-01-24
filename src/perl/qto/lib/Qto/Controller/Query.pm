@@ -43,7 +43,6 @@ sub doQueryItems {
    $db                  = toEnvName ( $db , $config) ;
    my $tables_meta      = $self->app->config($db . '.meta-tables');
    my $met              = { 'meta_cols'=>$msr2 , 'meta_tables' => $tables_meta};
-   
    my $objCnrUrlPrms  = {} ; 
    my $objRdrDbsFcry = {} ; 
    my $objRdrDb         = {} ; 
@@ -74,19 +73,19 @@ sub doQueryItems {
          ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 , '>', 'relevancy') ;
          $self->SUPER::doRenderJSON(200,$msg,'GET',$met,$rows_count,$list);
       } elsif ( $ret == 204 ) {
-         $self->SUPER::doRenderJSON(204,$msg,'GET','','0','');
+         $self->SUPER::doRenderJSON(204,$msg,'GET',$met,'0','');
       } elsif ( $ret == 100 ) {
-         $self->SUPER::doRenderJSON(200,$msg,'GET',(),'0',());
+         $self->SUPER::doRenderJSON(200,$msg,'GET',$met,'0',());
       } else {
-         $self->SUPER::doRenderJSON(400,$msg,'GET','','0','');
+         $self->SUPER::doRenderJSON(400,$msg,'GET',$met,'0','');
       }
 
    } elsif ( $ret == 204 ) {
-      $self->SUPER::doRenderJSON(204,$msg,'GET','','0','');
+      $self->SUPER::doRenderJSON(204,$msg,'GET',$met,'0','');
    } elsif ( $ret == 100 ) {
-      $self->SUPER::doRenderJSON(200,$msg,'GET',(),'0',());
+      $self->SUPER::doRenderJSON(200,$msg,'GET',$met,'0',());
    } else {
-      $self->SUPER::doRenderJSON(400,$msg,'GET','','0','');
+      $self->SUPER::doRenderJSON(400,$msg,'GET',$met,'0','');
    }
 }
 

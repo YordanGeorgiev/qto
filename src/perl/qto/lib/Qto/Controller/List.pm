@@ -42,7 +42,6 @@ sub doListItems {
    my $msr2             = {} ; 
    my $ret              = 1 ; 
    my $msg              = '' ; 
-   my $left_menu        = '' ; 
    my $as               = 'grid' ; # the default form of the list control 
    my $list_control     = 'null' ; 
 
@@ -56,7 +55,6 @@ sub doListItems {
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ;
    my $objCnrUrlPrms    = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    $objCnrUrlPrms->doValidateAndSetSelect();
-   ($ret,$msg,$left_menu) = $self->SUPER::doBuildLeftMenu(\$objModel, $db ) unless ( $as eq 'print-table');
 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
    my @allowed_as = ('grid','lbls','print-table');
@@ -66,7 +64,7 @@ sub doListItems {
 
 
    $msg = $self->doSetPageMsg ( $ret , $msg ) ; 
-   $self->doRenderPageTemplate( $ret , $msg , $as, $db , $item , $list_control, $left_menu) ; 
+   $self->doRenderPageTemplate( $ret , $msg , $as, $db , $item , $list_control) ; 
 }
 
 
@@ -131,7 +129,6 @@ sub doRenderPageTemplate {
    my $db               = shift ; 
    my $item             = shift ; 
    my $list_control     = shift ; 
-   my $left_menu        = shift ; 
    my $notice           = '' ;
 
    unless ( $ret == 0 ) {
@@ -172,7 +169,6 @@ sub doRenderPageTemplate {
     , 'page_load_time'  => $page_load_time
     , 'list_control'    => $list_control
     , 'notice'          => $notice
-    , 'left_menu'       => $left_menu
     , 'items_lst'       => $items_lst
 	) ; 
 

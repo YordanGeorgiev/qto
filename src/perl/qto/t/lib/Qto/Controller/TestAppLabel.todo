@@ -29,8 +29,9 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
       $tm = "$web_action userstories product_type: $env " ; 
       $url = '/' . $db . '/' . $web_action . '/userstories' ; 
-   
+
       $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
+      p $dom ; 
       ok ( $dom->find('div')->[1] =~ m/$env/ , $tm ) ;
 
       my $GitShortHash = $config->{'env'}->{'run'}->{ 'GitShortHash' } ; 

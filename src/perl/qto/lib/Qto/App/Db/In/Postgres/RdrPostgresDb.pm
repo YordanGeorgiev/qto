@@ -435,7 +435,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 
       eval {
 			$sql = " 
-            SELECT node.*
+            SELECT node.id, node.level, node.name, node.url, node.type
             FROM items_doc AS node, items_doc AS parent
             WHERE node.lft BETWEEN parent.lft AND parent.rgt
             AND parent.id = 0

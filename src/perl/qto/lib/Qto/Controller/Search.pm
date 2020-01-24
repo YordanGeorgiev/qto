@@ -53,7 +53,6 @@ sub doSearchItems {
    $self->SUPER::doReloadProjDbMeta( $db,'search' ) ;
    
    $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
-   ($ret,$msg,$left_menu) = $self->SUPER::doBuildLeftMenu(\$objModel, $db );
    
    $objCnrUrlPrms = 
       'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
@@ -159,9 +158,9 @@ sub doRenderPageTemplate {
     , 'item'            => 'search'
     , 'msg'             => $msg
     , 'db' 		         => $db
-    , 'EnvType' 		=> $config->{'env'}->{'run'}->{'ENV_TYPE'}
+    , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
     , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
-    , 'GitShortHash' => $config->{'env'}->{'run'}->{'GitShortHash'}
+    , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time
     , 'srch_control'    => $srch_control
     , 'notice'          => $notice

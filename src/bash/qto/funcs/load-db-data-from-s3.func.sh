@@ -24,8 +24,11 @@ doLoadDbDataFromS3(){
    test -f $PRODUCT_INSTANCE_DIR/dat/tmp/bootstrapping && rm -v $PRODUCT_INSTANCE_DIR/dat/tmp/bootstrapping
    test -f $PRODUCT_INSTANCE_DIR/bootstrapping && rm -v $PRODUCT_INSTANCE_DIR/bootstrapping
 
-   # grant the needed select 
-   psql -d "$postgres_db_name" -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public 
+   # grant the needed select
+   PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -v -q -t -X -w -U "${postgres_db_useradmin:-}" \
+      -h $postgres_db_host -p $postgres_db_port -v ON_ERROR_STOP=1 \
+      -d $postgres_db_name \
+      -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public
       TO $postgres_db_user; GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user"
 
 }

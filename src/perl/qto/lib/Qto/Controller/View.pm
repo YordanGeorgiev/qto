@@ -32,7 +32,6 @@ sub doViewItems {
    my $msg              = '' ; 
    my $objModel         = {} ; 
    my $view_control     = '' ; 
-   my $left_menu        = '' ; 
    my $as               = 'doc' ; 
 
    $config		         = $self->app->config ; 
@@ -40,7 +39,6 @@ sub doViewItems {
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
    $objModel            = 'Qto::App::Mdl::Model'->new ( \$config , $db ) ;
-   ($ret,$msg,$left_menu) = $self->SUPER::doBuildLeftMenu(\$objModel, $db );
 
 
    my $url_params = $self->req->params->to_hash ; # hash reference
@@ -48,7 +46,7 @@ sub doViewItems {
 
    ( $ret , $msg , $view_control ) = $self->doBuildViewPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
    $self->render('text' => 'view page is presented') unless $ret == 0 ; 
-   $self->doRenderPageTemplate( $ret , $msg , $as, $db , $item , $view_control , $left_menu) if $ret == 0 ;
+   $self->doRenderPageTemplate( $ret , $msg , $as, $db , $item , $view_control) if $ret == 0 ;
    return
 }
 
@@ -94,7 +92,6 @@ sub doRenderPageTemplate {
    my $db               = shift ; 
    my $item             = shift ; 
    my $list_control     = shift ; 
-   my $left_menu        = shift ;
    my $notice           = '' ;
 
    unless ( $ret == 0 ) {
@@ -132,7 +129,6 @@ sub doRenderPageTemplate {
     , 'page_load_time'  => $page_load_time
     , 'list_control'    => $list_control
     , 'notice'          => $notice
-    , 'left_menu'       => $left_menu
     , 'items_lst'       => $items_lst
 	) ; 
 

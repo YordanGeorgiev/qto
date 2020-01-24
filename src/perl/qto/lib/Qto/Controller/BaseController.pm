@@ -16,33 +16,6 @@ use Qto::App::Cnvr::CnrHsr2ToHsr2 ;
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 use Qto::App::UI::WtrUIFactory ;
 
-# 
-# call-by : $self->SUPER::doBuildLeftMenu($http_code,$msg,$http_method,$met,$cnt,$dat);
-#
-sub doBuildLeftMenu {
-
-   my $self                = shift ; 
-   my $objModel            = ${ shift @_ } ;
-   my $db                  = shift ; 
-
-   my $ret                 = 1 ; 
-   my $msg                 = 'error while building the left menu occurred !' ; 
-   my $left_menu           = '' ;
-
-   my $config	            = $self->app->config;
-   my $objWtrUIFactory     = 'Qto::App::UI::WtrUIFactory'->new(\$config, \$objModel );
-   my $objUIBuilder        = $objWtrUIFactory->doInit('control/left-menu');
-   my $hsr2                = $self->app->config($db . '.meta-tables');
-   my $items_lst           = "" ; 
-   #p $hsr2 ; 
-   #foreach my $key ( sort keys %$hsr2 ) {
-   #   $items_lst .= 
-   #}
-                           # debug rint "stop doBuildLeftMenu \n" ; 
-                           
-   ( $ret , $msg , $left_menu ) = $objUIBuilder->doBuild($db,$hsr2);
-   return ( $ret , $msg , $left_menu );
-}
 
 sub doReloadProjDbMeta {
 

@@ -62,6 +62,7 @@
          %= include 'controls/list-grid/js/modal-dia.js'
          %= include 'controls/list-grid/js/cruds-grid-sf.js'
          %= include 'controls/list-grid/js/cruds-grid.js'
+         %= include 'controls/list-grid/js/left-menu.js'
     }
 % end
 

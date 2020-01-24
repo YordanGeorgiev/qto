@@ -40,11 +40,7 @@ sub doLanding {
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db, 'home' ) ;
 
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
-   ($ret,$msg,$left_menu) = $self->SUPER::doBuildLeftMenu(\$objModel, $db );
-   
    my $http_code        = 200  ; 
-
    $self->doRenderPageTemplate($http_code,$msg,$db,$left_menu);
 }
 

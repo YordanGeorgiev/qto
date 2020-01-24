@@ -19,10 +19,17 @@ label, input, select, textarea {
    border-radius: 5px;
    width: 60%;
 }
-label {
+label{
    display: inline-block;
    width: 17%;
    text-align: right;
+   margin-right: 3%;
+}
+/* override the left-menu cls */
+.cls_lbl_fldrs{ 
+   display: inline-block;
+   width: 60%;
+   text-align: left;
    margin-right: 3%;
 }
 input.minput[type="text"]{
