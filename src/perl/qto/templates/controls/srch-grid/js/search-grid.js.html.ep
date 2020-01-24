@@ -68,14 +68,13 @@
          , fetchServerSideDataToUI: function(url_params) {
 
                if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
-               if ( typeof url_params.get('for') == null ){ hideControlsOnError() ; return ; }
+               if ( typeof url_params.get('for') == null ){ hideControlsOnError() ; }
                document.getElementById('inp_srch_box').value = url_params.get('for') ; 
                this.fetchServerSideData(url_params)
                .then( response => {
                   if ( response.status === 200 ) {
                      var data = response.data 
-                     if ( response.data.dat == null ) { hideControlsOnError() ;return ; }
-
+                     if ( response.data.dat == null ) { hideControlsOnError() ;}
                      var dataType = (typeof data)
                      if ( dataType === 'undefined' ) {
                         var msg = 'unexpected err occurred while fetching data !!!'
@@ -83,8 +82,12 @@
                      } else if ( dataType === 'string' ) {
                         setMsgVisuals(data,'div_msg','Error','search');
                      } else {
-                        this.gridData = data.dat
 								this.gridMeta = data.met.meta_cols
+                        bus.$emit('metaTablesLoadEmit',data.met.meta_tables)
+                        console.log(data.dat)
+                        console.log(typeof(data.dat))
+                        if ( typeof(data.dat) == 'undefined' || data.dat == null) { return }
+                        this.gridData = data.dat
                         var totalRSsize = data.cnt ; 
                         this.pageSize = url_params.get('pg-size')
                         this.pageNum = url_params.get('pg-num')

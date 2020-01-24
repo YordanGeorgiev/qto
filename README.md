@@ -16,7 +16,7 @@
     
 
 ## 1. WHY
-Why ?! Yet !!  Another App ?! ... ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿ 
+Why ?! Yet !!  Another App ?! ... ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿ !!!
 
 Software development is prohibitively expensive. In fact any endeavour with team of people aiming towards common goal in any field is expensive, even solely based on persons' time spent. 
 

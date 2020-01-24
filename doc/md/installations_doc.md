@@ -117,10 +117,11 @@ Check the main method in the run.sh and uncomment entities you do not want to in
 
 
 
-    # in the shell of your local Ubuntu box
+
+     # in the shell of your local Ubuntu box
     mkdir -p ~/opt; cd $_ ; git clone https://github.com/YordanGeorgiev/qto.git ; cd ~/opt
     
-    # run the bootstrap script and IMPORTANT !!! reload the bash env
+     # run the bootstrap script and IMPORTANT !!! reload the bash env
     ./qto/src/bash/deployer/run.sh ; bash ; 
     
 

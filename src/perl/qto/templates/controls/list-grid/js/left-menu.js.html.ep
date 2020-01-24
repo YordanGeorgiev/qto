@@ -1,0 +1,64 @@
+   var left_menu = new Vue({
+      el: '#lft_menu',
+      template: `
+         <ol id="left_menu" class="tree"> 
+            <div id="div_logout"><a alt="logout" tabindex="1" href="/<%= $db =%>/login">
+               <img alt="logout" src="../../themes/thme-blue/img/controls/logout.png" /></a>
+            </div>
+            <div v-html='buildMenu'/>
+            <div id="app_label">
+               <p><%= " $db" =%><%= " $ProductVersion " =%> <%= " $EnvType " =%><%= " $GitShortHash " =%> @<%= " $page_load_time " =%></p>
+            </div>
+         </ol>
+      `
+      , data: {
+         menuData: []
+	   }
+     	, computed: {
+        buildMenu: function(){
+            var i
+            var html=" "
+            var prev_lvl = 0
+            for (i = 0; i < this.menuData.length; i++) {
+               let itm = this.menuData[i]
+               if ( itm.level === 0 ) { continue ; }
+               var curr_lvl = itm.level
+               if (itm.type === 'folder') {
+                     if ( prev_lvl != 0 && prev_lvl > itm.level) {
+                        html += this.closeFolderLink(itm)
+                     }
+                     html += this.openFolderLink(itm);
+                  } else if ( itm.type === 'doc') {
+                     html += this.buildDocLink(itm);
+                  } else {
+                     html += ''
+                  }
+                  prev_lvl = itm.level
+            }
+            return html
+        } 
+     }
+     	, methods: {
+         menuDataLoaded: function(menuData) {
+            this.menuData = menuData
+        } 
+        , openFolderLink: function(itm) {
+            var html='<li><label for="' + itm.id + '"><a class="cls_fa" href="#">'
+            html += itm.name + '</a></label><input tabindex="1" type="checkbox" checked id="' 
+            html += itm.id + '" /><ol><li>'
+            return html
+        } 
+        , closeFolderLink: function(itm) {
+            if ( itm.id == 0 ) { return ' ' }
+            return '</ol></li>'
+        } 
+        , buildDocLink: function(itm) {
+            var url = window.location.href.split('?')[0] 
+            url = url.split('/')[0] + "//" + url.split('/')[2] + '/' + '<%= $db =%>' + '/'
+            return '<li class="file"><a class="cls_da" href="' + url + itm.url + '">' + itm.name + '</a></li>' ;
+        } 
+     }
+     , mounted() {
+         bus.$on('metaTablesLoadEmit',this.menuDataLoaded)
+	  }
+   });

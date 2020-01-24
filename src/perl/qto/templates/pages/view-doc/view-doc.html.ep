@@ -28,6 +28,8 @@
 % content_for cnt_all_js => begin
 
    <script id="all_js_scripts">
+   var bus=new Vue({});
+
 
    %= include 'js/global/get-url-params.func.js'
    %= include 'js/global/get-server-data.func.js'
@@ -41,6 +43,7 @@
    %= include 'pages/view-doc/js/inp-srch-box.js'
    %= include 'pages/view-doc/js/view-doc-items-list.js'
    %= include 'pages/view-doc/js/vue_app.js'
+   %= include 'controls/list-grid/js/left-menu.js'
 
    </script>
 % end

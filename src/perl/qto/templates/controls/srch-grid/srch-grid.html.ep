@@ -52,4 +52,5 @@
    %= include 'controls/srch-grid/js/modal-dia.js'
    %= include 'controls/srch-grid/js/search-grid-sf.js'
    %= include 'controls/srch-grid/js/search-grid.js'
+   %= include 'controls/list-grid/js/left-menu.js'
 % end

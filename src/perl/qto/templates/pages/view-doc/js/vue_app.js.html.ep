@@ -112,6 +112,7 @@
                   	commit('SET_SNACKBAR_MSG', errMsg ) 
                   } else {
                   	var items = data.dat  //alles ok
+                     bus.$emit('metaTablesLoadEmit',data.met.meta_tables)
                      var isNotAPrintDoc = ( document.location.search.indexOf('as=print-doc')<=0 ? true : false )
                   	commit('SET_SNACKBAR_SHOW', false)
                   	commit('SET_RGT_MENU_SHOW', isNotAPrintDoc )

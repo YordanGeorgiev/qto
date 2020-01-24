@@ -33,37 +33,9 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
       ->header_is('Accept-Charset' => 'UTF-8')
       ->header_is('Accept-Language' => 'fi, en'), $tm );
 
-   $dom = Mojo::DOM->new($t->ua->get($url)->result->body) ; 
-   ok ( $dom->find('div')->[1] =~ m/$config->{'env'}->{'run'}->{'ENV_TYPE'}/ , $tm ) ;
 
    #my @headers = $dom->find('div#lft_body')->map('all_text'); 
    #p @headers ; 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
    
 
 done_testing();

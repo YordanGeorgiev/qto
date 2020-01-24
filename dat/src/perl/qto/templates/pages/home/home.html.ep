@@ -7,7 +7,6 @@
 
 % content_for cnt_body_controls  => begin
    <div id="div_central_panel">
-		<div id="left_menu"> <%== $left_menu =%> </dev>
 		<div id="app"></div>
 	</div>
 
