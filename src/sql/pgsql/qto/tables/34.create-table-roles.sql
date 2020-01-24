@@ -1,7 +1,7 @@
 -- file: src/sql/pgsql/qto/tables/35.create-table-roles.sql
 -- v0.7.8
 
-DROP TABLE IF EXISTS roles ; 
+-- DROP TABLE IF EXISTS roles ; 
 
 SELECT 'create the "roles" table'
 ; 

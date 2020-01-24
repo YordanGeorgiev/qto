@@ -1,4 +1,8 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+# start vagrant
+src/bash/up.sh
+cnf/tpl/vagrant/Vagrantfile
+#  stop vagrant
 cnf/env/dev.env.json
 cnf/env/prd.env.json
 cnf/env/tst.env.json

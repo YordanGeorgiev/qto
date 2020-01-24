@@ -8,6 +8,7 @@ do_check_install_perl_modules(){
       use_modules="${use_modules:-} use $module ; "
    done < <(echo "$modules");
 
+   set -x
    perl -e "$use_modules" || {
       echo "deploying modules. This WILL take couple of min, but ONLY ONCE !!!"
       curl -L http://cpanmin.us | sudo perl - --self-upgrade -l ~/perl5 App::cpanminus \
@@ -20,6 +21,7 @@ do_check_install_perl_modules(){
 		cpanm --force --local-lib=~/perl5 'Net::Google::DataAPI' # does not install otherwise !!!
 		cmd="cpanm --local-lib=~/perl5 $modules"
       $cmd
+     
 
 		# nasty workaround for the "Moo complainings" in the Net::Google::DataAPI::Oauth2 module
 		find ~ -type f -name OAuth2.pm -exec perl -pi -e \

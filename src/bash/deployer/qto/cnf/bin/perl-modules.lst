@@ -1,6 +1,9 @@
       JSON  
       Data::Printer
       Carp::Always
+      IO::CaptureOutput
+      Net::DNS
+      Net::Domain::TLD
       Email::Valid
       Test::Most 
       Data::Printer 

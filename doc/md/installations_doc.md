@@ -10,8 +10,9 @@
 * [3. LOCAL DEPLOYMENT](#3-local-deployment)
   * [3.1. PREREQUISITES](#31-prerequisites)
   * [3.2. TARGET SETUP](#32-target-setup)
-  * [3.3. BOOTSTRAP AND DEPLOY THE APPLICATION LOCALLY](#33-bootstrap-and-deploy-the-application-locally)
-  * [3.4. PROVISION THE APPLICATION LOCALLY](#34-provision-the-application-locally)
+  * [3.3. INSTALL VB+VAGRANT VIRTUAL MACHINE FOR A LOCAL UBUNTU HOST (OPTIONAL) ](#33-install-vb+vagrant-virtual-machine-for-a-local-ubuntu-host-(optional)-)
+  * [3.4. BOOTSTRAP AND DEPLOY THE APPLICATION LOCALLY](#34-bootstrap-and-deploy-the-application-locally)
+  * [3.5. PROVISION THE APPLICATION LOCALLY](#35-provision-the-application-locally)
 * [4. AWS DEPLOYMENT](#4-aws-deployment)
   * [4.1. PREREQUISITES](#41-prerequisites)
     * [4.1.1. Configure the AdminEmail](#411-configure-the-adminemail)
@@ -107,25 +108,43 @@ The target setup for the qto appliction](https://github.com/YordanGeorgiev/qto/b
 
     
 
-### 3.3. Bootstrap and deploy the application locally
+### 3.3. Install VB+vagrant virtual machine for a local Ubuntu host (optional) 
+If your physical host OS is not the Ubuntu 18.04 OS, you could Install the latest version of the OracleVirtualBox with guest additions and HashiCorp Vagrant and run the up.sh bootstrapper script on the host to get the fully provisioned guest with all the binaries and configurations. This step might take at least 30 min depending on the hardware of your host machine and the VirtualBox configurations in your setup ...
+
+     # in the shell of your OS bash shell of your host machine
+    mkdir -p ~/opt; cd $_ ; git clone https://github.com/YordanGeorgiev/qto.git ; cd ~/opt/qto
+    
+    # run the vagrant provisioning script
+    ./src/bash/up.sh
+    
+    # now go to the vagrant guest
+    vagrant ssh
+    
+    # go to the qto project in the 
+    cd /home/vagrant/opt/qto/
+
+### 3.4. Bootstrap and deploy the application locally
+This step might not be needed if you used the up.sh vagrant provisioning script as described above, yet should the vagrant provisioning have failed you could run it on the vagrant guest once again and it WILL NOT if you have proper network connectivity and read/write access to your host file system from the guest.
 The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND perl modules as well as perform the needed configurations to enable the creation and load of the qto database. This step will take 20 min at least. The bootstrapping script will :
- - install all the required binaries
- - install all the required perl modules as non-root
- - install and provision postgres
- - install and provision the nginx proxy server 
-Check the main method in the run.sh and uncomment entities you do not want to install locally, should you have any ...
+  - install all the required binaries
+  - install all the required perl modules as non-root
+  - install and provision postgres
+  - install and provision the nginx proxy server 
+
+
+ Check the main method in the run.sh and uncomment entities you do not want to install locally, should you have any ...
 
 
 
 
-     # in the shell of your local Ubuntu box
+    # in the shell of your local Ubuntu box, skip this cmd if you are on vagrant ...
     mkdir -p ~/opt; cd $_ ; git clone https://github.com/YordanGeorgiev/qto.git ; cd ~/opt
     
-     # run the bootstrap script and IMPORTANT !!! reload the bash env
+    # run the bootstrap script and IMPORTANT !!! reload the bash env
     ./qto/src/bash/deployer/run.sh ; bash ; 
     
 
-### 3.4. Provision the application locally
+### 3.5. Provision the application locally
 The run of the following "shell actions" will create the qto database and load it with a snapshot of it's data from a sql dump stored in s3. If you start getting a lot of perl "cannot not find module" syntax check error, you probably did not reload the bash shell , by just typing "bash" and hitting enter in the previous step.
 
      # go to the product instance dir 

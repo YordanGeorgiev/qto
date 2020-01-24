@@ -98,12 +98,13 @@ The issues are basically organised into the following time intervals:
  - quinquennially
  - decadally
 
-So that in the end of each previous time period you could go trough the issues of that period and transfer up and down in the time scale. 
+So that in the end of each previous time period you could go trough the issues of that period and transfer up and down in the time scale.
+The product instance owners have an automated way of transferring the issues from one table to another described in the maintenance_guide_doc-200111060442 document.
 
     
 
 ### 2.3. Questions
-Sometimes during the workings of your project you encounter problems, which are complex enough not to allows the definition of an issue. In those cases it would be more rational to just register the problem, discuss it or review it later on, and define the issue as soon as the problem domain is understood and even possible issue solution could be proposed
+Sometimes during the workings of your project you encounter problems, which are complex enough not to allows the definition of an issue. In those cases it would be more rational to just register the question, discuss it or review it later on, and define the issue as soon as the problem domain is understood and even possible issue solution could be proposed
 
     
 

@@ -7,6 +7,8 @@ cnf/env/tst.env.json.bak
 cnf/env/qas.env.json.bak
 cnf/env/prd.env.json.bak
 # stop  :: do not remove those !!!
+.vagrant/**
+Vagrantfile
 **/*.zip
 **/*.log
 **/*.tdy

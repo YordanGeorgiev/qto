@@ -1,5 +1,5 @@
 #  REQUIREMENTS
-* [1. INTRO /](#1-intro-/)
+* [1. INTRO](#1-intro)
   * [1.1. INTRO](#11-intro)
   * [1.2. AUDIENCE](#12-audience)
   * [1.3. RELATED DOCUMENTATION/](#13-related-documentation/)
@@ -99,7 +99,7 @@
 
     
 
-## 1. INTRO /
+## 1. INTRO
 
 
     
