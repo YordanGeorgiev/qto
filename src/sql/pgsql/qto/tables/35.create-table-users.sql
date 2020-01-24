@@ -1,6 +1,6 @@
 -- file: src/sql/pgsql/qto/tables/34.create-table-users.sql
--- v0.7.8
-DROP TABLE users IF EXISTS; 
+-- v0.7.9
+-- DROP TABLE IF EXISTS users; 
 
 SELECT 'create the "users" table'
 ; 

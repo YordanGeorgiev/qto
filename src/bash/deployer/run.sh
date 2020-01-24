@@ -1,5 +1,6 @@
 #! /usr/bin/env bash
 
+set -x
 
 main(){
    do_set_vars "$@"
@@ -8,6 +9,7 @@ main(){
 	fi
    do_source_funtions
    do_check_setup_bash
+   do_setup_resolv_conf
    do_check_install_ubuntu_packages
    do_check_install_postgres
    do_check_install_chromium_headless
@@ -23,6 +25,16 @@ main(){
    do_finalize
 }
 
+do_setup_resolv_conf(){
+
+   sudo cat << EOF_RESOLV_CONF >> /etc/resolv.conf
+nameserver 10.1.2.1
+nameserver 10.1.2.2
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+EOF_RESOLV_CONF
+
+}
 
 usage(){
 
