@@ -1,6 +1,6 @@
 {
   "name": "qto",
-  "version": "0.7.7",
+  "version": "0.7.9",
   "description": "qto",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "chrome-launcher": "^0.12.0",
-    "chrome-remote-interface": "^0.28.0"
+    "chrome-remote-interface": "^0.28.0",
+    "puppeteer": "^2.0.0"
   }
 }

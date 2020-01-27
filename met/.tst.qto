@@ -1,4 +1,12 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+# start puppeteer
+src/js/node/ppoc/
+src/js/node/ppoc/index.html
+src/js/node/ppoc/test
+src/js/node/ppoc/test/test-login.spec.js
+src/js/node/ppoc/test/test-open-login.spec.js
+src/js/node/ppoc/package.json
+#  stop puppeteer
 # start vagrant
 src/bash/up.sh
 cnf/tpl/vagrant/Vagrantfile

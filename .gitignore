@@ -7,6 +7,8 @@ cnf/env/tst.env.json.bak
 cnf/env/qas.env.json.bak
 cnf/env/prd.env.json.bak
 # stop  :: do not remove those !!!
+src/js/node/ppoc/node_modules/**
+**/package-lock.json
 .vagrant/**
 Vagrantfile
 **/*.zip
@@ -32,6 +34,7 @@ dat/tmp/**
 dat/mix/2019/**
 src/node/node_modules/**
 src/js/node/js-unit-tests/01-set-url-param/node_modules/**
+**/*package-lock.json
 **/node_modules/**
 tags
 **/*.swp
