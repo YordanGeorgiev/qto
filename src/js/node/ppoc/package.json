@@ -1,0 +1,22 @@
+{
+  "name": "test-open-login",
+  "version": "0.7.9",
+  "description": "an example test to test the login of the qto app",
+  "main": "test-open-login.test.js",
+  "scripts": {
+    "test": "mocha --recursive test",
+    "server": "http-server src"
+  },
+  "author": "Yordan Georgiev",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "5.0.1",
+    "puppeteer": "^2.1.0"
+  },
+  "dependencies": {
+    "chai": "^4.2.0",
+    "http-server": "^0.12.1",
+    "mocha": "5.0.1",
+    "path": "^0.12.7"
+  }
+}

@@ -1,3 +1,4 @@
+         // usage: clear ; cd src/js/node/js-unit-tests/01-set-url-param ; npm install ; cd -
          // usage: clear ; cd src/js/node/js-unit-tests/01-set-url-param ; npm test ; cd -
          // prereqs: , nodejs , mocha
          // URI = scheme:[//authority]path[?paramName1=paramValue1&paramName2=paramValue2][#fragment]
