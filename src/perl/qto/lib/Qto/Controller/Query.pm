@@ -72,8 +72,9 @@ sub doQueryItems {
             'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
          ( $ret , $msg , $list , $rows_count ) = $objCnrHsr2ToArray->doConvert ($hsr2 , '>', 'relevancy') ;
          $self->SUPER::doRenderJSON(200,$msg,'GET',$met,$rows_count,$list);
-      } elsif ( $ret == 204 ) {
-         $self->SUPER::doRenderJSON(204,$msg,'GET',$met,'0','');
+      } elsif ( $ret == 204 ) { # the query did not return any data ..., but did not fail neither ...
+         $msg = ' no data ' ;
+         $self->SUPER::doRenderJSON(200,$msg,'GET',$met,'0','');
       } elsif ( $ret == 100 ) {
          $self->SUPER::doRenderJSON(200,$msg,'GET',$met,'0',());
       } else {

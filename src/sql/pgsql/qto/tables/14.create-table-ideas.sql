@@ -11,7 +11,6 @@ SELECT 'create the "ideas" table'
     , description    varchar (4000) NOT NULL DEFAULT 'description ...'
     , owner          varchar (50) NOT NULL DEFAULT 'unknown' 
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
-    , tags           varchar (400) NULL
     , CONSTRAINT pk_ideas_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE

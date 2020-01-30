@@ -83,10 +83,12 @@
                         setMsgVisuals(data,'div_msg','Error','search');
                      } else {
 								this.gridMeta = data.met.meta_cols
-                        bus.$emit('metaTablesLoadEmit',data.met.meta_tables)
-                        console.log(data.dat)
-                        console.log(typeof(data.dat))
-                        if ( typeof(data.dat) == 'undefined' || data.dat == null) { return }
+                        bus.$emit('metaTablesLoadEmit',response.data.met.meta_tables)
+                        if ( data.cnt === '0'){
+                           hideControlsOnError();
+                           setMsgVisuals(response.data.msg,'div_notice','Warning','search');
+                        }
+                        if ( typeof(data.dat) == 'undefined' || data.dat == null || data.cnt == '0') { return }
                         this.gridData = data.dat
                         var totalRSsize = data.cnt ; 
                         this.pageSize = url_params.get('pg-size')

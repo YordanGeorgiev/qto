@@ -38,8 +38,10 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $mshr2 = $response->{ 'met' } ; 
    ok (ref($mshr2) eq 'HASH' , $tm) ; 
    
-   $tm = 'some foo query param is specified ' ; 
+   $tm = 'if no string is found, 200 should be returned still, but the data count should be 0' ; 
    $url = '/' . $db . '/query?for=чичковитечервенотиквеничета' ; 
-   ok ( $t->get_ok($url)->status_is(204) , $tm ) ;
+   ok ( $t->get_ok($url)->status_is(200) , $tm ) ;
+   $response = $ua->get($url)->result->json ;
+   ok ( $response->{ 'cnt' } == '0' , $tm );
 
 done_testing();

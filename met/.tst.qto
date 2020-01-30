@@ -1,5 +1,10 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # start puppeteer
+# start redis
+src/perl/qto/t/lib/Qto/App/InOut/TestRedis.t
+src/perl/qto/lib/Qto/App/Db/Out/WtrRedis.pm
+src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm
+#  stop redis
 src/js/node/ppoc/
 src/js/node/ppoc/index.html
 src/js/node/ppoc/test
@@ -31,6 +36,8 @@ doc/docx/enduser.guide.docx
 doc/docx/requirements.docx
 doc/docx/userstories.docx
 doc/img/system_guide/what-is-system.jpg
+src/perl/qto/lib/auto/Qto/App/Db/In/RdrRedis/autosplit.ix
+src/perl/qto/lib/auto/Qto/App/Db/Out/WtrRedis/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Sec/Guardian/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Logon/autosplit.ix
 src/sql/pgsql/qto/tables/2020/2020-02/create-table-monthly_issues_202002.sql
@@ -51,6 +58,7 @@ src/perl/qto/templates/controls/left-menu
 src/perl/qto/templates/controls/left-menu/left-menu.html.ep
 src/perl/qto/public/themes/thme-blue/css/screen/controls/left-menu.css
 src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
+src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm
 src/perl/qto/lib/Qto/App/UI/WtrUIFactory.pm
 src/perl/qto/public/poc/css-tree/03
 src/perl/qto/public/poc/css-tree/03/index.html
@@ -64,6 +72,7 @@ src/perl/qto/public/poc/css-tree/02/index.html
 src/bash/deployer/run.sh
 src/bash/deployer/export-json-section-vars.func.sh
 src/bash/deployer/check-setup-bash.func.sh
+src/bash/deployer/check-install-redis.func.sh
 src/bash/deployer/check-install-ubuntu-packages.func.sh
 src/bash/deployer/check-install-postgres.func.sh
 src/bash/deployer/check-install-chromium-headless.func.sh
