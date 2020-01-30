@@ -16,6 +16,7 @@ main(){
    do_check_install_phantom_js
    do_check_install_perl_modules
    do_check_install_python_modules
+   do_check_install_redis
    do_provision_postgres
    do_provision_nginx
    do_provision_ssh_keys
@@ -72,6 +73,7 @@ do_source_funtions(){
    source $DEPLOY_DIR/src/bash/deployer/check-install-phantom-js.func.sh
    source $DEPLOY_DIR/src/bash/deployer/check-install-perl-modules.func.sh
    source $DEPLOY_DIR/src/bash/deployer/check-install-chromium-headless.func.sh
+   source $DEPLOY_DIR/src/bash/deployer/check-install-redis.func.sh
    source $DEPLOY_DIR/src/bash/deployer/provision-postgres.func.sh
    source $DEPLOY_DIR/src/bash/deployer/provision-nginx.func.sh
    source $DEPLOY_DIR/src/bash/deployer/provision-ssh-keys.func.sh

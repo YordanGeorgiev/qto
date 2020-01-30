@@ -13,6 +13,8 @@
 			%= text_field 'email', id => 'email', class=>"email", value=>'test.anonymous.user@gmail.com',focused=>"this.document.execCommand('selectAll',false,null);"
 			%= password_field 'pass', id => 'pass', class=>"email", value=>'secret',focused=>"this.document.execCommand('selectAll',false,null);"
          <input type="hidden" id="url" name="redirect-url" value="<%= $redirect_url =%>">
+			%= submit_button 'submit', class=>"btn", value=>' GO ', id=>"butLogin"
+		% end 
       <p><a href="https://github.com/YordanGeorgiev/qto">github</a></p>
 
 	</div>
