@@ -16,6 +16,7 @@ use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 use Qto::App::IO::In::CnrUrlPrms ; 
+use Qto::App::Db::In::RdrRedis ; 
 
 my $module_trace    = 0 ;
 our $config         = {};
@@ -34,6 +35,7 @@ sub doQueryItems {
    
    my $db               = $self->stash('db');
    my $ret              = 1 ; 
+   my $met              = {} ; 
    my $msg              = 'unknown error during global text search ';
    my $msr2             = $self->doGetRsMeta() ; 
 
@@ -41,8 +43,13 @@ sub doQueryItems {
    $self->SUPER::doReloadProjDbMeta( $db,'search' ) ;
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
-   my $tables_meta      = $self->app->config($db . '.meta-tables');
-   my $met              = { 'meta_cols'=>$msr2 , 'meta_tables' => $tables_meta};
+   #my $tables_meta      = $self->app->config($db . '.meta-tables');
+   my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
+   my $tables_meta   = $objRdrRedis->getData(\$config,"$db" . '.meta-tables');
+   $met = {
+        'meta_cols'     => $msr2
+      , 'meta_tables'   => $tables_meta
+   };
    my $objCnrUrlPrms  = {} ; 
    my $objRdrDbsFcry = {} ; 
    my $objRdrDb         = {} ; 
@@ -136,4 +143,5 @@ sub doGetRsMeta {
 
 
 1;
+
 __END__

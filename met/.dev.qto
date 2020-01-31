@@ -1,10 +1,12 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
-# start puppeteer
 # start redis
+src/perl/qto/lib/Qto/Controller/BaseController.pm
+src/perl/qto/lib/Qto/Controller/MetaDataController.pm
 src/perl/qto/t/lib/Qto/App/InOut/TestRedis.t
 src/perl/qto/lib/Qto/App/Db/Out/WtrRedis.pm
 src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm
 #  stop redis
+# start puppeteer
 src/js/node/ppoc/
 src/js/node/ppoc/index.html
 src/js/node/ppoc/test
@@ -37,6 +39,7 @@ doc/docx/requirements.docx
 doc/docx/userstories.docx
 doc/img/system_guide/what-is-system.jpg
 src/perl/qto/lib/auto/Qto/App/Db/In/RdrRedis/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/MetaDataController/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Db/Out/WtrRedis/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Sec/Guardian/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Logon/autosplit.ix
@@ -53,7 +56,6 @@ cnf/env
 # start ::: left-menu
 src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/qto/lib/Qto/Controller/View.pm
-src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/templates/controls/left-menu
 src/perl/qto/templates/controls/left-menu/left-menu.html.ep
 src/perl/qto/public/themes/thme-blue/css/screen/controls/left-menu.css

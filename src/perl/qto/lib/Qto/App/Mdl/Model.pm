@@ -14,6 +14,7 @@ use Data::Printer ;
 
 use parent 'Qto::App::Utils::OO::SetGetable' ;
 use parent 'Qto::App::Utils::OO::AutoLoadable' ;
+use Qto::App::Db::In::RdrRedis ;
 
 our $config       = {} ; 
 our $objLogger       = {} ; 
@@ -28,14 +29,22 @@ our $objLogger       = {} ;
       my $msg           = shift || 'error in the ' . $db . '.' . $table . ' model ';
 
       my $mhr2          = {} ; 
+      my $meta_cols     = {} ; 
       my $c             = 0 ; 
       my $ret           = 1 ; 
-      my $cols = $config->{ "$db" . '.meta-columns' } ; 
+
+
+      my $objRdrRedis = 'Qto::App::Db::In::RdrRedis'->new(\$config);
+      my $tables_meta = $objRdrRedis->getData(\$config,"$db" . '.meta-tables');
+      $meta_cols = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
+      #my $cols          = $config->{ "$db" . '.meta-columns' } ; 
+
+
       my @hides = split(/,/,$self->get('select.web-action.hide')) if ( defined $self->get('select.web-action.hide') );
 
 
-      foreach my $key ( keys %$cols ) {
-         my $row = $cols->{ $key } ; 
+      foreach my $key ( keys %$meta_cols ) {
+         my $row = $meta_cols->{ $key } ; 
          next if ( defined $self->get('select.web-action.hide') 
                    && grep ( /^$row->{ 'attribute_name' }$/, @hides )) ;
          next unless $table eq $row->{ 'table_name' } ; 
@@ -52,7 +61,7 @@ our $objLogger       = {} ;
    sub doGetItemsDefaultPickCols {
 
       my $self          = shift ; 
-      my $config     = shift ; 
+      my $config        = shift ; 
       my $db            = shift ; 
       my $table         = shift ; 
       my $msg           = shift || 'error in the ' . $db . '.' . $table . ' model ';
@@ -83,10 +92,12 @@ our $objLogger       = {} ;
       my $db            = shift || $self->get('postgres_db_name');
       my $table         = shift || $self->get('table_name');
       my $col           = shift ; 
-   
-      my $cols = $config->{ "$db" . '.meta-columns' } ; 
-      foreach my $key ( keys %$cols ) {
-         my $row = $cols->{ $key } ; 
+      my $meta_cols     = {} ; 
+      my $objRdrRedis = 'Qto::App::Db::In::RdrRedis'->new(\$config);
+      $meta_cols = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
+      #my $cols = $config->{ "$db" . '.meta-columns' } ; 
+      foreach my $key ( keys %$meta_cols ) {
+         my $row = $meta_cols->{ $key } ; 
          next unless $table eq $row->{ 'table_name' } ; 
          return 1 if $row->{ 'attribute_name' } eq $col; 
       }
@@ -100,10 +111,13 @@ our $objLogger       = {} ;
       my $db         = shift ; 
       my %tables     = () ;
       my @tbls       = () ;
-   
-      my $cols = $config->{ "$db" . '.meta-columns' } ; 
-      foreach my $key ( keys %$cols ) {
-         my $row = $cols->{ $key } ; 
+      my $meta_cols  = {} ; 
+      my $objRdrRedis = 'Qto::App::Db::In::RdrRedis'->new(\$config);
+      my $tables_meta = $objRdrRedis->getData(\$config,"$db" . '.meta-tables');
+      $meta_cols = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
+      #my $cols = $config->{ "$db" . '.meta-columns' } ; 
+      foreach my $key ( keys %$meta_cols ) {
+         my $row = $meta_cols->{ $key } ; 
          my $table = $row->{ 'table_name' } ; 
          $tables{ $table } = $table ; 
       }
