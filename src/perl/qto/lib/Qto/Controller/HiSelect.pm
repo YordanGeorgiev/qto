@@ -15,6 +15,7 @@ use Qto::App::IO::In::CnrUrlPrms ;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
+use Qto::App::Db::In::RdrRedis ; 
 
 our $config          = {} ; 
 
@@ -26,7 +27,7 @@ sub doHiSelectItems {
    my $msg           = '' ; 
    my $http_code     = 400 ; 
    my $http_method   = 'GET' ; 
-   my $meta_cols           = {} ; 
+   my $meta_cols     = {} ; 
    my $met           = {} ; 
    my $ret           = 1 ; 
    my $cnt           = 0 ; 
@@ -35,7 +36,7 @@ sub doHiSelectItems {
    my $objModel      = {} ; 
    my $objRdrDb      = {} ; 
    my $objRdrDbsFcry = {} ; 
-   my $mc               = {}; # the meta-counter of the meta-data
+   my $mc            = {}; # the meta-counter of the meta-data
  
    $config		      = $self->app->config ; 
    $db               = toEnvName ( $db , $config) ;
@@ -50,17 +51,19 @@ sub doHiSelectItems {
       unless $objCnrUrlPrms->doValidateAndSetHiSelect();
   
 
-   $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
+   $objRdrDbsFcry    = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
    $objRdrDb 			= $objRdrDbsFcry->doSpawn("$rdbms_type");
 
    ($http_code, $msg, $dat) 	= $objRdrDb->doHiSelectBranch( $db , $item );
    my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$config  ) ; 
    $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
    
-   my $meta_tables  = $self->app->config($db . '.meta-tables');
+   my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
+   my $tables_meta   = $objRdrRedis->getData(\$config,"$db" . '.meta-tables');
+   my $meta_cols     = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
    $met = {
-        'meta_cols' => $meta_cols
-      , 'meta_tables' => $meta_tables
+        'meta_cols'     => $meta_cols
+      , 'meta_tables'   => $tables_meta
       };
    $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    return ; 

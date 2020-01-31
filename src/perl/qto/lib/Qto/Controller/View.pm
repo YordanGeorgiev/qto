@@ -16,6 +16,7 @@ use Qto::Controller::PageFactory ;
 use Qto::App::Utils::Logger;
 use Qto::App::Utils::Timer ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
+use Qto::App::Db::In::RdrRedis ;
 
 our $module_trace    = 0 ; 
 our $config          = {};
@@ -110,7 +111,9 @@ sub doRenderPageTemplate {
 
    my $objTimer            = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
    my $page_load_time      = $objTimer->GetHumanReadableTime();
-   my @items_arr           = @{$config->{$db . '.tables-list'}};
+   my $objRdrRedis = 'Qto::App::Db::In::RdrRedis'->new(\$config);
+   my $tables_list = $objRdrRedis->getData(\$config,"$db" . '.tables-list');
+   my @items_arr           = @{$tables_list};
    my $items_lst           = '';
    foreach my $table ( @items_arr ){
       $items_lst .= "'" . "$table" . "'," ;

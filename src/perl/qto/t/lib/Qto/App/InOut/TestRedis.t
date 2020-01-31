@@ -23,8 +23,8 @@ my $config  = $t->app->config ;
 
 my $objRdrRedis = 'Qto::App::Db::In::RdrRedis'->new(\$config);
 my $objWtrRedis = 'Qto::App::Db::Out::WtrRedis'->new(\$config);
-
 $objWtrRedis->setData(\$config, 'config', $config);
+
 my $expected_config = $objRdrRedis->getData(\$config,'config');
 
 #$m = 'the saved config is the same as the initial config' ; 

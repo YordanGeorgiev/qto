@@ -26,83 +26,11 @@ sub doReloadProjDbMeta {
    $config		 		      = $self->app->config ;
    $db                     = toEnvName ( $db , $config ) ;
 
-   $self->doReloadProjDbMetaColumns($db,$item);
-   $self->doReloadProjDbMetaTables($db,$item);
+   use Qto::Controller::MetaDataController;
+   my $objMetaDataController = 'Qto::Controller::MetaDataController'->new(\$config);
+   $objMetaDataController->doReloadProjDbMeta($db,$item);
 }
 
-
-sub doReloadProjDbMetaColumns {
-
-   my $self                = shift ;
-   my $db                  = shift ;
-   my $item                = shift || '' ; 
-
-   $config		 		      = $self->app->config ;
-   $db                     = toEnvName ( $db , $config ) ;
-
-   # reload the columns meta data ONLY after the meta_columns has been requested
-   return if ( exists ($config->{ $db . '.meta-columns' }) && $item ne 'meta_columns' && $item ne 'meta_tables' && $item ne 'items_doc');
-
-   my $objRdrDbsFcry       = {} ; 
-   my $objRdrDb            = {} ; 
-   my $msr2                = {} ; 
-   my $ret                 = 1 ; 
-   my $msg                 = "fatal error while reloading project database meta data " ; 
-   my $objModel            = {} ; 
-
-   $objModel               = 'Qto::App::Mdl::Model'->new ( \$config ) ;
-   $objModel->set('postgres_db_name' , $db ) ; 
-    
-   $objRdrDbsFcry          = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config, \$objModel );
-   $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type );
-   ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMetaCols( $db ) ; 
-
-   $config->{ "$db" . '.meta-columns' } = $msr2 ; # chk: it-181101180808
-	$self->app->config($config);
-   $self->render('text' => $msg ) unless $ret == 0 ; 
-}
-
-
-sub doReloadProjDbMetaTables {
-
-   my $self                = shift ;
-   my $db                  = shift ;
-   my $item                = shift || '' ; 
-
-   $config		 		      = $self->app->config ;
-   $db                     = toEnvName ( $db , $config ) ;
-
-   # reload the columns meta data ONLY after the meta_columns has been requested
-   return if ( exists ($config->{ $db . '.meta-tables' }) && $item ne 'meta_columns' && $item ne 'meta_tables' && $item ne 'items_doc');
-
-   my $objRdrDbsFcry       = {} ; 
-   my $objRdrDb            = {} ; 
-   my $msr2                = {} ; 
-   my $hsr                 = {} ; 
-   my $ret                 = 1 ; 
-   my $msg                 = "fatal error while reloading project database meta data " ; 
-   my $objModel            = {} ; 
-
-   $objModel               = 'Qto::App::Mdl::Model'->new ( \$config ) ;
-   $objModel->set('postgres_db_name' , $db ) ; 
-    
-   $objRdrDbsFcry          = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config, \$objModel );
-   $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type );
-   ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMetaTables( $db ) ; 
-
-   $config->{ "$db" . '.meta-tables' } = $msr2 ; # chk: it-181101180808
-
-
-   ($ret, $msg, $hsr) = $objRdrDb->doSelectTablesList($db);
-   my @tables_lst          = ();
-   foreach my $rowid ( sort keys %$hsr ){
-      push (@tables_lst, $hsr->{$rowid}->{'table_name'});
-   }
-   $config->{ "$db" . '.tables-list' } = \@tables_lst ; 
-
-	$self->app->config($config);
-   $self->render('text' => $msg ) unless $ret == 0 ; 
-}
 
 
 sub isAuthenticated {
