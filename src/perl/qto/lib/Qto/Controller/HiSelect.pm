@@ -15,7 +15,6 @@ use Qto::App::IO::In::CnrUrlPrms ;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
-use Qto::App::Db::In::RdrRedis ; 
 
 our $config          = {} ; 
 
@@ -33,7 +32,6 @@ sub doHiSelectItems {
    my $cnt           = 0 ; 
    my $rdbms_type    = 'postgres' ; 
    my $dat           = [] ;
-   my $objModel      = {} ; 
    my $objRdrDb      = {} ; 
    my $objRdrDbsFcry = {} ; 
    my $mc            = {}; # the meta-counter of the meta-data
@@ -41,9 +39,9 @@ sub doHiSelectItems {
    $config		      = $self->app->config ; 
    $db               = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
 
-   $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
    my $objCnrUrlPrms = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    ( $ret , $msg , $meta_cols , $mc)   = $objModel->doGetTableMeta($config,$db,$item);
   
@@ -58,9 +56,7 @@ sub doHiSelectItems {
    my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$config  ) ; 
    $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
    
-   my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
-   my $tables_meta   = $objRdrRedis->getData(\$config,"$db" . '.meta-tables');
-   my $meta_cols     = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
+   my $tables_meta   = $objModel->get("$db" . '.meta-tables');
    $met = {
         'meta_cols'     => $meta_cols
       , 'meta_tables'   => $tables_meta

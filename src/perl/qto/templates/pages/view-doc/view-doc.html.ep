@@ -6,9 +6,9 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
    <link rel="stylesheet" type="text/css" 
-      href="../../themes/thme-blue/css/screen/controls/view-doc.css?v=<%= $ProductVersion =%>" />
+      href="../../themes/thme-blue/css/screen/controls/view-doc.css?v=<%= $ProductVersion =%>" media="nope!" onload="this.media='all'" />
    <link rel="stylesheet" type="text/css" 
-      href="../../themes/thme-blue/css/screen/controls/right-click-menu.css?v=<%= $ProductVersion =%>" />
+      href="../../themes/thme-blue/css/screen/controls/right-click-menu.css?v=<%= $ProductVersion =%>" media="nope!" onload="this.media='all'"  />
 % end
 
 

@@ -913,7 +913,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       return ( $ret , $msg ) unless $ret == 0 ; 
 
 
-      if ( $self->table_exists ( $db , $table ) == 0  ) {
+      if ( $objModel->doChkIfTableExists( $db , $table ) == 0  ) {
          $ret = 400 ; 
          $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
          return ( $ret , $msg ) ; 
@@ -984,8 +984,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
 
-
-      if ( $self->table_exists ( $db , $table ) == 0  ) {
+      if ( $objModel->doChkIfTableExists( $db , $table ) == 0  ) {
          $ret = 400 ; 
          $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
          return ( $ret , $msg ) ; 
@@ -1077,8 +1076,6 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
          $msg = DBI->errstr if $ret  == 400 ; 
          die "$msg" if $ret == 400 ;
-         $objModel->set('hsr2' , $hsr2 );
-         $objModel->set($db . '.dat.' . $table , $hsr2 ); 
          $ret = 200 ;
       };
       if ( $@ ) { 

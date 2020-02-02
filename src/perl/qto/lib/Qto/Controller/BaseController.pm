@@ -4,6 +4,7 @@ use strict ; use warnings ;
 use Mojo::Base 'Mojolicious::Controller';
 use Mojolicious::Sessions; 
 use Data::Printer ; 
+use Carp qw /croak carp/ ;
 
 our $module_trace    = 0 ; 
 our $config          = {};
@@ -15,20 +16,22 @@ use Qto::App::Db::In::RdrDbsFcry ;
 use Qto::App::Cnvr::CnrHsr2ToHsr2 ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 use Qto::App::UI::WtrUIFactory ;
+use Qto::Controller::MetaDataController;
 
 
 sub doReloadProjDbMeta {
 
    my $self                = shift ;
+	my $objModel            = ${ shift @_ } || croak 'objModel not passed !!!' ; 
    my $db                  = shift ;
    my $item                = shift || '' ; 
 
    $config		 		      = $self->app->config ;
    $db                     = toEnvName ( $db , $config ) ;
 
-   use Qto::Controller::MetaDataController;
-   my $objMetaDataController = 'Qto::Controller::MetaDataController'->new(\$config);
-   $objMetaDataController->doReloadProjDbMeta($db,$item);
+   my $objMetaDataController = 'Qto::Controller::MetaDataController'->new(\$config, \$objModel);
+   $objMetaDataController->doReloadProjDbMetaData($db,$item);
+   return;
 }
 
 

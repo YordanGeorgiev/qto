@@ -11,6 +11,7 @@ use Qto::App::Utils::Initiator ;
 use Qto::App::Utils::Logger ; 
 use Qto::App::Ctrl::Dispatcher ; 
 use Test::Mojo ; 
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 my $m          = 'the msg' ; 
 my $t          = Test::Mojo->new('Qto');
@@ -20,7 +21,8 @@ my $config  = $t->app->config ;
 my $tn           = '' ;     # the test number for easier reading 
 my $actions      = 'db-to-xls' ; 
 my $objLogger	  = 'Qto::App::Utils::Logger'->new(\$config);
-my $objModel     = 'Qto::App::Mdl::Model'->new ( \$config ) ; 
+my $db           = toEnvName ( $config->{'env'}->{'db'} , $config) ;
+my $objModel     = 'Qto::App::Mdl::Model'->new ( \$config , $db) ; 
 my $objDispatcher= 'Qto::App::Ctrl::Dispatcher'->new(\$config , \$objModel , 1);
 my $functions    = $objDispatcher->doRunActions($actions);
 

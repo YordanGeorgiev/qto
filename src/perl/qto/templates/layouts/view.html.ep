@@ -3,8 +3,9 @@
 
 % content_for cnt_header_css => begin
   <link rel="stylesheet" type="text/css" 
-      href="../../themes/thme-blue/css/screen/site/snackbar.css?v=<%= $ProductVersion =%>" />
+      href="../../themes/thme-blue/css/screen/site/snackbar.css?v=<%= $ProductVersion =%>"  media="nope!" onload="this.media='all'" />
+
   <link rel="stylesheet" type="text/css" 
-      href="../../themes/thme-blue/css/screen/site/view.css?v=<%= $ProductVersion =%>" />
+      href="../../themes/thme-blue/css/screen/site/view.css?v=<%= $ProductVersion =%>"  media="nope!" onload="this.media='all'" />
 % end
 % stash('template_name', __FILE__);

@@ -6,13 +6,9 @@ our @ISA = qw(Exporter Mojo::Base Qto::Controller::BaseController);
 our $AUTOLOAD =();
 our $ModuleDebug = 0 ; 
 use AutoLoader;
-
 use parent qw(Qto::Controller::BaseController);
-
 use Data::Printer ; 
 use Data::Dumper; 
-use Scalar::Util qw /looks_like_number/;
-
 use Qto::App::Utils::Logger;
 use Qto::Controller::PageFactory ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
@@ -22,13 +18,10 @@ use Qto::App::UI::WtrUIFactory ;
 use Qto::Controller::ListLabels ;
 use Qto::App::Utils::Timer ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
-use Qto::App::Db::In::RdrRedis ; 
-
 
 our $module_trace   = 0 ; 
 our $config      	  = {};
 our $objLogger      = {} ;
-
 
 #
 # --------------------------------------------------------
@@ -45,15 +38,13 @@ sub doListItems {
    my $msg              = '' ; 
    my $as               = 'grid' ; # the default form of the list control 
    my $list_control     = 'null' ; 
-
-  
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
+
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
    
- 
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ;
    my $objCnrUrlPrms    = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    $objCnrUrlPrms->doValidateAndSetSelect();
 
@@ -62,10 +53,8 @@ sub doListItems {
    $as = 'grid' unless ( grep ( /^$as$/, @allowed_as)) ;
    ( $ret , $msg , $list_control ) = $self->doBuildListPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
 
-
-
    $msg = $self->doSetPageMsg ( $ret , $msg ) ; 
-   $self->doRenderPageTemplate( $ret , $msg , $as, $db , $item , $list_control) ; 
+   $self->doRenderPageTemplate( $ret , $msg , \$objModel, $as, $db , $item , $list_control) ; 
 }
 
 
@@ -126,19 +115,19 @@ sub doRenderPageTemplate {
    my $self             = shift ; 
    my $ret              = shift ; 
    my $msg              = shift ; 
+   my $objModel         = ${ shift @_ } ; 
    my $as               = shift || 'grid' ; 
    my $db               = shift ; 
    my $item             = shift ; 
    my $list_control     = shift ; 
    my $notice           = '' ;
+   my $config		         = $self->app->config ; 
 
    unless ( $ret == 0 ) {
       $self->res->code($ret) unless $ret == 0 ; 
    } else {
       $self->res->code(200) ; 
    }
-
-   my $config		         = $self->app->config ; 
 
    my $as_templates = { 
          'lbls'         => 'list-labels'
@@ -152,11 +141,9 @@ sub doRenderPageTemplate {
    my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
 
-   my $objRdrRedis = 'Qto::App::Db::In::RdrRedis'->new(\$config);
-   my $tables_list = $objRdrRedis->getData(\$config,"$db" . '.tables-list');
-
-   my @items_arr           = @$tables_list;
-   my $items_lst           = '';
+   my $tables_list      = $objModel->get("$db" . '.tables-list');
+   my @items_arr        = @$tables_list;
+   my $items_lst        = '';
    foreach my $table ( @items_arr ){
       $items_lst .= "'" . "$table" . "'," ;
    }

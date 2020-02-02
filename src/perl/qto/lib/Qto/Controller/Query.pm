@@ -16,7 +16,6 @@ use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 use Qto::App::IO::In::CnrUrlPrms ; 
-use Qto::App::Db::In::RdrRedis ; 
 
 my $module_trace    = 0 ;
 our $config         = {};
@@ -38,14 +37,15 @@ sub doQueryItems {
    my $met              = {} ; 
    my $msg              = 'unknown error during global text search ';
    my $msr2             = $self->doGetRsMeta() ; 
+   my $item             = 'search' ; 
 
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db,'search' ) ;
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
-   #my $tables_meta      = $self->app->config($db . '.meta-tables');
-   my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
-   my $tables_meta   = $objRdrRedis->getData(\$config,"$db" . '.meta-tables');
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
+
+   my $tables_meta      = $objModel->get("$db" . '.meta-tables');
    $met = {
         'meta_cols'     => $msr2
       , 'meta_tables'   => $tables_meta
@@ -56,11 +56,6 @@ sub doQueryItems {
    my $hsr2             = {};
    my $http_code        = 400 ;
    my $rows_count       = 0 ; 
-
-	#print STDOUT "Query.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
-
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
-   $objModel->set('postgres_db_name' , $db ) ; 
 
    my $query_params = $self->req->query_params ; 
    $objCnrUrlPrms = 

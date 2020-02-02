@@ -3,8 +3,7 @@ package Qto::App::Db::Out::WtrDbsFcry ;
 	use strict; use warnings;
 	
 	use Data::Printer ; 
-   use Carp ; 
-
+   use Carp qw /carp cluck croak/; 
 
 	our $config 		= {} ; 
 	our $db_type			= 'postgres' ; 
@@ -15,32 +14,29 @@ package Qto::App::Db::Out::WtrDbsFcry ;
 
    use Qto::App::Db::Out::Postgres::WtrPostgresDb ; 
 
-
-
 	#
 	# -----------------------------------------------------------------------------
-	# fabricates different WtrDb object 
+	# produces different WtrDb object 
 	# -----------------------------------------------------------------------------
 	sub doSpawn {
 
 		my $self 			= shift ; 	
-		my $db_type			= shift // $db_type ; # the default is mysql
+		my $db_type			= shift // $db_type ; # the default is postgres
 
 		my @args 			= ( @_ ) ; 
-		my $WtrDb 		= {}   ; 
+		my $WtrDb 		   = {}   ; 
 
-		my $package_file     	= () ; 
-		my $objWtrDb   		= () ;
+		my $package_file  = () ; 
+		my $objWtrDb   	= () ;
 
-		if ( $db_type eq 'postgres' ) {
+		if ( $db_type eq 'postgres' or $db_type eq 'postgre') {
 		   $package_file     = "Qto/App/Db/Out/Postgres/WtrPostgresDb.pm";
 		   $objWtrDb   		= "Qto::App::Db::Out::Postgres::WtrPostgresDb" ; 
 		}
 		else {
-		   $package_file     = "Qto/App/Db/Out/Postgres/WtrPostgresDb.pm";
-		   $objWtrDb   		= "Qto::App::Db::Out::Postgres::WtrPostgresDb" ; 
+		   croak ( "unsupported db_type: $db_type passed !!!");
 		}
-		# future support for different RDBMS 's should be added as follows
+		# future support for different RDBMS 's could be added as follows
 		#elsif ( $db_type eq 'mysql' ) {
 		#	$WtrDb 				= 'WtrDbMariaDb' ; 
 		#   $package_file     	= "Qto/App/Db/Out/MariaDb/WtrMariaDb.pm";
@@ -66,7 +62,7 @@ package Qto::App::Db::Out::WtrDbsFcry ;
       $db_type             = shift || 'postgres' ; 
 		my $class = ref ( $invocant ) || $invocant ; 
 	   my $self = {}; bless( $self, $class );    
-      $self = $self->doInitialize() ; 
+      $self = $self->do_init() ; 
 		return $self;
 	}  
 	
@@ -74,7 +70,7 @@ package Qto::App::Db::Out::WtrDbsFcry ;
 	# --------------------------------------------------------
 	# intializes this object 
 	# --------------------------------------------------------
-   sub doInitialize {
+   sub do_init {
       my $self = shift ; 
 
       %$self = (
@@ -83,10 +79,8 @@ package Qto::App::Db::Out::WtrDbsFcry ;
 
 	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
 
-
       return $self ; 
 	}	
-	#eof sub doInitialize
 
 1;
 

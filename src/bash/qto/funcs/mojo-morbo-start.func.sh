@@ -1,10 +1,6 @@
 # src/bash/qto/funcs/mojo-morbo-start.func.sh
 
-# v0.6.5
-# ---------------------------------------------------------
-# start the qto web app with the morbo
-# cat doc/txt/qto/funcs/mojo-morbo-start.func.txt
-# ---------------------------------------------------------
+# v0.7.9
 doMojoMorboStart(){
 
    doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.app'
@@ -30,13 +26,10 @@ doMojoMorboStart(){
 
    # might require sudo visudoers 
    # usrqtoadmin ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
-	doLog "DEBUG check with netstat "
+	doLog "INFO check with netstat, running netstat -tulpn"
    netstat -tulpn | grep qto
  
    # if cmd arg -b is passed to the qto.sh, should not exit like ever, never because of docker
    test ${run_in_backround:-1} -eq 1 && while true; do sleep 1000; done;
 
 }
-
-
-# eof file: src/bash/qto/funcs/mojo-morbo-start.func.sh

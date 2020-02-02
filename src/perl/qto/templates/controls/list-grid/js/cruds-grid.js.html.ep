@@ -144,6 +144,7 @@
                });
          }
          , createNewItem: function (dbid) {
+            console.log("createNewItem called !!")
             this.postNewServerSideId(dbid)
             .then ( result => {
                if ( result.toString() !== "err: Request failed with status code 409" ) {

@@ -43,14 +43,12 @@ sub doSelectItems {
    my $objCnrUrlPrms    = {} ; 
    my $objRdrDbsFcry = {} ; 
    my $objRdrDb         = {} ; 
-
-   my $config		      = $self->app->config ; 
+   $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db , $item) ;
-
-	# debug rint "Select.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
+
    $objCnrUrlPrms       = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    
    return $self->SUPER::doRenderJSON(
@@ -70,14 +68,12 @@ sub doSelectItems {
       ( $ret , $msg , $dat , $cnt )       = $objCnrHsr2ToArray->doConvert ($hsr2);
       ( $ret , $msg , $meta_cols , $mc)   = $objModel->doGetTableMeta($config,$db,$item);
    } 
-   #my $tables_meta  = $self->app->config($db . '.meta-tables');
-   use Qto::App::Db::In::RdrRedis ; 
-   my $objRdrRedis = 'Qto::App::Db::In::RdrRedis'->new(\$config);
-   my $tables_meta = $objRdrRedis->getData(\$config,"$db" . '.meta-tables');
-   $meta_cols = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
+   my $meta_tables = $objModel->get("$db" . '.meta-tables');
+   #$meta_tables = $objModel->get($db . '.meta-tables');
+   $meta_cols = $objModel->get("$db" . '.meta-columns');
    $met = {
         'meta_cols' => $meta_cols
-      , 'meta_tables' => $tables_meta
+      , 'meta_tables' => $meta_tables
    };
    $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
 }
@@ -100,13 +96,12 @@ sub doSelectTables {
 	my $self       = shift;
 	my $db         = $self->stash('db');
    my $msg = 'unknown error during select-tables';
+   my $item       = 'select_tables' ; 
+   $config		      = $self->app->config ; 
 
-   $config		= $self->app->config;
-   $db            = toEnvName ( $db , $config) ;
-
-   my $objModel   = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db , 'meta_columns' ) ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
 
 	my $ret        = 0;
 	my $hsr2       = {};
@@ -175,15 +170,12 @@ sub doSelectDatabases {
    my $met           = '' ; 
    my $dat           = '' ; 
    my $cnt           = 0 ; 
-
+   my $item          = 'select_databases' ; 
 	$config	   = $self->app->config;
-   my $objModel   = 'Qto::App::Mdl::Model'->new ( \$config ) ;
-
-   $db                  = toEnvName ( $db , $config) ;
-	$objModel->set('postgres_db_name' , 'postgres' ) ; 
 
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db , 'meta_columns') ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
 
 	my $ret = 0;
 	my $hsr2 = {};
@@ -233,14 +225,13 @@ sub doSelectMeta {
    my $http_code   = '400';
    my $dat         = '' ; 
    my $cnt         = 0;
-
-   $config	       = $self->app->config;
-   my $objModel    = 'Qto::App::Mdl::Model'->new ( \$config ) ;
-   
+   my $item        = 'select_meta' ; 
+   $config		    = $self->app->config ; 
    $db             = toEnvName ( $db , $config) ;
+
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db,$table ) ;
-   $config		    = $self->app->config;
+   my $objModel    = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
       
    if ( defined $table ) {
       ( $ret , $msg , $cols_meta , $cnt ) = $objModel->doGetTableMeta ( $config , $db , $table ) 
@@ -257,13 +248,10 @@ sub doSelectMeta {
       unless ( $ret == 0 ) {
          $http_code = 400 ; $dat = '' ; $cnt = 0 ; 
       }
-      #my $tables_meta  = $self->app->config($db . '.meta-tables');
-      use Qto::App::Db::In::RdrRedis ; 
-      my $objRdrRedis = 'Qto::App::Db::In::RdrRedis'->new(\$config);
-      my $tables_meta = $objRdrRedis->getData(\$config,"$db" . '.meta-tables');
+      my $meta_tables = $objModel->get("$db" . '.meta-tables');
       $met = {
          'meta_cols' => $dat
-       , 'meta_tables' => $tables_meta
+       , 'meta_tables' => $meta_tables
       };
       $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 400 or $ret == 404 ) {

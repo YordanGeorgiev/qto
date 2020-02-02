@@ -40,11 +40,11 @@ sub doExportItems {
    my $met              = '' ; 
    my $cnt              = '' ; 
    my $dat              = '' ; 
+   $config		      = $self->app->config ; 
 
-   $config		         = $self->app->config ; 
-   $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
  
    my $as               = 'xls' ; # the default form of the Export control 
    $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build

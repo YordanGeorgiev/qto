@@ -18,10 +18,11 @@ use Qto::App::Db::Out::WtrDbsFcry;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::IO::In::CnrPostPrms ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
+use Qto::App::Mdl::Model ;
 
 our $module_trace   = 0 ;
-our $config      = {};
-our $rdbms_type     = 'postgre';
+our $config         = {};
+our $rdbms_type     = 'postgres';
 
 
 # --------------------------------------------------------
@@ -32,9 +33,8 @@ sub doUpdateById {
    my $self             = shift;
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
-   my $rdbms_type       = 'postgres';
-   my $objCnrPostPrms  = {} ; 
-   my $objWtrDbsFcry = {} ; 
+   my $objCnrPostPrms   = {} ; 
+   my $objWtrDbsFcry    = {} ; 
    my $objWtrDb         = {} ; 
    my $ret              = 0;
    my $msg              = 'unknown error during Update item';
@@ -42,14 +42,11 @@ sub doUpdateById {
 
    my $json             = $self->req->body;
    my $perl_hash        = decode_json($json) ; 
+   $config		          = $self->app->config ; 
 
-   $config		         = $self->app->config ; 
-   $db                  = toEnvName ( $db , $config) ;
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
-   $objModel->set('postgres_db_name' , $db ) ; 
-   
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
    
    $objCnrPostPrms = 
       'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
