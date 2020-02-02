@@ -42,14 +42,13 @@ sub doHiCreate {
    my $perl_hash        = decode_json($json) ; 
    my $oid              = $perl_hash->{'oid'} || 0 ;
    my $level_alpha      = $perl_hash->{'lvlalpha'} || 0;
-
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
-
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
+
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
    
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
    $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel);
 
    unless ( $objCnrPostPrms->hasValidHiCreateParams( $perl_hash ) == 1 ) {

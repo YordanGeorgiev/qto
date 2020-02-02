@@ -16,7 +16,6 @@ use Qto::Controller::PageFactory ;
 use Qto::App::Utils::Logger;
 use Qto::App::Utils::Timer ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
-use Qto::App::Db::In::RdrRedis ;
 
 our $module_trace    = 0 ; 
 our $config          = {};
@@ -25,21 +24,19 @@ our $objLogger       = {} ;
 
 sub doViewItems {
 
-   my $self             = shift;
-   my $db               = $self->stash('db');
-   my $item             = $self->stash('item');
+   my $self          = shift;
+   my $db            = $self->stash('db');
+   my $item          = $self->stash('item');
+   my $ret           = 1 ; 
+   my $msg           = '' ; 
+   my $view_control  = '' ; 
+   my $as            = 'doc' ; 
+   $config		      = $self->app->config ; 
+   $db               = toEnvName ( $db , $config) ;
 
-   my $ret              = 1 ; 
-   my $msg              = '' ; 
-   my $objModel         = {} ; 
-   my $view_control     = '' ; 
-   my $as               = 'doc' ; 
-
-   $config		         = $self->app->config ; 
-   $db                  = toEnvName ( $db , $config) ;
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db,$item ) ;
-   $objModel            = 'Qto::App::Mdl::Model'->new ( \$config , $db ) ;
+   my $objModel      = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
 
 
    my $url_params = $self->req->params->to_hash ; # hash reference
@@ -47,7 +44,7 @@ sub doViewItems {
 
    ( $ret , $msg , $view_control ) = $self->doBuildViewPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
    $self->render('text' => 'view page is presented') unless $ret == 0 ; 
-   $self->doRenderPageTemplate( $ret , $msg , $as, $db , $item , $view_control) if $ret == 0 ;
+   $self->doRenderPageTemplate( $ret , $msg , \$objModel , $as, $db , $item , $view_control) if $ret == 0 ;
    return
 }
 
@@ -89,6 +86,7 @@ sub doRenderPageTemplate {
    my $self             = shift ; 
    my $ret              = shift ; 
    my $msg              = shift ; 
+   my $objModel         = ${ shift @_ } ; 
    my $as               = shift || 'doc' ; 
    my $db               = shift ; 
    my $item             = shift ; 
@@ -111,8 +109,7 @@ sub doRenderPageTemplate {
 
    my $objTimer            = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
    my $page_load_time      = $objTimer->GetHumanReadableTime();
-   my $objRdrRedis = 'Qto::App::Db::In::RdrRedis'->new(\$config);
-   my $tables_list = $objRdrRedis->getData(\$config,"$db" . '.tables-list');
+   my $tables_list         = $objModel->get("$db" . '.tables-list');
    my @items_arr           = @{$tables_list};
    my $items_lst           = '';
    foreach my $table ( @items_arr ){

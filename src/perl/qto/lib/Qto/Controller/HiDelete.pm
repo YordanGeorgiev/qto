@@ -40,15 +40,13 @@ sub doHiDelete {
    my $hsr2             = {};
    my $json             = $self->req->body;
    my $perl_hash        = decode_json($json) ; 
-   my $oid              = $perl_hash->{'oid'} || 0 ;
+   my $oid              = $perl_hash->{'oid'} || undef;
+   $config		         = $self->app->config ; 
+   $db                  = toEnvName ( $db , $config) ; # probably a smell ...
 
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
-
-   $config		         = $self->app->config ; 
-   $db                  = toEnvName ( $db , $config) ;
-   
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
+   #nope !? $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
    $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel);
 
    unless ( $objCnrPostPrms->chkHiDeleteHasValidParams( $perl_hash ) == 1 ) {

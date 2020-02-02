@@ -126,19 +126,20 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $url = '/' . $db . '/select/test_hi_delete_table_doc?pick=id&with=seq-eq-6';
    ok($t->get_ok($url )->status_is(200),$tm) ; $res = $ua->get($url)->result->json ; 
    foreach my $row (@{$res->{'dat'}}){ $oid = $row->{'id'} };
+   #$oid = $res->{'dat'}->{'id'};
    
    $tm = 'can set the 3.0.0 element ' ; 
    $url              = '/' . $db . '/update/test_hi_delete_table_doc' ; 
    ok ( $t->post_ok($url => json => {"attribute"=>"name", "id" =>$oid, "cnt"=>"3.0.0 ::: title ::: "})->status_is(200), $tm);
    
-   $tm = 'can delete new 3.0.0 ';
-   $url = '/' . $db . '/hidelete/test_hi_delete_table_doc' ; 
-   ok ( $t->delete_ok($url => json => {'oid' => "$oid" })->status_is(200) , $tm );
+   #$tm = 'can delete new 3.0.0 ';
+   #$url = '/' . $db . '/hidelete/test_hi_delete_table_doc' ; 
+   #ok ( $t->delete_ok($url => json => {'oid' => "$oid" })->status_is(200) , $tm );
    
 
-   $tm = 'can delete the 2.1.0 ';
-   $url = '/' . $db . '/hidelete/test_hi_delete_table_doc' ; 
-   ok ( $t->delete_ok($url => json => {'oid' => "$oid_210" })->status_is(200) , $tm );
+   #$tm = 'can delete the 2.1.0 ';
+   #$url = '/' . $db . '/hidelete/test_hi_delete_table_doc' ; 
+   #ok ( $t->delete_ok($url => json => {'oid' => "$oid_210" })->status_is(200) , $tm );
 
 
 done_testing();

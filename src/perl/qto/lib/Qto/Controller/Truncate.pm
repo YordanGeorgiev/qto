@@ -11,14 +11,13 @@ use Data::Dumper;
 use JSON;
 
 use Qto::App::Db::Out::WtrDbsFcry;
-use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::IO::In::CnrPostPrms ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
+use Qto::App::Mdl::Model ;
 
 our $module_trace   = 0 ;
-our $config      = {};
-our $objLogger      = {} ;
+our $config         = {};
 our $rdbms_type     = 'postgre';
 
 
@@ -32,21 +31,20 @@ sub doTruncateItem {
    my $item             = $self->stash('item');
    my $db               = $self->stash('db');
    my $objCnrPostPrms   = {} ; 
-   my $objWtrDbsFcry = {} ; 
+   my $objWtrDbsFcry    = {} ; 
    my $objWtrDb         = {} ; 
    my $ret              = 0;
    my $msg              = 'unknown error during Truncate item';
    my $hsr2             = {};
-  
    $config		         = $self->app->config ; 
-   $db                  = toEnvName ( $db , $config);
-   
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db,$item) ;
+   $db                  = toEnvName ( $db , $config ) ;
 
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
+
    $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
-   $objWtrDbsFcry    = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$config, \$objModel );
+   $objWtrDbsFcry       = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$config, \$objModel );
    $objWtrDb            = $objWtrDbsFcry->doSpawn("$rdbms_type");
    ($ret, $msg)         = $objWtrDb->doTruncateTable(\$objModel, $db , $item);
 

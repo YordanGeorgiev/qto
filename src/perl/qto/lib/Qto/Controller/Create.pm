@@ -7,21 +7,17 @@ use AutoLoader;
 use parent qw(Qto::Controller::BaseController);
 
 use Data::Printer ; 
-use Data::Dumper; 
-use Scalar::Util qw /looks_like_number/;
 use JSON;
 
+use Qto::App::Mdl::Model ;
 use Qto::App::Db::Out::WtrDbsFcry;
-use Qto::App::Utils::Logger;
 use Qto::App::Cnvr::CnrHsr2ToArray ; 
 use Qto::App::IO::In::CnrPostPrms ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $module_trace   = 0 ;
-our $config      = {};
-our $objLogger      = {} ;
+our $config         = {};
 our $rdbms_type     = 'postgre';
-#use Carp qw(cluck longmess shortmess);
 
 #
 # --------------------------------------------------------
@@ -41,17 +37,14 @@ sub doCreateById {
    my $hsr2             = {};
    my $json             = $self->req->body;
    my $perl_hash        = decode_json($json) ; 
-
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
 
-  
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-   $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
-   
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
+
    $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
-   
    unless ( $objCnrPostPrms->doValidateAndSetCreate ( $perl_hash ) == 1 ) {
       my $http_code = $objCnrPostPrms->get('http_code') ; 
       $msg = $objCnrPostPrms->get('msg') ; 
@@ -66,7 +59,7 @@ sub doCreateById {
 
    $objWtrDbsFcry  = 'Qto::App::Db::Out::WtrDbsFcry'->new(\$config, \$objModel );
    $objWtrDb = $objWtrDbsFcry->doSpawn("$rdbms_type");
-   ($ret, $msg) = $objWtrDb->doInsertByItemId($item);
+   ($ret, $msg) = $objWtrDb->doInsertByItemId($db,$item);
 
    if ( $ret == 0 ) {
       my $http_code = 200 ; 

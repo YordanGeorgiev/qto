@@ -13,6 +13,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
    use Qto::App::Utils::Logger ; 
    use Qto::App::Db::In::RdrDbsFcry ; 
    use Qto::App::Utils::Timer ; 
+   use Qto::App::Mdl::Model ;
 
 
    our $module_trace                            = 1 ; 
@@ -52,7 +53,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-      if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
+      if ( $objRdrDb->table_exists( $db , $table ) == 0  ) {
          $ret = 400 ; 
          $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
          return ( $ret , $msg ) ; 
@@ -86,20 +87,15 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
    sub doDeleteById {
 
 		my $self 				= shift ; 
-      my $objModel       = ${ shift @_ } ; 
+      my $db               = shift ; 
       my $table            = shift ; 
+      my $id               = shift ; 
       my $ret              = 0 ; 
       my $msg              = '' ; 
    
-      my $id               = $objModel->get('delete.web-action.id' ) ; 
-
       my $dbh              = {} ;         # this is the database handle
       my $sth              = {} ;         # the statement handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
-      
-      if ( defined $objModel->get('postgres_db_name') ) {
-		   $db = $objModel->get('postgres_db_name');
-      }
       
       ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
@@ -108,7 +104,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-      if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
+      if ( $objRdrDb->table_exists( $db , $table ) == 0  ) {
          $ret = 400 ; 
          $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
          return ( $ret , $msg ) ; 
@@ -153,10 +149,10 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $ret              	= 0 ; 
       my $res              	= undef ;  # the result from FOUND in the func
       my $msg              	= '' ; 
-      my $dbh              	= {} ;         # this is the database handle
-      my $hsr              	= {} ;         # the hash reference keeping the data
-      my $sth              	= {} ;         # the statement handle
-      my $str_sql         	 	= q{} ;        # this is the sql string to use for the query
+      my $dbh              	= {} ; # this is the database handle
+      my $hsr              	= {} ; # the hash reference keeping the data
+      my $sth              	= {} ; # the statement handle
+      my $str_sql         	 	= '' ; # this is the sql string to use for the query
       
       ( $ret , $msg , $dbh ) 	= $self->doConnectToDbAsAppUser ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
@@ -164,7 +160,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objRdrDbsFcry 		= 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-      if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
+      if ( $objRdrDb->table_exists( $db , $table ) == 0  ) {
          $ret = 400 ; 
          $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
          return ( $ret , $msg ) ; 
@@ -209,6 +205,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          " . '
          END ; $$ ';
                #DELETE FROM $table WHERE lft <= originLft AND rgt <= originRgt ;
+         p $str_sql ; 
+         print "\nWtrPostgresDb delte by id \n";
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ;
          use warnings 'exiting' ; 
@@ -251,7 +249,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objRdrDbsFcry 		= 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-      if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
+      if ( $objModel->doChkIfTableExists( $db , $table ) == 0  ) {
          $ret = 400 ; 
          $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
          return ( $ret , $msg ) ; 
@@ -300,7 +298,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
                CASE
                   WHEN originLvl < tgtLvl THEN 
-                     UPDATE $table set lft=(lft+2) WHERE seq >= tgtSeq ;
+                     UPDATE $table set lft=(lft+2) WHERE seq > tgtSeq ;
                      UPDATE $table set rgt=(rgt+2) WHERE rgt > originLft;
                      INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, parentLft+1, parentLft+2);
                   WHEN originLvl = tgtLvl THEN 
@@ -353,6 +351,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
    sub doInsertByItemId {
    
 		my $self 				= shift ; 
+      my $db               = shift ; 
       my $table            = shift ; 
       my $ret              = 0 ; 
       my $msg              = '' ; 
@@ -362,7 +361,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $dbh              = {} ;         # this is the database handle
       my $sth              = {} ;         # the statement handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
-      
+   
       if ( defined $objModel->get('postgres_db_name') ) {
 		   $db = $objModel->get('postgres_db_name');
       }
@@ -374,7 +373,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-      if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
+      #if ( $objRdrDb->table_exists( $db , $table ) == 0  ) {
+      if ( $objModel->doChkIfTableExists( $db , $table ) == 0  ) {
          $ret = 400 ; 
          $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
          return ( $ret , $msg ) ; 
@@ -389,8 +389,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          INSERT INTO  $table ( id ) VALUES ( '$id' );
          " ; 
          eval {
+            # rint "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
             $sth = $dbh->prepare($str_sql);  
-            # debug rint "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
             $sth->execute() ;
             last ; 
          } or next ; 
@@ -443,7 +443,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-      if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
+      if ( $objModel->doChkIfTableExists( $db , $table ) == 0  ) {
          $ret = 400 ; 
          $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
          return ( $ret , $msg ) ; 
@@ -1026,7 +1026,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 		my $update_time      = $objTimer->GetHumanReadableTime();
       my $dmhsr            = {} ; 
       $db = $objModel->get('postgres_db_name');
-      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel , $self ) ; 
+      my $objRdrDbsFcry    = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel , $self ) ; 
       my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
       
       binmode(STDIN,  ':utf8');
@@ -1040,7 +1040,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          # load ONLY the tables defined to load
          next unless grep( /^$table$/, @tables )  ; 
 
-         if ( $objRdrDb->table_exists ( $db , $table ) == 0  ) {
+         if ( $objModel->doChkIfTableExists( $db , $table ) == 0  ) {
             $ret = 400 ; 
             $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
             return ( $ret , $msg , undef ) ; 
@@ -1173,7 +1173,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
 	sub new {
 		my $invocant 	= shift ;    
-		$config     = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
+		$config        = ${ shift @_ } || { 'foo' => 'bar' ,} ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in WtrPostgresDb !!!' ; 
       $objController = shift ;  
 		my $class      = ref ( $invocant ) || $invocant ; 

@@ -27,6 +27,7 @@ our $config = {};
 sub doWsSelectTables {
 
    my $self          = shift ; 
+
 	$self->inactivity_timeout(3000);
    
 	$self->on('message' => sub {
@@ -34,9 +35,12 @@ sub doWsSelectTables {
 		# debug print "WsSelect.pm msg: $msg \n";
       my $db = $msg ; 
       $db =~ s/open //g; 
+      $config		      = $self->app->config ; 
+      
+      return unless ( $self->SUPER::isAuthenticated($db) == 1 );
+      my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+      $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
 
-      $config		         = $self->app->config ; 
-      $db = toEnvName ( $db , $config );
       $self->tx->max_websocket_size(16777216) if $self->tx->is_websocket;
       
       my $objModel      = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;

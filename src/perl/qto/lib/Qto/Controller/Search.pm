@@ -19,7 +19,6 @@ use Qto::App::Cnvr::CnrHsr2ToArray ;
 use Qto::App::IO::In::CnrUrlPrms ; 
 use Qto::App::Utils::Timer ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
-use Qto::App::Db::In::RdrRedis ; 
 
 my $module_trace        = 0 ;
 our $config          = {};
@@ -31,8 +30,6 @@ our $rdbms_type         = 'postgres';
 sub doSearchItems {
    my $self             = shift;
    my $db               = $self->stash('db');
-   
-   my $objModel         = {} ;
    my $objCnrUrlPrms    = {} ; 
    my $objRdrDbsFcry = {} ; 
    my $objRdrDb         = {} ; 
@@ -46,14 +43,13 @@ sub doSearchItems {
    my $srch_control     = 'srch-grid' ; 
    my $notice           = '' ; 
    my $left_menu        = '' ; 
-   
-
+   my $item             = 'search' ; 
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 ); 
-   $self->SUPER::doReloadProjDbMeta( $db,'search' ) ;
    
-   $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
+   return unless ( $self->SUPER::isAuthenticated($db) == 1 ); 
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
    
    $objCnrUrlPrms = 
       'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
@@ -63,8 +59,7 @@ sub doSearchItems {
    
       my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
       my $page_load_time   = $objTimer->GetHumanReadableTime();
-      my $objRdrRedis      = 'Qto::App::Db::In::RdrRedis'->new(\$config);
-      my $tables_list      = $objRdrRedis->getData(\$config,"$db" . '.tables-list');
+      my $tables_list      = $objModel->get("$db" . '.tables-list');
       my @items_arr        = @{$tables_list};
       my $items_lst        = '';
       foreach my $table ( @items_arr ){
@@ -148,8 +143,7 @@ sub doRenderPageTemplate {
 
    my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
-   my $objRdrRedis      = 'Qto::App::Db::In::RdrRedis'->new(\$config);
-   my $tables_list      = $objRdrRedis->getData(\$config,"$db" . '.tables-list');
+   my $tables_list      = $objModel->get("$db" . '.tables-list');
    my @items_arr        = @{$tables_list};
    my $items_lst        = '';
    foreach my $table ( @items_arr ){

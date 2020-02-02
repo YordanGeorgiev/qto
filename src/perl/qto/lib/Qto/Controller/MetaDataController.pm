@@ -19,12 +19,14 @@ our $module_trace    = 0 ;
 our $config          = {};
 our $objLogger       = {} ;
 our $rdbms_type      = 'postgres' ; 
+our $objModel        = '' ; 
 
 # use Qto::Controller::MetaDataController;
 # my $objMetaDataController = 'Qto::Controller::MetaDataController'->new(\$config);
 sub new {
    my $class = shift; 
    $config = ${ shift @_ } || croak 'no config provided !!!' ; 
+	$objModel = ${ shift @_ } || croak 'objModel not passed !!!' ; 
    my $self = {}; 
    bless( $self, $class );    
    return $self;
@@ -34,49 +36,50 @@ sub new {
 # use Qto::Controller::MetaDataController;
 # my $objMetaDataController = 'Qto::Controller::MetaDataController'->new(\$config);
 # $objMetaDataController->doReloadProjDbMeta($db,$item);
-sub doReloadProjDbMeta {
+sub doReloadProjDbMetaData {
 
-   my $self                = shift ;
-   my $db                  = shift ;
-   my $item                = shift || '' ; 
-
-   $db                     = toEnvName ( $db , $config ) ;
-   $self->doReloadProjDbMetaColumns($db,$item);
-   $self->doReloadProjDbMetaTables($db,$item);
+   my $self          = shift ;
+   my $db            = shift ;
+   my $item          = shift || '' ; 
+   $db               = toEnvName ( $db , $config ) ;
+   $objModel->set('postgres_db_name' , $db ) ; 
+   # reload the columns meta data ONLY after the meta_columns has been requested
+   # each one of those requested by the UI triggers meta data reload to redis !!!
+   if ( $item eq 'app-startup' && $item eq 'meta_columns' && $item eq 'meta_tables' && $item eq 'items_doc') {
+      my $objWtrRedis = 'Qto::App::Db::Out::WtrRedis'->new(\$config);
+      $self->doReloadProjDbMetaColumns($db,$item,\$objWtrRedis);
+      $self->doReloadProjDbMetaTables($db,$item,\$objWtrRedis);
+   } else {
+      my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
+      my $meta_tables   = $objRdrRedis->getData(\$config,"$db" . '.meta-tables');
+      my $meta_columns  = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
+      my $tables_list   = $objRdrRedis->getData(\$config,"$db" . '.tables-list');
+      
+      $objModel->set($db . '.meta-columns',$meta_columns);
+      $objModel->set($db . '.meta-tables',$meta_tables);
+      $objModel->set($db . '.tables-list',$tables_list);
+   }
 }
-
 
 sub doReloadProjDbMetaColumns {
 
    my $self                = shift ;
    my $db                  = shift ;
    my $item                = shift || '' ; 
-
-   $db                     = toEnvName ( $db , $config ) ;
-
-   # reload the columns meta data ONLY after the meta_columns has been requested
-   # each one of those requested by the UI triggers meta data reload to redis !!!
-   return if ( $item ne 'app-startup' && $item ne 'meta_columns' && $item ne 'meta_tables' && $item ne 'items_doc');
-
+	my $objWtrRedis         = ${ shift @_ } || croak 'objWtrRedis not passed !!!' ; 
    my $objRdrDbsFcry       = {} ; 
    my $objRdrDb            = {} ; 
    my $msr2                = {} ; 
    my $ret                 = 1 ; 
    my $msg                 = "fatal error while reloading project database meta data " ; 
-   my $objModel            = {} ; 
 
-   $objModel               = 'Qto::App::Mdl::Model'->new ( \$config ) ;
-   $objModel->set('postgres_db_name' , $db ) ; 
     
    $objRdrDbsFcry          = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config, \$objModel );
    $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type );
    ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMetaCols( $db ) ; 
 
-   #$config->{ "$db" . '.meta-columns' } = $msr2 ; # chk: it-181101180808
-	#$self->app->config($config);
-   #$self->render('text' => $msg ) unless $ret == 0 ; 
-   my $objWtrRedis = 'Qto::App::Db::Out::WtrRedis'->new(\$config);
    $objWtrRedis->setData(\$config, $db . '.meta-columns', $msr2);
+   $objModel->set($db . '.meta-columns',$msr2);
 }
 
 
@@ -85,39 +88,28 @@ sub doReloadProjDbMetaTables {
    my $self                = shift ;
    my $db                  = shift ;
    my $item                = shift || '' ; 
-
-   $db                     = toEnvName ( $db , $config ) ;
-
-   # reload the columns meta data ONLY after the meta_columns has been requested
-   return if ( $item ne 'meta_columns' && $item ne 'meta_tables' && $item ne 'items_doc');
-
+	my $objWtrRedis         = ${ shift @_ } || croak 'objWtrRedis not passed !!!' ; 
    my $objRdrDbsFcry       = {} ; 
    my $objRdrDb            = {} ; 
    my $msr2                = {} ; 
    my $hsr                 = {} ; 
    my $ret                 = 1 ; 
    my $msg                 = "fatal error while reloading project database meta data " ; 
-   my $objModel            = {} ; 
 
-   $objModel               = 'Qto::App::Mdl::Model'->new ( \$config ) ;
-   $objModel->set('postgres_db_name' , $db ) ; 
-    
    $objRdrDbsFcry          = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config, \$objModel );
    $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type );
    ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMetaTables( $db ) ; 
 
-   #$config->{ "$db" . '.meta-tables' } = $msr2 ; # chk: it-181101180808
-   my $objWtrRedis = 'Qto::App::Db::Out::WtrRedis'->new(\$config);
    $objWtrRedis->setData(\$config, $db . '.meta-tables', $msr2);
+   $objModel->set($db . '.meta-tables',$msr2);
 
-
-   ($ret, $msg, $hsr) = $objRdrDb->doSelectTablesList($db);
+   ($ret, $msg, $hsr)      = $objRdrDb->doSelectTablesList($db);
    my @tables_lst          = ();
    foreach my $rowid ( sort keys %$hsr ){
       push (@tables_lst, $hsr->{$rowid}->{'table_name'});
    }
-   #$config->{ "$db" . '.tables-list' } = \@tables_lst ; 
    $objWtrRedis->setData(\$config, "$db" . '.tables-list', \@tables_lst);
+   $objModel->set("$db" . '.tables-list',\@tables_lst);
 
 }
 
