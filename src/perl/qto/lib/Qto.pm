@@ -26,6 +26,8 @@ use Qto::App::Utils::Initiator;
 use Qto::App::Utils::Logger;
 use Qto::App::Mdl::Model ; 
 use JSON::Parse 'json_file_to_perl';
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
+use Qto::Controller::MetaDataController ; 
 
 my $module_trace 					= 0;
 our $objInitiator 				= {};
@@ -51,6 +53,8 @@ sub startup {
    $self->doSetHooks() ; 
 
    $self->doSetRoutes();
+
+   $self->doReloadProjectsDbMeta();
 
 }
 
@@ -96,6 +100,31 @@ sub doLoadAppConfig {
    #$objLogger->doLogInfoMsg($msg);
 }
 
+
+# initial load into redis the metadata of all databases 
+sub doReloadProjectsDbMeta {
+
+   my $self                = shift ;
+   my $config              = $self->config ; # the global config
+   my $cnf                 = $self->config->{'env'}->{'db'}; # the db section only ...
+   #my $proj_dbs_str       =~ s/\s+/$config->{'postgres_db_name'} . ' , ' . $config->{'project_databases'}/g;
+   my $proj_dbs_str        = $cnf->{'postgres_db_name'} . ' , ' . $cnf->{'project_databases'};
+   $proj_dbs_str           =~ s/\s+//g;
+   my @dbs                 = split (',',$proj_dbs_str);
+
+   foreach my $db ( @dbs ) {
+      print "loading meta for db : \"" . "$db" . '"' . " \n" ; 
+      my $item             = 'app-startup';
+      my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ; 
+      $db                  = toEnvName ( $db , $config ) ;
+      my $objMetaDataController = 'Qto::Controller::MetaDataController'->new(\$config, \$objModel);
+      $objMetaDataController->doReloadProjDbMetaData($db,$item);
+   }
+
+   print "START printing the meta-data keys in redis : \n";
+   print `echo 'KEYS * ' | redis-cli | sort`;
+   print "STOP  printing the meta-data keys in redis : \n";
+}
 
 
 # -----------------------------------------------------------------------------

@@ -4,7 +4,6 @@
   * [1.2. AUDIENCE](#12-audience)
 * [2. THE INFORMATION SYSTEM AS CYBERNETIC ORGANISM ABSTRACTION](#2-the-information-system-as-cybernetic-organism-abstraction)
   * [2.1. THE QTO INFORMATION SYSTEM - DEFINITION](#21-the-qto-information-system--definition)
-  * [2.2. INFORMATION SYSTEM - DIAGRAM](#22-information-system--diagram)
 * [3. THE QTO SYSTEM INFRASTRUCTURE](#3-the-qto-system-infrastructure)
   * [3.1. SYSTEM ARCHITECTURAL OVERVIEW BY SIWA DIA](#31-system-architectural-overview-by-siwa-dia)
   * [3.2. INFRASTRUCTURAL COMPONENTS](#32-infrastructural-components)
@@ -13,24 +12,34 @@
     * [3.2.3. Local Development and testing](#323-local-development-and-testing)
     * [3.2.4. Source code in GitHub](#324-source-code-in-github)
 * [4. ARCHITECTURE](#4-architecture)
-  * [4.1. IOCM ARCHITECTURE DEFINITION](#41-iocm-architecture-definition)
+  * [4.1. ICOCM ARCHITECTURE DEFINITION](#41-icocm-architecture-definition)
     * [4.1.1. The Control components](#411-the-control-components)
     * [4.1.2. The Model components](#412-the-model-components)
     * [4.1.3. The Input Components](#413-the-input-components)
     * [4.1.4. The Output Components](#414-the-output-components)
-    * [4.1.5. The Converter Components](#415-the-converter-components)
+    * [4.1.5. The Conversion Components](#415-the-conversion-components)
   * [4.2. MULTI-INSTANCE SETUP](#42-multi-instance-setup)
     * [4.2.1. Multi-environment naming convention](#421-multi-environment-naming-convention)
-  * [4.3. SOFWARE ARCHITECTURE](#43-sofware-architecture)
-    * [4.3.1. Front-End](#431-front-end)
-    * [4.3.2. Back-End](#432-back-end)
-* [5. APPLICATION CONTROL FLOW ](#5-application-control-flow-)
-  * [5.1. SHELL CONTROL FLOW](#51-shell-control-flow)
-    * [5.1.1. Front-End](#511-front-end)
-    * [5.1.2. Back-End](#512-back-end)
-* [6. SECURITY](#6-security)
-  * [6.1. NON-SECURITY MODE](#61-non-security-mode)
-  * [6.2. SIMPLE NATIVE SECURITY MODE](#62-simple-native-security-mode)
+* [5. FULL STACK DESCRIPTION](#5-full-stack-description)
+  * [5.1. OS STACK](#51-os-stack)
+  * [5.2. THE PERL STACK](#52-the-perl-stack)
+    * [5.2.1. The perl binary](#521-the-perl-binary)
+    * [5.2.2. The perl modules](#522-the-perl-modules)
+  * [5.3. THE MOJOLICIOUS WEB FRAMEWORK](#53-the-mojolicious-web-framework)
+  * [5.4. THE BROWSER RUN-TIME](#54-the-browser-run-time)
+    * [5.4.1. HTML 5](#541-html-5)
+    * [5.4.2. JavaScript ](#542-javascript-)
+      * [5.4.2.1. Vue](#5421-vue)
+      * [5.4.2.2. VueX](#5422-vuex)
+    * [5.4.3. name...](#543-name)
+  * [5.5. NODEJS](#55-nodejs)
+* [6. APPLICATION CONTROL FLOW ](#6-application-control-flow-)
+  * [6.1. SHELL CONTROL FLOW](#61-shell-control-flow)
+    * [6.1.1. Front-End](#611-front-end)
+    * [6.1.2. Back-End](#612-back-end)
+* [7. SECURITY](#7-security)
+  * [7.1. NON-SECURITY MODE](#71-non-security-mode)
+  * [7.2. SIMPLE NATIVE SECURITY MODE](#72-simple-native-security-mode)
 
 
 
@@ -53,7 +62,7 @@ Target audience of this document is comprised of the architects and System desig
     
 
 ## 2. THE INFORMATION SYSTEM AS CYBERNETIC ORGANISM ABSTRACTION
-This section is essential for you to understand the very basic motives and principles behind the design of the qto applications and systems. Elon Musk stated in several interviews, that any organisation might be viewed as a cybernetic organism, ran to a certain degree by an Artificial Intelligence Instance... 
+This section is essential for you to understand the very basic motives and principles behind the design of the qto applications and systems. Elon Musk stated once in an interview, that any organisation might be viewed as a cybernetic organism, ran to a certain degree by an Artificial Intelligence Instance... 
 Qto has nothing to do with the modern AI definition, yet it's design is inspired by this cybernetic organism or biome metaphor. 
 
     
@@ -61,11 +70,6 @@ Qto has nothing to do with the modern AI definition, yet it's design is inspired
 ### 2.1. The qto Information System - definition
 There are multiple definitions for "Information System" - most of those apply to the qto information system, yet the following definition provides additional content, which might not necessary be applicable to any other non-qto IS. 
 The qto information system is the interactive combination of the people , processes & policies, hardware & networks , source code, binaries, configuration and data managed by any running instance of the qto application.
-
-    
-
-### 2.2. Information System - diagram
-The following diagram depicts the mention above definition.
 
     
 
@@ -119,34 +123,34 @@ https://github.com/YordanGeorgiev/qto
 
     
 
-### 4.1. IOCM architecture definition
-The Input-Output Control Model architecture is and application architecture providing the highest possible abstraction for almost any software artefact, by dividing its main executing components based on their abstract responsibilities - Input, Output , Control and Model. 
+### 4.1. ICOCM architecture definition
+The Input-Output Control Model architecture is and application architecture providing the highest possible abstraction for almost any software artefact, by dividing its main executing components based on their abstract responsibilities - Input, Conversion, Output , Control and Model. 
 
     
 
 #### 4.1.1. The Control components
-The Control components control the control flow in the application. The instantiate the Models and pass them to the Readers , Converters and Writers for output. 
+The Control components control the control flow in the application. The instantiate the Model and pass it to the Readers , Converters and Writers for output. 
 
     
 
 #### 4.1.2. The Model components
-The model components model the DATA of the application - that is no configuration, nor control flow nor anything else should be contained wihin the model. 
+The model components model the global DATA of the application - that is no configuration, nor control flow nor anything else should be contained within the model. 
 Should you encounter data, which is not modelled yet , you should expand the Model and NOT provide different data storage and passing techniques elsewhere in the code base ... 
 
     
 
 #### 4.1.3. The Input Components
-The Input Components are generally named as "Readers". Their responsibility is to read the application data into Model(s). 
+The Input Components are generally named as "Readers". Their responsibility is to read the application data into Model(s). The Input components must be as generic as possible.
 
     
 
 #### 4.1.4. The Output Components
-The Output Components are generally named as "Writers" Their responsibility is to write the already processed data from the Models into the output media . 
+The Output Components are generally named as "Writers" Their responsibility is to write the already processed data from the Models into the output media. The output components must be as generic as possible.
 
     
 
-#### 4.1.5. The Converter Components
-The Converters apply usually the business logic for converting the input data from the Models into the app specific data back to the Models. 
+#### 4.1.5. The Conversion Components
+The Conversion components are generally called "converters". Their responsibility is to convert from one run-time data structure to another. The conversion might also contain certain business logic.
 
     
 
@@ -166,56 +170,109 @@ Each database used by the qto application has an &lt;&lt;environment abbreviatio
 
     
 
-### 4.3. Sofware architecture
+## 5. FULL STACK DESCRIPTION
 
 
     
 
-#### 4.3.1. Front-End
-The Mojolicious Web Framework runs on top of a perl instance, which serves the back-end requests and passes back and forth json, as well as the ui Mojo templates dynamically, which combined with the vue template create the generic ui. 
+### 5.1. OS stack
+The Qto Application supports ONLY Ubuntu 18.04 as of v0.7.9. - that is all the deployment automations have been tested ONLY against this OS. 
+Any middle level full stack developer should be able to deploy and operate the Qto Application on most of the reason Linux distributions and even probably BSD, yet this will require substantial rewrite of the existing deployment scripts as the aim is to have single code base for those scripts and configurability if multiple OS's will be supported.
 
     
 
-#### 4.3.2. Back-End
-The id's of the tables which ARE VISIBLE to the end users ui are big integers, which are formed by the concatenation of the year, month, day, hour, minutes and second in which the row in the table is created. 
+### 5.2. The Perl Stack
+Qto runs preferably on the newest possible Perl version on Ubuntu, yet "use 5.12.0;" is placed at the entry point of the shell. script. The deployment script installs the latest perl binary for Ubuntu as non-root. Bothe the back-end of the web application and the shell scripts use the same Perl code base.
 
     
 
-## 5. APPLICATION CONTROL FLOW 
+#### 5.2.1. The perl binary
+"use 5.12.0;" is placed at the entry point of the shell. script. The deployment script installs the latest perl binary for Ubuntu as non-root. 
+
+    
+
+#### 5.2.2. The perl modules
+All the perl modules installations have been included in the deployment script and over automated installations have been performed without errors.
+The list of perl modules used by the deployer script to install is stored in the following "list" file:
+src/bash/deployer/qto/cnf/bin/perl-modules.lst
+
+    
+
+### 5.3. The Mojolicious web framework
+Qto uses Mojolicious as it's main engine - the reason is simply the fact that Mojolicious IS the best web framework out there. For those willing to argue this fact, simply extend this statement with the "for the needs of the Qto Application" phrase.
+
+    
+
+### 5.4. The browser run-time
+Qto strives to support all non-older then 2 years browsers. The majority of the testing is however conducted with Chromium based mobile and desktop browsers. 
+
+    
+
+#### 5.4.1. HTML 5
+
+
+    
+
+#### 5.4.2. JavaScript 
+Simple dynamic tricks have been implemented with vanilla JavaScript to avoid complexity of the Vue applications, by however providing the needed client side reactivity and functionality desired by modern look and feel.
+
+    
+
+##### 5.4.2.1. Vue
+The client side reactivity of the pages is implemented with Vue. As soon as you understand that the vue code "lives" with the Mojolicious templates of the back-end ( which as a techniques is not uncommon, that is the back-end templates to be "build" first on the backend, but then to "inject" client-side code) the whole magic of "double-dynamism" turns out to be a systematic approach to reduce complexity by the divide and conquer principle.
+
+    
+
+##### 5.4.2.2. VueX
+The view doc page is implemented with VueX.
+
+    
+
+#### 5.4.3. name...
+
+
+    _
+
+### 5.5. NodeJS
+Client side ui automation is implemented with a small npm project using couple of npm modules ( mocha and puppeteer)
+
+    _
+
+## 6. APPLICATION CONTROL FLOW 
 This section provides a generic control flow description for the shell based and ui based control flows. 
 
     
 
-### 5.1. Shell control flow
+### 6.1. Shell control flow
 The shell control flow is based on the control model input output architecture. The usual pattern is to call a single &lt;&lt;doSomeAction&gt;&gt; shell function, which is stored in a some-action.func.sh file and loaded dynamically based on this naming convention. Maximun of 2 level nesting is used in the functional calls, that is once an shell action is evoked it could call only 1 funtion, which might or might be not a shell action function , BUT not more, to address unneeded complexity written in bash. 
 
     
 
-#### 5.1.1. Front-End
+#### 6.1.1. Front-End
 The Mojolicious Web Framework runs on top of a perl instance, which serves the back-end requests and passes back and forth json, as well as the ui Mojo templates dynamically, which combined with the vue template create the generic ui loaded in modern html 5, web sockets and ajax capable browsers.
 That said the html,js , vue code is mixed with some perl Mojolicious template code several times per file unit and the logic of building the file units into html pages in defined by the Mojolicious templating system, but once one could grasp the concept the developing of the front-end is more or less html,javascript , vue centric. 
 
     
 
-#### 5.1.2. Back-End
+#### 6.1.2. Back-End
 The id's of the tables which ARE VISIBLE to the end users ui are big integers, which are formed by the concatenation of the year, month, day, hour, minutes and second in which the row in the table is created. 
 The primary keys are however GUID's to provide the underlying expandability for cross-domain, cross-db data transfers. 
 
     
 
-## 6. SECURITY
+## 7. SECURITY
 This section provides an overview of the security of a system operating the qto application. 
 
     
 
-### 6.1. Non-security mode
+### 7.1. Non-security mode
 In the non-security mode the application does NOT authenticate any one. Both run over https and http. Of course if you use http all the traffic will be in plain text ...
 
     
 
-### 6.2. Simple native security mode
+### 7.2. Simple native security mode
 In this mode the authentication is performed against the project defined in the login page ( where project is actually the database to which the application layer can connect to ). This means that one user can have access to multiple project databases and be authenticated agains some of them thus being able to navigate with the same browser from project to project. In this mode the user credentials - email and password are stored in the users table with a blowfish encryption.
-Sessions are used for storing the state of the authentication, which is handled by the Mojolicious web framework - all data gets serialized to json and stored Base64 encoded on the client-side, but is protected from unwanted changes with a HMAC-SHA1 signature. 
+Sessions are used for storing the state of the authentication, which is handled by the Mojolicious web framework - all data gets serialised to json and stored Base64 encoded on the client-side, but is protected from unwanted changes with a HMAC-SHA1 signature. 
 
     
 

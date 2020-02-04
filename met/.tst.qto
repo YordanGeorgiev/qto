@@ -9,14 +9,6 @@ src/perl/qto/t/lib/Qto/App/InOut/TestRedis.t
 src/perl/qto/lib/Qto/App/Db/Out/WtrRedis.pm
 src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm
 #  stop redis
-# start puppeteer
-src/js/node/ppoc/
-src/js/node/ppoc/index.html
-src/js/node/ppoc/test
-src/js/node/ppoc/test/test-login.spec.js
-src/js/node/ppoc/test/test-open-login.spec.js
-src/js/node/ppoc/package.json
-#  stop puppeteer
 # start vagrant
 src/bash/up.sh
 cnf/tpl/vagrant/Vagrantfile
@@ -145,8 +137,6 @@ src/perl/qto/public/poc/web-socket/web-socket.html
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
 # stop  websockets
-src/js/node/js-unit-tests/01-set-url-param/test/test.js
-src/js/node/js-unit-tests/01-set-url-param/package.json
 # ---
 src/perl/qto/templates/pages/view-doc/js/right-click-menu.js.html.ep
 src/perl/qto/templates/pages/view-doc/view-doc.html.ep
@@ -888,12 +878,20 @@ doc/pdf/userstories_doc.pdf
 src/perl/qto/public/poc/fixed-top-bar/index.html
 src/perl/qto/public/themes/thme-blue/css/screen/site/top-bar.css
 src/js/
+# start puppeteer
+src/js/node/ppoc/
+src/js/node/ppoc/index.html
+src/js/node/ppoc/test
+src/js/node/ppoc/test/test-login.spec.js
+src/js/node/ppoc/test/test-open-login.spec.js
+src/js/node/ppoc/package.json
+#  stop puppeteer
 src/js/node
 src/js/node/js-unit-tests
 src/js/node/js-unit-tests/01-set-url-param
 src/js/node/js-unit-tests/01-set-url-param/package.json
 src/js/node/js-unit-tests/01-set-url-param/test
 src/js/node/js-unit-tests/01-set-url-param/test/test.js
-src/js/node/package.json
-src/js/node/package-lock.json
-src/js/node/scrap-html.js
+src/js/node/scrap-html/package.json
+src/js/node/scrap-html/package-lock.json
+src/js/node/scrap-html/scrap-html.js

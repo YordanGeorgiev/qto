@@ -27,7 +27,8 @@ Still here ?! Let's move on !
     
 
 ## 2. SO, WHAT IS THIS ?!
-A generic and simplistic db centric content management system, build on postgres CRUDs ( s stands for search ) and hierarchical nested data-sets MULTIPLE databases from the same web application.An included example application is the "qto application", which is used to manage multiple projects' issues, including itself ;o). 
+A generic and simplistic db centric content management system, build on hot meta-data reloadable postgres CRUDs ( s stands for search ) and hierarchical nested data-sets MULTIPLE databases from the same web application.
+An included example application is the "qto application", which is used to manage multiple projects' issues, including itself ;o). 
 The full and extensive https://qto.fi/qto/view/features_doc contains all the features and functionalities of THIS released version. 
 
 
@@ -60,6 +61,7 @@ With qto you will gain the following capabilities:
 - provide db based authentication and restricted access to the app via http(s)
 - provide access to the non-technical person via http and/or https for CRUD operations
 - quickly define LOTS of tables DDL by using the existing examples and just changing the columns
+- alter tables without having to restart the application layer, a single page reload rebuilds the UI 
 - search the data from the db via the global search feature 
 - load initial data via xls ( less than 10k rows per sheet should be ok )
 - provide them with initial links to grasp the "semi-sql" syntax
@@ -71,7 +73,7 @@ With qto you will gain the following capabilities:
 
 ## 3. DEMO
 You can check the following https://qto.fi/qto/view/enduser_guide_doc of the web app, additionally every doc bellow has it's "it-doc" link aka the "native" qto document format …
-Use the "test.user@gmail.com" and "secret" credentials to login ( simple click of the login button would do it as well ;o) OR even better try to login with your own e-mail and request access from the admin e-mail displayed to the error msg ...
+Use the "test.anonymous.user@gmail.com" and "secret" credentials to login ( simple click of the login button would do it as well ;o) OR even better try to login with your own e-mail and request access from the admin e-mail displayed to the error msg ...
 Still here ?! Interested to get your own instance up-and-running in the cloud exposed to the Internet ?!
 Follow simply the instructions in the next section.
 
@@ -93,7 +95,8 @@ Check the doc/md or doc/pdf directories where the generated from the db document
     
 
 ## 5. AUTOMATED DEPLOYMENT LOCALLY AND ON AWS IN 35 MINUTES
-The installation guide https://github.com/YordanGeorgiev/qto/blob/master/doc/md/installations_doc.md contains the instructions on how-to deploy both a local instance AND and an aws instance exposed to the Internet in 35 minutes for instance from scratch on top of the Amazon latest ubuntu 18.04 ami, so that you can have 100% control on your binary configuration on your infrastructure.
+The installation guide https://github.com/YordanGeorgiev/qto/blob/master/doc/md/installations_doc.md contains the TESTED on each release instructions on how-to deploy both a local instance ( including on top of Oracle Virtual Box with vagrant if your host OS is not Ubuntu ) AND and an aws instance exposed to the Internet in 35 minutes for instance from scratch on top of the Amazon latest ubuntu 18.04 ami, so that you can have 100% control on your binary configuration on your infrastructure.
+Should you need a FREE ( as Speech !) assistance during the installation do not hesitate to contact the owner of this repo !
 
     
 

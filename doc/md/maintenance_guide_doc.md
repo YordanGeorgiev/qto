@@ -20,12 +20,15 @@
   * [3.3. BACKUP A DATABASE TABLE](#33-backup-a-database-table)
   * [3.4. BACKUP ONLY THE DATABASE TABLES INSERT DATA](#34-backup-only-the-database-tables-insert-data)
   * [3.5. RESTORE A DATABASE](#35-restore-a-database)
-    * [3.5.1. Restore a database from full database backup](#351-restore-a-database-from-full-database-backup)
-    * [3.5.2. Restore a database from db inserts file](#352-restore-a-database-from-db-inserts-file)
-  * [3.6. RESTORE A DATABASE TABLE](#36-restore-a-database-table)
-* [4. SHELL ACTIONS](#4-shell-actions)
-  * [4.1. RUN INCREASE-DATE ACTION](#41-run-increase-date-action)
-  * [4.2. LOAD XLS SHEET TO DB A DOC TABLE](#42-load-xls-sheet-to-db-a-doc-table)
+  * [3.6. ALTER TABLE AND RELOAD THE DB META DATA TO THE APPLICATION LAYER](#36-alter-table-and-reload-the-db-meta-data-to-the-application-layer)
+    * [3.6.1. Restore a database from full database backup](#361-restore-a-database-from-full-database-backup)
+    * [3.6.2. Restore a database from db inserts file](#362-restore-a-database-from-db-inserts-file)
+  * [3.7. RESTORE A DATABASE TABLE](#37-restore-a-database-table)
+* [4. BULK EXPORT AND IMPORT PROJECT DATA](#4-bulk-export-and-import-project-data)
+  * [4.1. EXPORT ALL DOCS AS PDFS](#41-export-all-docs-as-pdfs)
+  * [4.2. EXPORT ALL DOCS AS MD FILES](#42-export-all-docs-as-md-files)
+  * [4.3. RUN INCREASE-DATE ACTION](#43-run-increase-date-action)
+  * [4.4. LOAD XLS SHEET TO DB A DOC TABLE](#44-load-xls-sheet-to-db-a-doc-table)
 * [5. BULK ISSUES MANAGEMENT](#5-bulk-issues-management)
     * [5.1. Opening a monthly period](#51-opening-a-monthly-period)
   * [5.1. CLOSING A MONTHLY PERIOD](#51-closing-a-monthly-period)
@@ -206,7 +209,14 @@ You restore a database by first running the pgsql scripts of the project databas
     psql -d $postgres_db_name < \
     dat/mix/sql/pgsql/dbdumps/dev_qto/dev_qto.20180813_202202.insrt.dmp.sql
 
-#### 3.5.1. Restore a database from full database backup
+### 3.6. Alter table and reload the db meta data to the application layer
+The qto does load the db meta-data it needs for the application layer during startup and ALWAYS when loading one of the following tables - meta_tables, meta_columns, items_doc. Thus each time you alter a table which is used by the list pages you must manually reload one of those tables afterwards, which is much less invasive than full application restart by the way, not to mention any non-dynamic UI applications which WILL require coding work to adapt the UI to the new database structure ...
+
+    psql -d tst_qto -c "alter table monthly_issues_202001 add column tags varchar(10) defautl 'tag'";
+    psql -d tst_qto -c "alter table monthly_issues_202001 drop column tags"
+    
+
+#### 3.6.1. Restore a database from full database backup
 You restore a database by basically creating first the empty database and applying the dump file to that database. Practice this several times in dev before going to tst !!! 
 
     # if you DO HAVE THE DB - probably not a bad idea to first backup it !!!
@@ -220,7 +230,7 @@ You restore a database by basically creating first the empty database and applyi
     
     psql -d dev_qto < dat/mix/2020/2020-01/2020-01-11/sql/tst_qto/tst_qto.20200111_195947.full.dmp.sql
 
-#### 3.5.2. Restore a database from db inserts file
+#### 3.6.2. Restore a database from db inserts file
 This type of restore assumes you are 100% sure that the schema you took the db inserts backup from is the same as the schema you are applying the db inserts to, which should be the case when you are restoring data from the same qto version db. In qto we do not believe in migrations, which is a totally different discussion, but if you do not have the same schema you WILL HAVE errors and you ARE basically on your own, because you ended-up here by basically NOT taking regularly backups and not applying regular updates and that is YOUR fault and not the fault of the product instance owner you are getting the qto source from ....
 
     # if you DO HAVE THE DB - probably not a bad idea to first backup it !!!
@@ -235,24 +245,34 @@ This type of restore assumes you are 100% sure that the schema you took the db i
     psql -d $postgres_db_name < \
     dat/mix/sql/pgsql/dbdumps/dev_qto/dev_qto.20180813_202202.insrt.dmp.sql
 
-### 3.6. Restore a database table
+### 3.7. Restore a database table
 You restore a database table by first running the pgsql scripts of the project database or ONLY for that table and than restoring the insert data from the table insert file.
 
     # re-apply the table ddl
     psql -d $postgres_db_name < src/sql/pgsql/dev_qto/13.create-table-requirements.sql
 
-## 4. SHELL ACTIONS
-
+## 4. BULK EXPORT AND IMPORT PROJECT DATA
+Qto DOES NOT lock your data into qto. We believe that the more freedom and possibilities you have to transform your data the greater the value you will get from qto, the greater the possibility for you to use it, which might seem counterintuitive from at the first glance, but is 100% true as the rest of the power of the open source movement.
 
     
 
-### 4.1. Run increase-date action
+### 4.1. Export all docs as pdfs
+To export all docs as pdfs issue the following one-liner:
+
+    bash src/bash/qto/qto.sh -a generate-pdf-docs
+
+### 4.2. Export all docs as md files
+To export all docs as pdfs issue the following one-liner:
+
+    To export all docs as mark-down files issue the following one-liner:
+
+### 4.3. Run increase-date action
 You track the issues of your projects by storing them into xls files in "daily" proj_txt dirs. 
 Each time the day changes by running the increase-date action you will be able to clone the data of the previous date and start working on the current date.
 
     bash src/bash/qto/qto.sh -a increase-date
 
-### 4.2. Load xls sheet to db a doc table
+### 4.4. Load xls sheet to db a doc table
 To load xls issues to db and from db to txt files
 
     export do_truncate_tables=0 ; 
@@ -270,46 +290,12 @@ By bulk issues management herewith is meant the bulk handling via sql to the iss
 Each monthly period is basically a table with the naming convention monthly_issues_YYYYMM for example the monthly period for the year 2020 January will be the monthly_issues_202001. 
 To create the table you need to basically copy the monthly_issues table to the one with the period at the end and replace the monthly issues with the monthly_issues_&lt;&lt;yyyymm&gt;&gt; string and run the table as follows.
 
-    # copy the table
-    cp -v src/sql/pgsql/qto/tables/03.create-table-monthly_issues.sql \ src/sql/pgsql/qto/tables/2020/2020-01/create-table-monthly_issues_202001.sql
-    
-    # source the env vars loading func  
-    source lib/bash/funcs/export-json-section-vars.sh
-    
-    # load the env vars
-    doExportJsonSectionVars cnf/env/dev.env.json '.env.db'
-    psql -d dev_qto < src/sql/pgsql/qto/tables/2020/2020-01/create-table-monthly_issues_202001.sql
-    
-    # generate the sql for moving the data between the two tables
-    bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues monthly_issues_202001
-    
-    # copy paste the generated code as follows to "save" it into the $sql_code bash variable
-    IFS='' read -r -d '' sql_code <<"EOF_CODE"
-         INSERT INTO monthly_issues_202001                                                                                                                             ( guid , id , type , category , status , prio , name , description , owner , update_time )
-          SELECT guid , id , type , category , status , prio , name , description , owner , update_time
-          FROM monthly_issues
-          ON CONFLICT (id) DO UPDATE SET
-          guid = excluded.guid, id = excluded.id, type = excluded.type, category = excluded.category, status = excluded.status, prio = excluded.prio, name = exclu
-    ded.name, description = excluded.description, owner = excluded.owner, update_time = excluded.update_time;
-    EOF_CODE
-    
-    # run the sql code by pointing to the bash variable
-    psql -d tst_qto -c "$sql_code"
+    bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues_202001 monthly_issues_202002
 
 ### 5.1. Closing a monthly period
-Closing a monthly period would simply mean to ensure that all the done issues will be moved to the release_issues table
+Closing a monthly period would simply mean to ensure that all the done issues will be moved to the release_issues table.
 
-    bash src/tpl/psql-code-generator/psql-code-generator.sh dev_qto monthly_issues_202001 release_issues
-    IFS='' read -r -d '' sql_code <<"EOF_CODE"
-          INSERT INTO release_issues
-          ( guid , id , type , category , status , prio , name , description , owner , update_time )
-          SELECT guid , id , type , category , status , prio , name , description , owner , update_time
-          FROM monthly_issues_202001
-          ON CONFLICT (id) DO UPDATE SET
-          guid = excluded.guid, id = excluded.id, type = excluded.type, category = excluded.category, status = excluded.status, prio = excluded.prio, name = excluded.name, description = excluded.description, owner = excluded.owner, update_time = excluded.update_time;
-    EOF_CODE
-    psql -d tst_qto -c "$sql_code"
-    psql -d tst_qto -c "delete from release_issues where status <> '09-done';"
+    bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues_202001 yearly_issues_2020
 
 ### 5.2. Publish the release issues
 You publish the release issues by moving all the issues with '09-done' status to the release_issues table
@@ -317,7 +303,7 @@ You publish the release issues by moving all the issues with '09-done' status to
     
 
 ### 5.3. Dirs naming conventions
-The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
+The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name ...
 
     
 

@@ -33,28 +33,29 @@
 * [6. PERFORMANCE](#6-performance)
   * [6.1. PAGE LOAD TIMES](#61-page-load-times)
   * [6.2. LOGIN, LOGOUT](#62-login-logout)
-  * [6.3. AJAX CALLS TO BACK-END](#63-ajax-calls-to-back-end)
 * [7. DEPLOYABILITY](#7-deployability)
-  * [7.1. NEW HOSTS BINARY PROVISIONING](#71-new-hosts-binary-provisioning)
-  * [7.2. ONELINER FOR VERSION CHANGE ON PROVISIONED HOST](#72-oneliner-for-version-change-on-provisioned-host)
-  * [7.3. ONELINER FOR ENVIRONMENT CHANGE](#73-oneliner-for-environment-change)
+  * [7.1. AJAX CALLS TO BACK-END](#71-ajax-calls-to-back-end)
+  * [7.2. NEW HOSTS BINARY PROVISIONING](#72-new-hosts-binary-provisioning)
+  * [7.3. ONELINER FOR VERSION CHANGE ON PROVISIONED HOST](#73-oneliner-for-version-change-on-provisioned-host)
+  * [7.4. ONELINER FOR ENVIRONMENT CHANGE](#74-oneliner-for-environment-change)
+  * [7.5. FLEXIBILITY TOWARDS DATABASE CHANGES](#75-flexibility-towards-database-changes)
+  * [7.6. SINGLE CODE BASE FOR ALL DEVICE FORMATS](#76-single-code-base-for-all-device-formats)
 * [8. WEB USER INTERFACE FEATURES AND FUNCTIONALITIES](#8-web-user-interface-features-and-functionalities)
-  * [8.1. SINGLE CODE BASE FOR ALL DEVICE FORMATS](#81-single-code-base-for-all-device-formats)
-  * [8.2. LIST PAGE FEATURES AND FUNCTIONALITIES](#82-list-page-features-and-functionalities)
-    * [8.2.1. List page performance](#821-list-page-performance)
-    * [8.2.2. Navigating the list page](#822-navigating-the-list-page)
-    * [8.2.3. Managing items - full CRUD](#823-managing-items--full-crud)
-    * [8.2.4. Quick search and filtering items](#824-quick-search-and-filtering-items)
-    * [8.2.5. Visual indication](#825-visual-indication)
-    * [8.2.6. Print to pdf](#826-print-to-pdf)
-    * [8.2.7. Items interlinking](#827-items-interlinking)
-  * [8.3. VIEW PAGE FEATURES](#83-view-page-features)
-    * [8.3.1. Managing items ( beta )](#831-managing-items-(-beta-))
-      * [8.3.1.1. Add an item in the doc view page UI ( beta)](#8311-add-an-item-in-the-doc-view-page-ui-(-beta))
-      * [8.3.1.2. Update item ( beta )](#8312-update-item-(-beta-))
-      * [8.3.1.3. Delete item ( beta )](#8313-delete-item-(-beta-))
-      * [8.3.1.4. Print to pdf](#8314-print-to-pdf)
-    * [8.3.2. Print to pdf](#832-print-to-pdf)
+  * [8.1. LIST PAGE FEATURES AND FUNCTIONALITIES](#81-list-page-features-and-functionalities)
+    * [8.1.1. List page performance](#811-list-page-performance)
+    * [8.1.2. Navigating the list page](#812-navigating-the-list-page)
+    * [8.1.3. Managing items - full CRUD](#813-managing-items--full-crud)
+    * [8.1.4. Quick search and filtering items](#814-quick-search-and-filtering-items)
+    * [8.1.5. Visual indication](#815-visual-indication)
+    * [8.1.6. Print to pdf](#816-print-to-pdf)
+    * [8.1.7. Items interlinking](#817-items-interlinking)
+  * [8.2. VIEW PAGE FEATURES](#82-view-page-features)
+    * [8.2.1. Managing items ( beta )](#821-managing-items-(-beta-))
+      * [8.2.1.1. Add an item in the doc view page UI ( beta)](#8211-add-an-item-in-the-doc-view-page-ui-(-beta))
+      * [8.2.1.2. Update item ( beta )](#8212-update-item-(-beta-))
+      * [8.2.1.3. Delete item ( beta )](#8213-delete-item-(-beta-))
+      * [8.2.1.4. Print to pdf](#8214-print-to-pdf)
+    * [8.2.2. Print to pdf](#822-print-to-pdf)
 * [9. SECURITY](#9-security)
   * [9.1. AUTHENTICATION](#91-authentication)
     * [9.1.1. Non-athentication mode](#911-non-athentication-mode)
@@ -213,12 +214,12 @@ The application supports fully configurable audit logging to both console ( STDO
     
 
 ### 4.4. Full backup to the cloud in less than 5 minutes
-A full backup for the data for the qto and/or another project database is doable in less than 5 minutes. 
+A full backup for the data for the qto and/or another project database is doable in less than 5 minutes via a single shell call.
 
     
 
 ### 4.5. Stability based on actual running in the cloud since 2019-01-01
-The main qto application instance has been up-and-running since the beginning of 2019 with receiving new versions in an average of 2 weeks per sprint.
+The main qto application instance has been up-and-running since the beginning of 2019 with receiving new versions in an average of 2 about weeks per sprint.
 
     
 
@@ -268,92 +269,97 @@ Every login and logout operation completes in less than 0.3 seconds in modern ne
 
     
 
-### 6.3. Ajax calls to back-end
-Each back-end update from the UI takes no longer than 0.2 s. in a non-stressed qto instance, thus the look and feel of an qto instance is more like a desktop app and less like web app.
-
-    
-
 ## 7. DEPLOYABILITY
 
 
     
 
-### 7.1. New hosts binary provisioning
+### 7.1. Ajax calls to back-end
+Each back-end update from the UI takes no longer than 0.2 s. in a non-stressed qto instance, thus the look and feel of an qto instance is more like a desktop app and less like web app.
+
+    
+
+### 7.2. New hosts binary provisioning
 You can spawn new instances in the cloud from a client having the src code and needed terraform binary 
 
     
 
-### 7.2. Oneliner for version change on provisioned host
+### 7.3. Oneliner for version change on provisioned host
 You could create a new instance of the qto having different version ( which becomes automatically a dev environment ) by issuing the following command: 
 
-    bash src/bash/qto/qto.sh -a to-ver=0.7.7
+    bash src/bash/qto/qto.sh -a to-ver=0.7.9
 
-### 7.3. Oneliner for environment change
+### 7.4. Oneliner for environment change
 You could change the environment type of your current instance by issuing the following command:
 
     bash src/bash/qto/qto.sh -a to-env=tst
+
+### 7.5. Flexibility towards database changes
+The listing CRUD feature applies to ANY  postgres table, which has a guid and it uniq columns, a Admin can change the DDL of those tables ONLINE without having to restart the application layer after any of the meta_tables or meta_columns or items_doc tables are requested from the UI interface to trigger the whole database metadata reload to the Redis instance for quick fetch from the Application Layer.
+
+    
+
+### 7.6. Single code base for all device formats
+Although qto has not been explicitly designed for mobile phones and / or tablets it renders well on both high end mobile phones, and tablets over 4G networks. 
+
+    
 
 ## 8. WEB USER INTERFACE FEATURES AND FUNCTIONALITIES
 
 
     
 
-### 8.1. Single code base for all device formats
-Although qto has not been explicitly designed for mobile phones and / or tablets it renders well on both high end mobile phones, and tablets over 4G networks. 
-
-    
-
-### 8.2. List page features and functionalities
+### 8.1. List page features and functionalities
 The list page is simply a slice of the data from ANY postgres table filtered on any criteria defined in the url of the browser.
 
     
 
-#### 8.2.1. List page performance
+#### 8.1.1. List page performance
 The full execution time of any crud operation ( create,update,delete,search) from the end-user of the UI point of view is than 0.3 seconds
 
     
 
-#### 8.2.2. Navigating the list page
+#### 8.1.2. Navigating the list page
 After the load of the list page the user can quickly cycle trough all the element of the page with the tab key on the keyboard. Focus on the search 
 
     
 
-#### 8.2.3. Managing items - full CRUD
+#### 8.1.3. Managing items - full CRUD
 The System provides the needed UI interfaces to Create , Update , Delete and Search items in the database.
 
     
 
-#### 8.2.4. Quick search and filtering items
+#### 8.1.4. Quick search and filtering items
 The user can quickly filter the items from the presented listing by typing in the omnisearch box ... The System will shrink the table so that only the rows having the string in the search omnibox will be presented. Once the string is deleted from the search omnibox the table data is restored to its original state.
 
     
 
-#### 8.2.5. Visual indication
+#### 8.1.5. Visual indication
 The Systems does not present any ok messages for the operation of the list page, only errors are presented clearly on the top of the page ( for example when one tries to update a string value into a cell with column accepting only integer values ... )
 
     
 
-#### 8.2.6. Print to pdf
+#### 8.1.6. Print to pdf
 You can print any of the queries from the list page by adding / changing the as url parameter from as=grid to as=print-table. Use the browser print to pdf feature to save the listing page into a pdf file.
 
     
 
-#### 8.2.7. Items interlinking
+#### 8.1.7. Items interlinking
 The users can link to any items by simply typing &lt;&lt;item&gt;&gt;-&lt;&lt;id&gt;&gt; in the description. For example requirements_doc-4
 
     
 
-### 8.3. View page features
+### 8.2. View page features
 
 
     
 
-#### 8.3.1. Managing items ( beta )
+#### 8.2.1. Managing items ( beta )
 The Qto application provides the needed UI interfaces to Create , Update , Delete items in the view documents UI for the users having the privileges for those actions.
 
     
 
-##### 8.3.1.1. Add an item in the doc view page UI ( beta)
+##### 8.2.1.1. Add an item in the doc view page UI ( beta)
 Users with the write privileges for the document can add an item in the doc view page just by right clicking on the title and selecting one of the 3 options:
  - add sibling node - add an item which is on the same level in the hierarchy 
  - add parent node - add an item which is on 1 level up in the hierarchy
@@ -362,7 +368,7 @@ The new item appears straight after the origin title it was requested from.
 
     
 
-##### 8.3.1.2. Update item ( beta )
+##### 8.2.1.2. Update item ( beta )
 You can:
 - update item title content
 - update item description
@@ -370,17 +376,17 @@ You can:
 
     
 
-##### 8.3.1.3. Delete item ( beta )
+##### 8.2.1.3. Delete item ( beta )
 You can right click on an item and choose the remove node from the right click men.
 
     
 
-##### 8.3.1.4. Print to pdf
+##### 8.2.1.4. Print to pdf
 You can print any view doc by choosing right click view as pdf and choosing print to pdf file from the browser. Check the generate-pdf-docs shell action to automate this for each document configured in the export_files table.
 
     
 
-#### 8.3.2. Print to pdf
+#### 8.2.2. Print to pdf
 You can print any view doc by choosing right click view as pdf and choosing print to pdf file from the browser. Check the generate-pdf-docs shell action to automate this for each document configured in the export_files table.
 
     

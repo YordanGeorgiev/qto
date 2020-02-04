@@ -60,20 +60,21 @@ All the documents should be updated and redistributed in combination of the curr
 ### 2.1. Projects management
 You can manage multiple projects with the qto tool. Each project has its own data directories, database storage and configurations. You could also have different environments named dev, tst, prd for each project separately. 
 As the tool is backwards compatible you could have different instances of the qto projects with different versions ( and set of features ) operating against different project ( each one in its own version).
-You must pre-set the configuration variables of an qto project each time you start working on a project from the shell
+You must pre-set the configuration variables of an qto project each time you start working on a project from the shell.
 
     
 
 ### 2.2. Issues / Issue items / items
 Issue item is the shortest possible description of task , activity , note or anything requiring distinguishable and preferably measurable action or producing verifiable outcome.
-Issues could be of different types - tasks, activities, notes etc. 
+Issues could be different types - tasks, activities, notes etc. 
 Each issue MUST BE assigned to one and only one person.
+Issues as any items can be interlinked by simply copying the name of the item concatenated with dash and it's id - for example the concepts_doc-12 points to the next section and the problems-1807031157 to a specific problem.
 
     
 
 #### 2.2.1. Categories
-Each issue item could be categorized under one and only one category. One category might have 1 or more issues. 
-The categories could contain letters ,numbers, dashes
+Each issue item could be categorised under one and only one category. One category might have 1 or more issues. 
+The categories could contain letters ,numbers, dashes.
 
     
 
@@ -104,7 +105,7 @@ The product instance owners have an automated way of transferring the issues fro
     
 
 ### 2.3. Questions
-Sometimes during the workings of your project you encounter problems, which are complex enough not to allows the definition of an issue. In those cases it would be more rational to just register the question, discuss it or review it later on, and define the issue as soon as the problem domain is understood and even possible issue solution could be proposed
+Sometimes during the workings of your project you encounter problems, which are complex enough not to allows the definition of an issue. In those cases it would be more rational to just register the question, discuss it or review it later on, and define the issue as soon as the problem domain is understood and even possible issue solution could be proposed.
 
     
 
@@ -114,7 +115,7 @@ Your organisation might collect, sort and evaluate ideas so that they could be l
     
 
 ### 2.5. Problems
-Quite often the row input material for the issues are the problems encountered - the better you collect, describe and prioritise the list of problems to tackle the better you will be able to organise the issues to be completed. 
+Quite often the row input material for the issues are the problems encountered - the better you collect, describe and prioritise the list of problems to tackle the better you will be able to organise the issues to be completed. You can interlink problems with the description fields of any other item, for example: problems-1807031157
 
     
 
@@ -125,7 +126,7 @@ This section contains definitions of terms within the context of the qto applica
 
 ### 3.1. Release
 A qto release is the artefact you can download from the following GitHub page:
-https://github.com/YordanGeorgiev/qto/releases
+https://github.com/YordanGeorgiev/qto/releases.
 
     
 

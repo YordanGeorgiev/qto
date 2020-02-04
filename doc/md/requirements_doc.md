@@ -40,6 +40,7 @@
   * [5.2. SETUP SCALABILITY](#52-setup-scalability)
   * [5.3. PROJECTS DATABASES SCALABILITY](#53-projects-databases-scalability)
   * [5.4. QTO APPLICATION CLONES SCALABILITY](#54-qto-application-clones-scalability)
+  * [5.5. DB MODEL SCALABILITY](#55-db-model-scalability)
 * [6. PERFORMANCE](#6-performance)
   * [6.1. PAGE LOAD MAXIMUM TIME](#61-page-load-maximum-time)
   * [6.2. LOGIN, LOGOUT](#62-login-logout)
@@ -324,13 +325,18 @@ The qto application must support cloning - that is "forking" into new applicatio
 
     
 
+### 5.5. Db model scalability
+The list page must support ANY db tables DDL format complying to the guid PK and id uniq key interface. A sysadmin should be able to alter a table, reload the meta_tables or the meta_columns tables from the ui to the reload the meta-data for the users to be able to use the updated tables without disruptions or application layer restarts.
+
+    
+
 ## 6. PERFORMANCE
 
 
     
 
 ### 6.1. Page load maximum time
-Each page of the application containing less than 2000 items MUST load for less than 0.3 seconds.
+Each page of the application containing less than 2000 textual rows without pictures MUST load for less than 0.3 seconds.
 Any new feature which does not meet this requirement should be disregarded or implemented into a clone of the application with different name ( see the cloning / forking section bellow ). 
 
     
