@@ -74,6 +74,7 @@ The contents of this document ARE updated according to the EXISTING features, fu
 
 ### 1.6. Process
 The qto provides a mean for tracking of this documentation contents to the source code per feature/functionality, thus should you find inconsistencies in the behaviour of the application and the content of this document you should create a bug issue and assign it to the owner of your product instance.
+From work experience it's known that consistent binary configuration stability for each release is crucial for the ease and success rate for new to the project members to setup their working environment, thus the leading principle towards the binary configuration has been "the truth MUST BE found in the source", that each release MUST contain the fully tested, and integrated combination of source code, configuration and data to enable you to install a new instance as effortlessly as possible by following an up-to-date and as concise as possible documentation. 
 
     
 

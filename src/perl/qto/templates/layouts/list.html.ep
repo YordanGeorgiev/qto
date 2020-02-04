@@ -13,23 +13,19 @@
   <%= content 'cnt_header_css' %>
 </head>
 <body>
-   <nav class="fixed-nav-bar">
-   </nav>
-	   <div id="div_msg"> <%== $msg %></div>
+   <nav class="fixed-nav-bar"></nav>
+	<div id="div_msg"> <%== $msg %></div>
    %= include 'controls/left-menu/left-menu'
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
    <%= content 'cnt_body_controls' %>
-
 <script id="all">
    var bus=new Vue({});
    %= include 'controls/list-grid/js/global-msg.js'
    %= include 'controls/list-grid/js/search-box.js'
-
    <%= content 'js_scripts' %>
 </script>
-	<div id="div_notice"> <span> <%== $notice %> </span></div>
+	<div id="div_notice"><span> <%== $notice %> </span></div>
 </body>
 </html>
 

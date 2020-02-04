@@ -120,9 +120,11 @@
   * [6.2. TIME MANAGEMENT](#62-time-management)
   * [6.3. SYSTEM STABILITY](#63-system-stability)
   * [6.4. GENERIC CRUDS FOR ITEMS](#64-generic-cruds-for-items)
-  * [6.5. SYSTEM RELIABILITY](#65-system-reliability)
-  * [6.6. PROJECT'S PERSONS ISSUE COMBINATIONS](#66-project's-persons-issue-combinations)
-  * [6.7. EASE OF USE](#67-ease-of-use)
+  * [6.5. ALMOST HOT META-DATA RELOAD FOR ALTER TABLE STATEMENTS](#65-almost-hot-meta-data-reload-for-alter-table-statements)
+  * [6.6. HOT META-DATA RELOAD FOR ALTER TABLE STATEMENTS](#66-hot-meta-data-reload-for-alter-table-statements)
+  * [6.7. SYSTEM RELIABILITY](#67-system-reliability)
+  * [6.8. PROJECT'S PERSONS ISSUE COMBINATIONS](#68-project's-persons-issue-combinations)
+  * [6.9. EASE OF USE](#69-ease-of-use)
 * [7. PROJECT OBSERVER BIZ PERSPECTIVE](#7-project-observer-biz-perspective)
   * [7.1. SECURITY](#71-security)
   * [7.2. PROJECTS OBSERVATION](#72-projects-observation)
@@ -202,6 +204,8 @@ load-by-txt-to-db-action)
   * [10.4. ISSUES PUBLISHING FROM SHELL CALLS](#104-issues-publishing-from-shell-calls)
   * [10.5. METADATA HANDLING](#105-metadata-handling)
   * [10.6. EASY SETUP FOR TESTABILITY](#106-easy-setup-for-testability)
+* [11. ARCHITECTURAL PERSPECTIVE](#11-architectural-perspective)
+  * [11.1. FULL HORIZONTAL SCALABILITY](#111-full-horizontal-scalability)
 
 
 
@@ -1061,21 +1065,35 @@ I want to be able to create,update,delete and search for those items from the UI
 
     
 
-### 6.5. System reliability
+### 6.5. Almost Hot meta-data reload for alter table statements
+As the SysAdmin of an qto project database 
+In order to be able to perform quick changes on the database side, WITHOUT having to evoke downtime or code new changes in the UI
+I want to be able to simply run the alter table statements, reload one of the following tables from the list page: meta_tables, meta_columns or items_doc and be sure that none of the clients will get meta-data related errors during their next page refresh for this altered item table.
+
+    
+
+### 6.6. Hot meta-data reload for alter table statements
+As the SysAdmin of an qto project database 
+In order to be able to perform quick changes on the database side, WITHOUT having to evoke downtime or code new changes in the UI
+I want to be able to simply run the alter table statements and be sure that none of the clients will get meta-data related errors during their next page refresh for this item table.
+
+    
+
+### 6.7. System reliability
 As the SysAdmin
 In order to be able to rely on the operations of the tool
 I want to the System containing the qto application to perform its functions as specified consistently 
 
     
 
-### 6.6. Project's persons issue combinations
+### 6.8. Project's persons issue combinations
 As the project manager  of an qto project 
 In order to be able to quickly and reliably combine the reported hours by the project's people
 I want to be able to read their qto formatted google sheets and combine them into a single project's google qto sheet
 
     
 
-### 6.7. Ease of use
+### 6.9. Ease of use
 As the SysAdmin
 In order to be efficient and decrease the amount of errors
 I want to generally perform any command the system within the sysadmin scope via clean and memorable oneliners 
@@ -1441,7 +1459,7 @@ I want to be able to point to written documentation for user-stories, issues, fe
 #### 9.12.1. Issues files naming conventions for the  project
 As a DevOps 
 In order to be able quickly to switch between different projects
-I wanto to have the project name of the issues file in its name as the first token as follows:
+I want to have the project name of the issues file in its name as the first token as follows:
 &lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
 
     
@@ -1663,6 +1681,18 @@ so that even a table, column or whatever object is not populated in the meta sti
 As the UI Developer
 In order to deliver working ui units 
 I want  to be able to quickly setup the existing project with minimalistic default set of data
+
+    
+
+## 11. ARCHITECTURAL PERSPECTIVE
+
+
+    
+
+### 11.1. Full horizontal scalability
+As the architect of an qto instance 
+In order to be able to sell a solution, which does not require unknown amount of work regarding scalability
+I want the qto application to be fully horizontally scalable for both the application and database layers.
 
     
 

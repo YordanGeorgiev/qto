@@ -9,6 +9,11 @@ doMojoHypnotoadStart(){
    export MOJO_LOG_LEVEL='debug'
    export MOJO_MODE='production'
 
+   while read -r p ; do 
+      p=$(echo $p|sed 's/^ *//g')
+      test $p -ne $$ && kill -9 $p ; 
+   done < <(sudo ps -ef | grep -v grep | grep 'mojo-hypnotoad-start'|awk '{print $2}')
+
    cd src/perl/qto/script
    hypnotoad qto &
    cd $PRODUCT_INSTANCE_DIR
