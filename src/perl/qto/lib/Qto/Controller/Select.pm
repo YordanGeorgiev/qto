@@ -48,7 +48,6 @@ sub doSelectItems {
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
    $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
-
    $objCnrUrlPrms       = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    
    return $self->SUPER::doRenderJSON(
@@ -58,24 +57,21 @@ sub doSelectItems {
    $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
    $objRdrDb            = $objRdrDbsFcry->doSpawn ( $rdbms_type );
    my $who              = $self->session( 'app.' . $db . '.user' );
-   ($http_code, $msg, $hsr2)  = $objRdrDb->doSelectRows($db, $item,$who); # doSelect
 
-   if ( $http_code == 200 )  {
-      $cnt = 0 ; 
-      $msg = '' ; 
-      my $objCnrHsr2ToArray = 
-         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
-      ( $ret , $msg , $dat , $cnt )       = $objCnrHsr2ToArray->doConvert ($hsr2);
-      ( $ret , $msg , $meta_cols , $mc)   = $objModel->doGetTableMeta($config,$db,$item);
-   } 
+   ($ret, $msg, $hsr2)  = $objRdrDb->doSelectRows($db, $item,$who);
    my $meta_tables = $objModel->get("$db" . '.meta-tables');
-   #$meta_tables = $objModel->get($db . '.meta-tables');
    $meta_cols = $objModel->get("$db" . '.meta-columns');
    $met = {
         'meta_cols' => $meta_cols
       , 'meta_tables' => $meta_tables
    };
-   $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
+   $http_code = 200;
+   $cnt = 0 ; 
+   my $objCnrHsr2ToArray = 'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
+   my $msg1 = '' ; my $ret1 = 0;
+   ( $ret1 , $msg1 , $dat , $cnt )       = $objCnrHsr2ToArray->doConvert ($hsr2);
+
+   $self->SUPER::doRenderJSON($http_code,$msg . $msg1,$http_method,$met,$cnt,$dat,$ret);
 }
 
 
@@ -209,7 +205,7 @@ sub doSelectDatabases {
 
 #
 # --------------------------------------------------------
-# Select all the rows from db by passed db and table name
+# select the meta data 
 # --------------------------------------------------------
 sub doSelectMeta {
 
@@ -232,28 +228,25 @@ sub doSelectMeta {
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    my $objModel    = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
    $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
-      
-   if ( defined $table ) {
-      ( $ret , $msg , $cols_meta , $cnt ) = $objModel->doGetTableMeta ( $config , $db , $table ) 
-   }
 
    if ( $ret == 0 ) {
-      my $dat = () ; # an array ref holding the converted hash ref of hash refs 
+      my $arr_meta_cols = () ; # an array ref holding the converted hash ref of hash refs 
+      my $meta_cols = () ; # an array ref holding the converted hash ref of hash refs 
       my $http_code = 200 ; 
       $msg = "SELECT meta OK for table: $table " ; 
-      my $objCnrHsr2ToArray = 
-         'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
-      ( $ret , $msg , $dat , $cnt ) = $objCnrHsr2ToArray->doConvert($cols_meta);
-
+      my $objCnrHsr2ToArray = 'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
+      $meta_cols = $objModel->get("$db" . '.meta-columns');
+      ( $ret , $msg , $arr_meta_cols, $cnt ) = $objCnrHsr2ToArray->doConvert($meta_cols);
       unless ( $ret == 0 ) {
          $http_code = 400 ; $dat = '' ; $cnt = 0 ; 
       }
       my $meta_tables = $objModel->get("$db" . '.meta-tables');
+      ( $ret , $msg , $meta_cols , $cnt ) = $objModel->doGetColumnsMeta( $config , $db , $table );
       $met = {
-         'meta_cols' => $dat
+         'meta_cols' => $meta_cols
        , 'meta_tables' => $meta_tables
       };
-      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$arr_meta_cols);
    } elsif ( $ret == 400 or $ret == 404 ) {
       $http_code = 400 ; 
       $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);

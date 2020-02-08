@@ -36,7 +36,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    ok ( $t->delete_ok($url => json => {"id" =>"2"})->status_is(200) , $tm );
    ok ( $t->delete_ok($url => json => {"id" =>"3"})->status_is(200) , $tm );
 
-  $url              = '/' . $db . '/delete/test_delete_table' ; 
+   $url  = '/' . $db . '/delete/test_delete_table' ; 
 
    # the delete by attribute requires the following json format : 
    # the name of the attribute
@@ -47,14 +47,19 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
    $url = '/' . $db . '/select/test_delete_table?with=id-eq-1' ; 
    $tm = 'the name-1 was deleted , no data could be retrieved for the id with value 1' ; 
-   ok ( $t->get_ok($url )->status_is(204) , $tm ) ;
+   ok ( $t->get_ok($url )->status_is(200) , $tm ) ;
+   $res = $ua->get($url)->result->json ; 
+   $tm = 'the name-1 was deleted , no data could be retrieved for the id with value 1, res is 204' ; 
+   ok ( $res->{'ret'} == 204, $tm);
    
   
    $tm = 'no data could be fetched with this id' ; 
    $url = '/' . $db . '/delete/test_delete_table' ; 
    $t->delete_ok($url => json => {"attribute"=>"name", "id" =>"3", "cnt"=>"name-3-deleted"})->status_is(200);
    $url = '/' . $db . '/select/test_delete_table?with=id-eq-3' ; 
-   ok ( $t->get_ok($url )->status_is(204) , $tm ) ;
+   ok ( $t->get_ok($url )->status_is(200) , $tm ) ;
+   $res = $ua->get($url)->result->json ; 
+   ok ( $res->{'ret'} == 204, $tm . "and res is 204");
    
    # the create back-end web action requires the following json format : 
    # the id which is BY DESIGN a requirement for ANY qto app table to work ... 

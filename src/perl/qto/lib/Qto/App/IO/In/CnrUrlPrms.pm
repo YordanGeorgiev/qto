@@ -204,6 +204,7 @@ sub doValidateAndSetHides {
    my $self          = shift ; 
    my $isValid       = 0 ; 
    return 1 unless ( defined $query_params->param('hide') ) ; 
+  
    $objModel->set('select.web-action.hide' , $query_params->param('hide') );
    $query_params->remove('hide') ; 
    $isValid = 1 ; 

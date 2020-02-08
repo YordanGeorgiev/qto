@@ -10,7 +10,7 @@
       , pagesCount: 0
       , UrlParams:{ as:"grid" }
       , pageSizes: ['5', '7', '10','15','20','30','50','100']
-      , showPageSizer: false
+      , showPageSizer: true
       , searchInputChanged: ""
 		},
      	methods: {
@@ -79,46 +79,55 @@
             if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
 
             this.fetchServerSideData(url_params)
-            .then( response => {
-               if ( response.status === 204 ) {
-                  var warningMsg = response.statusText
-                  setMsgVisuals(warningMsg,'div_notice','Warning');
-                  return ;
-               } else if ( response.status === 404 || response.status === 400) {
-                  var errMsg = response.statusText + ": " + response.data.msg
-                  console.error(errMsg)
-                  setMsgVisuals(errMsg,'div_msg','Error');
-                  return ;
-               } else {
-                  var data = response.data
-                  if ( typeof(data) === 'undefined' ) {
-                     var msg = 'unexpected error occurred while fetching data !!! No data received !!!'
-                     setMsgVisuals(msg)
-                  } else {
-                     this.gridData = data.dat
-                     this.showPageSizer = true
-                     this.gridMeta = data.met.meta_cols
-                     bus.$emit('metaTablesLoadEmit',data.met.meta_tables)
-                     var totalRSsize = data.cnt ; 
-                     this.pageSize = url_params.get('pg-size');
-                     this.pageNum = url_params.get('pg-num');
-                     var remainder = totalRSsize % this.pageSize
-                     var toAdd = 1 // pg-size 10 , total-rs-size 30 => 3 and not 4
-                     if ( remainder == 0 ) { toAdd = 0  }
-                     this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
-                     var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa') ;
-
-                     if ( oa !== null ) {
-                        this.$children[0].setAscSortBy( oa ) ; 
-                     } else if ( typeof url_params.get("od") != 'undefined' ) {
-                        var od = url_params.get("od")
-                        this.$children[0].setDescSortBy( od ) ; 
+               .then( response => {
+					   this.gridMeta = response.data.met.meta_cols
+                  bus.$emit('metaTablesLoadEmit',response.data.met.meta_tables)
+                  if (response.data.dat == null || response.data.dat.cnt === 0){ hideControlsOnError()}
+                  if ( response.data.ret === 200 ) {
+                     var data = response.data 
+                     var dataType = (typeof data)
+                     if ( dataType === 'undefined' ) {
+                        var msg = 'unexpected err occurred while fetching data !!!'
+                        setMsgVisuals(data,'div_msg','Error','search');
+                     } else if ( dataType === 'string' ) {
+                        setMsgVisuals(data,'div_msg','Error','search');
                      } else {
-                        this.$children[0].setAscSortBy("id")
+                        if ( typeof(data.dat) == 'undefined' || data.dat == null || data.cnt == '0') { return }
+                        this.gridData = data.dat
+                        var totalRSsize = data.cnt ; 
+                        this.pageSize = url_params.get('pg-size')
+                        this.pageNum = url_params.get('pg-num')
+                        this.urlParamFor = url_params.get('for')
+                        var remainder = totalRSsize % this.pageSize
+                        var toAdd = 1 // example: pg-size 10 , total-rs-size 30 => 3 and not 4
+                        if ( remainder == 0 ) { toAdd = 0  }
+                        this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
+                        var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa');
+
+                        if ( oa !== null ) {
+                           this.$children[0].setAscSortBy( oa ) ; 
+                        } else if ( typeof url_params.get("od") != 'undefined' ) {
+                           var od = url_params.get("od")
+                           this.$children[0].setDescSortBy( od ) ; 
+                        } else {
+                           this.$children[0].setAscSortBy("id")
+                        }
                      }
+                     return ;
+                  } else if ( response.data.ret === 204) {
+                     var warningMsg = response.statusText
+                     setMsgVisuals(warningMsg,'div_notice','Warning','search');
+                     return ;
+                  } else if ( response.data.ret  === 404 || response.data.ret === 400) {
+                     var errMsg = response.statusText + ": " + response.data.msg
+                     setMsgVisuals(errMsg,'div_msg','Error','search');
+                     return ;
+                  } else {
+                     var errMsg = response.statusText + ": " + response.data.msg
+                     setMsgVisuals(errMsg,'div_msg','Error','search');
+                     return ;
                   }
-                }
-            })
+               })
             .catch(function(err) {
                if (typeof err !== 'undefined') {
                  var errMsg = err.toString() 
@@ -144,7 +153,6 @@
                });
          }
          , createNewItem: function (dbid) {
-            console.log("createNewItem called !!")
             this.postNewServerSideId(dbid)
             .then ( result => {
                if ( result.toString() !== "err: Request failed with status code 409" ) {

@@ -21,6 +21,31 @@ our $config       = {} ;
 our $objLogger    = {} ; 
 our $db           = '' ; 
 our $item         = '' ; 
+
+
+sub doGetColumnsMeta {
+
+   my $self          = shift ; 
+   my $config     = shift ; 
+   my $db            = shift ; 
+   my $table         = shift ; 
+   my $msg           = shift || 'error in the ' . $db . '.' . $table . ' model ';
+
+   my $mhr2          = {} ; 
+   my $meta_cols     = {} ; 
+   my $c             = 0 ; 
+   my $ret           = 1 ; 
+   my $objRdrRedis   = {};
+
+   $objRdrRedis = 'Qto::App::Db::In::RdrRedis'->new(\$config);
+   $meta_cols = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
+
+   $ret = 0 ; 
+   $msg = '' ; 
+   return ( $ret , $msg , $meta_cols);  
+}
+
+
 sub doGetTableMeta {
 
    my $self          = shift ; 
@@ -153,6 +178,7 @@ sub doChkIfTableExists {
    return 0 ; 
 }
 
+
 sub new {
 
    my $class      = shift ;    
@@ -161,27 +187,27 @@ sub new {
    $db            = toEnvName ( $db , $config ) ;
    $item          = shift or carp "no item provided in objItem constructor !!!";
    my $self       = {}; bless( $self, $class );    
-   $self          = $self->doInit(@_) ; 
+   $self          = $self->do_init(@_) ; 
    return $self;
 }  
 	
    
-   sub doInit {
+sub do_init {
 
-      my $self    = shift ; 
-      my $db      = shift ; 
-      my $table   = shift ; 
+   my $self    = shift ; 
+   my $db      = shift ; 
+   my $table   = shift ; 
 
-      %$self = (
-             config => $config
-      );
-      
-      $self->set('postgres_db_name' , $db )  if defined $db ; 
-      $self->set('table_name' , $table )     if defined $table ; 
-	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
+   %$self = (
+          config => $config
+   );
+   
+   $self->set('postgres_db_name' , $db )  if defined $db ; 
+   $self->set('table_name' , $table )     if defined $table ; 
+   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
 
-      return $self ; 
-	}	
+   return $self ; 
+}	
 
 
 

@@ -17,6 +17,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 	$t->get_ok('/' . $db . '/select-databases')->status_is(200) ; 
 
    my $url = '/' . $db . '/select-tables' ; 
+   my $env = $config->{'env'}->{'ENV_TYPE'};
 
 
    $t->get_ok($url)
@@ -65,12 +66,11 @@ for my $row ( @$list ) {
    # feature-guid: dfc1216d-5a16-40eb-849a-2785264aa5bd
 	my $table_name = 'non_existent_table' ; 
 	$t->get_ok('/' . $db . '/select/' . $table_name)
-		->status_is(400) 
+		->status_is(200) 
 		->header_is('Accept-Charset' => 'UTF-8')
 		->header_is('Accept-Language' => 'fi, en')
 	;
 
-   # feature-guid: 8d750499-4911-416c-ae81-b3415d13b5ef
    my $res = $ua->get('/' . $db . '/select/' . $table_name )->result->json ; 
    $tm = '2: the response msg for the ' . $table_name . ' is correct' ; 
    ok ( $res->{'msg'} eq " the table $table_name does not exist in the $db database " , $tm ) ; 
@@ -78,10 +78,12 @@ for my $row ( @$list ) {
    $tm = 'the return code for the ' . $table_name . ' is correct' ; 
    ok ( $res->{'ret'} == 400 , $tm) ; 
    
-  # $res = $ua->get('/non_existent_db/select/monthly_issues'  )->result->json ; 
-  # $tm = 'shoud return error for cannot connect to db' ; 
-  # my $exp_err_msg = 'cannot connect to the "non_existent_db" database: FATAL:  database "non_existent_db" does not exist' ; 
-  # ok ( $res->{'msg'} eq $exp_err_msg , $tm ) ; 
+   $res = $ua->get('/non_existent_db/select/monthly_issues'  )->result->json ; 
+   $tm = 'shoud return error for cannot connect to db' ; 
+   my $exp_err_msg = "cannot connect to the \"" . $env . "_non_existent_db\" database: FATAL:  database \"" . 
+                              $env . "_non_existent_db\" does not exist";
+                     
+   ok ( $res->{'msg'} eq $exp_err_msg , $tm ) ; 
 
 	$tm = 'if the page size is not a positive whole number return http 400 ' ; 
    my $page_size = 'not_even_a_number' ; 
@@ -95,9 +97,11 @@ for my $row ( @$list ) {
    $url = '/' . $db . '/select/tst_paging?as=table&pg-size=' . $page_size .'&pg-num=' . $page_num ; 
    $t->get_ok( $url )->status_is(400 , $tm ) ; 
 
-   $tm = 'if there is no data 204 should be returned' ; 
+   $tm = 'if there is no data http code 200 should be returned, but 204 ret to UI should be passed' ; 
    $url = '/' . $db . '/select/monthly_issues?with=prio-eq-1000000' ; 
-   $t->get_ok( $url )->status_is(204 , $tm ) ; 
+   $t->get_ok( $url )->status_is(200 , $tm ) ; 
+   $res = $ua->get($url )->result->json ; 
+   ok ( $res->{'ret'} == 204 , $tm);
 
 done_testing();
 
