@@ -1,8 +1,7 @@
 #  REQUIREMENTS
 * [1. INTRO](#1-intro)
-  * [1.1. INTRO](#11-intro)
-  * [1.2. AUDIENCE](#12-audience)
-  * [1.3. RELATED DOCUMENTATION/](#13-related-documentation/)
+  * [1.1. AUDIENCE](#11-audience)
+  * [1.2. RELATED DOCUMENTATION](#12-related-documentation)
 * [2. DEPLOYABILITY](#2-deployability)
   * [2.1. DEVOPS DEPLOYABILITY NO LONGER THAN A WEEK RELEASE CYCLE](#21-devops-deployability-no-longer-than-a-week-release-cycle)
   * [2.2. AUTOMATED AWS DEPLOYMENT IN LESS THAN AN HOUR](#22-automated-aws-deployment-in-less-than-an-hour)
@@ -36,11 +35,11 @@
     * [4.4.1. Database recreation and DDL scripts run one-liners](#441-database-recreation-and-ddl-scripts-run-one-liners)
     * [4.4.2. Table(s) load via aa single one-liner](#442-table(s)-load-via-aa-single-one-liner)
 * [5. SCALABILITY](#5-scalability)
-  * [5.1. FEATURE SCALABILITY](#51-feature-scalability)
-  * [5.2. SETUP SCALABILITY](#52-setup-scalability)
-  * [5.3. PROJECTS DATABASES SCALABILITY](#53-projects-databases-scalability)
-  * [5.4. QTO APPLICATION CLONES SCALABILITY](#54-qto-application-clones-scalability)
-  * [5.5. DB MODEL SCALABILITY](#55-db-model-scalability)
+  * [5.1. HORIZONTAL PERFORMANCE SCALABILITY](#51-horizontal-performance-scalability)
+  * [5.2. FEATURE SCALABILITY](#52-feature-scalability)
+  * [5.3. SETUP SCALABILITY](#53-setup-scalability)
+  * [5.4. PROJECTS DATABASES SCALABILITY](#54-projects-databases-scalability)
+  * [5.5. QTO APPLICATION CLONES SCALABILITY](#55-qto-application-clones-scalability)
 * [6. PERFORMANCE](#6-performance)
   * [6.1. PAGE LOAD MAXIMUM TIME](#61-page-load-maximum-time)
   * [6.2. LOGIN, LOGOUT](#62-login-logout)
@@ -105,17 +104,12 @@
 
     
 
-### 1.1. INTRO
-
-
-    
-
-### 1.2. Audience
+### 1.1. Audience
 This document is aimed for any potential and actual developers of the qto application. Product Owners, Developers and Architects working on the application MUST read and understand this document at least to the extend of their own contribution for the application. 
 
     
 
-### 1.3. Related documentation/
+### 1.2. Related documentation
 This document is part of the QTO application documentation-set, which contains the following documents:
  - ReadMe - the initial landing readme doc for the project
  - UserStories - the collection of user-stories used to describe "what is desired"
@@ -305,28 +299,28 @@ The developers should be able to load a table to the database via a single oneli
 
     
 
-### 5.1. Feature scalability
+### 5.1. Horizontal performance scalability
+The qto MUST support adding capacity horizontally in the application layer and by increasing database storage capacity simply by utilising the power of the cloud.
+
+    
+
+### 5.2. Feature scalability
 The addition of new features should be as scalable as possible. The UI and control flow should be as generic as possible.
 
     
 
-### 5.2. Setup scalability
+### 5.3. Setup scalability
 The creation of new instances of the application should be as easy and automated as possible. 
 
     
 
-### 5.3. Projects databases scalability
+### 5.4. Projects databases scalability
 Each instance of the qto application must be able to connect to one or many project databases which DDL schemas matching the current api of the application.
 
     
 
-### 5.4. Qto application clones scalability
+### 5.5. Qto application clones scalability
 The qto application must support cloning - that is "forking" into new applications with different names.
-
-    
-
-### 5.5. Db model scalability
-The list page must support ANY db tables DDL format complying to the guid PK and id uniq key interface. A sysadmin should be able to alter a table, reload the meta_tables or the meta_columns tables from the ui to the reload the meta-data for the users to be able to use the updated tables without disruptions or application layer restarts.
 
     
 
@@ -336,7 +330,7 @@ The list page must support ANY db tables DDL format complying to the guid PK and
     
 
 ### 6.1. Page load maximum time
-Each page of the application containing less than 2000 textual rows without pictures MUST load for less than 0.3 seconds.
+Each page of the application containing less than 2000 items MUST load for less than 0.3 seconds.
 Any new feature which does not meet this requirement should be disregarded or implemented into a clone of the application with different name ( see the cloning / forking section bellow ). 
 
     

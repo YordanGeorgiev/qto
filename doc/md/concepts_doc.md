@@ -66,9 +66,8 @@ You must pre-set the configuration variables of an qto project each time you sta
 
 ### 2.2. Issues / Issue items / items
 Issue item is the shortest possible description of task , activity , note or anything requiring distinguishable and preferably measurable action or producing verifiable outcome.
-Issues could be different types - tasks, activities, notes etc. 
+Issues could be of different types - tasks, activities, notes etc. 
 Each issue MUST BE assigned to one and only one person.
-Issues as any items can be interlinked by simply copying the name of the item concatenated with dash and it's id - for example the concepts_doc-12 points to the next section and the problems-1807031157 to a specific problem.
 
     
 
@@ -115,7 +114,7 @@ Your organisation might collect, sort and evaluate ideas so that they could be l
     
 
 ### 2.5. Problems
-Quite often the row input material for the issues are the problems encountered - the better you collect, describe and prioritise the list of problems to tackle the better you will be able to organise the issues to be completed. You can interlink problems with the description fields of any other item, for example: problems-1807031157
+Quite often the row input material for the issues are the problems encountered - the better you collect, describe and prioritise the list of problems to tackle the better you will be able to organise the issues to be completed. 
 
     
 

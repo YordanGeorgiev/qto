@@ -6,11 +6,9 @@ our @ISA = qw(Exporter Mojo::Base Qto::Controller::BaseController);
 our $AUTOLOAD =();
 our $ModuleDebug = 0 ; 
 use AutoLoader;
-
 use parent qw(Qto::Controller::BaseController);
-
-use Data::Printer ; 
 use Carp qw /cluck confess shortmess croak carp/ ;
+use Data::Printer ; 
 
 use Qto::App::Utils::Logger;
 use Qto::App::IO::In::CnrUrlPrms ; 
@@ -18,11 +16,10 @@ use Qto::App::IO::WtrExportFactory ;
 use Qto::App::Utils::Timer ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
-our $config      = {};
-our $objLogger      = {} ;
+our $config             = {};
+our $objLogger          = {} ;
 
 
-#
 # --------------------------------------------------------
 # Export all the items according to the "as" url param output type
 # --------------------------------------------------------
@@ -40,20 +37,19 @@ sub doExportItems {
    my $met              = '' ; 
    my $cnt              = '' ; 
    my $dat              = '' ; 
-   $config		      = $self->app->config ; 
+   $config		         = $self->app->config ; 
+   $db                  = toEnvName ( $db , $config) ;
 
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
    $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
  
    my $as               = 'xls' ; # the default form of the Export control 
-   $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
+   $as                  = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
    my $md_dialect       = 'github' ; # the default type of mark-down dialect ( because of Microsoft ... )
    $md_dialect          = $self->req->query_params->param('type') || $md_dialect ; # decide which type of list page to build
 
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $table ) ;
    my $objCnrUrlPrms    = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
-
    my $pg_size = $self->req->query_params->param('pg-size') || 100000 ; 
    $objModel->set('select.web-action.pg-size' , $pg_size );  
  
@@ -73,8 +69,5 @@ sub doExportItems {
 }
 
 
-
 1;
-
 __END__
-

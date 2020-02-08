@@ -47,6 +47,10 @@ EOF_EXPECT
       --host $postgres_db_host -d $postgres_db_name -c "
       GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public 
       TO $postgres_db_user ;"
+
+   psql -d "$postgres_db_name" -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES 
+   IN SCHEMA public TO $postgres_db_user; 
+   GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user"
    cd -
 
 }

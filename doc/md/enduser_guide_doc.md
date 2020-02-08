@@ -17,17 +17,19 @@
   * [3.4. OWN PASSWORD CHANGE](#34-own-password-change)
   * [3.5. SWITCH ITEMS BY USING THE :FOR OPERATOR IN THE SEARCH-BOX](#35-switch-items-by-using-the-for-operator-in-the-search-box)
   * [3.6. IMPORTANT PEACE OF INFORMATION ABOUT YOUR SECURITY](#36-important-peace-of-information-about-your-security)
-  * [3.7. VIEWING TABLES FROM DIFFERENT PROJECTS ( DATABASES )](#37-viewing-tables-from-different-projects-(-databases-))
 * [4. THE LEFT MENU](#4-the-left-menu)
+  * [4.1. VIEWING TABLES FROM DIFFERENT PROJECTS ( DATABASES )](#41-viewing-tables-from-different-projects-(-databases-))
+  * [4.2. OPEN AND CLOSE FOLDERS IN THE LEFT MENU](#42-open-and-close-folders-in-the-left-menu)
+  * [4.3. OPEN AND CLOSE THE LEFT MENU](#43-open-and-close-the-left-menu)
 * [5. THE LIST PAGE](#5-the-list-page)
-    * [5.1. Viewing the full content of the items](#51-viewing-the-full-content-of-the-items)
-    * [5.2. Viewing the list page](#52-viewing-the-list-page)
-    * [5.3. Listing url syntax](#53-listing-url-syntax)
-      * [5.3.1. The "pick" url param](#531-the-"pick"-url-param)
-      * [5.3.2. The "hide" url param](#532-the-"hide"-url-param)
-      * [5.3.3. The "with=col-operator-value" filter](#533-the-"with=col-operator-value"-filter)
-      * [5.3.4. The "where=col-operator-value" filter](#534-the-"where=col-operator-value"-filter)
-      * [5.3.5. Filtering with "like"](#535-filtering-with-"like")
+    * [5.1. Viewing the list page](#51-viewing-the-list-page)
+      * [5.1.1. Viewing the full content of the items](#511-viewing-the-full-content-of-the-items)
+    * [5.2. Listing url syntax](#52-listing-url-syntax)
+      * [5.2.1. The "pick" url param](#521-the-"pick"-url-param)
+      * [5.2.2. The "hide" url param](#522-the-"hide"-url-param)
+      * [5.2.3. The "with=col-operator-value" filter](#523-the-"with=col-operator-value"-filter)
+      * [5.2.4. The "where=col-operator-value" filter](#524-the-"where=col-operator-value"-filter)
+      * [5.2.5. Filtering with "like"](#525-filtering-with-"like")
   * [5.1. SORTING AN ITEM TABLE](#51-sorting-an-item-table)
     * [5.1.1. The 'as' url syntax for printing the listing page](#511-the-'as'-url-syntax-for-printing-the-listing-page)
   * [5.2. QUICK FILTERING AN ITEM TABLE](#52-quick-filtering-an-item-table)
@@ -179,7 +181,12 @@ The qto application users http session to identify you and technically user trac
 
     
 
-### 3.7. Viewing tables from different projects ( databases )
+## 4. THE LEFT MENU
+
+
+    
+
+### 4.1. Viewing tables from different projects ( databases )
 Each project in qto is actually stored in it's own database, to the access for example the dev_qto, tst_qto and prd_qto projects( which could be any names, but in this example just happen to be the dev, tst and prd databases for qto ) you should simply add the db name as the first url part:
 https://qto.fi:441/dev_qto/list/release_issues
 https://qto.fi:442/tst_qto/list/release_issues
@@ -187,7 +194,12 @@ https://qto.fi:443/prd_qto/list/release_issues
 
     
 
-## 4. THE LEFT MENU
+### 4.2. Open and close folders in the left menu
+If there are too much items in the left menu you can open and close them.
+
+    
+
+### 4.3. Open and close the left menu
 You can access the different pages configured for your project from the upper left menu. Click with the mouse and the menu will open a file explorer like menu containing different folders and "documents". The left menu is accessible from all the pages.
 
     
@@ -198,37 +210,37 @@ In the context of the qto's parley the "listing" is the ui list of control/(s) y
 
     
 
-#### 5.1. Viewing the full content of the items
-You can quickly view the full content of each cell of the listing table by hovering with the mouse on top of it. Note that all the links in the content are replaced with clickable links in the tooltip as well as the internal links such as the following one : enduser_guide_doc-190214224315 ( which just refer to next item in this document).
-
-    
-
-#### 5.2. Viewing the list page
+#### 5.1. Viewing the list page
 You can use the pick=col1, col2, col3 url parameter to select for only desired attributes.
 You could filter the result the same way the filters for the select page work ( see bellow ). 
 Should there be errors in the loading of the page, they will be displayed in a msg at the top of the page.
 
     
 
-#### 5.3. Listing url syntax
+##### 5.1.1. Viewing the full content of the items
+You can quickly view the full content of each cell of the listing table by hovering with the mouse on top of it. Note that all the links in the content are replaced with clickable links in the tooltip as well as the internal links such as the following one : enduser_guide_doc-190214224315 ( which just refer to next item in this document).
+
+    
+
+#### 5.2. Listing url syntax
 The listing url syntax mimics the sql select clause syntax, yet in much more simplified form. 
 
     
 
-##### 5.3.1. The "pick" url param
+##### 5.2.1. The "pick" url param
 You can use the pick=col1,col2,col3 url parameter to select for only desired attributes to be show in the ui control used for listing.
 The following url demonstrates this syntax:
 https://qto.fi/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
-##### 5.3.2. The "hide" url param
+##### 5.2.2. The "hide" url param
 If you do not specify any attribute to pick, you could hide specific attributes by using the "hide=col1,col2,col3" syntax.
 https://qto.fi/qto/list/yearly_issues?hide=description
 
     
 
-##### 5.3.3. The "with=col-operator-value" filter
+##### 5.2.3. The "with=col-operator-value" filter
 You can filter the result of the query by using the "with=col-operator-value". The following examples demonstrates, which operators are supported.
 An error message is shown if you do not use existing operator. 
 The following url demonstrates this syntax:
@@ -252,7 +264,7 @@ Note when going to the next page that all the rows' status is 09-done
     
     
 
-##### 5.3.4. The "where=col-operator-value" filter
+##### 5.2.4. The "where=col-operator-value" filter
 You can filter the result of the query by using the "where=col-operator-value", which works exactly as the with operator, thus the following examples demonstrates, which operators are supported.
 An error message is shown if you do not use existing operator. 
 
@@ -271,7 +283,7 @@ An error message is shown if you do not use existing operator.
          , 'le' => '<='
          , 'like' => 'like'
 
-##### 5.3.5. Filtering with "like"
+##### 5.2.5. Filtering with "like"
 The filtering with the like operator translates to the SQL "like" operator- the "like-by=&lt;&lt;attr&gt;&gt;&like-val=&lt;&lt;val&gt;&gt; filtering, where &lt;&lt;attr&gt;&gt; stands for the name of the attribute to use the like operator. 
 Example:
 https://qto.fi/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name&page-size=5&page-num=1&where=status-eq-09-done
