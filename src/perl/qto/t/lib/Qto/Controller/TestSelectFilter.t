@@ -15,7 +15,7 @@ my $db      = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ;
 use Qto::App::Utils::Timer ; 
 my $objTimer = 'Qto::App::Utils::Timer'->new;
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
-my @tables_to_check = ("monthly_issues_$year$mon" , "yearly_issues_$year" );
+my @tables_to_check = ("monthly_issues_$year$mon"  );
 my $ua      = $t->ua ; 
 my $res     = {} ; #a tmp result json string
 my $tm      = '' ; 
@@ -33,11 +33,12 @@ for my $row ( @$list ) {
 
    # debug print "\n running url: /$db" . '/select/' . $table . $url_params . "\n" ; 	
    my $meta_res = $ua->get('/' . $db . '/select-meta/' . $table  )->result->json ; 
-   my $list_meta = $meta_res->{'dat'} ; 
+   my $list_meta = $meta_res->{'dat'};
    
    # not all tables contain the prio attribute to test by , thus run only for those having it
    foreach my $prio_have_row ( @$list_meta )  {
-         next unless $prio_have_row->{'attribute_name'} eq 'prio'  ;
+      
+         next unless ( $prio_have_row->{'attribute_name'} eq 'prio');
          # test a filter by Select of integers	
          $url_params = '?fltr-by=prio&fltr-val=1,2,3' ; 
          $url = '/' . $db . '/select/' . $table . $url_params ; 

@@ -21,7 +21,8 @@ my $tables = $res->{'dat'} ;
 use Qto::App::Utils::Timer ; 
 my $objTimer = 'Qto::App::Utils::Timer'->new;
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
-my @tables_to_check = ("monthly_issues_$year$mon" , "yearly_issues_$year" );
+my $prev_year_month = "$year" . "$mon" - 1;
+my @tables_to_check = ("monthly_issues_$year$mon" , "monthly_issues_" . "$prev_year_month" );
 
 # foreach table in the app db in test call db/select/table
 for my $row ( @$tables ) {
@@ -97,7 +98,9 @@ for my $row ( @$tables ) {
       
       $url = '/' . $db . '/select/' . $table . '?pick=name,prio,status&with=status-eq-1000' ; 
       $tm = "if no data is received the 204 http code 'No Content' is returned" ;
-      ok ( $t->get_ok($url )->status_is(204) , $tm )
+      ok ( $t->get_ok($url )->status_is(200) , $tm );
+      $res = $ua->get($url)->result->json ; 
+      ok ( $res->{'ret'} == 204 , $tm )
    } 
    #eof for each status
 } 

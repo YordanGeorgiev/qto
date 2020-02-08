@@ -72,6 +72,7 @@ sub doRenderJSON {
    my $met           = shift ; # the meta data
    my $cnt           = shift ; # the count of the data
    my $dat           = shift ; # the data 
+   my $ret           = shift || $http_code ; 
    my $req           = "$http_method " . $self->req->url->to_abs ; 
 
    unless ( $cnt ) {
@@ -81,7 +82,7 @@ sub doRenderJSON {
    $self->res->headers->content_type('application/json; charset=utf-8');
    $self->res->code($http_code);
    $self->render( 'json' =>  { 
-        'ret'   => $http_code
+        'ret'   => $ret
       , 'msg'   => $msg
       , 'req'   => $req
       , 'met'   => $met

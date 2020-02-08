@@ -976,7 +976,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $self                   = shift ; 
       my $db                     = shift || croak 'no db passed !!!' ;  
       my $table                  = shift || croak 'no table passed !!!' ; 
-      my $who           = shift ; 
+      my $who                    = shift ; 
       my $ret                    = 1 ; 
       my $msg                    = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
       my $dbh                    = {} ;         # this is the database handle
@@ -1074,9 +1074,16 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          $msg = DBI->errstr if $ret  == 400 ; 
          die "$msg" if $ret == 400 ;
          $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
-         $msg = DBI->errstr if $ret  == 400 ; 
-         die "$msg" if $ret == 400 ;
-         $ret = 200 ;
+         unless ( keys %{$hsr2}) {
+            $msg = ' no data for this search request !!! ' ;
+            $objLogger->doLogWarningMsg ( $msg ) ; 
+            $ret = 204 ;
+            return ( $ret , $msg , {} ) ; 
+         } else {
+            $msg = DBI->errstr if $ret  == 400 ; 
+            die "$msg" if $ret == 400 ;
+            $ret = 200 ;
+         }
       };
       if ( $@ ) { 
          my $tmsg = "$@" ; 
@@ -1086,11 +1093,6 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       };
 
       $dbh->disconnect();
-         unless ( keys %{$hsr2}) {
-            $msg = ' no data for this search request !!! ' ;
-            $objLogger->doLogWarningMsg ( $msg ) ; 
-            $ret = 204 ;
-         }
       binmode(STDOUT, ':utf8');
       return ( $ret , $msg , $hsr2 ) ; 	
 

@@ -41,15 +41,15 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    
    $tm = 'the table should be empty' ; 
    $url = '/' . $db . '/select/test_truncate_table';
-   ok ( $t->get_ok($url )->status_is(204) , $tm ) ; # 204 - empty table
+   ok ( $t->get_ok($url )->status_is(200) , $tm ) ; # 200 - empty table , res->{ret} is 204 only
    
 	my $table_name = 'non_existent_table' ; 
 	$t->get_ok('/' . $db . '/truncate/' . $table_name)
 		->status_is(400) 
 	;
 	$db = 'non_existent_db' ; 
-	$t->get_ok('/' . $db . '/truncate/test_truncate_table')
-		->status_is(400) 
+	$t->get_ok('/' . $db . '/truncate/test_truncate_table'->{ret})
+		->status_is(404) 
 	;
    
 done_testing();

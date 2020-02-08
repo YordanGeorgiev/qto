@@ -72,9 +72,11 @@
                document.getElementById('inp_srch_box').value = url_params.get('for') ; 
                this.fetchServerSideData(url_params)
                .then( response => {
+                     console.log (data); //todo:ysg
                   if ( response.status === 200 ) {
                      var data = response.data 
                      if ( response.data.dat == null ) { hideControlsOnError() ;}
+                     if ( data.cnt === "0") { hideControlsOnError() ;}
                      var dataType = (typeof data)
                      if ( dataType === 'undefined' ) {
                         var msg = 'unexpected err occurred while fetching data !!!'

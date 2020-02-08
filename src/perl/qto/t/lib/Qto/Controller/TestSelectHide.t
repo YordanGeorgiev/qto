@@ -28,7 +28,7 @@ my $url_params    = '' ;
 my $url           = '' ; 
 
 $res = $ua->get('/' . $db . '/select-tables')->result->json ; 
-# foreach table in the app db in test call db/select/table
+
 for my $table ( @tables ) {
 
    # feature-guid: 2be978a7-1228-4502-9c5e-1c0bee8d2548
@@ -53,10 +53,9 @@ for my $table ( @tables ) {
    $tm .= "url : $url" ; 
    $res = $ua->get($url )->result->json ; 
    # debug r $ua->get($url )->result->json ;
-   # debug r $res ; 
    ok ( $res->{'ret'} == 400 , $tm ) ; 	
    $tm = "no data is retrieved for non-existent column to hide - url: $url" ; 
-   ok ( defined ($res->{'dat'}) == 0 , $tm ) ; 	
+   ok ( scalar(@{$res->{'dat'}}) == 0 , $tm ) ; 	
    $tm = "the client is informed for the non-existent column - url: $url" ; 
    ok ( $res->{'msg'} eq 'the non_existent_column column does not exist' , $tm ) ; 	
 
