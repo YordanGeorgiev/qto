@@ -31,12 +31,12 @@ package Qto::App::Db::In::Postgres::MojoPgWrapper ;
 		$db            = shift ;    
 		my $class      = ref ( $invocant ) || $invocant ; 
 		my $self       = {} ; bless( $self, $class ) ;  
-      $self          = $self->doInit($db) ; 
+      $self          = $self->do_init($db) ; 
 		return $self;
 	}  
 
 
-   sub doInit {
+   sub do_init {
 
       my $self       = shift ; 
       my $db         = shift ; 

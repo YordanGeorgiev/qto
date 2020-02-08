@@ -84,10 +84,21 @@
    // actions can contain arbitrary asynchronous operations
     var actions = {
          loadItems ({ commit }) {
+            function fetchServerSideData (url,url_params){
+               return axios.get( url , { params: url_params } )
+               .then(response => { 
+                  return response ; 
+               })
+               .catch(function(err) {
+                  console.error(err) 
+                  return err.response;
+               }) 
+            }
             var url_params = getUrlParams()  
 				var url = (window.location.pathname).replace("/view/" , "/hiselect/")
-            axios.get(url , { params: url_params} )
+            fetchServerSideData(url,url_params)
             .then( response => {
+               bus.$emit('metaTablesLoadEmit',response.data.met.meta_tables)
                if ( response.status === 204 ) {
                   var warningMsg = response.statusText
                   console.warn ( warningMsg ) 

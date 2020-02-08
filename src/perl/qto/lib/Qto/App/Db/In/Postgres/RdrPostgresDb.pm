@@ -26,7 +26,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 	our $postgres_db_user 							   = q{} ; 
 	our $postgres_db_user_pw	 					   = q{} ; 
 	our $web_host 											= q{} ; 
-   
+
+
    sub doNativeLogonAuth  {
 
       my $self             = shift ; 
@@ -199,7 +200,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       $dbh->disconnect();
       binmode(STDOUT, ':utf8');
 
-      unless ( keys %{$hsr2}) {
+      unless ( defined $hsr2 or keys %{$hsr2}) {
          $msg = ' no data for this search request !!! ' ;
          $ret = 204 ;
          return ( $ret , $msg , undef ) ; 
@@ -957,7 +958,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       };
 
       $dbh->disconnect();
-         unless ( keys %{$hsr2}) {
+         unless ( defined $hsr2 or keys %{$hsr2}) {
             $msg = ' no data for this search request !!! ' ;
             $objLogger->doLogWarningMsg ( $msg ) ; 
             $ret = 204 ;
@@ -1167,11 +1168,17 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $pg            = {} ; 
       my $sql           = {} ; 
       my $hsr2          = {} ; 
-      my $where_clause_with = '' ; 
-      my $like_clause = '' ; 
-      my $where_clause_bid = '' ; 
-
-		$pg = $self->doInitPg($db);
+      my $where_clause_with   = '' ; 
+      my $like_clause         = '' ; 
+      my $where_clause_bid    = '' ; 
+  
+      eval {
+		   $pg = $self->doInitPg($db);
+      };
+      if ( $@ ) {
+         $msg = 'cannot connect to ' . $db ;
+         return ( 1 , $msg , undef) ; 
+      }
 
       my $cols             = () ;         # the array ref of columns
       my $columns_to_select = '' ;
@@ -1237,7 +1244,6 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 				ORDER BY seq
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
-         # debug p $sql; 
       };
       if ( $@ ) {
          $rv               = 404 ; 
@@ -1246,8 +1252,13 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          return ( $rv , $msg ) ; 
       }
 
-      $rv               = 200 ; 
-      $msg              = '' ; 
+      unless ( defined $hsr2 ) {
+         $rv = 204 ; 
+         $msg = " no data " ; 
+      } else { 
+         $rv               = 200 ; 
+         $msg              = '' ; 
+      }
       return ( $rv , $msg , $hsr2 ) ; 
    }
 

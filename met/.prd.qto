@@ -38,7 +38,6 @@ src/perl/qto/lib/auto/Qto/Controller/MetaDataController/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Db/Out/WtrRedis/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Sec/Guardian/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Logon/autosplit.ix
-src/sql/pgsql/qto/tables/2020/2020-02/create-table-monthly_issues_202002.sql
 # eof security
 src/tpl/psql-code-generator
 src/tpl/psql-code-generator/psql-code-generator.sh

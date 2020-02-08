@@ -48,11 +48,10 @@ sub doHiSelectItems {
    return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
       unless $objCnrUrlPrms->doValidateAndSetHiSelect();
   
-
    $objRdrDbsFcry    = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
    $objRdrDb 			= $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-   ($http_code, $msg, $dat) 	= $objRdrDb->doHiSelectBranch( $db , $item );
+   ($http_code, $msg, $dat) = $objRdrDb->doHiSelectBranch( $db , $item );
    my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$config  ) ; 
    $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
    
@@ -60,7 +59,7 @@ sub doHiSelectItems {
    $met = {
         'meta_cols'     => $meta_cols
       , 'meta_tables'   => $tables_meta
-      };
+   };
    $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    return ; 
 }
