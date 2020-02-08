@@ -29,11 +29,10 @@
   * [4.8. MASTER BRANCH - THE SINGLE TRUTH FOR CURRENT STABLE VERSION OF THE SOFTWARE](#48-master-branch--the-single-truth-for-current-stable-version-of-the-software)
 * [5. SOURCE CODE STYLING](#5-source-code-styling)
   * [5.1. SPACES AND NOT TABS](#51-spaces-and-not-tabs)
-  * [5.2. CODE EDITORS RELIGION WARS ...](#52-code-editors-religion-wars-)
-    * [5.2.1. Set 3 spaces for a tab](#521-set-3-spaces-for-a-tab)
-    * [5.2.2. Spacing after variable asignments](#522-spacing-after-variable-asignments)
-  * [5.3. JAVASCRIPT STYLING](#53-javascript-styling)
-    * [5.3.1. Empty lines](#531-empty-lines)
+  * [5.2. PERL SOURCE CODE STYLING](#52-perl-source-code-styling)
+    * [5.2.1. Spacing after variable asignments](#521-spacing-after-variable-asignments)
+    * [5.2.2. Set 3 spaces for a tab](#522-set-3-spaces-for-a-tab)
+    * [5.2.3. Empty lines](#523-empty-lines)
 * [6. WAY OF WORKING](#6-way-of-working)
   * [6.1. CHAT / IRC](#61-chat-/-irc)
   * [6.2. DEFINITION OF DONE](#62-definition-of-done)
@@ -102,7 +101,6 @@ Use common sense when applying all those principles. Of course they are not engr
 ### 1.2. Personal responsibility
 Any given instance of the qto should have ONE and only ONE person which is responsible at the end for the functioning of THE instance - so think carefully before attempting to take ownership of an instance. The author(s) of the code are not responsible for the operation, bugs or whatever happens to a new instance. As a responsible owner of an instance you could create, share and assign issues to the authors of the source code, yet there is no Service Level Agreement, only openly stated attempt to assist when possible.
 Qto is design to make version updates fully vertically integrated and as automated as possible, yet YOU will be responsible for increasing the versions, taking backups, applying database migrations and so on ... 
-That is as the other and bigger Jordan having the Peterson surname states "Bring your house in order" ... first.
 
     
 
@@ -121,6 +119,10 @@ Any instance is the combination of code, configurations, binaries in the System 
 
 ### 1.5. Naming conventions
 All the names used in the code and the configurations MUST BE human readable and expandable - that is name the objects from the greater realm to the smaller - for example &lt;&lt;env&gt;&gt;_&lt;&lt;db_name&gt;&gt; , because the concept of operational IT environments ( dev , test , qas , prd ) is broader than the concept of a application databases ... 
+Before you start a new concept for example code for a new run-time spent some time first for some initial planning :
+ - how-many objects are there going to be after 10 years !!
+ - how about searching through those objects - how easy will it be 
+ - are you naming data, configuration, binary or source code objects ?
 
     
 
@@ -266,7 +268,7 @@ Once the business has approved a new version - it should be moved to the master 
     
 
 ## 5. SOURCE CODE STYLING
-This section is going to be the one to be debated and hated the most ... If you have studies the source code ... there is a clear styling which has been applied, albeit not automated. Should you have a working setup with this this automation for any run-time, bring it on ...
+This section is going to be the one to be debated and hated the most ...
 
     
 
@@ -275,31 +277,26 @@ This section is going to be the one to be debated and hated the most ... If you 
 
     
 
-### 5.2. Code editors religion wars ...
-We ... do not do them ... The qto has been written in vim ... but there are no "unfear/evil" bindings to vim ... You can use whatever IDE you like. Qto is designed from the ground up to support multiple run-times ( hence the src/run-time/&lt;&lt;run-component&gt;&gt; naming convention), thus nor will we accept any attempts to lock the most important users - the developers to specific editors ...
+### 5.2. Perl source code styling
+
 
     
 
-#### 5.2.1. Set 3 spaces for a tab
-Why ????!!!!!
-Because 2 is too little and 4 is too much and line legth of 80 to 100 is too small to be wasted or packed with too much stuff ... 
-Also 3 is a magical number ... 
-
-    
-
-#### 5.2.2. Spacing after variable asignments
+#### 5.2.1. Spacing after variable asignments
 You might want to use spacing after variable assignments if you have a lot of variables assigned ... it improves the readability of the code ....
 
     
 
-### 5.3. JavaScript styling
-Unfortunately descriptive variables and functions affect performance because of the amount of "extra" bytes which at the end compounds - thus try to compromise between abbreviated and descriptive variables and function names. Avoid extra spacing between brackets etc. 
+#### 5.2.2. Set 3 spaces for a tab
+Why ????!!!!!
+Because 2 is too little and 4 is too much and line legth of 80 to 100 is too small to be wasted or packed with too much stuff ... 
+Also 3 is a magical number ...
 
     
 
-#### 5.3.1. Empty lines
+#### 5.2.3. Empty lines
 Empty lines improve readability, when used in a standard way: 
-Use 2 empty lines between functions and 1 empty line between logical blocks within functions. A logical block in this context might mean also set of variables declaration, instantiation of different objects, different logically connected calls or simply control flow.
+Use 2 empty lines between functions and 1 empty line between logical blocks within functions.
 
     
 
