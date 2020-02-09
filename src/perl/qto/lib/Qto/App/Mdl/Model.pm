@@ -25,25 +25,26 @@ our $item         = '' ;
 
 sub doGetColumnsMeta {
 
-   my $self          = shift ; 
-   my $config     = shift ; 
-   my $db            = shift ; 
-   my $table         = shift ; 
+   my $self          = shift ;
+   my $config     = shift ;
+   my $db            = shift ;
+   my $table         = shift ;
    my $msg           = shift || 'error in the ' . $db . '.' . $table . ' model ';
 
-   my $mhr2          = {} ; 
-   my $meta_cols     = {} ; 
-   my $c             = 0 ; 
-   my $ret           = 1 ; 
+   my $mhr2          = {} ;
+   my $meta_cols     = {} ;
+   my $c             = 0 ;
+   my $ret           = 1 ;
    my $objRdrRedis   = {};
 
    $objRdrRedis = 'Qto::App::Db::In::RdrRedis'->new(\$config);
    $meta_cols = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
 
-   $ret = 0 ; 
-   $msg = '' ; 
-   return ( $ret , $msg , $meta_cols);  
+   $ret = 0 ;
+   $msg = '' ;
+   return ( $ret , $msg , $meta_cols);
 }
+
 
 
 sub doGetTableMeta {
@@ -178,7 +179,6 @@ sub doChkIfTableExists {
    return 0 ; 
 }
 
-
 sub new {
 
    my $class      = shift ;    
@@ -192,22 +192,22 @@ sub new {
 }  
 	
    
-sub do_init {
+   sub do_init {
 
-   my $self    = shift ; 
-   my $db      = shift ; 
-   my $table   = shift ; 
+      my $self    = shift ; 
+      my $db      = shift ; 
+      my $table   = shift ; 
 
-   %$self = (
-          config => $config
-   );
-   
-   $self->set('postgres_db_name' , $db )  if defined $db ; 
-   $self->set('table_name' , $table )     if defined $table ; 
-   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
+      %$self = (
+             config => $config
+      );
+      
+      $self->set('postgres_db_name' , $db )  if defined $db ; 
+      $self->set('table_name' , $table )     if defined $table ; 
+	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
 
-   return $self ; 
-}	
+      return $self ; 
+	}	
 
 
 

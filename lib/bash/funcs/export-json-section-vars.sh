@@ -1,6 +1,9 @@
 #------------------------------------------------------------------------------
 # usage example:
-# doExportJsonSectionVars cnf/env/dev.env.json '.env.virtual.docker.spark_base'
+# source lib/bash/funcs/export-json-section-vars.sh
+# doExportJsonSectionVars cnf/env/dev.env.json '.env.db'
+# alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U \
+#     ${postgres_db_useradmin:-} --port $postgres_db_port --host $postgres_db_host"
 #------------------------------------------------------------------------------
 doExportJsonSectionVars(){
 

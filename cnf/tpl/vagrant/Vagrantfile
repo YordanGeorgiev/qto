@@ -1,0 +1,53 @@
+# vi: set ft=ruby :
+
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
+
+
+
+Vagrant.configure("2") do |config|
+
+  # dev, tst and prd are separate vagrants
+  config.vm.define "%ENV_TYPE%-qto-vagrant" do |config|
+  config.vm.hostname = "%ENV_TYPE%-qto-vagrant"
+
+  # use the latest ubuntu as a base
+  config.vm.box = "generic/ubuntu1804"
+
+  # disable updates to the configured box
+  config.vm.box_check_update = false
+
+  # dev, tst and prd could run on the same host if ip is changed ...
+  # your mileage might vary ...
+  config.vm.network "private_network", ip: "192.168.10.50"
+
+  # open the the morbo dev web server ports for dev, tst and prd
+  config.vm.network "forwarded_port", guest: 3001, host: 3001
+  config.vm.network "forwarded_port", guest: 3002, host: 3002
+  config.vm.network "forwarded_port", guest: 3003, host: 3003
+
+  # open the the hypno prd web server ports for dev, tst and prd
+  config.vm.network "forwarded_port", guest: 8078, host: 8078
+  config.vm.network "forwarded_port", guest: 8282, host: 8282
+  config.vm.network "forwarded_port", guest: 8080, host: 8080
+
+  # the project dir will be visible from the vagrant @/home/vagrant/opt/qto
+  config.vm.synced_folder "%DEPLOY_DIR%", "/home/vagrant/opt/qto"
+  $script = <<-SCRIPT
+         # run the bootstrap script and IMPORTANT !!! reload the bash shell
+         bash /home/vagrant/opt/qto/src/bash/deployer/run.sh ; bash ;
+
+         # go to the product instance dir
+         cd /home/vagrant/opt
+         source $(find . -name '.env') && cd qto/qto.$VERSION.$ENV_TYPE.$USER
+
+         # ensure application layer consistency, run db ddl's and load data from s3
+         bash ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
+
+         # start the web server
+         ./src/bash/qto/qto.sh -a mojo-hypnotoad-start
+  SCRIPT
+
+  # and run the script
+  config.vm.provision "shell", inline: $script, privileged: false
+  end
+end

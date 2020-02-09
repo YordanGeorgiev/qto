@@ -35,6 +35,18 @@ doRunPgsqlScripts(){
 		echo -e '\n\n'; clearTheScreen	
 		doLog "INFO STOP   ::: running $relative_sql_script"
 	done < <(find "$pgsql_scripts_dir" -type f -name "*.sql"|sort -n)
+
+   sudo -u postgres PGPASSWORD=$postgres_usr_pw psql --port $postgres_db_port --host $postgres_db_host -c "
+      grant all privileges on database $postgres_db_name to $postgres_db_useradmin" ;
+   sudo -u postgres PGPASSWORD=$postgres_usr_pw psql --port $postgres_db_port \
+      --host $postgres_db_host -d $postgres_db_name -c "
+      GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public 
+      TO $postgres_db_user ;"
+   sudo -u postgres PGPASSWORD=$postgres_usr_pw psql \
+      --port $postgres_db_port --host $postgres_db_host -d "$postgres_db_name" -c \
+      "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES 
+      IN SCHEMA public TO $postgres_db_user; 
+      GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user"
 	
 	clearTheScreen ; 
 }
