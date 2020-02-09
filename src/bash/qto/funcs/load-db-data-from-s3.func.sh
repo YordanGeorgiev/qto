@@ -26,9 +26,9 @@ doLoadDbDataFromS3(){
 
    # grant the needed select
    PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -v -q -t -X -w -U "${postgres_db_useradmin:-}" \
-      -h $postgres_db_host -p $postgres_db_port -v ON_ERROR_STOP=1 \
-      -d $postgres_db_name \
-      -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public
-      TO $postgres_db_user; GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user"
+      -h ${postgres_db_host:-} -p ${postgres_db_port:-} -v ON_ERROR_STOP=1 \
+      -d ${postgres_db_name:-} \
+      -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public TO $postgres_db_user; 
+         GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user"
 
 }
