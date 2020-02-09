@@ -97,7 +97,6 @@ src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
 src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
 src/bash/qto/funcs/provision-db-admin.func.sh
 src/bash/qto/funcs/fix-db-permissions.func.sh
-src/bash/qto/funcs/provision-app-user.func.sh
 src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
 src/bash/qto/funcs/load-db-data-from-s3.func.sh
 src/bash/qto/qto.sh
@@ -461,6 +460,7 @@ src/bash/qto/funcs/run-pgsql-scripts.func.sh
 src/bash/qto/funcs/run-qto-db-ddl.func.sh
 src/sql/pgsql/qto/00.create-db.pgsql
 src/sql/pgsql/qto/01.create-qto-app-user.pgsql
+src/sql/pgsql/qto/02.alter-qto-app-user.pgsql
 src/sql/pgsql/qto/tables/02.create-table-items_doc.sql
 src/sql/pgsql/qto/funcs/01.create-func-fns_update_time.sql
 src/sql/pgsql/qto/funcs/02.create-func-f_concat_ws.sql
@@ -783,7 +783,6 @@ src/perl/qto/public/poc/modal-dialog/modal-01
 src/perl/qto/public/poc/modal-dialog/modal-01/index.html
 src/perl/qto/public/poc/modal-dialog/modal-02/index.html
 # ---
-met/.dev.qto
 met/.tst.qto
 met/.prd.qto
 src/bash/qto/deploy-start-minio.sh
@@ -851,7 +850,6 @@ src/perl/qto/lib/auto/Qto/Controller/HiCreate/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Index/
 src/perl/qto/lib/auto/Qto/Controller/Index/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Truncate/autosplit.ix
-dat/mix
 src/bash/qto/scripts/todo-copy-paste.sh
 src/bash/qto/funcs/backup-postgres-db-inserts.func.sh
 cnf/git/hooks/pre-commit

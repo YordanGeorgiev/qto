@@ -18,6 +18,7 @@ doProvisionDbAdmin(){
       expect eof
 EOF_EXPECT
 
+   
    cd /tmp ; sudo -u postgres PGPASSWORD=$postgres_usr_pw psql --port $postgres_db_port -d postgres --host $postgres_db_host -c "
 	DO \$\$DECLARE r record;
 		BEGIN
