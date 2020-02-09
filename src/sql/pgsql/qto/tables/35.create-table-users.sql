@@ -24,13 +24,13 @@ INSERT INTO public.users (guid, id, name, email, password, status, description) 
    ('02d16010-20af-4b0d-be86-cdf116a7d8c7', 190709193352, 'ysg', 'AdminEmail', '{CRYPT}$2a$08$/Z3BoSd2cOO1Enb4xckj9Ocl/8dWGzUxlyaI0fDLveDSEPHQh6XiG' , 1 , 'the product instance owner');
 
 INSERT INTO public.users (guid, id, name, email, password, status, description) VALUES 
-   ('2660a6e9-9e6b-4faa-8264-27a92872657b', 190707231513, 'test anonymous user', 'test.anonymous.user@qto.fi', '{CRYPT}$2a$08$/Z3BoSd2cOO1Enb4xckj9Ocl/8dWGzUxlyaI0fDLveDSEPHQh6XiG', 1, 'the test user');
+   ('2660a6e9-9e6b-4faa-8264-27a92872657b', 190707231513, 'test anonymous user', 'test.anonymous.user@gmail.com', '{CRYPT}$2a$08$/Z3BoSd2cOO1Enb4xckj9Ocl/8dWGzUxlyaI0fDLveDSEPHQh6XiG', 1, 'the test user');
 
 INSERT INTO public.users (guid, id, name, email, password, status, description) VALUES 
-   ('2660a6e9-9e6b-4faa-8264-27a92872657c', 200107231510, 'the test reader user', 'test.reader.user@qto.fi', '{CRYPT}$2a$08$/Z3BoSd2cOO1Enb4xckj9Ocl/8dWGzUxlyaI0fDLveDSEPHQh6XiG', 1, 'the test user');
+   ('2660a6e9-9e6b-4faa-8264-27a92872657c', 200107231510, 'the test reader user', 'test.reader.user@gmail.com', '{CRYPT}$2a$08$/Z3BoSd2cOO1Enb4xckj9Ocl/8dWGzUxlyaI0fDLveDSEPHQh6XiG', 1, 'the test user');
 
 INSERT INTO public.users (guid, id, name, email, password, status, description) VALUES 
-   ('2660a6e9-9e6b-4faa-8264-27a92872657d', 200107231511 , 'the test editor user', 'test.editor.user@qto.fi', '{CRYPT}$2a$08$/Z3BoSd2cOO1Enb4xckj9Ocl/8dWGzUxlyaI0fDLveDSEPHQh6XiG', 1, 'the test user');
+   ('2660a6e9-9e6b-4faa-8264-27a92872657d', 200107231511 , 'the test editor user', 'test.editor.user@gmail.com', '{CRYPT}$2a$08$/Z3BoSd2cOO1Enb4xckj9Ocl/8dWGzUxlyaI0fDLveDSEPHQh6XiG', 1, 'the test user');
 SELECT 'show the columns of the just created table'
 ; 
 

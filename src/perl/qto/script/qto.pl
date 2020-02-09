@@ -99,7 +99,7 @@ sub main {
   my $ret = 1;
 
   print " qto.pl START  \n ";
-  ($ret, $msg) = doInit();
+  ($ret, $msg) = do_init();
   doExit($ret, $msg) unless ($ret == 0);
 
   my $objDispatcher = 'Qto::App::Ctrl::Dispatcher'->new(\$config , \$objModel);
@@ -112,7 +112,7 @@ sub main {
 
 
 
-sub doInit {
+sub do_init {
 
    my $msg          = 'error during initialization !!!';
    my $ret          = 1;

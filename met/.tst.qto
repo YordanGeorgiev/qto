@@ -96,6 +96,7 @@ src/perl/qto/lib/Qto/Controller/HiDelete.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
 src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
 src/bash/qto/funcs/provision-db-admin.func.sh
+src/bash/qto/funcs/fix-db-permissions.func.sh
 src/bash/qto/funcs/provision-app-user.func.sh
 src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
 src/bash/qto/funcs/load-db-data-from-s3.func.sh
@@ -892,5 +893,4 @@ src/js/node/js-unit-tests/01-set-url-param/package.json
 src/js/node/js-unit-tests/01-set-url-param/test
 src/js/node/js-unit-tests/01-set-url-param/test/test.js
 src/js/node/scrap-html/package.json
-src/js/node/scrap-html/package-lock.json
 src/js/node/scrap-html/scrap-html.js

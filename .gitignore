@@ -7,6 +7,9 @@ cnf/env/tst.env.json.bak
 cnf/env/qas.env.json.bak
 cnf/env/prd.env.json.bak
 # stop  :: do not remove those !!!
+dat/mix
+dat/xls/run/*.xlsx
+dat/tests/t*.txt
 src/js/node/ppoc/node_modules/**
 **/package-lock.json
 .vagrant/**
@@ -15,9 +18,6 @@ Vagrantfile
 **/*.log
 **/*.tdy
 **/*.dmp.sql
-dat/xls/run/*.xlsx
-dat/tests/t*.txt
-dat/qto/**
 src/bash/qto/tmp/**
 **/~$*.xlsx
 **/.DS_Store
@@ -31,12 +31,10 @@ src/perl/qto/public/lib/js/**
 src/perl/qto/public/dat/tmp/**
 dat/tmp/**
 **/tmp/**
-dat/mix/2019/**
 src/node/node_modules/**
 src/js/node/js-unit-tests/01-set-url-param/node_modules/**
 **/*package-lock.json
 **/node_modules/**
-tags
 **/*.swp
 **/*.swo
 cnf/*.cnf
