@@ -10,6 +10,7 @@ main(){
    do_source_funtions
    do_check_setup_bash
    do_setup_resolv_conf
+   do_set_time
    do_check_install_ubuntu_packages
    do_check_install_postgres
    do_check_install_chromium_headless
@@ -35,6 +36,12 @@ nameserver 8.8.8.8
 nameserver 8.8.4.4
 EOF_RESOLV_CONF
 
+}
+
+do_set_time(){
+   sudo service ntp stop
+   sudo ntpdate -s time.nist.gov
+   sudo service ntp start
 }
 
 usage(){

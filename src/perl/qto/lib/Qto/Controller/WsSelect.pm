@@ -43,7 +43,6 @@ sub doWsSelectTables {
 
       $self->tx->max_websocket_size(16777216) if $self->tx->is_websocket;
       
-      my $objModel      = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
       my $ret        	= 0;
       my $hsr        	= {};
       my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );

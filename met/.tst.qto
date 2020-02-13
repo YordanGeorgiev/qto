@@ -1,4 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+cnf/env/dev.env.json
+cnf/env/prd.env.json
+cnf/env/tst.env.json
 # start redis
 src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/lib/Qto/Controller/Select.pm
@@ -13,9 +16,6 @@ src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm
 src/bash/up.sh
 cnf/tpl/vagrant/Vagrantfile
 #  stop vagrant
-cnf/env/dev.env.json
-cnf/env/prd.env.json
-cnf/env/tst.env.json
 # security
 src/perl/qto/public/themes/thme-blue/css/screen/site/login.css
 src/perl/qto/templates/pages/login/login.html.ep
