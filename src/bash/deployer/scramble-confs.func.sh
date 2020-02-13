@@ -24,6 +24,7 @@ doScrambleConfs(){
 			$data->{'env'}->{'db'}->{'postgres_db_useradmin_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'db'}->{'app_user_pwd'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'db'}->{'AdminEmail'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
+			$data->{'env'}->{'db'}->{'project_databases'} = $data->{'env'}->{'db'}->{'postgres_db_name'};
          my $json = JSON->new->allow_nonref;
 			open my $fh, ">", $ARGV[0];
 			print $fh $json->pretty->encode($data);
