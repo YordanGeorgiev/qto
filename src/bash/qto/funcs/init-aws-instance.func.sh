@@ -18,6 +18,7 @@ doInitAwdInstance(){
    perl -pi -e 's|\$AWS_ACCESS_KEY_ID|'"$AWS_ACCESS_KEY_ID"'|g' "$main_tf_file"
    perl -pi -e 's|\$AWS_SECRET_ACCESS_KEY|'"$AWS_SECRET_ACCESS_KEY"'|g' "$main_tf_file"
    perl -pi -e 's|\$ENV_TYPE|'"$ENV_TYPE"'|g' "$main_tf_file"
+   perl -pi -e 's|\$VERSION|'"$VERSION"'|g' "$main_tf_file"
    perl -pi -e 's|\$AWS_DEFAULT_REGION|'"$AWS_DEFAULT_REGION"'|g' "$main_tf_file"
    perl -pi -e 's|\$availability_zone|'"$availability_zone"'|g' "$main_tf_file"
    perl -pi -e 's|\$ssh_key_pair_file|'"$ssh_key_pair_file"'|g' "$main_tf_file"

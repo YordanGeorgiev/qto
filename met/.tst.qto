@@ -13,8 +13,8 @@ src/perl/qto/lib/Qto/App/Db/Out/WtrRedis.pm
 src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm
 #  stop redis
 # start vagrant
-src/bash/up.sh
 cnf/tpl/vagrant/Vagrantfile
+src/bash/deploy-vagrant-vm.sh
 #  stop vagrant
 # security
 src/perl/qto/public/themes/thme-blue/css/screen/site/login.css

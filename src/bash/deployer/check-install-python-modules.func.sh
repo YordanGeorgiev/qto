@@ -1,6 +1,6 @@
 
 do_check_install_python_modules(){
-   cd $DEPLOY_DIR
+   cd $PRODUCT_DIR
    modules="$(cat src/bash/deployer/qto/cnf/bin/python-modules.lst)"
   
    while read -r module ; do
