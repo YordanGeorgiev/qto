@@ -1,12 +1,12 @@
 #! /usr/bin/env bash
 
-
+set -x
 main(){
    do_set_vars "$@"
 	if [[ $APP_TO_DEPLOY == '--help' ]]; then
 		usage
 	fi
-	do_run_vagrant_up
+	do_vagrant_up
    do_finalize
 }
 
@@ -15,16 +15,16 @@ usage(){
 
 	cat << EOF_USAGE
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-      $APP_TO_DEPLOY up.sh PURPOSE: 
+      $APP_TO_DEPLOY deploy-vagrant-vm PURPOSE: 
 	to setup the needed binary configuration for the qto project
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
      
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-      $APP_TO_DEPLOY up.sh USAGE:
+      $APP_TO_DEPLOY deploy-vagrant-vm USAGE:
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
       # just the deploy the qto packages
-      ./src/bash/up.sh
+      ./src/bash/deploy-vagrant-vm.sh
 
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -34,21 +34,39 @@ EOF_USAGE
 }
 
 
-do_run_vagrant_up(){
+do_vagrant_up(){
 
    # kill all the hanging VBoxHeadless
-   while read -r pid ; do kill -9 $pid ; done < <(sudo ps -ef | grep -i vbox | grep -i qto_dev | awk '{print $2}')
+   #while read -r pid ; do kill -9 $pid ; done < <(sudo ps -ef | grep -i vbox | grep -i qto_$ENV_TYPE | awk '{print $2}')
 
 	# because idempotence in binary configuration !!!
-	test -d $DEPLOY_DIR/.vagrant && sudo rm -r $DEPLOY_DIR/.vagrant
+	test -d $PRODUCT_DIR/.vagrant && sudo rm -r $PRODUCT_DIR/.vagrant
 
 	# keep the root dir of the project clean	
-   cp -v $DEPLOY_DIR/cnf/tpl/vagrant/Vagrantfile $DEPLOY_DIR/Vagrantfile
-	
-	# get the vars to interpolate from the .env and the deploy dir
-	perl -pi -e 's|\%DEPLOY_DIR\%|'"$DEPLOY_DIR"'|g' "$DEPLOY_DIR/Vagrantfile"
-	perl -pi -e 's|\%ENV_TYPE\%|'"$ENV_TYPE"'|g' "$DEPLOY_DIR/Vagrantfile"
+   cp -v $PRODUCT_DIR/cnf/tpl/vagrant/Vagrantfile $vagrant_file
+   source $PRODUCT_DIR/lib/bash/funcs/export-json-section-vars.sh
 
+   for env in `echo dev tst prd`; do 
+      doExportJsonSectionVars $PRODUCT_DIR/cnf/env/$env.env.json '.env.app'
+      if [[ $env == 'dev' ]]; then
+         perl -pi -e 's/\%dev_mojo_morbo_port\%/'$mojo_morbo_port'/g' "$vagrant_file"
+         perl -pi -e 's/\%dev_mojo_hypnotoad_port\%/'$mojo_hypnotoad_port'/g' "$vagrant_file"
+      fi
+      if [[ $env == 'tst' ]]; then
+         perl -pi -e 's/\%tst_mojo_morbo_port\%/'$mojo_morbo_port'/g' "$vagrant_file"
+         perl -pi -e 's/\%tst_mojo_hypnotoad_port\%/'$mojo_hypnotoad_port'/g' "$vagrant_file"
+      fi
+      if [[ $env == 'prd' ]]; then
+         perl -pi -e 's/\%prd_mojo_morbo_port\%/'$mojo_morbo_port'/g' "$vagrant_file"
+         perl -pi -e 's/\%prd_mojo_hypnotoad_port\%/'$mojo_hypnotoad_port'/g' "$vagrant_file"
+      fi
+   done
+	
+   # get the vars to interpolate from the .env and the deploy dir
+	perl -pi -e 's|\%PRODUCT_BASE_DIR\%|'"$PRODUCT_BASE_DIR"'|g' "$vagrant_file"
+	perl -pi -e 's|\%PRODUCT_DIR\%|'"$PRODUCT_DIR"'|g' "$vagrant_file"
+	perl -pi -e 's|\%ENV_TYPE\%|'"$ENV_TYPE"'|g' "$vagrant_file"
+      
    # Action !!!
 	vagrant up
 }
@@ -57,20 +75,22 @@ do_run_vagrant_up(){
 do_set_vars(){
    set -eu -o pipefail 
    set +e
+   printf "\033[2J";printf "\033[0;0H"
    export APP_TO_DEPLOY=${1:-qto}
    app_owner=$USER || exit 1
    unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
-   export DEPLOY_DIR=$(cd $unit_run_dir/../..; echo `pwd`)
-   source "$DEPLOY_DIR/.env"
+   export PRODUCT_BASE_DIR=$(cd $unit_run_dir/../../..; echo `pwd`)
+   export PRODUCT_DIR=$(cd $unit_run_dir/../..; echo `pwd`)
+   source "$PRODUCT_DIR/.env"
    product_base_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
    product_dir=$(cd $unit_run_dir/../..; echo `pwd`)
-   source "$DEPLOY_DIR/.env"
+   source "$PRODUCT_DIR/.env"
    PRODUCT_INSTANCE_DIR="$product_dir/$APP_TO_DEPLOY.$VERSION.$ENV_TYPE.$app_owner"
    bash_opts_file=~/.bash_opts.$(hostname -s)
    host_name="$(hostname -s)"
-   cd $DEPLOY_DIR
+   vagrant_file=$PRODUCT_DIR/Vagrantfile
+   cd $PRODUCT_DIR
 }
-
 
 
 # ------------------------------------------------------------------------------
@@ -93,8 +113,10 @@ do_exit(){
       do_log "INFO  STOP FOR $APP_TO_DEPLOY deployer RUN: $exit_code $exit_msg"
    fi
 
+   test -f $vagrant_file && rm -v $vagrant_file
    exit $exit_code
 }
+
 
 #------------------------------------------------------------------------------
 # echo pass params and print them to a log file and terminal
@@ -118,11 +140,12 @@ do_finalize(){
 			:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 			DONE
 			:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		you can: now
+		to remove completely the vagrant box do:
 		vagrant halt
 		vagrant reload
 
 EOF_END
 }
+
 
 main "$@"

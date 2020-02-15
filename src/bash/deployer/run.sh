@@ -73,18 +73,18 @@ EOF_USAGE
 
 
 do_source_funtions(){
-   source $DEPLOY_DIR/src/bash/deployer/export-json-section-vars.func.sh
-   source $DEPLOY_DIR/src/bash/deployer/check-setup-bash.func.sh
-   source $DEPLOY_DIR/src/bash/deployer/check-install-ubuntu-packages.func.sh
-   source $DEPLOY_DIR/src/bash/deployer/check-install-postgres.func.sh
-   source $DEPLOY_DIR/src/bash/deployer/check-install-phantom-js.func.sh
-   source $DEPLOY_DIR/src/bash/deployer/check-install-perl-modules.func.sh
-   source $DEPLOY_DIR/src/bash/deployer/check-install-chromium-headless.func.sh
-   source $DEPLOY_DIR/src/bash/deployer/check-install-redis.func.sh
-   source $DEPLOY_DIR/src/bash/deployer/provision-postgres.func.sh
-   source $DEPLOY_DIR/src/bash/deployer/provision-nginx.func.sh
-   source $DEPLOY_DIR/src/bash/deployer/provision-ssh-keys.func.sh
-   source $DEPLOY_DIR/src/bash/deployer/scramble-confs.func.sh
+   source $PRODUCT_DIR/src/bash/deployer/export-json-section-vars.func.sh
+   source $PRODUCT_DIR/src/bash/deployer/check-setup-bash.func.sh
+   source $PRODUCT_DIR/src/bash/deployer/check-install-ubuntu-packages.func.sh
+   source $PRODUCT_DIR/src/bash/deployer/check-install-postgres.func.sh
+   source $PRODUCT_DIR/src/bash/deployer/check-install-phantom-js.func.sh
+   source $PRODUCT_DIR/src/bash/deployer/check-install-perl-modules.func.sh
+   source $PRODUCT_DIR/src/bash/deployer/check-install-chromium-headless.func.sh
+   source $PRODUCT_DIR/src/bash/deployer/check-install-redis.func.sh
+   source $PRODUCT_DIR/src/bash/deployer/provision-postgres.func.sh
+   source $PRODUCT_DIR/src/bash/deployer/provision-nginx.func.sh
+   source $PRODUCT_DIR/src/bash/deployer/provision-ssh-keys.func.sh
+   source $PRODUCT_DIR/src/bash/deployer/scramble-confs.func.sh
 }
 
 
@@ -95,18 +95,18 @@ do_set_vars(){
    maybe_echo=${2:-} || ''
    app_owner=$USER || exit 1
    unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
-   export DEPLOY_DIR=$(cd $unit_run_dir/../../..; echo `pwd`)
-   source "$DEPLOY_DIR/.env"
+   export PRODUCT_DIR=$(cd $unit_run_dir/../../..; echo `pwd`)
+   source "$PRODUCT_DIR/.env"
    product_base_dir=$(cd $unit_run_dir/../../../..; echo `pwd`)
    product_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
    # ALWAYS !!! bootstrap a dev instance, for tst and prd use -a to-env=tst , -a to-env=prd 
-   perl -pi -e 's|ENV_TYPE=tst|ENV_TYPE=dev|g' "$DEPLOY_DIR/.env"
-   perl -pi -e 's|ENV_TYPE=prd|ENV_TYPE=dev|g' "$DEPLOY_DIR/.env"
-   source "$DEPLOY_DIR/.env"
+   perl -pi -e 's|ENV_TYPE=tst|ENV_TYPE=dev|g' "$PRODUCT_DIR/.env"
+   perl -pi -e 's|ENV_TYPE=prd|ENV_TYPE=dev|g' "$PRODUCT_DIR/.env"
+   source "$PRODUCT_DIR/.env"
    PRODUCT_INSTANCE_DIR="$product_dir/$APP_TO_DEPLOY.$VERSION.$ENV_TYPE.$app_owner"
    bash_opts_file=~/.bash_opts.$(hostname -s)
    host_name="$(hostname -s)"
-   cd $DEPLOY_DIR
+   cd $PRODUCT_DIR
 }
 
 
@@ -115,7 +115,7 @@ do_copy_git_hooks(){
 }
 
 do_set_chmods(){
-   find $DEPLOY_DIR -type f -name '*.sh' -exec chmod 770 {} \;
+   find $PRODUCT_DIR -type f -name '*.sh' -exec chmod 770 {} \;
 }
 
 

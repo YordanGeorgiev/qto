@@ -1,15 +1,15 @@
 #  END USER GUIDE
 * [1. INTRODUCTION](#1-introduction)
-  * [1.1. PURPOSE](#11-purpose)
-  * [1.2. DOCUMENT STATUS ](#12-document-status-)
+  * [1.1. DOCUMENT STATUS ](#11-document-status-)
+  * [1.2. PURPOSE](#12-purpose)
   * [1.3. AUDIENCE](#13-audience)
   * [1.4. MASTER STORAGE AND STORAGE FORMAT](#14-master-storage-and-storage-format)
   * [1.5. SWITCH PROJECTS BY THE :TO OPERATOR IN THE SEARCH-BOX](#15-switch-projects-by-the-to-operator-in-the-search-box)
   * [1.6. VERSION CONTROL](#16-version-control)
-  * [1.7. WAY OF WORKING](#17-way-of-working)
 * [2. INITIAL CONCEPTS](#2-initial-concepts)
-  * [2.1. ACCESSING MULTIPLE APPLICATIONS FROM THE SAME UI](#21-accessing-multiple-applications-from-the-same-ui)
-  * [2.2. SWITCH PROJECTS BY THE :TO OPERATOR IN THE SEARCH-BOX](#22-switch-projects-by-the-to-operator-in-the-search-box)
+  * [2.1. WAY OF WORKING](#21-way-of-working)
+  * [2.2. ACCESSING MULTIPLE APPLICATIONS FROM THE SAME UI](#22-accessing-multiple-applications-from-the-same-ui)
+  * [2.3. SWITCH PROJECTS BY THE :TO OPERATOR IN THE SEARCH-BOX](#23-switch-projects-by-the-to-operator-in-the-search-box)
 * [3. LOGIN AND LOGOUT](#3-login-and-logout)
   * [3.1. LOGIN TO A QTO INSTANCE](#31-login-to-a-qto-instance)
   * [3.2. LOGOUT FROM A QTO INSTANCE](#32-logout-from-a-qto-instance)
@@ -22,55 +22,57 @@
   * [4.2. OPEN AND CLOSE FOLDERS IN THE LEFT MENU](#42-open-and-close-folders-in-the-left-menu)
   * [4.3. OPEN AND CLOSE THE LEFT MENU](#43-open-and-close-the-left-menu)
 * [5. THE LIST PAGE](#5-the-list-page)
-    * [5.1. Viewing the list page](#51-viewing-the-list-page)
-      * [5.1.1. Viewing the full content of the items](#511-viewing-the-full-content-of-the-items)
-    * [5.2. Listing url syntax](#52-listing-url-syntax)
-      * [5.2.1. The "pick" url param](#521-the-"pick"-url-param)
-      * [5.2.2. The "hide" url param](#522-the-"hide"-url-param)
-      * [5.2.3. The "with=col-operator-value" filter](#523-the-"with=col-operator-value"-filter)
-      * [5.2.4. The "where=col-operator-value" filter](#524-the-"where=col-operator-value"-filter)
-      * [5.2.5. Filtering with "like"](#525-filtering-with-"like")
-  * [5.1. SORTING AN ITEM TABLE](#51-sorting-an-item-table)
-    * [5.1.1. The 'as' url syntax for printing the listing page](#511-the-'as'-url-syntax-for-printing-the-listing-page)
-  * [5.2. QUICK FILTERING AN ITEM TABLE](#52-quick-filtering-an-item-table)
-  * [5.3. SETTING THE ITEM TABLE PAGING SIZE](#53-setting-the-item-table-paging-size)
-  * [5.4. PAGING - SETTING THE ITEM TABLE'S PAGE NUMBER](#54-paging--setting-the-item-table's-page-number)
-  * [5.5. ITEM TABLE PAGING](#55-item-table-paging)
-  * [5.6. KEYBOARD USABILITY IN THE LIST PAGE](#56-keyboard-usability-in-the-list-page)
-    * [5.6.1. Navigability of the list page with the keyboard](#561-navigability-of-the-list-page-with-the-keyboard)
-    * [5.6.2. Focus the quick search box](#562-focus-the-quick-search-box)
-    * [5.6.3. Undo the edit on a cell](#563-undo-the-edit-on-a-cell)
-    * [5.6.4. Keyboard navigation on the edit form](#564-keyboard-navigation-on-the-edit-form)
-  * [5.7. NEW ITEM CREATION (CREATE)](#57-new-item-creation-(create))
-    * [5.7.1. Successful execution](#571-successful-execution)
-    * [5.7.2. Error handling on list page click create new item action](#572-error-handling-on-list-page-click-create-new-item-action)
-  * [5.8. ITEM EDIT (UPDATE)](#58-item-edit-(update))
-    * [5.8.1. Form edit](#581-form-edit)
-    * [5.8.2. In-line edit ( UPDATE )](#582-in-line-edit-(-update-))
-      * [5.8.2.1. Table columns resizing](#5821-table-columns-resizing)
-      * [5.8.2.2. Contents for the table's cells](#5822-contents-for-the-table's-cells)
-      * [5.8.2.3. Successful execution](#5823-successful-execution)
-      * [5.8.2.4. Error handling on db update error](#5824-error-handling-on-db-update-error)
-      * [5.8.2.5. Nulls handling](#5825-nulls-handling)
-  * [5.9. ITEM DELETION ( DELETE )](#59-item-deletion-(-delete-))
-  * [5.10. LIST AS PRINT-TABLE PAGE](#510-list-as-print-table-page)
+  * [5.1. VIEWING THE LIST PAGE](#51-viewing-the-list-page)
+    * [5.1.1. Viewing the full content of the items](#511-viewing-the-full-content-of-the-items)
+    * [5.1.2. Listing url syntax](#512-listing-url-syntax)
+      * [5.1.2.1. The "pick" url param](#5121-the-"pick"-url-param)
+      * [5.1.2.2. The "hide" url param](#5122-the-"hide"-url-param)
+      * [5.1.2.3. The "with=col-operator-value" filter](#5123-the-"with=col-operator-value"-filter)
+      * [5.1.2.4. The "where=col-operator-value" filter](#5124-the-"where=col-operator-value"-filter)
+      * [5.1.2.5. Filtering with "like"](#5125-filtering-with-"like")
+  * [5.2. SORTING AN ITEM TABLE](#52-sorting-an-item-table)
+    * [5.2.1. The 'as' url syntax for printing the listing page](#521-the-'as'-url-syntax-for-printing-the-listing-page)
+  * [5.3. QUICK FILTERING AN ITEM TABLE](#53-quick-filtering-an-item-table)
+  * [5.4. SETTING THE ITEM TABLE PAGING SIZE](#54-setting-the-item-table-paging-size)
+  * [5.5. PAGING - SETTING THE ITEM TABLE'S PAGE NUMBER](#55-paging--setting-the-item-table's-page-number)
+  * [5.6. ITEM TABLE PAGING](#56-item-table-paging)
+  * [5.7. KEYBOARD USABILITY IN THE LIST PAGE](#57-keyboard-usability-in-the-list-page)
+    * [5.7.1. Navigability of the list page with the keyboard](#571-navigability-of-the-list-page-with-the-keyboard)
+    * [5.7.2. Focus the quick search box](#572-focus-the-quick-search-box)
+    * [5.7.3. Undo the edit on a cell](#573-undo-the-edit-on-a-cell)
+    * [5.7.4. Keyboard navigation on the edit form](#574-keyboard-navigation-on-the-edit-form)
+  * [5.8. NEW ITEM CREATION (CREATE)](#58-new-item-creation-(create))
+    * [5.8.1. Successful execution](#581-successful-execution)
+    * [5.8.2. Error handling on list page click create new item action](#582-error-handling-on-list-page-click-create-new-item-action)
+  * [5.9. ITEM EDIT (UPDATE)](#59-item-edit-(update))
+    * [5.9.1. Form edit](#591-form-edit)
+    * [5.9.2. In-line edit ( UPDATE )](#592-in-line-edit-(-update-))
+      * [5.9.2.1. Table columns resizing](#5921-table-columns-resizing)
+      * [5.9.2.2. Contents for the table's cells](#5922-contents-for-the-table's-cells)
+      * [5.9.2.3. Successful execution](#5923-successful-execution)
+      * [5.9.2.4. Error handling on db update error](#5924-error-handling-on-db-update-error)
+      * [5.9.2.5. Nulls handling](#5925-nulls-handling)
+  * [5.10. ITEM DELETION ( DELETE )](#510-item-deletion-(-delete-))
+  * [5.11. LIST AS PRINT-TABLE PAGE](#511-list-as-print-table-page)
 * [6. THE VIEW DOC PAGE](#6-the-view-doc-page)
-  * [6.1. LOADING THE VIEW DOC PAGE](#61-loading-the-view-doc-page)
-  * [6.2. USING THE TOC MENU](#62-using-the-toc-menu)
-  * [6.3. SEARCHING THE VIEW DOC BY QUICK FILTERING](#63-searching-the-view-doc-by-quick-filtering)
-  * [6.4. MANAGING THE VIEW DOC DATA WITH THE RIGHT CLICK MENU ( BETA )](#64-managing-the-view-doc-data-with-the-right-click-menu-(-beta-))
-  * [6.5. SMART INTERLINKING - SHARING ITEMS TO ANOTHER USERS](#65-smart-interlinking--sharing-items-to-another-users)
-  * [6.6. THE RIGHT TABLE OF CONTENTS MENU](#66-the-right-table-of-contents-menu)
-    * [6.6.1. Open & dive to manage only parts of the documents](#661-open-&-dive-to-manage-only-parts-of-the-documents)
-    * [6.6.2. Open in list](#662-open-in-list)
-    * [6.6.3. Export to md](#663-export-to-md)
-    * [6.6.4. Pdf print preview](#664-pdf-print-preview)
-    * [6.6.5. Add new parent node](#665-add-new-parent-node)
-    * [6.6.6. Add new sibling node](#666-add-new-sibling-node)
+  * [6.1. NAVIGATING THE VIEW DOC PAGE](#61-navigating-the-view-doc-page)
+    * [6.1.1. Loading the view doc page](#611-loading-the-view-doc-page)
+    * [6.1.2. Searching the view doc by quick filtering](#612-searching-the-view-doc-by-quick-filtering)
+    * [6.1.3. Navigating trough the document via the TOC right menu item](#613-navigating-trough-the-document-via-the-toc-right-menu-item)
+  * [6.2. SMART INTERLINKING - SHARING ITEMS TO ANOTHER USERS](#62-smart-interlinking--sharing-items-to-another-users)
+  * [6.3. MANAGING THE VIEW DOC DATA WITH THE RIGHT CLICK MENU ( BETA )](#63-managing-the-view-doc-data-with-the-right-click-menu-(-beta-))
+  * [6.4. THE RIGHT TABLE OF CONTENTS  - AKA THE "TOC MENU"
+THE RIGHT TABLE OF CONTENTS ( TOC ) MENU](#64-the-right-table-of-contents--aka-the-"toc-menu"
+the-right-table-of-contents-(-toc-)-menu)
+    * [6.4.1. Open & dive to manage only parts of the documents](#641-open-&-dive-to-manage-only-parts-of-the-documents)
+    * [6.4.2. Open in list](#642-open-in-list)
+    * [6.4.3. Export to md](#643-export-to-md)
+    * [6.4.4. Add new parent node ( beta )](#644-add-new-parent-node-(-beta-))
+    * [6.4.5. Add new sibling node ( beta )](#645-add-new-sibling-node-(-beta-))
+    * [6.4.6. Add new child node ( beta )](#646-add-new-child-node-(-beta-))
+    * [6.4.7. Remove node](#647-remove-node)
 * [7. THE SEARCH PAGE](#7-the-search-page)
-    * [7.1. Add new child node](#71-add-new-child-node)
   * [7.1. CYCLING THOUGH THE SEARCH RESULTS](#71-cycling-though-the-search-results)
-    * [7.1.1. Remove node](#711-remove-node)
   * [7.2. OPENING AN ITEM FROM THE SEARCH RESULT AND EDITING](#72-opening-an-item-from-the-search-result-and-editing)
 
 
@@ -83,15 +85,15 @@
 
     
 
-### 1.1. Purpose
-The purpose of this  document is to describe all the features, functionalities and capabilities provided by a properly installed, configured and operated instance of the qto application for the perspective of an application end-user.
-This document is the CONTRACT between you as the potential, former or active user of an qto instance and the product owner of that instance. Thus, should something here be described to work in a particular way, contrarian of your user experience, you should create an issue and assign it to your instance owner. 
-
+### 1.1. Document status 
+This document is updated constantly in every release of the qto. Each version however is considered to be a complete version regarding the qto version it situated in.
 
     
 
-### 1.2. Document status 
-This document is updated constantly in every release of the qto. Each version however is considered to be a complete version regarding the qto version it situated in.
+### 1.2. Purpose
+The purpose of this  document is to describe all the features, functionalities and capabilities provided by a properly installed, configured and operated instance of the qto application for the perspective of an application end-user.
+This document is the CONTRACT between you as the potential, former or active user of an qto instance and the product owner of that instance. Thus, should something here be described to work in a particular way, contrarian of your user experience, you should create an issue and assign it to your instance owner. 
+
 
     
 
@@ -116,22 +118,22 @@ The version of this document is the same as the version of the qto application. 
 
     
 
-### 1.7. Way of working
-The qto provides a mean for tracking of this documentation contents to the source code per feature/functionality, thus should you find inconsistencies in the behaviour of the application and the content of this document you should create a bug issue by clicking on the plus button of the enduser_issues and assign it to the owner of your product instance. 
-
-    
-
 ## 2. INITIAL CONCEPTS
 A single qto web application might have access to one or many databases ( called also projects ). 
 
     
 
-### 2.1. Accessing multiple applications from the same UI
+### 2.1. Way of working
+The qto provides a mean for tracking of this documentation contents to the source code per feature/functionality, thus should you find inconsistencies in the behaviour of the application and the content of this document you should create a bug issue by clicking on the plus button of the enduser_issues and assign it to the owner of your product instance. 
+
+    
+
+### 2.2. Accessing multiple applications from the same UI
 If you type the ":to &lt;&lt;database-name&gt;&gt;" you will get a drop down which will list the projects databases , to which your instance has access to, by choosing the database from the list and hitting enter you will be redirected to the same url by on the different database.
 
     
 
-### 2.2. Switch projects by the :to operator in the search-box
+### 2.3. Switch projects by the :to operator in the search-box
 If you type the ":to &lt;&lt;database-name&gt;&gt;" you will get a drop down which will list the projects databases , to which your instance has access to, by choosing the database from the list and hitting enter you will be redirected to the same url by on the different database.
 
     
@@ -210,37 +212,37 @@ In the context of the qto's parley the "listing" is the ui list of control/(s) y
 
     
 
-#### 5.1. Viewing the list page
+### 5.1. Viewing the list page
 You can use the pick=col1, col2, col3 url parameter to select for only desired attributes.
 You could filter the result the same way the filters for the select page work ( see bellow ). 
 Should there be errors in the loading of the page, they will be displayed in a msg at the top of the page.
 
     
 
-##### 5.1.1. Viewing the full content of the items
+#### 5.1.1. Viewing the full content of the items
 You can quickly view the full content of each cell of the listing table by hovering with the mouse on top of it. Note that all the links in the content are replaced with clickable links in the tooltip as well as the internal links such as the following one : enduser_guide_doc-190214224315 ( which just refer to next item in this document).
 
     
 
-#### 5.2. Listing url syntax
+#### 5.1.2. Listing url syntax
 The listing url syntax mimics the sql select clause syntax, yet in much more simplified form. 
 
     
 
-##### 5.2.1. The "pick" url param
+##### 5.1.2.1. The "pick" url param
 You can use the pick=col1,col2,col3 url parameter to select for only desired attributes to be show in the ui control used for listing.
 The following url demonstrates this syntax:
 https://qto.fi/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
-##### 5.2.2. The "hide" url param
+##### 5.1.2.2. The "hide" url param
 If you do not specify any attribute to pick, you could hide specific attributes by using the "hide=col1,col2,col3" syntax.
 https://qto.fi/qto/list/yearly_issues?hide=description
 
     
 
-##### 5.2.3. The "with=col-operator-value" filter
+##### 5.1.2.3. The "with=col-operator-value" filter
 You can filter the result of the query by using the "with=col-operator-value". The following examples demonstrates, which operators are supported.
 An error message is shown if you do not use existing operator. 
 The following url demonstrates this syntax:
@@ -264,7 +266,7 @@ Note when going to the next page that all the rows' status is 09-done
     
     
 
-##### 5.2.4. The "where=col-operator-value" filter
+##### 5.1.2.4. The "where=col-operator-value" filter
 You can filter the result of the query by using the "where=col-operator-value", which works exactly as the with operator, thus the following examples demonstrates, which operators are supported.
 An error message is shown if you do not use existing operator. 
 
@@ -283,7 +285,7 @@ An error message is shown if you do not use existing operator.
          , 'le' => '<='
          , 'like' => 'like'
 
-##### 5.2.5. Filtering with "like"
+##### 5.1.2.5. Filtering with "like"
 The filtering with the like operator translates to the SQL "like" operator- the "like-by=&lt;&lt;attr&gt;&gt;&like-val=&lt;&lt;val&gt;&gt; filtering, where &lt;&lt;attr&gt;&gt; stands for the name of the attribute to use the like operator. 
 Example:
 https://qto.fi/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name&page-size=5&page-num=1&where=status-eq-09-done
@@ -291,32 +293,32 @@ https://qto.fi/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name&p
     # this example url will list all the monthly_issues items having the "bug" string in their "name" attribute:
     http://host-name:3000/qto/list/monthly_issues?as=grid&like-by=name&like-val=bug
 
-### 5.1. Sorting an item table
+### 5.2. Sorting an item table
 The listed table is sortable by clicking on the columns OR by navigating with the tab key on the keyboard on a column and hitting Enter. 
 The sorted column is visually shown as the active one on page load:
 https://qto.fi/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name&page-size=5&page-num=1&where=status-eq-09-done
 
     
 
-#### 5.1.1. The 'as' url syntax for printing the listing page
+#### 5.2.1. The 'as' url syntax for printing the listing page
 By default the url syntax of the list page has the "as=grid" default listing format, if you replace it with the "as=print-table" url parameter you will get a bare listing of the data ( all other sorting and paging parameters work as well ) , which you could use for printing as well.
 
     
 
-### 5.2. Quick filtering an item table
+### 5.3. Quick filtering an item table
 You can filter the already presented part of the result set in the page by using the search textbox. This is only an ui type of filtering for the already loaded data. This type of filtering is different compared to the url parameters filtering by using the with url param syntax and it filters the already fetched from the db data-set, whereas the with=&lt;&lt;attribute&gt;&gt;&lt;&lt;operator&gt;&gt;&lt;&lt;value&gt;&gt; filtering does filter on the database side.
 You could focus the quick search textbox by pressing the forward slash on your keyboard. 
 The quick search box works instantaneously, thus hitting enter is not needed. 
 
     
 
-### 5.3. Setting the item table paging size
+### 5.4. Setting the item table paging size
 You can set the page size of the result set to be fetched from the database by using the "&page-size=&lt;&lt;page-size&gt;&gt;" url parameter or by clicking on the page sizes links bellow the table.
 The default and most convenient table paging size is 7, because it allows quick paging of a small result-set without scrolling on the screen ...  
 
     
 
-### 5.4. Paging - setting the item table's page number
+### 5.5. Paging - setting the item table's page number
 If the result-set requested is larger than the page size you can go to the next page number by using the "&pg-num=&lt;&lt;page-num&gt;&gt;" url parameter. 
 You could go to the next page number by clicking on the links just bellow the quick search textbox. The table control has UI for setting the table page number. 
 The pager shows 10 pages at a "pager page" so getting to the end of hundreds of pages ( depending of course on your page size ) is comparably easy. 
@@ -324,40 +326,40 @@ You could quickly use the / char shortcut to focus to the quick search box and f
 
     
 
-### 5.5. Item table paging
+### 5.6. Item table paging
 The table paging is decided by the pg-num=&lt;&lt;page-number&gt;&gt; and the pg-size=&lt;&lt;page-size&gt;&gt; url operators. 
 
     
 
-### 5.6. Keyboard usability in the list page
+### 5.7. Keyboard usability in the list page
 The order of all the ui elements of the list-as-grid page has been arranged so that the user could cycle trough the whole page by accessing all the elements quickly.
 Power-users will find it extremely convenient to cycle and edit small tables.
 
     
 
-#### 5.6.1. Navigability of the list page with the keyboard
+#### 5.7.1. Navigability of the list page with the keyboard
 
 You can quickly traverse the cells of the table via the tab key, which does go over the non-editable items too ( the id's ) , so that you could quickly scroll the table as scrolling when the editable is in focus does not work. 
 The whole table is easily scrollable whenever the cursor is on non-editable part of the table ( the id's column ) and whenever the last rows must be edited the page is scrolled so that the rows are situated in the middle and not the bottom of the screen. 
 
     
 
-#### 5.6.2. Focus the quick search box
+#### 5.7.2. Focus the quick search box
 You could focus the quick search by typing / IF you are not editing a cell. Thus the paging on the next cell is quite handy - as you could easily jump onto the quick search and with couple of tabs navigate to the next page. 
 
     
 
-#### 5.6.3. Undo the edit on a cell
+#### 5.7.3. Undo the edit on a cell
 If you were on a cell and types some text without leaving it, but you change your mind you could simply press the Esc key, which will restore the original content of the cell and you could proceed by tab to the next cell. 
 
     
 
-#### 5.6.4. Keyboard navigation on the edit form
+#### 5.7.4. Keyboard navigation on the edit form
 You could open the edit form with the keyboard while your cursors is on the id button of the item in the grid ( Note that the colour of the button text has to change also. By hitting enter the edit form will open witch the title id selected, from there you could cycle with the tab on each control of the form, thus each time the focus leaves a control the data updated or not is saved to the database. You could close the form by hitting enter when the close button is selected. 
 
     
 
-### 5.7. New item creation (CREATE)
+### 5.8. New item creation (CREATE)
 A new item could be added to the table in the ui and thus in the db table by clicking the plus button above the table ( which uses the google material design ui ). 
 The new button has a fixed position, thus available during scrolling as well from the same position. 
 The new button changes it's appears when focused via the keyboard, and can be pressed when in focus by hitting enter with the keyboard. 
@@ -366,65 +368,65 @@ https://qto.fi/qto/list/test_create_table?as=grid&pick=id,name&page-size=5&page-
 
     
 
-#### 5.7.1. Successful execution
+#### 5.8.1. Successful execution
 After clicking the plus button the System adds the new row into the database table and presents it into the table ui AS THE FIRST ROW to emphasise the created row - that is the existing sort of the table is changed to the id column. Note that if you had a defined sorting order before the addition of the new item, it has been replaced by the "order by the latest created" sorting order. 
 
     
 
-#### 5.7.2. Error handling on list page click create new item action
+#### 5.8.2. Error handling on list page click create new item action
 If any error occurs while the creation an error msg is presented clearly with fading effect, which returns the error msg from the database. 
 On invalid input the data is not created to the database and nothing is stored. 
 
     
 
-### 5.8. Item edit (UPDATE)
+### 5.9. Item edit (UPDATE)
 There are 2 ways to edit an item of the qto application :
  - inline edit
  - form edit
 
     
 
-#### 5.8.1. Form edit
+#### 5.9.1. Form edit
 You open the form to edit an item from the id button on the left. A modal dialog containing the filled in details of the item appears. You could either simply cycle via the keyboard trough the items, or edit some of the item details, as soon as any of the controls in the form is selected, after leaving the control the data is saved straight to the database. 
 
     
 
-#### 5.8.2. In-line edit ( UPDATE )
+#### 5.9.2. In-line edit ( UPDATE )
 The grid can be edited inline so that the data is updated to the database. White space in the cells is preserved. 
 To practice new items' creations updates and deletions to get comfortable on the app's behaviour please use first the development instances of the qto project: 
 https://qto.fi/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
 
     
 
-##### 5.8.2.1. Table columns resizing
+##### 5.9.2.1. Table columns resizing
 You can resize the columns of the tables to a max size of 500 pixels by dragging only one text area. Note however that the textarea will NOT be resized bigger than the maximum width of the current column … 
 For the visual outlook of the table a certain default values for certain columns' contents widths are assumed.
 
     
 
-##### 5.8.2.2. Contents for the table's cells
+##### 5.9.2.2. Contents for the table's cells
 The table's cells should accept any UTF-8 characters including html entities. The textarea's width should adjust automatically till the width of the widest cell in the table column.
 
     
 
-##### 5.8.2.3. Successful execution
+##### 5.9.2.3. Successful execution
 If the single cell inline-edit is successful no msg is presented and the data is updated to the database storage.
 If the updated cell was part of the currently sorted column the ui is automatically adjusted to the new sort order ( for example if a numeric sort was applied and the cell had value of 9 with 1..9 range and the smallest to greatest was currently active if the new update is 1 the item will appear in the top of the listing.
 
     
 
-##### 5.8.2.4. Error handling on db update error
+##### 5.9.2.4. Error handling on db update error
 If any error occurs while updating an error msg is presented clearly with fading effect, which returns the error msg from the database. 
 On invalid input the data is not updated to the database and the old value in the cell is restored.
 
     
 
-##### 5.8.2.5. Nulls handling
+##### 5.9.2.5. Nulls handling
 Nulls handling is somewhat problematic in ui. For now the behaviour by convention is to leave a nullable record in the database as null, whether the cell of the ui table is left empty ( white space chars are also considered empty)
 
     
 
-### 5.9. Item deletion ( DELETE )
+### 5.10. Item deletion ( DELETE )
 You could delete items by clicking the delete button with the trash icon in the beginning of every item. 
 To practice new items' creations and deletions to get comfortable on the app's behaviour please use first the development instances of the qto project: 
 https://qto.fi/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
@@ -433,7 +435,7 @@ The usual way if an error has occurred during the delete the error msg is displa
 
     
 
-### 5.10. List as print-table page
+### 5.11. List as print-table page
 The list as print-table page is aimed at producing quickly refined result-set from the database for a further copy paste on to another html page ( wiki etc. )  or even print to paper. 
 It has all the functionalities as the list as "table" page, without the filtering from the quick search box and without the ui for the pager and page-sizer -the url params for paging and page-sizing work, however. All the url params work as in the grid listing page. 
 https://qto.fi/qto/list/yearly_issues?as=print-table&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
@@ -445,29 +447,28 @@ The view page presents the data of a database table, having nested-set hierarchi
 
     
 
-### 6.1. Loading the view doc page
+### 6.1. Navigating the view doc page
+You can read a document peace by peace ( aka the big elephant ) by clicking on the logical numbers on the left of the titles in the content - the system will always post the click item to the top - note how the address bar in the broser changes too.
+
+    
+
+#### 6.1.1. Loading the view doc page
 When the page is loaded all the content of the document is presented / according to the urls params / which are applying the same filtering as in the list page , but on the hierarchical data-set …
 Should there be an error a dynamic snackbar is presented with the error message. The snackbar hides itself by default after 3.9 seconds ( set by default , but it could be pinned to the page by the user to view it properly / send it further). 
 
     
 
-### 6.2. Using the TOC menu
-The Table of Contents ( TOC ) right menu can be opened and closed and scrolled separately from the scroll of the view doc.
-
-    
-
-### 6.3. Searching the view doc by quick filtering
+#### 6.1.2. Searching the view doc by quick filtering
 Once the page is loaded the top search omnibox is selected. As soon as you start typing the document the ui starts shrinking the page by presenting ONLY the items containing the search string ( the search is case-insensitive). You can cycle and update the content for the displayed items. If your focus is not on an editable element of the page .you could focus the quick search by typing the "/" char similarly to how you could focus the search box in gmail.
 
     
 
-### 6.4. Managing the view doc data with the right click menu ( beta )
-This feature is in beta mode still - expect some quirks along the way ...
-If you right click on a number of a title or on the title in the right TOC listing and choosing one of the following options you could:
+#### 6.1.3. Navigating trough the document via the TOC right menu item
+The Table of Contents ( TOC ) right menu can be opened and closed and scrolled separately from the scroll of the view doc. Whenever you click on the links in the right menu the document content on the left is scrolled nicely with the clicked title to the top of the screen. 
 
     
 
-### 6.5. Smart interlinking - sharing items to another users
+### 6.2. Smart interlinking - sharing items to another users
 The items interlinking works both in the list-grid and in the view-doc pages ( the description ).
 Any &lt;&lt;item&gt;&gt;-&lt;&lt;id&gt;&gt; where &lt;&lt;id&gt;&gt; is a whole number is converted into the jump to the anchor of that exact item id of that &lt;&lt;item&gt;&gt;. 
 For example :
@@ -480,7 +481,16 @@ for example: principles-1805311658
 
     
 
-### 6.6. The right table of contents menu
+### 6.3. Managing the view doc data with the right click menu ( beta )
+You can right click ANY of the toc menu items ( including the doc title, which IS NOT right clickable from the document content) and choose one of the actions to perform on the clicked item:
+
+This feature is in beta mode still - expect some serious quirks along the way ...
+If you right click on a number of a title or on the title in the right TOC listing and choosing one of the following options you could:
+
+    
+
+### 6.4. The right table of contents  - aka the "TOC menu"
+The right Table Of Contents ( TOC ) menu
 You open and close the right click menu from the upper menu icon. The right click menu presents the structure of the document.You could navigate with the keyboard trough the right menu links too. 
 Note that when you click on a link on the right menu the title of the item you clicked on is scrolled to the top of the page.
 Right click on the title items presents the context menu containing several different options to perform on a branch of the document. 
@@ -488,34 +498,41 @@ Note, that you can quickly navigate with the tab key on the keyboard once the ri
 
     
 
-#### 6.6.1. Open & dive to manage only parts of the documents
+#### 6.4.1. Open & dive to manage only parts of the documents
 View the current title and it's tree as a separate document altogether - the larger your documents become the easier it could be to edit them once you open just a specific branch from the document as it's own document.
 
     
 
-#### 6.6.2. Open in list
+#### 6.4.2. Open in list
 See the current branch of the document as table, which will display the additional metadata you could define to track your content ( for example status per item ). You could use the open list to quickly add src_code ui element to your items ( for now there is no view doc for this feature ... )
 
     
 
-#### 6.6.3. Export to md
+#### 6.4.3. Export to md
 This option exports this branch as Mark Down document ( GitHub syntax ), Microsoft Azure is supported as well.
 
     
 
-#### 6.6.4. Pdf print preview
-View the current title's tree as pdf printable document convenient for printing as well ... 
+#### 6.4.4. Add new parent node ( beta )
+Adding new parent node means simply adding a new item in the document on the upper level in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4-th item on the first level you will get the 5.0 item and if the 5.0. item already exist it will be set as the 6.0. and so on ...
+This feature does not work for all the cases properly for now ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
 
     
 
-#### 6.6.5. Add new parent node
-Adding new parent node means simply adding a new item in the document on the upper level in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 5.0 item and if the 5.0. item already exist it will be set as the 6.0. and so on ...
-This feature does not work for all the cases properly for now ... you might have to reload the page if the ui does not behave according to the description above - this is known bug with WIP status ...
-
-    
-
-#### 6.6.6. Add new sibling node
+#### 6.4.5. Add new sibling node ( beta )
 Adding new sibling node means simply adding a new item in the document on the same hierarchy level as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.4. item and if the 4.4. item already exist it will be set as the 4.5. and so on ...
+This feature does not work for all the cases properly for now ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
+
+    
+
+#### 6.4.6. Add new child node ( beta )
+Adding new parent node means simply adding a new item in the document on one level bellow in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exist it will be set as the 4.3.2. and so on ...
+This feature does not work for all the cases properly for now ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
+
+    
+
+#### 6.4.7. Remove node
+Adding new parent node means simply adding a new item in the document on one level bellow in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exist it will be set as the 4.3.2. and so on ...
 This feature does not work for all the cases properly for now ... you might have to reload the page if the ui does not behave according to the description above - this is known bug with WIP status ...
 
     
@@ -525,20 +542,8 @@ The search page is presented either after you have search globally from either t
 
     
 
-#### 7.1. Add new child node
-Adding new parent node means simply adding a new item in the document on one level bellow in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exist it will be set as the 4.3.2. and so on ...
-This feature does not work for all the cases properly for now ... you might have to reload the page if the ui does not behave according to the description above - this is known bug with WIP status ...
-
-    
-
 ### 7.1. Cycling though the search results
 The search results listing provides a slice of the simple text search from the project database based on the postgres relevance algorithm. If you have more than 7 results you can set the size of the listing, go to the next page of the search result, previous etc. 
-
-    
-
-#### 7.1.1. Remove node
-Adding new parent node means simply adding a new item in the document on one level bellow in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exist it will be set as the 4.3.2. and so on ...
-This feature does not work for all the cases properly for now ... you might have to reload the page if the ui does not behave according to the description above - this is known bug with WIP status ...
 
     
 

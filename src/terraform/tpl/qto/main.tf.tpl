@@ -45,6 +45,7 @@ resource "aws_vpc" "$ENV_TYPE-vpc" {
 
   tags = {
    Name = "$ENV_TYPE-vpc"
+   Version = "$VERSION"
   }
 }
 
@@ -153,6 +154,13 @@ vpc_id = "${aws_vpc.$ENV_TYPE-vpc.id}"
     protocol    = "tcp"
     cidr_blocks     = ["0.0.0.0/0"]
   }
+  // postgres
+  ingress {
+    from_port   = 15432 
+    to_port     = 15432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   egress {
     from_port       = 0
@@ -196,7 +204,8 @@ resource "aws_instance" "$ENV_TYPE-qto-inst" {
 	key_name      = "$key_name"
 
   tags = {
-    Name = "$ENV_TYPE-qto-ec2"
+   Name = "$ENV_TYPE-qto-ec2"
+   Version = "$VERSION"
   }
 }
 
