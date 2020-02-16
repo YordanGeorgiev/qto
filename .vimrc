@@ -3,8 +3,6 @@
 " main principle - Don't put any lines in your vimrc that you don't understand !!!
 " enable syntax hightlighting
 
-set backspace=2 " backspace work l
-
 " adjust the backspace behaviour 
 set backspace=indent,eol,start
 
@@ -17,7 +15,7 @@ set winheight=92
 " set the brightest possible colorscheme
 colorscheme elflord
 " colorscheme Tomorrow-Night-Blue
-    
+
 " v1.1.9
 " the num of spaces for a tab - 4 is too much , 2 is too little
 " convert tabs into spaces
@@ -99,7 +97,7 @@ set wildignore+=**/node_modules/**
 " use perl regexes - src: http://andrewradev.com/2011/05/08/vim-regexes/
 noremap / /\v
 
-" my perl code under <<PRODUCT_INSTANCE_DIR>>/src/perl/<<tool-name-only-dir>>
+" my perl code under <<product_instance_dir>>/src/perl/<<tool-name-only-dir>>
 map <C-c><C-c> :!perl -MCarp::Always -I `pwd`/src/perl/*/ -I `pwd`/src/perl/*/lib/ -wc %
 
 " use perltidy with pre-configured mojolicious settings
@@ -117,6 +115,8 @@ map <C-c><C-c> :!perl -MCarp::Always -I `pwd`/src/perl/*/ -I `pwd`/src/perl/*/li
 " :fin Reader, tab, tab
 " display all the matthing files
 set wildmode=longest,list,full
+
+" :b substring from open buffer, will open that buffw
 set wildmenu
 "
 " F3 would go to the next buffer
@@ -165,7 +165,9 @@ set textwidth=100
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 " recursive file search by typing :file <<str-in-file-name>>
-set path +=**
+"set path +=**
+" to use the autocomplete in insert mode type Ctrl+N several times 
+set path=.,**
 
 " how-to open files starting with a string 
 " :fin Reader tab tab
@@ -217,7 +219,7 @@ filetype plugin on
 " :so ~/.vimrc
 " ---------------------------------------------------------
 "
-" how-to search g/to-srch/#
+" g/srch/#
 " how-to jump back and fortch visited code locations- Ctrl + O , Ctrl + I
 " how-to search for file / dir names starting with SomeStr
 " how-to srch for the word under the cursor forward - *
@@ -234,9 +236,6 @@ filetype plugin on
 " how-to jump to marks in the current file - in normal - 'A , 'B
 " how-to delete all the marks :delmarks A-Z0-9
 " how-to open the previous file - Ctrl + ^
-" how-to delete a letter in Normal mode - dl
-" how-to move by words back and forth - b , w
-" how-to delete a word from back to forth ( aka Alt + Backspace in most uis) - db
 " :delm! | delm A-Z0-9
 " how-to open a filename somewhere under the current root
 " :args **/*file-name*
@@ -274,7 +273,6 @@ filetype plugin on
 
 " src: https://stackoverflow.com/a/2460593/65706
 set path=.,**
-set complete=i
 
 " Set the type for the file type and override if file type
 " already has detected
@@ -291,6 +289,8 @@ let sh_fold_enabled=1
 let perl_extended_vars=1
 let perl_sync_dist=250
 
+" remove the included files while searching for autocomplete by Ctrl+N in insert mode
+" check the ~/.vim/perl.vim
 
 " list of used plugins 
 " use tab tab for smart completion , set path=.,** if it takes too long to load
@@ -300,8 +300,16 @@ let perl_sync_dist=250
 " u - undo
 " Ctrl + R - redo
 " set the cursor at the top of the page in Normal mode - zt
-" VersionHistory
+
+" Purpose:
+" Store the vim settings for quick and easy vim setup on different hosts
+"
+" Usage:
+"  wget -O ~/.vimrc https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/.vimrc.host-name
+"  sudo perl -pi -e '$_="$_\nhi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE" if $. == 27' $(locate elflord.vim)
+"
+" Version
 " ---------------------------------------------------------
-" export version=1.2.8
+" export version=1.3.0
 "
 " eof file: ~/.vimrc

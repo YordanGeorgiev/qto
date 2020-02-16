@@ -44,7 +44,9 @@ Vagrant.configure("2") do |config|
          source $(find . -name '.env') && cd qto/qto.$VERSION.$ENV_TYPE.$USER
 
          # ensure application layer consistency, run db ddl's and load data from s3
-         bash ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3 -a fix-db-permissions
+         bash ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs 
+         bash ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl 
+         bash ./src/bash/qto/qto.sh -a load-db-data-from-s3 -a fix-db-permissions
 
          # start the web server
          ./src/bash/qto/qto.sh -a mojo-hypnotoad-start

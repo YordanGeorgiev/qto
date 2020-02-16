@@ -20,6 +20,9 @@ our $config          = {};
 our $objLogger       = {} ;
 our $rdbms_type      = 'postgre';
 
+
+
+
 #
 # --------------------------------------------------------
 # Select all the rows from db by passed db and table name
@@ -30,7 +33,7 @@ sub doSelectItems {
    my $db               = $self->stash('db');
    my $item             = $self->stash('item');
 
-   my $http_method      = 'GET' ;  
+   my $http_method      = 'GET' ;
    my $http_code        = 200 ; 
    my $ret              = 0;
    my $dat              = undef ; 
@@ -41,7 +44,7 @@ sub doSelectItems {
    my $mc               = {}; # the meta-counter of the meta-data
    my $cnt              = 0 ; 
    my $objCnrUrlPrms    = {} ; 
-   my $objRdrDbsFcry = {} ; 
+   my $objRdrDbsFcry    = {} ; 
    my $objRdrDb         = {} ; 
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
