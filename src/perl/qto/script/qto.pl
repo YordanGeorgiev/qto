@@ -131,12 +131,13 @@ sub do_init {
    }
 
    p $config ; # not a debug print !!!
+   my $db = $config->{'env'}->{'db'}->{'postgres_db_name'};
 
    $objLogger = 'Qto::App::Utils::Logger'->new(\$config);
    my $m = "START MAIN";
    $objLogger->doLogInfoMsg($m);
 
-   $objModel               = 'Qto::App::Mdl::Model'->new ( \$config ) ; 
+   $objModel               = 'Qto::App::Mdl::Model'->new ( \$config , $db , 'xls') ; 
    my $objRdrCmdArgs 	   = 'Qto::App::IO::In::RdrCmdArgs'->new(\$config , \$objModel ) ; 
    $objRdrCmdArgs->doRead();
    my $objRdrEnv 	         = 'Qto::App::IO::In::RdrEnv'->new(\$config, \$objModel ) ; 

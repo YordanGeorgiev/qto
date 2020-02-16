@@ -69,18 +69,21 @@
   * [8.18. DEPLOYMENT TO THE TEST ENVIRONMENT](#818-deployment-to-the-test-environment)
   * [8.19. CHECK THAT ALL THE FILES IN THE DEPLOYMENT PACKAGE ARE THE SAME AS THOSE IN THE LATEST COMMIT OF THE DEV GIT BRANCH. ](#819-check-that-all-the-files-in-the-deployment-package-are-the-same-as-those-in-the-latest-commit-of-the-dev-git-branch-)
   * [8.20. RESTART THE APPLICATION LAYER](#820-restart-the-application-layer)
-* [9. SECURITY](#9-security)
-  * [9.1. AUTHENTICATION](#91-authentication)
-    * [9.1.1. Session based native authentication](#911-session-based-native-authentication)
-    * [9.1.2. JWT based native authentication](#912-jwt-based-native-authentication)
-* [10. KNOWS ISSUES AND WORKAROUNDS](#10-knows-issues-and-workarounds)
-  * [10.1. AUTHORISATION](#101-authorisation)
-  * [10.2. ALL TESTS FAIL WITH THE 302 ERROR](#102-all-tests-fail-with-the-302-error)
-  * [10.3. MORBO IS STUCK](#103-morbo-is-stuck)
-    * [10.3.1. Problem description](#1031-problem-description)
-    * [10.3.2. Probable root cause](#1032-probable-root-cause)
-    * [10.3.3. Kill processes](#1033-kill-processes)
-  * [10.4. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#104-the-page-looks-broken--probably-the-new-css-is-not-re-loaded)
+* [9. DEVBOX SETUP ( OPTIONAL )](#9-devbox-setup-(-optional-))
+  * [9.1. THE TMUX TERMINAL MULTIPLEXER](#91-the-tmux-terminal-multiplexer)
+  * [9.2. THE VIM IDE](#92-the-vim-ide)
+  * [9.3. AUTHENTICATION](#93-authentication)
+* [10. SECURITY](#10-security)
+    * [10.1. JWT based native authentication](#101-jwt-based-native-authentication)
+    * [10.2. Session based native authentication](#102-session-based-native-authentication)
+* [11. KNOWN ISSUES AND WORKAROUNDS](#11-known-issues-and-workarounds)
+  * [11.1. ALL TESTS FAIL WITH THE 302 ERROR](#111-all-tests-fail-with-the-302-error)
+  * [11.2. ALL TESTS FAIL WITH THE 302 ERROR](#112-all-tests-fail-with-the-302-error)
+    * [11.2.1. Probable root cause](#1121-probable-root-cause)
+  * [11.3. MORBO IS STUCK](#113-morbo-is-stuck)
+    * [11.3.1. Problem description](#1131-problem-description)
+    * [11.3.2. Kill processes](#1132-kill-processes)
+  * [11.4. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#114-the-page-looks-broken--probably-the-new-css-is-not-re-loaded)
 
 
 
@@ -537,12 +540,27 @@ Well just chain the both commands.
 
     bash src/bash/qto/qto.sh -a mojo-morbo-stop ; bash src/bash/qto/qto.sh -a mojo-morbo-start
 
-## 9. SECURITY
+## 9. DEVBOX SETUP ( optional )
+Every developer has his/her own development setup - this section is completely optional - your setup might be much more developed than the one suggested here ... You might find it 
 
+    # run the automatic personal setup
+    curl https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/src/bash/deployer/setup-bash-n-vim.sh | bash -s yordan.georgiev@gmail.com
 
+### 9.1. The tmux terminal multiplexer
+In this setup the tmux.conf contains all the instructions on the shortcut mappings, which enable quick navigation from one UI terminal window to multiple sessions with multiple windows etc. ...
+
+    cat ~/.tmux.conf
+
+### 9.2. The vim IDE
+Once again we DO NOT encourage "religious wars", if you happen to be using or interested about the setup used for development, check the .vimrc at the root of the project, which will point you to all the plugins, shortcuts and settings used.
+
+    # to check the syntax in the current file:
+    :make
     
+    # to check the syntax in the whole project from the proj root:
+    bash ./src/bash/qto/qto.sh -a check-perl-syntax
 
-### 9.1. Authentication
+### 9.3. Authentication
 You might want to refresh the following security related links from time while reading this section:
 
 http://self-issued.info/docs/draft-jones-json-web-token-06.html
@@ -551,7 +569,20 @@ https://tools.ietf.org/html/rfc6749#section-1.5
 
     
 
-#### 9.1.1. Session based native authentication
+## 10. SECURITY
+
+
+    
+
+#### 10.1. JWT based native authentication
+Theory chk the following links:
+http://self-issued.info/docs/draft-jones-json-web-token-06.html
+https://metacpan.org/pod/Mojo::JWT
+https://tools.ietf.org/html/rfc6749#section-1.5
+
+    
+
+#### 10.2. Session based native authentication
 The session based authentication works basically as follows:
  - non-authenticated users requests a resource from the application layer
  - the application layer , runs the controller specified in the route
@@ -562,39 +593,49 @@ So as of v0.7.8 - no roles, no permissions are implemented - the users are eithe
 
     
 
-#### 9.1.2. JWT based native authentication
-Theory chk the following links:
-http://self-issued.info/docs/draft-jones-json-web-token-06.html
-https://metacpan.org/pod/Mojo::JWT
-https://tools.ietf.org/html/rfc6749#section-1.5
-
-    
-
-## 10. KNOWS ISSUES AND WORKAROUNDS
+## 11. KNOWN ISSUES AND WORKAROUNDS
 
 
     
 
-### 10.1. Authorisation
-
-
-    
-
-### 10.2. All tests fail with the 302 error
+### 11.1. All tests fail with the 302 error
  This one is actually a bug ... all the tests not requiring non-authentication mode should set it in advance ...
 
     # disable authentication during testing
-    export QTO_ONGOING_TEST=1
+    export QTO_NO_AUTH=1
     
     # call the test once again
     perl src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
 
-### 10.3. Morbo is stuck
+### 11.2. All tests fail with the 302 error
+ This one is actually a bug ... all the tests not requiring non-authentication mode should set it in advance ...
+
+    # disable authentication during testing
+    export QTO_NO_AUTH=1
+    
+    # call the test once again
+    perl src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
+
+#### 11.2.1. Probable root cause
+This one occurs quite often , especially when the application layer is restarted, but the server not 
+
+    # the error msg is 
+     [INFO ] 2018.09.14-10:23:14 EEST [qto][@host-name] [4426] running action :: mojo-morbo-start:doMojoMorboStart
+    (Not all processes could be identified, non-owned process info
+     will not be shown, you would have to be root to see it all.)
+    tcp        0      0 0.0.0.0:3001            0.0.0.0:*               LISTEN      6034/qto
+    tcp        0      0 0.0.0.0:3002            0.0.0.0:*               LISTEN      7626/qto
+    Can't create listen socket: Address already in use at /usr/local/share/perl/5.26.0/Mojo/IOLoop.pm line 130.
+     [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN with:
+     [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
+    qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
+
+### 11.3. Morbo is stuck
 
 
     
 
-#### 10.3.1. Problem description
+#### 11.3.1. Problem description
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -608,21 +649,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 10.3.2. Probable root cause
-This one occurs quite often , especially when the application layer is restarted, but the server not 
-
-    # the error msg is 
-     [INFO ] 2018.09.14-10:23:14 EEST [qto][@host-name] [4426] running action :: mojo-morbo-start:doMojoMorboStart
-    (Not all processes could be identified, non-owned process info
-     will not be shown, you would have to be root to see it all.)
-    tcp        0      0 0.0.0.0:3001            0.0.0.0:*               LISTEN      6034/qto
-    tcp        0      0 0.0.0.0:3002            0.0.0.0:*               LISTEN      7626/qto
-    Can't create listen socket: Address already in use at /usr/local/share/perl/5.26.0/Mojo/IOLoop.pm line 130.
-     [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN with:
-     [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
-    qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
-
-#### 10.3.3. Kill processes
+#### 11.3.2. Kill processes
 List the running perl processes which run the morbo and kill the instances
 
     ps -ef | grep -i perl
@@ -630,7 +657,7 @@ List the running perl processes which run the morbo and kill the instances
     # be carefull what to kill 
     kill -9 <<proc-I-know-is-the-one-to-kill>>
 
-### 10.4. The page looks broken - probably the new css is not re-loaded
+### 11.4. The page looks broken - probably the new css is not re-loaded
 This problem is quite oftenly experienced and a real time-burner, so keep those shortcuts bellow in mind. 
 To apply the newest css do a hard reload in Chrome with the shortcut COMMAND + SHIFT + R.
 The other option is to keep the SHIFT button and press the reload button the Chrome address bar ( this one has been buggy from time to time as well. ... )

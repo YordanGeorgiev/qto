@@ -21,17 +21,16 @@ use Qto::App::Utils::Timer ;
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 my $module_trace        = 0 ;
-our $config          = {};
+our $config             = {};
 our $objLogger          = {} ;
 our $rdbms_type         = 'postgres';
-
 
 
 sub doSearchItems {
    my $self             = shift;
    my $db               = $self->stash('db');
    my $objCnrUrlPrms    = {} ; 
-   my $objRdrDbsFcry = {} ; 
+   my $objRdrDbsFcry    = {} ; 
    my $objRdrDb         = {} ; 
    my $ret              = 0;
    my $msg              = 'unknown error during search';
@@ -46,11 +45,12 @@ sub doSearchItems {
    my $item             = 'search' ; 
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
+  
    
    return unless ( $self->SUPER::isAuthenticated($db) == 1 ); 
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
    $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
-   
+
    $objCnrUrlPrms = 
       'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
    ( $ret , $msg ) = $objCnrUrlPrms->doSetQueryUrlParams('Search' );

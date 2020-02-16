@@ -16,6 +16,46 @@ our $rdbms_type      = 'postgres';
 
 #
 # --------------------------------------------------------
+# called after the users get only the login page
+# --------------------------------------------------------
+sub doShowLoginForm {
+
+   my $self             = shift;
+   my $db               = $self->stash('db');
+   my $msg              = "$db   login"; 
+   my $msg_color        = 'grey' ; 
+   
+   my $config		      = $self->app->config ; 
+   my $alConfig         = $config->{'env'}->{'app'} ; 
+   my $instance_domain  = $alConfig->{ 'web_host' } . $alConfig->{ 'port' } . '.' . $db ;
+   my $proj             = toEnvName ( $db , $config) ;
+
+   my $sessions = () ; 
+   $sessions = Mojolicious::Sessions->new  ;
+   $sessions->load($self);
+   $sessions->cookie_name('qto.' . $db) unless $sessions->cookie_name ;
+   $sessions->default_expiration(86400);
+   $sessions = $sessions->secure(0);
+   $sessions = $sessions->samesite('Strict');
+   $sessions->cookie_domain( $instance_domain) unless $sessions->cookie_domain( $instance_domain);
+   my $redirect_url = $self->session( 'app.' . $db . '.url' ) if defined $self->session( 'app.' . $db . '.url' ) ; 
+   $self->session( 'app.' . $db . '.user' => undef);
+
+   # do not allow login to land on a <<env>>_<<proj-db>>/login to avoid mixing of envs
+   my $plain_db         = toPlainName($db);
+   if ( $db ne $plain_db){
+      my $login_redirect_url        = '/' . $plain_db . '/login';
+      $self->redirect_to( $login_redirect_url);
+      return ;
+   }
+
+   $self->doRenderPageTemplate(200,$msg,$msg_color,$proj,$redirect_url) ;
+   return ;
+}
+
+
+#
+# --------------------------------------------------------
 # called after the users presses the login button
 # --------------------------------------------------------
 sub doLoginUser {
@@ -35,6 +75,8 @@ sub doLoginUser {
 
    $config		         = $self->app->config ; 
    $objLogger           = 'Qto::App::Utils::Logger'->new( \$config );
+
+
    $db                  = toEnvName ( $db , $config) ;
 	#print STDOUT "Logon.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
@@ -44,7 +86,7 @@ sub doLoginUser {
    my $redirect_url     = $self->param('redirect-url' );
    $redirect_url        = '/' . $db . '/search' unless $redirect_url ;
    
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db) ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , 'login') ;
    $objModel->set('postgres_db_name' , $db ) ; 
    $objLogger->doLogInfoMsg ( "login attempt for " . $self->setEmptyIfNull($email)) ; 
 
@@ -85,37 +127,6 @@ sub doLoginUser {
 }
 
 
-#
-# --------------------------------------------------------
-# called after the users get only the login page
-# --------------------------------------------------------
-sub doShowLoginForm {
-
-   my $self             = shift;
-   my $db               = $self->stash('db');
-   my $msg              = "$db   login"; 
-   my $msg_color        = 'grey' ; 
-   
-   my $config		      = $self->app->config ; 
-   my $alConfig         = $config->{'env'}->{'app'} ; 
-   my $instance_domain  = $alConfig->{ 'web_host' } . $alConfig->{ 'port' } . '.' . $db ;
-   my $proj             = toEnvName ( $db , $config) ;
-
-   my $sessions = () ; 
-   $sessions = Mojolicious::Sessions->new  ;
-   $sessions->load($self);
-   $sessions->cookie_name('qto.' . $db) unless $sessions->cookie_name ;
-   $sessions->default_expiration(86400);
-   $sessions = $sessions->secure(0);
-   $sessions = $sessions->samesite('Strict');
-   $sessions->cookie_domain( $instance_domain) unless $sessions->cookie_domain( $instance_domain);
-   my $redirect_url = $self->session( 'app.' . $db . '.url' ) if defined $self->session( 'app.' . $db . '.url' ) ; 
-   $self->session( 'app.' . $db . '.user' => undef);
-   $self->doRenderPageTemplate(200,$msg,$msg_color,$proj,$redirect_url) ;
-   return ;
-}
-
-
 # $self->doRenderPageTemplate($ret, $msg ,$msg_color,$db,$redirect_url);
 sub doRenderPageTemplate {
    
@@ -128,6 +139,7 @@ sub doRenderPageTemplate {
    my $notice           = '' ;
 
    $config		         = $self->app->config ; 
+   $db                  = toPlainName ($db);
    $msg = "$db login" unless $msg ; 
 
    $self->res->code($http_code) ; 

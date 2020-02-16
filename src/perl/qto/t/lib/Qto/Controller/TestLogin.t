@@ -7,16 +7,17 @@ use Test::Mojo;
 
 die_on_fail;
 
-BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
-   $ENV{'QTO_NO_AUTH'} = 1;
-
+BEGIN { 
+   unshift @INC, "$FindBin::Bin/../../../../../qto/lib" ; 
+   }
+   $ENV{'QTO_NO_AUTH'} = 0;
    my $tm         = '' ; # the test message for each test 
    my $emsg       = '' ; # the expected msg on the ui
    my $t          = Test::Mojo->new('Qto');
    $t->ua->max_redirects(10);
    my $config  = $t->app->config ; 
    my $db    = $config->{'env'}->{'db'}->{'postgres_db_name'} ; 
-   my $url        = '/' . $db . '/login' ; # the login url to test for 
+   my $url        = '/' . toPlainName($db) . '/login' ; # the login url to test for 
    my $tx         = {}  ; # the transaction object 
 
    $tm = "the email posted should not be empty"; 
@@ -94,5 +95,29 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $ProductVersion = $config->{'env'}->{'run'}->{'VERSION'} ;
    $tm = "login product version of this product instance: $ProductVersion " ; 
    ok ( $tx->result->dom->all_text =~ m/$db $ProductVersion  $env  $GitShortHash/ , $tm ) ;
+   
+   sub matches {
+      my $first = shift ; 
+      my $second = shift ; 
+      return $first =~ m/$second/gm;
+   }
+
+   $tm='the db requested has ANY <<env>>_ prefix it MUST be removed during the intial login' ;
+   my @env_dbs = ('dev_foobar' , 'tst_qto' , 'prd_baz');
+   for my $env_db ( @env_dbs) {
+      my $plain_db = toPlainName($env_db);
+      $url = '/' . $env_db . '/login' ;
+      ok ( $t->get_ok($url)->status_is(200) , $tm ) ;
+      $tx = $t->ua->get( $url); 
+      ok ( $tx->result->dom->all_text =~ "$plain_db login" , $tm );
+      ok ( !matches($tx->result->dom->all_text, "$env_db login" ), $tm );
+   }
+
+
+   sub toPlainName {
+      my $db  = shift ; 
+      $db =~ s/^|dev_|tst_|qas_|prd_|//g;
+      return $db ;
+   }
 
 done_testing();
