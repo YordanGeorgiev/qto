@@ -1,0 +1,57 @@
+<!-- courtesy of https://livelybone.github.io/vue/vue-datepicker/ -->
+<html>
+<head>
+<title>vue-date-time-picker-01</title>
+
+<link rel="stylesheet" type="text/css" href="/poc/vue-date-time-picker/02/vue-date-time-picker.css"/>
+</head>
+<body>
+
+<div> 
+<input style="width: 100px" id="datetime-picker"></input>
+</div>
+      <script src="https://unpkg.com/vue@2.5.3/dist/vue.js"></script>
+		<script src="/poc/vue-date-time-picker/02/vue-date-time-picker.js"></script>
+<script>
+
+var popperProps = {
+  popperOptions: {
+    modifiers: {
+      preventOverflow: {
+        padding: 20
+      }
+    }
+  }
+}
+new Vue({
+  el: '#datetime-picker',
+  template: '<datetime-picker type="second"' +
+  '                           :value="time"' +
+  '                           @input="log"' +
+  '                           min="2018-08-24 02:10:02"' +
+  '                           max="2020-09-1 22:10:00"' +
+  '                           :timeStr="timeStr"' +
+  '									:dayStr="dayStr"' +
+  '									:btnStr="btnStr"' +
+  '                           :scrollbarProps="{isMobile:true,maxHeight:\'2rem\'}"' +
+  '                           :popperProps="popperProps"/>',
+  data: function () {
+    return {
+      timeStr: ['hour', 'min', 'sec'],
+      time: '2019-02-01 01:02:01',
+      isM: true,
+		dayStr: ['mo','tu','we','th','fr','sa','su'],
+		btnStr: 'X',
+      popperProps: popperProps
+    }
+  },
+  methods: {
+    log: function (val) {
+      this.time = val
+    }
+  },
+  components: { 'datetime-picker': VueDatepicker.DatetimePicker }
+})
+</script>
+</body>
+</html>
