@@ -2,6 +2,15 @@
 cnf/env/dev.env.json
 cnf/env/prd.env.json
 cnf/env/tst.env.json
+# start vue-date-time-picker
+src/perl/qto/public/poc/vue-date-time-picker
+src/perl/qto/public/poc/vue-date-time-picker/01
+src/perl/qto/public/poc/vue-date-time-picker/01/index.html
+src/perl/qto/public/poc/vue-date-time-picker/02
+src/perl/qto/public/poc/vue-date-time-picker/02/index.html
+src/perl/qto/public/poc/vue-date-time-picker/03
+src/perl/qto/public/poc/vue-date-time-picker/03/index.html
+# stop  vue-date-time-picker
 # start redis
 src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/lib/Qto/Controller/Select.pm
