@@ -1,0 +1,12 @@
+<script type="text/x-template" id="vue-select-tmpl"> 
+   <v-select label="name" :filterable="true" :options="options" @search="onSearch" @input="setSelected" :id="id" :value="selected">
+    <template slot="no-options">
+      type search ...
+    </template>
+    <template slot="selected-option" slot-scope="option">
+      <div class="selected d-center">
+        {{ option.name }}
+      </div>
+    </template>
+  </v-select> 
+</script>
