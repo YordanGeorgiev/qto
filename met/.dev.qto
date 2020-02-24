@@ -2,7 +2,13 @@
 cnf/env/dev.env.json
 cnf/env/prd.env.json
 cnf/env/tst.env.json
+# start model
+src/perl/qto/lib/Qto/Auth/User.pm
+src/perl/qto/lib/Qto/Auth/Role.pm
+# stop  model
 # start vue-date-time-picker
+src/perl/qto/public/poc/vue-select
+src/perl/qto/public/poc/vue-select/01/index.html
 src/perl/qto/public/poc/vue-date-time-picker
 src/perl/qto/public/poc/vue-date-time-picker/01
 src/perl/qto/public/poc/vue-date-time-picker/01/index.html
@@ -10,6 +16,8 @@ src/perl/qto/public/poc/vue-date-time-picker/02
 src/perl/qto/public/poc/vue-date-time-picker/02/index.html
 src/perl/qto/public/poc/vue-date-time-picker/03
 src/perl/qto/public/poc/vue-date-time-picker/03/index.html
+src/perl/qto/public/poc/vue-date-time-picker/04
+src/perl/qto/public/poc/vue-date-time-picker/04/index.html
 # stop  vue-date-time-picker
 # start redis
 src/perl/qto/lib/Qto/Controller/BaseController.pm
@@ -217,6 +225,7 @@ src/perl/qto/templates/controls/list-grid/xt/grid.xt.html.ep
 src/perl/qto/templates/controls/list-grid/xt/modal-dia.xt.html.ep
 src/perl/qto/templates/controls/list-grid/js/modal-dia.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/editable.js.html.ep
+src/perl/qto/templates/controls/list-grid/js/editable-cal.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/cruds-grid.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/left-menu.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
@@ -238,6 +247,7 @@ src/perl/qto/public/themes/thme-blue/css/screen/controls/table.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/modal-dia.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/pager.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/list-grid.css
+src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-date-time-picker.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/right-click-menu.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/searchbox.css
@@ -491,6 +501,7 @@ src/sql/pgsql/qto/tables/05.03.create-table-insert-trigger.quinquennially_issues
 src/sql/pgsql/qto/tables/05.04.create-table-delete-trigger.quinquennially_issues.sql
 src/sql/pgsql/qto/tables/05.05.create-table-quinquennially_issues_2020.sql
 src/sql/pgsql/qto/tables/06.create-table-decadally_issues.sql
+src/sql/pgsql/qto/tables/06.create-table-decadally_issues_2020.sql
 src/sql/pgsql/qto/tables/07.create-table-confs.sql
 src/sql/pgsql/qto/tables/09.create-table-questions.sql
 src/sql/pgsql/qto/tables/10.create-table-problems.sql
@@ -521,6 +532,7 @@ src/sql/pgsql/qto/tables/33.create-table-links.sql
 src/sql/pgsql/qto/tables/34.create-table-roles.sql
 src/sql/pgsql/qto/tables/35.create-table-users.sql
 src/sql/pgsql/qto/tables/36.create-table-user_roles.sql
+src/sql/pgsql/qto/tables/37.create-table-items_roles_permissions.sql
 src/sql/pgsql/qto/tables/38.create-table-onboarding_guide_doc.sql
 src/sql/pgsql/qto/tables/39.create-table-security_checklist_doc.sql
 src/sql/pgsql/qto/tables/40.definitions_dictionary.sql
