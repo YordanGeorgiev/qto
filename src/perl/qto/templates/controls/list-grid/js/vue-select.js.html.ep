@@ -1,0 +1,68 @@
+Vue.component('vue-select', {
+    template: "#vue-select-tmpl"
+  , props: {
+    filterable: false
+    , itemname: ''
+    , hook: ''
+    , id: ''
+  }
+  , data: function(){
+    return { 
+      options: []
+      , selected: ''
+      , url: '/<%= $db =%>/select/'
+      }
+  },
+  mounted(){
+      axios.get( this.url + this.itemname, {}
+      ).then(res => {
+		  this.options = res.data.dat
+         res.data.dat.forEach(el => { if ( el.guid === this.hook){
+            this.selected = el.name 
+            }
+         });
+      });
+  }
+  , methods: {
+     getUrlParams: function (){
+      var urlPrms = new URLSearchParams();
+      if( window.location.toString().indexOf("?") != -1) {
+         var href_part = window.location.search.split('?')[1].split('#')[0]
+         href_part.replace(/([^=&]+)=([^&]*)/g, 
+            function(m, key, value) {
+               var attr = decodeURIComponent(key)
+               var val = decodeURIComponent(value)
+               urlPrms.append(attr,val);
+         });
+      } 
+      return urlPrms ; 
+    }
+    , setSelected(optionItem) {
+      this.selected = optionItem
+      this.options.forEach(el => { 
+         if ( el.name === optionItem.name ){
+            this.$parent.updateItem(optionItem.guid,this.id,optionItem.guid);
+         }
+      })
+    }
+    , onSearch(search, loading){
+      loading(true);
+      urlPrms = this.getUrlParams()
+      if ( urlPrms.has("like-by") === false) { urlPrms.append("like-by" , "name"); }
+      if ( urlPrms.has("like-val") === false) { urlPrms.append("like-val" , search); }
+      if ( String(search).length > 1 ) {
+         this.search(loading, search, urlPrms);
+      }
+      loading(false);
+    }
+    , search(loading, search, urlPrms) {
+         axios.get( this.url + this.itemname, { params: urlPrms })
+         .then(res => {
+           this.options = res.data.dat
+         });
+    }
+  }
+  , components: {
+    'v-select': VueSelect.VueSelect,
+  }
+});

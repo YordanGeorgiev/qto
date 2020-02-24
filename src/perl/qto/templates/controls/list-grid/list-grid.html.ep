@@ -19,6 +19,7 @@
    %= include 'controls/list-grid/xt/search-box.xt'
    %= include 'controls/list-grid/xt/modal-dia.xt'
    %= include 'controls/list-grid/xt/grid.xt'
+   %= include 'controls/list-grid/xt/vue-select.xt'
 
    <div id="div_central_panel" >
 
@@ -60,6 +61,7 @@
          %= include 'controls/list-grid/js/btn-new.js'
          %= include 'controls/list-grid/js/editable.js'
          %= include 'controls/list-grid/js/modal-dia.js'
+         %= include 'controls/list-grid/js/vue-select.js'
          %= include 'controls/list-grid/js/cruds-grid-sf.js'
          %= include 'controls/list-grid/js/cruds-grid.js'
          %= include 'controls/list-grid/js/left-menu.js'
