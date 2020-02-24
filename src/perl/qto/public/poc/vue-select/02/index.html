@@ -1,0 +1,114 @@
+<!-- courtesy of: https://github.com/sagalbot/vue-select/tree/master/docs/guide -->
+<html> 
+   <head> <title>vue-select-02</title>
+      <script src="https://unpkg.com/lodash@latest/lodash.min.js"></script>
+      <script src="https://unpkg.com/vue@2.5.3/dist/vue.js"></script>
+		<script src="/poc/vue-select/vue-select.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<style>
+
+#app {
+  max-width: 30em;
+  margin: 1em auto;
+}
+
+</style>
+<link rel="stylesheet" type="text/css" href="/poc/vue-select/02/vue-select.css"/>
+</head>
+<body> <h3>Vue Select - Ajax</h3> 
+
+<div id="app"> 
+   <vue-select :itemname="itemname"></vue-select> 
+</div> 
+
+<script type="text/x-template" id="vue-select-tmpl"> 
+   <v-select label="name" :filterable="false" :options="options" @search="onSearch" >
+    <template slot="no-options">
+      type search ...
+    </template>
+    <template slot="selected-option" slot-scope="option">
+      <div class="selected d-center">
+        {{ option.name }}
+      </div>
+    </template>
+  </v-select> 
+</script>
+
+<script>
+//`http://host-name:3001/qto/select/roles?pick=id,name&like-by=name&like-val=${escape(search)}`
+
+var vueSelect = Vue.component('vue-select', {
+    template: "#vue-select-tmpl"
+  , props: {
+    filterable: false
+    , itemname: ''
+  }
+  , data: function(){
+    return { 
+      options: []
+      , url: 'http://host-name:3001/qto/select/'
+      }
+  },
+  mounted(){
+      axios.get( this.url + this.itemname, {}
+      ).then(res => {
+		  this.options = res.data.dat
+      });
+  }
+  , methods: {
+     getUrlParams: function (){
+      var urlPrms = new URLSearchParams();
+      if( window.location.toString().indexOf("?") != -1) {
+         var href_part = window.location.search.split('?')[1].split('#')[0]
+         href_part.replace(/([^=&]+)=([^&]*)/g, 
+            function(m, key, value) {
+               var attr = decodeURIComponent(key)
+               var val = decodeURIComponent(value)
+               urlPrms.append(attr,val);
+         });
+      } 
+      return urlPrms ; 
+    }
+    , onSearch(search, loading) {
+      loading(true);
+      urlPrms = this.getUrlParams()
+      if ( urlPrms.has("like-by") === false) { urlPrms.append("like-by" , "name"); }
+      if ( urlPrms.has("like-val") === false) { urlPrms.append("like-val" , search); }
+      if ( String(search).length > 1 ) {
+         this.search(loading, search, urlPrms);
+      }
+      loading(false);
+    }
+    , search(loading, search, urlPrms) {
+         axios.get( this.url + this.itemname, { params: urlPrms })
+         .then(res => {
+           this.options = res.data.dat
+         });
+    }
+  }
+  , components: {
+    'v-select': VueSelect.VueSelect,
+  }
+});
+//Vue.component("v-select", VueSelect.VueSelect);
+
+new Vue({
+  el: "#app"
+  , data: {
+    itemname: 'items_doc' 
+   }
+  , components: {
+    'vue-select': vueSelect,
+  }
+})
+
+</script>
+<p><pre>
+ - gets the data on mount from http://host-name:3001/qto/select/<<itemname>>
+ - note the itemname is parametrized now - passed from the Vue instance
+ - note the {{ option.name }} sets the template
+ - can filter by typing from the web service ( local dev is up and running )
+ - with separate css file
+</pre></p>
+</body>
+</html>
