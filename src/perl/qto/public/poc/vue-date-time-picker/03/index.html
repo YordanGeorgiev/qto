@@ -7,34 +7,26 @@
 </head>
 <body>
 
-<div> 
-<textarea style="width: 100px" id="datetime-picker"></textarea>
+<div id="app"> 
+   <vue-date-time-picker/><textarea id="txt-1" style="width: 100px"></textarea>
+   <textarea id="txt-2" style="width: 100px"></textarea>
 </div>
       <script src="https://unpkg.com/vue@2.5.3/dist/vue.js"></script>
 		<script src="/poc/vue-date-time-picker/02/vue-date-time-picker.js"></script>
 <script>
 
-var popperProps = {
-  popperOptions: {
-    modifiers: {
-      preventOverflow: {
-        padding: 20
-      }
-    }
-  }
-}
-new Vue({
-  el: '#datetime-picker',
+
+var vueDateTimePicker = Vue.component('vue-date-time-picker',{
   template: '<datetime-picker type="second"' +
   '                           :value="time"' +
   '                           @input="log"' +
   '                           min="2018-08-24 02:10:02"' +
   '                           max="2020-09-1 22:10:00"' +
-  '                           :timeStr="timeStr"' +
-  '									:dayStr="dayStr"' +
-  '									:btnStr="btnStr"' +
+  '                           :timeStr="[\'hour\', \'min\', \'sec\']"' +
+  '									:dayStr="[\'mo\',\'tu\',\'we\',\'th\',\'fr\',\'sa\',\'su\']"' +
+  '									:btnStr="X"' +
   '                           :scrollbarProps="{isMobile:true,maxHeight:\'2rem\'}"' +
-  '                           :popperProps="popperProps"/>',
+  '                           :popperProps="{  popperOptions: { modifiers: { preventOverflow: { padding: 20 }  } } }"/>',
   data: function () {
     return {
       timeStr: ['hour', 'min', 'sec'],
@@ -52,6 +44,12 @@ new Vue({
   },
   components: { 'datetime-picker': VueDatepicker.DatetimePicker }
 })
+
+new Vue ( { 
+     el:'#app'
+   , components: vueDateTimePicker
+   }
+)
 </script>
 </body>
 </html>
