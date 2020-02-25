@@ -1,55 +1,81 @@
 <!-- courtesy of https://livelybone.github.io/vue/vue-datepicker/ -->
 <html>
-<head>
-<title>vue-date-time-picker-01</title>
+   <head> <title>vue-date-time-picker-04</title>
+ 
+ <style>
+ html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+    font-family: Helvetica Neue, Arial, sansserif;
+    font-size: 7em; /* gotcha !!! MUST set a base font size otherwise have to zoom 400%*/
+ }
+ </style>
 
-<link rel="stylesheet" type="text/css" href="/poc/vue-date-time-picker/02/vue-date-time-picker.css"/>
+<link rel="stylesheet" type="text/css"
+   href="/themes/thme-blue/css/screen/controls/vue-date-time-picker.css"/>
 </head>
+
 <body>
-
-<div id="app"> 
-   <vue-date-time-picker/><textarea id="txt-1" style="width: 100px"></textarea>
-   <textarea id="txt-2" style="width: 100px"></textarea>
-</div>
       <script src="https://unpkg.com/vue@2.5.3/dist/vue.js"></script>
-		<script src="/poc/vue-date-time-picker/02/vue-date-time-picker.js"></script>
+		<script src="/lib/js/controls/vue-date-time-picker.js"></script>
+		<!-- src="https://unpkg.com/@livelybone/vue-datepicker@3.1.0/lib/umd/index.js"></script>-->
+
+<div id="app" style="fontsize: 7em"> 
+      <vue-dt-pick id="first" :value="time"> </vue-dt-pick>
+      <vue-dt-pick id="second" :value="time"> </vue-dt-pick>
+</div> 
+<div>
+<p> this page demonstrates the following : </p>
+ - fully re-usable date-time-picker control via template
+ - can have more than 1 instance ... setable from data from the Vue instance
+ - the calendar has english days of the week , the close is with X
+ - the time values are mobile - aka scrollable
+ - the size of the calendar control is set from the font-size in the body in css
+
+</div>
+<script type="text/x-template" id="vue-date-time-picker"> 
+  <datetime-picker type="second" @input="log" min="2018-01-01 00:00:00" max="2022-01-01 00:00:00" 
+      :timeStr="['hour', 'min', 'sec']" :dayStr="['mo','tu','we','th','fr','sa','su']" :btnStr="'X'"
+      :popperProps="popperProps" :scrollbarProps="{isMobile:true,maxHeight:'2rem'}"
+      :value="time">
+  </datetime-picker>
+</script>
 <script>
+var valVueDtPick = Vue.component('vue-dt-pick', {
+    template: "#vue-date-time-picker"
+   , data: function () {
+       return {
+         time: '2019-02-01 01:02:01'
+         , popperProps: { 
+            popperOptions: {
+                modifiers: {
+                  preventOverflow: {
+                    padding: 20
+                  }
+                }
+            }
+         }
+       }
+     },
+     methods: {
+      log: function (val) {
+         this.time = val
+         console.log(val)
+         this.value = val
+      }
+    },
+     components: { 'datetime-picker': VueDatepicker.DatetimePicker }
+   })
 
-
-var vueDateTimePicker = Vue.component('vue-date-time-picker',{
-  template: '<datetime-picker type="second"' +
-  '                           :value="time"' +
-  '                           @input="log"' +
-  '                           min="2018-08-24 02:10:02"' +
-  '                           max="2020-09-1 22:10:00"' +
-  '                           :timeStr="[\'hour\', \'min\', \'sec\']"' +
-  '									:dayStr="[\'mo\',\'tu\',\'we\',\'th\',\'fr\',\'sa\',\'su\']"' +
-  '									:btnStr="X"' +
-  '                           :scrollbarProps="{isMobile:true,maxHeight:\'2rem\'}"' +
-  '                           :popperProps="{  popperOptions: { modifiers: { preventOverflow: { padding: 20 }  } } }"/>',
-  data: function () {
-    return {
-      timeStr: ['hour', 'min', 'sec'],
-      time: '2019-02-01 01:02:01',
-      isM: true,
-		dayStr: ['mo','tu','we','th','fr','sa','su'],
-		btnStr: 'X',
-      popperProps: popperProps
-    }
-  },
-  methods: {
-    log: function (val) {
-      this.time = val
-    }
-  },
-  components: { 'datetime-picker': VueDatepicker.DatetimePicker }
+new Vue({
+   el: "#app"
+   , data: function () {
+       return {
+         time: '2019-02-01 01:02:01'
+       }
+     },
+     components: { 'vue-dt-pick': valVueDtPick}
 })
-
-new Vue ( { 
-     el:'#app'
-   , components: vueDateTimePicker
-   }
-)
 </script>
 </body>
 </html>
