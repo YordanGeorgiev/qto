@@ -25,7 +25,6 @@ src/perl/qto/public/bower_components/**
 src/perl/qto/public/node_modules/**
 src/perl/qto/public/poc/poc-vue-js-modal/node_modules/**
 **/*.htpasswd
-src/perl/qto/public/lib/js/**
 **/*.crt
 **/*.key
 src/perl/qto/public/dat/tmp/**
