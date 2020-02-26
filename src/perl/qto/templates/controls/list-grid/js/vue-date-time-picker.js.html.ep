@@ -1,0 +1,41 @@
+Vue.component('vue-dt-pick', {
+   template: "#vue-date-time-picker"
+   , props: {
+      tme: {
+         get: function () {
+            return this.time
+       },
+         set: function (newValue) {
+            this.time = newValue
+       }
+      }
+   }
+   , data: function () {
+       return {
+         time: ''
+         , popperProps: { 
+            popperOptions: {
+                modifiers: {
+                  preventOverflow: {
+                    padding: 20
+                  }
+               }
+            }
+         }
+       }
+     },
+     mounted(){
+      this.time = this.tme 
+      this.value = this.time
+     }
+     , methods: {
+         log: function (val) {
+            this.time = val
+            this.value = val
+            if ( typeof(this.$el) !== "undefined"){
+               this.$parent.updateItem(val,this.$el.id,val);
+            }
+         }
+    },
+     components: { 'datetime-picker': VueDatepicker.DatetimePicker }
+})

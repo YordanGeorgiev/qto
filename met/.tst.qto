@@ -6,16 +6,6 @@ cnf/env/tst.env.json
 src/perl/qto/lib/Qto/Auth/User.pm
 src/perl/qto/lib/Qto/Auth/Role.pm
 # stop  model
-# start vue-date-time-picker
-src/perl/qto/public/poc/vue-select
-src/perl/qto/public/poc/vue-select/01/index.html
-src/perl/qto/public/poc/vue-select/02/index.html
-src/perl/qto/public/poc/vue-date-time-picker
-src/perl/qto/public/poc/vue-date-time-picker/01/index.html
-src/perl/qto/public/poc/vue-date-time-picker/02/index.html
-src/perl/qto/public/poc/vue-date-time-picker/03/index.html
-src/perl/qto/public/poc/vue-date-time-picker/04/index.html
-# stop  vue-date-time-picker
 # start redis
 src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/lib/Qto/Controller/Select.pm
@@ -150,6 +140,15 @@ src/perl/qto/public/poc/web-socket/web-socket.html
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
 # stop  websockets
+# start vue-date-time-picker
+src/perl/qto/public/poc/vue-select
+src/perl/qto/public/poc/vue-select/01/index.html
+src/perl/qto/public/poc/vue-select/02/index.html
+src/perl/qto/public/poc/vue-date-time-picker
+src/perl/qto/public/poc/vue-date-time-picker/01/index.html
+src/perl/qto/public/poc/vue-date-time-picker/02/index.html
+src/perl/qto/public/poc/vue-date-time-picker/03/index.html
+# stop  vue-date-time-picker
 # ---
 src/perl/qto/templates/pages/view-doc/js/right-click-menu.js.html.ep
 src/perl/qto/templates/pages/view-doc/view-doc.html.ep
@@ -213,6 +212,7 @@ src/perl/qto/templates/js/global/linkifies.func.js.html.ep
 src/perl/qto/templates/js/global/isNullOrEmpty.func.js.html.ep
 src/perl/qto/t/lib/Qto/Controller/TestView.t
 src/perl/qto/public/lib/js/controls/vue-select.js
+src/perl/qto/public/lib/js/controls/vue-date-time-picker.js
 src/perl/qto/templates/controls/list-grid/list-grid.html.ep
 src/perl/qto/templates/controls/srch-grid/srch-grid.html.ep
 src/perl/qto/templates/controls/list-grid/js/div-search-box.js.html.ep
@@ -221,6 +221,7 @@ src/perl/qto/templates/controls/list-grid/js/search-box.js.html.ep
 src/perl/qto/templates/controls/list-grid/xt/search-box.xt.html.ep
 src/perl/qto/templates/controls/list-grid/xt/grid.xt.html.ep
 src/perl/qto/templates/controls/list-grid/xt/vue-select.xt.html.ep
+src/perl/qto/templates/controls/list-grid/xt/vue-date-time-picker.xt.html.ep
 src/perl/qto/templates/controls/list-grid/xt/modal-dia.xt.html.ep
 src/perl/qto/templates/controls/list-grid/js/modal-dia.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/editable.js.html.ep
@@ -228,6 +229,7 @@ src/perl/qto/templates/controls/list-grid/js/cruds-grid.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/left-menu.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/vue-select.js.html.ep
+src/perl/qto/templates/controls/list-grid/js/vue-date-time-picker.js.html.ep
 src/perl/qto/templates/controls/srch-grid/xt/grid.xt.html.ep
 src/perl/qto/templates/controls/srch-grid/js/linkable.js.html.ep
 src/perl/qto/templates/controls/srch-grid/xt/modal-dia.xt.html.ep
@@ -243,11 +245,11 @@ src/perl/qto/templates/controls/list-grid/js/btn-play-next.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/btn-play-next-10.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/btn-new.js.html.ep
 src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-select.css
+src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-date-time-picker.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/table.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/modal-dia.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/pager.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/list-grid.css
-src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-date-time-picker.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/right-click-menu.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/srch-grid.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/searchbox.css
