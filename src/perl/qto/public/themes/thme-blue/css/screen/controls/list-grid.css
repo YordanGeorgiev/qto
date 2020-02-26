@@ -101,6 +101,9 @@ textarea {
    font-size: 14px ; 
 }
 
+#grid tbody tr td div{
+   text-align: center;
+}
 #grid tbody tr td:nth-child(1){ 
    width: 24px;
    padding: 2px ; 

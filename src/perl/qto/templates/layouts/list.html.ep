@@ -11,6 +11,7 @@
   <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/controls/left-menu.css?v=<%= $ProductVersion =%>" media="nope!" onload="this.media='all'"  />
   <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/top-bar.css?v=<%= $ProductVersion =%>" media="nope!" onload="this.media='all'"  />
 <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/controls/vue-select.css?v=<%= $ProductVersion =%>" media="nope!" onload="this.media='all'"/>
+<link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/controls/vue-date-time-picker.css?v=<%= $ProductVersion =%>" media="nope!" onload="this.media='all'"/>
   <%= content 'cnt_header_css' %>
 </head>
 <body>
@@ -20,6 +21,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/lib/js/controls/vue-select.js"></script>
+<script src="/lib/js/controls/vue-date-time-picker.js"></script>
    <%= content 'cnt_body_controls' %>
 <script id="all">
    var bus=new Vue({});
