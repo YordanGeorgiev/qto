@@ -19,7 +19,6 @@ Vue.component('vue-select', {
       axios.get( this.url + this.itemname, {params: {"pg-size": "20","oa": "name"}})
       .then(res => {
 		  this.options = res.data.dat
-        console.log(res.data.dat)
          res.data.dat.forEach(el => { if ( el.guid === this.hook){
             this.selected = el.name 
             }
