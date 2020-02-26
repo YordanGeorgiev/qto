@@ -1,4 +1,4 @@
- ---- DROP TABLE IF EXISTS monthly_issues_202002 ; 
+-- DROP TABLE IF EXISTS monthly_issues_202002 ; 
 
 SELECT 'create the "monthly_issues_202002" table'
 ; 
@@ -7,9 +7,9 @@ SELECT 'create the "monthly_issues_202002" table'
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , type           varchar (30) NOT NULL DEFAULT 'task'
     , category       varchar (30) NOT NULL DEFAULT 'category ...'
-    , status         varchar (20) NOT NULL DEFAULT 'status ...'
+    , issues_status_guid UUID NOT NULL DEFAULT 'cb989a14-d0b8-46e4-b2cc-5e2a974b5d29'
     , prio           integer NOT NULL DEFAULT 0
-    , name           varchar (100) NOT NULL DEFAULT 'name ...'
+    , name           varchar (100) NOT NULL DEFAULT 'name...'
     , description    varchar (4000)
     , owner          varchar (20) NOT NULL DEFAULT 'unknown'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())

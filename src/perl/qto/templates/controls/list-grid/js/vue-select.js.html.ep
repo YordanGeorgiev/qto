@@ -14,9 +14,12 @@ Vue.component('vue-select', {
       }
   },
   mounted(){
-      axios.get( this.url + this.itemname, {}
-      ).then(res => {
+      urlPrms = this.getUrlParams()
+      urlPrms.append("pg-size" , "10")
+      axios.get( this.url + this.itemname, {params: {"pg-size": "20","oa": "name"}})
+      .then(res => {
 		  this.options = res.data.dat
+        console.log(res.data.dat)
          res.data.dat.forEach(el => { if ( el.guid === this.hook){
             this.selected = el.name 
             }
@@ -48,6 +51,7 @@ Vue.component('vue-select', {
     , onSearch(search, loading){
       loading(true);
       urlPrms = this.getUrlParams()
+      if ( urlPrms.has("pg-size") === false) { urlPrms.append("pg-size" , "100"); }
       if ( urlPrms.has("like-by") === false) { urlPrms.append("like-by" , "name"); }
       if ( urlPrms.has("like-val") === false) { urlPrms.append("like-val" , search); }
       if ( String(search).length > 1 ) {
