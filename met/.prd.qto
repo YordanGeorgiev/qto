@@ -73,6 +73,7 @@ src/bash/deployer/run.sh
 src/bash/deployer/export-json-section-vars.func.sh
 src/bash/deployer/check-setup-bash.func.sh
 src/bash/deployer/check-install-redis.func.sh
+cnf/redis/etc/systemd/system/redis.service
 src/bash/deployer/check-install-ubuntu-packages.func.sh
 src/bash/deployer/check-install-postgres.func.sh
 src/bash/deployer/check-install-chromium-headless.func.sh
@@ -819,6 +820,11 @@ src/bash/qto/funcs/admin/restart-network.func.sh
 src/bash/qto/funcs/print-stats.func.sh
 cnf/hosts/host-name/etc/fstab
 cnf/hosts/host-name/etc/network/interfaces
+src/perl/qto/lib/auto/Qto/Auth/
+src/perl/qto/lib/auto/Qto/Auth/User
+src/perl/qto/lib/auto/Qto/Auth/User/autosplit.ix
+src/perl/qto/lib/auto/Qto/Auth/Role
+src/perl/qto/lib/auto/Qto/Auth/Role/autosplit.ix
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToXls/autosplit.ix
