@@ -19,12 +19,18 @@ do_check_install_redis(){
 		make test
 		sudo make install
 		sudo mkdir /etc/redis
-		sudo cp /tmp/redis-stable/redis.conf /etc/redis
-		sudo vim /etc/redis/redis.conf
+		sudo cp -v /tmp/redis-stable/redis.conf /etc/redis
+      echo 'supervised systemd' | sudo tee -a /etc/redis/redis.conf
+      my_ip=$(sudo ifconfig eth0 | grep -i 'inet '|awk '{print $2}')
+      echo "bind $my_ip" | sudo tee -a /etc/redis/redis.conf
+		#sudo vim /etc/redis/redis.conf
+      sudo mkdir -p /var/lib/redis/
 		ls -al /var/lib/redis/
 		sudo ls -al /var/lib/redis/
-		fg
-		sudo vim /etc/systemd/system/redis.service
+      sudo mkdir -p /var/log/redis
+		sudo chown -R redis:redis /var/log/redis
+      sudo chmod -R u+rwX,g+rwX,u+rx /var/log/redis
+		sudo cp -v $PRODUCT_DIR/cnf/redis/etc/systemd/system/redis.service /etc/systemd/system/redis.service
 		sudo adduser --system --group --no-create-home redis
 		sudo chown -R redis:redis /var/lib/redis
 		sudo chmod 770 /var/lib/redis
