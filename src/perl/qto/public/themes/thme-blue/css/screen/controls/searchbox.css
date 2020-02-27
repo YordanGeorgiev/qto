@@ -10,9 +10,12 @@
 }
 .autocomplete {
   position: relative;
+  margin-left: 10%;
+  width: 60%;
 }
 .autocomplete-results {
   position: relative;
+  margin-left: 10%;
   z-index:100;
   opacity: 1; 
   padding: 5px;
@@ -22,10 +25,11 @@
   overflow: auto;
   width: 80%;
   background-color: white;
-  min-width: 41%;
+  color: black;
 }
 
 .autocomplete-result {
+  margin-left: 10%;
   opacity: 1; 
   list-style: none;
   z-index:100;
@@ -33,7 +37,7 @@
   padding: 4px 2px;
   cursor: pointer;
   background-color: white;
-  min-width: 30%;
+  color: black;
 }
 
 .autocomplete-result.is-active,
@@ -44,7 +48,7 @@
   background-color: #00BFFF;
   color: white;
   font-weight: bold;
-  min-width: 30%;
+  min-width: 60%;
 }
 
 #div_frm_srch {
