@@ -39,13 +39,18 @@
   * [5.3. CREATE THE AWS INSTANCE](#53-create-the-aws-instance)
   * [5.4. SETUP BASH & VIM](#54-setup-bash-&-vim)
   * [5.5. CLONE THE PROJECT ON THE SSH SERVER](#55-clone-the-project-on-the-ssh-server)
-* [6. POTENTIAL PROBLEMS AND TROUBLESHOOTING](#6-potential-problems-and-troubleshooting)
-  * [6.1. THE POSTGRES ADMIN USER PASSWORD IS WRONG](#61-the-postgres-admin-user-password-is-wrong)
-  * [6.2. CANNOT LOGIN AT ALL IN THE WEB INTERFACE WITH THE ADMIN USER](#62-cannot-login-at-all-in-the-web-interface-with-the-admin-user)
-  * [6.3. STRANGE PERMISSIONS ERRORS](#63-strange-permissions-errors)
-  * [6.4. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#64-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
-  * [6.5. SOME KIND OF MISMATCH IN THE AWS](#65-some-kind-of-mismatch-in-the-aws)
-  * [6.6. THE PROBLEM OCCURRED IS NOT MENTIONED HERE ???!!!](#66-the-problem-occurred-is-not-mentioned-here-)
+* [6. PHYSICAL HOST OS INSTALLATIONS](#6-physical-host-os-installations)
+  * [6.1. MACOS](#61-macos)
+  * [6.2. MACOS](#62-macos)
+    * [6.2.1. Install qtpass](#621-install-qtpass)
+    * [6.2.2. Install qtpass](#622-install-qtpass)
+* [7. POTENTIAL PROBLEMS AND TROUBLESHOOTING](#7-potential-problems-and-troubleshooting)
+  * [7.1. THE POSTGRES ADMIN USER PASSWORD IS WRONG](#71-the-postgres-admin-user-password-is-wrong)
+  * [7.2. CANNOT LOGIN AT ALL IN THE WEB INTERFACE WITH THE ADMIN USER](#72-cannot-login-at-all-in-the-web-interface-with-the-admin-user)
+  * [7.3. STRANGE PERMISSIONS ERRORS](#73-strange-permissions-errors)
+  * [7.4. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#74-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
+  * [7.5. SOME KIND OF MISMATCH IN THE AWS](#75-some-kind-of-mismatch-in-the-aws)
+  * [7.6. THE PROBLEM OCCURRED IS NOT MENTIONED HERE ???!!!](#76-the-problem-occurred-is-not-mentioned-here-)
 
 
 
@@ -382,18 +387,43 @@ Clone as follows
     
     mkdir -p ~/opt; cd $_ ; git clone git@github.com:YordanGeorgiev/qto.git; cd ~/opt
 
-## 6. POTENTIAL PROBLEMS AND TROUBLESHOOTING
+## 6. PHYSICAL HOST OS INSTALLATIONS
+
+
+    
+
+### 6.1. MacOs
+
+
+    
+
+### 6.2. MacOs
+Qto has been developed mostly by using MacOs as the physical host OS. The next code section is probably obsolete, as you most probably have installed it as described here: https://treehouse.github.io/installation-guides/mac/homebrew
+
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+#### 6.2.1. Install qtpass
+https://sourceforge.net/p/gpgosx/docu/Download/
+
+    brew cask install qtpass
+
+#### 6.2.2. Install qtpass
+https://qtpass.org/downloads#macOS
+
+    brew cask install qtpass
+
+## 7. POTENTIAL PROBLEMS AND TROUBLESHOOTING
 As a rule of thumb - whatever errors you are encountering they are most probably NOT source code errors, but configuration errors. Thus ALWAYS try to change configuration entries from the dev, tst or prd environment configuration files and restart the web server with the mojo-hypnotoad-start shell action.
 
     
 
-### 6.1. The postgres admin user password is wrong
+### 7.1. The postgres admin user password is wrong
 Basically the db security is passed from OS root to postgres user to qto admin to qto app, thus to fix it issue the following command, which will basically re-provision your postgres.
 You would need to also restart the web server after executing this command.
 
      ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
 
-### 6.2. Cannot login at all in the web interface with the admin user
+### 7.2. Cannot login at all in the web interface with the admin user
 The password hashing in the users table is activated ALWAYS on blur even that the ui is not showing it ( yes , that is more of a bug, than a feature.
 The solution is to restart the application layer WITHOUT any authentication, change the admin user password from the ui and restart the application layer with authentication once again.
 
@@ -406,12 +436,12 @@ The solution is to restart the application layer WITHOUT any authentication, cha
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
     
 
-### 6.3. Strange permissions errors
+### 7.3. Strange permissions errors
 Some of the newly created tables might not have explicitly their permissions in the DDLs. Or you might have run some of the sql scripts ad-hoc / manually and they do not contain grant statements. Run the following one-liner:
 
     bash src/bash/qto/qto.sh -a provision-db-admin
 
-### 6.4. You have reached the hw provisioning limits of your AWS account
+### 7.4. You have reached the hw provisioning limits of your AWS account
 If you get one of the errors bellow you would have to go the UI of the AWS admin console and delete non-used resources. Fortunately, all resources have the &lt;&lt;env&gt;&gt;_&lt;&lt;resource_name&gt;&gt; naming convention either in the object or in their Tags, which means that you will know what you are deleting.
 
     Error: Error creating VPC: VpcLimitExceeded: The maximum number of VPCs has been reached.
@@ -427,12 +457,12 @@ If you get one of the errors bellow you would have to go the UI of the AWS admin
       on main.tf line 203, in resource "aws_eip" "tst-ip-test":
      203: resource "aws_eip" "tst-ip-test" {
 
-### 6.5. Some kind of mismatch in the aws
+### 7.5. Some kind of mismatch in the aws
 The aws web ui contains fancy ajax calls and in our experience it does not always update properly, if are bombarding it with terraform deployments onto the same resources. Make sure you hit F5 in your browser always when starting the work on new ec2 instance.
 
     
 
-### 6.6. The problem occurred is not mentioned here ???!!!
+### 7.6. The problem occurred is not mentioned here ???!!!
 Of course you quick Google it first ... if it took too long just send a e-mail / chat to the instance owner you got the source code from and you WILL get help sooner or later.
 
     

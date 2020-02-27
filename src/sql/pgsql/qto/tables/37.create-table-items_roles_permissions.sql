@@ -6,9 +6,9 @@ SELECT 'create the "items_roles_permissions" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , roles_guid     UUID NOT NULL DEFAULT gen_random_uuid()
-    , items_guid     UUID NOT NULL DEFAULT gen_random_uuid()
+    , meta_tables_guid UUID NOT NULL DEFAULT gen_random_uuid()
     , read           bool default true
-    , write          bool default false
+    , write          bool default true
     , exec           bool default true
     , name           varchar (100) NOT NULL DEFAULT 'name...'
     , description    varchar (200) NULL DEFAULT 'description...'

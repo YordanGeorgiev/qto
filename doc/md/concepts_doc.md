@@ -14,6 +14,12 @@
   * [2.5. PROBLEMS](#25-problems)
 * [3. DEFINITIONS](#3-definitions)
   * [3.1. RELEASE](#31-release)
+* [4. DOCUMENTATION](#4-documentation)
+  * [4.1. THE CONCEPTS DOC ](#41-the-concepts-doc-)
+  * [4.2. THE USERSTORIES DOC](#42-the-userstories-doc)
+  * [4.3. THE SYSTEM GUIDE](#43-the-system-guide)
+  * [4.4. THE DEVOPS GUIDE](#44-the-devops-guide)
+  * [4.5. THE MAINTENANCE AND OPERATIONS GUIDE](#45-the-maintenance-and-operations-guide)
 
 
 
@@ -58,35 +64,27 @@ All the documents should be updated and redistributed in combination of the curr
     
 
 ### 2.1. Projects management
-You can manage multiple projects with the qto tool. Each project has its own data directories, database storage and configurations. You could also have different environments named dev, tst, prd for each project separately. 
-As the tool is backwards compatible you could have different instances of the qto projects with different versions ( and set of features ) operating against different project ( each one in its own version).
-You must pre-set the configuration variables of an qto project each time you start working on a project from the shell.
+Any undertaking or endeavour, carried out individually or collaboratively and possibly involving research or design, that is carefully planned, usually by a project team, to achieve a particular aim could be considered a project. The main purpose of the qto application is to manage one or more projects from a single User Interface.
+
 
     
 
 ### 2.2. Issues / Issue items / items
-Issue item is the shortest possible description of task , activity , note or anything requiring distinguishable and preferably measurable action or producing verifiable outcome.
+Issue item is the shortest possible description of task, activity, note or anything requiring distinguishable and preferably measurable action or producing verifiable outcome.
 Issues could be of different types - tasks, activities, notes etc. 
-Each issue MUST BE assigned to one and only one person.
+Simply said the issues are the split by deliverable items of work to be done by the project team.
+Each issue MUST BE assigned to one and only one person, to foster responsibility and accountability
 
     
 
 #### 2.2.1. Categories
 Each issue item could be categorised under one and only one category. One category might have 1 or more issues. 
-The categories could contain letters ,numbers, dashes.
+The issues can be split into different categories. You can define your categories from the https://qto.fi/qto/list/category page.
 
     
 
 #### 2.2.2. Issues status
-You could define whatever statuses you like. As qto has been built to develop itself ( how sarcastic could that be ;o), that is for tracing the progress of a software project the following "default" statuses have been used: 
-01-eval - for evaluate the issue
-02-todo - for decided to do the issue
-03-wip - for the issue is being in work in progress mode
-04-diss - for discard the issue
-05-tst - for the issue is being in testing like mode
-06-onhold - for the issue is being kept onhold for the time period
-07-qas - for the issue is being quality assured 
-09-done - for the issue is being done / completed
+Each issue could be in a different status. You can define the different statuses for an issue from the issue_status list page : https://qto.fi/qto/list/issues_status
 
     
 
@@ -104,7 +102,7 @@ The product instance owners have an automated way of transferring the issues fro
     
 
 ### 2.3. Questions
-Sometimes during the workings of your project you encounter problems, which are complex enough not to allows the definition of an issue. In those cases it would be more rational to just register the question, discuss it or review it later on, and define the issue as soon as the problem domain is understood and even possible issue solution could be proposed.
+Sometimes during the workings of your project you encounter problems, which are complex enough not to allows the definition of an issue. In those cases it would be more rational to just register a question, a problem, an idea, discuss it or review it later on, and define the issue as soon as the problem domain is understood and even possible issue solution could be proposed.
 
     
 
@@ -114,6 +112,7 @@ Your organisation might collect, sort and evaluate ideas so that they could be l
     
 
 ### 2.5. Problems
+Sometimes during the workings of your project you encounter problems, which are complex enough not to allows the definition of an issue. In those cases it would be more rational to just register a question, a problem, an idea, discuss it or review it later on, and define the issue as soon as the problem domain is understood and even possible issue solution could be proposed.
 Quite often the row input material for the issues are the problems encountered - the better you collect, describe and prioritise the list of problems to tackle the better you will be able to organise the issues to be completed. 
 
     
@@ -126,6 +125,36 @@ This section contains definitions of terms within the context of the qto applica
 ### 3.1. Release
 A qto release is the artefact you can download from the following GitHub page:
 https://github.com/YordanGeorgiev/qto/releases.
+
+    
+
+## 4. DOCUMENTATION
+
+
+    
+
+### 4.1. The Concepts doc 
+
+
+    
+
+### 4.2. The UserStories doc
+The user stories doc contains the structurized and formal description of the user stories for the application.
+
+    
+
+### 4.3. The System Guide
+The System Guide describes the current and factual state of the System you are actually using.
+
+    
+
+### 4.4. The DevOps Guide
+The DevOps Guide contains information on how-to develop, operate and maintain the Application from a devops / developer perpective.
+
+    
+
+### 4.5. The Maintenance and Operations Guide
+The Maintenance and operations Guide contains information on how-to maintain and operate the Application.
 
     
 

@@ -84,6 +84,8 @@
     * [11.3.1. Problem description](#1131-problem-description)
     * [11.3.2. Kill processes](#1132-kill-processes)
   * [11.4. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#114-the-page-looks-broken--probably-the-new-css-is-not-re-loaded)
+* [12. FAQ](#12-faq)
+  * [12.1. WHY HAVING ALL THE HASSLE WITH THIS DIRECTORY STRUCTURE - IS OVERKILL ?!!](#121-why-having-all-the-hassle-with-this-directory-structure--is-overkill-)
 
 
 
@@ -425,6 +427,7 @@ Even the smallest proof of concept needs a small test-entry point. Start always 
 
 ### 8.6. Implementation of Proof of Concept ( optional )
 Aim to create a small POC for the new concept, feature or functionality - for example a page having a lot of hardcoding, which constrains the scope for ONLY this new thing. 
+POC small "projects" are extremely useful when new ui controls are to be integrated into the common base - check the public/poc directory for the the subdirectories containing the iterative approaches while introducing different controls into the project.
 Strive however to use the same naming convention, and implement with future integrations within the end truly dynamic code. 
 
     
@@ -664,4 +667,15 @@ The other option is to keep the SHIFT button and press the reload button the Chr
 
     COMMAND + SHIFT + R
     SHIT + CLICK ON RELOAD BUTTON
+
+## 12. FAQ
+This section contains the most probable frequently asked questions.
+
+    
+
+### 12.1. Why having all the hassle with this directory structure - is overkill ?!!
+Every software project has a scope. Qto as a project aims to provide the fully vertically integrated code base for deployment, operation and maintenance, which is not possible without the use of multiple run-times within the project ( such as bash, perl, python, terraform, npm ... )
+Having a project with a directory structure for a specific run-time enforcing that directory structure to all the other runtimes is a a mess.
+
+    
 

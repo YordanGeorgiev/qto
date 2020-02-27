@@ -52,6 +52,7 @@
       * [5.9.2.3. Successful execution](#5923-successful-execution)
       * [5.9.2.4. Error handling on db update error](#5924-error-handling-on-db-update-error)
       * [5.9.2.5. Nulls handling](#5925-nulls-handling)
+    * [5.9.3. Dropbox edit ( UPDATE )](#593-dropbox-edit-(-update-))
   * [5.10. ITEM DELETION ( DELETE )](#510-item-deletion-(-delete-))
   * [5.11. LIST AS PRINT-TABLE PAGE](#511-list-as-print-table-page)
 * [6. THE VIEW DOC PAGE](#6-the-view-doc-page)
@@ -423,6 +424,11 @@ On invalid input the data is not updated to the database and the old value in th
 
 ##### 5.9.2.5. Nulls handling
 Nulls handling is somewhat problematic in ui. For now the behaviour by convention is to leave a nullable record in the database as null, whether the cell of the ui table is left empty ( white space chars are also considered empty)
+
+    
+
+#### 5.9.3. Dropbox edit ( UPDATE )
+Should a column end with the "_guid" string, by convention it holds a foreign key. By convention the qto displays the select options the values from the name attribute of the primary key table, meaning simply that you could start searching for any of those items by clicking on the x close button first in the dropbox and start searching in the input. Should you search match items from the primary key table you will see them listed and you will be able to choose them either by scrolling with the mouse and hitting enter OR by pointing with the mouse. Once chosen the new value is automatically saved to the database.
 
     
 

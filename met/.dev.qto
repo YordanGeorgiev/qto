@@ -145,13 +145,9 @@ src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
 src/perl/qto/public/poc/vue-select
 src/perl/qto/public/poc/vue-select/01/index.html
 src/perl/qto/public/poc/vue-select/02/index.html
-src/perl/qto/public/poc/vue-select/02/vue-select.css
-src/perl/qto/public/poc/vue-select/vue-select.js
 src/perl/qto/public/poc/vue-date-time-picker
 src/perl/qto/public/poc/vue-date-time-picker/01/index.html
 src/perl/qto/public/poc/vue-date-time-picker/02/index.html
-src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.css
-src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.js
 src/perl/qto/public/poc/vue-date-time-picker/03/index.html
 # stop  vue-date-time-picker
 # ---
@@ -544,6 +540,9 @@ src/sql/pgsql/qto/tables/38.create-table-onboarding_guide_doc.sql
 src/sql/pgsql/qto/tables/39.create-table-security_checklist_doc.sql
 src/sql/pgsql/qto/tables/40.definitions_dictionary.sql
 src/sql/pgsql/qto/tables/41.create-table-issues_status.sql
+src/sql/pgsql/qto/tables/42.create-table-ideas_status.sql
+src/sql/pgsql/qto/tables/43.create-table-questions_status.sql
+src/sql/pgsql/qto/tables/44.create-table-category.sql
 src/sql/pgsql/qto/tables/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/tables/66.create-table-logs.sql
 src/sql/pgsql/qto/tables/88.create-table-test_hi_delete_table_doc.sql
@@ -926,4 +925,3 @@ src/js/node/js-unit-tests/01-set-url-param/test
 src/js/node/js-unit-tests/01-set-url-param/test/test.js
 src/js/node/scrap-html/package.json
 src/js/node/scrap-html/scrap-html.js
-src/sql/pgsql/scripts/grant-priveledges.todo.sql

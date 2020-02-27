@@ -23,6 +23,8 @@
     * [2.5.3. Items editing](#253-items-editing)
       * [2.5.3.1. Items editing inline](#2531-items-editing-inline)
       * [2.5.3.2. Items editing via a modal dialog](#2532-items-editing-via-a-modal-dialog)
+      * [2.5.3.3. Items editing via dropbox](#2533-items-editing-via-dropbox)
+      * [2.5.3.4. Items editing via calendar control](#2534-items-editing-via-calendar-control)
     * [2.5.4. Items creation](#254-items-creation)
     * [2.5.5. Items deletion](#255-items-deletion)
     * [2.5.6. Items export](#256-items-export)
@@ -78,18 +80,19 @@
     * [2.10.2. Items move](#2102-items-move)
   * [2.11. ISSUES IMPORT FROM GOOGLE CALENDAR](#211-issues-import-from-google-calendar)
 * [3. TEAM LEADER BIZ PERSPECTIVE](#3-team-leader-biz-perspective)
-  * [3.1. ROLES MANAGEMENT](#31-roles-management)
-  * [3.2. PROJECTS MANAGEMENT](#32-projects-management)
-  * [3.3. USERS MANAGEMENT IN A PROJECT](#33-users-management-in-a-project)
-    * [3.3.1. Users access management](#331-users-access-management)
-      * [3.3.1.1. Grant access per project](#3311-grant-access-per-project)
-      * [3.3.1.2. Personal data handling minimization](#3312-personal-data-handling-minimization)
-  * [3.4. SECURITY MANAGEMENT](#34-security-management)
-  * [3.5. SECURE ACCESS TO DATA](#35-secure-access-to-data)
-    * [3.5.1. Role based secure access to data per table for role](#351-role-based-secure-access-to-data-per-table-for-role)
-    * [3.5.2. Role based secure access to data per row](#352-role-based-secure-access-to-data-per-row)
-  * [3.6. TIME MANAGEMENT](#36-time-management)
-    * [3.6.1. Closing of a period](#361-closing-of-a-period)
+  * [3.1. DATA SECURITY](#31-data-security)
+  * [3.2. ROLES MANAGEMENT](#32-roles-management)
+  * [3.3. PROJECTS MANAGEMENT](#33-projects-management)
+  * [3.4. USERS MANAGEMENT IN A PROJECT](#34-users-management-in-a-project)
+    * [3.4.1. Users access management](#341-users-access-management)
+      * [3.4.1.1. Grant access per project](#3411-grant-access-per-project)
+      * [3.4.1.2. Personal data handling minimization](#3412-personal-data-handling-minimization)
+  * [3.5. SECURITY MANAGEMENT](#35-security-management)
+  * [3.6. SECURE ACCESS TO DATA](#36-secure-access-to-data)
+    * [3.6.1. Role based secure access to data per table for role](#361-role-based-secure-access-to-data-per-table-for-role)
+    * [3.6.2. Role based secure access to data per row](#362-role-based-secure-access-to-data-per-row)
+  * [3.7. TIME MANAGEMENT](#37-time-management)
+    * [3.7.1. Closing of a period](#371-closing-of-a-period)
 * [4. TEAM MEMBER BIZ PERSPECTIVE](#4-team-member-biz-perspective)
   * [4.1. ISSUES MANAGEMENT](#41-issues-management)
     * [4.1.1. Remove existing issues](#411-remove-existing-issues)
@@ -382,6 +385,22 @@ I wan to to be able to edit it Excel table like by quickly navigating trough an 
 As an UI user of the qto application 
 In order to be able update the application data via the UI by using a more familiar form-like interface
 I want to to be able to edit the data for any item by clicking on an edit button, and filling the fields of a form
+
+    
+
+##### 2.5.3.3. Items editing via dropbox
+As an UI user of the qto application 
+In order to be able to update foreign key tables data via the UI 
+I want to to be able to edit the data for any item by : 
+ - clicking on an a dropbox and either choosing or searching and choosing the human readable value
+
+    
+
+##### 2.5.3.4. Items editing via calendar control
+As an UI user of the qto application 
+In order to be able to update date-time data in the listing page via the UI
+I want to to be able to edit the data for any item by : 
+ - clicking on an a calendar control and choosing the date and the time from it
 
     
 
@@ -761,7 +780,13 @@ I want to have a nice user experience while using the qto tool.
 
     
 
-### 3.1. Roles management
+### 3.1. Data security
+As the biz team leader In order to protect the data of the project, which is vital for its existence 
+I don't want any person but me to have full visibility and control of the data in a project.
+
+    
+
+### 3.2. Roles management
 As the Instance Owner or Product Owner 
 in order to have a finer granularity on the different data stored in my instance 
 I want to be able to define roles and per roles visibility on : 
@@ -771,70 +796,70 @@ I want to be able to define roles and per roles visibility on :
 
     
 
-### 3.2. Projects management
+### 3.3. Projects management
 As an team leader
 In order to be able to manage multiple projects 
 I want to  be able to create , update and remove projects.
 
     
 
-### 3.3. Users management in a project
+### 3.4. Users management in a project
 As an team leader
 In order to be able to efficiently allocate human resources to a project
 I want to be able manage ( create , update , delete and search ) users for each project.
 
     
 
-#### 3.3.1. Users access management
+#### 3.4.1. Users access management
 As a team leader 
 In order provide the persons and programs access to my project
 I want to provide read, write access to the data and execute access ( run DDL's) per table
 
     
 
-##### 3.3.1.1. Grant access per project
+##### 3.4.1.1. Grant access per project
 As a team leader 
 In order to enroll authenticated users into the project I am responsible to 
 I want to be able to grant them with access by only writing their e-mail into a text field and clicking invite button. 
 
     
 
-##### 3.3.1.2. Personal data handling minimization
+##### 3.4.1.2. Personal data handling minimization
 As a team leader 
 In order to avoid legal obligations and complex procedures, while handling personal data
 I want to be able to handle the interpersonal exchange of data by collecting ONLY the e-mail of the persons or programs participating in the project.
 
     
 
-### 3.4. Security Management
+### 3.5. Security Management
 As an team leader
 In order to keep my business data secure 
 I want to be able decide which users to which projects will have access to the data my qto application has access to. 
 
     
 
-### 3.5. Secure access to data
+### 3.6. Secure access to data
 As the team leader of a qto project
 In order 
 I want to be able to grant separate read, write and execute access per table and role
 
     
 
-#### 3.5.1. Role based secure access to data per table for role
+#### 3.6.1. Role based secure access to data per table for role
 As the team leader of a qto project
 In order to restrict the certain operations to certain tables for the authenticated roles
 I want to be able to grant separate read, write and execute access per table and role.
 
     
 
-#### 3.5.2. Role based secure access to data per row
+#### 3.6.2. Role based secure access to data per row
 As the team leader of a qto project
 In order 
 I want to be able to grant separate read, write and execute access per table and role
 
     
 
-### 3.6. Time management
+### 3.7. Time management
 As an team leader
 In order to be able the maximise the performance of the team for qto used periods 
 I want to to be able to manage time efficiently 
@@ -842,7 +867,7 @@ by accessing a simple page containing its value and the period it is related to.
 
     
 
-#### 3.6.1. Closing of a period
+#### 3.7.1. Closing of a period
 As the team leader of a qto project
 In order to keep track the history of 
 I want to to be able to manage time efficiently 
