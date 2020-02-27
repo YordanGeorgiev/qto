@@ -13,7 +13,7 @@
   * [2.4. FULL APPLICATION CLONE CREATION IN 5MIN](#24-full-application-clone-creation-in-5min)
     * [2.4.1. Single shell call for postgres db creation and initial data load](#241-single-shell-call-for-postgres-db-creation-and-initial-data-load)
     * [2.4.2. One liner for single restore for both full db and inserts only](#242-one-liner-for-single-restore-for-both-full-db-and-inserts-only)
-  * [2.5. SINGLETON CONFIGURATION ](#25-singleton-configuration-)
+  * [2.5. ONE AND ONLY ONE PLACE FOR CONFIGURATION ](#25-one-and-only-one-place-for-configuration-)
 * [3. RELIABILITY AND STABILITY](#3-reliability-and-stability)
   * [3.1. ZERO TOLLERANCE TOWARDS CRASHING](#31-zero-tollerance-towards-crashing)
   * [3.2. ZERO TOLERANCE TOWARDS BUGS](#32-zero-tolerance-towards-bugs)
@@ -61,6 +61,7 @@
   * [9.1. DATA IMPORT](#91-data-import)
     * [9.1.1. Import from xls](#911-import-from-xls)
     * [9.1.2. Import from json format](#912-import-from-json-format)
+    * [9.1.3. Files upload ](#913-files-upload-)
   * [9.2. DATA EXPORT](#92-data-export)
     * [9.2.1. Export to pdf](#921-export-to-pdf)
     * [9.2.2. Export to md](#922-export-to-md)
@@ -89,6 +90,7 @@
     * [10.3.1. Traditional Unix permissions model per project database](#1031-traditional-unix-permissions-model-per-project-database)
       * [10.3.1.1. Traditional Unix permissions model to tables](#10311-traditional-unix-permissions-model-to-tables)
       * [10.3.1.2. Traditional Unix permissions model to table rows](#10312-traditional-unix-permissions-model-to-table-rows)
+    * [10.3.2. Secrets handling](#1032-secrets-handling)
 * [11. DOCUMENTATION](#11-documentation)
   * [11.1. DOCUMENTATION COMPLETENESS](#111-documentation-completeness)
   * [11.2. DOCUMENTATION AND CODE BASE SYNCHRONIZATION](#112-documentation-and-code-base-synchronization)
@@ -186,7 +188,7 @@ The full database should be loadable form a db dump either from a full dump or f
 
     
 
-### 2.5. Singleton configuration 
+### 2.5. One and only one place for configuration 
 Whenever there is a configuration entry indicating part of the configuration of an application instance it should be stored in 1 and only 1 place in the configuration file of the instance, so that any person not familiar with the internal logic of the application could find all the configuration entries in one and only one place including the secrets.
 
     
@@ -435,6 +437,11 @@ The qto application should support a single shell call json file to table import
 
     
 
+#### 9.1.3. Files upload 
+The qto application should provide an easy to use UI for uploading files easily accessible from any page of the application. Once the file being uploaded the link to it should be provided to the user to be able to copy paste it into an issue , documentation etc object ...
+
+    
+
 ### 9.2. Data export
 The qto application must support export to different data formats via both the web interface or terminal access.
 
@@ -582,8 +589,8 @@ The Qto application should have authorisation as described in the RFC 6749.
 
     
 
-### 10.3. Role-based Access control
-The Application must restrict the system access ONLY to authorized users. 
+### 10.3. Role-based Access Control
+The Access Control in the qto application must be role-based.
 
     
 
@@ -599,6 +606,11 @@ The application must provide the means for project owners to define custom read,
 
 ##### 10.3.1.2. Traditional Unix permissions model to table rows
 The application must provide the means for project owners to define custom read, write, execute ( list ) permissions on tables to per project database for table rows.
+
+    
+
+#### 10.3.2. Secrets handling
+
 
     
 

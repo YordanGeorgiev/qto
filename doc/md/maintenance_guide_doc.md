@@ -283,33 +283,12 @@ To create the table you need to basically copy the monthly_issues table to the o
     # generate the sql for moving the data between the two tables
     bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues monthly_issues_202001
     
-    # copy paste the generated code as follows to "save" it into the $sql_code bash variable
-    IFS='' read -r -d '' sql_code <<"EOF_CODE"
-         INSERT INTO monthly_issues_202001                                                                                                                             ( guid , id , type , category , status , prio , name , description , owner , update_time )
-          SELECT guid , id , type , category , status , prio , name , description , owner , update_time
-          FROM monthly_issues
-          ON CONFLICT (id) DO UPDATE SET
-          guid = excluded.guid, id = excluded.id, type = excluded.type, category = excluded.category, status = excluded.status, prio = excluded.prio, name = exclu
-    ded.name, description = excluded.description, owner = excluded.owner, update_time = excluded.update_time;
-    EOF_CODE
-    
-    # run the sql code by pointing to the bash variable
-    psql -d tst_qto -c "$sql_code"
 
 ### 5.1. Closing a monthly period
 Closing a monthly period would simply mean to ensure that all the done issues will be moved to the release_issues table
 
-    bash src/tpl/psql-code-generator/psql-code-generator.sh dev_qto monthly_issues_202001 release_issues
-    IFS='' read -r -d '' sql_code <<"EOF_CODE"
-          INSERT INTO release_issues
-          ( guid , id , type , category , status , prio , name , description , owner , update_time )
-          SELECT guid , id , type , category , status , prio , name , description , owner , update_time
-          FROM monthly_issues_202001
-          ON CONFLICT (id) DO UPDATE SET
-          guid = excluded.guid, id = excluded.id, type = excluded.type, category = excluded.category, status = excluded.status, prio = excluded.prio, name = excluded.name, description = excluded.description, owner = excluded.owner, update_time = excluded.update_time;
-    EOF_CODE
-    psql -d tst_qto -c "$sql_code"
-    psql -d tst_qto -c "delete from release_issues where status <> '09-done';"
+    bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues_202002 release_issues
+    
 
 ### 5.2. Publish the release issues
 You publish the release issues by moving all the issues with '09-done' status to the release_issues table
