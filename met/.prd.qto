@@ -145,9 +145,13 @@ src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
 src/perl/qto/public/poc/vue-select
 src/perl/qto/public/poc/vue-select/01/index.html
 src/perl/qto/public/poc/vue-select/02/index.html
+src/perl/qto/public/poc/vue-select/02/vue-select.css
+src/perl/qto/public/poc/vue-select/vue-select.js
 src/perl/qto/public/poc/vue-date-time-picker
 src/perl/qto/public/poc/vue-date-time-picker/01/index.html
 src/perl/qto/public/poc/vue-date-time-picker/02/index.html
+src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.css
+src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.js
 src/perl/qto/public/poc/vue-date-time-picker/03/index.html
 # stop  vue-date-time-picker
 # ---
@@ -922,3 +926,4 @@ src/js/node/js-unit-tests/01-set-url-param/test
 src/js/node/js-unit-tests/01-set-url-param/test/test.js
 src/js/node/scrap-html/package.json
 src/js/node/scrap-html/scrap-html.js
+src/sql/pgsql/scripts/grant-priveledges.todo.sql
