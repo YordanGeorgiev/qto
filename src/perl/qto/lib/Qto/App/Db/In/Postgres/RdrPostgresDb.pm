@@ -420,6 +420,69 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
    } 
    
    
+   sub doLoadProjDbRBACList {
+
+      my $self          = shift ; 
+      my $db            = shift || croak 'no db passed !!!' ; 
+   
+      my $ret           = 1 ; 
+      my $msg           = 'unknown error occured in RdrPostgresDb::doLoadProjDbMetaTables' ; 
+      my $sql           = {} ; 
+      my $sth           = {} ; 
+      my $dbh           = {} ; 
+      my $hsr           = {} ; 
+      my $arr           = () ;
+
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+		$sql = "
+            SELECT   
+               roles.name || '__' ||
+               CASE
+                  WHEN (items_roles_permissions.allowed = true) THEN 'may'
+                  WHEN (items_roles_permissions.allowed = false) THEN 'mayNOT'
+               ELSE 'mayNOT'
+               END 
+               || '__' || meta_routes.name 
+               || '__' || meta_tables.name as permission
+            FROM items_roles_permissions
+            LEFT JOIN roles ON roles.guid = roles_guid
+            LEFT JOIN meta_routes ON meta_routes.guid = meta_routes_guid
+            LEFT JOIN meta_tables ON meta_tables.guid = meta_tables_guid
+            ORDER BY roles.name,meta_routes.name,meta_tables.name
+         ;      
+         " ; 
+         # debug rint "START ::: RdrPostgresDb.pm :: doLoadProjDbRBACList \n" ;
+         # p $sql; 
+         # debug rint "STOP  ::: RdrPostgresDb.pm :: doLoadProjDbRBACList \n" ;   
+      
+      eval { 
+         $sth = $dbh->prepare($sql);  
+         $sth->execute() ; 
+         # one of the fastest according to  https://www.perlmonks.org/?node_id=273952
+         while (my $r = $sth->fetchrow_arrayref()){
+            push (@$arr,@$r);
+         };
+         # say "START ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;
+         #p $arr ; 
+         #say "STOP  ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;   
+      };
+      if ( $@ ) { 
+         $msg = " failed to get the project database: " . $db . " roles based access control list ! " ; 
+         $msg .= $DBI::errstr ; 
+         $ret = 1 ; 
+         return ( $ret , $msg , undef ) ; 
+      };
+
+         binmode(STDOUT, ':utf8');
+         $ret = 0 ; 
+         $dbh->disconnect();
+         return ( $ret , $msg , $arr) ; 	
+
+   }
+  
+
    sub doLoadProjDbMetaTables  {
 
       my $self          = shift ; 
@@ -625,7 +688,6 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 
       $hsr = $sth->fetchall_hashref( 'guid' ) ; 
       binmode(STDOUT, ':utf8');
-      p( $hsr ) if $module_trace == 1 ; 
 
       $msg = DBI->errstr ; 
       $objLogger->doLogDebugMsg ( $msg ) ; 
