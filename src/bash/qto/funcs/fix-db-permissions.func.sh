@@ -3,7 +3,11 @@ doFixDbPermissions(){
 
    doProvisionDbAdmin
 
+   test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
+   source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
+   test -z $PROJ_CONF_FILE && PROJ_CONF_FILE=$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json
    doExportJsonSectionVars $PROJ_CONF_FILE '.env.db'
+
    doLog "INFO using PROJ_INSTANCE_DIR: $PROJ_INSTANCE_DIR" ; 
    doLog "INFO using PROJ_CONF_FILE: $PROJ_CONF_FILE"
 

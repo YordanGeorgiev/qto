@@ -96,7 +96,7 @@ for my $row ( @$tables ) {
          ok ( $row->{'status'} =~ '0', $tm ) ; 
       }
       
-      $url = '/' . $db . '/select/' . $table . '?pick=name,prio,status&with=status-eq-1000' ; 
+      $url = '/' . $db . '/select/' . $table . '?pick=name,prio&with=prio-eq-1000' ; 
       $tm = "if no data is received the 204 http code 'No Content' is returned" ;
       ok ( $t->get_ok($url )->status_is(200) , $tm );
       $res = $ua->get($url)->result->json ; 

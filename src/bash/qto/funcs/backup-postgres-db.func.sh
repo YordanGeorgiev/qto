@@ -9,7 +9,8 @@ doBackupPostgresDb(){
    test -f $PRODUCT_INSTANCE_DIR/bootstrapping && return
    test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
-   doExportJsonSectionVars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
+   test -z ${PROJ_CONF_FILE:-} && PROJ_CONF_FILE=$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json
+   doExportJsonSectionVars $PROJ_CONF_FILE '.env.db'
 
    mix_data_dir="$PROJ_INSTANCE_DIR/dat/mix"
    test -z "${postgres_db_name-}" && postgres_db_name="${env_type-}"_"${run_unit//-/_}"
@@ -31,6 +32,4 @@ doBackupPostgresDb(){
    sleep 1
 
 }
-
-
 # eof file: src/bash/qto/funcs/backup-postgres-db.func.sh
