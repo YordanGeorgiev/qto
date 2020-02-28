@@ -46,20 +46,26 @@ sub doReloadProjDbMetaData {
    # reload the columns meta data ONLY after the meta_columns has been requested
    # each one of those requested by the UI triggers meta data reload to redis !!!
    if ( $item eq 'app-startup' or $item eq 'meta_columns' or $item eq 'meta_tables' or $item eq 'items_doc') {
+
       my $objWtrRedis = 'Qto::App::Db::Out::WtrRedis'->new(\$config);
       $self->doReloadProjDbMetaColumns($db,$item,\$objWtrRedis);
       $self->doReloadProjDbMetaTables($db,$item,\$objWtrRedis);
+      $self->doReloadProjDbRBACList($db,$item,\$objWtrRedis);
+
    } else {
       my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
       my $meta_tables   = $objRdrRedis->getData(\$config,"$db" . '.meta-tables');
       my $meta_columns  = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
       my $tables_list   = $objRdrRedis->getData(\$config,"$db" . '.tables-list');
+      my $rbac_list     = $objRdrRedis->getData(\$config,"$db" . '.rbac-list');
       
-      $objModel->set($db . '.meta-columns',$meta_columns);
-      $objModel->set($db . '.meta-tables',$meta_tables);
-      $objModel->set($db . '.tables-list',$tables_list);
+      $objModel->set($db . '.meta-columns',  $meta_columns);
+      $objModel->set($db . '.meta-tables',   $meta_tables);
+      $objModel->set($db . '.tables-list',   $tables_list);
+      $objModel->set($db . '.rbac-list',     $rbac_list);
    }
 }
+
 
 sub doReloadProjDbMetaColumns {
 
@@ -110,6 +116,29 @@ sub doReloadProjDbMetaTables {
    }
    $objWtrRedis->setData(\$config, "$db" . '.tables-list', \@tables_lst);
    $objModel->set("$db" . '.tables-list',\@tables_lst);
+
+}
+
+
+# reload the project db Roles Based Access Control List
+sub doReloadProjDbRBACList {
+
+   my $self                = shift ;
+   my $db                  = shift ;
+   my $item                = shift || '' ; 
+	my $objWtrRedis         = ${ shift @_ } || croak 'objWtrRedis not passed !!!' ; 
+   my $objRdrDbsFcry       = {} ; 
+   my $objRdrDb            = {} ; 
+   my $arr                 = () ; 
+   my $ret                 = 1 ; 
+   my $msg                 = "fatal error while reloading project database meta data " ; 
+
+   $objRdrDbsFcry          = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config, \$objModel );
+   $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type );
+   ($ret, $msg , $arr )    = $objRdrDb->doLoadProjDbRBACList( $db ) ; 
+
+   $objWtrRedis->setData(\$config, $db . '.rbac-list', $arr);
+   $objModel->set($db . '.rbac-list',$arr);
 
 }
 
