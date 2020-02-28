@@ -10,13 +10,14 @@ Vue.component('vue-select', {
     return { 
       options: []
       , selected: ''
+      , pxlsWidth: 160
       , url: '/<%= $db =%>/select/'
       }
   },
   mounted(){
       urlPrms = this.getUrlParams()
       urlPrms.append("pg-size" , "10")
-      axios.get( this.url + this.itemname, {params: {"pg-size": "20","oa": "name"}})
+      axios.get( this.url + this.itemname, {params: {"pg-size": "200","oa": "name"}})
       .then(res => {
 		  this.options = res.data.dat
          res.data.dat.forEach(el => { if ( el.guid === this.hook){

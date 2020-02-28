@@ -1,15 +1,14 @@
--- DROP TABLE IF EXISTS items_roles_permissions ; 
+DROP TABLE IF EXISTS items_roles_permissions ; 
 
 SELECT 'create the "items_roles_permissions" table'
 ; 
    CREATE TABLE items_roles_permissions (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
-    , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
+    , id             BIGSERIAL UNIQUE NOT NULL 
     , roles_guid     UUID NOT NULL DEFAULT gen_random_uuid()
     , meta_tables_guid UUID NOT NULL DEFAULT gen_random_uuid()
-    , read           bool default true
-    , write          bool default true
-    , exec           bool default true
+    , meta_routes_guid UUID NOT NULL DEFAULT gen_random_uuid()
+    , allowed        bool default true
     , name           varchar (100) NOT NULL DEFAULT 'name...'
     , description    varchar (200) NULL DEFAULT 'description...'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())

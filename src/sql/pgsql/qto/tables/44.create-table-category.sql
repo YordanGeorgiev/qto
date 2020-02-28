@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS category ; 
+-- DROP TABLE IF EXISTS category ; 
 
 SELECT 'create the "category" table'
 ; 

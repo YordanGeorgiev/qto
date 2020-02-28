@@ -2,10 +2,17 @@
 cnf/env/dev.env.json
 cnf/env/prd.env.json
 cnf/env/tst.env.json
-# start model
+# start roles based access 
+src/sql/pgsql/qto/tables/37.create-table-items_roles_permissions.sql
+src/sql/pgsql/scripts/admin/populate-items_roles_permissions.sql
+src/sql/pgsql/scripts/admin/populate-meta_tables.sql
+src/sql/pgsql/qto/tables/17.create-table-meta_tables.sql
+src/sql/pgsql/qto/tables/45.create-table-meta_routes.sql
+src/perl/qto/lib/Qto/App/Sec/Guardian.pm
+src/perl/qto/t/lib/Qto/App/Sec/TestGuardian.t
 src/perl/qto/lib/Qto/Auth/User.pm
 src/perl/qto/lib/Qto/Auth/Role.pm
-# stop  model
+# stop  roles based access
 # start redis
 src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/lib/Qto/Controller/Select.pm
@@ -28,8 +35,6 @@ src/perl/qto/t/lib/Qto/Controller/TestLogon.t
 src/perl/qto/lib/Qto/Controller/Login.pm
 src/perl/qto/lib/Qto/Controller/Logon.pm
 src/perl/qto/templates/pages/login
-src/perl/qto/lib/Qto/App/Sec/Guardian.pm
-src/perl/qto/t/lib/Qto/App/Sec/TestGuardian.t
 # 
 doc/docx/concepts.docx
 doc/docx/devops.guide.docx
@@ -514,7 +519,6 @@ src/sql/pgsql/qto/tables/13.create-table-requirements_doc.sql
 src/sql/pgsql/qto/tables/14.create-table-ideas.sql
 src/sql/pgsql/qto/tables/15.create-table-skills.sql
 src/sql/pgsql/qto/tables/16.create-table-userstories_doc.sql
-src/sql/pgsql/qto/tables/17.create-table-meta_tables.sql
 src/sql/pgsql/qto/tables/18.create-table-meta_columns.sql
 src/sql/pgsql/qto/tables/18.1.create-table-meta_cols.sql
 src/sql/pgsql/qto/tables/19.create-table-naming_conventions.sql
@@ -535,7 +539,6 @@ src/sql/pgsql/qto/tables/33.create-table-links.sql
 src/sql/pgsql/qto/tables/34.create-table-roles.sql
 src/sql/pgsql/qto/tables/35.create-table-users.sql
 src/sql/pgsql/qto/tables/36.create-table-user_roles.sql
-src/sql/pgsql/qto/tables/37.create-table-items_roles_permissions.sql
 src/sql/pgsql/qto/tables/38.create-table-onboarding_guide_doc.sql
 src/sql/pgsql/qto/tables/39.create-table-security_checklist_doc.sql
 src/sql/pgsql/qto/tables/40.definitions_dictionary.sql
