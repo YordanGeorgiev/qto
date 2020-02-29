@@ -34,6 +34,7 @@ sub doReloadProjDbMeta {
    return;
 }
 
+
 sub isAuthenticated {
 
    my $self                = shift ;

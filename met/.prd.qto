@@ -813,6 +813,8 @@ src/perl/qto/public/poc/right-click-vmenu/right-click-vmenu.html
 src/perl/qto/public/poc/modal-dialog/modal-01
 src/perl/qto/public/poc/modal-dialog/modal-01/index.html
 src/perl/qto/public/poc/modal-dialog/modal-02/index.html
+src/perl/qto/public/poc/modal-dialog/modal-03/index.html
+src/perl/qto/public/poc/modal-dialog/modal-03/external-content.html
 # ---
 met/.tst.qto
 met/.prd.qto
