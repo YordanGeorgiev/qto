@@ -1,11 +1,11 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # start file upload 
 src/perl/qto/lib/Qto/Controller/Upload.pm
-src/perl/qto/templates/forms/files-upload-form.html.ep
 src/perl/qto/public/poc/modal-dialog/modal-04/index.html
 src/perl/qto/public/poc/file-upload/01/index.html
 src/perl/qto/public/poc/file-upload/02/index.html
 src/perl/qto/templates/controls/list-grid/xt/modal-dia.xt.html.ep
+src/perl/qto/public/lib/js/controls/vue-simple-upload.min.js
 # stop file upload 
 cnf/env/dev.env.json
 cnf/env/prd.env.json
@@ -214,7 +214,6 @@ src/bash/qto/funcs/perl/run-benchmarks.func.sh
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.t
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.t
 src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.t
-src/perl/qto/templates/forms/files-upload-form.html.ep
 src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
 src/perl/qto/templates/layouts/list.html.ep

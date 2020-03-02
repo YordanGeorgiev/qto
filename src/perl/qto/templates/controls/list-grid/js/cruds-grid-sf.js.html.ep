@@ -43,6 +43,8 @@
 					 }
 				  })
 				}
+            console.log(data) ; //todo:ysg
+            console.log("data")
 				return data
 			},
 			set: function(data) {
@@ -63,6 +65,7 @@
        , sortBy: function (key) {
             this.sortKey = key
             this.sortOrders[key] = this.sortOrders[key] * -1
+            this.$parent.$forceUpdate();
        }
        , setAscSortBy: function (key) {
             this.sortKey = key
@@ -74,9 +77,11 @@
        }
 		 , deleteItem: function (id){
        	   this.$parent.deleteItem(id);
+            this.$parent.$forceUpdate();
 		 }
        , updateItem: function (content,id,oldValue) {
             this.$parent.updateItem(content,id,oldValue);
+            this.$parent.$forceUpdate();
        }
        , createNewItem: function (id) {
             this.$parent.createNewItem(id);
