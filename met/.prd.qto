@@ -5,6 +5,7 @@ src/perl/qto/public/poc/modal-dialog/modal-04/index.html
 src/perl/qto/public/poc/file-upload/01/index.html
 src/perl/qto/public/poc/file-upload/02/index.html
 src/perl/qto/templates/controls/list-grid/xt/modal-dia.xt.html.ep
+src/perl/qto/public/lib/js/controls/vue-simple-upload.min.js
 # stop file upload 
 cnf/env/dev.env.json
 cnf/env/prd.env.json
