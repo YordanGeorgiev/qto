@@ -364,6 +364,11 @@ sub doSetRoutes {
      controller   => 'Search'
    , action       => 'doSearchItems'
    );
+   
+   $r->post('/upload-files/')->to(
+     controller   => 'Upload'
+   , action       => 'doUploadFiles'
+   );
 
    $r->websocket('/ws-select-items')->to('WsSelect#doWsSelectTables');
    $r->websocket('/wsecho')->to('WSSelect#wsecho');

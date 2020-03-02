@@ -1,53 +1,40 @@
 package Qto::Controller::Upload ;
 use strict ; use warnings ; 
 
-use Mojo::Upload;
-
 require Exporter;
 our @ISA = qw(Exporter Mojo::Base Qto::Controller::BaseController);
 our $AUTOLOAD =();
 use AutoLoader;
+use Carp qw /carp cluck croak/;
+use File::Path qw/make_path/ ;
 
-use parent qw(Qto::Controller::BaseController);
 
+use Mojo::Upload;
 use Data::Printer ; 
+use parent qw(Qto::Controller::BaseController);
 use Qto::App::Utils::Logger;
 use Qto::App::Utils::Timer ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
-our $module_trace    = 0 ; 
-our $config          = {};
-our $objLogger       = {} ;
+our $config  = {};
 
 
 sub doUploadFiles {
-   my $self = shift;
+   my $self      = shift;
    my @files;
+   $config		      = $self->app->config ; 
+   my $landing_dir   = $config->{'env'}->{'run'}->{ 'ProductInstanceDir' } . '/src/perl/qto/public/uploads';
+   make_path( "$landing_dir" ) || carp ( "cannot create dir: " . $landing_dir ) ;  
+
    for my $file (@{$self->req->uploads('files')}) {
       my $size = $file->size;
       my $name = $file->filename;
       push @files, "$name ($size)";
-      $file->move_to("/tmp/".$name);
+      $file->move_to("$landing_dir/".$name);
    }
    $self->render(text => "@files");
 }
 
-sub doShowPage {
-
-   my $self                = shift;
-   my $db                  = $self->stash('db');
-   my $ret                 = 1 ; 
-   my $msg                 = '' ; 
-   $config		            = $self->app->config ; 
-     
-   my $template            = 'forms/files-upload-form'; 
-
-   $self->render(
-      'template'           => $template 
-   ) ; 
-
-   return ; 
-}
 
 1;
 

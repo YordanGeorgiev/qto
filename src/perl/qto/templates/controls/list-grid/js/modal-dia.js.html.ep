@@ -114,6 +114,9 @@ Vue.component('modal', {
            this.count++
         }
 	}
+   , components: {
+       'fileupload': FileUpload.FileUpload
+     }
 	, methods: {
 		addFormElement: function(type,tsElId,ccid,label,cnt) {
 			this.fields.push({

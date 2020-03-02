@@ -1,0 +1,14 @@
+<script>
+var app = new Vue({
+  el: '#fu_app',
+  data: {
+    title: 'vue-simple-upload'
+  },
+  components: {
+    'fileupload': FileUpload.FileUpload
+  }
+})
+</script>
+<div id="fu_app">
+	<fileupload target="/upload-files" action="POST"></fileupload>
+</div>

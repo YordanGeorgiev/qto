@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue-upload-component Test</title>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/vue-simple-upload@0.1.6/dist/vue-simple-upload.min.js"></script>
+</head>
+<body>
+
+<div id="fu_app">
+  <h4>{{ title }}</h4>
+  <fileupload target="/upload-files" action="POST">     </fileupload>
+</div>
+
+<script>
+var app = new Vue({
+  el: '#fu_app',
+  data: {
+    title: 'vue-simple-upload'
+  },
+  components: {
+    'fileupload': FileUpload.FileUpload
+  }
+})
+</script>
+</body>
+</html>

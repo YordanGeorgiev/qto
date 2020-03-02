@@ -36,9 +36,10 @@ sub doWsSelectTables {
       my $db = $msg ; 
       $db =~ s/open //g; 
       $config		      = $self->app->config ; 
+      my $item = 'none' ; 
       
       return unless ( $self->SUPER::isAuthenticated($db) == 1 );
-      my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+      my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ; 
       $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
 
       $self->tx->max_websocket_size(16777216) if $self->tx->is_websocket;

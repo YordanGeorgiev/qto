@@ -1,4 +1,13 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+# start file upload 
+src/perl/qto/lib/Qto/Controller/Upload.pm
+src/perl/qto/templates/forms/files-upload-form.html.ep
+src/perl/qto/public/poc/modal-dialog/modal-04/index.html
+src/perl/qto/public/poc/modal-dialog/modal-05/index.html
+src/perl/qto/public/poc/modal-dialog/modal-05/file-upload.html
+src/perl/qto/public/poc/file-upload/01/index.html
+src/perl/qto/public/poc/file-upload/02/index.html
+# stop file upload 
 cnf/env/dev.env.json
 cnf/env/prd.env.json
 cnf/env/tst.env.json
@@ -206,6 +215,7 @@ src/bash/qto/funcs/perl/run-benchmarks.func.sh
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.t
 src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.t
 src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.t
+src/perl/qto/templates/forms/files-upload-form.html.ep
 src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
 src/perl/qto/templates/layouts/list.html.ep
@@ -498,6 +508,7 @@ src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2019.sql
 src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql
 src/sql/pgsql/qto/tables/2020/2020-01/create-table-monthly_issues_202001.sql
 src/sql/pgsql/qto/tables/2020/2020-02/create-table-monthly_issues_202002.sql
+src/sql/pgsql/qto/tables/2020/2020-03/create-table-monthly_issues_202003.sql
 src/sql/pgsql/qto/tables/01.create-table-daily_issues.sql
 src/sql/pgsql/qto/tables/03.create-table-monthly_issues.sql
 src/sql/pgsql/qto/tables/04.create-table-yearly_issues.sql
@@ -647,10 +658,7 @@ src/bash/qto/funcs/dev/change-version.func.sh
 src/bash/qto/helps/change-version.help.sh
 #---
 src/bash/qto/funcs/change-env-type.func.sh
-doc/txt/qto/helps/change-env-type.help.txt
-doc/txt/qto/tests/change-env-type.test.txt
-src/bash/qto/helps/change-env-type.help.sh
-src/bash/qto/tests/change-env-type.test.sh
+src/bash/qto/funcs/cp-to-env.func.sh
 #---
 doc/txt/qto/helps/remove-action-files.help.txt
 doc/txt/qto/tests/remove-action-files.test.txt
@@ -831,6 +839,7 @@ cnf/hosts/host-name/etc/network/interfaces
 src/perl/qto/lib/auto/Qto/Auth/
 src/perl/qto/lib/auto/Qto/Auth/User
 src/perl/qto/lib/auto/Qto/Auth/User/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/Upload/autosplit.ix
 src/perl/qto/lib/auto/Qto/Auth/Role
 src/perl/qto/lib/auto/Qto/Auth/Role/autosplit.ix
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
