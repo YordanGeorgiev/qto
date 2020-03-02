@@ -72,18 +72,22 @@
 * [9. DEVBOX SETUP ( OPTIONAL )](#9-devbox-setup-(-optional-))
   * [9.1. THE TMUX TERMINAL MULTIPLEXER](#91-the-tmux-terminal-multiplexer)
   * [9.2. THE VIM IDE](#92-the-vim-ide)
-  * [9.3. AUTHENTICATION](#93-authentication)
 * [10. SECURITY](#10-security)
-    * [10.1. JWT based native authentication](#101-jwt-based-native-authentication)
-    * [10.2. Session based native authentication](#102-session-based-native-authentication)
+  * [10.1. AUTHENTICATION](#101-authentication)
+    * [10.1.1. JWT based native authentication](#1011-jwt-based-native-authentication)
+    * [10.1.2. Session based native authentication](#1012-session-based-native-authentication)
+    * [10.1.3. RBAC based native authentication](#1013-rbac-based-native-authentication)
+  * [10.2. AUTHORISATION](#102-authorisation)
+    * [10.2.1. Generic role-based access control list based authorisation](#1021-generic-role-based-access-control-list-based-authorisation)
+    * [10.2.2. The RBAC based native authorisation](#1022-the-rbac-based-native-authorisation)
 * [11. KNOWN ISSUES AND WORKAROUNDS](#11-known-issues-and-workarounds)
   * [11.1. ALL TESTS FAIL WITH THE 302 ERROR](#111-all-tests-fail-with-the-302-error)
-  * [11.2. ALL TESTS FAIL WITH THE 302 ERROR](#112-all-tests-fail-with-the-302-error)
+  * [11.2. MORBO IS STUCK](#112-morbo-is-stuck)
     * [11.2.1. Probable root cause](#1121-probable-root-cause)
-  * [11.3. MORBO IS STUCK](#113-morbo-is-stuck)
-    * [11.3.1. Problem description](#1131-problem-description)
-    * [11.3.2. Kill processes](#1132-kill-processes)
-  * [11.4. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#114-the-page-looks-broken--probably-the-new-css-is-not-re-loaded)
+    * [11.2.2. Problem description](#1122-problem-description)
+    * [11.2.3. Kill processes](#1123-kill-processes)
+  * [11.3. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#113-the-page-looks-broken--probably-the-new-css-is-not-re-loaded)
+  * [11.4. THE VUE UI DOES NOT UPDATE PROPERLY ](#114-the-vue-ui-does-not-update-properly-)
 * [12. FAQ](#12-faq)
   * [12.1. WHY HAVING ALL THE HASSLE WITH THIS DIRECTORY STRUCTURE - IS OVERKILL ?!!](#121-why-having-all-the-hassle-with-this-directory-structure--is-overkill-)
 
@@ -360,7 +364,10 @@ Because in order for you to be able to add more functionalities to the qto appli
 ### 7.1. Checking the perl syntax
 Before running any tests check the perl syntax ... as follows:
 
-     bash src/bash/qto/qto.sh -a check-perl-snt
+    bash src/bash/qto/qto.sh -a check-perl-syntax
+    # starts echoging something like this...
+    ...
+     ::: running: cd src/perl/qto ; perl -MCarp::Always -I /hos/opt/qto/qto.0.8.1.dev.ysg/src/perl/qto -I /hos/opt/qto/qto.0.8.1.dev.ysg/src/perl/qto/lib -wc "./t/lib/Qto/App/Utils/TestInitiator.t" ; cd -
 
 ### 7.2. Running unit tests
 
@@ -563,7 +570,12 @@ Once again we DO NOT encourage "religious wars", if you happen to be using or in
     # to check the syntax in the whole project from the proj root:
     bash ./src/bash/qto/qto.sh -a check-perl-syntax
 
-### 9.3. Authentication
+## 10. SECURITY
+
+
+    
+
+### 10.1. Authentication
 You might want to refresh the following security related links from time while reading this section:
 
 http://self-issued.info/docs/draft-jones-json-web-token-06.html
@@ -572,12 +584,7 @@ https://tools.ietf.org/html/rfc6749#section-1.5
 
     
 
-## 10. SECURITY
-
-
-    
-
-#### 10.1. JWT based native authentication
+#### 10.1.1. JWT based native authentication
 Theory chk the following links:
 http://self-issued.info/docs/draft-jones-json-web-token-06.html
 https://metacpan.org/pod/Mojo::JWT
@@ -585,14 +592,52 @@ https://tools.ietf.org/html/rfc6749#section-1.5
 
     
 
-#### 10.2. Session based native authentication
+#### 10.1.2. Session based native authentication
 The session based authentication works basically as follows:
  - non-authenticated users requests a resource from the application layer
  - the application layer , runs the controller specified in the route
  - each controller is derived from the BasedController, which has the isAuthenticated metho
  - which returns 1 or 0 based on Mojo::Session stored data
 
-So as of v0.7.8 - no roles, no permissions are implemented - the users are either authenticated or not. Once authenticated they can CRUD anything they have access to from the UI
+So as of v0.7.8 - no roles, no permissions are implemented - the users are either authenticated or not. Once authenticated they can CRUD anything they have access to from the UI.
+
+    
+
+#### 10.1.3. RBAC based native authentication
+The RBAC based native authentication works as follows:
+- during start-up or meta-data reload the Guardian component saves the RBAC list into the Redis
+ - the User authenticates against the System via the login
+ - The System grants the list of roles to the JWT token of the user
+
+    
+
+### 10.2. Authorisation
+As of v0.8.1 the Roles-Based Access Control is being implemented. You might want to refresh your RBAC theoretical skills:
+https://searchsecurity.techtarget.com/definition/role-based-access-control-RBAC
+
+    
+
+#### 10.2.1. Generic role-based access control list based authorisation
+Start by defining your roles in the list/roles page. Keep the number of roles in the beginning to the absolute minimum - you could easily re-do the whole RBAC list re-population later on.
+Who has access to what is defined in the following table: items_roles_permissions. 
+You could initially load this table by running the following scripts bellow. 
+
+    # populate the list of tables into the meta_tables table
+    psql -d dev_qto < /src/sql/pgsql/scripts/admin/populate-meta_tables.sql
+    
+    # populate the items roles_permissions
+    psql -d dev_qto < src/sql/pgsql/scripts/admin/populate-items_roles_permissions.sql
+
+#### 10.2.2. The RBAC based native authorisation
+The RBAC based native authentication works as follows:
+ - during start-up or meta-data reload the Guardian component saves the RBAC list into the Redis
+ - the User requests a resource from the System
+ - The Guardian component takes the role claims from the Users JWT
+ - The Guardian component builds the role-page resource id and checks that it exists from the RBAC list in Redis
+ - if the request role-page resources id exists the Guardian passes the User to fetch the resource
+ - if the request role-page resource id DOES NOT exist : 
+    -- the Guardian redirects the user to the login page if the user is not authenticated
+    -- the Guardian redirect the user to the search / home pager if the user is authenticated
 
     
 
@@ -610,14 +655,10 @@ So as of v0.7.8 - no roles, no permissions are implemented - the users are eithe
     # call the test once again
     perl src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
 
-### 11.2. All tests fail with the 302 error
- This one is actually a bug ... all the tests not requiring non-authentication mode should set it in advance ...
+### 11.2. Morbo is stuck
 
-    # disable authentication during testing
-    export QTO_NO_AUTH=1
+
     
-    # call the test once again
-    perl src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
 
 #### 11.2.1. Probable root cause
 This one occurs quite often , especially when the application layer is restarted, but the server not 
@@ -633,12 +674,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-### 11.3. Morbo is stuck
-
-
-    
-
-#### 11.3.1. Problem description
+#### 11.2.2. Problem description
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -652,7 +688,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 11.3.2. Kill processes
+#### 11.2.3. Kill processes
 List the running perl processes which run the morbo and kill the instances
 
     ps -ef | grep -i perl
@@ -660,13 +696,23 @@ List the running perl processes which run the morbo and kill the instances
     # be carefull what to kill 
     kill -9 <<proc-I-know-is-the-one-to-kill>>
 
-### 11.4. The page looks broken - probably the new css is not re-loaded
+### 11.3. The page looks broken - probably the new css is not re-loaded
 This problem is quite oftenly experienced and a real time-burner, so keep those shortcuts bellow in mind. 
 To apply the newest css do a hard reload in Chrome with the shortcut COMMAND + SHIFT + R.
 The other option is to keep the SHIFT button and press the reload button the Chrome address bar ( this one has been buggy from time to time as well. ... )
 
     COMMAND + SHIFT + R
     SHIT + CLICK ON RELOAD BUTTON
+
+### 11.4. The vue UI does not update properly 
+Due to the vue reactivity system - basically the more the complex the ui control, the better to have some kind of id to set in the v-for ... 
+
+    <div v-for="item in filteredItems" :key="item.id">
+    
+    // use also in every CRUD operation ...
+    this.$forceUpdate()
+    // or even 
+    this.$parent.$forceUpdate()
 
 ## 12. FAQ
 This section contains the most probable frequently asked questions.

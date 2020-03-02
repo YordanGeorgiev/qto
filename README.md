@@ -16,18 +16,18 @@
     
 
 ## 1. WHY
-Why ?! Yet !!  Another App ?! ... ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿ !!!
+Why ?! Yet !!  Another App/Tool/Framework/CMS ?! ... ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿ !!!
 
 Software development is prohibitively expensive. In fact any endeavour with team of people aiming towards common goal in any field is expensive, even solely based on persons' time spent. 
 
-If you want to concentrate to your project, but have a fast, efficient and simple to use tool to manage your projects, you must read further ...
+If you want to concentrate on your project(s), but have a fast, efficient and simple to use tool to manage it(them), that SIMPLY WORKS, you must read further ...
 
 Still here ?! Let's move on !
 
     
 
 ## 2. SO, WHAT IS THIS ?!
-A generic and simplistic db centric content management system, build on postgres CRUDs ( s stands for search ) and hierarchical nested data-sets MULTIPLE databases from the same web application.An included example application is the "qto application", which is used to manage multiple projects' issues, including itself ;o). 
+A generic and simplistic db centric content management system, build on postgres CRUDs ( s stands for search ) and hierarchical nested data-sets MULTIPLE databases from the same web application.An included example application is the "qto application", which is kind of incident management and issues handling tool, used for, well managing it's self ;o). 
 The full and extensive https://qto.fi/qto/view/features_doc contains all the features and functionalities of THIS released version. 
 
 
@@ -40,7 +40,13 @@ the 7 main entities of the qto app](https://raw.githubusercontent.com/YordanGeor
     
 
 ### 2.1. What can it do to for me and/or my organisation ?
-Manage your projects with scale and to the finest granularity of your choice.
+Manage your projects with scale and to the finest granularity of your choice by: 
+ - incident management
+ - issues handling
+ - ideas generation
+ - official documentation creation ( with interlinked content to those above )
+ - &lt;&lt;your-items-of-interest-interlinked&gt;&gt; ( items are just tables with id,and guid ... )
+
 
     
 
