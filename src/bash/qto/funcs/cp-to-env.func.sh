@@ -19,6 +19,9 @@ doCpToEnv(){
 
    relative_fpath=$(dirname "${file}")
    tgt_file=$tgt_PRODUCT_INSTANCE_DIR/$file
+   
    mkdir -p $(dirname $tgt_file)
-   cp -v $file $tgt_file
+   test -f $file && cp -v $file $tgt_file
+   test -d $tgt_file && rm -rv $tgt_file
+   test -d $file && rsync -v -X -r -E -o -g --perms --acls $file $(dirname $tgt_file)
 }

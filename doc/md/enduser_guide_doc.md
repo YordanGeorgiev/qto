@@ -389,6 +389,7 @@ There are 2 ways to edit an item of the qto application :
 
 #### 5.9.1. Form edit
 You open the form to edit an item from the id button on the left. A modal dialog containing the filled in details of the item appears. You could either simply cycle via the keyboard trough the items, or edit some of the item details, as soon as any of the controls in the form is selected, after leaving the control the data is saved straight to the database. 
+Note that human readable values from the drop downs are not show, but the guid's of the tables are show ( this behaviour will probably change in the feature ... )
 
     
 

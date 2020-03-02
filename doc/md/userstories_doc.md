@@ -74,7 +74,7 @@
     * [2.7.3. Global search modal dialog ui](#273-global-search-modal-dialog-ui)
       * [2.7.3.1. Search-autocomplete on modal search dialog](#2731-search-autocomplete-on-modal-search-dialog)
   * [2.8. THE NOTES PAGE / UI](#28-the-notes-page-/-ui)
-  * [2.9. THE CHAT PAGE / UI](#29-the-chat-page-/-ui)
+  * [2.9. THE CHAT UI](#29-the-chat-ui)
   * [2.10. MULTI-PROJECT AWARE UI](#210-multi-project-aware-ui)
     * [2.10.1. Items data transfer between different projects](#2101-items-data-transfer-between-different-projects)
     * [2.10.2. Items move](#2102-items-move)
@@ -201,7 +201,7 @@ load-by-txt-to-db-action)
     * [9.17.3. Issues publishing in google calendar format](#9173-issues-publishing-in-google-calendar-format)
   * [9.18. ISSUES TRANSFORMATIONS](#918-issues-transformations)
 * [10. UI DEVELOPER PERSPECTIVE](#10-ui-developer-perspective)
-  * [10.1. EASY SETUP FOR TESTABILITY](#101-easy-setup-for-testability)
+  * [10.1. FOREIGN KEYS (FK) CONFIGURABILITY](#101-foreign-keys-(fk)-configurability)
   * [10.2. CODE TRACEABILITY BY UUID](#102-code-traceability-by-uuid)
   * [10.3. SINGLE SHELL CALL FOR PROJECTS SWITCHING](#103-single-shell-call-for-projects-switching)
   * [10.4. ISSUES PUBLISHING FROM SHELL CALLS](#104-issues-publishing-from-shell-calls)
@@ -736,12 +736,10 @@ The 7 sticky notes would be used for practising :
 
     
 
-### 2.9. The chat page / UI
+### 2.9. The chat UI
 As UI user
-In order to : 
-be able to quickly communicate an issue with other users of the qto applications 
-I want to : 
-be able to use a quick chat with other users within the application instance
+In order to be able to quickly communicate on anything with other qto users of the qto applications 
+I want to be able to use a quick chat with other users within the application instance
 
     
 
@@ -1665,8 +1663,12 @@ I want to have user friendly development experience.
 
     
 
-### 10.1. Easy setup for testability
-5b04d8fa-1ebb-4fe7-a9ad-700c40a57f3c
+### 10.1. Foreign Keys (FK) configurability
+As the UI Developer 
+In order to be able to be able to quickly display FK table values as drop boxes 
+I want to be able to configure from the meta_columns table :
+ - the table from which the drop box will fetch it's values ( if not defined use the &lt;&lt;table&gt;&gt;_guid
+ - the attribute name from which the drop down list will be built
 
     
 

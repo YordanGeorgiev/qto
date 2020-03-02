@@ -86,11 +86,13 @@
       * [10.1.3.8. Must support whitelisting](#10138-must-support-whitelisting)
       * [10.1.3.9. Must support black-listing](#10139-must-support-black-listing)
   * [10.2. AUTHORISATION](#102-authorisation)
+    * [10.2.1. Authorisation via Json Web Tokens](#1021-authorisation-via-json-web-tokens)
+    * [10.2.2. Non-Authorisation mode](#1022-non-authorisation-mode)
   * [10.3. ROLE-BASED ACCESS CONTROL](#103-role-based-access-control)
-    * [10.3.1. Traditional Unix permissions model per project database](#1031-traditional-unix-permissions-model-per-project-database)
-      * [10.3.1.1. Traditional Unix permissions model to tables](#10311-traditional-unix-permissions-model-to-tables)
-      * [10.3.1.2. Traditional Unix permissions model to table rows](#10312-traditional-unix-permissions-model-to-table-rows)
+    * [10.3.1. Roles based Access Control list for routes and items per project database](#1031-roles-based-access-control-list-for-routes-and-items-per-project-database)
+      * [10.3.1.1. Roles based Access Control list for routes and items](#10311-roles-based-access-control-list-for-routes-and-items)
     * [10.3.2. Secrets handling](#1032-secrets-handling)
+      * [10.3.2.1. Support for segregation of duties during deployment](#10321-support-for-segregation-of-duties-during-deployment)
 * [11. DOCUMENTATION](#11-documentation)
   * [11.1. DOCUMENTATION COMPLETENESS](#111-documentation-completeness)
   * [11.2. DOCUMENTATION AND CODE BASE SYNCHRONIZATION](#112-documentation-and-code-base-synchronization)
@@ -438,7 +440,7 @@ The qto application should support a single shell call json file to table import
     
 
 #### 9.1.3. Files upload 
-The qto application should provide an easy to use UI for uploading files easily accessible from any page of the application. Once the file being uploaded the link to it should be provided to the user to be able to copy paste it into an issue , documentation etc object ...
+The qto application should provide an easy to use UI for uploading files, easily accessible from any page of the application. Once the file being uploaded the link to it should be provided to the user to be able to copy paste it into an issue , documentation etc object ...
 
     
 
@@ -589,28 +591,38 @@ The Qto application should have authorisation as described in the RFC 6749.
 
     
 
+#### 10.2.1. Authorisation via Json Web Tokens
+The application must create JWT during login which will must be signed with a private key and will contain the minimum set of claims to support the Roles-Based Access Control.
+
+    
+
+#### 10.2.2. Non-Authorisation mode
+The application must support a simple configuration for instantiation in an instance in a non-authorisation and non-authentication mode - that is full access is granted to all the actions if the configuration is enabled.
+
+    
+
 ### 10.3. Role-based Access Control
-The Access Control in the qto application must be role-based.
+The Access Control in the qto application must be role-based. The application must authorise the usage of resources based on fully configurable per role , per resource , per route.
 
     
 
-#### 10.3.1. Traditional Unix permissions model per project database
-The application must provide NON-ENFORCEABLE traditional permissions model for tables and/or table rows. The "non-enforceable" means that no overhead work must be enforced on organisations not-using the model at all - that is the default permissions will be 775  -  meaning that the authenticated users must be able to both list(execute) and write to all the tables and rows in the project database(s), however so that the rest of the non-registered users must be able to list and read all tables and their rows.
+#### 10.3.1. Roles based Access Control list for routes and items per project database
+The application must provide a revocable traditional permissions model for tables and/or table rows. The "non-enforceable" means that no overhead work must be enforced on organisations not-using the model at all. 
 
     
 
-##### 10.3.1.1. Traditional Unix permissions model to tables
-The application must provide the means for project owners to define custom read, write, execute ( list ) permissions on tables to per project database for table objects.
-
-    
-
-##### 10.3.1.2. Traditional Unix permissions model to table rows
-The application must provide the means for project owners to define custom read, write, execute ( list ) permissions on tables to per project database for table rows.
+##### 10.3.1.1. Roles based Access Control list for routes and items
+The application must provide the means for project owners to define who has access to what resources and why via a centralised UI.
 
     
 
 #### 10.3.2. Secrets handling
 
+
+    
+
+##### 10.3.2.1. Support for segregation of duties during deployment
+The application must support segregation of duties during deployment, that is the team which delivers the new software version / configuration change must be able to trigger the deployment to production without actually having access to the production data.
 
     
 

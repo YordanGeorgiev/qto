@@ -44,13 +44,14 @@
     * [8.2.1. List page performance](#821-list-page-performance)
     * [8.2.2. Navigating the list page](#822-navigating-the-list-page)
     * [8.2.3. Managing items - full CRUD](#823-managing-items--full-crud)
-    * [8.2.4. Quick search and filtering items](#824-quick-search-and-filtering-items)
-    * [8.2.5. Visual indication](#825-visual-indication)
-      * [8.2.5.1. Visual indication for ok cases](#8251-visual-indication-for-ok-cases)
-      * [8.2.5.2. Visual indication when no data is received on correct request](#8252-visual-indication-when-no-data-is-received-on-correct-request)
-      * [8.2.5.3. Visual indication on erroneous requests](#8253-visual-indication-on-erroneous-requests)
-    * [8.2.6. Items interlinking](#826-items-interlinking)
-    * [8.2.7. Print to pdf](#827-print-to-pdf)
+    * [8.2.4. Managing FK values](#824-managing-fk-values)
+    * [8.2.5. Quick search and filtering items](#825-quick-search-and-filtering-items)
+    * [8.2.6. Visual indication](#826-visual-indication)
+      * [8.2.6.1. Visual indication for ok cases](#8261-visual-indication-for-ok-cases)
+      * [8.2.6.2. Visual indication when no data is received on correct request](#8262-visual-indication-when-no-data-is-received-on-correct-request)
+      * [8.2.6.3. Visual indication on erroneous requests](#8263-visual-indication-on-erroneous-requests)
+    * [8.2.7. Items interlinking](#827-items-interlinking)
+    * [8.2.8. Print to pdf](#828-print-to-pdf)
   * [8.3. VIEW PAGE FEATURES](#83-view-page-features)
     * [8.3.1. Viewing documents](#831-viewing-documents)
       * [8.3.1.1. OK load for a view doc page](#8311-ok-load-for-a-view-doc-page)
@@ -65,6 +66,7 @@
     * [9.1.2. Non-athentication mode](#912-non-athentication-mode)
     * [9.1.3. Simple native authentication mode](#913-simple-native-authentication-mode)
   * [9.2. AUTHORISATION](#92-authorisation)
+    * [9.2.1. Roles based access control list](#921-roles-based-access-control-list)
 * [10. DOCUMENTATION](#10-documentation)
   * [10.1. DOCUMENTATION SET](#101-documentation-set)
   * [10.2. DOCUMENTATION FORMATS](#102-documentation-formats)
@@ -324,41 +326,46 @@ After the load of the list page the user can quickly cycle trough all the elemen
     
 
 #### 8.2.3. Managing items - full CRUD
-The System provides the needed UI interfaces to Create , Update , Delete and Search items in the database.
+The System provides the needed UI interfaces to Create , Update , Delete and Search items in the database. DateDate values could be presented with calendar controls.
 
     
 
-#### 8.2.4. Quick search and filtering items
+#### 8.2.4. Managing FK values
+The Foreign key values could be managed via drop box ui controls. For now the fetch is performed on the "name" attribute from the PK table, based on &lt;&lt;pk_table&gt;&gt;_guid naming convention in the FK column of the items.
+
+    
+
+#### 8.2.5. Quick search and filtering items
 The user can quickly filter the items from the presented listing by typing in the omnisearch box ... The System will shrink the table so that only the rows having the string in the search omnibox will be presented. Once the string is deleted from the search omnibox the table data is restored to its original state.
 
     
 
-#### 8.2.5. Visual indication
+#### 8.2.6. Visual indication
 The Systems does not present any ok messages for the operation of the list page, only errors are presented clearly on the top of the page ( for example when one tries to update a string value into a cell with column accepting only integer values ... )
 
     
 
-##### 8.2.5.1. Visual indication for ok cases
+##### 8.2.6.1. Visual indication for ok cases
 In the ok cases no msgs are presented, but just the requested data shown.
 
     
 
-##### 8.2.5.2. Visual indication when no data is received on correct request
+##### 8.2.6.2. Visual indication when no data is received on correct request
 Should the request in terms of url parameters be correct a warning msg at the bottom of the page in grey colour is presented
 
     
 
-##### 8.2.5.3. Visual indication on erroneous requests
+##### 8.2.6.3. Visual indication on erroneous requests
 Should the request be erroneous - un existing, tables , columns , ds , wrong syntax etc. an error of the top of the page is presented and the full technical error is displayed at the bottom of the page. 
 
     
 
-#### 8.2.6. Items interlinking
+#### 8.2.7. Items interlinking
 The users can link to any items by simply typing &lt;&lt;item&gt;&gt;-&lt;&lt;id&gt;&gt; in the description. For example requirements_doc-4
 
     
 
-#### 8.2.7. Print to pdf
+#### 8.2.8. Print to pdf
 You can print any of the queries from the list page by adding / changing the as url parameter from as=grid to as=print-table. Use the browser print to pdf feature to save the listing page into a pdf file.
 
     
@@ -439,6 +446,13 @@ A qto instance running under the simple native authentication mode stores the us
 
 ### 9.2. Authorisation
 Only the SysAdmin of the System can add basic authentication and simple native mode users, thus regular users can see only their own credentials.
+
+    
+
+#### 9.2.1. Roles based access control list
+The qto application has a centralised roles based access control list accessible from the following url: 
+&lt;&lt;proj-db&gt;&gt;/list/items_roles_permissions. 
+This list will define who ( which roles ) , can or cannot do what and why - the description field. 
 
     
 
