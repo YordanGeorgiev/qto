@@ -9,10 +9,11 @@ main(){
 
    is_daemon=0;actions=''
 
-	while getopts "a:d:t:" opt; do
+	while getopts "a:d:f:t:" opt; do
 		 case $opt in
 			  a) actions="${actions}$OPTARG ";;
 			  t) table=("$OPTARG ");;
+			  f) file=("$OPTARG ");;
 			  d) is_daemon=("$OPTARG ");;
 			  \?) doExit 2 "Invalid option: -$OPTARG";;
 			  :) doExit 2 "Option -$OPTARG requires an argument."
@@ -73,6 +74,7 @@ do_run_actions(){
 
       [[ $arg_action == to-ver=* ]] && run_funcs="$(echo -e "$run_funcs\ndoChangeVersion $arg_action")"
       [[ $arg_action == to-env=* ]] && run_funcs="$(echo -e "$run_funcs\ndoChangeEnvType $arg_action")"
+      [[ $arg_action == cp-to-env=* ]] && run_funcs="$(echo -e "$run_funcs\ndoCpToEnv $arg_action")"
       [[ $arg_action == to-app=* ]] && run_funcs="$(echo -e "$run_funcs\ndoCloneToApp $arg_action")"
       done < <(echo "$actions")
 

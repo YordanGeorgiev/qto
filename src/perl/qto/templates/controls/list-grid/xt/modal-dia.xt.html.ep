@@ -34,6 +34,7 @@
             <component v-for="field in fields" v-bind="field" :cid.sync="field.id" :is="field.type" :key.sync="field.key" v-bind:cnt.sync="field.cnt" :content.sync="field.cnt" :label.sync="field.label" :ref="field.id">
             </component>
           </div>
+	       <fileupload target="/upload-files" action="POST"></fileupload>
           <div name="footer" class="dia-footer">
             <%= " $item " =%>: {{this.$attrs.id.replace('dia-','') + '  @' + new Date().toISOString().replace('T',' ').replace('Z','')}}
           </div>

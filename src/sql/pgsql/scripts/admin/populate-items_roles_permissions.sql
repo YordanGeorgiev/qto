@@ -1,6 +1,8 @@
 TRUNCATE TABLE items_roles_permissions ;
-INSERT INTO items_roles_permissions ( roles_guid,meta_tables_guid,meta_routes_guid,name) 
-   SELECT roles.guid , t2.guid, t3.guid , roles.name || '::' || t3.name || '->'|| t2.name
+INSERT INTO items_roles_permissions ( roles_guid,meta_tables_guid,meta_routes_guid,name,description) 
+   SELECT roles.guid , t2.guid, t3.guid
+		, roles.name || '__' || t3.name || '__ON__' || t2.name as name
+		, 'WHETHER OR NOT THE ' || roles.name || ' CAN ' || t3.name || ' THE ' || t2.name as name
    from roles
    cross join (
       SELECT meta_tables.guid , meta_tables.name 
@@ -26,7 +28,7 @@ AND ( name like '%::view%' and name not like '%_doc')
 ; 
 
 -- and display the "forbidden ones"
-SELECT roles.name , meta_routes.name , meta_tables.name , items_roles_permissions.allowed
+SELECT roles.name , items_roles_permissions.allowed , meta_routes.name , meta_tables.name 
 FROM items_roles_permissions
 LEFT JOIN roles ON roles.guid = roles_guid
 LEFT JOIN meta_routes ON meta_routes.guid = meta_routes_guid

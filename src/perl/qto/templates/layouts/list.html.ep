@@ -22,6 +22,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/lib/js/controls/vue-select.js"></script>
 <script src="/lib/js/controls/vue-date-time-picker.js"></script>
+<script src="/lib/js/controls/vue-simple-upload.min.js"></script>
    <%= content 'cnt_body_controls' %>
 <script id="all">
    var bus=new Vue({});
