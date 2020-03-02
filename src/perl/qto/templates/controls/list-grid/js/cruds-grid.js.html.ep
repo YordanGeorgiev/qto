@@ -67,11 +67,11 @@
                if ( curi.indexOf("?") === -1 ) { curi = curi + '?' }
                if ( typeof pgSize === 'undefined' ) { pgSize = 7 }
                if ( curi.indexOf("pg-size=") === -1 ) {
-                  return curi + "&pg-size=" + pgSize ; 
+                  return (curi + "&pg-size=" + pgSize).replace(/pg-num=([0-9]+)/gi , "pg-num=1");
                } else {
                   return curi
                      .replace("pg-size=" + this.pageSize , "pg-size=" + pgSize) 
-                     .replace("pg-num=" + this.pageNum , "pg-num=1");
+                     .replace(/pg-num=([0-9]+)/gi , "pg-num=1");
                }
          }
          , fetchServerSideDataToUI: function(url_params) {
