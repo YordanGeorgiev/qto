@@ -8,7 +8,7 @@
       </div>
          <div class="cls_page_breaker"></div>
       <div id="lft_body">
-         <div v-for="item in filteredItems" @click="hideContextMenu()">
+         <div v-for="item in filteredItems" :key="item.id" @click="hideContextMenu()">
             <h3 :ref="'<%= $item =%>-' + item.id" :id="'h<%= $item =%>-' + item.id" class="title">
                <a :id="'<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" class="permalink scroll"
                   :href="'#<%= $item =%>-' + item.id">#</a>
@@ -44,7 +44,7 @@
       </div>
       <div tabindex="3" id="rgt_menu" class="rgt_side_nav">
          <div id="rgt_toc">
-            <div v-for="item in filteredItems">
+            <div v-for="item in filteredItems" :key="item.id">
                <div :id="'tll_<%= $item =%>-' + item.id" @contextmenu = "showContextMenu($event)">
                   <a :id="'rml_<%= $item =%>-' + item.id" :name="'<%= $item =%>-' + item.id" class="permalink scroll" 
                   :href="'#<%= $item =%>-' + item.id"> # </a>
