@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS items_roles_permissions ; 
+-- DROP TABLE IF EXISTS items_roles_permissions ; 
 
 SELECT 'create the "items_roles_permissions" table'
 ; 

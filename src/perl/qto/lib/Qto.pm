@@ -121,8 +121,10 @@ sub doReloadProjectsDbMeta {
       $objMetaDataController->doReloadProjDbMetaData($db,$item);
    }
 
+   my $redis_server        = $config->{'env'}->{'redis'}->{'server'};
+   my $redis_port          = $config->{'env'}->{'redis'}->{'port'};
    print "START printing the meta-data keys in redis : \n";
-   print `echo 'KEYS * ' | redis-cli | sort`;
+   print `echo 'KEYS * ' | redis-cli -h $redis_server -p $redis_port| sort`;
    print "STOP  printing the meta-data keys in redis : \n";
 }
 
