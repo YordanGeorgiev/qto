@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS monthly_issues_202002 ; 
+-- DROP TABLE IF EXISTS monthly_issues_202002 ; 
 
 SELECT 'create the "monthly_issues_202002" table'
 ; 
