@@ -53,8 +53,10 @@
             return '</ol></li>'
         } 
         , buildDocLink: function(itm) {
-            var url = window.location.href.split('?')[0] 
-            url = url.split('/')[0] + "//" + url.split('/')[2] + '/' + '<%= $db =%>' + '/'
+            var url = window.location.href.split('?')[0]
+            var db = '<%= $db =%>'
+            var pdb = db.replace(/dev_|tst_|qas_|prd_/g,'')
+            url = url.split('/')[0] + "//" + url.split('/')[2] + '/' + pdb + '/'
             return '<li class="file"><a class="cls_da" href="' + url + itm.url + '">' + itm.name + '</a></li>' ;
         } 
      }
