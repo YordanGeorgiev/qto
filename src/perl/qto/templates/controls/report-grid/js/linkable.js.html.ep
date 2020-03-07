@@ -1,0 +1,103 @@
+   Vue.component('linkable', {
+     template: `<div v-bind:id="id" class="cls_cnt_lnkble" @blur="onBlur" v-html="linkOrNot" v-model="cnt">{{ linkOrNot }}</div>`,
+     props: {
+		   id: {}
+         , cnt: {
+            twoWay: true
+            , default: ""
+         }
+         , for: {}
+	  }
+     , computed: {
+         linkOrNot: function() {
+            return this.cnt
+         }
+       }
+     , model: {
+        prop: 'cnt'
+      }
+     , data() {
+         return {
+            content: this.cnt
+         }
+	  }
+     , mounted() {
+         this.content = this.cnt
+         this.$el.style.width = this.getColMaxWidth(this.$el) + "px"
+     },
+     methods: {
+       onBlur(ev) {
+				var el = ev.target
+       }
+       , calcVarCharWidth(width,col) {
+            if ( typeof width !== "undefined" ) {
+               if ( width < 3 ) {
+                  return 30
+               } else if ( width > 2  && width < 7 ) {
+                  return 40
+               } else if ( width > 6 && width < 16 ) {
+                  return 60
+               } else if ( width > 15 && width < 35 ) {
+                  return 60
+               } else if ( width > 34 && width < 105) {
+                  return 240
+               } else if ( width > 104 && width < 205 ) {
+                  return 300
+               } else  {
+                  return 460
+               }
+            } else {
+               return 20
+            }
+     		}
+       , calcWidth() {
+            var width = 20
+            if ( typeof this.content != undefined && this.content != null) {
+               width = this.content.toString().length
+               if ( width < 3 ) {
+                  return 30
+               } else if ( width > 2  && width < 7 ) {
+                  return 40
+               } else if ( width > 6 && width < 16 ) {
+                  return 60
+               } else if ( width > 15 && width < 35 ) {
+                  return 150
+               } else if ( width > 34 && width < 60 ) {
+                  return 240
+               } else if ( width > 59 && width < 90 ) {
+                  return 300
+               } else  {
+                  return 460
+               }
+            } else {
+                  return 20
+            }
+     		}
+       , getColMaxWidth(el) {
+            var col = el.id.split('-')[0]
+            var meta = this.$parent.$parent.gridMeta
+            for (var prop in meta) {
+               if (!meta.hasOwnProperty(prop)) {
+                 continue;
+               }
+               if ( (meta[prop])["attribute_name"] !== col ) {
+                  continue ;
+               } else {
+                  if ( typeof ((meta[prop])["width"]) != "undefined" && (meta[prop])["width"] != null ) {
+                        maxWidth = this.calcVarCharWidth(Number((meta[prop])["width"]),col)         
+                  } else {
+                     if ( (meta[prop])["datatype"].indexOf("char") === -1) {
+                        maxWidth = this.calcWidth()
+                     } else if((meta[prop])["datatype"].indexOf("int") !== -1){
+                        maxWidth = 20;
+                     } else {
+                        maxWidth = this.calcVarCharWidth(Number((meta[prop])["char_max_length"]),col)         
+                     }
+                  }
+               }
+            }
+            if ( typeof(maxWidth) === "undefined" ){maxWidth=40}
+            return maxWidth
+         }
+		}
+   })

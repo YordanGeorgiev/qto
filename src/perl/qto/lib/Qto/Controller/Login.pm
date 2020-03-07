@@ -39,7 +39,7 @@ sub doShowLoginForm {
    $sessions = $sessions->samesite('Strict');
    $sessions->cookie_domain( $instance_domain) unless $sessions->cookie_domain( $instance_domain);
    my $redirect_url = $self->session( 'app.' . $db . '.url' ) if defined $self->session( 'app.' . $db . '.url' ) ; 
-   $self->session( 'app.' . $db . '.user' => undef);
+   $self->session( 'app.' . toPlainName($db) . '.user' => undef);
 
    # do not allow login to land on a <<env>>_<<proj-db>>/login to avoid mixing of envs
    my $plain_db         = toPlainName($db);
@@ -78,13 +78,14 @@ sub doLoginUser {
 
 
    $db                  = toEnvName ( $db , $config) ;
+   my $plain_db         = toPlainName($db);
 	#print STDOUT "Logon.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
    my $pass             = $self->param('pass');
    my $epass            = undef ; 
    my $email            = $self->param('email' );
    my $redirect_url     = $self->param('redirect-url' );
-   $redirect_url        = '/' . $db . '/search' unless $redirect_url ;
+   $redirect_url        = '/' . $plain_db . '/search' unless $redirect_url ;
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , 'login') ;
    $objModel->set('postgres_db_name' , $db ) ; 
@@ -96,7 +97,7 @@ sub doLoginUser {
    if ( $ret != 0 ) {
       $objLogger->doLogInfoMsg ( 'login failed for "' . $self->setEmptyIfNull($email) . '"') ; 
       $msg = 'login failed! ' . $msg ;
-      $redirect_url = '/' . $db . '/login' ; 
+      $redirect_url = '/' . $plain_db . '/login' ; 
       $self->doRenderPageTemplate($ret, $msg ,$msg_color,$db,$redirect_url);
       return ;
    } 
@@ -139,8 +140,8 @@ sub doRenderPageTemplate {
    my $notice           = '' ;
 
    $config		         = $self->app->config ; 
-   $db                  = toPlainName ($db);
-   $msg = "$db login" unless $msg ; 
+   my $plain_db         = toPlainName($db);
+   $msg = "$plain_db login" unless $msg ; 
 
    $self->res->code($http_code) ; 
 
@@ -155,7 +156,7 @@ sub doRenderPageTemplate {
       'template'        => $template 
     , 'msg'             => $msg
     , 'msg_color'       => $msg_color
-    , 'db' 		         => $db
+    , 'db' 		         => $plain_db
     , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
     , 'ProductVersion' 	=> $ProductVersion
     , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}

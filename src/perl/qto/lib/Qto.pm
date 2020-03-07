@@ -280,11 +280,22 @@ sub doSetRoutes {
    , action       => 'doSearchItems'
    );
    
+   $r->get('/:db/report/:report_name')->to(
+     controller   => 'Report'
+   , action       => 'doListReportResultItems'
+   );
+   
    $r->get('/:db/query')->to(
      controller   => 'Query'
    , action       => 'doQueryItems'
    );
 	
+   $r->get('/:db/call-func/:func')->to(
+     controller   => 'CallFunc'
+   , action       => 'doCallFunc'
+   );
+
+
    $r->get('/:db/select-databases')->to(
      controller   => 'Select'
    , action       => 'doSelectDatabases'

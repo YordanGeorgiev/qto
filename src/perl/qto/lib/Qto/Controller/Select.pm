@@ -94,9 +94,10 @@ sub doSelectItems {
 sub doSelectTables {
 	my $self       = shift;
 	my $db         = $self->stash('db');
-   my $msg = 'unknown error during select-tables';
+   my $msg        = 'unknown error during select-tables';
    my $item       = 'select_tables' ; 
-   $config		      = $self->app->config ; 
+   $config		   = $self->app->config ; 
+   $db            = toEnvName ( $db , $config) ;
 
    return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 

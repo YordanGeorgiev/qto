@@ -39,7 +39,7 @@
    function stripTechMsgPart(txt) {
       if ( typeof txt != 'undefined' && txt != null && txt != "" ) {
          if ( txt.indexOf(' :: ') !== -1 ) {
-            console.error ( txt )
+            // todo:ysg console.error ( txt )
             txt = txt.split(/ :: /)[0]
          }
       } else {

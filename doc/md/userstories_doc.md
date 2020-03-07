@@ -73,12 +73,13 @@
     * [2.7.2. Global search from the view page](#272-global-search-from-the-view-page)
     * [2.7.3. Global search modal dialog ui](#273-global-search-modal-dialog-ui)
       * [2.7.3.1. Search-autocomplete on modal search dialog](#2731-search-autocomplete-on-modal-search-dialog)
-  * [2.8. THE NOTES PAGE / UI](#28-the-notes-page-/-ui)
-  * [2.9. THE CHAT UI](#29-the-chat-ui)
-  * [2.10. MULTI-PROJECT AWARE UI](#210-multi-project-aware-ui)
-    * [2.10.1. Items data transfer between different projects](#2101-items-data-transfer-between-different-projects)
-    * [2.10.2. Items move](#2102-items-move)
-  * [2.11. ISSUES IMPORT FROM GOOGLE CALENDAR](#211-issues-import-from-google-calendar)
+  * [2.8. THE REPORT PAGE](#28-the-report-page)
+  * [2.9. THE NOTES PAGE / UI](#29-the-notes-page-/-ui)
+  * [2.10. THE CHAT UI](#210-the-chat-ui)
+  * [2.11. MULTI-PROJECT AWARE UI](#211-multi-project-aware-ui)
+    * [2.11.1. Items data transfer between different projects](#2111-items-data-transfer-between-different-projects)
+    * [2.11.2. Items move](#2112-items-move)
+  * [2.12. ISSUES IMPORT FROM GOOGLE CALENDAR](#212-issues-import-from-google-calendar)
 * [3. TEAM LEADER BIZ PERSPECTIVE](#3-team-leader-biz-perspective)
   * [3.1. DATA SECURITY](#31-data-security)
   * [3.2. ROLES MANAGEMENT](#32-roles-management)
@@ -729,42 +730,49 @@ I want the System to present me with autocomplete of the mostly occurring string
 
     
 
-### 2.8. The notes page / UI
+### 2.8. The report page
+As the UI of the qto application
+In order to be able to quickly view the results of predefined reports ( which are actually stored_procedures in the product databases ) 
+I want to be able to execute an report by providing the following syntax
+
+     <<server>>:<<port>>/<<proj-db>>/report/<<stored-procedure-name>>?p_01=<<parameter-01-value>>&?p_02=<<parameter-02-value>> ... 
+
+### 2.9. The notes page / UI
 The 7 sticky notes would be used for practising :
  - the cruds with web sockets
  - the per user data management
 
     
 
-### 2.9. The chat UI
+### 2.10. The chat UI
 As UI user
 In order to be able to quickly communicate on anything with other qto users of the qto applications 
 I want to be able to use a quick chat with other users within the application instance
 
     
 
-### 2.10. Multi-project aware UI
+### 2.11. Multi-project aware UI
 As the UI user of an qto instance 
 In order to save be able to track my personal time usage between different projects and the different interdependencies 
 I want to be able to move items data from one project to another via the UI.
 
     
 
-#### 2.10.1. Items data transfer between different projects
+#### 2.11.1. Items data transfer between different projects
 As the UI user of an qto instance 
 In order to manage multiple projects efficiently
 I want to be able to move items data from one project to another via the UI in a trusted manner.
 
     
 
-#### 2.10.2. Items move
+#### 2.11.2. Items move
 As an UI user of the application 
 I order to move the items into different tables
 I want to  be able to move them from a button in the listing page by specifying the target table
 
     
 
-### 2.11. Issues import from Google calendar
+### 2.12. Issues import from Google calendar
 As the UI user of an qto instance 
 In order to be able to visualise and manage my  start- and stop_time having issues better 
 I want to  be able to import my Google calendar issues into my qto profile on an qto instance

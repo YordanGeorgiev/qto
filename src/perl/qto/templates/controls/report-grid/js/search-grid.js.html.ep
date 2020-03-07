@@ -1,0 +1,190 @@
+   var search_grid = new Vue({
+     el: '#search-grid',
+     data: {
+       globalSrch: ''
+       , gridColumns: <%== $srch_control =%>
+       , gridData: []
+       , gridMeta: {}
+       , pageSize: 7
+       , pageNum: 1
+       , pagesCount: 0
+       , UrlParams:{ as:"grid" }
+       , pageSizes: ['5', '7', '10','15','20','30','50','100']
+       , searchInputChanged: ""
+       , showModal: false
+       , cid: null
+		},
+     	methods: {
+         showModalDialog: function (e) {
+           this.showModal = true
+           this.cid = e.target.id.replace("btn-modal-","dia-") ; 
+         }
+       , onSearchBoxInputChanged: function(quickSrch) {
+            this.globalSrch = quickSrch ; 
+        } 
+       , getUrlParams: function (){
+            var url_params = new URLSearchParams();
+            if( window.location.toString().indexOf("?") != -1) {
+               var href_part = window.location.search.split('?')[1].split('#')[0]
+               href_part.replace("pick=","pick=id,").replace('id,id','id').replace(/([^=&]+)=([^&]*)/g, 
+                  function(m, key, value) {
+                     var attr = decodeURIComponent(key)
+                     var val = decodeURIComponent(value)
+                     url_params.append(attr,val);
+               });
+            } 
+            
+            if ( url_params.has("od") === false) { url_params.append("od" , "id"); }
+            if ( url_params.has("as") === false) { url_params.append("as" , "grid"); }
+            if ( url_params.has("pg-size") === false) { url_params.append("pg-size" , 7); }
+            if ( url_params.has("pg-num") === false) { url_params.append("pg-num" , 1); }
+            // debug for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
+            return url_params ; 
+         }
+	      , fetchServerSideData: function (url_params){
+            if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
+            var uri = (window.location.pathname).replace(/\/[a-zA-Z_0-9]+\/report/ , "/<%= $db =%>/call-func")
+            return axios.get(uri , { params: url_params } )
+            .then(response => { 
+               return response ; 
+            })
+            .catch(function(err) {
+               console.error ( err ) 
+               return err.response;
+            }) 
+         }
+         , generatePageSize: function (pgSize) {
+               var currUrl = window.location.href ; 
+               if ( typeof pgSize === 'undefined' ) { pgSize = 7 }
+               if ( currUrl.indexOf("pg-size=") === -1 ) {
+                  return (currUrl + "&pg-size=" + pgSize)
+                     .replace(/pg-num=([0-9]+)/gi , "pg-num=1");
+               } else {
+                  return currUrl
+                     .replace("pg-size=" + this.pageSize , "pg-size=" + pgSize) 
+                     .replace(/pg-num=([0-9]+)/gi , "pg-num=1");
+               }
+         }
+         , fetchServerSideDataToUI: function(url_params) {
+
+               if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
+               if ( typeof url_params.get('for') == null ){ hideControlsOnError() ; }
+               document.getElementById('inp_srch_box').value = url_params.get('for') ; 
+               this.fetchServerSideData(url_params)
+               .then( response => {
+                  if ( response.status === 200 ) {
+                     var data = response.data 
+                     if ( response.data.dat == null ) { hideControlsOnError() ;}
+                     if ( data.cnt === "0") { hideControlsOnError() ;}
+                     var dataType = (typeof data)
+                     if ( dataType === 'undefined' ) {
+                        var msg = 'unexpected err occurred while fetching data !!!'
+                        setMsgVisuals(data,'div_msg','Error','search');
+                     } else if ( dataType === 'string' ) {
+                        setMsgVisuals(data,'div_msg','Error','search');
+                     } else {
+								this.gridMeta = data.met.meta_cols
+                        bus.$emit('metaTablesLoadEmit',response.data.met.meta_tables)
+                        if ( data.cnt === '0'){
+                           hideControlsOnError();
+                           setMsgVisuals(response.data.msg,'div_notice','Warning','search');
+                        }
+                        if ( typeof(data.dat) == 'undefined' || data.dat == null || data.cnt == '0') { return }
+                        this.gridData = data.dat
+                        var totalRSsize = data.cnt ; 
+                        this.pageSize = url_params.get('pg-size')
+                        this.pageNum = url_params.get('pg-num')
+                        var remainder = totalRSsize % this.pageSize
+                  
+                        var toAdd = 1 // example: pg-size 10 , total-rs-size 30 => 3 and not 4
+                        if ( remainder == 0 ) { toAdd = 0  }
+                        this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
+                        var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa');
+
+                        if ( oa !== null ) {
+                           this.$children[0].setAscSortBy( oa ) ; 
+                        } else if ( typeof url_params.get("od") != 'undefined' ) {
+                           var od = url_params.get("od")
+                           this.$children[0].setDescSortBy( od ) ; 
+                        } else {
+                           this.$children[0].setDescSortBy("id")
+                        }
+                     } return ;
+                  } else if ( response.status === 204) {
+                     var warningMsg = response.statusText
+                     setMsgVisuals(warningMsg,'div_notice','Warning','search');
+                     return ;
+                  } else if ( response.status === 404 || response.status === 400) {
+                     var errMsg = response.statusText + ": " + response.data.msg
+                     setMsgVisuals(errMsg,'div_msg','Error','search');
+                     return ;
+                  } else {
+                     var errMsg = response.statusText + ": " + response.data.msg
+                     setMsgVisuals(errMsg,'div_msg','Error','search');
+                     return ;
+                  }
+               })
+            .catch(function(err) {
+               if (typeof err !== 'undefined') {
+                 var errMsg = err.toString() 
+                 setMsgVisuals(errMsg);
+               } else {
+                 var msg = 'unknown err while fetching grid data for search occured !'
+                 setMsgVisuals(msg,'div_msg','Error');
+               } 
+            }) 
+	  	   }
+         , goToNextPage: function (id) {
+               var uri = window.location.href 
+               if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
+               if ( uri.indexOf("pg-num=") === -1 ) {
+                  uri = uri + "&pg-num=1"
+               } else {
+                  var newPageNum = Number(this.pageNum)+1
+                  if ( newPageNum > this.pagesCount ) { newPageNum = this.pagesCount }
+                  uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
+               }
+               window.location.href = uri 
+         }
+         , goToPrevPage: function (id) {
+               var uri = window.location.href 
+               if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
+               if ( uri.indexOf("pg-num=") === -1 ) {
+                  uri = uri + "&pg-num=1"
+               } else {
+                  var newPageNum = Number(this.pageNum)-1
+                  if ( newPageNum < 1 ) { newPageNum = 1 }
+                  uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
+               }
+               window.location.href = uri 
+         }
+         , goToNextPage10: function (id) {
+               var uri = window.location.href 
+               if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
+               if ( uri.indexOf("pg-num=") === -1 ) {
+                  uri = uri + "&pg-num=1"
+               } else {
+                  var newPageNum = Number(this.pageNum)+10
+                  if ( newPageNum > this.pagesCount ) { newPageNum = this.pagesCount }
+                  uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
+               }
+               window.location.href = uri 
+         }
+         , goToPrevPage10: function (id) {
+               var uri = window.location.href 
+               if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
+               if ( uri.indexOf("pg-num=") === -1 ) {
+                  uri = uri + "&pg-num=1"
+               } else {
+                  var newPageNum = Number(this.pageNum)-10
+                  if ( newPageNum < 1 ) { newPageNum = 1 }
+                  uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
+               }
+               window.location.href = uri 
+         }
+     }
+     , mounted() {
+	      this.fetchServerSideDataToUI();
+         bus.$on('searchBoxInputChanged',this.onSearchBoxInputChanged)
+	  }
+   });

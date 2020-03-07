@@ -43,8 +43,6 @@
 					 }
 				  })
 				}
-            console.log(data)
-            console.log("data in srch-grid/js/search-grid-sf.js.html.ep")
 				return data
 			},
 			set: function(data) {
@@ -58,11 +56,7 @@
        }
      },
      methods: {
-       showModalDialog: function (e) {
-         this.showModal = true
-         this.cid = e.target.id.replace("btn-modal-","dia-") ; 
-       }
-       , sortBy: function (key) {
+       sortBy: function (key) {
          this.sortKey = key
          this.sortOrders[key] = this.sortOrders[key] * -1
        }

@@ -47,8 +47,10 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 
       eval { 
          $str_sql = "
-            SELECT users.id, email, password 
-            FROM users 
+            SELECT users.id, email, password, roles.name as roles
+            FROM users
+            LEFT JOIN user_roles ON (users.guid = user_roles.users_guid)
+            LEFT JOIN roles ON (roles.guid = user_roles.roles_guid)
             WHERE 1=1
             AND status > 0
             AND email = ?
@@ -62,67 +64,127 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          if ( scalar ( keys %$hsr ) == 1 ) {
             $ret = 200 ; 
             $msg = "" ; 
-         } else { 
-            $msg = "$email not registered! Contact " . $config->{'env'}->{'db'}->{'AdminEmail'} . " to request access." ;  
-            $ret = 401 if ( scalar ( keys %$hsr ) != 1 );
-         }
-      };
-      if ( $@ ) { 
-         my $tmsg = "$@" ; 
-         $msg = DBI->errstr ; 
-         $objLogger->doLogErrorMsg ( "$tmsg" ) ;
+      } else { 
+         $msg = "$email not registered! Contact " . $config->{'env'}->{'db'}->{'AdminEmail'} . " to request access." ;  
+         $ret = 401 if ( scalar ( keys %$hsr ) != 1 );
       }
-
-      $dbh->disconnect();
-      return ( $ret , $msg , $hsr ) ; 	
+   };
+   if ( $@ ) { 
+      my $tmsg = "$@" ; 
+      $msg = DBI->errstr ; 
+      $objLogger->doLogErrorMsg ( "$tmsg" ) ;
    }
 
-   sub doNativeLoginAuth  {
+   $dbh->disconnect();
+   return ( $ret , $msg , $hsr ) ; 	
+}
+
+sub doNativeLoginAuth  {
+
+   my $self             = shift ; 
+   my $db               = shift ; 
+   my $email            = shift ; 
+   my $password         = shift ; 
+   my $msg              = q{} ;         
+   my $ret              = 401 ;        # 401 Unauthorized http code
+   my $debug_msg        = q{} ; 
+   my $hsr              = undef ;      # the hash reference containing the user details
+   my $sth              = {} ;         # this is the statement handle
+   my $dbh              = {} ;         # this is the database handle
+   my $str_sql          = q{} ;        # this is the sql string to use for the query
+   
+   ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+   return ( $ret , $msg ) unless $ret == 0 ; 
+
+   eval { 
+      $str_sql = "
+         SELECT id,email, password from users 
+         WHERE 1=1
+         AND status > 0
+         AND email = ?
+      ;
+      " ; 
+
+      $sth = $dbh->prepare($str_sql);  
+      $sth->execute($email) or $objLogger->error ( "$DBI::errstr" ) ;
+      $hsr = $sth->fetchall_hashref( 'id' ) ; 
+
+      if ( scalar ( keys %$hsr ) == 1 ) {
+         $ret = 200 ; 
+         $msg = "" ; 
+      } else { 
+         $msg = "$email not registered! Contact " . $config->{'env'}->{'db'}->{'AdminEmail'} . " to request access." ;  
+         $ret = 401 if ( scalar ( keys %$hsr ) != 1 );
+      }
+   };
+   if ( $@ ) { 
+      my $tmsg = "$@" ; 
+      $msg = DBI->errstr ; 
+      $objLogger->doLogErrorMsg ( "$tmsg" ) ;
+   }
+
+   $dbh->disconnect();
+   return ( $ret , $msg , $hsr ) ; 	
+}
+
+
+sub doCallFuncGetHashRef {
 
       my $self             = shift ; 
-      my $db               = shift ; 
-      my $email            = shift ; 
-      my $password         = shift ; 
-      my $msg              = q{} ;         
-      my $ret              = 401 ;        # 401 Unauthorized http code
-      my $debug_msg        = q{} ; 
-      my $hsr              = undef ;      # the hash reference containing the user details
-      my $sth              = {} ;         # this is the statement handle
-      my $dbh              = {} ;         # this is the database handle
-      my $str_sql          = q{} ;        # this is the sql string to use for the query
-      
+      my $func             = shift ; 
+      my $result_set_key   = shift ; 
+		my @params           = @_ ;
+
+      my $ret              = 1 ; 
+      my $msg              = 'unknown error has occured during global search ' ; 
+      my $dbh              = {} ; 
+      my $sth              = {} ; 
+      my $hsr2             = {} ; 
+      my $str_params       = '' ;
+
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
+   
+
+      #qto-200307110331
+      if (scalar( @params) > 0 ) { 
+         foreach my $p ( @params ) {
+            $str_params = $str_params . ' , ' . "'$p'" ;
+         }
+      }
+      $str_params = substr($str_params,3) if (length($str_params) > 0 );
+      
+      my $str_sql = 'SELECT * from public.' . "$func" . '(' . $str_params . ')';
+      $ret = 0 ; 
 
       eval { 
-         $str_sql = "
-            SELECT id,email, password from users 
-            WHERE 1=1
-            AND status > 0
-            AND email = ?
-         ;
-         " ; 
-
+         $msg = "" ; 
          $sth = $dbh->prepare($str_sql);  
-         $sth->execute($email) or $objLogger->error ( "$DBI::errstr" ) ;
-         $hsr = $sth->fetchall_hashref( 'id' ) ; 
-
-         if ( scalar ( keys %$hsr ) == 1 ) {
-            $ret = 200 ; 
-            $msg = "" ; 
-         } else { 
-            $msg = "$email not registered! Contact " . $config->{'env'}->{'db'}->{'AdminEmail'} . " to request access." ;  
-            $ret = 401 if ( scalar ( keys %$hsr ) != 1 );
-         }
+         $sth->execute() or $ret = 400 ; 
+         $msg = DBI->errstr if $ret  == 400 ; 
+         die "$msg" unless $ret == 0 ; 
+         $hsr2 = $sth->fetchall_hashref( $result_set_key ) or $ret = 400 ; # some error 
+         $msg = DBI->errstr if $ret  == 400 ; 
+         die "$msg" unless $ret == 0 ; 
       };
       if ( $@ ) { 
          my $tmsg = "$@" ; 
-         $msg = DBI->errstr ; 
-         $objLogger->doLogErrorMsg ( "$tmsg" ) ;
-      }
+         $objLogger->doLogErrorMsg ( "$msg" ) ;
+         $msg = "failed to get data :: $tmsg" unless $ret == 404 ; 
+         return ( $ret , $msg , "" ) ; 
+      };
 
       $dbh->disconnect();
-      return ( $ret , $msg , $hsr ) ; 	
+      binmode(STDOUT, ':utf8');
+
+      unless ( defined $hsr2 or keys %{$hsr2}) {
+         $msg = ' no data for this search request !!! ' ;
+         $ret = 204 ;
+         return ( $ret , $msg , undef ) ; 
+      }
+
+      $ret = 0 ; 
+      return ( $ret , $msg , $hsr2 ) ; 
    }
 
 
@@ -188,7 +250,6 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
          $msg = DBI->errstr if $ret  == 400 ; 
          die "$msg" unless $ret == 0 ; 
-         $objModel->set('hsr2' , $hsr2 );
       };
       if ( $@ ) { 
          my $tmsg = "$@" ; 
@@ -465,13 +526,14 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
             push (@$arr,@$r);
          };
          # say "START ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;
-         #p $arr ; 
-         #say "STOP  ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;   
+         # p $arr ; 
+         # say "STOP  ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;   
       };
       if ( $@ ) { 
          $msg = " failed to get the project database: " . $db . " roles based access control list ! " ; 
          $msg .= $DBI::errstr ; 
          $ret = 1 ; 
+         $objLogger->doLogErrorMsg($msg);
          return ( $ret , $msg , undef ) ; 
       };
 
@@ -776,6 +838,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       if ( $@ or !scalar(%$mhsr2)) { 
          $msg = " failed to get the project database: " . $db . " meta data ! " ; 
          $msg .= $DBI::errstr ; 
+         $objLogger->doLogErrorMsg($msg);
          $ret = 1 ; 
          return ( $ret , $msg , undef ) ; 
       };
@@ -835,6 +898,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          # $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
          $msg = "failed to get $table table meta data -  " ; 
          $msg .= "most probably the table does not exist " ; 
+         $objLogger->doLogErrorMsg($msg);
          $ret = 1 ; 
          return ( $ret , $msg , "" ) ; 
       };
@@ -873,6 +937,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          $ret = 0 ; $msg = "" ; 
       } else {
          $msg .= DBI->errstr ; 
+         $objLogger->doLogErrorMsg($msg);
       }
 
       return ( $ret , $msg , $dbh ) ; 
@@ -1011,6 +1076,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          die "$msg" unless $ret == 0 ; 
          $objModel->set('hsr2' , $hsr2 );
          $objModel->set($db . '.dat.' . $table , $hsr2 ); # wip: 181114145604
+         $objLogger->doLogErrorMsg($msg);
       };
       if ( $@ ) { 
          my $tmsg = "$@" ; 
@@ -1083,7 +1149,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 
       if ( defined $who ) {
          if ( $table eq 'users' and $who ne $admin_user_email ){
-            $str_sql .= "AND email = '" . $who . "'"
+            $str_sql .= "AND email = '" . $who . "'" unless $ENV{'QTO_NO_AUTH'} == 1;
          }
       }
       
@@ -1144,6 +1210,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
             return ( $ret , $msg , {} ) ; 
          } else {
             $msg = DBI->errstr if $ret  == 400 ; 
+            $objLogger->doLogErrorMsg($msg);
             die "$msg" if $ret == 400 ;
             $ret = 200 ;
          }
