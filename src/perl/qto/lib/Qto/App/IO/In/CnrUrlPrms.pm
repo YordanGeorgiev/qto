@@ -103,6 +103,45 @@ sub doValidateAndSetWith {
    return $isValid ;  
 }
 
+sub doSetCallFuncUrlParams {
+
+   my $self          = shift ; 
+   my $Controller    = shift || 'unknown' ; 
+   my $controller    = lc ( $Controller ) ; 
+   my $ret           = 0 ; 
+   my $msg           = '' ; 
+   
+   my $page_size = $query_params->param('pg-size') || 7 ; 
+   $msg = "the page size must a positive number, but pg-size of " . $page_size . " was requested !!!" ; 
+   unless ( isint $page_size ) {
+      $ret = 400 ; 
+      return ( $ret , $msg ) ; 
+   }
+   if ( $page_size < 0 ) {
+      $msg = "the page size must a positive number, but pg-size of " . $page_size . " was requested !!!" ; 
+      $ret = 400 ; 
+      return ( $ret , $msg ) ; 
+   }
+   $msg = '' ; 
+   $objModel->set('call-func.web-action.pg-size' , $query_params->param('pg-size') );
+
+   my $page_num = $query_params->param('pg-num') || 1 ; 
+   $msg = "the page num must a positive number, but pg-num of " . $page_num . " was requested !!!" ; 
+   unless ( isint $page_num ) {
+      $ret = 400 ; 
+      return ( $ret , $msg ) ; 
+   }
+   if ( $page_num < 0 ) {
+      $msg = "the page number must a positive number, but pg-num of " . $page_num . " was requested !!!" ; 
+      $ret = 400 ; 
+      return ( $ret , $msg ) ; 
+   }
+   $msg = '' ; 
+   $objModel->set('call-func.web-action.pg-num' , $query_params->param('pg-num') );
+   return ( $ret , $msg ) ; 
+}
+
+
 sub doSetQueryUrlParams {
 
    my $self          = shift ; 

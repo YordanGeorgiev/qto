@@ -6,6 +6,64 @@ use Data::Printer ;
 use Carp ; 
 
 our $objModel = {} ; 
+   
+   sub doConvertSetMaxWidth {
+
+      my $self          = shift ; 
+      my $msr2          = shift ;
+      my $hsr2          = shift ; 
+      my $order_op      = shift || '<=>' ; 
+      my $to_order_by   = shift || 'id';
+      my $page_size     = shift || 7 ;
+      my $page_num      = shift || 1 ;
+      my $msg           = 'unknown error has occurred !!!' ; 
+      my $ret           = 1 ;      # assume error from the start  
+      my @list          = () ; 
+
+      my $rows_count = 0 ; 
+      $to_order_by   = 'id' unless ( defined $to_order_by ) ; 
+      my $evl_str_sort_data = 'sort { $hsr2->{$b}->{ $to_order_by } ' . "$order_op" . ' $hsr2->{$a}->{ $to_order_by } } keys (%$hsr2) ' ; 
+      my $evl_str_sort_meta = 'keys %$hsr2' ; # as it is just a hash ref of hash refs 
+      my $evl_str_sort_by = $evl_str_sort_data ; 
+      $evl_str_sort_by = $evl_str_sort_meta if $to_order_by eq 'attnum' ; 
+      $evl_str_sort_by = $evl_str_sort_meta if $to_order_by eq 'attribute_number' ; 
+      $evl_str_sort_by = $evl_str_sort_meta if $to_order_by eq 'relevancy' ; 
+
+      foreach my $key (  eval "$evl_str_sort_by" ) {
+         my $row = $hsr2->{$key} ; 
+			foreach my $k ( keys %$row ){
+   			$self->setCellMaxWidth($msr2,$k,$row->{"$k"});
+			}
+         unshift( @list , $row ) ; 
+      }
+
+      $rows_count          = scalar(@list);      
+      my $slice_start      = $page_size*($page_num-1);
+      my $slice_stop       = $slice_start + ($page_size-1);
+      $slice_stop          = scalar(@list) -1 if ( $slice_stop >= scalar(@list));
+      my @paged_list       = @list[$slice_start..$slice_stop];
+
+      $ret                 = 0 ; 
+      $msg                 = "" ; 
+      return ( $ret , $msg , $msr2, \@paged_list , $rows_count ) ; 
+   } 
+
+   sub setCellMaxWidth {
+      my $self = shift ; 
+      my $msr2 = shift ; 
+      my $attribute_name = shift ; 
+      my $cell_cnt = shift ; 
+
+      foreach my $pos (keys %$msr2 ){
+         if ( $msr2->{"$pos"}->{'argname'} eq "$attribute_name" ){
+            $msr2->{"$pos"}->{'attribute_name'} = $msr2->{"$pos"}->{'argname'};
+				$msr2->{"$pos"}->{'attribute_number'} = $msr2->{$pos}->{'pos'} ; 
+				$msr2->{"$pos"}->{'char_max_length'} = length($cell_cnt);
+				$msr2->{"$pos"}->{'width'} = length($cell_cnt)*4;
+         }
+      }
+   }
+
 
    #
 	# -----------------------------------------------------------------------------
@@ -19,8 +77,6 @@ our $objModel = {} ;
       my $to_order_by   = shift || $objModel->get('select.web-action.o') ; 
 
       $to_order_by   = 'id' unless ( defined $to_order_by ) ; 
-      my $to_hide       = $objModel->get('select.web-action.hide');
-
       my $msg        = 'unknown error has occurred !!!' ; 
       my $ret        = 1 ;      # assume error from the start  
       my @list       = () ; 
@@ -36,7 +92,7 @@ our $objModel = {} ;
       foreach my $key (  eval "$evl_str_sort_by" ) {
          my $row = $hsr2->{$key} ; 
          $rows_count = $row->{'rows_count'} if ( exists $row->{'rows_count'} ); delete $row->{'rows_count'} ; 
-         push ( @list , $row ) ; 
+         push( @list , $row ) ; 
       }
       $ret = 0 ; 
       $msg = "" ; 

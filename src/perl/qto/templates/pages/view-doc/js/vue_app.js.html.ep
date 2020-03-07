@@ -237,7 +237,7 @@
                      context.commit('SET_SNACKBAR_MSG', err.response.data.msg.split("::")[0]) 
                   }
                }) 
-               this.$forceUpdate()
+               // this.$forceUpdate() // probably not needed because of the :keys
          }
          , createItem: (context,payload) => {
                var uri = window.location.href.replace('/view/', '/hicreate/')
@@ -269,7 +269,7 @@
                   }
                   context.commit('SET_SNACKBAR_SHOW', true)
                }) 
-               this.$forceUpdate()
+               // this.$forceUpdate() // probably not needed because of the :keys
          }
          , updateItem: (context,payload) => {
             var arr = payload.eid.split('-')
@@ -307,7 +307,7 @@
                }
                context.commit('SET_SNACKBAR_SHOW', true)
             }) 
-         this.$forceUpdate()
+               // this.$forceUpdate() // probably not needed because of the :keys
          }
    } 
    //eof actions

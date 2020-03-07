@@ -1,5 +1,5 @@
 -- file: src/sql/pgsql/qto/tables/34.create-table-users.sql
--- v0.7.9
+-- v0.8.1
 -- DROP TABLE IF EXISTS users; 
 
 SELECT 'create the "users" table'
@@ -42,11 +42,14 @@ SELECT 'show the columns of the just created table'
    ORDER  BY attnum
    ; 
 
-CREATE TRIGGER trg_set_update_time_on_users BEFORE UPDATE ON users 
-   FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+   CREATE TRIGGER trg_set_update_time_on_users BEFORE UPDATE ON users 
+      FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time()
+   ;
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'users'::regclass;
+   select tgname
+   from pg_trigger
+   where not tgisinternal
+   and tgrelid = 'users'::regclass
+   ;
+
 

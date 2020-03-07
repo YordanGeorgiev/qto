@@ -1,5 +1,9 @@
 # file: doc/cheats/qto-cheat-sheet.sh
 
+# how-to check the perl syntax of single perl file : 
+perl -MCarp::Always -I `pwd`/src/perl/*/ -I `pwd`/src/perl/*/lib/ -wc \
+   src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
+
 # start load env vars
 export PROJ_INSTANCE_DIR=`pwd`  # or could be any qto proj
 export PROJ_CONF_FILE=`pwd`/cnf/env/prd.env.json  # or could be any qto proj's conf file

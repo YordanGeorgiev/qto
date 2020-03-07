@@ -1,4 +1,4 @@
-  ---- DROP TABLE IF EXISTS problems ; 
+-- DROP TABLE IF EXISTS problems ; 
 
 SELECT 'create the "problems" table'
 ; 
@@ -6,7 +6,7 @@ SELECT 'create the "problems" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , prio           integer NOT NULL DEFAULT 1
-    , status         varchar (20) NOT NULL DEFAULT 'status ...'
+    , problems_status_guid uuid DEFAULT 'cb989a14-d0b8-46e4-b2cc-5e2a974b5d29'::uuid NOT NULL
     , category       varchar (20) NOT NULL DEFAULT 'category ...'
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000) NOT NULL DEFAULT 'desc ...'

@@ -41,16 +41,16 @@
   * [5.5. CLONE THE PROJECT ON THE SSH SERVER](#55-clone-the-project-on-the-ssh-server)
 * [6. PHYSICAL HOST OS INSTALLATIONS](#6-physical-host-os-installations)
   * [6.1. MACOS](#61-macos)
-  * [6.2. MACOS](#62-macos)
-    * [6.2.1. Install qtpass](#621-install-qtpass)
-    * [6.2.2. Install qtpass](#622-install-qtpass)
+    * [6.1.1. Install qtpass](#611-install-qtpass)
+    * [6.1.2. Install qtpass](#612-install-qtpass)
 * [7. POTENTIAL PROBLEMS AND TROUBLESHOOTING](#7-potential-problems-and-troubleshooting)
   * [7.1. THE POSTGRES ADMIN USER PASSWORD IS WRONG](#71-the-postgres-admin-user-password-is-wrong)
-  * [7.2. CANNOT LOGIN AT ALL IN THE WEB INTERFACE WITH THE ADMIN USER](#72-cannot-login-at-all-in-the-web-interface-with-the-admin-user)
-  * [7.3. STRANGE PERMISSIONS ERRORS](#73-strange-permissions-errors)
-  * [7.4. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#74-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
-  * [7.5. SOME KIND OF MISMATCH IN THE AWS](#75-some-kind-of-mismatch-in-the-aws)
-  * [7.6. THE PROBLEM OCCURRED IS NOT MENTIONED HERE ???!!!](#76-the-problem-occurred-is-not-mentioned-here-)
+  * [7.2. REDIS REFUSES TO START ](#72-redis-refuses-to-start-)
+  * [7.3. CANNOT LOGIN AT ALL IN THE WEB INTERFACE WITH THE ADMIN USER](#73-cannot-login-at-all-in-the-web-interface-with-the-admin-user)
+  * [7.4. STRANGE PERMISSIONS ERRORS](#74-strange-permissions-errors)
+  * [7.5. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#75-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
+  * [7.6. SOME KIND OF MISMATCH IN THE AWS](#76-some-kind-of-mismatch-in-the-aws)
+  * [7.7. THE PROBLEM OCCURRED IS NOT MENTIONED HERE ???!!!](#77-the-problem-occurred-is-not-mentioned-here-)
 
 
 
@@ -94,8 +94,6 @@ The qto provides a mean for tracking of this documentation contents to the sourc
     
 
 ## 2. LOCAL DEPLOYMENT
-You could easily skip the whole local deployment by exporting the qto ami image into a virtual box or VMWare vm from the qto ami image by using the following instructions: 
-https://aws.amazon.com/ec2/vm-import/
 
 
     
@@ -103,12 +101,13 @@ https://aws.amazon.com/ec2/vm-import/
 ### 2.1. Target setup
 You could easily skip the whole local deployment by exporting the qto ami image into a virtual box or VMWare vm from the qto ami image by using the following instructions: 
 https://aws.amazon.com/ec2/vm-import/
+Request the latest ami image from your Product Instance Owner.
 
 
     
 
 ### 2.2. Prerequisites
-You need hardware, which is powerful enough to run a virtual machine with at least 1GB of RAM ( preferably 2 or more ) and at least 20GB of hard disk space. 
+You need hardware, which is powerful enough to run a virtual machine with at least 2GB of RAM ( preferably 2 or more ) and at least 20GB of hard disk space. 
 
     
 
@@ -393,21 +392,16 @@ Clone as follows
     
 
 ### 6.1. MacOs
-
-
-    
-
-### 6.2. MacOs
 Qto has been developed mostly by using MacOs as the physical host OS. The next code section is probably obsolete, as you most probably have installed it as described here: https://treehouse.github.io/installation-guides/mac/homebrew
 
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-#### 6.2.1. Install qtpass
+#### 6.1.1. Install qtpass
 https://sourceforge.net/p/gpgosx/docu/Download/
 
     brew cask install qtpass
 
-#### 6.2.2. Install qtpass
+#### 6.1.2. Install qtpass
 https://qtpass.org/downloads#macOS
 
     brew cask install qtpass
@@ -421,9 +415,25 @@ As a rule of thumb - whatever errors you are encountering they are most probably
 Basically the db security is passed from OS root to postgres user to qto admin to qto app, thus to fix it issue the following command, which will basically re-provision your postgres.
 You would need to also restart the web server after executing this command.
 
-     ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
+     ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3 -a fix-db-permissions
 
-### 7.2. Cannot login at all in the web interface with the admin user
+### 7.2. Redis refuses to start 
+Redis should be configured to have bind on the ip address of the first eth. Also the bind to the ipv6 should be commented out ( ## bind 127.0.0.1 ::1). You should have also the correct ip configured in the cnf/env/&lt;&lt;env&gt;&gt;.env.json files. Because otherwise the application cannot connect and store correctly the db metadata during application startup.
+There might be still some bugs during the Redis provisioning in the src/bash/deployer/check-install-redis.func.sh file, run the the installation from the top till bottom command by command and try to restart after the provisioning.
+
+    sudo tail -n 10 /etc/redis/redis.conf
+    
+    # do not bind to ipv6 on the localhost 
+    # bind 127.0.0.1 ::1
+    
+    # bind on the first eth0 ip address 
+    bind 10.0.62.82
+    
+    # enable service mode 
+    supervised systemd
+    
+
+### 7.3. Cannot login at all in the web interface with the admin user
 The password hashing in the users table is activated ALWAYS on blur even that the ui is not showing it ( yes , that is more of a bug, than a feature.
 The solution is to restart the application layer WITHOUT any authentication, change the admin user password from the ui and restart the application layer with authentication once again.
 
@@ -436,12 +446,12 @@ The solution is to restart the application layer WITHOUT any authentication, cha
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
     
 
-### 7.3. Strange permissions errors
+### 7.4. Strange permissions errors
 Some of the newly created tables might not have explicitly their permissions in the DDLs. Or you might have run some of the sql scripts ad-hoc / manually and they do not contain grant statements. Run the following one-liner:
 
     bash src/bash/qto/qto.sh -a provision-db-admin
 
-### 7.4. You have reached the hw provisioning limits of your AWS account
+### 7.5. You have reached the hw provisioning limits of your AWS account
 If you get one of the errors bellow you would have to go the UI of the AWS admin console and delete non-used resources. Fortunately, all resources have the &lt;&lt;env&gt;&gt;_&lt;&lt;resource_name&gt;&gt; naming convention either in the object or in their Tags, which means that you will know what you are deleting.
 
     Error: Error creating VPC: VpcLimitExceeded: The maximum number of VPCs has been reached.
@@ -457,12 +467,12 @@ If you get one of the errors bellow you would have to go the UI of the AWS admin
       on main.tf line 203, in resource "aws_eip" "tst-ip-test":
      203: resource "aws_eip" "tst-ip-test" {
 
-### 7.5. Some kind of mismatch in the aws
+### 7.6. Some kind of mismatch in the aws
 The aws web ui contains fancy ajax calls and in our experience it does not always update properly, if are bombarding it with terraform deployments onto the same resources. Make sure you hit F5 in your browser always when starting the work on new ec2 instance.
 
     
 
-### 7.6. The problem occurred is not mentioned here ???!!!
+### 7.7. The problem occurred is not mentioned here ???!!!
 Of course you quick Google it first ... if it took too long just send a e-mail / chat to the instance owner you got the source code from and you WILL get help sooner or later.
 
     

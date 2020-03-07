@@ -229,6 +229,14 @@ src/perl/qto/public/lib/js/controls/vue-select.js
 src/perl/qto/public/lib/js/controls/vue-date-time-picker.js
 src/perl/qto/templates/controls/list-grid/list-grid.html.ep
 src/perl/qto/templates/controls/srch-grid/srch-grid.html.ep
+src/perl/qto/templates/controls/report-grid
+src/perl/qto/templates/controls/report-grid/report-grid.html.ep
+src/perl/qto/templates/controls/report-grid/xt
+src/perl/qto/templates/controls/report-grid/xt/grid.xt.html.ep
+src/perl/qto/templates/controls/report-grid/js
+src/perl/qto/templates/controls/report-grid/js/linkable.js.html.ep
+src/perl/qto/templates/controls/report-grid/js/search-grid.js.html.ep
+src/perl/qto/templates/controls/report-grid/js/search-grid-sf.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/div-search-box.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/global-msg.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/search-box.js.html.ep
@@ -343,18 +351,22 @@ src/perl/qto/lib/Qto/Controller/ListPrintTable.pm
 src/perl/qto/lib/Qto/Controller/ListLabels.pm
 src/perl/qto/lib/Qto/Controller/SearchGrid.pm
 src/perl/qto/lib/Qto/Controller/Query.pm
+src/perl/qto/lib/Qto/Controller/CallFunc.pm
 src/perl/qto/lib/Qto/Controller/Create.pm
 src/perl/qto/lib/Qto/Controller/Update.pm
 src/perl/qto/lib/Qto/Controller/Delete.pm
 src/perl/qto/lib/Qto/Controller/HiSelect.pm
 src/perl/qto/lib/Qto/Controller/Search.pm
+src/perl/qto/lib/Qto/Controller/Report.pm
 src/perl/qto/t/lib/Qto/Controller/TestCreate.t
 src/perl/qto/t/lib/Qto/Controller/TestTruncate.t
 src/perl/qto/t/lib/Qto/Controller/TestSelect.t
 src/perl/qto/t/lib/Qto/Controller/TestQuery.t
+src/perl/qto/t/lib/Qto/Controller/TestCallFunc.t
 src/perl/qto/t/lib/Qto/Controller/TestHiSelect.t
 src/perl/qto/t/lib/Qto/Controller/TestHiSelectWith.t
 src/perl/qto/t/lib/Qto/Controller/TestSearch.t
+src/perl/qto/t/lib/Qto/Controller/TestReport.t
 src/perl/qto/t/lib/Qto/Controller/TestSelectFilter.t
 src/perl/qto/t/lib/Qto/Controller/TestSelectLike.t
 src/perl/qto/t/lib/Qto/Controller/TestSelectPick.t
@@ -428,7 +440,6 @@ src/perl/qto/lib/Qto/App/IO/Out/WtrText.pm
 src/perl/qto/lib/Qto/App/IO/Out/WtrXls.pm
 src/perl/qto/lib/Qto/App/IO/Out/WtrGitHubMd.pm
 src/perl/qto/lib/Qto/App/IO/Out/WtrParadoxMd.pm
-src/perl/qto/lib/Qto/App/IO/Out/WtrGoogleSheet.pm
 src/perl/qto/lib/Qto/App/RAM
 src/perl/qto/lib/Qto/App/RAM/CnrTxtToHtml.pm
 src/perl/qto/lib/Qto/App/RAM/CnrHsr2ToTxt.pm
@@ -448,7 +459,6 @@ src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToDb.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToTxt.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlTxtToDb.pm
-src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToGoogleSheet.pm
 src/perl/qto/lib/Qto/App/Utils
 src/perl/qto/lib/Qto/App/Utils/Initiator.pm
 src/perl/qto/lib/Qto/App/IO/In/RdrDirs.pm
@@ -498,6 +508,7 @@ src/sql/pgsql/qto/02.alter-qto-app-user.pgsql
 src/sql/pgsql/qto/tables/02.create-table-items_doc.sql
 src/sql/pgsql/qto/funcs/01.create-func-fns_update_time.sql
 src/sql/pgsql/qto/funcs/02.create-func-f_concat_ws.sql
+src/sql/pgsql/qto/funcs/04.create-func.func_get_function_args.sql
 src/sql/pgsql/qto/tables
 src/sql/pgsql/qto/tables/2020/2020-01
 src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2018.sql
@@ -547,6 +558,8 @@ src/sql/pgsql/qto/tables/33.create-table-links.sql
 src/sql/pgsql/qto/tables/34.create-table-roles.sql
 src/sql/pgsql/qto/tables/35.create-table-users.sql
 src/sql/pgsql/qto/tables/36.create-table-user_roles.sql
+src/sql/pgsql/qto/tables/36.01.create-func.func_get_all_users_roles.sql
+src/sql/pgsql/qto/tables/36.01.create-func.func_get_items_roles_permissions.sql
 src/sql/pgsql/qto/tables/38.create-table-onboarding_guide_doc.sql
 src/sql/pgsql/qto/tables/39.create-table-security_checklist_doc.sql
 src/sql/pgsql/qto/tables/40.definitions_dictionary.sql
@@ -554,6 +567,7 @@ src/sql/pgsql/qto/tables/41.create-table-issues_status.sql
 src/sql/pgsql/qto/tables/42.create-table-ideas_status.sql
 src/sql/pgsql/qto/tables/43.create-table-questions_status.sql
 src/sql/pgsql/qto/tables/44.create-table-category.sql
+src/sql/pgsql/qto/tables/45.create-table-problems_status.sql
 src/sql/pgsql/qto/tables/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/tables/66.create-table-logs.sql
 src/sql/pgsql/qto/tables/88.create-table-test_hi_delete_table_doc.sql
@@ -581,6 +595,8 @@ src/sql/pgsql/scripts/admin/list-table-columns.sql
 src/sql/pgsql/scripts/admin/list-table-priviledges.sql
 src/sql/pgsql/scripts/admin/rank-srch.sql
 src/sql/pgsql/scripts/admin/upsert_item_trigger.sql
+src/sql/pgsql/scripts/meta/
+src/sql/pgsql/scripts/meta/show-procedure-definition.sql
 #----
 src/bash/qto/tests/db-to-xls.test.sh
 src/bash/qto/funcs/db-to-xls.func.sh
@@ -862,7 +878,6 @@ src/perl/qto/lib/auto/Qto/App/IO/Out/WtrExporterMd/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrExporterXls/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrFiles/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrGitHubMd/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/IO/Out/WtrGoogleSheet/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrParadoxMd/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrText/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrXls/autosplit.ix
@@ -876,7 +891,6 @@ src/perl/qto/lib/auto/Qto/App/Utils/Initiator/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Utils/Logger/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Utils/Timer/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Utils/OO/SetGetableChild/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToGoogleSheet/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HiDelete/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/WsSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Create/autosplit.ix

@@ -55,7 +55,7 @@ sub doLogonUser {
    my $email            = $perl_hash->{'email'} ; 
    my $redirect_url     = $perl_hash->{'redirect-url'} or '/' . $db . '/search' ;
 
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db ) ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , 'users') ;
    my $objCnrPostPrms   = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
    
    unless ( $objCnrPostPrms->hasValidLogonParams($email , $pass , 'Logon') ) {

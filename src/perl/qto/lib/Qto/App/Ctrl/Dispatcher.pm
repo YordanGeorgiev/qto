@@ -19,7 +19,6 @@ package Qto::App::Ctrl::Dispatcher ;
    use Qto::App::Ctrl::CtrlXlsToDb ; 	
    use Qto::App::Ctrl::CtrlDbToTxt ; 
    use Qto::App::Ctrl::CtrlDbToXls ; 
-   use Qto::App::Ctrl::CtrlDbToGoogleSheet ; 
 
 	our $module_trace                = 0 ; 
    our $module_test_run             = 0 ; 
@@ -75,17 +74,6 @@ package Qto::App::Ctrl::Dispatcher ;
          'Qto::App::Ctrl::CtrlTxtToDb'->new ( \$config , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlTxtToDb->doLoad () ; 
       return ( $ret , $msg ) ; 
-   }
-
-   
-   sub doDbToGsheet {
-      my $self = shift ; 
-      use strict 'refs'; 
-      my $objCtrlDbToGsheet = 
-         'Qto::App::Ctrl::CtrlDbToGoogleSheet'->new ( \$config , \$objModel) ; 
-      my ( $ret , $msg ) = $objCtrlDbToGsheet->doReadAndLoad ( ); 
-      return ( $ret , $msg ) ; 
-
    }
 
    
