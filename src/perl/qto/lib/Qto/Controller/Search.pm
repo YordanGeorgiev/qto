@@ -29,6 +29,7 @@ our $rdbms_type         = 'postgres';
 sub doSearchItems {
    my $self             = shift;
    my $db               = $self->stash('db');
+   my $pdb              = toPlainName ( $db );
    my $objCnrUrlPrms    = {} ; 
    my $objRdrDbsFcry    = {} ; 
    my $objRdrDb         = {} ; 
@@ -73,9 +74,10 @@ sub doSearchItems {
        , 'item'            => 'search'
        , 'msg'             => ''
        , 'db' 		         => $db
-       , 'EnvType' 		=> $config->{'env'}->{'run'}->{'ENV_TYPE'}
+       , 'pdb'             => $pdb
+       , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
        , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
-       , 'GitShortHash' => $config->{'env'}->{'run'}->{'GitShortHash'}
+       , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}
        , 'page_load_time'  => $page_load_time
        , 'srch_control'    => "['title']" 
        , 'notice'          => $notice
@@ -138,6 +140,7 @@ sub doRenderPageTemplate {
         'grid'          => 'srch-grid' 
    };
   
+   my $pdb              = toPlainName($db);
    my $template_name    = $as_templates->{ $as } || 'srch-grid' ; 
    my $template         = 'controls/' . $template_name . '/' . $template_name ; 
 
@@ -157,6 +160,7 @@ sub doRenderPageTemplate {
     , 'item'            => 'search'
     , 'msg'             => $msg
     , 'db' 		         => $db
+    , 'pdb' 		      => $pdb
     , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
     , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
     , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}

@@ -81,19 +81,20 @@
     * [2.11.2. Items move](#2112-items-move)
   * [2.12. ISSUES IMPORT FROM GOOGLE CALENDAR](#212-issues-import-from-google-calendar)
 * [3. TEAM LEADER BIZ PERSPECTIVE](#3-team-leader-biz-perspective)
-  * [3.1. DATA SECURITY](#31-data-security)
-  * [3.2. ROLES MANAGEMENT](#32-roles-management)
-  * [3.3. PROJECTS MANAGEMENT](#33-projects-management)
-  * [3.4. USERS MANAGEMENT IN A PROJECT](#34-users-management-in-a-project)
-    * [3.4.1. Users access management](#341-users-access-management)
-      * [3.4.1.1. Grant access per project](#3411-grant-access-per-project)
-      * [3.4.1.2. Personal data handling minimization](#3412-personal-data-handling-minimization)
-  * [3.5. SECURITY MANAGEMENT](#35-security-management)
-  * [3.6. SECURE ACCESS TO DATA](#36-secure-access-to-data)
-    * [3.6.1. Role based secure access to data per table for role](#361-role-based-secure-access-to-data-per-table-for-role)
-    * [3.6.2. Role based secure access to data per row](#362-role-based-secure-access-to-data-per-row)
-  * [3.7. TIME MANAGEMENT](#37-time-management)
-    * [3.7.1. Closing of a period](#371-closing-of-a-period)
+  * [3.1. SECURITY](#31-security)
+    * [3.1.1. Data security](#311-data-security)
+    * [3.1.2. Roles management](#312-roles-management)
+    * [3.1.3. Users management](#313-users-management)
+      * [3.1.3.1. Users management in a project](#3131-users-management-in-a-project)
+      * [3.1.3.2. Users management in a project](#3132-users-management-in-a-project)
+      * [3.1.3.3. Personal data handling minimisation](#3133-personal-data-handling-minimisation)
+  * [3.2. PROJECTS MANAGEMENT](#32-projects-management)
+    * [3.2.1. Grant access per project](#321-grant-access-per-project)
+  * [3.3. SECURE ACCESS TO DATA](#33-secure-access-to-data)
+    * [3.3.1. Role based secure access to data per table or report for role](#331-role-based-secure-access-to-data-per-table-or-report-for-role)
+    * [3.3.2. Role based secure access to data per row](#332-role-based-secure-access-to-data-per-row)
+  * [3.4. TIME MANAGEMENT](#34-time-management)
+    * [3.4.1. Closing of a period](#341-closing-of-a-period)
 * [4. TEAM MEMBER BIZ PERSPECTIVE](#4-team-member-biz-perspective)
   * [4.1. ISSUES MANAGEMENT](#41-issues-management)
     * [4.1.1. Remove existing issues](#411-remove-existing-issues)
@@ -136,71 +137,40 @@
   * [7.3. ISSUES OBSERVATION](#73-issues-observation)
     * [7.3.1. Who changed what and why](#731-who-changed-what-and-why)
 * [8. ETL AND INTEGRATIONS PERSPECTIVE](#8-etl-and-integrations-perspective)
-  * [8.1. DATABASE USERSTORIES](#81-database-userstories)
-    * [8.1.1. Database to json files data load](#811-database-to-json-files-data-load)
-    * [8.1.2. Database metadata export](#812-database-metadata-export)
-  * [8.2. SYSTEM DEPLOYABILITY](#82-system-deployability)
+  * [8.1. DATABASE TO JSON FILES DATA LOAD](#81-database-to-json-files-data-load)
+  * [8.2. DATABASE METADATA EXPORT](#82-database-metadata-export)
   * [8.3. SYSTEM PERFORMANCE](#83-system-performance)
   * [8.4. JSON FILES TO DB DATA LOAD](#84-json-files-to-db-data-load)
-  * [8.5. SYSTEM STABILITY](#85-system-stability)
-  * [8.6. SYSTEM RELIABILITY](#86-system-reliability)
-  * [8.7. XLS-TO-POSTGRES-DB HIERARCHICAL DATA LOAD](#87-xls-to-postgres-db-hierarchical-data-load)
-    * [8.7.1. error reporting in xls-to-postgres-db hierarchical data load ](#871-error-reporting-in-xls-to-postgres-db-hierarchical-data-load-)
-  * [8.8. EASE OF USE](#88-ease-of-use)
-  * [8.9. SECURITY](#89-security)
-  * [8.10. PROJECT DEPLOYMENT](#810-project-deployment)
-  * [8.11. SYSTEM VERIFIABILITY AND TESTABILITY](#811-system-verifiability-and-testability)
-* [9. DEVOPS PERSPECTIVE](#9-devops-perspective)
-  * [9.1. CLARITY AND BREVITY OF THE END TO END TESTS](#91-clarity-and-brevity-of-the-end-to-end-tests)
-  * [9.2. DATABASES - LOCAL TO REMOTE AND REMOTE TO LOCAL SYNC](#92-databases--local-to-remote-and-remote-to-local-sync)
-    * [9.2.1. Abort end-to-end tests on single test fail](#921-abort-end-to-end-tests-on-single-test-fail)
-  * [9.3. DATABASE TO JSON FILES DATA LOAD](#93-database-to-json-files-data-load)
-  * [9.4. LOGGING](#94-logging)
-  * [9.5. JSON FILES TO DB DATA LOAD](#95-json-files-to-db-data-load)
-    * [9.5.1. Control flow logging](#951-control-flow-logging)
-  * [9.6. XLS-TO-POSTGRES-DB HIERARCHICAL DATA LOAD](#96-xls-to-postgres-db-hierarchical-data-load)
-    * [9.6.1. Log entries format configuration](#961-log-entries-format-configuration)
-  * [9.7. XLS-TO-POSTGRES-DB HIERARCHICAL DATA LOAD](#97-xls-to-postgres-db-hierarchical-data-load)
-    * [9.7.1. Single entry point for end to end tests](#971-single-entry-point-for-end-to-end-tests)
-    * [9.7.2. Tool run log to human readable description](#972-tool-run-log-to-human-readable-description)
-  * [9.8. APPLICATION'S SOURCE CODE AND DOCUMENTATION INTEGRITY](#98-application's-source-code-and-documentation-integrity)
-  * [9.9. SYSTEM DEPLOYMENT](#99-system-deployment)
-    * [9.9.1. Userstories to test case relations](#991-userstories-to-test-case-relations)
-    * [9.9.2. UUID trackability for test files and userstories](#992-uuid-trackability-for-test-files-and-userstories)
-  * [9.10. SYSTEM VERIFIABILITY AND TESTABILITY](#910-system-verifiability-and-testability)
-    * [9.10.1. Components start run message print](#9101-components-start-run-message-print)
-    * [9.10.2. Tool exit with exit code and exit message](#9102-tool-exit-with-exit-code-and-exit-message)
-    * [9.10.3. Execution path tracing by UUID's](#9103-execution-path-tracing-by-uuid's)
-  * [9.11. LOGGING](#911-logging)
-    * [9.11.1. Issues directories naming conventions](#9111-issues-directories-naming-conventions)
-    * [9.11.2. Issues files naming conventions](#9112-issues-files-naming-conventions)
-    * [9.11.3. Issues files history](#9113-issues-files-history)
-    * [9.11.4. Issues files naming conventions](#9114-issues-files-naming-conventions)
-  * [9.12. APPLICATION'S SOURCE CODE AND DOCUMENTATION INTEGRITY](#912-application's-source-code-and-documentation-integrity)
-    * [9.12.1. Issues files naming conventions for the  project](#9121-issues-files-naming-conventions-for-the-project)
-  * [9.13. CONFIGURATION MANAGEMENT](#913-configuration-management)
-    * [9.13.1. a single route to copy paste the appConfig in json format](#9131-a-single-route-to-copy-paste-the-appconfig-in-json-format)
-    * [9.13.2. Issues files naming conventions for current date](#9132-issues-files-naming-conventions-for-current-date)
-    * [9.13.3. Issues files naming conventions for the time frame](#9133-issues-files-naming-conventions-for-the-time-frame)
-  * [9.14. ISSUES TRANSFORMATIONS](#914-issues-transformations)
-    * [9.14.1. 
-Load by txt-to-db action](#9141-
-load-by-txt-to-db-action)
-      * [9.14.1.1. Load issues file from file system to db](#91411-load-issues-file-from-file-system-to-db)
-    * [9.14.2. Load issues by db-to-xls action](#9142-load-issues-by-db-to-xls-action)
-    * [9.14.3. Load issues by xls-to-db action](#9143-load-issues-by-xls-to-db-action)
-      * [9.14.3.1. Load issues by xls-to-db action for insert or upset](#91431-load-issues-by-xls-to-db-action-for-insert-or-upset)
-      * [9.14.3.2. Load issues by xls-to-db action by truncating or not the loadable table](#91432-load-issues-by-xls-to-db-action-by-truncating-or-not-the-loadable-table)
-    * [9.14.4. Load issues by db-to-txt](#9144-load-issues-by-db-to-txt)
-      * [9.14.4.1. xls-to-db action load sort by issues prio attribute](#91441-xls-to-db-action-load-sort-by-issues-prio-attribute)
-    * [9.14.5. Load issues file from db to file system](#9145-load-issues-file-from-db-to-file-system)
-  * [9.15. ISSUES FILE FILTERING](#915-issues-file-filtering)
-  * [9.16. SINGLE SHELL CALL FOR PROJECTS SWITCHING](#916-single-shell-call-for-projects-switching)
-  * [9.17. ISSUES PUBLISHING FROM SHELL CALLS](#917-issues-publishing-from-shell-calls)
-    * [9.17.1. Issues publishing in e-mail format](#9171-issues-publishing-in-e-mail-format)
-    * [9.17.2. Issues handling in google sheet format](#9172-issues-handling-in-google-sheet-format)
-    * [9.17.3. Issues publishing in google calendar format](#9173-issues-publishing-in-google-calendar-format)
-  * [9.18. ISSUES TRANSFORMATIONS](#918-issues-transformations)
+  * [8.5. XLS-TO-POSTGRES-DB HIERARCHICAL DATA LOAD](#85-xls-to-postgres-db-hierarchical-data-load)
+    * [8.5.1. error reporting in xls-to-postgres-db hierarchical data load ](#851-error-reporting-in-xls-to-postgres-db-hierarchical-data-load-)
+  * [8.6. PROJECT DEPLOYMENT](#86-project-deployment)
+* [9. DEVOPS ENGINEER PERSPECTIVE](#9-devops-engineer-perspective)
+  * [9.1. DOCUMENTATION](#91-documentation)
+    * [9.1.1. Quick start documentation](#911-quick-start-documentation)
+    * [9.1.2. Application's source code and documentation integrity](#912-application's-source-code-and-documentation-integrity)
+  * [9.2. INSTALLATION](#92-installation)
+    * [9.2.1. A single shell call installation](#921-a-single-shell-call-installation)
+    * [9.2.2. A reliable installation documentation](#922-a-reliable-installation-documentation)
+  * [9.3. TESTING](#93-testing)
+    * [9.3.1. Clarity and brevity of the end to end tests](#931-clarity-and-brevity-of-the-end-to-end-tests)
+    * [9.3.2. Databases - local to remote and remote to local sync](#932-databases--local-to-remote-and-remote-to-local-sync)
+    * [9.3.3. Abort end-to-end tests on single test fail](#933-abort-end-to-end-tests-on-single-test-fail)
+    * [9.3.4. Userstories to test case relations](#934-userstories-to-test-case-relations)
+    * [9.3.5. Single shell call for e2e testing](#935-single-shell-call-for-e2e-testing)
+  * [9.4. ETL](#94-etl)
+    * [9.4.1. Database to json files data load](#941-database-to-json-files-data-load)
+    * [9.4.2. Items data transformations](#942-items-data-transformations)
+    * [9.4.3. Json files to db data load](#943-json-files-to-db-data-load)
+    * [9.4.4. Xls-to-postgres-db hierarchical data load](#944-xls-to-postgres-db-hierarchical-data-load)
+    * [9.4.5. Log entries format configuration](#945-log-entries-format-configuration)
+    * [9.4.6. Tool run log to human readable description](#946-tool-run-log-to-human-readable-description)
+    * [9.4.7. UUID trackability for test files and userstories](#947-uuid-trackability-for-test-files-and-userstories)
+    * [9.4.8. Components start run message print](#948-components-start-run-message-print)
+    * [9.4.9. Tool exit with exit code and exit message](#949-tool-exit-with-exit-code-and-exit-message)
+  * [9.5. RUN-TIME MANAGEMENT](#95-run-time-management)
+    * [9.5.1. Logging](#951-logging)
+    * [9.5.2. Single shell call for projects switching](#952-single-shell-call-for-projects-switching)
+  * [9.6. SINGLE SHELL CALL FOR PROJECTS SWITCHING](#96-single-shell-call-for-projects-switching)
 * [10. UI DEVELOPER PERSPECTIVE](#10-ui-developer-perspective)
   * [10.1. FOREIGN KEYS (FK) CONFIGURABILITY](#101-foreign-keys-(fk)-configurability)
   * [10.2. CODE TRACEABILITY BY UUID](#102-code-traceability-by-uuid)
@@ -786,13 +756,17 @@ I want to have a nice user experience while using the qto tool.
 
     
 
-### 3.1. Data security
-As the biz team leader In order to protect the data of the project, which is vital for its existence 
-I don't want any person but me to have full visibility and control of the data in a project.
+### 3.1. Security
+
 
     
 
-### 3.2. Roles management
+#### 3.1.1. Data security
+As the biz team leader In order to protect the data of the project, which is vital for its existence \nI don't want any person but me to have full visibility and control of the data in a project.
+
+    
+
+#### 3.1.2. Roles management
 As the Instance Owner or Product Owner 
 in order to have a finer granularity on the different data stored in my instance 
 I want to be able to define roles and per roles visibility on : 
@@ -802,70 +776,70 @@ I want to be able to define roles and per roles visibility on :
 
     
 
-### 3.3. Projects management
-As an team leader
-In order to be able to manage multiple projects 
-I want to  be able to create , update and remove projects.
-
-    
-
-### 3.4. Users management in a project
-As an team leader
-In order to be able to efficiently allocate human resources to a project
-I want to be able manage ( create , update , delete and search ) users for each project.
-
-    
-
-#### 3.4.1. Users access management
+#### 3.1.3. Users management
 As a team leader 
 In order provide the persons and programs access to my project
 I want to provide read, write access to the data and execute access ( run DDL's) per table
 
     
 
-##### 3.4.1.1. Grant access per project
-As a team leader 
-In order to enroll authenticated users into the project I am responsible to 
-I want to be able to grant them with access by only writing their e-mail into a text field and clicking invite button. 
+##### 3.1.3.1. Users management in a project
+As an team leader
+In order to be able to efficiently allocate human resources to a project
+I want to be able manage ( create , update , delete and search ) users for each project.
 
     
 
-##### 3.4.1.2. Personal data handling minimization
+##### 3.1.3.2. Users management in a project
+As an team leader
+In order to be able to efficiently allocate human resources to a project
+I want to be able manage ( create , update , delete and search ) users for each project.
+
+    
+
+##### 3.1.3.3. Personal data handling minimisation
 As a team leader 
 In order to avoid legal obligations and complex procedures, while handling personal data
 I want to be able to handle the interpersonal exchange of data by collecting ONLY the e-mail of the persons or programs participating in the project.
 
     
 
-### 3.5. Security Management
+### 3.2. Projects management
 As an team leader
-In order to keep my business data secure 
-I want to be able decide which users to which projects will have access to the data my qto application has access to. 
+In order to be able to manage multiple projects 
+I want to  be able to create , update and remove projects.
 
     
 
-### 3.6. Secure access to data
+#### 3.2.1. Grant access per project
+As a team leader 
+In order to enrol authenticated users into the project I am responsible to 
+I want to be able to grant them with access by only writing their e-mail into a text field and clicking invite button. 
+
+    
+
+### 3.3. Secure access to data
 As the team leader of a qto project
 In order 
 I want to be able to grant separate read, write and execute access per table and role
 
     
 
-#### 3.6.1. Role based secure access to data per table for role
+#### 3.3.1. Role based secure access to data per table or report for role
 As the team leader of a qto project
 In order to restrict the certain operations to certain tables for the authenticated roles
 I want to be able to grant separate read, write and execute access per table and role.
 
     
 
-#### 3.6.2. Role based secure access to data per row
+#### 3.3.2. Role based secure access to data per row
 As the team leader of a qto project
 In order 
 I want to be able to grant separate read, write and execute access per table and role
 
     
 
-### 3.7. Time management
+### 3.4. Time management
 As an team leader
 In order to be able the maximise the performance of the team for qto used periods 
 I want to to be able to manage time efficiently 
@@ -873,7 +847,7 @@ by accessing a simple page containing its value and the period it is related to.
 
     
 
-#### 3.7.1. Closing of a period
+#### 3.4.1. Closing of a period
 As the team leader of a qto project
 In order to keep track the history of 
 I want to to be able to manage time efficiently 
@@ -1180,29 +1154,17 @@ I want to have a nice user experience while using the qto application.
 
     
 
-### 8.1. Database userstories
-
-
-    
-
-#### 8.1.1. Database to json files data load
+### 8.1. Database to json files data load
 As the ETL and Integration Specialist 
 In order to be able to quickly move all the project data into a different storage format 
 I want to be able to export the project db data into json files - one per table via a single shell call. 
 
     
 
-#### 8.1.2. Database metadata export
+### 8.2. Database metadata export
 As the ETL and Integration Specialists
 In order to be able to show, communicate and store the meta-data of my application
 I want to be able to export the project's database meta-data into an xls file.
-
-    
-
-### 8.2. System deployability
-As the SysAdmin 
-In order to be able to provide access to a new database driven application to my organization
-I want to be able to deploy an instance of the qto application and spawn a new project out of it in less than a hour from a clean Linux host including AWS.
 
     
 
@@ -1220,21 +1182,7 @@ I want to be able to import the exported json files ( one per table ) into the d
 
     
 
-### 8.5. System stability
-As the SysAdmin
-In order to minimize downtimes and ensure continuous operations 
-I want to the System containing the qto application to perform its defined functions on request without interruptions or unknown side effects
-
-    
-
-### 8.6. System reliability
-As the SysAdmin
-In order to be able to rely on the operations of the tool
-I want to the System containing the qto application to perform its functions as specified consistently 
-
-    
-
-### 8.7. Xls-to-postgres-db hierarchical data load
+### 8.5. Xls-to-postgres-db hierarchical data load
 As the Data Integrator
 In order to be efficient while handling the System's hierarchical data
  I want to be able to
@@ -1242,7 +1190,7 @@ use a single shell call to load all or chosen table(s) to the postgres db
 
     
 
-#### 8.7.1. error reporting in xls-to-postgres-db hierarchical data load 
+#### 8.5.1. error reporting in xls-to-postgres-db hierarchical data load 
 As the Data Integrator
 In order to be efficient while troubleshooting data loading errors 
 I want to be able to see : 
@@ -1251,51 +1199,75 @@ I want to be able to see :
 
     
 
-### 8.8. Ease of use
-As the SysAdmin
-In order to be efficient and decrease the amount of errors
-I want to generally perform any command the system within the sysadmin scope via clean and memorable oneliners 
-
-    
-
-### 8.9. Security
-As the SysAdmin
-In order to be able to provide the best possible security level of operation for the qto instance I am responsible for
-I want to have pre-defined and clear set of tasks and activities to perform related to the security. 
-
-    
-
-### 8.10. Project deployment
+### 8.6. Project deployment
 As a potential Developer of the qto or a qto application 
 In order to have the easiest installation experience 
 I want to be able to deploy fully functional development environment on a clean host in less than an hour with a single oneliner. 
 
     
 
-### 8.11. System verifiability and testability
-As an ITOPS 
+## 9. DEVOPS ENGINEER PERSPECTIVE
+As a qto devops engineer
+In order to be efficient and decrease the amount of errors
+I want to generally perform any command the system within the sysadmin scope via clean and memorable oneliners 
+
+    
+
+### 9.1. Documentation
+
+
+    
+
+#### 9.1.1. Quick start documentation
+As a Full-Stack Developer
+In order to be able to quickly start on my own hacking the project
+I want to have a quick start documentation, which will simply guide me to start on my own.
+
+    
+
+#### 9.1.2. Application's source code and documentation integrity
+As a Full-Stack Developer
+In order to make easy the entry of other developers to the projects
+I want to be able to point to written documentation for user-stories, issues, features and functionalities, which will be linked to parts of the source code. 
+
+    
+
+### 9.2. Installation
+
+
+    
+
+#### 9.2.1. A single shell call installation
+As a potential Developer of the qto or a qto application 
+In order to have the easiest installation experience 
+I want to be able to deploy fully functional development environment on a clean host in less than an hour with a single oneliner. 
+
+    
+
+#### 9.2.2. A reliable installation documentation
+As a potential DevOps engineer of the qto or a qto application 
+In order to have the easiest installation experience 
+I want to have a reliable documentation, which will have short commands 
+
+    
+
+### 9.3. TESTING
+As a qto devops engineer 
 In order to be able to rely on the operations of the tool 
  and manage easily its features and functionalities
-I wanto the easily verify and  test parts or the whole System 
+I want to the easily verify and  test parts or the whole System 
 by issuing a single shell call.
 
     
 
-## 9. DEVOPS PERSPECTIVE
-As an ETL and integrations specialist 
-In order to complete the tasks and activities of my role
-I want to have a nice user experience while using the qto application.
-
-    
-
-### 9.1. Clarity and brevity of the end to end tests
+#### 9.3.1. Clarity and brevity of the end to end tests
 As an ITOPS 
 In order to be able to verify all the features and functionalities of the tool within the System
 I want to see the results of each test in 1 flow in the following format:.
 
     
 
-### 9.2. Databases - local to remote and remote to local sync
+#### 9.3.2. Databases - local to remote and remote to local sync
 As a DevOps Operator
 In order to :
  - keep the dog-fooded local and remote db instances in sync
@@ -1308,219 +1280,40 @@ I wanto to :
 
     
 
-#### 9.2.1. Abort end-to-end tests on single test fail
+#### 9.3.3. Abort end-to-end tests on single test fail
 As an ITOPS 
 In order to be able to run continuously end-to-end tests and skip for several runs failing tests
 I want to be able to configure the single e2e entry point script to skip certain tests, but report me what was skipped. 
 
     
 
-### 9.3. Database to json files data load
-As the ETL and Integration Specialist 
-In order to be able to quickly move all the project data into a different storage format 
-I want to be able to export the project db data into json files - one per table via a single shell call. 
+#### 9.3.4. Userstories to test case relations
+As a Developer 
+In order to ensure the stability and expandability of the application
+I want to be able to run for each implemented user-story a single test.
 
     
 
-### 9.4. Logging
-As a Full-Stack Developer
-In order to quickly understand what is happening in the application
-I want to have easy-to-use and highly customisable logging to both file and console.
-
-    
-
-### 9.5. Json files to db data load
-As the ETL and Integration Specialist 
-In order to be able to quickly move all the project data from json files into the db tables
-I want to be able to import the exported json files ( one per table ) into the database. 
-
-    
-
-#### 9.5.1. Control flow logging
-As a CLI user 
-In order to be able to understand what the issue tracker tool is executing
-I want  to have configurable logging with stderr, stdout and file output
-
-    
-
-### 9.6. Xls-to-postgres-db hierarchical data load
-As the Data Integrator
-In order to be efficient while handling the System's hierarchical data 
-I want to be able to
-use a single shell call to load all or chosen table(s) to the mysql db 
-
-    
-
-#### 9.6.1. Log entries format configuration
-As a Full-Stack Developer
-In order to be able to get the msg of any component of the application 
-I want each log entry to content:
-- the type of the entry - log , error, warn , fatal
-- the timestamp of the log entry event 
-- the name of the component issueing the msg and the line num of the src file 
-- the msg as it was echoed by the application
-
-    
-
-### 9.7. Xls-to-postgres-db hierarchical data load
-As the Data Integrator
-In order to be efficient while handling the System's hierarchical data
- I want to be able to
-use a single shell call to load all or chosen table(s) to the postgres db 
-
-    
-
-#### 9.7.1. Single entry point for end to end tests
+#### 9.3.5. Single shell call for e2e testing
 As an DevOps
 In order to be able to verify all the features and functionalities of the tool within the System
 I want to run a single shell call running all the end-to-end test of the application ensuring the specified features and functionalities.  
 
     
 
-#### 9.7.2. Tool run log to human readable description
-As a CLI user 
-In order to be able to get a human readable description of the log of the specific run of the tool
-I want to be able to translate the recorded uuid's in the execution run log to their respective records
-
-    
-
-### 9.8. Application's source code and documentation integrity
-As a Full-Stack Developer
-In order to make easy the entry of other developers to the projects
-I want to be able to point to written documentation for user-stories, issues, features and functionalities, which will be linked to parts of the source code. 
-
-    
-
-### 9.9. System deployment
-As a potential Developer of the qto or a qto application 
-In order to have the easiest installation experience 
-I want to be able to deploy fully functional development environment on a clean host in less than an hour with a single oneliner. 
-
-    
-
-#### 9.9.1. Userstories to test case relations
-As a Developer 
-In order to ensure the stability and expandability of the application
-I want to be able to run for each implemented user-story a single test
-
-    
-
-#### 9.9.2. UUID trackability for test files and userstories
-As a Developer 
-In order to identify each user-story to be tested with its according test
-I want to be able to track each user-story or test code entry point file by UUID.
-
-    
-
-### 9.10. System verifiability and testability
-As an ITOPS 
-In order to be able to rely on the operations of the tool 
- and manage easily its features and functionalities
-I wanto the easily verify and  test parts or the whole System 
-by issuing a single shell call.
-
-    
-
-#### 9.10.1. Components start run message print
-As a CLI user 
-In order to know when a component has been started
-I want to be able to see the "START &lt;&lt;COMPONENT NAME&gt;&gt; on either the STDOUT or the log file of the component
-
-    
-
-#### 9.10.2. Tool exit with exit code and exit message
-As a CLI user or calling  automated component
-In order to be able to understand whether or not the execution of the call to the tool was successful or not 
-I want to get the exit code from the tool execution and see the exit message
-
-    
-
-#### 9.10.3. Execution path tracing by UUID's
-As a DevOps operator
-Foreach execution run of the tool
-I want to be able to walk trough the execution path of the tool programmatically. 
-
-    
-
-### 9.11. Logging
-As a Full-Stack Developer
-In order to quickly understand what is happening in the application
-I want to have easy-to-use and highly customisable logging to both file and console.
-
-    
-
-#### 9.11.1. Issues directories naming conventions
-As a issues manager
-In order to be able to manage lots of issues from different projects stored in plain txt files 
-I want to be able to store large quantity of issues txt files by their date on daily, weekly, monthly, yearly and decadally basis
-
-    
-
-#### 9.11.2. Issues files naming conventions
-As a issues manager
-In order to be able to manage lots of issues from different projects stored in plain txt files 
-and open them quickly
-I want to be able to just type the first letter in a text editor supporting select opened file by typing its first letter and jump to that file
-
-    
-
-#### 9.11.3. Issues files history
-As a CLI user 
-In order to be able quickly to search trough old issues 
-I want to be able to access old issues files by their date held in their file names from the file system
-
-    
-
-#### 9.11.4. Issues files naming conventions
-As a DevOps 
-In order to be able quickly to access and manage programmatically issues
-I want to be able to guess the file paths of the issues file by their date 
-
-    
-
-### 9.12. Application's source code and documentation integrity
-As a Full-Stack Developer
-In order to make easy the entry of other developers to the projects
-I want to be able to point to written documentation for user-stories, issues, features and functionalities, which will be linked to parts of the source code. 
-
-    
-
-#### 9.12.1. Issues files naming conventions for the  project
-As a DevOps 
-In order to be able quickly to switch between different projects
-I wanto to have the project name of the issues file in its name as the first token as follows:
-&lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
-
-    
-
-### 9.13. Configuration management
+### 9.4. ETL
 
 
     
 
-#### 9.13.1. a single route to copy paste the appConfig in json format
-As a DevOps Operator 
-In order to quickly dig out basic confs about the current project , I want to be able to have a route for that in the web ui ... so that I could quickly just copy paste that json ... or create another application.conf out of it ... 
+#### 9.4.1. Database to json files data load
+As the ETL and Integration Specialist 
+In order to be able to quickly move all the project data into a different storage format 
+I want to be able to export the project db data into json files - one per table via a single shell call. 
 
     
 
-#### 9.13.2. Issues files naming conventions for current date
-As a DevOps 
-In order to be able quickly and programmatically to go back in the history
-I wanto to have the current registration date in the file name and path
-&lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt;daily|weekly|monthly|yearly&gt;&gt;.txt
-
-    
-
-#### 9.13.3. Issues files naming conventions for the time frame
-As a DevOps 
-In order to be able quickly and programmatically to go back in the history
-I want to have the current registration date in the file name and path
-&lt;&lt;issue_tracker_project&gt;&gt;-issues.&lt;&lt;current-iso-date&gt;&gt;.&lt;&lt; ( daily|weekly|monthly|yearly) &gt;&gt;.txt
-
-    
-
-### 9.14. Issues transformations
+#### 9.4.2. Items data transformations
 As a cli user of the qto application 
 In order to be able to sort the issues according to their attributes 
 and edit them in both txt file and xls file
@@ -1532,135 +1325,85 @@ db-to-txt - to load a txt file from db table
 
     
 
-#### 9.14.1. 
-Load by txt-to-db action
-As a cli user of the qto application 
-in order to store my issues in structured form to db for further processing
-I want to be able to load any issue file with a single line shell call to a db 
+#### 9.4.3. Json files to db data load
+As the ETL and Integration Specialist 
+In order to be able to quickly move all the project data from json files into the db tables
+I want to be able to import the exported json files ( one per table ) into the database. 
 
     
 
-##### 9.14.1.1. Load issues file from file system to db
-As a cli user of the qto application 
-- in order to be able to handle issues from different projects
-- and load them to db for further processing
-I want to:  
-- pre-set the variables of the project 
-- and than load any issue file with a single line shell call to a db
-- and optionally specify the period of the issues file ( daily , weekly , monthly , yearly ) with daily as default
+#### 9.4.4. Xls-to-postgres-db hierarchical data load
+As the Data Integrator
+In order to be efficient while handling the System's hierarchical data 
+I want to be able to
+use a single shell call to load all or chosen table(s) to the mysql db 
 
     
 
-#### 9.14.2. Load issues by db-to-xls action
-As a cli user of the qto application 
-in order to be able to sort and edit my issues in Excel
-I want to be able to unload my issues from one or many tables in the db at once in a single shell call
+#### 9.4.5. Log entries format configuration
+As a Full-Stack Developer
+In order to be able to get the msg of any component of the application 
+I want each log entry to content:
+- the type of the entry - log , error, warn , fatal
+- the timestamp of the log entry event 
+- the name of the component issueing the msg and the line num of the src file 
+- the msg as it was echoed by the application
 
     
 
-#### 9.14.3. Load issues by xls-to-db action
-As a cli user of the qto application 
-in order to store my issues in structured form to db for further processing after being sorted in Excel
-I want to be able to load my latest xls file with a single line shell call to a db 
-by choosing the names of the tables to load 
-
-    
-
-##### 9.14.3.1. Load issues by xls-to-db action for insert or upset
-As a cli user of the qto application 
-in order to insert or upsert my issues in structured form to db for further processing after being sorted in Excel
-I want to be able to load my latest xls file with a single line shell call to a db 
-by choosing the names of the tables to load and specifying upsert by adding the guid column to the xls sheet 
-
-    
-
-##### 9.14.3.2. Load issues by xls-to-db action by truncating or not the loadable table
-As a cli user of the qto application 
-in order to store my issues in structured form to db for further processing after being sorted in Excel
-I want to be able to load my latest xls file with a single line shell call to a db 
-by choosing the names of the tables to load 
-
-    
-
-#### 9.14.4. Load issues by db-to-txt
-As a cli user of the qto application 
-in order to store my issues in more structured data format for further processing
-I want to :
-- be able to load the issues for a period from the db to a file
-- by choosing the names of the tables to load
-
-    
-
-##### 9.14.4.1. xls-to-db action load sort by issues prio attribute
-As a cli user of the qto application 
-during the db-to-txt action load
-in order to understand the priority of my issues
-I want to :
-- be able to specify the order in the issues txt files lines to be based on the prio attribute 
-by choosing the names of the tables to load
-
-    
-
-#### 9.14.5. Load issues file from db to file system
-As a cli user of the qto application 
-in order to store my issues in more structured data format for further processing
-I want to :
-- be able to load the issues for a period from the db to a file
-- and optionally specify the period of the issues file ( daily , weekly , monthly , yearly ) with daily as default
-
-    
-
-### 9.15. issues file filtering
+#### 9.4.6. Tool run log to human readable description
 As a CLI user 
-In order to filter quickly my issues 
-I want to  be able to show the issues with their categories of only certain status
+In order to be able to get a human readable description of the log of the specific run of the tool
+I want to be able to translate the recorded uuid's in the execution run log to their respective records
 
     
 
-### 9.16. Single shell call for projects switching
+#### 9.4.7. UUID trackability for test files and userstories
+As a Developer 
+In order to identify each user-story to be tested with its according test
+I want to be able to track each user-story or test code entry point file by UUID.
+
+    
+
+#### 9.4.8. Components start run message print
+As a CLI user 
+In order to know when a component has been started
+I want to be able to see the "START &lt;&lt;COMPONENT NAME&gt;&gt; on either the STDOUT or the log file of the component
+
+    
+
+#### 9.4.9. Tool exit with exit code and exit message
+As a CLI user or calling  automated component
+In order to be able to understand whether or not the execution of the call to the tool was successful or not 
+I want to get the exit code from the tool execution and see the exit message
+
+    
+
+### 9.5. Run-time management
+
+
+    
+
+#### 9.5.1. Logging
+As a Full-Stack Developer
+In order to quickly understand what is happening in the application
+I want to have easy-to-use and highly customisable logging to both file and console.
+
+    
+
+#### 9.5.2. Single shell call for projects switching
+As a qto devops engineer
+In order to be able to switch between different projects quickly in the shell 
+I want to be able to issue a single shell call for loading a project's configuration
+and run the qto tool against the predefined configuration of an qto project's configuration.
+
+    
+
+### 9.6. Single shell call for projects switching
 As an issues-manager 
 In order to be able to switch between different projects quickly
 I want to be able to issue a single shell call for loading a project's configuration
 and run the issue-handler against this pre-loaded configuration
-
-    
-
-### 9.17. Issues publishing from shell calls
-As a DevOps 
-In order to be able to quickly share the current issues data in tabular format
-I want to be able to issue a single shell call for copying the current items data to a medium by specifying the tables to be published
-
-    
-
-#### 9.17.1. Issues publishing in e-mail format
-As a DevOps 
-In order to be able to quickly share the current issues data in email format
-I want  to be able to issue a single shell call for copying the current items data to email by specifying the tables to be published
-
-    
-
-#### 9.17.2. Issues handling in google sheet format
-As a DevOps 
-In order to be able to quickly share the current issues data in tabular format
-I want  to be able to issue a single shell call for copying the current items data to google sheet by specifying the tables to be published
-
-    
-
-#### 9.17.3. Issues publishing in google calendar format
-As a DevOps 
-In order to be able to quickly share the current issues data in google calendar format
-I want  to be able to issue a single shell call for copying the current items data to google calendar by specifying the tables to be published for the items having set start_time and stop_time attributes. 
-
-    
-
-### 9.18. Issues transformations
-As a cli user of the qto application 
-In order to be able to sort the issues according to their attributes 
-and edit them in both txt file and xls file
-I want to be able to perform the following loads: 
-txt-to-db - to load a txt file with issues to an issues table in db
-db-to-xls - to load a xls file from db table to xls
-xls-to-db - to load a xls file with issues to an issues table in db
 
     
 

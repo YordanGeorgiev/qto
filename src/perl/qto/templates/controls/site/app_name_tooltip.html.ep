@@ -1,13 +1,13 @@
 % if ( !defined ( param('as') ) or param('as') ne "print-doc" ) {
    <div class="app_name_tooltip" id="app_tooltip">
-   <a tabindex="1" href="/<%= $db =%>/home"><img src="../../themes/thme-blue/img/controls/home.png"></a>
+   <a tabindex="1" href="/<%= $pdb =%>/home"><img src="../../themes/thme-blue/img/controls/home.png"></a>
       <div class="app_name_tooltiptext">
          <%= " $db" =%>
          <%= " $ProductVersion " =%>
          <%= " $EnvType " =%>
          <%= " $GitShortHash " =%>
          <%= " $page_load_time " =%>
-         <a tabindex="1" href="/<%= $db =%>/login">logout</a>
+         <a tabindex="1" href="/<%= $pdb =%>/login">logout</a>
       </div>
    </div>
 % }

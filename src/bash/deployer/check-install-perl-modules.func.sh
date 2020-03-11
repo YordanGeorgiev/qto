@@ -18,7 +18,8 @@ do_check_install_perl_modules(){
       test "$(grep -c 'Mlocal::lib' $bash_opts_file)" -eq 0 && \
          echo 'eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)' >> $bash_opts_file
 		while read -r module ; do cpanm_modules="${cpanm_modules:-} $module " ; done < <(echo "$modules")
-		cpanm --force --local-lib=~/perl5 'Net::Google::DataAPI' # does not install otherwise !!!
+		#cpanm --force --local-lib=~/perl5 'Net::Google::DataAPI' # does not install otherwise !!!
+      # probably not needed as all google related modules are out of the setup ^^^
 		cmd="cpanm --local-lib=~/perl5 $modules"
       $cmd
      

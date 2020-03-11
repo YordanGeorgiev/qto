@@ -104,6 +104,7 @@ sub doRenderPageTemplate {
          ,  'print-doc'    => 'list-print-doc' 
    };
   
+   my $pdb              = toPlainName($db);
    my $template_name       = $as_templates->{ $as } || 'view-doc' ; 
    my $template            = 'pages/' . $template_name . '/' . $template_name ; 
 
@@ -123,6 +124,7 @@ sub doRenderPageTemplate {
     , 'msg'             => $msg
     , 'item'            => $item
     , 'db' 		         => $db
+    , 'pdb' 		      => $pdb
     , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
     , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
     , 'GitShortHash' 	=> $config->{'env'}->{'run'}->{'GitShortHash'}

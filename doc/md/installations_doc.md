@@ -42,7 +42,6 @@
 * [6. PHYSICAL HOST OS INSTALLATIONS](#6-physical-host-os-installations)
   * [6.1. MACOS](#61-macos)
     * [6.1.1. Install qtpass](#611-install-qtpass)
-    * [6.1.2. Install qtpass](#612-install-qtpass)
 * [7. POTENTIAL PROBLEMS AND TROUBLESHOOTING](#7-potential-problems-and-troubleshooting)
   * [7.1. THE POSTGRES ADMIN USER PASSWORD IS WRONG](#71-the-postgres-admin-user-password-is-wrong)
   * [7.2. REDIS REFUSES TO START ](#72-redis-refuses-to-start-)
@@ -58,7 +57,7 @@
     
 
 ## 1. INTRODUCTION
-
+The qto installation could be compressed to 4 oneliners, yet if you are installing it for first time you should read this guide thoroughly or at least jump from the code sections from the top till the bottom, simply because the stack is huge - postgres, perl application layer with a lot of modules and dependencies.
 
     
 
@@ -398,11 +397,6 @@ Qto has been developed mostly by using MacOs as the physical host OS. The next c
 
 #### 6.1.1. Install qtpass
 https://sourceforge.net/p/gpgosx/docu/Download/
-
-    brew cask install qtpass
-
-#### 6.1.2. Install qtpass
-https://qtpass.org/downloads#macOS
 
     brew cask install qtpass
 

@@ -9,7 +9,7 @@
 * [2. INITIAL CONCEPTS](#2-initial-concepts)
   * [2.1. WAY OF WORKING](#21-way-of-working)
   * [2.2. ACCESSING MULTIPLE APPLICATIONS FROM THE SAME UI](#22-accessing-multiple-applications-from-the-same-ui)
-  * [2.3. SWITCH PROJECTS BY THE :TO OPERATOR IN THE SEARCH-BOX](#23-switch-projects-by-the-to-operator-in-the-search-box)
+  * [2.3. SWITCH PROJECTS FROM THE SEARCH BOX](#23-switch-projects-from-the-search-box)
 * [3. LOGIN AND LOGOUT](#3-login-and-logout)
   * [3.1. LOGIN TO A QTO INSTANCE](#31-login-to-a-qto-instance)
   * [3.2. LOGOUT FROM A QTO INSTANCE](#32-logout-from-a-qto-instance)
@@ -61,20 +61,23 @@
     * [6.1.2. Searching the view doc by quick filtering](#612-searching-the-view-doc-by-quick-filtering)
     * [6.1.3. Navigating trough the document via the TOC right menu item](#613-navigating-trough-the-document-via-the-toc-right-menu-item)
   * [6.2. SMART INTERLINKING - SHARING ITEMS TO ANOTHER USERS](#62-smart-interlinking--sharing-items-to-another-users)
-  * [6.3. MANAGING THE VIEW DOC DATA WITH THE RIGHT CLICK MENU ( BETA )](#63-managing-the-view-doc-data-with-the-right-click-menu-(-beta-))
-  * [6.4. THE RIGHT TABLE OF CONTENTS  - AKA THE "TOC MENU"
-THE RIGHT TABLE OF CONTENTS ( TOC ) MENU](#64-the-right-table-of-contents--aka-the-"toc-menu"
+  * [6.3. MANAGING THE VIEW DOC DATA WITH THE RIGHT CLICK MENU](#63-managing-the-view-doc-data-with-the-right-click-menu)
+  * [6.4. THE RIGHT TABLE OF CONTENTS  - THE "TOC MENU"
+THE RIGHT TABLE OF CONTENTS ( TOC ) MENU](#64-the-right-table-of-contents--the-"toc-menu"
 the-right-table-of-contents-(-toc-)-menu)
     * [6.4.1. Open & dive to manage only parts of the documents](#641-open-&-dive-to-manage-only-parts-of-the-documents)
     * [6.4.2. Open in list](#642-open-in-list)
     * [6.4.3. Export to md](#643-export-to-md)
-    * [6.4.4. Add new parent node ( beta )](#644-add-new-parent-node-(-beta-))
-    * [6.4.5. Add new sibling node ( beta )](#645-add-new-sibling-node-(-beta-))
-    * [6.4.6. Add new child node ( beta )](#646-add-new-child-node-(-beta-))
-    * [6.4.7. Remove node](#647-remove-node)
+    * [6.4.4. Add new parent node ( gamma )](#644-add-new-parent-node-(-gamma-))
+    * [6.4.5. Add new sibling node ( gamma )](#645-add-new-sibling-node-(-gamma-))
+    * [6.4.6. Add new child node ( gamma )](#646-add-new-child-node-(-gamma-))
+    * [6.4.7. Remove node ( gamma )](#647-remove-node-(-gamma-))
 * [7. THE SEARCH PAGE](#7-the-search-page)
   * [7.1. CYCLING THOUGH THE SEARCH RESULTS](#71-cycling-though-the-search-results)
   * [7.2. OPENING AN ITEM FROM THE SEARCH RESULT AND EDITING](#72-opening-an-item-from-the-search-result-and-editing)
+* [8. THE REPORT PAGE](#8-the-report-page)
+  * [8.1. REPORTS VIEWING](#81-reports-viewing)
+  * [8.2. REPORTS CREATION](#82-reports-creation)
 
 
 
@@ -134,7 +137,7 @@ If you type the ":to &lt;&lt;database-name&gt;&gt;" you will get a drop down whi
 
     
 
-### 2.3. Switch projects by the :to operator in the search-box
+### 2.3. Switch projects from the search box
 If you type the ":to &lt;&lt;database-name&gt;&gt;" you will get a drop down which will list the projects databases , to which your instance has access to, by choosing the database from the list and hitting enter you will be redirected to the same url by on the different database.
 
     
@@ -233,7 +236,7 @@ The listing url syntax mimics the sql select clause syntax, yet in much more sim
 ##### 5.1.2.1. The "pick" url param
 You can use the pick=col1,col2,col3 url parameter to select for only desired attributes to be show in the ui control used for listing.
 The following url demonstrates this syntax:
-https://qto.fi/qto/list/yearly_issues?as=grid&pick=id,status,name,description&page-size=5&page-num=1&where=status-eq-09-done
+https://qto.fi/qto/list/yearly_issues_2020?as=grid&pick=id,name,description&page-size=5&page-num=1
 
     
 
@@ -247,7 +250,7 @@ https://qto.fi/qto/list/yearly_issues?hide=description
 You can filter the result of the query by using the "with=col-operator-value". The following examples demonstrates, which operators are supported.
 An error message is shown if you do not use existing operator. 
 The following url demonstrates this syntax:
-http://qto.fi/qto/list/yearly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1&where=status-eq-09-done
+http://qto.fi/qto/list/yearly_issues_2020?as=grid&pick=id,prio,name&page-size=5&page-num=1&where=prio-eq-1
 Note when going to the next page that all the rows' status is 09-done
 
     with=status-eq-09-done
@@ -264,8 +267,6 @@ Note when going to the next page that all the rows' status is 09-done
          , 'ge' => '>='
          , 'le' => '<='
          , 'like' => 'like'
-    
-    
 
 ##### 5.1.2.4. The "where=col-operator-value" filter
 You can filter the result of the query by using the "where=col-operator-value", which works exactly as the with operator, thus the following examples demonstrates, which operators are supported.
@@ -289,15 +290,14 @@ An error message is shown if you do not use existing operator.
 ##### 5.1.2.5. Filtering with "like"
 The filtering with the like operator translates to the SQL "like" operator- the "like-by=&lt;&lt;attr&gt;&gt;&like-val=&lt;&lt;val&gt;&gt; filtering, where &lt;&lt;attr&gt;&gt; stands for the name of the attribute to use the like operator. 
 Example:
-https://qto.fi/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name&page-size=5&page-num=1&where=status-eq-09-done
+https://qto.fi/qto/list/yearly_issues_2020?as=grid&oa=prio&pick=id,prio,name&page-size=5&page-num=1&like-by=name&like-val=add
 
-    # this example url will list all the monthly_issues items having the "bug" string in their "name" attribute:
-    http://host-name:3000/qto/list/monthly_issues?as=grid&like-by=name&like-val=bug
+    
 
 ### 5.2. Sorting an item table
 The listed table is sortable by clicking on the columns OR by navigating with the tab key on the keyboard on a column and hitting Enter. 
 The sorted column is visually shown as the active one on page load:
-https://qto.fi/qto/list/yearly_issues?as=grid&oa=prio&pick=id,status,prio,name&page-size=5&page-num=1&where=status-eq-09-done
+https://qto.fi/qto/list/yearly_issues_2020?as=grid&oa=prio&pick=id,prio,name&page-size=5&page-num=1&like-by=name&like-val=add
 
     
 
@@ -396,7 +396,7 @@ Note that human readable values from the drop downs are not show, but the guid's
 #### 5.9.2. In-line edit ( UPDATE )
 The grid can be edited inline so that the data is updated to the database. White space in the cells is preserved. 
 To practice new items' creations updates and deletions to get comfortable on the app's behaviour please use first the development instances of the qto project: 
-https://qto.fi/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
+https://qto.fi/qto/list/yearly_issues_2020?as=grid&oa=prio&pick=id,prio,name&page-size=5&page-num=1&like-by=name&like-val=add
 
     
 
@@ -436,7 +436,7 @@ Should a column end with the "_guid" string, by convention it holds a foreign ke
 ### 5.10. Item deletion ( DELETE )
 You could delete items by clicking the delete button with the trash icon in the beginning of every item. 
 To practice new items' creations and deletions to get comfortable on the app's behaviour please use first the development instances of the qto project: 
-https://qto.fi/qto/list/monthly_issues?as=grid&pick=id,status,prio,name,weight,start_time,stop_time&page-size=5&page-num=1
+https://qto.fi/qto/list/yearly_issues_2020?as=grid&oa=prio&pick=id,prio,name&page-size=5&page-num=1&like-by=name&like-val=add
 If the deletion is successful the item is removed both from the ui and from the database. No msg is presented.
 The usual way if an error has occurred during the delete the error msg is displayed in the top centre  area of the list page.
 
@@ -445,7 +445,7 @@ The usual way if an error has occurred during the delete the error msg is displa
 ### 5.11. List as print-table page
 The list as print-table page is aimed at producing quickly refined result-set from the database for a further copy paste on to another html page ( wiki etc. )  or even print to paper. 
 It has all the functionalities as the list as "table" page, without the filtering from the quick search box and without the ui for the pager and page-sizer -the url params for paging and page-sizing work, however. All the url params work as in the grid listing page. 
-https://qto.fi/qto/list/yearly_issues?as=print-table&pick=id,status,name,description&page-size=5&page-num=1&like-by=status&like-val=03
+https://qto.fi/qto/list/yearly_issues_2020?as=grid&oa=prio&pick=id,prio,name&page-size=5&page-num=1&like-by=name&like-val=add&as=print-table
 
     
 
@@ -488,7 +488,7 @@ for example: principles-1805311658
 
     
 
-### 6.3. Managing the view doc data with the right click menu ( beta )
+### 6.3. Managing the view doc data with the right click menu
 You can right click ANY of the toc menu items ( including the doc title, which IS NOT right clickable from the document content) and choose one of the actions to perform on the clicked item:
 
 This feature is in beta mode still - expect some serious quirks along the way ...
@@ -496,7 +496,7 @@ If you right click on a number of a title or on the title in the right TOC listi
 
     
 
-### 6.4. The right table of contents  - aka the "TOC menu"
+### 6.4. The right table of contents  - the "TOC menu"
 The right Table Of Contents ( TOC ) menu
 You open and close the right click menu from the upper menu icon. The right click menu presents the structure of the document.You could navigate with the keyboard trough the right menu links too. 
 Note that when you click on a link on the right menu the title of the item you clicked on is scrolled to the top of the page.
@@ -520,27 +520,27 @@ This option exports this branch as Mark Down document ( GitHub syntax ), Microso
 
     
 
-#### 6.4.4. Add new parent node ( beta )
+#### 6.4.4. Add new parent node ( gamma )
 Adding new parent node means simply adding a new item in the document on the upper level in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4-th item on the first level you will get the 5.0 item and if the 5.0. item already exist it will be set as the 6.0. and so on ...
-This feature does not work for all the cases properly for now ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
+This feature does does not work 100% ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
 
     
 
-#### 6.4.5. Add new sibling node ( beta )
+#### 6.4.5. Add new sibling node ( gamma )
 Adding new sibling node means simply adding a new item in the document on the same hierarchy level as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.4. item and if the 4.4. item already exist it will be set as the 4.5. and so on ...
-This feature does not work for all the cases properly for now ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
+This feature does does not work 100% ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
 
     
 
-#### 6.4.6. Add new child node ( beta )
+#### 6.4.6. Add new child node ( gamma )
 Adding new parent node means simply adding a new item in the document on one level bellow in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exist it will be set as the 4.3.2. and so on ...
-This feature does not work for all the cases properly for now ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
+This feature does does not work 100% ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
 
     
 
-#### 6.4.7. Remove node
+#### 6.4.7. Remove node ( gamma )
 Adding new parent node means simply adding a new item in the document on one level bellow in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exist it will be set as the 4.3.2. and so on ...
-This feature does not work for all the cases properly for now ... you might have to reload the page if the ui does not behave according to the description above - this is known bug with WIP status ...
+This feature does does not work 100% ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
 
     
 
@@ -556,6 +556,24 @@ The search results listing provides a slice of the simple text search from the p
 
 ### 7.2. Opening an item from the search result and editing
 To open an item from the search results click on the open button on the item row in the search listing - the dialog box contains the details of the item in read-only - to actually edit this item click on the edit button on the top in the dialog box, you will be redirect to either the list item page or the view doc page ui of this item.
+
+    
+
+## 8. THE REPORT PAGE
+You can view the result sets of pre-defined reports in the qto ( which are just postgres rdbms functions returning result sets), for example:
+https://qto.fi/qto/report/get_all_users_roles
+
+
+
+    
+
+### 8.1. Reports viewing
+You can use the same paging and quick filtering as in the search and list pages.
+
+    
+
+### 8.2. Reports creation
+A technical person having middle level postgres db knowledge and basic understanding of your qto proj-db business domain SHOULD be able to create a report for you ( which a basic select statement in a postgres function ) in about 15 to 30 min , depending on the complexity of the report. Once the report has been created in the db it straight visible in the reports page WITHOUT having to deploy or install anything on the application server.
 
     
 

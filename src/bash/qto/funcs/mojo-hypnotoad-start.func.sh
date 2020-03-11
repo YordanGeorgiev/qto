@@ -1,13 +1,22 @@
-# src/bash/qto/funcs/mojo-hypnotoad-start.func.sh
-
 doMojoHypnotoadStart(){
    
-   doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.app'
+   doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
    doMojoHypnotoadStop
 
-   export MOJO_LOG_LEVEL='error'
-   export MOJO_LOG_LEVEL='debug'
-   export MOJO_MODE='production'
+   jwt_private_key_file="~/.ssh/qto.$ENV_TYPE.jwtRS256.key"
+   jwt_public_key_file="~/.ssh/qto.$ENV_TYPE.jwtRS256.key.pub"
+   echo << EOF 
+   using the following private and public key files for the Guardian's JWT's :
+   $jwt_private_key_file
+   $jwt_public_key_file
+EOF
+
+   test -f $jwt_private_key_file || ssh-keygen -t rsa -b 4096 -m PEM -f $jwt_private_key_file
+   test -f $jwt_public_key_file && rm -v $jwt_public_key_file
+   openssl rsa -in $jwt_private_key_file -pubout -outform PEM -out $jwt_public_key_file
+
+   export MOJO_LOG_LEVEL='error'; #could be warn, debug, info
+   export MOJO_MODE='production'; #could be development as well ...
 
    while read -r p ; do 
       p=$(echo $p|sed 's/^ *//g')

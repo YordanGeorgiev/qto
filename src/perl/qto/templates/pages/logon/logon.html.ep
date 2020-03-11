@@ -1,7 +1,7 @@
 %layout 'login';
 
 % content_for cnt_header_css => begin
-  <title> <%= "$db " =%> login </title> 
+  <title> <%= "$pdb " =%> login </title> 
 % end
 
 
@@ -9,7 +9,7 @@
 <div id="div_center">
 	<div id="box">
 		<h4> <span style="color:<%= $msg_color =%>;"> <%= $msg =%> </span> </h4>
-		%= form_for 'login' => (method => 'POST') => begin
+		%= form_for 'logon' => (method => 'POST') => begin
 			%= text_field 'email', id => 'email', class=>"email", value=>'test.anonymous.user@gmail.com',focused=>"this.document.execCommand('selectAll',false,null);"
 			%= password_field 'pass', id => 'pass', class=>"email", value=>'test.anonymous.user-pass',focused=>"this.document.execCommand('selectAll',false,null);"
          <input type="hidden" id="url" name="redirect-url" value="<%= $redirect_url =%>">

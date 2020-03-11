@@ -19,15 +19,9 @@ package Qto::App::IO::In::CnrEncrypter ;
    use Data::Printer ; 
    use Qto::App::Mdl::Model ; 
 	use Authen::Passphrase::BlowfishCrypt ; 
-
    
    use parent 'Qto::App::Utils::OO::SetGetable' ; 
    use parent 'Qto::App::Utils::OO::AutoLoadable' ;
-
-   our $objModel     = {} ; 
-   our $config    = {} ; 
-
-
 
 	sub new {
 		my $invocant   = shift ;    
@@ -70,8 +64,7 @@ CnrEncrypter
 
 =head1 DESCRIPTION
 
-responsible for setting the parsed url params into the objModel
-
+wrapper around the Authen::Passphrase::BlowfishCrypt module
 =head2 EXPORT
 
 
@@ -83,8 +76,6 @@ responsible for setting the parsed url params into the objModel
 yordan.georgiev@gmail.com
 
 =head1 COPYRIGHT MOR LICENSE
-
-Copyright (C) 2019 Yordan Georgiev
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.1 or,

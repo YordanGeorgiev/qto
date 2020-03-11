@@ -69,7 +69,7 @@ BEGIN {
    printf "\n";
 
    $tm = "both email and pass are filled in and the pass matches - see users create table";
-   ok ( $t->post_ok( $url => 'form'  => {'email' =>'test.anonymous.user@gmail.com', 'pass' => 'secret'}) , $tm );
+   ok ( $t->post_ok( $url => 'form'  => {'email' =>'test.anonymous.user@gmail.com', 'pass' => 'test.anonymous.user-pass'}) , $tm );
    printf "\n";
    
    $tm = "non registered user"; 
@@ -78,13 +78,13 @@ BEGIN {
    ok ( $tx->result->dom->all_text =~ 'not.registered.user@gmail.com not registered' , $tm );
    printf "\n";
 
+   my $pdb = toPlainName($db);
    $tm = "a successfull result redirects to the home page";
-   $tx = $t->ua->post( $url => 'form'  => {'email' =>'test.anonymous.user@gmail.com', 'pass' => 'secret'});
-   ok ( $tx->result->dom->all_text =~ "search $db" , $tm );
+   $tx = $t->ua->post( $url => 'form'  => {'email' =>'test.anonymous.user@gmail.com', 'pass' => 'test.anonymous.user-pass'});
+   ok ( $tx->result->dom->to_string =~ "<title> search $pdb </title>", $tm );
+   #p $tx->result->dom->to_string ;
    printf "\n";
-   # debug p $tx->result->dom ;
    
-  
    # check that the product version , and the short hash are on the page
    my $env = $config->{'env'}->{'run'}->{'ENV_TYPE'} ; 
    my $dom = {} ;                                # the mojo dom parser 

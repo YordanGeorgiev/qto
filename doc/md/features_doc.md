@@ -56,15 +56,15 @@
     * [8.3.1. Viewing documents](#831-viewing-documents)
       * [8.3.1.1. OK load for a view doc page](#8311-ok-load-for-a-view-doc-page)
       * [8.3.1.2. NOK load for a view doc page](#8312-nok-load-for-a-view-doc-page)
-    * [8.3.2. Managing items ( beta )](#832-managing-items-(-beta-))
-      * [8.3.2.1. Add an item in the doc view page UI ( beta)](#8321-add-an-item-in-the-doc-view-page-ui-(-beta))
-      * [8.3.2.2. Update item ( beta )](#8322-update-item-(-beta-))
-      * [8.3.2.3. Delete item ( beta )](#8323-delete-item-(-beta-))
+    * [8.3.2.  Managing items ( gamma )](#832--managing-items-(-gamma-))
+      * [8.3.2.1. Add an item in the doc view page UI ( gamma)](#8321-add-an-item-in-the-doc-view-page-ui-(-gamma))
+      * [8.3.2.2. Update item ( gamma )](#8322-update-item-(-gamma-))
+      * [8.3.2.3. Delete item ( gamma )](#8323-delete-item-(-gamma-))
+    * [8.3.3. Printing view doc documents](#833-printing-view-doc-documents)
 * [9. SECURITY](#9-security)
   * [9.1. AUTHENTICATION](#91-authentication)
-    * [9.1.1. Print to pdf](#911-print-to-pdf)
-    * [9.1.2. Non-athentication mode](#912-non-athentication-mode)
-    * [9.1.3. Simple native authentication mode](#913-simple-native-authentication-mode)
+    * [9.1.1. Non-athentication mode](#911-non-athentication-mode)
+    * [9.1.2. Simple native authentication mode](#912-simple-native-authentication-mode)
   * [9.2. AUTHORISATION](#92-authorisation)
     * [9.2.1. Roles based access control list](#921-roles-based-access-control-list)
 * [10. DOCUMENTATION](#10-documentation)
@@ -390,30 +390,39 @@ Should the browser request a non-existing table or erroneous url parameters from
 
     
 
-#### 8.3.2. Managing items ( beta )
+#### 8.3.2.  Managing items ( gamma )
 The Qto application provides the needed UI interfaces to Create , Update , Delete items in the view documents UI for the users having the privileges for those actions.
+This feature in in gamma mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
 
     
 
-##### 8.3.2.1. Add an item in the doc view page UI ( beta)
+##### 8.3.2.1. Add an item in the doc view page UI ( gamma)
 Users with the write privileges for the document can add an item in the doc view page just by right clicking on the title and selecting one of the 3 options:
  - add sibling node - add an item which is on the same level in the hierarchy 
  - add parent node - add an item which is on 1 level up in the hierarchy
  - add child node - add and item which is on 1 level bellow in the hierarchy
 The new item appears straight after the origin title it was requested from.
+This feature in in gamma mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
 
     
 
-##### 8.3.2.2. Update item ( beta )
+##### 8.3.2.2. Update item ( gamma )
 You can:
 - update item title content
 - update item description
 - update item src code if visible ( you can make it visible by adding any non space content to it in the list page by right clicking the item number and choosing open in list )
+This feature in in gamma mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
 
     
 
-##### 8.3.2.3. Delete item ( beta )
+##### 8.3.2.3. Delete item ( gamma )
 You can right click on an item and choose the remove node from the right click men.
+This feature in in gamma mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
+
+    
+
+#### 8.3.3. Printing view doc documents
+You can print ANY branch including the whole documents by right clicking the branch or node and choosing "print-preview" and than use the browser's print functionality.
 
     
 
@@ -429,17 +438,12 @@ The qto application supports the following 2 modes of security:
 
     
 
-#### 9.1.1. Print to pdf
-You can print any view doc by choosing right click view as pdf and choosing print to pdf file from the browser. Check the generate-pdf-docs shell action to automate this for each document configured in the export_files table.
-
-    
-
-#### 9.1.2. Non-athentication mode
+#### 9.1.1. Non-athentication mode
 Any qto instance supports a non-authentication mode - that is all users having http access could perform all the actions on the UI without restrictions
 
     
 
-#### 9.1.3. Simple native authentication mode
+#### 9.1.2. Simple native authentication mode
 A qto instance running under the simple native authentication mode stores the user credentials in the instance db. The passwords are encrypted via the using the Blowfish-based Unix crypt() hash function, known as "bcrypt" encrypting mechanism. 
 
     
@@ -452,7 +456,7 @@ Only the SysAdmin of the System can add basic authentication and simple native m
 #### 9.2.1. Roles based access control list
 The qto application has a centralised roles based access control list accessible from the following url: 
 &lt;&lt;proj-db&gt;&gt;/list/items_roles_permissions. 
-This list will define who ( which roles ) , can or cannot do what and why - the description field. 
+This list will define who ( which roles ) , can or cannot do what and why - the description field. The actual application of this Access Control List has NOT been yet implemented ...
 
     
 
