@@ -58,13 +58,13 @@ Vue.component('form-textarea', {
    , data: function(){
       return {
          content: null
+         , oldData: ""
       }
    }
    , mounted(){
       this.cid = this.label + '-' + this.$parent.$attrs.id.replace("dia-","")
       this.content = this.cnt
    }
-   , oldData: ""
    , methods: {
       onBlur(ev) {
          var modifiedContent = ev.target.value

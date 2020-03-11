@@ -11,89 +11,145 @@ use Cwd qw/abs_path/;
 use Carp qw /cluck confess shortmess croak carp/ ; 
 use Data::Printer ; 
 use Mojo::JWT ; 
+use Mojo::File;
 
 use parent 'Qto::App::Utils::OO::SetGetable' ;
 use parent 'Qto::App::Utils::OO::AutoLoadable' ;
 use Qto::App::IO::In::RdrFiles;
 use Qto::App::Utils::Timer ; 
+use Qto::App::IO::In::CnrEncrypter ;
 
-our $config          = {} ;
-our $objLogger       = {} ;
-our $rdbms_type      = 'postgres';
+our $config                = {} ;
+our $objLogger             = {} ;
+our $jwt_public_key_file   = '' ; 
+our $jwt_private_key_file  = '' ; 
+
 
 # --------------------------------------------------------
-# called after the users presses the login button
+# called during the login process
+# call-by: 
+# ( $rv, $msg , $jwt ) = $objGuardian->doGrantAccessToken($hsr);
 # --------------------------------------------------------
-sub doGrantAccess {
+sub doGrantAccessToken {
+   my $self        = shift ; 
+   my $hsr         = shift ; 
+
+   my $prv_secret  = $self->doGetPrivateKeySecret();
+   my $claims      = $self->doBuildClaims($hsr);
+
+   my ( $rv, $msg , $jwt) = $self->create_token($claims,$prv_secret);
+   return ( $rv, $msg , $jwt );
+}
+
+
+# build the JWT claims based on the login hash ref
+# src: https://www.iana.org/assignments/jwt/jwt.xhtml
+sub doBuildClaims {
+   my $self             = shift ; 
+   my $hsr              = shift ; 
+   my $claims           = {} ;
+  
+   $claims->{'iss'}     = 'qto-' . $config->{'env'}->{'run'}->{'VERSION'};
+   $claims->{'sub'}     = $hsr->{'user_id'};
+   $claims->{'name'}    = $hsr->{'user_name'};
+   $claims->{'email'}   = $hsr->{'email'};
+
+   return $claims ;
+}
+
+
+# --------------------------------------------------------
+# call-by: my $epass  = $objGuardian->doProduceEncryptedPass($pass);
+# --------------------------------------------------------
+sub doProduceEncryptedPass {
    my $self = shift ; 
+   my $pass = shift ; 
 
+   my $objCnrEncrypter = 'Qto::App::IO::In::CnrEncrypter'->new();
+   my $epass = $objCnrEncrypter->make_crypto_hash($pass ) ; 
+   return $epass ;
 }
 
 
-# usage:
-# ( $ret , $msg , $prv_secret ) = $objGuardian->getPrivateKeySecret()
-sub getPrivateKeySecret {
+# --------------------------------------------------------
+# call-by: $objGuardian->passwordsMatch($dbepass,$pass);
+# returns 1: if the passwords match , 0 if they do NOT match
+# --------------------------------------------------------
+sub passwordsMatch {
 
-   my $self                = shift ; 
-   my $env_type            = $config->{'env'}->{'run'}->{'ENV_TYPE'} ; 
-   my $private_key_fpath   = $ENV{"HOME"} . '/.ssh/id_rsa.qto.' . $env_type ; 
-   my $objRdrFiles         = 'Qto::App::IO::In::RdrFiles'->new ( \$config ) ;
-
-   my ( $ret , $msg , $str_prv_file ) = $objRdrFiles->doReadFileReturnString ( $private_key_fpath ) ; 
-   return ( $ret , $msg , $str_prv_file ); 
-
-}
-
-
-# usage:
-# ( $ret , $msg , $pub_secret ) = $objGuardian->getPublicKeySecret()
-sub getPublicKeySecret {
-
-   my $self                = shift ; 
-   my $env_type            = $config->{'env'}->{'run'}->{'ENV_TYPE'} ; 
-   my $public_key_fpath    = $ENV{"HOME"} . '/.ssh/id_rsa.qto.' . $env_type . '.pub' ;
-   my $objRdrFiles         = 'Qto::App::IO::In::RdrFiles'->new ( \$config ) ;
-
-   my ( $ret , $msg , $str_pub_file ) = $objRdrFiles->doReadFileReturnString ( $public_key_fpath) ; 
-   return ( $ret , $msg , $str_pub_file ); 
-
-}
-
-
-# usage:
-# $objGuardian->isValid
-sub isValid {
    my $self       = shift ; 
-   my $is_valid   = 0 ; 
-   my $msg        = '' ; 
+   my $dbepass    = shift ;
+   my $pass       = shift ; 
 
+   my $objCnrEncrypter = 'Qto::App::IO::In::CnrEncrypter'->new();
+   return $objCnrEncrypter->match_passphrase_against_crypto_hash($dbepass,$pass) ;
 }
 
 
 # usage:
-# $objGuardian->create_token
+# ( $ret , $msg , $prv_secret ) = $objGuardian->doGetPrivateKeySecret()
+sub doGetPrivateKeySecret {
+
+   my $self = shift ; 
+   my $private_key_str = 'Mojo::File'->new($jwt_private_key_file)->slurp;
+   return $private_key_str ;
+}
+
+
+# usage:
+# ( $ret , $msg , $pub_secret ) = $objGuardian->doGetPublicKeySecret()
+sub doGetPublicKeySecret {
+
+   my $self = shift ; 
+   my $public_key_str = 'Mojo::File'->new($jwt_public_key_file)->slurp;
+   return $public_key_str ;
+}
+
+
+# usage:
+# $self->create_token
 sub create_token {
    my $self       = shift ; 
-   my $prv_secret = shift ;  # the private key secret
    my $claims     = shift ; # the claims of the jwt
-
-   my $msg        = '' ; 
+   my $prv_secret = shift ;  # the private key secret
+   my $msg        = 'an error during create_token in Guardian occurred !!!' ; 
    my $ret        = 1 ; 
-   my $jwt        = Mojo::JWT->new(claims => $claims, secret => $prv_secret )->encode;
-   return ( $ret , $msg , $jwt ) ; 
+   my $header = {
+      "typ" => "JWT",
+      "alg" => "RS256"
+   };
 
+   my $jwt        = Mojo::JWT->new() ; 
+   $jwt->algorithm('RS256');
+   $jwt->claims($claims);
+   $jwt->secret($prv_secret);
+   $jwt->header($header);
+
+   my $token      = $jwt->encode;
+   $msg           = '' ; 
+   $ret           = 0 ; 
+   
+   return ( $ret , $msg , $token) ; 
 }
 
 
 # usage
-sub verify_token {
+sub doVerifyTokenAndGetClaims {
+
    my $self       = shift ; 
-   my $secret     = shift ;  # might be public AND PRIVATE
-   my $jwt        = shift ;  # the Json Web Token 
+   my $token      = shift ;  # the Json Web Token as string
+   my $pub_secret = shift ; 
 
-   my $claims     = Mojo::JWT->new(secret => $secret)->decode($jwt);
+   my $msg        = '';
+   my $rv         = 1;
+   my $jwt        = 'Mojo::JWT'->new();
 
-   return $claims ; 
+   $jwt->algorithm('RS256');
+   $jwt->public($pub_secret);
+
+   my $claims     = $jwt->decode($token);
+   $rv            = 0 ; 
+   return ( $rv, $msg, $claims);
 }
 
 
@@ -105,10 +161,20 @@ sub new {
    $config = ${ shift @_ } || croak 'no config provided !!!' ; 
    my $self = {};        
    bless( $self, $class );    
-
+   $self->do_init();
    #*AUTOLOAD = \&Qto::App::Utils::OO::AutoLoadable::AUTOLOAD;
    return $self;
 }  
+
+
+sub do_init {
+   
+   my $self                = shift  ;
+   my $env_type            = $config->{'env'}->{'run'}->{'ENV_TYPE'} ; 
+   $jwt_private_key_file   = $ENV{'HOME'} . '/.ssh/qto.' . "$env_type" . '.jwtRS256.key';
+   $jwt_public_key_file    = $ENV{'HOME'} . '/.ssh/qto.' . "$env_type" . '.jwtRS256.key.pub';
+
+}
 
 
 1;

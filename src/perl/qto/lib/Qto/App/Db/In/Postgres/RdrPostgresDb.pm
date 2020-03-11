@@ -7,7 +7,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 	use Encode qw( encode_utf8 is_utf8 );
    use POSIX qw(strftime);
 	use Carp ; 
-   use DBI ; 
+   use DBI qw(:sql_types);
+   use DBD::Pg qw(:pg_types);
 	use Data::Printer ; 
 
    use Scalar::Util qw /looks_like_number/ ; 
@@ -33,7 +34,6 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       my $self             = shift ; 
       my $db               = shift ; 
       my $email            = shift ; 
-      my $password         = shift ; 
       my $msg              = q{} ;         
       my $ret              = 401 ;        # 401 Unauthorized http code
       my $debug_msg        = q{} ; 
@@ -46,19 +46,26 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       return ( $ret , $msg ) unless $ret == 0 ; 
 
       eval { 
-         $str_sql = "
-            SELECT users.id, email, password, roles.name as roles
-            FROM users
-            LEFT JOIN user_roles ON (users.guid = user_roles.users_guid)
+         $str_sql = '
+            SELECT 
+               ROW_NUMBER () OVER (ORDER BY users.id) as id
+               , users.id                 as user_id
+               , users.email              as email
+               , users.password           as pass
+               , users.name               as user_name 
+               , roles.name               as role
+               , user_roles.description   as description
+            FROM user_roles
             LEFT JOIN roles ON (roles.guid = user_roles.roles_guid)
+            LEFT JOIN users ON (users.guid = user_roles.users_guid)
             WHERE 1=1
-            AND status > 0
-            AND email = ?
-         ;
-         " ; 
-
+            AND users.email = $1
+            AND users.status > 0
+         ' ; 
+      
          $sth = $dbh->prepare($str_sql);  
-         $sth->execute($email) or $objLogger->error ( "$DBI::errstr" ) ;
+         $sth->bind_param('$1', $email);  # placeholders are numbered from 1, varchar is default db type
+         $sth->execute() or $objLogger->error ( "$DBI::errstr" ) ;
          $hsr = $sth->fetchall_hashref( 'id' ) ; 
 
          if ( scalar ( keys %$hsr ) == 1 ) {
@@ -79,12 +86,12 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
    return ( $ret , $msg , $hsr ) ; 	
 }
 
+
 sub doNativeLoginAuth  {
 
    my $self             = shift ; 
    my $db               = shift ; 
    my $email            = shift ; 
-   my $password         = shift ; 
    my $msg              = q{} ;         
    my $ret              = 401 ;        # 401 Unauthorized http code
    my $debug_msg        = q{} ; 
@@ -97,16 +104,16 @@ sub doNativeLoginAuth  {
    return ( $ret , $msg ) unless $ret == 0 ; 
 
    eval { 
-      $str_sql = "
+      $str_sql = '
          SELECT id,email, password from users 
          WHERE 1=1
          AND status > 0
-         AND email = ?
-      ;
-      " ; 
+         AND email = $1
+      ' ; 
 
       $sth = $dbh->prepare($str_sql);  
-      $sth->execute($email) or $objLogger->error ( "$DBI::errstr" ) ;
+      $sth->bind_param('$1', $email);  # placeholders are numbered from 1, varchar is default db type
+      $sth->execute() or $objLogger->error ( "$DBI::errstr" ) ;
       $hsr = $sth->fetchall_hashref( 'id' ) ; 
 
       if ( scalar ( keys %$hsr ) == 1 ) {
@@ -925,12 +932,18 @@ sub doCallFuncGetHashRef {
       my $msg = 'cannot connect to the "' . $db . '" database: '; 
       my $dbh  = undef ;
 
+      my $pg_errorlevel = 0 ; 
+      $pg_errorlevel = 1 if $config->{'env'}->{'log'}->{'PrintDebugMsgs'} == 1 ;
+      $pg_errorlevel = 2 if $config->{'env'}->{'log'}->{'PrintTraceMsgs'} == 1 ;
+
       $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_db_host;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
                  'RaiseError'          => 0 # otherwise it dies !!!
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
                , 'AutoCommit'          => 1
                , 'pg_utf8_strings'     => 1
+               , 'pg_enable_utf8'      => 1
+               , 'pg_errorlevel'       => $pg_errorlevel
       }) ; 
       
       if ( defined $dbh  ) {
@@ -1001,6 +1014,7 @@ sub doCallFuncGetHashRef {
       $ret = 0 ; 
       return ( $ret , $msg , $columns_to_order_by_desc );
    }
+
 
    sub doSetColToOrderByAsc {
 

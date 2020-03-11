@@ -18,36 +18,34 @@ our $rdbms_type      = 'postgres';
 # --------------------------------------------------------
 # called after the users get only the login page
 # --------------------------------------------------------
-sub doShowLoginForm {
+sub doInitShowLoginUI {
 
    my $self             = shift;
    my $db               = $self->stash('db');
-   my $msg              = "$db   login"; 
    my $msg_color        = 'grey' ; 
+   my $pdb              = toPlainName($db);
+   my $msg              = "$pdb   login"; 
    
    my $config		      = $self->app->config ; 
    my $alConfig         = $config->{'env'}->{'app'} ; 
    my $instance_domain  = $alConfig->{ 'web_host' } . $alConfig->{ 'port' } . '.' . $db ;
    my $proj             = toEnvName ( $db , $config) ;
+   $db                  = toEnvName ( $db , $config) ;
 
    my $sessions = () ; 
-   $sessions = Mojolicious::Sessions->new  ;
+   $sessions            = Mojolicious::Sessions->new  ;
    $sessions->load($self);
+   my $redirect_url     = '/' . $pdb . '/search' ;
+   # store the url to redirect to ... to give it to the form
+   $redirect_url = $self->session( 'app.' . $db . '.url' ) 
+      if (defined $self->session( 'app.' . $db . '.url' ));
    $sessions->cookie_name('qto.' . $db) unless $sessions->cookie_name ;
    $sessions->default_expiration(86400);
-   $sessions = $sessions->secure(0);
-   $sessions = $sessions->samesite('Strict');
+   $sessions            = $sessions->secure(0);
+   $sessions            = $sessions->samesite('Strict');
    $sessions->cookie_domain( $instance_domain) unless $sessions->cookie_domain( $instance_domain);
-   my $redirect_url = $self->session( 'app.' . $db . '.url' ) if defined $self->session( 'app.' . $db . '.url' ) ; 
-   $self->session( 'app.' . toPlainName($db) . '.user' => undef);
-
-   # do not allow login to land on a <<env>>_<<proj-db>>/login to avoid mixing of envs
-   my $plain_db         = toPlainName($db);
-   if ( $db ne $plain_db){
-      my $login_redirect_url        = '/' . $plain_db . '/login';
-      $self->redirect_to( $login_redirect_url);
-      return ;
-   }
+   $self->session( 'app.' . $db . '.user' => undef);
+   $self->session($sessions);
 
    $self->doRenderPageTemplate(200,$msg,$msg_color,$proj,$redirect_url) ;
    return ;
@@ -78,33 +76,32 @@ sub doLoginUser {
 
 
    $db                  = toEnvName ( $db , $config) ;
-   my $plain_db         = toPlainName($db);
+   my $pdb              = toPlainName($db);
 	#print STDOUT "Logon.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
 
    my $pass             = $self->param('pass');
-   my $epass            = undef ; 
    my $email            = $self->param('email' );
    my $redirect_url     = $self->param('redirect-url' );
-   $redirect_url        = '/' . $plain_db . '/search' unless $redirect_url ;
+   $redirect_url        = '/' . $pdb . '/search' unless $redirect_url ;
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , 'login') ;
    $objModel->set('postgres_db_name' , $db ) ; 
    $objLogger->doLogInfoMsg ( "login attempt for " . $self->setEmptyIfNull($email)) ; 
 
    my $objCnrPostPrms   = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
-   ( $ret , $msg , $epass) = $objCnrPostPrms->doValidateLoginParams('Login' , $email , $pass );
+   ($ret, $msg) = $objCnrPostPrms->doValidateLoginParams('Login' , $email , $pass );
 
    if ( $ret != 0 ) {
       $objLogger->doLogInfoMsg ( 'login failed for "' . $self->setEmptyIfNull($email) . '"') ; 
       $msg = 'login failed! ' . $msg ;
-      $redirect_url = '/' . $plain_db . '/login' ; 
+      $redirect_url = '/' . $pdb . '/login' ; 
       $self->doRenderPageTemplate($ret, $msg ,$msg_color,$db,$redirect_url);
       return ;
    } 
 
    $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
 	$objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
-   ($http_code, $msg , $hsr ) = $objRdrDb->doNativeLoginAuth($db,$email,$epass);
+   ($http_code, $msg , $hsr ) = $objRdrDb->doNativeLoginAuth($db,$email);
 
    if ( $http_code == 200 ) {
       my $objCnrEncrypter  = 'Qto::App::IO::In::CnrEncrypter'->new();
@@ -116,6 +113,10 @@ sub doLoginUser {
          } else {
            $objLogger->doLogInfoMsg ( "login ok for $email") ; 
            $self->session( 'app.' . $db . '.user' => $email);
+           if (defined $self->session( 'app.' . $db . '.url' )) {
+               $redirect_url = $self->session( 'app.' . $db . '.url' );
+               $self->session( 'app.' . $db . '.url' => undef);
+           }
            $self->redirect_to( $redirect_url);
            return ;
          }
@@ -140,14 +141,13 @@ sub doRenderPageTemplate {
    my $notice           = '' ;
 
    $config		         = $self->app->config ; 
-   my $plain_db         = toPlainName($db);
-   $msg = "$plain_db login" unless $msg ; 
+   my $pdb              = toPlainName($db);
+   $msg = "$pdb login" unless $msg ; 
 
    $self->res->code($http_code) ; 
 
    my $template_name    = 'login' ; 
    my $template         = 'pages/' . $template_name . '/' . $template_name ; 
-
    my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
    my $page_load_time   = $objTimer->GetHumanReadableTime();
    my $ProductVersion   = $config->{'env'}->{'run'}->{'VERSION'} ;
@@ -156,7 +156,7 @@ sub doRenderPageTemplate {
       'template'        => $template 
     , 'msg'             => $msg
     , 'msg_color'       => $msg_color
-    , 'db' 		         => $plain_db
+    , 'db' 		         => $pdb
     , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
     , 'ProductVersion' 	=> $ProductVersion
     , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}

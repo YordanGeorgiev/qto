@@ -121,8 +121,8 @@ sub doRenderPageTemplate {
    my $item             = shift ; 
    my $list_control     = shift ; 
    my $notice           = '' ;
-   my $config		         = $self->app->config ; 
-
+   my $config		      = $self->app->config ; 
+   my $pdb              = toPlainName($db);
    unless ( $ret == 0 ) {
       $self->res->code($ret) unless $ret == 0 ; 
    } else {
@@ -155,6 +155,7 @@ sub doRenderPageTemplate {
     , 'msg'             => $msg
     , 'item'            => $item
     , 'db' 		         => $db
+    , 'pdb' 		      => $pdb
     , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
     , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
     , 'GitShortHash' 	=> $config->{'env'}->{'run'}->{'GitShortHash'}

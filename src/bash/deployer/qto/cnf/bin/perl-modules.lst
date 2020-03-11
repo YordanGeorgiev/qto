@@ -55,6 +55,4 @@
       JSON::Parse
       Storable
       Redis
-      Net::Google::DataAPI::Auth::OAuth2
-      Net::Google::Spreadsheets::V4
-      Net::Google::Spreadsheets
+      Crypt::OpenSSL::RSA

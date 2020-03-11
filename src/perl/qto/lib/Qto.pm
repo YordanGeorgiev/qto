@@ -84,7 +84,6 @@ sub doLoadAppConfig {
    my $num_of_workers = $config->{'env'}->{'app'}->{ 'num_of_workers' } || 5 ; 
    my $listen = 'http://*:'.$port;
 
-   # debug pr ($config) ; 
    $self->set('ObjLogger', $objLogger );
 
    $config->{'hypnotoad'} = {
@@ -92,6 +91,7 @@ sub doLoadAppConfig {
       workers => $num_of_workers
       } ;
 
+   # debug rint $config;
    $self = $self->config( $config );
    # 
    $self->renderer->cache->max_keys(0);
@@ -149,18 +149,6 @@ sub doSetHooks {
   
    my $self = shift ; 
 
-   if ( $ENV{ 'MOJO_LOG_LEVEL' } eq 'developent' ){
-      my $before_render_debug = 0 ; 
-      if ( $before_render_debug == 1 ) {
-         $self->hook ( 'before_render' => sub {
-            my ($c, $args) = @_;
-            # debug r $c ; 
-            # debug r ( $c->req->url->to_abs . '?' . $c->req->url->query ) ; 
-         });
-      }
-   }
-
-
    $self->hook(after_dispatch => sub {
        my $c = shift;
 
@@ -182,6 +170,14 @@ sub doSetHooks {
       $c->res->headers->cache_control('max-age=604800, no-cache');
       $c->res->headers->accept_charset('UTF-8');
       $c->res->headers->accept_language('fi, en');
+
+      # get the app config
+      # create the Guardian
+      # get the RBAC list from the Redis
+      # get the jwt from the session 
+      # get the public key from the session
+      #
+
    });
 
 
@@ -257,12 +253,12 @@ sub doSetRoutes {
    
    $r->get('/:db/login')->to(
      controller   => 'Login'
-   , action       => 'doShowLoginForm'
+   , action       => 'doInitShowLoginUI'
    );
    
    $r->get('/:db/logon')->to(
      controller   => 'Logon'
-   , action       => 'doShowLogon'
+   , action       => 'doInitShowLogonUI'
    );
    
    $r->post('/:db/login')->to(

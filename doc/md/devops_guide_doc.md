@@ -72,24 +72,28 @@
 * [9. DEVBOX SETUP ( OPTIONAL )](#9-devbox-setup-(-optional-))
   * [9.1. THE TMUX TERMINAL MULTIPLEXER](#91-the-tmux-terminal-multiplexer)
   * [9.2. THE VIM IDE](#92-the-vim-ide)
-* [10. SECURITY](#10-security)
-  * [10.1. AUTHENTICATION](#101-authentication)
-    * [10.1.1. JWT based native authentication](#1011-jwt-based-native-authentication)
-    * [10.1.2. Session based native authentication](#1012-session-based-native-authentication)
-    * [10.1.3. RBAC based native authentication](#1013-rbac-based-native-authentication)
-  * [10.2. AUTHORISATION](#102-authorisation)
-    * [10.2.1. Generic role-based access control list based authorisation](#1021-generic-role-based-access-control-list-based-authorisation)
-    * [10.2.2. The RBAC based native authorisation](#1022-the-rbac-based-native-authorisation)
-* [11. KNOWN ISSUES AND WORKAROUNDS](#11-known-issues-and-workarounds)
-  * [11.1. ALL TESTS FAIL WITH THE 302 ERROR](#111-all-tests-fail-with-the-302-error)
-  * [11.2. MORBO IS STUCK](#112-morbo-is-stuck)
-    * [11.2.1. Probable root cause](#1121-probable-root-cause)
-    * [11.2.2. Problem description](#1122-problem-description)
-    * [11.2.3. Kill processes](#1123-kill-processes)
-  * [11.3. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#113-the-page-looks-broken--probably-the-new-css-is-not-re-loaded)
-  * [11.4. THE VUE UI DOES NOT UPDATE PROPERLY ](#114-the-vue-ui-does-not-update-properly-)
-* [12. FAQ](#12-faq)
-  * [12.1. WHY HAVING ALL THE HASSLE WITH THIS DIRECTORY STRUCTURE - IS OVERKILL ?!!](#121-why-having-all-the-hassle-with-this-directory-structure--is-overkill-)
+* [10. DEBUGGING](#10-debugging)
+  * [10.1. ENABLE DEBUGGING IN MOJOLICIOUS](#101-enable-debugging-in-mojolicious)
+  * [10.2. ENABLE DEBUGGING IN DBI](#102-enable-debugging-in-dbi)
+  * [10.3. DEBUGGING IN THE UI](#103-debugging-in-the-ui)
+* [11. SECURITY](#11-security)
+  * [11.1. AUTHENTICATION](#111-authentication)
+    * [11.1.1. JWT based native authentication](#1111-jwt-based-native-authentication)
+    * [11.1.2. Session based native authentication](#1112-session-based-native-authentication)
+    * [11.1.3. RBAC based native authentication](#1113-rbac-based-native-authentication)
+  * [11.2. AUTHORISATION](#112-authorisation)
+    * [11.2.1. Generic role-based access control list based authorisation](#1121-generic-role-based-access-control-list-based-authorisation)
+    * [11.2.2. The RBAC based native authorisation](#1122-the-rbac-based-native-authorisation)
+* [12. KNOWN ISSUES AND WORKAROUNDS](#12-known-issues-and-workarounds)
+  * [12.1. ALL TESTS FAIL WITH THE 302 ERROR](#121-all-tests-fail-with-the-302-error)
+  * [12.2. MORBO IS STUCK](#122-morbo-is-stuck)
+    * [12.2.1. Probable root cause](#1221-probable-root-cause)
+    * [12.2.2. Problem description](#1222-problem-description)
+    * [12.2.3. Kill processes](#1223-kill-processes)
+  * [12.3. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#123-the-page-looks-broken--probably-the-new-css-is-not-re-loaded)
+  * [12.4. THE VUE UI DOES NOT UPDATE PROPERLY ](#124-the-vue-ui-does-not-update-properly-)
+* [13. FAQ](#13-faq)
+  * [13.1. WHY HAVING ALL THE HASSLE WITH THIS DIRECTORY STRUCTURE - IS OVERKILL ?!!](#131-why-having-all-the-hassle-with-this-directory-structure--is-overkill-)
 
 
 
@@ -570,12 +574,58 @@ Once again we DO NOT encourage "religious wars", if you happen to be using or in
     # to check the syntax in the whole project from the proj root:
     bash ./src/bash/qto/qto.sh -a check-perl-syntax
 
-## 10. SECURITY
+## 10. DEBUGGING
+Debugging is bad - it almost means that you have already lost the battle with the complexity of the code and MUST slow down to grasp what is actually happening ... 
+But .. if you are already here than use the following hints ...
+
+    
+
+### 10.1. Enable debugging in Mojolicious
+Set the env var(s) and restart morbo.
+Check the following list of the Mojolicous env vars:
+https://github.com/mojolicious/mojo/wiki/%25ENV
+
+    # stop the application layer run-time if it is already running
+    bash src/bash/qto/qto.sh -a mojo-morbo-stop
+    
+    # set the env var
+    export MOJO_MODE=development
+    # ... or any other of the variables above ...
+    
+    # restart the application layer 
+    bash src/bash/qto/qto.sh -a mojo-morbo-start
+
+### 10.2. Enable debugging in DBI
+Set the DBI_TRACE env variable and restart the application layer. Check the dbitrace.log for your exact statement.
+
+    # stop the application layer run-time if it is already running
+    bash src/bash/qto/qto.sh -a mojo-morbo-stop
+    
+    # set the env var
+    DBI_TRACE=1=dbitrace.log
+    export DBI_TRACE
+    
+    # restart the application layer 
+    bash src/bash/qto/qto.sh -a mojo-morbo-start
+
+### 10.3. Debugging in the UI
+The  mojo *html.ep DO contain a lot of JavaScript code, which IS RUN on the client AFTER it is run on the server side, thus the good old console.log or console.error work ... Quite often it makes sense to debug large JS objects, especially those related to VueJS.
+
+
+    console.log(this.$parent)
+    console.log("what exactly my parent control contains")
+    console.log("todo:<<me>> remember to remove this ^^^")
+    // ^^^ this one might seem like overkill , BUT you will be amazed
+    // how-often you will have more than 5 console.log statements, which 
+    // you would have to hunt down, after the completion of the feature by:
+    find . -type f -name '*.html.ep' -exec grep -nHi console.log {} \;
+
+## 11. SECURITY
 
 
     
 
-### 10.1. Authentication
+### 11.1. Authentication
 You might want to refresh the following security related links from time while reading this section:
 
 http://self-issued.info/docs/draft-jones-json-web-token-06.html
@@ -584,7 +634,7 @@ https://tools.ietf.org/html/rfc6749#section-1.5
 
     
 
-#### 10.1.1. JWT based native authentication
+#### 11.1.1. JWT based native authentication
 Theory chk the following links:
 http://self-issued.info/docs/draft-jones-json-web-token-06.html
 https://metacpan.org/pod/Mojo::JWT
@@ -592,7 +642,7 @@ https://tools.ietf.org/html/rfc6749#section-1.5
 
     
 
-#### 10.1.2. Session based native authentication
+#### 11.1.2. Session based native authentication
 The session based authentication works basically as follows:
  - non-authenticated users requests a resource from the application layer
  - the application layer , runs the controller specified in the route
@@ -603,24 +653,25 @@ So as of v0.7.8 - no roles, no permissions are implemented - the users are eithe
 
     
 
-#### 10.1.3. RBAC based native authentication
+#### 11.1.3. RBAC based native authentication
 The RBAC based native authentication works as follows:
 - during start-up or meta-data reload the Guardian component saves the RBAC list into the Redis
- - the User authenticates against the System via the login
- - The System grants the list of roles to the JWT token of the user
+- the User authenticates against the System via the login
+- The System grants the list of roles to the JWT token of the user
 
     
 
-### 10.2. Authorisation
-As of v0.8.1 the Roles-Based Access Control is being implemented. You might want to refresh your RBAC theoretical skills:
+### 11.2. Authorisation
+As of v0.8.1 the Roles-Based Access Control List is being implemented. You might want to refresh your RBAC theoretical skills:
 https://searchsecurity.techtarget.com/definition/role-based-access-control-RBAC
 
     
 
-#### 10.2.1. Generic role-based access control list based authorisation
+#### 11.2.1. Generic role-based access control list based authorisation
 Start by defining your roles in the list/roles page. Keep the number of roles in the beginning to the absolute minimum - you could easily re-do the whole RBAC list re-population later on.
 Who has access to what is defined in the following table: items_roles_permissions. 
 You could initially load this table by running the following scripts bellow. 
+https://stackoverflow.com/a/58009983/65706
 
     # populate the list of tables into the meta_tables table
     psql -d dev_qto < /src/sql/pgsql/scripts/admin/populate-meta_tables.sql
@@ -628,7 +679,7 @@ You could initially load this table by running the following scripts bellow.
     # populate the items roles_permissions
     psql -d dev_qto < src/sql/pgsql/scripts/admin/populate-items_roles_permissions.sql
 
-#### 10.2.2. The RBAC based native authorisation
+#### 11.2.2. The RBAC based native authorisation
 The RBAC based native authentication works as follows:
  - during start-up or meta-data reload the Guardian component saves the RBAC list into the Redis
  - the User requests a resource from the System
@@ -641,12 +692,12 @@ The RBAC based native authentication works as follows:
 
     
 
-## 11. KNOWN ISSUES AND WORKAROUNDS
+## 12. KNOWN ISSUES AND WORKAROUNDS
 
 
     
 
-### 11.1. All tests fail with the 302 error
+### 12.1. All tests fail with the 302 error
  This one is actually a bug ... all the tests not requiring non-authentication mode should set it in advance ...
 
     # disable authentication during testing
@@ -655,12 +706,12 @@ The RBAC based native authentication works as follows:
     # call the test once again
     perl src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
 
-### 11.2. Morbo is stuck
+### 12.2. Morbo is stuck
 
 
     
 
-#### 11.2.1. Probable root cause
+#### 12.2.1. Probable root cause
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -674,7 +725,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 11.2.2. Problem description
+#### 12.2.2. Problem description
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -688,7 +739,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 11.2.3. Kill processes
+#### 12.2.3. Kill processes
 List the running perl processes which run the morbo and kill the instances
 
     ps -ef | grep -i perl
@@ -696,7 +747,7 @@ List the running perl processes which run the morbo and kill the instances
     # be carefull what to kill 
     kill -9 <<proc-I-know-is-the-one-to-kill>>
 
-### 11.3. The page looks broken - probably the new css is not re-loaded
+### 12.3. The page looks broken - probably the new css is not re-loaded
 This problem is quite oftenly experienced and a real time-burner, so keep those shortcuts bellow in mind. 
 To apply the newest css do a hard reload in Chrome with the shortcut COMMAND + SHIFT + R.
 The other option is to keep the SHIFT button and press the reload button the Chrome address bar ( this one has been buggy from time to time as well. ... )
@@ -704,7 +755,7 @@ The other option is to keep the SHIFT button and press the reload button the Chr
     COMMAND + SHIFT + R
     SHIT + CLICK ON RELOAD BUTTON
 
-### 11.4. The vue UI does not update properly 
+### 12.4. The vue UI does not update properly 
 Due to the vue reactivity system - basically the more the complex the ui control, the better to have some kind of id to set in the v-for ... 
 
     <div v-for="item in filteredItems" :key="item.id">
@@ -714,12 +765,12 @@ Due to the vue reactivity system - basically the more the complex the ui control
     // or even 
     this.$parent.$forceUpdate()
 
-## 12. FAQ
+## 13. FAQ
 This section contains the most probable frequently asked questions.
 
     
 
-### 12.1. Why having all the hassle with this directory structure - is overkill ?!!
+### 13.1. Why having all the hassle with this directory structure - is overkill ?!!
 Every software project has a scope. Qto as a project aims to provide the fully vertically integrated code base for deployment, operation and maintenance, which is not possible without the use of multiple run-times within the project ( such as bash, perl, python, terraform, npm ... )
 Having a project with a directory structure for a specific run-time enforcing that directory structure to all the other runtimes is a a mess.
 

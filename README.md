@@ -27,7 +27,10 @@ Still here ?! Let's move on !
     
 
 ## 2. SO, WHAT IS THIS ?!
-A generic and simplistic db centric content management system, build on postgres CRUDs ( s stands for search ) and hierarchical nested data-sets MULTIPLE databases from the same web application.An included example application is the "qto application", which is kind of incident management and issues handling tool, used for, well managing it's self ;o). 
+The short and non-technical answer is: 
+QTO is a simplistic, UI-wise, but extremely scalable and versatile incident management and documentation application used for the managing of multiple projects.
+The long and more technically in-depth answer goes as follows: 
+A generic and simplistic db centric content management system, build on Postgres CRUDs ( s stands for search ) and hierarchical nested data-sets MULTIPLE databases from the same web application. An included example application is the "qto application", which is kind of incident management and issues handling tool, used for, well managing it's self ;o). 
 The full and extensive https://qto.fi/qto/view/features_doc contains all the features and functionalities of THIS released version. 
 
 

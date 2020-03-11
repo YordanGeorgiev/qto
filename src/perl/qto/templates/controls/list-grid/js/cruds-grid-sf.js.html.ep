@@ -43,8 +43,6 @@
 					 }
 				  })
 				}
-            console.log(data) ; //todo:ysg
-            console.log("data")
 				return data
 			},
 			set: function(data) {
@@ -81,7 +79,7 @@
 		 }
        , updateItem: function (content,id,oldValue) {
             this.$parent.updateItem(content,id,oldValue);
-            this.$parent.$forceUpdate();
+            //this.$parent.$forceUpdate(); //nope closes the modal !! qto-200311140720
        }
        , createNewItem: function (id) {
             this.$parent.createNewItem(id);

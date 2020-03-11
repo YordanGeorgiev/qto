@@ -104,7 +104,6 @@ package Qto::App::IO::In::CnrPostPrms ;
       } else {
          $objModel->set($controller . '.pass' , $pass );
          my $objCnrEncrypter = 'Qto::App::IO::In::CnrEncrypter'->new();
-         $epass = $objCnrEncrypter->make_crypto_hash($pass ) ; 
          $ret = 0 ; 
          $msg = '' ; 
       }
@@ -112,7 +111,7 @@ package Qto::App::IO::In::CnrPostPrms ;
       return ( $ret , $msg , $epass ) ; 
    } 
 
-
+# returns : 
 # 1 -> has , 0 -> does not have
 sub hasValidHiCreateParams {
 
