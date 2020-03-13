@@ -18,11 +18,11 @@
    <nav class="fixed-nav-bar"></nav>
 	<div id="div_msg"> <%== $msg %></div>
    %= include 'controls/left-menu/left-menu'
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="/lib/js/controls/vue-select.js"></script>
-<script src="/lib/js/controls/vue-date-time-picker.js"></script>
-<script src="/lib/js/controls/vue-simple-upload.min.js"></script>
+<script type="application/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+<script type="application/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="application/javascript" src="/lib/js/controls/vue-select.js"></script>
+<script type="application/javascript" src="/lib/js/controls/vue-date-time-picker.js"></script>
+<script type="application/javascript" src="/lib/js/controls/vue-simple-upload.min.js"></script>
    <%= content 'cnt_body_controls' %>
 <script id="all">
    var bus=new Vue({});

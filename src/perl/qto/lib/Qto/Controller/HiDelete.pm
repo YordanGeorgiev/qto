@@ -44,7 +44,6 @@ sub doHiDelete {
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ; # probably a smell ...
 
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
    #nope !? $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
    $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel);

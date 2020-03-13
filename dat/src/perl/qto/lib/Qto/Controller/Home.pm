@@ -37,7 +37,6 @@ sub doLanding {
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
 
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    $self->SUPER::doReloadProjDbMeta( $db, 'home' ) ;
 
    my $http_code        = 200  ; 

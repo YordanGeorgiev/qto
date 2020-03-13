@@ -35,30 +35,6 @@ sub doReloadProjDbMeta {
 }
 
 
-sub isAuthenticated {
-
-   my $self                = shift ;
-   my $db                  = shift ;
-
-   $config		            = $self->app->config ; 
-   $db                     = toEnvName ( $db , $config ) ;
-
-   # non-authentication mode IF the app has been stared with this env var
-   return 1 if $ENV{'QTO_NO_AUTH'}; # no authentication when testing if desired so !!!
-
-   # basic native authentication mode if NOT started with this env var
-   unless ( defined ( $self->session( 'app.' . $db . '.user')) ) {
-      my $url = '/' . toPlainName($db) . '/login' ;
-      $self->session( 'app.' . $db . '.url' => $self->req->url->to_abs );
-      $self->redirect_to( $url );
-      return 0 ;
-   } else {
-      return 1 
-   }
-
-}
-
-
 # 
 # call-by : $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
 #

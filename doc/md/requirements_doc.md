@@ -70,12 +70,13 @@
     * [9.2.5. Export to json](#925-export-to-json)
 * [10. SECURITY](#10-security)
   * [10.1. AUTHENTICATION](#101-authentication)
-    * [10.1.1. Non-authentication mode](#1011-non-authentication-mode)
+    * [10.1.1. QTO_NO_AUTH mode](#1011-qto_no_auth-mode)
     * [10.1.2. Simple Native authentication mode](#1012-simple-native-authentication-mode)
       * [10.1.2.1. User email and password matching for login success](#10121-user-email-and-password-matching-for-login-success)
-      * [10.1.2.2. Blowfish encryption for the passwords](#10122-blowfish-encryption-for-the-passwords)
-          * [10.1.2.2.1. Passwords sensibility](#101221-passwords-sensibility)
-    * [10.1.3. JSON web token authentication](#1013-json-web-token-authentication)
+      * [10.1.2.2. The passwords must NOT be stored in clear text](#10122-the-passwords-must-not-be-stored-in-clear-text)
+      * [10.1.2.3. name ...](#10123-name-)
+      * [10.1.2.4. Passwords sensibility](#10124-passwords-sensibility)
+    * [10.1.3. RBAC authentication mode via JWT](#1013-rbac-authentication-mode-via-jwt)
       * [10.1.3.1. Login](#10131-login)
       * [10.1.3.2. Must be stateless and thus horizontally scalable](#10132-must-be-stateless-and-thus-horizontally-scalable)
       * [10.1.3.3. Must not use permanent cookies](#10133-must-not-use-permanent-cookies)
@@ -86,13 +87,14 @@
       * [10.1.3.8. Must support whitelisting](#10138-must-support-whitelisting)
       * [10.1.3.9. Must support black-listing](#10139-must-support-black-listing)
   * [10.2. AUTHORISATION](#102-authorisation)
-    * [10.2.1. Authorisation via Json Web Tokens](#1021-authorisation-via-json-web-tokens)
-    * [10.2.2. Non-Authorisation mode](#1022-non-authorisation-mode)
-  * [10.3. ROLE-BASED ACCESS CONTROL](#103-role-based-access-control)
-    * [10.3.1. Roles based Access Control list for routes and items per project database](#1031-roles-based-access-control-list-for-routes-and-items-per-project-database)
-      * [10.3.1.1. Roles based Access Control list for routes and items](#10311-roles-based-access-control-list-for-routes-and-items)
-    * [10.3.2. Secrets handling](#1032-secrets-handling)
-      * [10.3.2.1. Support for segregation of duties during deployment](#10321-support-for-segregation-of-duties-during-deployment)
+    * [10.2.1. QTO_NO_AUTH mode authorisation](#1021-qto_no_auth-mode-authorisation)
+    * [10.2.2. Simple Native mode authorisation](#1022-simple-native-mode-authorisation)
+    * [10.2.3. RBAC mode authorisation](#1023-rbac-mode-authorisation)
+      * [10.2.3.1. Role-based Access Control](#10231-role-based-access-control)
+      * [10.2.3.2. Authorisation via Json Web Tokens during login](#10232-authorisation-via-json-web-tokens-during-login)
+      * [10.2.3.3. Roles based Access Control list for routes and items](#10233-roles-based-access-control-list-for-routes-and-items)
+      * [10.2.3.4. Role Based Access Control on tables row level](#10234-role-based-access-control-on-tables-row-level)
+      * [10.2.3.5. Support for segregation of duties](#10235-support-for-segregation-of-duties)
 * [11. DOCUMENTATION](#11-documentation)
   * [11.1. DOCUMENTATION COMPLETENESS](#111-documentation-completeness)
   * [11.2. DOCUMENTATION AND CODE BASE SYNCHRONIZATION](#112-documentation-and-code-base-synchronization)
@@ -243,7 +245,7 @@ The top-bar must be visible on ALL pages, except those aimed for printing.
     
 
 ### 4.2. Application wide left menu usability
-The left menu must be ACCESSIBLE from the SAME button on EVERY non-printable page of the application from the top bar. The left-menu must contain the most commonly used links in the application.
+The left menu must be ACCESSIBLE from the SAME button on EVERY non-printable page of the application from the top bar. The left-menu must contain the most commonly used links in the application. The left menu must close itself when the user clicks outside of it.
 
     
 
@@ -488,8 +490,9 @@ There should be the following 2 modes of authentication:
 
     
 
-#### 10.1.1. Non-authentication mode
+#### 10.1.1. QTO_NO_AUTH mode
 Any qto instance should support a non-authentication mode - that is all users having http and/or https access could perform all the actions on the UI without any restrictions, that is the customer organisation wanting own custom solution for authentication and authorisation should be able to run an instance with non-authorisation mode.
+This mode MUST BE ALWAYS accessible to devops engineers to be able to quickly restart applications and troubleshoot them without having to add unnecessary complexity caused by the security aspects of the application.
 
     
 
@@ -512,18 +515,23 @@ Unregistered users should have access to the login page only.
 
     
 
-##### 10.1.2.2. Blowfish encryption for the passwords
+##### 10.1.2.2. The passwords must NOT be stored in clear text
 The application must match the passwords via blowfish encryption and store the authentication details into the session of default of 10h.
 
     
 
-###### 10.1.2.2.1. Passwords sensibility
+##### 10.1.2.3. name ...
+
+
+    
+
+##### 10.1.2.4. Passwords sensibility
 
 The regular users should see only their credentials. Only the admin user should see all the users credentials , but with the passwords encrypted.
 
     
 
-#### 10.1.3. JSON web token authentication
+#### 10.1.3. RBAC authentication mode via JWT
 The qto application should support native web tokens based authentication, by using as login a valid user e-mail and password, stored in the qto instance database. 
 
 The qto should support SSO authentication as described in the following RFC's. 
@@ -540,7 +548,6 @@ The login must be done against email and password over https. Should the email a
 ##### 10.1.3.2. Must be stateless and thus horizontally scalable
 The JSON web token authentication must be stateless to enable both process ( aka run-time ) and hosts scalability. The JWT must be signed with private key against tampering.
 Token verification must be done without db lookup and only in-memory. 
-Neither sticky sessions should be used ... 
 
     
 
@@ -591,37 +598,42 @@ The Qto application should have authorisation as described in the RFC 6749.
 
     
 
-#### 10.2.1. Authorisation via Json Web Tokens
+#### 10.2.1. QTO_NO_AUTH mode authorisation
+There must be no authorisation in the non-authentication mode - everyone must be  allowed to do anything, including truncating tables etc.
+
+    
+
+#### 10.2.2. Simple Native mode authorisation
+There must be almost no authorisation in the Simple Native mode authorisation mode - everyone must be  allowed to do anything, including truncating tables etc. except actions on the users table.
+
+    
+
+#### 10.2.3. RBAC mode authorisation
+
+
+    
+
+##### 10.2.3.1. Role-based Access Control
+The Access Control in the qto application in the RBAC mode authorisation mode must be role-based. The application must authorise the usage of resources based on fully configurable per role , per resource , per route.
+
+    
+
+##### 10.2.3.2. Authorisation via Json Web Tokens during login
 The application must create JWT during login which will must be signed with a private key and will contain the minimum set of claims to support the Roles-Based Access Control.
 
     
 
-#### 10.2.2. Non-Authorisation mode
-The application must support a simple configuration for instantiation in an instance in a non-authorisation and non-authentication mode - that is full access is granted to all the actions if the configuration is enabled.
-
-    
-
-### 10.3. Role-based Access Control
-The Access Control in the qto application must be role-based. The application must authorise the usage of resources based on fully configurable per role , per resource , per route.
-
-    
-
-#### 10.3.1. Roles based Access Control list for routes and items per project database
-The application must provide a revocable traditional permissions model for tables and/or table rows. The "non-enforceable" means that no overhead work must be enforced on organisations not-using the model at all. 
-
-    
-
-##### 10.3.1.1. Roles based Access Control list for routes and items
+##### 10.2.3.3. Roles based Access Control list for routes and items
 The application must provide the means for project owners to define who has access to what resources and why via a centralised UI.
 
     
 
-#### 10.3.2. Secrets handling
-
+##### 10.2.3.4. Role Based Access Control on tables row level
+The application must provide a revocable traditional permissions model for tables on table rows level. The "non-enforceable" means that no overhead work must be enforced on organisations not-using the model at all. 
 
     
 
-##### 10.3.2.1. Support for segregation of duties during deployment
+##### 10.2.3.5. Support for segregation of duties
 The application must support segregation of duties during deployment, that is the team which delivers the new software version / configuration change must be able to trigger the deployment to production without actually having access to the production data.
 
     

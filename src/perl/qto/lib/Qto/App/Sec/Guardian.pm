@@ -18,12 +18,39 @@ use parent 'Qto::App::Utils::OO::AutoLoadable' ;
 use Qto::App::IO::In::RdrFiles;
 use Qto::App::Utils::Timer ; 
 use Qto::App::IO::In::CnrEncrypter ;
+use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $config                = {} ;
 our $objLogger             = {} ;
 our $jwt_public_key_file   = '' ; 
 our $jwt_private_key_file  = '' ; 
 
+# call-by: 
+# $objGuardian->doAuthenticate($config,$db, $controller);
+# returns 1 if is authenticated, otherwise 0
+sub isAuthenticated {
+
+   my $self                = shift ;
+   my $config              = shift ; 
+   my $db                  = shift ;
+   my $controller          = shift ;
+   my $rv                  = 0;
+
+   # non-authentication mode IF the app has been stared with this env var
+   return 1 if $ENV{'QTO_NO_AUTH'}; # no authentication when testing if desired so !!!
+
+   p $controller->session( 'app.' . $db . '.user') ;
+   print ('app.' . $db . '.user');
+   print " ::: eof session user from isAuthenticated in Guardian.pm \n";
+
+   # basic native authentication mode if NOT started with this env var
+   unless ( defined ( $controller->session( 'app.' . $db . '.user')) ) {
+      return 0;
+   } else {
+      return 1 ;
+   }
+
+}
 
 # --------------------------------------------------------
 # called during the login process
