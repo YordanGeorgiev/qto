@@ -65,6 +65,7 @@ src/python/append-to-docx.py
 .env
 cnf/env
 # start ::: left-menu
+src/perl/qto/templates/controls/list-grid/js/left-menu.js.html.ep
 src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
 src/perl/qto/lib/Qto/Controller/View.pm
 src/perl/qto/templates/controls/left-menu
@@ -247,7 +248,6 @@ src/perl/qto/templates/controls/list-grid/xt/vue-date-time-picker.xt.html.ep
 src/perl/qto/templates/controls/list-grid/js/modal-dia.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/editable.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/cruds-grid.js.html.ep
-src/perl/qto/templates/controls/list-grid/js/left-menu.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/vue-select.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/vue-date-time-picker.js.html.ep

@@ -59,8 +59,20 @@
             url = url.split('/')[0] + "//" + url.split('/')[2] + '/' + pdb + '/'
             return '<li class="file"><a class="cls_da" href="' + url + itm.url + '">' + itm.name + '</a></li>' ;
         } 
+        , handleLeftMenuClickOutside(e) {
+         if (!this.$el.contains(e.target) && e.target.id !== 'chk_left_menu') {
+            var left_menu_checkbox = document.getElementById("chk_left_menu");
+            if ( left_menu_checkbox.checked == true) {
+               left_menu_checkbox.click()
+            }
+          }
+        }
      }
      , mounted() {
-         bus.$on('metaTablesLoadEmit',this.menuDataLoaded)
-	  }
+       bus.$on('metaTablesLoadEmit',this.menuDataLoaded)
+       document.addEventListener("click", this.handleLeftMenuClickOutside);
+     }
+     , destroyed() {
+       document.removeEventListener("click", this.handleLeftMenuClickOutside);
+     }
    });

@@ -28,9 +28,11 @@ use Qto::App::Mdl::Model ;
 use JSON::Parse 'json_file_to_perl';
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 use Qto::Controller::MetaDataController ; 
+use Qto::App::Sec::Guardian ;
 
 my $module_trace 					= 0;
 our $objInitiator 				= {};
+our $objGuardian              = {};
 our $config    				   = {};
 our $objLogger 					= {};
 our $objModel                 = {};
@@ -50,11 +52,12 @@ sub startup {
    
    $self->doLoadAppConfig();
 
+   $self->doReloadProjectsDbMeta();
+   
    $self->doSetHooks() ; 
 
    $self->doSetRoutes();
 
-   $self->doReloadProjectsDbMeta();
 
 }
 
@@ -91,13 +94,16 @@ sub doLoadAppConfig {
       workers => $num_of_workers
       } ;
 
-   # debug rint $config;
+   $objGuardian      = 'Qto::App::Sec::Guardian'->new ( \$config ) ;
+   $config->{'env'}->{'run'}->{ 'PublicRSAKey' } = $objGuardian->doGetPublicKeySecret();
+   $self->set('ObjGuardian', $objGuardian );
+   p $config;
    $self = $self->config( $config );
    # 
    $self->renderer->cache->max_keys(0);
 
    $msg = "START MAIN";
-   #$objLogger->doLogInfoMsg($msg);
+   $objLogger->doLogInfoMsg($msg);
 }
 
 
@@ -171,8 +177,9 @@ sub doSetHooks {
       $c->res->headers->accept_charset('UTF-8');
       $c->res->headers->accept_language('fi, en');
 
+      # qto-200302161711
       # get the app config
-      # create the Guardian
+      # get the guardian $objGuardian
       # get the RBAC list from the Redis
       # get the jwt from the session 
       # get the public key from the session
@@ -228,7 +235,7 @@ sub doSessions {
    
    my $self = shift ; 
    $self->sessions->default_expiration(86400); # set expiry to 1 day
-   $self->secrets(['Mojolicious rocks!!!' . randomStr()]);
+   $self->secrets(['Mojolicious rocks!!!' . rndStr(12, 'A'..'Z', 0..9, 'a'..'z')]);
 
 }
 
@@ -421,11 +428,7 @@ sub dumpFields {
    return $strFields;
 }    
 
-sub randomStr {
-   my @chars   = ("A".."Z", "a".."z");
-   my $string  = '' ; 
-   $string    .= $chars[rand @chars] for 1..3;
-   return $string 
-}
+sub rndStr{ join'', @_[ map{ rand @_ } 1 .. shift ] }
+
 
 1;

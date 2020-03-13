@@ -95,7 +95,7 @@ var Searchbox = {
          this.setResult("in: " + this.results[this.arrowCounter])
          window.alert("should I stay or should I go");
     }
-    , handleClickOutside(e) {
+    , handleSrchBoxDropDownClickOutside(e) {
          if (!this.$el.contains(e.target)) {
             this.isOpen = false;
             this.arrowCounter = -1;
@@ -111,10 +111,10 @@ var Searchbox = {
     }
   }
   , mounted() {
-    document.addEventListener("click", this.handleClickOutside);
+    document.addEventListener("click", this.handleSrchBoxDropDownClickOutside);
   }
   , destroyed() {
-    document.removeEventListener("click", this.handleClickOutside);
+    document.removeEventListener("click", this.handleSrchBoxDropDownClickOutside);
   }
 };
 
@@ -163,7 +163,7 @@ new Vue({
   }
   , mounted() {
       this.fetchSSDataUI() ; 
-      document.addEventListener("click", this.handleClickOutside);
+      document.addEventListener("click", this.handleSrchBoxDropDownClickOutside);
   }
 });
 
