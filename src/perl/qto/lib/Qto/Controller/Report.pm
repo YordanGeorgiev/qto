@@ -66,7 +66,6 @@ sub doListReportResultItems {
    $db                  = toEnvName ( $db , $config) ;
   
    
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 ); 
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
    $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
 
@@ -93,13 +92,14 @@ sub doListReportResultItems {
 				unless $msr2->{"$key"}->{'argname'} eq 'RETURN VALUE';
 		}
 		chop($srch_control); $srch_control .= ']';
-  
+      my $pdb = toPlainName ($db); 
       $self->render(
          'template'        => 'controls/report-grid/report-grid'
        , 'as'              => 'grid'
        , 'item'            => 'Report'
        , 'msg'             => ''
        , 'db' 		         => $db
+       , 'pdb' 		      => $pdb
        , 'EnvType' 			=> $config->{'env'}->{'run'}->{'ENV_TYPE'}
        , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
        , 'GitShortHash' 	=> $config->{'env'}->{'run'}->{'GitShortHash'}
@@ -146,13 +146,14 @@ sub doRenderPageTemplateNotResultSet {
       $items_lst .= "'" . "$table" . "'," ;
    }
    $items_lst = substr($items_lst, 0, -1);
-
+   my $pdb              = toPlainName($db);
    $self->render(
       'template'        => $template 
     , 'as'              => $as
     , 'item'            => 'Report'
     , 'msg'             => $msg
     , 'db' 		         => $db
+    , 'pdb' 	         => $pdb
     , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
     , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
     , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}

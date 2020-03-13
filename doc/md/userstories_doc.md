@@ -14,9 +14,10 @@
     * [2.3.2. View page quick filtering](#232-view-page-quick-filtering)
     * [2.3.3. Search results page quick filtering](#233-search-results-page-quick-filtering)
   * [2.4. THE LEFT MENU UI - ORGANISING THE STRUCTURE OF THE PROJECT](#24-the-left-menu-ui--organising-the-structure-of-the-project)
-    * [2.4.1. Managing listings from the left menu](#241-managing-listings-from-the-left-menu)
-    * [2.4.2. Managing documents from the left menu](#242-managing-documents-from-the-left-menu)
-    * [2.4.3. Managing folders on the left menu](#243-managing-folders-on-the-left-menu)
+    * [2.4.1. Opening and closing of the left menu](#241-opening-and-closing-of-the-left-menu)
+    * [2.4.2. Managing listings from the left menu](#242-managing-listings-from-the-left-menu)
+    * [2.4.3. Managing documents from the left menu](#243-managing-documents-from-the-left-menu)
+    * [2.4.4. Managing folders on the left menu](#244-managing-folders-on-the-left-menu)
   * [2.5. THE LIST PAGE UI](#25-the-list-page-ui)
     * [2.5.1. Search in the list page](#251-search-in-the-list-page)
     * [2.5.2. Items listing](#252-items-listing)
@@ -292,25 +293,32 @@ I want to be able to perform quick filtering on both the grid and the left and r
 ### 2.4. The left menu UI - organising the structure of the project
 As an UI user of the qto application
 in order to be able to manage the whole structure of my project
- I want to have access to a left menu from each page
+I want to have access to a left menu from each page.
 
     
 
-#### 2.4.1. Managing listings from the left menu
+#### 2.4.1. Opening and closing of the left menu
+As an UI user of the qto application
+in order to be able to quickly get to different pages of the project
+I want to be able to open the left menu by clicking on the top menu button and close it by clicking anywhere else in the document.
+
+    
+
+#### 2.4.2. Managing listings from the left menu
 As an UI user of the qto application
 in order to be able to store and track data from different listings or in different documents 
 I want to be able to create new listings by simple right click on the left menu and selecting "add listing".
 
     
 
-#### 2.4.2. Managing documents from the left menu
+#### 2.4.3. Managing documents from the left menu
 As an UI user of the qto application
 in order to be able to store and track data from different listings or in different documents 
 I want to be able to create new documents by simple right click on the right menu and selecting "add document".
 
     
 
-#### 2.4.3. Managing folders on the left menu
+#### 2.4.4. Managing folders on the left menu
 As an UI user of the qto application
 in order to be able to be able to organise the structure of my project
 I want to be able to add, update and delete folders from the left menu

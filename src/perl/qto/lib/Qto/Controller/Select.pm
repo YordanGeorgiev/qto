@@ -48,7 +48,6 @@ sub doSelectItems {
    my $objRdrDb         = {} ; 
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ;
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
    $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
    $objCnrUrlPrms       = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
@@ -99,7 +98,6 @@ sub doSelectTables {
    $config		   = $self->app->config ; 
    $db            = toEnvName ( $db , $config) ;
 
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
    $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
 
@@ -173,7 +171,6 @@ sub doSelectDatabases {
    my $item          = 'select_databases' ; 
 	$config	   = $self->app->config;
 
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
    $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
 
@@ -229,7 +226,6 @@ sub doSelectMeta {
    $config		    = $self->app->config ; 
    $db             = toEnvName ( $db , $config) ;
 
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    my $objModel    = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
    $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
 

@@ -97,7 +97,7 @@ sub doLoadAppConfig {
    $objGuardian      = 'Qto::App::Sec::Guardian'->new ( \$config ) ;
    $config->{'env'}->{'run'}->{ 'PublicRSAKey' } = $objGuardian->doGetPublicKeySecret();
    $self->set('ObjGuardian', $objGuardian );
-   p $config;
+   #debug rint $config;
    $self = $self->config( $config );
    # 
    $self->renderer->cache->max_keys(0);
@@ -155,20 +155,33 @@ sub doSetHooks {
   
    my $self = shift ; 
 
-   $self->hook(after_dispatch => sub {
-       my $c = shift;
+	# chk: https://mojolicious.org/perldoc/Mojolicious#before_routes
+	$self->hook('before_routes'=> sub {
+		my $c = shift;
+		my $code = $c->res->code;
+		my $type = $c->res->headers->content_type;
 
-       # was the response dynamic?
-       return if $c->res->headers->header('Expires');
+		# Was the response static?
+		return unless $code && ($code == 304 || $type);
 
-       # if so, try to prevent caching
-       $c->res->headers->header(
-           "Expires" => Mojo::Date->new(time-365*86400)
-       );
-       $c->res->headers->header(
-           "Cache-Control" => "max-age=1, no-cache"
-       );
-   });
+		# If so, remove cookies and/or caching instructions
+		$c->res->headers->remove('Cache-Control');
+		$c->res->headers->remove('Set-Cookie');
+
+		 # Decide on an expiry date
+		my $e = Mojo::Date->new(time+600);
+		if ($type) {
+			  if ($type =~ /javascript/) {
+					$e = Mojo::Date->new(time+300);
+			  }
+			  elsif ($type =~ /^text\/css/ || $type =~ /^image\//) {
+					$e = Mojo::Date->new(time+3600);
+					$c->res->headers->header("Cache-Control" => "public");
+			  }
+			  # …other conditions…
+		}
+		$c->res->headers->header(Expires => $e);
+	});
 
 
    $self->hook( 'before_dispatch' => sub {
@@ -176,7 +189,38 @@ sub doSetHooks {
       $c->res->headers->cache_control('max-age=604800, no-cache');
       $c->res->headers->accept_charset('UTF-8');
       $c->res->headers->accept_language('fi, en');
+   });
+  
+   # chk: https://toroid.org/mojolicious-static-resources, 
+   # obs: after_static_dispatch deprecated
+   $self->hook( 'after_dispatch' => sub {
+      my $c       = shift;
+      my $url     = (split('#',$c->req->url->to_abs))[0];
+	
+		my $type = $c->res->headers->content_type;
+		# if the content is static ( see bellow after_static hook)	
+		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g);
 
+		# If so, try to prevent caching
+		$c->res->headers->header(
+			Expires => Mojo::Date->new(time-365*86400)
+		);
+		$c->res->headers->header(
+			"Cache-Control" => "max-age=1, no-cache"
+		);
+
+      my $route   = (split('/',$url))[4];
+
+      unless ( $route eq 'logon' || $route eq 'login' ) {
+			my $db      = (split('/',$url))[3];
+			$db         = toEnvName ($db,$c->app->config);
+			my $objGuardian = $self->get('ObjGuardian');
+
+			unless ( $objGuardian->isAuthenticated($c->app->config, $db, $c)){
+				my $login_url = '/' . toPlainName($db) . '/login' ;
+				$c->redirect_to($login_url);
+			}
+		}
       # qto-200302161711
       # get the app config
       # get the guardian $objGuardian
@@ -185,29 +229,6 @@ sub doSetHooks {
       # get the public key from the session
       #
 
-   });
-
-
-   $self->hook( 'after_static' => sub {
-       my $c = shift;
-       my $code = $c->res->code;
-       my $type = $c->res->headers->content_type;
-
-       $c->res->headers->remove('Cache-Control');
-       $c->res->headers->remove('Set-Cookie');
-
-       # resolve an expiry date
-       my $e = Mojo::Date->new(time+600);
-       if ($type) {
-           if ($type =~ /javascript/) {
-               $e = Mojo::Date->new(time+300);
-           }
-           elsif ($type =~ /^text\/css/ || $type =~ /^image\//) {
-               $e = Mojo::Date->new(time+3600);
-               $c->res->headers->cache_control('max-age=604800, only-if-cached'); 
-           }
-       }
-       $c->res->headers->header(Expires => $e);
    });
 
 

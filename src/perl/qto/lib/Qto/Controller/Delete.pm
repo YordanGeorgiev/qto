@@ -39,7 +39,6 @@ sub doRemoveById {
    $db                  = toEnvName($db,$config); # probably a smell ...
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    #$self->SUPER::doReloadProjDbMeta( $db,$item ) ;
 
    my $json = $self->req->body;

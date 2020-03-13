@@ -20,7 +20,7 @@
 * [4. THE LEFT MENU](#4-the-left-menu)
   * [4.1. VIEWING TABLES FROM DIFFERENT PROJECTS ( DATABASES )](#41-viewing-tables-from-different-projects-(-databases-))
   * [4.2. OPEN AND CLOSE FOLDERS IN THE LEFT MENU](#42-open-and-close-folders-in-the-left-menu)
-  * [4.3. OPEN AND CLOSE THE LEFT MENU](#43-open-and-close-the-left-menu)
+  * [4.3. OPENING AND CLOSING THE LEFT MENU](#43-opening-and-closing-the-left-menu)
 * [5. THE LIST PAGE](#5-the-list-page)
   * [5.1. VIEWING THE LIST PAGE](#51-viewing-the-list-page)
     * [5.1.1. Viewing the full content of the items](#511-viewing-the-full-content-of-the-items)
@@ -205,8 +205,8 @@ If there are too much items in the left menu you can open and close them.
 
     
 
-### 4.3. Open and close the left menu
-You can access the different pages configured for your project from the upper left menu. Click with the mouse and the menu will open a file explorer like menu containing different folders and "documents". The left menu is accessible from all the pages.
+### 4.3. Opening and closing the left menu
+You can access the different pages configured for your project from the upper left menu. Click with the mouse and the menu will open a file explorer like menu containing different folders and "documents". The left menu is accessible from all the pages. If you click somewhere else and not in the left menu, or in the X closing "button" at the top of it the left menu will be closed.
 
     
 
@@ -472,6 +472,7 @@ Once the page is loaded the top search omnibox is selected. As soon as you start
 
 #### 6.1.3. Navigating trough the document via the TOC right menu item
 The Table of Contents ( TOC ) right menu can be opened and closed and scrolled separately from the scroll of the view doc. Whenever you click on the links in the right menu the document content on the left is scrolled nicely with the clicked title to the top of the screen. 
+Note that the TOC menu behaves differently than the left menu - it is NOT closing, if you click outside of it. Thus you could edit your documents and keep it open. Should you want to close it use either the closing button on top of it, or the closing button in its bottom.
 
     
 

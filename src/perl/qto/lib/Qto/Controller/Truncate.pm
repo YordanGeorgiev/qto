@@ -39,7 +39,6 @@ sub doTruncateItem {
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config ) ;
 
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
    $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
 

@@ -11,13 +11,13 @@ sub toEnvName {
    my $db                  = shift ; 
    my $config              = shift ; 
 
-   carp  "appconfig->env_type is undef " unless $config->{'env'}->{ 'ENV_TYPE' } ;
+   carp  "appconfig->env_type is undef " unless $config->{'env'}->{'run'}->{ 'ENV_TYPE' } ;
    carp "db is undef " unless $db ; 
    my @env_prefixes        = ( 'dev_' , 'tst_' , 'qas_' , 'prd_' );
  
    my $db_prefix           = substr($db,0,4);
    unless ( grep ( /^$db_prefix$/, @env_prefixes)) {
-      $db = $config->{'env'}->{'ENV_TYPE'} . '_' . $db ; 
+      $db = $config->{'env'}->{'run'}->{'ENV_TYPE'} . '_' . $db ; 
    } 
    return $db ;
 }

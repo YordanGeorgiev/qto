@@ -44,7 +44,6 @@ sub doUpdateById {
    my $perl_hash        = decode_json($json) ; 
    $config		          = $self->app->config ; 
 
-   return unless ( $self->SUPER::isAuthenticated($db) == 1 );
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
    $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
    

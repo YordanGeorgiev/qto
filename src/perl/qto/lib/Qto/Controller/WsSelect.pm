@@ -38,7 +38,6 @@ sub doWsSelectTables {
       $config		      = $self->app->config ; 
       my $item = 'none' ; 
       
-      return unless ( $self->SUPER::isAuthenticated($db) == 1 );
       my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ; 
       $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
 
