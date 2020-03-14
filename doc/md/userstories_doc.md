@@ -171,7 +171,9 @@
   * [9.5. RUN-TIME MANAGEMENT](#95-run-time-management)
     * [9.5.1. Logging](#951-logging)
     * [9.5.2. Single shell call for projects switching](#952-single-shell-call-for-projects-switching)
-  * [9.6. SINGLE SHELL CALL FOR PROJECTS SWITCHING](#96-single-shell-call-for-projects-switching)
+    * [9.5.3. Start and Stop of the Application](#953-start-and-stop-of-the-application)
+  * [9.6. SECURITY](#96-security)
+    * [9.6.1. Security modes](#961-security-modes)
 * [10. UI DEVELOPER PERSPECTIVE](#10-ui-developer-perspective)
   * [10.1. FOREIGN KEYS (FK) CONFIGURABILITY](#101-foreign-keys-(fk)-configurability)
   * [10.2. CODE TRACEABILITY BY UUID](#102-code-traceability-by-uuid)
@@ -1259,7 +1261,7 @@ I want to have a reliable documentation, which will have short commands
 
     
 
-### 9.3. TESTING
+### 9.3. Testing
 As a qto devops engineer 
 In order to be able to rely on the operations of the tool 
  and manage easily its features and functionalities
@@ -1400,18 +1402,32 @@ I want to have easy-to-use and highly customisable logging to both file and cons
     
 
 #### 9.5.2. Single shell call for projects switching
-As a qto devops engineer
+As a qto DevOps engineer
 In order to be able to switch between different projects quickly in the shell 
 I want to be able to issue a single shell call for loading a project's configuration
 and run the qto tool against the predefined configuration of an qto project's configuration.
 
     
 
-### 9.6. Single shell call for projects switching
-As an issues-manager 
-In order to be able to switch between different projects quickly
-I want to be able to issue a single shell call for loading a project's configuration
-and run the issue-handler against this pre-loaded configuration
+#### 9.5.3. Start and Stop of the Application
+As a qto DevOps engineer
+In order to be able to quickly start and stop the qto application
+I want to have a single shell call for those actions, with no other configuration, run-time or binary dependencies.
+
+    
+
+### 9.6. Security
+
+
+    
+
+#### 9.6.1. Security modes
+As a qto DevOps engineer
+In order to be able to effortlessly develop the application
+I want to have 3 Security Modes, which could be changed during the restart of the application, by a simple ENV var:
+ - No Auth - no auth whatsoever - so that I could be able to concentrate on non-security issues
+ - Simple Native Auth mode - every team member can do anything on each item ( excepts the users)
+ - RBAC Native Auth mode - configurability via db for which role, can perform what action on which item 
 
     
 

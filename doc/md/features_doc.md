@@ -32,8 +32,15 @@
   * [5.4. PROJECTS DATABASES SCALABILITY](#54-projects-databases-scalability)
 * [6. PERFORMANCE](#6-performance)
   * [6.1. PAGE LOAD TIMES](#61-page-load-times)
-  * [6.2. LOGIN, LOGOUT](#62-login-logout)
-  * [6.3. AJAX CALLS TO BACK-END](#63-ajax-calls-to-back-end)
+    * [6.1.1. Page load times](#611-page-load-times)
+    * [6.1.2. Server requirements for performance](#612-server-requirements-for-performance)
+    * [6.1.3. Performance on mobile devices ](#613-performance-on-mobile-devices-)
+    * [6.1.4. Loaded pages controls performance](#614-loaded-pages-controls-performance)
+  * [6.2. AJAX CALLS TO BACK-END](#62-ajax-calls-to-back-end)
+    * [6.2.1. Metadata caching via Redis](#621-metadata-caching-via-redis)
+    * [6.2.2. Foreign Key data for Drop Down controls caching](#622-foreign-key-data-for-drop-down-controls-caching)
+  * [6.3. LOGIN, LOGOUT](#63-login-logout)
+  * [6.4. CRUDS OPERATIONS](#64-cruds-operations)
 * [7. DEPLOYABILITY](#7-deployability)
   * [7.1. NEW HOSTS BINARY PROVISIONING](#71-new-hosts-binary-provisioning)
   * [7.2. ONELINER FOR VERSION CHANGE ON PROVISIONED HOST](#72-oneliner-for-version-change-on-provisioned-host)
@@ -264,19 +271,55 @@ Each instance of the qto application can connect via tcp to multiple postgres da
     
 
 ### 6.1. Page load times
-Each page of the application containing less than 2000 loads for less than 0.5 seconds.
-Any new feature which does not meet this requirement should be disregarded or implemented into a clone of the application with different name ( see the cloning / forking section bellow ). The qto has been operated on quite modest hardware ( check the second cheapest amazon ec2 instances for reference ), yet the page load times vary from 0.3 till 0.6 seconds for the smaller pages and up till 1.5 seconds for the pages having more than 2000 items ...
 Although the qto has not been explicitly designed for mobile devices the page load times on higher end phones on 4G networks are comparable with the upper 20% of the pages in the web, while running both the application layer and the db on a single aws instance based in Ireland ...
 
     
 
-### 6.2. Login, logout
+#### 6.1.1. Page load times
+The qto has been operated on quite modest hardware ( check the second cheapest amazon ec2 instances for reference ), yet the page load times vary from 0.3 till 0.6 seconds for the smaller pages and up till 1.5 seconds for the pages having more than 2000 items ...
+List pages with 7-10 items load in 0.3-0.35 seconds.
+View Pages with one image and less than 7 pages load in 0.3-0.45 seconds, View pages with 20 pages might take up till 0.8 seconds to load.
+
+    
+
+#### 6.1.2. Server requirements for performance
+The qto has been operated on quite modest hardware ( check the second cheapest amazon ec2 instances for reference ), yet the performance of the application has been amazingly good, considered that both the application server and the databases are deployed on the ec2 instance.
+
+    
+
+#### 6.1.3. Performance on mobile devices 
+Qto is NOT explicitly optimised for mobile use ( how old fashioned is that ?!), yet it has been from the ground-up designed in way allowing this optimisation to occur at a later point of time of the development of the application. 
+
+    
+
+#### 6.1.4. Loaded pages controls performance
+Once a page is loaded, more than 99% of the time the controls response quickly and effortlessly on different keyboard or mouse events.
+
+    
+
+### 6.2. Ajax calls to back-end
+Each back-end update from the UI takes no longer than 0.2 s. in a non-stressed qto instance, thus the look and feel of an qto instance is more like a desktop app and less like web app.
+
+    
+
+#### 6.2.1. Metadata caching via Redis
+All the meta data of the application during each request is fetched from Redis ( and can be re-load into Redis by loading the meta_tables or the meta_columns item in the browser)
+
+    
+
+#### 6.2.2. Foreign Key data for Drop Down controls caching
+The drop down controls which fetch the human readable data with the foreign keys of a normalised item table is cached to the localStorage. The localStorage is cleared once the users access the login page. 
+Thus a qto DevOps engineer could both easily modilfy the data for the dropdowns ( for example different statuses and their codes without having to restart the whole application layer), but the users get a faster and non-blinking list page loads once they have loaded the list page with the specific cached dropdowns data once.
+
+    
+
+### 6.3. Login, Logout
 Every login and logout operation completes in less than 0.3 seconds in modern network environments.
 
     
 
-### 6.3. Ajax calls to back-end
-Each back-end update from the UI takes no longer than 0.2 s. in a non-stressed qto instance, thus the look and feel of an qto instance is more like a desktop app and less like web app.
+### 6.4. CRUDs operations
+The Create, Update, Delete and Search operations with their respective roundtrips are 99% of the times extremely fast - less than 0.1.
 
     
 
