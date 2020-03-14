@@ -99,7 +99,7 @@ sub doLoadAppConfig {
    $self->set('ObjGuardian', $objGuardian );
    #debug rint $config;
    $self = $self->config( $config );
-   # 
+    
    $self->renderer->cache->max_keys(0);
 
    $msg = "START MAIN";
@@ -107,14 +107,18 @@ sub doLoadAppConfig {
 }
 
 
-# initial load into redis the metadata of all databases 
+# -----------------------------------------------------------------------------
+# initial load into redis the metadata of ALL databases 
+# -----------------------------------------------------------------------------
 sub doReloadProjectsDbMeta {
-
    my $self                = shift ;
+   my $start_time          = Time::HiRes::gettimeofday();
+   my $msg                 = '' ; 
    my $config              = $self->config ; # the global config
    my $cnf                 = $self->config->{'env'}->{'db'}; # the db section only ...
-   #my $proj_dbs_str       =~ s/\s+/$config->{'postgres_db_name'} . ' , ' . $config->{'project_databases'}/g;
-   my $proj_dbs_str        = $cnf->{'postgres_db_name'} . ' , ' . $cnf->{'project_databases'};
+
+   my $proj_dbs_str        = $cnf->{'project_databases'};
+   $proj_dbs_str .= ' , '. $cnf->{'postgres_db_name'} unless ( $cnf->{'project_databases'} eq $cnf->{'postgres_db_name'});
    $proj_dbs_str           =~ s/\s+//g;
    my @dbs                 = split (',',$proj_dbs_str);
 
@@ -129,9 +133,15 @@ sub doReloadProjectsDbMeta {
 
    my $redis_server        = $config->{'env'}->{'redis'}->{'server'};
    my $redis_port          = $config->{'env'}->{'redis'}->{'port'};
-   print "START printing the meta-data keys in redis : \n";
+
+   print "START printing the meta-data keys for ALL dbs in redis : \n";
    print `echo 'KEYS * ' | redis-cli -h $redis_server -p $redis_port| sort`;
    print "STOP  printing the meta-data keys in redis : \n";
+
+   my $stop_time = Time::HiRes::gettimeofday();
+   $msg  = "the meta-data load to Redis for the CONFIGURED project_databases: \"$proj_dbs_str\" took ";
+   $msg .= sprintf("%.3f seconds\n", $stop_time - $start_time); # takes about 0.065s on a dev-box for one db ~ 300kB
+   $objLogger->doLogInfoMsg($msg);
 }
 
 
@@ -198,7 +208,7 @@ sub doSetHooks {
       my $url     = (split('#',$c->req->url->to_abs))[0];
 	
 		my $type = $c->res->headers->content_type;
-		# if the content is static ( see bellow after_static hook)	
+		# obs no authentication for static resources ... qto-200314095059
 		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g);
 
 		# If so, try to prevent caching
@@ -209,7 +219,7 @@ sub doSetHooks {
 			"Cache-Control" => "max-age=1, no-cache"
 		);
 
-      my $route   = (split('/',$url))[4];
+      my $route   = (split('/',$url))[4]; #this will fail on new static resource types ...
 
       unless ( $route eq 'logon' || $route eq 'login' ) {
 			my $db      = (split('/',$url))[3];
@@ -226,7 +236,7 @@ sub doSetHooks {
       # get the guardian $objGuardian
       # get the RBAC list from the Redis
       # get the jwt from the session 
-      # get the public key from the session
+      # get the public key from the session from the config
       #
 
    });
