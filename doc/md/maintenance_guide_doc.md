@@ -14,35 +14,39 @@
   * [2.7. SECURITY RELATED OPERATIONS](#27-security-related-operations)
     * [2.7.1. Add, modify and delete new users to the application](#271-add-modify-and-delete-new-users-to-the-application)
     * [2.7.2. Regular users visibility](#272-regular-users-visibility)
-* [3. BACKUP AND RESTORE PROJECTS DATA](#3-backup-and-restore-projects-data)
-  * [3.1. LOAD DATABASE CONNECTIVITY CONFIGURATION SECURELY](#31-load-database-connectivity-configuration-securely)
-  * [3.2. BACKUP A DATABASE](#32-backup-a-database)
-  * [3.3. BACKUP A DATABASE TABLE](#33-backup-a-database-table)
-  * [3.4. BACKUP ONLY THE DATABASE TABLES INSERT DATA](#34-backup-only-the-database-tables-insert-data)
-  * [3.5. RESTORE A DATABASE](#35-restore-a-database)
-    * [3.5.1. Restore a database from full database backup](#351-restore-a-database-from-full-database-backup)
-    * [3.5.2. Restore a database from db inserts file](#352-restore-a-database-from-db-inserts-file)
-  * [3.6. RESTORE A DATABASE TABLE](#36-restore-a-database-table)
-* [4. SHELL ACTIONS](#4-shell-actions)
-  * [4.1. RUN INCREASE-DATE ACTION](#41-run-increase-date-action)
-  * [4.2. LOAD XLS SHEET TO DB A DOC TABLE](#42-load-xls-sheet-to-db-a-doc-table)
-* [5. BULK ISSUES MANAGEMENT](#5-bulk-issues-management)
-    * [5.1. Opening a monthly period](#51-opening-a-monthly-period)
-  * [5.1. CLOSING A MONTHLY PERIOD](#51-closing-a-monthly-period)
-  * [5.2. PUBLISH THE RELEASE ISSUES](#52-publish-the-release-issues)
-  * [5.3. DIRS NAMING CONVENTIONS](#53-dirs-naming-conventions)
-* [6. NAMING CONVENTIONS](#6-naming-conventions)
-  * [6.1. NAMING CONVENTIONS FOR DIRECTORIES](#61-naming-conventions-for-directories)
-  * [6.2. ROOT DIRS NAMING CONVENTIONS](#62-root-dirs-naming-conventions)
-* [7. SOURCE CODE MANAGEMENT](#7-source-code-management)
-  * [7.1. CONFIGURE AND USE GIT ALWAYS BY USING SSH IDENTITIES](#71-configure-and-use-git-always-by-using-ssh-identities)
-  * [7.2. AIM FOR E2E TRACEABILITY](#72-aim-for-e2e-traceability)
-  * [7.3. RESTART THE APPLICATION LAYER](#73-restart-the-application-layer)
-* [8. KNOWN ISSUES AND WORKAROUNDS](#8-known-issues-and-workarounds)
-  * [8.1. MORBO IS STUCK](#81-morbo-is-stuck)
-    * [8.1.1. Symptoms](#811-symptoms)
-    * [8.1.2. Probable root cause](#812-probable-root-cause)
-    * [8.1.3. Known solution and workaround](#813-known-solution-and-workaround)
+* [3. MODIFY THE UI FROM THE DB DATA](#3-modify-the-ui-from-the-db-data)
+  * [3.1. HIDE A COLUMN FROM THE LIST PAGE GLOBALLY FOR ALL USERS](#31-hide-a-column-from-the-list-page-globally-for-all-users)
+  * [3.2. SET THE WIDTH OF AN ITEM COLUMN IN THE LISTING PAGE](#32-set-the-width-of-an-item-column-in-the-listing-page)
+  * [3.3. ADD NEW FK DATA FOR THE DROP DOWNS IN THE LIST PAGE](#33-add-new-fk-data-for-the-drop-downs-in-the-list-page)
+* [4. BACKUP AND RESTORE PROJECTS DATA](#4-backup-and-restore-projects-data)
+  * [4.1. BACKUP A DATABASE](#41-backup-a-database)
+  * [4.2. LOAD DATABASE CONNECTIVITY CONFIGURATION SECURELY](#42-load-database-connectivity-configuration-securely)
+  * [4.3. BACKUP A DATABASE TABLE](#43-backup-a-database-table)
+  * [4.4. BACKUP ONLY THE DATABASE TABLES INSERT DATA](#44-backup-only-the-database-tables-insert-data)
+  * [4.5. RESTORE A DATABASE](#45-restore-a-database)
+    * [4.5.1. Restore a database from full database backup](#451-restore-a-database-from-full-database-backup)
+    * [4.5.2. Restore a database from db inserts file](#452-restore-a-database-from-db-inserts-file)
+  * [4.6. RESTORE A DATABASE TABLE](#46-restore-a-database-table)
+* [5. SHELL ACTIONS](#5-shell-actions)
+  * [5.1. RUN INCREASE-DATE ACTION](#51-run-increase-date-action)
+  * [5.2. LOAD XLS SHEET TO DB A DOC TABLE](#52-load-xls-sheet-to-db-a-doc-table)
+* [6. BULK ISSUES MANAGEMENT](#6-bulk-issues-management)
+    * [6.1. Opening a monthly period](#61-opening-a-monthly-period)
+  * [6.1. CLOSING A MONTHLY PERIOD](#61-closing-a-monthly-period)
+  * [6.2. PUBLISH THE RELEASE ISSUES](#62-publish-the-release-issues)
+  * [6.3. DIRS NAMING CONVENTIONS](#63-dirs-naming-conventions)
+* [7. NAMING CONVENTIONS](#7-naming-conventions)
+  * [7.1. NAMING CONVENTIONS FOR DIRECTORIES](#71-naming-conventions-for-directories)
+  * [7.2. ROOT DIRS NAMING CONVENTIONS](#72-root-dirs-naming-conventions)
+* [8. SOURCE CODE MANAGEMENT](#8-source-code-management)
+  * [8.1. CONFIGURE AND USE GIT ALWAYS BY USING SSH IDENTITIES](#81-configure-and-use-git-always-by-using-ssh-identities)
+  * [8.2. AIM FOR E2E TRACEABILITY](#82-aim-for-e2e-traceability)
+  * [8.3. RESTART THE APPLICATION LAYER](#83-restart-the-application-layer)
+* [9. KNOWN ISSUES AND WORKAROUNDS](#9-known-issues-and-workarounds)
+  * [9.1. MORBO IS STUCK](#91-morbo-is-stuck)
+    * [9.1.1. Symptoms](#911-symptoms)
+    * [9.1.2. Probable root cause](#912-probable-root-cause)
+    * [9.1.3. Known solution and workaround](#913-known-solution-and-workaround)
 
 
 
@@ -155,13 +159,40 @@ http://www.htaccesstools.com/htpasswd-generator/
 
     
 
-## 3. BACKUP AND RESTORE PROJECTS DATA
+## 3. MODIFY THE UI FROM THE DB DATA
+Qto is data driven application - this means that certain element of the UI could be changed by changing certain data in the application
+
+    
+
+### 3.1. Hide a column from the list page globally for all users
+Open the meta_columns table, type the item's table_name and the column_name, type 1 in the ski_in_list column.
+
+    
+
+### 3.2. Set the width of an item column in the listing page
+Open the meta_columns table, type the item's table_name and the column_name, type a desired number for the width ( 60 might be good default to start experimenting with)
+
+    
+
+### 3.3. Add new FK data for the drop downs in the list page
+Locate the primary key table which holds the FK data from the listed item you want to modify the drop down data to. Add new rows in this table, the new rows will be visible straight away in the UI, and if not - the users should logout and login to clear their localStorage.
+
+    
+
+## 4. BACKUP AND RESTORE PROJECTS DATA
 You could easily add those commands to your crontab for scheduled execution - remember to add the absolution patch of the qto.sh entry script.
 Anything you perform as shell action in qto could be applied not only to the current product instance dir, but also any other project instance dir, which has a directory structure, which is compatible with the current qto product.
 
     
 
-### 3.1. Load database connectivity configuration securely
+### 4.1. Backup a database
+You backup a database ( all the objects, roles and data ) with the following one-liner. 
+
+    # obs you must have the shell vars pre-loaded !!! Note dev, tst or prd instances !
+    # clear; doParseCnfEnvVars cnf/qto.prd.host-name.cnf
+    bash src/bash/qto/qto.sh -a backup-postgres-db
+
+### 4.2. Load database connectivity configuration securely
 Qto provides you with the means and tools to work on tens of databases, yet one at the time. Thus once you open a shell to run the tools you must have the connectivity to the database you want to work on. 
 
     source lib/bash/funcs/export-json-section-vars.sh
@@ -180,33 +211,26 @@ Qto provides you with the means and tools to work on tens of databases, yet one 
     # now you can run any psql 
     psql -d my_db -c "\dl"
 
-### 3.2. Backup a database
-You backup a database ( all the objects, roles and data ) with the following one-liner. 
-
-    # obs you must have the shell vars pre-loaded !!! Note dev, tst or prd instances !
-    # clear; doParseCnfEnvVars cnf/qto.prd.host-name.cnf
-    bash src/bash/qto/qto.sh -a backup-postgres-db
-
-### 3.3. Backup a database table
+### 4.3. Backup a database table
 You backup a database table with the following one-liner. Noe 
 
     # obs you have to have the shell vars pre-loaded !!!
     # clear; doParseCnfEnvVars <<path-to-cnf-file>>
     bash src/bash/qto/qto.sh -a backup-postgres-table -t my_table
 
-### 3.4. Backup only the database tables insert data
+### 4.4. Backup only the database tables insert data
 
 
     # obs you have to have the shell vars pre-loaded !!!
     bash src/bash/qto/qto.sh -a backup-postgres-db-inserts
 
-### 3.5. Restore a database
+### 4.5. Restore a database
 You restore a database by first running the pgsql scripts of the project database and than restoring the insert data 
 
     psql -d $postgres_db_name < \
     dat/mix/sql/pgsql/dbdumps/dev_qto/dev_qto.20180813_202202.insrt.dmp.sql
 
-#### 3.5.1. Restore a database from full database backup
+#### 4.5.1. Restore a database from full database backup
 You restore a database by basically creating first the empty database and applying the dump file to that database. Practice this several times in dev before going to tst !!! 
 
     # if you DO HAVE THE DB - probably not a bad idea to first backup it !!!
@@ -220,7 +244,7 @@ You restore a database by basically creating first the empty database and applyi
     
     psql -d dev_qto < dat/mix/2020/2020-01/2020-01-11/sql/tst_qto/tst_qto.20200111_195947.full.dmp.sql
 
-#### 3.5.2. Restore a database from db inserts file
+#### 4.5.2. Restore a database from db inserts file
 This type of restore assumes you are 100% sure that the schema you took the db inserts backup from is the same as the schema you are applying the db inserts to, which should be the case when you are restoring data from the same qto version db. In qto we do not believe in migrations, which is a totally different discussion, but if you do not have the same schema you WILL HAVE errors and you ARE basically on your own, because you ended-up here by basically NOT taking regularly backups and not applying regular updates and that is YOUR fault and not the fault of the product instance owner you are getting the qto source from ....
 
     # if you DO HAVE THE DB - probably not a bad idea to first backup it !!!
@@ -235,24 +259,24 @@ This type of restore assumes you are 100% sure that the schema you took the db i
     psql -d $postgres_db_name < \
     dat/mix/sql/pgsql/dbdumps/dev_qto/dev_qto.20180813_202202.insrt.dmp.sql
 
-### 3.6. Restore a database table
+### 4.6. Restore a database table
 You restore a database table by first running the pgsql scripts of the project database or ONLY for that table and than restoring the insert data from the table insert file.
 
     # re-apply the table ddl
     psql -d $postgres_db_name < src/sql/pgsql/dev_qto/13.create-table-requirements.sql
 
-## 4. SHELL ACTIONS
+## 5. SHELL ACTIONS
 
 
     
 
-### 4.1. Run increase-date action
+### 5.1. Run increase-date action
 You track the issues of your projects by storing them into xls files in "daily" proj_txt dirs. 
 Each time the day changes by running the increase-date action you will be able to clone the data of the previous date and start working on the current date.
 
     bash src/bash/qto/qto.sh -a increase-date
 
-### 4.2. Load xls sheet to db a doc table
+### 5.2. Load xls sheet to db a doc table
 To load xls issues to db and from db to txt files
 
     export do_truncate_tables=0 ; 
@@ -261,12 +285,12 @@ To load xls issues to db and from db to txt files
     # check that the rows where inserted
      psql -d dev_qto -c "SELECT * FROM requirements_doc;"
 
-## 5. BULK ISSUES MANAGEMENT
+## 6. BULK ISSUES MANAGEMENT
 By bulk issues management herewith is meant the bulk handling via sql to the issues items via the psql binary, which IS basically just moving data from table to table provided they have the same set of columns. 
 
     
 
-#### 5.1. Opening a monthly period
+#### 6.1. Opening a monthly period
 Each monthly period is basically a table with the naming convention monthly_issues_YYYYMM for example the monthly period for the year 2020 January will be the monthly_issues_202001. 
 To create the table you need to basically copy the monthly_issues table to the one with the period at the end and replace the monthly issues with the monthly_issues_&lt;&lt;yyyymm&gt;&gt; string and run the table as follows.
 
@@ -284,33 +308,33 @@ To create the table you need to basically copy the monthly_issues table to the o
     bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues monthly_issues_202001
     
 
-### 5.1. Closing a monthly period
+### 6.1. Closing a monthly period
 Closing a monthly period would simply mean to ensure that all the done issues will be moved to the release_issues table
 
     bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues_202002 release_issues
     
 
-### 5.2. Publish the release issues
+### 6.2. Publish the release issues
 You publish the release issues by moving all the issues with '09-done' status to the release_issues table
 
     
 
-### 5.3. Dirs naming conventions
+### 6.3. Dirs naming conventions
 The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
 
     
 
-## 6. NAMING CONVENTIONS
+## 7. NAMING CONVENTIONS
 
 
     
 
-### 6.1. Naming conventions for directories
+### 7.1. Naming conventions for directories
 The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
 
     
 
-### 6.2. Root Dirs naming conventions
+### 7.2. Root Dirs naming conventions
 The root dirs and named as follows:
 bin - contains the produced binaries for the project
 cnf - for the configuration
@@ -320,12 +344,12 @@ src - for the source code of the actual projects and subprojects
 
     
 
-## 7. SOURCE CODE MANAGEMENT
+## 8. SOURCE CODE MANAGEMENT
 The qto is a derivative of the wrapp tool - this means that development and deployment process must be integrated into a single pipeline. 
 
     
 
-### 7.1. Configure and use git ALWAYS by using ssh identities
+### 8.1. Configure and use git ALWAYS by using ssh identities
 You probably have access to different corporate and public git repositories. Use your personal ssh identity file you use in GitHub to push to the qto project. The following code snippet demonstrates how you could preserve your existing git configurations ( even on corporate / intra boxes ) , but use ALWAYS the personal identity to push to the qto...
 
     # create the company identity file
@@ -353,29 +377,29 @@ You probably have access to different corporate and public git repositories. Use
     # and verify 
     clear ; git log --pretty --format='%h %ae %<(15)%an ::: %s
 
-### 7.2. Aim for e2e traceability
+### 8.2. Aim for e2e traceability
 Aim for traceability between user-stories, requirements, features and functionalities
 Once the issues are defined and you start working on your own branch which is named by the issue-id aim to map one on one each test in your code with each listed requirement in qto.
 
     
 
-### 7.3. Restart the application layer
+### 8.3. Restart the application layer
 Well just chain the both commands. 
 
     # start does actually re-start always 
     bash src/bash/qto/qto.sh -a mojo-morbo-start 
 
-## 8. KNOWN ISSUES AND WORKAROUNDS
+## 9. KNOWN ISSUES AND WORKAROUNDS
 
 
     
 
-### 8.1. Morbo is stuck
+### 9.1. Morbo is stuck
 
 
     
 
-#### 8.1.1. Symptoms
+#### 9.1.1. Symptoms
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -389,7 +413,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 8.1.2. Probable root cause
+#### 9.1.2. Probable root cause
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -403,7 +427,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 8.1.3. Known solution and workaround
+#### 9.1.3. Known solution and workaround
 List the running perl processes which run the morbo and kill the instances
 
     ps -ef | grep -i perl

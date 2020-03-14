@@ -28,8 +28,7 @@
 % content_for cnt_all_js => begin
 
    <script id="all_js_scripts">
-   var bus=new Vue({});
-
+   var bus = new Vue({});
 
    %= include 'js/global/get-url-params.func.js'
    %= include 'js/global/get-server-data.func.js'

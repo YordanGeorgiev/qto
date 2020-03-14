@@ -168,7 +168,7 @@ All the binaries which are required for the running of the tool must be checked 
     
 
 #### 2.3.3. Required Perl modules installation
-All the required Perl modules must be part of the deployer script. The Perl modules should be installed as non-root user.
+All the required Perl modules must be part of the deployer script. The Perl modules should be installed as non-root user having sudo, which could be removed during the start-up of the application for security reasons.
 
     
 

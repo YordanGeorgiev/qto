@@ -25,7 +25,7 @@
 <script type="application/javascript" src="/lib/js/controls/vue-simple-upload.min.js"></script>
    <%= content 'cnt_body_controls' %>
 <script id="all">
-   var bus=new Vue({});
+   var bus = new Vue({});
    %= include 'controls/list-grid/js/global-msg.js'
    %= include 'controls/list-grid/js/search-box.js'
    <%= content 'js_scripts' %>

@@ -7,7 +7,7 @@
   * [1.5. SWITCH PROJECTS BY THE :TO OPERATOR IN THE SEARCH-BOX](#15-switch-projects-by-the-to-operator-in-the-search-box)
   * [1.6. VERSION CONTROL](#16-version-control)
 * [2. INITIAL CONCEPTS](#2-initial-concepts)
-  * [2.1. WAY OF WORKING](#21-way-of-working)
+  * [2.1. PROCESSES RELATED TO THIS DOCUMENT](#21-processes-related-to-this-document)
   * [2.2. ACCESSING MULTIPLE APPLICATIONS FROM THE SAME UI](#22-accessing-multiple-applications-from-the-same-ui)
   * [2.3. SWITCH PROJECTS FROM THE SEARCH BOX](#23-switch-projects-from-the-search-box)
 * [3. LOGIN AND LOGOUT](#3-login-and-logout)
@@ -127,7 +127,7 @@ A single qto web application might have access to one or many databases ( called
 
     
 
-### 2.1. Way of working
+### 2.1. Processes related to this document
 The qto provides a mean for tracking of this documentation contents to the source code per feature/functionality, thus should you find inconsistencies in the behaviour of the application and the content of this document you should create a bug issue by clicking on the plus button of the enduser_issues and assign it to the owner of your product instance. 
 
     

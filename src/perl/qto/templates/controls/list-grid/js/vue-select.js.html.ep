@@ -13,18 +13,33 @@ Vue.component('vue-select', {
       , pxlsWidth: 160
       , url: '/<%= $db =%>/select/'
       }
-  },
-  mounted(){
-      urlPrms = this.getUrlParams()
-      urlPrms.append("pg-size" , "10")
-      axios.get( this.url + this.itemname, {params: {"pg-size": "200","oa": "name"}})
-      .then(res => {
-		  this.options = res.data.dat
-         res.data.dat.forEach(el => { if ( el.guid === this.hook){
+  }
+  , mounted(){
+      var k = '<%= $db =%>' + '.' + this.itemname
+
+      // gotcha !!! localStorage is cleared ONLY on the login page ...
+      if ( localStorage.getItem(k) === 'undefined' || localStorage.getItem(k) === null 
+            || localStorage.getItem(k) === "null" || localStorage.getItem(k).length === 0) {
+         urlPrms = this.getUrlParams()
+         urlPrms.append("pg-size" , "10")
+         axios.get( this.url + this.itemname, {params: {"pg-size": "200","oa": "name"}})
+         .then(res => {
+            this.options = res.data.dat
+            var cachedData = JSON.stringify(res.data.dat)
+            localStorage.setItem(k,cachedData)
+            res.data.dat.forEach(el => { if ( el.guid === this.hook){
+               this.selected = el.name 
+               }
+            });
+         });
+      } else {
+         var cachedData = JSON.parse(localStorage.getItem(k))
+         this.options = cachedData
+         this.options.forEach(el => { if ( el.guid === this.hook){
             this.selected = el.name 
             }
          });
-      });
+      }
   }
   , methods: {
      getUrlParams: function (){

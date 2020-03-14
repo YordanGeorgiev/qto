@@ -178,5 +178,6 @@ Array.prototype.each = function(a) {
    <script id="all_js_scripts">
       document.getElementById("email").focus();
       document.getElementById("email").select();
+      localStorage.clear(); //clear all the cached vue controls data
    </script>
 % end
