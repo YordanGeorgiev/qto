@@ -39,9 +39,9 @@ sub isAuthenticated {
    # non-authentication mode IF the app has been stared with this env var
    return 1 if $ENV{'QTO_NO_AUTH'}; # no authentication when testing if desired so !!!
 
-   p $controller->session( 'app.' . $db . '.user') ;
-   print ('app.' . $db . '.user');
-   print " ::: eof session user from isAuthenticated in Guardian.pm \n";
+   # debug rint $controller->session( 'app.' . $db . '.user') ;
+   # debug rint ('app.' . $db . '.user');
+   # debut rint " ::: eof session user from isAuthenticated in Guardian.pm \n";
 
    # basic native authentication mode if NOT started with this env var
    unless ( defined ( $controller->session( 'app.' . $db . '.user')) ) {
