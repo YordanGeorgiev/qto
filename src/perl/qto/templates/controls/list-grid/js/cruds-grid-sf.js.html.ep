@@ -28,7 +28,14 @@
 				if (filterKey) {
 				  data = data.filter(function (row) {
 					 return Object.keys(row).some(function (key) {
-						return String(row[key]).toLowerCase().indexOf(filterKey) > -1
+                  var visible_val = row[key]
+                  // hook the vals from the drop downs to enable quick srch
+                  if ( key.endsWith('_guid')){
+                     var k = '<%= $db =%>' + '.' + key.replace('_guid','')
+                     var cachedData = JSON.parse(localStorage.getItem(k))
+                     visible_val = cachedData.find(obj => obj.guid == visible_val ).name
+                  }
+						return String(visible_val).toLowerCase().indexOf(filterKey) > -1
 					 })
 				  })
 				}
