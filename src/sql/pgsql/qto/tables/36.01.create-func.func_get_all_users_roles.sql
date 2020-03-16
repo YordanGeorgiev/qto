@@ -1,4 +1,3 @@
-DROP	FUNCTION func_get_all_users_roles();
 
 CREATE FUNCTION func_get_all_users_roles()
   RETURNS TABLE (
@@ -29,5 +28,4 @@ BEGIN
 END
 $func$  LANGUAGE plpgsql;
 
--- DROP FUNCTION func_get_all_users_roles ; 
 -- call by: psql -d dev_qto -c "select * from func_get_all_users_roles() "

@@ -1,4 +1,3 @@
-DROP	FUNCTION func_get_items_roles_permissions();
 
 CREATE FUNCTION func_get_items_roles_permissions()
   RETURNS TABLE (
@@ -31,5 +30,4 @@ END
 $func$  LANGUAGE plpgsql;
 
 -- INSERT INTO items_roles_permissions ( roles_guid,meta_tables_guid,meta_routes_guid,name,description) 
--- DROP FUNCTION func_get_items_roles_permissions ; 
 -- call by: psql -d dev_qto -c "select * from func_get_items_roles_permissions() "
