@@ -223,6 +223,7 @@ sub doSetHooks {
 
       unless ( $route eq 'logon' || $route eq 'login' ) {
 			my $db      = (split('/',$url))[3];
+         $db         = 'qto' unless $db ;
 			$db         = toEnvName ($db,$c->app->config);
 			my $objGuardian = $self->get('ObjGuardian');
 

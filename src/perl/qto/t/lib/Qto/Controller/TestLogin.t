@@ -79,7 +79,7 @@ BEGIN {
    printf "\n";
 
    my $pdb = toPlainName($db);
-   $tm = "a successfull result redirects to the home page";
+   $tm = "a successfull result redirects to the search page";
    $tx = $t->ua->post( $url => 'form'  => {'email' =>'test.anonymous.user@gmail.com', 'pass' => 'test.anonymous.user-pass'});
    ok ( $tx->result->dom->to_string =~ "<title> search $pdb </title>", $tm );
    #p $tx->result->dom->to_string ;
