@@ -11,7 +11,6 @@ doMojoHypnotoadStart(){
    $jwt_public_key_file
 EOF
    
-   set -x
    test -f $jwt_private_key_file || ssh-keygen -t rsa -b 4096 -m PEM -f $jwt_private_key_file
    test -f $jwt_public_key_file && rm -v $jwt_public_key_file
    openssl rsa -in $jwt_private_key_file -pubout -outform PEM -out $jwt_public_key_file
@@ -27,9 +26,8 @@ EOF
    cd src/perl/qto/script
    hypnotoad qto &
    cd $PRODUCT_INSTANCE_DIR
-   set -x
    sudo service nginx restart
    test $? -ne 0 && exit 1
-   set +x
+   sudo ps -ef | grep -v grep | grep qto
 }
 
