@@ -1,4 +1,4 @@
----- DROP TABLE IF EXISTS release_issues ; 
+DROP TABLE IF EXISTS release_issues ; 
 
 SELECT 'create the "release_issues" table'
 ; 
@@ -6,8 +6,8 @@ SELECT 'create the "release_issues" table'
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , type           varchar (30) NOT NULL DEFAULT 'task'
-    , category       varchar (30) NOT NULL DEFAULT 'category ...'
-    , status         varchar (20) NOT NULL DEFAULT 'status ...'
+    , category_guid UUID NOT NULL DEFAULT '70724562-d83c-446e-94cf-58ced84f3a0e'
+    , issues_status_guid UUID NOT NULL DEFAULT 'cb989a14-d0b8-46e4-b2cc-5e2a974b5d29'
     , prio           integer NOT NULL DEFAULT 0
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
