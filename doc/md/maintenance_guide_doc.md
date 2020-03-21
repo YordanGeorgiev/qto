@@ -175,7 +175,7 @@ Open the meta_columns table, type the item's table_name and the column_name, typ
     
 
 ### 3.3. Add new FK data for the drop downs in the list page
-Locate the primary key table which holds the FK data from the listed item you want to modify the drop down data to. Add new rows in this table, the new rows will be visible straight away in the UI, and if not - the users should logout and login to clear their localStorage.
+Locate the primary key table which holds the FK data from the listed item you want to modify the drop down data to. Add new rows in this table, the new rows will be visible straight away in the UI, and if not - the users should logout and login to clear their localStorage. Note, that some browsers do not show properly most the dropdown select's scrollbars if more than 12 items are contained in the select - aka the users should scroll till the end of the dropdown to see the full list of items ...
 
     
 

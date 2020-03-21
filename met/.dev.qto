@@ -360,6 +360,7 @@ src/perl/qto/lib/Qto/Controller/Search.pm
 src/perl/qto/lib/Qto/Controller/Report.pm
 src/perl/qto/t/lib/Qto/Controller/TestCreate.t
 src/perl/qto/t/lib/Qto/Controller/TestTruncate.t
+src/perl/qto/t/lib/Qto/Controller/TestSelectMeta.t
 src/perl/qto/t/lib/Qto/Controller/TestSelect.t
 src/perl/qto/t/lib/Qto/Controller/TestQuery.t
 src/perl/qto/t/lib/Qto/Controller/TestCallFunc.t
@@ -508,6 +509,7 @@ src/sql/pgsql/qto/02.alter-qto-app-user.pgsql
 src/sql/pgsql/qto/tables/02.create-table-items_doc.sql
 src/sql/pgsql/qto/funcs/01.create-func-fns_update_time.sql
 src/sql/pgsql/qto/funcs/02.create-func-f_concat_ws.sql
+src/sql/pgsql/qto/funcs/03.create-func.func_get_meta_routes.sql
 src/sql/pgsql/qto/funcs/04.create-func.func_get_function_args.sql
 src/sql/pgsql/qto/tables
 src/sql/pgsql/qto/tables/2020/2020-01
@@ -568,7 +570,9 @@ src/sql/pgsql/qto/tables/42.create-table-ideas_status.sql
 src/sql/pgsql/qto/tables/43.create-table-questions_status.sql
 src/sql/pgsql/qto/tables/44.create-table-category.sql
 src/sql/pgsql/qto/tables/45.create-table-risks.sql
-src/sql/pgsql/qto/tables/45.create-table-problems_status.sql
+src/sql/pgsql/qto/tables/46.create-table-problems_status.sql
+src/sql/pgsql/qto/tables/47.create-table-projects.sql
+src/sql/pgsql/qto/tables/48.create-table-contacts.sql
 src/sql/pgsql/qto/tables/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/tables/66.create-table-logs.sql
 src/sql/pgsql/qto/tables/88.create-table-test_hi_delete_table_doc.sql

@@ -47,27 +47,34 @@
   * [7.3. ONELINER FOR ENVIRONMENT CHANGE](#73-oneliner-for-environment-change)
 * [8. WEB USER INTERFACE FEATURES AND FUNCTIONALITIES](#8-web-user-interface-features-and-functionalities)
   * [8.1. SINGLE CODE BASE FOR ALL DEVICE FORMATS](#81-single-code-base-for-all-device-formats)
-  * [8.2. LIST PAGE FEATURES AND FUNCTIONALITIES](#82-list-page-features-and-functionalities)
-    * [8.2.1. List page performance](#821-list-page-performance)
-    * [8.2.2. Navigating the list page](#822-navigating-the-list-page)
-    * [8.2.3. Managing items - full CRUD](#823-managing-items--full-crud)
-    * [8.2.4. Managing FK values](#824-managing-fk-values)
-    * [8.2.5. Quick search and filtering items](#825-quick-search-and-filtering-items)
-    * [8.2.6. Visual indication](#826-visual-indication)
-      * [8.2.6.1. Visual indication for ok cases](#8261-visual-indication-for-ok-cases)
-      * [8.2.6.2. Visual indication when no data is received on correct request](#8262-visual-indication-when-no-data-is-received-on-correct-request)
-      * [8.2.6.3. Visual indication on erroneous requests](#8263-visual-indication-on-erroneous-requests)
-    * [8.2.7. Items interlinking](#827-items-interlinking)
-    * [8.2.8. Print to pdf](#828-print-to-pdf)
-  * [8.3. VIEW PAGE FEATURES](#83-view-page-features)
-    * [8.3.1. Viewing documents](#831-viewing-documents)
-      * [8.3.1.1. OK load for a view doc page](#8311-ok-load-for-a-view-doc-page)
-      * [8.3.1.2. NOK load for a view doc page](#8312-nok-load-for-a-view-doc-page)
-    * [8.3.2.  Managing items ( gamma )](#832--managing-items-(-gamma-))
-      * [8.3.2.1. Add an item in the doc view page UI ( gamma)](#8321-add-an-item-in-the-doc-view-page-ui-(-gamma))
-      * [8.3.2.2. Update item ( gamma )](#8322-update-item-(-gamma-))
-      * [8.3.2.3. Delete item ( gamma )](#8323-delete-item-(-gamma-))
-    * [8.3.3. Printing view doc documents](#833-printing-view-doc-documents)
+  * [8.2. GLOBAL UI ELEMENTS FOR ALL THE PAGES](#82-global-ui-elements-for-all-the-pages)
+    * [8.2.1. The global and quick search textbox - the omnibox](#821-the-global-and-quick-search-textbox--the-omnibox)
+    * [8.2.2. The Left Menu](#822-the-left-menu)
+  * [8.3. LIST PAGE FEATURES AND FUNCTIONALITIES](#83-list-page-features-and-functionalities)
+    * [8.3.1. List page performance](#831-list-page-performance)
+    * [8.3.2. Navigating the list page](#832-navigating-the-list-page)
+    * [8.3.3. Managing items - full CRUD](#833-managing-items--full-crud)
+    * [8.3.4. Managing FK values](#834-managing-fk-values)
+      * [8.3.4.1. CRUD via the smart grid](#8341-crud-via-the-smart-grid)
+      * [8.3.4.2. CRUD via the generic edit form](#8342-crud-via-the-generic-edit-form)
+    * [8.3.5. Quick search and filtering items](#835-quick-search-and-filtering-items)
+    * [8.3.6. Global text search from the view page](#836-global-text-search-from-the-view-page)
+      * [8.3.6.1. Visual indication for ok cases](#8361-visual-indication-for-ok-cases)
+    * [8.3.7. Visual indication](#837-visual-indication)
+      * [8.3.7.1. Visual indication when no data is received on correct request](#8371-visual-indication-when-no-data-is-received-on-correct-request)
+      * [8.3.7.2. Visual indication on erroneous requests](#8372-visual-indication-on-erroneous-requests)
+    * [8.3.8. Items interlinking](#838-items-interlinking)
+    * [8.3.9. Print to pdf](#839-print-to-pdf)
+  * [8.4. VIEW PAGE FEATURES](#84-view-page-features)
+    * [8.4.1. Viewing documents](#841-viewing-documents)
+      * [8.4.1.1. OK load for a view doc page](#8411-ok-load-for-a-view-doc-page)
+      * [8.4.1.2. NOK load for view doc page](#8412-nok-load-for-view-doc-page)
+      * [8.4.1.3. NOK load for a view doc page](#8413-nok-load-for-a-view-doc-page)
+    * [8.4.2.  Managing items ( beta )](#842--managing-items-(-beta-))
+      * [8.4.2.1. Add an item in the doc view page UI ( beta)](#8421-add-an-item-in-the-doc-view-page-ui-(-beta))
+      * [8.4.2.2. Update item ( gamma )](#8422-update-item-(-gamma-))
+      * [8.4.2.3. Delete item ( gamma )](#8423-delete-item-(-gamma-))
+    * [8.4.3. Printing view doc documents](#843-printing-view-doc-documents)
 * [9. SECURITY](#9-security)
   * [9.1. AUTHENTICATION](#91-authentication)
     * [9.1.1. Non-athentication mode](#911-non-athentication-mode)
@@ -211,8 +218,7 @@ Each test obeys the following convention:
     
 
 ### 4.1. Absence of application crashing
-Due to the stable architecture based on the based web framework out there - Mojolicious, the qto crashes experienced during the last years of operation have been extremely rare.
-Qto is vertically integrated - once you have installed the full stack according to the latest released version the probability of experiencing an application crash are less than 0,01% of the time.
+Qto is a vertically integrated application - from the OS till the client side libraries, which has been designed from the ground up to have stable architecture component wise and to rely on the best frameworks (Mojolicious, VueJS), libraries and tools out there, without creating too much interdependencies, thus the qto crashes experienced during the last years of operation have been extremely rare.
 
     
 
@@ -336,7 +342,7 @@ You can spawn new instances in the cloud from a client having the src code and n
 ### 7.2. Oneliner for version change on provisioned host
 You could create a new instance of the qto having different version ( which becomes automatically a dev environment ) by issuing the following command: 
 
-    bash src/bash/qto/qto.sh -a to-ver=0.7.7
+    bash src/bash/qto/qto.sh -a to-ver=0.8.2
 
 ### 7.3. Oneliner for environment change
 You could change the environment type of your current instance by issuing the following command:
@@ -353,103 +359,142 @@ Although qto has not been explicitly designed for mobile phones and / or tablets
 
     
 
-### 8.2. List page features and functionalities
+### 8.2. Global UI elements for all the pages
+The global UI elements are accessible from each page
+
+    
+
+#### 8.2.1. The global and quick search textbox - the omnibox
+The users can quick filter the content of any page - lists ( including the drop downs chosen values), reports and view docs by just typing strings to filter by in the omnibox in the top bar WITHOUT hitting enter or clicking on the search button. 
+After hitting enter or clicking on the search button the application performs global search from the project database and redirects to the search page with the actual result set from the search. Most of the pages are done so that hitting the back button on the browser goes directly to the previous view.
+A global keyboard shortcut - the "/" forward slash can be used to focus the omnibox from any non editable control on the page.
+
+    
+
+#### 8.2.2. The Left Menu
+The left menu is accessible from all the pages. The users can navigate from a folders tree like structure from the left menu to different pages in the application.
+The left menu contains information on the current instance of the application and a logout button, which clears out the user session data ( both session and local storage data).
+
+    
+
+### 8.3. List page features and functionalities
 The list page is simply a slice of the data from ANY postgres table filtered on any criteria defined in the url of the browser.
 
     
 
-#### 8.2.1. List page performance
-The full execution time of any crud operation ( create,update,delete,search) from the end-user of the UI point of view is less than 0.6 seconds usually right around 0.4 s for faster servers.
+#### 8.3.1. List page performance
+The full execution time of any crud operation ( create, update, delete, search) from the end-user of the UI point of view is less than 0.5 seconds usually right around 0.4 s for faster servers.
+Dropdown controls' data is cached in the browsers' local storage thus ones a page is accessed during an user session ( as the storage is cleared during login ), the next retrieval of their data is about 0.90-0.12 seconds faster - and their rendering is not actually noticeable.
 
     
 
-#### 8.2.2. Navigating the list page
+#### 8.3.2. Navigating the list page
 After the load of the list page the user can quickly cycle trough all the element of the page with the tab key on the keyboard. Focus on the search 
 
     
 
-#### 8.2.3. Managing items - full CRUD
+#### 8.3.3. Managing items - full CRUD
 The System provides the needed UI interfaces to Create , Update , Delete and Search items in the database. DateDate values could be presented with calendar controls.
 
     
 
-#### 8.2.4. Managing FK values
+#### 8.3.4. Managing FK values
 The Foreign key values could be managed via drop box ui controls. For now the fetch is performed on the "name" attribute from the PK table, based on &lt;&lt;pk_table&gt;&gt;_guid naming convention in the FK column of the items.
 
     
 
-#### 8.2.5. Quick search and filtering items
+##### 8.3.4.1. CRUD via the smart grid
+The Create, Update, Delete operations could be performed by simply typing the new values in the smart grid - or picking the values for the drop downs or the calendar controls.
+
+    
+
+##### 8.3.4.2. CRUD via the generic edit form
+The Create, Update, Delete operations could be performed by clicking in the edit button of the smart grid and editing the text in the modal dialog form.
+
+    
+
+#### 8.3.5. Quick search and filtering items
 The user can quickly filter the items from the presented listing by typing in the omnisearch box ... The System will shrink the table so that only the rows having the string in the search omnibox will be presented. Once the string is deleted from the search omnibox the table data is restored to its original state.
 
     
 
-#### 8.2.6. Visual indication
-The Systems does not present any ok messages for the operation of the list page, only errors are presented clearly on the top of the page ( for example when one tries to update a string value into a cell with column accepting only integer values ... )
+#### 8.3.6. Global text search from the view page
+The user can initiate a global text search from the view page, by simply typing on the global search text box and hitting enter or clicking on the global search button. Should the search yield results they will be displayed in the search page, thus the user could quickly return back in the exact same spot of the document by clicking the back button.
 
     
 
-##### 8.2.6.1. Visual indication for ok cases
+##### 8.3.6.1. Visual indication for ok cases
 In the ok cases no msgs are presented, but just the requested data shown.
 
     
 
-##### 8.2.6.2. Visual indication when no data is received on correct request
+#### 8.3.7. Visual indication
+The Systems does not present any ok messages for the operation of the list page, only errors are presented clearly on the top of the page ( for example when one tries to update a string value into a cell with column accepting only integer values ... )
+
+    
+
+##### 8.3.7.1. Visual indication when no data is received on correct request
 Should the request in terms of url parameters be correct a warning msg at the bottom of the page in grey colour is presented
 
     
 
-##### 8.2.6.3. Visual indication on erroneous requests
+##### 8.3.7.2. Visual indication on erroneous requests
 Should the request be erroneous - un existing, tables , columns , ds , wrong syntax etc. an error of the top of the page is presented and the full technical error is displayed at the bottom of the page. 
 
     
 
-#### 8.2.7. Items interlinking
+#### 8.3.8. Items interlinking
 The users can link to any items by simply typing &lt;&lt;item&gt;&gt;-&lt;&lt;id&gt;&gt; in the description. For example requirements_doc-4
 
     
 
-#### 8.2.8. Print to pdf
+#### 8.3.9. Print to pdf
 You can print any of the queries from the list page by adding / changing the as url parameter from as=grid to as=print-table. Use the browser print to pdf feature to save the listing page into a pdf file.
 
     
 
-### 8.3. View page features
+### 8.4. View page features
 
 
     
 
-#### 8.3.1. Viewing documents
+#### 8.4.1. Viewing documents
 The "view doc" page presents a single "doc" table from any qto db instance having the nested set api in it. The nested set api means simply that the table has the additional attributes needed for the data to be presented in hierarchical format aka the view doc format, which is the format of this type of document you are reading right now.
 
     
 
-##### 8.3.1.1. OK load for a view doc page
+##### 8.4.1.1. OK load for a view doc page
 Should a proper url format by requested from the browser a simple view doc page is presented with no msgs - the left menu will present the meta data of the project menu and the right menu will present the structure of the document.
 
     
 
-##### 8.3.1.2. NOK load for a view doc page
+##### 8.4.1.2. NOK load for view doc page
+Should the user request an un existing view doc page and error snackbar pop-up message appears on the top of the page. The error message can be pinned for easier copy paste or snapshot taking
+
+    
+
+##### 8.4.1.3. NOK load for a view doc page
 Should the browser request a non-existing table or erroneous url parameters from the application layer the system will present the error in a snackbar at the top of the page. The snackbar can be freezed by clicking on the top right corner of it. 
 
     
 
-#### 8.3.2.  Managing items ( gamma )
+#### 8.4.2.  Managing items ( beta )
 The Qto application provides the needed UI interfaces to Create , Update , Delete items in the view documents UI for the users having the privileges for those actions.
-This feature in in gamma mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
+This feature in in beta mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
 
     
 
-##### 8.3.2.1. Add an item in the doc view page UI ( gamma)
+##### 8.4.2.1. Add an item in the doc view page UI ( beta)
 Users with the write privileges for the document can add an item in the doc view page just by right clicking on the title and selecting one of the 3 options:
  - add sibling node - add an item which is on the same level in the hierarchy 
  - add parent node - add an item which is on 1 level up in the hierarchy
  - add child node - add and item which is on 1 level bellow in the hierarchy
 The new item appears straight after the origin title it was requested from.
-This feature in in gamma mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
+This feature in in beta mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
 
     
 
-##### 8.3.2.2. Update item ( gamma )
+##### 8.4.2.2. Update item ( gamma )
 You can:
 - update item title content
 - update item description
@@ -458,13 +503,13 @@ This feature in in gamma mode as it certain rare cases it might not work as expe
 
     
 
-##### 8.3.2.3. Delete item ( gamma )
+##### 8.4.2.3. Delete item ( gamma )
 You can right click on an item and choose the remove node from the right click men.
 This feature in in gamma mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
 
     
 
-#### 8.3.3. Printing view doc documents
+#### 8.4.3. Printing view doc documents
 You can print ANY branch including the whole documents by right clicking the branch or node and choosing "print-preview" and than use the browser's print functionality.
 
     

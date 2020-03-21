@@ -73,7 +73,7 @@ Vue.component('div_search_box', {
   , fetchSSDataForCols: function (url_params) { // only data logic here !!!
 		if ( typeof url_params === "undefined" ) { url_params = { as:"grid" } }
 
-      return axios.get(("/<%== $db =%>/select-meta/<%== $item =%>") , { params: url_params } )
+      return axios.get(("/<%== $db =%>/select-item-meta-for/<%== $item =%>") , { params: url_params } )
       .then(response => {
          return response.data.dat.map(obj => obj.attribute_name);
       })

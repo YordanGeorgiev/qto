@@ -32,7 +32,7 @@ for my $row ( @$tables ) {
 	my $url_params = '' ; # 
 	my $url        = '' ; 
 
-   $url = '/' . $db . '/select-meta/' . $table ; 
+   $url = '/' . $db . '/select-item-meta-for/' . $table ; 
    my $meta_res = $ua->get($url)->result->json ; 
    my $list_meta = $meta_res->{'dat'} ; 
    my @with_or_where = ( 'with' , 'where' ); 

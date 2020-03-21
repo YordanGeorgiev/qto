@@ -71,10 +71,9 @@ sub doLogonUser {
             my $dbepass = $hsr->{$key}->{ 'pass' } ; # this is the pass from the db !!!
             if ( $objGuardian->passwordsMatch ($dbepass,$pass) ){
 
-               my ( $rv, $msg , $jwt ) = $objGuardian->doGrantAccessToken($hsr);
+               my ( $rv, $msg , $jwt ) = $objGuardian->doGrantAccessToken($db, $hsr);
                if ( $rv == 0 ) { 
                   my $pub_secret          = $objGuardian->doGetPublicKeySecret();
-                  $self->session( 'app.' . $db . '.public_rsa_key' => $pub_secret);
                   $self->session( 'app.' . $db . '.jwt' => $jwt);
                   $self->session( 'app.' . $db . '.user' => $email);
                   $redirect_url = '/' . $pdb . '/search' ; 

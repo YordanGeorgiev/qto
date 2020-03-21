@@ -18,7 +18,7 @@ use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 my $module_trace     = 0 ;
 our $config          = {};
 our $objLogger       = {} ;
-our $rdbms_type      = 'postgre';
+our $rdbms_type      = 'postgres';
 
 
 
@@ -57,12 +57,13 @@ sub doSelectItems {
          unless $objCnrUrlPrms->doValidateAndSetSelect();
 
    $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
-   $objRdrDb            = $objRdrDbsFcry->doSpawn ( $rdbms_type );
+   $objRdrDb            = $objRdrDbsFcry->doSpawn ( $rdbms_type , $db);
    my $who              = $self->session( 'app.' . $db . '.user' );
 
    ($ret, $msg, $hsr2)  = $objRdrDb->doSelectRows($db, $item,$who);
-   my $meta_tables = $objModel->get("$db" . '.meta-tables');
-   $meta_cols = $objModel->get("$db" . '.meta-columns');
+   my $meta_tables      = $objModel->get("$db" . '.meta-tables');
+   $meta_cols           = $objModel->get("$db" . '.meta-columns');
+
    $met = {
         'meta_cols' => $meta_cols
       , 'meta_tables' => $meta_tables
@@ -106,8 +107,8 @@ sub doSelectTables {
 
 	my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
 
-	my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
-	($ret, $msg,$hsr2) = $objRdrDb->doSelectTablesList($db);
+	my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type",$db);
+	($ret, $msg, $hsr2) = $objRdrDb->doSelectTablesList($db);
 
    my $dat = [] ; # an array ref holding the converted hash ref of hash refs 
    if ( $ret == 0 ) {
@@ -161,7 +162,6 @@ sub doSelectDatabases {
 
 	my $self          = shift;
 	my $db            = $self->stash('db');
-	my $rdbms_type    = 'postgres';
    my $msg           = 'unknown error during select-databases';
    my $http_code     = 200 ; 
    my $http_method   = 'GET' ; 
@@ -180,7 +180,7 @@ sub doSelectDatabases {
 	my $objRdrDbsFcry
 			= 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
 
-	my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type");
+	my $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type", $db);
 	($ret, $msg) = $objRdrDb->doSelectDatabasesList(\$objModel);
 
    if ( $ret == 0 ) {
@@ -206,23 +206,21 @@ sub doSelectDatabases {
 
 #
 # --------------------------------------------------------
-# select the meta data 
+# select the meta data for an item
 # --------------------------------------------------------
-sub doSelectMeta {
+sub doSelectItemMetaFor {
 
    my $self        = shift;
    my $db          = $self->stash('db');
-   my $table       = $self->stash('item') || undef ; 
+   my $item        = $self->stash('item') || 'meta_columns';
    my $ret         = 0;
    my $msg         = 'unknown error during Select item';
    my $met         = {} ;
    my $cols_meta   = '' ; 
-   my $rdbms_type  = 'postgres';
    my $http_method = 'GET';
    my $http_code   = '400';
    my $dat         = '' ; 
    my $cnt         = 0;
-   my $item        = 'select_meta' ; 
    $config		    = $self->app->config ; 
    $db             = toEnvName ( $db , $config) ;
 
@@ -231,9 +229,8 @@ sub doSelectMeta {
 
    if ( $ret == 0 ) {
       my $arr_meta_cols = () ; # an array ref holding the converted hash ref of hash refs 
-      my $meta_cols = () ; # an array ref holding the converted hash ref of hash refs 
+      my $meta_cols = $objModel->get("$db" . '.meta-columns');
       my $http_code = 200 ; 
-      $msg = "SELECT meta OK for table: $table " ; 
       my $objCnrHsr2ToArray = 'Qto::App::Cnvr::CnrHsr2ToArray'->new ( \$config , \$objModel ) ; 
       $meta_cols = $objModel->get("$db" . '.meta-columns');
       ( $ret , $msg , $arr_meta_cols, $cnt ) = $objCnrHsr2ToArray->doConvert($meta_cols);
@@ -241,10 +238,12 @@ sub doSelectMeta {
          $http_code = 400 ; $dat = '' ; $cnt = 0 ; 
       }
       my $meta_tables = $objModel->get("$db" . '.meta-tables');
-      ( $ret , $msg , $meta_cols , $cnt ) = $objModel->doGetColumnsMeta( $config , $db , $table );
+
+      #$objModel->set($db . '.tables-list',   $tables_list);
+
       $met = {
-         'meta_cols' => $meta_cols
-       , 'meta_tables' => $meta_tables
+         'meta_cols'       => $meta_cols
+       , 'meta_tables'     => $meta_tables
       };
       $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$arr_meta_cols);
    } elsif ( $ret == 400 or $ret == 404 ) {
@@ -255,7 +254,7 @@ sub doSelectMeta {
       $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } elsif ( $ret == 1 ) {
       $http_code = 400 ; 
-      $msg = " the table $table does not exist " ; 
+      $msg = " the item $item does not exist " ; 
       $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    } else {
       $http_code = 400 ; 

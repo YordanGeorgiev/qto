@@ -25,29 +25,129 @@ our $objLogger             = {} ;
 our $jwt_public_key_file   = '' ; 
 our $jwt_private_key_file  = '' ; 
 
-# call-by: 
-# $objGuardian->doAuthenticate($config,$db, $controller);
-# returns 1 if is authenticated, otherwise 0
+
 sub isAuthenticated {
 
    my $self                = shift ;
    my $config              = shift ; 
    my $db                  = shift ;
    my $controller          = shift ;
+   my $msg                 = ${ shift @_ }; # ref passed !!!
    my $rv                  = 0;
+   $msg                    = 'an error occurred during the authentication !!!' ;
 
+   return 1 if $ENV{'QTO_NO_AUTH'}; # no authentication when testing if desired so !!!
+
+   # qto-200302161711 - jwt auth implementation
+   if ( defined $ENV{'QTO_JWT_AUTH'} && $ENV{'QTO_JWT_AUTH'} == 1 ){
+      # get the jwt from the session 
+      return 0 unless ( defined ( $controller->session( 'app.' . $db . '.jwt')));
+      my $jwt           = $controller->session( 'app.' . $db . '.jwt');
+      my $pub_secret    = $config->{'env'}->{'run'}->{ 'PublicRSAKey' } ; 
+
+      ( $rv, $msg, my $claims_from_token ) = $self->doVerifyTokenAndGetClaims($jwt,$pub_secret);
+      return $rv unless $rv == 0 ; 
+
+   } else {
+      # basic native authentication mode if NOT started with this env var
+      unless ( defined ( $controller->session( 'app.' . $db . '.user')) ) {
+         return 0;
+      } else {
+         return 1 ;
+      }
+   }
+
+}
+
+# call-by: 
+# $objGuardian->doAuthenticate($config,$db, $controller);
+# returns 1 if is authorized, returns 0 if NOT authorized to perform 
+# the <<web-action>> to the <<web-action-subject>>
+sub isAuthorized {
+
+   my $self                = shift ;
+   my $config              = shift ; 
+   my $db                  = shift ;
+   my $controller          = shift ;
+   my $msg                 = ${ shift @_ }; # ref passed !!!
+   my $rv                  = 0;
+   $msg                    = 'an error occurred during authentication !!!' ;
+
+   p $ENV{'QTO_NO_AUTH'} ; 
+   print "QTO_NO_AUTH in Guardian.pm todo:ysg \n";
    # non-authentication mode IF the app has been stared with this env var
    return 1 if $ENV{'QTO_NO_AUTH'}; # no authentication when testing if desired so !!!
+
 
    # debug rint $controller->session( 'app.' . $db . '.user') ;
    # debug rint ('app.' . $db . '.user');
    # debut rint " ::: eof session user from isAuthenticated in Guardian.pm \n";
+   #
+   p $ENV{'QTO_JWT_AUTH '};
+   print "QTO_JWT_AUTH in Guardian.pm todo:ysg \n";
 
-   # basic native authentication mode if NOT started with this env var
-   unless ( defined ( $controller->session( 'app.' . $db . '.user')) ) {
-      return 0;
+   # qto-200302161711 - jwt auth implementation
+   if ( defined $ENV{'QTO_JWT_AUTH'} && $ENV{'QTO_JWT_AUTH'} == 1 ){
+      #my $url           = (split('#',$controller->req->url->to_abs))[0];
+      my $path          = $controller->req->url->path;
+      my $web_action    = (split('/',$path))[2];
+      my $act_subject   = (split('/',$path))[3] || '' ;
+
+      # get the jwt from the session 
+      return 0 unless ( defined ( $controller->session( 'app.' . $db . '.jwt')));
+
+      # get the public key from the session from the config
+      my $pub_secret    = $config->{'env'}->{'run'}->{ 'PublicRSAKey' } ;
+      my $jwt           = $controller->session( 'app.' . $db . '.jwt');
+
+      # compare the route requested to the rbac list
+      # get the roles from the jwt
+      ( my $ret, $msg, my $claims_from_token ) = $self->doVerifyTokenAndGetClaims($jwt,$pub_secret);
+      return $rv unless $ret == 0 ; 
+      
+      # get the RBAC list from the Redis
+      my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
+      my $rbac_list     = $objRdrRedis->getData(\$config,"$db" . '.rbac-list');
+      # p $rbac_list ; 
+      # print "eof rbac_list from Guardian.pm todo:ysg \n";
+      # p $claims_from_token ;
+      # print "claims_from_token from Guardian.pm todo:ysg \n";
+      p $claims_from_token->{'roles'} ; 
+      print "the claims from token from Guardian todo:ysg \n";
+
+      # foreach role in the claims, build the permission string:
+      my $roles = $claims_from_token->{'roles'};
+      foreach my $role ( @$roles ) {
+         p $role ; 
+         print "role in forach my role \n";
+         # READER__may__view__yearly_issues
+         my $permission = $role . '__may__' . $web_action . '__' . $act_subject ;
+         $permission = substr($permission,0,-2) unless ( $act_subject);
+         print "permission $permission from Guardian.pom todo:ysg \n";
+         # grep the permission string from the rbac_list 
+         # if found set rv to 1 , else do nothing as rv is set to 0 
+         $rv = grep ( /^$permission/, @$rbac_list);
+         if ( $rv == 1 ) {
+            $msg = '' if ( $rv == 1 );
+            last ;
+         }
+      }
+      return $rv if ( $rv == 1 );
+
+      $msg = "you do not have the permission to $web_action" ; 
+      $msg .= "the $act_subject" if $act_subject ; 
+      $msg .= '! Please, check your url.' ;
+
+      # return $rv
+      return $rv ; 
+
    } else {
-      return 1 ;
+      # basic native authentication mode if NOT started with this env var
+      unless ( defined ( $controller->session( 'app.' . $db . '.user')) ) {
+         return 0;
+      } else {
+         return 1 ;
+      }
    }
 
 }
@@ -59,10 +159,14 @@ sub isAuthenticated {
 # --------------------------------------------------------
 sub doGrantAccessToken {
    my $self        = shift ; 
+   my $db          = shift ; 
    my $hsr         = shift ; 
 
+   p $hsr ; 
+   print "hsr from Guardian.pm ::: doGrantAccessToken todo:ysg \n";
+
    my $prv_secret  = $self->doGetPrivateKeySecret();
-   my $claims      = $self->doBuildClaims($hsr);
+   my $claims      = $self->doBuildClaims($db , $hsr);
 
    my ( $rv, $msg , $jwt) = $self->create_token($claims,$prv_secret);
    return ( $rv, $msg , $jwt );
@@ -73,13 +177,20 @@ sub doGrantAccessToken {
 # src: https://www.iana.org/assignments/jwt/jwt.xhtml
 sub doBuildClaims {
    my $self             = shift ; 
+   my $db               = shift ; 
    my $hsr              = shift ; 
    my $claims           = {} ;
-  
-   $claims->{'iss'}     = 'qto-' . $config->{'env'}->{'run'}->{'VERSION'};
-   $claims->{'sub'}     = $hsr->{'user_id'};
-   $claims->{'name'}    = $hsr->{'user_name'};
-   $claims->{'email'}   = $hsr->{'email'};
+   my @roles            = ();
+
+   foreach my $key ( keys %$hsr ){
+      my $row = $hsr->{$key};
+      $claims->{'iss'}     = 'qto' . '.' . $db . '-' . $config->{'env'}->{'run'}->{'VERSION'};
+      $claims->{'sub'}     = $row->{'user_id'};
+      $claims->{'name'}    = $row->{'user_name'};
+      $claims->{'email'}   = $row->{'email'};
+      push ( @roles , $row->{'role'} );
+      $claims->{'roles'}   = \@roles; # user might have 1..* roles
+   }
 
    return $claims ;
 }
@@ -160,7 +271,7 @@ sub create_token {
 }
 
 
-# usage
+# return 0 if ok , return 1 if NOK
 sub doVerifyTokenAndGetClaims {
 
    my $self       = shift ; 

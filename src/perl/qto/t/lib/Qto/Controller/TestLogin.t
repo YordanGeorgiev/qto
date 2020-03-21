@@ -11,6 +11,7 @@ BEGIN {
    unshift @INC, "$FindBin::Bin/../../../../../qto/lib" ; 
    }
    $ENV{'QTO_NO_AUTH'} = 0;
+   $ENV{'QTO_JWT_AUTH'} = undef;
    my $tm         = '' ; # the test message for each test 
    my $emsg       = '' ; # the expected msg on the ui
    my $t          = Test::Mojo->new('Qto');

@@ -51,6 +51,7 @@ sub doReloadProjDbMetaData {
       $self->doReloadProjDbMetaColumns($db,$item,\$objWtrRedis);
       $self->doReloadProjDbMetaTables($db,$item,\$objWtrRedis);
       $self->doReloadProjDbRBACList($db,$item,\$objWtrRedis);
+      $self->doReloadMetaRoutes($db,\$objWtrRedis);
 
    } else {
       my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
@@ -142,6 +143,27 @@ sub doReloadProjDbRBACList {
 
 }
 
+# reload the project db Roles Based Access Control List
+sub doReloadMetaRoutes {
+
+   my $self                = shift ;
+   my $db                  = shift ;
+   $db                     = toEnvName ( $db , $config ) ;
+	my $objWtrRedis         = ${ shift @_ } || croak 'objWtrRedis not passed !!!' ; 
+   my $objRdrDbsFcry       = {} ; 
+   my $objRdrDb            = {} ; 
+   my $hsr                 = {} ;
+   my $ret                 = 1 ; 
+   my $msg                 = "fatal error while reloading project database meta data " ; 
+
+   $objModel->set('postgres_db_name' , $db ) ; 
+   $objRdrDbsFcry          = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config, \$objModel );
+   $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type , $db);
+   ($ret, $msg , $hsr )    = $objRdrDb->doCallFuncGetHashRef('func_get_meta_routes','id'); # by convention ?!
+   
+   $objWtrRedis->setData(\$config, $db . '.meta-routes', $hsr);
+
+}
 
 1;
 
