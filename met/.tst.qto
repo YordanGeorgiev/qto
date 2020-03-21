@@ -568,7 +568,9 @@ src/sql/pgsql/qto/tables/42.create-table-ideas_status.sql
 src/sql/pgsql/qto/tables/43.create-table-questions_status.sql
 src/sql/pgsql/qto/tables/44.create-table-category.sql
 src/sql/pgsql/qto/tables/45.create-table-risks.sql
-src/sql/pgsql/qto/tables/45.create-table-problems_status.sql
+src/sql/pgsql/qto/tables/46.create-table-problems_status.sql
+src/sql/pgsql/qto/tables/47.create-table-projects.sql
+src/sql/pgsql/qto/tables/48.create-table-contacts.sql
 src/sql/pgsql/qto/tables/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/tables/66.create-table-logs.sql
 src/sql/pgsql/qto/tables/88.create-table-test_hi_delete_table_doc.sql

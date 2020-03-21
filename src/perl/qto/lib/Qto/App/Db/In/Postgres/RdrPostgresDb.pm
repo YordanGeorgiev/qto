@@ -67,13 +67,13 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          $sth->bind_param('$1', $email);  # placeholders are numbered from 1, varchar is default db type
          $sth->execute() or $objLogger->error ( "$DBI::errstr" ) ;
          $hsr = $sth->fetchall_hashref( 'id' ) ; 
-
-         if ( scalar ( keys %$hsr ) == 1 ) {
+                  
+         if ( scalar ( keys %$hsr ) >= 1 ) {
             $ret = 200 ; 
             $msg = "" ; 
       } else { 
          $msg = "$email not registered! Contact " . $config->{'env'}->{'db'}->{'AdminEmail'} . " to request access." ;  
-         $ret = 401 if ( scalar ( keys %$hsr ) != 1 );
+         $ret = 401 if ( scalar ( keys %$hsr ) < 1 );
       }
    };
    if ( $@ ) { 

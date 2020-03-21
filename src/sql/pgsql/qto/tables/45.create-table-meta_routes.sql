@@ -1,4 +1,4 @@
- ---- DROP TABLE IF EXISTS meta_routes ; 
+-- DROP TABLE IF EXISTS meta_routes ; 
 
 SELECT 'create the "meta_routes" table'
 ; 
@@ -57,7 +57,7 @@ b2a70ed6-e7d0-42ce-8e61-9138031a0e23	200228080331	1	t	update	The UPDATE route te
 3f651cb4-0702-4dc6-8368-a1c7d1e45ba0	200228080425	1	t	delete	the DELETE route tells the qto Application Layer to delete a row in an item table from DELETE request provided json data	2020-02-28 05:59:51
 4de2af7f-d23e-4f3c-a3e1-b84101cbf506	200228153439	1	t	hidelete	The deletion of hierarchical row in the db	2020-02-28 13:30:29
 03432642-6bcd-4bbc-bc39-674062e4403f	200228080115	1	t	select	The SELECT route tells the qto Application Layer  to select the data of an item in json data format ( aka qto api compliant table )	2020-02-28 06:00:44
-cc2ae685-01f8-4375-ae15-cf48b9b54e49	200228153513	1	t	select-meta	The retrieval of the meta-data for an item	2020-02-28 13:30:58
+cc2ae685-01f8-4375-ae15-cf48b9b54e49	200228153513	1	t	select-item-meta-for	The retrieval of the meta-data for an item	2020-02-28 13:30:58
 15b6523e-8e2c-45bf-bcc4-13bc8da1bf86	200228055434	1	t	list	The LIST route tells the qto Application Layer  to list in the qto UI the content of an item ( aka qto api compliant table )	2020-02-28 06:00:57
 ff5202c2-aebf-4007-af6d-e287addb8f93	200228153538	1	t	export	The export of data for an item , for example export as xls	2020-02-28 13:31:22
 1ec738f2-865c-433d-b5a0-6f5e67882659	200228080606	1	t	search	The SEARCH route tells the qto Application Layer  to display the search results in the qto UI, produced by querying all the item tables in the db	2020-02-28 06:02:06

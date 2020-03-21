@@ -10,6 +10,7 @@ die_on_fail;
 
 BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $ENV{'QTO_NO_AUTH'} = 0 ; # !!!
+   $ENV{'QTO_JWT_AUTH'} = 1 ; # !!!
 
    my $tm         = '' ; # the test message for each test 
    my $emsg       = '' ; # the expected msg on the ui
@@ -81,10 +82,6 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    ok ( $tx->result->dom->all_text =~ 'wrong password for test.anonymous.user@gmail.com' , $tm );
    printf "\n";
 
-   $tm = "both email and pass are filled in and the pass matches - see users create table";
-   ok ( $t->post_ok( $url => 'form'  => {'email' =>'test.anonymous.user@gmail.com', 'pass' => 'secret'}) , $tm );
-   printf "\n";
-   
    $tm = "non registered user"; 
    ok ( $t->post_ok( $url => 'form'  => {'email' =>'not.registered.user@gmail.com', 'pass' => 'invalid'})->status_is(401) , $tm );
    $tx = $t->ua->post( $url => 'form'  => {'email' =>'not.registered.user@gmail.com', 'pass' => 'invalid'});
@@ -92,7 +89,9 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    printf "\n";
 
    $tm = "a successfull result redirects to the search page";
-   $tx = $t->ua->post( $url => 'form'  => {'email' =>'test.anonymous.user@gmail.com', pass=>'test.anonymous.user-pass' => 'secret'});
+   $email = 'test.anonymous.user@gmail.com' ;
+   $pass = 'test.anonymous.user-pass';
+   $tx = $t->ua->post( $url => 'form'  => {'email' =>$email, pass=>$pass});
    ok ( $tx->result->dom->to_string =~ "<title> search $pdb </title>", $tm );
    # debug p $tx->result->dom->to_string ;
    printf "\n";
@@ -127,9 +126,17 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
       return $db ;
    }
 
+   $tm = 'once logged in the anonymous user should not be able to access the roles item';
+   $url = '/' . $db . '/select/roles';
+   $t->get_ok( $url )->status_is(200 , $tm ) ; 
+   my $ua  = $t->ua ; 
+   my $res = $ua->get($url )->result->json ; 
+   p $res ; 
+   #ok ( $res->{'ret'} == 204 , $tm);
+   printf "\n";
 
+   # todos: check for buffer overflows ... 
    $tm = 'the email should be no longer than 100 chars' ; # test for buffer overflows ...
-
    $tm = 'the pass should be no longer than 100 chars' ; # test for buffer overflows ...
 
 done_testing();

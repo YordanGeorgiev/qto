@@ -48,7 +48,7 @@ sub startup {
 
    $self->doRegisterPlugins() ; 
 
-   $self->doSessions() ; 
+   $self->doSetSessions() ; 
    
    $self->doLoadAppConfig();
 
@@ -205,12 +205,9 @@ sub doSetHooks {
    # obs: after_static_dispatch deprecated
    $self->hook( 'after_dispatch' => sub {
       my $c       = shift;
-      my $url     = (split('#',$c->req->url->to_abs))[0];
+      my $url     = (split('#',$c->req->url->path))[0];
+      my $msg     = '' ; 
 	
-		my $type = $c->res->headers->content_type;
-		# obs no authentication for static resources ... qto-200314095059
-		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g);
-
 		# If so, try to prevent caching
 		$c->res->headers->header(
 			Expires => Mojo::Date->new(time-365*86400)
@@ -218,27 +215,38 @@ sub doSetHooks {
 		$c->res->headers->header(
 			"Cache-Control" => "max-age=1, no-cache"
 		);
+		
+      my $type = $c->res->headers->content_type;
+      print "after_dispatch url: $url in Qto.pm todo:ysg \n";
+      print "after_dispatch type: $type in Qto.pm todo:ysg \n";
 
-      my $route   = (split('/',$url))[4]; #this will fail on new static resource types ...
+      # only authentiation for dynamic resources and json
+      # return unless ( defined $type || $type =~ /text\/html/g || $type =~ /application\/json/g);
+		# obs no authentication for static resources ... qto-200314095059
+		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g);
 
-      unless ( $route eq 'logon' || $route eq 'login' ) {
-			my $db      = (split('/',$url))[3];
+      my $route   = (split('/',$url))[1]; #this will fail on new static resource types ...
+      print "route: $route  Qto.pm todo:ysg \n";
+
+
+      unless ( $route eq 'logon' || $route eq 'login' || defined($route)) {
+			my $db      = (split('/',$url))[0];
          $db         = 'qto' unless $db ;
 			$db         = toEnvName ($db,$c->app->config);
 			my $objGuardian = $self->get('ObjGuardian');
 
-			unless ( $objGuardian->isAuthenticated($c->app->config, $db, $c)){
+			unless ( $objGuardian->isAuthenticated($c->app->config, $db, $c, \$msg)){
 				my $login_url = '/' . toPlainName($db) . '/login' ;
 				$c->redirect_to($login_url);
+
+            unless ( $objGuardian->isAuthorized($c->app->config, $db, $c, \$msg)){
+               my $home_url = '/' . toPlainName($db) . '/search' ;
+               p $msg ; 
+               print "msg after isAuthorized failed in Qto.pm todo:ysg \n";
+               $c->redirect_to($home_url);
+            }
 			}
 		}
-      # qto-200302161711
-      # get the app config
-      # get the guardian $objGuardian
-      # get the RBAC list from the Redis
-      # get the jwt from the session 
-      # get the public key from the session from the config
-      #
 
    });
 
@@ -263,7 +271,7 @@ sub doSetHooks {
 # -----------------------------------------------------------------------------
 # src: https://mojolicious.org/perldoc/Mojolicious/Sessions
 # -----------------------------------------------------------------------------
-sub doSessions {
+sub doSetSessions {
    
    my $self = shift ; 
    $self->sessions->default_expiration(86400); # set expiry to 1 day
@@ -383,16 +391,21 @@ sub doSetRoutes {
    , action       => 'doSelectItems'
    );
 
+   $r->get('/:db/select-item-meta-for')->to(
+     controller   => 'Select'
+   , action       => 'doSelectItemMetaFor'
+   );
+
+   $r->get('/:db/select-item-meta-for/:item')->to(
+     controller   => 'Select'
+   , action       => 'doSelectItemMetaFor'
+   );
+   
    $r->get('/:db/select-meta')->to(
      controller   => 'Select'
    , action       => 'doSelectMeta'
    );
 
-   $r->get('/:db/select-meta/:item')->to(
-     controller   => 'Select'
-   , action       => 'doSelectMeta'
-   );
-   
    $r->get('/:db/list/:item')->to(
      controller   => 'List'
    , action       => 'doListItems'
