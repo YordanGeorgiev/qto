@@ -27,14 +27,15 @@
     * [4.5.1. Restore a database from full database backup](#451-restore-a-database-from-full-database-backup)
     * [4.5.2. Restore a database from db inserts file](#452-restore-a-database-from-db-inserts-file)
   * [4.6. RESTORE A DATABASE TABLE](#46-restore-a-database-table)
+  * [4.7. CREATE A FULL BACKUP OF AN INSTANCE SITE](#47-create-a-full-backup-of-an-instance-site)
 * [5. SHELL ACTIONS](#5-shell-actions)
   * [5.1. RUN INCREASE-DATE ACTION](#51-run-increase-date-action)
   * [5.2. LOAD XLS SHEET TO DB A DOC TABLE](#52-load-xls-sheet-to-db-a-doc-table)
 * [6. BULK ISSUES MANAGEMENT](#6-bulk-issues-management)
-    * [6.1. Opening a monthly period](#61-opening-a-monthly-period)
-  * [6.1. CLOSING A MONTHLY PERIOD](#61-closing-a-monthly-period)
-  * [6.2. PUBLISH THE RELEASE ISSUES](#62-publish-the-release-issues)
-  * [6.3. DIRS NAMING CONVENTIONS](#63-dirs-naming-conventions)
+  * [6.1. OPENING A MONTHLY PERIOD](#61-opening-a-monthly-period)
+  * [6.2. CLOSING A MONTHLY PERIOD](#62-closing-a-monthly-period)
+  * [6.3. PUBLISH THE RELEASE ISSUES](#63-publish-the-release-issues)
+  * [6.4. DIRS NAMING CONVENTIONS](#64-dirs-naming-conventions)
 * [7. NAMING CONVENTIONS](#7-naming-conventions)
   * [7.1. NAMING CONVENTIONS FOR DIRECTORIES](#71-naming-conventions-for-directories)
   * [7.2. ROOT DIRS NAMING CONVENTIONS](#72-root-dirs-naming-conventions)
@@ -265,6 +266,30 @@ You restore a database table by first running the pgsql scripts of the project d
     # re-apply the table ddl
     psql -d $postgres_db_name < src/sql/pgsql/dev_qto/13.create-table-requirements.sql
 
+### 4.7. Create a full backup of an instance site
+Once an instance site is up-and-running - it might be a good idea to create a full-backup of the site's instance data, software and configuration:
+ - full backup the postgres - both DDL and DML's
+ - ensure the cnf/env/&lt;&lt;env&gt;&gt;.json is part of the met/.&lt;&lt;env&gt;&gt;.qto meta list file
+ - add the DML and DDL dump files to the met/.&lt;&lt;env&gt;&gt;.qto meta list file
+ - create a relative or full package zip file
+ - rename it to reflect the fact that this file contains a full backup file
+
+    # full backup the postgres - both DDL and DML's
+    ./src/bash/qto/qto.sh -a backup-postgres-db
+    ./src/bash/qto/qto.sh -a backup-postgres-db-inserts
+    #  ensure the cnf/env/<<env>>.json is part of the met/.<<env>>.qto meta list file 
+    # vim met/.<<env>>.qto
+    
+    #  add the DML and DDL dump files to the met/.<<env>>.qto meta list file, for example :
+    echo dat/mix/2020/2020-03/2020-03-22/sql/prd_qto/prd_qto.20200322_123449.full.dmp.sql >> met/.tst.qto
+    echo dat/mix/2020/2020-03/2020-03-22/sql/prd_qto/prd_qto.20200322_123633.insrts.dmp.sql >> met/.prd.qto
+    
+    #  create a relative or full package zip file
+    ./src/bash/qto/qto.sh -a create-relative-package
+    
+    #  rename it to reflect the fact that this file contains a full backup file
+    mv -v ../qto.0.8.1.prd.20200322_122924.ip-10-0-44-231.rel.zip ../qto.0.8.1.prd-fb.20200322_122924.ip-10-0-44-231.rel.zip
+
 ## 5. SHELL ACTIONS
 
 
@@ -290,7 +315,7 @@ By bulk issues management herewith is meant the bulk handling via sql to the iss
 
     
 
-#### 6.1. Opening a monthly period
+### 6.1. Opening a monthly period
 Each monthly period is basically a table with the naming convention monthly_issues_YYYYMM for example the monthly period for the year 2020 January will be the monthly_issues_202001. 
 To create the table you need to basically copy the monthly_issues table to the one with the period at the end and replace the monthly issues with the monthly_issues_&lt;&lt;yyyymm&gt;&gt; string and run the table as follows.
 
@@ -308,18 +333,18 @@ To create the table you need to basically copy the monthly_issues table to the o
     bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues monthly_issues_202001
     
 
-### 6.1. Closing a monthly period
+### 6.2. Closing a monthly period
 Closing a monthly period would simply mean to ensure that all the done issues will be moved to the release_issues table
 
     bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues_202002 release_issues
     
 
-### 6.2. Publish the release issues
+### 6.3. Publish the release issues
 You publish the release issues by moving all the issues with '09-done' status to the release_issues table
 
     
 
-### 6.3. Dirs naming conventions
+### 6.4. Dirs naming conventions
 The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
 
     

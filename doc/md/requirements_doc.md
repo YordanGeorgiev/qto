@@ -57,7 +57,7 @@
   * [8.4. LOGIN PAGE REQUIREMENTS](#84-login-page-requirements)
   * [8.5. LIST PAGE REQUIREMENTS](#85-list-page-requirements)
     * [8.5.1. View page requirements](#851-view-page-requirements)
-* [9. INTEROPERABILITY](#9-interoperability)
+* [9. ETL, DATA AND INTEROPERABILITY](#9-etl-data-and-interoperability)
   * [9.1. DATA IMPORT](#91-data-import)
     * [9.1.1. Import from xls](#911-import-from-xls)
     * [9.1.2. Import from json format](#912-import-from-json-format)
@@ -68,6 +68,9 @@
     * [9.2.3. Export to xls](#923-export-to-xls)
     * [9.2.4. Export to Microsoft docx](#924-export-to-microsoft-docx)
     * [9.2.5. Export to json](#925-export-to-json)
+  * [9.3. DATA MERGE](#93-data-merge)
+    * [9.3.1. Data merge from local to remote table](#931-data-merge-from-local-to-remote-table)
+    * [9.3.2. Data merge from remote to local table](#932-data-merge-from-remote-to-local-table)
 * [10. SECURITY](#10-security)
   * [10.1. AUTHENTICATION](#101-authentication)
     * [10.1.1. QTO_NO_AUTH mode](#1011-qto_no_auth-mode)
@@ -421,7 +424,7 @@ Each information on view doc page must be filterable from the omni search box - 
 
     
 
-## 9. INTEROPERABILITY
+## 9. ETL, DATA AND INTEROPERABILITY
 The qto application should support export and import from different data formats from both client and server side.
 
     
@@ -473,6 +476,21 @@ Any user having an up-and-running qto instance must be able to export all or sin
 
 #### 9.2.5. Export to json
 Any user having an up-and-running qto instance must be able to export all or single table from that or another qto instance with tcp/ip connectivity into json files.
+
+    
+
+### 9.3. Data merge
+
+
+    
+
+#### 9.3.1. Data merge from local to remote table
+
+
+    
+
+#### 9.3.2. Data merge from remote to local table
+
 
     
 

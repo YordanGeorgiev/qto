@@ -32,24 +32,26 @@
   * [3.13. PROVISION THE TST DATABASE](#313-provision-the-tst-database)
   * [3.14. FORK THE PRODUCTION INSTANCE](#314-fork-the-production-instance)
   * [3.15. PROVISION THE PRD DATABASE](#315-provision-the-prd-database)
-* [4. PROVISION HTTPS ( ONLY IF DNS IS CONFIGURED )](#4-provision-https-(-only-if-dns-is-configured-))
-* [5. NON-FIRST TIME AWS DEPLOYMENT](#5-non-first-time-aws-deployment)
-  * [5.1. FORK THE LATEST STABLE DEV TO TST](#51-fork-the-latest-stable-dev-to-tst)
-  * [5.2. GO TO YOUR PREVIOUS ENVIRONMENT](#52-go-to-your-previous-environment)
-  * [5.3. CREATE THE AWS INSTANCE](#53-create-the-aws-instance)
-  * [5.4. SETUP BASH & VIM](#54-setup-bash-&-vim)
-  * [5.5. CLONE THE PROJECT ON THE SSH SERVER](#55-clone-the-project-on-the-ssh-server)
-* [6. PHYSICAL HOST OS INSTALLATIONS](#6-physical-host-os-installations)
-  * [6.1. MACOS](#61-macos)
-    * [6.1.1. Install qtpass](#611-install-qtpass)
-* [7. POTENTIAL PROBLEMS AND TROUBLESHOOTING](#7-potential-problems-and-troubleshooting)
-  * [7.1. THE POSTGRES ADMIN USER PASSWORD IS WRONG](#71-the-postgres-admin-user-password-is-wrong)
-  * [7.2. REDIS REFUSES TO START ](#72-redis-refuses-to-start-)
-  * [7.3. CANNOT LOGIN AT ALL IN THE WEB INTERFACE WITH THE ADMIN USER](#73-cannot-login-at-all-in-the-web-interface-with-the-admin-user)
-  * [7.4. STRANGE PERMISSIONS ERRORS](#74-strange-permissions-errors)
-  * [7.5. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#75-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
-  * [7.6. SOME KIND OF MISMATCH IN THE AWS](#76-some-kind-of-mismatch-in-the-aws)
-  * [7.7. THE PROBLEM OCCURRED IS NOT MENTIONED HERE ???!!!](#77-the-problem-occurred-is-not-mentioned-here-)
+  * [3.16. PROVISION HTTPS ( ONLY IF DNS IS CONFIGURED )](#316-provision-https-(-only-if-dns-is-configured-))
+  * [3.17. SMOKE TEST THE SITE INSTANCE](#317-smoke-test-the-site-instance)
+  * [3.18. CREATE A FULL BACKUP OF AN INSTANCE SITE](#318-create-a-full-backup-of-an-instance-site)
+* [4. NON-FIRST TIME AWS DEPLOYMENT](#4-non-first-time-aws-deployment)
+  * [4.1. FORK THE LATEST STABLE DEV TO TST](#41-fork-the-latest-stable-dev-to-tst)
+  * [4.2. GO TO YOUR PREVIOUS ENVIRONMENT](#42-go-to-your-previous-environment)
+  * [4.3. CREATE THE AWS INSTANCE](#43-create-the-aws-instance)
+  * [4.4. SETUP BASH & VIM](#44-setup-bash-&-vim)
+  * [4.5. CLONE THE PROJECT ON THE SSH SERVER](#45-clone-the-project-on-the-ssh-server)
+* [5. PHYSICAL HOST OS INSTALLATIONS](#5-physical-host-os-installations)
+  * [5.1. MACOS](#51-macos)
+    * [5.1.1. Install qtpass](#511-install-qtpass)
+* [6. POTENTIAL PROBLEMS AND TROUBLESHOOTING](#6-potential-problems-and-troubleshooting)
+  * [6.1. THE POSTGRES ADMIN USER PASSWORD IS WRONG](#61-the-postgres-admin-user-password-is-wrong)
+  * [6.2. REDIS REFUSES TO START ](#62-redis-refuses-to-start-)
+  * [6.3. CANNOT LOGIN AT ALL IN THE WEB INTERFACE WITH THE ADMIN USER](#63-cannot-login-at-all-in-the-web-interface-with-the-admin-user)
+  * [6.4. STRANGE PERMISSIONS ERRORS](#64-strange-permissions-errors)
+  * [6.5. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#65-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
+  * [6.6. SOME KIND OF MISMATCH IN THE AWS](#66-some-kind-of-mismatch-in-the-aws)
+  * [6.7. THE PROBLEM OCCURRED IS NOT MENTIONED HERE ???!!!](#67-the-problem-occurred-is-not-mentioned-here-)
 
 
 
@@ -316,9 +318,10 @@ You "fork" the production instance by issuing the following command:
 
     ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
 
-## 4. PROVISION HTTPS ( ONLY IF DNS is configured )
-This section is separated as it is optional. If you have configured DNS you could provision https for the nginx server by issuing the following command:
-
+### 3.16. PROVISION HTTPS ( ONLY IF DNS is configured )
+This section is separated as it is optional. If you have configured DNS you could provision https for the nginx server by issuing the commands bellow. You perform the https provisioning ONLY from the prd instance of the site!!!
+The site url to verify the functionality is: 
+https://&lt;&lt;your-dns-name&gt;&gt;:443/qto/login
 
     ./src/bash/qto/qto.sh -a provision-https
     
@@ -338,12 +341,42 @@ This section is separated as it is optional. If you have configured DNS you coul
     
     
 
-## 5. NON-FIRST TIME AWS DEPLOYMENT
+### 3.17. Smoke test the site instance
+Navigate to the url of the site: 
+http://&lt;&lt;ip-or-dns-name&gt;&gt;:&lt;&lt;app-port&gt;&gt;/qto/login ( Check the env.app. configuration section of the cnf/env/&lt;&lt;env&gt;&gt;.json. 
+
+    
+
+### 3.18. Create a full backup of an instance site
+Once an instance site is up-and-running - it might be a good idea to create a full-backup of the site's instance data, software and configuration:
+ - full backup the postgres - both DDL and DML's
+ - ensure the cnf/env/&lt;&lt;env&gt;&gt;.json is part of the met/.&lt;&lt;env&gt;&gt;.qto meta list file
+ - add the DML and DDL dump files to the met/.&lt;&lt;env&gt;&gt;.qto meta list file
+ - create a relative or full package zip file
+ - rename it to reflect the fact that this file contains a full backup file
+
+    # full backup the postgres - both DDL and DML's
+    ./src/bash/qto/qto.sh -a backup-postgres-db
+    ./src/bash/qto/qto.sh -a backup-postgres-db-inserts
+    #  ensure the cnf/env/<<env>>.json is part of the met/.<<env>>.qto meta list file 
+    # vim met/.<<env>>.qto
+    
+    #  add the DML and DDL dump files to the met/.<<env>>.qto meta list file, for example :
+    echo dat/mix/2020/2020-03/2020-03-22/sql/prd_qto/prd_qto.20200322_123449.full.dmp.sql >> met/.tst.qto
+    echo dat/mix/2020/2020-03/2020-03-22/sql/prd_qto/prd_qto.20200322_123633.insrts.dmp.sql >> met/.prd.qto
+    
+    #  create a relative or full package zip file
+    ./src/bash/qto/qto.sh -a create-relative-package
+    
+    #  rename it to reflect the fact that this file contains a full backup file
+    mv -v ../qto.0.8.1.prd.20200322_122924.ip-10-0-44-231.rel.zip ../qto.0.8.1.prd-fb.20200322_122924.ip-10-0-44-231.rel.zip
+
+## 4. NON-FIRST TIME AWS DEPLOYMENT
 This section is aimed for the fortuned folks, who have already deployed at least one fully functional up-and-running instance of qto, thus it will assume already some familiarity. 
 
     
 
-### 5.1. Fork the latest stable dev to tst
+### 4.1. Fork the latest stable dev to tst
 By this point all obvious bugs within the scope of THIS release MUST be cleared out, if that is NOT the case you are wasting your time by gaining wrong velocity to demonstrate some new cool features, which you WILL pay later.
 
     # on your local dev box go the latest stable environment
@@ -357,13 +390,13 @@ By this point all obvious bugs within the scope of THIS release MUST be cleared 
     # ensure you copy your non-hash and SECRET configuration to this instance
     cp -v ~/.qto/cnf/* cnf/env/
 
-### 5.2. Go to your previous environment
+### 4.2. Go to your previous environment
 Go to your old environment - it contains your configuration at least you could spare yourself for copy paste for the creating of the RIGHT configuration for your ENTIRELY new deployment built with the infrastructure as a code .
 Open the admin console:
 
     ssh -i /home/ysg/.ssh/id_rsa.prd.qto  ubuntu@ec2-52-209-247-245.eu-west-1.compute.amazonaws.com
 
-### 5.3. Create the AWS instance
+### 4.3. Create the AWS instance
 
 
     bash src/bash/qto/qto.sh -a init-aws-instance
@@ -371,47 +404,47 @@ Open the admin console:
     # after that ssh to -it
     ssh -i ~/.ssh/id_rsa.prd.qto ubuntu@ec2-52-209-247-245.eu-west-1.compute.amazonaws.com
 
-### 5.4. Setup bash & vim
+### 4.4. Setup bash & vim
 This deployment script sets RATHER personal bash and tmux settings ... which are NOT part of the qto setup, but merely personal tools to navigate more easily in the terminal with bash, tmux and vim ...
 
     curl https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/src/bash/deployer/setup-bash-n-vim.sh | bash -s yordan.georgiev@gmail.com
     
     cat ~/
 
-### 5.5. Clone the project on the ssh server
+### 4.5. Clone the project on the ssh server
 Clone as follows
 
     cat ~/.ssh/
     
     mkdir -p ~/opt; cd $_ ; git clone git@github.com:YordanGeorgiev/qto.git; cd ~/opt
 
-## 6. PHYSICAL HOST OS INSTALLATIONS
+## 5. PHYSICAL HOST OS INSTALLATIONS
 
 
     
 
-### 6.1. MacOs
+### 5.1. MacOs
 Qto has been developed mostly by using MacOs as the physical host OS. The next code section is probably obsolete, as you most probably have installed it as described here: https://treehouse.github.io/installation-guides/mac/homebrew
 
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-#### 6.1.1. Install qtpass
+#### 5.1.1. Install qtpass
 https://sourceforge.net/p/gpgosx/docu/Download/
 
     brew cask install qtpass
 
-## 7. POTENTIAL PROBLEMS AND TROUBLESHOOTING
+## 6. POTENTIAL PROBLEMS AND TROUBLESHOOTING
 As a rule of thumb - whatever errors you are encountering they are most probably NOT source code errors, but configuration errors. Thus ALWAYS try to change configuration entries from the dev, tst or prd environment configuration files and restart the web server with the mojo-hypnotoad-start shell action.
 
     
 
-### 7.1. The postgres admin user password is wrong
+### 6.1. The postgres admin user password is wrong
 Basically the db security is passed from OS root to postgres user to qto admin to qto app, thus to fix it issue the following command, which will basically re-provision your postgres.
 You would need to also restart the web server after executing this command.
 
      ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3 -a fix-db-permissions
 
-### 7.2. Redis refuses to start 
+### 6.2. Redis refuses to start 
 Redis should be configured to have bind on the ip address of the first eth. Also the bind to the ipv6 should be commented out ( ## bind 127.0.0.1 ::1). You should have also the correct ip configured in the cnf/env/&lt;&lt;env&gt;&gt;.env.json files. Because otherwise the application cannot connect and store correctly the db metadata during application startup.
 There might be still some bugs during the Redis provisioning in the src/bash/deployer/check-install-redis.func.sh file, run the the installation from the top till bottom command by command and try to restart after the provisioning.
 
@@ -427,7 +460,7 @@ There might be still some bugs during the Redis provisioning in the src/bash/dep
     supervised systemd
     
 
-### 7.3. Cannot login at all in the web interface with the admin user
+### 6.3. Cannot login at all in the web interface with the admin user
 The password hashing in the users table is activated ALWAYS on blur even that the ui is not showing it ( yes , that is more of a bug, than a feature.
 The solution is to restart the application layer WITHOUT any authentication, change the admin user password from the ui and restart the application layer with authentication once again.
 
@@ -440,12 +473,12 @@ The solution is to restart the application layer WITHOUT any authentication, cha
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
     
 
-### 7.4. Strange permissions errors
+### 6.4. Strange permissions errors
 Some of the newly created tables might not have explicitly their permissions in the DDLs. Or you might have run some of the sql scripts ad-hoc / manually and they do not contain grant statements. Run the following one-liner:
 
     bash src/bash/qto/qto.sh -a provision-db-admin
 
-### 7.5. You have reached the hw provisioning limits of your AWS account
+### 6.5. You have reached the hw provisioning limits of your AWS account
 If you get one of the errors bellow you would have to go the UI of the AWS admin console and delete non-used resources. Fortunately, all resources have the &lt;&lt;env&gt;&gt;_&lt;&lt;resource_name&gt;&gt; naming convention either in the object or in their Tags, which means that you will know what you are deleting.
 
     Error: Error creating VPC: VpcLimitExceeded: The maximum number of VPCs has been reached.
@@ -461,12 +494,12 @@ If you get one of the errors bellow you would have to go the UI of the AWS admin
       on main.tf line 203, in resource "aws_eip" "tst-ip-test":
      203: resource "aws_eip" "tst-ip-test" {
 
-### 7.6. Some kind of mismatch in the aws
+### 6.6. Some kind of mismatch in the aws
 The aws web ui contains fancy ajax calls and in our experience it does not always update properly, if are bombarding it with terraform deployments onto the same resources. Make sure you hit F5 in your browser always when starting the work on new ec2 instance.
 
     
 
-### 7.7. The problem occurred is not mentioned here ???!!!
+### 6.7. The problem occurred is not mentioned here ???!!!
 Of course you quick Google it first ... if it took too long just send a e-mail / chat to the instance owner you got the source code from and you WILL get help sooner or later.
 
     
