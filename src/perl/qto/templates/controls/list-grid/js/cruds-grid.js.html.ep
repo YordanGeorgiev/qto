@@ -314,7 +314,5 @@
      , mounted() {
 	      this.fetchServerSideDataToUI();
          bus.$on('searchBoxInputChanged',this.onSearchBoxInputChanged)
-         console.log(this.gridColumns)
-         console.log('gridColumns ::: cruds-grid.js.html.ep :: todo:ysg')
 	  }
    });

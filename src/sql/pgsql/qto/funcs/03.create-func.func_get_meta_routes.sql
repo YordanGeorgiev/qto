@@ -1,5 +1,3 @@
-DROP FUNCTION func_get_meta_routes ; 
-
 CREATE FUNCTION func_get_meta_routes()
   RETURNS TABLE (
                id             bigint

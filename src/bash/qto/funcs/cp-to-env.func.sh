@@ -24,4 +24,7 @@ doCpToEnv(){
    test -f $file && cp -v $file $tgt_file
    test -d $tgt_file && rm -rv $tgt_file
    test -d $file && rsync -v -X -r -E -o -g --perms --acls $file $(dirname $tgt_file)
+
+   # copy the current site instance configuration file to the secret store as well ...
+   mkdir -p ~/.qto/cnf ; cp -v cnf/env/$ENV_TYPE.env.json ~/.qto/cnf/
 }

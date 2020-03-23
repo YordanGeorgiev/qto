@@ -131,7 +131,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $t->get_ok( $url )->status_is(200 , $tm ) ; 
    my $ua  = $t->ua ; 
    my $res = $ua->get($url )->result->json ; 
-   p $res ; 
+   #p $res ; print "eof res TestLogon.t todo:ysg \n";
    #ok ( $res->{'ret'} == 204 , $tm);
    printf "\n";
 

@@ -1,4 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+# start errors
+src/perl/qto/templates/exception.production.html.ep
+# stop  errors
 src/bash/qto/scripts/web-to-db-upsert.sh
 src/perl/qto/lib/Qto/Controller/Logon.pm
 src/perl/qto/lib/Qto/Controller/Login.pm
@@ -955,7 +958,6 @@ src/js/node/js-unit-tests/01-set-url-param/test
 src/js/node/js-unit-tests/01-set-url-param/test/test.js
 src/js/node/scrap-html/package.json
 src/js/node/scrap-html/scrap-html.js
-src/bash/qto/funcs/mojo-hypnotoad-start.func.sh
 src/perl/qto/lib/Qto/Controller/ListGrid.pm
 src/perl/qto/lib/auto/Qto/Controller/CallFunc/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Report/autosplit.ix
