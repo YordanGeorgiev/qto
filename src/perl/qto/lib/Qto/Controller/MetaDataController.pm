@@ -162,6 +162,9 @@ sub doReloadMetaRoutes {
    ($ret, $msg , $hsr )    = $objRdrDb->doCallFuncGetHashRef('func_get_meta_routes','id'); # by convention ?!
    
    $objWtrRedis->setData(\$config, $db . '.meta-routes', $hsr);
+   $config->{'env'}->{'app'}->{$db . '.meta-routes'} = $hsr ; 
+   p $config  ;
+   print "eof p config \@MetaDataController:::doReloadMetaRoutes todo:ysg \n";
 
 }
 

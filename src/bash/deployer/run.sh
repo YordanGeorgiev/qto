@@ -107,6 +107,7 @@ do_set_vars(){
    bash_opts_file=~/.bash_opts.$(hostname -s)
    host_name="$(hostname -s)"
    cd $PRODUCT_DIR
+   sudo ntpdate 'pool.ntp.org' # ensure the box has the correct time 
 }
 
 

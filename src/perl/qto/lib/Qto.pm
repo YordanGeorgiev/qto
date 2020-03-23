@@ -165,6 +165,19 @@ sub doSetHooks {
   
    my $self = shift ; 
 
+	$self->hook(before_render => sub {
+	  my ($c, $args) = @_;
+
+	  # Make sure we are rendering the exception template
+	  return unless my $template = $args->{template};
+	  return unless $template eq 'exception';
+
+	  # Switch to JSON rendering if content negotiation allows it
+	  return unless $c->accepts('json');
+	  $args->{'json'} = {'exception'=> $c->stash('exception')};
+});
+
+
 	# chk: https://mojolicious.org/perldoc/Mojolicious#before_routes
 	$self->hook('before_routes'=> sub {
 		my $c = shift;
@@ -229,7 +242,7 @@ sub doSetHooks {
       print "route: $route  Qto.pm todo:ysg \n";
 
 
-      unless ( $route eq 'logon' || $route eq 'login' || defined($route)) {
+      unless ( $route eq 'logon' || $route eq 'login' || $route eq 'error' || defined($route)) {
 			my $db      = (split('/',$url))[0];
          $db         = 'qto' unless $db ;
 			$db         = toEnvName ($db,$c->app->config);

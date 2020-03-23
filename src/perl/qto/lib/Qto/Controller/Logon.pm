@@ -65,7 +65,6 @@ sub doLogonUser {
       my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
       ($rv, $msg , $hsr )  = $objRdrDb->doNativeLogonAuth($db,$email);
 
-      # p $hsr ; print "eof hsr in Logon.pm \n"; # qto-200302161711 todo:ysg remove
       if ( $rv == 200 ) {
          foreach my $key ( keys %$hsr ) {
             my $dbepass = $hsr->{$key}->{ 'pass' } ; # this is the pass from the db !!!
