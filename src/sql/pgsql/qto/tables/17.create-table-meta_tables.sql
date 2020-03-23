@@ -7,6 +7,7 @@ SELECT 'create the "meta_tables" table'
     , id             bigserial UNIQUE 
     , prio           integer NOT NULL DEFAULT 1
     , name           varchar (200) NOT NULL DEFAULT 'name...'
+    , ver            varchar (10) NOT NULL DEFAULT 'version...'
     , description    varchar (4000) DEFAULT 'description...'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_meta_tables_guid PRIMARY KEY (guid)
