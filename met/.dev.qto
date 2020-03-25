@@ -971,4 +971,5 @@ src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
 src/sql/pgsql/qto/tables/26.create-table-release_issues.sql
 src/sql/pgsql/scripts/03.create-func.func_get_all_users_roles.sql
 src/sql/pgsql/scripts/grant-priveledges.todo.sql
+cnf/crontab/crontab-l.sh
 tags
