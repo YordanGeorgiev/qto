@@ -32,3 +32,4 @@
    ntpdate
    nmap
    net-tools
+   copyq
