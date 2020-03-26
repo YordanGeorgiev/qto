@@ -21,6 +21,10 @@ do_check_install_redis(){
       # uncomment out the ip6 bind directive, it brakes the redis
       perl -pi -e 's/bind 127.0.0.1 ::1/#bind 127.0.0.1 ::1/g' /etc/redis/redis.conf
 
+
+
+
+
       # restart to apply the changes 
 		sudo systemctl restart redis
       sudo systemctl restart redis.service
