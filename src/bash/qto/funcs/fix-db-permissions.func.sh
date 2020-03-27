@@ -19,10 +19,10 @@ doFixDbPermissions(){
       --host $postgres_db_host -d $postgres_db_name -c "
       ALTER USER $postgres_db_user WITH PASSWORD '"$postgres_db_user_pw"'";
 
-   sudo -u postgres PGPASSWORD=$postgres_usr_pw psql --port $postgres_db_port \
-      --host $postgres_db_host -d $postgres_db_name -c "
-      GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public 
-      TO $postgres_db_user ;"
+   PGPASSWORD=$postgres_db_useradmin_pw psql -U "${postgres_db_useradmin:-}" \
+      --host $postgres_db_host --port $postgres_db_port -d "$postgres_db_name" \
+      -c "  GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public TO $postgres_db_user; 
+            GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user"
 
    sudo -u postgres PGPASSWORD=$postgres_usr_pw psql \
       --port $postgres_db_port --host $postgres_db_host -d "$postgres_db_name" -c \

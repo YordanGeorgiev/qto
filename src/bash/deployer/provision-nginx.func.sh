@@ -39,6 +39,6 @@ EOF
    sudo service nginx status
    doExportJsonSectionVars $PRODUCT_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
    
-   find /var/log/nginx/
+   sudo mkdir -p /var/cache ; sudo chmod -R 777 /var/cache
 
 }
