@@ -208,11 +208,14 @@
                var uri = window.location.href.replace('/view/', '/hidelete/')
                uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
 
+               console.log(payload);
+               console.log("eof payload @ vue_app.js.html.ep")
                axios.delete(uri, { data:{
                   oid: payload.oid
                }})
                .then(response => { 
                   if ( typeof response.status != "undefined" && response.status === 200 ) {
+
                      var seq = 1
                      var index = state.items.findIndex(item => String(item.id) === payload.oid )
                      if ( index !== -1 ) { seq = state.items[index].seq -1 }

@@ -38,7 +38,8 @@ EOF
    sudo service nginx restart
    sudo service nginx status
    doExportJsonSectionVars $PRODUCT_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
-   
-   sudo mkdir -p /var/cache ; sudo chmod -R 777 /var/cache
+  
+   # qto-200326084258 create the cache dir NOT in the global dir
+   mkdir -p ~/var/cache ; chmod -R 777 ~/var/cache
 
 }
