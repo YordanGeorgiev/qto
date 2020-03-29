@@ -89,9 +89,11 @@ sub doLoadAppConfig {
 
    $self->set('ObjLogger', $objLogger );
 
+	# qto-200326084258
    $config->{'hypnotoad'} = {
-      listen  => [$listen],
-      workers => $num_of_workers
+        listen  => [$listen]
+      , workers => $num_of_workers
+      , inactivity_timeout => 0
       } ;
 
    $objGuardian      = 'Qto::App::Sec::Guardian'->new ( \$config ) ;
