@@ -8,10 +8,13 @@ doInitAwdInstance(){
    mkdir -p $PRODUCT_INSTANCE_DIR/src/terraform/qto
    cp -v $PRODUCT_INSTANCE_DIR/src/terraform/tpl/qto/main.tf.tpl \
       $PRODUCT_INSTANCE_DIR/src/terraform/qto/main.tf
-   
-	pem_key=$(cat ${pem_key_fpath:-})
-   public_key=$(cat $pem_key_fpath_pub)
-   key_name=$(basename ${pem_key_fpath:-})
+  
+   # expand the possible ~'s to the $HOME
+	pem_key=$(cat `eval echo ${pem_key_fpath:-}`)
+   public_key=$(cat `eval echo $pem_key_fpath_pub`)
+   key_name=$(basename `eval echo ${pem_key_fpath:-}`)
+   ssh_key_pair_file=$(echo `eval $ssh_key_pair_file`) 
+
 	main_tf_file="$PRODUCT_INSTANCE_DIR/src/terraform/qto/main.tf"   
 
 	# search and replace the variables from the configuration file to the tpl file
