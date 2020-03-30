@@ -26,6 +26,7 @@
       * [2.5.3.2. Items editing via a modal dialog](#2532-items-editing-via-a-modal-dialog)
       * [2.5.3.3. Items editing via dropbox](#2533-items-editing-via-dropbox)
       * [2.5.3.4. Items editing via calendar control](#2534-items-editing-via-calendar-control)
+      * [2.5.3.5. Commenting on items](#2535-commenting-on-items)
     * [2.5.4. Items creation](#254-items-creation)
     * [2.5.5. Items deletion](#255-items-deletion)
     * [2.5.6. Items export](#256-items-export)
@@ -81,7 +82,7 @@
     * [2.11.1. Items data transfer between different projects](#2111-items-data-transfer-between-different-projects)
     * [2.11.2. Items move](#2112-items-move)
   * [2.12. ISSUES IMPORT FROM GOOGLE CALENDAR](#212-issues-import-from-google-calendar)
-* [3. TEAM LEADER BIZ PERSPECTIVE](#3-team-leader-biz-perspective)
+* [3. TEAM LEADER PERSPECTIVE](#3-team-leader-perspective)
   * [3.1. SECURITY](#31-security)
     * [3.1.1. Data security](#311-data-security)
     * [3.1.2. Roles management](#312-roles-management)
@@ -96,6 +97,7 @@
     * [3.3.2. Role based secure access to data per row](#332-role-based-secure-access-to-data-per-row)
   * [3.4. TIME MANAGEMENT](#34-time-management)
     * [3.4.1. Closing of a period](#341-closing-of-a-period)
+    * [3.4.2. Use monthly_issues status report](#342-use-monthly_issues-status-report)
 * [4. TEAM MEMBER BIZ PERSPECTIVE](#4-team-member-biz-perspective)
   * [4.1. ISSUES MANAGEMENT](#41-issues-management)
     * [4.1.1. Remove existing issues](#411-remove-existing-issues)
@@ -382,6 +384,13 @@ As an UI user of the qto application
 In order to be able to update date-time data in the listing page via the UI
 I want to to be able to edit the data for any item by : 
  - clicking on an a calendar control and choosing the date and the time from it
+
+    
+
+##### 2.5.3.5. Commenting on items
+As an UI user of the qto application 
+In order to be able to have item centric discussion
+I want to to be able to open a comments chat like section at the right of the list page screen, which will pre-pend comments in a chat like fassion
 
     
 
@@ -759,7 +768,7 @@ I want to  be able to import my Google calendar issues into my qto profile on an
 
     
 
-## 3. TEAM LEADER BIZ PERSPECTIVE
+## 3. TEAM LEADER PERSPECTIVE
 As a team leader
 In order to operate successfully one or many projects of my team(s)  
 I want to have a nice user experience while using the qto tool.
@@ -862,6 +871,13 @@ As the team leader of a qto project
 In order to keep track the history of 
 I want to to be able to manage time efficiently 
 by accessing a simple page containing its value and the period it is related to.
+
+    
+
+#### 3.4.2. Use monthly_issues status report
+As the team leader of a qto project
+In order to keep track on the statuses of the ongoing issues in my project 
+I want to to be able to accesss and read a visual report containing pie chart with the amount of the issues at any moment and their distributions by status
 
     
 

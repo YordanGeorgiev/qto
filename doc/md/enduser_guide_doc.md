@@ -143,7 +143,7 @@ If you type the ":to &lt;&lt;database-name&gt;&gt;" you will get a drop down whi
     
 
 ## 3. LOGIN AND LOGOUT
-You need to sent e-mail to the administrator of the qto application ( just try to login with your e-mail and you will get his/her e-mail in the error msg ). 
+You need to send e-mail to the administrator of the qto application ( just try to login with your e-mail and you will get his/her e-mail in the error msg ). 
 This section provides initial concepts for new users to quickly grasp the basics of the qto application.
 Important you MUST have cookies enabled otherwise you will not be able to use the qto instance ( if that sounded too technical more than 99% of all the browsers have by default their cookies enabled, if you use regular web services such as Google, Facebook, Instagram you probably have your cookies enabled ... )
 
