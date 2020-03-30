@@ -53,18 +53,21 @@
   * [8.3. LIST PAGE FEATURES AND FUNCTIONALITIES](#83-list-page-features-and-functionalities)
     * [8.3.1. List page performance](#831-list-page-performance)
     * [8.3.2. Navigating the list page](#832-navigating-the-list-page)
-    * [8.3.3. Managing items - full CRUD](#833-managing-items--full-crud)
-    * [8.3.4. Managing FK values](#834-managing-fk-values)
-      * [8.3.4.1. CRUD via the smart grid](#8341-crud-via-the-smart-grid)
-      * [8.3.4.2. CRUD via the generic edit form](#8342-crud-via-the-generic-edit-form)
-    * [8.3.5. Quick search and filtering items](#835-quick-search-and-filtering-items)
-    * [8.3.6. Global text search from the view page](#836-global-text-search-from-the-view-page)
-      * [8.3.6.1. Visual indication for ok cases](#8361-visual-indication-for-ok-cases)
-    * [8.3.7. Visual indication](#837-visual-indication)
-      * [8.3.7.1. Visual indication when no data is received on correct request](#8371-visual-indication-when-no-data-is-received-on-correct-request)
-      * [8.3.7.2. Visual indication on erroneous requests](#8372-visual-indication-on-erroneous-requests)
-    * [8.3.8. Items interlinking](#838-items-interlinking)
-    * [8.3.9. Print to pdf](#839-print-to-pdf)
+    * [8.3.3. Filtering the result set from a single item](#833-filtering-the-result-set-from-a-single-item)
+      * [8.3.3.1. Filtering the result with the "with" url parameter](#8331-filtering-the-result-with-the-"with"-url-parameter)
+      * [8.3.3.2. Filtering the result with the "like-by" and "like-val" url parameters](#8332-filtering-the-result-with-the-"like-by"-and-"like-val"-url-parameters)
+    * [8.3.4. Managing items - full CRUD](#834-managing-items--full-crud)
+    * [8.3.5. Managing FK values](#835-managing-fk-values)
+      * [8.3.5.1. CRUD via the smart grid](#8351-crud-via-the-smart-grid)
+      * [8.3.5.2. CRUD via the generic edit form](#8352-crud-via-the-generic-edit-form)
+    * [8.3.6. Quick search and filtering items](#836-quick-search-and-filtering-items)
+    * [8.3.7. Global text search from the view page](#837-global-text-search-from-the-view-page)
+      * [8.3.7.1. Visual indication for ok cases](#8371-visual-indication-for-ok-cases)
+    * [8.3.8. Visual indication](#838-visual-indication)
+      * [8.3.8.1. Visual indication when no data is received on correct request](#8381-visual-indication-when-no-data-is-received-on-correct-request)
+      * [8.3.8.2. Visual indication on erroneous requests](#8382-visual-indication-on-erroneous-requests)
+    * [8.3.9. Items interlinking](#839-items-interlinking)
+    * [8.3.10. Print to pdf](#8310-print-to-pdf)
   * [8.4. VIEW PAGE FEATURES](#84-view-page-features)
     * [8.4.1. Viewing documents](#841-viewing-documents)
       * [8.4.1.1. OK load for a view doc page](#8411-ok-load-for-a-view-doc-page)
@@ -393,62 +396,87 @@ After the load of the list page the user can quickly cycle trough all the elemen
 
     
 
-#### 8.3.3. Managing items - full CRUD
+#### 8.3.3. Filtering the result set from a single item
+The qto list page uses a SQL like syntax to translate the url parameters of the list page 
+
+    
+
+##### 8.3.3.1. Filtering the result with the "with" url parameter
+The naming conventions is as follows: 
+with=&lt;&lt;attribute-name&gt;&gt;-&lt;&lt;operator&gt;&gt;-&lt;&lt;value&gt;
+
+For example:
+https://qto.fi:442/qto/list/ideas?&with=owner-eq-jrs
+
+This translates into "where &lt;&lt;attribute-name&gt;&gt; = '&lt;&lt;attribute-value&gt;&gt;' in the sql query to the database.
+
+    
+
+##### 8.3.3.2. Filtering the result with the "like-by" and "like-val" url parameters
+The naming conventions is as follows: 
+with=&lt;&lt;attribute-name&gt;&gt;-&lt;&lt;operator&gt;&gt;-&lt;&lt;value&gt;
+
+For example:
+https://qto.fi:442/qto/list/ideas?&with=owner-eq-jrs
+
+    
+
+#### 8.3.4. Managing items - full CRUD
 The System provides the needed UI interfaces to Create , Update , Delete and Search items in the database. DateDate values could be presented with calendar controls.
 
     
 
-#### 8.3.4. Managing FK values
+#### 8.3.5. Managing FK values
 The Foreign key values could be managed via drop box ui controls. For now the fetch is performed on the "name" attribute from the PK table, based on &lt;&lt;pk_table&gt;&gt;_guid naming convention in the FK column of the items.
 
     
 
-##### 8.3.4.1. CRUD via the smart grid
+##### 8.3.5.1. CRUD via the smart grid
 The Create, Update, Delete operations could be performed by simply typing the new values in the smart grid - or picking the values for the drop downs or the calendar controls.
 
     
 
-##### 8.3.4.2. CRUD via the generic edit form
+##### 8.3.5.2. CRUD via the generic edit form
 The Create, Update, Delete operations could be performed by clicking in the edit button of the smart grid and editing the text in the modal dialog form.
 
     
 
-#### 8.3.5. Quick search and filtering items
+#### 8.3.6. Quick search and filtering items
 The user can quickly filter the items from the presented listing by typing in the omnisearch box ... The System will shrink the table so that only the rows having the string in the search omnibox will be presented. Once the string is deleted from the search omnibox the table data is restored to its original state.
 
     
 
-#### 8.3.6. Global text search from the view page
+#### 8.3.7. Global text search from the view page
 The user can initiate a global text search from the view page, by simply typing on the global search text box and hitting enter or clicking on the global search button. Should the search yield results they will be displayed in the search page, thus the user could quickly return back in the exact same spot of the document by clicking the back button.
 
     
 
-##### 8.3.6.1. Visual indication for ok cases
+##### 8.3.7.1. Visual indication for ok cases
 In the ok cases no msgs are presented, but just the requested data shown.
 
     
 
-#### 8.3.7. Visual indication
+#### 8.3.8. Visual indication
 The Systems does not present any ok messages for the operation of the list page, only errors are presented clearly on the top of the page ( for example when one tries to update a string value into a cell with column accepting only integer values ... )
 
     
 
-##### 8.3.7.1. Visual indication when no data is received on correct request
+##### 8.3.8.1. Visual indication when no data is received on correct request
 Should the request in terms of url parameters be correct a warning msg at the bottom of the page in grey colour is presented
 
     
 
-##### 8.3.7.2. Visual indication on erroneous requests
+##### 8.3.8.2. Visual indication on erroneous requests
 Should the request be erroneous - un existing, tables , columns , ds , wrong syntax etc. an error of the top of the page is presented and the full technical error is displayed at the bottom of the page. 
 
     
 
-#### 8.3.8. Items interlinking
+#### 8.3.9. Items interlinking
 The users can link to any items by simply typing &lt;&lt;item&gt;&gt;-&lt;&lt;id&gt;&gt; in the description. For example requirements_doc-4
 
     
 
-#### 8.3.9. Print to pdf
+#### 8.3.10. Print to pdf
 You can print any of the queries from the list page by adding / changing the as url parameter from as=grid to as=print-table. Use the browser print to pdf feature to save the listing page into a pdf file.
 
     

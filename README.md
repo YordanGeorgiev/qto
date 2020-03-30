@@ -47,7 +47,6 @@ Manage your projects with scale and to the finest granularity of your choice by:
  - incident management
  - issues handling
  - ideas generation
- - problems registration and follow-up
  - official documentation creation ( with interlinked content to those above )
  - &lt;&lt;your-items-of-interest-interlinked&gt;&gt; ( items are just tables with id,and guid ... )
 
@@ -65,19 +64,17 @@ Your organisation:
     
 
 ### 2.3. Proposed capabilities
-Here is a list of the main capabilities ( the extensive list is available in the features and functionalities doc:
+With qto you will gain the following capabilities:
 - instance deployment to bare metal/vm install, which should take no more than 40min
 - provide db based authentication and restricted access to the app via http(s)
 - provide access to the non-technical person via http and/or https for CRUD operations
-- change DDL's of your tables on the fly - no coding, nor app restart required ...
 - quickly define LOTS of tables DDL by using the existing examples and just changing the columns
 - search the data from the db via the global search feature 
 - load initial data via xls ( less than 10k rows per sheet should be ok )
+- provide them with initial links to grasp the "semi-sql" syntax
 - create and update multiple hierarchical documents via the view doc interface
 - load hierarchical docs via xls, export them to md format ( programatically ) or pdf
-- create instant reports ( no app restart required), which are simply postgres funcs returning result-sets
 - lots of automated sysadmin capabilities ( check the docs in the doc/md dir )
-
 
     
 

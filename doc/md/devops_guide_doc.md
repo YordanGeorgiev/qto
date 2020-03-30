@@ -37,8 +37,8 @@
   * [6.1. CHAT / IRC](#61-chat-/-irc)
   * [6.2. DEFINITION OF DONE](#62-definition-of-done)
   * [6.3. E-MAIL COMMUNICATION](#63-e-mail-communication)
-  * [6.4. DOCUMENTATION](#64-documentation)
-  * [6.5. ISSUES MANAGEMENT](#65-issues-management)
+  * [6.4. ISSUES MANAGEMENT](#64-issues-management)
+  * [6.5. DOCUMENTATION](#65-documentation)
 * [7. TESTING](#7-testing)
   * [7.1. CHECKING THE PERL SYNTAX](#71-checking-the-perl-syntax)
   * [7.2. RUNNING UNIT TESTS](#72-running-unit-tests)
@@ -83,17 +83,18 @@
     * [11.1.3. RBAC based native authentication](#1113-rbac-based-native-authentication)
   * [11.2. AUTHORISATION](#112-authorisation)
     * [11.2.1. Generic role-based access control list based authorisation](#1121-generic-role-based-access-control-list-based-authorisation)
-    * [11.2.2. The RBAC based native authorisation](#1122-the-rbac-based-native-authorisation)
 * [12. KNOWN ISSUES AND WORKAROUNDS](#12-known-issues-and-workarounds)
+    * [12.1. The RBAC based native authorisation](#121-the-rbac-based-native-authorisation)
   * [12.1. ALL TESTS FAIL WITH THE 302 ERROR](#121-all-tests-fail-with-the-302-error)
   * [12.2. MORBO IS STUCK](#122-morbo-is-stuck)
     * [12.2.1. Probable root cause](#1221-probable-root-cause)
-    * [12.2.2. Problem description](#1222-problem-description)
-    * [12.2.3. Kill processes](#1223-kill-processes)
+    * [12.2.2. Kill processes](#1222-kill-processes)
+    * [12.2.3. Problem description](#1223-problem-description)
   * [12.3. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#123-the-page-looks-broken--probably-the-new-css-is-not-re-loaded)
   * [12.4. THE VUE UI DOES NOT UPDATE PROPERLY ](#124-the-vue-ui-does-not-update-properly-)
+  * [12.5. NGINX FAILS WITH 502 BAD GATEWAY ERROR AND PROBABLY CRASHES THE SITE](#125-nginx-fails-with-502-bad-gateway-error-and-probably-crashes-the-site)
+  * [12.6. WHY HAVING ALL THE HASSLE WITH THIS DIRECTORY STRUCTURE - IS OVERKILL ?!!](#126-why-having-all-the-hassle-with-this-directory-structure--is-overkill-)
 * [13. FAQ](#13-faq)
-  * [13.1. WHY HAVING ALL THE HASSLE WITH THIS DIRECTORY STRUCTURE - IS OVERKILL ?!!](#131-why-having-all-the-hassle-with-this-directory-structure--is-overkill-)
 
 
 
@@ -338,12 +339,7 @@ Use e-mail when you have to get an written evidence on agreed matters, which mig
 
     
 
-### 6.4. Documentation
-Undocumented feature is not a feature. 
-
-    
-
-### 6.5. Issues management
+### 6.4. Issues management
 At the end of the month you should move the completed issues to the yearly_issues table as follows:
 
 
@@ -358,6 +354,11 @@ At the end of the month you should move the completed issues to the yearly_issue
     guid = excluded.guid ,id = excluded.id ,type = excluded.type ,category = excluded.category ,status = excluded.status ,prio = excluded.prio, name = excluded.name ,description = excluded.description ,owner = excluded.owner ,update_time = excluded.update_time
     ;
     "
+
+### 6.5. Documentation
+Undocumented feature is not a feature. 
+
+    
 
 ## 7. TESTING
 Why the testing section is before the coding one ??!!!
@@ -679,7 +680,12 @@ https://stackoverflow.com/a/58009983/65706
     # populate the items roles_permissions
     psql -d dev_qto < src/sql/pgsql/scripts/admin/populate-items_roles_permissions.sql
 
-#### 11.2.2. The RBAC based native authorisation
+## 12. KNOWN ISSUES AND WORKAROUNDS
+
+
+    
+
+#### 12.1. The RBAC based native authorisation
 The RBAC based native authentication works as follows:
  - during start-up or meta-data reload the Guardian component saves the RBAC list into the Redis
  - the User requests a resource from the System
@@ -689,11 +695,6 @@ The RBAC based native authentication works as follows:
  - if the request role-page resource id DOES NOT exist : 
     -- the Guardian redirects the user to the login page if the user is not authenticated
     -- the Guardian redirect the user to the search / home pager if the user is authenticated
-
-    
-
-## 12. KNOWN ISSUES AND WORKAROUNDS
-
 
     
 
@@ -725,7 +726,15 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 12.2.2. Problem description
+#### 12.2.2. Kill processes
+List the running perl processes which run the morbo and kill the instances
+
+    ps -ef | grep -i perl
+    
+    # be carefull what to kill 
+    kill -9 <<proc-I-know-is-the-one-to-kill>>
+
+#### 12.2.3. Problem description
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -738,14 +747,6 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN with:
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
-
-#### 12.2.3. Kill processes
-List the running perl processes which run the morbo and kill the instances
-
-    ps -ef | grep -i perl
-    
-    # be carefull what to kill 
-    kill -9 <<proc-I-know-is-the-one-to-kill>>
 
 ### 12.3. The page looks broken - probably the new css is not re-loaded
 This problem is quite oftenly experienced and a real time-burner, so keep those shortcuts bellow in mind. 
@@ -765,14 +766,26 @@ Due to the vue reactivity system - basically the more the complex the ui control
     // or even 
     this.$parent.$forceUpdate()
 
-## 13. FAQ
-This section contains the most probable frequently asked questions.
+### 12.5. NginX fails with 502 Bad Gateway error and probably crashes the site
+Might be due to the following error found in the journal log: 
+"nginx.service: Failed to parse PID from file /run/nginx.pid: Invalid argument"
+
+    sudo mkdir /etc/systemd/system/nginx.service.d
+    printf "[Service]\
+    ExecStartPost=/bin/sleep 0.1\
+    " | \
+        sudo tee /etc/systemd/system/nginx.service.d/override.conf
+    sudo systemctl daemon-reload
+    sudo systemctl restart nginx
+
+### 12.6. Why having all the hassle with this directory structure - is overkill ?!!
+Every software project has a scope. Qto as a project aims to provide the fully vertically integrated code base for deployment, operation and maintenance, which is not possible without the use of multiple run-times within the project ( such as bash, perl, python, terraform, npm ... )
+Having a project with a directory structure for a specific run-time enforcing that directory structure to all the other runtimes is a a mess.
 
     
 
-### 13.1. Why having all the hassle with this directory structure - is overkill ?!!
-Every software project has a scope. Qto as a project aims to provide the fully vertically integrated code base for deployment, operation and maintenance, which is not possible without the use of multiple run-times within the project ( such as bash, perl, python, terraform, npm ... )
-Having a project with a directory structure for a specific run-time enforcing that directory structure to all the other runtimes is a a mess.
+## 13. FAQ
+This section contains the most probable frequently asked questions.
 
     
 
