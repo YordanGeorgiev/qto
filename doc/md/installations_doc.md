@@ -37,11 +37,11 @@
   * [3.15. PROVISION THE PRD DATABASE](#315-provision-the-prd-database)
 * [4. PROVISION HTTPS ( ONLY IF DNS IS CONFIGURED )](#4-provision-https-(-only-if-dns-is-configured-))
   * [4.1. FORK THE LATEST STABLE DEV TO TST](#41-fork-the-latest-stable-dev-to-tst)
-  * [4.2. GO TO YOUR PREVIOUS ENVIRONMENT](#42-go-to-your-previous-environment)
 * [5. NON-FIRST TIME AWS DEPLOYMENT](#5-non-first-time-aws-deployment)
-  * [5.1. CREATE THE AWS INSTANCE](#51-create-the-aws-instance)
-  * [5.2. SETUP BASH & VIM](#52-setup-bash-&-vim)
-  * [5.3. CLONE THE PROJECT ON THE SSH SERVER](#53-clone-the-project-on-the-ssh-server)
+  * [5.1. GO TO YOUR PREVIOUS ENVIRONMENT](#51-go-to-your-previous-environment)
+  * [5.2. CREATE THE AWS INSTANCE](#52-create-the-aws-instance)
+  * [5.3. SETUP BASH & VIM](#53-setup-bash-&-vim)
+  * [5.4. CLONE THE PROJECT ON THE SSH SERVER](#54-clone-the-project-on-the-ssh-server)
 * [6. PHYSICAL HOST OS INSTALLATIONS](#6-physical-host-os-installations)
   * [6.1. MACOS](#61-macos)
     * [6.1.1. Install qtpass](#611-install-qtpass)
@@ -370,18 +370,18 @@ By this point all obvious bugs within the scope of THIS release MUST be cleared 
     # ensure you copy your non-hash and SECRET configuration to this instance
     cp -v ~/.qto/cnf/* cnf/env/
 
-### 4.2. Go to your previous environment
-Go to your old environment - it contains your configuration at least you could spare yourself for copy paste for the creating of the RIGHT configuration for your ENTIRELY new deployment built with the infrastructure as a code .
-Open the admin console:
-
-    ssh -i /home/ysg/.ssh/id_rsa.prd.qto  ubuntu@ec2-52-209-247-245.eu-west-1.compute.amazonaws.com
-
 ## 5. NON-FIRST TIME AWS DEPLOYMENT
 This section is aimed for the fortuned folks, who have already deployed at least one fully functional up-and-running instance of qto, thus it will assume already some familiarity. 
 
     
 
-### 5.1. Create the AWS instance
+### 5.1. Go to your previous environment
+Go to your old environment - it contains your configuration at least you could spare yourself for copy paste for the creating of the RIGHT configuration for your ENTIRELY new deployment built with the infrastructure as a code .
+Open the admin console:
+
+    ssh -i /home/ysg/.ssh/id_rsa.prd.qto  ubuntu@ec2-52-209-247-245.eu-west-1.compute.amazonaws.com
+
+### 5.2. Create the AWS instance
 
 
     bash src/bash/qto/qto.sh -a init-aws-instance
@@ -389,14 +389,14 @@ This section is aimed for the fortuned folks, who have already deployed at least
     # after that ssh to -it
     ssh -i ~/.ssh/id_rsa.prd.qto ubuntu@ec2-52-209-247-245.eu-west-1.compute.amazonaws.com
 
-### 5.2. Setup bash & vim
+### 5.3. Setup bash & vim
 This deployment script sets RATHER personal bash and tmux settings ... which are NOT part of the QTO setup, but merely personal tools to navigate more easily in the terminal with bash, tmux and vim ...
 
     curl https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/src/bash/deployer/setup-bash-n-vim.sh | bash -s yordan.georgiev@gmail.com
     
     cat ~/
 
-### 5.3. Clone the project on the ssh server
+### 5.4. Clone the project on the ssh server
 Clone as follows
 
     cat ~/.ssh/

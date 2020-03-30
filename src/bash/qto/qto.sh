@@ -139,7 +139,6 @@ doExportJsonSectionVars(){
    while read -r l ; do
      key=$(echo $l|cut -d'=' -f1)
      val=$(echo $l|cut -d'=' -f2)
-     eval "$(echo -e 'export '$key=\"\"$val\"\")"
      doLog "INFO $key=$val"
    done < <(cat "$json_file"| jq -r "$section"'|keys_unsorted[] as $key|"\($key)=\"\(.[$key])\""')
 }
