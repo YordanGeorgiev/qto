@@ -15,13 +15,13 @@ export itm=$2
 
 curl -s -b ~/.qto/cookies.txt "$url" | jq -r '.dat'
 
-echo $json_str
+#echo $json_str
 IFS='' read -r -d '' perl_code <<"EOF_PERL_CODE"
       use strict; use warnings; binmode STDOUT, ":utf8"; use utf8; 
       use JSON; use Data::Printer;use Mojo::Template; use feature ':5.12';
       my $json_var = decode_json($ENV{'json_str'}) ; 
       my $itm = $ENV{'itm'};
-      p $json_var ;
+      #p $json_var ;
       my $col_lst = '(';
       my $val_lst = '(';
       my $upd_lst = '';
@@ -29,9 +29,13 @@ IFS='' read -r -d '' perl_code <<"EOF_PERL_CODE"
       foreach my $row (@$json_var){
          #p $row ; 
          foreach my $key (keys %$row) {
+            my $cll = $row->{$key} ;
+            $cll = '' if ($cll eq 'null' or !defined($cll));
+            $cll =~ s/'/''/g;
+            $cll =~ s/\\n/\\\n/g;
             $col_lst .= $key . ', ' ;
-            $upd_lst .= $key . ' = ' . "'" . $row->{$key} . "'" . ', ';
-            $val_lst .= "'" . $row->{$key} . "'" . ', ' ;
+            $upd_lst .= $key . ' = ' . "'" . $cll . "'" . ', ';
+            $val_lst .= "'" . $cll . "'" . ', ' ;
          }
          $col_lst = substr($col_lst, 0,-2); $col_lst .= ')'; 
          $upd_lst = substr($upd_lst, 0,-2); 
@@ -41,7 +45,8 @@ IFS='' read -r -d '' perl_code <<"EOF_PERL_CODE"
          $val_lst = '(';
          $upd_lst = '';
       }
-      #p $col_lst ; p $val_lst ; 
+      #p $col_lst ; 
+      #p $val_lst ; 
       my $mt = Mojo::Template->new;
       say $mt->render(<<'EOF', $sql_lst, $col_lst,$val_lst, $upd_lst, $ENV{'col_lst_excluded'});
       % my ($sql_lst, $col_lst, $val_lst, $upd_lst, $col_lst_excluded) = @_;
@@ -51,8 +56,10 @@ EOF
 
 EOF_PERL_CODE
 
+#echo $perl_code
+#echo eof perl_code
 sql_code=$(perl -e "$perl_code")
 echo $sql_code
-         PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} \
+PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} \
             --port $postgres_db_port --host $postgres_db_host -t -d ${postgres_db_name:-} \
             -c "$sql_code"

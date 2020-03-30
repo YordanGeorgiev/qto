@@ -325,6 +325,7 @@ do_set_vars(){
    doLog "INFO using the following vars:"
    cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
    echo -e "$cmd"
+   vars=$(echo -e "$cmd"); doLog "$vars"
 
    while read -r func_file ; do source "$func_file" ; done < <(find $PRODUCT_INSTANCE_DIR -name "*func.sh")
    clearTheScreen

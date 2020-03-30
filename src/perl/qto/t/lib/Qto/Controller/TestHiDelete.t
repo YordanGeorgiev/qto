@@ -94,11 +94,18 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $url = '/' . $db . '/select/test_hi_delete_table_doc?pick=id&with=seq-eq-4';
    ok($t->get_ok($url )->status_is(200),$tm) ; $res = $ua->get($url)->result->json ; 
    foreach my $row (@{$res->{'dat'}}){ $oid = $row->{'id'} };
-   my $oid_210 = $oid ;
+   my $oid_220 = $oid ;
    
    $tm = 'can set the 2.1.0 element ' ; 
    $url              = '/' . $db . '/update/test_hi_delete_table_doc' ; 
    ok ( $t->post_ok($url => json => {"attribute"=>"name", "id" =>$oid, "cnt"=>"2.1.0 ::: title ::: "})->status_is(200), $tm);
+   
+   my $oid_210 = undef; # the ORIGIN id - aka the id where the add action originated ...
+   $tm = 'can fetch the origin id for the 3.0.0 name' ;
+   $url = '/' . $db . '/select/test_hi_delete_table_doc?pick=id&with=seq-eq-4';
+   ok($t->get_ok($url )->status_is(200),$tm) ; $res = $ua->get($url)->result->json ; 
+   foreach my $row (@{$res->{'dat'}}){ $oid_210 = $row->{'id'} };
+   $oid_210 = $res->{'dat'}->[0]->{'id'};
    
    $tm = 'can create 2.2.0 name - lvlalpha-0,seq-4 no siblings' ;
    $lvlalpha = 0 ; 
@@ -115,6 +122,13 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $tm = 'can set the 2.2.0 element ' ; 
    $url              = '/' . $db . '/update/test_hi_delete_table_doc' ; 
    ok ( $t->post_ok($url => json => {"attribute"=>"name", "id" =>$oid, "cnt"=>"2.2.0 ::: title ::: "})->status_is(200), $tm);
+   
+   my $oid_220 = undef; # the ORIGIN id - aka the id where the add action originated ...
+   $tm = 'can fetch the origin id for the 3.0.0 name' ;
+   $url = '/' . $db . '/select/test_hi_delete_table_doc?pick=id&with=seq-eq-5';
+   ok($t->get_ok($url )->status_is(200),$tm) ; $res = $ua->get($url)->result->json ; 
+   foreach my $row (@{$res->{'dat'}}){ $oid_220 = $row->{'id'} };
+   $oid_220 = $res->{'dat'}->[0]->{'id'};
 
    $tm = 'can create 3.0.0 name - lvlalpha-2,seq-6 with siblings' ;
    $lvlalpha            = -1 ; 
@@ -126,7 +140,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $url = '/' . $db . '/select/test_hi_delete_table_doc?pick=id&with=seq-eq-6';
    ok($t->get_ok($url )->status_is(200),$tm) ; $res = $ua->get($url)->result->json ; 
    foreach my $row (@{$res->{'dat'}}){ $oid = $row->{'id'} };
-   #$oid = $res->{'dat'}->{'id'};
+   $oid = $res->{'dat'}->[0]->{'id'};
    
    $tm = 'can set the 3.0.0 element ' ; 
    $url              = '/' . $db . '/update/test_hi_delete_table_doc' ; 
@@ -137,9 +151,13 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    #ok ( $t->delete_ok($url => json => {'oid' => "$oid" })->status_is(200) , $tm );
    
 
-   #$tm = 'can delete the 2.1.0 ';
-   #$url = '/' . $db . '/hidelete/test_hi_delete_table_doc' ; 
-   #ok ( $t->delete_ok($url => json => {'oid' => "$oid_210" })->status_is(200) , $tm );
+   $tm = 'can delete the 2.2.0 ';
+   $url = '/' . $db . '/hidelete/test_hi_delete_table_doc' ; 
+   ok ( $t->delete_ok($url => json => {'oid' => "$oid_220" })->status_is(200) , $tm );
+   
+   $tm = 'can delete the 2.1.0 ';
+   $url = '/' . $db . '/hidelete/test_hi_delete_table_doc' ; 
+   ok ( $t->delete_ok($url => json => {'oid' => "$oid_210" })->status_is(200) , $tm );
 
 
 done_testing();

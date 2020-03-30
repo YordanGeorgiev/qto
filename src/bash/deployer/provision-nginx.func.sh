@@ -3,6 +3,14 @@ do_provision_nginx(){
 
    test -f /etc/nginx/nginx.conf || sudo apt-get install -y nginx
    test -f /etc/nginx/nginx.conf && sudo cp -v /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+
+   # chk: devops_guide_doc-200325051051
+   sudo mkdir /etc/systemd/system/nginx.service.d
+   cat << EOF | sudo tee /etc/systemd/system/nginx.service.d/override.conf
+[Service]
+ExecStartPost=/bin/sleep 0.1
+EOF
+
    sudo rm -v /etc/nginx/sites-enabled/*
    sudo rm -v /etc/nginx/sites-available/*
    test -f /etc/nginx/sites-enabled/default && rm -v /etc/nginx/sites-enabled/default
@@ -25,10 +33,13 @@ do_provision_nginx(){
       sudo ls -la /etc/nginx/sites-enabled/$env.http-site.conf
    done ;
 
+   sudo systemctl daemon-reload
+   sudo systemctl restart nginx
    sudo service nginx restart
    sudo service nginx status
    doExportJsonSectionVars $PRODUCT_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
-   
-   find /var/log/nginx/
+  
+   # qto-200326084258 create the cache dir NOT in the global dir
+   mkdir -p ~/var/cache ; chmod -R 777 ~/var/cache
 
 }

@@ -1,4 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
+cnf/env/dev.env.json
+cnf/env/prd.env.json
+cnf/env/tst.env.json
 # start errors
 src/perl/qto/templates/exception.production.html.ep
 # stop  errors
@@ -30,9 +33,6 @@ src/perl/qto/public/poc/file-upload/02/index.html
 src/perl/qto/templates/controls/list-grid/xt/modal-dia.xt.html.ep
 src/perl/qto/public/lib/js/controls/vue-simple-upload.min.js
 # stop file upload 
-cnf/env/dev.env.json
-cnf/env/prd.env.json
-cnf/env/tst.env.json
 # start redis
 src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/lib/Qto/Controller/Select.pm
@@ -971,4 +971,5 @@ src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
 src/sql/pgsql/qto/tables/26.create-table-release_issues.sql
 src/sql/pgsql/scripts/03.create-func.func_get_all_users_roles.sql
 src/sql/pgsql/scripts/grant-priveledges.todo.sql
+cnf/crontab/crontab-l.sh
 tags
