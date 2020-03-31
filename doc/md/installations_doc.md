@@ -18,7 +18,7 @@
   * [3.2. PREREQUISITES](#32-prerequisites)
     * [3.2.1. Configure the AdminEmail](#321-configure-the-adminemail)
     * [3.2.2. Create the aws instance deployment keys](#322-create-the-aws-instance-deployment-keys)
-    * [3.2.3. Configure your aws credentials - aws keys](#323-configure-your-aws-credentials--aws-keys)
+    * [3.2.3. Configure your aws credentials - AWS keys](#323-configure-your-aws-credentials--aws-keys)
   * [3.3. INITIALISE THE AWS INFRASTRUCTURE](#33-initialise-the-aws-infrastructure)
   * [3.4. SET THE IP ADDRESS FOR THE HOST IN DNS ( OPTIONAL ) ](#34-set-the-ip-address-for-the-host-in-dns-(-optional-)-)
   * [3.5. ACCESS THE AWS HOST VIA SSH AND FETCH THE SOURCE CODE FROM GITHUB](#35-access-the-aws-host-via-ssh-and-fetch-the-source-code-from-github)
@@ -45,11 +45,12 @@
 * [7. POTENTIAL PROBLEMS AND TROUBLESHOOTING](#7-potential-problems-and-troubleshooting)
   * [7.1. THE POSTGRES ADMIN USER PASSWORD IS WRONG](#71-the-postgres-admin-user-password-is-wrong)
   * [7.2. REDIS REFUSES TO START ](#72-redis-refuses-to-start-)
-  * [7.3. CANNOT LOGIN AT ALL IN THE WEB INTERFACE WITH THE ADMIN USER](#73-cannot-login-at-all-in-the-web-interface-with-the-admin-user)
-  * [7.4. STRANGE PERMISSIONS ERRORS](#74-strange-permissions-errors)
-  * [7.5. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#75-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
-  * [7.6. SOME KIND OF MISMATCH IN THE AWS](#76-some-kind-of-mismatch-in-the-aws)
-  * [7.7. THE PROBLEM OCCURRED IS NOT MENTIONED HERE ???!!!](#77-the-problem-occurred-is-not-mentioned-here-)
+  * [7.3. COULD NOT CONNECT TO REDIS SERVER](#73-could-not-connect-to-redis-server) 
+  * [7.4. CANNOT LOGIN IN THE WEB INTERFACE WITH THE ADMIN USER](#74-cannot-login-in-the-web-interface-with-the-admin-user)
+  * [7.5. POSTGRES PERMISSIONS ERRORS](#75-postgres-permissions-errors)
+  * [7.6. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#76-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
+  * [7.7. SOME KIND OF MISMATCH IN THE AWS](#77-some-kind-of-mismatch-in-the-aws)
+  * [7.8. THE PROBLEM OCCURRED IS NOT MENTIONED HERE ?!](#78-the-problem-occurred-is-not-mentioned-here-)
 
 
 
@@ -412,22 +413,53 @@ You would need to also restart the web server after executing this command.
      ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3 -a fix-db-permissions
 
 ### 7.2. Redis refuses to start 
-Redis should be configured to have bind on the ip address of the first eth. Also the bind to the ipv6 should be commented out ( ## bind 127.0.0.1 ::1). You should have also the correct ip configured in the cnf/env/&lt;&lt;env&gt;&gt;.env.json files. Because otherwise the application cannot connect and store correctly the db metadata during application startup.
-There might be still some bugs during the Redis provisioning in the src/bash/deployer/check-install-redis.func.sh file, run the the installation from the top till bottom command by command and try to restart after the provisioning.
+Redis should be configured to have bind on the ip address of the first eth. Also the bind to the ipv6 should be commented out ( ## bind 127.0.0.1 ::1). You should have also the correct ip configured in the `cnf/env/<<env>>.env.json` files. Because otherwise the application cannot connect and store correctly the db metadata during application startup.
+There might be still some bugs during the Redis provisioning in the `src/bash/deployer/check-install-redis.func.sh` file, run the installation from the top to bottom command by command.
 
+It may be worth checking `redis.conf` and make sure it is bound to a private IP.
+```
     sudo tail -n 10 /etc/redis/redis.conf
-    
+```
+```
     # do not bind to ipv6 on the localhost 
     # bind 127.0.0.1 ::1
     
-    # bind on the first eth0 ip address 
+    # bind on the first eth0 ip address looking like 10.0.2.15
     bind 10.0.62.82
     
     # enable service mode 
     supervised systemd
-    
+```
 
-### 7.3. Cannot login at all in the web interface with the admin user
+Then restart Redis using this command in the terminal:
+```
+sudo systemctl restart redis
+```
+
+You can verify that Redis is running in the following way:
+```
+sudo systemctl status redis
+```
+    
+### 7.3. Could not connect to Redis server
+`Uncaught exception from user code: Can't load application from file "...": Could not connect to Redis server at host-name:6379.`
+
+To fix this, first learn IPs of the current machine by running this command in the terminal:
+```
+ifconfig -a | grep inet
+```
+
+When working with virtual machines, search for the private IP that looks similar to `10.0.2.15`.
+When working with AWS EC2 instance, IP will look like `172.31.25.82`.
+
+Change Redis server IP inside `%path to qto%/cnf/env/dev.env.json` from `host-name` to the private IP. Then run mojo-hypnotoad again.
+
+```
+.src/bash/qto/qto.sh -a mojo-hypnotoad-start
+```
+
+
+### 7.4. Cannot login in the web interface with the admin user
 The password hashing in the users table is activated ALWAYS on blur even that the ui is not showing it ( yes , that is more of a bug, than a feature.
 The solution is to restart the application layer WITHOUT any authentication, change the admin user password from the ui and restart the application layer with authentication once again.
 
@@ -440,12 +472,12 @@ The solution is to restart the application layer WITHOUT any authentication, cha
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
     
 
-### 7.4. Strange permissions errors
+### 7.5. Postgres permissions errors
 Some of the newly created tables might not have explicitly their permissions in the DDLs. Or you might have run some of the sql scripts ad-hoc / manually and they do not contain grant statements. Run the following one-liner:
 
     bash src/bash/qto/qto.sh -a provision-db-admin
 
-### 7.5. You have reached the hw provisioning limits of your AWS account
+### 7.6. You have reached the hw provisioning limits of your AWS account
 If you get one of the errors bellow you would have to go the UI of the AWS admin console and delete non-used resources. Fortunately, all resources have the &lt;&lt;env&gt;&gt;_&lt;&lt;resource_name&gt;&gt; naming convention either in the object or in their Tags, which means that you will know what you are deleting.
 
     Error: Error creating VPC: VpcLimitExceeded: The maximum number of VPCs has been reached.
@@ -461,13 +493,10 @@ If you get one of the errors bellow you would have to go the UI of the AWS admin
       on main.tf line 203, in resource "aws_eip" "tst-ip-test":
      203: resource "aws_eip" "tst-ip-test" {
 
-### 7.6. Some kind of mismatch in the aws
-The aws web ui contains fancy ajax calls and in our experience it does not always update properly, if are bombarding it with terraform deployments onto the same resources. Make sure you hit F5 in your browser always when starting the work on new ec2 instance.
+### 7.7. Some kind of mismatch in the AWS
+The AWS web ui contains fancy ajax calls and in our experience it does not always update properly, if are bombarding it with terraform deployments onto the same resources. Make sure you hit F5 in your browser always when starting the work on new ec2 instance.
 
     
 
-### 7.7. The problem occurred is not mentioned here ???!!!
-Of course you quick Google it first ... if it took too long just send a e-mail / chat to the instance owner you got the source code from and you WILL get help sooner or later.
-
-    
-
+### 7.8. The problem occurred is not mentioned here ?!
+Try to Google it first. If it took too long, send a e-mail / chat invitation to the instance owner you got the source code from and you WILL get help sooner or later.
