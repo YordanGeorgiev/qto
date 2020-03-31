@@ -50,10 +50,11 @@ sub isAuthenticated {
 
    } else {
       # basic native authentication mode if NOT started with this env var
-      unless ( defined ( $controller->session( 'app.' . $db . '.user')) ) {
-         return 0;
+      if ( defined ( $controller->session( 'app.' . $db . '.user')) ) {
+         print "should be here !!! \n"; sleep 3 ;  
+         return 1;
       } else {
-         return 1 ;
+         return 0 ;
       }
    }
 
@@ -143,10 +144,11 @@ sub isAuthorized {
 
    } else {
       # basic native authentication mode if NOT started with this env var
-      unless ( defined ( $controller->session( 'app.' . $db . '.user')) ) {
-         return 0;
+      if ( defined ( $controller->session( 'app.' . $db . '.user')) ) {
+         print "should be here !!! \n"; sleep 3 ;  
+         return 1;
       } else {
-         return 1 ;
+         return 0 ;
       }
    }
 

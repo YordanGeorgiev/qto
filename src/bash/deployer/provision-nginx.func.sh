@@ -1,4 +1,3 @@
-
 do_provision_nginx(){
 
    test -f /etc/nginx/nginx.conf || sudo apt-get install -y nginx
@@ -33,6 +32,7 @@ EOF
       sudo ls -la /etc/nginx/sites-enabled/$env.http-site.conf
    done ;
 
+   sudo chown -R www-data:www-data /etc/nginx # !!! monthly_issues_202003-200326084258
    sudo systemctl daemon-reload
    sudo systemctl restart nginx
    sudo service nginx restart

@@ -107,7 +107,7 @@ sub doLoginUser {
       my $objCnrEncrypter  = 'Qto::App::IO::In::CnrEncrypter'->new();
       foreach my $key ( keys %$hsr ) {
          my $dbepass = $hsr->{$key}->{ 'password' } ; 
-         unless ( $objCnrEncrypter->match_passphrase_against_crypto_hash($dbepass,$pass) == 1 ) {
+         unless ( $objCnrEncrypter->match_passphrase_against_crypto_hash($dbepass,$pass)  ) {
            $http_code = 401 ; 
            $msg = "wrong password for $email" ;
          } else {

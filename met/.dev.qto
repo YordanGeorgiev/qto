@@ -522,6 +522,7 @@ src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql
 src/sql/pgsql/qto/tables/2020/2020-01/create-table-monthly_issues_202001.sql
 src/sql/pgsql/qto/tables/2020/2020-02/create-table-monthly_issues_202002.sql
 src/sql/pgsql/qto/tables/2020/2020-03/create-table-monthly_issues_202003.sql
+src/sql/pgsql/qto/tables/2020/2020-04/create-table-monthly_issues_202004.sql
 src/sql/pgsql/qto/tables/01.create-table-daily_issues.sql
 src/sql/pgsql/qto/tables/03.create-table-monthly_issues.sql
 src/sql/pgsql/qto/tables/04.create-table-yearly_issues.sql
@@ -672,7 +673,6 @@ doc/txt/qto/helps/dev/clone-to-app.help.txt
 src/bash/qto/funcs/dev/clone-to-app.func.sh
 src/bash/qto/tests/dev/clone-to-app.test.sh
 #---
-doc/txt/qto/funcs/change-version.func.txt
 doc/txt/qto/helps/change-version.help.txt
 doc/txt/qto/tests/change-version.test.txt
 src/bash/qto/funcs/dev/change-version.func.sh

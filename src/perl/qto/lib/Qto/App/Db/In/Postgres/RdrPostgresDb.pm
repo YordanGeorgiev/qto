@@ -1181,6 +1181,7 @@ sub doCallFuncGetHashRef {
       my $where_clause_with = '' ; 
 		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 0) ; 
 		return ( $ret , $msg ) unless $ret == 0 ; 
+      print "where_clause_with. $where_clause_with ::: RdrPostgresDb.pm todo:ysg\n";
 		$str_sql .= $where_clause_with if $where_clause_with ; 
 
       my $order_by = "\n" . 'ORDER BY' ; 
@@ -1326,15 +1327,15 @@ sub doCallFuncGetHashRef {
       my $cols             = () ;         # the array ref of columns
       my $columns_to_select = '' ;
       my @default_pick_cols = ('guid', 'id', 'seq', 'level', 'name', 'description','src', 'formats');
-      my @musthave_pick_cols = ('guid', 'id', 'seq', 'level', 'name' ); # no view-doc without those !!!
-      ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect($table,\@default_pick_cols);
-      return ( 400 , $msg , undef ) unless ( $ret == 0 );
-      foreach my $musthave_pick_col ( @musthave_pick_cols ) {
-         $columns_to_select = "$columns_to_select , $musthave_pick_col"
-            unless ( $columns_to_select =~ m/$musthave_pick_col/g );
-      }
+   my @musthave_pick_cols = ('guid', 'id', 'seq', 'level', 'name' ); # no view-doc without those !!!
+   ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect($table,\@default_pick_cols);
+   return ( 400 , $msg , undef ) unless ( $ret == 0 );
+   foreach my $musthave_pick_col ( @musthave_pick_cols ) {
+      $columns_to_select = "$columns_to_select , $musthave_pick_col"
+         unless ( $columns_to_select =~ m/$musthave_pick_col/g );
+   }
 
-		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 1) ; 
+   ( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 1) ; 
 		return ( $ret , $msg ) unless $ret == 0 ; 
       if ( $where_clause_with ) {
          $where_clause_with =~ s/$table/parent/g ; 

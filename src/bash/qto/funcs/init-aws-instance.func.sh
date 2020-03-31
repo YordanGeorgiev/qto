@@ -8,6 +8,10 @@ doInitAwdInstance(){
    mkdir -p $PRODUCT_INSTANCE_DIR/src/terraform/qto
    cp -v $PRODUCT_INSTANCE_DIR/src/terraform/tpl/qto/main.tf.tpl \
       $PRODUCT_INSTANCE_DIR/src/terraform/qto/main.tf
+
+   sudo service ntp stop
+   sudo ntpdate -s time.nist.gov
+   sudo service ntp start
   
    # expand the possible ~'s to the $HOME
 	pem_key=$(cat `eval echo ${pem_key_fpath:-}`)
