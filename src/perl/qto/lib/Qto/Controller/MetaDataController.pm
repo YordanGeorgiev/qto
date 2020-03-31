@@ -163,8 +163,6 @@ sub doReloadMetaRoutes {
    
    $objWtrRedis->setData(\$config, $db . '.meta-routes', $hsr);
    $config->{'env'}->{'app'}->{$db . '.meta-routes'} = $hsr ; 
-   p $config  ;
-   print "eof p config \@MetaDataController:::doReloadMetaRoutes todo:ysg \n";
 
 }
 

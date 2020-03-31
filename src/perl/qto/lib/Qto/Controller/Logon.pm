@@ -69,6 +69,7 @@ sub doLogonUser {
          foreach my $key ( keys %$hsr ) {
             my $dbepass = $hsr->{$key}->{ 'pass' } ; # this is the pass from the db !!!
             if ( $objGuardian->passwordsMatch ($dbepass,$pass) ){
+               $self->session( 'app.' . $db . '.user' => $email);
 
                my ( $rv, $msg , $jwt ) = $objGuardian->doGrantAccessToken($db, $hsr);
                if ( $rv == 0 ) { 

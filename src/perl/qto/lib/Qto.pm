@@ -232,8 +232,8 @@ sub doSetHooks {
 		);
 		
       my $type = $c->res->headers->content_type;
-      print "after_dispatch url: $url in Qto.pm todo:ysg \n";
-      print "after_dispatch type: $type in Qto.pm todo:ysg \n";
+      # debug rint "after_dispatch url: $url in Qto.pm todo:ysg \n";
+      # debug rint "after_dispatch type: $type in Qto.pm todo:ysg \n";
 
       # only authentiation for dynamic resources and json
       # return unless ( defined $type || $type =~ /text\/html/g || $type =~ /application\/json/g);
@@ -241,7 +241,7 @@ sub doSetHooks {
 		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g);
 
       my $route   = (split('/',$url))[1]; #this will fail on new static resource types ...
-      print "route: $route  Qto.pm todo:ysg \n";
+      # debug rint "route: $route  Qto.pm todo:ysg \n";
 
 
       unless ( $route eq 'logon' || $route eq 'login' || $route eq 'error' || defined($route)) {
