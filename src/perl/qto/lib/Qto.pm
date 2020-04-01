@@ -125,7 +125,7 @@ sub doReloadProjectsDbMeta {
    my @dbs                 = split (',',$proj_dbs_str);
 
    foreach my $db ( @dbs ) {
-      print "loading meta for db : \"" . "$db" . '"' . " \n" ; 
+      print "start loading meta for db : \"" . "$db" . '"' . " \n" ; 
       my $item             = 'app-startup';
       my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ; 
       $db                  = toEnvName ( $db , $config ) ;
@@ -235,33 +235,34 @@ sub doSetHooks {
       # debug rint "after_dispatch url: $url in Qto.pm todo:ysg \n";
       # debug rint "after_dispatch type: $type in Qto.pm todo:ysg \n";
 
-      # only authentiation for dynamic resources and json
+      # only auth#entiation for dynamic resources and json
       # return unless ( defined $type || $type =~ /text\/html/g || $type =~ /application\/json/g);
 		# obs no authentication for static resources ... qto-200314095059
+      return unless $type ; 
 		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g);
 
-      my $route   = (split('/',$url))[1]; #this will fail on new static resource types ...
-      # debug rint "route: $route  Qto.pm todo:ysg \n";
+      my $route   = (split('/',$url))[2]; #this will fail on new static resource types ...
 
 
-      unless ( $route eq 'logon' || $route eq 'login' || $route eq 'error' || defined($route)) {
-			my $db      = (split('/',$url))[0];
+      if ( $route eq 'logon' || $route eq 'login' || $route eq 'error' || !defined($route)) {
+         return ;
+		} else {
+			my $db      = (split('/',$url))[1];
          $db         = 'qto' unless $db ;
 			$db         = toEnvName ($db,$c->app->config);
 			my $objGuardian = $self->get('ObjGuardian');
 
 			unless ( $objGuardian->isAuthenticated($c->app->config, $db, $c, \$msg)){
-				my $login_url = '/' . toPlainName($db) . '/login' ;
+				my $login_url = '/' . toPlainName($db) . '/logon' ;
 				$c->redirect_to($login_url);
+            return ;
 
             unless ( $objGuardian->isAuthorized($c->app->config, $db, $c, \$msg)){
                my $home_url = '/' . toPlainName($db) . '/search' ;
-               p $msg ; 
-               print "msg after isAuthorized failed in Qto.pm todo:ysg \n";
                $c->redirect_to($home_url);
             }
 			}
-		}
+      }
 
    });
 

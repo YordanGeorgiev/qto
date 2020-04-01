@@ -1181,7 +1181,6 @@ sub doCallFuncGetHashRef {
       my $where_clause_with = '' ; 
 		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 0) ; 
 		return ( $ret , $msg ) unless $ret == 0 ; 
-      print "where_clause_with. $where_clause_with ::: RdrPostgresDb.pm todo:ysg\n";
 		$str_sql .= $where_clause_with if $where_clause_with ; 
 
       my $order_by = "\n" . 'ORDER BY' ; 
@@ -1220,12 +1219,13 @@ sub doCallFuncGetHashRef {
          $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
          unless ( keys %{$hsr2}) {
             $msg = ' no data for this search request !!! ' ;
-            $objLogger->doLogWarningMsg ( $msg ) ; 
+            $msg = DBI->errstr ;
+            $objLogger->doLogErrorMsg($msg) if $msg ; 
             $ret = 204 ;
             return ( $ret , $msg , {} ) ; 
          } else {
             $msg = DBI->errstr if $ret  == 400 ; 
-            $objLogger->doLogErrorMsg($msg);
+            $objLogger->doLogErrorMsg($msg) if $msg ; 
             die "$msg" if $ret == 400 ;
             $ret = 200 ;
          }

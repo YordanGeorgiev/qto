@@ -1,7 +1,7 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
-cnf/env/dev.env.json
-cnf/env/prd.env.json
-cnf/env/tst.env.json
+# cnf
+cnf/env
+# cnf
 # start errors
 src/perl/qto/templates/exception.production.html.ep
 # stop  errors
@@ -65,7 +65,6 @@ src/tpl/psql-code-generator/test-psql-code-generator.sh
 #
 src/python/generate-docx.py
 src/python/append-to-docx.py
-.env
 cnf/env
 # start ::: left-menu
 src/perl/qto/templates/controls/list-grid/js/left-menu.js.html.ep
