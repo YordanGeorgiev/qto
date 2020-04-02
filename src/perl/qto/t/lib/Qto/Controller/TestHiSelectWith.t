@@ -40,7 +40,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
       next unless ( grep( /^$table_name$/, @tables_to_check ) ) ;
 
       $tm = 'the return code for the ' . $table_name . ' is correct' ; 
-      $url = '/' . $db . '/hiselect/' . $table_name  . '?bid=0&with=description-like-name' ; 
+      $url = '/' . $db . '/hiselect/' . $table_name  . '?bid=0&with=description-like-the' ; 
       
       ok ($t->get_ok($url)
          ->status_is(200) 
@@ -55,8 +55,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
       foreach my $row ( @{$res->{'dat'}} ) {
          my $desc = $row->{ 'description' } ; 
          if ( defined $desc ) {
-            my $tm = 'if a description is filtered it contains the "name" string' ; 
-            ok ( $desc =~ m/name/g , $tm );
+            my $tm = 'if a description is filtered it contains the "the" string' ; 
+            ok ( $desc =~ m/the/ig , $tm ) unless $row->{ 'id'} == 0;
          }
       }
 

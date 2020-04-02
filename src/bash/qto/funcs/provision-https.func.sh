@@ -38,6 +38,7 @@ EOF_EXPECT
          sudo ls -la /etc/nginx/sites-enabled/$env.https-site.conf
       done ;
 
+      sudo chown -R www-data:www-data /etc/nginx
       sudo service nginx restart
       sudo service nginx status
       doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'

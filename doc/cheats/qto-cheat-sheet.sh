@@ -42,4 +42,18 @@ psql -d "$postgres_db_name" -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON AL
 # list all the tables in the terminal
 clear ; psql -d dev_qto -t -c '\dt' | cut -c 11- | perl -ne 's/^([a-z_0-9]*)( )(.*)/$1/; print '
 
+# how-to backup dirs from remote to local
+
+export ssh_user=ubuntu; export ssh_server=123.123.123.123
+export tgt_dir=/tmp/dir-to-be-overwritten; export src_dir=/tmp/dir-to-be-rsynced
+rsync -e "ssh -l USERID -i ~/.ssh/id_rsa.tst.qto" -av -r --partial --progress --human-readable \
+   --stats --delete-excluded $ssh_user@$ssh_server:$src_dir $tgt_dir
+
+export ssh_server=qto.fi
+export ssh_user=ubuntu
+export src_dir=/home/ubuntu/opt/qto
+export tgt_dir=/hos/opt/opt
+rsync -e "ssh -l USERID -i ~/.ssh/id_rsa.aws-ec2.qto.prd" -av -r --partial --progress
+   --human-readable --stats $ssh_user@$ssh_server:$src_dir $tgt_dir
+
 # eof file: doc/cheats/qto-cheat-sheet.sh

@@ -59,13 +59,17 @@ sub doSearchItems {
    
       my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
       my $page_load_time   = $objTimer->GetHumanReadableTime();
-      my $tables_list      = $objModel->get("$db" . '.tables-list');
-      my @items_arr        = @{$tables_list};
+      my $tables_list      = $objModel->get("$db" . '.tables-list') ;
       my $items_lst        = '';
-      foreach my $table ( @items_arr ){
-         $items_lst .= "'" . "$table" . "'," ;
+
+      # chk: qto-200321104505 because of potential memory leak crashing site ...
+      if ( defined $tables_list ) { 
+         my @items_arr        = @{$tables_list};
+         foreach my $table ( @items_arr ){
+            $items_lst .= "'" . "$table" . "'," ;
+         }
+         $items_lst = substr($items_lst, 0, -1);
       }
-      $items_lst = substr($items_lst, 0, -1);
   
       $self->render(
          'template'        => 'controls/srch-grid/srch-grid'

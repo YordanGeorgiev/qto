@@ -67,13 +67,13 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          $sth->bind_param('$1', $email);  # placeholders are numbered from 1, varchar is default db type
          $sth->execute() or $objLogger->error ( "$DBI::errstr" ) ;
          $hsr = $sth->fetchall_hashref( 'id' ) ; 
-
-         if ( scalar ( keys %$hsr ) == 1 ) {
+                  
+         if ( scalar ( keys %$hsr ) >= 1 ) {
             $ret = 200 ; 
             $msg = "" ; 
       } else { 
          $msg = "$email not registered! Contact " . $config->{'env'}->{'db'}->{'AdminEmail'} . " to request access." ;  
-         $ret = 401 if ( scalar ( keys %$hsr ) != 1 );
+         $ret = 401 if ( scalar ( keys %$hsr ) < 1 );
       }
    };
    if ( $@ ) { 
@@ -1219,12 +1219,13 @@ sub doCallFuncGetHashRef {
          $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
          unless ( keys %{$hsr2}) {
             $msg = ' no data for this search request !!! ' ;
-            $objLogger->doLogWarningMsg ( $msg ) ; 
+            $msg = DBI->errstr ;
+            $objLogger->doLogErrorMsg($msg) if $msg ; 
             $ret = 204 ;
             return ( $ret , $msg , {} ) ; 
          } else {
             $msg = DBI->errstr if $ret  == 400 ; 
-            $objLogger->doLogErrorMsg($msg);
+            $objLogger->doLogErrorMsg($msg) if $msg ; 
             die "$msg" if $ret == 400 ;
             $ret = 200 ;
          }
@@ -1326,15 +1327,15 @@ sub doCallFuncGetHashRef {
       my $cols             = () ;         # the array ref of columns
       my $columns_to_select = '' ;
       my @default_pick_cols = ('guid', 'id', 'seq', 'level', 'name', 'description','src', 'formats');
-      my @musthave_pick_cols = ('guid', 'id', 'seq', 'level', 'name' ); # no view-doc without those !!!
-      ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect($table,\@default_pick_cols);
-      return ( 400 , $msg , undef ) unless ( $ret == 0 );
-      foreach my $musthave_pick_col ( @musthave_pick_cols ) {
-         $columns_to_select = "$columns_to_select , $musthave_pick_col"
-            unless ( $columns_to_select =~ m/$musthave_pick_col/g );
-      }
+   my @musthave_pick_cols = ('guid', 'id', 'seq', 'level', 'name' ); # no view-doc without those !!!
+   ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect($table,\@default_pick_cols);
+   return ( 400 , $msg , undef ) unless ( $ret == 0 );
+   foreach my $musthave_pick_col ( @musthave_pick_cols ) {
+      $columns_to_select = "$columns_to_select , $musthave_pick_col"
+         unless ( $columns_to_select =~ m/$musthave_pick_col/g );
+   }
 
-		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 1) ; 
+   ( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 1) ; 
 		return ( $ret , $msg ) unless $ret == 0 ; 
       if ( $where_clause_with ) {
          $where_clause_with =~ s/$table/parent/g ; 

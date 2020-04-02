@@ -32,7 +32,7 @@ for my $row ( @$list ) {
 	my $url = '' ; 
 
    # debug print "\n running url: /$db" . '/select/' . $table . $url_params . "\n" ; 	
-   my $meta_res = $ua->get('/' . $db . '/select-meta/' . $table  )->result->json ; 
+   my $meta_res = $ua->get('/' . $db . '/select-item-meta-for/' . $table  )->result->json ; 
    my $list_meta = $meta_res->{'dat'};
    
    # not all tables contain the prio attribute to test by , thus run only for those having it

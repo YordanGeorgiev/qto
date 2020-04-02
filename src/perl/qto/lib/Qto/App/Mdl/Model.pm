@@ -26,10 +26,9 @@ our $item         = '' ;
 sub doGetColumnsMeta {
 
    my $self          = shift ;
-   my $config     = shift ;
+   my $config        = shift ;
    my $db            = shift ;
-   my $table         = shift ;
-   my $msg           = shift || 'error in the ' . $db . '.' . $table . ' model ';
+   my $msg           = shift ;
 
    my $mhr2          = {} ;
    my $meta_cols     = {} ;

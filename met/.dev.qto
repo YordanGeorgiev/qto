@@ -1,5 +1,14 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
-# security
+# cnf
+cnf/env
+cnf/env/dev.env.json
+cnf/env/tst.env.json
+cnf/env/prd.env.json
+# cnf
+# start errors
+src/perl/qto/templates/exception.production.html.ep
+# stop  errors
+src/bash/qto/scripts/web-to-db-upsert.sh
 src/perl/qto/lib/Qto/Controller/Logon.pm
 src/perl/qto/lib/Qto/Controller/Login.pm
 src/perl/qto/public/themes/thme-blue/css/screen/site/login.css
@@ -27,9 +36,6 @@ src/perl/qto/public/poc/file-upload/02/index.html
 src/perl/qto/templates/controls/list-grid/xt/modal-dia.xt.html.ep
 src/perl/qto/public/lib/js/controls/vue-simple-upload.min.js
 # stop file upload 
-cnf/env/dev.env.json
-cnf/env/prd.env.json
-cnf/env/tst.env.json
 # start redis
 src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/lib/Qto/Controller/Select.pm
@@ -62,7 +68,6 @@ src/tpl/psql-code-generator/test-psql-code-generator.sh
 #
 src/python/generate-docx.py
 src/python/append-to-docx.py
-.env
 cnf/env
 # start ::: left-menu
 src/perl/qto/templates/controls/list-grid/js/left-menu.js.html.ep
@@ -360,6 +365,7 @@ src/perl/qto/lib/Qto/Controller/Search.pm
 src/perl/qto/lib/Qto/Controller/Report.pm
 src/perl/qto/t/lib/Qto/Controller/TestCreate.t
 src/perl/qto/t/lib/Qto/Controller/TestTruncate.t
+src/perl/qto/t/lib/Qto/Controller/TestSelectMeta.t
 src/perl/qto/t/lib/Qto/Controller/TestSelect.t
 src/perl/qto/t/lib/Qto/Controller/TestQuery.t
 src/perl/qto/t/lib/Qto/Controller/TestCallFunc.t
@@ -508,6 +514,7 @@ src/sql/pgsql/qto/02.alter-qto-app-user.pgsql
 src/sql/pgsql/qto/tables/02.create-table-items_doc.sql
 src/sql/pgsql/qto/funcs/01.create-func-fns_update_time.sql
 src/sql/pgsql/qto/funcs/02.create-func-f_concat_ws.sql
+src/sql/pgsql/qto/funcs/03.create-func.func_get_meta_routes.sql
 src/sql/pgsql/qto/funcs/04.create-func.func_get_function_args.sql
 src/sql/pgsql/qto/tables
 src/sql/pgsql/qto/tables/2020/2020-01
@@ -517,6 +524,7 @@ src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql
 src/sql/pgsql/qto/tables/2020/2020-01/create-table-monthly_issues_202001.sql
 src/sql/pgsql/qto/tables/2020/2020-02/create-table-monthly_issues_202002.sql
 src/sql/pgsql/qto/tables/2020/2020-03/create-table-monthly_issues_202003.sql
+src/sql/pgsql/qto/tables/2020/2020-04/create-table-monthly_issues_202004.sql
 src/sql/pgsql/qto/tables/01.create-table-daily_issues.sql
 src/sql/pgsql/qto/tables/03.create-table-monthly_issues.sql
 src/sql/pgsql/qto/tables/04.create-table-yearly_issues.sql
@@ -568,7 +576,9 @@ src/sql/pgsql/qto/tables/42.create-table-ideas_status.sql
 src/sql/pgsql/qto/tables/43.create-table-questions_status.sql
 src/sql/pgsql/qto/tables/44.create-table-category.sql
 src/sql/pgsql/qto/tables/45.create-table-risks.sql
-src/sql/pgsql/qto/tables/45.create-table-problems_status.sql
+src/sql/pgsql/qto/tables/46.create-table-problems_status.sql
+src/sql/pgsql/qto/tables/47.create-table-projects.sql
+src/sql/pgsql/qto/tables/48.create-table-contacts.sql
 src/sql/pgsql/qto/tables/50.create-table-tst_paging.sql
 src/sql/pgsql/qto/tables/66.create-table-logs.sql
 src/sql/pgsql/qto/tables/88.create-table-test_hi_delete_table_doc.sql
@@ -665,7 +675,6 @@ doc/txt/qto/helps/dev/clone-to-app.help.txt
 src/bash/qto/funcs/dev/clone-to-app.func.sh
 src/bash/qto/tests/dev/clone-to-app.test.sh
 #---
-doc/txt/qto/funcs/change-version.func.txt
 doc/txt/qto/helps/change-version.help.txt
 doc/txt/qto/tests/change-version.test.txt
 src/bash/qto/funcs/dev/change-version.func.sh
@@ -951,3 +960,18 @@ src/js/node/js-unit-tests/01-set-url-param/test
 src/js/node/js-unit-tests/01-set-url-param/test/test.js
 src/js/node/scrap-html/package.json
 src/js/node/scrap-html/scrap-html.js
+src/perl/qto/lib/Qto/Controller/ListGrid.pm
+src/perl/qto/lib/auto/Qto/Controller/CallFunc/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/Report/autosplit.ix
+src/perl/qto/public/poc/modal-dialog/modal-05/file-upload.html
+src/perl/qto/public/poc/modal-dialog/modal-05/vue-simple-upload.min.js
+src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.css
+src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.js
+src/perl/qto/public/poc/vue-select/02/vue-select.css
+src/perl/qto/public/poc/vue-select/vue-select.js
+src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
+src/sql/pgsql/qto/tables/26.create-table-release_issues.sql
+src/sql/pgsql/scripts/03.create-func.func_get_all_users_roles.sql
+src/sql/pgsql/scripts/grant-priveledges.todo.sql
+cnf/crontab/crontab-l.sh
+tags
