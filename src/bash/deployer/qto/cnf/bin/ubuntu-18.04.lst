@@ -29,3 +29,8 @@
    npm
    expect
    nginx
+   ntpdate
+   nmap
+   net-tools
+   copyq
+   awscli

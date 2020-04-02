@@ -48,7 +48,7 @@ sub startup {
 
    $self->doRegisterPlugins() ; 
 
-   $self->doSessions() ; 
+   $self->doSetSessions() ; 
    
    $self->doLoadAppConfig();
 
@@ -89,9 +89,11 @@ sub doLoadAppConfig {
 
    $self->set('ObjLogger', $objLogger );
 
+	# qto-200326084258
    $config->{'hypnotoad'} = {
-      listen  => [$listen],
-      workers => $num_of_workers
+        listen  => [$listen]
+      , workers => $num_of_workers
+      , inactivity_timeout => 0
       } ;
 
    $objGuardian      = 'Qto::App::Sec::Guardian'->new ( \$config ) ;
@@ -123,7 +125,7 @@ sub doReloadProjectsDbMeta {
    my @dbs                 = split (',',$proj_dbs_str);
 
    foreach my $db ( @dbs ) {
-      print "loading meta for db : \"" . "$db" . '"' . " \n" ; 
+      print "start loading meta for db : \"" . "$db" . '"' . " \n" ; 
       my $item             = 'app-startup';
       my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ; 
       $db                  = toEnvName ( $db , $config ) ;
@@ -165,6 +167,19 @@ sub doSetHooks {
   
    my $self = shift ; 
 
+	$self->hook(before_render => sub {
+	  my ($c, $args) = @_;
+
+	  # Make sure we are rendering the exception template
+	  return unless my $template = $args->{template};
+	  return unless $template eq 'exception';
+
+	  # Switch to JSON rendering if content negotiation allows it
+	  return unless $c->accepts('json');
+	  $args->{'json'} = {'exception'=> $c->stash('exception')};
+});
+
+
 	# chk: https://mojolicious.org/perldoc/Mojolicious#before_routes
 	$self->hook('before_routes'=> sub {
 		my $c = shift;
@@ -205,12 +220,9 @@ sub doSetHooks {
    # obs: after_static_dispatch deprecated
    $self->hook( 'after_dispatch' => sub {
       my $c       = shift;
-      my $url     = (split('#',$c->req->url->to_abs))[0];
+      my $url     = (split('#',$c->req->url->path))[0];
+      my $msg     = '' ; 
 	
-		my $type = $c->res->headers->content_type;
-		# obs no authentication for static resources ... qto-200314095059
-		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g);
-
 		# If so, try to prevent caching
 		$c->res->headers->header(
 			Expires => Mojo::Date->new(time-365*86400)
@@ -218,27 +230,39 @@ sub doSetHooks {
 		$c->res->headers->header(
 			"Cache-Control" => "max-age=1, no-cache"
 		);
+		
+      my $type = $c->res->headers->content_type;
+      # debug rint "after_dispatch url: $url in Qto.pm todo:ysg \n";
+      # debug rint "after_dispatch type: $type in Qto.pm todo:ysg \n";
 
-      my $route   = (split('/',$url))[4]; #this will fail on new static resource types ...
+      # only auth#entiation for dynamic resources and json
+      # return unless ( defined $type || $type =~ /text\/html/g || $type =~ /application\/json/g);
+		# obs no authentication for static resources ... qto-200314095059
+      return unless $type ; 
+		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g);
 
-      unless ( $route eq 'logon' || $route eq 'login' ) {
-			my $db      = (split('/',$url))[3];
+      my $route   = (split('/',$url))[2]; #this will fail on new static resource types ...
+
+
+      if ( $route eq 'logon' || $route eq 'login' || $route eq 'error' || !defined($route)) {
+         return ;
+		} else {
+			my $db      = (split('/',$url))[1];
          $db         = 'qto' unless $db ;
 			$db         = toEnvName ($db,$c->app->config);
 			my $objGuardian = $self->get('ObjGuardian');
 
-			unless ( $objGuardian->isAuthenticated($c->app->config, $db, $c)){
-				my $login_url = '/' . toPlainName($db) . '/login' ;
+			unless ( $objGuardian->isAuthenticated($c->app->config, $db, $c, \$msg)){
+				my $login_url = '/' . toPlainName($db) . '/logon' ;
 				$c->redirect_to($login_url);
+            return ;
+
+            unless ( $objGuardian->isAuthorized($c->app->config, $db, $c, \$msg)){
+               my $home_url = '/' . toPlainName($db) . '/search' ;
+               $c->redirect_to($home_url);
+            }
 			}
-		}
-      # qto-200302161711
-      # get the app config
-      # get the guardian $objGuardian
-      # get the RBAC list from the Redis
-      # get the jwt from the session 
-      # get the public key from the session from the config
-      #
+      }
 
    });
 
@@ -263,7 +287,7 @@ sub doSetHooks {
 # -----------------------------------------------------------------------------
 # src: https://mojolicious.org/perldoc/Mojolicious/Sessions
 # -----------------------------------------------------------------------------
-sub doSessions {
+sub doSetSessions {
    
    my $self = shift ; 
    $self->sessions->default_expiration(86400); # set expiry to 1 day
@@ -383,16 +407,21 @@ sub doSetRoutes {
    , action       => 'doSelectItems'
    );
 
+   $r->get('/:db/select-item-meta-for')->to(
+     controller   => 'Select'
+   , action       => 'doSelectItemMetaFor'
+   );
+
+   $r->get('/:db/select-item-meta-for/:item')->to(
+     controller   => 'Select'
+   , action       => 'doSelectItemMetaFor'
+   );
+   
    $r->get('/:db/select-meta')->to(
      controller   => 'Select'
    , action       => 'doSelectMeta'
    );
 
-   $r->get('/:db/select-meta/:item')->to(
-     controller   => 'Select'
-   , action       => 'doSelectMeta'
-   );
-   
    $r->get('/:db/list/:item')->to(
      controller   => 'List'
    , action       => 'doListItems'

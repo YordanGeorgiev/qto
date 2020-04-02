@@ -200,8 +200,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
                DELETE FROM $table WHERE id=$origin_id ;
                UPDATE $table SET seq = seq-1 where seq > originSeq;
-               UPDATE $table SET rgt = rgt -widthRgtLft WHERE rgt > originRgt;
-               UPDATE $table SET lft = lft -widthRgtLft WHERE lft > originRgt;
+               UPDATE $table SET rgt = rgt - widthRgtLft WHERE rgt > originRgt;
+               UPDATE $table SET lft = lft - widthRgtLft WHERE lft > originLft;
          " . '
          END ; $$ ';
                #DELETE FROM $table WHERE lft <= originLft AND rgt <= originRgt ;

@@ -140,6 +140,7 @@ package Qto::App::Utils::Initiator ;
 		my @DirParts = @{doGetDirParts ( $levels_up )} ; 
 		
 		$PRODUCT_INSTANCE_DIR 					= join( '/' , @DirParts );
+
 		$ProductInstanceDir 						= $PRODUCT_INSTANCE_DIR ; 
 		$PRODUCT_INSTANCE_DIR 					= $self->untaint ( $PRODUCT_INSTANCE_DIR); 
 		$ProductInstanceDir 						= $self->untaint ( $PRODUCT_INSTANCE_DIR); 
@@ -179,10 +180,12 @@ package Qto::App::Utils::Initiator ;
 		my $file = $ProductInstanceDir . '/.env' ;
 		open my $fh, '<', $file or carp "no .env file $file in the product instance dir !!!" ;
 		
-		while( my $line = <$fh>)  {   
-			 $EnvType = $line;    
-			 $EnvType =~ s/ENV_TYPE=(.*)/$1/g;
-			 last if $EnvType =~ m/|dev|tst|stg|qas|prd|/g ;
+		while( my $line = <$fh>){
+         next unless $line =~ m/ENV_TYPE/;
+
+			$EnvType = $line;    
+			$EnvType =~ s/ENV_TYPE=(.*)$/$1/g;
+			last if $EnvType =~ m/|dev|tst|stg|qas|prd|/g ;
 		}
 		close $fh; 
       chomp($EnvType);

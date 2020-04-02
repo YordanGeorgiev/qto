@@ -23,6 +23,7 @@ main(){
    do_provision_ssh_keys
    do_copy_git_hooks
    do_set_chmods
+   do_change_default_confs
    do_create_multi_env_dir
    do_finalize
 }
@@ -93,7 +94,8 @@ do_set_vars(){
    set +e
    export APP_TO_DEPLOY=${1:-qto}
    maybe_echo=${2:-} || ''
-   app_owner=$USER || exit 1
+   host_name="$(hostname -s)"
+   user_at_host=$USER'@'$host_name || exit 1
    unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
    export PRODUCT_DIR=$(cd $unit_run_dir/../../..; echo `pwd`)
    source "$PRODUCT_DIR/.env"
@@ -103,10 +105,10 @@ do_set_vars(){
    perl -pi -e 's|ENV_TYPE=tst|ENV_TYPE=dev|g' "$PRODUCT_DIR/.env"
    perl -pi -e 's|ENV_TYPE=prd|ENV_TYPE=dev|g' "$PRODUCT_DIR/.env"
    source "$PRODUCT_DIR/.env"
-   PRODUCT_INSTANCE_DIR="$product_dir/$APP_TO_DEPLOY.$VERSION.$ENV_TYPE.$app_owner"
-   bash_opts_file=~/.bash_opts.$(hostname -s)
-   host_name="$(hostname -s)"
+   PRODUCT_INSTANCE_DIR="$product_dir/$APP_TO_DEPLOY.$VERSION.$ENV_TYPE.$user_at_host"
+   bash_opts_file=~/.bash_opts.$host_name
    cd $PRODUCT_DIR
+   sudo ntpdate 'pool.ntp.org' # ensure the box has the correct time 
 }
 
 
@@ -157,6 +159,42 @@ do_log(){
    echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [$APP_TO_DEPLOY][@$host_name] [$$] $msg " >> $log_file
 }
 
+do_change_default_confs(){
+   eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
+
+   my_ip=$(hostname -I|awk '{print $1}')
+   while read -r file ; do
+      script=$(cat <<"EOF_CONFS"
+         use strict; use warnings; binmode STDOUT, ':utf8'; use utf8; use JSON; use Data::Printer;
+         sub rndStr{ join'', @_[ map{ rand @_ } 1 .. shift ] }
+         my $sjson;
+         {
+           local $/; #Enable 'slurp' mode
+           open my $fh, '<', $ARGV[0];
+           $sjson = <$fh>;
+           close $fh;
+         }
+         my $data = decode_json($sjson);  #p $data ;
+
+         # set some default values to the configuration
+         $data->{'env'}->{'app'}->{'web_host'} = '127.0.0.1' ;
+         $data->{'env'}->{'aws'}->{'AdminEmail'} = 'type-here-your-email@host.com' ;
+         $data->{'env'}->{'db'}->{'AdminEmail'} = 'type-here-your-email@host.com' ;
+         $data->{'env'}->{'db'}->{'project_databases'} = $data->{'env'}->{'db'}->{'postgres_db_name'};
+         $data->{'env'}->{'db'}->{'postgres_db_host'} = '127.0.0.1' ;
+         $data->{'env'}->{'redis'}->{'server'} = $my_ip;
+         $data->{'env'}->{'ssh'}->{'ssh_server'} = 'type-here-ssh-server-to-re-use-from-bash-history';
+
+         my $json = JSON->new->allow_nonref;
+         open my $fh, '>', $ARGV[0];
+         print $fh $json->pretty->encode($data);
+         close $fh;
+EOF_CONFS
+)
+      perl -e "$script" $file
+   done < <(find $PRODUCT_DIR/cnf/env/ -type f -name '*.json')
+
+}
 
 do_create_multi_env_dir(){
    test -d "$PRODUCT_INSTANCE_DIR" && \
@@ -165,6 +203,7 @@ do_create_multi_env_dir(){
    mv -v "$product_dir" "$product_dir"'_'
    mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$PRODUCT_INSTANCE_DIR"; 
 }
+
 
 do_finalize(){
 
@@ -178,6 +217,8 @@ do_finalize(){
    echo " cd $PRODUCT_INSTANCE_DIR"
    echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 }
+
+
 
 main "$@"
 

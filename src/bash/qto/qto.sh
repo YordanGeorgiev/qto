@@ -139,7 +139,6 @@ doExportJsonSectionVars(){
    while read -r l ; do
      key=$(echo $l|cut -d'=' -f1)
      val=$(echo $l|cut -d'=' -f2)
-     eval "$(echo -e 'export '$key=\"\"$val\"\")"
      doLog "INFO $key=$val"
    done < <(cat "$json_file"| jq -r "$section"'|keys_unsorted[] as $key|"\($key)=\"\(.[$key])\""')
 }
@@ -325,6 +324,7 @@ do_set_vars(){
    doLog "INFO using the following vars:"
    cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
    echo -e "$cmd"
+   vars=$(echo -e "$cmd"); doLog "$vars"
 
    while read -r func_file ; do source "$func_file" ; done < <(find $PRODUCT_INSTANCE_DIR -name "*func.sh")
    clearTheScreen

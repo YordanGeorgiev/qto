@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Error</title>
+   
+   </head>
+   <body>
+      <h3>Error Status Code</h3>
+      <p><%= $status %></p>
+      <h3>Error</h3>
+      <p><%= $exception->message %></p>
+      <h4>Stash</h1>
+      <pre><%= dumper $snapshot %></pre>
+      <h5>Page Load Time</h5>
+      <p><%= localtime(time()) %></p>
+   </body>
+</html>

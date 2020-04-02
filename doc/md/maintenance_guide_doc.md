@@ -27,26 +27,33 @@
     * [4.5.1. Restore a database from full database backup](#451-restore-a-database-from-full-database-backup)
     * [4.5.2. Restore a database from db inserts file](#452-restore-a-database-from-db-inserts-file)
   * [4.6. RESTORE A DATABASE TABLE](#46-restore-a-database-table)
+  * [4.7. CREATE A FULL BACKUP OF AN INSTANCE SITE](#47-create-a-full-backup-of-an-instance-site)
 * [5. SHELL ACTIONS](#5-shell-actions)
-  * [5.1. RUN INCREASE-DATE ACTION](#51-run-increase-date-action)
+  * [5.1. BACKUP DIRECTORIES WITH RSYNC](#51-backup-directories-with-rsync)
   * [5.2. LOAD XLS SHEET TO DB A DOC TABLE](#52-load-xls-sheet-to-db-a-doc-table)
-* [6. BULK ISSUES MANAGEMENT](#6-bulk-issues-management)
-    * [6.1. Opening a monthly period](#61-opening-a-monthly-period)
-  * [6.1. CLOSING A MONTHLY PERIOD](#61-closing-a-monthly-period)
-  * [6.2. PUBLISH THE RELEASE ISSUES](#62-publish-the-release-issues)
-  * [6.3. DIRS NAMING CONVENTIONS](#63-dirs-naming-conventions)
-* [7. NAMING CONVENTIONS](#7-naming-conventions)
-  * [7.1. NAMING CONVENTIONS FOR DIRECTORIES](#71-naming-conventions-for-directories)
-  * [7.2. ROOT DIRS NAMING CONVENTIONS](#72-root-dirs-naming-conventions)
-* [8. SOURCE CODE MANAGEMENT](#8-source-code-management)
-  * [8.1. CONFIGURE AND USE GIT ALWAYS BY USING SSH IDENTITIES](#81-configure-and-use-git-always-by-using-ssh-identities)
-  * [8.2. AIM FOR E2E TRACEABILITY](#82-aim-for-e2e-traceability)
-  * [8.3. RESTART THE APPLICATION LAYER](#83-restart-the-application-layer)
-* [9. KNOWN ISSUES AND WORKAROUNDS](#9-known-issues-and-workarounds)
-  * [9.1. MORBO IS STUCK](#91-morbo-is-stuck)
-    * [9.1.1. Symptoms](#911-symptoms)
-    * [9.1.2. Probable root cause](#912-probable-root-cause)
-    * [9.1.3. Known solution and workaround](#913-known-solution-and-workaround)
+  * [5.3. RUN INCREASE-DATE ACTION](#53-run-increase-date-action)
+* [6. NGINX CONFIGURATION](#6-nginx-configuration)
+  * [6.1. THE NGINX PROVISIONING](#61-the-nginx-provisioning)
+  * [6.2. APPLYING NEW NGINX CONFIGURATION](#62-applying-new-nginx-configuration)
+  * [6.3. OPENING A MONTHLY PERIOD](#63-opening-a-monthly-period)
+  * [6.4. NAME ...](#64-name-)
+* [7. BULK ISSUES MANAGEMENT](#7-bulk-issues-management)
+  * [7.1. CLOSING A MONTHLY PERIOD](#71-closing-a-monthly-period)
+  * [7.2. NAME ...](#72-name-)
+  * [7.3. PUBLISH THE RELEASE ISSUES](#73-publish-the-release-issues)
+  * [7.4. DIRS NAMING CONVENTIONS](#74-dirs-naming-conventions)
+* [8. NAMING CONVENTIONS](#8-naming-conventions)
+  * [8.1. NAMING CONVENTIONS FOR DIRECTORIES](#81-naming-conventions-for-directories)
+  * [8.2. ROOT DIRS NAMING CONVENTIONS](#82-root-dirs-naming-conventions)
+* [9. SOURCE CODE MANAGEMENT](#9-source-code-management)
+  * [9.1. CONFIGURE AND USE GIT ALWAYS BY USING SSH IDENTITIES](#91-configure-and-use-git-always-by-using-ssh-identities)
+  * [9.2. AIM FOR E2E TRACEABILITY](#92-aim-for-e2e-traceability)
+  * [9.3. RESTART THE APPLICATION LAYER](#93-restart-the-application-layer)
+* [10. KNOWN ISSUES AND WORKAROUNDS](#10-known-issues-and-workarounds)
+  * [10.1. MORBO IS STUCK](#101-morbo-is-stuck)
+    * [10.1.1. Symptoms](#1011-symptoms)
+    * [10.1.2. Probable root cause](#1012-probable-root-cause)
+    * [10.1.3. Known solution and workaround](#1013-known-solution-and-workaround)
 
 
 
@@ -175,7 +182,7 @@ Open the meta_columns table, type the item's table_name and the column_name, typ
     
 
 ### 3.3. Add new FK data for the drop downs in the list page
-Locate the primary key table which holds the FK data from the listed item you want to modify the drop down data to. Add new rows in this table, the new rows will be visible straight away in the UI, and if not - the users should logout and login to clear their localStorage.
+Locate the primary key table which holds the FK data from the listed item you want to modify the drop down data to. Add new rows in this table, the new rows will be visible straight away in the UI, and if not - the users should logout and login to clear their localStorage. Note, that some browsers do not show properly most the dropdown select's scrollbars if more than 12 items are contained in the select - aka the users should scroll till the end of the dropdown to see the full list of items ...
 
     
 
@@ -265,16 +272,40 @@ You restore a database table by first running the pgsql scripts of the project d
     # re-apply the table ddl
     psql -d $postgres_db_name < src/sql/pgsql/dev_qto/13.create-table-requirements.sql
 
+### 4.7. Create a full backup of an instance site
+Once an instance site is up-and-running - it might be a good idea to create a full-backup of the site's instance data, software and configuration:
+ - full backup the postgres - both DDL and DML's
+ - ensure the cnf/env/&lt;&lt;env&gt;&gt;.json is part of the met/.&lt;&lt;env&gt;&gt;.qto meta list file
+ - add the DML and DDL dump files to the met/.&lt;&lt;env&gt;&gt;.qto meta list file
+ - create a relative or full package zip file
+ - rename it to reflect the fact that this file contains a full backup file
+
+    # full backup the postgres - both DDL and DML's
+    ./src/bash/qto/qto.sh -a backup-postgres-db
+    ./src/bash/qto/qto.sh -a backup-postgres-db-inserts
+    #  ensure the cnf/env/<<env>>.json is part of the met/.<<env>>.qto meta list file 
+    # vim met/.<<env>>.qto
+    
+    #  add the DML and DDL dump files to the met/.<<env>>.qto meta list file, for example :
+    echo dat/mix/2020/2020-03/2020-03-22/sql/prd_qto/prd_qto.20200322_123449.full.dmp.sql >> met/.tst.qto
+    echo dat/mix/2020/2020-03/2020-03-22/sql/prd_qto/prd_qto.20200322_123633.insrts.dmp.sql >> met/.prd.qto
+    
+    #  create a relative or full package zip file
+    ./src/bash/qto/qto.sh -a create-relative-package
+    
+    #  rename it to reflect the fact that this file contains a full backup file
+    mv -v ../qto.0.8.1.prd.20200322_122924.ip-10-0-44-231.rel.zip ../qto.0.8.1.prd-fb.20200322_122924.ip-10-0-44-231.rel.zip
+
 ## 5. SHELL ACTIONS
 
 
     
 
-### 5.1. Run increase-date action
-You track the issues of your projects by storing them into xls files in "daily" proj_txt dirs. 
-Each time the day changes by running the increase-date action you will be able to clone the data of the previous date and start working on the current date.
+### 5.1. Backup directories with rsync
+You can backup whole directories from remote to local via ssh with the following setup and naming conventions:
+on the local design for each remote a different product owner 
 
-    bash src/bash/qto/qto.sh -a increase-date
+    _
 
 ### 5.2. Load xls sheet to db a doc table
 To load xls issues to db and from db to txt files
@@ -285,12 +316,53 @@ To load xls issues to db and from db to txt files
     # check that the rows where inserted
      psql -d dev_qto -c "SELECT * FROM requirements_doc;"
 
-## 6. BULK ISSUES MANAGEMENT
-By bulk issues management herewith is meant the bulk handling via sql to the issues items via the psql binary, which IS basically just moving data from table to table provided they have the same set of columns. 
+### 5.3. Run increase-date action
+You track the issues of your projects by storing them into xls files in "daily" proj_txt dirs. 
+Each time the day changes by running the increase-date action you will be able to clone the data of the previous date and start working on the current date.
+
+    bash src/bash/qto/qto.sh -a increase-date
+
+## 6. NGINX CONFIGURATION
+This section contains 
 
     
 
-#### 6.1. Opening a monthly period
+### 6.1. The nginx provisioning
+Anytime you change the ngix configuration and confirm that the change is beneficial for the overall setup you must add the change to the provisioning code - aka to the branch.
+
+    # this is the main nginx.conf 
+    cnf/nginx/etc/nginx/nginx.conf
+    
+    cnf/nginx/
+    cnf/nginx/etc
+    cnf/nginx/etc/nginx
+    cnf/nginx/etc/nginx/sites-available
+    cnf/nginx/etc/nginx/sites-available/tst.localhost.cnf
+    cnf/nginx/etc/nginx/sites-available/prd.localhost.cnf
+    cnf/nginx/etc/nginx/sites-available/dev.localhost.cnf
+    cnf/nginx/etc/nginx/sites-available/%env%.http-site.conf
+    cnf/nginx/etc/nginx/sites-available/%env%.https-site.conf
+    
+    
+    
+
+### 6.2. Applying new nginx configuration
+To apply new configuration ensure the following: 
+ - are you on a PRODUCTION server ?!!! What will happen if the configuration is totally messed -up 
+
+    # sudo nginx -c /etc/nginx/nginx.conf -t
+    # clear ; sudo service nginx restart ; sudo service nginx status
+    
+    # if all is ok make a backup
+    sudo cp -v /etc/nginx/nginx.conf cnf/nginx/etc/nginx/nginx.conf.$(date "+%Y%m%d_%H%M%S").bak
+    sudo cp -v /etc/nginx/nginx.conf cnf/nginx/etc/nginx/nginx.conf
+    
+    # if errors , troubleshoot 
+    sudo journalctl -xe | less
+    
+    
+
+### 6.3. Opening a monthly period
 Each monthly period is basically a table with the naming convention monthly_issues_YYYYMM for example the monthly period for the year 2020 January will be the monthly_issues_202001. 
 To create the table you need to basically copy the monthly_issues table to the one with the period at the end and replace the monthly issues with the monthly_issues_&lt;&lt;yyyymm&gt;&gt; string and run the table as follows.
 
@@ -308,33 +380,48 @@ To create the table you need to basically copy the monthly_issues table to the o
     bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues monthly_issues_202001
     
 
-### 6.1. Closing a monthly period
+### 6.4. name ...
+
+
+    _
+
+## 7. BULK ISSUES MANAGEMENT
+By bulk issues management herewith is meant the bulk handling via sql to the issues items via the psql binary, which IS basically just moving data from table to table provided they have the same set of columns. 
+
+    
+
+### 7.1. Closing a monthly period
 Closing a monthly period would simply mean to ensure that all the done issues will be moved to the release_issues table
 
     bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues_202002 release_issues
     
 
-### 6.2. Publish the release issues
+### 7.2. name ...
+
+
+    _
+
+### 7.3. Publish the release issues
 You publish the release issues by moving all the issues with '09-done' status to the release_issues table
 
     
 
-### 6.3. Dirs naming conventions
+### 7.4. Dirs naming conventions
 The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
 
     
 
-## 7. NAMING CONVENTIONS
+## 8. NAMING CONVENTIONS
 
 
     
 
-### 7.1. Naming conventions for directories
+### 8.1. Naming conventions for directories
 The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
 
     
 
-### 7.2. Root Dirs naming conventions
+### 8.2. Root Dirs naming conventions
 The root dirs and named as follows:
 bin - contains the produced binaries for the project
 cnf - for the configuration
@@ -344,12 +431,12 @@ src - for the source code of the actual projects and subprojects
 
     
 
-## 8. SOURCE CODE MANAGEMENT
+## 9. SOURCE CODE MANAGEMENT
 The qto is a derivative of the wrapp tool - this means that development and deployment process must be integrated into a single pipeline. 
 
     
 
-### 8.1. Configure and use git ALWAYS by using ssh identities
+### 9.1. Configure and use git ALWAYS by using ssh identities
 You probably have access to different corporate and public git repositories. Use your personal ssh identity file you use in GitHub to push to the qto project. The following code snippet demonstrates how you could preserve your existing git configurations ( even on corporate / intra boxes ) , but use ALWAYS the personal identity to push to the qto...
 
     # create the company identity file
@@ -377,29 +464,29 @@ You probably have access to different corporate and public git repositories. Use
     # and verify 
     clear ; git log --pretty --format='%h %ae %<(15)%an ::: %s
 
-### 8.2. Aim for e2e traceability
+### 9.2. Aim for e2e traceability
 Aim for traceability between user-stories, requirements, features and functionalities
 Once the issues are defined and you start working on your own branch which is named by the issue-id aim to map one on one each test in your code with each listed requirement in qto.
 
     
 
-### 8.3. Restart the application layer
+### 9.3. Restart the application layer
 Well just chain the both commands. 
 
     # start does actually re-start always 
     bash src/bash/qto/qto.sh -a mojo-morbo-start 
 
-## 9. KNOWN ISSUES AND WORKAROUNDS
+## 10. KNOWN ISSUES AND WORKAROUNDS
 
 
     
 
-### 9.1. Morbo is stuck
+### 10.1. Morbo is stuck
 
 
     
 
-#### 9.1.1. Symptoms
+#### 10.1.1. Symptoms
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -413,7 +500,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 9.1.2. Probable root cause
+#### 10.1.2. Probable root cause
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -427,7 +514,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 9.1.3. Known solution and workaround
+#### 10.1.3. Known solution and workaround
 List the running perl processes which run the morbo and kill the instances
 
     ps -ef | grep -i perl
