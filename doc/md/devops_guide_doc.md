@@ -9,39 +9,39 @@
   * [1.7. AIM FOR SIMPLICITY](#17-aim-for-simplicity)
   * [1.8. DO NOT ALLOW BROKEN WINDOWS](#18-do-not-allow-broken-windows)
   * [1.9. DO NOT ADD A COMMIT WITHOUT PASSING ALL THE REGRESSION TESTS](#19-do-not-add-a-commit-without-passing-all-the-regression-tests)
-* [2. ETL OPERATIONS](#2-etl-operations)
-  * [2.1. DB DATA BACKUP AND RESTORE](#21-db-data-backup-and-restore)
-  * [2.2. RUN INCREASE-DATE ACTION](#22-run-increase-date-action)
-  * [2.3. LOAD XLS ISSUES TO DB AND FROM DB](#23-load-xls-issues-to-db-and-from-db)
-  * [2.4. DIRS NAMING CONVENTIONS](#24-dirs-naming-conventions)
-* [3. NAMING CONVENTIONS](#3-naming-conventions)
-  * [3.1. PRODUCT INSTANCE DIRECTORIES](#31-product-instance-directories)
-  * [3.2. ROOT DIRS NAMING CONVENTIONS](#32-root-dirs-naming-conventions)
-  * [3.3. DABASE NAMING CONVENTIONS](#33-dabase-naming-conventions)
-* [4. SOURCE CODE MANAGEMENT](#4-source-code-management)
-  * [4.1. CONFIGURE AND USE GIT ALWAYS BY USING SSH IDENTITIES](#41-configure-and-use-git-always-by-using-ssh-identities)
-  * [4.2. AIM FOR TRACEABILITY BETWEEN USER-STORIES, REQUIREMENTS, FEATURES AND FUNCTIONALITIES](#42-aim-for-traceability-between-user-stories-requirements-features-and-functionalities)
-  * [4.3. ZERO TOLERANCE FOR BUGS, ESPECIALLY CRASHES](#43-zero-tolerance-for-bugs-especially-crashes)
-  * [4.4. ALWAYS START WITH A TEST UNIT CREATION](#44-always-start-with-a-test-unit-creation)
-  * [4.5. BRANCH FOR COMMON DEVELOPMENT - DEV](#45-branch-for-common-development--dev)
-  * [4.6. INTEGRATION TESTING IN THE TST BRANCH](#46-integration-testing-in-the-tst-branch)
-  * [4.7. PRODUCTION IN THE PRD BRANCH](#47-production-in-the-prd-branch)
-  * [4.8. MASTER BRANCH - THE SINGLE TRUTH FOR CURRENT STABLE VERSION OF THE SOFTWARE](#48-master-branch--the-single-truth-for-current-stable-version-of-the-software)
-* [5. SOURCE CODE STYLING](#5-source-code-styling)
-  * [5.1. SPACES AND NOT TABS](#51-spaces-and-not-tabs)
-  * [5.2. PERL SOURCE CODE STYLING](#52-perl-source-code-styling)
-    * [5.2.1. Spacing after variable asignments](#521-spacing-after-variable-asignments)
-    * [5.2.2. Set 3 spaces for a tab](#522-set-3-spaces-for-a-tab)
-    * [5.2.3. Empty lines](#523-empty-lines)
-* [6. WAY OF WORKING](#6-way-of-working)
-  * [6.1. CHAT / IRC](#61-chat-/-irc)
-  * [6.2. DEFINITION OF DONE](#62-definition-of-done)
-  * [6.3. E-MAIL COMMUNICATION](#63-e-mail-communication)
-  * [6.4. ISSUES MANAGEMENT](#64-issues-management)
-  * [6.5. DOCUMENTATION](#65-documentation)
+* [2. WAY OF WORKING AND PROCESSES IN THE QTO PROGRAM](#2-way-of-working-and-processes-in-the-qto-program)
+  * [2.1. CHAT / IRC](#21-chat-/-irc)
+  * [2.2. DEFINITION OF DONE](#22-definition-of-done)
+  * [2.3. E-MAIL COMMUNICATION](#23-e-mail-communication)
+  * [2.4. CONTINUOUS IMPROVEMENT BY ISSUES MANAGEMENT](#24-continuous-improvement-by-issues-management)
+* [3. ETL OPERATIONS](#3-etl-operations)
+  * [3.1. DB DATA BACKUP AND RESTORE](#31-db-data-backup-and-restore)
+  * [3.2. RUN INCREASE-DATE ACTION](#32-run-increase-date-action)
+  * [3.3. LOAD XLS ISSUES TO DB AND FROM DB](#33-load-xls-issues-to-db-and-from-db)
+  * [3.4. DIRS NAMING CONVENTIONS](#34-dirs-naming-conventions)
+* [4. NAMING CONVENTIONS](#4-naming-conventions)
+  * [4.1. PRODUCT INSTANCE DIRECTORIES](#41-product-instance-directories)
+  * [4.2. ROOT DIRS NAMING CONVENTIONS](#42-root-dirs-naming-conventions)
+  * [4.3. DABASE NAMING CONVENTIONS](#43-dabase-naming-conventions)
+* [5. SOURCE CODE MANAGEMENT](#5-source-code-management)
+  * [5.1. CONFIGURE AND USE GIT ALWAYS BY USING SSH IDENTITIES](#51-configure-and-use-git-always-by-using-ssh-identities)
+  * [5.2. AIM FOR TRACEABILITY BETWEEN USER-STORIES, REQUIREMENTS, FEATURES AND FUNCTIONALITIES](#52-aim-for-traceability-between-user-stories-requirements-features-and-functionalities)
+  * [5.3. ZERO TOLERANCE FOR BUGS, ESPECIALLY CRASHES](#53-zero-tolerance-for-bugs-especially-crashes)
+  * [5.4. ALWAYS START WITH A TEST UNIT CREATION](#54-always-start-with-a-test-unit-creation)
+  * [5.5. BRANCH FOR COMMON DEVELOPMENT - DEV](#55-branch-for-common-development--dev)
+  * [5.6. INTEGRATION TESTING IN THE TST BRANCH](#56-integration-testing-in-the-tst-branch)
+  * [5.7. PRODUCTION IN THE PRD BRANCH](#57-production-in-the-prd-branch)
+  * [5.8. DEPLOYMENT TO THE CLOUD](#58-deployment-to-the-cloud)
+  * [5.9. MASTER BRANCH - THE SINGLE TRUTH FOR CURRENT STABLE VERSION OF THE SOFTWARE](#59-master-branch--the-single-truth-for-current-stable-version-of-the-software)
+* [6. SOURCE CODE STYLING](#6-source-code-styling)
+  * [6.1. SPACES AND NOT TABS](#61-spaces-and-not-tabs)
+  * [6.2. PERL SOURCE CODE STYLING](#62-perl-source-code-styling)
+    * [6.2.1. Spacing after variable asignments](#621-spacing-after-variable-asignments)
+    * [6.2.2. Set 3 spaces for a tab](#622-set-3-spaces-for-a-tab)
+    * [6.2.3. Empty lines](#623-empty-lines)
 * [7. TESTING](#7-testing)
-  * [7.1. CHECKING THE PERL SYNTAX](#71-checking-the-perl-syntax)
-  * [7.2. RUNNING UNIT TESTS](#72-running-unit-tests)
+  * [7.1. RUNNING UNIT TESTS](#71-running-unit-tests)
+  * [7.2. CHECKING THE PERL SYNTAX](#72-checking-the-perl-syntax)
   * [7.3. RUNNING FUNCTIONAL TESTS](#73-running-functional-tests)
   * [7.4. RUNNING INTEGRATION TESTS](#74-running-integration-tests)
   * [7.5. USER-STORY CREATION](#75-user-story-creation)
@@ -84,16 +84,16 @@
   * [11.2. AUTHORISATION](#112-authorisation)
     * [11.2.1. Generic role-based access control list based authorisation](#1121-generic-role-based-access-control-list-based-authorisation)
 * [12. KNOWN ISSUES AND WORKAROUNDS](#12-known-issues-and-workarounds)
-    * [12.1. The RBAC based native authorisation](#121-the-rbac-based-native-authorisation)
-  * [12.1. ALL TESTS FAIL WITH THE 302 ERROR](#121-all-tests-fail-with-the-302-error)
-  * [12.2. MORBO IS STUCK](#122-morbo-is-stuck)
-    * [12.2.1. Probable root cause](#1221-probable-root-cause)
-    * [12.2.2. Kill processes](#1222-kill-processes)
-    * [12.2.3. Problem description](#1223-problem-description)
-  * [12.3. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#123-the-page-looks-broken--probably-the-new-css-is-not-re-loaded)
-  * [12.4. THE VUE UI DOES NOT UPDATE PROPERLY ](#124-the-vue-ui-does-not-update-properly-)
-  * [12.5. NGINX FAILS WITH 502 BAD GATEWAY ERROR AND PROBABLY CRASHES THE SITE](#125-nginx-fails-with-502-bad-gateway-error-and-probably-crashes-the-site)
-  * [12.6. WHY HAVING ALL THE HASSLE WITH THIS DIRECTORY STRUCTURE - IS OVERKILL ?!!](#126-why-having-all-the-hassle-with-this-directory-structure--is-overkill-)
+  * [12.1. THE RBAC BASED NATIVE AUTHORISATION](#121-the-rbac-based-native-authorisation)
+  * [12.2. ALL TESTS FAIL WITH THE 302 ERROR](#122-all-tests-fail-with-the-302-error)
+  * [12.3. MORBO IS STUCK](#123-morbo-is-stuck)
+    * [12.3.1. Probable root cause](#1231-probable-root-cause)
+    * [12.3.2. Kill processes](#1232-kill-processes)
+    * [12.3.3. Problem description](#1233-problem-description)
+  * [12.4. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#124-the-page-looks-broken--probably-the-new-css-is-not-re-loaded)
+  * [12.5. THE VUE UI DOES NOT UPDATE PROPERLY ](#125-the-vue-ui-does-not-update-properly-)
+  * [12.6. NGINX FAILS WITH 502 BAD GATEWAY ERROR AND PROBABLY CRASHES THE SITE](#126-nginx-fails-with-502-bad-gateway-error-and-probably-crashes-the-site)
+  * [12.7. WHY HAVING ALL THE HASSLE WITH THIS DIRECTORY STRUCTURE - IS OVERKILL ?!!](#127-why-having-all-the-hassle-with-this-directory-structure--is-overkill-)
 * [13. FAQ](#13-faq)
 
 
@@ -161,45 +161,78 @@ Even in your personal branch. Really. Because after the application has surpasse
 
     
 
-## 2. ETL OPERATIONS
+## 2. WAY OF WORKING AND PROCESSES IN THE QTO PROGRAM
+A project represents a single, focused endeavour, whereas a program might be even a collection of projects, with ongoing activities and not a clear, definite, SINGLE outcome. 
+Qto is more of a program with not strictly defined end-product and less of a project, so whenever you see the "qto project" think more for a "definite milestone of the qto program".
+This section describes the way of working within a team working on the qto program. 
+The work on the qto project is conducted by using the Scrum methodology, thus the Scrum
+
+    
+
+### 2.1. Chat / IRC
+Should you want a quicker respond than 2 hours use a chat tool. Do not expect people to answer you straight away, it takes 5 to 20 min to reach the most productive flow state, thus not answering your question might be the more productive option from the point of view of the organisation.
+
+    
+
+### 2.2. Definition of Done
+Each issue must have a tangible artifact. An issue without tangible artifact is a thought thrown in the air.
+The DoD must be iterated and updated during each Sprint Review. 
+
+    
+
+### 2.3. E-mail communication
+Do not use e-mail communication for code style, testing, developing etc. Issues which could be achieved with the code review interface of the source code management system. 
+Before writing an e-mail think first could you find a way to avoid writing it at all. 
+Do not expect answer of your e-mail within 2 hours. 
+Use e-mail when you have to get an written evidence on agreed matters, which might cause later on discussions. 
+
+    
+
+### 2.4. Continuous improvement by issues management
+At the end of the month you should move the completed issues to the yearly_issues table as follows:
 
 
     
 
-### 2.1. Db data backup and restore
+## 3. ETL OPERATIONS
+
+
+    
+
+### 3.1. Db data backup and restore
 Check maintenance_guide_doc-23
 
     
 
-### 2.2. Run increase-date action
+### 3.2. Run increase-date action
 You track the issues of your projects by storing them into xls files in "daily" proj_txt dirs. 
 Each time the day changes by running the increase-date action you will be able to clone the data of the previous date and start working on the current date.
 
     bash src/bash/qto/qto.sh -a increase-date
 
-### 2.3. Load xls issues to db and from db
+### 3.3. Load xls issues to db and from db
 To load xls issues to db run the following one-liner:
 
     bash src/bash/qto/qto.sh -a xls-to-db
     
     
 
-### 2.4. Dirs naming conventions
+### 3.4. Dirs naming conventions
 The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
 
     
 
-## 3. NAMING CONVENTIONS
+## 4. NAMING CONVENTIONS
 
 
     
 
-### 3.1. Product instance directories
+### 4.1. Product instance directories
 
 
     
 
-### 3.2. Root Dirs naming conventions
+### 4.2. Root Dirs naming conventions
 The root dirs and named as follows:
 bin - contains the produced binaries for the project
 cnf - for the configuration
@@ -209,17 +242,17 @@ src - for the source code of the actual projects and subprojects
 
     
 
-### 3.3. Dabase naming conventions
+### 4.3. Dabase naming conventions
 Each database must start with it's environment prefix - dev, tst or prd. And yes this is so fundamentally in-build into qto that changing this naming convention will definitely destroy your application.
 
     
 
-## 4. SOURCE CODE MANAGEMENT
+## 5. SOURCE CODE MANAGEMENT
 The qto is a derivative of the wrapp tool - this means that development and deployment process must be integrated into a single pipeline. 
 
     
 
-### 4.1. Configure and use git ALWAYS by using ssh identities
+### 5.1. Configure and use git ALWAYS by using ssh identities
 You probably have access to different corporate and public git repositories. Use your personal ssh identity file you use in GitHub to push to the qto project. The following code snippet demonstrates how you could preserve your existing git configurations ( even on corporate / intra boxes ) , but use ALWAYS the personal identity to push to the qto...
 
     # create the company identity file
@@ -241,122 +274,83 @@ You probably have access to different corporate and public git repositories. Use
     # and verify 
     clear ; git log --pretty --format='%h %ae %<(15)%an ::: %s
 
-### 4.2. Aim for traceability between user-stories, requirements, features and functionalities
+### 5.2. Aim for traceability between user-stories, requirements, features and functionalities
 Once the issues are defined and you start working on your own branch which is named by the issue-id aim to map one on one each test in your code with each listed requirement in confluence and / or JIRA. 
 
     
 
-### 4.3. Zero tolerance for bugs, especially crashes
+### 5.3. Zero tolerance for bugs, especially crashes
 As soon as bugs are identified and reproduceable, register them as issues and resolve them with prio ( aka priority ) 1.
 After resolution, think about the root cause of the bug, the mear fact that the bug occurred tells that something in the way of working has to be improved , what ?!
 Bugs are like broken windows the more you have them the faster the value of your building will be down to zero. 
 
     
 
-### 4.4. ALWAYS Start with a test unit creation
+### 5.4. ALWAYS Start with a test unit creation
 Do not ever never write code without starting first the unit test on how-to test the code. Period. 
 This is he only way to avoid braking old functionalities when the application code base grows larger. 
 Each time a new bug is found fix it by adding new Unit Test!
 
     
 
-### 4.5. Branch for COMMON development - dev
+### 5.5. Branch for COMMON development - dev
 No code should be merged into the development branch without broad testing coverage and approval from the owner of the instance - as the owner of the instance is at the end responsible personally for the whole instance, since once a change has been merged to develop it must pass as quickly as possible to tst, prd and master.
+Each developer committing to the development branch MUST rebase as frequently as possible from the dev branch to avoid time waste aligning the feature branches to the common dev branch.
 
-    
+    # qto explicitly avoids the usage of the develop branch, because qto deployment and release process IS DIFFERENT
+    git rebase -i dev
 
-### 4.6. Integration testing in the tst branch
+### 5.6. Integration testing in the tst branch
 The tst branch is dedicated for integration testing of all the tests, the deployment, performance testing and configuration changes. Should you need to perform bigger than a small hotfix changes you must branch the tst branch into a separate dev--feature branch and re-run the integration testing and approval all over. 
 At the end all the integration tests should be behind this shell call. 
 
     bash src/bash/qto/qto.sh -a run-integration-tests
 
-### 4.7. Production in the prd branch
+### 5.7. Production in the prd branch
 The prd branch is the one deployed to the production environment. This code is NOT straight merged into the master branch , but after certain time depending on the dynamic of the tool with bugless operation merged. 
 
     
 
-### 4.8. master branch - the single truth for current stable version of the software
+### 5.8. Deployment to the cloud
+//
+
+    
+
+### 5.9. master branch - the single truth for current stable version of the software
 Once the business has approved a new version - it should be moved to the master branch and all other branches including the separate feature branches MUST be REBASED ( and NOT MERGED !!! ) from the master branch to accommodate any hotfixes, configuration related adjustments or quick bug fixes detected in production only. 
 
     
 
-## 5. SOURCE CODE STYLING
+## 6. SOURCE CODE STYLING
 This section is going to be the one to be debated and hated the most ...
 
     
 
-### 5.1. Spaces and not tabs
+### 6.1. Spaces and not tabs
 
 
     
 
-### 5.2. Perl source code styling
+### 6.2. Perl source code styling
 
 
     
 
-#### 5.2.1. Spacing after variable asignments
+#### 6.2.1. Spacing after variable asignments
 You might want to use spacing after variable assignments if you have a lot of variables assigned ... it improves the readability of the code ....
 
     
 
-#### 5.2.2. Set 3 spaces for a tab
+#### 6.2.2. Set 3 spaces for a tab
 Why ????!!!!!
 Because 2 is too little and 4 is too much and line legth of 80 to 100 is too small to be wasted or packed with too much stuff ... 
 Also 3 is a magical number ...
 
     
 
-#### 5.2.3. Empty lines
+#### 6.2.3. Empty lines
 Empty lines improve readability, when used in a standard way: 
 Use 2 empty lines between functions and 1 empty line between logical blocks within functions.
-
-    
-
-## 6. WAY OF WORKING
-This section describes the way of working within a team working on the qto project. 
-The work on the qto project is conducted by using the Scrum methodology, thus the Scrum
-
-    
-
-### 6.1. Chat / IRC
-Should you want a quicker respond than 2 hours use a chat tool. Do not expect people to answer you straight away, it takes 5 to 20 min to reach the most productive flow state, thus not answering your question might be the more productive option from the point of view of the organisation.
-
-    
-
-### 6.2. Definition of Done
-Each issue must have a tangible artifact. An issue without tangible artifact is a thought thrown in the air.
-The DoD must be iterated and updated during each Sprint Review. 
-
-    
-
-### 6.3. E-mail communication
-Do not use e-mail communication for code style, testing, developing etc. Issues which could be achieved with the code review interface of the source code management system. 
-Before writing an e-mail think first could you find a way to avoid writing it at all. 
-Do not expect answer of your e-mail within 2 hours. 
-Use e-mail when you have to get an written evidence on agreed matters, which might cause later on discussions. 
-
-    
-
-### 6.4. Issues management
-At the end of the month you should move the completed issues to the yearly_issues table as follows:
-
-
-    psql -d tst_qto -c "
-    INSERT INTO yearly_issues
-    ( guid  , id  , type  , category  , status  , prio  , name  , description  , owner  , update_time)
-    SELECT
-    guid  , id  , type  , category  , status  , prio  , name  , description  , owner  , update_time
-    FROM monthly_issues WHERE 1=1 and status='09-done'
-    ON CONFLICT (id) DO UPDATE
-    SET
-    guid = excluded.guid ,id = excluded.id ,type = excluded.type ,category = excluded.category ,status = excluded.status ,prio = excluded.prio, name = excluded.name ,description = excluded.description ,owner = excluded.owner ,update_time = excluded.update_time
-    ;
-    "
-
-### 6.5. Documentation
-Undocumented feature is not a feature. 
 
     
 
@@ -366,18 +360,18 @@ Because in order for you to be able to add more functionalities to the qto appli
 
     
 
-### 7.1. Checking the perl syntax
+### 7.1. Running unit tests
+
+
+     bash src/bash/qto/qto.sh -a run-unit-tests
+
+### 7.2. Checking the perl syntax
 Before running any tests check the perl syntax ... as follows:
 
     bash src/bash/qto/qto.sh -a check-perl-syntax
     # starts echoging something like this...
     ...
      ::: running: cd src/perl/qto ; perl -MCarp::Always -I /hos/opt/qto/qto.0.8.1.dev.ysg/src/perl/qto -I /hos/opt/qto/qto.0.8.1.dev.ysg/src/perl/qto/lib -wc "./t/lib/Qto/App/Utils/TestInitiator.t" ; cd -
-
-### 7.2. Running unit tests
-
-
-     bash src/bash/qto/qto.sh -a run-unit-tests
 
 ### 7.3. Running functional tests
 
@@ -685,7 +679,7 @@ https://stackoverflow.com/a/58009983/65706
 
     
 
-#### 12.1. The RBAC based native authorisation
+### 12.1. The RBAC based native authorisation
 The RBAC based native authentication works as follows:
  - during start-up or meta-data reload the Guardian component saves the RBAC list into the Redis
  - the User requests a resource from the System
@@ -698,7 +692,7 @@ The RBAC based native authentication works as follows:
 
     
 
-### 12.1. All tests fail with the 302 error
+### 12.2. All tests fail with the 302 error
  This one is actually a bug ... all the tests not requiring non-authentication mode should set it in advance ...
 
     # disable authentication during testing
@@ -707,12 +701,12 @@ The RBAC based native authentication works as follows:
     # call the test once again
     perl src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
 
-### 12.2. Morbo is stuck
+### 12.3. Morbo is stuck
 
 
     
 
-#### 12.2.1. Probable root cause
+#### 12.3.1. Probable root cause
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -726,7 +720,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-#### 12.2.2. Kill processes
+#### 12.3.2. Kill processes
 List the running perl processes which run the morbo and kill the instances
 
     ps -ef | grep -i perl
@@ -734,7 +728,7 @@ List the running perl processes which run the morbo and kill the instances
     # be carefull what to kill 
     kill -9 <<proc-I-know-is-the-one-to-kill>>
 
-#### 12.2.3. Problem description
+#### 12.3.3. Problem description
 This one occurs quite often , especially when the application layer is restarted, but the server not 
 
     # the error msg is 
@@ -748,7 +742,7 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-### 12.3. The page looks broken - probably the new css is not re-loaded
+### 12.4. The page looks broken - probably the new css is not re-loaded
 This problem is quite oftenly experienced and a real time-burner, so keep those shortcuts bellow in mind. 
 To apply the newest css do a hard reload in Chrome with the shortcut COMMAND + SHIFT + R.
 The other option is to keep the SHIFT button and press the reload button the Chrome address bar ( this one has been buggy from time to time as well. ... )
@@ -756,7 +750,7 @@ The other option is to keep the SHIFT button and press the reload button the Chr
     COMMAND + SHIFT + R
     SHIT + CLICK ON RELOAD BUTTON
 
-### 12.4. The vue UI does not update properly 
+### 12.5. The vue UI does not update properly 
 Due to the vue reactivity system - basically the more the complex the ui control, the better to have some kind of id to set in the v-for ... 
 
     <div v-for="item in filteredItems" :key="item.id">
@@ -766,7 +760,7 @@ Due to the vue reactivity system - basically the more the complex the ui control
     // or even 
     this.$parent.$forceUpdate()
 
-### 12.5. NginX fails with 502 Bad Gateway error and probably crashes the site
+### 12.6. NginX fails with 502 Bad Gateway error and probably crashes the site
 Might be due to the following error found in the journal log: 
 "nginx.service: Failed to parse PID from file /run/nginx.pid: Invalid argument"
 
@@ -778,7 +772,7 @@ Might be due to the following error found in the journal log:
     sudo systemctl daemon-reload
     sudo systemctl restart nginx
 
-### 12.6. Why having all the hassle with this directory structure - is overkill ?!!
+### 12.7. Why having all the hassle with this directory structure - is overkill ?!!
 Every software project has a scope. Qto as a project aims to provide the fully vertically integrated code base for deployment, operation and maintenance, which is not possible without the use of multiple run-times within the project ( such as bash, perl, python, terraform, npm ... )
 Having a project with a directory structure for a specific run-time enforcing that directory structure to all the other runtimes is a a mess.
 

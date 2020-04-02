@@ -119,12 +119,9 @@ our $jwt_private_key_file  = '' ;
          # foreach role in the claims, build the permission string:
          my $roles = $claims_from_token->{'roles'};
          foreach my $role ( @$roles ) {
-            p $role ; 
-            print "role in forach my role \n";
             # READER__may__view__yearly_issues
             my $permission = $role . '__may__' . $web_action . '__' . $act_subject ;
             $permission = substr($permission,0,-2) unless ( $act_subject);
-            print "permission $permission from Guardian.pom todo:ysg \n";
             # grep the permission string from the rbac_list 
             # if found set rv to 1 , else do nothing as rv is set to 0 
             $rv = grep ( /^$permission/, @$rbac_list);
