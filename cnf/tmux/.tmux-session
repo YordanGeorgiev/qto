@@ -1,9 +1,0 @@
-sess---qto	win---DEV--ssh	/hos/opt/qto/qto.0.8.2.dev.$USER@$host_name
-sess---qto	win---DEV--run	/hos/opt/qto/qto.0.8.2.dev.$USER@$host_name
-sess---qto	win---DEV--vim	/hos/opt/qto/qto.0.8.2.dev.$USER@$host_name
-sess---qto	win---TST--run	/hos/opt/qto/qto.0.8.2.tst.$USER@$host_name
-sess---qto	win---TST--vim	/hos/opt/qto/qto.0.8.2.tst.$USER@$host_name
-sess---qto	win---TST--qto.fi	/hos/opt/qto/qto.0.8.2.tst.$USER@$host_name
-sess---qto	win---PRD--run	/hos/opt/qto/qto.0.8.2.prd.$USER@$host_name
-sess---qto	win---PRD--vim	/hos/opt/qto/qto.0.8.2.prd.$USER@$host_name
-sess---qto	win---PRD--ssh	/hos/opt/qto/qto.0.8.2.prd.$USER@$host_name
