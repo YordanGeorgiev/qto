@@ -94,7 +94,8 @@ do_set_vars(){
    set +e
    export APP_TO_DEPLOY=${1:-qto}
    maybe_echo=${2:-} || ''
-   app_owner=$USER || exit 1
+   host_name="$(hostname -s)"
+   user_at_host=$USER'@'$host_name || exit 1
    unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
    export PRODUCT_DIR=$(cd $unit_run_dir/../../..; echo `pwd`)
    source "$PRODUCT_DIR/.env"
@@ -104,9 +105,8 @@ do_set_vars(){
    perl -pi -e 's|ENV_TYPE=tst|ENV_TYPE=dev|g' "$PRODUCT_DIR/.env"
    perl -pi -e 's|ENV_TYPE=prd|ENV_TYPE=dev|g' "$PRODUCT_DIR/.env"
    source "$PRODUCT_DIR/.env"
-   PRODUCT_INSTANCE_DIR="$product_dir/$APP_TO_DEPLOY.$VERSION.$ENV_TYPE.$app_owner"
-   bash_opts_file=~/.bash_opts.$(hostname -s)
-   host_name="$(hostname -s)"
+   PRODUCT_INSTANCE_DIR="$product_dir/$APP_TO_DEPLOY.$VERSION.$ENV_TYPE.$user_at_host"
+   bash_opts_file=~/.bash_opts.$host_name
    cd $PRODUCT_DIR
    sudo ntpdate 'pool.ntp.org' # ensure the box has the correct time 
 }

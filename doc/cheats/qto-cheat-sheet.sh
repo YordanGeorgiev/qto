@@ -49,4 +49,11 @@ export tgt_dir=/tmp/dir-to-be-overwritten; export src_dir=/tmp/dir-to-be-rsynced
 rsync -e "ssh -l USERID -i ~/.ssh/id_rsa.tst.qto" -av -r --partial --progress --human-readable \
    --stats --delete-excluded $ssh_user@$ssh_server:$src_dir $tgt_dir
 
+export ssh_server=qto.fi
+export ssh_user=ubuntu
+export src_dir=/home/ubuntu/opt/qto
+export tgt_dir=/hos/opt/opt
+rsync -e "ssh -l USERID -i ~/.ssh/id_rsa.aws-ec2.qto.prd" -av -r --partial --progress
+   --human-readable --stats $ssh_user@$ssh_server:$src_dir $tgt_dir
+
 # eof file: doc/cheats/qto-cheat-sheet.sh
