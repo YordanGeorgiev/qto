@@ -37,7 +37,7 @@ ok (length($jwt) > 0, $tm);
 $tn = 'test-02' ; 
 $tm = $tn . " the token can be verfied back with the PUBLIC key";
 my $pub_secret          = $objGuardian->doGetPublicKeySecret();
-( $rv, $msg, my $claims_from_token ) = $objGuardian->doVerifyTokenAndGetClaims($jwt,$pub_secret);
+( $rv, $msg, my $claims_from_token ) = $objGuardian->hasValidTokenAndClaims($jwt,$pub_secret);
 ok ( $rv == 0 ,$tm);
 ok ( $msg eq '' ,$tm);
 
