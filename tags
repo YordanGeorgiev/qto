@@ -1280,7 +1280,7 @@ doValidateAndSetSeq	src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm	371;"	subroutin
 doValidateAndSetUpdate	src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm	201;"	subroutine	language:Perl
 doValidateAndSetWith	src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm	32;"	subroutine	language:Perl
 doValidateLoginParams	src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm	76;"	subroutine	language:Perl
-doVerifyTokenAndGetClaims	src/perl/qto/lib/Qto/App/Sec/Guardian.pm	275;"	subroutine	language:Perl
+hasValidTokenAndClaims	src/perl/qto/lib/Qto/App/Sec/Guardian.pm	275;"	subroutine	language:Perl
 doViewItems	src/perl/qto/lib/Qto/Controller/View.pm	25;"	subroutine	language:Perl
 doWgetMinioBins	src/bash/qto/deploy-start-minio.sh	10;"	function	language:Sh
 doWrite	src/perl/qto/lib/Qto/App/IO/Out/WtrGitHubMd.pm	38;"	subroutine	language:Perl

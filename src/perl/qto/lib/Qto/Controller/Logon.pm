@@ -68,8 +68,11 @@ sub doLogonUser {
       if ( $rv == 200 ) {
          foreach my $key ( keys %$hsr ) {
             my $dbepass = $hsr->{$key}->{ 'pass' } ; # this is the pass from the db !!!
+
             if ( $objGuardian->passwordsMatch ($dbepass,$pass) ){
                $self->session( 'app.' . $db . '.user' => $email);
+               $self->redirect_to($redirect_url) 
+                  if ( !defined $ENV{'QTO_JWT_AUTH'} or $ENV{'QTO_JWT_AUTH'} != 1 ) ;
 
                my ( $rv, $msg , $jwt ) = $objGuardian->doGrantAccessToken($db, $hsr);
                if ( $rv == 0 ) { 

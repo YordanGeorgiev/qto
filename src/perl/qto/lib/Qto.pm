@@ -19,6 +19,7 @@ use Carp qw< carp croak confess cluck >;
 use Encode qw< encode decode >;
 use Unicode::Normalize qw< NFD NFC >;
 use IO::Compress::Gzip 'gzip' ;
+use URL::Encode qw(url_encode url_decode);
 
 use Mojolicious::Plugin::RenderFile ; 
 
@@ -125,7 +126,7 @@ sub doReloadProjectsDbMeta {
    my @dbs                 = split (',',$proj_dbs_str);
 
    foreach my $db ( @dbs ) {
-      print "start loading meta for db : \"" . "$db" . '"' . " \n" ; 
+      #print "start loading meta for db : \"" . "$db" . '"' . " \n" ; 
       my $item             = 'app-startup';
       my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ; 
       $db                  = toEnvName ( $db , $config ) ;
@@ -136,9 +137,9 @@ sub doReloadProjectsDbMeta {
    my $redis_server        = $config->{'env'}->{'redis'}->{'server'};
    my $redis_port          = $config->{'env'}->{'redis'}->{'port'};
 
-   print "START printing the meta-data keys for ALL dbs in redis : \n";
-   print `echo 'KEYS * ' | redis-cli -h $redis_server -p $redis_port| sort`;
-   print "STOP  printing the meta-data keys in redis : \n";
+   #print "START printing the meta-data keys for ALL dbs in redis : \n";
+   #print `echo 'KEYS * ' | redis-cli -h $redis_server -p $redis_port| sort`;
+   #print "STOP  printing the meta-data keys in redis : \n";
 
    my $stop_time = Time::HiRes::gettimeofday();
    $msg  = "the meta-data load to Redis for the CONFIGURED project_databases: \"$proj_dbs_str\" took ";
@@ -232,8 +233,6 @@ sub doSetHooks {
 		);
 		
       my $type = $c->res->headers->content_type;
-      # debug rint "after_dispatch url: $url in Qto.pm todo:ysg \n";
-      # debug rint "after_dispatch type: $type in Qto.pm todo:ysg \n";
 
       # only auth#entiation for dynamic resources and json
       # return unless ( defined $type || $type =~ /text\/html/g || $type =~ /application\/json/g);
@@ -244,7 +243,8 @@ sub doSetHooks {
       my $route   = (split('/',$url))[2]; #this will fail on new static resource types ...
 
 
-      if ( $route eq 'logon' || $route eq 'login' || $route eq 'error' || !defined($route)) {
+      if ( $route eq 'logon' || $route eq 'login' || $route eq 'error' || 
+            $route eq 'search' or $route eq 'serve' or !defined($route)) {
          return ;
 		} else {
 			my $db      = (split('/',$url))[1];
@@ -256,12 +256,23 @@ sub doSetHooks {
 				my $login_url = '/' . toPlainName($db) . '/login' ;
 				$c->redirect_to($login_url);
             return ;
-
-            unless ( $objGuardian->isAuthorized($c->app->config, $db, $c, \$msg)){
-               my $home_url = '/' . toPlainName($db) . '/search' ;
-               $c->redirect_to($home_url);
-            }
 			}
+         unless ( $objGuardian->isAuthorized($c->app->config, $db, $c, \$msg)){
+            foreach my $k(keys %{$config->{'env'}->{'app'}->{$db . '.meta-routes'}}){
+               my $r = $config->{'env'}->{'app'}->{$db . '.meta-routes'}->{$k};
+               next unless $r->{'name'} eq $route ;
+
+               if ( $r->{'is_backend'} == 1) {
+                  my $backend_error_url  = '/' . toPlainName($db) . '/serve/forbidden?&msg=' . url_encode($msg);
+                  $c->redirect_to($backend_error_url);
+                  return;
+               } else {
+                  my $home_url = '/' . toPlainName($db) . '/search' ;
+                  $c->redirect_to($home_url);
+                  return ;
+               }
+            }
+         }
       }
 
    });
@@ -303,6 +314,11 @@ sub doSetRoutes {
    
    my $self = shift ; 
    my $r = $self->routes;
+   
+   $r->get('/:db/serve/:item')->to(
+     controller   => 'Serve'
+   , action       => 'doServe'
+   );
    
    $r->get('/')->to(
      controller   => 'Index'

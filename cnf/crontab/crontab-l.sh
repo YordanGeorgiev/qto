@@ -4,16 +4,16 @@
 # crontab cnf/crontab/crontab-l.sh
 
 # every day at 03:00 perform a full db backup in TST
-1 3 * * * cd /home/ubuntu/opt/qto/qto.0.8.2.tst.ubuntu && bash ./src/bash/qto/qto.sh -a backup-postgres-PRD
+1 3 * * * bash /home/ubuntu/opt/qto/qto.0.8.2.tst.ubuntu@qto.fi/src/bash/qto/qto.sh -a backup-postgres-db -a backup-postgres-db-inserts -a publish-dbdump-to-s3
 
 # every day at 03:15 perform a full restart of the application layer in TST
-15 3 * * * cd /home/ubuntu/opt/qto/qto.0.8.2.tst.ubuntu && bash ./src/bash/qto/qto.sh -a mojo-hypnotoad-start
+15 3 * * * bash /home/ubuntu/opt/qto/qto.0.8.2.tst.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-start
 
 # every day at 03:15 perform a full restart of the application layer in PRD
-15 3 * * * cd /home/ubuntu/opt/qto/qto.0.8.2.prd.ubuntu && bash ./src/bash/qto/qto.sh -a mojo-hypnotoad-start
+15 3 * * * bash /home/ubuntu/opt/qto/qto.0.8.2.prd.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-start
 
 # every day at 19:00 perform a full db backup in TST
-1 19 * * * cd /home/ubuntu/opt/qto/qto.0.8.2.tst.ubuntu && bash ./src/bash/qto/qto.sh -a backup-postgres-db
+1 19 * * * bash /home/ubuntu/opt/qto/qto.0.8.2.tst.ubuntu@qto.fi/src/bash/qto/qto.sh -a backup-postgres-db -a backup-postgres-db-inserts -a publish-dbdump-to-s3
 
 #
 # 0 3 * * *

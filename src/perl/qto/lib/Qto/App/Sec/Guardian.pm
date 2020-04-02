@@ -40,14 +40,13 @@ our $jwt_private_key_file  = '' ;
 
       # qto-200302161711 - jwt auth implementation
       if ( defined $ENV{'QTO_JWT_AUTH'} && $ENV{'QTO_JWT_AUTH'} == 1 ){
-         print "v0.8.2 QTO_JWT_AUTH MUST not be used, as RBAC feature is wip !!!";
          # get the jwt from the session 
          return 0 unless ( defined ( $controller->session( 'app.' . $db . '.jwt')));
          my $jwt           = $controller->session( 'app.' . $db . '.jwt');
          my $pub_secret    = $config->{'env'}->{'run'}->{ 'PublicRSAKey' } ; 
 
-         ( $rv, $msg, my $claims_from_token ) = $self->doVerifyTokenAndGetClaims($jwt,$pub_secret);
-         return $rv unless $rv == 0 ; 
+         ( $rv, $msg, my $claims_from_token ) = $self->hasValidTokenAndClaims($jwt,$pub_secret);
+         return $rv ;
 
       } else {
          # basic native authentication mode if NOT started with this env var
@@ -70,22 +69,17 @@ our $jwt_private_key_file  = '' ;
       my $config              = shift ; 
       my $db                  = shift ;
       my $controller          = shift ;
-      my $msg                 = ${ shift @_ }; # ref passed !!!
+      my $rmsg                = shift ; 
       my $rv                  = 0;
-      $msg                    = 'an error occurred during authentication !!!' ;
+      $$rmsg                  = 'an error occurred during authentication !!!' ;
 
-      p $ENV{'QTO_NO_AUTH'} ; 
-      print "QTO_NO_AUTH in Guardian.pm todo:ysg \n";
       # non-authentication mode IF the app has been stared with this env var
       return 1 if $ENV{'QTO_NO_AUTH'}; # no authentication when testing if desired so !!!
-
 
       # debug rint $controller->session( 'app.' . $db . '.user') ;
       # debug rint ('app.' . $db . '.user');
       # debut rint " ::: eof session user from isAuthenticated in Guardian.pm \n";
       #
-      p $ENV{'QTO_JWT_AUTH '};
-      print "QTO_JWT_AUTH in Guardian.pm todo:ysg \n";
 
       # qto-200302161711 - jwt auth implementation
       if ( defined $ENV{'QTO_JWT_AUTH'} && $ENV{'QTO_JWT_AUTH'} == 1 ){
@@ -103,46 +97,47 @@ our $jwt_private_key_file  = '' ;
 
          # compare the route requested to the rbac list
          # get the roles from the jwt
-         ( my $ret, $msg, my $claims_from_token ) = $self->doVerifyTokenAndGetClaims($jwt,$pub_secret);
-         return $rv unless $ret == 0 ; 
+         ( my $ret, $$rmsg, my $claims_from_token ) = $self->hasValidTokenAndClaims($jwt,$pub_secret);
+         return 0 unless $ret == 1;
          
          # get the RBAC list from the Redis
          my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
          my $rbac_list     = $objRdrRedis->getData(\$config,"$db" . '.rbac-list');
          # p $rbac_list ; 
-         # print "eof rbac_list from Guardian.pm todo:ysg \n";
+         # rint "eof rbac_list from Guardian.pm todo:ysg \n";
          # p $claims_from_token ;
-         # print "claims_from_token from Guardian.pm todo:ysg \n";
-         p $claims_from_token->{'roles'} ; 
-         print "the claims from token from Guardian todo:ysg \n";
+         # rint "claims_from_token from Guardian.pm todo:ysg \n";
+         # p $claims_from_token->{'roles'} ; 
+         # rint "the claims from token from Guardian todo:ysg \n";
 
          # foreach role in the claims, build the permission string:
          my $roles = $claims_from_token->{'roles'};
+         my $last_role = '';
          foreach my $role ( @$roles ) {
-            # READER__may__view__yearly_issues
+        
+            $last_role = $role ; 
+            # examples: READER__may__view__yearly_issues or ANONYMOUS__mayNOT__select__users
             my $permission = $role . '__may__' . $web_action . '__' . $act_subject ;
             $permission = substr($permission,0,-2) unless ( $act_subject);
             # grep the permission string from the rbac_list 
             # if found set rv to 1 , else do nothing as rv is set to 0 
-            $rv = grep ( /^$permission/, @$rbac_list);
+            $rv = grep ( /^$permission$/, @$rbac_list); # must be the exact match !!!
             if ( $rv == 1 ) {
-               $msg = '' if ( $rv == 1 );
+               $$rmsg = '' ;
                last ;
             }
          }
          return $rv if ( $rv == 1 );
 
-         $msg = "you do not have the permission to $web_action" ; 
-         $msg .= "the $act_subject" if $act_subject ; 
-         $msg .= '! Please, check your url.' ;
+         $$rmsg  = "the $last_role role does not have the permission to $web_action " ; 
+         $$rmsg .= "the $act_subject item" if $act_subject ; 
+         $$rmsg .= '!' ;
 
-         # return $rv
-         return $rv ; 
+         return 0; 
 
       } else {
          # basic native authentication mode if NOT started with this env var
          if ( defined ( $controller->session( 'app.' . $db . '.user')) ) {
-            print "should be here !!! \n"; sleep 3 ;  
             return 1;
          } else {
             return 0 ;
@@ -160,9 +155,6 @@ our $jwt_private_key_file  = '' ;
       my $self        = shift ; 
       my $db          = shift ; 
       my $hsr         = shift ; 
-
-      p $hsr ; 
-      print "hsr from Guardian.pm ::: doGrantAccessToken todo:ysg \n";
 
       my $prv_secret  = $self->doGetPrivateKeySecret();
       my $claims      = $self->doBuildClaims($db , $hsr);
@@ -271,21 +263,21 @@ our $jwt_private_key_file  = '' ;
 
 
 # return 0 if ok , return 1 if NOK
-sub doVerifyTokenAndGetClaims {
+sub hasValidTokenAndClaims {
 
    my $self       = shift ; 
    my $token      = shift ;  # the Json Web Token as string
    my $pub_secret = shift ; 
 
    my $msg        = '';
-   my $rv         = 1;
+   my $rv         = 0 ; 
    my $jwt        = 'Mojo::JWT'->new();
 
    $jwt->algorithm('RS256');
    $jwt->public($pub_secret);
 
    my $claims     = $jwt->decode($token);
-   $rv            = 0 ; 
+   $rv            = 1 ; 
    return ( $rv, $msg, $claims);
 }
 
