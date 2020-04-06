@@ -13,6 +13,14 @@ INSERT INTO items_roles_permissions ( roles_guid,meta_tables_guid,meta_routes_gu
       SELECT meta_routes.guid , meta_routes.name FROM meta_routes) t3
 ;
 
+-- the query and search routes apply to all the items - should use the all fake item
+DELETE FROM items_roles_permissions WHERE 1=1 
+   AND meta_tables_guid NOT IN 
+   ( SELECT guid from meta_tables WHERE name = 'all')
+   AND meta_routes_guid IN 
+   ( SELECT guid from meta_routes WHERE name IN ('query' , 'search'))
+; 
+
 -- deny anything related to roles and users to all but the product instance owner
 UPDATE items_roles_permissions set allowed=false
 WHERE 1=1
@@ -35,3 +43,5 @@ LEFT JOIN meta_routes ON meta_routes.guid = meta_routes_guid
 LEFT JOIN meta_tables ON meta_tables.guid = meta_tables_guid
 WHERE items_roles_permissions.allowed = 'false'
 ;
+
+

@@ -1161,9 +1161,12 @@ sub doCallFuncGetHashRef {
          FROM $table 
          WHERE 1=1 " ; 
 
+      # ternary operator in Perl
+      # CONDITION ? EVALUATE_IF_CONDITION_WAS_TRUE : EVALUATE_IF_CONDITION_WAS_FALSE
+      my $QTO_NO_AUTH = defined $ENV{'QTO_NO_AUTH'} ? $ENV{'QTO_NO_AUTH'} : 0;
       if ( defined $who ) {
-         if ( $table eq 'users' and $who ne $admin_user_email ){
-            $str_sql .= "AND email = '" . $who . "'" unless $ENV{'QTO_NO_AUTH'} == 1;
+         if ( $table eq 'users' and $who ne $admin_user_email){
+            $str_sql .= "AND email = '" . $who . "'" unless $QTO_NO_AUTH == 1;
          }
       }
       

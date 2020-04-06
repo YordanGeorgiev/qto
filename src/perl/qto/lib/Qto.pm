@@ -145,6 +145,7 @@ sub doReloadProjectsDbMeta {
    $msg  = "the meta-data load to Redis for the CONFIGURED project_databases: \"$proj_dbs_str\" took ";
    $msg .= sprintf("%.3f seconds\n", $stop_time - $start_time); # takes about 0.065s on a dev-box for one db ~ 300kB
    $objLogger->doLogInfoMsg($msg);
+   $self->config($config);
 }
 
 
@@ -241,19 +242,30 @@ sub doSetHooks {
 		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g);
 
       my $route   = (split('/',$url))[2]; #this will fail on new static resource types ...
+	   my $db      = (split('/',$url))[1]; $db = toEnvName($db,$c->app->config);
+      my @open_routes = (); 
 
+      # do not check public/poc like locations 
+      print "route $route todo:ysg \n" ; 
+      # if the routes does not start with a proj db simply pass it ...
+      return unless $config->{'env'}->{'app'}->{$db . '.meta-routes'} ;
 
-      if ( $route eq 'logon' || $route eq 'login' || $route eq 'error' || 
-            $route eq 'search' or $route eq 'serve' or !defined($route)) {
-         return ;
+      # chk if it is a publicall opened route ( login , error , etc. ) 
+      foreach my $k(keys %{$config->{'env'}->{'app'}->{$db . '.meta-routes'}}){
+         my $r = $config->{'env'}->{'app'}->{$db . '.meta-routes'}->{$k};
+         push @open_routes, $r->{'name'} if $r->{'is_open'} == 1 ; 
+      }
+
+      my $flag_found_open_route = grep ( /^$route$/, @open_routes);
+      if ( $flag_found_open_route == 1 ){
+         return ; # not authorization checks for open routes
 		} else {
-			my $db      = (split('/',$url))[1];
          $db         = 'qto' unless $db ;
 			$db         = toEnvName ($db,$c->app->config);
 			my $objGuardian = $self->get('ObjGuardian');
 
 			unless ( $objGuardian->isAuthenticated($c->app->config, $db, $c, \$msg)){
-				my $login_url = '/' . toPlainName($db) . '/login' ;
+				my $login_url = '/' . toPlainName($db) . '/logon' ;
 				$c->redirect_to($login_url);
             return ;
 			}
@@ -423,21 +435,11 @@ sub doSetRoutes {
    , action       => 'doSelectItems'
    );
 
-   $r->get('/:db/select-item-meta-for')->to(
-     controller   => 'Select'
-   , action       => 'doSelectItemMetaFor'
-   );
-
    $r->get('/:db/select-item-meta-for/:item')->to(
      controller   => 'Select'
    , action       => 'doSelectItemMetaFor'
    );
    
-   $r->get('/:db/select-meta')->to(
-     controller   => 'Select'
-   , action       => 'doSelectMeta'
-   );
-
    $r->get('/:db/list/:item')->to(
      controller   => 'List'
    , action       => 'doListItems'

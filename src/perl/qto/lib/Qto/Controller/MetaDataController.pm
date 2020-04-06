@@ -163,7 +163,6 @@ sub doReloadMetaRoutes {
    
    $objWtrRedis->setData(\$config, $db . '.meta-routes', $hsr);
    $config->{'env'}->{'app'}->{$db . '.meta-routes'} = $hsr ; 
-
 }
 
 1;
