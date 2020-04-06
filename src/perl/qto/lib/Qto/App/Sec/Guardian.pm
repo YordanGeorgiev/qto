@@ -118,7 +118,8 @@ our $jwt_private_key_file  = '' ;
             $last_role = $role ; 
             # examples: READER__may__view__yearly_issues or ANONYMOUS__mayNOT__select__users
             my $permission = $role . '__may__' . $web_action . '__' . $act_subject ;
-            $permission = substr($permission,0,-2) unless ( $act_subject);
+            $permission = substr($permission,0,-2) . 'all'  unless ( $act_subject);
+            print "Guardian.pm ::: permission: $permission todo:ysg \n";
             # grep the permission string from the rbac_list 
             # if found set rv to 1 , else do nothing as rv is set to 0 
             $rv = grep ( /^$permission$/, @$rbac_list); # must be the exact match !!!

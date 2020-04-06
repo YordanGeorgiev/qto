@@ -208,8 +208,6 @@
                var uri = window.location.href.replace('/view/', '/hidelete/')
                uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
 
-               console.log(payload);
-               console.log("eof payload @ vue_app.js.html.ep")
                axios.delete(uri, { data:{
                   oid: payload.oid
                }})
