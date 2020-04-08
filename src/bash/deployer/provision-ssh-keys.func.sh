@@ -21,4 +21,18 @@ EOF_EXPECT
       echo created the fillowing private key file : $prv_key_fpath
    }
 
+   for env_type in `echo dev tst prd`; do 
+      jwt_private_key_file=~/.ssh/qto.$env_type.jwtRS256.key
+      jwt_public_key_file=~/.ssh/qto.$env_type.jwtRS256.key.pub
+      echo << EOF_USING
+      creating and using the following private and public key files for the Guardian's JWT's :
+      $jwt_private_key_file
+      $jwt_public_key_file
+EOF_USING
+      
+      test -f $jwt_private_key_file || ssh-keygen -t rsa -b 4096 -m PEM -f $jwt_private_key_file
+      test -f $jwt_public_key_file && rm -v $jwt_public_key_file
+      openssl rsa -in $jwt_private_key_file -pubout -outform PEM -out $jwt_public_key_file
+   done;
+
 }

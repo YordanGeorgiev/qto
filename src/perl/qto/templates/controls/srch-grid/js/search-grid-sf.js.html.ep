@@ -43,8 +43,6 @@
 					 }
 				  })
 				}
-            console.log(data)
-            console.log("data in srch-grid/js/search-grid-sf.js.html.ep")
 				return data
 			},
 			set: function(data) {

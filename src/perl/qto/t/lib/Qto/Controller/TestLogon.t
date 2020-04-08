@@ -126,9 +126,18 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
       return $db ;
    }
 
-   $tm = 'once logged in the anonymous user should not be able to access the roles item';
+   $ENV{'QTO_JWT_AUTH'} = 1 ; 
+   $tm = "a successfull result redirects to the search page";
+   $email = 'test.anonymous.user@gmail.com' ;
+   $pass = 'test.anonymous.user-pass';
+   $tx = $t->ua->post( $url => 'form'  => {'email' =>$email, pass=>$pass});
+   ok ( $tx->result->dom->to_string =~ "<title> search $pdb </title>", $tm );
+
+   # debug p $tx->result->dom->to_string ;
+   printf "\n";
+   $tm = 'once logged in the anonymous user should NOT be able to access the roles item';
    $url = '/' . $db . '/select/roles';
-   $t->get_ok( $url )->status_is(200 , $tm ) ; 
+   $t->get_ok( $url )->status_is(403 , $tm ) ; 
    my $ua  = $t->ua ; 
    my $res = $ua->get($url )->result->json ; 
    #p $res ; print "eof res TestLogon.t todo:ysg \n";

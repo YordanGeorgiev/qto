@@ -27,7 +27,7 @@
     * [4.5.1. Restore a database from full database backup](#451-restore-a-database-from-full-database-backup)
     * [4.5.2. Restore a database from db inserts file](#452-restore-a-database-from-db-inserts-file)
   * [4.6. RESTORE A DATABASE TABLE](#46-restore-a-database-table)
-  * [4.7. CREATE A FULL BACKUP OF AN INSTANCE SITE](#47-create-a-full-backup-of-an-instance-site)
+  * [4.7. CREATE A FULL BACKUP OF AN INSTANCE SITE FROM A SATELLITE HOST](#47-create-a-full-backup-of-an-instance-site-from-a-satellite-host)
 * [5. SHELL ACTIONS](#5-shell-actions)
   * [5.1. BACKUP DIRECTORIES WITH RSYNC](#51-backup-directories-with-rsync)
   * [5.2. LOAD XLS SHEET TO DB A DOC TABLE](#52-load-xls-sheet-to-db-a-doc-table)
@@ -272,7 +272,7 @@ You restore a database table by first running the pgsql scripts of the project d
     # re-apply the table ddl
     psql -d $postgres_db_name < src/sql/pgsql/dev_qto/13.create-table-requirements.sql
 
-### 4.7. Create a full backup of an instance site
+### 4.7. Create a full backup of an instance site from a satellite host
 Once an instance site is up-and-running - it might be a good idea to create a full-backup of the site's instance data, software and configuration:
  - full backup the postgres - both DDL and DML's
  - ensure the cnf/env/&lt;&lt;env&gt;&gt;.json is part of the met/.&lt;&lt;env&gt;&gt;.qto meta list file
@@ -290,10 +290,10 @@ Once an instance site is up-and-running - it might be a good idea to create a fu
     echo dat/mix/2020/2020-03/2020-03-22/sql/prd_qto/prd_qto.20200322_123449.full.dmp.sql >> met/.tst.qto
     echo dat/mix/2020/2020-03/2020-03-22/sql/prd_qto/prd_qto.20200322_123633.insrts.dmp.sql >> met/.prd.qto
     
-    #  create a relative or full package zip file
+    # create a relative or full package zip file
     ./src/bash/qto/qto.sh -a create-relative-package
     
-    #  rename it to reflect the fact that this file contains a full backup file
+    # rename it to reflect the fact that this file contains a full backup file
     mv -v ../qto.0.8.1.prd.20200322_122924.ip-10-0-44-231.rel.zip ../qto.0.8.1.prd-fb.20200322_122924.ip-10-0-44-231.rel.zip
 
 ## 5. SHELL ACTIONS
