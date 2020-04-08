@@ -1,6 +1,5 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # cnf
-cnf/env
 cnf/env/dev.env.json
 cnf/env/tst.env.json
 cnf/env/prd.env.json
@@ -39,6 +38,7 @@ src/perl/qto/public/lib/js/controls/vue-simple-upload.min.js
 # start redis
 src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/lib/Qto/Controller/Select.pm
+src/perl/qto/lib/Qto/Controller/Serve.pm
 src/perl/qto/lib/Qto/Controller/List.pm
 src/perl/qto/lib/Qto/Controller/MetaDataController.pm
 src/perl/qto/lib/Qto/App/Mdl/Model.pm
@@ -906,6 +906,7 @@ src/perl/qto/lib/auto/Qto/Controller/WsSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Create/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Delete/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Export/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/Serve/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HiSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/List/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Query/autosplit.ix

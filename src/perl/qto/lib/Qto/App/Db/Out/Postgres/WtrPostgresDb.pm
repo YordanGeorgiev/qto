@@ -205,8 +205,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          " . '
          END ; $$ ';
                #DELETE FROM $table WHERE lft <= originLft AND rgt <= originRgt ;
-         p $str_sql ; 
-         print "\nWtrPostgresDb delte by id \n";
+         #debug $str_sql ; 
+         #debug rint "\nWtrPostgresDb delte by id \n";
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ;
          use warnings 'exiting' ; 
@@ -875,8 +875,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       for (1..3) { chop ( $sql_str_insrt) } ; 
       $sql_str_insrt	.= ')' ; 
 
-      # debug p $hsr2 ; 
-      # debug p $sql_str_insrt ; 
+      # debug $hsr2 ; 
+      # debug $sql_str_insrt ; 
       my $expected_amount_of_inserted_rows = keys %$hsr2; 
 
       $update_time      = $objTimer->GetHumanReadableTime();
@@ -891,8 +891,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          %row_h = map { lc $_ => $row_h{$_} } keys %row_h;
          $hs_row = \%row_h ; 
 
-         # debug p($hs_row) ; 
-         # p $hs_headers ; 
+         # debug $hs_row ; 
+         # debug $hs_headers ; 
 
          foreach my $col_num ( sort ( keys ( %$hs_headers ) ) ) {
 
@@ -1051,9 +1051,9 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
 
          my $hs_table = $hsr3->{ $table } ; 
-         #debug p $hs_headers ;  
-         #debug p $hs_table->{ 0 } ; 
-         #debug p($hs_headers ) ; 
+         #debug $hs_headers ;  
+         #debug $hs_table->{0} ; 
+         #debug $hs_headers  ; 
          ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
          return ( $ret , $msg ) unless $ret == 0 ;       
 

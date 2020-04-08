@@ -14,6 +14,9 @@ EOF
    sudo rm -v /etc/nginx/sites-available/*
    test -f /etc/nginx/sites-enabled/default && rm -v /etc/nginx/sites-enabled/default
 
+   # qto-200326084258 create the cache dir NOT in the global dir, related to site crashes
+   mkdir -p ~/var/cache ; chmod -R 777 ~/var/cache
+   perl -pi -e 's|~/|'$HOME/'|g' $PRODUCT_DIR/cnf/nginx/etc/nginx/nginx.conf #qto-200402172803
    sudo cp -v $PRODUCT_DIR/cnf/nginx/etc/nginx/nginx.conf /etc/nginx/nginx.conf
 
    source $PRODUCT_DIR/lib/bash/funcs/export-json-section-vars.sh
@@ -39,7 +42,5 @@ EOF
    sudo service nginx status
    doExportJsonSectionVars $PRODUCT_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
   
-   # qto-200326084258 create the cache dir NOT in the global dir
-   mkdir -p ~/var/cache ; chmod -R 777 ~/var/cache
 
 }
