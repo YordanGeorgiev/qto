@@ -1,6 +1,5 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # cnf
-cnf/env
 cnf/env/dev.env.json
 cnf/env/tst.env.json
 cnf/env/prd.env.json
