@@ -25,16 +25,16 @@ our $objLogger             = {} ;
 our $jwt_public_key_file   = '' ; 
 our $jwt_private_key_file  = '' ; 
 
-# perlsyn - false - The number 0, the strings '0' and '', the empty list "()", and "undef"
+   # perlsyn - false - The number 0, the strings '0' and '', the empty list "()", and "undef"
    sub isAuthenticated {
 
       my $self                = shift ;
       my $config              = shift ; 
       my $db                  = shift ;
       my $controller          = shift ;
-      my $msg                 = ${ shift @_ }; # ref passed !!!
+      my $rmsg                = shift ; 
       my $rv                  = 0;
-      $msg                    = 'an error occurred during the authentication !!!' ;
+      $$rmsg                  = 'an error occurred during the authentication !!!' ;
 
       return 1 if $ENV{'QTO_NO_AUTH'}; # no authentication when testing if desired so !!!
 
@@ -45,7 +45,7 @@ our $jwt_private_key_file  = '' ;
          my $jwt           = $controller->session( 'app.' . $db . '.jwt');
          my $pub_secret    = $config->{'env'}->{'run'}->{ 'PublicRSAKey' } ; 
 
-         ( $rv, $msg, my $claims_from_token ) = $self->hasValidTokenAndClaims($jwt,$pub_secret);
+         ( $rv, my $claims_from_token ) = $self->hasValidTokenAndClaims($rmsg , $jwt,$pub_secret);
          return $rv ;
 
       } else {
@@ -76,14 +76,8 @@ our $jwt_private_key_file  = '' ;
       # non-authentication mode IF the app has been stared with this env var
       return 1 if $ENV{'QTO_NO_AUTH'}; # no authentication when testing if desired so !!!
 
-      # debug rint $controller->session( 'app.' . $db . '.user') ;
-      # debug rint ('app.' . $db . '.user');
-      # debut rint " ::: eof session user from isAuthenticated in Guardian.pm \n";
-      #
-
       # qto-200302161711 - jwt auth implementation
       if ( defined $ENV{'QTO_JWT_AUTH'} && $ENV{'QTO_JWT_AUTH'} == 1 ){
-         #my $url           = (split('#',$controller->req->url->to_abs))[0];
          my $path          = $controller->req->url->path;
          my $web_action    = (split('/',$path))[2];
          my $act_subject   = (split('/',$path))[3] || '' ;
@@ -97,18 +91,12 @@ our $jwt_private_key_file  = '' ;
 
          # compare the route requested to the rbac list
          # get the roles from the jwt
-         ( my $ret, $$rmsg, my $claims_from_token ) = $self->hasValidTokenAndClaims($jwt,$pub_secret);
+         ( my $ret, my $claims_from_token ) = $self->hasValidTokenAndClaims($rmsg , $jwt,$pub_secret);
          return 0 unless $ret == 1;
          
          # get the RBAC list from the Redis
          my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
          my $rbac_list     = $objRdrRedis->getData(\$config,"$db" . '.rbac-list');
-         # p $rbac_list ; 
-         # rint "eof rbac_list from Guardian.pm todo:ysg \n";
-         # p $claims_from_token ;
-         # rint "claims_from_token from Guardian.pm todo:ysg \n";
-         # p $claims_from_token->{'roles'} ; 
-         # rint "the claims from token from Guardian todo:ysg \n";
 
          # foreach role in the claims, build the permission string:
          my $roles = $claims_from_token->{'roles'};
@@ -119,7 +107,6 @@ our $jwt_private_key_file  = '' ;
             # examples: READER__may__view__yearly_issues or ANONYMOUS__mayNOT__select__users
             my $permission = $role . '__may__' . $web_action . '__' . $act_subject ;
             $permission = substr($permission,0,-2) . 'all'  unless ( $act_subject);
-            print "Guardian.pm ::: permission: $permission todo:ysg \n";
             # grep the permission string from the rbac_list 
             # if found set rv to 1 , else do nothing as rv is set to 0 
             $rv = grep ( /^$permission$/, @$rbac_list); # must be the exact match !!!
@@ -252,14 +239,15 @@ our $jwt_private_key_file  = '' ;
       my $jwt        = Mojo::JWT->new() ; 
       $jwt->algorithm('RS256');
       $jwt->claims($claims);
-   $jwt->secret($prv_secret);
-   $jwt->header($header);
-
-   my $token      = $jwt->encode;
-   $msg           = '' ; 
-   $ret           = 0 ; 
    
-   return ( $ret , $msg , $token) ; 
+      $jwt->secret($prv_secret);
+      $jwt->header($header);
+
+      my $token      = $jwt->encode;
+      $msg           = '' ; 
+      $ret           = 0 ; 
+      
+      return ( $ret , $msg , $token) ; 
 }
 
 
@@ -267,19 +255,21 @@ our $jwt_private_key_file  = '' ;
 sub hasValidTokenAndClaims {
 
    my $self       = shift ; 
+   my $rmsg       = shift ; 
    my $token      = shift ;  # the Json Web Token as string
    my $pub_secret = shift ; 
 
-   my $msg        = '';
    my $rv         = 0 ; 
-   my $jwt        = 'Mojo::JWT'->new();
+   $$rmsg         = 'the token is not valid';
 
+   my $jwt        = 'Mojo::JWT'->new();
    $jwt->algorithm('RS256');
    $jwt->public($pub_secret);
 
+   $$rmsg         = '';
    my $claims     = $jwt->decode($token);
    $rv            = 1 ; 
-   return ( $rv, $msg, $claims);
+   return ( $rv, $claims);
 }
 
 

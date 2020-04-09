@@ -87,6 +87,15 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $tx = $t->ua->post( $url => 'form'  => {'email' =>'not.registered.user@gmail.com', 'pass' => 'invalid'});
    ok ( $tx->result->dom->all_text =~ 'not.registered.user@gmail.com not registered' , $tm );
    printf "\n";
+   $tm = "non registered user"; 
+   $pass = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+   ok ( $t->post_ok( $url => 'form'  => {'email' =>'not.registered.user@gmail.com', 'pass' => $pass})->status_is(401) , $tm );
+   $tx = $t->ua->post( $url => 'form'  => {'email' =>'not.registered.user@gmail.com', 'pass' => 'invalid'});
+   ok ( $tx->result->dom->all_text =~ 'not.registered.user@gmail.com not registered' , $tm );
+   printf "\n";
+   # todos: check for buffer overflows ... 
+   $tm = 'the email should be no longer than 100 chars' ; # test for buffer overflows ...
+   $tm = 'the pass should be no longer than 100 chars' ; # test for buffer overflows ...
 
    $tm = "a successfull result redirects to the search page";
    $email = 'test.anonymous.user@gmail.com' ;
@@ -135,17 +144,22 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
    # debug p $tx->result->dom->to_string ;
    printf "\n";
-   $tm = 'once logged in the anonymous user should NOT be able to access the roles item';
+   $tm = 'a forbidden backend route should be redirected to the error page';
    $url = '/' . $db . '/select/roles';
    $t->get_ok( $url )->status_is(403 , $tm ) ; 
    my $ua  = $t->ua ; 
    my $res = $ua->get($url )->result->json ; 
    #p $res ; print "eof res TestLogon.t todo:ysg \n";
-   #ok ( $res->{'ret'} == 204 , $tm);
+   ok ( $res->{'ret'} == 403 , $tm);
+   $tm = "the ANONYMOUS role SHOULD NOT not have the permission to select the roles item!";
+   ok ( $res->{'msg'} eq "the ANONYMOUS role does not have the permission to select the roles item!", $tm);
    printf "\n";
+   
+   $url = '/' . $db . '/list/roles';
+   $t->get_ok( $url )->status_is(200 , $tm ) ; 
+   $ua  = $t->ua ; 
+   $tm = 'a forbidden ui route should be redirected to the search page';
+   ok ( $tx->result->dom->to_string =~ "<title> search $pdb </title>", $tm );
 
-   # todos: check for buffer overflows ... 
-   $tm = 'the email should be no longer than 100 chars' ; # test for buffer overflows ...
-   $tm = 'the pass should be no longer than 100 chars' ; # test for buffer overflows ...
 
 done_testing();
