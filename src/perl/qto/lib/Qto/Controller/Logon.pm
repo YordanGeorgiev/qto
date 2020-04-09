@@ -52,9 +52,9 @@ sub doLogonUser {
    my $objCnrPostPrms   = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
   
 
-   unless ( $objCnrPostPrms->hasValidLogonParams($email , $pass , 'Logon') ) {
+   unless ( $objCnrPostPrms->hasValidLogonParams(\$msg , $email , $pass , 'Logon') ) {
       $rv = 400 ; 
-      $msg = "logon failed! " . $objCnrPostPrms->get('msg');
+      $msg = "logon failed! " . $msg ; 
       $redirect_url = '/' . $pdb . '/logon' ; 
       $self->doRenderPageTemplate($rv, $msg ,$msg_color,$db,$redirect_url);
       return ;

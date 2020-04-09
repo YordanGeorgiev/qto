@@ -34,40 +34,41 @@ package Qto::App::IO::In::CnrPostPrms ;
    sub hasValidLogonParams {
 
       my $self             = shift ; 
+      my $rmsg             = shift ; 
       my $email            = shift ; 
       my $pass             = shift ; 
       my $Controller       = shift || 'Logon' ; 
       my $controller       = lc ( $Controller ) ; 
       my $is_valid         = 1 ; 
       my $is_not_valid     = 0 ;
-      my $msg              = 'unknown error occured during logon post params validation' ; 
       my $epass            = undef ; # the encrypted hash
+      $$rmsg               = 'unknown error occured during logon post params validation' ;
 
 
       if ( !defined ( $email ) or $email eq '' ) {
-         $self->set('msg',"empty email ! "); 
+         $$rmsg = "empty email ! "; 
          return $is_not_valid ;
       } elsif ( length ( $email ) > 100 ) {
-         $self->set('msg',"the email: $email is too long ");
+         $$rmsg = "the email: $email is too long ";
          return $is_not_valid ;
       } elsif ( !Email::Valid->address($email) ){
-         $self->set('msg',"$email is not a valid email! ");
+         $$rmsg = "$email is not a valid email! " ; 
          return $is_not_valid ;
       } else {
-         $self->set('msg',"the email: $email is valid");
+         $$rmsg = "the email: $email is valid" ; 
       }
 
       if ( !defined ( $pass ) or $pass eq '' ) {
-         $self->set('msg'," empty password ! " ); 
+         $$rmsg = " empty password ! " ;
          return $is_not_valid ;
       } elsif ( length ($pass) > 100 ) {
-         $self->set('msg',"the password: $pass is too long ");
+         $$rmsg = "the password: $pass is too long " ; 
          return $is_not_valid ;
       } else {
          my $objCnrEncrypter = 'Qto::App::IO::In::CnrEncrypter'->new();
          $epass = $objCnrEncrypter->make_crypto_hash($pass ) ; 
          $self->set('epass',$epass);
-         $self->set('msg'," " ) ; 
+         $$rmsg = " " ;
          return $is_valid ; 
       }
    } 

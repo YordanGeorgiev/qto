@@ -266,6 +266,7 @@ sub doSetHooks {
 
 			unless ( $objGuardian->isAuthenticated($c->app->config, $db, $c, \$msg)){
 				my $login_url = '/' . toPlainName($db) . '/logon' ;
+            $objLogger->doLogErrorMsg($msg);
 				$c->redirect_to($login_url);
             return ;
 			}
