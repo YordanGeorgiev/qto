@@ -21,7 +21,7 @@
   * [3.2. PREREQUISITES](#32-prerequisites)
     * [3.2.1. Configure the AdminEmail](#321-configure-the-adminemail)
     * [3.2.2. Create the aws instance deployment keys](#322-create-the-aws-instance-deployment-keys)
-    * [3.2.3. Configure your aws credentials - aws keys](#323-configure-your-aws-credentials--aws-keys)
+    * [3.2.3. Configure your AWS credentials - AWS keys](#323-configure-your-aws-credentials--aws-keys)
   * [3.3. INITIALISE THE AWS INFRASTRUCTURE](#33-initialise-the-aws-infrastructure)
   * [3.4. SET THE IP ADDRESS FOR THE HOST IN DNS ( OPTIONAL ) ](#34-set-the-ip-address-for-the-host-in-dns-(-optional-)-)
   * [3.5. ACCESS THE AWS HOST VIA SSH AND FETCH THE SOURCE CODE FROM GITHUB](#35-access-the-aws-host-via-ssh-and-fetch-the-source-code-from-github)
@@ -48,11 +48,20 @@
 * [7. POTENTIAL PROBLEMS AND TROUBLESHOOTING](#7-potential-problems-and-troubleshooting)
   * [7.1. THE POSTGRES ADMIN USER PASSWORD IS WRONG](#71-the-postgres-admin-user-password-is-wrong)
   * [7.2. REDIS REFUSES TO START ](#72-redis-refuses-to-start-)
+<<<<<<< HEAD
+  * [7.3. COULD NOT CONNECT TO REDIS SERVER](#73-could-not-connect-to-redis-server) 
+  * [7.4. CANNOT LOGIN IN THE WEB INTERFACE WITH THE ADMIN USER](#74-cannot-login-in-the-web-interface-with-the-admin-user)
+  * [7.5. POSTGRES PERMISSIONS ERRORS](#75-postgres-permissions-errors)
+  * [7.6. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#76-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
+  * [7.7. SOME KIND OF MISMATCH IN THE AWS](#77-some-kind-of-mismatch-in-the-aws)
+  * [7.8. THE PROBLEM OCCURRED IS NOT MENTIONED HERE ?!](#78-the-problem-occurred-is-not-mentioned-here-)
+=======
   * [7.3. STRANGE PERMISSIONS ERRORS](#73-strange-permissions-errors)
   * [7.4. CANNOT LOGIN AT ALL IN THE WEB INTERFACE WITH THE ADMIN USER](#74-cannot-login-at-all-in-the-web-interface-with-the-admin-user)
   * [7.5. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#75-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
   * [7.6. SOME KIND OF MISMATCH IN THE AWS](#76-some-kind-of-mismatch-in-the-aws)
   * [7.7. THE PROBLEM OCCURRED IS NOT MENTIONED HERE ???!!!](#77-the-problem-occurred-is-not-mentioned-here-)
+>>>>>>> upstream/v0.8.3
 
 
 
@@ -60,7 +69,11 @@
     
 
 ## 1. INTRODUCTION
+<<<<<<< HEAD
+The QTO installation could be compressed to 4 oneliners, yet if you are installing it for first time you should read this guide thoroughly or at least jump from the code sections from the top till the bottom, simply because the stack is huge - PostgreSQL, Perl application layer with a lot of modules and dependencies.
+=======
 The QTO installation could be compressed to 4 one-liners, yet if you are installing it for first time you should read this guide thoroughly or at least jump from the code sections from the top till the bottom, simply because the stack is huge - PostgreSQL, Perl application layer with a lot of modules and dependencies.
+>>>>>>> upstream/v0.8.3
 
     
 
@@ -70,23 +83,23 @@ The purpose of this document is to provide a description for the tasks and activ
     
 
 ### 1.2. Document status
-This document is reviewed for the current qto version it is generated from. The document is updated and reviewed after each qto release.
+This document is reviewed for the current QTO version it is generated from. The document is updated and reviewed after each QTO release.
 
     
 
 ### 1.3. Audience
-This document is aimed for everyone, who shall, will or even would like to install  a qto application instance. Although this guide is aimed to be fully implementable via copy paste by following top to bottom, you need to have basic understanding of networking, protocols and Linux in order to complete the full installation, as your mileage will vary ...
-This document might be of interest for people from architectural or even business roles to the extend to verify the claims for easy deployability states in other parts of the qto application documentation set.
+This document is aimed for everyone, who shall, will or even would like to install  a QTO application instance. Although this guide is aimed to be fully implementable via copy paste by following top to bottom, you need to have basic understanding of networking, protocols and Linux in order to complete the full installation, as your mileage will vary.
+This document might be of interest for people from architectural or even business roles to the extend to verify the claims for easy deployability states in other parts of the QTO application documentation set.
 
     
 
 ### 1.4. Master storage and storage format
-The master storage of this document is the master branch of the latest qto release. The main storage format is Markdown. 
+The master storage of this document is the master branch of the latest QTO release. The main storage format is Markdown. 
 
     
 
 ### 1.5. Version control
-The contents of this document ARE updated according to the EXISTING features, functionalities and capabilities of the qto version, in which this document residues. Thus the git commit hash of a release qto version contains the md format of this document.
+The contents of this document ARE updated according to the EXISTING features, functionalities and capabilities of the QTO version, in which this document residues. Thus the git commit hash of a release QTO version contains the md format of this document.
 
     
 
@@ -98,8 +111,11 @@ The QTO provides a mean for tracking of this documentation contents to the sourc
 ## 2. LOCAL DEPLOYMENT
 
 
+<<<<<<< HEAD
+=======
     
 
+>>>>>>> upstream/v0.8.3
 ### 2.1. Prerequisites
 You need hardware, which is powerful enough to run a virtual machine with at least 2GB of RAM ( preferably 2 or more ) and at least 20GB of hard disk space. 
 
@@ -107,7 +123,11 @@ You need hardware, which is powerful enough to run a virtual machine with at lea
 
 ### 2.2. Target setup
 The target setup is a system comprised of dev, tst, qas and prd instances of QTO locally and dev, tst, qas and prd instances in AWS. 
+<<<<<<< HEAD
+The following diagram illustrates that setup. Naturally you will be deploying only the dev.&lt;&lt;site&gt;&gt;.com when doing the installation for first time - in the spirit of qto - you will be moving fast and destroying in dev, reinforcing skills in tst and do it at once in prd.
+=======
 The following diagram illustrates that setup. Naturally you will be deploying only the dev.&lt;&lt;site&gt;&gt;.com when doing the installation for first time - in the spirit of QTO - you will be moving fast and destroying in dev, reinforcing skills in tst and do it at once in prd.
+>>>>>>> upstream/v0.8.3
 
 
 Figure 1: 
@@ -115,8 +135,17 @@ The target setup for the qto appliction
 ![Figure 1: 
 The target setup for the qto appliction](https://github.com/YordanGeorgiev/qto/blob/master/doc/img/system_guide/qto-infra.jpg?raw=true)
 
-    
+### 2.3. Ensure you have passwordless sudo 
+The next command check whether or not your Linux user can execute sudo commands without having to provide password by checking whether or not the:
+"&lt;&lt;your-linux-accont&gt;&gt; ALL=(ALL) NOPASSWD: ALL"
+line without the quotes is found in your /etc/sudoers file and if it is not it adds it to it. Make sure you copy paste the whole line, because if you brake the syntax of your /etc/sudoers file you would have to boot in safe mode and manually add the line into your /etc/sudoers file. 
 
+    test $(grep `whoami` /etc/sudoers|wc -l) -ne 1 && echo $(whoami)' ALL=(ALL) NOPASSWD: ALL'|sudo tee -a /etc/sudoers
+
+<<<<<<< HEAD
+### 2.4. Install VB+Vagrant virtual machine for a local Ubuntu host (optional) 
+If your physical host OS is not the Ubuntu 18.04 OS, you could install the latest version of the Oracle VirtualBox with Guest additions and HashiCorp Vagrant and run the `deploy-vagrant-vm.sh` bootstrapper script on the host to get a provisioned Guest with all the binaries and configurations. This step might take at least 30 min depending on the hardware of your host machine and the VirtualBox configurations in your setup.
+=======
 ### 2.3. Ensure you have passwordless sudo 
 The next command check whether or not your Linux user can execute sudo commands without having to provide password by checking whether or not the:
 "&lt;&lt;your-linux-accont&gt;&gt; ALL=(ALL) NOPASSWD: ALL"
@@ -126,17 +155,18 @@ line without the quotes is found in your /etc/sudoers file and if it is not it a
 
 ### 2.4. Install VB+vagrant virtual machine for a local Ubuntu host (optional) 
 If your physical host OS is not the Ubuntu 18.04 OS, you could Install the latest version of the OracleVirtualBox with guest additions and HashiCorp Vagrant and run the up.sh bootstrapper script on the host to get the fully provisioned guest with all the binaries and configurations. This step might take at least 30 min depending on the hardware of your host machine and the VirtualBox configurations in your setup ...
+>>>>>>> upstream/v0.8.3
 
      # in the shell of your OS bash shell of your host machine
     mkdir -p ~/opt; cd $_ ; git clone https://github.com/YordanGeorgiev/qto.git ; cd ~/opt/qto
     
     # run the vagrant provisioning script
-    ./src/bash/up.sh
+    ./src/bash/deploy-vagrant-vm.sh
     
     # now go to the vagrant guest
     vagrant ssh
     
-    # go to the qto project in the 
+    # go to the QTO project in the 
     cd /home/vagrant/opt/qto/
 
 ### 2.5. Bootstrap and deploy the application locally
@@ -148,12 +178,12 @@ The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND Perl
   - install and provision the nginx proxy server 
 
 
- Check the main method in the run.sh and uncomment entities you do not want to install locally, should you have any ...
+ Check the main method in the run.sh and uncomment entities you do not want to install locally, should you have any.
 
 
 
 
-    # in the shell of your local Ubuntu box, skip this cmd if you are on vagrant ...
+    # in the shell of your local Ubuntu box, skip this cmd if you are on vagrant
     mkdir -p ~/opt; cd $_ ; git clone https://github.com/YordanGeorgiev/qto.git ; cd ~/opt
     
     # run the bootstrap script and IMPORTANT !!! reload the bash env
@@ -161,13 +191,35 @@ The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND Perl
     
 
 ### 2.6. Provision the application locally
+<<<<<<< HEAD
+The run of the following "shell actions" will create the QTO database and load it with a snapshot of it's data from a SQL dump stored in s3. If you start getting a lot of perl `cannot not find module` syntax check error, you probably did not reload the bash shell, by typing `bash` and hitting enter in the previous step.
+=======
 The run of the following "shell actions" will create the QTO database and load it with a snapshot of it's data from a sql dump stored in s3. If you start getting a lot of perl "cannot not find module" syntax check error, you probably did not reload the bash shell , by just typing "bash" and hitting enter in the previous step.
+>>>>>>> upstream/v0.8.3
 
      # go to the product instance dir 
     source $(find . -name '.env') && cd qto/qto.$VERSION.$ENV_TYPE.$USER
     
     # ensure application layer consistency, run db ddl's and load data from s3
     ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
+	
+### 2.7. Start the application layer
+Start the application layer by issueing the following command:
+bash [src/bash/qto](src/bash/qto/qto.sh) -a mojo-hypnotoad-start
+
+    
+
+### 2.8. Create and start the tst instance
+
+
+    ./src/bash/qto/qto.sh -a check-perl-syntax -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
+
+#### 2.8.1. Start the tst instance
+Open first the cnf/enf/tst.env.json file ... Change the redis
+
+```
+-
+```
 
 ### 2.7. Start the application layer
 Start the application layer by issueing the following command:
@@ -197,7 +249,11 @@ This installation is not truly idempotent, meaning that not all infra resources 
     
 
 ### 3.2. Prerequisites
+<<<<<<< HEAD
+You should have a local instance of QTO as far as you could issue the terraform shell action (that is DB and site configuration are not must have for the AWS deployment to succeed).
+=======
 You should have a local instance of QTO as far as you could issue the terraform shell action ( that is db and site configuration are not must have for the aws deployment to succeed).
+>>>>>>> upstream/v0.8.3
 
     
 
@@ -207,7 +263,7 @@ The bootstrapping script simply replaces the demo "test.user@gmail.com" with the
 
     
 
-#### 3.2.2. Create the aws instance deployment keys
+#### 3.2.2. Create the AWS instance deployment keys
 You will use those deployment keys later on when you later on ssh -i &lt;&lt;full-deployment-key&gt;&gt; ubuntu@&lt;&lt;instance-dns&gt;&gt;
 
     # create the dev instance deployment key
@@ -221,9 +277,15 @@ You will use those deployment keys later on when you later on ssh -i &lt;&lt;ful
     # create the prd instance deployment key
     ssh-keygen -t rsa -b 4096 -C "yordan.georgiev@gmail.com" -f ~/.ssh/id_rsa.prd.qto
 
+<<<<<<< HEAD
+#### 3.2.3. Configure your AWS credentials - AWS keys
+Generate NEW AWS access- and secret-keys https://console.aws.amazon.com/iam/home?region=&lt;&lt;YOUR-AWS-REGION&gt;&gt;#/security_credentials. 
+Store the keys in the QTO's development environment configuration file - the `cnf/env/dev.env.json` file.
+=======
 #### 3.2.3. Configure your aws credentials - aws keys
 Generate NEW aws access- and secret-keys https://console.aws.amazon.com/iam/home?region=&lt;&lt;YOUR-AWS-REGION&gt;&gt;#/security_credentials. 
 Store the keys in the QTO's development environment configuration file - the cnf/env/dev.env.json file.
+>>>>>>> upstream/v0.8.3
 
 
     
@@ -234,37 +296,53 @@ To initialise the git aws infrastructure you need to clone the QTO source code l
     # apply the infra terraform in the src/terraform/tpl/qto/main.tf.tpl 
     clear ; bash ~/opt/qto/src/bash/qto/qto.sh -a init-aws-instance
 
-### 3.4. Set the ip address for the host in DNS ( optional ) 
-If you have registered your own DNS name you should configure now the public ip address found in the amamazon ec2 instances section of the newly created host to the dns name you have registered with your DNS provider, as it usually takes some time for the DNS to replicate ( with the qto.fi domain it takes about 5 min max, some DNS providers suggest even hours to be reserved, your mileage might vary...).
-If you do not have a registered DNS, you could either use directly the ip address or the dns name provided by amazon in the ec2 settings of the newly created host, in this case you should configure the same DNS in the cnf/etc/dev.env.json file ( env-&gt;app-&gt;web_host variable ) for ngix to be able to pick it in its own configuration.
+### 3.4. Set the IP address for the host in DNS ( optional ) 
+If you have registered your own DNS name you should configure now the public ip address found in the amamazon ec2 instances section of the newly created host to the dns name you have registered with your DNS provider, as it usually takes some time for the DNS to replicate (with the qto.fi domain it takes about 5 min max, some DNS providers suggest even hours to be reserved, your mileage might vary).
+If you do not have a registered DNS, you could either use directly the ip address or the dns name provided by Amazon in the ec2 settings of the newly created host, in this case you should configure the same DNS in the cnf/etc/dev.env.json file ( env-&gt;app-&gt;web_host variable ) for ngix to be able to pick it in its own configuration.
 
     
 
+<<<<<<< HEAD
+### 3.5. Access the AWS host via SSH and fetch the source code from GitHub
+To access the AWS host via SSH you need to copy the provided elastic IP which was created by the terraform script. In your browser go to the following url:
+https://eu-west-1.console.aws.amazon.com/ec2/v2/home?region=&lt;&lt;YOUR-AWS-REGION&gt;&gt;#Instances:sort=instanceId
+You should see a listing of your AWS instances one of which should be named dev-qto-ec2 ( that is the development instance of the QTO application). Click on its checkbox. Search for the "IPv4 Public IP" string and copy the value of the IP.
+=======
 ### 3.5. Access the aws host via ssh and fetch the source code from GitHub
 To access the AWS host via SSH you need to copy the provided elastic ip which was created by the terraform script. In your browser go to the following url:
 https://eu-west-1.console.aws.amazon.com/ec2/v2/home?region=&lt;&lt;YOUR-AWS-REGION&gt;&gt;#Instances:sort=instanceId
 You should see a listing of your AWS instances one of which should be named dev-qto-ec2 ( that is the development instance of the QTO application). Click on it's checkbox. Search for the "IPv4 Public IP" string and copy the value of the ip.
+>>>>>>> upstream/v0.8.3
 
     # run locally 
     ssh -i ~/.ssh/id_rsa.dev.qto ubuntu@<<just-copied-IPv4-Public-IP>>
     
-    # on the aws server
+    # on the AWS server
     mkdir -p ~/opt; cd $_ ; git clone https://github.com/YordanGeorgiev/qto.git ; cd ~/opt
 
+<<<<<<< HEAD
+### 3.6. Bootstrap and deploy the application on the AWS instance
+=======
 ### 3.6. Bootstrap and deploy the application on the aws instance
+>>>>>>> upstream/v0.8.3
 The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND perl modules as well as perform the needed configurations to enable the creation and load of the QTO database. This step will take at least 20 min. The bootstrap script will perform the following actions:
  - install all the required binaries
  - install all the required perl modules as non-root
  - install and provision postgres
  - install and provision the nginx proxy server
 
-Copy paste the full command bellow - this is IMPORTANT !!!
+Copy paste the full command below. It is very important to run `bash` command after to reload the shell.
 
     # run the bootstrap script and IMPORTANT !!! reload the bash shell 
     bash ./qto/src/bash/deployer/run.sh ; bash ; 
 
+<<<<<<< HEAD
+### 3.7. Provision the application in the AWS instance in dev
+The run of the following "shell actions" will create the QTO database and load it with a snapshot of its data from a SQL dump stored in AWS s3. 
+=======
 ### 3.7. Provision the application in the aws instance in dev
 The run of the following "shell actions" will create the QTO database and load it with a snapshot of it's data from a sql dump stored in s3. 
+>>>>>>> upstream/v0.8.3
 
      # go to the product instance dir 
     source $(find . -name '.env') && cd qto/qto.$VERSION.$ENV_TYPE.$USER
@@ -273,8 +351,13 @@ The run of the following "shell actions" will create the QTO database and load i
     bash ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
 
 ### 3.8. Edit the configuration file and start the web server
+<<<<<<< HEAD
+You would have to set the web_host variable in the configuration files to the ip address or DNS name if you have configured one for this ip address, otherwise your nginx configuration will be broken.
+The following command will both start the Mojolicious hyphotoad server initiating the qto application layer and the nginx reverse proxy, which will listen on the app-&gt;port port defined in the cnf/env/dev.env.json file.
+=======
 You would have to set the web_host variable in the configuration files to the ip address or DNS name if you have configured one for this ip address, otherwise your nginx configuration will be broken ...
 The following command will both start the Mojolicious hyphotoad server initiating the QTO application layer and the nginx reverse proxy, which will listen on the app-&gt;port port defined in the cnf/env/dev.env.json file.
+>>>>>>> upstream/v0.8.3
 
     # start the web server
     ./src/bash/qto/qto.sh -a mojo-hypnotoad-start
@@ -343,7 +426,7 @@ This section is separated as it is optional. If you have configured DNS you coul
     sudo certbot --nginx -d <<your.organisation.com>>
     
     
-    # you should get the following output ... 
+    # you should get the following output
     #IMPORTANT NOTES:
     # - Unable to install the certificate
     # - Congratulations! Your certificate and chain have been saved at:
@@ -353,9 +436,12 @@ This section is separated as it is optional. If you have configured DNS you coul
     # now re-run the 
     bash src/bash/qto/qto.sh -a provision-nginx -a provision-https
     
+<<<<<<< HEAD
+=======
     
     
 
+>>>>>>> upstream/v0.8.3
 ### 4.1. Fork the latest stable dev to tst
 By this point all obvious bugs within the scope of THIS release MUST be cleared out, if that is NOT the case you are wasting your time by gaining wrong velocity to demonstrate some new cool features, which you WILL pay later.
 
@@ -369,12 +455,20 @@ By this point all obvious bugs within the scope of THIS release MUST be cleared 
     
     # ensure you copy your non-hash and SECRET configuration to this instance
     cp -v ~/.qto/cnf/* cnf/env/
+    
 
+## 5. NON-FIRST TIME AWS DEPLOYMENT
+This section is aimed for the fortuned folks, who have already deployed at least one fully functional up-and-running instance of qto, thus it will assume already some familiarity. 
+
+
+<<<<<<< HEAD
+=======
 ## 5. NON-FIRST TIME AWS DEPLOYMENT
 This section is aimed for the fortuned folks, who have already deployed at least one fully functional up-and-running instance of qto, thus it will assume already some familiarity. 
 
     
 
+>>>>>>> upstream/v0.8.3
 ### 5.1. Go to your previous environment
 Go to your old environment - it contains your configuration at least you could spare yourself for copy paste for the creating of the RIGHT configuration for your ENTIRELY new deployment built with the infrastructure as a code .
 Open the admin console:
@@ -390,7 +484,11 @@ Open the admin console:
     ssh -i ~/.ssh/id_rsa.prd.qto ubuntu@ec2-52-209-247-245.eu-west-1.compute.amazonaws.com
 
 ### 5.3. Setup bash & vim
+<<<<<<< HEAD
+This deployment script sets RATHER personal bash and tmux settings, which are NOT part of the qto setup, but merely personal tools to navigate more easily in the terminal with bash, tmux and vim.
+=======
 This deployment script sets RATHER personal bash and tmux settings ... which are NOT part of the QTO setup, but merely personal tools to navigate more easily in the terminal with bash, tmux and vim ...
+>>>>>>> upstream/v0.8.3
 
     curl https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/src/bash/deployer/setup-bash-n-vim.sh | bash -s yordan.georgiev@gmail.com
     
@@ -430,40 +528,84 @@ You would need to also restart the web server after executing this command.
      ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3 -a fix-db-permissions
 
 ### 7.2. Redis refuses to start 
-Redis should be configured to have bind on the ip address of the first eth. Also the bind to the ipv6 should be commented out ( ## bind 127.0.0.1 ::1). You should have also the correct ip configured in the cnf/env/&lt;&lt;env&gt;&gt;.env.json files. Because otherwise the application cannot connect and store correctly the db metadata during application startup.
-There might be still some bugs during the Redis provisioning in the src/bash/deployer/check-install-redis.func.sh file, run the the installation from the top till bottom command by command and try to restart after the provisioning.
+Redis should be configured to have bind on the ip address of the first eth. Also the bind to the ipv6 should be commented out ( ## bind 127.0.0.1 ::1). You should have also the correct ip configured in the `cnf/env/<<env>>.env.json` files. Because otherwise the application cannot connect and store correctly the db metadata during application startup.
+There might be still some bugs during the Redis provisioning in the `src/bash/deployer/check-install-redis.func.sh` file, run the installation from the top to bottom command by command.
 
+It may be worth checking `redis.conf` and make sure it is bound to a private IP.
+```
     sudo tail -n 10 /etc/redis/redis.conf
-    
+```
+```
     # do not bind to ipv6 on the localhost 
     # bind 127.0.0.1 ::1
     
-    # bind on the first eth0 ip address 
+    # bind on the first eth0 ip address looking like 10.0.2.15
     bind 10.0.62.82
     
     # enable service mode 
     supervised systemd
-    
+```
 
+Then restart Redis using this command in the terminal:
+```
+sudo systemctl restart redis
+```
+
+You can verify that Redis is running in the following way:
+```
+sudo systemctl status redis
+```
+    
+### 7.3. Could not connect to Redis server
+`Uncaught exception from user code: Can't load application from file "...": Could not connect to Redis server at host-name:6379.`
+
+To fix this, first learn IPs of the current machine by running this command in the terminal:
+```
+ifconfig -a | grep inet
+```
+
+When working with virtual machines, search for the private IP that looks similar to `10.0.2.15`.
+When working with AWS EC2 instance, IP will look like `172.31.25.82`.
+
+Change Redis server IP inside `%path to qto%/cnf/env/dev.env.json` from `host-name` to the private IP. Then run mojo-hypnotoad again.
+
+```
+.src/bash/qto/qto.sh -a mojo-hypnotoad-start
+```
+
+<<<<<<< HEAD
+
+### 7.4. Cannot login in the web interface with the admin user
+=======
 ### 7.3. Strange permissions errors
 Some of the newly created tables might not have explicitly their permissions in the DDLs. Or you might have run some of the sql scripts ad-hoc / manually and they do not contain grant statements. Run the following one-liner:
 
     bash src/bash/qto/qto.sh -a provision-db-admin
 
 ### 7.4. Cannot login at all in the web interface with the admin user
+>>>>>>> upstream/v0.8.3
 The password hashing in the users table is activated ALWAYS on blur even that the ui is not showing it ( yes , that is more of a bug, than a feature.
 The solution is to restart the application layer WITHOUT any authentication, change the admin user password from the ui and restart the application layer with authentication once again.
 
     export QTO_NO_AUTH=1
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
     
-    # now change the AdminEmail user password from the UI , delete the test users ...
-    # as they all have the convinient "secret" password .. 
+    # now change the AdminEmail user password from the UI, delete the test users
+    # as they all have the convinient "secret" password ..
     export QTO_NO_AUTH=0
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
     
 
+<<<<<<< HEAD
+### 7.5. Postgres permissions errors
+Some of the newly created tables might not have explicitly their permissions in the DDLs. Or you might have run some of the sql scripts ad-hoc / manually and they do not contain grant statements. Run the following one-liner:
+
+    bash src/bash/qto/qto.sh -a provision-db-admin
+
+### 7.6. You have reached the hw provisioning limits of your AWS account
+=======
 ### 7.5. You have reached the hw provisioning limits of your AWS account
+>>>>>>> upstream/v0.8.3
 If you get one of the errors bellow you would have to go the UI of the AWS admin console and delete non-used resources. Fortunately, all resources have the &lt;&lt;env&gt;&gt;_&lt;&lt;resource_name&gt;&gt; naming convention either in the object or in their Tags, which means that you will know what you are deleting.
 
     Error: Error creating VPC: VpcLimitExceeded: The maximum number of VPCs has been reached.
@@ -479,6 +621,10 @@ If you get one of the errors bellow you would have to go the UI of the AWS admin
       on main.tf line 203, in resource "aws_eip" "tst-ip-test":
      203: resource "aws_eip" "tst-ip-test" {
 
+<<<<<<< HEAD
+### 7.7. Some kind of mismatch in the AWS
+The AWS web UI contains fancy Ajax calls and in our experience it does not always update properly, if are bombarding it with terraform deployments onto the same resources. Make sure you hit F5 in your browser always when starting the work on new ec2 instance.
+=======
 ### 7.6. Some kind of mismatch in the AWS
 The AWS web ui contains fancy ajax calls and in our experience it does not always update properly, if are bombarding it with terraform deployments onto the same resources. Make sure you hit F5 in your browser always when starting the work on new ec2 instance.
 
@@ -486,6 +632,9 @@ The AWS web ui contains fancy ajax calls and in our experience it does not alway
 
 ### 7.7. The problem occurred is not mentioned here ???!!!
 Of course you quick Google it first ... if it took too long just send a e-mail / chat to the instance owner you got the source code from and you WILL get help sooner or later.
+>>>>>>> upstream/v0.8.3
 
     
 
+### 7.8. The problem occurred is not mentioned here ?!
+Try to Google it first. If it took too long, send a e-mail / chat invitation to the instance owner you got the source code from and you WILL get help sooner or later.
