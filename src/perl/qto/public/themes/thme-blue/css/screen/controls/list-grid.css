@@ -7,6 +7,15 @@ body {
    font-stretch: expanded;
    left: 1%;
    top: 7%;
+}
+#btnNew-02{
+   position: fixed;
+   font-size: 24px;
+   font-stretch: expanded;
+   right: 1%;
+   top: 87%%;
+}
+.clsBtnNew {
    width: 56px;
    border-radius: 50%;
    align-items: center;
@@ -49,7 +58,7 @@ body {
    transition-timing-function: cubic-bezier(0.25, 0.8, 0.5, 1), ease;
    vertical-align: bottom;
 }
-#btnNew:hover {
+.clsBtnNew:hover {
    position: fixed;
    color: yellow ;
 	font-weight: 800;
@@ -63,7 +72,7 @@ body {
 	-moz-box-shadow: 3px 3px 10px #C0C0C0;
 }
 
-#btnNew:focus {
+.clsBtnNew:focus {
    position: fixed;
    color: yellow ;
 	font-weight: 900;
@@ -76,7 +85,8 @@ body {
 	-webkit-box-shadow: 3px 3px 10px #C0C0C0;
 	-moz-box-shadow: 3px 3px 10px #C0C0C0;
 }
-#btnNew:active {
+
+.clsBtnNew:active {
    position: fixed;
    color: yellow ;
 	font-weight: 900 ;
@@ -89,6 +99,7 @@ body {
 	-webkit-box-shadow: 4px 4px 10px #C0C0C0;
 	-moz-box-shadow: 4px 4px 10px #C0C0C0;
 }
+
 textarea {
 	min-width: 10px;
 	max-width: 500px; /* why percentages do not work here !!! */
