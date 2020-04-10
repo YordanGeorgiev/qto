@@ -52,6 +52,15 @@ th.active .arrow {
 	opacity: 1;
 }
 
+thead th:first-child {
+   left: 0;
+}
+tr > :first-child {
+   position: -webkit-sticky;
+   position: sticky; 
+   z-index: 1;
+   left: 0; 
+}
 tr {
 	height: 1px;
 }
