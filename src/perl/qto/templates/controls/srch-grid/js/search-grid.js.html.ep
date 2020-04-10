@@ -6,8 +6,8 @@
        , gridData: []
        , gridMeta: {}
        , pageSize: 7
-       , urlParamFor: ""
        , pageNum: 1
+       , urlParamFor: ""
        , pagesCount: 0
        , UrlParams:{ as:"grid" }
        , pageSizes: ['5', '7', '10','15','20','30','50','100']

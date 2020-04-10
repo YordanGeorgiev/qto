@@ -24,7 +24,8 @@
 }
 #inp_srch_box {
    font-size: 15px;
-   width: 41%;
+   min-width: 250px;
+   width: 65%;
    border: 1px solid #dadada;
 	box-shadow: 2px 2px 2px #C0C0C0;
 	-webkit-box-shadow: 2px 2px 2px #C0C0C0;
@@ -35,7 +36,8 @@
    margin-top: 20px;
 }
 #inp_srch_box:focus {
-   width: 60%;
+   min-width: 250px;
+   width: 80%;
    margin-top: 7px;
    outline: none;
    box-shadow: 0 0 0px #9ecaed;
@@ -48,7 +50,8 @@
 }
 #inp_srch_box:hover {
    margin-top: 7px;
-   width: 45%;
+   min-width: 250px;
+   width: 80%;
    outline: none;
    padding: 2px 4px; 
    line-height: 22px; 
