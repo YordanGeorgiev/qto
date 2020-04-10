@@ -24,7 +24,7 @@ sub doBuildSearchControl {
    my $ret           	= 0 ; 
    my $control       	= '' ; 
 
-   $control = "['id' , 'item' , 'relevancy' , 'name' , 'description']" ; # it is just the js array definining the cols
+   $control = "['id', 'name', 'item', 'relevancy' , 'description']" ; # it is just the js array definining the cols
    return ( $ret , $msg , $control ) ; 
 }
 
