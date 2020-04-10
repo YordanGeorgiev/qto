@@ -227,8 +227,12 @@ sub doCallFuncGetHashRef {
 
       # qto-190613084850
             $str_sql .= "
-               SELECT guid ,id , '" . "$table" . "' as item, name , description 
+               SELECT guid
+               ,id
                , ts_rank(to_tsvector('simple' , f_concat_ws(' ',name,description)) , to_tsquery('" . $ts_qry . "')) as relevancy
+               , name
+               , '" . "$table" . "' as item
+               , description 
                FROM $table 
                WHERE 1=1
                AND ts_rank(to_tsvector(name || description), to_tsquery('" . $ts_qry . "')) <> 0 

@@ -104,25 +104,25 @@ sub doGetRsMeta {
 			'width' => '20'
 		}
 		, '1' => {
-			'attribute_name' => 'item',
-			'attribute_number' => 2,
-			'char_max_length' => 104,
-			'data_type' => 'character varying(100)',
-			'width' => '40'
-		}
-		, '2' => {
 			'attribute_name' => 'relevancy',
 			'attribute_number' => 3,
 			'char_max_length' => 60,
 			'data_type' => 'character varying(100)',
 			'width' => '20'
 		}
-		, '3' => {
+		, '2' => {
 			'attribute_name' => 'name',
 			'attribute_number' => 4,
 			'char_max_length' => 104,
 			'data_type' => 'character varying(100)',
 			'width' => '100'
+		}
+		, '3' => {
+			'attribute_name' => 'item',
+			'attribute_number' => 2,
+			'char_max_length' => 104,
+			'data_type' => 'character varying(100)',
+			'width' => '40'
 		}
 		, '4' => {
 			'attribute_name' => 'description',
