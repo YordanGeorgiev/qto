@@ -86,6 +86,7 @@ sub doLoadAppConfig {
    my $port = $config->{'env'}->{'app'}->{ 'port' };
    my $protocol = $config->{'env'}->{'app'}->{ 'ht_protocol' };
    my $num_of_workers = $config->{'env'}->{'app'}->{ 'num_of_workers' } || 5 ; 
+   my $inactivity_timeout = $config->{'env'}->{'app'}->{ 'inactivity_timeout' } || 60 ;
    my $listen = 'http://*:'.$port;
 
    $self->set('ObjLogger', $objLogger );
@@ -94,8 +95,9 @@ sub doLoadAppConfig {
    $config->{'hypnotoad'} = {
         listen  => [$listen]
       , workers => $num_of_workers
-      , inactivity_timeout => 0
+      , inactivity_timeout => $inactivity_timeout
       } ;
+
 
    $objGuardian      = 'Qto::App::Sec::Guardian'->new ( \$config ) ;
    $config->{'env'}->{'run'}->{ 'PublicRSAKey' } = $objGuardian->doGetPublicKeySecret();
