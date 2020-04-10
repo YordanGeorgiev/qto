@@ -248,7 +248,6 @@ sub doSetHooks {
       my @open_routes = (); 
 
       # do not check public/poc like locations 
-      print "route $route todo:ysg \n" ; 
       # if the routes does not start with a proj db simply pass it ...
       return unless $config->{'env'}->{'app'}->{$db . '.meta-routes'} ;
 
