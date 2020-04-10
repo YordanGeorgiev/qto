@@ -69,8 +69,10 @@
         }
      }
      , mounted() {
-       bus.$on('metaTablesLoadEmit',this.menuDataLoaded)
-       document.addEventListener("click", this.handleLeftMenuClickOutside);
+         this.$nextTick(() => {
+            bus.$on('metaTablesLoadEmit',this.menuDataLoaded)
+            document.addEventListener("click", this.handleLeftMenuClickOutside);
+         })
      }
      , destroyed() {
        document.removeEventListener("click", this.handleLeftMenuClickOutside);

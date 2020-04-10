@@ -233,8 +233,12 @@ src/perl/qto/templates/js/global/isNullOrEmpty.func.js.html.ep
 src/perl/qto/t/lib/Qto/Controller/TestView.t
 src/perl/qto/public/lib/js/controls/vue-select.js
 src/perl/qto/public/lib/js/controls/vue-date-time-picker.js
+src/perl/qto/templates/controls/list-grid/js/cruds-grid.js.html.ep
+src/perl/qto/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
 src/perl/qto/templates/controls/list-grid/list-grid.html.ep
 src/perl/qto/templates/controls/srch-grid/srch-grid.html.ep
+src/perl/qto/templates/controls/srch-grid/js/search-grid.js.html.ep
+src/perl/qto/templates/controls/srch-grid/js/search-grid-sf.js.html.ep
 src/perl/qto/templates/controls/report-grid
 src/perl/qto/templates/controls/report-grid/report-grid.html.ep
 src/perl/qto/templates/controls/report-grid/xt
@@ -252,16 +256,12 @@ src/perl/qto/templates/controls/list-grid/xt/vue-select.xt.html.ep
 src/perl/qto/templates/controls/list-grid/xt/vue-date-time-picker.xt.html.ep
 src/perl/qto/templates/controls/list-grid/js/modal-dia.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/editable.js.html.ep
-src/perl/qto/templates/controls/list-grid/js/cruds-grid.js.html.ep
-src/perl/qto/templates/controls/list-grid/js/cruds-grid-sf.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/vue-select.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/vue-date-time-picker.js.html.ep
 src/perl/qto/templates/controls/srch-grid/xt/grid.xt.html.ep
 src/perl/qto/templates/controls/srch-grid/js/linkable.js.html.ep
 src/perl/qto/templates/controls/srch-grid/xt/modal-dia.xt.html.ep
 src/perl/qto/templates/controls/srch-grid/js/modal-dia.js.html.ep
-src/perl/qto/templates/controls/srch-grid/js/search-grid.js.html.ep
-src/perl/qto/templates/controls/srch-grid/js/search-grid-sf.js.html.ep
 # --
 src/perl/qto/templates/controls/list-grid
 src/perl/qto/templates/controls/list-grid/js/btn-del.js.html.ep
