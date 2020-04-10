@@ -100,8 +100,16 @@ th:focus {
 	border-color: #C0C0C0;
 	border-width: 4px;
 }
+
 #pager{
    padding-top: 12px;
+}
+
+#pager02 {
+  	z-index: 1;
+  	position: relative;
+  	clear: both;
+	left: 0%;
 }
 .cls_img_but {
    padding: 2px;
