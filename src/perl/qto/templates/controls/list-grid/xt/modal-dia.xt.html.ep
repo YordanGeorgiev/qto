@@ -29,16 +29,21 @@
         <div class="modal-container">
           <div name="header" class="dia-header">
             <input id="modal-dia-title-id" :value="'<%=  $item  =%>-'+this.$attrs.id.replace('dia-','')" readonly>
+            <button class="cls_itm_close" id="modal-close-btn-01" v-on:click="$emit('close')" tabindex="0">&nbsp;&times;&nbsp;</button>
             </input><div id="modal-dia-msg" align="center"> </div></div>
           <div id="form-container" ref="form_container" class="form-container">
             <component v-for="field in fields" v-bind="field" :cid.sync="field.id" :is="field.type" :key.sync="field.key" v-bind:cnt.sync="field.cnt" :content.sync="field.cnt" :label.sync="field.label" :ref="field.id">
             </component>
           </div>
 	       <fileupload target="/upload-files" action="POST"></fileupload>
+          <div id="close-buttons">
+            <sub><btn-del :id="'btn-del-'+this.$attrs.id.replace('dia-','')" 
+               v-on:clickedBtnDelete="this.$parent.$parent.deleteItem" tabindex="3"></btn-del></sub>
+            <button class="cls_itm_ok_btn" id="modal-close-btn-02" v-on:click="$emit('close')" tabindex="0">&nbsp;&#x2713;&nbsp;</button>
+          </div>
           <div name="footer" class="dia-footer">
             <%= " $item " =%>: {{this.$attrs.id.replace('dia-','') + '  @' + new Date().toISOString().replace('T',' ').replace('Z','')}}
           </div>
-          <button id="modal-close-btn" v-on:click="$emit('close')" tabindex="0">&nbsp;&times;&nbsp;</button>
         </div>
       </div>
     </div>

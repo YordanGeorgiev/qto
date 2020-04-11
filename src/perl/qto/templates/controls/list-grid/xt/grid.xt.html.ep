@@ -4,13 +4,6 @@
          </modal>
          <div_search_box id="div_search_box" />
          <btn-new tabindex="2" class="clsBtnNew" id="btnNew" v-on:clickedBtnNew="createNewItem" ></btn-new>
-         <div id="pager" v-if="this.$parent.showPageSizer">
-            <btn-play-next-10 id="btnPlayNext10" v-on:clickedBtnPlayNext10="goToNextPage10" tabindex="3"></btn-play-next-10>
-            <btn-play-next id="btnPlayNext" v-on:clickedBtnPlayNext="goToNextPage" tabindex="3"></btn-play-next>
-            <div id="page_counter"><span v-for> {{this.$parent.pageNum}} / {{this.$parent.pagesCount }}</span></div>
-            <btn-play-prev id="btnPlayPrev" v-on:clickedBtnPlayPrev="goToPrevPage" tabindex="3"></btn-play-prev>
-            <btn-play-prev-10 id="btnPlayPrev10" v-on:clickedBtnPlayPrev10="goToPrevPage10" tabindex="3"></btn-play-prev-10>
-         </div>
          <div id="not_pager" v-if="!this.$parent.showPageSizer">
             </br></br></br>
          </div>
@@ -22,7 +15,7 @@
               :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span></th></tr>
 			 </thead>
 			 <tbody>
-				<tr v-for="(entry,index) in filteredData" :key="entry['id']" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div v-if="key === 'id'" :title="entry[key]" tabindex="3"><button tabindex="3" :ref="'ref_btn_modal_'+entry[key]" :id="'btn-modal-'+entry[key]" v-on:click="showModalDialog($event)" @keydown.esc="showModal = false" class="gridOpenBtn" :title="'edit id-'+entry[key]">edit</button><btn-del :id="'btn-del-'+entry['id']" v-on:clickedBtnDelete="deleteItem" tabindex="3"></btn-del></div><div v-if="key.endsWith('_guid')" tabindex="3"><vue-select :id="key+'-'+entry.id+'-'" :hook="entry[key]" :itemname="key.replace('_guid','')"></vue-select></div><vue-dt-pick v-if="(key.endsWith('_time') || key.endsWith('_aika'))" :id="key+'-'+entry.id+'-'" style="white-space: normal;" tabindex="3" :id="key+'-'+entry.id+'-'" :tme="entry[key]" :value.sync="entry[key]"></vue-dt-pick><div v-else><div class="cls_tbltooltip"><div v-if="key == 'description'" class="cls_tbltooltiptext" v-html="lnkMayBe(entry[key])">{{lnkMayBe(entry[key])}}</div><editable v-if="key !== 'id' && !key.endsWith('_guid')" tabindex="3" :content.sync="entry[key]" v-bind:cnt.sync="entry[key]" :id="key+'-'+entry.id+'-'" v-on:update="updateItem"></editable></div></td></tr>
+				<tr v-for="(entry,index) in filteredData" :key="entry['id']" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div v-if="key === 'id'" :title="entry[key]" tabindex="3"><button tabindex="3" :ref="'ref_btn_modal_'+entry[key]" :id="'btn-modal-'+entry[key]" v-on:click="showModalDialog($event)" @keydown.esc="showModal = false" class="gridOpenBtn" :title="'edit id-'+entry[key]">&nbsp;&#9998;&nbsp;</button></div><div v-if="key.endsWith('_guid')" tabindex="3"><vue-select :id="key+'-'+entry.id+'-'" :hook="entry[key]" :itemname="key.replace('_guid','')"></vue-select></div><vue-dt-pick v-if="(key.endsWith('_time') || key.endsWith('_aika'))" :id="key+'-'+entry.id+'-'" style="white-space: normal;" tabindex="3" :id="key+'-'+entry.id+'-'" :tme="entry[key]" :value.sync="entry[key]"></vue-dt-pick><div v-else><div class="cls_tbltooltip"><div v-if="key == 'description'" class="cls_tbltooltiptext" v-html="lnkMayBe(entry[key])">{{lnkMayBe(entry[key])}}</div><editable v-if="key !== 'id' && !key.endsWith('_guid')" tabindex="3" :content.sync="entry[key]" v-bind:cnt.sync="entry[key]" :id="key+'-'+entry.id+'-'" v-on:update="updateItem"></editable></div></td></tr>
 			 </tbody>
 		  </table>
          <btn-new tabindex="2" class="clsBtnNew" id="btnNew-02" v-on:clickedBtnNew="createNewItem" ></btn-new>

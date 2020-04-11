@@ -87,6 +87,20 @@ Vue.component('form-select', {
 	, props: ['label','cnt','cid']
 });
 
+	Vue.component('btn-del', {
+       name: 'btn-del'
+	  , data: function () {
+		 return {
+			count: 0
+		 }
+	  }
+	  , methods: {
+       clickedDelete: function(ev) {
+         this.$emit('clickedBtnDelete', ev.currentTarget.id)
+       }
+	  }
+	  , template: `<button type="submit" href="javascript:void(0);" class="cls_img_but" v-on:click="clickedDelete($event)"><img src="../../themes/thme-blue/img/controls/trash-bin.png" /></button>` 
+	})
 
 Vue.component('modal', {
 	  template: '#modal-tmpl'

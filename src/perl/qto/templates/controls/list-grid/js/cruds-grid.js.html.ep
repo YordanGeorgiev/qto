@@ -224,6 +224,7 @@
             });
           }
           , deleteItem (id) {
+               console.log("id " + id);
                var arr = id.split('-')
                var dbid = arr[2]
                

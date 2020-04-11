@@ -65,29 +65,28 @@ form {
   transition: opacity .2s ease;
 }
 
-button {
-   background: #ABF ;
+.cls_itm_ok_btn {
+   background: #3ab967 ;
    color: white;
-   padding: 5px;
-   border: 2px solid #ABF;
-   border-left-color: #ABF;
+   padding: 4px 12px 4px 12px;
+   border: 2px solid #3ab967;
+   border-left-color: #3ab967;
    border-left-style: none;
-   border-right-color: #ABF;
+   border-right-color: #3ab967;
    border-right-style: none;
-   border-top-color: #ABF;
+   border-top-color: #3ab967;
    border-radius: 3px;
 }
-button:hover , button:focus , button:active{
-   background: #ABF ;
+.cls_itm_ok_btn:hover , .cls_itm_ok_btn:focus , .cls_itm_ok_btn:active{
+   background: #3ab967 ;
    color: blue;
-   padding: 5px;
-   border: 2px solid #ABF;
-   border-left-color: #ABF;
+   padding: 4px 12px 4px 12px;
+   border: 2px solid #3ab967;
+   border-left-color: #3ab967;
    border-left-style: none;
-   border-right-color: #ABF;
+   border-right-color: #3ab967;
    border-right-style: none;
-   border-top-color: #ABF;
-   border-radius: 3px;
+   border-top-color: #3ab967;
    box-shadow: 3px 3px 3px 3px #C0C0C0;
 }
 .modal-wrapper {
@@ -109,11 +108,53 @@ button:hover , button:focus , button:active{
   font-family: Helvetica, Arial, sans-serif;
 }
 
-#modal-close-btn {
-  position: absolute;
-  top:4%;
-  left:77%;
+#modal-close-btn-01 {
+   background: #ABF ;
+   color: white;
+   padding: 5px;
+   border: 2px solid #ABF;
+   border-left-color: #ABF;
+   border-left-style: none;
+   border-right-color: #ABF;
+   border-right-style: none;
+   border-top-color: #ABF;
+   border-radius: 3px;
+}
+#modal-close-btn-01:hover , #modal-close-btn-01:focus , #modal-close-btn-01:active{
+   background: #ABF ;
+   color: blue;
+   padding: 5px;
+   border: 2px solid #ABF;
+   border-left-color: #ABF;
+   border-left-style: none;
+   border-right-color: #ABF;
+   border-right-style: none;
+   border-top-color: #ABF;
+   border-radius: 3px;
+   box-shadow: 3px 3px 3px 3px #C0C0C0;
+}
+
+#modal-close-btn-01 {
+  display: inline-block;
+  margin-right: 15%;
   float: right;
+}
+
+#close-buttons {
+  margin-top: 3%;
+  text-align: center;
+}
+
+#modal-close-btn-02 {
+  display: inline-block;
+  margin-right: 3%;
+  margin-left: 3%;
+}
+
+.cls_itm_del_btn{
+  display: inline-block;
+  margin-right: 3%;
+  margin-left: 3%;
 }
 
 .modal-enter {

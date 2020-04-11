@@ -6,7 +6,7 @@ body {
    font-size: 24px;
    font-stretch: expanded;
    left: 1%;
-   top: 7%;
+   top: 5%;
 }
 #btnNew-02{
    position: fixed;
@@ -116,18 +116,6 @@ textarea {
 #grid tbody tr td div{
    text-align: center;
 }
-#grid tbody tr td:nth-child(1){ 
-   width: 24px;
-   padding: 2px ; 
-   font-size: 80%;
-}
-
-table#grid tbody tr td:nth-child(2){ 
-   width: auto;
-   display: inline-block;
-   font-size: 10px ; 
-   color: #a4a9c4;
-}
 .cls_cnt_edtble {
 	padding: 2px;
 	white-space:pre-wrap;
@@ -169,31 +157,35 @@ table#grid tbody tr td:nth-child(2){
   padding: 2% 2% 2% 2% ;
 }
 button.gridOpenBtn {
-   background: #ABF ;
+   transform: rotateZ(90deg);
+   font-size: large;
+   background: #4887e8 ;
    color: white;
-   padding: 10 0 10 0px;
+   padding: 10px 1px 10px 1px;
    margin: 3px;
    text-align: right;
    float:right;
    width: auto;
-   border: 2px solid #ABF;
-   border-left-color: #ABF;
+   border: 2px solid #4887e8;
+   border-left-color: #4887e8;
    border-left-style: none;
-   border-right-color: #ABF;
+   border-right-color: #4887e8;
    border-right-style: none;
-   border-top-color: #ABF;
+   border-top-color: #4887e8;
    border-radius: 3px;
 }
 button.gridOpenBtn:hover , button.gridOpenBtn:focus , button.gridOpenBtn:active{
-   background: #ABF ;
-   color: blue;
-   padding: 5px;
-   border: 2px solid #ABF;
-   border-left-color: #ABF;
-   border-left-style: none;
-   border-right-color: #ABF;
+   transform: rotateZ(90deg);
+   font-size: large;
+   background: #4887e8 ;
+   color: red;
+   padding: 10px 1px 10px 1px;
+   border: 2px solid #4887e8;
+   border-right-color: #4887e8;
    border-right-style: none;
-   border-top-color: #ABF;
+   border-left-color: #4887e8;
+   border-left-style: none;
+   border-top-color: #4887e8;
    border-radius: 3px;
    box-shadow: 3px 3px 3px 3px #C0C0C0;
 }
