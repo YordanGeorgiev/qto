@@ -21,8 +21,7 @@ Vue.component('vue-select', {
       if ( localStorage.getItem(k) === 'undefined' || localStorage.getItem(k) === null 
             || localStorage.getItem(k) === "null" || localStorage.getItem(k).length === 0) {
          urlPrms = this.getUrlParams()
-         urlPrms.append("pg-size" , "10")
-         axios.get( this.url + this.itemname, {params: {"pg-size": "200","oa": "name"}})
+         axios.get( this.url + this.itemname, {params: {"pg-size": "2000","oa": "name"}})
          .then(res => {
             this.options = res.data.dat
             var cachedData = JSON.stringify(res.data.dat)

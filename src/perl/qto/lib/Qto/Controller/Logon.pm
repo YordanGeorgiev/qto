@@ -25,7 +25,6 @@ sub doLogonUser {
    my $self             = shift;
    my $db               = $self->stash('db');
    my $ret              = 1 ; 
-   my $msg              = "$db logon";
    my $msg_color        = 'red' ;
    my $hsr              = {};
    my $rv               = 400 ;
@@ -38,6 +37,7 @@ sub doLogonUser {
    $config		         = $self->app->config ; 
    $objLogger           = 'Qto::App::Utils::Logger'->new( \$config );
    $db                  = toEnvName ( $db , $config) ;
+   my $msg              = "$db logon";
    my $pdb              = toPlainName( $db ) ;
 	#print STDOUT "Logon.pm ::: url: " . $self->req->url->to_abs . "\n\n" if $module_trace == 1 ; 
    
@@ -50,11 +50,14 @@ sub doLogonUser {
          if defined $self->session( 'app.' . $db . '.redirect-url' ) ; 
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , 'users') ;
    my $objCnrPostPrms   = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
-  
+ 
+   $msg .= " attempt for $email ";
+   $objLogger->doLogInfoMsg ( $msg );
 
    unless ( $objCnrPostPrms->hasValidLogonParams(\$msg , $email , $pass , 'Logon') ) {
       $rv = 400 ; 
       $msg = "logon failed! " . $msg ; 
+      $objLogger->doLogErrorMsg ( $msg );
       $redirect_url = '/' . $pdb . '/logon' ; 
       $self->doRenderPageTemplate($rv, $msg ,$msg_color,$db,$redirect_url);
       return ;
@@ -71,8 +74,12 @@ sub doLogonUser {
 
             if ( $objGuardian->passwordsMatch ($dbepass,$pass) ){
                $self->session( 'app.' . $db . '.user' => $email);
-               $self->redirect_to($redirect_url) 
-                  if ( !defined $ENV{'QTO_JWT_AUTH'} or $ENV{'QTO_JWT_AUTH'} != 1 ) ;
+               if ( !defined $ENV{'QTO_JWT_AUTH'} or $ENV{'QTO_JWT_AUTH'} != 1 ){
+                  $msg = "$db login ok for $email via single native auth";
+                  $objLogger->doLogInfoMsg ( $msg );
+                  $self->redirect_to($redirect_url) ; 
+                  return ;
+               }
 
                my ( $rv, $msg , $jwt ) = $objGuardian->doGrantAccessToken($db, $hsr);
                if ( $rv == 0 ) { 
@@ -84,16 +91,21 @@ sub doLogonUser {
                      $redirect_url = $self->session( 'app.' . $db . '.url' );
                      $self->session( 'app.' . $db . '.url' => undef);
                   }
+
+                  $msg = "$db login ok for $email via JWT based native auth";
+                  $objLogger->doLogInfoMsg ( $msg );
                   $self->redirect_to( $redirect_url);
                   return;
                } else {
                   $rv = 500 ; 
-                  $msg = "an error occurref in the token granting process" ;
+                  $msg = "an error occurref in the token granting process for $email" ;
                   $msg .= "for the following user: " . $hsr->{$key}->{ 'user_id' } ;
+                  $objLogger->doLogErrorMsg ( $msg ) ; 
                }
             } else {
                $rv = 401 ; 
                $msg = "wrong password for $email" ;
+               $objLogger->doLogErrorMsg ( $msg ) ; 
             }
          }
       } else {
