@@ -10,7 +10,7 @@
    <link rel="stylesheet" type="text/css" media="screen"  
       href="../../themes/thme-blue/css/screen/controls/table.css?v=<%= $ProductVersion =%>" />
    <link rel="stylesheet" type="text/css" media="screen"  
-      href="../../themes/thme-blue/css/screen/controls/modal-dia.css?v=<%= $ProductVersion =%>" />
+      href="../../themes/thme-blue/css/screen/controls/srch-modal-dia.css?v=<%= $ProductVersion =%>" />
    <link rel="stylesheet" type="text/css" media="screen" 
       href="../../themes/thme-blue/css/screen/controls/srch-grid.css?v=<%= $ProductVersion =%>" />
 % end

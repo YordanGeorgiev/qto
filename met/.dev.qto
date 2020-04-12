@@ -274,6 +274,7 @@ src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-select.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-date-time-picker.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/table.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/modal-dia.css
+src/perl/qto/public/themes/thme-blue/css/screen/controls/srch-modal-dia.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/pager.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/list-grid.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/right-click-menu.css
