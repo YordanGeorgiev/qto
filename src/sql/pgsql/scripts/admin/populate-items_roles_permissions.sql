@@ -7,7 +7,14 @@ INSERT INTO items_roles_permissions ( roles_guid,meta_tables_guid,meta_routes_gu
    cross join (
       SELECT meta_tables.guid , meta_tables.name 
          FROM meta_tables
-         WHERE 1=1 and meta_tables.name not like 'test_%'
+         WHERE 1=1 
+         and meta_tables.name not like 'test_%'
+         and meta_tables.name not like '%_2018%'
+         and meta_tables.name not like '%_2018'
+         and meta_tables.name not like '%_2019%'
+         and meta_tables.name not like '%_2019'
+         and meta_tables.name not like '%_2020%'
+         and meta_tables.name not like '%_2020'
          ) t2
    cross join (
       SELECT meta_routes.guid , meta_routes.name FROM meta_routes) t3
@@ -24,9 +31,17 @@ DELETE FROM items_roles_permissions WHERE 1=1
 -- deny anything related to roles and users to all but the product instance owner
 UPDATE items_roles_permissions set allowed=false
 WHERE 1=1
-AND (name not like '%userstories%')
-AND (name like '%roles%' or name like '%users%')
-AND (name not like '%PI_OWNER%')
+AND ( name not like '%userstories%')
+AND ( name like '%roles%' or name like '%users%' or name like '%items_roles_permissions%' 
+      or name like '%meta_tables%' or name like '%meta_routes%' 
+    )
+;
+
+-- the PRODUCT_INSTANCE_OWNER MUST see EVERYTHING
+UPDATE items_roles_permissions set allowed=true
+WHERE 1=1
+   AND roles_guid IN 
+   ( SELECT guid from roles WHERE name = 'PRODUCT_INSTANCE_OWNER')
 ;
 
 -- any combination of view with item not ending with _doc is pointless 

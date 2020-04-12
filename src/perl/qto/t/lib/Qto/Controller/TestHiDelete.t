@@ -117,13 +117,13 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $url = '/' . $db . '/select/test_hi_delete_table_doc?pick=id&with=seq-eq-5';
    ok($t->get_ok($url )->status_is(200),$tm) ; $res = $ua->get($url)->result->json ; 
    foreach my $row (@{$res->{'dat'}}){ $oid = $row->{'id'} };
-   my $oid_220 = $oid ; 
+   $oid_220 = $oid ; 
    
    $tm = 'can set the 2.2.0 element ' ; 
    $url              = '/' . $db . '/update/test_hi_delete_table_doc' ; 
    ok ( $t->post_ok($url => json => {"attribute"=>"name", "id" =>$oid, "cnt"=>"2.2.0 ::: title ::: "})->status_is(200), $tm);
    
-   my $oid_220 = undef; # the ORIGIN id - aka the id where the add action originated ...
+   $oid_220 = undef; # the ORIGIN id - aka the id where the add action originated ...
    $tm = 'can fetch the origin id for the 3.0.0 name' ;
    $url = '/' . $db . '/select/test_hi_delete_table_doc?pick=id&with=seq-eq-5';
    ok($t->get_ok($url )->status_is(200),$tm) ; $res = $ua->get($url)->result->json ; 

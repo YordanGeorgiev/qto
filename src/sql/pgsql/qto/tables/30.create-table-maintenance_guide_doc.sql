@@ -14,7 +14,7 @@ SELECT 'create the "maintenance_guide_doc" table'
     , type           varchar (25) NULL 
     , name           varchar (200) NOT NULL DEFAULT 'name ...'
     , description    text NULL
-    , src            text NULL
+    , src            text NULL DEFAULT '_'
     , formats        text NULL
     , runtime        varchar (20) NULL 
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())

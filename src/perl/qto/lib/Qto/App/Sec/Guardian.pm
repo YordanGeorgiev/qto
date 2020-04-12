@@ -21,7 +21,6 @@ use Qto::App::IO::In::CnrEncrypter ;
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
 our $config                = {} ;
-our $objLogger             = {} ;
 our $jwt_public_key_file   = '' ; 
 our $jwt_private_key_file  = '' ; 
 
@@ -40,8 +39,11 @@ our $jwt_private_key_file  = '' ;
 
       # qto-200302161711 - jwt auth implementation
       if ( defined $ENV{'QTO_JWT_AUTH'} && $ENV{'QTO_JWT_AUTH'} == 1 ){
-         # get the jwt from the session 
+
+         $$rmsg = 'undefined Json Web Token : ' . 'app.' . $db . '.jwt' . ' in session !!!';
          return 0 unless ( defined ( $controller->session( 'app.' . $db . '.jwt')));
+
+         # get the jwt from the session 
          my $jwt           = $controller->session( 'app.' . $db . '.jwt');
          my $pub_secret    = $config->{'env'}->{'run'}->{ 'PublicRSAKey' } ; 
 
@@ -49,10 +51,12 @@ our $jwt_private_key_file  = '' ;
          return $rv ;
 
       } else {
+         $$rmsg = 'simple native auth in use as QTO_JWT_AUTH is NOT defined'; 
          # basic native authentication mode if NOT started with this env var
          if ( defined ( $controller->session( 'app.' . $db . '.user')) ) {
             return 1;
          } else {
+            $$rmsg = 'session for ' . 'app.' . $db . '.user' . ' was not defined !!!';
             return 0 ;
          }
       }
@@ -81,6 +85,8 @@ our $jwt_private_key_file  = '' ;
          my $path          = $controller->req->url->path;
          my $web_action    = (split('/',$path))[2];
          my $act_subject   = (split('/',$path))[3] || '' ;
+         # timestamped tables are just interepreted without the timestamp
+         $act_subject      =~ s/^(.*?)([_0-9]*)$/$1/g; #monthly_issues_202001 -> monthly_issues
 
          # get the jwt from the session 
          return 0 unless ( defined ( $controller->session( 'app.' . $db . '.jwt')));
