@@ -35,20 +35,19 @@ Vue.component('modal', {
 	}
 	, methods: {
       toTable: function() {
-         var html = '<table>';
+         var html = '<div>';
          var oprops = ['id','item','name','description','relevancy','guid']
          oprops.map(oprop => {
                for (const prop in this.itemData) {
                   if ( oprop !== prop ) { continue; }
-                  html += '<tr tabindex="0">';
+                  html += '<div tabindex="0">';
                   if (this.itemData.hasOwnProperty(prop)) {
-                    html += '<td>' + prop + '</td>'
-                    html += '<td>' + this.itemData[prop] + '</td>'
+                    html += '<div class="cls-srch-modal-dia-title"><p><b>' + prop + '</b></p></div>'+ this.itemData[prop] + '</div>'
                   }
                }
-               html += '</tr>';
+               html += '</div>';
          })
-         html += '</table>';
+         html += '</div>';
          return html
       }
 	}

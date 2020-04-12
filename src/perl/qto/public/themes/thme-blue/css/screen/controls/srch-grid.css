@@ -121,3 +121,63 @@ a.interlnk:visited {
   visibility: visible;
   padding: 2% 2% 2% 2% ;
 }
+button.srch-grid-chk-btn {
+   font-size: large;
+   background: #7195cc ;
+   color: white;
+   padding: 1px 10px 1px 10px;
+   margin: 3px;
+   text-align: right;
+   width: auto;
+   border: 2px solid #7195cc;
+   border-left-color: #7195cc;
+   border-left-style: none;
+   border-right-color: #7195cc;
+   border-right-style: none;
+   border-top-color: #7195cc;
+   border-radius: 3px;
+}
+button.srch-grid-chk-btn:hover , button.srch-grid-chk-btn:focus , button.srch-grid-chk-btn:active{
+   font-size: large;
+   background: #7195cc ;
+   color: red;
+   padding: 1px 10px 1px 10px;
+   border: 2px solid #7195cc;
+   border-right-color: #7195cc;
+   border-right-style: none;
+   border-left-color: #7195cc;
+   border-left-style: none;
+   border-top-color: #7195cc;
+   border-radius: 3px;
+   box-shadow: 3px 3px 3px 3px #C0C0C0;
+}
+a.gridOpenBtn {
+   font-size: large;
+   background: #4887e8 ;
+   color: white;
+   padding: 1px 10px 1px 10px ;
+   margin: 3px;
+   text-align: right;
+   width: auto;
+   border: 2px solid #4887e8;
+   border-left-color: #4887e8;
+   border-left-style: none;
+   border-right-color: #4887e8;
+   border-right-style: none;
+   border-top-color: #4887e8;
+   border-radius: 3px;
+}
+a.gridOpenBtn:hover , a.gridOpenBtn:focus , a.gridOpenBtn:active{
+   font-size: large;
+   background: #4887e8 ;
+   color: red;
+   padding: 1px 10px 1px 10px ;
+   border: 2px solid #4887e8;
+   border-right-color: #4887e8;
+   border-right-style: none;
+   border-left-color: #4887e8;
+   border-left-style: none;
+   border-top-color: #4887e8;
+   border-radius: 3px;
+   box-shadow: 3px 3px 3px 3px #C0C0C0;
+}

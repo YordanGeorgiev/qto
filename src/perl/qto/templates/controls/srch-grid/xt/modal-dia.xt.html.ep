@@ -4,12 +4,16 @@
       <div class="modal-wrapper">
         <div class="modal-container">
         <input tabindex="0" id="modal-dia-title-id" :value="this.$attrs.id.replace('dia-','')" readonly></input>
-        <a :href="lnkOpen"><img src="../../themes/thme-blue/img/controls/edit-pen.svg" style="margin-left:20px;width:24px;height:24px"></a>
+          <button id="modal-close-btn-01" v-on:click="$emit('close')" tabindex="0">&nbsp;&times;&nbsp;</button>
           <div name="header"></div>
           <div name="content" v-html="cnt"> </div>
+          <div name="footer"></div>
+          <div id="close-buttons">
+            <a class="gridOpenBtn" :href="lnkOpen">&nbsp;&#9998;&nbsp;</a>
+            <button id="modal-close-btn-02" class="cls_itm_ok_btn" v-on:click="$emit('close')" tabindex="0">&nbsp;&#x2713;&nbsp;</button>
+          </div>
         </div>
       </div>
-          <button id="modal-close-btn" v-on:click="$emit('close')" tabindex="0">&nbsp;&times;&nbsp;</button>
     </div>
   </transition>
 </script>
