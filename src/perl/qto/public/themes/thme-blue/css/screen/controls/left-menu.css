@@ -3,21 +3,33 @@
       * Erik Terwan - https://codepen.io/erikterwan/pen/grOZxx */
 #div_logout{
    position: relative;
-   margin-left: 99%;
-   margin-top: -7%;
+   margin-left: 85%;
+   margin-top: 4%;
 }
 #app_label {
-padding: 10% 0% 0% 0%;
-font-size: 80%;
+   padding: 10% 0% 2% 0%;
+   font-size: 70%;
 }
 .cls_fa, .cls_da {
   text-decoration: none;
   color: #232323;
   transition: color 0.3s ease;
+  text-align: left;
 }
-.cls_fa a:hover, .cls_da a:hover, .cls_fa a:focus, .cls_da a:focus {
-	color:#FF0066;
-	background-color: #82CAFA;
+
+a.cls_fa:hover, a.cls_fa:focus, a.cls_da:hover, a.cls_da:focus {
+   color:#FF0066;
+   background-color: #82CAFA;
+   text-align: left;
+   border-radius: 3px;
+   border-top:    1px solid #82CAFA;
+   border-right:  2px solid #82CAFA;
+   border-bottom: 1px solid #82CAFA;
+   border-left:   2px solid #82CAFA;
+   border-top-style: none;
+   border-bottom-style: none;
+   box-sizing: border-box;
+   box-shadow: 3px 3px 3px #888;
 }
 li label a:focus {
 	color:#FF0066;
@@ -27,6 +39,11 @@ li label a:focus {
 #chk_left_menu input {
   width: 30px;
   height: 30px;
+}
+
+.cls-lft-mnu-lbl {
+   width: 80%;
+   text-align: left;
 }
 
 #left_menu_toggle {
@@ -72,7 +89,7 @@ li label a:focus {
 }
 #left_menu_toggle input:checked ~ span {
   opacity: 1;
-  transform: rotate(45deg) translate(0px, -1px);
+  transform: rotate(45deg) translate(1px, 1px);
   background: #232323;
 }
 #left_menu_toggle input:checked ~ span:nth-last-child(3) {
@@ -81,21 +98,25 @@ li label a:focus {
 }
 
 #left_menu_toggle input:checked ~ span:nth-last-child(2) {
-  transform: rotate(-45deg) translate(0, -1px);
+  transform: rotate(-45deg) translate(1px, 1px);
 }
+
 #left_menu {
   position: absolute;
   width: 300px;
-  margin: -130px 0 0 -50px;
-  padding: 50px;
-  padding-top: 125px;
+  margin: -30px 20px -10px -10px;
   background: #b4aeb4;
+  background-image: linear-gradient(to bottom right, #b4aeb4, #d6d0d6);
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
   /* to stop flickering of text in safari */
   transform-origin: 0% 0%;
   transform: translate(-100%, 0);
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+  border-radius: 7px;
+  border:1px solid #b4aeb4;
+  box-sizing: border-box;
+  box-shadow: 7px 7px 7px #888;
 }
 #left_menu li {
   padding: 3px 0;
