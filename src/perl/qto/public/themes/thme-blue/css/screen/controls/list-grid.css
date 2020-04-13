@@ -111,6 +111,8 @@ textarea {
    border-style: none;
    color: inherit;
    font-size: 14px ; 
+   box-sizing: border-box;
+   padding: 1%;
 }
 
 #grid tbody tr td div{
@@ -156,7 +158,7 @@ textarea {
   visibility: visible;
   padding: 2% 2% 2% 2% ;
 }
-button.gridOpenBtn {
+button.cls-lst-grd-opn-btn {
    transform: rotateZ(90deg);
    font-size: large;
    background: #4887e8 ;
@@ -166,26 +168,30 @@ button.gridOpenBtn {
    text-align: right;
    float:right;
    width: auto;
-   border: 2px solid #4887e8;
-   border-left-color: #4887e8;
+   border-top:    2px solid #4887e8;
+   border-right:  2px solid #4887e8;
+   border-bottom: 2px solid #4887e8;
+   border-left:   2px solid #4887e8;
    border-left-style: none;
-   border-right-color: #4887e8;
    border-right-style: none;
-   border-top-color: #4887e8;
    border-radius: 3px;
 }
-button.gridOpenBtn:hover , button.gridOpenBtn:focus , button.gridOpenBtn:active{
+button.cls-lst-grd-opn-btn:hover , button.cls-lst-grd-opn-btn:focus , button.cls-lst-grd-opn-btn:active{
    transform: rotateZ(90deg);
-   font-size: large;
-   background: #4887e8 ;
-   color: red;
-   padding: 10px 1px 10px 1px;
-   border: 2px solid #4887e8;
-   border-right-color: #4887e8;
-   border-right-style: none;
-   border-left-color: #4887e8;
+   font-size: small;
+   background: #79a3e4;
+   color: #ef0f69;
+   padding: 10px 2px 10px 2px;
+   border-top:    2px solid #79a3e4;
+   border-right:  2px solid #79a3e4;
+   border-bottom: 2px solid #79a3e4;
+   border-left:   2px solid #79a3e4;
    border-left-style: none;
-   border-top-color: #4887e8;
+   border-right-style: none;
    border-radius: 3px;
-   box-shadow: 3px 3px 3px 3px #C0C0C0;
+   -moz-box-shadow: 3px 6px 6px #888;
+   -webkit-box-shadow: 3px 6px 6px #888;
+   box-shadow: 3px 6px 6px #888;
+
+
 }

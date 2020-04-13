@@ -10,7 +10,7 @@
    margin-bottom: 5%;
    padding: 0% 0% 0% 0%;
 }
-label, input, select, textarea {
+label, input, select, textarea :not(#inp_srch_box){
    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
    font-size: 13px;
    font-weight: normal;
@@ -32,24 +32,6 @@ label{
    text-align: left;
    margin-right: 3%;
 }
-input.minput[type="text"]{
-   background-color: #F0FFFF;
-   border:1px solid #B0C4DE;
-}
-input.minput[type="text"]:focus{
-   outline: none !important;
-   border:2px solid #F5B7B1;
-   box-shadow: 0 0 15px #719ECE;
-}
-textarea.mtextarea {
-   background-color: #F0FFFF;
-   border:1px solid #B0C4DE;
-}
-textarea.mtextarea:focus {
-   outline: none !important;
-   box-shadow: 0 0 15px #719ECE;
-   border:2px solid #F5B7B1;
-}
 form {
     margin:3% 0;
 }
@@ -69,22 +51,23 @@ form {
    background: #3ab967 ;
    color: white;
    padding: 4px 12px 4px 12px;
-   border: 2px solid #3ab967;
-   border-left-color: #3ab967;
+   border-top:    5px solid #3ab967;
+   border-right:  2px solid #3ab967;
+   border-bottom: 2px solid #3ab967;
+   border-left:   2px solid #3ab967;
    border-left-style: none;
-   border-right-color: #3ab967;
    border-right-style: none;
-   border-top-color: #3ab967;
    border-radius: 3px;
 }
 .cls_itm_ok_btn:hover , .cls_itm_ok_btn:focus , .cls_itm_ok_btn:active{
    background: #3ab967 ;
-   color: blue;
+   color: grey;
    padding: 4px 12px 4px 12px;
-   border: 2px solid #3ab967;
-   border-left-color: #3ab967;
+   border-top:    5px solid #3ab967;
+   border-right:  2px solid #3ab967;
+   border-bottom: 2px solid #3ab967;
+   border-left:   2px solid #3ab967;
    border-left-style: none;
-   border-right-color: #3ab967;
    border-right-style: none;
    border-top-color: #3ab967;
    box-shadow: 3px 3px 3px 3px #C0C0C0;

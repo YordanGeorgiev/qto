@@ -9,7 +9,7 @@
           <div name="content" v-html="cnt"> </div>
           <div name="footer"></div>
           <div id="close-buttons">
-            <a class="gridOpenBtn" :href="lnkOpen">&nbsp;&#9998;&nbsp;</a>
+            <a class="cls-lst-grd-opn-btn" :href="lnkOpen">&nbsp;&#9998;&nbsp;</a>
             <button id="modal-close-btn-02" class="cls_itm_ok_btn" v-on:click="$emit('close')" tabindex="0">&nbsp;&#x2713;&nbsp;</button>
           </div>
         </div>
