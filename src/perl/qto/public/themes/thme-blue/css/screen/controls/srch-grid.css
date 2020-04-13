@@ -41,7 +41,6 @@ a.interlnk:hover {
 	-webkit-box-shadow: 4px 4px 10px #A5BDED;
 	-moz-box-shadow: 4px 4px 10px #A5BDED;
 }
-
 a.interlnk:active {
 	color: red ; 
 	background-color: #A5BDED;
@@ -54,7 +53,6 @@ a.interlnk:active {
 	-webkit-box-shadow: 4px 4px 10px #A5BDED;
 	-moz-box-shadow: 4px 4px 10px #A5BDED;
 }
-
 a.interlnk:focus {
    color: red ; 
    background-color: #A5BDED;
@@ -68,11 +66,9 @@ a.interlnk:focus {
 	-webkit-box-shadow: 4px 4px 10px #A5BDED;
 	-moz-box-shadow: 4px 4px 10px #A5BDED;
 }
-
 a.interlnk:visited {
   color: purple;
 }
-
 .cls_cnt_lnkble {
    padding: 2px;
    overflow: hidden;
@@ -90,7 +86,6 @@ a.interlnk:visited {
 	opacity: 1.2 ;
 	background-color: #FFFFE0;
 }
-
 .cls_cnt_lnkble:focus {
 	background-color: #FFFFE0;
 }
@@ -140,7 +135,7 @@ button.srch-grid-chk-btn {
 button.srch-grid-chk-btn:hover , button.srch-grid-chk-btn:focus , button.srch-grid-chk-btn:active{
    font-size: large;
    background: #7195cc ;
-   color: red;
+   color: blue;
    padding: 1px 10px 1px 10px;
    border: 2px solid #7195cc;
    border-right-color: #7195cc;
@@ -151,7 +146,8 @@ button.srch-grid-chk-btn:hover , button.srch-grid-chk-btn:focus , button.srch-gr
    border-radius: 3px;
    box-shadow: 3px 3px 3px 3px #C0C0C0;
 }
-a.gridOpenBtn {
+a.cls-lst-grd-opn-btn {
+   transform: rotateZ(90deg);
    font-size: large;
    background: #4887e8 ;
    color: white;
@@ -167,10 +163,11 @@ a.gridOpenBtn {
    border-top-color: #4887e8;
    border-radius: 3px;
 }
-a.gridOpenBtn:hover , a.gridOpenBtn:focus , a.gridOpenBtn:active{
+a.cls-lst-grd-opn-btn:hover , a.cls-lst-grd-opn-btn:focus , a.cls-lst-grd-opn-btn:active{
+   transform: rotateZ(90deg);
    font-size: large;
    background: #4887e8 ;
-   color: red;
+   color: grey;
    padding: 1px 10px 1px 10px ;
    border: 2px solid #4887e8;
    border-right-color: #4887e8;

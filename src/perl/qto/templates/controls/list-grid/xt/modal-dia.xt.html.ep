@@ -37,7 +37,7 @@
           </div>
 	       <fileupload target="/upload-files" action="POST"></fileupload>
           <div id="close-buttons">
-            <sub><btn-del :id="'btn-del-'+this.$attrs.id.replace('dia-','')" 
+            <sub><btn-del :id="'btn-del-'+this.$attrs.id.replace('dia-','')" class="cls-del-btn"
                v-on:clickedBtnDelete="this.$parent.$parent.deleteItem" tabindex="0"></btn-del></sub>
             <button class="cls_itm_ok_btn" id="modal-close-btn-02" v-on:click="$emit('close')" tabindex="0">&nbsp;&#x2713;&nbsp;</button>
           </div>
