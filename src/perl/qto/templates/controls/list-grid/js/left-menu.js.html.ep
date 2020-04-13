@@ -43,7 +43,7 @@
             this.menuData = menuData
         } 
         , openFolderLink: function(itm) {
-            var html='<li><label for="' + itm.id + '"><a class="cls_fa" href="#">'
+            var html='<li><label class="cls-lft-mnu-lbl" for="' + itm.id + '"><a class="cls_fa" href="#">'
             html += itm.name + '</a></label><input tabindex="1" type="checkbox" checked id="' 
             html += itm.id + '" /><ol><li>'
             return html

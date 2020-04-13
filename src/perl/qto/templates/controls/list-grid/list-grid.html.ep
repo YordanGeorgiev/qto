@@ -27,7 +27,7 @@
      <div id="cruds-grid">
 
          <cruds-grid-sf :data.sync="gridData" :columns="gridColumns" :filter-key="globalSrch"></cruds-grid-sf>
-         <div id="pager02" v-if="this.showPageSizer">
+         <div id="pager02" v-if="gridData.length !== 0">
             <button id="btnPlayNext10" type="submit" href="javascript:void(0);" v-on:click="goToNextPage10" tabindex="3" class="cls_img_but">
                <img src="../../themes/thme-blue/img/controls/play-next-10.png" /></button>
             <button id="btnPlayNext" type="submit" href="javascript:void(0);" v-on:click="goToNextPage" class="cls_img_but">

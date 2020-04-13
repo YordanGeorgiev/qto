@@ -19,7 +19,7 @@ label, input, select, textarea :not(#inp_srch_box){
    border-radius: 5px;
    width: 60%;
 }
-label{
+label {
    display: inline-block;
    width: 17%;
    text-align: right;
@@ -131,9 +131,7 @@ form {
    color: white;
    border: 2px solid #4887e8;
    border-left-color: #4887e8;
-   border-left-style: none;
    border-right-color: #4887e8;
-   border-right-style: none;
    border-top-color: #4887e8;
    border-radius: 3px;
 }
@@ -144,9 +142,7 @@ form {
    padding: 2px;
    border: 2px solid #82aae8;
    border-left-color: #82aae8;
-   border-left-style: none;
    border-right-color: #82aae8;
-   border-right-style: none;
    border-top-color: #82aae8;
    border-radius: 3px;
    box-shadow: 3px 3px 3px 3px #C0C0C0;
