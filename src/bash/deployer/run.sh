@@ -30,12 +30,12 @@ main(){
 
 do_setup_resolv_conf(){
 
-   sudo cat << EOF_RESOLV_CONF >> /etc/resolv.conf
+sudo bash -c 'cat << EOF_RESOLV_CONF >> /etc/resolv.conf
 nameserver 10.1.2.1
 nameserver 10.1.2.2
 nameserver 8.8.8.8
 nameserver 8.8.4.4
-EOF_RESOLV_CONF
+EOF_RESOLV_CONF'
 
 }
 
