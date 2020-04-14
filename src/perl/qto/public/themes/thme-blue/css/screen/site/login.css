@@ -42,7 +42,8 @@ input[type="submit"]{
 }
 input[type="submit"]:hover{
   background:#2CC06B; 
-  color:yellow;
+  /* NOTE: Redesign the hover colors
+  color:yellow;*/
 }
 canvas {
    position: absolute;
