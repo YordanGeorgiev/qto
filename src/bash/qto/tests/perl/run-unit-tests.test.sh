@@ -3,13 +3,13 @@
 # v0.6.9
 doTestRunUnitTests(){
 
-	doLog "DEBUG START doTestRununitTests"
+	do_log "DEBUG START doTestRununitTests"
 	
 	sleep "$sleep_interval"
    # Action !!!	
 	bash src/bash/qto/qto.sh -a run-unit-tests
 	
-	doLog "DEBUG STOP  doTestRununitTests"
+	do_log "DEBUG STOP  doTestRununitTests"
 }
 
 

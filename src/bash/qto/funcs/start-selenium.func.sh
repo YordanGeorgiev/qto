@@ -6,14 +6,14 @@
 # ---------------------------------------------------------
 doStartSelenium(){
 
-	doLog "DEBUG START doStartSelenium"
+	do_log "DEBUG START doStartSelenium"
 	
    selenium='/usr/lib/selenium-server-standalone.jar'
    chrome_driver=$(which chromedriver)
 
-   test -f $(which java) || export exit_code=1 ; doExit 1 " java is not installed. v1.8 required "
-   test -f "$selenium" || export exit_code=1 ; doExit 1 " the selenium jar $selenium is not installed" 
-   test -f "$chrome_driver" || export exit_code=1 ; doExit 1 " the chrome driver: $chrome_driver is not installed"
+   test -f $(which java) || export exit_code=1 ; do_exit 1 " java is not installed. v1.8 required "
+   test -f "$selenium" || export exit_code=1 ; do_exit 1 " the selenium jar $selenium is not installed" 
+   test -f "$chrome_driver" || export exit_code=1 ; do_exit 1 " the chrome driver: $chrome_driver is not installed"
 	
 	sleep "$sleep_interval"
    echo "clean-up before start "
@@ -27,7 +27,7 @@ doStartSelenium(){
 	# Action !!!
    xvfb-run -e /dev/stdout java -Dwebdriver.chrome.driver=$chrome_driver -jar "$selenium" &
 
-	doLog "DEBUG STOP  doStartSelenium"
+	do_log "DEBUG STOP  doStartSelenium"
 }
 # eof func doStartSelenium
 

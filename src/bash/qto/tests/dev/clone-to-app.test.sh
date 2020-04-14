@@ -6,12 +6,12 @@
 # ---------------------------------------------------------
 doTestCloneToApp(){
 
-	doLog "DEBUG START doTestCloneToApp"
+	do_log "DEBUG START doTestCloneToApp"
 	
 	# add your action implementation code here ... 
    bash src/bash/qto/qto.sh -a to-app=qto
 
-	doLog "DEBUG STOP  doTestCloneToApp"
+	do_log "DEBUG STOP  doTestCloneToApp"
 }
 # eof func doTestCloneToApp
 

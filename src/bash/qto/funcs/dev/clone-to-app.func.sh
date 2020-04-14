@@ -16,12 +16,12 @@ doCloneToApp(){
 	tgt_PRODUCT_INSTANCE_DIR=$tgt_product_dir/$tgt_environment_name
 
 	mkdir -p $tgt_PRODUCT_INSTANCE_DIR 
-	[[ $? -eq 0 ]] || doExit 2 "ERROR :: cannot create the tgt_PRODUCT_INSTANCE_DIR: $tgt_PRODUCT_INSTANCE_DIR !"
+	[[ $? -eq 0 ]] || do_exit 2 "ERROR :: cannot create the tgt_PRODUCT_INSTANCE_DIR: $tgt_PRODUCT_INSTANCE_DIR !"
 
 	# remove everything from the tgt product version dir - no extra files allowed !!!
 	rm -fvr $tgt_PRODUCT_INSTANCE_DIR
 	# if the removal failed exit with error msg
-	[[ $? -eq 0 ]] || doExit 2 "ERROR :: cannot write to $tgt_PRODUCT_INSTANCE_DIR !"
+	[[ $? -eq 0 ]] || do_exit 2 "ERROR :: cannot write to $tgt_PRODUCT_INSTANCE_DIR !"
 
 	doCreateRelativePackage
 	unzip -o $zip_file -d $tgt_PRODUCT_INSTANCE_DIR

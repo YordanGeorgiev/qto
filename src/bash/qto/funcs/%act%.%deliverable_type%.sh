@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 %full_func%(){
 
-	doLog "DEBUG START %full_func%"
+	do_log "DEBUG START %full_func%"
 	
 	cat doc/txt/qto/%deliverable_type%s/%act%.%deliverable_type%.txt
 	
@@ -14,7 +14,7 @@
 	# add your action implementation code here ... 
 	# Action !!!
 
-	doLog "DEBUG STOP  %full_func%"
+	do_log "DEBUG STOP  %full_func%"
 }
 # eof func %full_func%
 

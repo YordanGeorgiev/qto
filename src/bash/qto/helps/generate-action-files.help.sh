@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doHelpGenerateActionFiles(){
 
-	doLog "DEBUG START doHelpGenerateActionFiles"
+	do_log "DEBUG START doHelpGenerateActionFiles"
 	
 	cat doc/txt/qto/helps/generate-action-files.help.txt
 	
@@ -14,7 +14,7 @@ doHelpGenerateActionFiles(){
 	# add your action implementation code here ... 
 	# Action !!!
 
-	doLog "DEBUG STOP  doHelpGenerateActionFiles"
+	do_log "DEBUG STOP  doHelpGenerateActionFiles"
 }
 # eof func doHelpGenerateActionFiles
 

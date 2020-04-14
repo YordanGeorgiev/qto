@@ -5,7 +5,7 @@
 # cat doc/txt/qto/funcs/mojo-morbo-stop.func.txt
 # ---------------------------------------------------------
 doMojoMorboStop(){
-   doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.app'
+   do_export_json_section_vars $PRODUCT_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.app'
    test -z "${mojo_morbo_port:-}" && export mojo_morbo_port=3001
    found=0
 

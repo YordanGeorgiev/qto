@@ -5,7 +5,7 @@ doGenerateMsftDocs(){
    test -z "${docs_root_dir-}" && docs_root_dir="$PROJ_INSTANCE_DIR"
 
    test -z ${PROJ_CONF_FILE-} && PROJ_CONF_FILE=$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json
-   doExportJsonSectionVars $PROJ_CONF_FILE '.env.app'
+   do_export_json_section_vars $PROJ_CONF_FILE '.env.app'
 
    # <<web-host>>:<<web-port>>/<<db>>/select/export_files?as=grid&od=id
    basic_url="$ht_protocol://${web_host:-}:${port:-}/${postgres_db_name:-}"
@@ -13,7 +13,7 @@ doGenerateMsftDocs(){
    echo "running: curl --cookie ~/.qto/cookies.txt --insecure  -s $furl \| jq -r '.dat[]|.url'"
    curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]|.url'
 	ret=$?
-	test $ret != "0" && doExit $ret "failed to get data from the $furl"
+	test $ret != "0" && do_exit $ret "failed to get data from the $furl"
 
    while read -r url ; do 
       table_name=$(curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .name'); 

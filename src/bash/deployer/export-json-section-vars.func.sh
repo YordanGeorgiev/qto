@@ -1,8 +1,8 @@
 #------------------------------------------------------------------------------
 # usage example:
-# doExportJsonSectionVars cnf/env/dev.env.json '.env.virtual.docker.spark_base'
+# do_export_json_section_vars cnf/env/dev.env.json '.env.virtual.docker.spark_base'
 #------------------------------------------------------------------------------
-doExportJsonSectionVars(){
+do_export_json_section_vars(){
 
    json_file="$1"
    shift 1;
@@ -10,7 +10,7 @@ doExportJsonSectionVars(){
    test -f "$json_file" || return
 
    section="$1"
-   test -z "$section" && echo "the section in doExportJsonSectionVars is empty !!! nothing to do !!!"
+   test -z "$section" && echo "the section in do_export_json_section_vars is empty !!! nothing to do !!!"
    test -z "$section" && return
    shift 1;
 

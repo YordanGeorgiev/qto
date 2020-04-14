@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doTestDbToXls(){
 
-	doLog "DEBUG START doTestDbToXls"
+	do_log "DEBUG START doTestDbToXls"
 	
 	cat doc/txt/qto/tests/db-to-xls.test.txt
 	
@@ -15,11 +15,11 @@ doTestDbToXls(){
    src/bash/qto/qto.sh -a db-to-xls
    
    exit_code=$?
-	doLog "INFO txt-to-db.test-1 exit_code: $exit_code "
+	do_log "INFO txt-to-db.test-1 exit_code: $exit_code "
    sleep "$sleep_interval"
    test $exit_code -ne 0 && return
 
-	doLog "DEBUG STOP  doTestDbToXls"
+	do_log "DEBUG STOP  doTestDbToXls"
 }
 
 

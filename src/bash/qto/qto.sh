@@ -15,8 +15,8 @@ main(){
 			  t) table=("$OPTARG ");;
 			  f) file=("$OPTARG ");;
 			  d) is_daemon=("$OPTARG ");;
-			  \?) doExit 2 "Invalid option: -$OPTARG";;
-			  :) doExit 2 "Option -$OPTARG requires an argument."
+			  \?) do_exit 2 "Invalid option: -$OPTARG";;
+			  :) do_exit 2 "Option -$OPTARG requires an argument."
 		 esac
 	done
 	shift $((OPTIND -1))
@@ -26,7 +26,7 @@ main(){
    test -z "${actions:-}" && actions=' print-usage '
    do_run_actions "$actions"
    test -d $PRODUCT_INSTANCE_DIR/.git/hooks/ && do_check_git_hooks
-   doExit $exit_code "# ::: STOP  MAIN :::  $RUN_UNIT "
+   do_exit $exit_code "# ::: STOP  MAIN :::  $RUN_UNIT "
 }
 
 
@@ -82,13 +82,13 @@ do_run_actions(){
    while read -r run_func ; do
       #debug run_funcs: $run_funcs ; sleep 3
       cd $PRODUCT_INSTANCE_DIR
-      doLog "INFO START ::: running action :: $run_func"
+      do_log "INFO START ::: running action :: $run_func"
       $run_func
       exit_code=$?
       if [[ "$exit_code" != "0" ]]; then
          exit $exit_code
       fi
-      doLog "INFO STOP ::: running function :: $run_func"
+      do_log "INFO STOP ::: running function :: $run_func"
    done < <(echo "$run_funcs")
 
 	test -d "$daily_backup_dir" || doBackupPostgresDb
@@ -121,25 +121,28 @@ do_init(){
 
 
 #------------------------------------------------------------------------------
-# usage example:
-# doExportJsonSectionVars cnf/env/dev.env.json '.env.app'
+# usage :
+# do_export_json_section_vars cnf/env/dev.env.json '.env.app'
+# do_export_json_section_vars <<configuration-file>> '<<cnf-section>>''
 #------------------------------------------------------------------------------
-doExportJsonSectionVars(){
+do_export_json_section_vars(){
 
    json_file="$1"
    shift 1;
-   test -f "$json_file" || doExit 1 "the json_file: $json_file does not exist !!! Nothing to do"
+   test -f "$json_file" || \
+      do_exit 1 "FATAL the json_file: $json_file does not exist!!! Nothing to do !!! \n"
 
    section="$1"
-   test -z "$section" && doExit 1 "the section in doExportJsonSectionVars is empty !!! nothing to do !!!"
+   test -z "$section" && \
+      do_exit 1 "FATAL the section in do_export_json_section_vars is empty !!! nothing to do !!!"
    shift 1;
 
 	clearTheScreen
-	doLog "INFO exporting vars from cnf $json_file: "
+	do_log "INFO exporting vars from cnf $json_file: "
    while read -r l ; do
      key=$(echo $l|cut -d'=' -f1)
      val=$(echo $l|cut -d'=' -f2)
-     doLog "INFO $key=$val"
+     do_log "INFO $key=$val"
    done < <(cat "$json_file"| jq -r "$section"'|keys_unsorted[] as $key|"\($key)=\"\(.[$key])\""')
 }
 
@@ -151,7 +154,7 @@ doExportJsonSectionVars(){
 do_apply_shell_expansion() {
    declare file="$1"
    shift 1;
-   test -f "$file" || doExit 1 "do_apply_shell_expansion: the file: $file does not exist !!! Nothing to do"
+   test -f "$file" || do_exit 1 "do_apply_shell_expansion: the file: $file does not exist !!! Nothing to do"
    perl -wpe 's#\${?(\w+)}?# $ENV{$1} // $& #ge;' $file
 }
 
@@ -190,21 +193,21 @@ export TOP_PID=$$
 # ------------------------------------------------------------------------------
 # clean and exit with passed status and message
 # call by:
-# doExit 0 "ok msg"
-# doExit 1 "NOK msg"
+# do_exit 0 "ok msg"
+# do_exit 1 "NOK msg"
 # ------------------------------------------------------------------------------
-doExit(){
+do_exit(){
    exit_code=$1 ; shift
    exit_msg="$*"
 
    if (( ${exit_code:-} != 0 )); then
       exit_msg=" ERROR --- exit_code $exit_code --- exit_msg : $exit_msg"
       >&2 echo "$exit_msg"
-      doLog "FATAL STOP FOR $RUN_UNIT RUN with: "
-      doLog "FATAL exit_code: $exit_code exit_msg: $exit_msg"
+      do_log "FATAL STOP FOR $RUN_UNIT RUN with: "
+      do_log "FATAL exit_code: $exit_code exit_msg: $exit_msg"
    else
-      doLog "INFO  STOP FOR $RUN_UNIT RUN with: "
-      doLog "INFO  STOP FOR $RUN_UNIT RUN: $exit_code $exit_msg"
+      do_log "INFO  STOP FOR $RUN_UNIT RUN with: "
+      do_log "INFO  STOP FOR $RUN_UNIT RUN: $exit_code $exit_msg"
    fi
 
    rm -rf "$run_unit_bash_dir/tmp" #clear the tmpdir
@@ -219,10 +222,10 @@ doExit(){
 # echo pass params and print them to a log file and terminal
 # with timestamp and $host_name and $0 PID
 # usage:
-# doLog "INFO some info message"
-# doLog "DEBUG some debug message"
+# do_log "INFO some info message"
+# do_log "DEBUG some debug message"
 #------------------------------------------------------------------------------
-doLog(){
+do_log(){
    type_of_msg=$(echo $*|cut -d" " -f1)
    msg="$(echo $*|cut -d" " -f2-)"
 
@@ -246,7 +249,7 @@ doLog(){
 #------------------------------------------------------------------------------
 doRunCmdAndLog(){
   cmd="$*" ;
-  doLog "DEBUG running cmd and log: \"$cmd\""
+  do_log "DEBUG running cmd and log: \"$cmd\""
 
    msg=$($cmd 2>&1)
    ret_cmd=$?
@@ -254,8 +257,8 @@ doRunCmdAndLog(){
 		\"$cmd\" with the output:
 		\"$msg\" !!!"
 
-   [ $ret_cmd -eq 0 ] || doLog "$error_msg"
-   doLog "DEBUG : cmdoutput : \"$msg\""
+   [ $ret_cmd -eq 0 ] || do_log "$error_msg"
+   do_log "DEBUG : cmdoutput : \"$msg\""
 }
 
 
@@ -269,7 +272,7 @@ doRunCmdAndLog(){
 doRunCmdOrExit(){
    cmd=$* ;
 
-   doLog "DEBUG running cmd or exit: "$cmd
+   do_log "DEBUG running cmd or exit: "$cmd
    msg=$($cmd 2>&1)
    export exit_code=$?
 
@@ -279,13 +282,13 @@ doRunCmdOrExit(){
 		\"$msg\" !!!"
 
 	if [ $exit_code -ne 0 ] ; then
-		doLog "ERROR $msg"
-		doLog "FATAL $msg"
-		doExit "$exit_code" "$error_msg"
+		do_log "ERROR $msg"
+		do_log "FATAL $msg"
+		do_exit "$exit_code" "$error_msg"
 	else
    	#if no errors occured just log the message
-   	doLog "DEBUG : cmdoutput : "$msg
-		doLog "INFO  "$msg
+   	do_log "DEBUG : cmdoutput : "$msg
+		do_log "INFO  "$msg
 	fi
 
 }
@@ -316,15 +319,15 @@ do_set_vars(){
 
    ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
-   doLog "INFO # --------------------------------------"
-   doLog "INFO #       ::: START MAIN ::: $RUN_UNIT"
-   doLog "INFO # --------------------------------------"
+   do_log "INFO # --------------------------------------"
+   do_log "INFO #       ::: START MAIN ::: $RUN_UNIT"
+   do_log "INFO # --------------------------------------"
 
    exit_code=0
-   doLog "INFO using the following vars:"
+   do_log "INFO using the following vars:"
    cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
    echo -e "$cmd"
-   vars=$(echo -e "$cmd"); doLog "$vars"
+   vars=$(echo -e "$cmd"); do_log "$vars"
 
    while read -r func_file ; do source "$func_file" ; done < <(find $PRODUCT_INSTANCE_DIR -name "*func.sh")
    clearTheScreen

@@ -6,8 +6,8 @@
 # ---------------------------------------------------------
 doFullCleanDocker(){
    clearTheScreen
-	doLog "INFO START full clean of docker !!! " 
-   doLog "INFO Are you SURE ??!! You have 3 seconds to abort by Ctrl + C !!"
+	do_log "INFO START full clean of docker !!! " 
+   do_log "INFO Are you SURE ??!! You have 3 seconds to abort by Ctrl + C !!"
    sleep 3
    
    docker system prune -f -a --volumes
@@ -16,7 +16,7 @@ doFullCleanDocker(){
    docker volume prune -f
    docker network prune -f
 
-	doLog "INFO STOP  full clean of the docker"
+	do_log "INFO STOP  full clean of the docker"
 }
 
 

@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doHelpRunDataLoadTests(){
 
-	doLog "DEBUG START doHelpRunDataLoadTests"
+	do_log "DEBUG START doHelpRunDataLoadTests"
 	
 	cat doc/txt/qto/funcs/run-data-load-tests.func.txt
 	
@@ -14,7 +14,7 @@ doHelpRunDataLoadTests(){
 	# add your action implementation code here ... 
 	# Action !!!
 
-	doLog "DEBUG STOP  doHelpRunDataLoadTests"
+	do_log "DEBUG STOP  doHelpRunDataLoadTests"
 }
 # eof func doHelpRunDataLoadTests
 

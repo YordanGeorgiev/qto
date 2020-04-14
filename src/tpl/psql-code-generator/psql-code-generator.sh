@@ -104,16 +104,16 @@ EOF_PERL_CODE
 
 #------------------------------------------------------------------------------
 # usage example:
-# doExportJsonSectionVars cnf/env/dev.env.json '.env.app'
+# do_export_json_section_vars cnf/env/dev.env.json '.env.app'
 #------------------------------------------------------------------------------
-doExportJsonSectionVars(){
+do_export_json_section_vars(){
 
    json_file="$1"
    shift 1;
-   test -f "$json_file" || doExit 1 "the json_file: $json_file does not exist !!! Nothing to do"
+   test -f "$json_file" || do_exit 1 "the json_file: $json_file does not exist !!! Nothing to do"
 
    section="$1"
-   test -z "$section" && echo "the section in doExportJsonSectionVars is empty !!! nothing to do !!!"
+   test -z "$section" && echo "the section in do_export_json_section_vars is empty !!! nothing to do !!!"
    shift 1;
 
    while read -r l ; do
@@ -162,7 +162,7 @@ do_set_vars(){
    fi
 
    cd .. ; product_base_dir=`pwd`; org_name=$(basename `pwd`)
-   doExportJsonSectionVars $PROJ_CONF_FILE '.env.db'
+   do_export_json_section_vars $PROJ_CONF_FILE '.env.db'
    if [[ $do_print -eq 1 ]]; then
       ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
       echo "INFO using the following vars:"

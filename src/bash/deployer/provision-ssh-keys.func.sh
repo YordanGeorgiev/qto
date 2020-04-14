@@ -1,6 +1,6 @@
 do_provision_ssh_keys(){
 
-   doExportJsonSectionVars $PRODUCT_DIR/cnf/env/$ENV_TYPE.env.json '.env.db'
+   do_export_json_section_vars $PRODUCT_DIR/cnf/env/$ENV_TYPE.env.json '.env.db'
    which expect || sudo apt-get update && sudo apt-get install -y expect
 
    # if the ssh key does not exist create it ...

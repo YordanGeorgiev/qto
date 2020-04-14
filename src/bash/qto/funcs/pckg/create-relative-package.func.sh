@@ -4,7 +4,7 @@
 doCreateRelativePackage(){
 
 	mkdir -p $product_dir/dat/zip
-		test $? -ne 0 && doExit 2 "Failed to create $PRODUCT_INSTANCE_DIR/dat/zip !"
+		test $? -ne 0 && do_exit 2 "Failed to create $PRODUCT_INSTANCE_DIR/dat/zip !"
 
 	test -z ${include_file:-}         && \
 		include_file="$PRODUCT_INSTANCE_DIR/met/.$env_type.$RUN_UNIT"
@@ -13,7 +13,7 @@ doCreateRelativePackage(){
 	[[ $include_file == /* ]] || include_file=$PRODUCT_INSTANCE_DIR/$include_file
 
 	test -f $include_file || \
-		doExit 3 "did not found any deployment file paths containing deploy file @ $include_file"
+		do_exit 3 "did not found any deployment file paths containing deploy file @ $include_file"
 
    tgt_env_type=$(echo `basename "$include_file"`|cut -d'.' -f2)
 
@@ -29,16 +29,16 @@ doCreateRelativePackage(){
 		[[ $f == '#'* ]] && continue ; 
 		test -d "$PRODUCT_INSTANCE_DIR/$f" && continue ; 
 		test -f "$PRODUCT_INSTANCE_DIR/$f" && continue ; 
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || doLog 'FATAL cannot find the file: "'"$PRODUCT_INSTANCE_DIR/$f"'" to package it' ;  
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || doLog 'ERROR search for it in the '"$include_file"' ' ;  
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || doLog 'INFO if you need the file add it to the list file  ' ;  
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || doLog 'INFO if you do not need the file remove it from the list file  ' ;  
+		test -f "$PRODUCT_INSTANCE_DIR/$f" || do_log 'FATAL cannot find the file: "'"$PRODUCT_INSTANCE_DIR/$f"'" to package it' ;  
+		test -f "$PRODUCT_INSTANCE_DIR/$f" || do_log 'ERROR search for it in the '"$include_file"' ' ;  
+		test -f "$PRODUCT_INSTANCE_DIR/$f" || do_log 'INFO if you need the file add it to the list file  ' ;  
+		test -f "$PRODUCT_INSTANCE_DIR/$f" || do_log 'INFO if you do not need the file remove it from the list file  ' ;  
 		test -f "$PRODUCT_INSTANCE_DIR/$f" || ret=1
 		test -f "$PRODUCT_INSTANCE_DIR/$f" && break ;
 	done < <(cat $include_file)
 
-	doLog "DEBUG ret is $ret "
-	test $ret -ne 0 && doLog "ERROR non-existend file specified in the include file: $include_file "
+	do_log "DEBUG ret is $ret "
+	test $ret -ne 0 && do_log "ERROR non-existend file specified in the include file: $include_file "
 	
 	# start: add the perl_ignore_file_pattern
 	while read -r line ; do \
@@ -63,22 +63,22 @@ doCreateRelativePackage(){
       fatal_msg1="deleting $zip_file !!!"
       fatal_msg2="because of packaging errors !!!"
       rm -fv $zip_file
-      doLog "FATAL $fatal_msg1"
-      doLog "FATAL $fatal_msg2"
-      doExit 1 "FATAL failed to create relative package"
+      do_log "FATAL $fatal_msg1"
+      do_log "FATAL $fatal_msg2"
+      do_exit 1 "FATAL failed to create relative package"
    else
       cd $product_dir
-      doLog "INFO created the following relative package:"
-      doLog "INFO `stat -c \"%y %n\" $zip_file_name`"
+      do_log "INFO created the following relative package:"
+      do_log "INFO `stat -c \"%y %n\" $zip_file_name`"
 
       if [[ ${network_backup_dir+x} && -n $network_backup_dir ]] ; then
          if [ -d "$network_backup_dir" ] ; then
             doRunCmdAndLog "cp -v $zip_file $network_backup_dir/"
-            doLog "INFO with the following network backup  :" && \
-            doLog "INFO `stat -c \"%y %n\" \"$network_backup_dir/$zip_file_name\"`"
+            do_log "INFO with the following network backup  :" && \
+            do_log "INFO `stat -c \"%y %n\" \"$network_backup_dir/$zip_file_name\"`"
          else
             msg="skip backup as network_backup_dir is not configured"
-            doLog "INFO $msg"
+            do_log "INFO $msg"
          fi
       fi
    fi

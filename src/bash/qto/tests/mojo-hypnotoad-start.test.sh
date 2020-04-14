@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doTestMojoHypnotoadStart(){
 
-	doLog "DEBUG START doTestMojoHypnotoadStart"
+	do_log "DEBUG START doTestMojoHypnotoadStart"
 	
 	# cat doc/txt/qto/tests/mojo-hypnotoad-start.test.txt
 	
@@ -16,7 +16,7 @@ doTestMojoHypnotoadStart(){
    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
    test $exit_code -ne 0 && return
 
-	doLog "DEBUG STOP  doTestMojoHypnotoadStart"
+	do_log "DEBUG STOP  doTestMojoHypnotoadStart"
 }
 # eof func doTestMojoHypnotoadStart
 

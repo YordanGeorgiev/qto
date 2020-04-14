@@ -23,7 +23,7 @@ doTestRestoreTmuxSession(){
 	 fi
 	done < ~/.tmux-session
 	
-	doLog "restore_tmux_sessiond $count sessions"
+	do_log "restore_tmux_sessiond $count sessions"
 	tmux list-sessions | column -t | sort
 
 }

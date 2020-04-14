@@ -6,13 +6,13 @@
 # ---------------------------------------------------------
 doTestRunFunctionalTests(){
 
-	doLog "DEBUG START doTestRunFunctionalTests"
+	do_log "DEBUG START doTestRunFunctionalTests"
 	
 	sleep "$sleep_interval"
    # Action !!!	
 	bash src/bash/qto/qto.sh -a run-functional-tests
 	
-	doLog "DEBUG STOP  doTestRunFunctionalTests"
+	do_log "DEBUG STOP  doTestRunFunctionalTests"
 }
 # eof func doTestRunFunctionalTests
 

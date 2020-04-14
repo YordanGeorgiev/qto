@@ -5,14 +5,14 @@
 # todo: add doTestRunDataLoadTests comments ...
 # ---------------------------------------------------------
 doTestRunDataLoadTests(){
-	doLog "DEBUG START doTestRunDataLoadTests"
+	do_log "DEBUG START doTestRunDataLoadTests"
 	
 	
 	sleep "$sleep_interval"
 	# Action !!!
    clear ; bash src/bash/qto/qto.sh -a run-data-load-tests
 
-	doLog "DEBUG STOP  doTestRunDataLoadTests"
+	do_log "DEBUG STOP  doTestRunDataLoadTests"
 }
 # eof func doTestRunDataLoadTests
 

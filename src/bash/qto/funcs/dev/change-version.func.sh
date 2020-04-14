@@ -20,7 +20,7 @@ doChangeVersion(){
 	test "$tgt_PRODUCT_INSTANCE_DIR" == "$PRODUCT_INSTANCE_DIR" && return
 	# remove everything from the tgt product version dir - no extra files allowed !!!
 	rm -fvr $tgt_PRODUCT_INSTANCE_DIR/*
-	test $? -eq 0  || doExit 2 "cannot write to $tgt_PRODUCT_INSTANCE_DIR !"
+	test $? -eq 0  || do_exit 2 "cannot write to $tgt_PRODUCT_INSTANCE_DIR !"
 	
 	doCreateRelativePackage
 	unzip -o $zip_file -d $tgt_PRODUCT_INSTANCE_DIR
@@ -34,8 +34,8 @@ doChangeVersion(){
 
 	# ensure that all the files in the target product version dir are indentical to the current ones
 	while read -r file ; do (
-		doLog "DEBUG comparing src file: $file"
-		doLog "DEBUG to tgt file: $tgt_PRODUCT_INSTANCE_DIR/$file"
+		do_log "DEBUG comparing src file: $file"
+		do_log "DEBUG to tgt file: $tgt_PRODUCT_INSTANCE_DIR/$file"
 		test -f "$PRODUCT_INSTANCE_DIR/$file" \
 			&& diff "$PRODUCT_INSTANCE_DIR/$file" "$tgt_PRODUCT_INSTANCE_DIR/$file"
 		[[ $? != 0 ]] && exit $?

@@ -32,7 +32,7 @@ doCheckPerlSyntax(){
 	
 	done < <(ls -1 "src/perl")
 
-	test $ret -ne 0 && doExit 4 "Perl syntax error" ; 
+	test $ret -ne 0 && do_exit 4 "Perl syntax error" ; 
 	printf "\033[2J";printf "\033[0;0H"
 
 }

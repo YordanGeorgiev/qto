@@ -10,18 +10,18 @@
 # ---------------------------------------------------------
 doRemoveActionFiles(){
 
-	doLog "DEBUG START doRemoveActionFiles"
+	do_log "DEBUG START doRemoveActionFiles"
 	
 	# for each defined action 	
 	while read -r act ; do (
-		doLog "INFO STOP  :: removing action: $act"
+		do_log "INFO STOP  :: removing action: $act"
 		find . | grep $act | cut -c 3- | xargs rm -fv "{}"
       for env in `echo dev tst prd src`; do perl -pi -e 's/^.*?'$act'.*\n$//gm' "met/.$env.";done;
 		
 	); 
 	done< <(cat "src/bash//tests/rem--actions.lst")
 
-	doLog "DEBUG STOP  doRemoveActionFiles"
+	do_log "DEBUG STOP  doRemoveActionFiles"
 }
 # eof func doRemoveActionFiles
 

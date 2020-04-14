@@ -10,7 +10,7 @@ doTestMojoMorboStop(){
 	
    # Action !!!
    bash src/bash/qto/qto.sh -a mojo-morbo-stop
-	doLog "check with netstat "
+	do_log "check with netstat "
    # sudo visudoers 
    # usrqtoadmin ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
    sudo netstat -tulpn | grep qto

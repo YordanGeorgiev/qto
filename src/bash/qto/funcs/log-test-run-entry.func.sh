@@ -4,14 +4,14 @@
 # ---------------------------------------------------------
 # provides a mean for registering test run log entries 
 # Usage:
-# doLogTestRunEntry START "$msg"
-# doLogTestRunEntry INFO "$msg"
-# doLogTestRunEntry STOP $exit_code "$msg"
-# doLogTestRunEntry STATUS
+# do_logTestRunEntry START "$msg"
+# do_logTestRunEntry INFO "$msg"
+# do_logTestRunEntry STOP $exit_code "$msg"
+# do_logTestRunEntry STATUS
 # ---------------------------------------------------------
-doLogTestRunEntry(){
+do_logTestRunEntry(){
 
-	doLog "DEBUG START doLogTestRunEntry"
+	do_log "DEBUG START do_logTestRunEntry"
 
    case "$1" in
      INIT)
@@ -48,7 +48,7 @@ doLogTestRunEntry(){
          echo -e `date "+%Y-%m-%d %H:%M:%S"`"\t STOP  $component_name test run report" >> "$test_run_report_file"
          cat "$test_run_report_file"
          echo -e "\n\n"
-         # doLog "product instance tests listing"
+         # do_log "product instance tests listing"
          # find "$PRODUCT_INSTANCE_DIR"'/dat/tests' -type f -exec stat -c "%y %n" {} \; | sort -nr
          echo -e "\n\n"
          ;;
@@ -56,9 +56,9 @@ doLogTestRunEntry(){
          echo $"Usage: $0 {START|STOP|INFO|STATUS}" 1>&2 
    esac	
         
-	doLog "DEBUG STOP  doLogTestRunEntry"
+	do_log "DEBUG STOP  do_logTestRunEntry"
 }
-# eof func doLogTestRunEntry
+# eof func do_logTestRunEntry
 
 
 # eof file: src/bash/qto/funcs/log-test-run-entry.func.sh

@@ -7,7 +7,7 @@ doCreateCtags(){
 
 	
 	ctags --help >/dev/null 2>&1 ||
-	{ doLog "ERROR. ctags is not installed or not in PATH. Aborting." >&2; exit 1; }
+	{ do_log "ERROR. ctags is not installed or not in PATH. Aborting." >&2; exit 1; }
 	pushd .
 	cd $PRODUCT_INSTANCE_DIR
 

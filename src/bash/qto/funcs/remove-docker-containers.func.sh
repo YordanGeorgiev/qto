@@ -8,21 +8,21 @@
 doRemoveDockerContainers(){
 
    clearTheScreen
-	doLog "INFO START removing all docker containers with the $product_version.$env_type tag !!! " 
-   doLog "INFO Are you SURE ??!! You have 3 seconds to abort by Ctrl + C !!"
+	do_log "INFO START removing all docker containers with the $product_version.$env_type tag !!! " 
+   do_log "INFO Are you SURE ??!! You have 3 seconds to abort by Ctrl + C !!"
    sleep 3
 
    ret=$(docker ps -a|grep -i qto-image.$env_type|awk '{print $1}'|wc -l| perl -ne 's/\s+//g;print')
    if test $ret -eq 0 
    then
-      doLog "INFO No docker containers found. Nothing to do !!!"
+      do_log "INFO No docker containers found. Nothing to do !!!"
    else
-      doLog "INFO stopping containers ..."
+      do_log "INFO stopping containers ..."
       docker stop $(docker ps -a|grep -i qto-image:$product_version.$env_type|awk '{print $1}')
       sleep 1
-      doLog "INFO removing containers ..."
+      do_log "INFO removing containers ..."
       docker rm $(docker ps -a|grep -i qto-image:$product_version.$env_type|awk '{print $1}')
    fi
 
-	doLog "INFO STOP  removing all docker containers"
+	do_log "INFO STOP  removing all docker containers"
 }

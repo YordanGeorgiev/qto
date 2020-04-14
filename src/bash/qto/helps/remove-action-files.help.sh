@@ -6,13 +6,13 @@
 # ---------------------------------------------------------
 doHelpRemoveActionFiles(){
 
-	doLog "DEBUG START doHelpRemoveActionFiles"
+	do_log "DEBUG START doHelpRemoveActionFiles"
 	
 	cat doc/txt/qto/helps/remove-action-files.help.txt
 	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 
-	doLog "DEBUG STOP  doHelpRemoveActionFiles"
+	do_log "DEBUG STOP  doHelpRemoveActionFiles"
 }
 # eof func doHelpRemoveActionFiles
 

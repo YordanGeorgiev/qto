@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doHelpGmailPackage(){
 
-	doLog "DEBUG START doHelpGmailPackage"
+	do_log "DEBUG START doHelpGmailPackage"
 	
 	cat doc/txt/qto/helps/gmail-package.help.txt
 	
@@ -14,7 +14,7 @@ doHelpGmailPackage(){
 	# add your action implementation code here ... 
 	# Action !!!
 
-	doLog "DEBUG STOP  doHelpGmailPackage"
+	do_log "DEBUG STOP  doHelpGmailPackage"
 }
 # eof func doHelpGmailPackage
 

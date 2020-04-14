@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doHelpCloneProject(){
 
-	doLog "DEBUG START doHelpCloneProject"
+	do_log "DEBUG START doHelpCloneProject"
 	
 	cat doc/txt/qto/helps/clone-project.help.txt
 	
@@ -14,7 +14,7 @@ doHelpCloneProject(){
 	# add your action implementation code here ... 
 	# Action !!!
 
-	doLog "DEBUG STOP  doHelpCloneProject"
+	do_log "DEBUG STOP  doHelpCloneProject"
 }
 # eof func doHelpCloneProject
 

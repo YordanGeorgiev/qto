@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doHelpRemovePackage(){
 
-	doLog "DEBUG START doHelpRemovePackage"
+	do_log "DEBUG START doHelpRemovePackage"
 	
 	cat doc/txt/qto/helps/remove-package.help.txt
 	
@@ -14,7 +14,7 @@ doHelpRemovePackage(){
 	# add your action implementation code here ... 
 	# Action !!!
 
-	doLog "DEBUG STOP  doHelpRemovePackage"
+	do_log "DEBUG STOP  doHelpRemovePackage"
 }
 # eof func doHelpRemovePackage
 

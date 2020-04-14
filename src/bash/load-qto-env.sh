@@ -20,7 +20,7 @@ main(){
       export PROJ_CONF_FILE=$1
       export PROJ_INSTANCE_DIR=$(cd `dirname $PROJ_CONF_FILE`/../..; echo `pwd`)
       source $PRODUCT_DIR/lib/bash/funcs/export-json-section-vars.sh
-      doExportJsonSectionVars $PROJ_CONF_FILE '.env.db'; printf "\033[2J";printf "\033[0;0H"
+      do_export_json_section_vars $PROJ_CONF_FILE '.env.db'; printf "\033[2J";printf "\033[0;0H"
       sleep 1
       alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} --port $postgres_db_port --host $postgres_db_host"
       alias|sort ; sleep 1 ; printf "\033[2J";printf "\033[0;0H"
