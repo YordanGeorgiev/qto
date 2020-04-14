@@ -1,6 +1,6 @@
 doCheckTmuxIsInstalled(){
    which tmux >/dev/null 2>&1 ||
-      { doLog "FATAL ERROR - tmux is not installed
+      { do_log "FATAL ERROR - tmux is not installed
          or not in PATH. To install it do run
          sudo apt-get install -y tmux
          or

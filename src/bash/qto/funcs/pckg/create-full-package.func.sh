@@ -15,7 +15,7 @@ doCreateFullPackage(){
 	[[ $include_file == /* ]] || include_file=$PRODUCT_INSTANCE_DIR/$include_file
 
    if [ ! -f "$include_file" ]; then
-      doLog "FATAL the deployment file: $include_file does not exist !!!"
+      do_log "FATAL the deployment file: $include_file does not exist !!!"
       return 1
    fi
 
@@ -56,14 +56,14 @@ doCreateFullPackage(){
 		while IFS='' read f ; do (
 			test -d "$PRODUCT_INSTANCE_DIR/$f" && continue ; 
 			test -f "$PRODUCT_INSTANCE_DIR/$f" && continue ; 
-			test -f "$PRODUCT_INSTANCE_DIR/$f" || doLog 'ERROR not a file: "'"$f"'"' ;  
+			test -f "$PRODUCT_INSTANCE_DIR/$f" || do_log 'ERROR not a file: "'"$f"'"' ;  
 			test -f "$PRODUCT_INSTANCE_DIR/$f" || ret=1 && exit 1
 		); 
 		done < <(cat $include_file | egrep -v "$perl_ignore_file_pattern" | sed '/^#/ d')
 	);
 
    if [ ! $ret -eq 0 ]; then
-      doLog "FATAL deleted $zip_file , because of packaging errors $! !!!"
+      do_log "FATAL deleted $zip_file , because of packaging errors $! !!!"
 	   rm -fv $zip_file
       return 1
    fi
@@ -82,26 +82,26 @@ doCreateFullPackage(){
    fi
 
    msg="created the following full development package:"
-   doLog "INFO $msg"
+   do_log "INFO $msg"
    msg="`stat -c \"%y %n\" $zip_file`"
-   doLog "INFO $msg"
+   do_log "INFO $msg"
 
    if [[ ${network_backup_dir+x} && -n $network_backup_dir ]] ; then
       if [ -d "$network_backup_dir" ] ; then
          doRunCmdAndLog "cp -v $zip_file $network_backup_dir/"
          msg=" with the following network dir backup :
          ""$(stat -c "%y %n" "$network_backup_dir/$zip_file_name")"
-         doLog "INFO $msg"
+         do_log "INFO $msg"
       else
          msg="skip backup as network_backup_dir does not exist"
-         doLog "ERROR $msg"
+         do_log "ERROR $msg"
       fi
    else
       msg="skip the creation of the network backup as no network_backup_dir is configured"
-      doLog "INFO  $msg"
+      do_log "INFO  $msg"
    fi
 
-   doLog "INFO STOP  create-full-package.func.sh" 
+   do_log "INFO STOP  create-full-package.func.sh" 
 
 }
 #eof func doCreateFullPackage

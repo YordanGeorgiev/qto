@@ -7,7 +7,7 @@
 # ---------------------------------------------------------
 doTestMojoMorboStart(){
 
-	doLog "INFO START doTestMojoMorboStart"
+	do_log "INFO START doTestMojoMorboStart"
 	
 	sleep "$sleep_interval"
 	
@@ -17,7 +17,7 @@ doTestMojoMorboStart(){
    # sudo visudoers 
    # ysg ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
    netstat -tulpn | grep qto
-	doLog "INFO STOP  doTestMojoMorboStart"
+	do_log "INFO STOP  doTestMojoMorboStart"
 }
 # eof func doTestMojoMorboStart
 

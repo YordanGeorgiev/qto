@@ -5,9 +5,9 @@ doRunPgsqlScripts(){
 
    pgsql_scripts_dir="$PRODUCT_INSTANCE_DIR/src/sql/pgsql/qto"
    tmp_log_file="$tmp_dir/.$$.log"
-   doExportJsonSectionVars $PROJ_CONF_FILE '.env.db'
-   doLog "INFO using PROJ_INSTANCE_DIR: $PROJ_INSTANCE_DIR"
-   doLog "INFO using PROJ_CONF_FILE: $PROJ_CONF_FILE"
+   do_export_json_section_vars $PROJ_CONF_FILE '.env.db'
+   do_log "INFO using PROJ_INSTANCE_DIR: $PROJ_INSTANCE_DIR"
+   do_log "INFO using PROJ_CONF_FILE: $PROJ_CONF_FILE"
    sleep 3 ; clearTheScreen	
    echo -e "should run the following files: \n\n" ; find "$pgsql_scripts_dir" -type f -name "*.sql"|sort -n
 
@@ -15,7 +15,7 @@ doRunPgsqlScripts(){
    while read -r sql_script ; do 
 
 		relative_sql_script=$(echo $sql_script|perl -ne "s|$PROJ_INSTANCE_DIR\/||g;print")
-		doLog "INFO START ::: running $relative_sql_script" ; echo -e '\n\n'
+		do_log "INFO START ::: running $relative_sql_script" ; echo -e '\n\n'
       perl -pi -e 's|-- DROP|DROP|g' $sql_script # drop and create the objects
       
       set -x
@@ -29,11 +29,11 @@ doRunPgsqlScripts(){
       perl -pi -e 's|DROP|-- DROP|g' $relative_sql_script
       cat "$tmp_log_file" ; cat "$tmp_log_file" >> $log_file # show it and save it 
       test $ret -ne 0 && sleep 3
-      test $ret -ne 0 && doExit 1 "pid: $$ psql ret $ret - failed to run sql_script: $sql_script !!!"
+      test $ret -ne 0 && do_exit 1 "pid: $$ psql ret $ret - failed to run sql_script: $sql_script !!!"
       test $ret -ne 0 && break
 
 		echo -e '\n\n'; clearTheScreen	
-		doLog "INFO STOP   ::: running $relative_sql_script"
+		do_log "INFO STOP   ::: running $relative_sql_script"
 	done < <(find "$pgsql_scripts_dir" -type f -name "*.sql"|sort -n)
 	
 	clearTheScreen ; 

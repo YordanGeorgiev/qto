@@ -9,7 +9,7 @@
 # ---------------------------------------------------------
 doTestRemoveActionFiles(){
 
-	doLog "DEBUG START doTestRemoveActionFiles"
+	do_log "DEBUG START doTestRemoveActionFiles"
 
 	doSpecRemoveActionFiles
 	sleep "$sleep_interval"
@@ -40,7 +40,7 @@ doTestRemoveActionFiles(){
 
 	# and test the actual removal of the action 	
 	bash src/bash/qto/qto.sh -a remove-action-files		
-	doLog "DEBUG STOP  doTestRemoveActionFiles"
+	do_log "DEBUG STOP  doTestRemoveActionFiles"
 
 	sleep "$sleep_interval"
 	printf "\033[2J";printf "\033[0;0H"

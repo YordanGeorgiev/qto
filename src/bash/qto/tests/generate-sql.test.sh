@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doTestGenerateSQL(){
 
-	doLog "DEBUG START doTestGenerateSQL"
+	do_log "DEBUG START doTestGenerateSQL"
 	
 	cat doc/txt/qto/tests/generate-sql.test.txt
 	
@@ -15,7 +15,7 @@ doTestGenerateSQL(){
 	# Action !!!
    bash src/bash/qto/qto.sh -a generate-sql
 
-	doLog "DEBUG STOP  doTestGenerateSQL"
+	do_log "DEBUG STOP  doTestGenerateSQL"
 }
 # eof func doTestGenerateSQL
 

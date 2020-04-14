@@ -7,7 +7,7 @@
 # ---------------------------------------------------------
 doXlsToDb(){
 
-	doLog "DEBUG START doXlsToDb"
+	do_log "DEBUG START doXlsToDb"
 	
 	sleep "$sleep_interval"
    test -z ${items_order_by_attribute+x} && export items_order_by_attribute='category'
@@ -25,8 +25,8 @@ doXlsToDb(){
    cmd="perl src/perl/qto/script/qto.pl --do xls-to-db --tables $tables"
    test -z ${xls_file} || cmd="$cmd --xls-file $xls_file"
 
-   doLog "INFO using: mix_data_dir: ${mix_data_dir+}"
-   doLog "INFO using xls_file: $xls_file"
+   do_log "INFO using: mix_data_dir: ${mix_data_dir+}"
+   do_log "INFO using xls_file: $xls_file"
    # Action !!!
    $cmd
 
@@ -37,10 +37,10 @@ doXlsToDb(){
 #   FROM '"$tables"'_issues order by '"$items_order_by_attribute"'
 #   ;';
 
-   doLog "INFO doRunQto exit_code $exit_code"
-   test $exit_code -ne 0 && doExit $exit_code "failed to run qto.pl"  
+   do_log "INFO doRunQto exit_code $exit_code"
+   test $exit_code -ne 0 && do_exit $exit_code "failed to run qto.pl"  
   
-	doLog "DEBUG STOP  doXlsToDb"
+	do_log "DEBUG STOP  doXlsToDb"
 }
 # eof func doXlsToDb
 

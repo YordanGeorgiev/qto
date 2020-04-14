@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doHelpMorphDir(){
 
-	doLog "DEBUG START doHelpMorphDir"
+	do_log "DEBUG START doHelpMorphDir"
 	
 	cat doc/txt/qto/helps/morph-dir.help.txt
 	
@@ -14,7 +14,7 @@ doHelpMorphDir(){
 	# add your action implementation code here ... 
 	# Action !!!
 
-	doLog "DEBUG STOP  doHelpMorphDir"
+	do_log "DEBUG STOP  doHelpMorphDir"
 }
 # eof func doHelpMorphDir
 

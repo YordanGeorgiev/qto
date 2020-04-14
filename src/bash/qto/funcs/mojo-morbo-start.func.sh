@@ -3,7 +3,7 @@
 # v0.7.9 chk: https://github.com/mojolicious/mojo/wiki/%25ENV
 doMojoMorboStart(){
 
-   doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
+   do_export_json_section_vars $PRODUCT_INSTANCE_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
    doMojoMorboStop 0
 
    # to prevent the 'failed: could not create socket: Too many open files at sys' error
@@ -19,7 +19,7 @@ doMojoMorboStart(){
    export MOJO_LISTEN='http://*:'"$mojo_morbo_port"
    test -z "${mojo_morbo_port:-}" && export MOJO_LISTEN='http://*:3001'
    
-   doLog "INFO running: morbo -w $PRODUCT_INSTANCE_DIR/src/perl/script/qto
+   do_log "INFO running: morbo -w $PRODUCT_INSTANCE_DIR/src/perl/script/qto
       --listen $MOJO_LISTEN $PRODUCT_INSTANCE_DIR/src/perl/qto/script/qto"
 
    while read -r p ; do 
@@ -31,6 +31,6 @@ doMojoMorboStart(){
 
    # might require sudo visudoers 
    # usrqtoadmin ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
-	doLog "INFO check with netstat, running netstat -tulpn" ; netstat -tulpn | grep qto
+	do_log "INFO check with netstat, running netstat -tulpn" ; netstat -tulpn | grep qto
  
 }

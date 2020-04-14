@@ -3,12 +3,12 @@
 # v1.3.0
 doTestRunIntegrationTests(){
 
-	doLog "DEBUG START doTestRunIntegrationTests"
+	do_log "DEBUG START doTestRunIntegrationTests"
 	
 	# Action !!!
    bash src/bash/qto/qto.sh -a run-integration-tests
 
-	doLog "DEBUG STOP  doTestRunIntegrationTests"
+	do_log "DEBUG STOP  doTestRunIntegrationTests"
 }
 # eof func doTestRunIntegrationTests
 

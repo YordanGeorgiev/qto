@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doCloneProject(){
 
-	doLog "DEBUG START doCloneProject"
+	do_log "DEBUG START doCloneProject"
 	
 	sleep "$sleep_interval"
    # doc/txt/qto/spec/clone-project.spec.txt
@@ -51,7 +51,7 @@ doCloneProject(){
    # and increase the dat
    bash src/bash/qto/qto.sh -a increase-date -d today
 
-	doLog "DEBUG STOP  doCloneProject"
+	do_log "DEBUG STOP  doCloneProject"
 }
 # eof func doCloneProject
 

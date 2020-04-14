@@ -1,11 +1,11 @@
 #------------------------------------------------------------------------------
 # usage example:
 # source lib/bash/funcs/export-json-section-vars.sh
-# doExportJsonSectionVars cnf/env/dev.env.json '.env.db'
+# do_export_json_section_vars cnf/env/dev.env.json '.env.db'
 # alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U \
 #     ${postgres_db_useradmin:-} --port $postgres_db_port --host $postgres_db_host"
 #------------------------------------------------------------------------------
-doExportJsonSectionVars(){
+do_export_json_section_vars(){
 
    json_file="$1"
    shift 1;
@@ -13,7 +13,7 @@ doExportJsonSectionVars(){
    test -f "$json_file" || return
 
    section="$1"
-   test -z "$section" && echo "the section in doExportJsonSectionVars is empty !!! nothing to do !!!"
+   test -z "$section" && echo "the section in do_export_json_section_vars is empty !!! nothing to do !!!"
    test -z "$section" && return
    shift 1;
 

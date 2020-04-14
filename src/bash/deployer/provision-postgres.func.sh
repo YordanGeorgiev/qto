@@ -1,6 +1,6 @@
 do_provision_postgres(){
 
-   doExportJsonSectionVars $PRODUCT_DIR/cnf/env/$ENV_TYPE.env.json '.env.db'
+   do_export_json_section_vars $PRODUCT_DIR/cnf/env/$ENV_TYPE.env.json '.env.db'
    doScrambleConfs   # because well they were taken from public git repo
 
    psql_cnf_dir='/etc/postgresql/12/main'

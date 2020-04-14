@@ -2,7 +2,7 @@
 
 # v0.6.7
 doRunContainer(){
-   doLog "DEBUG START doRunContainer"
+   do_log "DEBUG START doRunContainer"
 
    test -z ${qto_project:-} && \
       source "$PRODUCT_INSTANCE_DIR/lib/bash/funcs/parse-cnf-env-vars.sh" && \
@@ -32,7 +32,7 @@ doRunContainer(){
    echo do stop it run the following command
    echo docker container stop $container_name
 
-   doLog "DEBUG STOP  doRunContainer"
+   do_log "DEBUG STOP  doRunContainer"
 }
 
 

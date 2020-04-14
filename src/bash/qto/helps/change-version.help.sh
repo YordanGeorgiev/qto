@@ -6,13 +6,13 @@
 # ---------------------------------------------------------
 doHelpChangeVersion(){
 
-	doLog "DEBUG START doHelpChangeVersion"
+	do_log "DEBUG START doHelpChangeVersion"
 	
 	cat doc/txt/qto/helps/change-version.help.txt
 	sleep 2
 	# add your action implementation code here ... 
 
-	doLog "DEBUG STOP  doHelpChangeVersion"
+	do_log "DEBUG STOP  doHelpChangeVersion"
 }
 # eof func doHelpChangeVersion
 

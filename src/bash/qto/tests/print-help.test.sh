@@ -6,13 +6,13 @@
 # ---------------------------------------------------------
 doTestPrintHelp(){
 
-	doLog "DEBUG START doTestPrintHelp"
+	do_log "DEBUG START doTestPrintHelp"
 	
 	cat doc/txt/qto/tests/print-help.test.txt
 	sleep 2
 	# add your action implementation code here ... 
 
-	doLog "DEBUG STOP  doTestPrintHelp"
+	do_log "DEBUG STOP  doTestPrintHelp"
 }
 # eof func doTestPrintHelp
 

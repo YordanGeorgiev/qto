@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doTestXlsToDb(){
 
-	doLog "DEBUG START doTestXlsToDb"
+	do_log "DEBUG START doTestXlsToDb"
 	
 	
 	sleep "$sleep_interval"
@@ -25,7 +25,7 @@ doTestXlsToDb(){
    sleep "$sleep_interval"
    test $exit_code -ne 0 && return
 
-	doLog "DEBUG STOP  doTestXlsToDb"
+	do_log "DEBUG STOP  doTestXlsToDb"
 }
 
 

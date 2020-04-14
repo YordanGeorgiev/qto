@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doHelpPrintUsage(){
 
-	doLog "DEBUG START doHelpPrintUsage"
+	do_log "DEBUG START doHelpPrintUsage"
 	
 	cat doc/txt/qto/helps/print-usage.help.txt
 	
@@ -14,7 +14,7 @@ doHelpPrintUsage(){
 	# add your action implementation code here ... 
 	# Action !!!
 
-	doLog "DEBUG STOP  doHelpPrintUsage"
+	do_log "DEBUG STOP  doHelpPrintUsage"
 }
 # eof func doHelpPrintUsage
 

@@ -8,7 +8,7 @@
 # ---------------------------------------------------------
 doGenerateSQL(){
 
-	doLog "DEBUG START doGenerateSQL"
+	do_log "DEBUG START doGenerateSQL"
 	
    while read -r list_file ; do   #foreach list file in the dat/lst/sql dir
 
@@ -59,7 +59,7 @@ doGenerateSQL(){
 	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 
-	doLog "DEBUG STOP  doGenerateSQL"
+	do_log "DEBUG STOP  doGenerateSQL"
 }
 # eof func doGenerateSQL
 

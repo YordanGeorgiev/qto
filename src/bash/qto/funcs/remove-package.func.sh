@@ -6,13 +6,13 @@
 # ---------------------------------------------------------
 doRemovePackage(){
 
-	doLog "DEBUG START doRemovePackage"
+	do_log "DEBUG START doRemovePackage"
 	
 	cat doc/txt/qto/tmpl/remove-package.func.txt
 	sleep 2
 	# add your action implementation code here ... 
 
-	doLog "DEBUG STOP  doRemovePackage"
+	do_log "DEBUG STOP  doRemovePackage"
 }
 # eof func doRemovePackage
 

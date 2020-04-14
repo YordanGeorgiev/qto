@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doTestLogTestRunEntry(){
 
-	doLog "DEBUG START doTestLogTestRunEntry"
+	do_log "DEBUG START doTestLogTestRunEntry"
 	
 	cat doc/txt/qto/tests/log-test-run-entry.test.txt
 	
@@ -15,26 +15,26 @@ doTestLogTestRunEntry(){
    action_n='some-action-name'
 
    # should initialize the test run report
-   doLogTestRunEntry 'INIT'
+   do_logTestRunEntry 'INIT'
 
-   doLogTestRunEntry 'START'
+   do_logTestRunEntry 'START'
    
    # should register the test line start time
-   doLogTestRunEntry 'INFO' ' '$(date "+%H:%M:%S")
+   do_logTestRunEntry 'INFO' ' '$(date "+%H:%M:%S")
    
    # should register the test line stop time
-   doLogTestRunEntry 'INFO' ' '$(date "+%H:%M:%S")
+   do_logTestRunEntry 'INFO' ' '$(date "+%H:%M:%S")
    
    # should addd the name of the action to test 
-   doLogTestRunEntry 'INFO' ' '"$action_n"
+   do_logTestRunEntry 'INFO' ' '"$action_n"
    
    # should close the test run line
-   doLogTestRunEntry 'STOP' 0
+   do_logTestRunEntry 'STOP' 0
    
    # should close and print the test run report 
-   doLogTestRunEntry 'STATUS'
+   do_logTestRunEntry 'STATUS'
 
-	doLog "DEBUG STOP  doTestLogTestRunEntry"
+	do_log "DEBUG STOP  doTestLogTestRunEntry"
 }
 # eof func doTestLogTestRunEntry
 

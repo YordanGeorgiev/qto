@@ -8,7 +8,7 @@ perl -MCarp::Always -I `pwd`/src/perl/*/ -I `pwd`/src/perl/*/lib/ -wc \
 export PROJ_INSTANCE_DIR=`pwd`  # or could be any qto proj
 export PROJ_CONF_FILE=`pwd`/cnf/env/prd.env.json  # or could be any qto proj's conf file
 source lib/bash/funcs/export-json-section-vars.sh
-doExportJsonSectionVars $PROJ_INSTANCE_DIR/cnf/env/prd.env.json '.env.db'
+do_export_json_section_vars $PROJ_INSTANCE_DIR/cnf/env/prd.env.json '.env.db'
 alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} --host $postgres_db_host --port $postgres_db_port"
 
 ./src/bash/qto/qto.sh -a provision-db-admin # change the db-admin pw

@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doHelpGenerateSQL(){
 
-	doLog "DEBUG START doHelpGenerateSQL"
+	do_log "DEBUG START doHelpGenerateSQL"
 	
 	cat doc/txt/qto/helps/generate-sql.help.txt
 	
@@ -14,7 +14,7 @@ doHelpGenerateSQL(){
 	# add your action implementation code here ... 
 	# Action !!!
 
-	doLog "DEBUG STOP  doHelpGenerateSQL"
+	do_log "DEBUG STOP  doHelpGenerateSQL"
 }
 # eof func doHelpGenerateSQL
 

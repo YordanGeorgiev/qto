@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 doTestMorphDir(){
 		
-	doLog " INFO START : morph-dir.test"
+	do_log " INFO START : morph-dir.test"
 
 	# doSpecMorphDir
 	echo this function should not work without setting the following shell vars
@@ -25,7 +25,7 @@ doTestMorphDir(){
 	
 	echo "and check the produced dir"
 	find /tmp/src/bash/new-app -type f
-	doLog " INFO STOP  : morph-dir.test"
+	do_log " INFO STOP  : morph-dir.test"
 
 }
 #eof doMorphDir

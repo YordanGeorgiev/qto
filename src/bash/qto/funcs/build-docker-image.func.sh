@@ -3,10 +3,10 @@ doBuildQtoDockerImage(){
    test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
    test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
-   doExportJsonSectionVars $PROJ_CONF_FILE '.env.db'
+   do_export_json_section_vars $PROJ_CONF_FILE '.env.db'
 
    test -f "$PRODUCT_INSTANCE_DIR/src/docker/Dockerfile.deploy-$RUN_UNIT.$product_version" || \
-      doExit 1 "the src/docker/Dockerfile.deploy-$RUN_UNIT.$product_version cannot be found !!!"
+      do_exit 1 "the src/docker/Dockerfile.deploy-$RUN_UNIT.$product_version cannot be found !!!"
 
    #doRemoveDockerContainers 
    test ${DOCKER_NUCLEAR_OPTION_PURGE:-0} -eq 1 && doFullCleanDocker # obs clears all docker stuff !!!
@@ -31,7 +31,7 @@ doBuildQtoDockerImage(){
    --build-arg app_user_pwd=$app_user_pwd \
    -t qto-image:$product_version.$env_type .
 
-   test $? -ne 0 && doLog "FATAL the docker image building failed !!!"
+   test $? -ne 0 && do_log "FATAL the docker image building failed !!!"
    rm -v "$PRODUCT_INSTANCE_DIR/Dockerfile"
    
    echo -e "\n\n to instantiate a new container, run: \n"

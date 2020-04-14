@@ -10,7 +10,7 @@ doBackupPostgresDb(){
    test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
    test -z ${PROJ_CONF_FILE:-} && PROJ_CONF_FILE=$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json
-   doExportJsonSectionVars $PROJ_CONF_FILE '.env.db'
+   do_export_json_section_vars $PROJ_CONF_FILE '.env.db'
 
    mix_data_dir="$PROJ_INSTANCE_DIR/dat/mix"
    test -z "${postgres_db_name-}" && postgres_db_name="${env_type-}"_"${run_unit//-/_}"
@@ -20,7 +20,7 @@ doBackupPostgresDb(){
    test -d $backup_dir || mkdir -p $backup_dir
 
    which nmap 2>/dev/null && nmap -Pnv -p $postgres_db_port $postgres_db_host || \
-         doExit 1 "cannot connect to $postgres_db_port:$postgres_db_host"
+         do_exit 1 "cannot connect to $postgres_db_port:$postgres_db_host"
 
    PGPASSWORD="${postgres_db_useradmin_pw:-}" pg_dump -U "${postgres_db_useradmin:-}"  \
          -h $postgres_db_host -p $postgres_db_port -w --format=plain \

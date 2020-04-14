@@ -47,7 +47,7 @@ do_vagrant_up(){
    source $PRODUCT_DIR/lib/bash/funcs/export-json-section-vars.sh
 
    for env in `echo dev tst prd`; do 
-      doExportJsonSectionVars $PRODUCT_DIR/cnf/env/$env.env.json '.env.app'
+      do_export_json_section_vars $PRODUCT_DIR/cnf/env/$env.env.json '.env.app'
       if [[ $env == 'dev' ]]; then
          perl -pi -e 's/\%dev_mojo_morbo_port\%/'$mojo_morbo_port'/g' "$vagrant_file"
          perl -pi -e 's/\%dev_mojo_hypnotoad_port\%/'$mojo_hypnotoad_port'/g' "$vagrant_file"

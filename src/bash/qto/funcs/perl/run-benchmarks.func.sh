@@ -11,11 +11,11 @@ doRunBenchmarks(){
       source "$PRODUCT_INSTANCE_DIR/lib/bash/funcs/parse-cnf-env-vars.sh" && \
       doParseCnfEnvVars "$PRODUCT_INSTANCE_DIR/cnf/$RUN_UNIT.$env_type.*.cnf"
    
-   doLog "INFO START testing controllers"
+   do_log "INFO START testing controllers"
    while read -r f ; do 
-      doLog "INFO START functional test for $f"
+      do_log "INFO START functional test for $f"
       perl $f ;
-      doLog "INFO STOP  functional test for $f"
+      do_log "INFO STOP  functional test for $f"
       clearTheScreen
    done < <(find src/perl/qto/t/lib/Qto/App/benchmarks -type f -name '*.pl'|sort)
 

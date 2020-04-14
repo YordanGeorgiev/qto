@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doTestRemovePackageFiles(){
 
-	doLog "DEBUG START doTestRemovePackageFiles"
+	do_log "DEBUG START doTestRemovePackageFiles"
 	
 	cat doc/txt/qto/tests/remove-package-files.test.txt
 	
@@ -14,7 +14,7 @@ doTestRemovePackageFiles(){
 	# add your action implementation code here ... 
 	# Action !!!
 
-	doLog "DEBUG STOP  doTestRemovePackageFiles"
+	do_log "DEBUG STOP  doTestRemovePackageFiles"
 }
 # eof func doTestRemovePackageFiles
 

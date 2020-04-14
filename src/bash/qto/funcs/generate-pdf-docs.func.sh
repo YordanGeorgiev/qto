@@ -5,7 +5,7 @@ doGeneratePdfDocs(){
    test -z "${docs_root_dir-}" && docs_root_dir="$PROJ_INSTANCE_DIR"
 
    test -z ${PROJ_CONF_FILE-} && PROJ_CONF_FILE=$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json
-   doExportJsonSectionVars $PROJ_CONF_FILE '.env.app'
+   do_export_json_section_vars $PROJ_CONF_FILE '.env.app'
 
    # <<web-host>>:<<web-port>>/<<db>>/select/export_files?as=grid&od=id
    basic_url="$ht_protocol://${web_host:-}:${port:-}/${postgres_db_name:-}"
@@ -13,7 +13,7 @@ doGeneratePdfDocs(){
    echo "running: curl --cookie ~/.qto/cookies.txt --insecure  -s $furl \| jq -r '.dat[]|.url'"
    curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]|.url'
 	ret=$?
-	test $ret != "0" && doExit $ret "failed to get data from the $furl"
+	test $ret != "0" && do_exit $ret "failed to get data from the $furl"
 
    while read -r url ; do 
       file_name=$(curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .name'); 
@@ -27,7 +27,7 @@ doGeneratePdfDocs(){
       echo -e "\nrunning: chrome --headless --disable-gpu --print-to-pdf=$file_path $basic_url/view/$url"
       chrome --headless --disable-gpu --print-to-pdf=$file_path $basic_url/view/$url
       lines=$(wc -l "$file_path"|awk '{print $1;}')
-      [[ $lines -eq 0 ]] && doExit 0 "load the $url !!! the table is empty !!!"
+      [[ $lines -eq 0 ]] && do_exit 0 "load the $url !!! the table is empty !!!"
       echo -e "$lines lines in the $file_path file \n"
    done < <(curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]|.url')
 	

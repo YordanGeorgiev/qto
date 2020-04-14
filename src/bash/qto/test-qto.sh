@@ -9,7 +9,7 @@ umask 022    ;
 # set -v
 # exit the script if any statement returns a non-true return value. gotcha !!!
 # set -e
-trap 'doExit $LINENO $BASH_COMMAND; exit' SIGHUP SIGINT SIGQUIT
+trap 'do_exit $LINENO $BASH_COMMAND; exit' SIGHUP SIGINT SIGQUIT
 trap "exit $exit_code" TERM
 export TOP_PID=$$
 
@@ -21,7 +21,7 @@ main(){
    doInit
   	doSetVars
 	doRunTests "$@"
-  	doExit 0 "# = STOP  MAIN = $RUN_UNIT_TESTER "
+  	do_exit 0 "# = STOP  MAIN = $RUN_UNIT_TESTER "
 
 }
 #eof main
@@ -54,10 +54,10 @@ get_function_list() {
 doRunTests(){
 	cd $PRODUCT_INSTANCE_DIR
 
-   doLogTestRunEntry 'INIT'
-   doLog "INFO actions list file:
+   do_logTestRunEntry 'INIT'
+   do_log "INFO actions list file:
    $PRODUCT_INSTANCE_DIR/src/bash/qto/tests/run-qto-tests.lst"
-   doLog "INFO running the following actions : "
+   do_log "INFO running the following actions : "
    cat $PRODUCT_INSTANCE_DIR/src/bash/qto/tests/run-qto-tests.lst | grep -v '#'
    sleep 1
 
@@ -68,10 +68,10 @@ doRunTests(){
 		# do not run a test if it is commented out ( starts with # )
 		[[ ${action:0:1} = \# ]] && continue
 
-		doLog "INFO START :: testing action: \"$action\""
-      doLogTestRunEntry 'START'
+		do_log "INFO START :: testing action: \"$action\""
+      do_logTestRunEntry 'START'
 		while read -r test_file ; do (
-			# doLog "test_file: \"$test_file\""
+			# do_log "test_file: \"$test_file\""
 			while read -r function_name ; do (
 				action_name=`echo $(basename $test_file)|sed -e 's/.test.sh//g'`
             
@@ -79,17 +79,17 @@ doRunTests(){
             then
                continue
             else
-				   doLog "INFO START ::: calling function":"$function_name"
-               doLogTestRunEntry 'INFO' ' '$(date "+%H:%M:%S")
+				   do_log "INFO START ::: calling function":"$function_name"
+               do_logTestRunEntry 'INFO' ' '$(date "+%H:%M:%S")
                $function_name
-               doLog "INFO test-qto loop exit_code: $exit_code" 
-               doLogTestRunEntry 'INFO' ' '$(date "+%H:%M:%S")
-               doLogTestRunEntry 'INFO' ' '"$action_name"
+               do_log "INFO test-qto loop exit_code: $exit_code" 
+               do_logTestRunEntry 'INFO' ' '$(date "+%H:%M:%S")
+               do_logTestRunEntry 'INFO' ' '"$action_name"
                # all testing functions should export their exit code
-               doLogTestRunEntry 'STOP' $exit_code
+               do_logTestRunEntry 'STOP' $exit_code
 				   # and clear the screen
-		         doLog "INFO STOP :: testing action: \"$action\""
-               # test $exit_code -ne 0 && doExit $exit_code "FATAL $function_name"
+		         do_log "INFO STOP :: testing action: \"$action\""
+               # test $exit_code -ne 0 && do_exit $exit_code "FATAL $function_name"
 				   sleep $sleep_interval
 				   printf "\033[2J";printf "\033[0;0H"
             fi
@@ -101,7 +101,7 @@ doRunTests(){
 	);
 	done < <(cat $PRODUCT_INSTANCE_DIR/src/bash/qto/tests/run-qto-tests.lst)
 
-   doLogTestRunEntry 'STATUS'
+   do_logTestRunEntry 'STATUS'
 }
 #eof fun doRunTests
 
@@ -128,7 +128,7 @@ doInit(){
 #------------------------------------------------------------------------------
 # clean and exit with passed status and message
 #------------------------------------------------------------------------------
-doExit(){
+do_exit(){
    exit_code=0
    exit_msg="$*"
 
@@ -144,11 +144,11 @@ doExit(){
       exit_msg=" ERROR --- exit_code $exit_code --- exit_msg : $exit_msg"
       >&2 echo "$exit_msg"
       # doSendReport
-      doLog "FATAL STOP FOR $RUN_UNIT_TESTER RUN with: "
-      doLog "FATAL exit_code: $exit_code exit_msg: $exit_msg"
+      do_log "FATAL STOP FOR $RUN_UNIT_TESTER RUN with: "
+      do_log "FATAL exit_code: $exit_code exit_msg: $exit_msg"
    else
-      doLog "INFO  STOP FOR $RUN_UNIT_TESTER RUN with: "
-      doLog "INFO  STOP FOR $RUN_UNIT_TESTER RUN: $exit_code $exit_msg"
+      do_log "INFO  STOP FOR $RUN_UNIT_TESTER RUN with: "
+      do_log "INFO  STOP FOR $RUN_UNIT_TESTER RUN: $exit_code $exit_msg"
    fi
 
    doCleanAfterRun
@@ -158,17 +158,17 @@ doExit(){
    test $exit_code -eq 0 && exit 0
 
 }
-#eof func doExit
+#eof func do_exit
 
 # v1.2.8 
 #------------------------------------------------------------------------------
 # echo pass params and print them to a log file and terminal
 # with timestamp and $host_name and $0 PID
 # usage:
-# doLog "INFO some info message"
-# doLog "DEBUG some debug message"
+# do_log "INFO some info message"
+# do_log "DEBUG some debug message"
 #------------------------------------------------------------------------------
-doLog(){
+do_log(){
    type_of_msg=$(echo $*|cut -d " " -f1)
    msg="$(echo $*|cut -d " " -f2-)"
    [[ $type_of_msg == DEBUG ]] && [[ $do_print_debug_msgs -ne 1 ]] && return
@@ -183,7 +183,7 @@ doLog(){
 			log_file="$PRODUCT_INSTANCE_DIR/dat/log/bash/$RUN_UNIT_TESTER.`date "+%Y%m"`.log"
    echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S"` [$RUN_UNIT_TESTER][@$host_name] [$$] $msg " >> $log_file
 }
-#eof func doLog
+#eof func do_log
 
 
 #v1.2.8
@@ -211,7 +211,7 @@ doCleanAfterRun(){
 #------------------------------------------------------------------------------
 doRunCmdAndLog(){
   cmd="$*" ;
-  doLog "DEBUG running cmd and log: \"$cmd\""
+  do_log "DEBUG running cmd and log: \"$cmd\""
 
    msg=$($cmd 2>&1)
    ret_cmd=$?
@@ -219,8 +219,8 @@ doRunCmdAndLog(){
 		\"$cmd\" with the output:
 		\"$msg\" !!!"
 
-   [ $ret_cmd -eq 0 ] || doLog "$error_msg"
-   doLog "DEBUG : cmdoutput : \"$msg\""
+   [ $ret_cmd -eq 0 ] || do_log "$error_msg"
+   do_log "DEBUG : cmdoutput : \"$msg\""
 }
 #eof func doRunCmdAndLog
 
@@ -235,15 +235,15 @@ doRunCmdAndLog(){
 doRunCmdOrExit(){
    cmd="$*" ;
 
-   doLog "DEBUG running cmd or exit: \"$cmd\""
+   do_log "DEBUG running cmd or exit: \"$cmd\""
    msg=$($cmd 2>&1)
    ret_cmd=$?
    # if occured during the execution exit with error
    error_msg=": FATAL : Failed to run the command \"$cmd\" with the output \"$msg\" !!!"
-   [ $ret_cmd -eq 0 ] || doExit "$ret_cmd" "$error_msg"
+   [ $ret_cmd -eq 0 ] || do_exit "$ret_cmd" "$error_msg"
 
    #if no occured just log the message
-   doLog "DEBUG : cmdoutput : \"$msg\""
+   do_log "DEBUG : cmdoutput : \"$msg\""
 }
 #eof func doRunCmdOrExit
 
@@ -257,7 +257,7 @@ doSetVars(){
    for i in {1..3} ; do cd .. ; done ;
    export PRODUCT_INSTANCE_DIR=`pwd`;
    
-   # add the doLogTestRunEntry func
+   # add the do_logTestRunEntry func
    . "$PRODUCT_INSTANCE_DIR/src/bash/qto/funcs/log-test-run-entry.func.sh"
 
 	# include all the func files to fetch their funcs 
@@ -298,14 +298,14 @@ doSetVars(){
 	( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
 
-	doLog "INFO # --------------------------------------"
-	doLog "INFO # -----------------------"
-	doLog "INFO # ===		 START MAIN   === $RUN_UNIT_TESTER"
-	doLog "INFO # -----------------------"
-	doLog "INFO # --------------------------------------"
+	do_log "INFO # --------------------------------------"
+	do_log "INFO # -----------------------"
+	do_log "INFO # ===		 START MAIN   === $RUN_UNIT_TESTER"
+	do_log "INFO # -----------------------"
+	do_log "INFO # --------------------------------------"
 		
 	exit_code=0
-	doLog "INFO using the following vars:"
+	do_log "INFO using the following vars:"
 	cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
 	echo -e "$cmd"
 
@@ -380,7 +380,7 @@ main "$@"
 #
 # VersionHistory:
 #------------------------------------------------------------------------------
-# 1.1.0 --- 2017-03-05 16:48:13 -- change to doExit , added testing report
+# 1.1.0 --- 2017-03-05 16:48:13 -- change to do_exit , added testing report
 # 1.0.0 --- 2016-09-11 12:24:15 -- init from bash-stub
 #----------------------------------------------------------
 #

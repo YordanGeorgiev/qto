@@ -41,6 +41,7 @@ EOF_RESOLV_CONF'
 
 do_set_time(){
    sudo apt-get install ntp
+   sudo timedatectl set-ntp on
    sudo service ntp stop
    sudo ntpdate -s time.nist.gov
    sudo service ntp start

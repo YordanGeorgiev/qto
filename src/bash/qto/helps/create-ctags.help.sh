@@ -6,13 +6,13 @@
 # ---------------------------------------------------------
 doHelpCreateCtags(){
 
-	doLog "DEBUG START doHelpCreateCtags"
+	do_log "DEBUG START doHelpCreateCtags"
 	
 	cat doc/txt/qto/helps/create-ctags.help.txt
 	sleep 2
 	# add your action implementation code here ... 
 
-	doLog "DEBUG STOP  doHelpCreateCtags"
+	do_log "DEBUG STOP  doHelpCreateCtags"
 }
 # eof func doHelpCreateCtags
 

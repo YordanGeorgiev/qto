@@ -1,6 +1,6 @@
 doMojoHypnotoadStart(){
    
-   doExportJsonSectionVars $PRODUCT_INSTANCE_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
+   do_export_json_section_vars $PRODUCT_INSTANCE_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
    doMojoHypnotoadStop
 
    export MOJO_LOG_LEVEL='error'; #could be warn, debug, info

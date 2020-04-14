@@ -2,7 +2,7 @@
 
 doTestBackupPostgresDb(){
 
-	doLog "DEBUG START doTestBackupPostgresDb"
+	do_log "DEBUG START doTestBackupPostgresDb"
 	
 	# Action !!!
    bash src/bash/qto/qto.sh -a backup-postgres-db
@@ -16,14 +16,14 @@ doTestBackupPostgresDb(){
    if [ $count -lt 1 ]; then
       msg="db dump files are not found !!!"
       export exit_code=1 ;
-      doExit "$msg";
+      do_exit "$msg";
       exit 1 ;
    fi
    
    msg="at least one db dump file was created"
    test $exit_code -ne 0 && return
  
-	doLog "DEBUG STOP  doTestBackupPostgresDb"
+	do_log "DEBUG STOP  doTestBackupPostgresDb"
 }
 # eof func doTestBackupPostgresDb
 

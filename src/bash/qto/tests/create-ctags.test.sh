@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doTestCreateCtags(){
 
-	doLog "DEBUG START doTestCreateCtags"
+	do_log "DEBUG START doTestCreateCtags"
 	
 	cat doc/txt/qto/tests/create-ctags.test.txt
 	
@@ -14,7 +14,7 @@ doTestCreateCtags(){
 	# add your action implementation code here ... 
 	# Action !!!
 
-	doLog "DEBUG STOP  doTestCreateCtags"
+	do_log "DEBUG STOP  doTestCreateCtags"
 }
 # eof func doTestCreateCtags
 

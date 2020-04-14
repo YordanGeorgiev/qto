@@ -6,11 +6,11 @@
 # ---------------------------------------------------------
 doHelpCreateRelativePackage(){
 
-	doLog "DEBUG START doHelpCreateRelativePackage"
+	do_log "DEBUG START doHelpCreateRelativePackage"
 	
 	cat doc/txt/qto/helps/pckg/create-relative-package.help.txt
 	sleep $sleep_interval
-	doLog "DEBUG STOP  doHelpCreateRelativePackage"
+	do_log "DEBUG STOP  doHelpCreateRelativePackage"
 }
 # eof func doHelpCreateRelativePackage
 

@@ -4,7 +4,7 @@ doInitAwdInstance(){
 
    test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
-   doExportJsonSectionVars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.aws'
+   do_export_json_section_vars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.aws'
    mkdir -p $PRODUCT_INSTANCE_DIR/src/terraform/qto
    cp -v $PRODUCT_INSTANCE_DIR/src/terraform/tpl/qto/main.tf.tpl \
       $PRODUCT_INSTANCE_DIR/src/terraform/qto/main.tf
@@ -38,7 +38,7 @@ doInitAwdInstance(){
    cd $PRODUCT_INSTANCE_DIR/src/terraform/qto/
    terraform init
    terraform plan
-	test $? -ne 0 && doExit 1 "terraform plan failed"
+	test $? -ne 0 && do_exit 1 "terraform plan failed"
 	
 	terraform apply -auto-approve
 	

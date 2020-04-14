@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doTestGmailPackage(){
 
-	doLog "DEBUG START doTestGmailPackage"
+	do_log "DEBUG START doTestGmailPackage"
 	
    cat doc/txt/qto/tests/pckg/gmail-package.test.txt
 	sleep "$sleep_interval"
@@ -15,7 +15,7 @@ doTestGmailPackage(){
 	sleep "$sleep_interval"
    printf "\033[2J";printf "\033[0;0H"
 
-	doLog "DEBUG STOP  doTestGmailPackage"
+	do_log "DEBUG STOP  doTestGmailPackage"
 }
 # eof func doTestGmailPackage
 

@@ -2,9 +2,9 @@ doProvisionDbAdmin(){
    test -z "${PROJ_INSTANCE_DIR-}" && export PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
    test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
-   doExportJsonSectionVars $PROJ_CONF_FILE '.env.db'
-   doLog "INFO using PROJ_INSTANCE_DIR: $PROJ_INSTANCE_DIR" ; 
-   doLog "INFO using PROJ_CONF_FILE: $PROJ_CONF_FILE"
+   do_export_json_section_vars $PROJ_CONF_FILE '.env.db'
+   do_log "INFO using PROJ_INSTANCE_DIR: $PROJ_INSTANCE_DIR" ; 
+   do_log "INFO using PROJ_CONF_FILE: $PROJ_CONF_FILE"
    echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bashrc
    sudo -u root echo "postgres:$postgres_os_usr_pw" | sudo chpasswd
 

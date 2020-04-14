@@ -6,12 +6,12 @@
 # ---------------------------------------------------------
 doHelpRunFunctionalTests(){
 
-	doLog "DEBUG START doHelpRunFunctionalTests"
+	do_log "DEBUG START doHelpRunFunctionalTests"
 	
 	sleep "$sleep_interval"
 	# add your action implementation code here ... 
 
-	doLog "DEBUG STOP  doHelpRunFunctionalTests"
+	do_log "DEBUG STOP  doHelpRunFunctionalTests"
 }
 # eof func doHelpRunFunctionalTests
 

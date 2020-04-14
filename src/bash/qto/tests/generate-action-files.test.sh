@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doTestGenerateActionFiles(){
 
-	doLog "DEBUG START doTestGenerateActionFiles"
+	do_log "DEBUG START doTestGenerateActionFiles"
 	
 	cat doc/txt/lp_nettilaskuri/tests/generate-action-files.test.txt
 	
@@ -16,7 +16,7 @@ doTestGenerateActionFiles(){
 	
 	bash src/bash/lp_nettilaskuri/lp_nettilaskuri.sh -a generate-action-files
 
-	doLog "DEBUG STOP  doTestGenerateActionFiles"
+	do_log "DEBUG STOP  doTestGenerateActionFiles"
 	
 	sleep $sleep_interval
    printf "\033[2J";printf "\033[0;0H"
