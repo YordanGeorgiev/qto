@@ -5,7 +5,7 @@ alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postg
 psql -d dev_qto < src/sql/pgsql/scripts/admin/list-schema-tables.sql 
 */
 
-      INSERT INTO meta_tables ( id,name,is_menu)
+      INSERT INTO app_items ( id,name,is_menu)
       SELECT  
            ROW_NUMBER () OVER (ORDER BY table_name) as id
          , table_name as name

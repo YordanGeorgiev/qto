@@ -63,7 +63,7 @@ sub doHiSelectItems {
    my $tables_meta   = $objModel->get("$db" . '.meta-tables');
    $met = {
         'meta_cols'     => $meta_cols
-      , 'meta_tables'   => $tables_meta
+      , 'app_items'   => $tables_meta
    };
 
    my $tms = $msg ; # the technical msg

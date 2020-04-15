@@ -668,8 +668,8 @@ Who has access to what is defined in the following table: items_roles_permission
 You could initially load this table by running the following scripts bellow. 
 https://stackoverflow.com/a/58009983/65706
 
-    # populate the list of tables into the meta_tables table
-    psql -d dev_qto < /src/sql/pgsql/scripts/admin/populate-meta_tables.sql
+    # populate the list of tables into the app_items table
+    psql -d dev_qto < /src/sql/pgsql/scripts/admin/populate-app_items.sql
     
     # populate the items roles_permissions
     psql -d dev_qto < src/sql/pgsql/scripts/admin/populate-items_roles_permissions.sql

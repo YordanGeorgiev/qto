@@ -73,7 +73,7 @@ sub doCallFunc {
                $objCnrHsr2ToArray->doConvertSetMaxWidth ($msr2, $hsr2 , '<=>', 'id',$page_size,$page_num) ;
          $met = {
               'meta_cols'     => $msr2
-            , 'meta_tables'   => $tables_meta
+            , 'app_items'   => $tables_meta
          };
          $self->SUPER::doRenderJSON(200,$msg,'GET',$met,$rows_count,$list);
       } elsif ( $ret == 204 ) { # the CallFunc did not return any data ..., but did not fail neither ...

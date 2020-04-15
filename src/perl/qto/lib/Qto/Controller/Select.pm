@@ -61,12 +61,12 @@ sub doSelectItems {
    my $who              = $self->session( 'app.' . $db . '.user' );
 
    ($ret, $msg, $hsr2)  = $objRdrDb->doSelectRows($db, $item,$who);
-   my $meta_tables      = $objModel->get("$db" . '.meta-tables');
+   my $app_items      = $objModel->get("$db" . '.meta-tables');
    $meta_cols           = $objModel->get("$db" . '.meta-columns');
 
    $met = {
         'meta_cols' => $meta_cols
-      , 'meta_tables' => $meta_tables
+      , 'app_items' => $app_items
    };
    $http_code = 200;
    $cnt = 0 ; 
@@ -237,13 +237,13 @@ sub doSelectItemMetaFor {
       unless ( $ret == 0 ) {
          $http_code = 400 ; $dat = '' ; $cnt = 0 ; 
       }
-      my $meta_tables = $objModel->get("$db" . '.meta-tables');
+      my $app_items = $objModel->get("$db" . '.meta-tables');
 
       #$objModel->set($db . '.tables-list',   $tables_list);
 
       $met = {
          'meta_cols'       => $meta_cols
-       , 'meta_tables'     => $meta_tables
+       , 'app_items'     => $app_items
       };
       $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$arr_meta_cols);
    } elsif ( $ret == 400 or $ret == 404 ) {

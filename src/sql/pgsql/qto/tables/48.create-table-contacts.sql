@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS contacts ; 
+-- DROP TABLE IF EXISTS contacts ; 
 
 SELECT 'create the "contacts" table'
 ; 

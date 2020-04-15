@@ -84,7 +84,7 @@
                         setMsgVisuals(data,'div_msg','Error','search');
                      } else {
 								this.gridMeta = data.met.meta_cols
-                        bus.$emit('metaTablesLoadEmit',response.data.met.meta_tables)
+                        bus.$emit('metaTablesLoadEmit',response.data.met.app_items)
                         if ( data.cnt === '0'){
                            hideControlsOnError();
                            setMsgVisuals(response.data.msg,'div_notice','Warning','search');

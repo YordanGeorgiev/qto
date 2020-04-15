@@ -8,7 +8,7 @@ SELECT 'create the "items_roles_permissions" table'
     , roles_guid     UUID NOT NULL DEFAULT gen_random_uuid()
     , allowed        bool default true
     , meta_routes_guid UUID NOT NULL DEFAULT gen_random_uuid()
-    , meta_tables_guid UUID NOT NULL DEFAULT gen_random_uuid()
+    , app_items_guid UUID NOT NULL DEFAULT gen_random_uuid()
     , name           varchar (100) NOT NULL DEFAULT 'name...'
     , description    varchar (200) NULL DEFAULT 'description...'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())

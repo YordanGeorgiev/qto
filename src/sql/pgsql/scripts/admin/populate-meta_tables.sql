@@ -1,4 +1,4 @@
-   INSERT INTO meta_tables
+   INSERT INTO app_items
    ( name , description)
 
    select tablename as name , tablename as description 

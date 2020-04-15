@@ -98,7 +98,7 @@
 				var url = (window.location.pathname).replace("/view/" , "/hiselect/")
             fetchServerSideData(url,url_params)
             .then( response => {
-               bus.$emit('metaTablesLoadEmit',response.data.met.meta_tables)
+               bus.$emit('metaTablesLoadEmit',response.data.met.app_items)
                if ( response.status === 204 ) {
                   var warningMsg = response.statusText
                   console.warn ( warningMsg ) 
@@ -123,7 +123,7 @@
                   	commit('SET_SNACKBAR_MSG', errMsg ) 
                   } else {
                   	var items = data.dat  //alles ok
-                     bus.$emit('metaTablesLoadEmit',data.met.meta_tables)
+                     bus.$emit('metaTablesLoadEmit',data.met.app_items)
                      var isNotAPrintDoc = ( document.location.search.indexOf('as=print-doc')<=0 ? true : false )
                   	commit('SET_SNACKBAR_SHOW', false)
                   	commit('SET_RGT_MENU_SHOW', isNotAPrintDoc )

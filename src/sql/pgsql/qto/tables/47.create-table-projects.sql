@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS projects ; 
+-- DROP TABLE IF EXISTS projects ; 
 
 SELECT 'create the "projects" table'
 ; 
