@@ -47,7 +47,7 @@ sub doQueryItems {
    my $tables_meta      = $objModel->get("$db" . '.meta-tables');
    $met = {
         'meta_cols'     => $msr2
-      , 'meta_tables'   => $tables_meta
+      , 'app_items'   => $tables_meta
    };
    my $objCnrUrlPrms  = {} ; 
    my $objRdrDbsFcry = {} ; 

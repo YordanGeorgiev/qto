@@ -312,7 +312,7 @@ Each back-end update from the UI takes no longer than 0.2 s. in a non-stressed q
     
 
 #### 6.2.1. Metadata caching via Redis
-All the meta data of the application during each request is fetched from Redis ( and can be re-load into Redis by loading the meta_tables or the meta_columns item in the browser)
+All the meta data of the application during each request is fetched from Redis ( and can be re-load into Redis by loading the app_items or the meta_columns item in the browser)
 
     
 

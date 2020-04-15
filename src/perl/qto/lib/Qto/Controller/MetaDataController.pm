@@ -45,7 +45,7 @@ sub doReloadProjDbMetaData {
    $objModel->set('postgres_db_name' , $db ) ; 
    # reload the columns meta data ONLY after the meta_columns has been requested
    # each one of those requested by the UI triggers meta data reload to redis !!!
-   if ( $item eq 'app-startup' or $item eq 'meta_columns' or $item eq 'meta_tables' or $item eq 'items_doc') {
+   if ( $item eq 'app-startup' or $item eq 'meta_columns' or $item eq 'app_items' or $item eq 'items_doc') {
 
       my $objWtrRedis = 'Qto::App::Db::Out::WtrRedis'->new(\$config);
       $self->doReloadProjDbMetaColumns($db,$item,\$objWtrRedis);
@@ -55,13 +55,13 @@ sub doReloadProjDbMetaData {
 
    } else {
       my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
-      my $meta_tables   = $objRdrRedis->getData(\$config,"$db" . '.meta-tables');
+      my $app_items   = $objRdrRedis->getData(\$config,"$db" . '.meta-tables');
       my $meta_columns  = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
       my $tables_list   = $objRdrRedis->getData(\$config,"$db" . '.tables-list');
       my $rbac_list     = $objRdrRedis->getData(\$config,"$db" . '.rbac-list');
       
       $objModel->set($db . '.meta-columns',  $meta_columns);
-      $objModel->set($db . '.meta-tables',   $meta_tables);
+      $objModel->set($db . '.meta-tables',   $app_items);
       $objModel->set($db . '.tables-list',   $tables_list);
       $objModel->set($db . '.rbac-list',     $rbac_list);
    }

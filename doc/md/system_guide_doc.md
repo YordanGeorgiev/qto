@@ -199,7 +199,7 @@ The id's of the tables which ARE VISIBLE to the end users ui are big integers, w
     
 
 ### 4.4. Hot meta data reload functionality
-In most of the modern applications using databases as main data storage, the changes in the Entity models mean in most of the cases full release of the application. Qto simplistic UI interfaces and the hot meta-data reload functionality enable all the changes to the db, which do not break the qto table api ( basically guid and id columns), to be performed only without even having to restart the application layer, but only by reloading one of the following meta-data tables - items_doc, meta_tables, meta_columns
+In most of the modern applications using databases as main data storage, the changes in the Entity models mean in most of the cases full release of the application. Qto simplistic UI interfaces and the hot meta-data reload functionality enable all the changes to the db, which do not break the qto table api ( basically guid and id columns), to be performed only without even having to restart the application layer, but only by reloading one of the following meta-data tables - items_doc, app_items, meta_columns
 
     
 

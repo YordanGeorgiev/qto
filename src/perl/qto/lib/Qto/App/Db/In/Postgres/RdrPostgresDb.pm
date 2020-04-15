@@ -517,12 +517,12 @@ sub doCallFuncGetHashRef {
                ELSE 'mayNOT'
                END 
                || '__' || meta_routes.name 
-               || '__' || meta_tables.name as permission
+               || '__' || app_items.name as permission
             FROM items_roles_permissions
             LEFT JOIN roles ON roles.guid = roles_guid
             LEFT JOIN meta_routes ON meta_routes.guid = meta_routes_guid
-            LEFT JOIN meta_tables ON meta_tables.guid = meta_tables_guid
-            ORDER BY roles.name,meta_routes.name,meta_tables.name
+            LEFT JOIN app_items ON app_items.guid = app_items_guid
+            ORDER BY roles.name,meta_routes.name,app_items.name
          ;      
          " ; 
          # debug rint "START ::: RdrPostgresDb.pm :: doLoadProjDbRBACList \n" ;
@@ -779,7 +779,7 @@ sub doCallFuncGetHashRef {
    #
    # -----------------------------------------------------------------------------
    # load the project database meta data. must work for all the tables and colum 
-   # regardless on wether or not the custom meta data in meta_tables and meta_columns
+   # regardless on wether or not the custom meta data in app_items and meta_columns
    # tables are defined !!!
    # -----------------------------------------------------------------------------
    sub doLoadProjDbMetaCols {

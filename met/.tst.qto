@@ -18,8 +18,8 @@ src/perl/qto/templates/pages/login
 # start roles based access 
 src/sql/pgsql/qto/tables/37.create-table-items_roles_permissions.sql
 src/sql/pgsql/scripts/admin/populate-items_roles_permissions.sql
-src/sql/pgsql/scripts/admin/populate-meta_tables.sql
-src/sql/pgsql/qto/tables/17.create-table-meta_tables.sql
+src/sql/pgsql/scripts/admin/populate-app_items.sql
+src/sql/pgsql/qto/tables/17.create-table-app_items.sql
 src/sql/pgsql/qto/tables/45.create-table-meta_routes.sql
 src/perl/qto/lib/Qto/App/Sec/Guardian.pm
 src/perl/qto/t/lib/Qto/App/Sec/TestGuardian.t

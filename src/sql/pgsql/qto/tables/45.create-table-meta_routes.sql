@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS meta_routes ; 
+-- DROP TABLE IF EXISTS meta_routes ; 
 
 SELECT 'create the "meta_routes" table'
 ; 
