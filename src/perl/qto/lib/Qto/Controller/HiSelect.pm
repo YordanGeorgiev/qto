@@ -59,6 +59,9 @@ sub doHiSelectItems {
         'meta_cols'     => $meta_cols
       , 'meta_tables'   => $tables_meta
    };
+
+   my $tms = $msg ; # the technical msg
+   $msg =~ s/(.*?)(LINE )(.*)/$1/gm ; 
    $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
    return ; 
 }
