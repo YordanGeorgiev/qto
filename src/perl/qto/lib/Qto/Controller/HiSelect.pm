@@ -46,6 +46,12 @@ sub doHiSelectItems {
   
    return $self->SUPER::doRenderJSON($objCnrUrlPrms->get('http_code'),$objCnrUrlPrms->get('msg'),$http_method,$met,$cnt,$dat) 
       unless $objCnrUrlPrms->doValidateAndSetHiSelect();
+
+   unless ( $objModel->doChkIfTableExists($db , $item ) == 1 ) {
+      $msg = "the document $item does not exist" ;  
+      $self->SUPER::doRenderJSON($http_code,$msg,$http_method,$met,$cnt,$dat);
+      return ; 
+   }
   
    $objRdrDbsFcry    = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
    $objRdrDb 			= $objRdrDbsFcry->doSpawn("$rdbms_type");
