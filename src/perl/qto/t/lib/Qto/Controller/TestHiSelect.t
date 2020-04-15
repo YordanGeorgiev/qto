@@ -30,11 +30,11 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
    $tm = 'status 404 is returned  when the database provided does not exist' ; 
    $url = '/non_existent_db/hiselect/daily_issues' ; 
-	ok ( $t->get_ok($url)->status_is(404)  , $tm ) ; 
+	ok ( $t->get_ok($url)->status_is(400)  , $tm ) ; 
    
    $tm = 'status 404 is returned  when the table  provided does not exist' ; 
    $url = '/non_existent_db/hiselect/daily_issues' ; 
-	ok ( $t->get_ok($url)->status_is(404)  , $tm ) ; 
+	ok ( $t->get_ok($url)->status_is(400)  , $tm ) ; 
 
    my $ua  = $t->ua ; 
    my $response = $ua->get('/' . $db . '/select-tables')->result->json ; 
@@ -66,12 +66,22 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
       $tm = 'return 400 if non-integer is passed for the seq url parameter' ; 
       $url = '/' . $db . '/hiselect/' . $table_name . '?bid=non_integer' ; 
       ok ($t->get_ok($url)->status_is(400) , $tm );
+      
 
       $res = $ua->get($url)->result->json ; 
       my $emsg = "the branch-id bid url parameter should be a whole number" ; 
       ok ( $res->{'msg'} eq $emsg , $emsg) ;
+
    }
 
+      $tm = 'return 400 if non-existent table is requested' ; 
+      my $table_name = 'non_existent';
+      $url = '/' . $db . '/hiselect/' . $table_name  ; 
+      ok ($t->get_ok($url)->status_is(400) , $tm );
+      
+      my $res = $ua->get($url)->result->json ; 
+      my $emsg = "the document $table_name does not exist";
+      ok ( $res->{'msg'} eq $emsg , $emsg) ;
 
 done_testing();
 
