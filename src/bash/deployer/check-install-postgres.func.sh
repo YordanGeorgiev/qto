@@ -23,7 +23,22 @@ EOF_PACKAGES
 	}
 
 	which psql 2>/dev/null || {
-		echo "FATAL failed to install postgres !!!" ; exit 1
+		cat << EOF_UNINSTALL
+      FATAL failed to install postgres !!! You might have to run those manually
+      sudo /etc/init.d/postgresql stop
+      sudo /etc/init.d/postgresql status
+      sudo dpkg --configure -a
+      sudo rm -rf /var/log/postgresql/
+      sudo rm -rf /var/lib/postgresql/
+      sudo apt-get purge -y remove pgdg-keyring postgresql*
+      sudo apt-get -y purge postgresql
+      sudo apt-get -y purge postgresql-contrib
+      sudo apt-get -y purge libpq-dev
+      sudo apt-get -y purge pgadmin3
+      sudo apt-get purge -y postgresql-client
+      sudo apt-get -y purge psql
+EOF_UNINSTALL
+      exit 1
 	}
 
 	echo "check the postgres version:"
