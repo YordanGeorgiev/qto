@@ -109,7 +109,7 @@ sub doGetRsMeta {
 	$objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
    $objRdrDb = $objRdrDbsFcry->doSpawn("$rdbms_type",$db);
 
-   my ($ret, $msg , $msr2 ) = $objRdrDb->doCallFuncGetHashRef('func_get_function_args','pos',$func_name,'public');
+   my ($ret, $msg , $msr2 ) = $objRdrDb->doCallFuncGetHashRef('fnc_get_function_args','pos',$func_name,'public');
    return $msr2 ; 
 }
 

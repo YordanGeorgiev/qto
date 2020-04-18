@@ -10,7 +10,7 @@ GRANT SELECT ON ALL TABLES IN SCHEMA PUBLIC TO usrqtoapp;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO usrqtoapp;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO usrqtoapp;
 
-SELECT rolname, rolsuper, rolinherit, rolcreaterole, rolcreatedb, rolcanlogin, rolreplication, rolconnlimit FROM pg_roles 
+SELECT rolname, rolsuper, rolinherit, rolcreaterole, rolcreatedb, rolcanlogin, rolreplication, rolconnlimit FROM pg_app_roles 
 WHERE 1=1
 AND rolname='usrqtoapp'
 ;

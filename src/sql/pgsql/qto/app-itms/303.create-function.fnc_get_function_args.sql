@@ -1,4 +1,4 @@
-CREATE FUNCTION public.func_get_function_args(
+CREATE FUNCTION fnc_get_function_args(
   IN funcname character varying,
   IN schema character varying,
   OUT pos integer,
@@ -76,7 +76,7 @@ BEGIN
   RETURN;
 END;$$ LANGUAGE plpgsql STABLE STRICT SECURITY INVOKER;
 
-COMMENT ON FUNCTION public.func_get_function_args(character varying, character
+COMMENT ON FUNCTION fnc_get_function_args(character varying, character
 varying)
 IS $$For a function name and schema, this procedure selects for each
 argument the following data:
@@ -86,4 +86,4 @@ argument the following data:
 - data type$$;
 
 -- src: https://www.alberton.info/postgresql_meta_info.html
--- call by: psql -d dev_qto -c "SELECT * FROM  func_get_function_args('func_get_all_users_roles','public') "
+-- call by: psql -d dev_qto -c "SELECT * FROM  fnc_get_function_args('func_get_all_users_app_roles','public') "

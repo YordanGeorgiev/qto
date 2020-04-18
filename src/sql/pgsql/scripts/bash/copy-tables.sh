@@ -1,7 +1,7 @@
 # grab the list of cols straight from bash
 export src_db='dev_qto'
 export tgt_db='prd_phz'
-export table_to_copy='meta_columns'
+export table_to_copy='app_item_attributes'
  psql -d "$src_db" -t -c \
  "SELECT column_name 
  FROM information_schema.columns 

@@ -48,19 +48,19 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       eval { 
          $str_sql = '
             SELECT 
-               ROW_NUMBER () OVER (ORDER BY users.id) as id
-               , users.id                 as user_id
-               , users.email              as email
-               , users.password           as pass
-               , users.name               as user_name 
-               , roles.name               as role
-               , user_roles.description   as description
-            FROM user_roles
-            LEFT JOIN roles ON (roles.guid = user_roles.roles_guid)
-            LEFT JOIN users ON (users.guid = user_roles.users_guid)
+               ROW_NUMBER () OVER (ORDER BY app_users.id) as id
+               , app_users.id                 as user_id
+               , app_users.email              as email
+               , app_users.password           as pass
+               , app_users.name               as user_name 
+               , app_roles.name               as role
+               , app_user_roles.description   as description
+            FROM app_user_roles
+            LEFT JOIN app_roles ON (app_roles.guid = app_user_roles.app_roles_guid)
+            LEFT JOIN app_users ON (app_users.guid = app_user_roles.app_users_guid)
             WHERE 1=1
-            AND users.email = $1
-            AND users.status > 0
+            AND app_users.email = $1
+            AND app_users.status > 0
          ' ; 
       
          $sth = $dbh->prepare($str_sql);  
@@ -105,7 +105,7 @@ sub doNativeLoginAuth  {
 
    eval { 
       $str_sql = '
-         SELECT id,email, password from users 
+         SELECT id,email, password from app_users 
          WHERE 1=1
          AND status > 0
          AND email = $1
@@ -229,7 +229,7 @@ sub doCallFuncGetHashRef {
             $str_sql .= "
                SELECT guid
                ,id
-               , ts_rank(to_tsvector('simple' , f_concat_ws(' ',name,description)) , to_tsquery('" . $ts_qry . "')) as relevancy
+               , ts_rank(to_tsvector('simple' , fnc_concat_ws(' ',name,description)) , to_tsquery('" . $ts_qry . "')) as relevancy
                , name
                , '" . "$table" . "' as item
                , description 
@@ -510,19 +510,19 @@ sub doCallFuncGetHashRef {
 
 		$sql = "
             SELECT   
-               roles.name || '__' ||
+               app_roles.name || '__' ||
                CASE
-                  WHEN (items_roles_permissions.allowed = true) THEN 'may'
-                  WHEN (items_roles_permissions.allowed = false) THEN 'mayNOT'
+                  WHEN (app_items_roles_permissions.allowed = true) THEN 'may'
+                  WHEN (app_items_roles_permissions.allowed = false) THEN 'mayNOT'
                ELSE 'mayNOT'
                END 
-               || '__' || meta_routes.name 
+               || '__' || app_routes.name 
                || '__' || app_items.name as permission
-            FROM items_roles_permissions
-            LEFT JOIN roles ON roles.guid = roles_guid
-            LEFT JOIN meta_routes ON meta_routes.guid = meta_routes_guid
+            FROM app_items_roles_permissions
+            LEFT JOIN app_roles ON app_roles.guid = app_roles_guid
+            LEFT JOIN app_routes ON app_routes.guid = app_routes_guid
             LEFT JOIN app_items ON app_items.guid = app_items_guid
-            ORDER BY roles.name,meta_routes.name,app_items.name
+            ORDER BY app_roles.name,app_routes.name,app_items.name
          ;      
          " ; 
          # debug rint "START ::: RdrPostgresDb.pm :: doLoadProjDbRBACList \n" ;
@@ -541,7 +541,7 @@ sub doCallFuncGetHashRef {
          # say "STOP  ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;   
       };
       if ( $@ ) { 
-         $msg = " failed to get the project database: " . $db . " roles based access control list ! " ; 
+         $msg = " failed to get the project database: " . $db . " app_roles based access control list ! " ; 
          $msg .= $DBI::errstr ; 
          $ret = 1 ; 
          $objLogger->doLogErrorMsg($msg);
@@ -573,14 +573,14 @@ sub doCallFuncGetHashRef {
       eval {
 			$sql = " 
             SELECT node.id, node.level, node.name, node.url, node.type
-            FROM items_doc AS node, items_doc AS parent
+            FROM app_items_doc AS node, app_items_doc AS parent
             WHERE node.lft BETWEEN parent.lft AND parent.rgt
             AND parent.id = 0
             ORDER BY node.lft;
 			" ; 
          $hsr2 = $pg->db->query("$sql")->hashes ; 
          # debug pr $hsr2 ; 
-         # print "STOP ::: RdrPostgresDb.pm items_doc \n" ; 
+         # print "STOP ::: RdrPostgresDb.pm app_items_doc \n" ; 
       };
       if ( $@ ) {
          $rv               = 404 ; 
@@ -625,10 +625,6 @@ sub doCallFuncGetHashRef {
       " ; 
 
       # authentication src: http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $db \n postgres_db_host: $postgres_db_host " ; 
-      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
-      # $objLogger->doLogDebugMsg ( $debug_msg ) ; 
-      
       # src: http://www.easysoft.com/developer/languages/perl/dbd_odbc_tutorial_part_2.html
       $sth = $dbh->prepare($str_sql);  
       # debug rint "$str_sql \n stop RdrPostgresDb.pm" ; 
@@ -779,7 +775,7 @@ sub doCallFuncGetHashRef {
    #
    # -----------------------------------------------------------------------------
    # load the project database meta data. must work for all the tables and colum 
-   # regardless on wether or not the custom meta data in app_items and meta_columns
+   # regardless on wether or not the custom meta data in app_items and app_item_attributes
    # tables are defined !!!
    # -----------------------------------------------------------------------------
    sub doLoadProjDbMetaCols {
@@ -809,8 +805,8 @@ sub doCallFuncGetHashRef {
              , a.attnotnull as not_null
              , com.description as comment
              , coalesce(i.indisprimary,false) as is_primary_key
-             , meta_columns.skip_in_list as skip_in_list
-             , meta_columns.width as width
+             , app_item_attributes.skip_in_list as skip_in_list
+             , app_item_attributes.width as width
          FROM pg_attribute a 
          JOIN pg_class pgc ON pgc.oid = a.attrelid
          LEFT JOIN pg_index i ON 
@@ -820,8 +816,8 @@ sub doCallFuncGetHashRef {
          LEFT JOIN pg_attrdef def ON 
              (a.attrelid = def.adrelid AND a.attnum = def.adnum)
          LEFT JOIN pg_catalog.pg_namespace n ON n.oid = pgc.relnamespace
-         LEFT JOIN meta_columns ON 
-            ( meta_columns.name = a.attname AND meta_columns.table_name = pgc.relname ) 
+         LEFT JOIN app_item_attributes ON 
+            ( app_item_attributes.name = a.attname AND app_item_attributes.table_name = pgc.relname ) 
          WHERE 1=1 
             AND pgc.relkind IN ('r','')
              AND n.nspname <> 'pg_catalog'
@@ -842,9 +838,9 @@ sub doCallFuncGetHashRef {
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ; 
          $mhsr2 = $sth->fetchall_hashref( 'rowid' ) ; 
-         #say "START ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;
-         #p $mhsr2 ; 
-         #say "STOP  ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;   
+         # say "START ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;
+         # p $mhsr2 ; 
+         # say "STOP  ::: RdrPostgresDb.pm :: doLoadProjDbMetaColsData \n" ;   
       };
       if ( $@ or !scalar(%$mhsr2)) { 
          $msg = " failed to get the project database: " . $db . " meta data ! " ; 
@@ -1169,7 +1165,7 @@ sub doCallFuncGetHashRef {
       # CONDITION ? EVALUATE_IF_CONDITION_WAS_TRUE : EVALUATE_IF_CONDITION_WAS_FALSE
       my $QTO_NO_AUTH = defined $ENV{'QTO_NO_AUTH'} ? $ENV{'QTO_NO_AUTH'} : 0;
       if ( defined $who ) {
-         if ( $table eq 'users' and $who ne $admin_user_email){
+         if ( $table eq 'app_users' and $who ne $admin_user_email){
             $str_sql .= "AND email = '" . $who . "'" unless $QTO_NO_AUTH == 1;
          }
       }
@@ -1218,12 +1214,12 @@ sub doCallFuncGetHashRef {
       # rint "$str_sql \n" . 'vim +987 `find . -name RdrPostgresDb.pm`' . "\n" ; 
 
       eval { 
-         $msg = "" ; 
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() or $ret = 400 ; 
          $msg = DBI->errstr if $ret  == 400 ; 
          die "$msg" if $ret == 400 ;
          $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
+         $msg = "" ; 
          unless ( keys %{$hsr2}) {
             $msg = ' no data for this search request !!! ' ;
             $msg = DBI->errstr ;
@@ -1246,6 +1242,7 @@ sub doCallFuncGetHashRef {
 
       $dbh->disconnect();
       binmode(STDOUT, ':utf8');
+      $msg = '' unless $msg ; # which is a smell ..
       return ( $ret , $msg , $hsr2 ) ; 	
 
    }

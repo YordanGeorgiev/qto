@@ -145,17 +145,17 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    # debug p $tx->result->dom->to_string ;
    printf "\n";
    $tm = 'a forbidden backend route should be redirected to the error page';
-   $url = '/' . $db . '/select/roles';
+   $url = '/' . $db . '/select/app_roles';
    $t->get_ok( $url )->status_is(403 , $tm ) ; 
    my $ua  = $t->ua ; 
    my $res = $ua->get($url )->result->json ; 
    #p $res ; print "eof res TestLogon.t todo:ysg \n";
    ok ( $res->{'ret'} == 403 , $tm);
-   $tm = "the ANONYMOUS role SHOULD NOT not have the permission to select the roles item!";
-   ok ( $res->{'msg'} eq "the ANONYMOUS role does not have the permission to select the roles item!", $tm);
+   $tm = "the ANONYMOUS role SHOULD NOT not have the permission to select the app_roles item!";
+   ok ( $res->{'msg'} eq "the ANONYMOUS role does not have the permission to select the app_roles item!", $tm);
    printf "\n";
    
-   $url = '/' . $db . '/list/roles';
+   $url = '/' . $db . '/list/app_roles';
    $t->get_ok( $url )->status_is(200 , $tm ) ; 
    $ua  = $t->ua ; 
    $tm = 'a forbidden ui route should be redirected to the search page';

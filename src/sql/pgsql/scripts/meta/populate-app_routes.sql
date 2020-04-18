@@ -1,4 +1,4 @@
-CREATE TABLE meta_data as
+CREATE TABLE meta_cols as
          SELECT DISTINCT
              ROW_NUMBER () OVER (ORDER BY pgc.relname , a.attnum) as id,gen_random_uuid() as guid
              , pgc.relname as table_name
@@ -28,3 +28,4 @@ CREATE TABLE meta_data as
          AND NOT a.attisdropped
          ORDER BY id
 ;
+

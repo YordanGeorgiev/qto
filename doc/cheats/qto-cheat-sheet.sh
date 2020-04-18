@@ -1,5 +1,10 @@
 # file: doc/cheats/qto-cheat-sheet.sh
 
+psql -d "$postgres_db_name" -c \
+   "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public TO $postgres_db_user; 
+   GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user;
+   GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO $postgres_db_user
+ "
 # how-to check the perl syntax of single perl file : 
 perl -MCarp::Always -I `pwd`/src/perl/*/ -I `pwd`/src/perl/*/lib/ -wc \
    src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
@@ -36,8 +41,6 @@ mojo get 'http://host-name:8082/tst_qto/hiselect/requirements_doc?bid=0&oa=seq' 
 
 psql -t -d dev_qto -c "select array_to_json(array_agg(row_to_json(t))) from ( select * from release_issues ) t"|jq
 
-psql -d "$postgres_db_name" -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public 
-   TO $postgres_db_user; GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user"
 
 # list all the tables in the terminal
 clear ; psql -d dev_qto -t -c '\dt' | cut -c 11- | perl -ne 's/^([a-z_0-9]*)( )(.*)/$1/; print '

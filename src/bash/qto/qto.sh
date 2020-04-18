@@ -7,14 +7,14 @@
 main(){
    do_init
 
-   is_daemon=0;actions=''
+   dir=0;actions=''
 
 	while getopts "a:d:f:t:" opt; do
 		 case $opt in
 			  a) actions="${actions}$OPTARG ";;
 			  t) table=("$OPTARG ");;
 			  f) file=("$OPTARG ");;
-			  d) is_daemon=("$OPTARG ");;
+			  d) dir=("$OPTARG ");;
 			  \?) do_exit 2 "Invalid option: -$OPTARG";;
 			  :) do_exit 2 "Option -$OPTARG requires an argument."
 		 esac

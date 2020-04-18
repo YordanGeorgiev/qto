@@ -49,7 +49,7 @@ h1 {
 
 <script>
 
-//`http://host-name:3001/qto/select/roles?pick=id,name&like-by=name&like-val=${escape(search)}`
+//`http://host-name:3001/qto/select/app_roles?pick=id,name&like-by=name&like-val=${escape(search)}`
 
 var vueSelect = Vue.component('vue-select', {
     template: "#vue-select-tmpl"
@@ -57,7 +57,7 @@ var vueSelect = Vue.component('vue-select', {
   , data: function(){
     return { 
       options: []
-      , url: `http://host-name:3001/qto/select/roles`
+      , url: `http://host-name:3001/qto/select/app_roles`
       }
   },
   mounted(){
@@ -114,7 +114,7 @@ new Vue({
 
 </script>
 <p><pre>
- - gets the data on mount from http://host-name:3001/qto/select/roles
+ - gets the data on mount from http://host-name:3001/qto/select/app_roles
  - note the {{ option.name }} sets the template
  - can filter by typing from the web service ( local dev is up and running )
 </pre></p>
