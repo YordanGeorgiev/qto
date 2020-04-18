@@ -3,9 +3,8 @@
 cnf/env/dev.env.json
 cnf/env/tst.env.json
 cnf/env/prd.env.json
-# start errors
+src/bash/qto/funcs/search-and-replace-tokens.func.sh
 src/perl/qto/templates/exception.production.html.ep
-# stop  errors
 src/bash/qto/scripts/web-to-db-upsert.sh
 src/perl/qto/lib/Qto/Controller/Logon.pm
 src/perl/qto/lib/Qto/Controller/Login.pm
@@ -16,11 +15,8 @@ src/perl/qto/t/lib/Qto/Controller/TestLogin.t
 src/perl/qto/t/lib/Qto/Controller/TestLogon.t
 src/perl/qto/templates/pages/login
 # start roles based access 
-src/sql/pgsql/qto/tables/37.create-table-items_roles_permissions.sql
-src/sql/pgsql/scripts/admin/populate-items_roles_permissions.sql
+src/sql/pgsql/scripts/admin/populate-app_items_roles_permissions.sql
 src/sql/pgsql/scripts/admin/populate-app_items.sql
-src/sql/pgsql/qto/tables/17.create-table-app_items.sql
-src/sql/pgsql/qto/tables/45.create-table-meta_routes.sql
 src/perl/qto/lib/Qto/App/Sec/Guardian.pm
 src/perl/qto/t/lib/Qto/App/Sec/TestGuardian.t
 src/perl/qto/lib/Qto/Auth/User.pm
@@ -197,7 +193,6 @@ src/bash/qto/funcs/admin/restart-postgres.func.sh
 src/bash/qto/funcs/full-clean-docker.func.sh
 src/bash/qto/tests/build-docker-image.test.sh
 src/sql/pgsql/scripts/admin/grant-permissions.sql
-src/sql/pgsql/scripts/meta/populate-meta-data-table.sql
 src/bash/qto/funcs/admin/restart-postgres.func.sh
 cnf/postgres/etc/postgresql/12/main
 cnf/postgres/etc/postgresql/12/main/pg_hba.conf
@@ -511,11 +506,21 @@ src/bash/qto/funcs/run-qto-db-ddl.func.sh
 src/sql/pgsql/qto/00.create-db.pgsql
 src/sql/pgsql/qto/01.create-qto-app-user.pgsql
 src/sql/pgsql/qto/02.alter-qto-app-user.pgsql
-src/sql/pgsql/qto/tables/02.create-table-items_doc.sql
-src/sql/pgsql/qto/funcs/01.create-func-fns_update_time.sql
-src/sql/pgsql/qto/funcs/02.create-func-f_concat_ws.sql
-src/sql/pgsql/qto/funcs/03.create-func.func_get_meta_routes.sql
-src/sql/pgsql/qto/funcs/04.create-func.func_get_function_args.sql
+src/sql/pgsql/qto/03.create-function.fnc_set_update_time.sql
+src/sql/pgsql/qto/app-itms/001.create-table.app_users.sql
+src/sql/pgsql/qto/app-itms/002.create-table.app_roles.sql
+src/sql/pgsql/qto/app-itms/003.create-table.app_user_roles.sql
+src/sql/pgsql/qto/app-itms/004.create-table.app_items.sql
+src/sql/pgsql/qto/app-itms/005.create-table.app_items_doc.sql
+src/sql/pgsql/qto/app-itms/005.create-table.app_item_attributes.sql
+src/sql/pgsql/qto/app-itms/006.create-table.app_routes.sql
+src/sql/pgsql/qto/app-itms/007.create-table.app_items_roles_permissions.sql
+src/sql/pgsql/qto/app-itms/300.create-function.fnc_set_update_time.sql
+src/sql/pgsql/qto/app-itms/301.create-function.fnc_concat_ws.sql
+src/sql/pgsql/qto/app-itms/302.create-function.fnc_get_app_routes.sql
+src/sql/pgsql/qto/app-itms/303.create-function.fnc_get_function_args.sql
+src/sql/pgsql/qto/app-itms/304.create-function.fnc_get_all_app_user_roles.sql
+src/sql/pgsql/qto/app-itms/305.create-function.fnc_get_app_items_roles_permissions.sql
 src/sql/pgsql/qto/tables
 src/sql/pgsql/qto/tables/2020/2020-01
 src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2018.sql
@@ -546,8 +551,7 @@ src/sql/pgsql/qto/tables/13.create-table-requirements_doc.sql
 src/sql/pgsql/qto/tables/14.create-table-ideas.sql
 src/sql/pgsql/qto/tables/15.create-table-skills.sql
 src/sql/pgsql/qto/tables/16.create-table-userstories_doc.sql
-src/sql/pgsql/qto/tables/18.create-table-meta_columns.sql
-src/sql/pgsql/qto/tables/18.1.create-table-meta_cols.sql
+src/sql/pgsql/qto/tables/17.create-table-meta_cols.sql
 src/sql/pgsql/qto/tables/19.create-table-naming_conventions.sql
 src/sql/pgsql/qto/tables/20.create-table-goals.sql
 src/sql/pgsql/qto/tables/21.create-table-devops_guide_doc.sql
@@ -563,11 +567,6 @@ src/sql/pgsql/qto/tables/30.create-table-maintenance_guide_doc.sql
 src/sql/pgsql/qto/tables/31.create-table-readme_doc.sql
 src/sql/pgsql/qto/tables/32.create-table-export_files.sql
 src/sql/pgsql/qto/tables/33.create-table-links.sql
-src/sql/pgsql/qto/tables/34.create-table-roles.sql
-src/sql/pgsql/qto/tables/35.create-table-users.sql
-src/sql/pgsql/qto/tables/36.create-table-user_roles.sql
-src/sql/pgsql/qto/tables/36.01.create-func.func_get_all_users_roles.sql
-src/sql/pgsql/qto/tables/36.01.create-func.func_get_items_roles_permissions.sql
 src/sql/pgsql/qto/tables/38.create-table-onboarding_guide_doc.sql
 src/sql/pgsql/qto/tables/39.create-table-security_checklist_doc.sql
 src/sql/pgsql/qto/tables/40.definitions_dictionary.sql

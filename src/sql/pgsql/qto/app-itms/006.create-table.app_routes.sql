@@ -1,8 +1,8 @@
--- DROP TABLE IF EXISTS meta_routes ; 
+-- DROP TABLE IF EXISTS app_routes ; 
 
-SELECT 'create the "meta_routes" table'
+SELECT 'create the "app_routes" table'
 ; 
-   CREATE TABLE meta_routes (
+   CREATE TABLE app_routes (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , prio           integer NOT NULL DEFAULT 1
@@ -12,12 +12,12 @@ SELECT 'create the "meta_routes" table'
     , name           varchar (200) NOT NULL DEFAULT 'route-name...'
     , description    varchar (4000) DEFAULT 'description...'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
-    , CONSTRAINT pk_meta_routes_guid PRIMARY KEY (guid)
+    , CONSTRAINT pk_app_routes_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
     );
 
-create unique index idx_uniq_meta_routes_id on meta_routes (id);
+create unique index idx_uniq_app_routes_id on app_routes (id);
 
 
 
@@ -26,28 +26,28 @@ SELECT 'show the columns of the just created table'
 
    SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute
-   WHERE  attrelid = 'public.meta_routes'::regclass
+   WHERE  attrelid = 'public.app_routes'::regclass
    AND    attnum > 0
    AND    NOT attisdropped
    ORDER  BY attnum
    ; 
 
 --The trigger:
-CREATE TRIGGER trg_set_update_time_on_meta_routes BEFORE UPDATE ON meta_routes FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+CREATE TRIGGER trg_set_update_time_on_app_routes BEFORE UPDATE ON app_routes FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
 select tgname
 from pg_trigger
 where not tgisinternal
-and tgrelid = 'meta_routes'::regclass;
+and tgrelid = 'app_routes'::regclass;
 
 
 --
 -- TOC entry 3313 (class 0 OID 60445)
 -- Dependencies: 270
--- Data for Name: meta_routes; Type: TABLE DATA; Schema: public; Owner: usrdevqtoadmin
+-- Data for Name: app_routes; Type: TABLE DATA; Schema: public; Owner: usrdevqtoadmin
 --
 
-COPY public.meta_routes (guid, id, prio, is_open, is_backend, name, description, update_time, has_subject) FROM stdin;
+COPY public.app_routes (guid, id, prio, is_open, is_backend, name, description, update_time, has_subject) FROM stdin;
 15b6523e-8e2c-45bf-bcc4-13bc8da1bf86	200228055434	1	f	f	list	The LIST route tells the qto Application Layer  to list in the qto UI the content of an item ( aka qto api compliant table )	2020-04-02 20:44:01	t
 9b2bfd99-bedc-4c8d-8a89-1051a57386e7	200228153152	1	f	t	insert	The insert route tells the application layer to insert a row via post 	2020-04-02 20:09:46	t
 e86764c7-c25b-4391-a24b-d155f3b7032a	200228080831	1	f	t	truncate	The TRUNCATE route tells the qto Application Layer to truncate a whole item table 	2020-04-03 21:31:09	t

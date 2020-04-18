@@ -223,7 +223,7 @@ sub doValidateAndSetUpdate {
 
    my $col_name      = $perl_hash->{'attribute'} ; 
    my $col_value     = $perl_hash->{'cnt'} ; 
-   my @tables        = ( 'users' , 'test_update_table');
+   my @tables        = ( 'app_users' , 'test_update_table');
 
    if ( grep ( /$item/, @tables ) == 1 ) {
       my $objCnrEncrypter = 'Qto::App::IO::In::CnrEncrypter'->new();

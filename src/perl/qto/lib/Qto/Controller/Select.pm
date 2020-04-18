@@ -61,7 +61,7 @@ sub doSelectItems {
    my $who              = $self->session( 'app.' . $db . '.user' );
 
    ($ret, $msg, $hsr2)  = $objRdrDb->doSelectRows($db, $item,$who);
-   my $app_items      = $objModel->get("$db" . '.meta-tables');
+   my $app_items        = $objModel->get("$db" . '.meta-tables');
    $meta_cols           = $objModel->get("$db" . '.meta-columns');
 
    $met = {
@@ -74,7 +74,8 @@ sub doSelectItems {
    my $msg1 = '' ; my $ret1 = 0;
    ( $ret1 , $msg1 , $dat , $cnt )       = $objCnrHsr2ToArray->doConvert ($hsr2);
 
-   $self->SUPER::doRenderJSON($http_code,$msg . $msg1,$http_method,$met,$cnt,$dat,$ret);
+   $msg = $msg . $msg1 ; 
+   $self->SUPER::doRenderJSON($http_code,$msg, $http_method,$met,$cnt,$dat,$ret);
 }
 
 
@@ -212,7 +213,7 @@ sub doSelectItemMetaFor {
 
    my $self        = shift;
    my $db          = $self->stash('db');
-   my $item        = $self->stash('item') || 'meta_columns';
+   my $item        = $self->stash('item') || 'app_item_attributes';
    my $ret         = 0;
    my $msg         = 'unknown error during Select item';
    my $met         = {} ;

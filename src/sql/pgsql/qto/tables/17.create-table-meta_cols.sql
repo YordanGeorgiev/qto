@@ -1,4 +1,6 @@
 -- DROP TABLE IF EXISTS meta_cols ; 
+-- OBS - this is NOT THE app_item_columns table 
+-- use this one to populate meta data from different dbs ... just like data ... 
 
 SELECT 'create the "meta_cols" table'
 ; 

@@ -1,4 +1,4 @@
--- call by: psql -d dev_qto -v PROCEDURE_NAME=func_get_all_users_roles < src/sql/pgsql/scripts/meta/show-procedure-definition.sql
+-- call by: psql -d dev_qto -v PROCEDURE_NAME=func_get_all_users_app_roles < src/sql/pgsql/scripts/meta/show-procedure-definition.sql
 SELECT      p.proname AS procedure_name,
 --            p.pronargs AS num_args,
 --            t1.typname AS return_type,
@@ -12,5 +12,5 @@ LEFT JOIN   pg_authid a ON p.proowner=a.oid
 LEFT JOIN   pg_language l ON p.prolang=l.oid
 -- WHERE       proname = ':PROCEDURE_NAME' -- nope
 --WHERE       proname like 'func%'
-WHERE       proname = 'func_get_all_users_roles' --ok
+WHERE       proname = 'func_get_all_users_app_roles' --ok
 ;

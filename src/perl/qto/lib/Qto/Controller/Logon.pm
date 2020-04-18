@@ -48,7 +48,7 @@ sub doLogonUser {
    my $redirect_url     = $post_params->{'redirect-url'} or '/' . $db . '/search' ;
    $redirect_url = $self->session( 'app.' . $db . '.redirect-url' ) 
          if defined $self->session( 'app.' . $db . '.redirect-url' ) ; 
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , 'users') ;
+   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , 'app_users') ;
    my $objCnrPostPrms   = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
  
    $msg .= " attempt for $email ";

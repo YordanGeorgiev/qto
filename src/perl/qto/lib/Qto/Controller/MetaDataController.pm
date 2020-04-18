@@ -43,9 +43,9 @@ sub doReloadProjDbMetaData {
    my $item          = shift || '' ; 
    $db               = toEnvName ( $db , $config ) ;
    $objModel->set('postgres_db_name' , $db ) ; 
-   # reload the columns meta data ONLY after the meta_columns has been requested
+   # reload the columns meta data ONLY after the app_item_attributes has been requested
    # each one of those requested by the UI triggers meta data reload to redis !!!
-   if ( $item eq 'app-startup' or $item eq 'meta_columns' or $item eq 'app_items' or $item eq 'items_doc') {
+   if ( $item eq 'app-startup' or $item eq 'app_item_attributes' or $item eq 'app_items' or $item eq 'items_doc') {
 
       my $objWtrRedis = 'Qto::App::Db::Out::WtrRedis'->new(\$config);
       $self->doReloadProjDbMetaColumns($db,$item,\$objWtrRedis);
@@ -56,11 +56,11 @@ sub doReloadProjDbMetaData {
    } else {
       my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
       my $app_items   = $objRdrRedis->getData(\$config,"$db" . '.meta-tables');
-      my $meta_columns  = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
+      my $app_item_attributes  = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
       my $tables_list   = $objRdrRedis->getData(\$config,"$db" . '.tables-list');
       my $rbac_list     = $objRdrRedis->getData(\$config,"$db" . '.rbac-list');
       
-      $objModel->set($db . '.meta-columns',  $meta_columns);
+      $objModel->set($db . '.meta-columns',  $app_item_attributes);
       $objModel->set($db . '.meta-tables',   $app_items);
       $objModel->set($db . '.tables-list',   $tables_list);
       $objModel->set($db . '.rbac-list',     $rbac_list);
@@ -115,6 +115,7 @@ sub doReloadProjDbMetaTables {
    foreach my $rowid ( sort keys %$hsr ){
       push (@tables_lst, $hsr->{$rowid}->{'table_name'});
    }
+
    $objWtrRedis->setData(\$config, "$db" . '.tables-list', \@tables_lst);
    $objModel->set("$db" . '.tables-list',\@tables_lst);
 
@@ -138,6 +139,7 @@ sub doReloadProjDbRBACList {
    $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type );
    ($ret, $msg , $arr )    = $objRdrDb->doLoadProjDbRBACList( $db ) ; 
 
+   # p $arr ;
    $objWtrRedis->setData(\$config, $db . '.rbac-list', $arr);
    $objModel->set($db . '.rbac-list',$arr);
 
@@ -159,7 +161,7 @@ sub doReloadMetaRoutes {
    $objModel->set('postgres_db_name' , $db ) ; 
    $objRdrDbsFcry          = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config, \$objModel );
    $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type , $db);
-   ($ret, $msg , $hsr )    = $objRdrDb->doCallFuncGetHashRef('func_get_meta_routes','id'); # by convention ?!
+   ($ret, $msg , $hsr )    = $objRdrDb->doCallFuncGetHashRef('fnc_get_app_routes','id'); # by convention ?!
    
    $objWtrRedis->setData(\$config, $db . '.meta-routes', $hsr);
    $config->{'env'}->{'app'}->{$db . '.meta-routes'} = $hsr ; 

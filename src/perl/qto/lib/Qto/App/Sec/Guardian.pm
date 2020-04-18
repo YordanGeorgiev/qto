@@ -96,7 +96,7 @@ our $jwt_private_key_file  = '' ;
          my $jwt           = $controller->session( 'app.' . $db . '.jwt');
 
          # compare the route requested to the rbac list
-         # get the roles from the jwt
+         # get the app_roles from the jwt
          ( my $ret, my $claims_from_token ) = $self->hasValidTokenAndClaims($rmsg , $jwt,$pub_secret);
          return 0 unless $ret == 1;
          
@@ -105,23 +105,21 @@ our $jwt_private_key_file  = '' ;
          my $rbac_list     = $objRdrRedis->getData(\$config,"$db" . '.rbac-list');
 
          # foreach role in the claims, build the permission string:
-         my $roles = $claims_from_token->{'roles'};
+         my $app_roles = $claims_from_token->{'app_roles'};
          my $last_role = '';
-         foreach my $role ( @$roles ) {
-        
+         my $allowed_count = 0 ;
+         foreach my $role ( @$app_roles ) {
             $last_role = $role ; 
             # examples: READER__may__view__yearly_issues or ANONYMOUS__mayNOT__select__users
             my $permission = $role . '__may__' . $web_action . '__' . $act_subject ;
             $permission = $permission . 'all'  unless ( $act_subject);
             # grep the permission string from the rbac_list 
             # if found set rv to 1 , else do nothing as rv is set to 0 
-            $rv = grep ( /^$permission$/, @$rbac_list); # must be the exact match !!!
-            if ( $rv == 1 ) {
-               $$rmsg = '' ;
-               last ;
-            }
+            my $found = 0 ;
+            $found = grep ( /^$permission$/, @$rbac_list); # must be the exact match !!!
+            $allowed_count = $allowed_count + $found if $found > 0 ;
          }
-         return $rv if ( $rv == 1 );
+         return 1 if ( $allowed_count > 0 );
 
          $$rmsg  = "the $last_role role does not have the permission to $web_action " ; 
          $$rmsg .= "the $act_subject item" if $act_subject ; 
@@ -165,7 +163,7 @@ our $jwt_private_key_file  = '' ;
       my $db               = shift ; 
       my $hsr              = shift ; 
       my $claims           = {} ;
-      my @roles            = ();
+      my @app_roles            = ();
 
       foreach my $key ( keys %$hsr ){
          my $row = $hsr->{$key};
@@ -173,8 +171,8 @@ our $jwt_private_key_file  = '' ;
          $claims->{'sub'}     = $row->{'user_id'};
          $claims->{'name'}    = $row->{'user_name'};
          $claims->{'email'}   = $row->{'email'};
-         push ( @roles , $row->{'role'} );
-         $claims->{'roles'}   = \@roles; # user might have 1..* roles
+         push ( @app_roles , $row->{'role'} );
+         $claims->{'app_roles'}   = \@app_roles; # user might have 1..* app_roles
       }
 
       return $claims ;

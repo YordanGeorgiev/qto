@@ -3,6 +3,10 @@
 set -x
 
 main(){
+
+   msg='is not allowed to run sudo'
+   test $(sudo -l -U $USER 2>&1 | grep "$msg") -eq 1 && echo "$USER $msg !!!" && exit 1
+
    do_set_vars "$@"
 	if [[ $APP_TO_DEPLOY == '--help' ]]; then
 		usage

@@ -26,11 +26,11 @@ $objGuardian      = 'Qto::App::Sec::Guardian'->new ( \$config ) ;
 $tn = 'test-01' ; 
 $tm = $tn . " the guardian can issue a RS256 PRIVATE key signed token"; 
 my $hsr = {} ;
-my @roles = ('anonymous');
+my @app_roles = ('anonymous');
 $hsr->{1}->{'user_name'}  = 'user_name' ;
 $hsr->{1}->{'user_id'}    = '1' ;
 $hsr->{1}->{'email'}      = 'test.user@gmail.com' ;
-$hsr->{1}->{'roles'}      = \@roles ; 
+$hsr->{1}->{'app_roles'}      = \@app_roles ; 
 
 my ( $rv, $msg , $jwt ) = $objGuardian->doGrantAccessToken($db,$hsr);
 p $jwt ; 
