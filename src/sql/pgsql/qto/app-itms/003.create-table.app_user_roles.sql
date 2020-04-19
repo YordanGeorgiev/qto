@@ -1,12 +1,10 @@
--- DROP TABLE IF EXISTS app_user_roles ; 
-
 SELECT 'create the "app_user_roles" table'
 ; 
    CREATE TABLE app_user_roles (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , app_users_guid     UUID NOT NULL DEFAULT gen_random_uuid()
-    , app_roles_guid     UUID NOT NULL DEFAULT gen_random_uuid()
+    , app_users_guid     UUID NOT NULL DEFAULT '2660a6e9-9e6b-4faa-8264-27a92872657b'
+    , app_roles_guid     UUID NOT NULL DEFAULT '71eea083-d818-4557-89fe-29eb950881ab'
     , name           varchar (100) NOT NULL DEFAULT 'name...'
     , description    varchar (200) NULL DEFAULT 'description...'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
@@ -16,6 +14,30 @@ SELECT 'create the "app_user_roles" table'
     );
 
 create unique index idx_app_user_roles_uniq_id on app_user_roles (id);
+
+
+/*
+alter table public.app_user_roles 
+   drop constraint fk_app_users_guid 
+; 
+*/
+alter table public.app_user_roles 
+   add constraint fk_app_users_guid 
+   foreign key (app_users_guid)
+   references app_users(guid) 
+   on delete cascade
+;
+/*
+alter table public.app_user_roles 
+   drop constraint fk_app_roles_guid 
+; 
+*/
+alter table public.app_user_roles 
+   add constraint fk_app_roles_guid 
+   foreign key (app_roles_guid)
+   references app_roles(guid) 
+   on delete cascade
+;
 
 
 SELECT 'show the columns of the just created table'

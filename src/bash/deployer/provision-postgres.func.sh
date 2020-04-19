@@ -6,8 +6,7 @@ do_provision_postgres(){
    psql_cnf_dir='/etc/postgresql/12/main'
    sudo mkdir -p "$psql_cnf_dir"
 
-   # probably not needed ...
-   echo "postgres:$postgres_os_usr_pw" | chpasswd  
+   echo "postgres:$postgres_os_usr_pw" | chpasswd   # probably obsolete
    echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' | sudo tee -a /var/lib/postgresql/.bashrc
    
    sudo /etc/init.d/postgresql restart
