@@ -15,10 +15,8 @@ src/perl/qto/t/lib/Qto/Controller/TestLogin.t
 src/perl/qto/t/lib/Qto/Controller/TestLogon.t
 src/perl/qto/templates/pages/login
 # start roles based access 
-src/sql/pgsql/qto/tables/37.create-table-items_roles_permissions.sql
 src/sql/pgsql/scripts/admin/populate-app_items_roles_permissions.sql
 src/sql/pgsql/scripts/admin/populate-app_items.sql
-src/sql/pgsql/qto/tables/17.create-table-app_items.sql
 src/perl/qto/lib/Qto/App/Sec/Guardian.pm
 src/perl/qto/t/lib/Qto/App/Sec/TestGuardian.t
 src/perl/qto/lib/Qto/Auth/User.pm
@@ -195,7 +193,6 @@ src/bash/qto/funcs/admin/restart-postgres.func.sh
 src/bash/qto/funcs/full-clean-docker.func.sh
 src/bash/qto/tests/build-docker-image.test.sh
 src/sql/pgsql/scripts/admin/grant-permissions.sql
-src/sql/pgsql/scripts/meta/populate-meta-data-table.sql
 src/bash/qto/funcs/admin/restart-postgres.func.sh
 cnf/postgres/etc/postgresql/12/main
 cnf/postgres/etc/postgresql/12/main/pg_hba.conf
@@ -503,7 +500,6 @@ src/bash/qto/funcs/increase-date.func.sh
 # the postgres DDL scripts
 src/sql/pgsql
 src/sql/pgsql/qto
-src/sql/pgsql/qto/funcs
 src/bash/qto/funcs/run-pgsql-scripts.func.sh
 src/bash/qto/funcs/run-qto-db-ddl.func.sh
 src/sql/pgsql/qto/00.create-db.pgsql
@@ -548,7 +544,7 @@ src/sql/pgsql/qto/tables/06.create-table-decadally_issues_2020.sql
 src/sql/pgsql/qto/tables/07.create-table-confs.sql
 src/sql/pgsql/qto/tables/09.create-table-questions.sql
 src/sql/pgsql/qto/tables/10.create-table-problems.sql
-krc/sql/pgsql/qto/tables/11.create-table-principles.sql
+src/sql/pgsql/qto/tables/11.create-table-principles.sql
 src/sql/pgsql/qto/tables/12.create-table-check_lists.sql
 src/sql/pgsql/qto/tables/13.create-table-requirements_doc.sql
 src/sql/pgsql/qto/tables/14.create-table-ideas.sql

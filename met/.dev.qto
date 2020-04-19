@@ -500,7 +500,6 @@ src/bash/qto/funcs/increase-date.func.sh
 # the postgres DDL scripts
 src/sql/pgsql
 src/sql/pgsql/qto
-src/sql/pgsql/qto/funcs
 src/bash/qto/funcs/run-pgsql-scripts.func.sh
 src/bash/qto/funcs/run-qto-db-ddl.func.sh
 src/sql/pgsql/qto/00.create-db.pgsql
