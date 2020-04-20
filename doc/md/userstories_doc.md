@@ -18,6 +18,8 @@
     * [2.4.2. Managing listings from the left menu](#242-managing-listings-from-the-left-menu)
     * [2.4.3. Managing documents from the left menu](#243-managing-documents-from-the-left-menu)
     * [2.4.4. Managing folders on the left menu](#244-managing-folders-on-the-left-menu)
+    * [2.4.5. Fixing the left menu](#245-fixing-the-left-menu)
+    * [2.4.6. Drag to widen or shrink the left menu](#246-drag-to-widen-or-shrink-the-left-menu)
   * [2.5. THE LIST PAGE UI](#25-the-list-page-ui)
     * [2.5.1. Search in the list page](#251-search-in-the-list-page)
     * [2.5.2. Items listing](#252-items-listing)
@@ -75,13 +77,19 @@
     * [2.7.2. Global search from the view page](#272-global-search-from-the-view-page)
     * [2.7.3. Global search modal dialog ui](#273-global-search-modal-dialog-ui)
       * [2.7.3.1. Search-autocomplete on modal search dialog](#2731-search-autocomplete-on-modal-search-dialog)
-  * [2.8. THE REPORT PAGE](#28-the-report-page)
-  * [2.9. THE NOTES PAGE / UI](#29-the-notes-page-/-ui)
-  * [2.10. THE CHAT UI](#210-the-chat-ui)
-  * [2.11. MULTI-PROJECT AWARE UI](#211-multi-project-aware-ui)
-    * [2.11.1. Items data transfer between different projects](#2111-items-data-transfer-between-different-projects)
-    * [2.11.2. Items move](#2112-items-move)
-  * [2.12. ISSUES IMPORT FROM GOOGLE CALENDAR](#212-issues-import-from-google-calendar)
+  * [2.8. THE PRESS PAGE](#28-the-press-page)
+    * [2.8.1. URL naming convention of the press page](#281-url-naming-convention-of-the-press-page)
+    * [2.8.2. Articles listing from the press page DAILY](#282-articles-listing-from-the-press-page-daily)
+    * [2.8.3. Articles listing from the press page MONTHLY](#283-articles-listing-from-the-press-page-monthly)
+    * [2.8.4. Articles listing from the press page MONTHLY](#284-articles-listing-from-the-press-page-monthly)
+    * [2.8.5. Accessing a single article / blog post by url](#285-accessing-a-single-article-/-blog-post-by-url)
+  * [2.9. THE REPORT PAGE](#29-the-report-page)
+  * [2.10. THE NOTES PAGE / UI](#210-the-notes-page-/-ui)
+  * [2.11. THE CHAT UI](#211-the-chat-ui)
+  * [2.12. MULTI-PROJECT AWARE UI](#212-multi-project-aware-ui)
+    * [2.12.1. Items data transfer between different projects](#2121-items-data-transfer-between-different-projects)
+    * [2.12.2. Items move](#2122-items-move)
+  * [2.13. ISSUES IMPORT FROM GOOGLE CALENDAR](#213-issues-import-from-google-calendar)
 * [3. TEAM LEADER PERSPECTIVE](#3-team-leader-perspective)
   * [3.1. SECURITY](#31-security)
     * [3.1.1. Data security](#311-data-security)
@@ -326,6 +334,20 @@ I want to be able to create new documents by simple right click on the right men
 As an UI user of the qto application
 in order to be able to be able to organise the structure of my project
 I want to be able to add, update and delete folders from the left menu
+
+    
+
+#### 2.4.5. Fixing the left menu
+As an UI user of the qto application
+in order to be able to be able to better manipulate the items on the left menu
+I want to be able to fix it to not close when clicking somewhere else ....
+
+    
+
+#### 2.4.6. Drag to widen or shrink the left menu
+As an UI user of the qto application
+in order to be able to be able to better manipulate the items on the left menu
+I want to be able to drag the border of the left menu to either widen it or to shrink it , so that a closing button would be visible on left menu hover.
 
     
 
@@ -719,49 +741,93 @@ I want the System to present me with autocomplete of the mostly occurring string
 
     
 
-### 2.8. The report page
+### 2.8. The press page
+
+
+    
+
+#### 2.8.1. URL naming convention of the press page
+As the reader of any qto instance 
+In order to be able to receive and send short URLs from the articles collection of this instance
+I want to have a short and time based url in order to be able to quickly access it from the history of my browser.
+
+    
+
+#### 2.8.2. Articles listing from the press page DAILY
+As the reader of a qto instance
+In order to be able to quickly access all the articles per DAY
+I want to access all the articles per day by accessing the following url : 
+&lt;&lt;proj&gt;&gt;/press/&lt;&lt;yyyy&gt;&gt;-&lt;&lt;mm&gt;&gt;-&lt;&lt;dd&gt;&gt;
+
+    
+
+#### 2.8.3. Articles listing from the press page MONTHLY
+As the reader of a qto instance
+In order to be able to quickly access all the articles per MONTH
+I want to access all the articles per day by accessing the following url : 
+&lt;&lt;proj&gt;&gt;/press/&lt;&lt;yyyy&gt;&gt;-&lt;&lt;mm&gt;&gt;
+
+    
+
+#### 2.8.4. Articles listing from the press page MONTHLY
+As the reader of a qto instance
+In order to be able to quickly access all the articles per YEAR
+I want to access all the articles per day by accessing the following url : 
+&lt;&lt;proj&gt;&gt;/press/&lt;&lt;yyyy&gt;&gt;
+
+    
+
+#### 2.8.5. Accessing a single article / blog post by url
+As the reader of a qto instance
+In order to be able to quickly access a single article
+I want to access a single article by using the following naming convention
+&lt;&lt;proj&gt;&gt;/press/&lt;&lt;yyyy&gt;&gt;-&lt;&lt;mm&gt;&gt;-&lt;&lt;dd&gt;&gt;/&lt;&lt;article-short-title&gt;&gt;
+
+    
+
+### 2.9. The report page
 As the UI of the qto application
 In order to be able to quickly view the results of predefined reports ( which are actually stored_procedures in the product databases ) 
-I want to be able to execute an report by providing the following syntax
+I want to be able to execute a report by providing the following syntax
 
      <<server>>:<<port>>/<<proj-db>>/report/<<stored-procedure-name>>?p_01=<<parameter-01-value>>&?p_02=<<parameter-02-value>> ... 
 
-### 2.9. The notes page / UI
+### 2.10. The notes page / UI
 The 7 sticky notes would be used for practising :
  - the cruds with web sockets
  - the per user data management
 
     
 
-### 2.10. The chat UI
+### 2.11. The chat UI
 As UI user
 In order to be able to quickly communicate on anything with other qto users of the qto applications 
 I want to be able to use a quick chat with other users within the application instance
 
     
 
-### 2.11. Multi-project aware UI
+### 2.12. Multi-project aware UI
 As the UI user of an qto instance 
 In order to save be able to track my personal time usage between different projects and the different interdependencies 
 I want to be able to move items data from one project to another via the UI.
 
     
 
-#### 2.11.1. Items data transfer between different projects
+#### 2.12.1. Items data transfer between different projects
 As the UI user of an qto instance 
 In order to manage multiple projects efficiently
 I want to be able to move items data from one project to another via the UI in a trusted manner.
 
     
 
-#### 2.11.2. Items move
+#### 2.12.2. Items move
 As an UI user of the application 
 I order to move the items into different tables
 I want to  be able to move them from a button in the listing page by specifying the target table
 
     
 
-### 2.12. Issues import from Google calendar
+### 2.13. Issues import from Google calendar
 As the UI user of an qto instance 
 In order to be able to visualise and manage my  start- and stop_time having issues better 
 I want to  be able to import my Google calendar issues into my qto profile on an qto instance
@@ -788,7 +854,7 @@ As the biz team leader In order to protect the data of the project, which is vit
 #### 3.1.2. Roles management
 As the Instance Owner or Product Owner 
 in order to have a finer granularity on the different data stored in my instance 
-I want to be able to define roles and per roles visibility on : 
+I want to be able to define app_roles and per app_roles visibility on : 
  - item page level 
  - item row level
  - item tag level
@@ -846,7 +912,7 @@ I want to be able to grant separate read, write and execute access per table and
 
 #### 3.3.1. Role based secure access to data per table or report for role
 As the team leader of a qto project
-In order to restrict the certain operations to certain tables for the authenticated roles
+In order to restrict the certain operations to certain tables for the authenticated app_roles
 I want to be able to grant separate read, write and execute access per table and role.
 
     
@@ -1457,7 +1523,7 @@ I want to have user friendly development experience.
 ### 10.1. Foreign Keys (FK) configurability
 As the UI Developer 
 In order to be able to be able to quickly display FK table values as drop boxes 
-I want to be able to configure from the meta_columns table :
+I want to be able to configure from the app_item_attributes table :
  - the table from which the drop box will fetch it's values ( if not defined use the &lt;&lt;table&gt;&gt;_guid
  - the attribute name from which the drop down list will be built
 

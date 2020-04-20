@@ -312,7 +312,7 @@ Each back-end update from the UI takes no longer than 0.2 s. in a non-stressed q
     
 
 #### 6.2.1. Metadata caching via Redis
-All the meta data of the application during each request is fetched from Redis ( and can be re-load into Redis by loading the app_items or the meta_columns item in the browser)
+All the meta data of the application during each request is fetched from Redis ( and can be re-load into Redis by loading the app_items or the app_item_attributes item in the browser)
 
     
 
@@ -570,9 +570,9 @@ Only the SysAdmin of the System can add basic authentication and simple native m
     
 
 #### 9.2.1. Roles based access control list
-The qto application has a centralised roles based access control list accessible from the following url: 
-&lt;&lt;proj-db&gt;&gt;/list/items_roles_permissions. 
-This list will define who ( which roles ) , can or cannot do what and why - the description field. The actual application of this Access Control List has NOT been yet implemented ...
+The qto application has a centralised app_roles based access control list accessible from the following url: 
+&lt;&lt;proj-db&gt;&gt;/list/app_items_roles_permissions. 
+This list will define who ( which app_roles ) , can or cannot do what and why - the description field. The actual application of this Access Control List has NOT been yet implemented ...
 
     
 
