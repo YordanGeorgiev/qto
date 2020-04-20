@@ -95,6 +95,7 @@
       * [10.2.3.3. Roles based Access Control list for routes and items](#10233-roles-based-access-control-list-for-routes-and-items)
       * [10.2.3.4. Role Based Access Control on tables row level](#10234-role-based-access-control-on-tables-row-level)
       * [10.2.3.5. Support for segregation of duties](#10235-support-for-segregation-of-duties)
+    * [10.2.4. Role level based security ](#1024-role-level-based-security-)
 * [11. DOCUMENTATION](#11-documentation)
   * [11.1. DOCUMENTATION COMPLETENESS](#111-documentation-completeness)
   * [11.2. DOCUMENTATION AND CODE BASE SYNCHRONIZATION](#112-documentation-and-code-base-synchronization)
@@ -635,6 +636,12 @@ The application must provide a revocable traditional permissions model for table
 
 ##### 10.2.3.5. Support for segregation of duties
 The application must support segregation of duties during deployment, that is the team which delivers the new software version / configuration change must be able to trigger the deployment to production without actually having access to the production data.
+
+    
+
+#### 10.2.4. Role level based security 
+The qto must support row level based security : 
+https://www.postgresql.org/docs/current/ddl-rowsecurity.html
 
     
 

@@ -87,7 +87,7 @@ This section describes the current system infrastructure.
     
 
 ### 3.1. System architectural overview by SIWA dia
-The following diagram implements the Simplest Possible Way of describing Architecture principle - it's sole purpose is to quickly provide an overview of the existing infrastructure built with the help of the qto application as well as provide visual tool for communication related to the application. 
+The following diagram implements the Simplest Possible Way of describing Architecture principle - it's sole purpose is to quickly provide an overview of the existing infrastructure built with the help of the qto application as well as provide visual tool for communication related to thejyot application. 
 
 
 Figure 1:
@@ -199,7 +199,7 @@ The id's of the tables which ARE VISIBLE to the end users ui are big integers, w
     
 
 ### 4.4. Hot meta data reload functionality
-In most of the modern applications using databases as main data storage, the changes in the Entity models mean in most of the cases full release of the application. Qto simplistic UI interfaces and the hot meta-data reload functionality enable all the changes to the db, which do not break the qto table api ( basically guid and id columns), to be performed only without even having to restart the application layer, but only by reloading one of the following meta-data tables - items_doc, app_items, meta_columns
+In most of the modern applications using databases as main data storage, the changes in the Entity models mean in most of the cases full release of the application. Qto simplistic UI interfaces and the hot meta-data reload functionality enable all the changes to the db, which do not break the qto table api ( basically guid and id columns), to be performed only without even having to restart the application layer, but only by reloading one of the following meta-data tables - items_doc, app_items, app_item_attributes
 
     
 

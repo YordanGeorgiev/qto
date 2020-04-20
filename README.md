@@ -16,7 +16,7 @@
     
 
 ## 1. WHY
-Why ?! Yet !!  Another App/Tool/Framework/CMS ?! ... ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿ !!!
+Why ?! Yet !!  Another App/Tool/Framework/CMS ?! ... ¿¿¿¿¿¿¿ !!!
 
 Software development is prohibitively expensive. In fact any endeavour with team of people aiming towards common goal in any field is expensive, even solely based on persons' time spent. 
 
@@ -28,9 +28,9 @@ Still here ?! Let's move on !
 
 ## 2. SO, WHAT IS THIS ?!
 The short and non-technical answer is: 
-QTO is a simplistic, UI-wise, but extremely scalable and versatile incident management and documentation application used for the managing of multiple projects.
+QTO is a simplistic UI-wise, but extremely scalable and versatile web-based incident management and documentation application used for the managing of multiple projects.
 The long and more technically in-depth answer goes as follows: 
-A generic and simplistic db centric content management system, build on Postgres CRUDs ( s stands for search ) and hierarchical nested data-sets MULTIPLE databases from the same web application. An included example application is the "qto application", which is kind of incident management and issues handling tool, used for, well managing it's self ;o). 
+A generic and simplistic db centric web-based content management system, build on Postgres CRUDs ( s stands for search ) and hierarchical nested data-sets MULTIPLE databases from the same web application. An included example application is the "qto application", which is kind of incident management and issues handling tool, used for managing of multiple sites and well managing itself ;o). 
 The full and extensive https://qto.fi/qto/view/features_doc contains all the features and functionalities of THIS released version. 
 
 
@@ -49,6 +49,7 @@ Manage your projects with scale and to the finest granularity of your choice by:
  - ideas generation
  - official documentation creation ( with interlinked content to those above )
  - &lt;&lt;your-items-of-interest-interlinked&gt;&gt; ( items are just tables with id,and guid ... )
+from both mobile and desktop browsers
 
 
     

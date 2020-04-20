@@ -28,6 +28,7 @@
     * [4.5.2. Restore a database from db inserts file](#452-restore-a-database-from-db-inserts-file)
   * [4.6. RESTORE A DATABASE TABLE](#46-restore-a-database-table)
   * [4.7. CREATE A FULL BACKUP OF AN INSTANCE SITE FROM A SATELLITE HOST](#47-create-a-full-backup-of-an-instance-site-from-a-satellite-host)
+  * [4.8. BACKUP MULTIPLE EC2 SERVERS FROM THE SATELLITE HOST](#48-backup-multiple-ec2-servers-from-the-satellite-host)
 * [5. SHELL ACTIONS](#5-shell-actions)
   * [5.1. BACKUP DIRECTORIES WITH RSYNC](#51-backup-directories-with-rsync)
   * [5.2. LOAD XLS SHEET TO DB A DOC TABLE](#52-load-xls-sheet-to-db-a-doc-table)
@@ -36,12 +37,10 @@
   * [6.1. THE NGINX PROVISIONING](#61-the-nginx-provisioning)
   * [6.2. APPLYING NEW NGINX CONFIGURATION](#62-applying-new-nginx-configuration)
   * [6.3. OPENING A MONTHLY PERIOD](#63-opening-a-monthly-period)
-  * [6.4. NAME ...](#64-name-)
+  * [6.4. CLOSING A MONTHLY PERIOD](#64-closing-a-monthly-period)
 * [7. BULK ISSUES MANAGEMENT](#7-bulk-issues-management)
-  * [7.1. CLOSING A MONTHLY PERIOD](#71-closing-a-monthly-period)
-  * [7.2. NAME ...](#72-name-)
-  * [7.3. PUBLISH THE RELEASE ISSUES](#73-publish-the-release-issues)
-  * [7.4. DIRS NAMING CONVENTIONS](#74-dirs-naming-conventions)
+  * [7.1. DIRS NAMING CONVENTIONS](#71-dirs-naming-conventions)
+  * [7.2. PUBLISH THE RELEASE ISSUES](#72-publish-the-release-issues)
 * [8. NAMING CONVENTIONS](#8-naming-conventions)
   * [8.1. NAMING CONVENTIONS FOR DIRECTORIES](#81-naming-conventions-for-directories)
   * [8.2. ROOT DIRS NAMING CONVENTIONS](#82-root-dirs-naming-conventions)
@@ -54,6 +53,11 @@
     * [10.1.1. Symptoms](#1011-symptoms)
     * [10.1.2. Probable root cause](#1012-probable-root-cause)
     * [10.1.3. Known solution and workaround](#1013-known-solution-and-workaround)
+  * [10.2. NGINX PRESENTS HTTP 502](#102-nginx-presents-http-502)
+* [11. LINUX SYSTEM ADMINISTRATION](#11-linux-system-administration)
+  * [11.1. CHECK OPEN FILE DESCRIPTORS](#111-check-open-file-descriptors)
+* [12. SECURITY](#12-security)
+  * [12.1. CHECK THE LOGIN EVENTS ON A QTO INSTANCE](#121-check-the-login-events-on-a-qto-instance)
 
 
 
@@ -172,12 +176,12 @@ Qto is data driven application - this means that certain element of the UI could
     
 
 ### 3.1. Hide a column from the list page globally for all users
-Open the meta_columns table, type the item's table_name and the column_name, type 1 in the ski_in_list column.
+Open the app_item_attributes table, type the item's table_name and the column_name, type 1 in the ski_in_list column.
 
     
 
 ### 3.2. Set the width of an item column in the listing page
-Open the meta_columns table, type the item's table_name and the column_name, type a desired number for the width ( 60 might be good default to start experimenting with)
+Open the app_item_attributes table, type the item's table_name and the column_name, type a desired number for the width ( 60 might be good default to start experimenting with)
 
     
 
@@ -193,7 +197,7 @@ Anything you perform as shell action in qto could be applied not only to the cur
     
 
 ### 4.1. Backup a database
-You backup a database ( all the objects, roles and data ) with the following one-liner. 
+You backup a database ( all the objects, app_roles and data ) with the following one-liner. 
 
     # obs you must have the shell vars pre-loaded !!! Note dev, tst or prd instances !
     # clear; doParseCnfEnvVars cnf/qto.prd.host-name.cnf
@@ -296,6 +300,41 @@ Once an instance site is up-and-running - it might be a good idea to create a fu
     # rename it to reflect the fact that this file contains a full backup file
     mv -v ../qto.0.8.1.prd.20200322_122924.ip-10-0-44-231.rel.zip ../qto.0.8.1.prd-fb.20200322_122924.ip-10-0-44-231.rel.zip
 
+### 4.8. Backup multiple ec2 servers from the satellite host
+ The user@host notation in the $PRODUCT_OWNER part ensures that each product instance dir WILL have an unique path even if they are moved between the different qto hosts:
+
+    #set the variables 
+    export ssh_server=qto.fi
+    export ssh_user=ubuntu
+    export src_dir=/home/ubuntu/opt/qto # on the satellite host 
+    export tgt_dir=/hos/opt/opt # on the ssh-server
+    
+    # copy all from src_dir on the ssh server to the tgt dir on the satellite host 
+    rsync -e "ssh -l USERID -i ~/.ssh/id_rsa.aws-ec2.qto.prd" -av -r --partial --progress --human-readable \
+    	--stats $ssh_user@$ssh_server:$src_dir $tgt_dir
+    
+    # and verify
+    clear ; find /hos/opt/qto -type d -maxdepth 0|sort -nr| less
+    
+    # result could look something like 
+    /hos/opt/qto/qto.0.8.3.dev.ysg@host-name
+    /hos/opt/qto/qto.0.8.2.tst.ysg@host-name.20200331_210320
+    /hos/opt/qto/qto.0.8.2.tst.ysg@host-name
+    /hos/opt/qto/qto.0.8.2.tst.ubuntu@qto.fi
+    /hos/opt/qto/qto.0.8.2.tst.ubuntu@csitea.net
+    /hos/opt/qto/qto.0.8.2.prd.ysg@host-name.20200331_210300
+    /hos/opt/qto/qto.0.8.2.prd.ysg@host-name
+    /hos/opt/qto/qto.0.8.2.prd.ubuntu@qto.fi
+    /hos/opt/qto/qto.0.8.2.prd.ubuntu@csitea.net
+    /hos/opt/qto/qto.0.8.2.dev.ysg@host-name
+    /hos/opt/qto/qto.0.8.2.dev.ubuntu@qto.fi
+    /hos/opt/qto/qto.0.8.1.tst.ysg@qto.fi
+    /hos/opt/qto/qto.0.8.1.tst.ubuntu@qto.fi
+    /hos/opt/qto/qto.0.8.1.prd.ysg@qto.fi
+    /hos/opt/qto/qto.0.8.1.prd.ubuntu@qto.fi
+    /hos/opt/qto/qto.0.8.1.prd.ubuntu@csitea.net
+    
+
 ## 5. SHELL ACTIONS
 
 
@@ -305,7 +344,19 @@ Once an instance site is up-and-running - it might be a good idea to create a fu
 You can backup whole directories from remote to local via ssh with the following setup and naming conventions:
 on the local design for each remote a different product owner 
 
-    _
+    export ssh_server=qto.fi
+    export ssh_user=ubuntu
+    export src_dir=/home/ubuntu/opt/qto
+    export tgt_dir=/hos/opt/opt
+    
+    # incremental backuip
+    rsync -e "ssh -l USERID -i ~/.ssh/id_rsa.aws-ec2.qto.prd" -av -r --partial --progress --human-readable \
+    	--stats $ssh_user@$ssh_server:$src_dir $tgt_dir
+    clear ; find /hos/opt/qto -type d -maxdepth 1|sort -nr| less
+    
+    # single backup
+    rsync -e "ssh -l USERID -i ~/.ssh/id_rsa.aws-ec2.qto.prd" -av -r --partial --progress --human-readable \
+    	--stats --delete-excluded ubuntu@$ssh_server:$src_dir $tgt_dir
 
 ### 5.2. Load xls sheet to db a doc table
 To load xls issues to db and from db to txt files
@@ -380,34 +431,27 @@ To create the table you need to basically copy the monthly_issues table to the o
     bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues monthly_issues_202001
     
 
-### 6.4. name ...
+### 6.4. Closing a monthly period
+Closing a monthly period would simply mean to ensure that all the done issues will be moved to the release_issues table an those marked with the '09-done' and '04-diss' status are removed AFTER they have been "copied" aka upserted to the yearly_issues_&lt;&lt;yyyyy&gt;&gt; and monthly_issues_&lt;&lt;yyyymm&gt;&gt; table of the previous month.
 
-
-    _
+    source lib/bash/funcs/export-json-section-vars.sh
+    doExportJsonSectionVars cnf/env/tst.env.json '.env.db'
+    alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} --port $postgres_db_port --host $postgres_db_host"
+    psql -d tst_qto -c "delete from monthly_issues_202004 where issues_status_guid = 'e486d2d7-0789-4af2-8466-9b8c03743d85';"
+    clear ; history | cut -c 8-
 
 ## 7. BULK ISSUES MANAGEMENT
 By bulk issues management herewith is meant the bulk handling via sql to the issues items via the psql binary, which IS basically just moving data from table to table provided they have the same set of columns. 
 
     
 
-### 7.1. Closing a monthly period
-Closing a monthly period would simply mean to ensure that all the done issues will be moved to the release_issues table
-
-    bash src/tpl/psql-code-generator/psql-code-generator.sh tst_qto monthly_issues_202002 release_issues
-    
-
-### 7.2. name ...
-
-
-    _
-
-### 7.3. Publish the release issues
-You publish the release issues by moving all the issues with '09-done' status to the release_issues table
-
-    
-
-### 7.4. Dirs naming conventions
+### 7.1. Dirs naming conventions
 The dir structure should be logical and a person navigating to a dir should almost understand what is to be find in thre by its name .. 
+
+    
+
+### 7.2. Publish the release issues
+You publish the release issues by moving all the issues with '09-done' status to the release_issues table
 
     
 
@@ -521,4 +565,46 @@ List the running perl processes which run the morbo and kill the instances
     
     # be carefull what to kill 
     kill -9 <<proc-I-know-is-the-one-to-kill>>
+
+### 10.2. Nginx presents http 502
+The root cause of this error is not exactly known ... Just restart the via the hypnotoad restart shell action ...
+
+    # in the dev tmux window !!!
+    cd ~/opt/qto/qto.0.8.3.dev.ubuntu@qto.fi
+    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start & # restart 
+    
+    # in the tst tmux window !!!
+    cd ~/opt/qto/qto.0.8.3.tst.ubuntu@qto.fi
+    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start &
+    
+    # in the prd tmux window !!!
+    cd ~/opt/qto/qto.0.8.3.prd.ubuntu@qto.fi
+    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start &
+    
+    # detach from the tmux session
+    
+
+## 11. LINUX SYSTEM ADMINISTRATION
+
+
+    
+
+### 11.1. Check open file descriptors
+To check qto opened file descriptors issue the following command:
+For further reading: 
+https://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/
+https://mojolicious.org/perldoc/Mojo/Server/Hypnotoad#WORKER-SIGNALS
+https://www.cyberciti.biz/tips/linux-procfs-file-descriptors.html
+
+    while read -r p ; do lsof -a -p $p ; done < <(ps aux | grep perl|awk '{print $2}') | less
+
+## 12. SECURITY
+
+
+    
+
+### 12.1. Check the login events on a qto instance
+To heck the login events on a qto instance issue the following command from the product instance dir.
+
+    grep -nHi 'login ' dat/log/qto.2020.04*
 
