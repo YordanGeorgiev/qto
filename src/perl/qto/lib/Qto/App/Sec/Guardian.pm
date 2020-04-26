@@ -64,16 +64,18 @@ our $jwt_private_key_file  = '' ;
    }
 
    # call-by: 
-   # $objGuardian->doAuthenticate($config,$db, $controller);
-   # returns 1 if is authorized, returns 0 if NOT authorized to perform 
+   # unless ( $objGuardian->isAuthorized($c->app->config, $rbac_list, $db, $c, \$msg)){
+   # returns 1 if is authorized, returns 0 if NOT authorized to perform a route call
    # the <<web-action>> to the <<web-action-subject>>
    sub isAuthorized {
 
       my $self                = shift ;
       my $config              = shift ; 
+      my $rbac_list           = shift ; 
       my $db                  = shift ;
       my $controller          = shift ;
       my $rmsg                = shift ; 
+      my $act_subj_over       = shift ;
       my $rv                  = 0;
       $$rmsg                  = 'an error occurred during authentication !!!' ;
 
@@ -84,14 +86,15 @@ our $jwt_private_key_file  = '' ;
       if ( defined $ENV{'QTO_JWT_AUTH'} && $ENV{'QTO_JWT_AUTH'} == 1 ){
          my $path          = $controller->req->url->path;
          my $web_action    = (split('/',$path))[2];
-         my $act_subject   = (split('/',$path))[3] || '' ;
+         my $act_subject   = defined ($act_subj_over ) ? $act_subj_over : (split('/',$path))[3];
+         $act_subject      = '' unless $act_subject ;
          # timestamped tables are just interepreted without the timestamp
          $act_subject      =~ s/^(.*?)([_0-9]*)$/$1/g; #monthly_issues_202001 -> monthly_issues
 
          # get the jwt from the session 
          return 0 unless ( defined ( $controller->session( 'app.' . $db . '.jwt')));
 
-         # get the public key from the session from the config
+         # get the public key from the session from the co unless ( defined $action_subject );
          my $pub_secret    = $config->{'env'}->{'run'}->{ 'PublicRSAKey' } ;
          my $jwt           = $controller->session( 'app.' . $db . '.jwt');
 
@@ -100,10 +103,6 @@ our $jwt_private_key_file  = '' ;
          ( my $ret, my $claims_from_token ) = $self->hasValidTokenAndClaims($rmsg , $jwt,$pub_secret);
          return 0 unless $ret == 1;
          
-         # get the RBAC list from the Redis
-         my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
-         my $rbac_list     = $objRdrRedis->getData(\$config,"$db" . '.rbac-list');
-
          # foreach role in the claims, build the permission string:
          my $app_roles = $claims_from_token->{'app_roles'};
          my $last_role = '';
@@ -137,6 +136,7 @@ our $jwt_private_key_file  = '' ;
       }
 
    }
+   
 
    # --------------------------------------------------------
    # called during the login process

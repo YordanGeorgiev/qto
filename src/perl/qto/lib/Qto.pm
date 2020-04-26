@@ -289,6 +289,8 @@ sub doSetHooks {
          $db         = 'qto' unless $db ;
 			$db         = toEnvName ($db,$c->app->config);
 			my $objGuardian = $self->get('ObjGuardian');
+         my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
+         my $rbac_list     = $objRdrRedis->getData(\$config,"$db" . '.rbac-list');
 
 			unless ( $objGuardian->isAuthenticated($c->app->config, $db, $c, \$msg)){
 				my $login_url = '/' . toPlainName($db) . '/logon' ;
@@ -296,7 +298,7 @@ sub doSetHooks {
 				$c->redirect_to($login_url);
             return ;
 			}
-         unless ( $objGuardian->isAuthorized($c->app->config, $db, $c, \$msg)){
+         unless ( $objGuardian->isAuthorized($c->app->config, $rbac_list, $db, $c, \$msg)){
             foreach my $k(keys %{$config->{'env'}->{'app'}->{$db . '.meta-routes'}}){
                my $r = $config->{'env'}->{'app'}->{$db . '.meta-routes'}->{$k};
                next unless $r->{'name'} eq $route ;

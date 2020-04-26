@@ -9,6 +9,7 @@ use AutoLoader;
 use parent qw(Qto::Controller::BaseController);
 use Data::Printer ; 
 use Data::Dumper; 
+use Carp qw /cluck confess shortmess croak carp/ ; 
 use Qto::App::Utils::Logger;
 use Qto::Controller::PageFactory ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
@@ -18,6 +19,7 @@ use Qto::App::UI::WtrUIFactory ;
 use Qto::Controller::ListLabels ;
 use Qto::App::Utils::Timer ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
+use Qto::App::Sec::Guardian ; 
 
 our $module_trace   = 0 ; 
 our $config      	  = {};
@@ -142,12 +144,20 @@ sub doRenderPageTemplate {
 
    my $tables_list      = $objModel->get("$db" . '.tables-list');
    my @items_arr        = @$tables_list;
+   my $rbac_list_r      = $objModel->get($db . '.rbac-list');
+   my @rbac_list        = @$rbac_list_r ;
+
    my $items_lst        = '';
+	my $objGuardian      = $self->app->get('ObjGuardian');
+
+   my $c = $self ; 
    foreach my $table ( @items_arr ){
       $items_lst .= "'" . "$table" . "'," ;
+      # qto-200426130849 - for some reason breaks the whole ui !!!
+      # nope !!! next unless $objGuardian->isAuthorized($c->app->config, $rbac_list_r, $db, $c, \$msg, $table );
    }
    $items_lst = substr($items_lst, 0, -1);
-	
+
    $self->render(
       'template'        => $template 
     , 'as'              => $as
