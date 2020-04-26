@@ -16,6 +16,12 @@ sub toEnvName {
    my @env_prefixes        = ( 'dev_' , 'tst_' , 'qas_' , 'prd_' );
  
    my $db_prefix           = substr($db,0,4);
+
+   if ( $db =~ m/[^a-z0-9_]/g ) {
+      carp "invalid $db db " ;
+      return $db ;
+   }
+
    unless ( grep ( /^$db_prefix$/, @env_prefixes)) {
       $db = $config->{'env'}->{'run'}->{'ENV_TYPE'} . '_' . $db ; 
    } 

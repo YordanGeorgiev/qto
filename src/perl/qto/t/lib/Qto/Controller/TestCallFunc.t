@@ -14,7 +14,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $t = Test::Mojo->new('Qto');
    my $config = $t->app->config ; 
    my $db= $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
-   my $url = '/' . $db . '/call-func/get_all_users_app_roles';
+   my $url = '/' . $db . '/call-func/get_all_app_user_roles';
 
    $tm = "call the func";
    ok ( $t->get_ok($url)->status_is(200) , $tm ) ;
