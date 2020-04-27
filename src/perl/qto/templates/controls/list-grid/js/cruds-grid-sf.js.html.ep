@@ -67,6 +67,18 @@
            this.showModal = true
            this.cid = e.target.id.replace("btn-modal-","dia-") ; 
        }
+	    , getColDataType: function (col_name){
+            for (var prop in this.$parent.gridMeta) {
+               if (!this.$parent.gridMeta.hasOwnProperty(prop)) {
+                 continue;
+               }
+               if ( (this.$parent.gridMeta[prop])["attribute_name"] !== col_name ) {
+                  continue ;
+               } else {
+                  return (this.$parent.gridMeta[prop])["data_type"]
+               }
+            }
+         }
        , sortBy: function (key) {
             this.sortKey = key
             this.sortOrders[key] = this.sortOrders[key] * -1

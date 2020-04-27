@@ -8,6 +8,7 @@ SELECT 'create the "goals" table'
     , prio           integer NOT NULL DEFAULT 1
     , status         varchar (20) NOT NULL DEFAULT 'status ...'
     , category       varchar (20) NOT NULL DEFAULT 'category ...'
+    , deadline       timestamp NOT NULL DEFAULT DATE_TRUNC('second', NOW())
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000) NOT NULL DEFAULT 'desc ...'
     , seq            integer NULL
@@ -30,6 +31,8 @@ SELECT 'show the columns of the just created table'
    ORDER  BY attnum
    ; 
 
+-- the index 
+CREATE INDEX idx_goals_description ON goals (description);
 
 --The trigger:
 CREATE TRIGGER trg_set_update_time_on_goals BEFORE UPDATE ON goals FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
