@@ -65,8 +65,9 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       
          $sth = $dbh->prepare($str_sql);  
          $sth->bind_param('$1', $email);  # placeholders are numbered from 1, varchar is default db type
-         $sth->execute() or $objLogger->error ( "$DBI::errstr" ) ;
+         $sth->execute() or $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
          $hsr = $sth->fetchall_hashref( 'id' ) ; 
+         p $str_sql ;
                   
          if ( scalar ( keys %$hsr ) >= 1 ) {
             $ret = 200 ; 
@@ -143,7 +144,7 @@ sub doCallFuncGetHashRef {
 		my @params           = @_ ;
 
       my $ret              = 1 ; 
-      my $msg              = 'unknown error has occured during the call func call ' ; 
+      my $msg              = 'unknown error has occured during global search ' ; 
       my $dbh              = {} ; 
       my $sth              = {} ; 
       my $hsr2             = {} ; 
@@ -222,10 +223,6 @@ sub doCallFuncGetHashRef {
       my $str_sql = 'SELECT guid as guid, id as id, item as item, name as name, description as description , relevancy' ; 
       $str_sql .= ', count(*) OVER () as rows_count FROM ( ' ;
       foreach my $table ( @tables ) {
-
-         my @excluded_from_srch = ('app_users' , 'app_roles' , 'app_user_roles', 'user_preferences');
-         next if ( grep (/^$table$/, @excluded_from_srch)); #qto-200426125120
-
          if ( $objModel->doChkIfColumnExists ( $db , $table , 'name' ) == 1
                && $objModel->doChkIfColumnExists ( $db , $table , 'description' ) == 1 ) {
 
@@ -245,6 +242,7 @@ sub doCallFuncGetHashRef {
          }
       }
 	   for (1..10) { chop ( $str_sql ) } ; # chop off the last union all
+      # rint "str_sql : $str_sql \n" ; 
       $str_sql .= ' ) a ' ; 
       my $limit = $objModel->get('query.web-action.pg-size' ) || 7 ; 
       my $page_num = $objModel->get('query.web-action.pg-num' ) || 1 ; 
@@ -253,8 +251,7 @@ sub doCallFuncGetHashRef {
       $offset = $limit*$offset ; 
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset ;" ; 
-      # rint $str_sql ;  
-
+      
       $ret = 0 ; 
       eval { 
          $msg = "" ; 

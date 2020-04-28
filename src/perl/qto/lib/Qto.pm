@@ -110,8 +110,8 @@ sub doLoadAppConfig {
    foreach my $dir (@{$arrDirs}) {
       $dir =~ s/(.*)[\\|\/](.*?)/$2/g;
    }
-
-   $config->{'env'}->{'run'}->{ 'PublicLevel1Dirs' } = $arrDirs;
+   my @dirsAndFiles = @{$arrDirs} ; push @dirsAndFiles , 'index.html' ; 
+   $config->{'env'}->{'run'}->{ 'PublicLevel1Dirs' } = \@dirsAndFiles ;
    # debug rint $config;
    $self = $self->config( $config );
     
@@ -237,7 +237,8 @@ sub doSetHooks {
       my $c       = shift;
       my $url     = (split('#',$c->req->url->path))[0];
       my $msg     = '' ; 
-	
+
+         
 		# If so, try to prevent caching
 		$c->res->headers->header(
 			Expires => Mojo::Date->new(time-365*86400)
@@ -253,12 +254,13 @@ sub doSetHooks {
 		# obs no authentication for static resources ... qto-200314095059
       return unless $type ; 
 		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g);
+      return unless $c->req->url->path->parts->[0] ; # bare url address typed - https://qto.fi
 
       my $route   = (split('/',$url))[2]; #this will fail on new static resource types ...
 	   my $db      = (split('/',$url))[1]; $db = toEnvName($db,$c->app->config);
       my @open_routes = (); 
    
-      my $lvl_1_public_dirs = $config->{'env'}->{'run'}->{ 'PublicLevel1Dirs' } ;
+      my $lvl_1_public_dirs = $config->{'env'}->{'run'}->{ 'PublicLevel1Dirs' } ; 
 
       # basically a static resource fetch ...
       # do not check src/perl/qto/public/poc like locations / routes
