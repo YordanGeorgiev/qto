@@ -65,11 +65,11 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       
          $sth = $dbh->prepare($str_sql);  
          $sth->bind_param('$1', $email);  # placeholders are numbered from 1, varchar is default db type
-         $sth->execute() or $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
+         $sth->execute() or $objLogger->error ( "$DBI::errstr" ) ;
          $hsr = $sth->fetchall_hashref( 'id' ) ; 
-         p $str_sql ;
                   
          if ( scalar ( keys %$hsr ) >= 1 ) {
+            p $hsr ;
             $ret = 200 ; 
             $msg = "" ; 
       } else { 
@@ -1248,7 +1248,139 @@ sub doCallFuncGetHashRef {
 
    }
 
-	
+   # get only rows from an item which belong to the caller's email associated with his app_user_id 
+   sub doSelectMyRows {
+
+      my $self                   = shift ; 
+      my $db                     = shift || croak 'no db passed !!!' ;  
+      my $table                  = shift || croak 'no table passed !!!' ; 
+      my $who                    = shift ; 
+      my $ret                    = 1 ; 
+      my $msg                    = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
+      my $dbh                    = {} ;         # this is the database handle
+
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+      if ( $objModel->doChkIfTableExists( $db , $table ) == 0  ) {
+         $ret = 400 ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
+         return ( $ret , $msg ) ; 
+      }
+
+      my $debug_msg        = q{} ; 
+      my $hsr2             = {} ;         # this is hash ref of hash refs to populate with
+      my $sth              = {} ;         # this is the statement handle
+      my $cols             = () ;         # the array ref of columns
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      my $columns_to_select= '' ; 
+      my $columns_to_order_by_asc   = '' ; 
+      my $columns_to_order_by_desc  = '' ; 
+
+      ( $ret , $msg , $cols ) = $objModel->doGetItemsDefaultPickCols ( $config , $db , $table ) ; 
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
+
+      ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect($table,$cols);
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
+
+      ($ret , $msg , $columns_to_order_by_asc ) = $self->doSetColToOrderByAsc(\$objModel,$table,$cols);
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
+      
+      ($ret , $msg , $columns_to_order_by_desc ) = $self->doSetColToOrderByDesc(\$objModel,$table,$cols);
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
+    
+      $str_sql = " 
+         SELECT 
+         $columns_to_select , count(*) OVER () as rows_count
+         FROM $table 
+         WHERE 1=1 " ; 
+
+      if ( defined $who ) {
+         $str_sql .= "AND $table.app_users_guid IN (
+            SELECT guid from app_users WHERE 1=1 AND email = '" . $who . "'
+            )" ;
+      }
+      
+      my $like_clause = '' ; 
+		( $ret , $msg , $like_clause ) = $self->doBuildLikeClause ( $db , $table  ) ; 
+		
+      return ( $ret , $msg ) unless $ret == 0 ; 
+		$str_sql .= $like_clause if $like_clause ; 
+		
+      my $where_clause_fltr = '' ; 
+		( $ret , $msg , $where_clause_fltr ) = $self->doBuildWhereClauseByFltr ( $db , $table ) ; 
+		return ( $ret , $msg ) unless $ret == 0 ; 
+		$str_sql .= $where_clause_fltr if $where_clause_fltr ; 
+      
+      my $where_clause_with = '' ; 
+		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 0) ; 
+		return ( $ret , $msg ) unless $ret == 0 ; 
+		$str_sql .= $where_clause_with if $where_clause_with ; 
+
+      my $order_by = "\n" . 'ORDER BY' ; 
+      if ( defined $columns_to_order_by_asc ) {
+         $str_sql .= " $order_by " ; 
+         foreach my $col ( split /,/ , $columns_to_order_by_asc ){
+            $str_sql .= " $col," ; 
+         }
+         chop($str_sql); $str_sql .= " ASC" ; 
+      }
+      $order_by = ' , ' if ( $str_sql =~ m/ORDER BY/g ) ; 
+      if ( defined $columns_to_order_by_desc ) {
+         $str_sql .= " $order_by " ; 
+         foreach my $col ( split /,/ , $columns_to_order_by_desc ){
+            $str_sql .= "$col," ; 
+         }
+         chop($str_sql); $str_sql .= " DESC " ; 
+      }
+
+      my $limit = $objModel->get('select.web-action.pg-size' ) || 7 ; 
+      my $page_num = $objModel->get('select.web-action.pg-num' ) || 1 ; 
+      my $offset = ( $page_num -1 ) || 0 ; # get default page is 1
+      
+      $offset = $limit*$offset ; 
+      $offset = 0 if ( $offset < 0 ) ; 
+      $str_sql .= " LIMIT $limit OFFSET $offset " ; 
+
+      print "$str_sql \n" ; carp ("todo:ysg");
+
+      eval { 
+         $sth = $dbh->prepare($str_sql);  
+         $sth->execute() or $ret = 400 ; 
+         $msg = DBI->errstr if $ret  == 400 ; 
+         die "$msg" if $ret == 400 ;
+         $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
+         $msg = "" ; 
+         unless ( keys %{$hsr2}) {
+            p $hsr2 ;
+            carp ("todo:ysg");
+            $msg = ' no data for this search request !!! ' ;
+            $msg = DBI->errstr ;
+            $objLogger->doLogErrorMsg($msg) if $msg ; 
+            $ret = 204 ;
+            return ( $ret , $msg , {} ) ; 
+         } else {
+            $msg = DBI->errstr if $ret  == 400 ; 
+            $objLogger->doLogErrorMsg($msg) if $msg ; 
+            die "$msg" if $ret == 400 ;
+            $ret = 200 ;
+         }
+      };
+      if ( $@ ) { 
+         my $tmsg = "$@" ; 
+         $objLogger->doLogErrorMsg ( "$msg" ) ;
+         $msg = "failed to get $table table data :: $tmsg" unless $ret == 404 ; 
+         return ( $ret , $msg , {} ) ; 
+      };
+
+      $dbh->disconnect();
+      binmode(STDOUT, ':utf8');
+      $msg = '' unless $msg ; # which is a smell ..
+      return ( $ret , $msg , $hsr2 ) ; 	
+
+   }
+
+
 	sub new {
 		my $invocant   = shift ;    
 		$config        = ${ shift @_ } || croak 'config not passed in RdrPostgresDb !!!' ; 
@@ -1378,14 +1510,14 @@ sub doCallFuncGetHashRef {
                )  AS dyn_sql 
             LEFT JOIN ( 
                SELECT 
-                 imgs.id            as img_id
-               , imgs.item_guid     as img_item_guid
-               , imgs.name          as img_name
-               , imgs.relative_path as img_relative_path
-               , imgs.http_path     as img_http_path
-               , imgs.style         as img_style
-               , imgs.description   as img_description
-               FROM imgs
+                 app_imgs.id            as img_id
+               , app_imgs.item_guid     as img_item_guid
+               , app_imgs.name          as img_name
+               , app_imgs.relative_path as img_relative_path
+               , app_imgs.http_path     as img_http_path
+               , app_imgs.style         as img_style
+               , app_imgs.description   as img_description
+               FROM app_imgs
             ) AS imgs
             ON ( dyn_sql.guid = imgs.img_item_guid ) 
 				WHERE 1=1 

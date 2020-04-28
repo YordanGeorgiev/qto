@@ -11,6 +11,7 @@ use parent qw(Qto::Controller::BaseController);
 
 use Data::Printer ; 
 use Data::Dumper; 
+use Gravatar::URL qw(gravatar_url);
 
 use Qto::Controller::PageFactory ; 
 use Qto::App::Db::In::RdrDbsFcry;
@@ -70,7 +71,10 @@ sub doSearchItems {
          }
          $items_lst = substr($items_lst, 0, -1);
       }
-  
+   
+      my $logged_in_usr_email = $self->session( 'app.' . $db . '.user');
+      my $gravatar_url = gravatar_url('email' => $logged_in_usr_email);
+
       $self->render(
          'template'        => 'controls/srch-grid/srch-grid'
        , 'as'              => 'grid'
@@ -86,6 +90,7 @@ sub doSearchItems {
        , 'notice'          => $notice
        , 'left_menu'       => $left_menu
        , 'items_lst'       => $items_lst
+       , 'gravatar_url'    => $gravatar_url
       ) ; 
       return ; 
    }  else {
@@ -156,6 +161,9 @@ sub doRenderPageTemplate {
       $items_lst .= "'" . "$table" . "'," ;
    }
    $items_lst = substr($items_lst, 0, -1);
+      
+   my $logged_in_usr_email = $self->session( 'app.' . $db . '.user');
+   my $gravatar_url = gravatar_url('email' => $logged_in_usr_email);
 
    $self->render(
       'template'        => $template 
@@ -172,6 +180,7 @@ sub doRenderPageTemplate {
     , 'notice'          => $notice
     , 'left_menu'       => $left_menu
     , 'items_lst'       => $items_lst
+    , 'gravatar_url'    => $gravatar_url
 	) ; 
 
    return ; 

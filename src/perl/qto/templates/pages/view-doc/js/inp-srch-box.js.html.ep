@@ -6,6 +6,10 @@ const OmniSrchBox = Vue.component('omni-srch-box', {
          <button id="but_srch" class="cls_img_but" tabindex="1" type="submit" v-on:click="onOmniSrchEnter">
             <sub><img src="../../themes/thme-blue/img/controls/srch.png" /></sub>
          </button>
+         % if ( defined($self->session( 'app.' . $db . '.user'))) {
+            <a href="https://en.gravatar.com/emails/" target="_blank"><img title="logged in as <%== $self->session( 'app.' . $db . '.user') %>" 
+               id="gravatar_url_img" src="<%== $gravatar_url %>"></img></a>
+         % } 
       </nav>
    </div>
 `
