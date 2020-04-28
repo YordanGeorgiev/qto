@@ -116,7 +116,7 @@ textarea {
 }
 
 #grid tbody tr td div{
-   text-align: center;
+   text-align: left;
 }
 .cls_cnt_edtble {
 	padding: 2px;
