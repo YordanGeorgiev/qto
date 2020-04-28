@@ -26,7 +26,8 @@ EOF_CONFIG
 
    aws configure list
    set -x
-   aws s3 cp "$dump_file" s3://$bucket/"$ENV_TYPE"'_'"$RUN_UNIT"'.latest.insrts.dmp.sql' \
+   # remove the grants to disable full publicity of the data ... 
+   aws s3 cp "$dump_file" "s3://$bucket/$postgres_db_name"'.latest.insrts.dmp.sql' \
       --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
    set +x
 

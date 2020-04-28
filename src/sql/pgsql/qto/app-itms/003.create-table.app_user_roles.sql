@@ -66,8 +66,8 @@ and tgrelid = 'app_user_roles'::regclass;
 --
 
 COPY public.app_user_roles (guid, id, app_users_guid, app_roles_guid, name, description, update_time) FROM stdin;
-caa37277-5f81-473d-a4f3-5f43c8efa533	200418123923	2660a6e9-9e6b-4faa-8264-27a92872657b	71eea083-d818-4557-89fe-29eb950881ab	anonymous	the test anonymous user has the anonymous role	2020-04-18 09:39:54
-53fc5912-8193-4e10-a6ed-c77a61e0c4a9	200418123958	2660a6e9-9e6b-4faa-8264-27a92872657c	71eea083-d818-4557-89fe-29eb950881ad	reader	the test reader user has the reader role	2020-04-18 09:40:13
-3645f65a-628b-4cf5-b30c-8386f9547cd0	200418093842	02d16010-20af-4b0d-be86-cdf116a7d8c7	71eea083-d818-4557-89fe-29eb950881aa	product instance owner	the test product instance user has the product instance role 	2020-04-18 09:40:37
-f24f92a7-b378-45a3-9847-dcf9c149dbcb	200418124015	2660a6e9-9e6b-4faa-8264-27a92872657d	71eea083-d818-4557-89fe-29eb950881ac	editor	the editor user has the editor role	2020-04-18 09:40:46
+6f036963-52cc-4d49-ae36-984c75d14bb2	200411160810	2660a6e9-9e6b-4faa-8264-27a92872657c	71eea083-d818-4557-89fe-29eb950881ad	trd must be reader	description...	2020-05-01 21:13:48
+0fb84503-0d7a-4cdc-889b-4e4a8f6aac53	200410220814	2660a6e9-9e6b-4faa-8264-27a92872657d	71eea083-d818-4557-89fe-29eb950881ac	ted must be editor	description...	2020-05-01 21:14:01
+460cc595-7db7-4211-a271-d825b3801d1e	200224195828	2660a6e9-9e6b-4faa-8264-27a92872657b	71eea083-d818-4557-89fe-29eb950881ab	tau must be anonymous	description...	2020-05-01 21:14:11
+472cbd25-d8a5-4828-85f3-556387aea673	200502001551	9426c566-0abd-4028-830f-82ed9f91d262	71eea083-d818-4557-89fe-29eb950881aa	pio must be product instance owner	description...	2020-05-01 21:19:21
 \.

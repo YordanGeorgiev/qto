@@ -41,11 +41,11 @@
   * [3.15. PROVISION PRD DB](#315-provision-prd-db)
 * [4. PROVISION HTTPS (ONLY IF DNS IS CONFIGURED)](#4-provision-https-(only-if-dns-is-configured))
   * [4.1. FORK LATEST STABLE DEV TO TST](#41-fork-latest-stable-dev-to-tst)
+  * [4.2. GO TO YOUR PREVIOUS ENVIRONMENT](#42-go-to-your-previous-environment)
 * [5. NON-FIRST TIME AWS DEPLOYMENT](#5-non-first-time-aws-deployment)
-  * [5.1. GO TO YOUR PREVIOUS ENVIRONMENT](#51-go-to-your-previous-environment)
-  * [5.2. CREATE AWS INSTANCE](#52-create-aws-instance)
-  * [5.3. SETUP BASH & VIM](#53-setup-bash-&-vim)
-  * [5.4. CLONE PROJECT TO GUEST SERVER](#54-clone-project-to-guest-server)
+  * [5.1. CREATE AWS INSTANCE](#51-create-aws-instance)
+  * [5.2. SETUP BASH & VIM](#52-setup-bash-&-vim)
+  * [5.3. CLONE PROJECT TO GUEST SERVER](#53-clone-project-to-guest-server)
 * [6. PHYSICAL HOST OS INSTALLATIONS](#6-physical-host-os-installations)
   * [6.1. MACOS](#61-macos)
     * [6.1.1. Install QtPass](#611-install-qtpass)
@@ -54,8 +54,8 @@
   * [7.2. AWS WAS NOT ABLE TO VALIDATE THE PROVIDED ACCESS CREDENTIALS](#72-aws-was-not-able-to-validate-the-provided-access-credentials)
   * [7.3. REDIS REFUSES TO START ](#73-redis-refuses-to-start-)
   * [7.4. COULD NOT CONNECT TO REDIS SERVER](#74-could-not-connect-to-redis-server)
-  * [7.5. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#75-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
-  * [7.6. CANNOT LOGIN IN WEB INTERFACE WITH ADMIN USER](#76-cannot-login-in-web-interface-with-admin-user)
+  * [7.5. CANNOT LOGIN IN WEB INTERFACE WITH ADMIN USER](#75-cannot-login-in-web-interface-with-admin-user)
+  * [7.6. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#76-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
   * [7.7. MISMATCH IN THE AWS](#77-mismatch-in-the-aws)
   * [7.8. THE PROBLEM OCCURRED IS NOT MENTIONED HERE ?!](#78-the-problem-occurred-is-not-mentioned-here-)
 
@@ -115,12 +115,6 @@ The target setup of both the LOCAL an the AWS deployments is a system comprised 
 The target setup in this section is the "satellite-host" depicted as "dev-mac" in the bellow diagram.
 The following diagram illustrates that setup. Naturally you will be deploying only the dev.&lt;&lt;site&gt;&gt;.com, when performing the installation for first time. Thus, in the spirit of QTO, you will be moving fast and destroying in dev, reinforcing skills in tst and do it at once in prd.
 
-
-
-Figure 1: 
-The target setup for the qto appliction
-![Figure 1: 
-The target setup for the qto appliction](https://github.com/YordanGeorgiev/qto/blob/master/doc/img/system_guide/qto-infra.jpg?raw=true)
 
     
 
@@ -442,18 +436,18 @@ By this point all obvious bugs within the scope of THIS release MUST be cleared 
     # ensure you copy your non-hash and SECRET configuration to this instance
     cp -v ~/.qto/cnf/* cnf/env/
 
-## 5. NON-FIRST TIME AWS DEPLOYMENT
-This section is aimed for the fortuned folks, who have already deployed at least one fully functional up-and-running instance of qto, thus it will assume already some familiarity. 
-
-    
-
-### 5.1. Go to your previous environment
+### 4.2. Go to your previous environment
 Go to your old environment: it contains your configuration at least you could spare yourself for copy paste for the creating of the RIGHT configuration for your ENTIRELY new deployment built with the infrastructure as a code.
 Open the admin console:
 
     ssh -i /home/ysg/.ssh/id_rsa.prd.qto  ubuntu@ec2-52-209-247-245.eu-west-1.compute.amazonaws.com
 
-### 5.2. Create AWS instance
+## 5. NON-FIRST TIME AWS DEPLOYMENT
+This section is aimed for the fortuned folks, who have already deployed at least one fully functional up-and-running instance of qto, thus it will assume already some familiarity. 
+
+    
+
+### 5.1. Create AWS instance
 
 
     bash src/bash/qto/qto.sh -a init-aws-instance
@@ -461,14 +455,14 @@ Open the admin console:
     # after that ssh to -it
     ssh -i ~/.ssh/id_rsa.prd.qto ubuntu@ec2-52-209-247-245.eu-west-1.compute.amazonaws.com
 
-### 5.3. Setup bash & vim
+### 5.2. Setup bash & vim
 This deployment script sets RATHER personal bash and tmux settings, which are NOT part of the QTO setup, but merely personal tools to navigate more easily in the terminal with bash, tmux and vim.
 
     curl https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/src/bash/deployer/setup-bash-n-vim.sh | bash -s yordan.georgiev@gmail.com
     
     cat ~/
 
-### 5.4. Clone project to Guest server
+### 5.3. Clone project to Guest server
 Connect via SSH to the target server and clone QTO Github repository as follows:
 
     cat ~/.ssh/
@@ -560,7 +554,20 @@ Change Redis server IP inside %path-to-qto%/cnf/env/dev.env.json from host-name 
 
     
 
-### 7.5. You have reached the hw provisioning limits of your AWS account
+### 7.5. Cannot login in web interface with admin user
+The password hashing in the users table is activated ALWAYS on blur even that the UI is not showing it (yes, that is more of a bug, than a feature).
+The solution is to restart the application layer WITHOUT any authentication, change the admin user password from the UI and restart the application layer with authentication once again.
+
+    export QTO_NO_AUTH=1
+    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
+    
+    # now change the AdminEmail user password from the UI, delete the test users
+    # as they all have the convenient "secret" password
+    export QTO_NO_AUTH=0
+    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
+    
+
+### 7.6. You have reached the hw provisioning limits of your AWS account
 If you get one of the errors below, go the UI of the AWS admin console and delete non-used resources. Fortunately, all resources have the &lt;&lt;env&gt;&gt;_&lt;&lt;resource_name&gt;&gt; naming convention either in the object or in their Tags, which means you will know what you are deleting.
 
     Error: Error creating VPC: VpcLimitExceeded: The maximum number of VPCs has been reached.
@@ -575,19 +582,6 @@ If you get one of the errors below, go the UI of the AWS admin console and delet
     
       on main.tf line 203, in resource "aws_eip" "tst-ip-test":
      203: resource "aws_eip" "tst-ip-test" {
-
-### 7.6. Cannot login in web interface with admin user
-The password hashing in the users table is activated ALWAYS on blur even that the UI is not showing it (yes, that is more of a bug, than a feature).
-The solution is to restart the application layer WITHOUT any authentication, change the admin user password from the UI and restart the application layer with authentication once again.
-
-    export QTO_NO_AUTH=1
-    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
-    
-    # now change the AdminEmail user password from the UI, delete the test users
-    # as they all have the convenient "secret" password
-    export QTO_NO_AUTH=0
-    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
-    
 
 ### 7.7. Mismatch in the AWS
 The AWS web UI contains fancy Ajax calls and in our experience it does not always update properly, if are bombarding it with terraform deployments onto the same resources. Make sure you always hit F5 in your browser, when starting the work on new ec2 instance.

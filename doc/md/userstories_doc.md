@@ -133,7 +133,7 @@
   * [5.2. MEASURE SUCCESS](#52-measure-success)
   * [5.3. ISSUES OBSERVATION](#53-issues-observation)
   * [5.4. MONITOR SUCCESS](#54-monitor-success)
-* [6. SYSADMIN PERSPECTIVE](#6-sysadmin-perspective)
+* [6. PRODUCT INSTANCE OWNER PERSPECTIVE](#6-product-instance-owner-perspective)
   * [6.1. SYSTEM DEPLOYABILITY](#61-system-deployability)
   * [6.2. TIME MANAGEMENT](#62-time-management)
   * [6.3. SYSTEM STABILITY](#63-system-stability)
@@ -141,12 +141,15 @@
   * [6.5. SYSTEM RELIABILITY](#65-system-reliability)
   * [6.6. PROJECT'S PERSONS ISSUE COMBINATIONS](#66-project's-persons-issue-combinations)
   * [6.7. EASE OF USE](#67-ease-of-use)
+  * [6.8. SECURITY](#68-security)
+    * [6.8.1. Password strength security](#681-password-strength-security)
+    * [6.8.2. Password reset enforceability](#682-password-reset-enforceability)
+    * [6.8.3. Login info](#683-login-info)
 * [7. PROJECT OBSERVER BIZ PERSPECTIVE](#7-project-observer-biz-perspective)
-  * [7.1. SECURITY](#71-security)
-  * [7.2. PROJECTS OBSERVATION](#72-projects-observation)
-    * [7.2.1. Who logged in and out when](#721-who-logged-in-and-out-when)
-  * [7.3. ISSUES OBSERVATION](#73-issues-observation)
-    * [7.3.1. Who changed what and why](#731-who-changed-what-and-why)
+  * [7.1. PROJECTS OBSERVATION](#71-projects-observation)
+    * [7.1.1. Who logged in and out when](#711-who-logged-in-and-out-when)
+  * [7.2. ISSUES OBSERVATION](#72-issues-observation)
+    * [7.2.1. Who changed what and why](#721-who-changed-what-and-why)
 * [8. ETL AND INTEGRATIONS PERSPECTIVE](#8-etl-and-integrations-perspective)
   * [8.1. DATABASE TO JSON FILES DATA LOAD](#81-database-to-json-files-data-load)
   * [8.2. DATABASE METADATA EXPORT](#82-database-metadata-export)
@@ -1139,7 +1142,7 @@ I want to  be able to monitor the metrics of the issues.
 
     
 
-## 6. SYSADMIN PERSPECTIVE
+## 6. PRODUCT INSTANCE OWNER PERSPECTIVE
 As a sysadmin of the qto application 
 In order to complete the tasks and activities of my role
 I want to have a nice user experience while using the qto application.
@@ -1195,6 +1198,35 @@ I want to generally perform any command the system within the sysadmin scope via
 
     
 
+### 6.8. Security
+As the PIO
+In order to be able to provide the best possible security level of operation for the qto instance I am responsible for
+I want to have pre-defined and clear set of tasks and activities to perform related to the security. 
+
+    
+
+#### 6.8.1. Password strength security
+As the SysAdmin
+In order to be assured that the hacking of the system via brut force attack will not be easy
+I want the System to enforce password strength security by not allowing saving of weak passwords.
+
+    
+
+#### 6.8.2. Password reset enforceability
+As the SysAdmin
+In order to be assured that the hacking of the system via brut force attack will not be easy
+I want the System to enforce password strength security by not allowing saving of weak passwords.
+
+    
+
+#### 6.8.3. Login info
+As the PIO
+In order to provide the best possible security for the data of my organisation 
+I want to be able to provide easily and quickly answer to the question :
+Who logged in and out when?
+
+    
+
 ## 7. PROJECT OBSERVER BIZ PERSPECTIVE
 As a project observer 
 In order to observe the advancement of a project  
@@ -1202,21 +1234,14 @@ I want to have a nice user experience while using the qto application.
 
     
 
-### 7.1. Security
-As the SysAdmin
-In order to be able to provide the best possible security level of operation for the qto instance I am responsible for
-I want to have pre-defined and clear set of tasks and activities to perform related to the security. 
-
-    
-
-### 7.2. Projects observation
+### 7.1. Projects observation
 As a project observer 
 In order to observe the advancement of a project  
 I want to be able to observe the project's data. 
 
     
 
-#### 7.2.1. Who logged in and out when
+#### 7.1.1. Who logged in and out when
 As the SysAdmin
 In order to provide the best possible security for the data of my organisation 
 I want to be able to provide easily and quickly answer to the question :
@@ -1224,14 +1249,14 @@ Who logged in and out when?
 
     
 
-### 7.3. Issues observation
+### 7.2. Issues observation
 As a project observer 
 In order to observe the advancement of the project's issues  
 I want to be able to observe the project's issues. 
 
     
 
-#### 7.3.1. Who changed what and why
+#### 7.2.1. Who changed what and why
 As the SysAdmin
 In order to provide the best possible security for the data of my organisation 
 I want to be able to provide easily and quickly answer to the question :

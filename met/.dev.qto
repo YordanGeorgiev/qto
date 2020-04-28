@@ -1,8 +1,8 @@
 # perl_ignore_file_pattern=.*\.swp$|.*\.log|$.*\.swo|\#---$
 # cnf
-cnf/env/dev.env.json
-cnf/env/tst.env.json
-cnf/env/prd.env.json
+# cnf/env/dev.env.json
+# cnf/env/tst.env.json
+# cnf/env/prd.env.json
 src/bash/qto/funcs/search-and-replace-tokens.func.sh
 src/perl/qto/templates/exception.production.html.ep
 src/bash/qto/scripts/web-to-db-upsert.sh
@@ -33,8 +33,10 @@ src/perl/qto/public/lib/js/controls/vue-simple-upload.min.js
 # start redis
 src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/lib/Qto/Controller/Select.pm
+src/perl/qto/lib/Qto/Controller/SelectMy.pm
 src/perl/qto/lib/Qto/Controller/Serve.pm
 src/perl/qto/lib/Qto/Controller/List.pm
+src/perl/qto/lib/Qto/Controller/ListMy.pm
 src/perl/qto/lib/Qto/Controller/MetaDataController.pm
 src/perl/qto/lib/Qto/App/Mdl/Model.pm
 src/perl/qto/t/lib/Qto/App/InOut/TestRedis.t
@@ -114,7 +116,6 @@ src/perl/qto/lib/Qto/Controller/HiCreate.pm
 src/perl/qto/lib/Qto/Controller/HiDelete.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
 src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
-src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrDbName.t
 src/bash/qto/funcs/provision-db-admin.func.sh
 src/bash/qto/funcs/fix-db-permissions.func.sh
 src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
@@ -391,7 +392,6 @@ src/perl/qto/lib/Qto/App/Cnvr
 src/perl/qto/lib/Qto/App/Cnvr/CnrHashesArrRefToHashesArrRef.pm
 src/perl/qto/t
 src/perl/qto/t/lib/Qto/App/Utils/TestRdrCmdArgs.t
-src/perl/qto/t/lib/Qto/App/IO/In/TestRdrDirs.t
 src/perl/qto/t/lib/Qto/App/Utils/OO/SetGetableChild.pm
 src/perl/qto/t/lib/Qto/App/Utils/OO/AutoLoadableChild.pm
 src/perl/qto/t/lib/Qto/App/Utils/OO/TestSetGetable.t
@@ -516,6 +516,7 @@ src/sql/pgsql/qto/app-itms/005.create-table.app_items_doc.sql
 src/sql/pgsql/qto/app-itms/005.create-table.app_item_attributes.sql
 src/sql/pgsql/qto/app-itms/006.create-table.app_routes.sql
 src/sql/pgsql/qto/app-itms/007.create-table.app_items_roles_permissions.sql
+src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql
 src/sql/pgsql/qto/app-itms/300.create-function.fnc_set_update_time.sql
 src/sql/pgsql/qto/app-itms/301.create-function.fnc_concat_ws.sql
 src/sql/pgsql/qto/app-itms/302.create-function.fnc_get_app_routes.sql
@@ -531,6 +532,7 @@ src/sql/pgsql/qto/tables/2020/2020-01/create-table-monthly_issues_202001.sql
 src/sql/pgsql/qto/tables/2020/2020-02/create-table-monthly_issues_202002.sql
 src/sql/pgsql/qto/tables/2020/2020-03/create-table-monthly_issues_202003.sql
 src/sql/pgsql/qto/tables/2020/2020-04/create-table-monthly_issues_202004.sql
+src/sql/pgsql/qto/tables/2020/2020-05/create-table-monthly_issues_202005.sql
 src/sql/pgsql/qto/tables/01.create-table-daily_issues.sql
 src/sql/pgsql/qto/tables/03.create-table-monthly_issues.sql
 src/sql/pgsql/qto/tables/04.create-table-yearly_issues.sql
@@ -562,7 +564,6 @@ src/sql/pgsql/qto/tables/24.create-table-system_guide_doc.sql
 src/sql/pgsql/qto/tables/25.create-table-installations_doc.sql
 src/sql/pgsql/qto/tables/26.create-table-release_issues.sql
 src/sql/pgsql/qto/tables/27.create-table-nix_book_doc.sql
-src/sql/pgsql/qto/tables/28.create-table-imgs.sql
 src/sql/pgsql/qto/tables/29.create-table-enduser_guide_doc.sql
 src/sql/pgsql/qto/tables/30.create-table-maintenance_guide_doc.sql
 src/sql/pgsql/qto/tables/31.create-table-readme_doc.sql
@@ -973,16 +974,6 @@ src/perl/qto/public/poc/vue-select/02/vue-select.css
 src/perl/qto/public/poc/vue-select/vue-select.js
 src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
 src/sql/pgsql/qto/tables/26.create-table-release_issues.sql
-src/sql/pgsql/scripts/03.create-func.func_get_all_users_roles.sql
 src/sql/pgsql/scripts/grant-priveledges.todo.sql
 cnf/crontab/crontab-l.sh
 tags
-doc/draw.io/qto-main-shell-entry.drawio
-doc/draw.io/qto-main-shell-entry.jpg
-src/bash/load-qto-env.sh
-src/bash/qto/scripts/setup-bash-tmux-vim.sh
-src/perl/qto/public/poc/file-upload/03/index.html
-src/perl/qto/public/poc/file-upload/04/index.html
-src/sql/pgsql/scripts/meta/populate-app_routes.sql
-src/sql/pgsql/scripts/reporting/create-rep_userstories_doc.sql
-src/sql/pgsql/scripts/reporting/repopulate-rep_userstories_doc.sql

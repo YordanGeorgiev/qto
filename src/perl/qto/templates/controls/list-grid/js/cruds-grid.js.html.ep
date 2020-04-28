@@ -52,7 +52,12 @@
             if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
 
             var toReplace = ( url_params.has("bid") == false) ? "/select/" : "/hiselect/" //it-190205084244
-            return axios.get(window.location.pathname.replace("/list/" , toReplace ) , { params: url_params } )
+            var path = window.location.pathname
+            var backEndUri = (path.includes('/list/')) ? path.replace('/list/', toReplace ) : path
+            backEndUri = (path.includes('/list-my/')) ? path.replace('/list-my/', '/select-my/' ) : backEndUri
+            console.log(backEndUri)
+
+            return axios.get(backEndUri , { params: url_params } )
             .then(response => { 
                return response ; 
             })

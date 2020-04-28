@@ -8,6 +8,17 @@ body {
    scroll-behavior: smooth;
    font-size: 14px;
 }
+
+#gravatar_url_img {
+   position: fixed;
+   top: 5px;
+   right: 45px;
+   z-index: 101;
+   float: right;
+   width: 30px;
+   height: 30px;
+   border-radius: 3px !important;
+}
 .app_name_tooltip {
    color: #D3D3D3 ;
    font-size: 75%;

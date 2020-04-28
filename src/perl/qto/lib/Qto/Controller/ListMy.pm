@@ -1,4 +1,4 @@
-package Qto::Controller::List ; 
+package Qto::Controller::ListMy ;
 use strict ; use warnings ; 
 
 require Exporter;
@@ -29,7 +29,7 @@ our $objLogger      = {} ;
 # --------------------------------------------------------
 # list all the items according to the "as" url param output type
 # --------------------------------------------------------
-sub doListItems {
+sub doListMyItems {
 
 my $self             = shift;
 my $db               = $self->stash('db');

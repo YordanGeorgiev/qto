@@ -56,3 +56,4 @@
       Storable
       Redis
       Crypt::OpenSSL::RSA
+      Gravatar::URL
