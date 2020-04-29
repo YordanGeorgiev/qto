@@ -15,7 +15,12 @@
   <%= content 'cnt_header_css' %>
 </head>
 <body>
-   <nav class="fixed-nav-bar"></nav>
+   <nav class="fixed-nav-bar">
+	% if ( defined($self->session( 'app.' . $db . '.user'))) {
+      <a href="https://en.gravatar.com/emails/" target="_blank"><img title="logged in as <%== $self->session( 'app.' . $db . '.user') %>" 
+         id="gravatar_url_img" src="<%== $gravatar_url %>"></img></a>
+	% } 
+   </nav>
 	<div id="div_msg"> <%== $msg %></div>
    %= include 'controls/left-menu/left-menu'
 <script type="application/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>

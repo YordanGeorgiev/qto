@@ -130,6 +130,7 @@ sub doInitShowLogonUI {
    my $msg_color        = 'grey' ; 
    
    my $config		      = $self->app->config ; 
+   my $edb              = toEnvName ( $db , $config) ;
    my $pdb              = toPlainName($db);
    my $alConfig         = $config->{'env'}->{'app'} ; 
    my $instance_domain  = $alConfig->{ 'web_host' } . $alConfig->{ 'port' } . '.' . $db ;
@@ -146,7 +147,7 @@ sub doInitShowLogonUI {
    $sessions            = $sessions->secure(0);
    $sessions            = $sessions->samesite('Strict');
    $sessions->cookie_domain( $instance_domain) unless $sessions->cookie_domain( $instance_domain);
-   $self->session( 'app.' . $db . '.user' => undef);
+   $self->session( 'app.' . $edb . '.user' => undef);
    $self->session($sessions);
    
 
