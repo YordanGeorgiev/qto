@@ -11,6 +11,7 @@ use parent qw(Qto::Controller::BaseController);
 
 use Data::Printer ; 
 use Scalar::Util qw /looks_like_number/;
+use Gravatar::URL qw(gravatar_url);
 
 use Qto::Controller::PageFactory ; 
 use Qto::App::Utils::Logger;
@@ -116,6 +117,8 @@ sub doRenderPageTemplate {
       $items_lst .= "'" . "$table" . "'," ;
    }
    $items_lst = substr($items_lst, 0, -1);
+   my $logged_in_usr_email = $self->session( 'app.' . $db . '.user');
+   my $gravatar_url = gravatar_url('email' => $logged_in_usr_email);
 
    $self->render(
       'template'        => $template 
@@ -131,6 +134,7 @@ sub doRenderPageTemplate {
     , 'list_control'    => $list_control
     , 'notice'          => $notice
     , 'items_lst'       => $items_lst
+    , 'gravatar_url'    => $gravatar_url
 	) ; 
 
    return ; 

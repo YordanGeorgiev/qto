@@ -9,6 +9,8 @@ use AutoLoader;
 use parent qw(Qto::Controller::BaseController);
 use Data::Printer ; 
 use Data::Dumper; 
+use Gravatar::URL qw(gravatar_url);
+
 use Qto::App::Utils::Logger;
 use Qto::Controller::PageFactory ; 
 use Qto::App::IO::In::CnrUrlPrms ; 
@@ -29,80 +31,80 @@ our $objLogger      = {} ;
 # --------------------------------------------------------
 sub doListItems {
 
-   my $self             = shift;
-   my $db               = $self->stash('db');
-   my $item             = $self->stash('item');
+my $self             = shift;
+my $db               = $self->stash('db');
+my $item             = $self->stash('item');
 
-   my $msr2             = {} ; 
-   my $ret              = 1 ; 
-   my $msg              = '' ; 
-   my $as               = 'grid' ; # the default form of the list control 
-   my $list_control     = 'null' ; 
-   $config		         = $self->app->config ; 
-   $db                  = toEnvName ( $db , $config) ;
+my $msr2             = {} ; 
+my $ret              = 1 ; 
+my $msg              = '' ; 
+my $as               = 'grid' ; # the default form of the list control 
+my $list_control     = 'null' ; 
+$config		         = $self->app->config ; 
+$db                  = toEnvName ( $db , $config) ;
 
-   my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
-   $self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
-   
-   my $objCnrUrlPrms    = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
-   $objCnrUrlPrms->doValidateAndSetSelect();
+my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+$self->SUPER::doReloadProjDbMeta( \$objModel , $db , $item) ;
 
-   $as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
-   my @allowed_as = ('grid','lbls','print-table');
-   $as = 'grid' unless ( grep ( /^$as$/, @allowed_as)) ;
-   ( $ret , $msg , $list_control ) = $self->doBuildListPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
+my $objCnrUrlPrms    = 'Qto::App::IO::In::CnrUrlPrms'->new(\$config , \$objModel , $self->req->query_params);
+$objCnrUrlPrms->doValidateAndSetSelect();
 
-   $msg = $self->doSetPageMsg ( $ret , $msg ) ; 
-   $self->doRenderPageTemplate( $ret , $msg , \$objModel, $as, $db , $item , $list_control) ; 
+$as = $self->req->query_params->param('as') || $as ; # decide which type of list page to build
+my @allowed_as = ('grid','lbls','print-table');
+$as = 'grid' unless ( grep ( /^$as$/, @allowed_as)) ;
+( $ret , $msg , $list_control ) = $self->doBuildListPageType ( $msg , \$objModel , $db , $item , $as  ) ; 
+
+$msg = $self->doSetPageMsg ( $ret , $msg ) ; 
+$self->doRenderPageTemplate( $ret , $msg , \$objModel, $as, $db , $item , $list_control) ; 
 }
 
 
 sub doSetPageMsg {
 
-   my $self       = shift ; 
-   my $ret        = shift ; 
-   my $msg        = shift ; 
+my $self       = shift ; 
+my $ret        = shift ; 
+my $msg        = shift ; 
 
-   unless ( $ret == 0 ) {
-      $msg = (split '::' , $msg)[0] ; 
-      $msg = '<span id="spn_err_msg">' . $msg . '</span>' ; 
-   } else {
-      $msg = '<span id="spn_msg">' . $msg . '</span>' ; 
-   }
+unless ( $ret == 0 ) {
+   $msg = (split '::' , $msg)[0] ; 
+   $msg = '<span id="spn_err_msg">' . $msg . '</span>' ; 
+} else {
+   $msg = '<span id="spn_msg">' . $msg . '</span>' ; 
+}
 
-   return $msg ; 
+return $msg ; 
 }
 
 
 
 sub doBuildListPageType {
 
-   my $self             = shift ; 
-   my $msg              = shift ; 
-   my $objModel         = ${ shift @_ } ; 
-   my $db               = shift ; 
-   my $table            = shift ; 
-   my $as               = shift ;  # grid, # print-table , lbls
+my $self             = shift ; 
+my $msg              = shift ; 
+my $objModel         = ${ shift @_ } ; 
+my $db               = shift ; 
+my $table            = shift ; 
+my $as               = shift ;  # grid, # print-table , lbls
 
-   my $ui_type          = 'page/list-grid' ; 
-   my $ret              = 1 ; 
-   my $list_control     = 'null' ; 
-   my $objPageBuilder   = {} ; 
-   my $objPageFactory   = {} ; 
+my $ui_type          = 'page/list-grid' ; 
+my $ret              = 1 ; 
+my $list_control     = 'null' ; 
+my $objPageBuilder   = {} ; 
+my $objPageFactory   = {} ; 
 
-   my $lables_pages = { 
-         'lbls'         => 'list-labels'
-      ,  'grid'         => 'list-grid'
-      ,  'print-table'  => 'list-print-table'
-   };
+my $lables_pages = { 
+      'lbls'         => 'list-labels'
+   ,  'grid'         => 'list-grid'
+   ,  'print-table'  => 'list-print-table'
+};
 
-   $ui_type = 'page/' . $lables_pages->{ $as } ; 
+$ui_type = 'page/' . $lables_pages->{ $as } ; 
 
-   $objPageFactory                  = 'Qto::Controller::PageFactory'->new(\$config, \$objModel );
-   $objPageBuilder                  = $objPageFactory->doSpawn( $ui_type );
-   ( $ret , $msg , $list_control )  = $objPageBuilder->doBuildListControl( $msg , \$objModel , $db , $table , $as ) ;
+$objPageFactory                  = 'Qto::Controller::PageFactory'->new(\$config, \$objModel );
+$objPageBuilder                  = $objPageFactory->doSpawn( $ui_type );
+( $ret , $msg , $list_control )  = $objPageBuilder->doBuildListControl( $msg , \$objModel , $db , $table , $as ) ;
 
-   return ( $ret , $msg , $list_control ) ; 
+return ( $ret , $msg , $list_control ) ; 
 
 }
 
@@ -110,11 +112,11 @@ sub doBuildListPageType {
 
 
 sub doRenderPageTemplate {
-   
-   my $self             = shift ; 
-   my $ret              = shift ; 
-   my $msg              = shift ; 
-   my $objModel         = ${ shift @_ } ; 
+
+my $self             = shift ; 
+my $ret              = shift ; 
+my $msg              = shift ; 
+my $objModel         = ${ shift @_ } ; 
    my $as               = shift || 'grid' ; 
    my $db               = shift ; 
    my $item             = shift ; 
@@ -147,7 +149,10 @@ sub doRenderPageTemplate {
       $items_lst .= "'" . "$table" . "'," ;
    }
    $items_lst = substr($items_lst, 0, -1);
-	
+
+   my $logged_in_usr_email = $self->session( 'app.' . $db . '.user');
+   my $gravatar_url = gravatar_url('email' => $logged_in_usr_email);
+
    $self->render(
       'template'        => $template 
     , 'as'              => $as
@@ -162,6 +167,7 @@ sub doRenderPageTemplate {
     , 'list_control'    => $list_control
     , 'notice'          => $notice
     , 'items_lst'       => $items_lst
+    , 'gravatar_url'    => $gravatar_url
 	) ; 
 
    return ; 
