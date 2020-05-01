@@ -89,12 +89,6 @@ This section describes the current system infrastructure.
 ### 3.1. System architectural overview by SIWA dia
 The following diagram implements the Simplest Possible Way of describing Architecture principle - it's sole purpose is to quickly provide an overview of the existing infrastructure built with the help of the qto application as well as provide visual tool for communication related to thejyot application. 
 
-
-Figure 1:
-The qto insfrastructure
-![Figure 1:
-The qto insfrastructure](https://github.com/YordanGeorgiev/qto/blob/master/doc/img/system_guide/qto-infra.jpg?raw=true)
-
     
 
 ### 3.2. Infrastructural components
@@ -169,12 +163,6 @@ The Converters apply usually the business logic for converting the input data fr
 
 ### 4.2. Multi-instance setup
 The multi-instance setup refers to the capability of any installed and setup instance of the qto application to "know" its version , environment type  - development , testing and production ) and owner.
-
-
-Figure: 2
-qto multi-instance setup
-![Figure: 2
-qto multi-instance setup](https://github.com/YordanGeorgiev/qto/blob/master/doc/img/system_guide/multi-env-setup.png?raw=true)
 
     
 

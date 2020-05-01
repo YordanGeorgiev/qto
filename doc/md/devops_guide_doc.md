@@ -30,7 +30,7 @@
   * [6.2. AIM FOR TRACEABILITY BETWEEN USER-STORIES, REQUIREMENTS, FEATURES AND FUNCTIONALITIES](#62-aim-for-traceability-between-user-stories-requirements-features-and-functionalities)
   * [6.3. ZERO TOLERANCE FOR BUGS, ESPECIALLY CRASHES](#63-zero-tolerance-for-bugs-especially-crashes)
   * [6.4. ALWAYS START WITH A TEST UNIT CREATION](#64-always-start-with-a-test-unit-creation)
-  * [6.5. BRANCH FOR THE CURRENT COMMON RELEASABLE BRANCH - FOR EXAMPLE V0.8.3](#65-branch-for-the-current-common-releasable-branch--for-example-v083)
+  * [6.5. BRANCH FOR THE CURRENT COMMON RELEASABLE BRANCH - FOR EXAMPLE V0.8.4](#65-branch-for-the-current-common-releasable-branch--for-example-v084)
   * [6.6. SYNCING CHANGES WITH THE ORIGINAL REPO](#66-syncing-changes-with-the-original-repo)
   * [6.7. INTEGRATION TESTING IN THE TST BRANCH](#67-integration-testing-in-the-tst-branch)
   * [6.8. PRODUCTION IN THE PRD BRANCH](#68-production-in-the-prd-branch)
@@ -308,7 +308,7 @@ Each time a new bug is found fix it by adding new Unit Test!
 
     
 
-### 6.5. Branch for the current common releasable branch - for example v0.8.3
+### 6.5. Branch for the current common releasable branch - for example v0.8.4
 No code should be merged into the development branch without broad testing coverage and approval from the owner of the instance - as the owner of the instance is at the end responsible personally for the whole instance, since once a change has been merged to develop it must pass as quickly as possible to tst, prd and master.
 Each developer committing to the development branch MUST rebase as frequently as possible from the dev branch to avoid time waste aligning the feature branches to the common dev branch.
 
@@ -316,12 +316,12 @@ Each developer committing to the development branch MUST rebase as frequently as
     git stash 
     
     # check the current wip version of the qto application
-    git checkout v0.8.3
+    git checkout v0.8.4
     
     # create a new branch from the v0.8.3 branch AND set the correct name of the branch
     # by using the issues-id and use for the name of the branch the copy paste from the issue
     # name by replacing the spaces and other special chars with - dashes ... 
-    git checkout -b v0.8.3-200402120006-fix-bug-for-wrong-order-in-env-file
+    git checkout -b v0.8.4-200402120006-fix-bug-for-wrong-order-in-env-file
     
     # apply back your configuration
     git stash pop
@@ -334,12 +334,12 @@ Each developer committing to the development branch MUST rebase as frequently as
     git add --all ; git commit -m "$git_msg" --author "Yordan Georgiev <yordan.georgiev@gmail.com>" ; git push ;
     
     # have to set a new upstream when pushing for first time 
-    git push --set-upstream origin v0.8.3-fix-bug-for-wrong-order-in-env-file
+    git push --set-upstream origin v0.8.4-fix-bug-for-wrong-order-in-env-file
     
     # set the 
     git stash
     git branch -a
-    git checkout v0.8.3
+    git checkout v0.8.4
     
     git pull
     
@@ -379,7 +379,7 @@ If you have forked a GitHub repo you want to sync with you will need to  :
     git checkout master
     
     #merge the changes from the upstream/master into your local master branch. 
-    #it is also possible to specify a different upstream branch other than master, for example upstream/v0.8.3:
+    #it is also possible to specify a different upstream branch other than master, for example upstream/v0.8.4:
     git merge upstream/master
     
     #push or force push to your Github master branch:

@@ -242,13 +242,25 @@ You can access the different pages configured for your project from the upper le
     
 
 ## 6. THE LIST PAGE
-The list page presents part or the whole content of a database by the means of UI controls - dynamic html table, forms etc. 
-In the context of the qto's parley the "listing" is the ui list of control/(s) you get by using the following URL format:
+To see a subset of any database table based on filtering criteria in the url of the qto app you would have the following url: 
+https://qto.fi/qto/list/yearly_issues_2020?&oa=prio&pg-size=7
 
-    
+The "list-my page" works exactly the same way as the list page, except for the fact that the subset is ALWAYS restricted by the records belonging to the currently logged in user.
+
+The syntax of the list and list-my pages is constructed as follows:
+
+
+
+    # https://qto.fi:442/qto/list-my/yearly_issues_2020?&oa=prio&pg-size=7
+    protocol      -- https 
+    site          -- qto.fi
+    port          -- 442
+    qto           -- the project db ( migh be also different than qto )
+    list-my       -- the action to perform on the project db - in this case list
+    yearly_issues -- the subject of the action - in this case - WHAT to link 
 
 ### 6.1. Viewing the list page
-You can use the pick=col1, col2, col3 url parameter to select for only desired attributes.
+You can use the   url parameter to select for only desired attributes.
 You could filter the result the same way the filters for the select page work ( see bellow ). 
 Should there be errors in the loading of the page, they will be displayed in a msg at the top of the page.
 
@@ -265,14 +277,13 @@ The listing url syntax mimics the sql select clause syntax, yet in much more sim
     
 
 ##### 6.1.2.1. The "pick" url param
-You can use the pick=col1,col2,col3 url parameter to select for only desired attributes to be show in the ui control used for listing.
-The following url demonstrates this syntax:
+You can "pick" particular columns from the item used in the listing page by adding the url parameter pick with the comma separated list of the columns to pick for example: 
 https://qto.fi/qto/list/yearly_issues_2020?as=grid&pick=id,name,description&page-size=5&page-num=1
 
     
 
 ##### 6.1.2.2. The "hide" url param
-If you do not specify any attribute to pick, you could hide specific attributes by using the "hide=col1,col2,col3" syntax.
+You can hide specific columns from an item listing by using the hide url parameter as follows:
 https://qto.fi/qto/list/yearly_issues?hide=description
 
     
