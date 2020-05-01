@@ -31,7 +31,7 @@ sub doCallFunc {
    my $self             = shift;
    
    my $db               = $self->stash('db');
-   my $func 				= 'func_' . $self->stash('func');
+   my $func 				= 'fnc_' . $self->stash('func');
    my $ret              = 1 ; 
    my $met              = {} ; 
    my $msg              = 'unknown error during global text search ';

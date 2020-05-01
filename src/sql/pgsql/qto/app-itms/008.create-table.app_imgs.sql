@@ -1,8 +1,8 @@
----- DROP TABLE IF EXISTS imgs CASCADE;
+-- DROP TABLE IF EXISTS app_imgs CASCADE;
 
-SELECT 'create the "imgs" table'
+SELECT 'create the "app_imgs" table'
 ; 
-   CREATE TABLE imgs (
+   CREATE TABLE app_imgs (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , name           varchar (200) NOT NULL DEFAULT 'image figure title ...'
@@ -12,12 +12,12 @@ SELECT 'create the "imgs" table'
     , item_guid      UUID NOT NULL DEFAULT gen_random_uuid()
     , description    varchar (4000) NOT NULL DEFAULT 'txt to appear on alt ...' 
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
-    , CONSTRAINT pk_imgs_guid PRIMARY KEY (guid)
+    , CONSTRAINT pk_app_imgs_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
     );
 
-   create unique index idx_uniq_imgs_id on imgs (id);
+   create unique index idx_uniq_app_imgs_id on app_imgs (id);
 
 
 
@@ -26,19 +26,19 @@ SELECT 'show the columns of the just created table'
 
    SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute
-   WHERE  attrelid = 'public.imgs'::regclass
+   WHERE  attrelid = 'public.app_imgs'::regclass
    AND    attnum > 0
    AND    NOT attisdropped
    ORDER  BY attnum
    ; 
 
 --The trigger:
-   CREATE TRIGGER trg_set_update_time_on_imgs 
-   BEFORE UPDATE ON imgs 
+   CREATE TRIGGER trg_set_update_time_on_app_imgs 
+   BEFORE UPDATE ON app_imgs 
    FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
 select tgname
 from pg_trigger
 where not tgisinternal
-and tgrelid = 'imgs'::regclass;
+and tgrelid = 'app_imgs'::regclass;
 

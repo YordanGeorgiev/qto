@@ -50,7 +50,7 @@
   * [8.2. GLOBAL UI ELEMENTS FOR ALL THE PAGES](#82-global-ui-elements-for-all-the-pages)
     * [8.2.1. The global and quick search textbox - the omnibox](#821-the-global-and-quick-search-textbox--the-omnibox)
     * [8.2.2. The Left Menu](#822-the-left-menu)
-  * [8.3. LIST PAGE FEATURES AND FUNCTIONALITIES](#83-list-page-features-and-functionalities)
+  * [8.3. LIST AND LIST-MY PAGE FEATURES AND FUNCTIONALITIES](#83-list-and-list-my-page-features-and-functionalities)
     * [8.3.1. List page performance](#831-list-page-performance)
     * [8.3.2. Navigating the list page](#832-navigating-the-list-page)
     * [8.3.3. Filtering the result set from a single item](#833-filtering-the-result-set-from-a-single-item)
@@ -380,8 +380,13 @@ The left menu contains information on the current instance of the application an
 
     
 
-### 8.3. List page features and functionalities
-The list page is simply a slice of the data from ANY postgres table filtered on any criteria defined in the url of the browser.
+### 8.3. List and list-my page features and functionalities
+The list page is simply a slice/subset of the data from ANY postgres table filtered on any criteria defined in the url of the browser.
+The list-my route works exactly as the list page except for the fact that the retrieved subset is restricted to the data of a table, which is assigned to the currently logged in user by means of a foreign key to the app_users table.
+An example url of a list page :
+https://qto.fi/qto/list/yearly_issues_2020?&oa=prio&pg-size=5
+An example url of a list-my page:
+https://qto.fi/qto/list-my/yearly_issues_2020?&oa=prio&pg-size=5
 
     
 

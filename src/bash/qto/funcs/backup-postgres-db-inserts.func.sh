@@ -1,8 +1,9 @@
 # file: src/bash/qto/funcs/backup-postgres-db-inserts.func.sh
 
-# v0.8.3
+# v0.8.4
 # ---------------------------------------------------------
 # create only data inserts backup without create db clause
+# EXCLUDING the app_users table data ...
 # ---------------------------------------------------------
 doBackupPostgresDbInserts(){
 
@@ -20,10 +21,11 @@ doBackupPostgresDbInserts(){
    which nmap 2>/dev/null && nmap -Pnv -p $postgres_db_port $postgres_db_host || \
          do_exit 1 "cannot connect to $postgres_db_port:$postgres_db_host"
 
+   # --exclude-table=app_users \
    PGPASSWORD="${postgres_db_useradmin_pw:-}" pg_dump -U "${postgres_db_useradmin:-}"  \
          -h $postgres_db_host -p $postgres_db_port -w --format=plain \
          --column-inserts --data-only \
-         --exclude-table=users \
+         --exclude-table=app_users \
          $postgres_db_name   > $backup_dir/$backup_fname
 
    ls -1 $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/* | sort -nr
@@ -31,5 +33,3 @@ doBackupPostgresDbInserts(){
    wc -l $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/* | sort -nr
    sleep 1
 }
-
-# eof file: src/bash/qto/funcs/backup-postgres-db-inserts.func.sh

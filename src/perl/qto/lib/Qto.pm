@@ -441,6 +441,16 @@ sub doSetRoutes {
      controller   => 'Select'
    , action       => 'doSelectItems'
    );
+   
+   $r->get('/:db/select-my/:item')->to(
+     controller   => 'SelectMy'
+   , action       => 'doSelectMyItems'
+   );
+   
+   $r->get('/:db/select-my/:item')->to(
+     controller   => 'SelectMy'
+   , action       => 'doSelectMyItems'
+   );
 
    $r->get('/:db/select-item-meta-for/:item')->to(
      controller   => 'Select'
@@ -450,6 +460,11 @@ sub doSetRoutes {
    $r->get('/:db/list/:item')->to(
      controller   => 'List'
    , action       => 'doListItems'
+   );
+   
+   $r->get('/:db/list-my/:item')->to(
+     controller   => 'ListMy'
+   , action       => 'doListMyItems'
    );
 
    $r->get('/:db/export/:item')->to(

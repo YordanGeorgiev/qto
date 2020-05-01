@@ -60,6 +60,7 @@ and tgrelid = 'app_items_doc'::regclass;
 -- Data for Name: items_doc; Type: TABLE DATA; Schema: public; Owner: usrtstqtoadmin
 --
 
+
 COPY public.app_items_doc (guid, id, level, seq, type, url, title, name, status, description, item_id, prio, src, formats, lft, rgt, update_time) FROM stdin;
 5b9c9736-6d97-44f7-8453-8a63bad5f150	191109112208	2	4	doc	view/readme_doc	readme	readme	09-done	\N	\N	1	\N	\N	5	6	2020-01-31 18:39:56
 7b0e04c7-ccee-4c74-b32c-428916dc8b40	191110102142	2	18	doc	view/concepts_doc	application concepts	concepts	09-done	\N	\N	1	\N	\N	31	26	2020-03-01 10:29:33
@@ -86,7 +87,7 @@ ccabc9fd-39f2-492b-8079-29f58587a72e	191109112117	1	17	folder	#	documents	docume
 fa4bc87e-8a98-4012-9128-d40c0a15d40b	0	0	1	folder	#	not used	ITEMS DOC	09-done	\N	\N	1	\N	\N	1	52	2020-03-19 11:36:36
 e66250fb-324d-47c8-81f4-25c1ac3dd539	191109110438	1	7	folder	#	lists	lists	09-done	\N	\N	1	\N	\N	12	23	2020-03-19 11:36:37
 fb9c288d-e363-4219-8224-2e6a71e71777	191110045939	2	6	doc	view/enduser_guide_doc	end-user guide	end-user guide	09-done	\N	\N	1	\N	\N	9	8	2020-03-20 07:37:45
-16232847-865e-45b3-90be-21ca1f5636b4	191110044820	2	10	doc	list/monthly_issues_202004?oa=prio	monthly-issues	monthly-issues	09-done	\N	\N	1	\N	\N	17	16	2020-04-01 02:35:07
+16232847-865e-45b3-90be-21ca1f5636b4	191110044820	2	10	doc	list/monthly_issues_202005?oa=prio	monthly-issues	monthly-issues	09-done	\N	\N	1	\N	\N	17	16	2020-04-01 02:35:07
 3d71a66a-f9e8-45c5-af6b-268cfc671a19	191110050537	2	19	doc	view/userstories_doc	user-stories	userstories doc	09-done	\N	\N	1	\N	\N	33	28	2020-04-06 14:14:23
 c95e8b4f-48a1-4426-8ff3-9c512ee5d21f	1	1	2	folder	#	general	start	09-done	\N	\N	1	\N	\N	2	11	2020-04-10 17:40:51
 8d969e0b-03b4-400c-a8e7-78b723161bd2	191113062550	2	3	doc	search	search	home & search	09-done	\N	\N	1	\N	\N	3	4	2020-04-10 19:22:32

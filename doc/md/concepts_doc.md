@@ -41,7 +41,7 @@ The purpose of this document is to present the concepts and the business logic o
 
 ### 1.2. Audience
 This document could be of interest for any potential and actual users of the application. Key-users must read, understand and even be able to present and explain the contents of this document. 
-Developers and Architects working on the application MUST read and understand this document at least to the extend of their own contribution for the application. 
+Developers and Architects working on the application MUST read and understand this document at least to the extent of their own contribution for the application. 
 
     
 
@@ -51,12 +51,12 @@ This document is part of the qto application documentation-set, which contains t
  - userstories_doc-0 - the collection of user-stories used to describe "what is desired"
  - requirements_doc-0 - the structured collection of the requirements 
  - system_guide_doc-0 - architecture and System description
- - devops_guide_doc-0 - a guide for the developers and devops operators
+ - devops_guide_doc-0 - a guide for the developers and DevOps operators
  - installations_doc-0 - a guide for installation of the application
  - enduser_guide_doc-0 - the guide for the usage of the UI ( mainly ) for the end-users
  - concepts_doc-0 - the concepts doc 
 
-All the documents should be updated and redistributed in combination of the current version of the application and should be found under the doc/md directory.
+All the documents should be updated and redistributed in combination of the current version of the application and should be found under the doc/MD directory.
 
 
     
@@ -67,7 +67,7 @@ All the documents should be updated and redistributed in combination of the curr
     
 
 ### 2.1. Projects management
-Any undertaking or endeavour, carried out individually or collaboratively and possibly involving research or design, that is carefully planned, usually by a project team, to achieve a particular aim could be considered a project. The main purpose of the qto application is to manage one or more projects from a single User Interface.
+Any undertaking or endeavour, carried out individually or collaboratively and possibly involving research or design, that is carefully planned, usually by a project team, to achieve a particular aim could be considered a project. The main purpose of the QTO application is to manage one or more projects from a single User Interface.
 
 
     
@@ -154,7 +154,7 @@ https://github.com/YordanGeorgiev/qto/releases.
     
 
 ### 4.1. The Concepts doc 
-This document
+This document to contain different planned and/or possible concepts in order to ease your understanding and further exploitation of the application. Of course, we, as QTO team, are here to support your organisation while internal development is on-going. In case the day-to-day requirements extends and/or change, you will be able to make these amendments independently if you will.
 
     
 
@@ -174,12 +174,12 @@ The System Guide describes the current and factual state of the System you are a
     
 
 ### 4.5. The DevOps Guide
-The DevOps Guide contains information on how-to develop, operate and maintain the Application from a devops / developer perpective.
+The DevOps Guide contains information on how-to develop, operate and maintain the Application from a DevOps / developer perspective.
 
     
 
 ### 4.6. The Maintenance and Operations Guide
-The Maintenance and operations Guide contains information on how-to maintain and operate the Application.
+The Maintenance and Operations Guide contains information on how-to maintain and operate the Application.
 
     
 

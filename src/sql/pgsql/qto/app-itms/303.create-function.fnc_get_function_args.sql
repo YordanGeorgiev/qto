@@ -86,4 +86,4 @@ argument the following data:
 - data type$$;
 
 -- src: https://www.alberton.info/postgresql_meta_info.html
--- call by: psql -d dev_qto -c "SELECT * FROM  fnc_get_function_args('func_get_all_users_app_roles','public') "
+-- call by: psql -d dev_qto -c "SELECT * FROM  fnc_get_function_args('func_fnc_get_all_app_user_roles','public') "

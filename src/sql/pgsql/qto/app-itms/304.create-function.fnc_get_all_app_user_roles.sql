@@ -1,3 +1,5 @@
+
+
 CREATE FUNCTION fnc_get_all_app_user_roles()
   RETURNS TABLE (
                  id           bigint
