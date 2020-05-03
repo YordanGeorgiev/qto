@@ -29,6 +29,7 @@ use Qto::App::Mdl::Model ;
 use JSON::Parse 'json_file_to_perl';
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 use Qto::Controller::MetaDataController ; 
+use Qto::App::IO::In::RdrDirs ; 
 use Qto::App::Sec::Guardian ;
 
 my $module_trace 					= 0;
@@ -75,7 +76,8 @@ sub doLoadAppConfig {
 
    $objInitiator  = 'Qto::App::Utils::Initiator'->new();
    $config        = json_file_to_perl ($objInitiator->doResolveConfFile());
-   $config->{'env'}->{'run'}->{'ProductInstanceDir'} = $objInitiator->doResolveProductInstanceDir(-1);
+	my $ProductInstanceDir = $objInitiator->doResolveProductInstanceDir(-1); 
+   $config->{'env'}->{'run'}->{'ProductInstanceDir'} = $ProductInstanceDir ; 
    $config->{'env'}->{'run'}->{'ProductName'} = $objInitiator->doResolveProductName();
    $config->{'env'}->{'run'}->{'VERSION'} = $objInitiator->doResolveVersion();
    $config->{'env'}->{'run'}->{'ENV_TYPE'} = $objInitiator->doResolveEnvType();
@@ -102,7 +104,15 @@ sub doLoadAppConfig {
    $objGuardian      = 'Qto::App::Sec::Guardian'->new ( \$config ) ;
    $config->{'env'}->{'run'}->{ 'PublicRSAKey' } = $objGuardian->doGetPublicKeySecret();
    $self->set('ObjGuardian', $objGuardian );
-   #debug rint $config;
+
+   my $objRdrDirs = 'Qto::App::IO::In::RdrDirs'->new (); 
+	my $arrDirs = $objRdrDirs->doFindMaxDepth( "$ProductInstanceDir/src/perl/qto/public", 1) ; 
+   foreach my $dir (@{$arrDirs}) {
+      $dir =~ s/(.*)[\\|\/](.*?)/$2/g;
+   }
+   my @dirsAndFiles = @{$arrDirs} ; push @dirsAndFiles , 'index.html' ; 
+   $config->{'env'}->{'run'}->{ 'PublicLevel1Dirs' } = \@dirsAndFiles ;
+   # debug rint $config;
    $self = $self->config( $config );
     
    $self->renderer->cache->max_keys(0);
@@ -227,7 +237,8 @@ sub doSetHooks {
       my $c       = shift;
       my $url     = (split('#',$c->req->url->path))[0];
       my $msg     = '' ; 
-	
+
+         
 		# If so, try to prevent caching
 		$c->res->headers->header(
 			Expires => Mojo::Date->new(time-365*86400)
@@ -243,15 +254,30 @@ sub doSetHooks {
 		# obs no authentication for static resources ... qto-200314095059
       return unless $type ; 
 		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g);
+      return unless $c->req->url->path->parts->[0] ; # bare url address typed - https://qto.fi
 
       my $route   = (split('/',$url))[2]; #this will fail on new static resource types ...
 	   my $db      = (split('/',$url))[1]; $db = toEnvName($db,$c->app->config);
       my @open_routes = (); 
+   
+      my $lvl_1_public_dirs = $config->{'env'}->{'run'}->{ 'PublicLevel1Dirs' } ; 
 
-      # do not check public/poc like locations 
-      # if the routes does not start with a proj db simply pass it ...
-      return unless $config->{'env'}->{'app'}->{$db . '.meta-routes'} ;
-
+      # basically a static resource fetch ...
+      # do not check src/perl/qto/public/poc like locations / routes
+      my $pdb = toPlainName($db);
+      return if grep ( /^$pdb$/, @$lvl_1_public_dirs);
+      
+      # but if the :db is not configured nor static root => something fishy !!!
+      unless ( defined ($config->{'env'}->{'app'}->{$db . '.meta-routes'} )) {
+         my $redirect_db = $config->{'env'}->{'db'}->{'postgres_db_name'};
+         my $msg = " the project db you requested : $db does not exist !!!" ;
+         my $backend_error_url  = '/' . toPlainName($redirect_db) . '/serve/forbidden?&msg=' . url_encode($msg);
+         $msg .= ' unauthorized attempt to access ' . $route . ' backend route ';
+         $objLogger->doLogErrorMsg($msg);
+         $c->redirect_to($backend_error_url);
+         return;
+      }
+         
       # chk if it is a publicall opened route ( login , error , etc. ) 
       foreach my $k(keys %{$config->{'env'}->{'app'}->{$db . '.meta-routes'}}){
          my $r = $config->{'env'}->{'app'}->{$db . '.meta-routes'}->{$k};
@@ -265,6 +291,8 @@ sub doSetHooks {
          $db         = 'qto' unless $db ;
 			$db         = toEnvName ($db,$c->app->config);
 			my $objGuardian = $self->get('ObjGuardian');
+         my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
+         my $rbac_list     = $objRdrRedis->getData(\$config,"$db" . '.rbac-list');
 
 			unless ( $objGuardian->isAuthenticated($c->app->config, $db, $c, \$msg)){
 				my $login_url = '/' . toPlainName($db) . '/logon' ;
@@ -272,7 +300,7 @@ sub doSetHooks {
 				$c->redirect_to($login_url);
             return ;
 			}
-         unless ( $objGuardian->isAuthorized($c->app->config, $db, $c, \$msg)){
+         unless ( $objGuardian->isAuthorized($c->app->config, $rbac_list, $db, $c, \$msg)){
             foreach my $k(keys %{$config->{'env'}->{'app'}->{$db . '.meta-routes'}}){
                my $r = $config->{'env'}->{'app'}->{$db . '.meta-routes'}->{$k};
                next unless $r->{'name'} eq $route ;

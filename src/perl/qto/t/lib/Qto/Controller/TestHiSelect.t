@@ -28,14 +28,6 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
       , $tm )
    ;
 
-   $tm = 'status 404 is returned  when the database provided does not exist' ; 
-   $url = '/non_existent_db/hiselect/daily_issues' ; 
-	ok ( $t->get_ok($url)->status_is(400)  , $tm ) ; 
-   
-   $tm = 'status 404 is returned  when the table  provided does not exist' ; 
-   $url = '/non_existent_db/hiselect/daily_issues' ; 
-	ok ( $t->get_ok($url)->status_is(400)  , $tm ) ; 
-
    my $ua  = $t->ua ; 
    my $response = $ua->get('/' . $db . '/select-tables')->result->json ; 
    my $list = $response->{ 'dat' } ; 

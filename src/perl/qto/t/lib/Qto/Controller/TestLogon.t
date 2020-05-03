@@ -155,11 +155,21 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    ok ( $res->{'msg'} eq "the ANONYMOUS role does not have the permission to select the app_roles item!", $tm);
    printf "\n";
    
-   $url = '/' . $db . '/list/app_roles';
+   $tm = 'all requests to static resources are wide open ...' ;
+   $url = '/dat/img/qto/concepts_doc/what-is-is.png';
    $t->get_ok( $url )->status_is(200 , $tm ) ; 
+   
+   printf "\n";
+   $tm = 'a sheisse db - not one of the public root dirs , nor project, should not be allowed !!!';
+   $url = '/-insert%/drop/db';
+   $t->get_ok( $url )->status_is(403 , $tm ) ; 
    $ua  = $t->ua ; 
-   $tm = 'a forbidden ui route should be redirected to the search page';
-   ok ( $tx->result->dom->to_string =~ "<title> search $pdb </title>", $tm );
+   $res = $ua->get($url )->result->json ; 
+   # p $res ; print "eof res TestLogon.t todo:ysg \n";
+   ok ( $res->{'ret'} == 403 , $tm);
+   my $em = " the project db you requested : -insert% does not exist !!!";
+   ok ( $res->{'msg'} eq $em, $tm );
+   printf "\n";
 
 
 done_testing();
