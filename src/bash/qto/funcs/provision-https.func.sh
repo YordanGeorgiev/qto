@@ -33,6 +33,7 @@ EOF_EXPECT
          sudo perl -pi -e 's|\%mojo_hypnotoad_port\%|'"$mojo_hypnotoad_port"'|g' "/etc/nginx/sites-available/$env.https-site.conf"
          sudo perl -pi -e 's|\%web_host\%|'"$web_host"'|g' "/etc/nginx/sites-available/$env.https-site.conf"
          sudo perl -pi -e 's|\%port\%|'"$port"'|g' "/etc/nginx/sites-available/$env.https-site.conf"
+         sudo perl -pi -e 's|#todo-https-me||g' "/etc/nginx/sites-available/$env.http-site.conf"
          
          sudo ln -fs /etc/nginx/sites-available/$env.https-site.conf /etc/nginx/sites-enabled/$env.https-site.conf
          sudo ls -la /etc/nginx/sites-enabled/$env.https-site.conf
