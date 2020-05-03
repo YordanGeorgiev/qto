@@ -1,5 +1,6 @@
 -- src: https://stackoverflow.com/a/49175321/65706
 -- src: https://dba.stackexchange.com/a/213921/1245
+-- src: https://stackoverflow.com/a/22684537/65706
 
 SET myvars.postgres_db_user TO :'postgres_db_user';
 SET myvars.postgres_db_user_pw TO :'postgres_db_user_pw';
@@ -20,20 +21,39 @@ EXCEPTION WHEN OTHERS THEN
 			, current_setting('myvars.postgres_db_user', true)::text 
 	);
 	EXECUTE format( '
-            ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON TABLES TO %I
-            '
+            ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON TABLES TO %I'
 			, current_setting('myvars.postgres_db_user', true)::text 
 	);
 	EXECUTE format( '
-            GRANT SELECT ON ALL TABLES IN SCHEMA PUBLIC TO %I
-         '
+            GRANT SELECT ON ALL TABLES IN SCHEMA PUBLIC TO %I '
 			, current_setting('myvars.postgres_db_user', true)::text 
 	);
 	EXECUTE format( '
-      GRANT SELECT, INSERT, UPDATE, DELETE , REFERENCES ON ALL TABLES IN SCHEMA public TO %I
-         '
+            GRANT SELECT, INSERT, UPDATE, DELETE , REFERENCES ON ALL TABLES IN SCHEMA public TO %I '
 			, current_setting('myvars.postgres_db_user', true)::text 
 	);
+
+	EXECUTE format( '
+            GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public TO %I '
+			, current_setting('myvars.postgres_db_user', true)::text 
+	);
+	
+   EXECUTE format( '
+           GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO %I '
+         , current_setting('myvars.postgres_db_user', true)::text 
+	);
+   
+   EXECUTE format( '
+           GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO %I'
+         , current_setting('myvars.postgres_db_user', true)::text 
+	);
+   EXECUTE format( '
+           ALTER DEFAULT PRIVILEGES FOR USER %I IN SCHEMA public GRANT SELECT ON TABLES TO %I, current_setting('myvars.postgres_db_user', true)::text 
+	);
+
+;  "
+
+
 END
 $do$;
 
