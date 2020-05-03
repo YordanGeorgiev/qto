@@ -62,16 +62,49 @@ package Qto::App::IO::In::RdrDirs ;
 		}
 	}
 
-   # 
-	# src: http://www.netalive.org/tinkering/serious-perl/#oop_constructors¨
+
+
+	#
 	# -----------------------------------------------------------------------------
+	# read dir recursively , return only the files matching the regex for the 
+	# src: https://www.perlmonks.org/?node_id=170969
+	# file extension , example - get all the .pl or .pm files:
+	# my $arrRefTxtFiles = $objFH->doFindMaxDepth( $dir, 1)
+	# -----------------------------------------------------------------------------
+   sub doFindMaxDepth {
+
+		my $self 		= shift ;
+		my $root_dir 	= shift ; 
+		my $max_depth 	= shift || 1 ;
+		my $min_depth 	= shift || $max_depth ;
+
+      $_ = $root_dir ; 	
+		my $full_depth = tr!/!! ; # count slashes to get depth
+      my $full_max_depth = $full_depth + $max_depth ; 
+      my $full_min_depth = $full_depth + $min_depth ; 
+		# find files
+		my @files;
+		find({ wanted => 
+				 sub {
+					  my $depth = tr!/!!; # count slashes to get depth
+					  return if $depth < $full_min_depth or $depth > $full_max_depth;
+					  push @files, $_ ;
+				 },
+				 no_chdir => 1 }, $root_dir );
+
+      my @sorted_files = sort @files ;
+		return \@sorted_files ; 
+		# sort by mtime
+		# @files = sort { (stat($a))[9] <=> (stat($b))[9] } @files;
+   }
+
+
 	sub new {
 		 my $class = shift;    # Class name is in the first parameter
 		 my $self = {};        # Anonymous hash reference holds instance attributes
 		 bless($self, $class); # Say: $self is a $class
 		 return $self;
 	}   
-	#eof const
 
 1;
 

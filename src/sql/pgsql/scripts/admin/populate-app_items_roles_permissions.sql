@@ -1,7 +1,9 @@
+UPDATE app_routes set is_open=True where name in ('query', 'search');
+
 TRUNCATE TABLE app_items_roles_permissions ;
 INSERT INTO app_items_roles_permissions ( app_roles_guid,app_items_guid,app_routes_guid,name,description) 
    SELECT app_roles.guid , t2.guid, t3.guid
-		, app_roles.name || '__' || t3.name || '__ON__' || t2.name as name
+		, app_roles.name || '__may__' || t3.name || '__' || t2.name as name
 		, 'WHETHER OR NOT THE ' || app_roles.name || ' CAN ' || t3.name || ' THE ' || t2.name as name
    from app_roles
    cross join (
@@ -43,7 +45,9 @@ DELETE FROM app_items_roles_permissions WHERE 1=1
 ; 
 
 -- deny anything related to app_roles and users to all but the product instance owner
-UPDATE app_items_roles_permissions set allowed=false
+UPDATE app_items_roles_permissions 
+   set allowed=false
+   , name = replace(name, 'may', 'mayNOT')
 WHERE 1=1
 AND ( name not like '%userstories%')
 AND ( name like '%app_roles%' or name like '%users%' or name like '%app_items_roles_permissions%' 
@@ -52,7 +56,9 @@ AND ( name like '%app_roles%' or name like '%users%' or name like '%app_items_ro
 ;
 
 -- the PRODUCT_INSTANCE_OWNER MUST see EVERYTHING
-UPDATE app_items_roles_permissions set allowed=true
+UPDATE app_items_roles_permissions set 
+   allowed=true
+   , name = replace(name, 'mayNOT', 'may')
 WHERE 1=1
    AND app_roles_guid IN 
    ( SELECT guid from app_roles WHERE name = 'PRODUCT_INSTANCE_OWNER')
@@ -74,8 +80,12 @@ WHERE app_items_roles_permissions.allowed = 'false'
 ;
 
 
-UPDATE app_items_roles_permissions set allowed=true
+UPDATE app_items_roles_permissions set 
+   allowed=true
+   , name = replace(name, 'mayNOT', 'may')
 WHERE 1=1
    AND app_routes_guid IN 
    ( SELECT guid from app_routes WHERE app_routes.is_open = true)
 ;
+
+

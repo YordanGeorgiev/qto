@@ -104,7 +104,7 @@ BEGIN {
    }
 
    $tm='the db requested has ANY <<env>>_ prefix it MUST be removed during the intial login' ;
-   my @env_dbs = ('dev_foobar' , 'tst_qto' , 'prd_baz');
+   my @env_dbs = ('dev_qto' );
    for my $env_db ( @env_dbs) {
       my $plain_db = toPlainName($env_db);
       $url = '/' . $env_db . '/login' ;
