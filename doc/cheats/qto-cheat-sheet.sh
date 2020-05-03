@@ -1,10 +1,8 @@
 # file: doc/cheats/qto-cheat-sheet.sh
 
-psql -d "$postgres_db_name" -c \
-   "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public TO $postgres_db_user; 
-   GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user;
-   GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO $postgres_db_user
- "
+psql -d "$postgres_db_name" -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public TO $postgres_db_user; GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user; GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO $postgres_db_user; ALTER DEFAULT PRIVILEGES FOR USER $postgres_db_user IN SCHEMA public GRANT SELECT ON TABLES TO    $postgres_db_user;  "
+
+
 # how-to check the perl syntax of single perl file : 
 perl -MCarp::Always -I `pwd`/src/perl/*/ -I `pwd`/src/perl/*/lib/ -wc \
    src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm

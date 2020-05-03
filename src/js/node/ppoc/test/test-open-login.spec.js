@@ -1,8 +1,7 @@
 /**
  * usage:
    cd src/js/node/ppoc/ ; npm install puppeteer; cd -
-   cd src/js/node/ppoc/ ; npm run ; cd -
-   cd src/js/node/ppoc/ ; node test-open-login.js; cd -
+   cd src/js/node/ppoc/ ; npm install chai; cd -
    cd src/js/node/ppoc/ ; npm test; cd -
  * @name open the login page
  *
