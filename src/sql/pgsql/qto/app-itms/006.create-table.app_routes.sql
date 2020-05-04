@@ -1,44 +1,40 @@
--- DROP TABLE IF EXISTS app_routes ; 
+-- \echo 'If necessary, perform DROP TABLE IF EXISTS app_routes;'
 
-SELECT 'create the "app_routes" table'
-; 
-   CREATE TABLE app_routes (
+-- \echo '6. Creating the app_routes table'
+
+CREATE TABLE app_routes (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , prio           integer NOT NULL DEFAULT 1
+    , prio           smallint NOT NULL DEFAULT 1
     , is_open        bool NOT NULL default true
     , has_subject    bool NOT NULL default true
     , is_backend     bool NOT NULL default true
-    , name           varchar (200) NOT NULL DEFAULT 'route-name...'
-    , description    varchar (4000) DEFAULT 'description...'
+    , name           varchar (200) NOT NULL DEFAULT 'Route name'
+    , description    varchar (4000) DEFAULT ''
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_app_routes_guid PRIMARY KEY (guid)
-    ) WITH (
-      OIDS=FALSE
     );
 
-create unique index idx_uniq_app_routes_id on app_routes (id);
+CREATE UNIQUE INDEX idx_uniq_app_routes_id
+	ON app_routes (id);
 
-
-
-SELECT 'show the columns of the just created table'
-; 
-
-   SELECT attrelid::regclass, attnum, attname
+-- \echo 'List columns of the created table app_routes'
+SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute
-   WHERE  attrelid = 'public.app_routes'::regclass
-   AND    attnum > 0
+   WHERE  attrelid='public.app_routes'::regclass
+   AND    attnum>0
    AND    NOT attisdropped
-   ORDER  BY attnum
-   ; 
+   ORDER  BY attnum; 
 
---The trigger:
-CREATE TRIGGER trg_set_update_time_on_app_routes BEFORE UPDATE ON app_routes FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+-- \echo 'Update time on every EXECUTE trigger:'
+CREATE TRIGGER trg_set_update_time_on_app_routes
+	BEFORE UPDATE ON app_routes
+	FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'app_routes'::regclass;
+SELECT tgname
+	FROM pg_trigger
+	WHERE NOT tgisinternal
+	AND tgrelid='app_routes'::regclass;
 
 
 --

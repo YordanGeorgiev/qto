@@ -9,15 +9,37 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 ALTER DEFAULT PRIVILEGES IN SCHEMA public 
    GRANT ALL PRIVILEGES ON SEQUENCES TO :"postgres_db_user";
 
-GRANT SELECT ON ALL TABLES IN SCHEMA PUBLIC TO :"postgres_db_user";
-GRANT SELECT ON ALL TABLES IN SCHEMA pg_catalog TO :"postgres_db_user";
-GRANT ALL PRIVILEGES ON DATABASE :"postgres_db_name" TO :"postgres_db_user";
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO :"postgres_db_user";
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO :"postgres_db_user";
-GRANT SELECT, INSERT, UPDATE, DELETE , REFERENCES ON ALL TABLES IN SCHEMA public TO :"postgres_db_user";
+GRANT SELECT
+	ON ALL TABLES
+	IN SCHEMA PUBLIC
+	TO :"postgres_db_user";
+	
+GRANT SELECT
+	ON ALL TABLES
+	IN SCHEMA pg_catalog
+	TO :"postgres_db_user";
 
-SELECT rolname, rolsuper, rolinherit, rolcreaterole, rolcreatedb, rolcanlogin, rolreplication, rolconnlimit FROM pg_app_roles 
-WHERE 1=1
-AND rolname=:'postgres_db_user'
-;
+GRANT ALL PRIVILEGES
+	ON DATABASE :"postgres_db_name"
+	TO :"postgres_db_user";
+	
+GRANT ALL PRIVILEGES
+	ON ALL TABLES
+	IN SCHEMA public
+	TO :"postgres_db_user";
+	
+GRANT ALL PRIVILEGES
+	ON ALL SEQUENCES
+	IN SCHEMA public
+	TO :"postgres_db_user";
+	
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES
+	ON ALL TABLES
+	IN SCHEMA public
+	TO :"postgres_db_user";
+
+SELECT rolname, rolsuper, rolinherit, rolcreaterole, rolcreatedb, rolcanlogin, rolreplication, rolconnlimit
+	FROM pg_app_roles 
+	WHERE 1=1
+	ND rolname=:'postgres_db_user';
 
