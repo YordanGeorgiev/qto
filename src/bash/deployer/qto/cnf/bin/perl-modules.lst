@@ -17,7 +17,6 @@
       File::Copy
       File::Find
       File::Path
-      Excel::Writer::XLSX
       Spreadsheet::ParseExcel
       Spreadsheet::XLSX
       Spreadsheet::ParseExcel::FmtJapan
