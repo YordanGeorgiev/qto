@@ -52,9 +52,6 @@ EXCEPTION WHEN OTHERS THEN
 		   , current_setting('myvars.postgres_db_user', true)::text 
 	);
 
-;  "
-
-
 END
 $do$;
 
