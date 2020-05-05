@@ -25,6 +25,13 @@ ALTER TABLE public.app_user_roles
    REFERENCES app_users(guid) 
    ON DELETE CASCADE;
 ;
+	
+ALTER TABLE public.app_user_roles
+   ADD CONSTRAINT fk_app_roles_guid 
+   FOREIGN KEY (app_roles_guid)
+   REFERENCES app_roles(guid) 
+   ON DELETE CASCADE;
+;
 
 -- \echo 'List columns of the created table app_user_roles');
 
