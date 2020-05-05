@@ -41,6 +41,7 @@ doRunQtoDbDdl(){
    PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -q -t -X -w -U "${postgres_db_useradmin:-}" \
       -h $postgres_db_host -p $postgres_db_port -d postgres -v ON_ERROR_STOP=1 -c \
       "GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO $postgres_db_user;
+	  GRANT CONNECT ON DATABASE $postgres_db_name TO $postgres_db_user;
 	  GRANT SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA public TO $postgres_db_user;
       GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user;"
 
