@@ -17,48 +17,55 @@ BEGIN
 EXCEPTION WHEN OTHERS THEN
 	RAISE NOTICE 'User "%" already exists, re-creating it', current_setting('myvars.postgres_db_user', true)::text;
 	EXECUTE format( '
-            GRANT SELECT, INSERT, UPDATE, DELETE
-				ON ALL TABLES
-				IN SCHEMA public
-				TO %I '
+            GRANT CONNECT
+				ON DATABASE %I
+				TO %I ;'
+			, current_setting('myvars.postgres_db_name', true)::text 
 			, current_setting('myvars.postgres_db_user', true)::text 
 	);
 	EXECUTE format( '
-			ALTER DEFAULT PRIVILEGES
-				GRANT SELECT, INSERT, UPDATE, DELETE
-			 	ON TABLES
+            GRANT SELECT, INSERT, UPDATE, DELETE
+				ON ALL TABLES
 				IN SCHEMA public
-				TO %I '
+				TO %I ;'
+			, current_setting('myvars.postgres_db_user', true)::text 
+	);
+	EXECUTE format( '
+			ALTER DEFAULT PRIVILEGES			
+				IN SCHEMA public
+				GRANT SELECT, INSERT, UPDATE, DELETE
+			 		ON TABLES
+					TO %I ;'
 			, current_setting('myvars.postgres_db_user', true)::text 
 	);
 	EXECUTE format( '
             GRANT SELECT, UPDATE
 				ON ALL SEQUENCES
 				IN SCHEMA public
-				TO %I '
+				TO %I ;'
 			, current_setting('myvars.postgres_db_user', true)::text 
 	);
 	EXECUTE format( '
-			ALTER DEFAULT PRIVILEGES
-				GRANT SELECT, UPDATE
-			 	ON SEQUENCES
+			ALTER DEFAULT PRIVILEGES			
 				IN SCHEMA public
-				TO %I '
+				GRANT SELECT, UPDATE
+			 		ON SEQUENCES
+					TO %I ;'
 			, current_setting('myvars.postgres_db_user', true)::text 
 	);	
    	EXECUTE format( '
 			GRANT EXECUTE
 				ON ALL FUNCTIONS
 				IN SCHEMA public
-				TO %I '
+				TO %I ;'
            , current_setting('myvars.postgres_db_user', true)::text 
 	);
 	EXECUTE format( '
-			ALTER DEFAULT PRIVILEGES
-				GRANT EXECUTE
-			 	ON FUNCTIONS
+			ALTER DEFAULT PRIVILEGES			
 				IN SCHEMA public
-				TO %I '
+				GRANT EXECUTE
+			 		ON FUNCTIONS
+					TO %I ;'
 			, current_setting('myvars.postgres_db_user', true)::text 
 	);
 
