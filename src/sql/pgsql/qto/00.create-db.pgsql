@@ -3,8 +3,6 @@ DROP DATABASE IF EXISTS :postgres_db_name ;
 
 -- \echo 'CREATE the DB :postgres_db_name '
 CREATE DATABASE :postgres_db_name
-       LC_COLLATE='C'
-       LC_CTYPE='C'
        CONNECTION LIMIT=-1;
 
 -- \echo 'and check that the :postgres_db_name DB exists:'
