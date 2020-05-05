@@ -28,7 +28,6 @@ do_check_install_redis(){
       # restart to apply the changes 
 		sudo systemctl restart redis
       sudo systemctl restart redis.service
-		sudo systemctl status redis
 
       # check that redis is running
       sudo ps -ef | grep -v grep | grep -i redis
