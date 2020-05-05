@@ -13,7 +13,7 @@ CREATE TABLE yearly_issues_2020 (
     , description    varchar (4000)
     , owner          varchar (20) NOT NULL DEFAULT 'unknown'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
-    , CONSTRAINT pk_yearly_issues_guid PRIMARY KEY (guid)
+    , CONSTRAINT pk_yearly_issues_2020_guid PRIMARY KEY (guid)
     );
 
 CREATE unique index idx_uniq_yearly_issues_2020_id
@@ -25,11 +25,11 @@ SELECT 'show the columns of the just created table'
 ; 
 
 SELECT attrelid::regclass, attnum, attname
-   FROM   pg_attribute
-   WHERE  attrelid = 'public.yearly_issues_2020'::regclass
-   AND    attnum>0
-   AND    NOT attisdropped
-   ORDER  BY attnum; 
+	FROM   pg_attribute
+	WHERE  attrelid = 'public.yearly_issues_2020'::regclass
+	AND    attnum>0
+	AND    NOT attisdropped
+	ORDER  BY attnum; 
 
 --The trigger:
 CREATE TRIGGER trg_set_update_time_on_yearly_issues_2020
