@@ -17,13 +17,6 @@ BEGIN
 EXCEPTION WHEN OTHERS THEN
 	RAISE NOTICE 'User "%" already exists, re-creating it', current_setting('myvars.postgres_db_user', true)::text;
 	EXECUTE format( '
-            GRANT CONNECT
-				ON DATABASE %I
-				TO %I ;'
-			, current_setting('myvars.postgres_db_name', true)::text 
-			, current_setting('myvars.postgres_db_user', true)::text 
-	);
-	EXECUTE format( '
             GRANT SELECT, INSERT, UPDATE, DELETE
 				ON ALL TABLES
 				IN SCHEMA public
@@ -36,6 +29,13 @@ EXCEPTION WHEN OTHERS THEN
 				GRANT SELECT, INSERT, UPDATE, DELETE
 			 		ON TABLES
 					TO %I ;'
+			, current_setting('myvars.postgres_db_user', true)::text 
+	);
+	EXECUTE format( '
+            GRANT CONNECT
+				ON DATABASE %I
+				TO %I ;'
+			, current_setting('myvars.postgres_db_name', true)::text 
 			, current_setting('myvars.postgres_db_user', true)::text 
 	);
 	EXECUTE format( '
