@@ -11,8 +11,6 @@ CREATE TABLE app_user_roles (
     , description    varchar (200) NULL DEFAULT ''
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_app_user_roles_guid PRIMARY KEY (guid)
-    ) WITH (
-      OIDS=FALSE
     );
 
 CREATE UNIQUE INDEX idx_app_user_roles_uniq_id
@@ -27,16 +25,6 @@ ALTER TABLE public.app_user_roles
    REFERENCES app_users(guid) 
    ON DELETE CASCADE;
 ;
-
--- \echo 'If necessary, perform ALTER TABLE public.app_user_roles DROP CONSTRAINT fk_app_roles_noauth_guid;'
-
-ALTER TABLE public.app_user_roles 
-   ADD CONSTRAINT fk_app_users_guid 
-   FOREIGN KEY (app_users_guid)
-   REFERENCES app_users(guid) 
-   ON DELETE CASCADE;
-;
-
 
 -- \echo 'List columns of the created table app_user_roles');
 

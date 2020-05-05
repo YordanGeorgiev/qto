@@ -20,7 +20,7 @@ CREATE unique index idx_app_roles_uniq_id
 
 
 INSERT INTO app_roles 
-   ( guid, id, name, access_level, description )
+   ( guid, id, name, level, description )
 VALUES
    ('71eea083-d818-4557-89fe-29eb950881aa', 1, 'PRODUCT_INSTANCE_OWNER', 0, 'Product instance owner'),
    ('71eea083-d818-4557-89fe-29eb950881ac', 2, 'EDITOR', 2, 'Has the right to edit content'),
