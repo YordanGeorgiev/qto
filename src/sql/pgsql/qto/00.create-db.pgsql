@@ -3,9 +3,6 @@ DROP DATABASE IF EXISTS :postgres_db_name ;
 
 -- \echo 'CREATE the DB :postgres_db_name '
 CREATE DATABASE :postgres_db_name
-       TEMPLATE=template1
-       ENCODING='UTF-8'
-       TABLESPACE=pg_default
        LC_COLLATE='C'
        LC_CTYPE='C'
        CONNECTION LIMIT=-1;
