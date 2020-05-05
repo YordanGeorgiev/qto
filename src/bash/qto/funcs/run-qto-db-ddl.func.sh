@@ -10,7 +10,7 @@ doRunQtoDbDdl(){
    # 00 create the db
    tmp_log_file="$tmp_dir/.$$.log"
 	pgsql_scripts_dir="$PRODUCT_INSTANCE_DIR/src/sql/pgsql/qto"
-   sql_script="$pgsql_scripts_dir/""00.create-db.pgsql"
+   sql_script="$pgsql_scripts_dir/00.create-db.pgsql"
 
    PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -v -q -t -X -w -U "${postgres_db_useradmin:-}" \
       -h $postgres_db_host -p $postgres_db_port -v ON_ERROR_STOP=1 \
@@ -40,7 +40,8 @@ doRunQtoDbDdl(){
    } 
    PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -q -t -X -w -U "${postgres_db_useradmin:-}" \
       -h $postgres_db_host -p $postgres_db_port -d postgres -v ON_ERROR_STOP=1 -c \
-      "GRANT SELECT ON ALL TABLES IN SCHEMA public TO $postgres_db_user; 
-      GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user"
+      "GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO $postgres_db_user;
+	  GRANT SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA public TO $postgres_db_user;
+      GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user;"
 
 }
