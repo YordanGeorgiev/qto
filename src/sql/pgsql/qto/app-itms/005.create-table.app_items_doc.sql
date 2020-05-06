@@ -1,8 +1,10 @@
--- DROP TABLE IF EXISTS app_items_doc CASCADE;
+-- v0.8.4
 
-SELECT 'create the "app_items_doc" table'
-; 
-   CREATE TABLE app_items_doc (
+-- \echo 'If necessary, perform DROP TABLE IF EXISTS app_items_doc;'
+
+-- \echo '5. Creating the app_items_doc table'
+
+CREATE TABLE app_items_doc (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , level          integer NULL
@@ -14,18 +16,17 @@ SELECT 'create the "app_items_doc" table'
     , status         varchar (10) NOT NULL DEFAULT '02-todo'
     , description    varchar (4000)
     , item_id        integer NULL -- the future hook for the table name in the url
-    , prio           integer NOT NULL DEFAULT 1
+    , prio           smallint NOT NULL DEFAULT 1
     , src            varchar (4000)
     , formats        text NULL
     , lft            bigint  NULL
     , rgt            bigint  NULL
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_app_items_doc_guid PRIMARY KEY (guid)
-    ) WITH (
-      OIDS=FALSE
     );
 
-   create unique index idx_uniq_app_items_doc_id on app_items_doc (id);
+CREATE unique index idx_uniq_app_items_doc_id
+	ON app_items_doc (id);
 
 -- insert into app_items_doc ( id , level , seq , lft , rgt , name) values ( 0 , 0, 1, 1, 8, 'ITEMS DOC' );
 -- insert into app_items_doc ( id , level , seq , lft , rgt , name) values ( 1 , 1, 2, 2, 3, 'lists' );
@@ -33,26 +34,23 @@ SELECT 'create the "app_items_doc" table'
 -- insert into app_items_doc ( id , level , seq , lft , rgt , name) values ( 3 , 1, 4, 6, 7, 'labels' );
 
 
-SELECT 'show the columns of the just created table'
-; 
-
-   SELECT attrelid::regclass, attnum, attname
+-- \echo 'List columns of the created table app_items'
+SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute
-   WHERE  attrelid = 'public.app_items_doc'::regclass
-   AND    attnum > 0
+   WHERE  attrelid='public.app_items_doc'::regclass
+   AND    attnum>0
    AND    NOT attisdropped
-   ORDER  BY attnum
-   ; 
+   ORDER  BY attnum; 
 
---The trigger:
-   CREATE TRIGGER trg_set_update_time_on_app_items_doc 
-   BEFORE UPDATE ON app_items_doc 
-   FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+-- \echo 'Update time on every EXECUTE trigger:'
+CREATE TRIGGER trg_set_update_time_on_app_items_doc
+	BEFORE UPDATE ON app_items_doc
+	FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'app_items_doc'::regclass;
+SELECT tgname
+	FROM pg_trigger
+	WHERE NOT tgisinternal
+	AND tgrelid='app_items_doc'::regclass;
 
 --
 -- TOC entry 3321 (class 0 OID 46939)

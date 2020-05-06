@@ -29,20 +29,6 @@ DELETE FROM app_items_roles_permissions WHERE 1=1
    AND app_routes_guid IN 
    ( SELECT guid from app_routes WHERE name IN ('query' , 'search'))
 ; 
-/*
-DELETE 0
-UPDATE 528
-UPDATE 1166
-DELETE 0
-*/
-
--- the list-my and select-my make sense only for tables having app_users_guid attribute
-DELETE FROM app_items_roles_permissions WHERE 1=1 
-   AND app_routes_guid IN 
-   ( SELECT guid from app_routes WHERE name IN ('list-my','select-my'))
-   AND app_items_guid NOT IN 
-   ( SELECT guid from app_items WHERE name IN ('monthly_issues_202005' , 'yearly_issues_2020'))
-; 
 
 -- deny anything related to app_roles and users to all but the product instance owner
 UPDATE app_items_roles_permissions 

@@ -65,9 +65,8 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
       
          $sth = $dbh->prepare($str_sql);  
          $sth->bind_param('$1', $email);  # placeholders are numbered from 1, varchar is default db type
-         $sth->execute() or $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
+         $sth->execute() or $objLogger->error ( "$DBI::errstr" ) ;
          $hsr = $sth->fetchall_hashref( 'id' ) ; 
-         p $str_sql ;
                   
          if ( scalar ( keys %$hsr ) >= 1 ) {
             p $hsr ;
