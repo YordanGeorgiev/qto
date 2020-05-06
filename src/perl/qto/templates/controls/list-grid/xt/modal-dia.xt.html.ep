@@ -32,7 +32,7 @@
                :value="'<%=  $item  =%>-'+this.$attrs.id.replace('dia-','')" readonly>
             <button class="cls_itm_close" id="modal-close-btn-01" v-on:click="$emit('close')" tabindex="0">&nbsp;&times;&nbsp;</button>
             <input id="modal-dia-share-lnk" @focus="this.document.execCommand('selectAll',false,null)"
-               :value="'<%=  $self->req->url->to_abs =%>'+'&with=id-eq-'+this.$attrs.id.replace('dia-','')" readonly>
+               :value="'<%=  $self->req->url->to_abs =%>&'+'with=id-eq-'+this.$attrs.id.replace('dia-','')" readonly>
             </input><div id="modal-dia-msg" align="center"> </div></div>
           <div id="form-container" ref="form_container" class="form-container">
             <component v-for="field in fields" v-bind="field" :cid.sync="field.id" :is="field.type" :key.sync="field.key" v-bind:cnt.sync="field.cnt" :content.sync="field.cnt" :label.sync="field.label" :ref="field.id">
