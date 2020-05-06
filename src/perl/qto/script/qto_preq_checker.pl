@@ -50,24 +50,17 @@ sub doCheckRequiredModules {
    ExtUtils::Installed
    Carp::Always
    Data::Printer
-   File::Copy
+   File::Copy   
+   File::Copy::Recursive
    File::Find
    File::Path
-   Excel::Writer::XLSX
    Spreadsheet::ParseExcel
    Spreadsheet::XLSX
    Spreadsheet::ParseExcel::FmtJapan
    Text::CSV_XS
    Module::Build::Tiny
-   Carp::Always
-   URL::Encode
-   Carp::Always
-   Data::Printer
-   File::Copy::Recursive
-   Spreadsheet::ParseExcel
-   Spreadsheet::XLSX
-   JSON
-   Text::CSV_XS
+   JSON   
+   JSON::Parse
    Test::Trap
    Test::More
    Test::Most
@@ -75,27 +68,26 @@ sub doCheckRequiredModules {
    Tie::Hash::DBD
    Scalar::Util::Numeric
    IPC::System::Simple
-   Mojo::Pg
    Selenium::Remote::Driver
    Selenium::Chrome
    Mojolicious::Plugin::BasicAuthPlus
    Mojolicious::Plugin::StaticCache
-   Mojolicious::Plugin::RenderFile
-   Time::HiRes
+   Mojolicious::Plugin::RenderFile   
    Mojolicious::Plugin::Authentication
    Mojo::JWT
-   Mojo::Pg
+   Mojo::Pg   
+   Time::HiRes
    Authen::Passphrase::BlowfishCrypt
-   Net::Google::DataAPI::Auth::OAuth2
-   Net::Google::Spreadsheets::V4
-   Net::Google::Spreadsheets;
    Net::Google::DataAPI::Auth::OAuth2
    Net::Google::Spreadsheets::V4
    Net::Google::Spreadsheets
    Term::ReadKey
    Term::Prompt
    DBIx::ProcedureCall
-   JSON::Parse
+   Storable
+   Redis
+   Crypt::OpenSSL::RSA
+   Gravatar::URL
   );
 
   for (@modules) {

@@ -212,8 +212,6 @@
                   modifiedContent = ( modifiedContent == "null" ? "" : modifiedContent )
                   newCntIndx = this.gridData.findIndex(obj => obj.id == dbid);
                   this.gridData[newCntIndx][col] = modifiedContent; // it-180920075303 , it-181011195040 !!!
-                  var url_params = this.getUrlParams();
-                  this.fetchServerSideDataToUI(url_params);
                }
             )
             .catch(function (err) {

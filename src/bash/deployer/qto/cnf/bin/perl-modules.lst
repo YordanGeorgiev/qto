@@ -1,58 +1,48 @@
-      JSON  
+      JSON	  
+      JSON::Parse
       Data::Printer
       Carp::Always
       IO::CaptureOutput
       Net::DNS
       Net::Domain::TLD
       Email::Valid
-      Test::Most 
-      Data::Printer 
       FindBin
-      JSON::Parse 
       IPC::System::Simple 
-      Mojolicious 
+      Mojolicious	  
+      Mojolicious::Plugin::BasicAuthPlus
+      Mojolicious::Plugin::StaticCache
+      Mojolicious::Plugin::RenderFile
+      Mojolicious::Plugin::Authentication
       IO::Socket::SSL  
       URL::Encode
       ExtUtils::Installed
       File::Copy
       File::Find
       File::Path
-      Excel::Writer::XLSX
       Spreadsheet::ParseExcel
       Spreadsheet::XLSX
       Spreadsheet::ParseExcel::FmtJapan
       Text::CSV_XS
       Module::Build::Tiny
-      URL::Encode
-      Data::Printer
       File::Copy::Recursive
-      Spreadsheet::ParseExcel
-      Spreadsheet::XLSX
-      JSON
-      Text::CSV_XS
       Test::Trap
       Test::More
-      Test::Most
+      Test::Most	  
+      Test::Mojo
       DBD::Pg
       Tie::Hash::DBD
       Scalar::Util::Numeric
       IPC::System::Simple
       Time::HiRes
-      Mojolicious::Plugin::BasicAuthPlus
-      Mojolicious::Plugin::StaticCache
-      Mojolicious::Plugin::RenderFile
-      Mojolicious::Plugin::Authentication
       Mojo::JWT
       Mojo::Pg
       Mojo::Phantom 
-      Test::Mojo
       Authen::Passphrase::BlowfishCrypt
       Selenium::Remote::Driver
       Selenium::Chrome
       Term::ReadKey
       Term::Prompt
       DBIx::ProcedureCall
-      JSON::Parse
       Storable
       Redis
       Crypt::OpenSSL::RSA

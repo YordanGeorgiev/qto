@@ -3,8 +3,8 @@
       * Erik Terwan - https://codepen.io/erikterwan/pen/grOZxx */
 #div_logout{
    position: relative;
-   margin-left: 87%;
-   margin-top: 1%;
+   margin-left: 85%;
+   margin-top: 4%;
 }
 #app_label {
    padding: 10% 0% 2% 0%;
@@ -61,7 +61,7 @@ li label a:focus {
   height: 29px;
   position: absolute;
   top: -15px;
-  left: -10px;
+  left: -5px;
   cursor: pointer;
   opacity: 0; /* hide this */
   z-index: 2; /* and place it over the hamburger */
