@@ -10,7 +10,7 @@ do_provision_ssh_keys(){
    test -f $prv_key_fpath || {
    expect <<- EOF_EXPECT
       set timeout -1
-      spawn ssh-keygen -t rsa -b 4096 -C $AdminEmail -f $prv_key_fpath
+      spawn ssh-keygen -t rsa -b 4096 -C $AdminEmail -f $prv_key_fpath -N ''
       expect "Enter passphrase (empty for no passphrase): "
       send -- "\r"
 		expect "Enter same passphrase again: "
@@ -30,7 +30,7 @@ EOF_EXPECT
       $jwt_public_key_file
 EOF_USING
       
-      test -f $jwt_private_key_file || ssh-keygen -t rsa -b 4096 -m PEM -f $jwt_private_key_file
+      test -f $jwt_private_key_file || ssh-keygen -t rsa -b 4096 -m PEM -f $jwt_private_key_file -N ''
       test -f $jwt_public_key_file && rm -v $jwt_public_key_file
       openssl rsa -in $jwt_private_key_file -pubout -outform PEM -out $jwt_public_key_file
    done;

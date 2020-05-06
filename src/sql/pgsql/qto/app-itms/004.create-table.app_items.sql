@@ -1,42 +1,40 @@
--- DROP TABLE IF EXISTS app_items ; 
+-- v0.8.4
 
-SELECT 'create the "app_items" table'
-; 
+-- \echo 'If necessary, perform DROP TABLE IF EXISTS app_items;'
+
+-- \echo '5. Creating the app_items table'
+
    CREATE TABLE app_items (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigserial UNIQUE 
-    , prio           integer NOT NULL DEFAULT 1
-    , name           varchar (200) NOT NULL DEFAULT 'name...'
-    , ver            varchar (10) NOT NULL DEFAULT 'version...'
-    , description    varchar (4000) DEFAULT 'description...'
+    , prio           smallint NOT NULL DEFAULT 1
+    , name           varchar (200) NOT NULL DEFAULT 'Item name'
+    , ver            varchar (10) NOT NULL DEFAULT '0.8.4'
+    , description    varchar (4000) DEFAULT ''
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_app_items_guid PRIMARY KEY (guid)
-    ) WITH (
-      OIDS=FALSE
     );
 
-create unique index idx_uniq_app_items_id on app_items (id);
+CREATE UNIQUE INDEX idx_uniq_app_items_id
+	ON app_items (id);
 
-
-
-SELECT 'show the columns of the just created table'
-; 
-
-   SELECT attrelid::regclass, attnum, attname
+-- \echo 'List columns of the created table app_items'
+SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute
-   WHERE  attrelid = 'public.app_items'::regclass
-   AND    attnum > 0
+   WHERE  attrelid='public.app_items'::regclass
+   AND    attnum>0
    AND    NOT attisdropped
-   ORDER  BY attnum
-   ; 
+   ORDER  BY attnum; 
 
---The trigger:
-CREATE TRIGGER trg_set_update_time_on_app_items BEFORE UPDATE ON app_items FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
+-- \echo 'Update time on every EXECUTE trigger:'
+CREATE TRIGGER trg_set_update_time_on_app_items
+	BEFORE UPDATE ON app_items
+	FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'app_items'::regclass;
+SELECT tgname
+	FROM pg_trigger
+	WHERE NOT tgisinternal
+	AND tgrelid='app_items'::regclass;
 
 --
 -- TOC entry 3310 (class 0 OID 58960)
