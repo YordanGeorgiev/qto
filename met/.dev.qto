@@ -116,7 +116,6 @@ src/perl/qto/lib/Qto/Controller/HiCreate.pm
 src/perl/qto/lib/Qto/Controller/HiDelete.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
 src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
-src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrDbName.t
 src/bash/qto/funcs/provision-db-admin.func.sh
 src/bash/qto/funcs/fix-db-permissions.func.sh
 src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
@@ -393,7 +392,6 @@ src/perl/qto/lib/Qto/App/Cnvr
 src/perl/qto/lib/Qto/App/Cnvr/CnrHashesArrRefToHashesArrRef.pm
 src/perl/qto/t
 src/perl/qto/t/lib/Qto/App/Utils/TestRdrCmdArgs.t
-src/perl/qto/t/lib/Qto/App/IO/In/TestRdrDirs.t
 src/perl/qto/t/lib/Qto/App/Utils/OO/SetGetableChild.pm
 src/perl/qto/t/lib/Qto/App/Utils/OO/AutoLoadableChild.pm
 src/perl/qto/t/lib/Qto/App/Utils/OO/TestSetGetable.t
@@ -566,7 +564,6 @@ src/sql/pgsql/qto/tables/24.create-table-system_guide_doc.sql
 src/sql/pgsql/qto/tables/25.create-table-installations_doc.sql
 src/sql/pgsql/qto/tables/26.create-table-release_issues.sql
 src/sql/pgsql/qto/tables/27.create-table-nix_book_doc.sql
-src/sql/pgsql/qto/tables/28.create-table-wow_doc.sql
 src/sql/pgsql/qto/tables/29.create-table-enduser_guide_doc.sql
 src/sql/pgsql/qto/tables/30.create-table-maintenance_guide_doc.sql
 src/sql/pgsql/qto/tables/31.create-table-readme_doc.sql
@@ -980,12 +977,3 @@ src/sql/pgsql/qto/tables/26.create-table-release_issues.sql
 src/sql/pgsql/scripts/grant-priveledges.todo.sql
 cnf/crontab/crontab-l.sh
 tags
-doc/draw.io/qto-main-shell-entry.drawio
-doc/draw.io/qto-main-shell-entry.jpg
-src/bash/load-qto-env.sh
-src/bash/qto/scripts/setup-bash-tmux-vim.sh
-src/perl/qto/public/poc/file-upload/03/index.html
-src/perl/qto/public/poc/file-upload/04/index.html
-src/sql/pgsql/scripts/meta/populate-app_routes.sql
-src/sql/pgsql/scripts/reporting/create-rep_userstories_doc.sql
-src/sql/pgsql/scripts/reporting/repopulate-rep_userstories_doc.sql

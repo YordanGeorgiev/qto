@@ -469,17 +469,12 @@ sub doSetRoutes {
      controller   => 'Select'
    , action       => 'doSelectItems'
    );
-   
-   $r->get('/:db/select-my/:item')->to(
-     controller   => 'SelectMy'
-   , action       => 'doSelectMyItems'
-   );
-   
-   $r->get('/:db/select-my/:item')->to(
-     controller   => 'SelectMy'
-   , action       => 'doSelectMyItems'
-   );
 
+   $r->get('/:db/select-my/:item')->to(
+     controller   => 'SelectMy'
+   , action       => 'doSelectMyItems'
+   );
+   
    $r->get('/:db/select-item-meta-for/:item')->to(
      controller   => 'Select'
    , action       => 'doSelectItemMetaFor'

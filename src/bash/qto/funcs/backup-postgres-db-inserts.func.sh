@@ -3,7 +3,6 @@
 # v0.8.4
 # ---------------------------------------------------------
 # create only data inserts backup without create db clause
-# EXCLUDING the app_users table data ...
 # ---------------------------------------------------------
 doBackupPostgresDbInserts(){
 
