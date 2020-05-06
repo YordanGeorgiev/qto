@@ -18,8 +18,8 @@ do_check_install_redis(){
       echo "bind $my_ip"| sudo tee -a /etc/redis/redis.conf
       echo 'supervised systemd' | sudo tee -a /etc/redis/redis.conf
 
-      # uncomment out the ip6 bind directive, it brakes the redis
-      perl -pi -e 's/bind 127.0.0.1 ::1/#bind 127.0.0.1 ::1/g' /etc/redis/redis.conf
+      # uncomment out the ip6 bind directive, it breaks the redis
+      sudo perl -pi -e 's/bind 127.0.0.1 ::1/#bind 127.0.0.1 ::1/ig' /etc/redis/redis.conf
 
 
 
@@ -28,7 +28,6 @@ do_check_install_redis(){
       # restart to apply the changes 
 		sudo systemctl restart redis
       sudo systemctl restart redis.service
-		sudo systemctl status redis
 
       # check that redis is running
       sudo ps -ef | grep -v grep | grep -i redis
