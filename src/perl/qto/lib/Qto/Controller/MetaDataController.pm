@@ -5,7 +5,7 @@ my $VERSION = '1.0.0';
 require Exporter;
 use AutoLoader  ;
 our @ISA    = qw(Exporter);
-use Carp qw(cluck croak);
+use Carp qw< carp croak confess cluck >;
 our @EXPORT_OK = qw(setData);
 
 use Data::Printer ; 
@@ -50,8 +50,10 @@ sub doReloadProjDbMetaData {
       my $objWtrRedis = 'Qto::App::Db::Out::WtrRedis'->new(\$config);
       $self->doReloadProjDbMetaColumns($db,$item,\$objWtrRedis);
       $self->doReloadProjDbMetaTables($db,$item,\$objWtrRedis);
-      $self->doReloadProjDbRBACList($db,$item,\$objWtrRedis);
-      $self->doReloadMetaRoutes($db,\$objWtrRedis);
+      if ( defined $ENV{'QTO_JWT_AUTH'} && $ENV{'QTO_JWT_AUTH'} == 1 ){
+         $self->doReloadProjDbRBACList($db,$item,\$objWtrRedis) ;
+         $self->doReloadMetaRoutes($db,\$objWtrRedis);
+      }
 
    } else {
       my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
@@ -140,6 +142,7 @@ sub doReloadProjDbRBACList {
    ($ret, $msg , $arr )    = $objRdrDb->doLoadProjDbRBACList( $db ) ; 
 
    # p $arr ;
+   # carp ($db) ; # todo:ysg
    $objWtrRedis->setData(\$config, $db . '.rbac-list', $arr);
    $objModel->set($db . '.rbac-list',$arr);
 
