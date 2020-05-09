@@ -5,7 +5,7 @@
       , gridColumns: <%== defined($list_control) ? $list_control : "['name']" =%>
       , gridData: []
       , gridMeta: []
-      , pageSize: 7
+      , pageSize: 5
       , pageNum: 1
       , pagesCount: 0
       , UrlParams:{ as:"grid" }
@@ -42,7 +42,7 @@
             
             if ( url_params.has("od") === false) { url_params.append("od" , "id"); }
             if ( url_params.has("as") === false) { url_params.append("as" , "grid"); }
-            if ( url_params.has("pg-size") === false) { url_params.append("pg-size" , 7); }
+            if ( url_params.has("pg-size") === false) { url_params.append("pg-size" , 5); }
             if ( url_params.has("pg-num") === false) { url_params.append("pg-num" , 1); }
             
             //debug for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
@@ -70,7 +70,7 @@
          , generatePageSize: function (pgSize) {
                var curi = window.location.href ; 
                if ( curi.indexOf("?") === -1 ) { curi = curi + '?' }
-               if ( typeof pgSize === 'undefined' ) { pgSize = 7 }
+               if ( typeof pgSize === 'undefined' ) { pgSize = 5 }
                if ( curi.indexOf("pg-size=") === -1 ) {
                   return (curi + "&pg-size=" + pgSize).replace(/pg-num=([0-9]+)/gi , "pg-num=1");
                } else {
@@ -166,7 +166,7 @@
                   for(var kv of url_params.entries()) { queryStr = queryStr + kv[0]+ '='+ kv[1] + '&'; }
                   var uri = window.location.href.split('?')[0] + '?' + queryStr.slice(0, - 1)
                   if ( uri.indexOf("oa=prio") === -1 ) { url_params.set("od" , "id") }
-                  url_params.set("pg-size" , "7")
+                  url_params.set("pg-size" , "5")
                   url_params.set("pg-num" , 1)
                   this.fetchServerSideDataToUI(url_params)
                   if ( uri.indexOf("oa=prio") === -1 ) { 

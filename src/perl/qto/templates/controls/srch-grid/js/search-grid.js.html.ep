@@ -5,7 +5,7 @@
        , gridColumns: <%== $srch_control =%>
        , gridData: []
        , gridMeta: {}
-       , pageSize: 7
+       , pageSize: 5
        , pageNum: 1
        , urlParamFor: ""
        , pagesCount: 0
@@ -56,7 +56,7 @@
          }
          , generatePageSize: function (pgSize) {
                var currUrl = window.location.href ; 
-               if ( typeof pgSize === 'undefined' ) { pgSize = 7 }
+               if ( typeof pgSize === 'undefined' ) { pgSize = 5 }
                if ( currUrl.indexOf("pg-size=") === -1 ) {
                   return (currUrl + "&pg-size=" + pgSize)
                      .replace(/pg-num=([0-9]+)/gi , "pg-num=1");
