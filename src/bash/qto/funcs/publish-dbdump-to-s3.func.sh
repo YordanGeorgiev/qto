@@ -8,7 +8,7 @@ doPublishDbdumpToS3(){
    dump_file="$(find $PROJ_INSTANCE_DIR/dat/mix/ -type f -name '*.insrts.dmp.sql'|sort -nr|head -n 1)"
    dump_file_name=$(basename $dump_file)
 
-   AWS_DEFAULT_PROFILE="$ENV_TYPE"'_'"$RUN_UNIT"
+   AWS_DEFAULT_PROFILE="$ENV_TYPE"'-'"$RUN_UNIT"
    test -f ~/.aws/credentials && cp -v ~/.aws/credentials ~/.aws/credentials.bak
    cat << EOF_CREDENTIALS > ~/.aws/credentials
      [$AWS_DEFAULT_PROFILE]
