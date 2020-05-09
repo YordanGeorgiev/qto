@@ -256,72 +256,74 @@ sub doSetHooks {
 		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g);
       return unless $c->req->url->path->parts->[0] ; # bare url address typed - https://qto.fi
 
-      my $route   = (split('/',$url))[2]; #this will fail on new static resource types ...
-	   my $db      = (split('/',$url))[1]; $db = toEnvName($db,$c->app->config);
-      my @open_routes = (); 
-   
-      my $lvl_1_public_dirs = $config->{'env'}->{'run'}->{ 'PublicLevel1Dirs' } ; 
+      if ( defined $ENV{'QTO_JWT_AUTH'} && $ENV{'QTO_JWT_AUTH'} == 1 ){
 
-      # basically a static resource fetch ...
-      # do not check src/perl/qto/public/poc like locations / routes
-      my $pdb = toPlainName($db);
-      return if grep ( /^$pdb$/, @$lvl_1_public_dirs);
+         my $route   = (split('/',$url))[2]; #this will fail on new static resource types ...
+         my $db      = (split('/',$url))[1]; $db = toEnvName($db,$c->app->config);
+         my @open_routes = (); 
       
-      # but if the :db is not configured nor static root => something fishy !!!
-      unless ( defined ($config->{'env'}->{'app'}->{$db . '.meta-routes'} )) {
-         my $redirect_db = $config->{'env'}->{'db'}->{'postgres_db_name'};
-         my $msg = " the project db you requested : $db does not exist !!!" ;
-         my $backend_error_url  = '/' . toPlainName($redirect_db) . '/serve/forbidden?&msg=' . url_encode($msg);
-         $msg .= ' unauthorized attempt to access ' . $route . ' backend route ';
-         $objLogger->doLogErrorMsg($msg);
-         $c->redirect_to($backend_error_url);
-         return;
-      }
+         my $lvl_1_public_dirs = $config->{'env'}->{'run'}->{ 'PublicLevel1Dirs' } ; 
+
+         # basically a static resource fetch ...
+         # do not check src/perl/qto/public/poc like locations / routes
+         my $pdb = toPlainName($db);
+         return if grep ( /^$pdb$/, @$lvl_1_public_dirs);
          
-      # chk if it is a publicall opened route ( login , error , etc. ) 
-      foreach my $k(keys %{$config->{'env'}->{'app'}->{$db . '.meta-routes'}}){
-         my $r = $config->{'env'}->{'app'}->{$db . '.meta-routes'}->{$k};
-         push @open_routes, $r->{'name'} if $r->{'is_open'} == 1 ; 
-      }
-
-      my $flag_found_open_route = grep ( /^$route$/, @open_routes);
-      if ( $flag_found_open_route == 1 ){
-         return ; # not authorization checks for open routes
-		} else {
-         $db         = 'qto' unless $db ;
-			$db         = toEnvName ($db,$c->app->config);
-			my $objGuardian = $self->get('ObjGuardian');
-         my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
-         my $rbac_list     = $objRdrRedis->getData(\$config,"$db" . '.rbac-list');
-
-			unless ( $objGuardian->isAuthenticated($c->app->config, $db, $c, \$msg)){
-				my $login_url = '/' . toPlainName($db) . '/logon' ;
+         # but if the :db is not configured nor static root => something fishy !!!
+         unless ( defined ($config->{'env'}->{'app'}->{$db . '.meta-routes'} )) {
+            my $redirect_db = $config->{'env'}->{'db'}->{'postgres_db_name'};
+            my $msg = " the project db you requested : $db does not exist !!!" ;
+            my $backend_error_url  = '/' . toPlainName($redirect_db) . '/serve/forbidden?&msg=' . url_encode($msg);
+            $msg .= ' unauthorized attempt to access ' . $route . ' backend route ';
             $objLogger->doLogErrorMsg($msg);
-				$c->redirect_to($login_url);
-            return ;
-			}
-         unless ( $objGuardian->isAuthorized($c->app->config, $rbac_list, $db, $c, \$msg)){
-            foreach my $k(keys %{$config->{'env'}->{'app'}->{$db . '.meta-routes'}}){
-               my $r = $config->{'env'}->{'app'}->{$db . '.meta-routes'}->{$k};
-               next unless $r->{'name'} eq $route ;
+            $c->redirect_to($backend_error_url);
+            return;
+         }
+            
+         # chk if it is a publicall opened route ( login , error , etc. ) 
+         foreach my $k(keys %{$config->{'env'}->{'app'}->{$db . '.meta-routes'}}){
+            my $r = $config->{'env'}->{'app'}->{$db . '.meta-routes'}->{$k};
+            push @open_routes, $r->{'name'} if $r->{'is_open'} == 1 ; 
+         }
 
-               if ( $r->{'is_backend'} == 1) {
-                  my $backend_error_url  = '/' . toPlainName($db) . '/serve/forbidden?&msg=' . url_encode($msg);
-                  $msg .= ' unauthorized attempt to access ' . $route . ' backend route ';
-                  $objLogger->doLogErrorMsg($msg);
-                  $c->redirect_to($backend_error_url);
-                  return;
-               } else {
-                  $msg .= ' unauthorized attempt to access ' . $route . ' ui route ';
-                  $objLogger->doLogErrorMsg($msg);
-                  my $home_url = '/' . toPlainName($db) . '/search' ;
-                  $c->redirect_to($home_url);
-                  return ;
+         my $flag_found_open_route = grep ( /^$route$/, @open_routes);
+         if ( $flag_found_open_route == 1 ){
+            return ; # not authorization checks for open routes
+         } else {
+            $db         = 'qto' unless $db ;
+            $db         = toEnvName ($db,$c->app->config);
+            my $objGuardian = $self->get('ObjGuardian');
+            my $objRdrRedis   = 'Qto::App::Db::In::RdrRedis'->new(\$config);
+            my $rbac_list     = $objRdrRedis->getData(\$config,"$db" . '.rbac-list');
+
+            unless ( $objGuardian->isAuthenticated($c->app->config, $db, $c, \$msg)){
+               my $login_url = '/' . toPlainName($db) . '/logon' ;
+               $objLogger->doLogErrorMsg($msg);
+               $c->redirect_to($login_url);
+               return ;
+            }
+            unless ( $objGuardian->isAuthorized($c->app->config, $rbac_list, $db, $c, \$msg)){
+               foreach my $k(keys %{$config->{'env'}->{'app'}->{$db . '.meta-routes'}}){
+                  my $r = $config->{'env'}->{'app'}->{$db . '.meta-routes'}->{$k};
+                  next unless $r->{'name'} eq $route ;
+
+                  if ( $r->{'is_backend'} == 1) {
+                     my $backend_error_url  = '/' . toPlainName($db) . '/serve/forbidden?&msg=' . url_encode($msg);
+                     $msg .= ' unauthorized attempt to access ' . $route . ' backend route ';
+                     $objLogger->doLogErrorMsg($msg);
+                     $c->redirect_to($backend_error_url);
+                     return;
+                  } else {
+                     $msg .= ' unauthorized attempt to access ' . $route . ' ui route ';
+                     $objLogger->doLogErrorMsg($msg);
+                     my $home_url = '/' . toPlainName($db) . '/search' ;
+                     $c->redirect_to($home_url);
+                     return ;
+                  }
                }
             }
          }
       }
-
    });
 
 
