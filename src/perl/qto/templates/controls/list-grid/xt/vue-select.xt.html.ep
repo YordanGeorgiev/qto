@@ -1,7 +1,7 @@
 <script type="text/x-template" id="vue-select-tmpl"> 
-   <v-select label="name" :selectOnTab="true" :searchable="true" :filterable="true" :options="options" @search="onSearch" @input="setSelected" :id="id" :value="selected" :style="'white-space: normal;'">
+   <v-select tabindex="3" label="name" :selectOnTab="true" :searchable="true" :filterable="false" :options="options" @search="onSearch" @input="setSelected" :id="id" :value="selected" :style="'white-space: normal;'">
     <template slot="no-options">
-      type search ...
+      search ...
     </template>
     <template slot="selected-option" slot-scope="option">
       <div class="selected d-center">

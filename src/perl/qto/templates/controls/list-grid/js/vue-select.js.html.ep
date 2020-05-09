@@ -1,7 +1,7 @@
 Vue.component('vue-select', {
     template: "#vue-select-tmpl"
   , props: {
-    filterable: false
+    filterable: true
     , itemname: ''
     , hook: ''
     , id: ''
@@ -15,30 +15,7 @@ Vue.component('vue-select', {
       }
   }
   , mounted(){
-      var k = '<%= $db =%>' + '.' + this.itemname
-
-      // gotcha !!! localStorage is cleared ONLY on the login page ...
-      if ( localStorage.getItem(k) === 'undefined' || localStorage.getItem(k) === null 
-            || localStorage.getItem(k) === "null" || localStorage.getItem(k).length === 0) {
-         urlPrms = this.getUrlParams()
-         axios.get( this.url + this.itemname, {params: {"pg-size": "2000","oa": "name"}})
-         .then(res => {
-            this.options = res.data.dat
-            var cachedData = JSON.stringify(res.data.dat)
-            localStorage.setItem(k,cachedData)
-            res.data.dat.forEach(el => { if ( el.guid === this.hook){
-               this.selected = el.name 
-               }
-            });
-         });
-      } else {
-         var cachedData = JSON.parse(localStorage.getItem(k))
-         this.options = cachedData
-         this.options.forEach(el => { if ( el.guid === this.hook){
-            this.selected = el.name 
-            }
-         });
-      }
+   this.loadData()
   }
   , methods: {
      getUrlParams: function (){
@@ -54,7 +31,38 @@ Vue.component('vue-select', {
       } 
       return urlPrms ; 
     }
+    , loadData(){
+      var k = '<%= $db =%>' + '.' + this.itemname
+
+      // gotcha !!! localStorage is cleared ONLY on the login page ...
+      if ( localStorage.getItem(k) === 'undefined' || localStorage.getItem(k) === null 
+            || localStorage.getItem(k) === "null" || localStorage.getItem(k).length === 0) {
+         urlPrms = this.getUrlParams()
+         axios.get( this.url + this.itemname, {params: {"pg-size": "2000","oa": "name"}})
+         .then(res => {
+            this.options = res.data.dat
+            console.log(res.data)
+            var cachedData = JSON.stringify(res.data.dat)
+            localStorage.setItem(k,cachedData)
+            res.data.dat.forEach(el => { if ( el.guid === this.hook){
+               this.selected = el.name 
+               }
+            });
+         });
+      } else {
+         var cachedData = JSON.parse(localStorage.getItem(k))
+         this.options = cachedData
+         this.options.forEach(el => { if ( el.guid === this.hook){
+            this.selected = el.name 
+            }
+         });
+      }
+    }
     , setSelected(optionItem) {
+      if ( optionItem == null || typeof(optionItem) === "undefined") {
+         this.selected = ""
+         return 
+      }
       this.selected = optionItem
       this.options.forEach(el => { 
          if ( el.name === optionItem.name ){
@@ -64,17 +72,13 @@ Vue.component('vue-select', {
     }
     , onSearch(search, loading){
       loading(true);
-      urlPrms = this.getUrlParams()
-      if ( urlPrms.has("pg-size") === false) { urlPrms.append("pg-size" , "100"); }
-      if ( urlPrms.has("like-by") === false) { urlPrms.append("like-by" , "name"); }
-      if ( urlPrms.has("like-val") === false) { urlPrms.append("like-val" , search); }
       if ( String(search).length > 1 ) {
-         this.search(loading, search, urlPrms);
+         this.loadFilteredData(loading, search)
       }
       loading(false);
     }
-    , search(loading, search, urlPrms) {
-         axios.get( this.url + this.itemname, { params: urlPrms })
+    , loadFilteredData(loading, search) {
+         axios.get( this.url + this.itemname, {params: {"pg-size": "2000","oa": "name","like-by":"name","like-val":search}})
          .then(res => {
            this.options = res.data.dat
          });
