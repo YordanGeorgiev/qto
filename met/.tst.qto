@@ -555,6 +555,7 @@ src/sql/pgsql/qto/tables/14.create-table-ideas.sql
 src/sql/pgsql/qto/tables/15.create-table-skills.sql
 src/sql/pgsql/qto/tables/16.create-table-userstories_doc.sql
 src/sql/pgsql/qto/tables/17.create-table-meta_cols.sql
+src/sql/pgsql/qto/tables/18.create-table-incidents.sql
 src/sql/pgsql/qto/tables/19.create-table-naming_conventions.sql
 src/sql/pgsql/qto/tables/20.create-table-goals.sql
 src/sql/pgsql/qto/tables/21.create-table-devops_guide_doc.sql
@@ -977,3 +978,19 @@ src/sql/pgsql/qto/tables/26.create-table-release_issues.sql
 src/sql/pgsql/scripts/grant-priveledges.todo.sql
 cnf/crontab/crontab-l.sh
 tags
+doc/draw.io/qto-main-shell-entry.drawio
+doc/draw.io/qto-main-shell-entry.jpg
+src/bash/load-qto-env.sh
+src/bash/qto/scripts/setup-bash-tmux-vim.sh
+src/perl/qto/lib/auto/Qto/Controller/SelectMy/autosplit.ix
+src/perl/qto/public/poc/file-upload/03/index.html
+src/perl/qto/public/poc/file-upload/04/index.html
+src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrDbName.t
+src/perl/qto/t/lib/Qto/App/IO/In/TestRdrDirs.t
+src/perl/qto/t/lib/Qto/Controller/TestMySelect.t
+src/sql/pgsql/qto/tables/28.create-table-imgs.sql
+src/sql/pgsql/qto/tables/28.create-table-wow_doc.sql
+src/sql/pgsql/scripts/03.create-func.func_get_all_users_roles.sql
+src/sql/pgsql/scripts/meta/populate-app_routes.sql
+src/sql/pgsql/scripts/reporting/create-rep_userstories_doc.sql
+src/sql/pgsql/scripts/reporting/repopulate-rep_userstories_doc.sql

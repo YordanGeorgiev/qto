@@ -29,7 +29,10 @@ EOF_EXPECT
          sudo cp -v "$PRODUCT_INSTANCE_DIR"'/cnf/nginx/etc/nginx/sites-available/%env%.https-site.conf' \
             "/etc/nginx/sites-available/$env.https-site.conf"
          sudo perl -pi -e 's|\%nginx_port\%|'"$nginx_port"'|g' "/etc/nginx/sites-available/$env.https-site.conf"
+         sudo perl -pi -e 's|\%nginx_port\%|'"$nginx_port"'|g' "/etc/nginx/sites-available/$env.http-site.conf"
          sudo perl -pi -e 's|\%https_port\%|'"$https_port"'|g' "/etc/nginx/sites-available/$env.https-site.conf"
+         sudo perl -pi -e 's|\%https_port\%|'"$https_port"'|g' "/etc/nginx/sites-available/$env.http-site.conf"
+         sudo perl -pi -e 's|#uncomment-for-https ||g' "/etc/nginx/sites-available/$env.http-site.conf"
          sudo perl -pi -e 's|\%mojo_hypnotoad_port\%|'"$mojo_hypnotoad_port"'|g' "/etc/nginx/sites-available/$env.https-site.conf"
          sudo perl -pi -e 's|\%web_host\%|'"$web_host"'|g' "/etc/nginx/sites-available/$env.https-site.conf"
          sudo perl -pi -e 's|\%port\%|'"$port"'|g' "/etc/nginx/sites-available/$env.https-site.conf"
