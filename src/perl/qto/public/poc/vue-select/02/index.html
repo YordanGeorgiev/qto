@@ -40,13 +40,13 @@
 var vueSelect = Vue.component('vue-select', {
     template: "#vue-select-tmpl"
   , props: {
-    filterable: false
+    filterable: true
     , itemname: ''
   }
   , data: function(){
     return { 
       options: []
-      , url: 'http://host-name:3001/qto/select/'
+      , url: 'http://host-name:8078/qto/select/'
       }
   },
   mounted(){
@@ -82,6 +82,7 @@ var vueSelect = Vue.component('vue-select', {
     , search(loading, search, urlPrms) {
          axios.get( this.url + this.itemname, { params: urlPrms })
          .then(res => {
+            console.log(res)
            this.options = res.data.dat
          });
     }
@@ -95,7 +96,7 @@ var vueSelect = Vue.component('vue-select', {
 new Vue({
   el: "#app"
   , data: {
-    itemname: 'items_doc' 
+    itemname: 'category' 
    }
   , components: {
     'vue-select': vueSelect,
