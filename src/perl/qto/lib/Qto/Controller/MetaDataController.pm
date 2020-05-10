@@ -87,6 +87,8 @@ sub doReloadProjDbMetaColumns {
    $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type );
    ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMetaCols( $db ) ; 
 
+   croak ( "could not fetch any proj tables  meta data !!! Does $db exist ?! \n\n\n\n\n\n" ) unless $msr2;
+
    $objWtrRedis->setData(\$config, $db . '.meta-columns', $msr2);
    $objModel->set($db . '.meta-columns',$msr2);
 }
@@ -108,6 +110,7 @@ sub doReloadProjDbMetaTables {
    $objRdrDbsFcry          = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config, \$objModel );
    $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type );
    ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbMetaTables( $db ) ; 
+   croak ( "could not fetch any proj tables  meta data !!! Does $db exist ?! \n\n\n\n\n\n" ) unless $msr2;
 
    $objWtrRedis->setData(\$config, $db . '.meta-tables', $msr2);
    $objModel->set($db . '.meta-tables',$msr2);
@@ -166,6 +169,8 @@ sub doReloadMetaRoutes {
    $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type , $db);
    ($ret, $msg , $hsr )    = $objRdrDb->doCallFuncGetHashRef('fnc_get_app_routes','id'); # by convention ?!
    
+   croak ( "could not fetch any proj db app-routes meta data !!! Does $db exist ?!" ) unless $hsr;
+
    $objWtrRedis->setData(\$config, $db . '.meta-routes', $hsr);
    $config->{'env'}->{'app'}->{$db . '.meta-routes'} = $hsr ; 
 }
