@@ -160,33 +160,32 @@
   * [8.6. PROJECT DEPLOYMENT](#86-project-deployment)
 * [9. DEVOPS ENGINEER PERSPECTIVE](#9-devops-engineer-perspective)
   * [9.1. DOCUMENTATION](#91-documentation)
-    * [9.1.1. Quick start documentation](#911-quick-start-documentation)
-    * [9.1.2. Application's source code and documentation integrity](#912-application's-source-code-and-documentation-integrity)
-  * [9.2. INSTALLATION](#92-installation)
-    * [9.2.1. A single shell call installation](#921-a-single-shell-call-installation)
-    * [9.2.2. A reliable installation documentation](#922-a-reliable-installation-documentation)
-  * [9.3. TESTING](#93-testing)
-    * [9.3.1. Clarity and brevity of the end to end tests](#931-clarity-and-brevity-of-the-end-to-end-tests)
-    * [9.3.2. Databases - local to remote and remote to local sync](#932-databases--local-to-remote-and-remote-to-local-sync)
-    * [9.3.3. Abort end-to-end tests on single test fail](#933-abort-end-to-end-tests-on-single-test-fail)
-    * [9.3.4. Userstories to test case relations](#934-userstories-to-test-case-relations)
-    * [9.3.5. Single shell call for e2e testing](#935-single-shell-call-for-e2e-testing)
-  * [9.4. ETL](#94-etl)
-    * [9.4.1. Database to json files data load](#941-database-to-json-files-data-load)
-    * [9.4.2. Items data transformations](#942-items-data-transformations)
-    * [9.4.3. Json files to db data load](#943-json-files-to-db-data-load)
-    * [9.4.4. Xls-to-postgres-db hierarchical data load](#944-xls-to-postgres-db-hierarchical-data-load)
-    * [9.4.5. Log entries format configuration](#945-log-entries-format-configuration)
-    * [9.4.6. Tool run log to human readable description](#946-tool-run-log-to-human-readable-description)
-    * [9.4.7. UUID trackability for test files and userstories](#947-uuid-trackability-for-test-files-and-userstories)
-    * [9.4.8. Components start run message print](#948-components-start-run-message-print)
-    * [9.4.9. Tool exit with exit code and exit message](#949-tool-exit-with-exit-code-and-exit-message)
-  * [9.5. RUN-TIME MANAGEMENT](#95-run-time-management)
-    * [9.5.1. Logging](#951-logging)
-    * [9.5.2. Single shell call for projects switching](#952-single-shell-call-for-projects-switching)
-    * [9.5.3. Start and Stop of the Application](#953-start-and-stop-of-the-application)
-  * [9.6. SECURITY](#96-security)
-    * [9.6.1. Security modes](#961-security-modes)
+  * [9.2. ETL](#92-etl)
+    * [9.2.1. Quick start documentation](#921-quick-start-documentation)
+    * [9.2.2. Application's source code and documentation integrity](#922-application's-source-code-and-documentation-integrity)
+  * [9.3. INSTALLATION](#93-installation)
+    * [9.3.1. A single shell call installation](#931-a-single-shell-call-installation)
+    * [9.3.2. A reliable installation documentation](#932-a-reliable-installation-documentation)
+  * [9.4. TESTING](#94-testing)
+    * [9.4.1. Clarity and brevity of the end to end tests](#941-clarity-and-brevity-of-the-end-to-end-tests)
+    * [9.4.2. Databases - local to remote and remote to local sync](#942-databases--local-to-remote-and-remote-to-local-sync)
+    * [9.4.3. Abort end-to-end tests on single test fail](#943-abort-end-to-end-tests-on-single-test-fail)
+    * [9.4.4. Single shell call for e2e testing](#944-single-shell-call-for-e2e-testing)
+  * [9.5. ETL](#95-etl)
+    * [9.5.1. Database to json files data load](#951-database-to-json-files-data-load)
+    * [9.5.2. Items data transformations](#952-items-data-transformations)
+    * [9.5.3. Json files to db data load](#953-json-files-to-db-data-load)
+    * [9.5.4. Xls-to-postgres-db hierarchical data load](#954-xls-to-postgres-db-hierarchical-data-load)
+    * [9.5.5. Log entries format configuration](#955-log-entries-format-configuration)
+    * [9.5.6. Tool run log to human readable description](#956-tool-run-log-to-human-readable-description)
+    * [9.5.7. Components start run message print](#957-components-start-run-message-print)
+    * [9.5.8. Tool exit with exit code and exit message](#958-tool-exit-with-exit-code-and-exit-message)
+  * [9.6. RUN-TIME MANAGEMENT](#96-run-time-management)
+    * [9.6.1. Logging](#961-logging)
+    * [9.6.2. Single shell call for projects switching](#962-single-shell-call-for-projects-switching)
+    * [9.6.3. Start and Stop of the Application](#963-start-and-stop-of-the-application)
+  * [9.7. SECURITY](#97-security)
+    * [9.7.1. Security modes](#971-security-modes)
 * [10. UI DEVELOPER PERSPECTIVE](#10-ui-developer-perspective)
   * [10.1. FOREIGN KEYS (FK) CONFIGURABILITY](#101-foreign-keys-(fk)-configurability)
   * [10.2. CODE TRACEABILITY BY UUID](#102-code-traceability-by-uuid)
@@ -1335,40 +1334,45 @@ I want to generally perform any command the system within the sysadmin scope via
 
     
 
-#### 9.1.1. Quick start documentation
+### 9.2. ETL
+
+
+    
+
+#### 9.2.1. Quick start documentation
 As a Full-Stack Developer
 In order to be able to quickly start on my own hacking the project
 I want to have a quick start documentation, which will simply guide me to start on my own.
 
     
 
-#### 9.1.2. Application's source code and documentation integrity
+#### 9.2.2. Application's source code and documentation integrity
 As a Full-Stack Developer
 In order to make easy the entry of other developers to the projects
 I want to be able to point to written documentation for user-stories, issues, features and functionalities, which will be linked to parts of the source code. 
 
     
 
-### 9.2. Installation
+### 9.3. Installation
 
 
     
 
-#### 9.2.1. A single shell call installation
+#### 9.3.1. A single shell call installation
 As a potential Developer of the qto or a qto application 
 In order to have the easiest installation experience 
 I want to be able to deploy fully functional development environment on a clean host in less than an hour with a single oneliner. 
 
     
 
-#### 9.2.2. A reliable installation documentation
+#### 9.3.2. A reliable installation documentation
 As a potential DevOps engineer of the qto or a qto application 
 In order to have the easiest installation experience 
 I want to have a reliable documentation, which will have short commands 
 
     
 
-### 9.3. Testing
+### 9.4. Testing
 As a qto devops engineer 
 In order to be able to rely on the operations of the tool 
  and manage easily its features and functionalities
@@ -1377,14 +1381,14 @@ by issuing a single shell call.
 
     
 
-#### 9.3.1. Clarity and brevity of the end to end tests
+#### 9.4.1. Clarity and brevity of the end to end tests
 As an ITOPS 
 In order to be able to verify all the features and functionalities of the tool within the System
 I want to see the results of each test in 1 flow in the following format:.
 
     
 
-#### 9.3.2. Databases - local to remote and remote to local sync
+#### 9.4.2. Databases - local to remote and remote to local sync
 As a DevOps Operator
 In order to :
  - keep the dog-fooded local and remote db instances in sync
@@ -1397,40 +1401,35 @@ I wanto to :
 
     
 
-#### 9.3.3. Abort end-to-end tests on single test fail
+#### 9.4.3. Abort end-to-end tests on single test fail
 As an ITOPS 
 In order to be able to run continuously end-to-end tests and skip for several runs failing tests
 I want to be able to configure the single e2e entry point script to skip certain tests, but report me what was skipped. 
 
     
 
-#### 9.3.4. Userstories to test case relations
-As a Developer 
-In order to ensure the stability and expandability of the application
-I want to be able to run for each implemented user-story a single test.
-
-    
-
-#### 9.3.5. Single shell call for e2e testing
+#### 9.4.4. Single shell call for e2e testing
 As an DevOps
 In order to be able to verify all the features and functionalities of the tool within the System
 I want to run a single shell call running all the end-to-end test of the application ensuring the specified features and functionalities.  
 
     
 
-### 9.4. ETL
-
+### 9.5. ETL
+As an DevOps
+In order to be able to quickly manage the combination of binaries, configuration, own source code and data 
+I want to be able to quickly and efficiently Extract, Transform and Load data from and into any qto based or related System.
 
     
 
-#### 9.4.1. Database to json files data load
+#### 9.5.1. Database to json files data load
 As the ETL and Integration Specialist 
 In order to be able to quickly move all the project data into a different storage format 
 I want to be able to export the project db data into json files - one per table via a single shell call. 
 
     
 
-#### 9.4.2. Items data transformations
+#### 9.5.2. Items data transformations
 As a cli user of the qto application 
 In order to be able to sort the issues according to their attributes 
 and edit them in both txt file and xls file
@@ -1438,18 +1437,17 @@ I want to be able to perform the following loads:
 txt-to-db - to load a txt file with issues to an issues table in db
 db-to-xls - to load a xls file from db table to xls
 xls-to-db - to load a xls file with issues to an issues table in db
-db-to-txt - to load a txt file from db table 
 
     
 
-#### 9.4.3. Json files to db data load
-As the ETL and Integration Specialist 
+#### 9.5.3. Json files to db data load
+As the ETL data engineer 
 In order to be able to quickly move all the project data from json files into the db tables
 I want to be able to import the exported json files ( one per table ) into the database. 
 
     
 
-#### 9.4.4. Xls-to-postgres-db hierarchical data load
+#### 9.5.4. Xls-to-postgres-db hierarchical data load
 As the Data Integrator
 In order to be efficient while handling the System's hierarchical data 
 I want to be able to
@@ -1457,7 +1455,7 @@ use a single shell call to load all or chosen table(s) to the mysql db
 
     
 
-#### 9.4.5. Log entries format configuration
+#### 9.5.5. Log entries format configuration
 As a Full-Stack Developer
 In order to be able to get the msg of any component of the application 
 I want each log entry to content:
@@ -1468,47 +1466,40 @@ I want each log entry to content:
 
     
 
-#### 9.4.6. Tool run log to human readable description
+#### 9.5.6. Tool run log to human readable description
 As a CLI user 
 In order to be able to get a human readable description of the log of the specific run of the tool
 I want to be able to translate the recorded uuid's in the execution run log to their respective records
 
     
 
-#### 9.4.7. UUID trackability for test files and userstories
-As a Developer 
-In order to identify each user-story to be tested with its according test
-I want to be able to track each user-story or test code entry point file by UUID.
-
-    
-
-#### 9.4.8. Components start run message print
+#### 9.5.7. Components start run message print
 As a CLI user 
 In order to know when a component has been started
 I want to be able to see the "START &lt;&lt;COMPONENT NAME&gt;&gt; on either the STDOUT or the log file of the component
 
     
 
-#### 9.4.9. Tool exit with exit code and exit message
+#### 9.5.8. Tool exit with exit code and exit message
 As a CLI user or calling  automated component
 In order to be able to understand whether or not the execution of the call to the tool was successful or not 
 I want to get the exit code from the tool execution and see the exit message
 
     
 
-### 9.5. Run-time management
+### 9.6. Run-time management
 
 
     
 
-#### 9.5.1. Logging
+#### 9.6.1. Logging
 As a Full-Stack Developer
 In order to quickly understand what is happening in the application
 I want to have easy-to-use and highly customisable logging to both file and console.
 
     
 
-#### 9.5.2. Single shell call for projects switching
+#### 9.6.2. Single shell call for projects switching
 As a qto DevOps engineer
 In order to be able to switch between different projects quickly in the shell 
 I want to be able to issue a single shell call for loading a project's configuration
@@ -1516,19 +1507,19 @@ and run the qto tool against the predefined configuration of an qto project's co
 
     
 
-#### 9.5.3. Start and Stop of the Application
+#### 9.6.3. Start and Stop of the Application
 As a qto DevOps engineer
 In order to be able to quickly start and stop the qto application
 I want to have a single shell call for those actions, with no other configuration, run-time or binary dependencies.
 
     
 
-### 9.6. Security
+### 9.7. Security
 
 
     
 
-#### 9.6.1. Security modes
+#### 9.7.1. Security modes
 As a qto DevOps engineer
 In order to be able to effortlessly develop the application
 I want to have 3 Security Modes, which could be changed during the restart of the application, by a simple ENV var:

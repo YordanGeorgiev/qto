@@ -22,13 +22,15 @@
   * [4.1. BACKUP A DATABASE](#41-backup-a-database)
   * [4.2. LOAD DATABASE CONNECTIVITY CONFIGURATION SECURELY](#42-load-database-connectivity-configuration-securely)
   * [4.3. BACKUP A DATABASE TABLE](#43-backup-a-database-table)
-  * [4.4. BACKUP ONLY THE DATABASE TABLES INSERT DATA](#44-backup-only-the-database-tables-insert-data)
-  * [4.5. RESTORE A DATABASE](#45-restore-a-database)
-    * [4.5.1. Restore a database from full database backup](#451-restore-a-database-from-full-database-backup)
-    * [4.5.2. Restore a database from db inserts file](#452-restore-a-database-from-db-inserts-file)
-  * [4.6. RESTORE A DATABASE TABLE](#46-restore-a-database-table)
-  * [4.7. CREATE A FULL BACKUP OF AN INSTANCE SITE FROM A SATELLITE HOST](#47-create-a-full-backup-of-an-instance-site-from-a-satellite-host)
-  * [4.8. BACKUP MULTIPLE EC2 SERVERS FROM THE SATELLITE HOST](#48-backup-multiple-ec2-servers-from-the-satellite-host)
+  * [4.4. BACKUP ALL THE DATA FROM A REMOTE HOST TO LOCALHOST](#44-backup-all-the-data-from-a-remote-host-to-localhost)
+  * [4.5. REMOVING OLD BACKUPS](#45-removing-old-backups)
+  * [4.6. BACKUP ONLY THE DATABASE TABLES INSERT DATA](#46-backup-only-the-database-tables-insert-data)
+  * [4.7. RESTORE A DATABASE](#47-restore-a-database)
+    * [4.7.1. Restore a database from full database backup](#471-restore-a-database-from-full-database-backup)
+    * [4.7.2. Restore a database from db inserts file](#472-restore-a-database-from-db-inserts-file)
+  * [4.8. RESTORE A DATABASE TABLE](#48-restore-a-database-table)
+  * [4.9. CREATE A FULL BACKUP OF AN INSTANCE SITE FROM A SATELLITE HOST](#49-create-a-full-backup-of-an-instance-site-from-a-satellite-host)
+  * [4.10. BACKUP MULTIPLE EC2 SERVERS FROM THE SATELLITE HOST](#410-backup-multiple-ec2-servers-from-the-satellite-host)
 * [5. SHELL ACTIONS](#5-shell-actions)
   * [5.1. BACKUP DIRECTORIES WITH RSYNC](#51-backup-directories-with-rsync)
   * [5.2. LOAD XLS SHEET TO DB A DOC TABLE](#52-load-xls-sheet-to-db-a-doc-table)
@@ -229,19 +231,49 @@ You backup a database table with the following one-liner. Noe
     # clear; doParseCnfEnvVars <<path-to-cnf-file>>
     bash src/bash/qto/qto.sh -a backup-postgres-table -t my_table
 
-### 4.4. Backup only the database tables insert data
+### 4.4. Backup all the data from a remote host to localhost
+Storage is cheap - human time is expensive - this the principle according to which the backup ideology of qto has been build upon ... and for now it is working ...
+Because of the naming convention of the product instance directories you will never overwrite a local directory with the remote directories and always keep track of what where is.
+So provided that you have configured an ssh key to access you remote server you would issue the following one-liner which will replicate the remote structure on the remote host on the localhost ...
+
+    export ssh_server=qto.fi
+    export ssh_user=ubuntu
+    export src_dir=/home/ubuntu/opt/qto/
+    export tgt_dir=/hos/opt/
+    rsync -e "ssh -l USERID -i ~/.ssh/id_rsa.aws-ec2.qto.prd" -av -r --partial --progress --human-readable \
+    	--stats $ssh_user@$ssh_server:$src_dir $tgt_dir
+
+### 4.5. Removing old backups
+Because of the naming convention removing backups requires as little effort as: 
+
+    # check what where is in the localhost
+    find /hos/opt/qto -type d -maxdepth 1 -mindepth 1 | sort -nr | less
+    
+    # remove ALL dirs an files belonging to v0.8.1, as we are now in v0.8.4
+    rm -r /hos/opt/qto/qto.0.8.1*
+    
+    # and verify
+    find /hos/opt/qto -type d -maxdepth 1 -mindepth 1 | sort -nr | less
+    # remove ALL dirs an files belonging to v0.8.2, as we are now in v0.8.4
+    rm -r /hos/opt/qto/qto.0.8.2*
+    
+    # and verify
+    find /hos/opt/qto -type d -maxdepth 1 -mindepth 1 | sort -nr | less 
+    
+
+### 4.6. Backup only the database tables insert data
 
 
     # obs you have to have the shell vars pre-loaded !!!
     bash src/bash/qto/qto.sh -a backup-postgres-db-inserts
 
-### 4.5. Restore a database
+### 4.7. Restore a database
 You restore a database by first running the pgsql scripts of the project database and than restoring the insert data 
 
     psql -d $postgres_db_name < \
     dat/mix/sql/pgsql/dbdumps/dev_qto/dev_qto.20180813_202202.insrt.dmp.sql
 
-#### 4.5.1. Restore a database from full database backup
+#### 4.7.1. Restore a database from full database backup
 You restore a database by basically creating first the empty database and applying the dump file to that database. Practice this several times in dev before going to tst !!! 
 
     # if you DO HAVE THE DB - probably not a bad idea to first backup it !!!
@@ -255,7 +287,7 @@ You restore a database by basically creating first the empty database and applyi
     
     psql -d dev_qto < dat/mix/2020/2020-01/2020-01-11/sql/tst_qto/tst_qto.20200111_195947.full.dmp.sql
 
-#### 4.5.2. Restore a database from db inserts file
+#### 4.7.2. Restore a database from db inserts file
 This type of restore assumes you are 100% sure that the schema you took the db inserts backup from is the same as the schema you are applying the db inserts to, which should be the case when you are restoring data from the same qto version db. In qto we do not believe in migrations, which is a totally different discussion, but if you do not have the same schema you WILL HAVE errors and you ARE basically on your own, because you ended-up here by basically NOT taking regularly backups and not applying regular updates and that is YOUR fault and not the fault of the product instance owner you are getting the qto source from ....
 
     # if you DO HAVE THE DB - probably not a bad idea to first backup it !!!
@@ -270,13 +302,13 @@ This type of restore assumes you are 100% sure that the schema you took the db i
     psql -d $postgres_db_name < \
     dat/mix/sql/pgsql/dbdumps/dev_qto/dev_qto.20180813_202202.insrt.dmp.sql
 
-### 4.6. Restore a database table
+### 4.8. Restore a database table
 You restore a database table by first running the pgsql scripts of the project database or ONLY for that table and than restoring the insert data from the table insert file.
 
     # re-apply the table ddl
     psql -d $postgres_db_name < src/sql/pgsql/dev_qto/13.create-table-requirements.sql
 
-### 4.7. Create a full backup of an instance site from a satellite host
+### 4.9. Create a full backup of an instance site from a satellite host
 Once an instance site is up-and-running - it might be a good idea to create a full-backup of the site's instance data, software and configuration:
  - full backup the postgres - both DDL and DML's
  - ensure the cnf/env/&lt;&lt;env&gt;&gt;.json is part of the met/.&lt;&lt;env&gt;&gt;.qto meta list file
@@ -300,7 +332,7 @@ Once an instance site is up-and-running - it might be a good idea to create a fu
     # rename it to reflect the fact that this file contains a full backup file
     mv -v ../qto.0.8.1.prd.20200322_122924.ip-10-0-44-231.rel.zip ../qto.0.8.1.prd-fb.20200322_122924.ip-10-0-44-231.rel.zip
 
-### 4.8. Backup multiple ec2 servers from the satellite host
+### 4.10. Backup multiple ec2 servers from the satellite host
  The user@host notation in the $PRODUCT_OWNER part ensures that each product instance dir WILL have an unique path even if they are moved between the different qto hosts:
 
     #set the variables 

@@ -13,12 +13,13 @@
   * [2.4. CLONE QTO REPOSITORY TO YOUR GITHUB ACCOUNT](#24-clone-qto-repository-to-your-github-account)
   * [2.5. INSTALL AND TMUX, VIM, GIT AND BASH CONFS (OPTIONAL)](#25-install-and-tmux-vim-git-and-bash-confs-(optional))
   * [2.6. INSTALL VB+VAGRANT VIRTUAL MACHINE FOR A LOCAL UBUNTU HOST (OPTIONAL) ](#26-install-vb+vagrant-virtual-machine-for-a-local-ubuntu-host-(optional)-)
-  * [2.7. BOOTSTRAP AND DEPLOY THE APPLICATION LOCALLY](#27-bootstrap-and-deploy-the-application-locally)
-  * [2.8. PROVISION THE APPLICATION LOCALLY](#28-provision-the-application-locally)
-  * [2.9. START THE APPLICATION LAYER ON THE DEV INSTANCE](#29-start-the-application-layer-on-the-dev-instance)
-  * [2.10. CREATE AND START THE TST INSTANCE](#210-create-and-start-the-tst-instance)
-  * [2.11. CHECK APPLICATION LAYER SYNTAX, LOAD DB DATA](#211-check-application-layer-syntax-load-db-data)
-  * [2.12. START THE TST INSTANCE](#212-start-the-tst-instance)
+  * [2.7. ADD TRUST BETWEEN LOCAL HOST AND GITHUB SERVER](#27-add-trust-between-local-host-and-github-server)
+  * [2.8. BOOTSTRAP AND DEPLOY THE APPLICATION LOCALLY](#28-bootstrap-and-deploy-the-application-locally)
+  * [2.9. PROVISION THE APPLICATION LOCALLY](#29-provision-the-application-locally)
+  * [2.10. START THE APPLICATION LAYER ON THE DEV INSTANCE](#210-start-the-application-layer-on-the-dev-instance)
+  * [2.11. CREATE AND START THE TST INSTANCE](#211-create-and-start-the-tst-instance)
+  * [2.12. CHECK APPLICATION LAYER SYNTAX, LOAD DB DATA](#212-check-application-layer-syntax-load-db-data)
+  * [2.13. START THE TST INSTANCE](#213-start-the-tst-instance)
 * [3. FIRST TIME AWS DEPLOYMENT](#3-first-time-aws-deployment)
   * [3.1. AWS CENTRIC INFRASTRUCTURE AS A CODE RELATED INTRO](#31-aws-centric-infrastructure-as-a-code-related-intro)
   * [3.2. PREREQUISITES](#32-prerequisites)
@@ -28,17 +29,18 @@
     * [3.2.4. Configure your AWS credentials - AWS keys](#324-configure-your-aws-credentials--aws-keys)
   * [3.3. INITIALISE AWS INFRASTRUCTURE](#33-initialise-aws-infrastructure)
   * [3.4. SET IP ADDRESS FOR THE HOST IN DNS (OPTIONAL) ](#34-set-ip-address-for-the-host-in-dns-(optional)-)
-  * [3.5. ACCESS AWS HOST VIA SSH AND FETCH SOURCE CODE FROM GITHUB](#35-access-aws-host-via-ssh-and-fetch-source-code-from-github)
-  * [3.6. BOOTSTRAP AND DEPLOY THE APPLICATION ON AWS INSTANCE](#36-bootstrap-and-deploy-the-application-on-aws-instance)
-  * [3.7. PROVISION APPLICATION IN AWS INSTANCE IN DEV](#37-provision-application-in-aws-instance-in-dev)
-  * [3.8. EDIT THE CONFIGURATION FILE AND START WEB SERVER](#38-edit-the-configuration-file-and-start-web-server)
-  * [3.9. ACCESS THE QTO APPLICATION FROM WEB](#39-access-the-qto-application-from-web)
-  * [3.10. CONFIGURE DNS](#310-configure-dns)
-  * [3.11. PROVISION QTO WEB USERS](#311-provision-qto-web-users)
-  * [3.12. CREATE THE TST PRODUCT INSTANCE](#312-create-the-tst-product-instance)
-  * [3.13. PROVISION THE TST DATABASE](#313-provision-the-tst-database)
-  * [3.14. FORK PRODUCTION INSTANCE](#314-fork-production-instance)
-  * [3.15. PROVISION PRD DB](#315-provision-prd-db)
+  * [3.5. ACCESS AWS HOST VIA SSH](#35-access-aws-host-via-ssh)
+  * [3.6. FETCH THE SOURCE CODE FROM GITHUB ON THE AWS SERVER](#36-fetch-the-source-code-from-github-on-the-aws-server)
+  * [3.7. BOOTSTRAP AND DEPLOY THE APPLICATION ON AWS INSTANCE](#37-bootstrap-and-deploy-the-application-on-aws-instance)
+  * [3.8. PROVISION APPLICATION IN AWS INSTANCE IN DEV](#38-provision-application-in-aws-instance-in-dev)
+  * [3.9. EDIT THE CONFIGURATION FILE AND START WEB SERVER](#39-edit-the-configuration-file-and-start-web-server)
+  * [3.10. ACCESS THE QTO APPLICATION FROM WEB](#310-access-the-qto-application-from-web)
+  * [3.11. CONFIGURE DNS](#311-configure-dns)
+  * [3.12. PROVISION QTO WEB USERS](#312-provision-qto-web-users)
+  * [3.13. CREATE THE TST PRODUCT INSTANCE](#313-create-the-tst-product-instance)
+  * [3.14. PROVISION THE TST DATABASE](#314-provision-the-tst-database)
+  * [3.15. FORK PRODUCTION INSTANCE](#315-fork-production-instance)
+  * [3.16. PROVISION PRD DB](#316-provision-prd-db)
 * [4. PROVISION HTTPS (ONLY IF DNS IS CONFIGURED)](#4-provision-https-(only-if-dns-is-configured))
   * [4.1. FORK LATEST STABLE DEV TO TST](#41-fork-latest-stable-dev-to-tst)
   * [4.2. GO TO YOUR PREVIOUS ENVIRONMENT](#42-go-to-your-previous-environment)
@@ -54,8 +56,8 @@
   * [7.2. AWS WAS NOT ABLE TO VALIDATE THE PROVIDED ACCESS CREDENTIALS](#72-aws-was-not-able-to-validate-the-provided-access-credentials)
   * [7.3. REDIS REFUSES TO START ](#73-redis-refuses-to-start-)
   * [7.4. COULD NOT CONNECT TO REDIS SERVER](#74-could-not-connect-to-redis-server)
-  * [7.5. CANNOT LOGIN IN WEB INTERFACE WITH ADMIN USER](#75-cannot-login-in-web-interface-with-admin-user)
-  * [7.6. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#76-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
+  * [7.5. YOU HAVE REACHED THE HW PROVISIONING LIMITS OF YOUR AWS ACCOUNT](#75-you-have-reached-the-hw-provisioning-limits-of-your-aws-account)
+  * [7.6. CANNOT LOGIN IN WEB INTERFACE WITH ADMIN USER](#76-cannot-login-in-web-interface-with-admin-user)
   * [7.7. MISMATCH IN THE AWS](#77-mismatch-in-the-aws)
   * [7.8. THE PROBLEM OCCURRED IS NOT MENTIONED HERE ?!](#78-the-problem-occurred-is-not-mentioned-here-)
 
@@ -65,7 +67,7 @@
     
 
 ## 1. INTRODUCTION
-The QTO installation could be compressed to four oneliners, yet if you are installing it for first time you should read this guide thoroughly or at least jump through the code sections from the top till the bottom, simply because the stack is huge - PostgreSQL, Perl application layer with a lot of modules and dependencies.
+The QTO installation could be compressed to four oneliners, yet if you are installing it for first time you should read this guide thoroughly and CAREFULLY or at least jump through the code sections from the top till the bottom, simply because the stack is huge - PostgreSQL, Perl application layer with a lot of modules and dependencies and you will be deploying the whole stack.
 
     
 
@@ -138,7 +140,15 @@ This action will enable the Merge Requests creation according to the qto develop
 ### 2.5. Install and tmux, vim, git and bash confs (optional)
 This step is optional - it will deploy tmux, vim and git with some default configurations, which you could omit. Replace the email and the initials passed as $1 and $2 to the script with your email and initials and not those bellow.
 
-    curl https://raw.githubusercontent.com/<<your-git-account>>/qto/master/src/bash/qto/scripts/pre-push/setup-bash-n-vim.sh | bash -s firstname.last-name@gmail.com $USER
+    # on the AWS server
+    export your_git_user_name=YordanGeorgiev
+    export your_email=yordan.georgiev@gmail.com
+    export your_initials=ysg
+    
+    curl https://raw.githubusercontent.com/$your_git_user_name/qto/master/src/bash/qto/scripts/setup-bash-tmux-vim.sh | bash -s $your_email $your_initials
+    
+    # on the AWS server
+    mkdir -p ~/opt; cd $_ ;  git clone git@github.com:<<YourGitHubUserName>>/qto.git; cd ~/opt
 
 ### 2.6. Install VB+Vagrant virtual machine for a local Ubuntu host (optional) 
 If your physical host OS is not Ubuntu 18.04 OS, you could install the latest version of the Oracle VirtualBox with Guest additions and HashiCorp Vagrant and run the deploy-vagrant-vm.sh bootstrapper script on the Host to get a fully provisioned Guest setup with all the binaries and configurations. This step might take around 30 min depending on the hardware of your host machine and the VirtualBox configurations in your setup.
@@ -155,7 +165,29 @@ If your physical host OS is not Ubuntu 18.04 OS, you could install the latest ve
     # go to the qto project in the 
     cd /home/vagrant/opt/qto/
 
-### 2.7. Bootstrap and deploy the application locally
+### 2.7. Add trust between local host and github server
+To add the trust between the locahost andl the GitHub server you must paste your public ssh keys into the GitHub UserSettings , as described in the following link:
+https://www.inmotionhosting.com/support/website/ssh/how-to-add-ssh-keys-to-your-github-account/
+
+And it would look something as follows:
+
+    # check the ~/.ssh dir, of course you will have a different output 
+    find ~/.ssh|sort
+    /home/ubuntu/.ssh
+    /home/ubuntu/.ssh/authorized_keys
+    /home/ubuntu/.ssh/id_rsa.ysg.ip-10-0-46-110
+    /home/ubuntu/.ssh/id_rsa.ysg.ip-10-0-46-110.pub
+    
+    # get the full string of the public key of your local OS account
+    # of course this line will look different to you ... so don't copy it ... 
+    cat /home/ubuntu/.ssh/id_rsa.ysg.ip-10-0-46-110.pub
+    
+    # copy carefully from EXACTLY the beginning of the next line till the end of the email address
+    # of course YOUR public ssh key WILL look different
+    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC1dEuQqFp+4yUDAGwLCf8YxsHCaWD/by+yyOYh85loZw1TTm51dqEjsFDWgNKE9e8hLeX5AuyJGfz4dOTT81/Wrj3OBeF8fc3Lvu4IdXQaXxaEHGTdXtuOdD/uYXnVcnO3rQd8BFuPnqBZbu5nD1ROWdRPBLPE4x5dZ/P/UqUkHfOxq1cFIMHtus2tG+WboCRxRL0Ft5QGMAZM9DgLWr+IH/HI9fzgiRykmoaCwX2fy4m18lf2opFj+fr1BAsRDZduBS7btBjRuTtJejVjS2Ulzjh/6vEKcJWospwKX/5C9ndGyayk+xmG7ZCnycM9PBxzgmhEE9l+UfubODzRfxk5Gl7DqxGfXNiHjK2Kark6fvTWifuF7DL4/ZHmRZ3SLQRVRbpjLnogJyTIxIOKs3b175ZEBvkL7l0Ioe5EyFQcBv0L3lxIJABFqJnB8so21W7tqmuRANnAUP5ncZVOhwAV6+nlQAXrvA8k4HZOmCsFB4ArTD0K4NLdd2HLbw+N7UTRT7arfGz1fHeTKKAWlVvIkE/NnqIlDkJ+8+INAQDkk2cClnXx9GUMD26IObUmH9K9kIKQx60YahS6Jfi3YNUhfP9+Vd7qvPLHRjjaIsPg1Y3gph0+v6DOewTrv4YQ47kp1mo8q+X2vagH/18dJMTe4fETpC1evOqzdWfHvCinjw== yordan.georgiev@gmail.com
+    
+
+### 2.8. Bootstrap and deploy the application locally
 This step might not be needed if you used the deploy-vagrant-vm.sh vagrant provisioning script as described above, yet should the vagrant provisioning have failed you could run it on the Vagrant Guest once again and it WILL NOT if you have proper network connectivity and read/write access to your host file system from the Guest.
 The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND Perl modules as well as perform the needed configurations to enable the creation and load of the QTO database. This step will take 20 min at least. The bootstrapping script will:
   - install all the required binaries
@@ -171,9 +203,9 @@ Check the main method in the run.sh and uncomment entities you do not want to in
     
     # run the bootstrap script and IMPORTANT !!! reload the bash env
     ./qto/src/bash/deployer/run.sh ; bash ; 
-    
+    # copy this line too !!! to ensure you reload the bash from the ^^^ line
 
-### 2.8. Provision the application locally
+### 2.9. Provision the application locally
 The run of the following "shell actions" will create the QTO database and load it with a snapshot of it's data from an SQL dump stored in s3. If you start getting a lot of Perl "cannot not find module" syntax check error, you probably did not reload the bash shell, by typing "bash" and hitting Enter in the previous step.
 
      # go to the product instance dir 
@@ -182,7 +214,7 @@ The run of the following "shell actions" will create the QTO database and load i
     # ensure application layer consistency, run db ddl's and load data from s3
     ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
 
-### 2.9. Start the application layer on the dev instance
+### 2.10. Start the application layer on the dev instance
 Start the application layer by issuing the following command. The hypnotoad starting script ALWAYS checks whether or not you have public and private files for the JWT auth and if you do not have them if will create them basically only once. So hit Enter or type a password, when executing the action for first time.
 
     # ALWAYS run any shell-action from the product instance dir 
@@ -191,7 +223,7 @@ Start the application layer by issuing the following command. The hypnotoad star
     # start the web server
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
 
-### 2.10. Create and start the tst instance
+### 2.11. Create and start the tst instance
 The development product instance dir is aimed for development on that machine. You would need at least a testing and production environments according to QTO's (and a lot more applications out there) best practices.
 
     bash ./src/bash/qto/qto.sh -a to-env=tst
@@ -199,7 +231,7 @@ The development product instance dir is aimed for development on that machine. Y
     # now to to the TST product instance directory
     cd ~/opt/qto/qto.$VERSION.tst.$USER
 
-### 2.11. Check application layer syntax, load DB data
+### 2.12. Check application layer syntax, load DB data
 You can concatenate multiple shell-actions with the -a &lt;&lt;shell-action-01&gt;&gt; -a &lt;&lt;shell-action-02&gt;&gt; and so on.
 This actions will:
  - check the application layer syntax 
@@ -209,7 +241,7 @@ This actions will:
 
     ./src/bash/qto/qto.sh -a check-perl-syntax -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
 
-### 2.12. Start the tst instance
+### 2.13. Start the tst instance
 The hypnotoad starting script ALWAYS checks whether or not you have public and private files for the JWT auth and, if you do not have them, it will create them only once. So hit Enter or type a password when executing the action for first time.
 
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
@@ -227,7 +259,7 @@ This installation is not truly idempotent, meaning that not all infra resources 
     
 
 ### 3.2. Prerequisites
-You should have a local instance of QTO as far as you could issue the terraform shell action (that is DB and site configuration are not must have for the AWS deployment to succeed).
+You should have a local instance of QTO as far as you could issue the terraform shell action - DB and site configuration are not must have for the AWS deployment to succeed.
 
     
 
@@ -287,7 +319,7 @@ Store the keys in the QTO's development environment configuration file - the cnf
 To initialise the git AWS infrastructure you need to clone the QTO source code locally first. If you are repeating this task all over, you might need to remove from the AWS web UI duplicating VPCs and elastic IPs.
 
     # go to the product instance dir
-    cd ~/opt/qto/qto.0.8.2.dev.$USER
+    cd ~/opt/qto/qto.0.8.5.dev.$USER
     
     # apply the infra terraform in the src/terraform/tpl/qto/main.tf.tpl 
     clear ; bash qto/src/bash/qto/qto.sh -a init-aws-instance
@@ -298,7 +330,7 @@ If you do not have a registered DNS, you could either use directly the IP addres
 
     
 
-### 3.5. Access AWS host via SSH and fetch source code from GitHub
+### 3.5. Access AWS host via SSH
 To access the AWS host via SSH you need to copy the provided elastic IP which was created by the terraform script. In your browser go to the following URL:
 https://eu-west-1.console.aws.amazon.com/ec2/v2/home?region=&lt;&lt;YOUR-AWS-REGION&gt;&gt;#Instances:sort=instanceId
 You should see a listing of your AWS instances one of which should be named dev-qto-ec2 (that is the development instance of the QTO application). Click on its checkbox. Search for the "IPv4 Public IP" string and copy the value of the IP.
@@ -308,13 +340,41 @@ You should see a listing of your AWS instances one of which should be named dev-
     # for example: 
     # ssh  -i ~/.ssh/id_rsa.aws-ec2.qto.dev ubuntu@31.249.74.222
     
-    # optionally 
-    curl https://raw.githubusercontent.com/<<your-git-account>>/qto/master/src/bash/qto/scripts/pre-push/setup-bash-n-vim.sh | bash -s <<yor-email>> <<your-initials>>
+    
+
+### 3.6. Fetch the source code from GitHub on the aws server
+If you have not yet forked the qto to your GitHub do it now by forking it from the product instance owner's GitHub account - to be able to submit changes to YOUR OWN git repository during the installation.
+To fetch the source code from GitHub you need to have a full trust between the aws host and your GitHub account via public private ssh keys. In order to achieve that you need to put a public open-ssh key in the ssh keys section of your GitHub account in the GitHub web UI.
+If you know how-to do this you could skip the following automated run, but if you don't know than first run this script and do all the steps in the following this instruction:
+https://www.inmotionhosting.com/support/website/ssh/how-to-add-ssh-keys-to-your-github-account/
+
+
+
+    # on the AWS server
+    export your_git_user_name=YordanGeorgiev #the one visible 
+    export your_email=yordan.georgiev@gmail.com
+    export your_initials=ysg
+    
+    # optionally run a provisioning script installing tmux, vim and automating the ssh keys creation
+    curl https://raw.githubusercontent.com/$your_git_user_name/qto/master/src/bash/qto/scripts/setup-bash-tmux-vim.sh | bash -s $your_email $your_initials
+    
+    # if you know what tmux is start it now ... 
+    tmux
     
     # on the AWS server
-    mkdir -p ~/opt; cd $_ ;  git clone git@github.com:<<YourGitHubUserName>>/qto.git; cd ~/opt
+    my_private_ssh_key_file=~/.ssh/id_rsa.$your_initials.`hostname -s`
+    
+    # each time you issue the git command in THIS shell, it will be referring to your private key file
+    # which is the trusted one by GitHub because you added it's public key file to your settings ...
+    alias git='GIT_SSH_COMMAND="ssh -i $my_private_ssh_key_file" git'
+    
+    # now you must be able to clone the project , without being asked for passwords
+    mkdir -p ~/opt; cd $_ ;  git clone git@github.com:$your_git_user_name/qto.git; cd ~/opt
+    
+    
+    
 
-### 3.6. Bootstrap and deploy the application on AWS instance
+### 3.7. Bootstrap and deploy the application on AWS instance
 The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND Perl modules as well as perform the needed configurations to enable the creation and load of the QTO database. This step will take at least 20 min. The bootstrap script will perform the following actions:
  - install all the required binaries
  - install all the required Perl modules as non-root
@@ -325,12 +385,11 @@ Copy paste the full command bellow - this is IMPORTANT !!!
 
     # run the bootstrap script and IMPORTANT !!! reload the bash shell 
     bash ./qto/src/bash/deployer/run.sh ; bash ; 
-    
-    # copy and run till here !!! Just to make sure the enter is copied too
+    # copy THIS line as well !!! Just to make sure the enter and ; from ^^^ line are copied too
     
     
 
-### 3.7. Provision application in AWS instance in dev
+### 3.8. Provision application in AWS instance in dev
 The run of the following "shell actions" will create the QTO database and load it with a snapshot of its data from a SQL dump stored in s3. 
 
      # go to the product instance dir 
@@ -339,14 +398,14 @@ The run of the following "shell actions" will create the QTO database and load i
     # ensure application layer consistency, run db ddl's and load data from s3
     bash ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
 
-### 3.8. Edit the configuration file and start web server
+### 3.9. Edit the configuration file and start web server
 You need to set the web_host variable in the configuration files to the IP address or DNS name, if you have configured one for this IP address, otherwise your nginx configuration will be broken.
 The following command will both start the Mojolicious hypnotoad server initiating the QTO application layer and the nginx reverse proxy, which will listen on the app-&gt;port port defined in the cnf/env/dev.env.json file.
 
     # start the web server
     ./src/bash/qto/qto.sh -a mojo-hypnotoad-start
 
-### 3.9. Access the QTO application from web
+### 3.10. Access the QTO application from web
 The QTO web application is available at the following address
 http://&lt;&lt;just-copied-IPv4-Public-IP&gt;&gt;:8078 This should redirect you to the dev_qto/login page - this is the end-point via Mojolicious over http (NOT safe).
 
@@ -355,32 +414,32 @@ http://&lt;&lt;just-copied-IPv4-Public-IP&gt;&gt;:78 This should redirect you to
 
     
 
-### 3.10. Configure DNS
+### 3.11. Configure DNS
 Configure the DNS server name in the UI of your DNS provider.
 
     
 
-### 3.11. Provision QTO web users
+### 3.12. Provision QTO web users
 Open the cnf/env/dev.env.json, change the env-&gt;AdminEmail with an e-mail you have access to. Restart the web servers as shown bellow. Login via web interface.
 
     # the start action performs restart as well, if the web servers are running
     ./src/bash/qto/qto.sh -a mojo-hypnotoad-start
 
-### 3.12. Create the tst product instance
+### 3.13. Create the tst product instance
 If you revisit the target architecture picture(@installations_doc-10), the actions so far have been only the installations of the dev instance, which you should have be now up and running. 
 QTO is designed around the idea of developing in dev (aka doing things for first time and possibly with some errors), testing in tst (more of a testing and configuration allowed, but not developing with minor errors) and prd (where no errors are allowed and everything should go smoothly). 
 Thus by now you have achieved only the dev instance deployment.
 
     ./src/bash/qto/qto.sh -a to-env=tst
 
-### 3.13. Provision the tst database
+### 3.14. Provision the tst database
 If you revisit the target architecture picture(installations_doc-10), the actions so far have been only the installations of the dev instance, which you should have be now up and running. 
 QTO is designed around the idea of developing in dev (aka doing things for first time and possibly with some errors), testing in tst (more of a testing and configuration allowed, but not developing with minor errors and prd (where no errors are allowed and everything should go smoothly). 
 Thus by now you have achieved only the dev instance deployment
 
     
 
-### 3.14. Fork production instance
+### 3.15. Fork production instance
 The creation of this one should succeed at once, as it is performed exactly in the same way as the creation of the testing (tst) instance.
 You "fork" the production instance by issuing the following command:
 
@@ -394,7 +453,7 @@ You "fork" the production instance by issuing the following command:
     /home/ubuntu/opt/csitea/qto/qto.0.7.8.tst.ysg
     /home/ubuntu/opt/csitea/qto/qto.0.7.8.prd.ysg
 
-### 3.15. Provision prd DB
+### 3.16. Provision prd DB
 The creation of prd instance should succeed at once, as it is performed exactly in the same way as the creation of the testing (tst) instance.
 You "fork" the production instance by issuing the following command:
 
@@ -554,20 +613,7 @@ Change Redis server IP inside %path-to-qto%/cnf/env/dev.env.json from host-name 
 
     
 
-### 7.5. Cannot login in web interface with admin user
-The password hashing in the users table is activated ALWAYS on blur even that the UI is not showing it (yes, that is more of a bug, than a feature).
-The solution is to restart the application layer WITHOUT any authentication, change the admin user password from the UI and restart the application layer with authentication once again.
-
-    export QTO_NO_AUTH=1
-    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
-    
-    # now change the AdminEmail user password from the UI, delete the test users
-    # as they all have the convenient "secret" password
-    export QTO_NO_AUTH=0
-    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
-    
-
-### 7.6. You have reached the hw provisioning limits of your AWS account
+### 7.5. You have reached the hw provisioning limits of your AWS account
 If you get one of the errors below, go the UI of the AWS admin console and delete non-used resources. Fortunately, all resources have the &lt;&lt;env&gt;&gt;_&lt;&lt;resource_name&gt;&gt; naming convention either in the object or in their Tags, which means you will know what you are deleting.
 
     Error: Error creating VPC: VpcLimitExceeded: The maximum number of VPCs has been reached.
@@ -582,6 +628,19 @@ If you get one of the errors below, go the UI of the AWS admin console and delet
     
       on main.tf line 203, in resource "aws_eip" "tst-ip-test":
      203: resource "aws_eip" "tst-ip-test" {
+
+### 7.6. Cannot login in web interface with admin user
+The password hashing in the users table is activated ALWAYS on blur even that the UI is not showing it (yes, that is more of a bug, than a feature).
+The solution is to restart the application layer WITHOUT any authentication, change the admin user password from the UI and restart the application layer with authentication once again.
+
+    export QTO_NO_AUTH=1
+    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
+    
+    # now change the AdminEmail user password from the UI, delete the test users
+    # as they all have the convenient "secret" password
+    export QTO_NO_AUTH=0
+    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
+    
 
 ### 7.7. Mismatch in the AWS
 The AWS web UI contains fancy Ajax calls and in our experience it does not always update properly, if are bombarding it with terraform deployments onto the same resources. Make sure you always hit F5 in your browser, when starting the work on new ec2 instance.
