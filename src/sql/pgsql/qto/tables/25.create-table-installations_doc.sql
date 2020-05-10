@@ -13,7 +13,7 @@ SELECT 'create the "installations_doc" table'
     , status         varchar (20) NOT NULL DEFAULT 'status...'
     , name           varchar (100) NOT NULL DEFAULT 'name...'
     , description    varchar (4000)
-    , src            varchar (4000)
+    , src            varchar (4000) NULL default '_'
     , formats  text NULL
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , runtime        varchar (20) NULL DEFAULT 'runtime...'
