@@ -69,7 +69,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
          $hsr = $sth->fetchall_hashref( 'id' ) ; 
                   
          if ( scalar ( keys %$hsr ) >= 1 ) {
-            p $hsr ;
+            # rint $hsr ;
             $ret = 200 ; 
             $msg = "" ; 
       } else { 
@@ -1299,6 +1299,10 @@ sub doCallFuncGetHashRef {
          $str_sql .= "AND $table.app_users_guid IN (
             SELECT guid from app_users WHERE 1=1 AND email = '" . $who . "'
             )" ;
+      } else {
+         $msg = "select-my must ALWAYS provide who is asking. Undefined who:!!!" ;
+         $ret = 400 ; 
+         return ( $ret , $msg ) ;
       }
       
       my $like_clause = '' ; 
@@ -1342,8 +1346,6 @@ sub doCallFuncGetHashRef {
       $offset = 0 if ( $offset < 0 ) ; 
       $str_sql .= " LIMIT $limit OFFSET $offset " ; 
 
-      print "$str_sql \n" ; carp ("todo:ysg");
-
       eval { 
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() or $ret = 400 ; 
@@ -1352,8 +1354,6 @@ sub doCallFuncGetHashRef {
          $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
          $msg = "" ; 
          unless ( keys %{$hsr2}) {
-            p $hsr2 ;
-            carp ("todo:ysg");
             $msg = ' no data for this search request !!! ' ;
             $msg = DBI->errstr ;
             $objLogger->doLogErrorMsg($msg) if $msg ; 

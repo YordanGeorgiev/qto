@@ -27,7 +27,7 @@
    </div>
 <script>
 "use strict";
-
+localStorage.clear(); //clear all the cached vue controls data
 var canvas = document.getElementById('canvas'),
     ctx = canvas.getContext('2d'),
     w = canvas.width = window.innerHeight,

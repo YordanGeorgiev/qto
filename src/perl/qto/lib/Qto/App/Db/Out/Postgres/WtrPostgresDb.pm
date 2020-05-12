@@ -347,6 +347,73 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       return ( $ret , $msg , $hsr) ; 
    }
 
+   
+   sub doInsertMyByItemId {
+   
+		my $self 				= shift ; 
+      my $db               = shift ; 
+      my $table            = shift ; 
+      my $who              = shift ; 
+      my $ret              = 0 ; 
+      my $msg              = '' ; 
+   
+      my $id               = $objModel->get('create.web-action.id' ) ; 
+
+      my $dbh              = {} ;         # this is the database handle
+      my $sth              = {} ;         # the statement handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+   
+      if ( defined $objModel->get('postgres_db_name') ) {
+		   $db = $objModel->get('postgres_db_name');
+      }
+      
+      ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
+      my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
+
+      if ( $objModel->doChkIfTableExists( $db , $table ) == 0  ) {
+         $ret = 400 ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
+         return ( $ret , $msg ) ; 
+      }
+
+      # this basically restricts the application from creating no more than 100 new items per
+      # minute IF there are ongoing requests, which FOR NOW should suffice ...
+      no warnings 'exiting' ; 
+      for ( my $trialNum = 0 ; $trialNum < 100 ; $trialNum++ ) { 
+         $id = $id + $trialNum ; 
+         $str_sql = " 
+         INSERT INTO  $table ( id , app_users_guid) VALUES ( '$id' , (SELECT guid from app_users where email='$who'));
+         " ; 
+         eval {
+            # rint "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
+            $sth = $dbh->prepare($str_sql);  
+            $sth->execute() ;
+            last ; 
+         } or next ; 
+      } 
+      use warnings 'exiting' ; 
+
+      binmode(STDOUT, ':utf8');
+
+      unless ( defined ( $DBI::errstr ) ) {
+         $msg = 'CREATE OK ' ; 
+         $ret = 0 ; 
+         return ( $ret , $msg ) ; 
+      } else {
+         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $msg = "$DBI::errstr" ; 
+         if ( $msg =~ m/duplicate key value violates unique constraint/ ){
+            $ret = 409 ; 
+         } else {
+            $ret = 400 ; 
+         }
+      }
+      return ( $ret , $msg ) ; 
+   }
 
    sub doInsertByItemId {
    
@@ -373,7 +440,6 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-      #if ( $objRdrDb->table_exists( $db , $table ) == 0  ) {
       if ( $objModel->doChkIfTableExists( $db , $table ) == 0  ) {
          $ret = 400 ; 
          $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 

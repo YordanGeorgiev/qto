@@ -73,7 +73,7 @@ sub doSearchItems {
       }
    
       my $logged_in_usr_email = $self->session( 'app.' . $db . '.user') || '' ; 
-      my $gravatar_url = gravatar_url('email' => $logged_in_usr_email) || '';
+      my $gravatar_url = gravatar_url('email' => $logged_in_usr_email , ('https',1)) || '';
 
       $self->render(
          'template'        => 'controls/srch-grid/srch-grid'

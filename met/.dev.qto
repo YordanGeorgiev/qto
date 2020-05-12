@@ -355,6 +355,7 @@ src/perl/qto/lib/Qto/Controller/SearchGrid.pm
 src/perl/qto/lib/Qto/Controller/Query.pm
 src/perl/qto/lib/Qto/Controller/CallFunc.pm
 src/perl/qto/lib/Qto/Controller/Create.pm
+src/perl/qto/lib/Qto/Controller/CreateMy.pm
 src/perl/qto/lib/Qto/Controller/Update.pm
 src/perl/qto/lib/Qto/Controller/Delete.pm
 src/perl/qto/lib/Qto/Controller/HiSelect.pm
@@ -912,6 +913,7 @@ src/perl/qto/lib/auto/Qto/Controller/Export/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Serve/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/HiSelect/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/List/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/ListMy/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Query/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Search/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/Select/autosplit.ix
