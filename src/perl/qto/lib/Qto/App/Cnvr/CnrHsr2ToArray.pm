@@ -52,7 +52,7 @@ our $objModel = {} ;
       my $self = shift ; 
       my $msr2 = shift ; 
       my $attribute_name = shift ; 
-      my $cell_cnt = shift ; 
+      my $cell_cnt = shift || 10; 
 
       foreach my $pos (keys %$msr2 ){
          if ( $msr2->{"$pos"}->{'argname'} eq "$attribute_name" ){

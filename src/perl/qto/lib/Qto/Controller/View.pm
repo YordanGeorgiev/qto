@@ -117,8 +117,8 @@ sub doRenderPageTemplate {
       $items_lst .= "'" . "$table" . "'," ;
    }
    $items_lst = substr($items_lst, 0, -1);
-   my $logged_in_usr_email = $self->session( 'app.' . $db . '.user');
-   my $gravatar_url = gravatar_url('email' => $logged_in_usr_email);
+   my $logged_in_usr_email = $self->session( 'app.' . $db . '.user') || '' ; 
+   my $gravatar_url = gravatar_url('email' => $logged_in_usr_email) || '';
 
    $self->render(
       'template'        => $template 

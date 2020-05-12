@@ -12,7 +12,7 @@ do_check_install_redis(){
       sudo cp -v /etc/redis/redis.conf /etc/redis/redis.conf.orig
 
       # capture the first ip address into a var to add the the bind directive
-      my_ip=$(hostname -I|awk '{print $1}')
+      export my_ip=$(hostname -I|awk '{print $1}')
 
       # append the following lines to the /etc/redis/redis.conf file
       echo "bind $my_ip"| sudo tee -a /etc/redis/redis.conf
@@ -20,10 +20,26 @@ do_check_install_redis(){
 
       # uncomment out the ip6 bind directive, it breaks the redis
       sudo perl -pi -e 's/bind 127.0.0.1 ::1/#bind 127.0.0.1 ::1/ig' /etc/redis/redis.conf
-
-
-
-
+      while read -r file ; do
+         IFS='' read -r -d '' perl_code <<"EOF_PERL_CODE"
+            use strict; use warnings; binmode STDOUT, ":utf8"; use utf8; use JSON; use Data::Printer;
+            my $my_ip = $ENV{'my_ip'};
+            my $sjson;
+            {
+              local $/; open my $fh, "<", $ARGV[0];
+              $sjson = <$fh>; close $fh;
+            }
+            my $data = decode_json($sjson);
+            #p $data ; 
+            $data->{'env'}->{'redis'}->{'server'} = $my_ip; 
+            my $json = JSON->new->allow_nonref;
+            open my $fh, ">", $ARGV[0];
+            print $fh $json->pretty->encode($data);
+            close $fh;
+EOF_PERL_CODE
+      
+         perl -e "$perl_code" $file
+	   done < <(find $PRODUCT_DIR/cnf/env/ -type f| grep -v '.bak')
 
       # restart to apply the changes 
 		sudo systemctl restart redis

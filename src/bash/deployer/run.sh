@@ -27,7 +27,6 @@ main(){
    do_provision_ssh_keys
    do_copy_git_hooks
    do_set_chmods
-   do_change_default_confs
    do_create_multi_env_dir
    do_finalize
 }
@@ -163,43 +162,6 @@ do_log(){
    [[ -t 1 ]] && echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [$APP_TO_DEPLOY][@$host_name] [$$] $msg "
    log_dir="$product_dir/dat/log/bash" ; mkdir -p $log_dir && log_file="$log_dir/$APP_TO_DEPLOY.`date "+%Y%m"`.log"
    echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [$APP_TO_DEPLOY][@$host_name] [$$] $msg " >> $log_file
-}
-
-do_change_default_confs(){
-   eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
-
-   my_ip=$(hostname -I|awk '{print $1}')
-   while read -r file ; do
-      script=$(cat <<"EOF_CONFS"
-         use strict; use warnings; binmode STDOUT, ':utf8'; use utf8; use JSON; use Data::Printer;
-         sub rndStr{ join'', @_[ map{ rand @_ } 1 .. shift ] }
-         my $sjson;
-         {
-           local $/; #Enable 'slurp' mode
-           open my $fh, '<', $ARGV[0];
-           $sjson = <$fh>;
-           close $fh;
-         }
-         my $data = decode_json($sjson);  #p $data ;
-
-         # set some default values to the configuration
-         $data->{'env'}->{'app'}->{'web_host'} = '127.0.0.1' ;
-         $data->{'env'}->{'aws'}->{'AdminEmail'} = 'type-here-your-email@host.com' ;
-         $data->{'env'}->{'db'}->{'AdminEmail'} = 'type-here-your-email@host.com' ;
-         $data->{'env'}->{'db'}->{'project_databases'} = $data->{'env'}->{'db'}->{'postgres_db_name'};
-         $data->{'env'}->{'db'}->{'postgres_db_host'} = '127.0.0.1' ;
-         $data->{'env'}->{'redis'}->{'server'} = $my_ip;
-         $data->{'env'}->{'ssh'}->{'ssh_server'} = 'type-here-ssh-server-to-re-use-from-bash-history';
-
-         my $json = JSON->new->allow_nonref;
-         open my $fh, '>', $ARGV[0];
-         print $fh $json->pretty->encode($data);
-         close $fh;
-EOF_CONFS
-)
-      perl -e "$script" $file
-   done < <(find $PRODUCT_DIR/cnf/env/ -type f -name '*.json')
-
 }
 
 do_create_multi_env_dir(){
