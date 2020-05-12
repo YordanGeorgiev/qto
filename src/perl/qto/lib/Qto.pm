@@ -442,6 +442,11 @@ sub doSetRoutes {
    , action       => 'doCreateById'
    );
    
+   $r->post('/:db/create-my/:item')->to(
+     controller   => 'CreateMy'
+   , action       => 'doCreateMyById'
+   );
+   
    $r->post('/:db/hicreate/:item')->to(
      controller   => 'HiCreate'
    , action       => 'doHiCreate'

@@ -143,7 +143,9 @@
             }) 
 	  	   }
 	      , postNewServerSideId: function (dbid){
-               return axios.post('/<%= $db =%>/create/<%= $item =%>', {
+            var path = window.location.pathname
+            uri = (path.includes('/list-my/')) ? '/<%= $db =%>/create-my/<%= $item =%>' : '/<%= $db =%>/create/<%= $item =%>'
+               return axios.post(uri, {
                 id: dbid
                })
                .then(function (response) { 

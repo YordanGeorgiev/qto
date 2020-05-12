@@ -150,7 +150,6 @@ sub doInitShowLogonUI {
    $self->session( 'app.' . $edb . '.user' => undef);
    $self->session($sessions);
    
-
    # do not allow login to land on a <<env>>_<<proj-db>>/login to avoid mixing of envs
    if ( $db ne $pdb){
       my $login_redirect_url        = '/' . $pdb . '/logon';

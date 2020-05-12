@@ -144,8 +144,7 @@ sub doReloadProjDbRBACList {
    $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type );
    ($ret, $msg , $arr )    = $objRdrDb->doLoadProjDbRBACList( $db ) ; 
 
-   # p $arr ;
-   # carp ($db) ; # todo:ysg
+   # p $arr ; carp ($db) ; 
    $objWtrRedis->setData(\$config, $db . '.rbac-list', $arr);
    $objModel->set($db . '.rbac-list',$arr);
 
