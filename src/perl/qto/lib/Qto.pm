@@ -253,7 +253,7 @@ sub doSetHooks {
       # return unless ( defined $type || $type =~ /text\/html/g || $type =~ /application\/json/g);
 		# obs no authentication for static resources ... qto-200314095059
       return unless $type ; 
-		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g);
+		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g || $type =~ /font/g);
       return unless $c->req->url->path->parts->[0] ; # bare url address typed - https://qto.fi
 
       if ( defined $ENV{'QTO_JWT_AUTH'} && $ENV{'QTO_JWT_AUTH'} == 1 ){

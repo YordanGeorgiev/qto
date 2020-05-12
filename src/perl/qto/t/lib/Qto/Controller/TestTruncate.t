@@ -48,8 +48,8 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 		->status_is(400) 
 	;
 	$db = 'non_existent_db' ; 
-	$t->get_ok('/' . $db . '/truncate/test_truncate_table'->{ret})
-		->status_is(302) 
+	$t->get_ok('/' . $db . '/truncate/test_truncate_table')
+		->status_is(400) 
 	;
    
 done_testing();
