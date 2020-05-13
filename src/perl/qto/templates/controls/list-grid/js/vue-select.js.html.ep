@@ -11,7 +11,7 @@ Vue.component('vue-select', {
       options: []
       , selected: ''
       , pxlsWidth: 160
-      , url: '/<%= $db =%>/select/'
+      , url: '/<%= $db =%>/select-col/'
       }
   }
   , mounted(){
@@ -38,10 +38,9 @@ Vue.component('vue-select', {
       if ( localStorage.getItem(k) === 'undefined' || localStorage.getItem(k) === null 
             || localStorage.getItem(k) === "null" || localStorage.getItem(k).length === 0) {
          urlPrms = this.getUrlParams()
-         axios.get( this.url + this.itemname, {params: {"pg-size": "2000","oa": "name"}})
+         axios.get( this.url + this.itemname, {params: {"pg-size": "2000","oa": "name","pick":"guid,name"}})
          .then(res => {
             this.options = res.data.dat
-            console.log(res.data)
             var cachedData = JSON.stringify(res.data.dat)
             localStorage.setItem(k,cachedData)
             res.data.dat.forEach(el => { if ( el.guid === this.hook){

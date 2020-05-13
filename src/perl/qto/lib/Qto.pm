@@ -479,6 +479,11 @@ sub doSetRoutes {
      controller   => 'Select'
    , action       => 'doSelectItems'
    );
+   
+   $r->get('/:db/select-col/:item')->to(
+     controller   => 'SelectCol'
+   , action       => 'doSelectColItems'
+   );
 
    $r->get('/:db/select-my/:item')->to(
      controller   => 'SelectMy'
