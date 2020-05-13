@@ -1,7 +1,8 @@
 CREATE FUNCTION fnc_get_app_routes()
 	RETURNS TABLE (
-			id				bigint
+			  id				bigint
 			, is_open		bool 
+			, is_open_in	bool 
 			, is_backend	bool 
 			, has_subject	bool 
 			, name			varchar (200)
@@ -12,6 +13,7 @@ BEGIN
 	SELECT 
 		ROW_NUMBER () OVER (ORDER BY app_routes.name) as id
 		, app_routes.is_open as is_open
+		, app_routes.is_open_in as is_open_in
 		, app_routes.is_backend as is_backend
 		, app_routes.has_subject as has_subject
 		, app_routes.name as name

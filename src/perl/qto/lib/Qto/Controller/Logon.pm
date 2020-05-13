@@ -138,17 +138,24 @@ sub doInitShowLogonUI {
    my $sessions = () ; 
    $sessions            = Mojolicious::Sessions->new  ;
    $sessions->load($self);
+   # Create response cookie with domain and expiration date
+   $self->cookie('app.' . $edb . '.user' => undef, {'domain' => $instance_domain, expires => time + 60});
    my $redirect_url     = '/' . $pdb . '/search' ;
+   # Create secure response cookie
+   my $secret = 'Mojolicious rocks!!!' . rndStr(12, 'A'..'Z', 0..9, 'a'..'z');
+   $self->cookie(secret => $secret, {secure => 1, httponly => 1});
    # store the url to redirect to ... to give it to the form
    $redirect_url = $self->session( 'app.' . $db . '.url' ) 
       if (defined $self->session( 'app.' . $db . '.url' ));
    $sessions->cookie_name('qto.' . $db) unless $sessions->cookie_name ;
    $sessions->default_expiration(86400);
-   $sessions            = $sessions->secure(0);
+   $sessions            = $sessions->secure(1);
    $sessions            = $sessions->samesite('Strict');
-   $sessions->cookie_domain( $instance_domain) unless $sessions->cookie_domain( $instance_domain);
-   $self->session( 'app.' . $edb . '.user' => undef);
-   $self->session($sessions);
+   $sessions->cookie_domain($instance_domain) unless $sessions->cookie_domain( $instance_domain);
+
+
+   $sessions->store($self);
+   $self = $self->session( 'app.' . $edb . '.user' => undef);
    
    # do not allow login to land on a <<env>>_<<proj-db>>/login to avoid mixing of envs
    if ( $db ne $pdb){
@@ -204,6 +211,7 @@ sub doRenderPageTemplate {
    return ; 
 }
 
+sub rndStr{ join'', @_[ map{ rand @_ } 1 .. shift ] }
 
 1 ; 
 

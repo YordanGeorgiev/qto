@@ -75,6 +75,7 @@ our $jwt_private_key_file  = '' ;
       my $db                  = shift ;
       my $controller          = shift ;
       my $rmsg                = shift ; 
+      my $is_open_in_route    = shift ;
       my $act_subj_over       = shift ;
       my $rv                  = 0;
       $$rmsg                  = 'an error occurred during authentication !!!' ;
@@ -102,6 +103,7 @@ our $jwt_private_key_file  = '' ;
          # get the app_roles from the jwt
          ( my $ret, my $claims_from_token ) = $self->hasValidTokenAndClaims($rmsg , $jwt,$pub_secret);
          return 0 unless $ret == 1;
+         return 1 if ( $is_open_in_route > 0); # internally open routes as search & home
          
          # foreach role in the claims, build the permission string:
          my $app_roles = $claims_from_token->{'app_roles'};
