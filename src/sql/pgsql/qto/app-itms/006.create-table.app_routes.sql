@@ -69,4 +69,5 @@ cc2ae685-01f8-4375-ae15-cf48b9b54e49	200228153513	1	f	t	t	t	select-item-meta-for
 9b6dbcd5-da0d-4d36-be4c-e1944dd03d94	200403234539	1	t	t	f	t	select-databases	list the databases in the configured postgres server to the AL	2020-05-13 19:15:45
 07c0cbb7-07e4-477e-8ec3-d80e76a2ab3c	200502002514	1	f	f	t	f	list-my	list only the records belonging to the logged in user	2020-05-13 19:16:39
 15b6523e-8e2c-45bf-bcc4-13bc8da1bf86	200228055434	1	f	f	t	f	list	The LIST route tells the qto Application Layer  to list in the qto UI the content of an item ( aka qto api compliant table )	2020-05-13 19:17:13
+1854a713-d29e-4abd-9c29-0b27d08ebea2	200513223249	1	f	f	t	t	select-col	selects ONLY a single column from a table ...	2020-05-13 19:33:40
 \.

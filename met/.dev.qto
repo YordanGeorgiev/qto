@@ -33,6 +33,7 @@ src/perl/qto/public/lib/js/controls/vue-simple-upload.min.js
 # start redis
 src/perl/qto/lib/Qto/Controller/BaseController.pm
 src/perl/qto/lib/Qto/Controller/Select.pm
+src/perl/qto/lib/Qto/Controller/SelectCol.pm
 src/perl/qto/lib/Qto/Controller/SelectMy.pm
 src/perl/qto/lib/Qto/Controller/Serve.pm
 src/perl/qto/lib/Qto/Controller/List.pm

@@ -1110,6 +1110,135 @@ sub doCallFuncGetHashRef {
       return ( $ret , $msg , $hsr2 ) ; 	
 
    }
+   
+   
+   sub doSelectColRows {
+
+      my $self                   = shift ; 
+      my $db                     = shift || croak 'no db passed !!!' ;  
+      my $table                  = shift || croak 'no table passed !!!' ; 
+      my $who                    = shift ; 
+      my $ret                    = 1 ; 
+      my $msg                    = 'unknown error while retrieving the content of the ' . $table . ' table' ; 
+      my $dbh                    = {} ;         # this is the database handle
+
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+      if ( $objModel->doChkIfTableExists( $db , $table ) == 0  ) {
+         $ret = 400 ; 
+         $msg = ' the table ' . $table . ' does not exist in the ' . $db . ' database '  ; 
+         return ( $ret , $msg ) ; 
+      }
+
+      my $debug_msg        = q{} ; 
+      my $hsr2             = {} ;         # this is hash ref of hash refs to populate with
+      my $sth              = {} ;         # this is the statement handle
+      my $cols             = () ;         # the array ref of columns
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+      my $columns_to_select= '' ; 
+      my $columns_to_order_by_asc   = '' ; 
+      my $columns_to_order_by_desc  = '' ; 
+
+      ( $ret , $msg , $cols ) = $objModel->doGetItemsDefaultPickCols ( $config , $db , $table ) ; 
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
+
+      ($ret , $msg , $columns_to_select ) = $self->getColumnsToSelect($table,$cols);
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
+
+      ($ret , $msg , $columns_to_order_by_asc ) = $self->doSetColToOrderByAsc(\$objModel,$table,$cols);
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
+      
+      ($ret , $msg , $columns_to_order_by_desc ) = $self->doSetColToOrderByDesc(\$objModel,$table,$cols);
+      return ( 400 , $msg , undef ) unless ( $ret == 0 );
+    
+      my $admin_user_email = $config->{'env'}->{'db'}->{'AdminEmail'} ; 
+      $str_sql = " 
+         SELECT 
+         $columns_to_select , count(*) OVER () as rows_count
+         FROM $table 
+         WHERE 1=1 " ; 
+
+      # ternary operator in Perl
+      # CONDITION ? EVALUATE_IF_CONDITION_WAS_TRUE : EVALUATE_IF_CONDITION_WAS_FALSE
+      my $QTO_NO_AUTH = defined $ENV{'QTO_NO_AUTH'} ? $ENV{'QTO_NO_AUTH'} : 0;
+      
+      my $like_clause = '' ; 
+		( $ret , $msg , $like_clause ) = $self->doBuildLikeClause ( $db , $table  ) ; 
+		
+      return ( $ret , $msg ) unless $ret == 0 ; 
+		$str_sql .= $like_clause if $like_clause ; 
+		
+      my $where_clause_fltr = '' ; 
+		( $ret , $msg , $where_clause_fltr ) = $self->doBuildWhereClauseByFltr ( $db , $table ) ; 
+		return ( $ret , $msg ) unless $ret == 0 ; 
+		$str_sql .= $where_clause_fltr if $where_clause_fltr ; 
+      
+      my $where_clause_with = '' ; 
+		( $ret , $msg , $where_clause_with ) = $self->doBuildWhereClauseByWith ( $db , $table , 0) ; 
+		return ( $ret , $msg ) unless $ret == 0 ; 
+		$str_sql .= $where_clause_with if $where_clause_with ; 
+
+      my $order_by = "\n" . 'ORDER BY' ; 
+      if ( defined $columns_to_order_by_asc ) {
+         $str_sql .= " $order_by " ; 
+         foreach my $col ( split /,/ , $columns_to_order_by_asc ){
+            $str_sql .= " $col," ; 
+         }
+         chop($str_sql); $str_sql .= " ASC" ; 
+      }
+      $order_by = ' , ' if ( $str_sql =~ m/ORDER BY/g ) ; 
+      if ( defined $columns_to_order_by_desc ) {
+         $str_sql .= " $order_by " ; 
+         foreach my $col ( split /,/ , $columns_to_order_by_desc ){
+            $str_sql .= "$col," ; 
+         }
+         chop($str_sql); $str_sql .= " DESC " ; 
+      }
+
+      my $limit = $objModel->get('select.web-action.pg-size' ) || 7 ; 
+      my $page_num = $objModel->get('select.web-action.pg-num' ) || 1 ; 
+      my $offset = ( $page_num -1 ) || 0 ; # get default page is 1
+      
+      $offset = $limit*$offset ; 
+      $offset = 0 if ( $offset < 0 ) ; 
+      $str_sql .= " LIMIT $limit OFFSET $offset " ; 
+
+      # rint "$str_sql \n" . 'vim +987 `find . -name RdrPostgresDb.pm`' . "\n" ; 
+
+      eval { 
+         $sth = $dbh->prepare($str_sql);  
+         $sth->execute() or $ret = 400 ; 
+         $msg = DBI->errstr if $ret  == 400 ; 
+         die "$msg" if $ret == 400 ;
+         $hsr2 = $sth->fetchall_hashref( 'guid' ) or $ret = 400 ; # some error 
+         $msg = "" ; 
+         unless ( keys %{$hsr2}) {
+            $msg = ' no data for this search request !!! ' ;
+            $msg = DBI->errstr ;
+            $objLogger->doLogErrorMsg($msg) if $msg ; 
+            $ret = 204 ;
+            return ( $ret , $msg , {} ) ; 
+         } else {
+            $msg = DBI->errstr if $ret  == 400 ; 
+            $objLogger->doLogErrorMsg($msg) if $msg ; 
+            die "$msg" if $ret == 400 ;
+            $ret = 200 ;
+         }
+      };
+      if ( $@ ) { 
+         my $tmsg = "$@" ; 
+         $objLogger->doLogErrorMsg ( "$msg" ) ;
+         $msg = "failed to get $table table data :: $tmsg" unless $ret == 404 ; 
+         return ( $ret , $msg , {} ) ; 
+      };
+
+      $dbh->disconnect();
+      binmode(STDOUT, ':utf8');
+      $msg = '' unless $msg ; # which is a smell ..
+      return ( $ret , $msg , $hsr2 ) ; 	
+
+   }
 
    #
    # -----------------------------------------------------------------------------

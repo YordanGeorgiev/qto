@@ -49,6 +49,15 @@ WHERE 1=1
    ( SELECT guid from app_roles WHERE name = 'PRODUCT_INSTANCE_OWNER')
 ;
 
+-- the select-col must be available for everyone logged in
+UPDATE app_items_roles_permissions set 
+   allowed=true
+   , name = replace(name, 'mayNOT', 'may')
+WHERE 1=1
+   AND app_route_guid IN 
+   ( SELECT guid from app_routes WHERE name = 'select-col')
+;
+
 -- any combination of view with item not ending with _doc is pointless 
 DELETE FROM app_items_roles_permissions 
 WHERE 1=1
@@ -64,13 +73,22 @@ LEFT JOIN app_items ON app_items.guid = app_items_guid
 WHERE app_items_roles_permissions.allowed = 'false'
 ;
 
-
+-- all open routes must be accesible
 UPDATE app_items_roles_permissions set 
    allowed=true
    , name = replace(name, 'mayNOT', 'may')
 WHERE 1=1
    AND app_routes_guid IN 
    ( SELECT guid from app_routes WHERE app_routes.is_open = true)
+;
+
+-- the select-col route should be available to all the roles
+UPDATE app_items_roles_permissions set 
+   allowed=true
+   , name = replace(name, 'mayNOT', 'may')
+WHERE 1=1
+   AND app_routes_guid IN 
+   ( SELECT guid from app_routes WHERE app_routes.name = 'select-col')
 ;
 
 UPDATE app_routes set is_open_in = True where name in ('query', 'search');
