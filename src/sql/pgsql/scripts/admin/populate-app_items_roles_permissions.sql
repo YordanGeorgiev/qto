@@ -1,4 +1,3 @@
-UPDATE app_routes set is_open=True where name in ('query', 'search');
 
 TRUNCATE TABLE app_items_roles_permissions ;
 INSERT INTO app_items_roles_permissions ( app_roles_guid,app_items_guid,app_routes_guid,name,description) 
@@ -74,4 +73,6 @@ WHERE 1=1
    ( SELECT guid from app_routes WHERE app_routes.is_open = true)
 ;
 
+UPDATE app_routes set is_open_in = True where name in ('query', 'search');
+UPDATE app_routes set is_open = True where name in ('logon', 'login');
 

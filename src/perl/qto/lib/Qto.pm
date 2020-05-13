@@ -261,6 +261,7 @@ sub doSetHooks {
          my $route   = (split('/',$url))[2]; #this will fail on new static resource types ...
          my $db      = (split('/',$url))[1]; $db = toEnvName($db,$c->app->config);
          my @open_routes = (); 
+         my @open_in_routes = (); 
       
          my $lvl_1_public_dirs = $config->{'env'}->{'run'}->{ 'PublicLevel1Dirs' } ; 
 
@@ -284,10 +285,12 @@ sub doSetHooks {
          foreach my $k(keys %{$config->{'env'}->{'app'}->{$db . '.meta-routes'}}){
             my $r = $config->{'env'}->{'app'}->{$db . '.meta-routes'}->{$k};
             push @open_routes, $r->{'name'} if $r->{'is_open'} == 1 ; 
+            push @open_in_routes, $r->{'name'} if $r->{'is_open_in'} == 1 ; 
          }
 
          my $flag_found_open_route = grep ( /^$route$/, @open_routes);
-         if ( $flag_found_open_route == 1 ){
+         my $flag_found_open_in_route = grep ( /^$route$/, @open_in_routes);
+         if ( $flag_found_open_route > 0 ){
             return ; # not authorization checks for open routes
          } else {
             $db         = 'qto' unless $db ;
@@ -302,7 +305,7 @@ sub doSetHooks {
                $c->redirect_to($login_url);
                return ;
             }
-            unless ( $objGuardian->isAuthorized($c->app->config, $rbac_list, $db, $c, \$msg)){
+            unless ( $objGuardian->isAuthorized($c->app->config, $rbac_list, $db, $c, \$msg, $flag_found_open_in_route)){
                foreach my $k(keys %{$config->{'env'}->{'app'}->{$db . '.meta-routes'}}){
                   my $r = $config->{'env'}->{'app'}->{$db . '.meta-routes'}->{$k};
                   next unless $r->{'name'} eq $route ;
