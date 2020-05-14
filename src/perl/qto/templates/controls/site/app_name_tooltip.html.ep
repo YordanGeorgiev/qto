@@ -1,6 +1,6 @@
 % if ( !defined ( param('as') ) or param('as') ne "print-doc" ) {
    <div class="app_name_tooltip" id="app_tooltip">
-   <a tabindex="1" href="/<%= $pdb =%>/home"><img src="../../themes/thme-blue/img/controls/home.png"></a>
+   <a tabindex="1" href="/<%= $pdb =%>/home"><img loading="lazy" src="../../themes/thme-blue/img/controls/home.png"></a>
       <div class="app_name_tooltiptext">
          <%= " $db" =%>
          <%= " $ProductVersion " =%>

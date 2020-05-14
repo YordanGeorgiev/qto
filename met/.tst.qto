@@ -665,11 +665,8 @@ src/bash/qto/funcs/sys/tmux/tmux-common.sh
 src/bash/qto/funcs/sys/tmux/restore-tmux-session.func.sh
 src/bash/qto/tests/sys/tmux/restore-tmux-session.test.sh
 #---
-#---
-doc/txt/qto/tests/pckg/create-relative-package.test.txt
 doc/txt/qto/funcs/pckg/create-relative-package.func.txt
 doc/txt/qto/helps/pckg/create-relative-package.help.txt
-src/bash/qto/helps/pckg/create-relative-package.help.sh
 src/bash/qto/funcs/pckg/create-relative-package.func.sh
 src/bash/qto/tests/pckg/create-relative-package.test.sh
 met

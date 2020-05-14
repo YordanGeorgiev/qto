@@ -6,7 +6,7 @@
              <div class="snackbar__body">
                <div>
                   <input type="checkbox" id="infinity" v-model="infinity">
-                  <img src="../../themes/thme-blue/img/controls/tack.png" width="24px" height="24px"></img>
+                  <img loading="lazy" src="../../themes/thme-blue/img/controls/tack.png" width="24px" height="24px"></img>
                </div>
                <button type="submit" href="javascript:void(0);" class="close-btn" 
                   v-on:click="hideSnackBar">

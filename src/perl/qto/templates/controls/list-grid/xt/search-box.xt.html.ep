@@ -11,6 +11,6 @@
         {{ result }}
       </li>
     </ul>
-    <button id="but_srch" class="cls_img_but" tabindex="1" type="submit" v-on:click="onEnter"><sub><img src="../../themes/thme-blue/img/controls/srch.png" /></sub></button>
+    <button id="but_srch" class="cls_img_but" tabindex="1" type="submit" v-on:click="onEnter"><sub><img loading="lazy" src="../../themes/thme-blue/img/controls/srch.png" /></sub></button>
   </div>
 </script>

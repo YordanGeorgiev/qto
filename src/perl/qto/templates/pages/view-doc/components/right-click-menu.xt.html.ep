@@ -8,47 +8,47 @@
 	  <ul>
 		 <context-menu-item>
 			<a @click="openItem($event)">
-            <img src="../../themes/thme-blue/img/controls/open-book.png" 
+            <img loading="lazy" src="../../themes/thme-blue/img/controls/open-book.png" 
 				class="context-menu-icon" width="18">  open as doc</a>
 		 </context-menu-item>
 		 <context-menu-item>
 			<a @click="openInList($event)">
-            <img src="../../themes/thme-blue/img/controls/open-in-listing.png" 
+            <img loading="lazy" src="../../themes/thme-blue/img/controls/open-in-listing.png" 
 				class="context-menu-icon"  width="18"> open as list </a>
 		 </context-menu-item>
 		 <context-menu-item>
 			<a @click="exportItemToGitHubMd($event)">
-            <img src="../../themes/thme-blue/img/controls/github-md.png" 
+            <img loading="lazy" src="../../themes/thme-blue/img/controls/github-md.png" 
 				class="context-menu-icon"  width="18"> export to md </a>
 		 </context-menu-item>
 		 <context-menu-item>
 			<a @click="exportItemToXls($event)">
-            <img src="../../themes/thme-blue/img/controls/xls-icon.png" 
+            <img loading="lazy" src="../../themes/thme-blue/img/controls/xls-icon.png" 
 				class="context-menu-icon"  width="18"> export to xls </a>
 		 </context-menu-item>
 		 <context-menu-item>
 			<a @click="openInPrintPreview($event)">
-         <img src="../../themes/thme-blue/img/controls/pdf-print-preview.png" 
+         <img loading="lazy" src="../../themes/thme-blue/img/controls/pdf-print-preview.png" 
 				class="context-menu-icon"  width="18"> pdf print preview </a>
 		 </context-menu-item>
 		 <context-menu-item>
 			<a @click="addNewSiblingNode($event)">
-            <img src="../../themes/thme-blue/img/controls/add-sibling-node.png" 
+            <img loading="lazy" src="../../themes/thme-blue/img/controls/add-sibling-node.png" 
 				class="context-menu-icon"  width="18"> add new sibling node </a>
 		 </context-menu-item>
 		 <context-menu-item>
 			<a id="add-new-parent-node" @click="addNewParentNode($event)">
-            <img src="../../themes/thme-blue/img/controls/add-parent-node.png" 
+            <img loading="lazy" src="../../themes/thme-blue/img/controls/add-parent-node.png" 
 				class="context-menu-icon"  width="18"> add new parent node </a>
 		 </context-menu-item>
 		 <context-menu-item>
 			<a @click="addNewChildNode($event)">
-            <img src="../../themes/thme-blue/img/controls/add-child-node.png" 
+            <img loading="lazy" src="../../themes/thme-blue/img/controls/add-child-node.png" 
 				class="context-menu-icon"  width="18"> add new child node </a>
 		 </context-menu-item>
 		 <context-menu-item>
 			<a @click="deleteNode($event)">
-            <img src="../../themes/thme-blue/img/controls/trash-bin.png" 
+            <img loading="lazy" src="../../themes/thme-blue/img/controls/trash-bin.png" 
 				class="context-menu-icon"  width="18"> remove node </a>
 		 </context-menu-item>
 	  </ul>
