@@ -3,7 +3,7 @@
       template: `
          <ol id="left_menu" class="tree"> 
             <div id="div_logout"><a alt="logout" tabindex="1" href="/<%= $pdb =%>/logon">
-               <img alt="logout" src="../../themes/thme-blue/img/controls/logout.png" /></a>
+               <img loading="lazy" alt="logout" src="../../themes/thme-blue/img/controls/logout.png" /></a>
             </div>
             <div v-html='buildMenu'/>
             <div id="app_label">

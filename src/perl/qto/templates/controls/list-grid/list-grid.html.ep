@@ -29,14 +29,14 @@
          <cruds-grid-sf :data.sync="gridData" :columns="gridColumns" :filter-key="globalSrch"></cruds-grid-sf>
          <div id="pager02" v-if="gridData.length !== 0">
             <button id="btnPlayNext10" type="submit" href="javascript:void(0);" v-on:click="goToNextPage10" tabindex="3" class="cls_img_but">
-               <img src="../../themes/thme-blue/img/controls/play-next-10.png" /></button>
+               <img loading="lazy" src="../../themes/thme-blue/img/controls/play-next-10.png" /></button>
             <button id="btnPlayNext" type="submit" href="javascript:void(0);" v-on:click="goToNextPage" class="cls_img_but">
-               <img src="../../themes/thme-blue/img/controls/play-next.png" /></button>
+               <img loading="lazy" src="../../themes/thme-blue/img/controls/play-next.png" /></button>
             <div id="page_counter"><span v-for> {{this.pageNum}} / {{this.pagesCount }}</span></div>
             <button id="btnPlayPrev" tabindex="3" type="submit" href="javascript:void(0);" v-on:click="goToPrevPage" class="cls_img_but">
-               <img src="../../themes/thme-blue/img/controls/play-prev.png" /></button>
+               <img loading="lazy" src="../../themes/thme-blue/img/controls/play-prev.png" /></button>
 	         <button id="btnPlayPrev10" tabindex="3" type="submit" href="javascript:void(0);" v-on:click="goToPrevPage10" class="cls_img_but">
-               <img src="../../themes/thme-blue/img/controls/play-prev-10.png" /></button>` 
+               <img loading="lazy" src="../../themes/thme-blue/img/controls/play-prev-10.png" /></button>` 
          </div>
 
          <div id="div_page_sizer" v-if="this.showPageSizer">

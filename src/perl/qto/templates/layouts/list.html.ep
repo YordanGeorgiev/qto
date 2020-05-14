@@ -17,7 +17,7 @@
 <body>
    <nav class="fixed-nav-bar">
 	% if ( defined($self->session( 'app.' . $db . '.user'))) {
-      <a href="https://en.gravatar.com/emails/" target="_blank"><img title="logged in as <%== $self->session( 'app.' . $db . '.user') %>" 
+      <a href="https://en.gravatar.com/emails/" target="_blank"><img loading="lazy" title="logged in as <%== $self->session( 'app.' . $db . '.user') %>" 
          id="gravatar_url_img" src="<%== $gravatar_url %>"></img></a>
 	% } 
    </nav>

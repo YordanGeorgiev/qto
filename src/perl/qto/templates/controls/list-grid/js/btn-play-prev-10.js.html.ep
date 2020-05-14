@@ -5,5 +5,5 @@
          this.$emit('clickedBtnPlayPrev10', ev.currentTarget.id)
        }
 	  }
-	  , template: `<button type="submit" href="javascript:void(0);" v-on:click="clickedBtnPlayPrev10($event)" class="cls_img_but"><img src="../../themes/thme-blue/img/controls/play-prev-10.png" /></button>` 
+	  , template: `<button type="submit" href="javascript:void(0);" v-on:click="clickedBtnPlayPrev10($event)" class="cls_img_but"><img loading="lazy" src="../../themes/thme-blue/img/controls/play-prev-10.png" /></button>` 
 	})

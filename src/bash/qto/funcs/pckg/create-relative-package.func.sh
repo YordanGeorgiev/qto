@@ -19,8 +19,9 @@ doCreateRelativePackage(){
 
 	timestamp=`date "+%Y%m%d_%H%M%S"`
 	# the last token of the include_file with . token separator - thus no points in names
+   git_short_hash=$(git rev-parse --short HEAD)
 	zip_file_name=$(echo $include_file | rev | cut -d. -f 1 | rev)
-	zip_file_name="$zip_file_name.$product_version.$tgt_env_type.$timestamp.$host_name.rel.zip"
+	zip_file_name="$zip_file_name.$product_version.$tgt_env_type.$timestamp.$git_short_hash.$host_name.rel.zip"
 	zip_file="$product_dir/$zip_file_name"
 	
 
