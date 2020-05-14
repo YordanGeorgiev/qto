@@ -50,6 +50,8 @@ sub doReloadProjDbMetaData {
       my $objWtrRedis = 'Qto::App::Db::Out::WtrRedis'->new(\$config);
       $self->doReloadProjDbMetaColumns($db,$item,\$objWtrRedis);
       $self->doReloadProjDbMetaTables($db,$item,\$objWtrRedis);
+      $self->doReloadProjDbForeignKeys($db,$item,\$objWtrRedis);
+
       if ( defined $ENV{'QTO_JWT_AUTH'} && $ENV{'QTO_JWT_AUTH'} == 1 ){
          $self->doReloadProjDbRBACList($db,$item,\$objWtrRedis) ;
          $self->doReloadMetaRoutes($db,\$objWtrRedis);
@@ -61,11 +63,13 @@ sub doReloadProjDbMetaData {
       my $app_item_attributes  = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
       my $tables_list   = $objRdrRedis->getData(\$config,"$db" . '.tables-list');
       my $rbac_list     = $objRdrRedis->getData(\$config,"$db" . '.rbac-list');
+      my $foreign_keys  = $objRdrRedis->getData(\$config,"$db" . '.foreign_keys');
       
       $objModel->set($db . '.meta-columns',  $app_item_attributes);
       $objModel->set($db . '.meta-tables',   $app_items);
       $objModel->set($db . '.tables-list',   $tables_list);
       $objModel->set($db . '.rbac-list',     $rbac_list);
+      $objModel->set($db . '.foreign-keys',  $foreign_keys);
    }
 }
 
@@ -91,6 +95,29 @@ sub doReloadProjDbMetaColumns {
 
    $objWtrRedis->setData(\$config, $db . '.meta-columns', $msr2);
    $objModel->set($db . '.meta-columns',$msr2);
+}
+
+sub doReloadProjDbForeignKeys {
+
+   my $self                = shift ;
+   my $db                  = shift ;
+   my $item                = shift || '' ; 
+	my $objWtrRedis         = ${ shift @_ } || croak 'objWtrRedis not passed !!!' ; 
+   my $objRdrDbsFcry       = {} ; 
+   my $objRdrDb            = {} ; 
+   my $msr2                = {} ; 
+   my $ret                 = 1 ; 
+   my $msg                 = "fatal error while reloading project database foreign keys" ; 
+
+    
+   $objRdrDbsFcry          = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config, \$objModel );
+   $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type );
+   ($ret, $msg , $msr2 )   = $objRdrDb->doLoadProjDbForeignKeys( $db ) ; 
+
+   croak ( "could not fetch any proj db foreign keys!!! Does $db exist ?! \n\n\n\n\n\n" ) unless $msr2;
+
+   $objWtrRedis->setData(\$config, $db . '.foreign-keys', $msr2);
+   $objModel->set($db . '.foreign-keys',$msr2);
 }
 
 
