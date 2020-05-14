@@ -775,6 +775,67 @@ sub doCallFuncGetHashRef {
 
    #
    # -----------------------------------------------------------------------------
+   # load the project database  foreign keys
+   # -----------------------------------------------------------------------------
+   sub doLoadProjDbForeignKeys {
+
+      my $self             = shift ; 
+      my $db               = shift ; 
+      
+      my $msg              = q{} ;         
+      my $ret              = () ;          # this is the return value from this method 
+      my $debug_msg        = q{} ; 
+      my $mhsr2            = {} ;         # this is meta hash describing the data hash ^^
+      my $sth              = {} ;         # this is the statement handle
+      my $dbh              = {} ;         # this is the database handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+
+      ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+		$str_sql = "
+         SELECT 
+            o.oid
+            , o.conname AS constraint_name
+         , (SELECT nspname FROM pg_namespace WHERE oid=m.relnamespace) AS source_schema
+         , m.relname AS source_table
+         , (SELECT a.attname FROM pg_attribute a 
+            WHERE a.attrelid = m.oid AND a.attnum = o.conkey[1] AND a.attisdropped = false) AS source_column
+         , (SELECT nspname FROM pg_namespace 
+            WHERE oid=f.relnamespace) AS target_schema
+         , f.relname AS target_table
+         , (SELECT a.attname FROM pg_attribute a 
+            WHERE a.attrelid = f.oid AND a.attnum = o.confkey[1] AND a.attisdropped = false) AS target_column
+         , ROW_NUMBER () OVER (ORDER BY o.oid) as rowid
+         FROM pg_constraint o 
+         LEFT JOIN pg_class f ON f.oid = o.confrelid 
+         LEFT JOIN pg_class m ON m.oid = o.conrelid
+         WHERE 1=1
+         AND o.contype = 'f' 
+         AND o.conrelid IN (SELECT oid FROM pg_class c WHERE c.relkind = 'r')
+         " ; 
+      
+      eval { 
+         $sth = $dbh->prepare($str_sql);  
+         $sth->execute() ; 
+         $mhsr2 = $sth->fetchall_hashref( 'rowid' ) ; 
+      };
+      if ( $@ or !scalar(%$mhsr2)) { 
+         $msg = " failed to get the project database: " . $db . " foreign keys ! " ; 
+         $msg .= $DBI::errstr ; 
+         $objLogger->doLogErrorMsg($msg);
+         $ret = 1 ; 
+         return ( $ret , $msg , undef ) ; 
+      };
+
+         binmode(STDOUT, ':utf8');
+         $ret = 0 ; 
+         $dbh->disconnect();
+         return ( $ret , $msg , $mhsr2 ) ; 	
+   }
+
+   #
+   # -----------------------------------------------------------------------------
    # load the project database meta data. must work for all the tables and colum 
    # regardless on wether or not the custom meta data in app_items and app_item_attributes
    # tables are defined !!!
