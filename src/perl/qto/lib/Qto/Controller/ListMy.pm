@@ -153,6 +153,11 @@ my $objModel         = ${ shift @_ } ;
    my $logged_in_usr_email = $self->session( 'app.' . $db . '.user') || '' ; 
    my $gravatar_url = gravatar_url('email' => $logged_in_usr_email , ('https',1)) || '';
 
+   my $web_host = $config->{'env'}->{'app'}->{'web_host'};
+   my $https_port = $config->{'env'}->{'app'}->{'https_port'};
+   my $url_path = $self->url_for->path;
+   my $url_to_share = 'https://' .  $web_host . ':' . $https_port . $url_path ;
+
    $self->render(
       'template'        => $template 
     , 'as'              => $as
@@ -168,6 +173,7 @@ my $objModel         = ${ shift @_ } ;
     , 'notice'          => $notice
     , 'items_lst'       => $items_lst
     , 'gravatar_url'    => $gravatar_url
+    , 'url_to_share'    => $url_to_share
 	) ; 
 
    return ; 
