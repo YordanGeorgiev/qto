@@ -7,9 +7,9 @@ CREATE TABLE app_imgs (
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
     , name           varchar (200) NOT NULL DEFAULT 'Image figure title'
     , relative_path  varchar (1000) NOT NULL DEFAULT 'src/perl/qto/public/dat/img/qto/...'
-    , http_path      varchar (4000) NOT NULL DEFAULT 'https://raw.githubusercontent.com/YordanGeorgiev/qto/dev/doc/img/..'
+    , http_path      varchar (4000) NOT NULL DEFAULT 'https://raw.githubusercontent.com/YordanGeorgiev/qto/master/doc/img/..'
     , style          varchar (100) NOT NULL DEFAULT 'width: 800px; height: 600x'
-    , item_guid      UUID NOT NULL DEFAULT gen_random_uuid()
+    , item_id        bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint)
     , description    varchar (4000) NOT NULL DEFAULT 'Alt text' 
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_app_imgs_guid PRIMARY KEY (guid)

@@ -111,4 +111,8 @@ ca053b66-acc3-4b25-8c53-d3b7ac825fc6	29	1	monthly_issues	0.8.3	monthly_issues	20
 bbe094a4-2255-45ef-af76-8880ead881c7	65	1	yearly_issues_2020	0.8.3	yearly_issues_2020	2020-04-12 18:14:56
 bea09ac2-f835-43d3-9746-d5da2228d4b3	200419113429	1	problems_status	0.8.3	problems_status	2020-04-19 09:07:17
 f9fecf76-c485-4cd8-8454-b25f0322d521	60	1	app_users	0.8.3	app_users	2020-04-19 21:08:56
+39b3eba3-e262-4e06-872c-d3c5f6085075	200515003827	1	bugs	0.8.5	will hold the bugs in the system	2020-05-14 21:38:46
+c6fe1378-0be4-41f5-9662-66983021816a	200511135541	1	app_items_doc	0.8.5	contins the howl menu ...	2020-05-11 10:55:56
+c84a7013-19c8-470c-8f2d-c17b7d660fe6	200504204736	2	wow_doc	0.8.4	the way of working doc	2020-05-04 17:48:06
+f5b4fd92-039b-46ec-a923-7d1638314373	200509025750	1	incidents	0.8.4	contains the incidents in the qto.fi system	2020-05-08 23:58:20
 \.

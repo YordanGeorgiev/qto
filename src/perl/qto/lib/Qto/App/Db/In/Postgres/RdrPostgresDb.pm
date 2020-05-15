@@ -1681,12 +1681,11 @@ sub doCallFuncGetHashRef {
       $offset = $limit*$offset ; 
       $offset = 0 if ( $offset < 0 ) ; 
 
-
       eval {
 			$sql = " 
 				SELECT *
             , img_id
-            , img_item_guid
+            , img_item_id
             , img_name
             , img_relative_path
             , img_http_path
@@ -1701,15 +1700,15 @@ sub doCallFuncGetHashRef {
             LEFT JOIN ( 
                SELECT 
                  app_imgs.id            as img_id
-               , app_imgs.item_guid     as img_item_guid
+               , app_imgs.item_id       as img_item_id
                , app_imgs.name          as img_name
                , app_imgs.relative_path as img_relative_path
                , app_imgs.http_path     as img_http_path
                , app_imgs.style         as img_style
                , app_imgs.description   as img_description
                FROM app_imgs
-            ) AS imgs
-            ON ( dyn_sql.guid = imgs.img_item_guid ) 
+            ) AS app_imgs
+            ON ( dyn_sql.id = app_imgs.img_item_id ) 
 				WHERE 1=1 
             $where_clause_with
 				ORDER BY seq

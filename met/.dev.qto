@@ -567,6 +567,7 @@ src/sql/pgsql/qto/tables/24.create-table-system_guide_doc.sql
 src/sql/pgsql/qto/tables/25.create-table-installations_doc.sql
 src/sql/pgsql/qto/tables/26.create-table-release_issues.sql
 src/sql/pgsql/qto/tables/27.create-table-nix_book_doc.sql
+src/sql/pgsql/qto/tables/28.create-table-bugs.sql
 src/sql/pgsql/qto/tables/29.create-table-enduser_guide_doc.sql
 src/sql/pgsql/qto/tables/30.create-table-maintenance_guide_doc.sql
 src/sql/pgsql/qto/tables/31.create-table-readme_doc.sql
