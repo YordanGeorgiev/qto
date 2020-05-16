@@ -5,17 +5,19 @@
             <div id="div_logout"><a alt="logout" tabindex="1" href="/<%= $pdb =%>/logon">
                <img loading="lazy" alt="logout" src="../../themes/thme-blue/img/controls/logout.png" /></a>
             </div>
-            <div v-html='buildMenu'/>
+            <div v-html='buildMenu' @click="handleClick($event)" v-on:keyup.enter="onEnter"/>
             <div id="app_label">
                <p><%= " $db" =%><%= " $ProductVersion " =%> <%= " $EnvType " =%><%= " $GitShortHash " =%> @<%= " $page_load_time " =%></p>
             </div>
          </ol>
       `
       , data: {
-         menuData: []
+         menuData: [],
+         chksState: {}
 	   }
      	, computed: {
         buildMenu: function(){
+            this.chksState = JSON.parse(localStorage.getItem('chksState')) || {}
             var i
             var html=" "
             var prev_lvl = 0
@@ -43,11 +45,33 @@
             this.menuData = menuData
         } 
         , openFolderLink: function(itm) {
+            var checkedMayBe = (typeof(this.chksState[String(itm.id)]) === 'undefined') ? false : this.chksState[String(itm.id)]
+            var checkedMayBeStr = (checkedMayBe) ? 'checked' : ''
             var html='<li><label class="cls-lft-mnu-lbl" for="' + itm.id + '"><a class="cls_fa" href="#">'
-            html += itm.name + '</a></label><input tabindex="1" type="checkbox" checked id="' 
+            html += itm.name + '</a></label><input class="lmfi" tabindex="1" type="checkbox" ' + checkedMayBeStr + ' id="' 
             html += itm.id + '" /><ol><li>'
             return html
         } 
+        , handleClick: function(e) {
+            if (String(e.target.className) === 'cls-lft-mnu-lbl' || String(e.target.className) === 'cls_fa') {
+               var theChck = e.target.parentElement.parentElement.getElementsByTagName('input')[0]
+               theChck.click()
+            }
+            if (String(e.target.className) === 'lmfi') {
+               this.chksState = JSON.parse(localStorage.getItem('chksState')) || {}
+               var eid = e.target.id
+               this.chksState[String(eid)] = (typeof(this.chksState[String(eid)]) === 'undefined') ? false : this.chksState[String(eid)]
+               this.chksState[String(e.target.id)] = !this.chksState[String(e.target.id)]
+               e.target.focus() 
+               localStorage.setItem('chksState',JSON.stringify(this.chksState))
+            }
+        }
+        , onEnter: function(e) {
+            if (String(e.target.className) === 'cls-lft-mnu-lbl' || String(e.target.className) === 'cls_fa') {
+               var theChck = e.target.parentElement.parentElement.getElementsByTagName('input')[0]
+               theChck.click()
+            }
+        }
         , closeFolderLink: function(itm) {
             if ( itm.id == 0 ) { return ' ' }
             return '</ol></li>'
