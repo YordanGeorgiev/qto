@@ -417,6 +417,10 @@
          , showContextMenu: function (e) {
             this.$store.dispatch("showContextMenu",e);
          }
+         , handleClick: function (e) {
+            console.log("handleClick")
+            console.log(e)
+         }
      }
      , updated: function() {
          this.$nextTick(function() {

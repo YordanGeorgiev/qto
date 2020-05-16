@@ -1,8 +1,6 @@
--- DROP TABLE IF EXISTS incidents ; 
 
 SELECT 'create the "incidents" table'
 ; 
--- DROP TABLE incidents ; 
 
 CREATE TABLE incidents (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
