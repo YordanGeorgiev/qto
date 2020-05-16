@@ -1,8 +1,5 @@
--- DROP TABLE IF EXISTS bugs ; 
-
 SELECT 'create the "bugs" table'
 ; 
--- DROP TABLE bugs ; 
 
 CREATE TABLE bugs (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()

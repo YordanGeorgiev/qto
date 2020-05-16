@@ -33,6 +33,30 @@
             lnkMayBe = lnkMayBe.linkifyItems()
             return (typeof(lnkMayBe) != "undefined") ? lnkMayBe : ''
           }
+          , handleMouseDown: function(e){
+            if (e.target && e.ctrlKey == true) {
+               e.bubbles = false
+               e.preventDefault();
+               e.stopPropagation();
+               e.target.addEventListener('click', function(e) {
+                 if (e.ctrlKey) {
+                     e.stopPropagation();
+                 }
+               }, false);
+            } 
+          }
+          , handleMouseUp: function(e){
+            if (e.target && e.ctrlKey == true) {
+               e.bubbles = false
+               e.preventDefault();
+               e.stopPropagation();
+               e.target.addEventListener('click', function(e) {
+                 if (e.ctrlKey) {
+                     e.stopPropagation();
+                 }
+               }, false);
+            } 
+          }
       }
       , template: "#view-doc-items-list"
    });

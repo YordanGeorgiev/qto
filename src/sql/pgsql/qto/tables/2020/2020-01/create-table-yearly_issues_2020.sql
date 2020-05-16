@@ -11,7 +11,7 @@ CREATE TABLE yearly_issues_2020 (
     , prio           integer NOT NULL DEFAULT 0
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
-    , owner          varchar (20) NOT NULL DEFAULT 'unknown'
+    , app_users_guid uuid DEFAULT public.gen_random_uuid()
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_yearly_issues_2020_guid PRIMARY KEY (guid)
     );
