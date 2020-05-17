@@ -53,20 +53,22 @@
             return html
         } 
         , handleClick: function(e) {
+            e.stopPropagation
             if (String(e.target.className) === 'cls-lft-mnu-lbl' || String(e.target.className) === 'cls_fa') {
                var theChck = e.target.parentElement.parentElement.getElementsByTagName('input')[0]
                theChck.click()
             }
             if (String(e.target.className) === 'lmfi') {
                this.chksState = JSON.parse(localStorage.getItem('chksState')) || {}
-               var eid = e.target.id
-               this.chksState[String(eid)] = (typeof(this.chksState[String(eid)]) === 'undefined') ? false : this.chksState[String(eid)]
+               var eid = String(e.target.id)
+               this.chksState[eid] = (typeof(this.chksState[eid]) === 'undefined') ? false : this.chksState[eid]
                this.chksState[String(e.target.id)] = !this.chksState[String(e.target.id)]
                e.target.focus() 
                localStorage.setItem('chksState',JSON.stringify(this.chksState))
             }
         }
         , onEnter: function(e) {
+            e.stopPropagation
             if (String(e.target.className) === 'cls-lft-mnu-lbl' || String(e.target.className) === 'cls_fa') {
                var theChck = e.target.parentElement.parentElement.getElementsByTagName('input')[0]
                theChck.click()
@@ -83,11 +85,14 @@
             url = url.split('/')[0] + "//" + url.split('/')[2] + '/' + pdb + '/'
             return '<li class="file"><a class="cls_da" href="' + url + itm.url + '">' + itm.name + '</a></li>' ;
         } 
-        , handleLeftMenuClickOutside(e) {
-         if (!this.$el.contains(e.target) && e.target.id !== 'chk_left_menu') {
-            var left_menu_checkbox = document.getElementById("chk_left_menu");
-            if ( left_menu_checkbox.checked == true) {
-               left_menu_checkbox.click()
+        , handleClckOutOfLftMnu(e) {
+         console.log(this.$el.contains(e.target))
+         console.log('this.$el.contains(e.target)')
+         if (this.$el.contains(e.target) === false && e.target.id != 'chk_left_menu') {
+            console.log('IF')
+            var left_menu_checkbox = document.getElementById("chk_left_menu")
+            if ( left_menu_checkbox.checked === true) { //lft mnu is open
+               left_menu_checkbox.click() //close it
             }
           }
         }
@@ -95,10 +100,10 @@
      , mounted() {
          this.$nextTick(() => {
             bus.$on('metaTablesLoadEmit',this.menuDataLoaded)
-            document.addEventListener("click", this.handleLeftMenuClickOutside);
+            document.addEventListener("click", this.handleClckOutOfLftMnu);
          })
      }
      , destroyed() {
-       document.removeEventListener("click", this.handleLeftMenuClickOutside);
+       document.removeEventListener("click", this.handleClckOutOfLftMnu);
      }
    });

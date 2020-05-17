@@ -461,7 +461,6 @@ src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
 src/perl/qto/lib/Qto/App/Mdl/Model.pm
 src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToDb.pm
-src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToTxt.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlTxtToDb.pm
 src/perl/qto/lib/Qto/App/Utils
@@ -869,7 +868,6 @@ src/perl/qto/lib/auto/Qto/Controller/Upload/autosplit.ix
 src/perl/qto/lib/auto/Qto/Auth/Role
 src/perl/qto/lib/auto/Qto/Auth/Role/autosplit.ix
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToTxt/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToXls/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlTxtToDb/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlXlsToDb/autosplit.ix
