@@ -17,19 +17,18 @@ package Qto::App::Ctrl::Dispatcher ;
    use Qto::App::Utils::Logger ; 
    use Qto::App::Ctrl::CtrlTxtToDb ; 
    use Qto::App::Ctrl::CtrlXlsToDb ; 	
-   use Qto::App::Ctrl::CtrlDbToTxt ; 
    use Qto::App::Ctrl::CtrlDbToXls ; 
 
 	our $module_trace                = 0 ; 
    our $module_test_run             = 0 ; 
-	our $config						   = {} ; 
+	our $config						      = {} ; 
 	our $RunDir 						   = '' ; 
 	our $ProductBaseDir 				   = '' ; 
 	our $ProductDir 					   = '' ; 
 	our $ProductInstanceDir 			= ''; 
-	our $ProductInstanceEnv  = '' ; 
+	our $ProductInstanceEnv          = '' ; 
 	our $ProductName 					   = '' ; 
-	our $EnvType 					   = '' ; 
+	our $EnvType 					      = '' ; 
 	our $ProductVersion 				   = ''; 
 	our $ProductOwner 				   = '' ; 
 	our $HostName 						   = '' ; 
@@ -77,16 +76,6 @@ package Qto::App::Ctrl::Dispatcher ;
    }
 
    
-   sub doDbToTxt {
-
-      my $self = shift ; 
-      use strict 'refs'; 
-      my $objCtrlDbToTxt = 
-         'Qto::App::Ctrl::CtrlDbToTxt'->new ( \$config , \$objModel) ; 
-      my ( $ret , $msg ) = $objCtrlDbToTxt->doReadAndWrite ( ) ; 
-      return ( $ret , $msg ) ; 
-   }
-
 
    sub doDbToXls {
       my $self = shift ; 
