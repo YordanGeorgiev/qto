@@ -8,29 +8,20 @@ doPublishDbdumpToS3(){
    dump_file="$(find $PROJ_INSTANCE_DIR/dat/mix/ -type f -name '*.insrts.dmp.sql'|sort -nr|head -n 1)"
    dump_file_name=$(basename $dump_file)
 
-   AWS_DEFAULT_PROFILE="$ENV_TYPE"'-'"$RUN_UNIT"
-   test -f ~/.aws/credentials && cp -v ~/.aws/credentials ~/.aws/credentials.bak
-   cat << EOF_CREDENTIALS > ~/.aws/credentials
-     [$AWS_DEFAULT_PROFILE]
-     aws_AWS_ACCESS_KEY_ID_id = $AWS_ACCESS_KEY_ID
-     aws_secret_AWS_ACCESS_KEY_ID = $AWS_SECRET_ACCESS_KEY
-EOF_CREDENTIALS
-
-   test -f ~/.aws/config && cp -v ~/.aws/config ~/.aws/config.bak 
-   cat << EOF_CONFIG > ~/.aws/config
-     [$AWS_DEFAULT_PROFILE]
-     region=$AWS_DEFAULT_REGION
-     output=json
-     [profile $AWS_DEFAULT_PROFILE]
-EOF_CONFIG
-
+   export AWS_DEFAULT_PROFILE='default'
    aws configure list
    set -x
-   # remove the grants to disable full publicity of the data ... 
-   aws s3 cp "$dump_file" "s3://$bucket/$postgres_db_name"'.latest.insrts.dmp.sql' \
+   # remove the grants to disable full publicity of the data ...
+   aws s3 --profile default cp "$dump_file" "s3://$bucket/$postgres_db_name"'.latest.insrts.dmp.sql' \
       --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
-   set +x
+	set +x
 
-   cp -v ~/.aws/config.bak ~/.aws/config
-   cp -v ~/.aws/credentials.bak ~/.aws/credentials
+	cat << EOF
+		IF error occurs check that your aws credentials file ~/.aws/credentials looks as follws
+		sudo ntpdate ntp.ubuntu.com
+		cat ~/.aws/credentials
+		[default]
+		aws_access_key_id = BKIAID4UEECKBMVJMG55
+		aws_secret_access_key = 7VB1A4tpSfnE0P22jNEFMurPy8G2n9H7lqxSEFa9
+EOF
 }
