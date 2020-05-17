@@ -993,3 +993,4 @@ src/sql/pgsql/scripts/03.create-func.func_get_all_users_roles.sql
 src/sql/pgsql/scripts/meta/populate-app_routes.sql
 src/sql/pgsql/scripts/reporting/create-rep_userstories_doc.sql
 src/sql/pgsql/scripts/reporting/repopulate-rep_userstories_doc.sql
+cnf/bash/etc/init.d/qto-on-boot.sh
