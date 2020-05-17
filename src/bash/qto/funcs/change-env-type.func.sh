@@ -26,5 +26,11 @@ doChangeEnvType(){
 	unzip -o $zip_file -d $tgt_PRODUCT_INSTANCE_DIR
 	cp -v $zip_file $tgt_PRODUCT_INSTANCE_DIR
 
+
    perl -pi -e 's|'$env_type'|'$tgt_env'|g' $tgt_PRODUCT_INSTANCE_DIR/.env
+
+   cd $tgt_PRODUCT_INSTANCE_DIR
+   ln -sf `pwd`/src/bash/qto/qto.sh qto
+   ln -sf `pwd`/src/perl/qto/script/qto.pl qto.pl
+   cd -
 }
