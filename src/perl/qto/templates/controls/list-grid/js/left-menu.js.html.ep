@@ -5,7 +5,7 @@
             <div id="div_logout"><a alt="logout" tabindex="1" href="/<%= $pdb =%>/logon">
                <img loading="lazy" alt="logout" src="../../themes/thme-blue/img/controls/logout.png" /></a>
             </div>
-            <div v-html='buildMenu' @click="handleClick($event)" v-on:keyup.enter="onEnter"/>
+            <div style="margin-top:7%" v-html='buildMenu' @click="handleClick($event)" v-on:keyup.enter="onEnter"/>
             <div id="app_label">
                <p><%= " $db" =%><%= " $ProductVersion " =%> <%= " $EnvType " =%><%= " $GitShortHash " =%> @<%= " $page_load_time " =%></p>
             </div>
@@ -45,25 +45,27 @@
             this.menuData = menuData
         } 
         , openFolderLink: function(itm) {
-            var checkedMayBe = (typeof(this.chksState[String(itm.id)]) === 'undefined') ? false : this.chksState[String(itm.id)]
+            var eid = 'lfcb-'+String(itm.id)
+            var checkedMayBe = (typeof(this.chksState[eid]) === 'undefined') ? false : this.chksState[eid]
             var checkedMayBeStr = (checkedMayBe) ? 'checked' : ''
-            var html='<li><label class="cls-lft-mnu-lbl" for="' + itm.id + '"><a class="cls_fa" href="#">'
-            html += itm.name + '</a></label><input class="lmfi" tabindex="1" type="checkbox" ' + checkedMayBeStr + ' id="' 
+            var html='<li><label class="cls-lft-mnu-lbl" for="' + itm.id + '"><a id="' + 'lmfal-' + itm.id + '" class="cls_fa" href="#">'
+            html += itm.name + '</a></label><input class="lmfi" tabindex="1" type="checkbox" ' + checkedMayBeStr + ' id="lfcb-' 
             html += itm.id + '" /><ol><li>'
             return html
         } 
         , handleClick: function(e) {
             e.stopPropagation
             if (String(e.target.className) === 'cls-lft-mnu-lbl' || String(e.target.className) === 'cls_fa') {
-               var theChck = e.target.parentElement.parentElement.getElementsByTagName('input')[0]
-               theChck.click()
+               var cheid = String(e.target.id).replace('lmfal-','lfcb-')
+               document.getElementById(cheid).click()
             }
             if (String(e.target.className) === 'lmfi') {
+               console.log("handleClick lmfi")
+               var cheid = String(e.target.id)
                this.chksState = JSON.parse(localStorage.getItem('chksState')) || {}
-               var eid = String(e.target.id)
-               this.chksState[eid] = (typeof(this.chksState[eid]) === 'undefined') ? false : this.chksState[eid]
-               this.chksState[String(e.target.id)] = !this.chksState[String(e.target.id)]
-               e.target.focus() 
+               this.chksState[cheid] = (typeof(this.chksState[cheid]) === 'undefined') ? false : this.chksState[cheid]
+               this.chksState[cheid] = !this.chksState[cheid]
+               document.getElementById(cheid).focus()
                localStorage.setItem('chksState',JSON.stringify(this.chksState))
             }
         }
@@ -71,7 +73,7 @@
             e.stopPropagation
             if (String(e.target.className) === 'cls-lft-mnu-lbl' || String(e.target.className) === 'cls_fa') {
                var theChck = e.target.parentElement.parentElement.getElementsByTagName('input')[0]
-               theChck.click()
+               document.getElementById(theChck.id).click()
             }
         }
         , closeFolderLink: function(itm) {
@@ -86,15 +88,18 @@
             return '<li class="file"><a class="cls_da" href="' + url + itm.url + '">' + itm.name + '</a></li>' ;
         } 
         , handleClckOutOfLftMnu(e) {
-         console.log(this.$el.contains(e.target))
-         console.log('this.$el.contains(e.target)')
-         if (this.$el.contains(e.target) === false && e.target.id != 'chk_left_menu') {
-            console.log('IF')
-            var left_menu_checkbox = document.getElementById("chk_left_menu")
-            if ( left_menu_checkbox.checked === true) { //lft mnu is open
-               left_menu_checkbox.click() //close it
+            var el=e.target
+            console.log("handleClckOutOfLftMnu")
+            var div_lft_mnu = document.getElementById("div_left_menu")
+            console.log(el)
+            console.log("el")
+            if (div_lft_mnu.contains(el) === false && el.id !== 'chk_left_menu' && el.className !== 'cls_fa' && el.className !== 'lmfi'){
+               console.log("should click")
+               var left_menu_checkbox = document.getElementById("chk_left_menu")
+               if ( left_menu_checkbox.checked === true) { //lft mnu is open
+                  left_menu_checkbox.click() //close it
+               }
             }
-          }
         }
      }
      , mounted() {
@@ -104,6 +109,6 @@
          })
      }
      , destroyed() {
-       document.removeEventListener("click", this.handleClckOutOfLftMnu);
+         document.removeEventListener("click", this.handleClckOutOfLftMnu);
      }
    });

@@ -3,8 +3,8 @@
       * Erik Terwan - https://codepen.io/erikterwan/pen/grOZxx */
 #div_logout{
    position: relative;
-   margin-left: 85%;
-   margin-top: 4%;
+   margin-left: 87%;
+   margin-top: 1%;
 }
 #app_label {
    padding: 10% 0% 2% 0%;
@@ -104,7 +104,7 @@ li label a:focus {
 #left_menu {
   position: absolute;
   width: 300px;
-  margin: -30px 20px -10px -10px;
+  margin: -35px 20px -10px -10px;
   background: #b4aeb4;
   background-image: linear-gradient(to bottom right, #b4aeb4, #d6d0d6);
   list-style-type: none;
