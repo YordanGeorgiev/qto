@@ -1,6 +1,6 @@
 # ssh public private key authentication 
 
-ssh-keygen -t rsa -b 4096 -C "yordan@phz.fi"
+ssh-keygen -t rsa -b 4096 -C "yordan@gmail.com"
 
 cat id_rsa.pub >> ~/.ssh/authorized_keys
 cat ~/.ssh/authorized_keys
@@ -17,9 +17,9 @@ ssh $ssh_user@$ssh_server
 # START === how-to implement public private key ( pkk ) authentication 
 # create pub priv keys on server
 # START copy 
-ssh-keygen -t rsa -b 4096 -C "yordan@phz.fi"
+ssh-keygen -t rsa -b 4096 -C "yordan@gmail.com"
 ssh-keygen -t rsa
-ssh-keygen -t rsa -b 4096 -C "yordan.georgiev@phz.fi" -f ~/.ssh/id_rsa.pub
+ssh-keygen -t rsa -b 4096 -C "yordan.georgiev@gmail.com" -f ~/.ssh/id_rsa.pub
 ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
 # Hit enter twice 
 # copy the rsa pub key to the ssh server
