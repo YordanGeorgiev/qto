@@ -1,0 +1,1970 @@
+<!doctype html>
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/site.css?v=0.8.5" media="all" onload="this.media='all'">
+<link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/controls/left-menu.css?v=0.8.5" media="all" onload="this.media='all'">
+<link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/top-bar.css?v=0.8.5" media="all" onload="this.media='all'">
+<link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/controls/vue-select.css?v=0.8.5" media="all" onload="this.media='all'">
+<link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/controls/vue-date-time-picker.css?v=0.8.5" media="all" onload="this.media='all'">
+  <title> list monthly_issues_202005 as grid in tst_qto </title> 
+   <link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/pager.css?v=0.8.5">
+<link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/searchbox.css?v=0.8.5">
+<link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/table.css?v=0.8.5">
+<link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/modal-dia.css?v=0.8.5">
+<link rel="stylesheet" type="text/css" media="screen" href="../../themes/thme-blue/css/screen/controls/list-grid.css?v=0.8.5">
+
+</head>
+<body>
+   <nav class="fixed-nav-bar">
+      <a href="https://en.gravatar.com/emails/" target="_blank"><img loading="lazy" title="logged in as yordan.georgiev@gmail.com" id="gravatar_url_img" src="https://secure.gravatar.com/avatar/6e0652a12b8a5b2577f91f0e192ea3f9"></a>
+   </nav>
+	<div id="div_msg"> <span id="spn_msg"></span></div>
+   <div id="div_left_menu" role="navigation">
+  <div id="left_menu_toggle">
+    <input id="chk_left_menu" type="checkbox"> 
+    <span></span>
+    <span></span>
+    <span></span>
+   <ol id="left_menu" class="tree"><div id="div_logout"><a alt="logout" tabindex="1" href="/qto/logon"><img loading="lazy" alt="logout" src="../../themes/thme-blue/img/controls/logout.png"></a></div> <div style="margin-top: 7%;"> <li><label class="cls-lft-mnu-lbl" for="1"><a id="lmfal-1" class="cls_fa" href="#">start</a></label><input class="lmfi" tabindex="1" type="checkbox" id="lfcb-1"><ol><li></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/search">home &amp; search</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/view/readme_doc">readme</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/view/concepts_doc">concepts</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/view/enduser_guide_doc">end-user guide</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/view/wow_doc">way of working</a></li></ol></li><li><label class="cls-lft-mnu-lbl" for="191109110438"><a id="lmfal-191109110438" class="cls_fa" href="#">lists</a></label><input class="lmfi" tabindex="1" type="checkbox" checked="" id="lfcb-191109110438"><ol><li></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/list/bugs?oa=prio">bugs</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/list/ideas?oa=prio">ideas</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/list/problems?oa=prio">problems</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/list-my/monthly_issues_202005?oa=prio">my monthly issues</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/list/monthly_issues_202005?oa=prio">monthly-issues</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/list/questions?oa=prio">questions</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/list/incidents?oa=prio">incidents</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/list/goals?oa=prio">goals</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/list/yearly_issues_2020?&amp;oa=prio&amp;pg-size=7">yearly_issues</a></li></ol></li><li><label class="cls-lft-mnu-lbl" for="200301101943"><a id="lmfal-200301101943" class="cls_fa" href="#">admin corner</a></label><input class="lmfi" tabindex="1" type="checkbox" id="lfcb-200301101943"><ol><li></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/list/app_items_doc?oa=seq&amp;pick=name,url,title,type">list items doc</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/view/app_items_doc">view items doc</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/list/app_item_attributes?oa=name&amp;pick=prio,table_name,name,skip_in_list,width,readonly">meta attributes</a></li></ol></li><li><label class="cls-lft-mnu-lbl" for="191109112117"><a id="lmfal-191109112117" class="cls_fa" href="#">documents</a></label><input class="lmfi" tabindex="1" type="checkbox" checked="" id="lfcb-191109112117"><ol><li></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/view/concepts_doc">concepts</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/view/userstories_doc">userstories doc</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/view/requirements_doc">requirements</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/view/features_doc">features &amp; functionalities</a></li></ol></li><li><label class="cls-lft-mnu-lbl" for="191110043707"><a id="lmfal-191110043707" class="cls_fa" href="#">devops doc store</a></label><input class="lmfi" tabindex="1" type="checkbox" id="lfcb-191110043707"><ol><li></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/view/system_guide_doc">system guide</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/view/installations_doc">installation guide</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/view/maintenance_guide_doc">maintenance &amp; operations guide</a></li><li class="file"><a class="cls_da" href="https://qto.fi:442/qto/view/devops_guide_doc">devops guide</a></li></ol></li></div> <div id="app_label"><p> tst_qto 0.8.5  tst   @ 2020-05-21 10:17:05 </p></div></ol>
+  </div>
+</div>
+
+<script type="application/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js" crossorigin="anonymous"></script>
+<script type="application/javascript" src="https://unpkg.com/axios/dist/axios.min.js" crossorigin="anonymous"></script>
+<script type="application/javascript" src="/lib/js/controls/vue-select.js"></script>
+<script type="application/javascript" src="/lib/js/controls/vue-date-time-picker.js"></script>
+<script type="application/javascript" src="/lib/js/controls/vue-simple-upload.min.js"></script>
+      <script type="text/x-template" id="searchbox">
+  <div class="autocomplete">
+    <input id="inp_srch_box" tabindex="1" type="text" v-model="globalSrch" @input="onChange" 
+    @keyup.esc="isOpen=false" @keyup.down="onArrowDown" @keyup.up="onArrowUp" @keyup.right ="onArrowRight" @keyup.left="onArrowLeft" @keyup.enter="onEnter" @blur="isOpen=false"/>
+    <ul id="searchbox-results" v-show="isOpen && results.length > 0" class="autocomplete-results">
+      <li class="loading" v-if="isLoading">
+        Loading ...
+      </li>
+      <li v-else v-for="(result, i) in results" :key="i" @mouseover="setDropDownResultOnHover(result)" @click="setDropDownResult(result)" 
+         class="autocomplete-result" :class="{ 'is-active': i === arrowCounter }">
+        {{ result }}
+      </li>
+    </ul>
+    <button id="but_srch" class="cls_img_but" tabindex="1" type="submit" v-on:click="onEnter"><sub><img loading="lazy" src="../../themes/thme-blue/img/controls/srch.png" /></sub></button>
+  </div>
+</script>
+
+   <script type="x-template" id="form-input">
+  <div :ref="cid" v-on:keyup.tab="this.document.execCommand('selectAll',false,null);">
+    <label>{{label}}</label>
+    <input class="minput" type="text" :id="cid" :value="content" tabindex="0" @blur="onBlur" v-on:focus="focused" />
+  </div>
+</script>
+
+<script type="x-template" id="form-textarea">
+  <div :ref="cid" v-on:keyup.tab="this.document.execCommand('selectAll',false,null);">
+    <label>{{label}}</label>
+    <textarea class="mtextarea" :id="cid" :value="content" tabindex="0" @blur="onBlur" v-on:focus="focused" />
+  </div>
+</script>
+
+<script type="x-template" id="form-select">
+  <div>
+    <label>Select</label>
+    <select class="mselect">
+      <option v-for="oitem in cnt" :value="oitem.value" :id="cid" >{{oitem.text}}</option>
+    </select>
+  </div>
+  <div v-html="cnt"></div>
+</script>
+
+<script type="text/x-template" id="modal-tmpl">
+  <transition name="modal" :id="cid">
+    <div id="div-modal-tmpl" class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div name="header" class="dia-header">
+            <input id="modal-dia-title-id" @focus="this.document.execCommand('selectAll',false,null)"
+               :value="'monthly_issues_202005-'+this.$attrs.id.replace('dia-','')" readonly>
+<button class="cls_itm_close" id="modal-close-btn-01" v-on:click="$emit('close')" tabindex="0">&nbsp;&times;&nbsp;</button>
+            <input id="modal-dia-share-lnk" @focus="this.document.execCommand('selectAll',false,null)"
+               :value="'https://qto.fi:442/qto/list/monthly_issues_202005?&'+'with=id-eq-'+this.$attrs.id.replace('dia-','')" readonly>
+</input><div id="modal-dia-msg" align="center"> </div></div>
+          <div id="form-container" ref="form_container" class="form-container">
+            <component v-for="field in fields" v-bind="field" :cid.sync="field.id" :is="field.type" :key.sync="field.key" v-bind:cnt.sync="field.cnt" :content.sync="field.cnt" :label.sync="field.label" :ref="field.id">
+            </component>
+          </div>
+	       <fileupload target="/upload-files" action="POST"></fileupload>
+          <div id="close-buttons">
+            <sub><btn-del :id="'btn-del-'+this.$attrs.id.replace('dia-','')" class="cls-del-btn"
+               v-on:clickedBtnDelete="this.$parent.$parent.deleteItem" tabindex="0"></btn-del></sub>
+            <button class="cls_itm_ok_btn" id="modal-close-btn-02" v-on:click="$emit('close')" tabindex="0">&nbsp;&#x2713;&nbsp;</button>
+          </div>
+          <div name="footer" class="dia-footer">
+ monthly_issues_202005 : {{this.$attrs.id.replace('dia-','') + '  @' + new Date().toISOString().replace('T',' ').replace('Z','')}}
+</div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</script>
+
+   	<script type="text/x-template" id="grid-template">
+      <div id="div_grid_tmpl" style="overflow-x: auto;" >
+         <modal :id="cid" v-if="showModal" v-on:close="showModal = false" :showModal="showModal" v-on:update="updateItem">
+         </modal>
+         <div_search_box id="div_search_box" />
+         <btn-new tabindex="2" class="clsBtnNew" id="btnNew" v-on:clickedBtnNew="createNewItem" ></btn-new>
+         <div id="not_pager" v-if="!this.$parent.showPageSizer">
+            </br></br></br>
+         </div>
+			<table id="grid">
+			 <thead>
+				<tr>
+				  <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }" tabindex="3" 
+              v-on:keyup.enter="sortBy(key)" :id="'th-'+key">{{ key }}<span class="arrow"
+              :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span></th></tr>
+			 </thead>
+			 <tbody>
+				<tr v-for="(entry,index) in filteredData" :key="entry['id']" :class="{cls_even: index % 2, cls_odd: !(index % 2)}"><td v-for="key in columns"><div v-if="key === 'id'" :title="entry[key]" tabindex="3"><button tabindex="3" :ref="'ref_btn_modal_'+entry[key]" :id="'btn-modal-'+entry[key]" v-on:click="showModalDialog($event)" @keydown.esc="showModal = false" class="cls-lst-grd-opn-btn" :title="'edit id-'+entry[key]">&nbsp;&#9998;&nbsp;</button></div><div v-if="key.endsWith('_guid')" tabindex="3"><vue-select :id="key+'-'+entry.id+'-'" :hook="entry[key]" :itemname="key.replace('_guid','')"></vue-select></div><vue-dt-pick v-if="(key.endsWith('_time') || (getColDataType(key)).includes('timestamp'))" :id="key+'-'+entry.id+'-'" style="white-space: normal;" tabindex="3" :id="key+'-'+entry.id+'-'" :tme="entry[key]" :value.sync="entry[key]"></vue-dt-pick><div v-else><div class="cls_tbltooltip"><div v-if="key == 'description'" class="cls_tbltooltiptext" v-html="lnkMayBe(entry[key])">{{lnkMayBe(entry[key])}}</div><editable v-if="key !== 'id' && !key.endsWith('_guid')" tabindex="3" :content.sync="entry[key]" v-bind:cnt.sync="entry[key]" :id="key+'-'+entry.id+'-'" v-on:update="updateItem"></editable></div></td></tr>
+			 </tbody>
+		  </table>
+         <btn-new tabindex="2" class="clsBtnNew" id="btnNew-02" v-on:clickedBtnNew="createNewItem" ></btn-new>
+      </div>
+	</script>
+
+   <script type="text/x-template" id="vue-select-tmpl"> 
+   <v-select tabindex="3" label="name" :selectOnTab="true" :searchable="true" :filterable="false" :options="options" @search="onSearch" @input="setSelected" :id="id" :value="selected" :style="'white-space: normal;'">
+    <template slot="no-options">
+      search ...
+    </template>
+    <template slot="selected-option" slot-scope="option">
+      <div class="selected d-center">
+        {{ option.name }}
+      </div>
+    </template>
+  </v-select> 
+</script>
+
+   <script type="text/x-template" id="vue-date-time-picker"> 
+  <datetime-picker type="second" @input="log" min="2018-01-01 00:00:00" max="2022-01-01 00:00:00" 
+      :timeStr="['hour', 'min', 'sec']" :dayStr="['mo','tu','we','th','fr','sa','su']" :btnStr="'X'"
+      :popperProps="popperProps" :scrollbarProps="{isMobile:true,maxHeight:'2rem'}"
+      :time="time" :value="time"
+   >
+  </datetime-picker>
+</script>
+
+
+   <div id="div_central_panel">
+
+     <div id="cruds-grid"><div id="div_grid_tmpl" style="overflow-x: auto;"><!----> <div class="autocomplete" id="div_search_box"><input id="inp_srch_box" tabindex="1" type="text"> <ul id="searchbox-results" class="autocomplete-results" style="display: none;"></ul> <button id="but_srch" tabindex="1" type="submit" class="cls_img_but"><sub><img loading="lazy" src="../../themes/thme-blue/img/controls/srch.png"></sub></button></div> <button tabindex="2" id="btnNew" class="clsBtnNew"> + </button> <!----> <table id="grid"><thead><tr><th tabindex="3" id="th-id" class="">id<span class="arrow asc"></span></th><th tabindex="3" id="th-category_guid" class="">category_guid<span class="arrow asc"></span></th><th tabindex="3" id="th-issues_status_guid" class="">issues_status_guid<span class="arrow asc"></span></th><th tabindex="3" id="th-prio" class="active">prio<span class="arrow asc"></span></th><th tabindex="3" id="th-name" class="">name<span class="arrow asc"></span></th><th tabindex="3" id="th-description" class="">description<span class="arrow asc"></span></th><th tabindex="3" id="th-app_users_guid" class="">app_users_guid<span class="arrow asc"></span></th><th tabindex="3" id="th-type" class="">type<span class="arrow asc"></span></th><th tabindex="3" id="th-update_time" class="">update_time<span class="arrow asc"></span></th></tr></thead> <tbody><tr class="cls_odd"><td><div title="200518233948" tabindex="3"><button tabindex="3" id="btn-modal-200518233948" title="edit id-200518233948" class="cls-lst-grd-opn-btn">&nbsp;✎&nbsp;</button></div><!----><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="category_guid-200518233948-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        unknown
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="issues_status_guid-200518233948-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        01-eval
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="prio-200518233948-" class="cls_desc" tabindex="3" content="0" style="width: 30px;"></textarea></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="name-200518233948-" class="cls_desc" tabindex="3" content="add the xls-to-table shell action" style="width: 240px;"></textarea></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><div class="cls_tbltooltiptext"> - read xls into giant hash ref of 
+ - keys as the sheet names 
+ - vals as hasrefs with rows and a name</div><textarea id="description-200518233948-" class="cls_desc" tabindex="3" content=" - read xls into giant hash ref of 
+ - keys as the sheet names 
+ - vals as hasrefs with rows and a name" style="width: 460px;"></textarea></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="app_users_guid-200518233948-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        ysg
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="type-200518233948-" class="cls_desc" tabindex="3" content="task" style="width: 60px;"></textarea></div></div></td><td><!----><!----><div class="datetime-picker" type="second" time="2020-05-18 20:41:12" id="update_time-200518233948-" tabindex="3" value="2020-05-18 20:41:12" style="white-space: normal;"><input readonly="readonly" class="vue-input"> <!----></div></td></tr><tr class="cls_even"><td><div title="200519172510" tabindex="3"><button tabindex="3" id="btn-modal-200519172510" title="edit id-200519172510" class="cls-lst-grd-opn-btn">&nbsp;✎&nbsp;</button></div><!----><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="category_guid-200519172510-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        setup
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="issues_status_guid-200519172510-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        01-eval
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="prio-200519172510-" class="cls_desc" tabindex="3" content="0" style="width: 30px;"></textarea></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="name-200519172510-" class="cls_desc" tabindex="3" content="to update version from v0.8.4 to v0.8.5" style="width: 240px;"></textarea></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><div class="cls_tbltooltiptext"> what are the commands to be used in terminal to get the path in V0.8.5..I updated the version in my github account.I removed the qto and again done clone and everything but i am getting qto.0.8.4 only in terminal.
+
+ sveta@sveta-Lenovo-G50-30 [ti touko 19 13:51:50] [~/opt/qto/qto.0.8.4.dev.sveta@sveta-Lenovo-G50-30] $</div><textarea id="description-200519172510-" class="cls_desc" tabindex="3" content=" what are the commands to be used in terminal to get the path in V0.8.5..I updated the version in my github account.I removed the qto and again done clone and everything but i am getting qto.0.8.4 only in terminal.
+
+ sveta@sveta-Lenovo-G50-30 [ti touko 19 13:51:50] [~/opt/qto/qto.0.8.4.dev.sveta@sveta-Lenovo-G50-30] $" style="width: 460px;"></textarea></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="app_users_guid-200519172510-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        swetha
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="type-200519172510-" class="cls_desc" tabindex="3" content="task" style="width: 60px;"></textarea></div></div></td><td><!----><!----><div class="datetime-picker" type="second" time="2020-05-19 14:29:32" id="update_time-200519172510-" tabindex="3" value="2020-05-19 14:29:32" style="white-space: normal;"><input readonly="readonly" class="vue-input"> <!----></div></td></tr><tr class="cls_odd"><td><div title="200513095254" tabindex="3"><button tabindex="3" id="btn-modal-200513095254" title="edit id-200513095254" class="cls-lst-grd-opn-btn">&nbsp;✎&nbsp;</button></div><!----><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="category_guid-200513095254-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        setup
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="issues_status_guid-200513095254-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        02-todo
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="prio-200513095254-" class="cls_desc" tabindex="3" content="1" style="width: 30px;"></textarea></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="name-200513095254-" class="cls_desc" tabindex="3" content="running command for application layer to dev instance." style="width: 240px;"></textarea></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><div class="cls_tbltooltiptext"> while i am running this below command i am getting the error.
+
+bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
+
+ysg: This is the call of the command ... What IS the error ?
+
+the error is
+
+FATAL:  password authentication failed for user "usrdevqtoapp" 
+
+
+Uncaught exception from user code:
+	Can't load application from file "/home/sveta/opt/qto/qto.0.8.4.dev.sveta@sveta-Lenovo-G50-30/src/perl/qto/script/qto": not a reference at /home/sveta/opt/qto/qto.0.8.4.dev.sveta@sveta-Lenovo-G50-30/src/perl/qto/script/../lib/Qto/App/Db/Out/WtrRedis.pm line 25.
+	Compilation failed in require at (eval 88) line 1.
+</div><textarea id="description-200513095254-" class="cls_desc" tabindex="3" content=" while i am running this below command i am getting the error.
+
+bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
+
+ysg: This is the call of the command ... What IS the error ?
+
+the error is
+
+FATAL:  password authentication failed for user &quot;usrdevqtoapp&quot; 
+
+
+Uncaught exception from user code:
+	Can't load application from file &quot;/home/sveta/opt/qto/qto.0.8.4.dev.sveta@sveta-Lenovo-G50-30/src/perl/qto/script/qto&quot;: not a reference at /home/sveta/opt/qto/qto.0.8.4.dev.sveta@sveta-Lenovo-G50-30/src/perl/qto/script/../lib/Qto/App/Db/Out/WtrRedis.pm line 25.
+	Compilation failed in require at (eval 88) line 1.
+" style="width: 460px;"></textarea></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="app_users_guid-200513095254-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        swetha
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="type-200513095254-" class="cls_desc" tabindex="3" content="task" style="width: 60px;"></textarea></div></div></td><td><!----><!----><div class="datetime-picker" type="second" time="2020-05-19 14:34:03" id="update_time-200513095254-" tabindex="3" value="2020-05-19 14:34:03" style="white-space: normal;"><input readonly="readonly" class="vue-input"> <!----></div></td></tr><tr class="cls_even"><td><div title="200516001902" tabindex="3"><button tabindex="3" id="btn-modal-200516001902" title="edit id-200516001902" class="cls-lst-grd-opn-btn">&nbsp;✎&nbsp;</button></div><!----><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="category_guid-200516001902-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        db 
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="issues_status_guid-200516001902-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        02-todo
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="prio-200516001902-" class="cls_desc" tabindex="3" content="1" style="width: 30px;"></textarea></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="name-200516001902-" class="cls_desc" tabindex="3" content="add the item_name in the app_imgs table " style="width: 240px;"></textarea></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><div class="cls_tbltooltiptext"> because of <a href="https://qto.fi:442/tst_qto/list/bugs?with=id-eq-200516001718">bugs-200516001718</a></div><textarea id="description-200516001902-" class="cls_desc" tabindex="3" content=" because of bugs-200516001718" style="width: 460px;"></textarea></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="app_users_guid-200516001902-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        ysg
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="type-200516001902-" class="cls_desc" tabindex="3" content="task" style="width: 60px;"></textarea></div></div></td><td><!----><!----><div class="datetime-picker" type="second" time="2020-05-17 07:03:41" id="update_time-200516001902-" tabindex="3" value="2020-05-17 07:03:41" style="white-space: normal;"><input readonly="readonly" class="vue-input"> <!----></div></td></tr><tr class="cls_odd"><td><div title="200520134410" tabindex="3"><button tabindex="3" id="btn-modal-200520134410" title="edit id-200520134410" class="cls-lst-grd-opn-btn">&nbsp;✎&nbsp;</button></div><!----><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="category_guid-200520134410-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        setup
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="issues_status_guid-200520134410-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        01-eval
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="prio-200520134410-" class="cls_desc" tabindex="3" content="1" style="width: 30px;"></textarea></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="name-200520134410-" class="cls_desc" tabindex="3" content="git checkout and git pull" style="width: 240px;"></textarea></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><div class="cls_tbltooltiptext"> when i used this command git checkout command 
+git checkout v0.8.5 i got this message
+Already on 'v0.8.5'
+then i used git pull origin v0.8.5
+error is Warning: Permanently added the RSA host key for IP address '140.82.114.4' to the list of known hosts.
+From github.com:mswetha44/qto
+ * branch              v0.8.5     -&gt; FETCH_HEAD
+Updating 138201c9..ea14078d
+error: Your local changes to the following files would be overwritten by merge:
+	cnf/env/dev.env.json
+	cnf/env/prd.env.json
+	cnf/env/tst.env.json
+Please commit your changes or stash them before you merge.
+error: Your local changes to the following files would be overwritten by merge:
+	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql
+Please commit your changes or stash them before you merge.
+Aborting
+
+how can i commit changes..</div><textarea id="description-200520134410-" class="cls_desc" tabindex="3" content=" when i used this command git checkout command 
+git checkout v0.8.5 i got this message
+Already on 'v0.8.5'
+then i used git pull origin v0.8.5
+error is Warning: Permanently added the RSA host key for IP address '140.82.114.4' to the list of known hosts.
+From github.com:mswetha44/qto
+ * branch              v0.8.5     -> FETCH_HEAD
+Updating 138201c9..ea14078d
+error: Your local changes to the following files would be overwritten by merge:
+	cnf/env/dev.env.json
+	cnf/env/prd.env.json
+	cnf/env/tst.env.json
+Please commit your changes or stash them before you merge.
+error: Your local changes to the following files would be overwritten by merge:
+	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql
+Please commit your changes or stash them before you merge.
+Aborting
+
+how can i commit changes.." style="width: 460px;"></textarea></div></div></td><td><!----><div tabindex="3"><div dir="auto" class="v-select vs--single vs--searchable" id="app_users_guid-200520134410-" style="white-space: normal;"><div class="vs__dropdown-toggle"><div class="vs__selected-options"><span class="vs__selected"><div class="selected d-center">
+        swetha
+      </div> <!----></span> <input tabindex="3" aria-label="Search for option" role="combobox" type="search" autocomplete="off" class="vs__search"></div> <div class="vs__actions"><button type="button" title="Clear selection" class="vs__clear" style=""><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z"></path></svg></button> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation" class="vs__open-indicator"><path d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path></svg> <div class="vs__spinner" style="display: none;">Loading...</div></div></div> <!----></div></div><div><div class="cls_tbltooltip"><!----><!----></div></div></td><td><!----><!----><div><div class="cls_tbltooltip"><!----><textarea id="type-200520134410-" class="cls_desc" tabindex="3" content="task" style="width: 60px;"></textarea></div></div></td><td><!----><!----><div class="datetime-picker" type="second" time="2020-05-20 10:48:30" id="update_time-200520134410-" tabindex="3" value="2020-05-20 10:48:30" style="white-space: normal;"><input readonly="readonly" class="vue-input"> <!----></div></td></tr></tbody></table> <button tabindex="2" id="btnNew-02" class="clsBtnNew"> + </button></div> <div id="pager02"><button id="btnPlayNext10" type="submit" href="javascript:void(0);" tabindex="3" class="cls_img_but"><img loading="lazy" src="../../themes/thme-blue/img/controls/play-next-10.png"></button> <button id="btnPlayNext" type="submit" href="javascript:void(0);" class="cls_img_but"><img loading="lazy" src="../../themes/thme-blue/img/controls/play-next.png"></button> <div id="page_counter"><span> 1 / 46</span></div> <button id="btnPlayPrev" tabindex="3" type="submit" href="javascript:void(0);" class="cls_img_but"><img loading="lazy" src="../../themes/thme-blue/img/controls/play-prev.png"></button> <button id="btnPlayPrev10" tabindex="3" type="submit" href="javascript:void(0);" class="cls_img_but"><img loading="lazy" src="../../themes/thme-blue/img/controls/play-prev-10.png"></button>` 
+         </div> <div id="div_page_sizer"><div class="pgr-show-inline-block"><div class="pgr-bar pgr-border pgr-round"><a href="https://qto.fi:442/qto/list/monthly_issues_202005?oa=prio&amp;pg-size=5" class="pgr-bar-item pgr-button"><span class="actv"><strong>5</strong></span></a><a href="https://qto.fi:442/qto/list/monthly_issues_202005?oa=prio&amp;pg-size=7" class="pgr-bar-item pgr-button"><span>7</span></a><a href="https://qto.fi:442/qto/list/monthly_issues_202005?oa=prio&amp;pg-size=10" class="pgr-bar-item pgr-button"><span>10</span></a><a href="https://qto.fi:442/qto/list/monthly_issues_202005?oa=prio&amp;pg-size=15" class="pgr-bar-item pgr-button"><span>15</span></a><a href="https://qto.fi:442/qto/list/monthly_issues_202005?oa=prio&amp;pg-size=20" class="pgr-bar-item pgr-button"><span>20</span></a><a href="https://qto.fi:442/qto/list/monthly_issues_202005?oa=prio&amp;pg-size=30" class="pgr-bar-item pgr-button"><span>30</span></a><a href="https://qto.fi:442/qto/list/monthly_issues_202005?oa=prio&amp;pg-size=50" class="pgr-bar-item pgr-button"><span>50</span></a><a href="https://qto.fi:442/qto/list/monthly_issues_202005?oa=prio&amp;pg-size=100" class="pgr-bar-item pgr-button"><span>100</span></a></div></div></div></div>
+
+   </div>
+
+
+<script id="all">
+   var bus = new Vue({});
+      function setMsgVisuals(txt,eid,msgType,pageType){
+      if ( typeof eid === "undefined" ) { eid ='div_msg' }
+      if ( typeof msgType === "undefined" ) { msgType ='Error' }
+      txt = stripTechMsgPart(txt)
+      paintError(eid)
+      window['paint' + msgType](eid,txt);
+      if ( pageType === 'search' ) {
+         hideControlsOnError()
+      }
+      fadeAwayDiv(eid);
+   }
+   function setStyleProp ( eid,pname,pval) {
+     var el = document.getElementById(eid)
+     if ( typeof el != "undefined" && el != null ) {
+         el.style[pname] = pval
+     }
+   }
+
+   function paintError(eid,txt){
+      if ( typeof document.getElementById(eid) !== "undefined" && document.getElementById(eid) != null) { 
+         document.getElementById(eid).innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
+         setStyleProp(eid,'z-index','3')
+         setStyleProp(eid,'display','inline')
+         setStyleProp(eid,'box-shadow','0 0 10px red')
+         setStyleProp(eid,'background-color','#FFFF00')
+      }
+   }
+
+   function paintWarning(eid,txt){
+      if ( typeof document.getElementById(eid) !== "undefined" && document.getElementById(eid) != null) { 
+         document.getElementById(eid).innerHTML=""
+         document.getElementById(eid).innerHTML="<span id=\"spn_warr_msg\">" + txt + '</span>';
+         setStyleProp(eid,'display','inline')
+         setStyleProp(eid,'box-shadow','0 0 10px #80838A')
+         setStyleProp(eid,'background-color','#CEC9D7')
+      }
+   }
+
+   function stripTechMsgPart(txt) {
+      if ( typeof txt != 'undefined' && txt != null && txt != "" ) {
+         if ( txt.indexOf(' :: ') !== -1 ) {
+            txt = txt.split(/ :: /)[0]
+         }
+      } else {
+         txt = 'unknown error occurred !!!';
+      }
+      return txt
+   }
+
+   function fadeAwayDiv(fadable) {
+      if ( typeof fadable === 'undefined' && fadable != null ) { fadable='div_msg' }
+      if ( typeof document.getElementById(fadable) !== "undefined" && document.getElementById(fadable) != null){ 
+         var div_msg_style = document.getElementById(fadable).style; div_msg_style.opacity = 1; 
+         (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,1000)})();
+         setStyleProp(fadable,'z-index','10000')
+      }
+   }
+   function hideControlsOnError() {
+     setStyleProp('grid','display','none')
+     setStyleProp('pager','display','none')
+     setStyleProp('div_page_sizer','display','none')
+     setStyleProp('inp_srch_box','margin-top','10%')
+     setStyleProp('btnNew','display','none')
+   }
+
+   var Searchbox = {
+  name: "searchbox",
+  template: "#searchbox",
+  props: {
+    dblist: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    tblist: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    collist: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    isAsync: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  }
+  , model: {
+	  prop: 'dblist',
+	  prop: 'tblist',
+	  prop: 'collist',
+	  prop: 'operators',
+	  prop: 'theFirstItem',
+	  event: 'dblistChange'
+	}
+  , data() {
+    return {
+        isOpen: false
+      , results: []
+      , globalSrch: ""
+      , isLoading: false
+      , arrowCounter: 0
+      , operators: [':to', ':in']
+    };
+  },
+  methods: {
+   onChange() {
+      var globalSrch = this.globalSrch.replace(':to ' , '').replace(':in ' , '')
+      if ( this.globalSrch.slice(" ") ){
+         this.isLoading = false
+         this.isOpen = false
+      }
+      bus.$emit('searchBoxInputChanged', globalSrch );
+      if ( this.globalSrch.length < 4 ) {
+         return
+      }
+      var tokens = this.globalSrch.split(" ")
+      var lastWord = tokens[tokens.length - 1]
+      var secondLastWord = tokens[tokens.length - 2]
+      if ( this.operators.includes( lastWord ) || this.operators.includes ( secondLastWord ) ) { 
+         if (this.isAsync) {
+            this.isLoading = true;
+            this.filterResults();
+         } else {
+            this.isOpen = true;
+            this.filterResults();
+         }
+      }
+    } 
+    , filterResults() {
+         this.arrowCounter = 0
+         var tokens = this.globalSrch.split(" ")
+         var lastWord = tokens[tokens.length - 1]
+         var secondLastWord = tokens[tokens.length - 2]
+         if ( lastWord === ':to' || secondLastWord === ':to' ) { 
+            this.results = []
+            this.$parent.fetchSSDataForDbsUI() ; 
+            this.results = this.dblist
+            
+               .filter(item => {
+                  var to_srch = lastWord.toLowerCase().replace(':to' , '')
+                  if ( to_srch === '' ) {
+                     return item ; 
+                  } else {
+                     return item.toLowerCase().indexOf(to_srch) > -1;
+                  }
+               })
+         }
+         else if ( lastWord === ':in' || secondLastWord === ':in' ) { 
+            this.results = []
+            this.$parent.fetchSSDataForTablesUI() ; 
+            this.results = this.tblist
+               .filter(item => {
+                  var to_srch = lastWord.toLowerCase().replace(':in' , '')
+                  if ( to_srch === '' ) {
+                     return item ; 
+                  } else {
+                     return item.toLowerCase().indexOf(to_srch) > -1;
+                  }
+               })
+         }
+         else if ( lastWord === ':order-by' || secondLastWord === ':order-by'  ) { 
+            this.results = []
+            this.$parent.fetchSSDataForColsUI() ; 
+            this.results = this.collist
+               .filter(item => {
+                  var to_srch = lastWord.toLowerCase().replace(':order-by' , '')
+                  if ( to_srch === '' ) {
+                     return item ; 
+                  } else {
+                     return item.toLowerCase().indexOf(to_srch) > -1;
+                  }
+               })
+         }
+         else if ( lastWord === ':desc-by' || secondLastWord === ':desc-by' ) { 
+            this.results = []
+            this.$parent.fetchSSDataForColsUI() ; 
+            this.results = this.collist
+               .filter(item => {
+                  var to_srch = lastWord.toLowerCase().replace(':desc-by' , '')
+                  if ( to_srch === '' ) {
+                     return item ; 
+                  } else {
+                     return item.toLowerCase().indexOf(to_srch) > -1;
+                  }
+               })
+         }
+    }
+    , setResult(result) {
+         this.globalSrch = result
+    }
+    , setDropDownResultOnHover(result) {
+         if ( typeof result == undefined ) {
+            result = this.results[0]
+         }
+         this.globalSrch = this.globalSrch.substring(0, this.globalSrch.lastIndexOf(" "));
+         this.globalSrch = this.globalSrch + " " + result
+    }
+    , onArrowDown(evt) {
+         if ( this.arrowCounter === this.results.length - 1 ) {
+            this.setDropDownResult( this.results[this.results.length - 1]) ; 
+         }
+         else if ( this.arrowCounter < this.results.length && this.arrowCounter > -1) {
+            this.arrowCounter = this.arrowCounter + 1;
+            this.setDropDownResultOnHover(this.results[this.arrowCounter]);
+         } else {
+            this.arrowCounter = this.results.length - 1
+            this.setDropDownResultOnHover(this.results[this.arrowCounter]);
+         }
+    } 
+    , onArrowUp() {
+         if ( this.arrowCounter === 0 ) {
+            this.setDropDownResult( this.results[0]); 
+         }
+         else if ( this.arrowCounter < this.results.length && this.arrowCounter > -1) {
+            this.arrowCounter = this.arrowCounter - 1;
+            this.setDropDownResult(this.results[this.arrowCounter]) ; 
+         } else {
+            this.setDropDownResult( this.results[0]) ; 
+         }
+    }
+    , onArrowRight(e) {
+         var indx = (typeof x === 'undefined') ? 0 : this.arrowCounter;
+         this.setDropDownResult(this.results[indx])
+         this.isOpen = false; 
+    }
+    , onArrowLeft(e) {
+         var indx = (typeof x === 'undefined') ? 0 : this.arrowCounter;
+         this.setDropDownResult(this.results[indx])
+         this.isOpen = false; 
+    }
+    , setDropDownResult(result) {
+         if ( typeof result == undefined ) {
+            result = this.results[0]
+         }
+         this.globalSrch = this.globalSrch.substring(0, this.globalSrch.lastIndexOf(" "));
+         this.globalSrch = this.globalSrch + " " + result
+    }
+    , onEnter() {
+         if ( this.isOpen == true ) {
+            var result = this.results[this.arrowCounter];
+            this.setDropDownResult(result)
+            this.isOpen = false;
+            return ; 
+         }
+         var gs = String(this.globalSrch).trim()
+         if ( gs === "" ) { return } 
+         var tokens = gs.trim().split(" ")
+         var lastWord = tokens[tokens.length - 1]
+         if ( lastWord === "undefined" ) { return ; }
+
+         var tableSpecified = 0 ; 
+         var uri = window.location.toString()
+         const url = document.createElement('a')
+         url.setAttribute('href', window.location.toString())
+
+         var db = uri.split("/")[3]
+
+         if ( String(gs).indexOf(':to ') !== -1 ) {
+            var newDb = gs.replace(/^(.*?):to\s+([a-zA-Z0-9_]+)($|\s)(.*)/gi, '$2')
+            if ( typeof newDb !== "undefined" ) {
+               uri = uri.replace(db,newDb);
+               db = newDb  
+               gs = gs.replace(":to ", "").replace(newDb,"").trim
+               uri = this.buildLike ( uri , gs)
+            } else {
+               return
+            }
+         }
+
+         if ( String(gs).indexOf(':in ') !== -1 ) {
+            var newTable = gs.replace(/^(.*?\s*):in\s+([a-zA-Z0-9_]+)(\s*.*)/gi, '$2')
+            if ( typeof newTable !== "undefined" ) {
+               uri = url.protocol + "//" + url.hostname + ':' + url.port + '/' 
+               uri = uri.replace(/([&]{0,1}for=([a-zA-Z0-9_%]+))+/gi , "" ) 
+               uri = uri + db + '/list/' + newTable + url.search
+               uri = ( uri.indexOf('?') == -1 ) ? uri + '?' : uri
+               gs = gs.replace(":in ", "").replace( newTable,"").trim()
+               uri = this.buildLike ( uri , gs)
+            } else {
+               return 
+            }
+            tableSpecified = 1 ; 
+         }
+         
+
+         if ( tableSpecified == 0 ) {
+            uri = ( uri.indexOf('?') == -1 ) ? uri + '?' : uri
+            uri = uri.replace(/([&]{0,1}pg-num=([0-9]+))+/gi , "") 
+            uri = uri + '&pg-num=1'
+            uri = uri.replace(/([&]{0,1}pg-size=([0-9]+))+/gi , "") 
+            uri = uri + '&pg-size=5'
+            if ( gs.length > 0 ) {
+               uri = url.protocol + "//" + url.hostname + ':' + url.port + '/' 
+               uri = uri + db + '/search' + url.search
+               uri = ( uri.indexOf('?') == -1 ) ? uri + '?' : uri
+               uri = uri.replace(/([&]{0,1}pick=([a-zA-Z\,0-9_]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}for=([a-zA-Z0-9_%\-]+))+/gi , "" ) 
+               uri = uri.replace(/([&]{0,1}with=([a-zA-Z_%\-0-9]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}like-by=([a-zA-Z_0-9%]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}like-val=([a-zA-Z_0-9%]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}pg-num=([0-9]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}pg-size=([0-9]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}open=([a-zA-Z0-9_%\-]+))+/gi , "" ) 
+               uri = uri.replace(/([&]{0,1}oa=([a-zA-Z_0-9%]+))+/gi , "") 
+               uri = uri.replace(/([&]{0,1}od=([a-zA-Z_0-9%]+))+/gi , "") 
+               uri = uri + '&for=' + gs
+            }
+         }
+         uri = ( uri.endsWith('?') ) ? uri.slice(0, -1) : uri
+         uri = ( uri.includes('&od=relevancy') ) ? uri + '&od=relevancy' : uri 
+         window.location.href = encodeURI(uri) // and redirect !!!
+    } 
+    , buildLike(uri,pFor) {
+         if ( pFor.length > 0) {
+            uri = uri.replace(/([&]{0,1}with=([a-zA-Z_%\-0-9]+))+/gi , "") 
+            uri = uri.replace(/([&]{0,1}like-by=([a-zA-Z_0-9]+))+/gi , "") 
+            uri = uri.replace(/([&]{0,1}like-val=([a-zA-Z_0-9%]+))+/gi , "") 
+            uri = uri.replace(/([&]{0,1}for=([a-zA-Z0-9_%\-]+))+/gi , "" ) 
+            uri = uri + '&like-by=name,description&like-val=' + pFor
+         } 
+         return uri
+    }
+    , handleSrchBoxDropDownClickOutside(e) {
+         if (!this.$el.contains(e.target)) {
+            this.isOpen = false;
+            this.arrowCounter = -1;
+         }
+    }
+  }
+  , watch: {
+    dblist: function(val, oldValue) {
+      if (val.length !== oldValue.length) {  // actually compare them
+        this.results = val;
+        this.isLoading = false;
+      }
+    }
+    , tblist: function(val, oldValue) {
+      if (val.length !== oldValue.length) {  
+        this.results = val;
+        this.isLoading = false;
+      }
+    }
+    , collist: function(val, oldValue) {
+      if (val.length !== oldValue.length) {  
+        this.results = val;
+        this.isLoading = false;
+      }
+    }
+  }
+  , mounted() {
+    document.addEventListener("click", this.handleSrchBoxDropDownClickOutside);
+  }
+  , destroyed() {
+    document.removeEventListener("click", this.handleSrchBoxDropDownClickOutside);
+  }
+};
+
+   
+      function getUrlParams (){
+      var url_params = new URLSearchParams();
+      if( window.location.toString().indexOf("?") != -1) {
+         var href_part = window.location.search.split('?')[1]
+         href_part.replace(/([^=&]+)=([^&]*)/g, 
+            function(m, key, value) {
+               var attr = decodeURIComponent(key)
+               var val = decodeURIComponent(value)
+               url_params.append(attr,val);
+         });
+      } 
+      
+      if ( url_params.has("as") === false) { url_params.append("as" , "doc"); }
+      // for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
+      return url_params ; 
+   }
+
+   function sleep(ms) {
+     return new Promise(resolve => setTimeout(resolve, ms));
+   }
+
+   String.prototype.setUriParam = function (paramName, paramValue) {
+   var uri = this
+   var fragment = ( uri.indexOf('#') === -1 ) ? '' : uri.split('#')[1] 
+   uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
+   if ( uri.indexOf("?") === -1 ) { uri = uri + '?&' } 
+   uri = uri.replace ( '?' + paramName , '?&' + paramName)
+   var toRepl = (paramValue != null) ? ('$1' + paramValue) : ''
+   var toSrch = new RegExp('([&]' + paramName + '=)(([^&#]*)?)')
+   uri = uri.replace(toSrch,toRepl)
+   if (uri.indexOf(paramName + '=') === -1 && toRepl != '' ) {
+      var ampersandMayBe = uri.endsWith('&') ? '' : '&'
+      uri = uri + ampersandMayBe + paramName + "=" + String(paramValue)
+   }
+   uri = ( fragment.length == 0 ) ? uri : (uri+"#"+fragment) //may-be re-add the fragment 
+   return uri
+}
+
+   if(!String.linkify) {
+    String.prototype.linkify = function() {
+        var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;\[\]]*[a-z0-9-+&@#\/%=~_|]/gim;
+        var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+        var emailAddressPattern = /[\w.]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+/gim;
+        return this
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;')
+            .replace(urlPattern, '<a href="$&">$&</a>')
+            .replace(pseudoUrlPattern, '$1<a href="http://$2">$2</a>')
+    };
+}
+if(!String.linkifyOne) {
+    String.prototype.linkifyOne = function(lnkTitle) {
+        var title = String(lnkTitle)
+        // http://, https://, ftp:// pseudo ->// www. without http:// or https:// - not the converted ones !!!
+        var urlPattern = /([^">]){1}\b((?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;\[\]]*[a-z0-9-+&@#\/%=~_|])/im;
+        var pseudoUrlPattern = /([^">]){1}([^|[^\/])([^"]www\.[\S]+(\b|$))/im;
+        return this
+            .replace(urlPattern, ' <a href="$2">' + title + '</a>')
+            .replace(pseudoUrlPattern, ' $2<a href="http://$3">' + title + '</a>')
+    };
+}
+if(!String.linkifyItems) {
+   String.prototype.linkifyItems = function(){
+      var allItems = ['app_imgs','app_users','benchmarks','bugs','category','check_lists','concepts_doc','confs','contacts','daily_issues','decadally_issues','app_imsgs','decadally_issues_2020','definitions_dictionary','devops_guide_doc','enduser_guide_doc','export_files','features_doc','goals','his_quinquennially_issues','ideas','ideas_status','app_item_attributes','imgs','incidents','installations_doc','issues_status','links','logs','maintenance_guide_doc','meta_cols','monthly_issues','monthly_issues_202001','app_items','monthly_issues_202002','monthly_issues_202003','monthly_issues_202004','monthly_issues_202005','naming_conventions','nix_book_doc','onboarding_guide_doc','principles','problems','problems_status','app_items_doc','projects','questions','questions_status','quinquennially_issues','quinquennially_issues_2020','readme_doc','release_issues','requirements_doc','risks','security_checklist_doc','app_items_roles_permissions','skills','system_guide_doc','test_create_table','test_delete_table','test_empty_table','test_hi_create_table_doc','test_hi_delete_table_doc','test_hierarchy_doc','test_item','test_truncate_table','app_roles','test_update_table','test_xls_to_db_table','tst_paging','userstories_doc','wow_doc','yearly_issues','yearly_issues_2018','yearly_issues_2019','yearly_issues_2020','app_routes','app_user_roles']
+      var docItems = allItems.filter(itm => itm.endsWith ('_doc'))
+      var listItems = allItems.filter(itm => !itm.endsWith ('_doc'))
+      var me = ( typeof(this) === "undefined" ) ? '' : this
+      docItems.map ( itm => { 
+         var strPattern = '(('+itm+')(-)' + '(\\d{1,18}))' // example: yearly_issues-190215124643
+         var rgxPattern = new RegExp(strPattern,'igm')
+			var uri = window.location.href.split('/').slice(0, 4).join('/')
+         me = me.replace(rgxPattern, '<a href="'+uri+'/view/$2#$2-$4">$2-$4</a>')
+      }) 
+      me = ( typeof(me) === "undefined" ) ? '' : me
+      listItems.map ( itm => { 
+         var strPattern = '(('+itm + ')(-)' + '(\\d{1,18}))'
+         var rgxPattern = new RegExp(strPattern,'igm')
+			var uri = window.location.href.split('/').slice(0, 3).join('/')
+         me = me.replace(rgxPattern, '<a href="'+uri+'/tst_qto/list/$2?with=id-eq-$4">$&</a>')
+})
+      return me
+   };
+}
+
+   function sleep(ms) {
+   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+window.addEventListener("load", function(event) {
+   var uri = window.location.href
+   if ( uri.indexOf('open=') !== -1) {
+      url_params = getUrlParams()
+      var eid = 'btn-modal-' + url_params.get("open")
+      var el = document.getElementById(eid) 
+      console.log ( el )
+      sleep(400)
+      if ( typeof el != "undefined" ) { el.click() }
+   }
+});
+
+   Vue.component('div_search_box', {
+  name: "div_search_box",
+  components: {
+    searchbox: Searchbox
+  },
+  data() {
+      return {
+           pdblist: []
+         , ptblist: []
+         , pcollist: []
+         , globalSrch: ""
+      }
+  }
+  , methods: {
+  fetchSSDataForDbs: function (url_params) { // only data logic here !!!
+		if ( typeof url_params === "undefined" ) { url_params = { as:"grid" } }
+
+      return axios.get(("/tst_qto/select-databases") , { params: url_params } )
+.then(response => {
+         return response.data.dat.map(obj => obj.datname);
+      })
+      .catch(function(error) {
+         console.error ( error.toString );
+         return error ; 
+      })
+	 }
+  , fetchSSDataForDbsUI: function (url_params) { // only UI logic here !!!
+      var self = this
+      return this.fetchSSDataForDbs()
+      .then( response => {
+         if ( response.toString().startsWith('Error') ) {  // NOK 
+            self.pdblist = [] ; 
+            window.alert(response.toString()) ; 
+         }
+         else {                                             // OK 
+            self.pdblist = response ; 
+         }
+      })
+      .catch(function(error) {                              // NOK
+         self.pdblist = [] ; 
+         window.alert(error.toString()) ; 
+      })
+   }
+  , fetchSSDataForTables: function (url_params) { // only data logic here !!!
+		if ( typeof url_params === "undefined" ) { url_params = { as:"grid" } }
+
+      return axios.get(("/tst_qto/select-tables") , { params: url_params } )
+.then(response => {
+         return response.data.dat.map(obj => obj.table_name);
+      })
+      .catch(function(error) {
+         console.error ( error.toString );
+         return error ; 
+      })
+	 }
+  , fetchSSDataForTablesUI: function (url_params) { // only UI logic here !!!
+      var self = this
+      return this.fetchSSDataForTables()
+      .then( response => {
+         if ( response.toString().startsWith('Error') ) {  // NOK 
+            self.ptblist = [] ; 
+            window.alert(response.toString()) ; 
+         }
+         else {                                             // OK 
+            self.ptblist = response ; 
+         }
+      })
+      .catch(function(error) {                              // NOK
+         self.ptblist = [] ; 
+         window.alert(error.toString()) ; 
+      })
+   }
+  , fetchSSDataForCols: function (url_params) { // only data logic here !!!
+		if ( typeof url_params === "undefined" ) { url_params = { as:"grid" } }
+
+      return axios.get(("/tst_qto/select-item-meta-for/monthly_issues_202005") , { params: url_params } )
+.then(response => {
+         return response.data.dat.map(obj => obj.attribute_name);
+      })
+      .catch(function(error) {
+         console.error ( error.toString );
+         return error ; 
+      })
+	 }
+  , fetchSSDataForColsUI: function (url_params) { // only UI logic here !!!
+		if ( typeof url_params === "undefined" ) { return; }
+      var self = this
+      return this.fetchSSDataForCols()
+      .then( response => {
+         if ( response.toString().startsWith('Error') ) {  // NOK 
+            self.pcollist = [] ; 
+            window.alert(response.toString()) ; 
+         }
+         else {                                             // OK 
+            self.pcollist = response ; 
+         }
+      })
+      .catch(function(error) {                              // NOK
+         self.pcollist = [] ; 
+         window.alert(error.toString()) ; 
+      })
+   }
+  }
+  , template: ` <searchbox :dblist="pdblist" :tblist="ptblist" :collist="pcollist" />`
+  , mounted() {
+      document.getElementById("inp_srch_box").focus();
+      // focus the search textbox on forward slash, but only when not in textarea ...
+      window.addEventListener('keyup', function(event) {
+         if (event.key === "/" ) { 
+            var focusedElement = document.activeElement;
+            if ( typeof focusedElement !== "undefined" ) {
+               if ( typeof focusedElement.getAttribute("contenteditable") === "undefined" ) {
+                  return;
+               } else {
+                  if ( focusedElement.getAttribute("class") == "cls_desc") {
+                     return ;
+                  } else {
+                     document.getElementById("inp_srch_box").focus();
+                  }
+               }
+          } else {
+               document.getElementById("inp_srch_box").focus();
+          }
+         }
+      });
+  }
+});
+
+
+    if ( document.getElementById("spn_msg") ) {
+
+         	Vue.component('btn-del', {
+       name: 'btn-del'
+	  , data: function () {
+		 return {
+			count: 0
+		 }
+	  }
+	  , methods: {
+       clickedDelete: function(ev) {
+         this.$emit('clickedBtnDelete', ev.currentTarget.id)
+       }
+	  }
+	  , template: `<button type="submit" href="javascript:void(0);" v-on:click="clickedDelete($event)"><img loading="lazy" src="../../themes/thme-blue/img/controls/trash-bin.png" /></button>` 
+	})
+
+         	Vue.component('btn-play-prev-10', {
+       name: 'btn-play-prev-10'
+	  , methods: {
+       clickedBtnPlayPrev10: function(ev) {
+         this.$emit('clickedBtnPlayPrev10', ev.currentTarget.id)
+       }
+	  }
+	  , template: `<button type="submit" href="javascript:void(0);" v-on:click="clickedBtnPlayPrev10($event)" class="cls_img_but"><img loading="lazy" src="../../themes/thme-blue/img/controls/play-prev-10.png" /></button>` 
+	})
+
+         	Vue.component('btn-play-prev', {
+       name: 'btn-play-prev'
+	  , methods: {
+       clickedBtnPlayPrev: function(ev) {
+         this.$emit('clickedBtnPlayPrev', ev.currentTarget.id)
+       }
+	  }
+	  , template: `<button type="submit" href="javascript:void(0);" v-on:click="clickedBtnPlayPrev($event)" class="cls_img_but"><img loading="lazy" src="../../themes/thme-blue/img/controls/play-prev.png" /></button>` 
+	})
+
+         	Vue.component('btn-play-next', {
+       name: 'btn-play-next'
+	  , methods: {
+       clickedBtnPlayNext: function(ev) {
+         this.$emit('clickedBtnPlayNext', ev.currentTarget.id)
+       }
+	  }
+	  , template: `<button type="submit" href="javascript:void(0);" v-on:click="clickedBtnPlayNext($event)" class="cls_img_but"><img loading="lazy" src="../../themes/thme-blue/img/controls/play-next.png" /></button>` 
+	})
+
+         	Vue.component('btn-play-next-10', {
+       name: 'btn-play-next-10'
+	  , methods: {
+       clickedBtnPlayNext10: function(ev) {
+         this.$emit('clickedBtnPlayNext10', ev.currentTarget.id)
+       }
+	  }
+	  , template: `<button type="submit" href="javascript:void(0);" v-on:click="clickedBtnPlayNext10($event)" class="cls_img_but"><img loading="lazy" src="../../themes/thme-blue/img/controls/play-next-10.png" /></button>` 
+	})
+
+         	Vue.component('btn-new', {
+	  data: "",
+	  methods: {
+			clickedBtnNew() {
+				function pad2(n) { return n < 10 ? '0' + n : n }
+				var date = new Date();
+				var dbid = date.getFullYear().toString().substr(2,3) + pad2(date.getMonth() + 1) + pad2( date.getDate()) + pad2( date.getHours() ) + pad2( date.getMinutes() ) + pad2( date.getSeconds() );
+				this.$emit('clickedBtnNew',dbid)
+			}
+	  },
+	  template: ` <button v-on:click="clickedBtnNew()"> + </button> ` 
+	})
+
+            Vue.component('editable', {
+     template: `<textarea v-bind:id="id" class="cls_desc" @blur="onBlur" v-model="cnt" v-on:focus="focused" v-on:click="onClick" v-on:keyup.tab="this.document.execCommand('selectAll',false,null);" v-on:keyup.esc="revertChange"></textarea>`,
+     props: {
+		   id: {}
+         , cnt: {
+            twoWay: true
+            , default: ""
+         }
+	  }
+     , model: {
+        prop: 'cnt'
+      }
+     , data() {
+         return {
+            content: this.lnkMayBe
+         }
+	  }
+     , oldData: ""
+     , mounted() {
+         this.content = this.cnt
+         this.displayEmptyCellIfNullOrUndefined()
+         this.$el.style.width = this.getColMaxWidth(this.$el) + "px"
+     },
+     methods: {
+       displayEmptyCellIfNullOrUndefined() {
+            if ( typeof this.content == "undefined" || this.content === 'null' || this.content == null) {
+               this.$el.innerText = " "
+               this.$el.value = " "
+               this.content = " "
+            }
+       }
+      , focused(ev) {
+				var el = ev.target
+            this.oldData = ev.target.value
+            el.style.width = this.getColMaxWidth(el).toString() + 'px'
+       }
+       , onBlur(ev) {
+				var el = ev.target
+				var modifiedContent = ev.target.value
+				this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
+				this.displayEmptyCellIfNullOrUndefined()
+				el.rows = "2" // the default
+            el.style.width = this.getColMaxWidth(el).toString() + 'px'
+       }
+       , revertChange() {
+     		  this.$el.value = this.oldData ; 
+           this.displayEmptyCellIfNullOrUndefined()
+       }
+       , onClick(ev){
+				var el = ev.target
+				setTimeout(function(){
+				if ( typeof el.value != undefined && el.value != null && el.value.toString().length > 59) {
+					el.style.zIndex = "1001"  
+					el.rows = "7"
+				}
+            
+			  },0);
+           el.style.width = this.getColMaxWidth(el).toString() + 'px'
+			}
+       , getColumnMaxWidth(el) {
+            var col = el.id.split('-')[0]
+            var textareaList = document.querySelectorAll(".cls_cnt_edtble");
+            var columnWidthsFiltered = Array.prototype.slice.call(textareaList).filter(elm => elm.id.startsWith(col))
+            var widths = columnWidthsFiltered.map( elm => Number(elm.style.width.slice(0,-2)) )
+            var maxWidth = widths.sort(function(a, b) { return b - a })[0]
+            //maxWidth = ( typeof ( maxWidth ) == 'undefined' ) ? 60 : maxWidth
+            return maxWidth
+         }
+       , getColMaxWidth(el) {
+            var col = el.id.split('-')[0]
+            var meta = this.$parent.$parent.gridMeta
+            for (var prop in this.$parent.$parent.gridMeta) {
+               if (!this.$parent.$parent.gridMeta.hasOwnProperty(prop)) {
+                 continue;
+               }
+               if ( (meta[prop])["attribute_name"] !== col ) {
+                  continue ;
+               } else {
+                  if ( typeof ((meta[prop])["width"]) != "undefined" && (meta[prop])["width"] != null ) {
+                        maxWidth = this.calcVarCharWidth(Number((meta[prop])["width"]),col)         
+                  } else {
+                     if ( (meta[prop])["data_type"].indexOf("char") === -1) {
+                        maxWidth = this.calcWidth()
+                     } else {
+                        maxWidth = this.calcVarCharWidth(Number((meta[prop])["char_max_length"]),col)         
+                     }
+                  }
+               }
+            }
+            return maxWidth
+         }
+       , calcWidth() {
+            var width = 20
+            if ( typeof this.content != undefined && this.content != null) {
+               width = this.content.toString().length
+               if ( width < 3 ) {
+                  return 30
+               } else if ( width > 2  && width < 7 ) {
+                  return 40
+               } else if ( width > 6 && width < 16 ) {
+                  return 60
+               } else if ( width > 15 && width < 35 ) {
+                  return 150
+               } else if ( width > 34 && width < 60 ) {
+                  return 240
+               } else if ( width > 59 && width < 90 ) {
+                  return 300
+               } else  {
+                  return 460
+               }
+            } else {
+                  return 20
+            }
+     		}
+       , calcVarCharWidth(width,col) {
+            if ( typeof width !== "undefined" ) {
+               if ( width < 3 ) {
+                  return 30
+               } else if ( width > 2  && width < 7 ) {
+                  return 40
+               } else if ( width > 6 && width < 16 ) {
+                  return 60
+               } else if ( width > 15 && width < 35 ) {
+                  return 60
+               } else if ( width > 34 && width < 105) {
+                  return 240
+               } else if ( width > 104 && width < 205 ) {
+                  return 300
+               } else  {
+                  return 460
+               }
+            } else {
+               return 20
+            }
+     		}
+		}
+   })
+
+         Vue.component('form-input', {
+	template: '#form-input'
+	, props: {
+       label: {
+         default: ""
+      }
+      , cid: {
+         twoWay: true
+         , defult: null
+      }
+      , cnt: {
+         twoWay: true
+         , defult: ""
+      }
+   }
+   , data: function(){
+      return {
+         oldData: ''
+         , content: null
+      }
+   }
+   , mounted(){
+      this.cid = this.label + '-' + this.$parent.$attrs.id.replace("dia-","")
+      this.content = this.cnt
+   }
+   , oldData: ""
+   , methods: {
+      onBlur(ev) {
+         var modifiedContent = ev.target.value
+         this.content = modifiedContent
+         this.cid = ev.target.id
+         this.$parent.updateItem(modifiedContent,this.cid,this.oldData)
+      }
+      , forceRerender() {
+         this.key += 1;  
+      }
+      , focused(ev) {
+            this.oldData = ev.target.value
+       }
+   }
+});
+
+Vue.component('form-textarea', {
+	template: '#form-textarea'
+	, props: {
+       label: {
+         default: ""
+      }
+      , cid: {
+         twoWay: true
+         , defult: null
+      }
+      , cnt: {
+         twoWay: true
+         , defult: ""
+      }
+   }
+   , data: function(){
+      return {
+         content: null
+         , oldData: ""
+      }
+   }
+   , mounted(){
+      this.cid = this.label + '-' + this.$parent.$attrs.id.replace("dia-","")
+      this.content = this.cnt
+   }
+   , methods: {
+      onBlur(ev) {
+         var modifiedContent = ev.target.value
+         this.content = modifiedContent
+         this.cid = ev.target.id
+         this.$parent.updateItem(modifiedContent,this.cid,this.oldData)
+      }
+      , focused(ev) {
+         this.oldData = ev.target.value
+      }
+      , forceRerender() {
+         this.key += 1;  
+      }
+   }
+});
+
+
+Vue.component('form-select', {
+	template: '#form-select'
+	, props: ['label','cnt','cid']
+});
+
+	Vue.component('btn-del', {
+       name: 'btn-del'
+	  , data: function () {
+		 return {
+			count: 0
+		 }
+	  }
+	  , methods: {
+       clickedDelete: function(ev) {
+         this.$emit('clickedBtnDelete', ev.currentTarget.id)
+       }
+	  }
+	  , template: `<button type="submit" href="javascript:void(0);" v-on:click="clickedDelete($event)"><img loading="lazy" src="../../themes/thme-blue/img/controls/trash-bin.png" /></button>` 
+	})
+
+Vue.component('modal', {
+	  template: '#modal-tmpl'
+	, props: ['field','showModal']
+	, data: function() {
+		return {
+			cnt: ''
+			, cid: ''
+         , itmName: 'monthly_issues_202005'
+, itemId: null
+			, itemData: null
+			, itmMeta: null
+			, fields: []
+			, msg: ""
+			, count: 0
+		}
+	}
+	, mounted () {
+      this.redraw()
+   }
+	, updated() {
+        if ( this.count == 0 ) {
+           document.getElementById("modal-dia-title-id").focus()
+           document.getElementById("modal-dia-title-id").click()
+           this.count++
+        }
+	}
+   , components: {
+       'fileupload': FileUpload.FileUpload
+     }
+	, methods: {
+		addFormElement: function(type,tsElId,ccid,label,cnt) {
+			this.fields.push({
+			    'type': type
+			  , 'key': tsElId
+           , 'id':ccid
+			  , 'label':label
+			  , 'cnt':cnt
+			});
+		 }
+      , redraw: function() {
+         var shown = ",guid,id,update_time"
+         this.itemId = this.$attrs.id.replace("dia-","")
+         this.itemData = this.$parent.data.find(obj => obj.id == this.itemId )
+         this.itmMeta = this.$parent.$parent.gridMeta
+         var firstElId = null 
+         Object.keys(this.itmMeta).sort((a,b) => (this.itmMeta[a].attribute_number > this.itmMeta[b].attribute_number) ? 1 : ( this.itmMeta[b].attribute_number > this.itmMeta[a].attribute_number ) ? -1 :0).map( key => {
+            var prop = this.itmMeta[Number(key)]
+            if (this.itmMeta.hasOwnProperty(key)) {
+               var dataType = this.itmMeta[key].data_type
+               var charMaxLength = this.itmMeta[key].char_max_length
+               var attributeName = String(this.itmMeta[key].attribute_name)
+               var attributeNum = Number(this.itmMeta[key].attribute_number)
+               var attributeValue = this.itemData[attributeName]
+               var elId = attributeName + '-' + String(this.itemId)
+               var tsElId = elId + '-' + ((new Date().getTime() * 10000) + 621355968000000000)
+               if ( dataType.includes('character varying')  && Number(charMaxLength) > 99 ) {
+                  if (this.itemData.hasOwnProperty(attributeName) && shown.indexOf(',' + attributeName + ',') === -1) {
+                     firstElId = elId
+                     this.addFormElement('form-textarea',tsElId,elId,attributeName,attributeValue )
+                  }
+               } else {
+                  if (this.itemData.hasOwnProperty(attributeName) && shown.indexOf(',' + attributeName + ',') === -1) {
+                     firstElId = elId
+                     this.addFormElement('form-input',tsElId,elId,attributeName,attributeValue )
+                  }
+               }
+              shown = shown + ',' + attributeName + ','
+            }
+         })
+	   }
+      , updateItem: function (modifiedContent,id,oldValue) {
+         var arr = id.split('-')
+         var col = arr[0]
+         var dbid = arr[1]
+			this.$emit('update', modifiedContent ,id,oldValue) // events up ...
+         var elId = col + '-' + dbid
+         var tsElId = elId + '-' + ((new Date().getTime() * 10000) + 621355968000000000)
+         this.fields.find(obj => obj.id == elId).id = col + "-" + dbid
+         this.fields.find(obj => obj.id == elId).key = tsElId
+         this.fields.find(obj => obj.id == elId).label = col
+         this.fields.find(obj => obj.id == elId).cnt = modifiedContent // dyn controls !!!
+         this.cid = 'dia-' + dbid
+       }
+	}
+})
+
+         Vue.component('vue-select', {
+    template: "#vue-select-tmpl"
+  , props: {
+    filterable: true
+    , itemname: ''
+    , hook: ''
+    , id: ''
+  }
+  , data: function(){
+    return { 
+      options: []
+      , selected: ''
+      , pxlsWidth: 160
+      , url: '/tst_qto/select-col/'
+}
+  }
+  , mounted(){
+   this.loadData()
+  }
+  , methods: {
+     getUrlParams: function (){
+      var urlPrms = new URLSearchParams();
+      if( window.location.toString().indexOf("?") != -1) {
+         var href_part = window.location.search.split('?')[1].split('#')[0]
+         href_part.replace(/([^=&]+)=([^&]*)/g, 
+            function(m, key, value) {
+               var attr = decodeURIComponent(key)
+               var val = decodeURIComponent(value)
+               urlPrms.append(attr,val);
+         });
+      } 
+      return urlPrms ; 
+    }
+    , loadData(){
+      var k = 'tst_qto' + '.' + this.itemname
+      // gotcha !!! localStorage is cleared ONLY on the login page ...
+      if ( localStorage.getItem(k) === 'undefined' || localStorage.getItem(k) === null 
+            || localStorage.getItem(k) === "null" || localStorage.getItem(k).length === 0) {
+         urlPrms = this.getUrlParams()
+         axios.get( this.url + this.itemname, {params: {"pg-size": "2000","oa": "name","pick":"guid,name"}})
+         .then(res => {
+            this.options = res.data.dat
+            var cachedData = JSON.stringify(res.data.dat)
+            localStorage.setItem(k,cachedData)
+            res.data.dat.forEach(el => { if ( el.guid === this.hook){
+               this.selected = el.name 
+               }
+            });
+         });
+      } else {
+         var cachedData = JSON.parse(localStorage.getItem(k))
+         this.options = cachedData
+         this.options.forEach(el => { if ( el.guid === this.hook){
+            this.selected = el.name 
+            }
+         });
+      }
+    }
+    , setSelected(optionItem) {
+      if ( optionItem == null || typeof(optionItem) === "undefined") {
+         this.selected = ""
+         return 
+      }
+      this.selected = optionItem
+      this.options.forEach(el => { 
+         if ( el.name === optionItem.name ){
+            this.$parent.updateItem(optionItem.guid,this.id,optionItem.guid);
+         }
+      })
+    }
+    , onSearch(search, loading){
+      loading(true);
+      if ( String(search).length > 1 ) {
+         this.loadFilteredData(loading, search)
+      }
+      loading(false);
+    }
+    , loadFilteredData(loading, search) {
+         axios.get( this.url + this.itemname, {params: {"pg-size": "2000","oa": "name","like-by":"name","like-val":search}})
+         .then(res => {
+           this.options = res.data.dat
+         });
+    }
+  }
+  , components: {
+    'v-select': VueSelect.VueSelect,
+  }
+});
+
+         Vue.component('vue-dt-pick', {
+   template: "#vue-date-time-picker"
+   , props: {
+      tme: {
+         get: function () {
+            return this.time
+       },
+         set: function (newValue) {
+            this.time = newValue
+       }
+      }
+   }
+   , data: function () {
+       return {
+         time: ''
+         , popperProps: { 
+            popperOptions: {
+                modifiers: {
+                  preventOverflow: {
+                    padding: 20
+                  }
+               }
+            }
+         }
+       }
+     },
+     mounted(){
+      this.time = this.tme 
+      this.value = this.time
+     }
+     , methods: {
+         log: function (val) {
+            this.time = val
+            this.value = val
+            if ( typeof(this.$el) !== "undefined"){
+               this.$parent.updateItem(val,this.$el.id,val);
+            }
+         }
+    },
+     components: { 'datetime-picker': VueDatepicker.DatetimePicker }
+})
+
+            Vue.component('cruds-grid-sf', {
+     template: '#grid-template',
+     props: {
+       data: { type: Array, twoWay: true}
+       , columns: Array
+       , filterKey: String
+       , showModal: false
+       , cid: null
+       , refss: null
+     },
+     data: function () {
+       var sortOrders = {}
+       this.columns.forEach(function (key) {
+         sortOrders[key] = 1
+       })
+       return {
+         sortKey: '',
+         sortOrders: sortOrders
+       }
+     }
+	  , computed: {
+		  filteredData: {		
+			 get: function () {
+				var sortKey = this.sortKey
+				var filterKey = this.filterKey && this.filterKey.toLowerCase()
+				var order = this.sortOrders[sortKey] || 1
+				var data = this.data
+				if (filterKey) {
+				  data = data.filter(function (row) {
+					 return Object.keys(row).some(function (key) {
+                  var visible_val = row[key]
+                  // hook the vals from the drop downs to enable quick srch
+                  if ( key.endsWith('_guid')){
+                     var k = 'tst_qto' + '.' + key.replace('_guid','')
+var cachedData = JSON.parse(localStorage.getItem(k))
+                     visible_val = cachedData.find(obj => obj.guid == visible_val ).name
+                  }
+						return String(visible_val).toLowerCase().indexOf(filterKey) > -1
+					 })
+				  })
+				}
+				if (sortKey) {
+				  data = data.slice().sort(function (a, b) {
+					 a = a[sortKey]
+					 b = b[sortKey] 
+					 if ( (!isNaN(parseFloat(a)) && isFinite(a)) && (!isNaN(parseFloat(b)) && isFinite(b)) ) {
+						return (a-b) * order
+					 } else {
+						return (a === b ? 0 : a > b ? 1 : -1) * order
+					 }
+				  })
+				}
+				return data
+			},
+			set: function(data) {
+				this.data = data
+			}
+		}
+	  },
+     filters: {
+       capitalize: function (str) {
+         return str.charAt(0).toUpperCase() + str.slice(1)
+       }
+     },
+     methods: {
+       showModalDialog: function (e) {
+           this.showModal = true
+           this.cid = e.target.id.replace("btn-modal-","dia-") ; 
+       }
+	    , getColDataType: function (col_name){
+            for (var prop in this.$parent.gridMeta) {
+               if (!this.$parent.gridMeta.hasOwnProperty(prop)) {
+                 continue;
+               }
+               if ( (this.$parent.gridMeta[prop])["attribute_name"] !== col_name ) {
+                  continue ;
+               } else {
+                  return (this.$parent.gridMeta[prop])["data_type"]
+               }
+            }
+         }
+       , sortBy: function (key) {
+            this.sortKey = key
+            this.sortOrders[key] = this.sortOrders[key] * -1
+            this.$parent.$forceUpdate();
+       }
+       , setAscSortBy: function (key) {
+            this.sortKey = key
+            this.sortOrders[key] = 1 ; 
+       }
+       , setDescSortBy: function (key) {
+            this.sortKey = key
+            this.sortOrders[key] = -1 ;
+       }
+		 , deleteItem: function (id){
+       	   this.$parent.deleteItem(id);
+            this.$parent.$forceUpdate();
+		 }
+       , updateItem: function (content,id,oldValue) {
+            this.$parent.updateItem(content,id,oldValue);
+            //this.$parent.$forceUpdate(); //nope closes the modal !! qto-200311140720
+       }
+       , createNewItem: function (id) {
+            this.$parent.createNewItem(id);
+       }
+		 , goToPrevPage10: function (id){
+       	   this.$parent.goToPrevPage10(id);
+       }
+		 , goToPrevPage: function (id){
+       	   this.$parent.goToPrevPage(id);
+       }
+		 , goToNextPage: function (id){
+       	   this.$parent.goToNextPage(id);
+       }
+		 , goToNextPage10: function (id){
+       	   this.$parent.goToNextPage10(id);
+       }
+       , lnkMayBe: function(cnt) {
+         var lnkMayBe = (cnt == null) ? '' :cnt 
+         if ( this.formats != null ) {
+           var titles = JSON.parse(this.formats).lnktitles
+           titles.map ( title => lnkMayBe = String(lnkMayBe).linkifyOne(title) )	
+         } else {
+           lnkMayBe = String(lnkMayBe).linkify()
+         }
+         lnkMayBe = lnkMayBe.linkifyItems()
+         return (typeof(lnkMayBe) != "undefined") ? lnkMayBe : ''
+       }
+	 }
+   })
+
+            var gruds_crid = new Vue({
+     el: '#cruds-grid',
+     data: {
+        globalSrch: ''
+      , gridColumns:['id','category_guid','issues_status_guid','prio','name','description','app_users_guid','type','update_time']      , gridData: []
+      , gridMeta: []
+      , pageSize: 5
+      , pageNum: 1
+      , pagesCount: 0
+      , UrlParams:{ as:"grid" }
+      , pageSizes: ['5', '7', '10','15','20','30','50','100']
+      , showPageSizer: true
+      , searchInputChanged: ""
+		},
+     	methods: {
+       onSearchBoxInputChanged: function(quickSrch) {
+            this.globalSrch = quickSrch ; 
+        } 
+      , inpQuickSrchCH: function(event) {
+           if ( event ) {
+               if ( document.getElementById("inp_srch_box").value !== "" ) {
+                  document.getElementById("btnNew").setAttribute( 
+                     "class" , "v-btn v-btn--floating theme--dark silver");
+               } else {
+                  document.getElementById("btnNew").setAttribute( 
+                     "class" , "v-btn v-btn--floating theme--dark indigo");
+               }
+           } 
+         }
+         , getUrlParams: function (){
+            var url_params = new URLSearchParams();
+            if( window.location.toString().indexOf("?") != -1) {
+               var href_part = window.location.search.split('?')[1].split('#')[0]
+               href_part.replace("pick=","pick=id,").replace('id,id','id').replace(/([^=&]+)=([^&]*)/g, 
+                  function(m, key, value) {
+                     var attr = decodeURIComponent(key)
+                     var val = decodeURIComponent(value)
+                     url_params.append(attr,val);
+               });
+            } 
+            
+            if ( url_params.has("od") === false) { url_params.append("od" , "id"); }
+            if ( url_params.has("as") === false) { url_params.append("as" , "grid"); }
+            if ( url_params.has("pg-size") === false) { url_params.append("pg-size" , 5); }
+            if ( url_params.has("pg-num") === false) { url_params.append("pg-num" , 1); }
+            
+            //debug for(var pair of url_params.entries()) { consolas.log(pair[0]+ '->'+ pair[1]); }
+            return url_params ; 
+         }
+	      , fetchServerSideData: function (url_params){
+            if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
+
+            var toReplace = ( url_params.has("bid") == false) ? "/select/" : "/hiselect/" //it-190205084244
+            var path = window.location.pathname
+            var backEndUri = (path.includes('/list/')) ? path.replace('/list/', toReplace ) : path
+            backEndUri = (path.includes('/list-my/')) ? path.replace('/list-my/', '/select-my/' ) : backEndUri
+
+            return axios.get(backEndUri , { params: url_params } )
+            .then(response => { 
+               return response ; 
+            })
+            .catch(function(err) {
+               console.error(err) 
+               //setMsgVisuals(err,'div_msg');
+               return err.response;
+            }) 
+         }
+         , generatePageSize: function (pgSize) {
+               var curi = window.location.href ; 
+               if ( curi.indexOf("?") === -1 ) { curi = curi + '?' }
+               if ( typeof pgSize === 'undefined' ) { pgSize = 5 }
+               if ( curi.indexOf("pg-size=") === -1 ) {
+                  return (curi + "&pg-size=" + pgSize).replace(/pg-num=([0-9]+)/gi , "pg-num=1");
+               } else {
+                  return curi
+                     .replace("pg-size=" + this.pageSize , "pg-size=" + pgSize) 
+                     .replace(/pg-num=([0-9]+)/gi , "pg-num=1");
+               }
+         }
+         , fetchServerSideDataToUI: function(url_params) {
+
+            if ( typeof url_params === "undefined" ) { url_params = this.getUrlParams()  }
+
+            this.fetchServerSideData(url_params)
+               .then( response => {
+					   this.gridMeta = response.data.met.meta_cols
+                  bus.$emit('metaTablesLoadEmit',response.data.met.app_items)
+                  if (response.data.dat == null || response.data.dat.cnt === 0){ hideControlsOnError()}
+                  if ( response.data.ret === 200 ) {
+                     var data = response.data 
+                     var dataType = (typeof data)
+                     if ( dataType === 'undefined' ) {
+                        var msg = 'unexpected err occurred while fetching data !!!'
+                        setMsgVisuals(data,'div_msg','Error','search');
+                     } else if ( dataType === 'string' ) {
+                        setMsgVisuals(data,'div_msg','Error','search');
+                     } else {
+                        if ( typeof(data.dat) == 'undefined' || data.dat == null || data.cnt == '0') { return }
+                        this.gridData = data.dat
+                        var totalRSsize = data.cnt ; 
+                        this.pageSize = url_params.get('pg-size')
+                        this.pageNum = url_params.get('pg-num')
+                        this.urlParamFor = url_params.get('for')
+                        var remainder = totalRSsize % this.pageSize
+                        var toAdd = 1 // example: pg-size 10 , total-rs-size 30 => 3 and not 4
+                        if ( remainder == 0 ) { toAdd = 0  }
+                        this.pagesCount = Math.floor(totalRSsize/this.pageSize ) + toAdd
+                        var oa = (typeof url_params.get('oa') === 'undefined') ? 'id' : url_params.get('oa');
+
+                        if ( oa !== null ) {
+                           this.$children[0].setAscSortBy( oa ) ; 
+                        } else if ( typeof url_params.get("od") != 'undefined' ) {
+                           var od = url_params.get("od")
+                           this.$children[0].setDescSortBy( od ) ; 
+                        } else {
+                           this.$children[0].setAscSortBy("id")
+                        }
+                     }
+                     return ;
+                  } else if ( response.data.ret === 204) {
+                     var warningMsg = response.statusText
+                     setMsgVisuals(warningMsg,'div_notice','Warning','search');
+                     return ;
+                  } else if ( response.data.ret  === 404 || response.data.ret === 400) {
+                     var errMsg = response.statusText + ": " + response.data.msg
+                     setMsgVisuals(errMsg,'div_msg','Error','search');
+                     return ;
+                  } else {
+                     var errMsg = response.statusText + ": " + response.data.msg
+                     setMsgVisuals(errMsg,'div_msg','Error','search');
+                     return ;
+                  }
+               })
+            .catch(function(err) {
+               if (typeof err !== 'undefined') {
+                 var errMsg = err.toString() 
+                 setMsgVisuals(errMsg);
+               } else {
+                 var msg = 'unknown err while fetching grid data occured !'
+                 setMsgVisuals(msg,'div_msg','Error');
+               } 
+            }) 
+	  	   }
+	      , postNewServerSideId: function (dbid){
+            var path = window.location.pathname
+            uri = (path.includes('/list-my/')) ? '/tst_qto/create-my/monthly_issues_202005' : '/tst_qto/create/monthly_issues_202005'
+return axios.post(uri, {
+                id: dbid
+               })
+               .then(function (response) { 
+                  return response ;
+               })
+               .catch(function (err) {
+                  if (typeof err !== 'undefined') {
+                    var errMsg = err.response.data.msg
+                    throw new Error(errMsg);
+                  }
+               });
+         }
+         , createNewItem: function (dbid) {
+            this.postNewServerSideId(dbid)
+            .then ( result => {
+               if ( result.toString() !== "err: Request failed with status code 409" ) {
+                  var url_params = this.getUrlParams();
+                  var queryStr = ""
+                  for(var kv of url_params.entries()) { queryStr = queryStr + kv[0]+ '='+ kv[1] + '&'; }
+                  var uri = window.location.href.split('?')[0] + '?' + queryStr.slice(0, - 1)
+                  if ( uri.indexOf("oa=prio") === -1 ) { url_params.set("od" , "id") }
+                  url_params.set("pg-size" , "5")
+                  url_params.set("pg-num" , 1)
+                  this.fetchServerSideDataToUI(url_params)
+                  if ( uri.indexOf("oa=prio") === -1 ) { 
+                     uri = uri.replace(/([&]{0,1}oa=([0-9a-zA-Z_\-]+))+/gi , "") 
+                     uri = uri.replace(/([&]{0,1}od=([0-9a-zA-Z_\-]+))+/gi , "") 
+                     uri = uri.setUriParam("od","id")
+                  } else {
+                     uri = uri.setUriParam("od",null)
+                  }
+                  uri = uri.replace(/([&]{0,1}pg-num=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  uri = uri.replace(/([&]{0,1}pg-size=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  uri = uri.replace(/([&]{0,1}for=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  uri = uri.replace(/([&]{0,1}with=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  uri = uri.replace(/([&]{0,1}like-by=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  uri = uri.replace(/([&]{0,1}like-val=([0-9a-zA-Z_\-]+))+/gi , "") 
+                  window.location.href = uri // and redirect !!!
+               } else {
+                  var msg = result.toString(); 
+                  msg = msg + ". Somebody was faster than you in the second you clicked !"
+                  msg = msg + " Retry once again."
+                  setMsgVisuals( msg ) ;
+               }
+            })				
+            .catch(function (err) {
+               setMsgVisuals(err.toString());
+               setMsgVisuals(err.message);
+            });
+
+         }
+         , updateItem: function (modifiedContent,id,oldValue) {
+            var arr = id.split('-')
+            var col = arr[0]
+            var dbid = arr[1]
+            modifiedContent = ( modifiedContent == "" ? "null" : modifiedContent ) //empty cell is treated as null
+            
+            axios.post('/tst_qto/update/monthly_issues_202005', {
+attribute: col ,
+                  id: dbid , 
+                  cnt: modifiedContent
+            })
+            .then( 
+               response => {
+                  modifiedContent = ( modifiedContent == "null" ? "" : modifiedContent )
+                  newCntIndx = this.gridData.findIndex(obj => obj.id == dbid);
+                  this.gridData[newCntIndx][col] = modifiedContent; // it-180920075303 , it-181011195040 !!!
+               }
+            )
+            .catch(function (err) {
+               if ( id.endsWith('-')) {
+                  document.getElementById(id).value = (oldValue == "null" ? "" : oldValue)
+               } else {
+                  document.getElementById(id).getElementsByTagName('input')[0].value = (oldValue == "null" ? "" : oldValue)
+               }
+               if (typeof err !== undefined ) {
+                 var errMsg = err.response.data.msg
+                 console.error(err.response.data.msg)
+                 setMsgVisuals(errMsg,'div_msg');
+                 setMsgVisuals(errMsg,'modal-dia-msg');
+               }
+            });
+          }
+          , deleteItem (id) {
+               console.log("id " + id);
+               var arr = id.split('-')
+               var dbid = arr[2]
+               
+               axios.delete('/tst_qto/delete/monthly_issues_202005', { data: {
+id: dbid 
+               }})
+               .then( 
+                  response => {
+                     var url_params = this.getUrlParams();
+                     if ( typeof this.$children[0].pageSize !== "undefined" ) {
+                        url_params.delete("pg-size") ; 
+                        url_params.set("pg-size", this.$children[0].PageSize ) ;
+                     }
+                     if ( typeof this.$children[0].pageNum !== undefined ) {
+                        url_params.delete("pg-num") ; 
+                        url_params.set("pg-num", this.$children[0].pageNum ) ;
+                     }
+                     if ( typeof this.$children[0].sortKey !== "undefined" ) {
+                        var key = this.$children[0].sortKey ; 
+                        url_params.delete("oa") ; 
+                        url_params.delete("od") ; 
+                        if ( this.$children[0].sortOrders[key] === 1 ) {
+                           url_params.set("oa", this.$children[0].sortKey.trim()) ;
+                        } else {
+                           url_params.set("od", this.$children[0].sortKey.trim() ) ;
+                        }
+                     }
+                     url_params.delete("pg-num") ; 
+                     url_params.delete("pg-size") ; 
+                     url_params.set("pg-size" , this.pageSize);
+                     url_params.set("pg-num" , this.pageNum);
+                     this.fetchServerSideDataToUI(url_params);
+                  }
+               )
+               .catch(function (err) {
+                  setMsgVisuals(err.message);
+               });
+          }
+         , goToNextPage: function (id) {
+               var uri = window.location.href 
+               if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
+               if ( uri.indexOf("pg-num=") === -1 ) {
+                  uri = uri + "&pg-num=2"
+               } else {
+                  var newPageNum = Number(this.pageNum)+1
+                  if ( newPageNum > this.pagesCount ) { newPageNum = this.pagesCount }
+                  uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
+               }
+               window.location.href = uri 
+         }
+         , goToPrevPage: function (id) {
+               var uri = window.location.href 
+               if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
+               if ( uri.indexOf("pg-num=") === -1 ) {
+                  uri = uri + "&pg-num=1"
+               } else {
+                  var newPageNum = Number(this.pageNum)-1
+                  if ( typeof newPageNum == "undefined" || newPageNum < 1 ) { newPageNum = 1 }
+                  uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
+               }
+               window.location.href = uri 
+         }
+         , goToNextPage10: function (id) {
+               var uri = window.location.href 
+               if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
+               if ( uri.indexOf("pg-num=") === -1 ) {
+                  uri = uri + "&pg-num=1"
+               } else {
+                  var newPageNum = Number(this.pageNum)+10
+                  if ( newPageNum > this.pagesCount ) { newPageNum = this.pagesCount }
+                  uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
+               }
+               window.location.href = uri 
+         }
+         , goToPrevPage10: function (id) {
+               var uri = window.location.href 
+               if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
+               if ( uri.indexOf("pg-num=") === -1 ) {
+                  uri = uri + "&pg-num=1"
+               } else {
+                  var newPageNum = Number(this.pageNum)-10
+                  if ( typeof newPageNum == "undefined" || newPageNum < 1 ) { newPageNum = 1 }
+                  uri = uri.replace("pg-num=" + this.pageNum, "pg-num=" + String(newPageNum))
+               }
+               window.location.href = uri 
+         }
+     }
+     , mounted() {
+	      this.fetchServerSideDataToUI();
+         bus.$on('searchBoxInputChanged',this.onSearchBoxInputChanged)
+	  }
+   });
+
+            var left_menu = new Vue({
+      el: '#lft_menu',
+      template: `
+         <ol id="left_menu" class="tree"> 
+            <div id="div_logout"><a alt="logout" tabindex="1" href="/qto/logon">
+<img loading="lazy" alt="logout" src="../../themes/thme-blue/img/controls/logout.png" /></a>
+            </div>
+            <div style="margin-top:7%" v-html='buildMenu' @click="handleClick($event)" v-on:keyup.enter="onEnter"/>
+            <div id="app_label">
+               <p> tst_qto 0.8.5  tst   @ 2020-05-21 10:17:05 </p>
+</div>
+         </ol>
+      `
+      , data: {
+         menuData: [],
+         chksState: {}
+	   }
+     	, computed: {
+        buildMenu: function(){
+            this.chksState = JSON.parse(localStorage.getItem('chksState')) || {}
+            var i
+            var html=" "
+            var prev_lvl = 0
+            for (i = 0; i < this.menuData.length; i++) {
+               let itm = this.menuData[i]
+               if ( itm.level === 0 ) { continue ; }
+               var curr_lvl = itm.level
+               if (itm.type === 'folder') {
+                     if ( prev_lvl != 0 && prev_lvl > itm.level) {
+                        html += this.closeFolderLink(itm)
+                     }
+                     html += this.openFolderLink(itm);
+                  } else if ( itm.type === 'doc') {
+                     html += this.buildDocLink(itm);
+                  } else {
+                     html += ''
+                  }
+                  prev_lvl = itm.level
+            }
+            return html
+        } 
+     }
+     	, methods: {
+         menuDataLoaded: function(menuData) {
+            this.menuData = menuData
+        } 
+        , openFolderLink: function(itm) {
+            var eid = 'lfcb-'+String(itm.id)
+            var checkedMayBe = (typeof(this.chksState[eid]) === 'undefined') ? false : this.chksState[eid]
+            var checkedMayBeStr = (checkedMayBe) ? 'checked' : ''
+            var html='<li><label class="cls-lft-mnu-lbl" for="' + itm.id + '"><a id="' + 'lmfal-' + itm.id + '" class="cls_fa" href="#">'
+            html += itm.name + '</a></label><input class="lmfi" tabindex="1" type="checkbox" ' + checkedMayBeStr + ' id="lfcb-' 
+            html += itm.id + '" /><ol><li>'
+            return html
+        } 
+        , handleClick: function(e) {
+            e.stopPropagation
+            if (String(e.target.className) === 'cls-lft-mnu-lbl' || String(e.target.className) === 'cls_fa') {
+               var cheid = String(e.target.id).replace('lmfal-','lfcb-')
+               document.getElementById(cheid).click()
+            }
+            if (String(e.target.className) === 'lmfi') {
+               console.log("handleClick lmfi")
+               var cheid = String(e.target.id)
+               this.chksState = JSON.parse(localStorage.getItem('chksState')) || {}
+               this.chksState[cheid] = (typeof(this.chksState[cheid]) === 'undefined') ? false : this.chksState[cheid]
+               this.chksState[cheid] = !this.chksState[cheid]
+               document.getElementById(cheid).focus()
+               localStorage.setItem('chksState',JSON.stringify(this.chksState))
+            }
+        }
+        , onEnter: function(e) {
+            e.stopPropagation
+            if (String(e.target.className) === 'cls-lft-mnu-lbl' || String(e.target.className) === 'cls_fa') {
+               var theChck = e.target.parentElement.parentElement.getElementsByTagName('input')[0]
+               document.getElementById(theChck.id).click()
+            }
+        }
+        , closeFolderLink: function(itm) {
+            if ( itm.id == 0 ) { return ' ' }
+            return '</ol></li>'
+        } 
+        , buildDocLink: function(itm) {
+            var url = window.location.href.split('?')[0]
+            var db = 'tst_qto'
+var pdb = db.replace(/dev_|tst_|qas_|prd_/g,'')
+            url = url.split('/')[0] + "//" + url.split('/')[2] + '/' + pdb + '/'
+            return '<li class="file"><a class="cls_da" href="' + url + itm.url + '">' + itm.name + '</a></li>' ;
+        } 
+        , handleClckOutOfLftMnu(e) {
+            var el=e.target
+            console.log("handleClckOutOfLftMnu")
+            var div_lft_mnu = document.getElementById("div_left_menu")
+            console.log(el)
+            console.log("el")
+            if (div_lft_mnu.contains(el) === false && el.id !== 'chk_left_menu' && el.className !== 'cls_fa' && el.className !== 'lmfi'){
+               console.log("should click")
+               var left_menu_checkbox = document.getElementById("chk_left_menu")
+               if ( left_menu_checkbox.checked === true) { //lft mnu is open
+                  left_menu_checkbox.click() //close it
+               }
+            }
+        }
+     }
+     , mounted() {
+         this.$nextTick(() => {
+            bus.$on('metaTablesLoadEmit',this.menuDataLoaded)
+            document.addEventListener("click", this.handleClckOutOfLftMnu);
+         })
+     }
+     , destroyed() {
+         document.removeEventListener("click", this.handleClckOutOfLftMnu);
+     }
+   });
+
+    }
+
+</script>
+	<div id="div_notice"><span>  </span></div>
+
+
+
+</body></html>

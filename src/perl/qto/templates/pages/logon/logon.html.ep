@@ -10,8 +10,8 @@
 	<div id="box">
 		<h4> <span style="color:<%= $msg_color =%>;"> <%= $msg =%> </span> </h4>
 		%= form_for 'logon' => (method => 'POST') => begin
-			%= text_field 'email', id => 'email', class=>"email", value=>'test.anonymous.user@gmail.com',focused=>"this.document.execCommand('selectAll',false,null);"
-			%= password_field 'pass', id => 'pass', class=>"email", value=>'test.anonymous.user-pass',focused=>"this.document.execCommand('selectAll',false,null);"
+			%= text_field "$edb" . '_email', id => 'email', class=>"email", value=>'test.anonymous.user@gmail.com', focused=>"this.document.execCommand('selectAll',false,null);"
+			%= password_field 'pass', id => 'pass', class=>"email", value=>'test.anonymous.user-pass', focused=>"this.document.execCommand('selectAll',false,null);"
          <input type="hidden" id="url" name="redirect-url" value="<%= $redirect_url =%>">
 			%= submit_button 'submit', class=>"btn", value=>' GO ', id=>"butLogin"
 		% end 
@@ -176,7 +176,7 @@ Array.prototype.each = function(a) {
 % content_for cnt_all_js => begin
 
    <script id="all_js_scripts">
-      document.getElementById("email").focus();
-      document.getElementById("email").select();
+      document.getElementById("<%= $db =%>_email").focus();
+      document.getElementById("<%= $db =%>_email").select();
    </script>
 % end
