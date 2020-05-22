@@ -24,6 +24,122 @@ our $objLogger          = q{};
 our $ProductInstanceDir = {};
 our @tables             = () ; 
 
+
+sub doReadXlsFileToHsr3NoChecks {
+
+  my $self           = shift;
+  my $xls_file       = shift;
+  my $objModel     = ${ shift @_ } ; 
+
+  my $ret = 1;
+  my $msg = "read the following xls_file: $xls_file";
+  $objLogger->doLogInfoMsg($msg);
+
+  my $formatter    = Spreadsheet::ParseExcel::FmtJapan->new();
+  my $objXlsParser = 'Spreadsheet::ParseExcel'->new();
+
+  # optionally : 
+  # my $objWorkbook      = $objXlsParser->Parse( $xls_file , $formatter );
+  my $objWorkbook = $objXlsParser->Parse($xls_file);
+  my $hsr3 = {};    # this is the data hash ref of hash refs
+
+  # check if we are using Excel2007 open xml format
+  if (!defined $objWorkbook) {
+
+    # works too my $objConverter = () ;
+    my $objConverter = Text::Iconv->new("utf-8", "utf-8");
+
+    $objWorkbook = Spreadsheet::XLSX->new($xls_file, $objConverter);
+
+    # exit the whole application if there is no excel defined
+    if (!defined $objWorkbook) {
+      $msg = "cannot parse \$xls_file $xls_file $! $objXlsParser->error()";
+      $objLogger->doLogErrorMsg("$msg");
+      return ($ret, $msg, {});
+    }
+
+  } 
+
+  foreach my $worksheet (@{$objWorkbook->{Worksheet}}) {
+    my $hsWorkSheet   = {};
+    #use Encode; use Encode::Unicode;
+    binmode STDOUT, ":utf8";
+    my $WorkSheetName = decode( "utf8",$worksheet->{'Name'});
+    #my $WorkSheetName = $worksheet->{'Name'} ;
+    #my $WorkSheetName = decode("koi8-u",$worksheet->{'Name'});
+    $objLogger->doLogInfoMsg("check worksheet: " . $WorkSheetName) ; 
+
+
+    $msg = "read worksheet: " . $WorkSheetName ; 
+    $objLogger->doLogInfoMsg( $msg ) ; 
+
+    my $RowMin = $worksheet->{'MinRow'};
+    my $RowMax = $worksheet->{'MaxRow'};
+
+    my $row_num = 0;
+    for my $row ($RowMin .. $RowMax) {
+
+      my $hsRow  = {};
+      my $MinCol = $worksheet->{'MinCol'};
+      my $MaxCol = $worksheet->{'MaxCol'};
+
+      #debug rint "MinCol::$MinCol , MaxCol::$MaxCol \n" ;
+      my $col_num = 0;
+
+      #debug rint "row_num:: $row_num \n" ;
+      for my $col ($MinCol .. $MaxCol) {
+        # print "col_num:: $col_num \n" ;
+        my $cell       = $worksheet->{'Cells'}[$row][$col];
+        my $obj_header = $worksheet->{'Cells'}[0][$col];
+        my $header     = $obj_header->unformatted() if ( defined $obj_header);
+        my $token      = '';
+
+        # to represent NULL in the sql
+        unless (defined($cell)) {
+          $token = 'NULL';
+        }
+        else {
+          # this one seems to return the value ONLY if
+          # it is formateed properly with Ctrl + 1
+          # $token = $cell->Value();
+          # this one seems to return the value as it has been typed into ...
+          $token = $cell->unformatted();
+
+          # this is must have !!!
+          $token = decode('utf8', $token);
+
+          # $token = $cell->{'Val'} ;
+          my $encoding = $cell->encoding();
+
+          # debug rint "token is :: " . $token . "\n" ;
+          # debug rint "encoding is :: " . $encoding . "\n" ;
+          # debug rint "is_utf8 " . is_utf8 ( $token ) ;
+          # p($token);
+
+          # and this is one of those wtf moments ?!
+          $token =~ s/\&gt;/\>/g;
+          $token =~ s/\&lt;/\</g;
+          $token =~ s/\&amp;/\&/g;
+        }
+
+        $hsRow->{$header} = $token;
+        $col_num++;
+      } #eof for col
+
+      $hsWorkSheet->{"$row_num"} = $hsRow;
+      $row_num++;
+
+    } #eof foreach row
+
+    $hsr3->{"$WorkSheetName"} = $hsWorkSheet;
+  }
+
+   $ret = 0;
+   $objModel->set('hsr3' , $hsr3 ); 
+   return ($ret, $msg);
+
+}    
+
 #
 # ------------------------------------------------------
 # convert an excel file into a hash ref of hash ref of hash refs

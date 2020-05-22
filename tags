@@ -88,10 +88,10 @@ Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef	src/perl/qto/lib/Qto/App/Cnvr/CnrH
 Qto::App::Cnvr::CnrHsr2ToArray	src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToArray.pm	2;"	package	language:Perl
 Qto::App::Cnvr::CnrHsr2ToHsr2	src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToHsr2.pm	2;"	package	language:Perl
 Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3	src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm	2;"	package	language:Perl
-Qto::App::Ctrl::CtrlDbToTxt	src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToTxt.pm	1;"	package	language:Perl
 Qto::App::Ctrl::CtrlDbToXls	src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm	1;"	package	language:Perl
 Qto::App::Ctrl::CtrlTxtToDb	src/perl/qto/lib/Qto/App/Ctrl/CtrlTxtToDb.pm	1;"	package	language:Perl
 Qto::App::Ctrl::CtrlXlsToDb	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToDb.pm	1;"	package	language:Perl
+Qto::App::Ctrl::CtrlXlsToTable	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToTable.pm	1;"	package	language:Perl
 Qto::App::Ctrl::Dispatcher	src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm	1;"	package	language:Perl
 Qto::App::Db::In::Postgres::MojoPgWrapper	src/perl/qto/lib/Qto/App/Db/In/Postgres/MojoPgWrapper.pm	1;"	package	language:Perl
 Qto::App::Db::In::Postgres::RdrPostgresDb	src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm	1;"	package	language:Perl
@@ -215,7 +215,7 @@ app_imgs.guid	src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql	5;"	field
 app_imgs.http_path	src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql	10;"	field	language:SQL
 app_imgs.id	src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql	7;"	field	language:SQL
 app_imgs.idx_uniq_app_imgs_id	src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql	19;"	index	language:SQL
-app_imgs.item_guid	src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql	12;"	field	language:SQL
+app_imgs.item_id	src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql	12;"	field	language:SQL
 app_imgs.name	src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql	8;"	field	language:SQL
 app_imgs.relative_path	src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql	9;"	field	language:SQL
 app_imgs.style	src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql	11;"	field	language:SQL
@@ -309,7 +309,7 @@ app_users.name	src/sql/pgsql/qto/app-itms/001.create-table.app_users.sql	10;"	fi
 app_users.password	src/sql/pgsql/qto/app-itms/001.create-table.app_users.sql	16;"	field	language:SQL
 app_users.status	src/sql/pgsql/qto/app-itms/001.create-table.app_users.sql	14;"	field	language:SQL
 app_users.update_time	src/sql/pgsql/qto/app-itms/001.create-table.app_users.sql	17;"	field	language:SQL
-autofit_columns	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	153;"	subroutine	language:Perl
+autofit_columns	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	269;"	subroutine	language:Perl
 b	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	function	language:JavaScript
 b	src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.js	9;"	function	language:JavaScript
 benchmarks	src/sql/pgsql/qto/tables/93.create-table-benchmarks.sql	5;"	table	language:SQL
@@ -329,6 +329,17 @@ benchmarks.stop_time	src/sql/pgsql/qto/tables/93.create-table-benchmarks.sql	12;
 benchmarks.update_time	src/sql/pgsql/qto/tables/93.create-table-benchmarks.sql	19;"	field	language:SQL
 bottom	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	property	language:JavaScript	class:I.ee.t
 bottom	src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.js	9;"	property	language:JavaScript	class:I.ee.t
+bugs	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	4;"	table	language:SQL
+bugs.category_guid	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	9;"	field	language:SQL
+bugs.description	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	11;"	field	language:SQL
+bugs.guid	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	4;"	field	language:SQL
+bugs.id	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	6;"	field	language:SQL
+bugs.issues_status_guid	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	8;"	field	language:SQL
+bugs.name	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	10;"	field	language:SQL
+bugs.owner	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	13;"	field	language:SQL
+bugs.prio	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	7;"	field	language:SQL
+bugs.solution_proposal	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	12;"	field	language:SQL
+bugs.update_time	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	14;"	field	language:SQL
 buildDoc	src/python/append-to-docx.py	55;"	function	language:Python	access:public
 buildDoc	src/python/generate-docx.py	50;"	function	language:Python	access:public
 c	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	function	language:JavaScript
@@ -354,6 +365,7 @@ check_lists.prio	src/sql/pgsql/qto/tables/12.create-table-check_lists.sql	8;"	fi
 check_lists.status	src/sql/pgsql/qto/tables/12.create-table-check_lists.sql	9;"	field	language:SQL
 check_lists.update_time	src/sql/pgsql/qto/tables/12.create-table-check_lists.sql	14;"	field	language:SQL
 chkHiDeleteHasValidParams	src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm	150;"	subroutine	language:Perl
+clearTheScreen	qto	297;"	function	language:Sh
 clearTheScreen	src/bash/deployer/test-deployer-run.sh	55;"	function	language:Sh
 clearTheScreen	src/bash/qto/qto.sh	297;"	function	language:Sh
 clearTheScreen	src/tpl/psql-code-generator/test-psql-code-generator.sh	43;"	function	language:Sh
@@ -491,7 +503,7 @@ doBuildXlsFromHashRef	src/perl/qto/lib/Qto/App/IO/Out/WtrXls.pm	33;"	subroutine	
 doCallFunc	src/perl/qto/lib/Qto/Controller/CallFunc.pm	29;"	subroutine	language:Perl
 doCallFuncGetHashRef	src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm	139;"	subroutine	language:Perl
 doChangeEnvType	src/bash/qto/funcs/change-env-type.func.sh	7;"	function	language:Sh
-doChangeVersion	src/bash/qto/funcs/dev/change-version.func.sh	6;"	function	language:Sh
+doChangeVersion	src/bash/qto/funcs/dev/change-version.func.sh	1;"	function	language:Sh
 doCheckInitTerraform	src/bash/qto/funcs/check-init-terraform.func.sh	2;"	function	language:Sh
 doCheckPerlSyntax	src/bash/qto/funcs/perl/check-perl-syntax.func.sh	2;"	function	language:Sh
 doCheckRequiredModules	src/perl/qto/script/qto_preq_checker.pl	46;"	subroutine	language:Perl
@@ -514,15 +526,15 @@ doConvertSetMaxWidth	src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToArray.pm	10;"	subrou
 doConvertStrToHashRef	src/perl/qto/lib/Qto/App/IO/In/RdrText.pm	66;"	subroutine	language:Perl
 doCpToEnv	src/bash/qto/funcs/cp-to-env.func.sh	7;"	function	language:Sh
 doCreateById	src/perl/qto/lib/Qto/Controller/Create.pm	26;"	subroutine	language:Perl
-doCreateCtags	src/bash/qto/funcs/dev/create-ctags.func.sh	6;"	function	language:Sh
+doCreateCtags	src/bash/qto/funcs/dev/create-ctags.func.sh	7;"	function	language:Sh
 doCreateFullPackage	src/bash/qto/funcs/pckg/create-full-package.func.sh	7;"	function	language:Sh
 doCreateMyById	src/perl/qto/lib/Qto/Controller/CreateMy.pm	26;"	subroutine	language:Perl
 doCreateRelativePackage	src/bash/qto/funcs/pckg/create-relative-package.func.sh	4;"	function	language:Sh
 doDbToGsheet	src/bash/qto/funcs/db-to-gsheet.func.sh	7;"	function	language:Sh
-doDbToTxt	src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm	80;"	subroutine	language:Perl
 doDbToXls	src/bash/qto/funcs/db-to-xls.func.sh	4;"	function	language:Sh
 doDbToXls	src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm	91;"	subroutine	language:Perl
 doDeleteById	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	87;"	subroutine	language:Perl
+doExit	qto.pl	155;"	subroutine	language:Perl
 doExit	src/perl/qto/script/qto.pl	155;"	subroutine	language:Perl
 doExport	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterMd.pm	27;"	subroutine	language:Perl
 doExport	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterXls.pm	26;"	subroutine	language:Perl
@@ -553,7 +565,6 @@ doHelpChangeVersion	src/bash/qto/helps/change-version.help.sh	7;"	function	langu
 doHelpCloneProject	src/bash/qto/helps/clone-project.help.sh	7;"	function	language:Sh
 doHelpCloneToApp	src/bash/qto/helps/clone-to-app.help.sh	7;"	function	language:Sh
 doHelpCreateCtags	src/bash/qto/helps/create-ctags.help.sh	7;"	function	language:Sh
-doHelpCreateRelativePackage	src/bash/qto/helps/pckg/create-relative-package.help.sh	7;"	function	language:Sh
 doHelpGenerateActionFiles	src/bash/qto/helps/generate-action-files.help.sh	7;"	function	language:Sh
 doHelpGenerateSQL	src/bash/qto/helps/generate-sql.help.sh	7;"	function	language:Sh
 doHelpGmailPackage	src/bash/qto/helps/pckg/gmail-package.help.sh	7;"	function	language:Sh
@@ -576,10 +587,11 @@ doHsr2ToDb	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	639;"	subro
 doIncreaseDate	src/bash/qto/funcs/increase-date.func.sh	8;"	function	language:Sh
 doInit	src/bash/qto/test-qto.sh	113;"	function	language:Sh
 doInit	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToDb.pm	135;"	subroutine	language:Perl
+doInit	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToTable.pm	138;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm	166;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm	1586;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/Db/In/RdrDbsFcry.pm	62;"	subroutine	language:Perl
-doInit	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1253;"	subroutine	language:Perl
+doInit	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1390;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/IO/In/RdrTextFactory.pm	20;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterMd.pm	71;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterXls.pm	66;"	subroutine	language:Perl
@@ -597,14 +609,13 @@ doInitAwdInstance	src/bash/qto/funcs/init-aws-instance.func.sh	1;"	function	lang
 doInitPg	src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm	1605;"	subroutine	language:Perl
 doInitShowLoginUI	src/perl/qto/lib/Qto/Controller/Login.pm	21;"	subroutine	language:Perl
 doInitShowLogonUI	src/perl/qto/lib/Qto/Controller/Logon.pm	121;"	subroutine	language:Perl
-doInitialize	src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToTxt.pm	136;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm	108;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/Ctrl/CtrlTxtToDb.pm	142;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/IO/In/RdrCmdArgs.pm	124;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/IO/In/RdrEnv.pm	86;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/IO/In/RdrText.pm	368;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/IO/In/RdrTextFactory.pm	83;"	subroutine	language:Perl
-doInitialize	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	172;"	subroutine	language:Perl
+doInitialize	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	288;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/IO/Out/WtrText.pm	100;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/IO/Out/WtrTextFactory.pm	64;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/RAM/CnrHsr2ToJson.pm	111;"	subroutine	language:Perl
@@ -662,12 +673,13 @@ doRead	src/perl/qto/lib/Qto/App/IO/In/RdrCmdArgs.pm	29;"	subroutine	language:Per
 doRead	src/perl/qto/lib/Qto/App/IO/In/RdrEnv.pm	29;"	subroutine	language:Perl
 doReadAndLoad	src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm	48;"	subroutine	language:Perl
 doReadAndLoad	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToDb.pm	49;"	subroutine	language:Perl
-doReadAndWrite	src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToTxt.pm	55;"	subroutine	language:Perl
+doReadAndLoad	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToTable.pm	49;"	subroutine	language:Perl
 doReadDirGetFilesByExtension	src/perl/qto/lib/Qto/App/IO/In/RdrDirs.pm	28;"	subroutine	language:Perl
 doReadFileReturnArrayRef	src/perl/qto/lib/Qto/App/IO/In/RdrFiles.pm	102;"	subroutine	language:Perl
 doReadFileReturnString	src/perl/qto/lib/Qto/App/IO/In/RdrFiles.pm	35;"	subroutine	language:Perl
 doReadIssueFile	src/perl/qto/lib/Qto/App/IO/In/RdrText.pm	290;"	subroutine	language:Perl
-doReadXlsFileToHsr3	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	31;"	subroutine	language:Perl
+doReadXlsFileToHsr3	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	147;"	subroutine	language:Perl
+doReadXlsFileToHsr3NoChecks	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	28;"	subroutine	language:Perl
 doRegisterPlugins	src/perl/qto/lib/Qto.pm	168;"	subroutine	language:Perl
 doReloadMetaRoutes	src/perl/qto/lib/Qto/Controller/MetaDataController.pm	181;"	subroutine	language:Perl
 doReloadProjDbForeignKeys	src/perl/qto/lib/Qto/Controller/MetaDataController.pm	100;"	subroutine	language:Perl
@@ -709,8 +721,10 @@ doRestartPostgres	src/bash/qto/funcs/admin/restart-postgres.func.sh	1;"	function
 doRestoreTmuxSession	src/bash/qto/funcs/sys/tmux/restore-tmux-session.func.sh	9;"	function	language:Sh
 doRunActions	src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm	103;"	subroutine	language:Perl
 doRunBenchmarks	src/bash/qto/funcs/perl/run-benchmarks.func.sh	7;"	function	language:Sh
+doRunCmdAndLog	qto	250;"	function	language:Sh
 doRunCmdAndLog	src/bash/qto/qto.sh	250;"	function	language:Sh
 doRunCmdAndLog	src/bash/qto/test-qto.sh	212;"	function	language:Sh
+doRunCmdOrExit	qto	272;"	function	language:Sh
 doRunCmdOrExit	src/bash/qto/qto.sh	272;"	function	language:Sh
 doRunCmdOrExit	src/bash/qto/test-qto.sh	235;"	function	language:Sh
 doRunContainer	src/bash/qto/funcs/run-container.func.sh	4;"	function	language:Sh
@@ -798,13 +812,14 @@ doTestWebSocket	src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm	20;"	subroutine	
 doTestXlsToDb	src/bash/qto/tests/xls-to-db.test.sh	7;"	function	language:Sh
 doTruncateItem	src/perl/qto/lib/Qto/Controller/Truncate.pm	27;"	subroutine	language:Perl
 doTruncateTable	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	38;"	subroutine	language:Perl
-doTxtToDb	src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm	69;"	subroutine	language:Perl
+doTxtToDb	src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm	79;"	subroutine	language:Perl
 doUncrambleConfs	src/bash/qto/funcs/unscramble-confs.func.sh	1;"	function	language:Sh
 doUpdateById	src/perl/qto/lib/Qto/Controller/Update.pm	31;"	subroutine	language:Perl
 doUpdateItemBySingleColToDb	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	485;"	subroutine	language:Perl
 doUploadFiles	src/perl/qto/lib/Qto/Controller/Upload.pm	22;"	subroutine	language:Perl
+doUpsertSingleTable	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1066;"	subroutine	language:Perl
 doUpsertTable	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	887;"	subroutine	language:Perl
-doUpsertTables	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1072;"	subroutine	language:Perl
+doUpsertTables	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1209;"	subroutine	language:Perl
 doValidateAndSetBranchId	src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm	346;"	subroutine	language:Perl
 doValidateAndSetCreate	src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm	178;"	subroutine	language:Perl
 doValidateAndSetDelete	src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm	242;"	subroutine	language:Perl
@@ -829,12 +844,15 @@ doWrite	src/perl/qto/lib/Qto/App/IO/Out/WtrParadoxMd.pm	33;"	subroutine	language
 doWsSelectTables	src/perl/qto/lib/Qto/Controller/WsSelect.pm	27;"	subroutine	language:Perl
 doXlsToDb	src/bash/qto/funcs/xls-to-db.func.sh	8;"	function	language:Sh
 doXlsToDb	src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm	58;"	subroutine	language:Perl
+doXlsToTable	src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm	68;"	subroutine	language:Perl
+do_apply_shell_expansion	qto	154;"	function	language:Sh
 do_apply_shell_expansion	src/bash/qto/qto.sh	154;"	function	language:Sh
 do_build_cols_lst_comma	src/tpl/psql-code-generator/psql-code-generator.sh	221;"	function	language:Sh
 do_build_cols_lst_excluded	src/tpl/psql-code-generator/psql-code-generator.sh	252;"	function	language:Sh
 do_build_cols_lst_new	src/tpl/psql-code-generator/psql-code-generator.sh	244;"	function	language:Sh
 do_build_cols_lst_old	src/tpl/psql-code-generator/psql-code-generator.sh	236;"	function	language:Sh
 do_build_cols_lst_table_col	src/tpl/psql-code-generator/psql-code-generator.sh	228;"	function	language:Sh
+do_check_git_hooks	qto	341;"	function	language:Sh
 do_check_git_hooks	src/bash/qto/qto.sh	341;"	function	language:Sh
 do_check_install_chromium_headless	src/bash/deployer/check-install-chromium-headless.func.sh	3;"	function	language:Sh
 do_check_install_perl_modules	src/bash/deployer/check-install-perl-modules.func.sh	3;"	function	language:Sh
@@ -843,6 +861,7 @@ do_check_install_postgres	src/bash/deployer/check-install-postgres.func.sh	2;"	f
 do_check_install_python_modules	src/bash/deployer/check-install-python-modules.func.sh	2;"	function	language:Sh
 do_check_install_redis	src/bash/deployer/check-install-redis.func.sh	2;"	function	language:Sh
 do_check_install_ubuntu_packages	src/bash/deployer/check-install-ubuntu-packages.func.sh	2;"	function	language:Sh
+do_check_ready_to_start	qto	167;"	function	language:Sh
 do_check_ready_to_start	src/bash/qto/qto.sh	167;"	function	language:Sh
 do_check_setup_bash	src/bash/deployer/check-setup-bash.func.sh	1;"	function	language:Sh
 do_chk_print_usage	src/tpl/psql-code-generator/psql-code-generator.sh	177;"	function	language:Sh
@@ -850,12 +869,14 @@ do_copy_git_hooks	src/bash/deployer/run.sh	120;"	function	language:Sh
 do_create_multi_env_dir	src/bash/deployer/run.sh	167;"	function	language:Sh
 do_echo_copy_pasteables	src/bash/qto/scripts/setup-bash-tmux-vim.sh	190;"	function	language:Sh
 do_enable_locate	src/bash/qto/scripts/setup-bash-tmux-vim.sh	19;"	function	language:Sh
+do_exit	qto	199;"	function	language:Sh
 do_exit	src/bash/deploy-vagrant-vm.sh	102;"	function	language:Sh
 do_exit	src/bash/deployer/run.sh	136;"	function	language:Sh
 do_exit	src/bash/qto/qto.sh	199;"	function	language:Sh
 do_exit	src/bash/qto/test-qto.sh	131;"	function	language:Sh
 do_exit	src/tpl/psql-code-generator/psql-code-generator.sh	265;"	function	language:Sh
 do_export_json_section_vars	lib/bash/funcs/export-json-section-vars.sh	8;"	function	language:Sh
+do_export_json_section_vars	qto	128;"	function	language:Sh
 do_export_json_section_vars	src/bash/deployer/export-json-section-vars.func.sh	5;"	function	language:Sh
 do_export_json_section_vars	src/bash/qto/qto.sh	128;"	function	language:Sh
 do_export_json_section_vars	src/tpl/psql-code-generator/psql-code-generator.sh	109;"	function	language:Sh
@@ -867,6 +888,8 @@ do_generate_psql_html_with_perl_code_example	src/tpl/psql-code-generator/psql-co
 do_generate_psql_select_all	src/tpl/psql-code-generator/psql-code-generator.sh	58;"	function	language:Sh
 do_generate_psql_select_into_another_table	src/tpl/psql-code-generator/psql-code-generator.sh	27;"	function	language:Sh
 do_get_psql_meta_data	src/tpl/psql-code-generator/psql-code-generator.sh	201;"	function	language:Sh
+do_init	qto	102;"	function	language:Sh
+do_init	qto.pl	115;"	subroutine	language:Perl
 do_init	src/bash/qto/qto.sh	102;"	function	language:Sh
 do_init	src/perl/qto/lib/Qto/App/Db/In/Postgres/MojoPgWrapper.pm	39;"	subroutine	language:Perl
 do_init	src/perl/qto/lib/Qto/App/Db/Out/WtrDbsFcry.pm	73;"	subroutine	language:Perl
@@ -874,6 +897,7 @@ do_init	src/perl/qto/lib/Qto/App/Mdl/Model.pm	194;"	subroutine	language:Perl
 do_init	src/perl/qto/lib/Qto/App/Sec/Guardian.pm	296;"	subroutine	language:Perl
 do_init	src/perl/qto/script/qto.pl	115;"	subroutine	language:Perl
 do_init	src/tpl/psql-code-generator/psql-code-generator.sh	129;"	function	language:Sh
+do_log	qto	228;"	function	language:Sh
 do_log	src/bash/deploy-vagrant-vm.sh	127;"	function	language:Sh
 do_log	src/bash/deployer/run.sh	159;"	function	language:Sh
 do_log	src/bash/deployer/test-deployer-run.sh	46;"	function	language:Sh
@@ -890,12 +914,14 @@ do_provision_ssh_keys	src/bash/deployer/provision-ssh-keys.func.sh	1;"	function	
 do_provision_ssh_keys	src/bash/qto/scripts/setup-bash-tmux-vim.sh	145;"	function	language:Sh
 do_provision_tmux	src/bash/qto/scripts/setup-bash-tmux-vim.sh	31;"	function	language:Sh
 do_provision_vim	src/bash/qto/scripts/setup-bash-tmux-vim.sh	52;"	function	language:Sh
+do_run_actions	qto	54;"	function	language:Sh
 do_run_actions	src/bash/qto/qto.sh	54;"	function	language:Sh
 do_run_test_01	src/tpl/psql-code-generator/test-psql-code-generator.sh	11;"	function	language:Sh
 do_run_test_02	src/tpl/psql-code-generator/test-psql-code-generator.sh	23;"	function	language:Sh
 do_run_test_03	src/tpl/psql-code-generator/test-psql-code-generator.sh	35;"	function	language:Sh
 do_set_chmods	src/bash/deployer/run.sh	124;"	function	language:Sh
 do_set_time	src/bash/deployer/run.sh	45;"	function	language:Sh
+do_set_vars	qto	302;"	function	language:Sh
 do_set_vars	src/bash/deploy-vagrant-vm.sh	75;"	function	language:Sh
 do_set_vars	src/bash/deployer/run.sh	97;"	function	language:Sh
 do_set_vars	src/bash/deployer/test-deployer-run.sh	7;"	function	language:Sh
@@ -1003,6 +1029,7 @@ getItems	src/perl/qto/public/poc/vuex/sabe/app.js	6;"	property	language:JavaScri
 getProductInstanceDir	src/js/node/ppoc/test/test-login.spec.js	58;"	function	language:JavaScript
 getTableData	src/python/append-to-docx.py	41;"	function	language:Python	access:public
 getTableData	src/python/generate-docx.py	38;"	function	language:Python	access:public
+get_function_list	qto	36;"	function	language:Sh
 get_function_list	src/bash/qto/qto.sh	36;"	function	language:Sh
 get_function_list	src/bash/qto/test-qto.sh	34;"	function	language:Sh
 goals	src/sql/pgsql/qto/tables/20.create-table-goals.sql	5;"	table	language:SQL
@@ -1079,28 +1106,28 @@ imgs.name	src/sql/pgsql/qto/tables/28.create-table-imgs.sql	8;"	field	language:S
 imgs.relative_path	src/sql/pgsql/qto/tables/28.create-table-imgs.sql	9;"	field	language:SQL
 imgs.style	src/sql/pgsql/qto/tables/28.create-table-imgs.sql	11;"	field	language:SQL
 imgs.update_time	src/sql/pgsql/qto/tables/28.create-table-imgs.sql	14;"	field	language:SQL
-incidents	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	7;"	table	language:SQL
+incidents	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	5;"	table	language:SQL
 incidents	src/sql/pgsql/qto/tables/49.create-table-incidents.sql	5;"	table	language:SQL
-incidents.category	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	12;"	field	language:SQL
+incidents.category	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	10;"	field	language:SQL
 incidents.category_guid	src/sql/pgsql/qto/tables/49.create-table-incidents.sql	8;"	field	language:SQL
-incidents.description	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	14;"	field	language:SQL
+incidents.description	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	12;"	field	language:SQL
 incidents.description	src/sql/pgsql/qto/tables/49.create-table-incidents.sql	12;"	field	language:SQL
-incidents.guid	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	7;"	field	language:SQL
+incidents.guid	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	5;"	field	language:SQL
 incidents.guid	src/sql/pgsql/qto/tables/49.create-table-incidents.sql	5;"	field	language:SQL
-incidents.id	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	9;"	field	language:SQL
+incidents.id	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	7;"	field	language:SQL
 incidents.id	src/sql/pgsql/qto/tables/49.create-table-incidents.sql	7;"	field	language:SQL
 incidents.idx_rank_incidents	src/sql/pgsql/qto/tables/49.create-table-incidents.sql	24;"	index	language:SQL
 incidents.idx_uniq_incidents_id	src/sql/pgsql/qto/tables/49.create-table-incidents.sql	21;"	index	language:SQL
-incidents.incidents_status_guid	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	11;"	field	language:SQL
+incidents.incidents_status_guid	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	9;"	field	language:SQL
 incidents.issues_status_guid	src/sql/pgsql/qto/tables/49.create-table-incidents.sql	9;"	field	language:SQL
-incidents.name	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	13;"	field	language:SQL
+incidents.name	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	11;"	field	language:SQL
 incidents.name	src/sql/pgsql/qto/tables/49.create-table-incidents.sql	11;"	field	language:SQL
-incidents.owner	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	16;"	field	language:SQL
+incidents.owner	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	14;"	field	language:SQL
 incidents.owner	src/sql/pgsql/qto/tables/49.create-table-incidents.sql	13;"	field	language:SQL
-incidents.prio	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	10;"	field	language:SQL
+incidents.prio	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	8;"	field	language:SQL
 incidents.prio	src/sql/pgsql/qto/tables/49.create-table-incidents.sql	10;"	field	language:SQL
-incidents.solution_proposal	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	15;"	field	language:SQL
-incidents.update_time	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	17;"	field	language:SQL
+incidents.solution_proposal	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	13;"	field	language:SQL
+incidents.update_time	src/sql/pgsql/qto/tables/18.create-table-incidents.sql	15;"	field	language:SQL
 incidents.update_time	src/sql/pgsql/qto/tables/49.create-table-incidents.sql	15;"	field	language:SQL
 installations_doc	src/sql/pgsql/qto/tables/25.create-table-installations_doc.sql	5;"	table	language:SQL
 installations_doc.description	src/sql/pgsql/qto/tables/25.create-table-installations_doc.sql	15;"	field	language:SQL
@@ -1159,6 +1186,8 @@ logs.prio	src/sql/pgsql/qto/tables/66.create-table-logs.sql	8;"	field	language:S
 logs.update_time	src/sql/pgsql/qto/tables/66.create-table-logs.sql	13;"	field	language:SQL
 m	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	function	language:JavaScript	function:f
 m	src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.js	9;"	function	language:JavaScript	function:f
+main	qto	7;"	function	language:Sh
+main	qto.pl	96;"	subroutine	language:Perl
 main	src/bash/deploy-vagrant-vm.sh	4;"	function	language:Sh
 main	src/bash/deployer/run.sh	5;"	function	language:Sh
 main	src/bash/deployer/test-deployer-run.sh	1;"	function	language:Sh
@@ -1304,16 +1333,16 @@ new	src/perl/qto/lib/Qto/App/Cnvr/CnrHashesArrRefToHashesArrRef.pm	170;"	subrout
 new	src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToArray.pm	103;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToHsr2.pm	51;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm	199;"	subroutine	language:Perl
-new	src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToTxt.pm	119;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm	98;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Ctrl/CtrlTxtToDb.pm	125;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToDb.pm	125;"	subroutine	language:Perl
+new	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToTable.pm	128;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm	150;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Db/In/Postgres/MojoPgWrapper.pm	27;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm	1574;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Db/In/RdrDbsFcry.pm	51;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm	27;"	subroutine	language:Perl
-new	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1240;"	subroutine	language:Perl
+new	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1377;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Db/Out/WtrDbsFcry.pm	57;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Db/Out/WtrRedis.pm	31;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/In/CnrEncrypter.pm	26;"	subroutine	language:Perl
@@ -1325,7 +1354,7 @@ new	src/perl/qto/lib/Qto/App/IO/In/RdrEnv.pm	70;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/In/RdrFiles.pm	119;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/In/RdrText.pm	344;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/In/RdrTextFactory.pm	63;"	subroutine	language:Perl
-new	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	187;"	subroutine	language:Perl
+new	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	303;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/Out/WtrDirs.pm	59;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterMd.pm	59;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterXls.pm	54;"	subroutine	language:Perl
@@ -1471,6 +1500,7 @@ q	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	function	langu
 q	src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.js	9;"	function	language:JavaScript	function:J
 qe	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	function	language:JavaScript	function:function
 qe	src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.js	9;"	function	language:JavaScript	function:function
+qto	qto.pl	2;"	package	language:Perl
 qto	src/perl/qto/script/qto.pl	2;"	package	language:Perl
 questions	src/sql/pgsql/qto/tables/09.create-table-questions.sql	5;"	table	language:SQL
 questions.category	src/sql/pgsql/qto/tables/09.create-table-questions.sql	10;"	field	language:SQL
@@ -1897,6 +1927,7 @@ yearly_issues_2019.prio	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearl
 yearly_issues_2019.status	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2019.sql	10;"	field	language:SQL
 yearly_issues_2019.update_time	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2019.sql	15;"	field	language:SQL
 yearly_issues_2020	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql	5;"	table	language:SQL
+yearly_issues_2020.app_users_guid	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql	14;"	field	language:SQL
 yearly_issues_2020.category_guid	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql	9;"	field	language:SQL
 yearly_issues_2020.description	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql	13;"	field	language:SQL
 yearly_issues_2020.guid	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql	5;"	field	language:SQL
@@ -1904,7 +1935,6 @@ yearly_issues_2020.id	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_
 yearly_issues_2020.idx_uniq_yearly_issues_2020_id	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql	19;"	index	language:SQL
 yearly_issues_2020.issues_status_guid	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql	10;"	field	language:SQL
 yearly_issues_2020.name	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql	12;"	field	language:SQL
-yearly_issues_2020.owner	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql	14;"	field	language:SQL
 yearly_issues_2020.prio	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql	11;"	field	language:SQL
 yearly_issues_2020.update_time	src/sql/pgsql/qto/tables/2020/2020-01/create-table-yearly_issues_2020.sql	15;"	field	language:SQL
 z	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	function	language:JavaScript	function:B

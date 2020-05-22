@@ -44,7 +44,8 @@ sub doLogonUser {
    my $post_params      = $self->req->body_params->to_hash;
    # p $post_params ; print "eof post_params \n";
    my $pass             = $post_params->{'pass'} ; # this is the pass from the UI !!!
-   my $email            = $post_params->{'email'} ; 
+   my $email_input_name = $db . '_email' ; 
+   my $email            = $post_params->{ $email_input_name } ; 
    my $redirect_url     = $post_params->{'redirect-url'} or '/' . $db . '/search' ;
    $redirect_url = $self->session( 'app.' . $db . '.redirect-url' ) 
          if defined $self->session( 'app.' . $db . '.redirect-url' ) ; 
@@ -184,6 +185,7 @@ sub doRenderPageTemplate {
 
    $config		         = $self->app->config ; 
    my $pdb              = toPlainName($db);
+   my $edb              = toEnvName($db,$config);
    $msg                 = "$pdb login" unless $msg ; 
 
    $self->res->code($rv) ; 
@@ -199,6 +201,7 @@ sub doRenderPageTemplate {
     , 'msg'             => $msg
     , 'msg_color'       => $msg_color
     , 'db' 		         => $db
+    , 'edb' 		      => $edb
     , 'pdb' 		      => $pdb
     , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
     , 'ProductVersion' 	=> $ProductVersion

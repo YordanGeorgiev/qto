@@ -1354,10 +1354,10 @@ sub doCallFuncGetHashRef {
 
       # ternary operator in Perl
       # CONDITION ? EVALUATE_IF_CONDITION_WAS_TRUE : EVALUATE_IF_CONDITION_WAS_FALSE
-      my $QTO_NO_AUTH = defined $ENV{'QTO_NO_AUTH'} ? $ENV{'QTO_NO_AUTH'} : 0;
+      my $QTO_JWT_AUTH = defined $ENV{'QTO_JWT_AUTH'} ? $ENV{'QTO_JWT_AUTH'} : 1;
       if ( defined $who ) {
          if ( $table eq 'app_users' and $who ne $admin_user_email){
-            $str_sql .= "AND email = '" . $who . "'" unless $QTO_NO_AUTH == 1;
+            $str_sql .= "AND email = '" . $who . "'" unless $QTO_JWT_AUTH == 1;
          }
       }
       

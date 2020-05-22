@@ -1061,6 +1061,109 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       $msg = 'upsert OK for all table' ; 
 		return ( $ret , $msg ) ; 
 	}
+	
+  
+  sub doUpsertSingleTable {
+
+		my $self 			   = shift ; 
+      my $objModel         = ${ shift @_ } ; 
+		my $hsr3 		      = $objModel->get( 'hsr3' ) ; 
+      my @tables           = @{ $_[0] } ; 
+
+		my $ret 				   = 1 ; 
+		my $msg 				   = ' failed to connect during insert to db !!! ' ; 
+		my $debug_msg 		   = ' failed to connect during insert to db !!! ' ; 
+
+      return ( $ret , $msg , undef ) unless $hsr3 ; 
+      return ( $ret , $msg , undef ) unless @tables ; 
+
+      my $sth              = {} ;    # this is the statement handle
+      my $dbh              = {} ;    # this is the database handle
+      my $str_sql          = q{} ;   # this is the sql string to use for the query
+      my $rv               = 0 ;     # apperantly insert ok returns rv = 1 !!! 
+      my $hs_headers       = {} ; 
+      my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
+		my $update_time      = $objTimer->GetHumanReadableTime();
+      my $dmhsr            = {} ; 
+      $db = $objModel->get('postgres_db_name');
+      my $objRdrDbsFcry    = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel , $self ) ; 
+      my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
+      
+      binmode(STDIN,  ':utf8');
+      binmode(STDOUT, ':utf8');
+      binmode(STDERR, ':utf8');
+
+      # obs this does not support ordered primary key tables first order yet !!!
+      foreach my $table ( keys %$hsr3 ) { 
+
+         my $hs_table = $hsr3->{ $table } ; 
+         print "hs_table $hs_table \n" ;
+         ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
+         return ( $ret , $msg ) unless $ret == 0 ;       
+
+         my $sql_str          = '' ; 
+         my $sql_str_insrt    = "INSERT INTO process ( process_category, name , description)" ; 
+         foreach my $row_num ( sort ( keys %$hs_table ) ) { 
+            next if $row_num == 0 ; 
+            
+            my $hs_row = $hs_table->{ $row_num } ; 
+            my $data_str = q{} ; 
+            my $category = $table ;
+            my $cell_value = (values%{$hs_row})[0] ;
+            my $name = (split(/:/,$cell_value))[0] . ':';
+            
+            # if the xls does not contain the guid's do just insert
+            # note that even cells with 1 space are considered for nulls !!!
+            # this is simply because of Shift + arrow works on 1 space
+            if ( !defined ( $cell_value ) or $cell_value eq 'NULL' 
+                  or $cell_value eq 'null' or $cell_value eq "'NULL'" 
+                  or $cell_value eq ' ' ) {  
+               $cell_value = 'NULL'   ; 
+            } else { 
+               # $cell_value =~ s|\\|\\\\|g ; 
+               # replace the ' chars with \'
+               $cell_value 		=~ s|\'|\'\'|g ; 
+               # clear any possible winblows carriage returns
+               $cell_value     =~ s|\r\n|\n|g if ( $cell_value ) ; 
+            }
+            $data_str .= "'" . "$category" . "' , '" . $name . "' , '" . $cell_value . "' .  " ; 
+            
+            # remove the " , " at the end 
+            for (1..3) { chop ( $data_str ) } ; 
+            
+            $sql_str .= $sql_str_insrt ;  
+            $sql_str	.=  " VALUES (" . "$data_str" . ');' ; 
+
+         }  # eof row
+          
+
+         my $do_trucate_tables = $ENV{ 'do_truncate_tables' } || 0 ; 
+         if ( $do_trucate_tables == 1 ) { 
+            $sql_str = "TRUNCATE TABLE $table ; $sql_str " ; 
+         }
+         
+         p $sql_str ; 
+
+         # Action !!! 
+         $msg = " DBI upsert error on table: $table: " . $msg  ; $ret = 1 ; 
+         eval { 
+            $rv = $dbh->do($sql_str) ; 
+         } or return ( $ret , $msg ) ; 
+
+
+
+         if ( $rv == 1 ) { 
+            $msg = "upsert OK for table $table" ;          
+            $objLogger->doLogInfoMsg ( $msg ) ; 
+            $ret = 0 ; 
+         }
+
+      } 
+      #eof foreach table
+		
+      $msg = 'upsert OK for all tables' ; 
+		return ( $ret , $msg ) ; 
+	}
 
 
 	#
