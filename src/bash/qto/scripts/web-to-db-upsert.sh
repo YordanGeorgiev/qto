@@ -1,21 +1,40 @@
 #!/bin/bash
-# call-by: 
 
-test $1 == '--usage' && cat << EOF_CALL_ME
-perl src/bash/qto/scripts/web-to-db-upsert.sh \
-   'https://qto.fi:442/qto/select/monthly_issues_202003?oa=prio&as=grid&with=id-eq-200322150540' \
-   monthly_issues_202003
-EOF_CALL_ME
-test $1 == '--usage' && exit 0
+if [ \( "$1" = '--usage' \) -o \( "$1" = '' \) -o \( "$1" = '--help' \) ]
+then
+   printf "\033[2J";printf "\033[0;0H"
+   url='https://qto.fi:442/qto/select/monthly_issues_202005?oa=prio&with=app_users_guid-eq-02d16010-20af-4b0d-be86-cdf116a7d8c7'
+   tgt_table='monthly_issues_202005'
+   cat << EOF_PRINT_USAGE
 
-#https://qto.fi:442/qto/select/monthly_issues_202003?oa=prio&as=grid&with=id-eq-200322150540' | jq
-url=$1
+   $0
+   Purpose: 
+   --------------------------------------------------------
+   upsert qto http json data to postgres db
+
+   USAGE EXAMPLE:
+   --------------------------------------------------------
+  
+   url='https://qto.fi:442/qto/select/monthly_issues_202005'
+   tgt_table=monthly_issues_202005
+   bash $0 \$url \$tgt_table
+
+
+EOF_PRINT_USAGE
+   exit 1
+fi
+
+#https://qto.fi:442/qto/select/monthly_issues_202005?oa=prio' | jq
+url=$(echo $1|perl -ne 's|\/list|/select|g;print') # copy list from browser but use select for data
+echo $url
+#curl -s -b ~/.qto/cookies.txt "$url"
+#sleep 3
 export json_str=$(curl -s -b ~/.qto/cookies.txt "$url" | jq -r '.dat')
 export itm=$2
 
 curl -s -b ~/.qto/cookies.txt "$url" | jq -r '.dat'
 
-#echo $json_str
+echo $json_str
 IFS='' read -r -d '' perl_code <<"EOF_PERL_CODE"
       use strict; use warnings; binmode STDOUT, ":utf8"; use utf8; 
       use JSON; use Data::Printer;use Mojo::Template; use feature ':5.12';

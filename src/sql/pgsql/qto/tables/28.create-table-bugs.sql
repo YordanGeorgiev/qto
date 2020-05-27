@@ -8,6 +8,7 @@ CREATE TABLE bugs (
     , issues_status_guid uuid DEFAULT 'cb989a14-d0b8-46e4-b2cc-5e2a974b5d29'::uuid NOT NULL
     , category_guid uuid DEFAULT '70724562-d83c-446e-94cf-58ced84f3a0e'::uuid NOT NULL
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
+    , location       character varying(100)
     , description    varchar (4000) NOT NULL DEFAULT 'desc ...'
     , solution_proposal varchar (4000) NULL
     , owner          varchar (50) NOT NULL DEFAULT 'none'

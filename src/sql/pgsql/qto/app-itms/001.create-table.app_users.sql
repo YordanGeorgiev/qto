@@ -16,7 +16,8 @@ CREATE TABLE public.app_users (
     description character varying(200) DEFAULT ''::character varying,
     password character varying(200) DEFAULT 'Password'::character varying NOT NULL,
     update_time timestamp without time zone DEFAULT date_trunc('second'::text, now()),
-    CONSTRAINT pk_app_users_guid PRIMARY KEY (guid)
+    CONSTRAINT pk_app_users_guid PRIMARY KEY (guid),
+    UNIQUE(email)
 );
 
 
