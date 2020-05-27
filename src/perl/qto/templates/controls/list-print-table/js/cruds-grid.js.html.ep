@@ -82,7 +82,6 @@
                   if ( dataType === 'undefined' ) {
                      var msg = 'unexpected err occurred while fetching data !!!'
                      setMsgVisuals(data)
-                  } else {
                      this.gridData = data.dat
                      this.showPageSizer = true
                      this.gridMeta = data.met.meta_cols

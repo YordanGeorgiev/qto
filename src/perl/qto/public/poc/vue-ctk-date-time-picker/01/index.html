@@ -1,0 +1,43 @@
+<!-- courtesy of https://codepen.io/louismazel/pen/jQWNzQ -->
+<html>
+   <head> <title>vue-ctk-date-time-picker</title>
+ 
+ <style>
+ html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+    font-family: Helvetica Neue, Arial, sansserif;
+ }
+ </style>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@1.4.1/dist/vue-ctk-date-time-picker.css">
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@1.4.1/dist/vue-ctk-date-time-picker.umd.js" charset="utf-8"></script>
+
+    <div id="app">
+      <vue-ctk-date-time-picker label="Hello World!" v-model="value" range></vue-ctk-date-time-picker>
+    </div>
+
+
+    <script type="text/javascript">
+      Vue.component('vue-ctk-date-time-picker', window['vue-ctk-date-time-picker']);
+      new Vue({
+        el: '#app',
+        data () {
+          return {
+            value: null
+          }
+        }
+      });
+    </script>
+
+
+<div>
+<p> this page demonstrates the following : </p>
+<pre>
+ - just a moneky copy-paste single html page of the vue-ctk-date-time-picker umd implemantation
+</pre>
+</body>
+</html>
