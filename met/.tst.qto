@@ -166,6 +166,7 @@ src/perl/qto/public/poc/vue-date-time-picker
 src/perl/qto/public/poc/vue-date-time-picker/01/index.html
 src/perl/qto/public/poc/vue-date-time-picker/02/index.html
 src/perl/qto/public/poc/vue-date-time-picker/03/index.html
+src/perl/qto/public/poc/vue-ctk-date-time-picker/01/index.html
 # stop  vue-date-time-picker
 # ---
 src/perl/qto/templates/pages/view-doc/js/right-click-menu.js.html.ep
@@ -461,6 +462,7 @@ src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
 src/perl/qto/lib/Qto/App/Mdl/Model.pm
 src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToDb.pm
+src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToTable.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlTxtToDb.pm
 src/perl/qto/lib/Qto/App/Utils
@@ -871,6 +873,7 @@ src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToXls/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlTxtToDb/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlXlsToDb/autosplit.ix
+src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlXlsToTable/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/Dispatcher/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Db/In/Postgres/MojoPgWrapper/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Db/In/Postgres/RdrPostgresDb/autosplit.ix
@@ -994,3 +997,4 @@ src/sql/pgsql/scripts/meta/populate-app_routes.sql
 src/sql/pgsql/scripts/reporting/create-rep_userstories_doc.sql
 src/sql/pgsql/scripts/reporting/repopulate-rep_userstories_doc.sql
 cnf/bash/etc/init.d/qto-on-boot.sh
+dat/xls/styler.xlsx
