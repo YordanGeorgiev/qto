@@ -3,6 +3,17 @@
 # cnf/env/dev.env.json
 # cnf/env/tst.env.json
 # cnf/env/prd.env.json
+# start vue-date-time-picker
+src/perl/qto/public/poc/vue-ctk-date-time-picker/01/index.html
+src/perl/qto/public/poc/vue-ctk-date-time-picker/02/index.html
+src/perl/qto/public/poc/vue-select
+src/perl/qto/public/poc/vue-select/01/index.html
+src/perl/qto/public/poc/vue-select/02/index.html
+src/perl/qto/public/poc/vue-date-time-picker
+src/perl/qto/public/poc/vue-date-time-picker/01/index.html
+src/perl/qto/public/poc/vue-date-time-picker/02/index.html
+src/perl/qto/public/poc/vue-date-time-picker/03/index.html
+# stop  vue-date-time-picker
 src/bash/qto/funcs/search-and-replace-tokens.func.sh
 src/perl/qto/templates/exception.production.html.ep
 src/bash/qto/scripts/web-to-db-upsert.sh
@@ -158,16 +169,6 @@ src/perl/qto/public/poc/web-socket/web-socket.html
 src/perl/qto/public/poc/notes/index.html
 src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
 # stop  websockets
-# start vue-date-time-picker
-src/perl/qto/public/poc/vue-select
-src/perl/qto/public/poc/vue-select/01/index.html
-src/perl/qto/public/poc/vue-select/02/index.html
-src/perl/qto/public/poc/vue-date-time-picker
-src/perl/qto/public/poc/vue-date-time-picker/01/index.html
-src/perl/qto/public/poc/vue-date-time-picker/02/index.html
-src/perl/qto/public/poc/vue-date-time-picker/03/index.html
-src/perl/qto/public/poc/vue-ctk-date-time-picker/01/index.html
-# stop  vue-date-time-picker
 # ---
 src/perl/qto/templates/pages/view-doc/js/right-click-menu.js.html.ep
 src/perl/qto/templates/pages/view-doc/view-doc.html.ep

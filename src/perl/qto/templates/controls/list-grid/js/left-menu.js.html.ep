@@ -60,7 +60,6 @@
                document.getElementById(cheid).click()
             }
             if (String(e.target.className) === 'lmfi') {
-               console.log("handleClick lmfi")
                var cheid = String(e.target.id)
                this.chksState = JSON.parse(localStorage.getItem('chksState')) || {}
                this.chksState[cheid] = (typeof(this.chksState[cheid]) === 'undefined') ? false : this.chksState[cheid]
@@ -89,12 +88,8 @@
         } 
         , handleClckOutOfLftMnu(e) {
             var el=e.target
-            console.log("handleClckOutOfLftMnu")
             var div_lft_mnu = document.getElementById("div_left_menu")
-            console.log(el)
-            console.log("el")
             if (div_lft_mnu.contains(el) === false && el.id !== 'chk_left_menu' && el.className !== 'cls_fa' && el.className !== 'lmfi'){
-               console.log("should click")
                var left_menu_checkbox = document.getElementById("chk_left_menu")
                if ( left_menu_checkbox.checked === true) { //lft mnu is open
                   left_menu_checkbox.click() //close it

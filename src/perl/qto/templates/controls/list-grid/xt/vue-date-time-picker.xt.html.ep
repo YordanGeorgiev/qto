@@ -1,8 +1,5 @@
-<script type="text/x-template" id="vue-date-time-picker"> 
-  <datetime-picker type="second" @input="log" min="2018-01-01 00:00:00" max="2022-01-01 00:00:00" 
-      :timeStr="['hour', 'min', 'sec']" :dayStr="['mo','tu','we','th','fr','sa','su']" :btnStr="'X'"
-      :popperProps="popperProps" :scrollbarProps="{isMobile:true,maxHeight:'2rem'}"
-      :time="time" :value="time"
-   >
-  </datetime-picker>
+<script type="text/x-template" id="vue-ctk-date-time-picker-tpl"> 
+   <vue-ctk-date-time-picker :format="'YYYY-MM-DD HH:mm'" :formatted="'YYYY-MM-DD HH:mm'" :no-label="true" 
+      v-model="cnt" :no-header="true" :overlay="true" @input="onInput" @destroy="onDestroy" >
+   </vue-ctk-date-time-picker>
 </script>
