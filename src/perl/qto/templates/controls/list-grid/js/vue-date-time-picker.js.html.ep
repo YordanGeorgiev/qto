@@ -1,41 +1,33 @@
-Vue.component('vue-dt-pick', {
-   template: "#vue-date-time-picker"
-   , props: {
-      tme: {
-         get: function () {
-            return this.time
-       },
-         set: function (newValue) {
-            this.time = newValue
-       }
-      }
-   }
+var valVueDtPick = Vue.component('vue-ctk-date-time-pic', {
+    template: "#vue-ctk-date-time-picker-tpl"
+    , props: {
+		   id: {}
+         , cnt: {
+            twoWay: true
+            , default: ""
+         }
+	  }
+     , model: {
+        prop: 'cnt'
+     }
    , data: function () {
        return {
-         time: ''
-         , popperProps: { 
-            popperOptions: {
-                modifiers: {
-                  preventOverflow: {
-                    padding: 20
-                  }
-               }
-            }
-         }
+         value: null
        }
      },
-     mounted(){
-      this.time = this.tme 
-      this.value = this.time
-     }
-     , methods: {
-         log: function (val) {
-            this.time = val
-            this.value = val
-            if ( typeof(this.$el) !== "undefined"){
-               this.$parent.updateItem(val,this.$el.id,val);
-            }
-         }
+     methods: {
+       onInput(v) {
+            console.log(v)
+            console.log(this)
+            //console.log(this.$el.id)
+            console.log("this.$el.id @vue-date-time-picker.js.html.ep")
+            this.$parent.updateItem(v,this.id,v);
+       }
+       , onDestroy(e) {
+            console.log(e)
+            console.log("onDestroy")
+				//this.$emit('update', value ,ev.target.id,'') // parent's job !!!
+       }
     },
-     components: { 'datetime-picker': VueDatepicker.DatetimePicker }
-})
+     components: { 'datetime-picker': Vue.component('vue-ctk-date-time-picker', window['vue-ctk-date-time-picker'])}
+   })

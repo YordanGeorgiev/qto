@@ -48,7 +48,6 @@
 /* omnisrch */
 *, *:before, *:after {
   box-sizing: inherit;
-/*   border: 1px solid red; */
 }
 .fixed-nav-bar {
   position: fixed;
