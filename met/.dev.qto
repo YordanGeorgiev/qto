@@ -226,9 +226,10 @@ src/perl/qto/public/poc/vue-ctk-date-time-picker/02/index.html
 src/perl/qto/templates/controls/list-grid/list-grid.html.ep
 src/perl/qto/templates/layouts/login.html.ep
 src/perl/qto/templates/controls/list-grid/xt/grid.xt.html.ep
+src/perl/qto/templates/controls/list-grid/js/qchk.js.html.ep
+src/perl/qto/templates/controls/list-grid/js/editable.js.html.ep
 src/perl/qto/templates/controls/list-grid/xt/vue-date-time-picker.xt.html.ep
 src/perl/qto/templates/controls/list-grid/js/vue-date-time-picker.js.html.ep
-src/perl/qto/templates/controls/list-grid/js/editable.js.html.ep
 src/perl/qto/templates/js/global/get-url-params.func.js.html.ep
 src/perl/qto/templates/js/global/get-server-data.func.js.html.ep
 src/perl/qto/templates/js/global/on-load.funcs.js.html.ep

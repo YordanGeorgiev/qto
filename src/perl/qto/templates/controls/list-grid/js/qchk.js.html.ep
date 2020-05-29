@@ -1,0 +1,21 @@
+   Vue.component('qchk', {
+     template: `<input type="checkbox" v-bind:id="id" v-model="cnt" @change="onChange">`
+     , props: {
+		   id: {}
+         , cnt: {
+            twoWay: true
+            , default: ""
+         }
+	  }
+     , mounted() {
+         this.checked = this.cnt
+     }
+     , methods: {
+         onChange(ev) {
+            var el = ev.target
+            var val= (el.checked) ? true : false
+            var notval= (el.checked) ? false : true
+            this.$parent.updateItem(val,ev.target.id,notval);
+         }
+		}
+   })

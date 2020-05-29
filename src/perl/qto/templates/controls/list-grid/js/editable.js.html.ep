@@ -37,8 +37,6 @@
        , onBlur(ev) {
 				var el = ev.target
 				var modifiedContent = ev.target.value
-            console.log(ev.target.id)
-            console.log("ev.target.id @editable.js.html.ep")
 				this.$emit('update', modifiedContent ,ev.target.id,this.oldData) // parent's job !!!
 				this.displayEmptyCellIfNullOrUndefined()
 				el.rows = "2" // the default
