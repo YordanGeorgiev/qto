@@ -61,8 +61,9 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
      
       $msg = "using the following \@tables: " . join (",", @tables) . "\n" ; 
       $objLogger->doLogInfoMsg ( $msg ) ; 
-
       # if the xls_file is not defined take the latest one from the mix data dir
+      $xls_file               = $objModel->get( 'io.xls-file' ) ; 
+      print "$xls_file \n" ; sleep 10 ; 
       if ( $objModel->get( 'io.xls-file' ) eq 'undefined' ) {
          my $xls_dir          = $ENV{'PROJ_INSTANCE_DIR' } || $config->{'env'}->{'run'}->{'ProductInstanceDir'} ; 
          $xls_dir             = $xls_dir . "/dat/mix" ; 
@@ -70,15 +71,13 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
          # ignore tilde containing files - todo: fix regex for file names starting with ~
          $xls_file            = (reverse sort (grep { $_ !~ m/~/g } @$arrRefXlsFiles))[0] ; 
          $objModel->set( 'io.xls-file' , $xls_file ) ; 
-         confess ( "xls file not defined !!! Nothing to do !!!" ) unless $objModel->get( 'io.xls-file' ) ; 
+         confess ( "cannot find an xls file to load !!! Nothing to do !!!" ) unless $objModel->get( 'io.xls-file' ) ; 
       } 
-      $xls_file               = $objModel->get( 'io.xls-file' ) ; 
      
       my $objRdrXls           = 'Qto::App::IO::In::RdrXls'->new ( \$config , \@tables ) ; 
       
       # read the xls into hash ref of hash ref
-      ( $ret , $msg  ) = 
-            $objRdrXls->doReadXlsFileToHsr3 ( $xls_file , \$objModel) ; 
+      ( $ret , $msg  ) = $objRdrXls->doReadXlsFileToHsr3 ( $xls_file , \$objModel) ; 
       return ( $ret , $msg ) unless $ret == 0 ; 
       my $hsr3             = $objModel->get('hsr3' ); 
 

@@ -438,9 +438,7 @@ src/perl/qto
 src/perl/qto/lib
 src/perl/qto/lib/Qto
 src/perl/qto/lib/Qto/App/IO/In
-src/perl/qto/lib/Qto/App/IO/In/RdrText.pm
 src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm
-src/perl/qto/lib/Qto/App/IO/In/RdrTextFactory.pm
 src/perl/qto/lib/Qto/App/IO/Out
 src/perl/qto/lib/Qto/App/IO/Out/WtrTextFactory.pm
 src/perl/qto/lib/Qto/App/IO/Out/WtrText.pm
