@@ -122,14 +122,16 @@ th:focus {
 	left: 0%;
 }
 .cls_img_but {
-   padding: 2px;
+   padding: 6px;
 	background-color: transparent;
    border-bottom-left-radius: 45%;
    border-bottom-right-radius: 45%;
 	box-shadow: 0px 0px 5px 0px #C0C0C0;
+   border-color: white;
+   border-top: none;
 }
-.cls_img_but:hover {
-   padding: 2px;
+.cls_img_but:hover, .cls_img_but:focus{
+   padding: 7px;
    background-color: #D3D3D3;
 	border-radius: 0px 1px 0px 0px;
 	box-shadow: 0px 0px 5px 0px #C0C0C0;
@@ -137,16 +139,7 @@ th:focus {
 	-moz-box-shadow: 0px 0px 5px 0px #C0C0C0;
    border-bottom-left-radius: 45%;
    border-bottom-right-radius: 45%;
-}
-.cls_img_but:focus {
-   padding: 2px;
-   background-color: #D3D3D3;
-	border-radius: 0px 1px 0px 0px;
-	box-shadow: 0px 0px 5px 0px #C0C0C0;
-	-webkit-box-shadow: 0px 0px 5px 0px #C0C0C0;
-	-moz-box-shadow: 0px 0px 5px 0px #C0C0C0;
-   border-bottom-left-radius: 45%;
-   border-bottom-right-radius: 45%;
+   border-top: none;
 }
 #btnPlayPrev10 {
    float:right;

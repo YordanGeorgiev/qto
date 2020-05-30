@@ -3,14 +3,15 @@
 SELECT 'create the "ideas" table'
 ; 
    CREATE TABLE ideas (
-      guid           UUID NOT NULL DEFAULT gen_random_uuid()
-    , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , prio           integer NULL default 0
-    , ideas_status_guid UUID NOT NULL DEFAULT 'cb989a14-d0b8-46e4-b2cc-5e2a974b5d29'
-    , name           varchar (100) NOT NULL DEFAULT 'name ...'
-    , description    varchar (4000) NOT NULL DEFAULT 'description ...'
-    , owner          varchar (50) NOT NULL DEFAULT 'unknown' 
-    , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
+    guid uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id bigint DEFAULT (to_char(CURRENT_TIMESTAMP, 'YYMMDDHH12MISS'::text))::bigint NOT NULL,
+    app_users_guid uuid DEFAULT '2660a6e9-9e6b-4faa-8264-27a92872657b'::uuid NOT NULL,
+    prio integer DEFAULT 0,
+    ideas_status_guid uuid DEFAULT 'cb989a14-d0b8-46e4-b2cc-5e2a974b5d29'::uuid NOT NULL,
+    name character varying(100) DEFAULT 'name ...'::character varying NOT NULL,
+    description character varying(4000) DEFAULT 'description ...'::character varying NOT NULL,
+    owner character varying(50) DEFAULT 'unknown'::character varying NOT NULL,
+    update_time timestamp without time zone DEFAULT date_trunc('second'::text, now())
     , CONSTRAINT pk_ideas_guid PRIMARY KEY (guid)
     ) WITH (
       OIDS=FALSE
