@@ -15,7 +15,6 @@ package Qto::App::Ctrl::Dispatcher ;
    use base qw(Qto::App::Utils::OO::AutoLoadable); 
 
    use Qto::App::Utils::Logger ; 
-   use Qto::App::Ctrl::CtrlTxtToDb ; 
    use Qto::App::Ctrl::CtrlXlsToDb ; 	
    use Qto::App::Ctrl::CtrlDbToXls ; 
    use Qto::App::Ctrl::CtrlXlsToTable ; 
@@ -75,16 +74,6 @@ package Qto::App::Ctrl::Dispatcher ;
       return ( $ret , $msg ) ; 
    }
 
-
-   sub doTxtToDb {
-      my $self = shift ; 
-      use strict 'refs'; 
-
-      my $objCtrlTxtToDb = 
-         'Qto::App::Ctrl::CtrlTxtToDb'->new ( \$config , \$objModel) ; 
-      my ( $ret , $msg ) = $objCtrlTxtToDb->doLoad () ; 
-      return ( $ret , $msg ) ; 
-   }
 
    
 

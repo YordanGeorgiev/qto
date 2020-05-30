@@ -15,7 +15,6 @@ AUTOLOAD	src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm	125;"	subroutine	language:
 AUTOLOAD	src/perl/qto/lib/Qto/App/Ctrl/CtrlTxtToDb.pm	161;"	subroutine	language:Perl
 AUTOLOAD	src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm	48;"	subroutine	language:Perl
 AUTOLOAD	src/perl/qto/lib/Qto/App/Db/Out/WtrRedis.pm	52;"	subroutine	language:Perl
-AUTOLOAD	src/perl/qto/lib/Qto/App/IO/Out/WtrText.pm	162;"	subroutine	language:Perl
 AUTOLOAD	src/perl/qto/lib/Qto/App/RAM/CnrHsr2ToJson.pm	157;"	subroutine	language:Perl
 AUTOLOAD	src/perl/qto/lib/Qto/App/RAM/CnrHsr2ToTxt.pm	293;"	subroutine	language:Perl
 AUTOLOAD	src/perl/qto/lib/Qto/App/RAM/CnrJsonToHsr2.pm	155;"	subroutine	language:Perl
@@ -32,7 +31,6 @@ DESTROY	src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm	145;"	subroutine	language:P
 DESTROY	src/perl/qto/lib/Qto/App/Ctrl/CtrlTxtToDb.pm	191;"	subroutine	language:Perl
 DESTROY	src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm	40;"	subroutine	language:Perl
 DESTROY	src/perl/qto/lib/Qto/App/Db/Out/WtrRedis.pm	44;"	subroutine	language:Perl
-DESTROY	src/perl/qto/lib/Qto/App/IO/Out/WtrText.pm	193;"	subroutine	language:Perl
 DESTROY	src/perl/qto/lib/Qto/App/RAM/CnrHsr2ToJson.pm	188;"	subroutine	language:Perl
 DESTROY	src/perl/qto/lib/Qto/App/RAM/CnrHsr2ToTxt.pm	324;"	subroutine	language:Perl
 DESTROY	src/perl/qto/lib/Qto/App/RAM/CnrJsonToHsr2.pm	186;"	subroutine	language:Perl
@@ -107,8 +105,6 @@ Qto::App::IO::In::RdrCmdArgs	src/perl/qto/lib/Qto/App/IO/In/RdrCmdArgs.pm	1;"	pa
 Qto::App::IO::In::RdrDirs	src/perl/qto/lib/Qto/App/IO/In/RdrDirs.pm	1;"	package	language:Perl
 Qto::App::IO::In::RdrEnv	src/perl/qto/lib/Qto/App/IO/In/RdrEnv.pm	1;"	package	language:Perl
 Qto::App::IO::In::RdrFiles	src/perl/qto/lib/Qto/App/IO/In/RdrFiles.pm	1;"	package	language:Perl
-Qto::App::IO::In::RdrText	src/perl/qto/lib/Qto/App/IO/In/RdrText.pm	1;"	package	language:Perl
-Qto::App::IO::In::RdrTextFactory	src/perl/qto/lib/Qto/App/IO/In/RdrTextFactory.pm	1;"	package	language:Perl
 Qto::App::IO::In::RdrXls	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	1;"	package	language:Perl
 Qto::App::IO::Out::WtrDirs	src/perl/qto/lib/Qto/App/IO/Out/WtrDirs.pm	1;"	package	language:Perl
 Qto::App::IO::Out::WtrExporterMd	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterMd.pm	1;"	package	language:Perl
@@ -116,8 +112,6 @@ Qto::App::IO::Out::WtrExporterXls	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterXls
 Qto::App::IO::Out::WtrFiles	src/perl/qto/lib/Qto/App/IO/Out/WtrFiles.pm	1;"	package	language:Perl
 Qto::App::IO::Out::WtrGitHubMd	src/perl/qto/lib/Qto/App/IO/Out/WtrGitHubMd.pm	1;"	package	language:Perl
 Qto::App::IO::Out::WtrParadoxMd	src/perl/qto/lib/Qto/App/IO/Out/WtrParadoxMd.pm	1;"	package	language:Perl
-Qto::App::IO::Out::WtrText	src/perl/qto/lib/Qto/App/IO/Out/WtrText.pm	1;"	package	language:Perl
-Qto::App::IO::Out::WtrTextFactory	src/perl/qto/lib/Qto/App/IO/Out/WtrTextFactory.pm	1;"	package	language:Perl
 Qto::App::IO::Out::WtrXls	src/perl/qto/lib/Qto/App/IO/Out/WtrXls.pm	1;"	package	language:Perl
 Qto::App::IO::WtrExportFactory	src/perl/qto/lib/Qto/App/IO/WtrExportFactory.pm	1;"	package	language:Perl
 Qto::App::IO::WtrMdFactory	src/perl/qto/lib/Qto/App/IO/WtrMdFactory.pm	1;"	package	language:Perl
@@ -179,7 +173,6 @@ RunBeforeExit	src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm	139;"	subroutine	lang
 RunBeforeExit	src/perl/qto/lib/Qto/App/Ctrl/CtrlTxtToDb.pm	179;"	subroutine	language:Perl
 RunBeforeExit	src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm	35;"	subroutine	language:Perl
 RunBeforeExit	src/perl/qto/lib/Qto/App/Db/Out/WtrRedis.pm	39;"	subroutine	language:Perl
-RunBeforeExit	src/perl/qto/lib/Qto/App/IO/Out/WtrText.pm	181;"	subroutine	language:Perl
 RunBeforeExit	src/perl/qto/lib/Qto/App/RAM/CnrHsr2ToJson.pm	176;"	subroutine	language:Perl
 RunBeforeExit	src/perl/qto/lib/Qto/App/RAM/CnrHsr2ToTxt.pm	312;"	subroutine	language:Perl
 RunBeforeExit	src/perl/qto/lib/Qto/App/RAM/CnrJsonToHsr2.pm	174;"	subroutine	language:Perl
@@ -220,6 +213,20 @@ app_imgs.name	src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql	8;"	field
 app_imgs.relative_path	src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql	9;"	field	language:SQL
 app_imgs.style	src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql	11;"	field	language:SQL
 app_imgs.update_time	src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql	14;"	field	language:SQL
+app_instance_releases	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	1;"	table	language:SQL
+app_instance_releases.app_git_ref	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	5;"	field	language:SQL
+app_instance_releases.app_ver	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	4;"	field	language:SQL
+app_instance_releases.db_git_ref	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	7;"	field	language:SQL
+app_instance_releases.db_ver	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	6;"	field	language:SQL
+app_instance_releases.description	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	12;"	field	language:SQL
+app_instance_releases.dns_name	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	10;"	field	language:SQL
+app_instance_releases.env	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	8;"	field	language:SQL
+app_instance_releases.guid	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	1;"	field	language:SQL
+app_instance_releases.id	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	3;"	field	language:SQL
+app_instance_releases.idx_uniq_app_instance_releases_id	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	18;"	index	language:SQL
+app_instance_releases.name	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	11;"	field	language:SQL
+app_instance_releases.proj_db_name	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	9;"	field	language:SQL
+app_instance_releases.update_time	src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql	13;"	field	language:SQL
 app_item_attributes	src/sql/pgsql/qto/app-itms/005.create-table.app_item_attributes.sql	5;"	table	language:SQL
 app_item_attributes.description	src/sql/pgsql/qto/app-itms/005.create-table.app_item_attributes.sql	11;"	field	language:SQL
 app_item_attributes.guid	src/sql/pgsql/qto/app-itms/005.create-table.app_item_attributes.sql	5;"	field	language:SQL
@@ -331,15 +338,16 @@ bottom	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	property	
 bottom	src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.js	9;"	property	language:JavaScript	class:I.ee.t
 bugs	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	4;"	table	language:SQL
 bugs.category_guid	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	9;"	field	language:SQL
-bugs.description	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	11;"	field	language:SQL
+bugs.description	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	12;"	field	language:SQL
 bugs.guid	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	4;"	field	language:SQL
 bugs.id	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	6;"	field	language:SQL
 bugs.issues_status_guid	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	8;"	field	language:SQL
+bugs.location	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	11;"	field	language:SQL
 bugs.name	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	10;"	field	language:SQL
-bugs.owner	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	13;"	field	language:SQL
+bugs.owner	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	14;"	field	language:SQL
 bugs.prio	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	7;"	field	language:SQL
-bugs.solution_proposal	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	12;"	field	language:SQL
-bugs.update_time	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	14;"	field	language:SQL
+bugs.solution_proposal	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	13;"	field	language:SQL
+bugs.update_time	src/sql/pgsql/qto/tables/28.create-table-bugs.sql	15;"	field	language:SQL
 buildDoc	src/python/append-to-docx.py	55;"	function	language:Python	access:public
 buildDoc	src/python/generate-docx.py	50;"	function	language:Python	access:public
 c	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	function	language:JavaScript
@@ -523,7 +531,6 @@ doConvert	src/perl/qto/lib/Qto/App/RAM/CnrJsonToHsr2.pm	62;"	subroutine	language
 doConvertHashRefToJsonStr	src/perl/qto/lib/Qto/App/RAM/CnrHsr2ToJson.pm	62;"	subroutine	language:Perl
 doConvertHashRefToStr	src/perl/qto/lib/Qto/App/RAM/CnrHsr2ToTxt.pm	60;"	subroutine	language:Perl
 doConvertSetMaxWidth	src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToArray.pm	10;"	subroutine	language:Perl
-doConvertStrToHashRef	src/perl/qto/lib/Qto/App/IO/In/RdrText.pm	66;"	subroutine	language:Perl
 doCpToEnv	src/bash/qto/funcs/cp-to-env.func.sh	7;"	function	language:Sh
 doCreateById	src/perl/qto/lib/Qto/Controller/Create.pm	26;"	subroutine	language:Perl
 doCreateCtags	src/bash/qto/funcs/dev/create-ctags.func.sh	7;"	function	language:Sh
@@ -539,7 +546,6 @@ doExit	src/perl/qto/script/qto.pl	155;"	subroutine	language:Perl
 doExport	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterMd.pm	27;"	subroutine	language:Perl
 doExport	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterXls.pm	26;"	subroutine	language:Perl
 doExportItems	src/perl/qto/lib/Qto/Controller/Export.pm	26;"	subroutine	language:Perl
-doFillInLevelsPerRow	src/perl/qto/lib/Qto/App/IO/In/RdrText.pm	273;"	subroutine	language:Perl
 doFilter	src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToHsr2.pm	18;"	subroutine	language:Perl
 doFindMaxDepth	src/perl/qto/lib/Qto/App/IO/In/RdrDirs.pm	74;"	subroutine	language:Perl
 doFixDbPermissions	src/bash/qto/funcs/fix-db-permissions.func.sh	2;"	function	language:Sh
@@ -587,17 +593,15 @@ doHsr2ToDb	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	639;"	subro
 doIncreaseDate	src/bash/qto/funcs/increase-date.func.sh	8;"	function	language:Sh
 doInit	src/bash/qto/test-qto.sh	113;"	function	language:Sh
 doInit	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToDb.pm	135;"	subroutine	language:Perl
-doInit	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToTable.pm	138;"	subroutine	language:Perl
+doInit	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToTable.pm	126;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm	166;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm	1586;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/Db/In/RdrDbsFcry.pm	62;"	subroutine	language:Perl
-doInit	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1390;"	subroutine	language:Perl
-doInit	src/perl/qto/lib/Qto/App/IO/In/RdrTextFactory.pm	20;"	subroutine	language:Perl
+doInit	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1356;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterMd.pm	71;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterXls.pm	66;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/IO/Out/WtrGitHubMd.pm	235;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/IO/Out/WtrParadoxMd.pm	148;"	subroutine	language:Perl
-doInit	src/perl/qto/lib/Qto/App/IO/Out/WtrTextFactory.pm	21;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/IO/Out/WtrXls.pm	153;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/IO/WtrExportFactory.pm	62;"	subroutine	language:Perl
 doInit	src/perl/qto/lib/Qto/App/IO/WtrMdFactory.pm	54;"	subroutine	language:Perl
@@ -608,16 +612,12 @@ doInit	src/perl/qto/lib/Qto/Controller/PageFactory.pm	69;"	subroutine	language:P
 doInitAwdInstance	src/bash/qto/funcs/init-aws-instance.func.sh	1;"	function	language:Sh
 doInitPg	src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm	1605;"	subroutine	language:Perl
 doInitShowLoginUI	src/perl/qto/lib/Qto/Controller/Login.pm	21;"	subroutine	language:Perl
-doInitShowLogonUI	src/perl/qto/lib/Qto/Controller/Logon.pm	121;"	subroutine	language:Perl
+doInitShowLogonUI	src/perl/qto/lib/Qto/Controller/Logon.pm	122;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm	108;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/Ctrl/CtrlTxtToDb.pm	142;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/IO/In/RdrCmdArgs.pm	124;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/IO/In/RdrEnv.pm	86;"	subroutine	language:Perl
-doInitialize	src/perl/qto/lib/Qto/App/IO/In/RdrText.pm	368;"	subroutine	language:Perl
-doInitialize	src/perl/qto/lib/Qto/App/IO/In/RdrTextFactory.pm	83;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	288;"	subroutine	language:Perl
-doInitialize	src/perl/qto/lib/Qto/App/IO/Out/WtrText.pm	100;"	subroutine	language:Perl
-doInitialize	src/perl/qto/lib/Qto/App/IO/Out/WtrTextFactory.pm	64;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/RAM/CnrHsr2ToJson.pm	111;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/RAM/CnrHsr2ToTxt.pm	247;"	subroutine	language:Perl
 doInitialize	src/perl/qto/lib/Qto/App/RAM/CnrJsonToHsr2.pm	109;"	subroutine	language:Perl
@@ -659,7 +659,6 @@ doParseConfFile	src/bash/qto/test-qto.sh	324;"	function	language:Sh
 doParseIniEnvVars	lib/bash/funcs/parse-cnf-env-vars.sh	51;"	function	language:Sh
 doPrepareHashForPrinting	src/perl/qto/lib/Qto/App/RAM/CnrHsr2ToTxt.pm	185;"	subroutine	language:Perl
 doPrintHelp	src/bash/qto/funcs/man/print-help.func.sh	5;"	function	language:Sh
-doPrintIssuesFile	src/perl/qto/lib/Qto/App/IO/Out/WtrText.pm	65;"	subroutine	language:Perl
 doPrintRow	src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm	184;"	subroutine	language:Perl
 doPrintStats	src/bash/qto/funcs/print-stats.func.sh	1;"	function	language:Sh
 doPrintToFile	src/perl/qto/lib/Qto/App/IO/Out/WtrFiles.pm	29;"	subroutine	language:Perl
@@ -677,7 +676,6 @@ doReadAndLoad	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToTable.pm	49;"	subroutine	la
 doReadDirGetFilesByExtension	src/perl/qto/lib/Qto/App/IO/In/RdrDirs.pm	28;"	subroutine	language:Perl
 doReadFileReturnArrayRef	src/perl/qto/lib/Qto/App/IO/In/RdrFiles.pm	102;"	subroutine	language:Perl
 doReadFileReturnString	src/perl/qto/lib/Qto/App/IO/In/RdrFiles.pm	35;"	subroutine	language:Perl
-doReadIssueFile	src/perl/qto/lib/Qto/App/IO/In/RdrText.pm	290;"	subroutine	language:Perl
 doReadXlsFileToHsr3	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	147;"	subroutine	language:Perl
 doReadXlsFileToHsr3NoChecks	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	28;"	subroutine	language:Perl
 doRegisterPlugins	src/perl/qto/lib/Qto.pm	168;"	subroutine	language:Perl
@@ -701,7 +699,7 @@ doRenderJSON	src/perl/qto/lib/Qto/Controller/BaseController.pm	41;"	subroutine	l
 doRenderPageTemplate	src/perl/qto/lib/Qto/Controller/List.pm	114;"	subroutine	language:Perl
 doRenderPageTemplate	src/perl/qto/lib/Qto/Controller/ListMy.pm	114;"	subroutine	language:Perl
 doRenderPageTemplate	src/perl/qto/lib/Qto/Controller/Login.pm	133;"	subroutine	language:Perl
-doRenderPageTemplate	src/perl/qto/lib/Qto/Controller/Logon.pm	175;"	subroutine	language:Perl
+doRenderPageTemplate	src/perl/qto/lib/Qto/Controller/Logon.pm	176;"	subroutine	language:Perl
 doRenderPageTemplate	src/perl/qto/lib/Qto/Controller/Search.pm	137;"	subroutine	language:Perl
 doRenderPageTemplate	src/perl/qto/lib/Qto/Controller/View.pm	84;"	subroutine	language:Perl
 doRenderPageTemplateNotResultSet	src/perl/qto/lib/Qto/Controller/Report.pm	123;"	subroutine	language:Perl
@@ -819,7 +817,7 @@ doUpdateItemBySingleColToDb	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgres
 doUploadFiles	src/perl/qto/lib/Qto/Controller/Upload.pm	22;"	subroutine	language:Perl
 doUpsertSingleTable	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1066;"	subroutine	language:Perl
 doUpsertTable	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	887;"	subroutine	language:Perl
-doUpsertTables	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1209;"	subroutine	language:Perl
+doUpsertTables	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1175;"	subroutine	language:Perl
 doValidateAndSetBranchId	src/perl/qto/lib/Qto/App/IO/In/CnrUrlPrms.pm	346;"	subroutine	language:Perl
 doValidateAndSetCreate	src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm	178;"	subroutine	language:Perl
 doValidateAndSetDelete	src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm	242;"	subroutine	language:Perl
@@ -968,6 +966,8 @@ export_files.path	src/sql/pgsql/qto/tables/32.create-table-export_files.sql	9;"	
 export_files.update_time	src/sql/pgsql/qto/tables/32.create-table-export_files.sql	12;"	field	language:SQL
 f	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	function	language:JavaScript	function:T
 f	src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.js	9;"	function	language:JavaScript	function:T
+fadeAwayDiv	src/perl/qto/public/list/page/list-monthly-issues.html	321;"	function	language:HTML
+fadeAwayDiv	src/perl/qto/qto-list-page-static.html	282;"	function	language:HTML
 features_doc	src/sql/pgsql/qto/tables/22.create-table-features_doc.sql	5;"	table	language:SQL
 features_doc.description	src/sql/pgsql/qto/tables/22.create-table-features_doc.sql	16;"	field	language:SQL
 features_doc.formats	src/sql/pgsql/qto/tables/22.create-table-features_doc.sql	18;"	field	language:SQL
@@ -1029,6 +1029,8 @@ getItems	src/perl/qto/public/poc/vuex/sabe/app.js	6;"	property	language:JavaScri
 getProductInstanceDir	src/js/node/ppoc/test/test-login.spec.js	58;"	function	language:JavaScript
 getTableData	src/python/append-to-docx.py	41;"	function	language:Python	access:public
 getTableData	src/python/generate-docx.py	38;"	function	language:Python	access:public
+getUrlParams	src/perl/qto/public/list/page/list-monthly-issues.html	634;"	function	language:HTML
+getUrlParams	src/perl/qto/qto-list-page-static.html	595;"	function	language:HTML
 get_function_list	qto	36;"	function	language:Sh
 get_function_list	src/bash/qto/qto.sh	36;"	function	language:Sh
 get_function_list	src/bash/qto/test-qto.sh	34;"	function	language:Sh
@@ -1058,6 +1060,8 @@ hasValidHiCreateParams	src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm	117;"	subro
 hasValidLogonParams	src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm	34;"	subroutine	language:Perl
 hasValidTokenAndClaims	src/perl/qto/lib/Qto/App/Sec/Guardian.pm	261;"	subroutine	language:Perl
 headless	src/js/node/ppoc/test/test-open-login.spec.js	20;"	property	language:JavaScript	class:const
+hideControlsOnError	src/perl/qto/public/list/page/list-monthly-issues.html	329;"	function	language:HTML
+hideControlsOnError	src/perl/qto/qto-list-page-static.html	290;"	function	language:HTML
 his_quinquennially_issues	src/sql/pgsql/qto/tables/05.01.create-table-his_quinquennially_issues.sql	5;"	table	language:SQL
 his_quinquennially_issues.action_type	src/sql/pgsql/qto/tables/05.01.create-table-his_quinquennially_issues.sql	10;"	field	language:SQL
 his_quinquennially_issues.category	src/sql/pgsql/qto/tables/05.01.create-table-his_quinquennially_issues.sql	11;"	field	language:SQL
@@ -1336,13 +1340,13 @@ new	src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm	199;"	subroutine	languag
 new	src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm	98;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Ctrl/CtrlTxtToDb.pm	125;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToDb.pm	125;"	subroutine	language:Perl
-new	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToTable.pm	128;"	subroutine	language:Perl
+new	src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToTable.pm	116;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm	150;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Db/In/Postgres/MojoPgWrapper.pm	27;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm	1574;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Db/In/RdrDbsFcry.pm	51;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm	27;"	subroutine	language:Perl
-new	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1377;"	subroutine	language:Perl
+new	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	1343;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Db/Out/WtrDbsFcry.pm	57;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/Db/Out/WtrRedis.pm	31;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/In/CnrEncrypter.pm	26;"	subroutine	language:Perl
@@ -1352,8 +1356,6 @@ new	src/perl/qto/lib/Qto/App/IO/In/RdrCmdArgs.pm	107;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/In/RdrDirs.pm	102;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/In/RdrEnv.pm	70;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/In/RdrFiles.pm	119;"	subroutine	language:Perl
-new	src/perl/qto/lib/Qto/App/IO/In/RdrText.pm	344;"	subroutine	language:Perl
-new	src/perl/qto/lib/Qto/App/IO/In/RdrTextFactory.pm	63;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm	303;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/Out/WtrDirs.pm	59;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterMd.pm	59;"	subroutine	language:Perl
@@ -1361,8 +1363,6 @@ new	src/perl/qto/lib/Qto/App/IO/Out/WtrExporterXls.pm	54;"	subroutine	language:P
 new	src/perl/qto/lib/Qto/App/IO/Out/WtrFiles.pm	113;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/Out/WtrGitHubMd.pm	220;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/Out/WtrParadoxMd.pm	138;"	subroutine	language:Perl
-new	src/perl/qto/lib/Qto/App/IO/Out/WtrText.pm	80;"	subroutine	language:Perl
-new	src/perl/qto/lib/Qto/App/IO/Out/WtrTextFactory.pm	45;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/Out/WtrXls.pm	139;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/WtrExportFactory.pm	50;"	subroutine	language:Perl
 new	src/perl/qto/lib/Qto/App/IO/WtrMdFactory.pm	42;"	subroutine	language:Perl
@@ -1442,6 +1442,12 @@ originSeq	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	192;"	label	
 originSeq	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	280;"	label	language:Perl
 p	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	function	language:JavaScript
 p	src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.js	9;"	function	language:JavaScript
+pad2	src/perl/qto/public/list/page/list-monthly-issues.html	924;"	function	language:HTML
+pad2	src/perl/qto/qto-list-page-static.html	885;"	function	language:HTML
+paintError	src/perl/qto/public/list/page/list-monthly-issues.html	290;"	function	language:HTML
+paintError	src/perl/qto/qto-list-page-static.html	251;"	function	language:HTML
+paintWarning	src/perl/qto/public/list/page/list-monthly-issues.html	300;"	function	language:HTML
+paintWarning	src/perl/qto/qto-list-page-static.html	261;"	function	language:HTML
 parentLft	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	292;"	label	language:Perl
 parentLvl	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	284;"	label	language:Perl
 parentLvl	src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm	288;"	label	language:Perl
@@ -1625,7 +1631,7 @@ risks.prio	src/sql/pgsql/qto/tables/45.create-table-risks.sql	8;"	field	language
 risks.status	src/sql/pgsql/qto/tables/45.create-table-risks.sql	9;"	field	language:SQL
 risks.update_time	src/sql/pgsql/qto/tables/45.create-table-risks.sql	13;"	field	language:SQL
 rndStr	src/perl/qto/lib/Qto.pm	570;"	subroutine	language:Perl
-rndStr	src/perl/qto/lib/Qto/Controller/Logon.pm	214;"	subroutine	language:Perl
+rndStr	src/perl/qto/lib/Qto/Controller/Logon.pm	217;"	subroutine	language:Perl
 scheduleUpdate	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	function	language:JavaScript
 scheduleUpdate	src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.js	9;"	function	language:JavaScript
 se	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	function	language:JavaScript	function:te.ne
@@ -1653,6 +1659,10 @@ set	src/perl/qto/lib/Qto/App/Utils/OO/SetGetable.pm	32;"	subroutine	language:Per
 setCellMaxWidth	src/perl/qto/lib/Qto/App/Cnvr/CnrHsr2ToArray.pm	51;"	subroutine	language:Perl
 setData	src/perl/qto/lib/Qto/App/Db/Out/WtrRedis.pm	18;"	subroutine	language:Perl
 setEmptyIfNull	src/perl/qto/lib/Qto/Controller/Login.pm	173;"	subroutine	language:Perl
+setMsgVisuals	src/perl/qto/public/list/page/list-monthly-issues.html	272;"	function	language:HTML
+setMsgVisuals	src/perl/qto/qto-list-page-static.html	233;"	function	language:HTML
+setStyleProp	src/perl/qto/public/list/page/list-monthly-issues.html	283;"	function	language:HTML
+setStyleProp	src/perl/qto/qto-list-page-static.html	244;"	function	language:HTML
 setUriParam	src/js/node/js-unit-tests/01-set-url-param/test/test.js	6;"	method	language:JavaScript	class:String
 set_vars	src/python/append-to-docx.py	22;"	function	language:Python	access:public
 set_vars	src/python/generate-docx.py	19;"	function	language:Python	access:public
@@ -1667,10 +1677,16 @@ skills.name	src/sql/pgsql/qto/tables/15.create-table-skills.sql	10;"	field	langu
 skills.prio	src/sql/pgsql/qto/tables/15.create-table-skills.sql	9;"	field	language:SQL
 skills.seq	src/sql/pgsql/qto/tables/15.create-table-skills.sql	8;"	field	language:SQL
 skills.update_time	src/sql/pgsql/qto/tables/15.create-table-skills.sql	12;"	field	language:SQL
+sleep	src/perl/qto/public/list/page/list-monthly-issues.html	651;"	function	language:HTML
+sleep	src/perl/qto/public/list/page/list-monthly-issues.html	718;"	function	language:HTML
+sleep	src/perl/qto/qto-list-page-static.html	612;"	function	language:HTML
+sleep	src/perl/qto/qto-list-page-static.html	679;"	function	language:HTML
 slice	src/perl/qto/public/lib/js/controls/vue-date-time-picker.js	9;"	method	language:JavaScript	class:m.return
 slice	src/perl/qto/public/poc/vue-date-time-picker/02/vue-date-time-picker.js	9;"	method	language:JavaScript	class:m.return
 slowMo	src/js/node/ppoc/test/test-open-login.spec.js	21;"	property	language:JavaScript	class:const
 startup	src/perl/qto/lib/Qto.pm	47;"	subroutine	language:Perl
+stripTechMsgPart	src/perl/qto/public/list/page/list-monthly-issues.html	310;"	function	language:HTML
+stripTechMsgPart	src/perl/qto/qto-list-page-static.html	271;"	function	language:HTML
 system_guide_doc	src/sql/pgsql/qto/tables/24.create-table-system_guide_doc.sql	5;"	table	language:SQL
 system_guide_doc.description	src/sql/pgsql/qto/tables/24.create-table-system_guide_doc.sql	15;"	field	language:SQL
 system_guide_doc.formats	src/sql/pgsql/qto/tables/24.create-table-system_guide_doc.sql	17;"	field	language:SQL
