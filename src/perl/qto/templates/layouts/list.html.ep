@@ -11,6 +11,7 @@
   <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/controls/left-menu.css?v=<%= $ProductVersion =%>" media="nope!" onload="this.media='all'"  />
   <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/top-bar.css?v=<%= $ProductVersion =%>" media="nope!" onload="this.media='all'"  />
 <link rel="stylesheet" type="text/css" media="nope!" onload="this.media='all'" href="../../themes/thme-blue/css/screen/controls/vue-select.css?v=<%= $ProductVersion =%>" />
+<link rel="stylesheet" type="text/css" media="nope!" onload="this.media='all'" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
 
 % if ( defined(stash('item-has-timestamp-attr')) && stash('item-has-timestamp-attr') == 1) {
    <link rel="stylesheet" type="text/css" media="nope!" onload="this.media='all'" 

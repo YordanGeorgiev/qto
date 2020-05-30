@@ -121,7 +121,6 @@ sub doChkIfColumnExists {
    my $meta_cols     = {} ; 
    my $objRdrRedis = 'Qto::App::Db::In::RdrRedis'->new(\$config);
    $meta_cols = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
-   #my $cols = $config->{ "$db" . '.meta-columns' } ; 
    foreach my $key ( keys %$meta_cols ) {
       my $row = $meta_cols->{ $key } ; 
       next unless $table eq $row->{ 'table_name' } ; 
