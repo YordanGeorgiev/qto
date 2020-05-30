@@ -4,6 +4,7 @@
 # cnf/env/tst.env.json
 # cnf/env/prd.env.json
 # start vue-date-time-picker
+src/perl/qto/public/poc/vue-ctk-date-time-picker/02/index.html
 src/perl/qto/public/poc/vue-ctk-date-time-picker/01/index.html
 src/perl/qto/public/poc/vue-select
 src/perl/qto/public/poc/vue-select/01/index.html
@@ -221,13 +222,15 @@ src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.t
 src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
 src/perl/qto/templates/layouts/list.html.ep
+src/perl/qto/templates/controls/list-grid/list-grid.html.ep
+src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-ctk-date-time-picker.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-ctk-date-time-picker.css
 src/perl/qto/public/poc/vue-ctk-date-time-picker/02/index.html
-src/perl/qto/templates/controls/list-grid/list-grid.html.ep
 src/perl/qto/templates/layouts/login.html.ep
 src/perl/qto/templates/controls/list-grid/xt/grid.xt.html.ep
 src/perl/qto/templates/controls/list-grid/js/qchk.js.html.ep
 src/perl/qto/templates/controls/list-grid/js/editable.js.html.ep
+src/perl/qto/templates/controls/list-grid/js/qchk.js.html.ep
 src/perl/qto/templates/controls/list-grid/xt/vue-date-time-picker.xt.html.ep
 src/perl/qto/templates/controls/list-grid/js/vue-date-time-picker.js.html.ep
 src/perl/qto/templates/js/global/get-url-params.func.js.html.ep
@@ -438,12 +441,8 @@ src/perl/qto
 src/perl/qto/lib
 src/perl/qto/lib/Qto
 src/perl/qto/lib/Qto/App/IO/In
-src/perl/qto/lib/Qto/App/IO/In/RdrText.pm
 src/perl/qto/lib/Qto/App/IO/In/RdrXls.pm
-src/perl/qto/lib/Qto/App/IO/In/RdrTextFactory.pm
 src/perl/qto/lib/Qto/App/IO/Out
-src/perl/qto/lib/Qto/App/IO/Out/WtrTextFactory.pm
-src/perl/qto/lib/Qto/App/IO/Out/WtrText.pm
 src/perl/qto/lib/Qto/App/IO/Out/WtrXls.pm
 src/perl/qto/lib/Qto/App/IO/Out/WtrGitHubMd.pm
 src/perl/qto/lib/Qto/App/IO/Out/WtrParadoxMd.pm
@@ -465,7 +464,6 @@ src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToDb.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToTable.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm
-src/perl/qto/lib/Qto/App/Ctrl/CtrlTxtToDb.pm
 src/perl/qto/lib/Qto/App/Utils
 src/perl/qto/lib/Qto/App/Utils/Initiator.pm
 src/perl/qto/lib/Qto/App/IO/In/RdrDirs.pm
@@ -521,6 +519,7 @@ src/sql/pgsql/qto/app-itms/005.create-table.app_item_attributes.sql
 src/sql/pgsql/qto/app-itms/006.create-table.app_routes.sql
 src/sql/pgsql/qto/app-itms/007.create-table.app_items_roles_permissions.sql
 src/sql/pgsql/qto/app-itms/008.create-table.app_imgs.sql
+src/sql/pgsql/qto/app-itms/009.create-table.app_instance_releases.sql
 src/sql/pgsql/qto/app-itms/300.create-function.fnc_set_update_time.sql
 src/sql/pgsql/qto/app-itms/301.create-function.fnc_concat_ws.sql
 src/sql/pgsql/qto/app-itms/302.create-function.fnc_get_app_routes.sql
@@ -872,7 +871,6 @@ src/perl/qto/lib/auto/Qto/Auth/Role
 src/perl/qto/lib/auto/Qto/Auth/Role/autosplit.ix
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToXls/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlTxtToDb/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlXlsToDb/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlXlsToTable/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/Dispatcher/autosplit.ix
@@ -886,7 +884,6 @@ src/perl/qto/lib/auto/Qto/App/IO/In/RdrCmdArgs/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/In/RdrDirs/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/In/RdrEnv/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/In/RdrFiles/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/IO/In/RdrText/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/In/RdrXls/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrDirs/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrExporterMd/autosplit.ix
@@ -894,7 +891,6 @@ src/perl/qto/lib/auto/Qto/App/IO/Out/WtrExporterXls/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrFiles/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrGitHubMd/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrParadoxMd/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/IO/Out/WtrText/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrXls/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Mdl/Model/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/RAM/CnrHsr2ToJson/autosplit.ix
@@ -999,3 +995,7 @@ src/sql/pgsql/scripts/reporting/create-rep_userstories_doc.sql
 src/sql/pgsql/scripts/reporting/repopulate-rep_userstories_doc.sql
 cnf/bash/etc/init.d/qto-on-boot.sh
 dat/xls/styler.xlsx
+qto
+qto.pl
+src/perl/qto/lib/auto/Qto/Controller/CreateMy/autosplit.ix
+src/perl/qto/lib/auto/Qto/Controller/SelectCol/autosplit.ix

@@ -11,7 +11,12 @@
   <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/controls/left-menu.css?v=<%= $ProductVersion =%>" media="nope!" onload="this.media='all'"  />
   <link rel="stylesheet" type="text/css" href="../../themes/thme-blue/css/screen/site/top-bar.css?v=<%= $ProductVersion =%>" media="nope!" onload="this.media='all'"  />
 <link rel="stylesheet" type="text/css" media="nope!" onload="this.media='all'" href="../../themes/thme-blue/css/screen/controls/vue-select.css?v=<%= $ProductVersion =%>" />
-<link rel="stylesheet" type="text/css" media="nope!" onload="this.media='all'" href="../../themes/thme-blue/css/screen/controls/vue-ctk-date-time-picker.css?v=<%= $ProductVersion =%>" media="nope!" onload="this.media='all'"/>
+
+% if ( defined(stash('item-has-timestamp-attr')) && stash('item-has-timestamp-attr') == 1) {
+   <link rel="stylesheet" type="text/css" media="nope!" onload="this.media='all'" 
+      href="../../themes/thme-blue/css/screen/controls/vue-ctk-date-time-picker.css?v=<%= $ProductVersion =%>" />
+% } 
+
   <%= content 'cnt_header_css' %>
 </head>
 <body>
@@ -25,7 +30,10 @@
    %= include 'controls/left-menu/left-menu'
 <script type="application/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js" crossorigin="anonymous"></script>
 <script type="application/javascript" src="https://unpkg.com/axios/dist/axios.min.js" crossorigin="anonymous"></script>
-<script type="application/javascript" src="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@2.4.0/dist/vue-ctk-date-time-picker.umd.min.js" charset="utf-8"></script>
+% if ( defined(stash('item-has-timestamp-attr')) && stash('item-has-timestamp-attr') == 1) {
+      <script type="application/javascript" charset="utf-8"
+         src="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@2.4.0/dist/vue-ctk-date-time-picker.umd.min.js" charset="utf-8"></script>
+% } 
 <script type="application/javascript" src="/lib/js/controls/vue-select.js"></script>
 <script type="application/javascript" src="/lib/js/controls/vue-simple-upload.min.js"></script>
    <%= content 'cnt_body_controls' %>

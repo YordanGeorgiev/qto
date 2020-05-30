@@ -222,10 +222,10 @@ src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.t
 src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
 src/perl/qto/templates/layouts/list.html.ep
+src/perl/qto/templates/controls/list-grid/list-grid.html.ep
 src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-ctk-date-time-picker.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-ctk-date-time-picker.css
 src/perl/qto/public/poc/vue-ctk-date-time-picker/02/index.html
-src/perl/qto/templates/controls/list-grid/list-grid.html.ep
 src/perl/qto/templates/layouts/login.html.ep
 src/perl/qto/templates/controls/list-grid/xt/grid.xt.html.ep
 src/perl/qto/templates/controls/list-grid/js/qchk.js.html.ep
@@ -891,7 +891,6 @@ src/perl/qto/lib/auto/Qto/App/IO/Out/WtrExporterXls/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrFiles/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrGitHubMd/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrParadoxMd/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/IO/Out/WtrText/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/IO/Out/WtrXls/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Mdl/Model/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/RAM/CnrHsr2ToJson/autosplit.ix
