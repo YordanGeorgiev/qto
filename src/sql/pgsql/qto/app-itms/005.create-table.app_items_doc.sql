@@ -16,7 +16,6 @@ CREATE TABLE app_items_doc (
     , status         varchar (10) NOT NULL DEFAULT '02-todo'
     , description    varchar (4000)
     , item_id        integer NULL -- the future hook for the table name in the url
-    , prio           smallint NOT NULL DEFAULT 1
     , src            varchar (4000)
     , formats        text NULL
     , lft            bigint  NULL

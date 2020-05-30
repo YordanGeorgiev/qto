@@ -129,6 +129,24 @@ sub doChkIfColumnExists {
    }
    return 0 ; 
 }
+
+
+sub itemHasTimestampAttr {
+
+   my $self          = shift ; 
+   my $db            = shift || $self->get('postgres_db_name');
+   my $table         = shift || $self->get('table_name');
+   my $col           = shift ; 
+   my $meta_cols     = {} ; 
+   my $objRdrRedis = 'Qto::App::Db::In::RdrRedis'->new(\$config);
+   $meta_cols = $objRdrRedis->getData(\$config,"$db" . '.meta-columns');
+   foreach my $key ( keys %$meta_cols ) {
+      my $row = $meta_cols->{ $key } ; 
+      next unless $table eq $row->{ 'table_name' } ; 
+      return 1 if ($row->{ 'attribute_name' } ne 'update_time' && $row->{'data_type'} =~ /timestamp/g ); 
+   }
+   return 0 ; 
+}
   
 
 sub doSetDbTablesList {
