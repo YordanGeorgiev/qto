@@ -167,7 +167,7 @@
                   for(var kv of url_params.entries()) { queryStr = queryStr + kv[0]+ '='+ kv[1] + '&'; }
                   var uri = window.location.href.split('?')[0] + '?' + queryStr.slice(0, - 1)
                   if ( uri.indexOf("oa=prio") === -1 ) { url_params.set("od" , "id") }
-                  url_params.set("pg-size" , "5")
+                  url_params.set("pg-size" , this.pageSize)
                   url_params.set("pg-num" , 1)
                   this.fetchServerSideDataToUI(url_params)
                   if ( uri.indexOf("oa=prio") === -1 ) { 
@@ -178,7 +178,6 @@
                      uri = uri.setUriParam("od",null)
                   }
                   uri = uri.replace(/([&]{0,1}pg-num=([0-9a-zA-Z_\-]+))+/gi , "") 
-                  uri = uri.replace(/([&]{0,1}pg-size=([0-9a-zA-Z_\-]+))+/gi , "") 
                   uri = uri.replace(/([&]{0,1}for=([0-9a-zA-Z_\-]+))+/gi , "") 
                   uri = uri.replace(/([&]{0,1}with=([0-9a-zA-Z_\-]+))+/gi , "") 
                   uri = uri.replace(/([&]{0,1}like-by=([0-9a-zA-Z_\-]+))+/gi , "") 
@@ -186,7 +185,7 @@
                   window.location.href = uri // and redirect !!!
                } else {
                   var msg = result.toString(); 
-                  msg = msg + ". Somebody was faster than you in the second you clicked !"
+                  msg = msg + ". Extremely rare case of 2 users adding new item in the same second !!!"
                   msg = msg + " Retry once again."
                   setMsgVisuals( msg ) ;
                }
@@ -273,7 +272,11 @@
                var uri = window.location.href 
                if ( uri.indexOf("?") === -1 ) { uri = uri + '?' }
                if ( uri.indexOf("pg-num=") === -1 ) {
-                  uri = uri + "&pg-num=2"
+                  if (this.pageNum < this.pageCount) {
+                     uri = uri + "&pg-num=2"
+                  } else {
+                     uri = uri + "&pg-num=1"
+                  }
                } else {
                   var newPageNum = Number(this.pageNum)+1
                   if ( newPageNum > this.pagesCount ) { newPageNum = this.pagesCount }

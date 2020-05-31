@@ -157,6 +157,7 @@ my $objModel         = ${ shift @_ } ;
    my $https_port = $config->{'env'}->{'app'}->{'https_port'};
    my $url_path = $self->url_for->path;
    my $url_to_share = 'https://' .  $web_host . ':' . $https_port . $url_path ;
+   $self->stash('item-has-timestamp-attr'=> $objModel->itemHasTimestampAttr($db,$item));
 
    $self->render(
       'template'        => $template 
