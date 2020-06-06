@@ -4,8 +4,6 @@
 % content_for cnt_header_css => begin
    <title> report <%= " $db " =%> </title> 
    <link rel="stylesheet" type="text/css" media="screen"  
-      href="../../themes/thme-blue/css/screen/controls/pager.css?v=<%= $ProductVersion =%>" />
-   <link rel="stylesheet" type="text/css" media="screen"  
       href="../../themes/thme-blue/css/screen/controls/searchbox.css?v=<%= $ProductVersion =%>" />
    <link rel="stylesheet" type="text/css" media="screen"  
       href="../../themes/thme-blue/css/screen/controls/table.css?v=<%= $ProductVersion =%>" />

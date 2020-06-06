@@ -48,3 +48,4 @@
       Redis
       Crypt::OpenSSL::RSA
       Gravatar::URL
+      Mojolicious::Plugin::Gzip

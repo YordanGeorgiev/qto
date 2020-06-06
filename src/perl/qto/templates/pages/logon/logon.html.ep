@@ -176,7 +176,7 @@ Array.prototype.each = function(a) {
 % content_for cnt_all_js => begin
 
    <script id="all_js_scripts">
-      document.getElementById("<%= $db =%>_email").focus();
-      document.getElementById("<%= $db =%>_email").select();
+      document.getElementById("email").focus();
+      document.getElementById("email").select();
    </script>
 % end

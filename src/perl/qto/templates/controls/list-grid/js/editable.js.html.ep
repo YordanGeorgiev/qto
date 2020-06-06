@@ -20,8 +20,14 @@
          this.content = this.cnt
          this.displayEmptyCellIfNullOrUndefined()
          this.$el.style.width = this.getColMaxWidth(this.$el) + "px"
-     },
-     methods: {
+     }
+, ready: function () {
+  window.addEventListener('resize', this.handleResize)
+}
+, beforeDestroy: function () {
+  window.removeEventListener('resize', this.handleResize)
+}
+,      methods: {
        displayEmptyCellIfNullOrUndefined() {
             if ( typeof this.content == "undefined" || this.content === 'null' || this.content == null) {
                this.$el.innerText = " "
@@ -106,7 +112,7 @@
                } else if ( width > 59 && width < 90 ) {
                   return 300
                } else  {
-                  return 460
+                  return 400
                }
             } else {
                   return 20
@@ -127,11 +133,14 @@
                } else if ( width > 104 && width < 205 ) {
                   return 300
                } else  {
-                  return 460
+                  return 400
                }
             } else {
                return 20
             }
      		}
+, handleResize: function () {
+  console.log('handleResize')
+}
 		}
    })

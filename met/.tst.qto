@@ -536,6 +536,7 @@ src/sql/pgsql/qto/tables/2020/2020-02/create-table-monthly_issues_202002.sql
 src/sql/pgsql/qto/tables/2020/2020-03/create-table-monthly_issues_202003.sql
 src/sql/pgsql/qto/tables/2020/2020-04/create-table-monthly_issues_202004.sql
 src/sql/pgsql/qto/tables/2020/2020-05/create-table-monthly_issues_202005.sql
+src/sql/pgsql/qto/tables/2020/2020-05/create-table-monthly_issues_202006.sql
 src/sql/pgsql/qto/tables/01.create-table-daily_issues.sql
 src/sql/pgsql/qto/tables/03.create-table-monthly_issues.sql
 src/sql/pgsql/qto/tables/04.create-table-yearly_issues.sql
