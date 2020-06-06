@@ -57,4 +57,9 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_read_timeout 10s;
   }
+
+  location ~* .(ico|css|js|gif|jpeg|jpg|png|woff|ttf|otf|svg|woff2|eot)$ {
+  	expires 4h;
+   add_header Cache-Control "public, max-age=31536000";
+  }
 }

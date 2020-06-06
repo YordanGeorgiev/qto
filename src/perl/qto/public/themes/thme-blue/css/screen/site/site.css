@@ -2,7 +2,6 @@ html{
    font-size: 90px; /* because of the stupid calendar */
 }
 body {
-   overflow-x: hidden;
    max-width: 100%; 
    font-family: Helvetica Neue, Arial, sans-serif;
    scroll-behavior: smooth;

@@ -1,5 +1,5 @@
 <script type="text/x-template" id="vue-ctk-date-time-picker-tpl"> 
    <vue-ctk-date-time-picker :format="'YYYY-MM-DD HH:mm'" :formatted="'YYYY-MM-DD HH:mm'" :no-label="true" 
-      v-model="cnt" :no-header="true" :overlay="true" @input="onInput">
+      style="min-width: 170px" style="max-width:360px" v-model="cnt" :no-header="true" :overlay="true" @input="onInput">
    </vue-ctk-date-time-picker>
 </script>

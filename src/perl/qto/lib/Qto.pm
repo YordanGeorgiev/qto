@@ -22,6 +22,7 @@ use IO::Compress::Gzip 'gzip' ;
 use URL::Encode qw(url_encode url_decode);
 
 use Mojolicious::Plugin::RenderFile ; 
+use Mojolicious::Plugin::Gzip ;
 
 use Qto::App::Utils::Initiator;
 use Qto::App::Utils::Logger;
@@ -172,6 +173,7 @@ sub doRegisterPlugins {
    $self->plugin('BasicAuthPlus');
    $self->plugin('RenderFile');
    # $self->plugin('Config');
+   $self->plugin(Gzip => {min_size => 1500});
 }
 
 #

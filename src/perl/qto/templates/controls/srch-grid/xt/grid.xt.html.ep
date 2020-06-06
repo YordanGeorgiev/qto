@@ -1,5 +1,5 @@
 	<script type="text/x-template" id="grid-template">
-      <div id="div_grid_tmpl" style="overflow-x: auto;" >
+      <div id="div_grid_tmpl" style="overflow-y:visible">
          <modal :id="cid" v-if="showModal" v-on:close="showModal = false" >
          </modal>
          <div_search_box id="div_search_box" />
