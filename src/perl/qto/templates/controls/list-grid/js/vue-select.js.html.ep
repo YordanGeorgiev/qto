@@ -31,6 +31,27 @@ Vue.component('vue-select', {
       } 
       return urlPrms ; 
     }
+    , handlers: (map, vm) => ({
+			//  tab
+			9: e => this.onTab()
+			//  enter
+			, 13: e => {
+				 e.preventDefault();
+				 return this.typeAheadSelect();
+			}
+			//  esc
+			, 27: e => this.onEscape()
+			//  up
+			, 38: e => {
+				 e.preventDefault();
+				 return this.typeAheadUp();
+			}
+			//  down
+			, 40: e => {
+				 e.preventDefault();
+				 return this.typeAheadDown();
+			}
+    })
     , loadData(){
       var k = '<%= $db =%>' + '.' + this.itemname
 
