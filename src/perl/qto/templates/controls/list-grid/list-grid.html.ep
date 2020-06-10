@@ -36,7 +36,7 @@
                      </button></div>
                      <div id="page_counter"><span v-for> {{this.pageNum}} / {{this.pagesCount }}</span></div>
                   <div class="cls_img_but">
-                     <button id="btnPlayNext" type="submit" href="javascript:void(0);" v-on:click="goToNextPage">
+                     <button id="btnPlayNext" tabindex="3" type="submit" href="javascript:void(0);" v-on:click="goToNextPage">
                         <span style="clear:none" class="material-icons">play_circle_outline</span></button></div>
                   <div class="cls_img_but">
                      <button id="btnPlayNext10" type="submit" href="javascript:void(0);" v-on:click="goToNextPage10" tabindex="3">

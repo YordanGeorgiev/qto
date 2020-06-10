@@ -224,7 +224,6 @@ src/perl/qto/templates/layouts/view.html.ep
 src/perl/qto/templates/layouts/list.html.ep
 src/perl/qto/templates/controls/list-grid/list-grid.html.ep
 src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-ctk-date-time-picker.css
-src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-ctk-date-time-picker.css
 src/perl/qto/public/poc/vue-ctk-date-time-picker/02/index.html
 src/perl/qto/templates/layouts/login.html.ep
 src/perl/qto/templates/controls/list-grid/xt/grid.xt.html.ep
