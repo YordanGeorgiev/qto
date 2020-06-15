@@ -11,9 +11,10 @@ main(){
 	if [[ $APP_TO_DEPLOY == '--help' ]]; then
 		usage
 	fi
-   do_source_funtions
+   do_source_functions
+   do_add_nginx_repositories
+   do_add_dns
    do_check_setup_bash
-   do_setup_resolv_conf
    do_set_time
    do_check_install_ubuntu_packages
    do_check_install_postgres
@@ -31,15 +32,24 @@ main(){
    do_finalize
 }
 
-do_setup_resolv_conf(){
+do_add_dns(){
 
-sudo bash -c 'cat << EOF_RESOLV_CONF >> /etc/resolv.conf
+sudo bash -c 'cat >> /etc/resolv.conf << EOF_ADD_DNS
 nameserver 10.1.2.1
 nameserver 10.1.2.2
 nameserver 8.8.8.8
 nameserver 8.8.4.4
-EOF_RESOLV_CONF'
+EOF_ADD_DNS'
+}
 
+do_add_nginx_repositories(){
+
+sudo bash -c 'cat >> /etc/apt/sources.list << EOF_NGINX_REPOS
+# nginx repos
+deb https://nginx.org/packages/ubuntu/ bionic nginx
+deb-src https://nginx.org/packages/ubuntu/ bionic nginx
+EOF_NGINX_REPOS'
+sudo apt-get update
 }
 
 do_set_time(){
@@ -78,7 +88,7 @@ EOF_USAGE
 }
 
 
-do_source_funtions(){
+do_source_functions(){
    source $PRODUCT_DIR/src/bash/deployer/export-json-section-vars.func.sh
    source $PRODUCT_DIR/src/bash/deployer/check-setup-bash.func.sh
    source $PRODUCT_DIR/src/bash/deployer/check-install-ubuntu-packages.func.sh
@@ -189,4 +199,3 @@ do_finalize(){
 
 
 main "$@"
-
