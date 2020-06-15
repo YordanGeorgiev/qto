@@ -6,7 +6,7 @@
 	# ------------------------------------------------------
 	-- todo: what is the purpose of the doHelpGenerateActionFiles function
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
 	-- todo: what are the prerequisites of the doHelpGenerateActionFiles function
 
@@ -15,7 +15,7 @@
 	-- todo: what are the required installations for the  
 		doHelpGenerateActionFiles function to execute without errors
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
 	-- todo: what are the interdependancies for the  
 		doHelpGenerateActionFiles function to execute without errors
@@ -24,7 +24,7 @@
 	# ------------------------------------------------------
 	-- todo: how can be the doHelpGenerateActionFiles used 
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
 	-- todo: what issues, todos could be pointed for development
 

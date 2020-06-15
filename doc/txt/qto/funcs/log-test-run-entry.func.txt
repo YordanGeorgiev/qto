@@ -8,13 +8,13 @@
    single test-run-report-file
    to show the test-run-report-fil
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
 
 	# Installation and Configuration
 	# ------------------------------------------------------
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
    bash , perl, qto core funcs
 
@@ -34,7 +34,7 @@
    # and show the whole test-run-report-file
 	doLogTestRunEntry STATUS
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
    # wip: implement the real code
    # wip: implement trap  if the action function fails ...

@@ -5,7 +5,7 @@
 	# Purpose:
 	# ------------------------------------------------------
 	
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
    bash , perl , *.SQL file with %vars% notation in the 
    src/sql/mssql/run dir
@@ -14,7 +14,7 @@
 	# ------------------------------------------------------
    unzip -o <<zip_pacckage>> -d <<dir-to-deploy>> 
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
    there should be a lst file in the dat/lst/mssql/list.list
 
@@ -22,12 +22,12 @@
 	# ------------------------------------------------------
    1. fill in the lst file 
 	2. ensure tabs are used as token separators
-   3. enssure you have a template -05-14 src/sql/mssql/run
+   3. ensure you have a template -05-14 src/sql/mssql/run
    4. Action !!!
    bash src/bash/qto/qto.sh -a generate-sql
     
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
    
 	# Caveats:
