@@ -6,7 +6,7 @@
 	# ------------------------------------------------------
 	download all the docs of an qto app onto a <<proj_docs_root_dir>> or <<PROJ_INSTANCE_DIR>>/docs/md/ by calling the 
    export as md feature by fetching json string from the pre-defined export files table
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
 	app up and running - valid hierarchichal docs
 
@@ -14,7 +14,7 @@
 	# ------------------------------------------------------
    see ISG 
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
    app up and running with the morbo web server
 
@@ -22,7 +22,7 @@
 	# ------------------------------------------------------
 	bash $0 -a generate-md-docs
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
 	http://192.168.56.120:3001/prd_livy_rester/select/export_files?as=grid&od=id
 	parsing it and producing the desired exported files

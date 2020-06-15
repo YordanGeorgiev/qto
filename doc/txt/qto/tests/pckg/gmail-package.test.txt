@@ -6,7 +6,7 @@
 	# ------------------------------------------------------
 	to test whether the sending to gmail works 
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
    preconfigured muttrc , mutt , see .muttrc from meta
 
@@ -14,7 +14,7 @@
 	# ------------------------------------------------------
    register gmail account , install mutt , configure muttrc
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
    preconfigured muttrc , mutt , see .muttrc from meta
 
@@ -22,7 +22,7 @@
 	# ------------------------------------------------------
 	bash src/bash/qto/qto.sh -a gmail-package
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
 	-- simplify .muttrc configuration, add to to docs
 

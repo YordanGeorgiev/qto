@@ -8,7 +8,7 @@
    sfw/sql/pgsql/<<db-name>> 
    by logging the output of the scripts to a log file
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
    gnu bash, perl, qto core funcs, postgres
    <<db-name>> is configured in the conf file
@@ -17,7 +17,7 @@
 	# ------------------------------------------------------
    gnu bash, perl, qto core funcs, postgres
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
    gnu bash, perl, qto core funcs, postgres
    <<db-name>> is configured in the conf file
@@ -30,7 +30,7 @@
    bash src/bash/qto/test-qto.sh
    Inspect the test report file you should get ok from the ran action
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
 
 	# Caveats:

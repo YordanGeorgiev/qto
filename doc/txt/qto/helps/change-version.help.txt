@@ -6,7 +6,7 @@
 	# ------------------------------------------------------
 	-- todo: what is the purpose of the doHelpChangeVersion function
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
 	-- todo: what are the prerequisites of the doHelpChangeVersion function
 
@@ -15,7 +15,7 @@
 	-- todo: what are the required installations for the  
 		doHelpChangeVersion function to execute without errors
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
 	-- todo: what are the interdependancies for the  
 		doHelpChangeVersion function to execute without errors
@@ -24,7 +24,7 @@
 	# ------------------------------------------------------
 	-- todo: how can be the doHelpChangeVersion used 
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
 	-- todo: what issues, todos could be pointed for development
 
