@@ -6,7 +6,7 @@
 	# ------------------------------------------------------
 	to generate sql scripts out of *.SQL templates
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
    bash , perl , *.SQL file with %vars% notation in the 
    src/sql/mssql/run dir
@@ -15,19 +15,19 @@
 	# ------------------------------------------------------
    unzip -o <<zip_pacckage>> -d <<dir-to-deploy>> 
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
    there should be a lst file in the dat/lst/mssql/list.lst
 
 	# Usage:
 	# ------------------------------------------------------
    1. fill in the lst file 
-   2. enssure you have a template 
+   2. ensure you have a template 
    3. Action !!!
    bash src/bash/qto/qto.sh -a generate-sql
     
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
    
 	# Caveats:

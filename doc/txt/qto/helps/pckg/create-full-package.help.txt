@@ -9,11 +9,11 @@
 	You must specify the files to be be included in the full package from the met/qto.dev 
 	file
 
-	# Prequisites and installations
+	# Prerequisites and installations
 	# ------------------------------------------------------
 	zip , perl , bash , xargs
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
 	you might specify different file paths containing file 
 	as follows: 
@@ -24,7 +24,7 @@
 	bash src/bash/qto/qto.sh -a create-full-package
 	bash src/bash/qto/qto.sh -a create-full-package -i met/.prd.qto
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
 	-- todo: clear up console output
 	-- better error handling when I file is not found 	

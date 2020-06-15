@@ -6,7 +6,7 @@
 	# ------------------------------------------------------
 	to run the data load tests 
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
 	the full setup up and running - chk ISG
 
@@ -14,7 +14,7 @@
 	# ------------------------------------------------------
    chk ISG
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
    chk the System Guide 
 
@@ -22,7 +22,7 @@
 	# ------------------------------------------------------
 	clear ; bash src/bash/qto/qto.sh -a run-data-load-tests
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
 	-- identify and separate all the data loading tests into this shell action
 

@@ -6,7 +6,7 @@
 	# ------------------------------------------------------
 	to start the selenium stand-alone server in the background
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
 	selenium-server-standalone-3.13.0.jar
 
@@ -16,7 +16,7 @@
 	wget https://selenium-release.storage.googleapis.com/3.13/selenium-server-standalone-3.13.0.jar
    mv -v selenium-server-standalone-3.13.0.jar /usr/lib/selenium-server-standalone.jar
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
    you must ssh -X username@host
 
@@ -24,7 +24,7 @@
 	# ------------------------------------------------------
 	bash $0 -a start-selenium
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
 	-- todo: a stop func ?
    -- the removing of the lock files is manual ... 
