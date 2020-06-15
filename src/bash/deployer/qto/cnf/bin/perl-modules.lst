@@ -19,10 +19,6 @@
       File::Copy
       File::Find
       File::Path
-      Spreadsheet::ParseExcel
-      Spreadsheet::XLSX
-      Spreadsheet::ParseExcel::FmtJapan
-      Excel::Writer::XLSX
       Text::CSV_XS
       Module::Build::Tiny
       File::Copy::Recursive
@@ -39,8 +35,6 @@
       Mojo::Pg
       Mojo::Phantom 
       Authen::Passphrase::BlowfishCrypt
-      Selenium::Remote::Driver
-      Selenium::Chrome
       Term::ReadKey
       Term::Prompt
       DBIx::ProcedureCall
