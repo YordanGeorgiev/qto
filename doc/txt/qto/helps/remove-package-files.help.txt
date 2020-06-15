@@ -6,7 +6,7 @@
 	# ------------------------------------------------------
 	-- todo: what is the purpose of the doHelpRemovePackageFiles function
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
 	-- todo: what are the prerequisites of the doHelpRemovePackageFiles function
 
@@ -15,7 +15,7 @@
 	-- todo: what are the required installations for the  
 		doHelpRemovePackageFiles function to execute without errors
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
 	-- todo: what are the interdependancies for the  
 		doHelpRemovePackageFiles function to execute without errors
@@ -24,7 +24,7 @@
 	# ------------------------------------------------------
 	-- todo: how can be the doHelpRemovePackageFiles used 
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
 	-- todo: what issues, todos could be pointed for development
 

@@ -7,7 +7,7 @@
 	to create a relative zip package with the files specified
    in the includd file
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
    gnu bash , zip , unzip , perl the include file to use, qto core
 
@@ -15,7 +15,7 @@
 	# ------------------------------------------------------
    install the gnu bash , zip , perl , unzip binaries
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
    gnu bash , zip , unzip , perl the include file to use , qto core
 
@@ -28,7 +28,7 @@
    # creates the relative package with different include file
    bash src/bash/qto/qto.sh -a create-relative-package -i met/.tmp.qto	
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
 
 	# Caveats:

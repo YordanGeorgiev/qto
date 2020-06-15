@@ -9,7 +9,7 @@
    by logging the output of the scripts to a log file
    by exitting the whole bash script on the first sql error
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
    gnu bash, perl, qto core funcs, postgres
    <<db-name>> is configured in the conf file
@@ -26,7 +26,7 @@
    # grant him the privilege to create db's 
    ALTER USER ysg CREATEDB;
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
    gnu bash, perl, qto core funcs, postgres
    <<db-name>> is configured in the conf file
@@ -36,7 +36,7 @@
 	# ------------------------------------------------------
 	bash src/bash/qto/qto.sh -a run-pgsql-scripts
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
 
 	# Caveats:
