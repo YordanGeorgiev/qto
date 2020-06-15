@@ -58,7 +58,7 @@ SELECT tgname
 --
 
 
-COPY public.app_items_doc (guid, id, level, seq, type, url, title, name, status, description, item_id, prio, src, formats, lft, rgt, update_time) FROM stdin;
+COPY public.app_items_doc (guid, id, level, seq, type, url, title, name, status, description, item_id, src, formats, lft, rgt, update_time) FROM stdin;
 5b9c9736-6d97-44f7-8453-8a63bad5f150	191109112208	2	4	doc	view/readme_doc	readme	readme	09-done	\N	\N	\N	\N	5	6	2020-01-31 18:39:56
 7b0e04c7-ccee-4c74-b32c-428916dc8b40	191110102142	2	18	doc	view/concepts_doc	application concepts	concepts	09-done	\N	\N	\N	\N	31	26	2020-03-01 10:29:33
 d9aa6513-724c-420f-b694-a583d54564f5	191110102154	2	21	doc	view/features_doc	features & functionalities	features & functionalities	09-done	\N	\N	\N	\N	37	30	2020-03-01 10:29:33
