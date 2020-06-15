@@ -6,7 +6,7 @@
 	# ------------------------------------------------------
 	to provide a quick oneliner for removing specified action files
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
 	perl , bash
 
@@ -14,7 +14,7 @@
 	# ------------------------------------------------------
 	install perl , bash 
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
 	you need to specify the action files to be removed in the : 
 	src/bash/qto/tests/rem-qto-actions.lst

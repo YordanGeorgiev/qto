@@ -10,7 +10,7 @@
 	mkdir -p <<target_PRODUCT_INSTANCE_DIR>>
 	unzip -o <<zip_file>> -d <<target_PRODUCT_INSTANCE_DIR>>	
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
 	zip , perl , bash , xargs
 
@@ -18,7 +18,7 @@
 	# ------------------------------------------------------
 	install zip , perl , bash , xargs
 
-	# Interdependancies
+	# Interdependencies
 	# ------------------------------------------------------
 	you might specify different file paths containing file 
 	as follows: 
@@ -28,7 +28,7 @@
 	# ------------------------------------------------------
 	bash src/bash/qto/qto.sh -a create-relative-package
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
 	-- todo: clear up console output
 	-- better error handling when I file is not found 	
