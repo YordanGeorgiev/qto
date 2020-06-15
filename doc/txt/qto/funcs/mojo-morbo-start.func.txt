@@ -7,7 +7,7 @@
 	just a wrapper func to start the mojolicious app in 
    development mode of this product instance mojolicious web-app
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
 	Mojolicious - the real time Perl web framework
 
@@ -16,7 +16,7 @@
 	# ------------------------------------------------------
 	$0 -a mojo-morbo-start
 
-	# Developent
+	# Development
 	# ------------------------------------------------------
 
 	# Caveats:

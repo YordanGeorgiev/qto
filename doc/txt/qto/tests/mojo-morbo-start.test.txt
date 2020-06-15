@@ -6,7 +6,7 @@
 	# ------------------------------------------------------
 	to test the staring of the mojo qto app 
 
-	# Prequisites
+	# Prerequisites
 	# ------------------------------------------------------
    - Mojolicious installed
    perl src/perl/qto/script/qto_preq_checker.pl
@@ -15,7 +15,7 @@
 	# ------------------------------------------------------
    perl src/perl/qto/script/qto_preq_checker.pl
    
-	# Interdependancies
+	# Interdependencies
    # ------------------------------------------------------
    mojo 
 	# Usage:

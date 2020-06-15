@@ -46,12 +46,25 @@ sub doListAllInstalledModules {
 sub doCheckRequiredModules {
 
   my @modules = qw(
+   JSON	  
+   JSON::Parse
+   Data::Printer
+   Carp::Always
+   IO::CaptureOutput
+   Net::DNS
+   Net::Domain::TLD
+   Email::Valid
+   FindBin
+   IPC::System::Simple 
+   Mojolicious	  
+   Mojolicious::Plugin::BasicAuthPlus
+   Mojolicious::Plugin::StaticCache
+   Mojolicious::Plugin::RenderFile
+   Mojolicious::Plugin::Authentication
+   IO::Socket::SSL  
    URL::Encode
    ExtUtils::Installed
-   Carp::Always
-   Data::Printer
-   File::Copy   
-   File::Copy::Recursive
+   File::Copy
    File::Find
    File::Path
    Spreadsheet::ParseExcel
@@ -59,28 +72,19 @@ sub doCheckRequiredModules {
    Spreadsheet::ParseExcel::FmtJapan
    Text::CSV_XS
    Module::Build::Tiny
-   JSON   
-   JSON::Parse
+   File::Copy::Recursive
    Test::Trap
    Test::More
-   Test::Most
+   Test::Most	  
+   Test::Mojo
    DBD::Pg
    Tie::Hash::DBD
    Scalar::Util::Numeric
-   IPC::System::Simple
-   Selenium::Remote::Driver
-   Selenium::Chrome
-   Mojolicious::Plugin::BasicAuthPlus
-   Mojolicious::Plugin::StaticCache
-   Mojolicious::Plugin::RenderFile   
-   Mojolicious::Plugin::Authentication
-   Mojo::JWT
-   Mojo::Pg   
    Time::HiRes
+   Mojo::JWT
+   Mojo::Pg
+   Mojo::Phantom 
    Authen::Passphrase::BlowfishCrypt
-   Net::Google::DataAPI::Auth::OAuth2
-   Net::Google::Spreadsheets::V4
-   Net::Google::Spreadsheets
    Term::ReadKey
    Term::Prompt
    DBIx::ProcedureCall
