@@ -19,6 +19,9 @@
       File::Copy
       File::Find
       File::Path
+      Spreadsheet::ParseExcel
+      Spreadsheet::XLSX
+      Spreadsheet::ParseExcel::FmtJapan
       Text::CSV_XS
       Module::Build::Tiny
       File::Copy::Recursive
@@ -29,7 +32,6 @@
       DBD::Pg
       Tie::Hash::DBD
       Scalar::Util::Numeric
-      IPC::System::Simple
       Time::HiRes
       Mojo::JWT
       Mojo::Pg
