@@ -34,7 +34,7 @@ main(){
 
 do_add_dns(){
 
-sudo bash -c 'cat >> /etc/resolv.conf << EOF_ADD_DNS
+	sudo bash -c 'cat >> /etc/resolv.conf << EOF_ADD_DNS
 nameserver 10.1.2.1
 nameserver 10.1.2.2
 nameserver 8.8.8.8
@@ -44,12 +44,15 @@ EOF_ADD_DNS'
 
 do_add_nginx_repositories(){
 
-sudo bash -c 'cat >> /etc/apt/sources.list << EOF_NGINX_REPOS
+	sudo bash -c 'cat >> /etc/apt/sources.list << EOF_NGINX_REPOS
 # nginx repos
 deb https://nginx.org/packages/ubuntu/ bionic nginx
 deb-src https://nginx.org/packages/ubuntu/ bionic nginx
 EOF_NGINX_REPOS'
-sudo apt-get update
+	wget http://nginx.org/keys/nginx_signing.key
+	sudo apt-key add nginx_signing.key
+	sudo apt-get update
+	sudo apt remove nginx nginx-common nginx-full nginx-core
 }
 
 do_set_time(){
