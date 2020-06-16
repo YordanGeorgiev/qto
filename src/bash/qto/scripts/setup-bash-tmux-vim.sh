@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # purpose: a SLIGHTLY opinionated bash,tmux,vim and git setup 
 # usage:
 # curl https://raw.githubusercontent.com/YordanGeorgiev/qto/master/src/bash/qto/scripts/pre-push/setup-bash-n-vim.sh | bash -s yordan.georgiev@gmail.com ysg

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Some things that run always
 export QTO_NO_AUTH=0

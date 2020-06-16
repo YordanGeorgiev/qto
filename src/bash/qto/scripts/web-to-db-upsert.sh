@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ \( "$1" = '--usage' \) -o \( "$1" = '' \) -o \( "$1" = '--help' \) ]
 then
