@@ -197,8 +197,10 @@ do_finalize(){
    touch $PRODUCT_INSTANCE_DIR/bootstraping # tell the backup db automate to not trigger yet
    printf "\033[2J";printf "\033[0;0H";
    printf "\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
-   printf "Going to $APP_TO_DEPLOY directory:\n$PRODUCT_INSTANCE_DIR\n\n"
-   cd qto/qto.$VERSION.$ENV_TYPE.$USER'@'$host_name
+   printf "Going to $APP_TO_DEPLOY directory:\n$PRODUCT_INSTANCE_DIR/\n\n"
+   cd /home/$USER/opt/
+   ln -s /home/$USER/opt/qto/qto.$VERSION.$ENV_TYPE.$USER'@'`hostname -s` link_to_qto 
+   cd link_to_qto
    printf "$APP_TO_DEPLOY deployment completed successfully.\n\nPlease continue database creation by running this command: \n"
    printf "bash ; ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3\n"
    printf "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
