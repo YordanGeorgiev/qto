@@ -3,42 +3,50 @@
 }
 #paging {
 	top: 160px;
-	width: auto;
-	min-height: 60px;
-	height: auto;
-	height: 100px;
+	width: 100%;
+	min-height: 70px;
+	height: 120px;
    text-align: center;
 }
-#pager02 button{
+#pager button{
    border-style:none;
    background-color:white;
 }
-#pager02 {
+#pager {
    display: inline-block;
+   position: fixed;
+   left: 50%;
+   transform: translate(-50%, 0%);
    clear: none;
 	font-size: 100% ;
 	width: 50%;
-	min-width: 200px;
-	height: 50px;
-	margin: 0px auto;
+	min-width: 300px;
+	height: 70px;
 	padding: 5px;
-	position: relative;
-	z-index: 1;
+   text-align:center;
+   z-index: 100;
+   bottom: 0;
+   background-color:#F0F8FF;
 }
 #div_page_sizer {
    display: inline-block;
+   position: fixed;
+   margin-top: 70px;
+   left: 50%;
+   transform: translate(-50%, 0%);
    clear: none;
-	z-index: 1;
 	font-size: 80% ;
+	min-width: 150px;
 	width: 50%;
 	height: 30px;
-	margin: 0 auto;
-	padding: 5px;
-	position: relative;
+   text-align:center;
+   z-index: 100;
+   bottom: 0;
+   background-color:#F0F8FF;
 }
 .cls_img_but {
    display: inline-block;
-   float: left;
+   float: center;
    padding: 6px;
    height; 20px;
 	background-color: transparent;
@@ -63,7 +71,7 @@
 }
 #page_counter{
    display: inline-block;
-   float:left;
+   float:center;
    clear: none;
    margin: 10px;
    font-size: 90% ;
@@ -71,7 +79,7 @@
 }
 .actv {
    padding: 0px 6px 2px 6px;
-   float: left;
+   float: center;
    width: auto;
    border: none;
    display: inline;
@@ -266,7 +274,7 @@ th:focus {
 }
 .pgr-bar .pgr-bar-item {
    padding: 6px 10px;
-   float: left;
+   float: center;
    width: auto;
    border: none;
    display: inline;
