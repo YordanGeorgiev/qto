@@ -11,10 +11,11 @@ main(){
       installation_steps_size=("usage" "${installation_steps_size[@]}")
    fi
 
+   counter=0;
    for i in ${!installation_steps[*]}
    do
-      set +x
-      printf "$i/${#installation_steps[*]}) ${installation_steps[$i]}\n";
+	  ((counter+=1))
+      printf "$counter/${#installation_steps[*]}) ${installation_steps[$i]}\n";
       ${installation_steps[$i]}
    done
 }
@@ -195,12 +196,12 @@ do_finalize(){
    set +x
    touch $PRODUCT_INSTANCE_DIR/bootstraping # tell the backup db automate to not trigger yet
    printf "\033[2J";printf "\033[0;0H";
-   printf "\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-   printf "\nGoing to $APP_TO_DEPLOY directory:\n$PRODUCT_INSTANCE_DIR\n\n"
-   cd $PRODUCT_INSTANCE_DIR
+   printf "\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
+   printf "Going to $APP_TO_DEPLOY directory:\n$PRODUCT_INSTANCE_DIR\n\n"
+   cd qto/qto.$VERSION.$ENV_TYPE.$USER'@'$host_name
    printf "$APP_TO_DEPLOY deployment completed successfully.\n\nPlease continue database creation by running this command: \n"
-   printf "bash ; ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3\n\n"
-   printf ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+   printf "bash ; ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3\n"
+   printf "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
    
 }
 
