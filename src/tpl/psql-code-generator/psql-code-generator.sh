@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # usage: bash src/tpl/psql-code-generator/psql-code-generator.sh dev_qto release_issues monthly_issues
 # chk also: https://mojolicious.org/perldoc/Mojo/Template
 

@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/usr/bin/env bash 
 # file: src/bash/qto/test-qto.sh
 
 umask 022    ;

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # file: src/bash/qto/install-prerequisites-on-ubuntu.sh
 
 # caveat package names are for Ubuntu !!!

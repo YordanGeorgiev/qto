@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 usage(){
    echo provide the PROJ_CONF_FILE as the first cmd arg - \$1
