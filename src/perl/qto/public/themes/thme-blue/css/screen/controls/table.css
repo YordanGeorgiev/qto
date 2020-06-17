@@ -9,8 +9,11 @@
    text-align: center;
 }
 #pager button{
+  all: initial;
+  * {
+    all: unset;
+  }
    border-style:none;
-   background-color:white;
 }
 #pager {
    display: inline-block;
