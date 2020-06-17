@@ -996,7 +996,5 @@ src/sql/pgsql/scripts/reporting/create-rep_userstories_doc.sql
 src/sql/pgsql/scripts/reporting/repopulate-rep_userstories_doc.sql
 cnf/bash/etc/init.d/qto-on-boot.sh
 dat/xls/styler.xlsx
-qto
-qto.pl
 src/perl/qto/lib/auto/Qto/Controller/CreateMy/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/SelectCol/autosplit.ix

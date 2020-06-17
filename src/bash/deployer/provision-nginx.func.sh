@@ -37,9 +37,9 @@ EOF
 
    sudo chown -R www-data:www-data /etc/nginx # !!! monthly_issues_202003-200326084258
    sudo systemctl daemon-reload
-   sudo systemctl restart nginx
-   sudo service nginx restart
-   sudo service nginx status
+   sudo systemctl try-restart nginx
+   sudo systemctl enable nginx
+   sudo systemctl status nginx
    do_export_json_section_vars $PRODUCT_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
   
 
