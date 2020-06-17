@@ -26,7 +26,7 @@
       <div id="cruds-grid">
          <cruds-grid-sf :data.sync="gridData" :columns="gridColumns" :filter-key="globalSrch"></cruds-grid-sf>
          <div id="paging">
-               <div id="pager" v-if="gridData.length !== 0">
+               <div id="pager" v-if="gridData.length !== 0" class="hcentered">
                   <div class="cls_img_but">
                      <button id="btnPlayPrev10" tabindex="3" type="submit" href="javascript:void(0);" v-on:click="goToPrevPage10">
                      <span class="material-icons" style="transform: rotate(-180deg)">fast_forward</span></button></div>
@@ -42,7 +42,7 @@
                      <button id="btnPlayNext10" type="submit" href="javascript:void(0);" v-on:click="goToNextPage10" tabindex="3">
                   <span class="material-icons">fast_forward</span></button></div>
                </div>
-               <div id="div_page_sizer" v-if="this.showPageSizer">
+               <div id="div_page_sizer" v-if="this.showPageSizer" class="hcentered">
                   <div class="pgr-show-inline-block">
                      <div class="pgr-bar pgr-border pgr-round">
                         <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 
