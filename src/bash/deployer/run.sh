@@ -1,40 +1,42 @@
-#! /usr/bin/env bash
-
-set -x
+#!/usr/bin/env bash
 
 main(){
-
-   msg='is not allowed to run sudo'
-   test $(sudo -l -U $USER 2>&1 | grep "$msg") -eq 1 && echo "$USER $msg !!!" && exit 1
-
+   do_initial_message
    do_set_vars "$@"
-	if [[ $APP_TO_DEPLOY == '--help' ]]; then
-		usage
-	fi
-   do_source_functions
-   do_add_nginx_repositories
-   do_add_dns
-   do_check_setup_bash
-   do_set_time
-   do_check_install_ubuntu_packages
-   do_check_install_postgres
-   do_check_install_chromium_headless
-   do_check_install_phantom_js
-   do_check_install_perl_modules
-   do_check_install_python_modules
-   do_check_install_redis
-   do_provision_postgres
-   do_provision_nginx
-   do_provision_ssh_keys
-   do_copy_git_hooks
-   do_set_chmods
-   do_create_multi_env_dir
-   do_finalize
+   
+   installation_steps=(do_check_sudo_rights do_set_time do_source_functions do_add_nginx_repositories do_add_dns do_check_setup_bash do_check_install_ubuntu_packages do_check_install_postgres do_check_install_chromium_headless do_check_install_phantom_js do_check_install_perl_modules do_check_install_python_modules do_check_install_redis do_provision_postgres do_provision_nginx do_provision_ssh_keys do_copy_git_hooks do_set_chmods do_create_multi_env_dir do_finalize)
+	
+   if [ $APP_TO_DEPLOY == '--help' ]
+   then
+      installation_steps_size=("usage" "${installation_steps_size[@]}")
+   fi
+
+   counter=0;
+   for i in ${!installation_steps[*]}
+   do
+	  ((counter+=1))
+      printf "$counter/${#installation_steps[*]}) ${installation_steps[$i]}\n";
+      ${installation_steps[$i]}
+   done
+}
+
+do_initial_message(){
+   printf "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n     QTO installation has started.\n     You can abort it at any time using Ctrl+C.\n\n     After the installation please run this command to continue with the database creation:\n\n     bash ; ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
+}
+
+do_check_sudo_rights(){
+   printf "\nChecking sudo rights\n"
+   set -x
+   
+   # msg='is not allowed to run sudo'
+   # test $(sudo -l -U $USER 2>&1 | grep "$msg") -eq 1 && echo "$USER $msg !!!" && exit 1
+   sudo -l
 }
 
 do_add_dns(){
-
-sudo bash -c 'cat >> /etc/resolv.conf << EOF_ADD_DNS
+	printf "\nAdding DNS to /etc/resolv.conf\n"
+	set -x
+	sudo bash -c 'cat >> /etc/resolv.conf << EOF_ADD_DNS
 nameserver 10.1.2.1
 nameserver 10.1.2.2
 nameserver 8.8.8.8
@@ -43,20 +45,25 @@ EOF_ADD_DNS'
 }
 
 do_add_nginx_repositories(){
-
-sudo bash -c 'cat >> /etc/apt/sources.list << EOF_NGINX_REPOS
+	printf "\nAdding nginx repositories to install the latest nginx version\n"
+	set -x
+	sudo bash -c 'cat >> /etc/apt/sources.list << EOF_NGINX_REPOS
 # nginx repos
 deb https://nginx.org/packages/ubuntu/ bionic nginx
 deb-src https://nginx.org/packages/ubuntu/ bionic nginx
 EOF_NGINX_REPOS'
-sudo apt-get update
+	wget http://nginx.org/keys/nginx_signing.key
+	sudo apt-key add nginx_signing.key
+	sudo apt-get update
 }
 
 do_set_time(){
-   sudo apt-get install -y ntp
+   printf "\nSynchronising time\n"
+   set -x
+   sudo apt-get install ntp -y
    sudo timedatectl set-ntp on
    sudo service ntp stop
-   sudo ntpdate -s time.nist.gov
+   # sudo ntpdate -s time.nist.gov
    sudo service ntp start
 }
 
@@ -76,8 +83,8 @@ usage(){
       # just the deploy the qto packages
       ./src/bash/deployer/run.sh
 
-      Note: when run for first time the required modules for the testing
-      will be installed for the current OS user - and that WILL take 
+      Note: when run for the first time the required modules for the testing
+      will be installed for the current OS user - and that will take 
 		at least 10 minutes
 
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -105,8 +112,10 @@ do_source_functions(){
 
 
 do_set_vars(){
-   set -eu -o pipefail 
+   set -eu -o pipefail
+   printf "\nEntering verbose mode to display all technical messages\n"
    set +e
+   set -x
    export APP_TO_DEPLOY=${1:-qto}
    maybe_echo=${2:-} || ''
    host_name="$(hostname -s)"
@@ -149,12 +158,12 @@ do_exit(){
 
    if (( ${exit_code:-} != 0 )); then
       exit_msg=" ERROR --- exit_code $exit_code --- exit_msg : $exit_msg"
-      >&2 echo "$exit_msg"
+      >&2 printf "$exit_msg"
       do_log "FATAL STOP FOR $APP_TO_DEPLOY deployer RUN with: "
       do_log "FATAL exit_code: $exit_code exit_msg: $exit_msg"
    else
-      do_log "INFO  STOP FOR $APP_TO_DEPLOY deployer RUN with: "
-      do_log "INFO  STOP FOR $APP_TO_DEPLOY deployer RUN: $exit_code $exit_msg"
+      do_log "INFO STOP FOR $APP_TO_DEPLOY deployer RUN with: "
+      do_log "INFO STOP FOR $APP_TO_DEPLOY deployer RUN: $exit_code $exit_msg"
    fi
 
    exit $exit_code
@@ -171,7 +180,7 @@ do_log(){
    msg="$(echo $*|cut -d" " -f2-)"
    [[ -t 1 ]] && echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [$APP_TO_DEPLOY][@$host_name] [$$] $msg "
    log_dir="$product_dir/dat/log/bash" ; mkdir -p $log_dir && log_file="$log_dir/$APP_TO_DEPLOY.`date "+%Y%m"`.log"
-   echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [$APP_TO_DEPLOY][@$host_name] [$$] $msg " >> $log_file
+   printf " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [$APP_TO_DEPLOY][@$host_name] [$$] $msg " >> $log_file
 }
 
 do_create_multi_env_dir(){
@@ -184,16 +193,18 @@ do_create_multi_env_dir(){
 
 
 do_finalize(){
-
+   set +x
    touch $PRODUCT_INSTANCE_DIR/bootstraping # tell the backup db automate to not trigger yet
-   printf "\033[2J";printf "\033[0;0H"
-   echo -e "\n\n"
-   echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-   echo "DONE"
-   echo -e "\n"
-   echo "# go to your PRODUCT_INSTANCE_DIR by: "
-   echo " cd $PRODUCT_INSTANCE_DIR"
-   echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+   printf "\033[2J";printf "\033[0;0H";
+   printf "\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
+   printf "Going to $APP_TO_DEPLOY directory:\n$PRODUCT_INSTANCE_DIR/\n\n"
+   cd /home/$USER/opt/
+   ln -s /home/$USER/opt/qto/qto.$VERSION.$ENV_TYPE.$USER'@'`hostname -s` link_to_qto 
+   cd link_to_qto
+   printf "$APP_TO_DEPLOY deployment completed successfully.\n\nPlease continue database creation by running this command: \n"
+   printf "bash ; ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3\n"
+   printf "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
+   
 }
 
 
