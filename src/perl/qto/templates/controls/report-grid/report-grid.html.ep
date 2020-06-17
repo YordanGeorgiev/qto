@@ -22,7 +22,7 @@
      <div id="search-grid">
          <search-grid-sf :data.sync="gridData" :columns="gridColumns" :filter-key="globalSrch"></search-grid-sf>
 
-         <div id="div_page_sizer">
+         <div id="div_page_sizer" class="hcentered">
             <div class="pgr-show-inline-block">
                <div class="pgr-bar pgr-border pgr-round">
                   <a class="pgr-bar-item pgr-button" v-for="(pgSize, index) in this.pageSizes" 

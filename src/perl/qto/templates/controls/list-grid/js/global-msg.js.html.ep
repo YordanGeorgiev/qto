@@ -19,10 +19,10 @@
    function paintError(eid,txt){
       if ( typeof document.getElementById(eid) !== "undefined" && document.getElementById(eid) != null) { 
          document.getElementById(eid).innerHTML="<span id=\"spn_err_msg\">" + txt + '</span>';
-         setStyleProp(eid,'z-index','3')
+         setStyleProp(eid,'z-index','1000')
          setStyleProp(eid,'display','inline')
-         setStyleProp(eid,'box-shadow','0 0 10px red')
-         setStyleProp(eid,'background-color','#FFFF00')
+         setStyleProp(eid,'box-shadow','10px 10px 10px #888')
+         setStyleProp(eid,'background-color','#ffffe0')
       }
    }
 
@@ -49,12 +49,16 @@
 
    function fadeAwayDiv(fadable) {
       if ( typeof fadable === 'undefined' && fadable != null ) { fadable='div_msg' }
-      if ( typeof document.getElementById(fadable) !== "undefined" && document.getElementById(fadable) != null){ 
-         var div_msg_style = document.getElementById(fadable).style; div_msg_style.opacity = 1; 
-         (function fade(){(div_msg_style.opacity-=.1)<0?div_msg_style.display="none":setTimeout(fade,1000)})();
-         setStyleProp(fadable,'z-index','10000')
+      var fe = document.getElementById(fadable)
+      if ( typeof fe !== "undefined" && fe != null){ 
+			fe.style.opacity = 1
+			setTimeout(() => {
+				(function fade(){(fe.style.opacity-=.1)<0?fe.style.display="none":setTimeout(fade,200)})();
+				setStyleProp(fe,'z-index','100')
+		 	}, 1500);
       }
    }
+
    function hideControlsOnError() {
      setStyleProp('grid','display','none')
      setStyleProp('pager','display','none')
