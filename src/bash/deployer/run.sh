@@ -2,6 +2,7 @@
 
 main(){
    do_initial_message
+   do_set_vars "$@"
       
    installation_steps=(do_check_sudo_rights
    do_set_time
