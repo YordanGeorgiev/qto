@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
 main(){
-   do_initial_message
+
    do_set_vars "$@"
-      
-   installation_steps=(usage
-   do_check_sudo_rights
+   
+   installation_steps=(do_check_sudo_rights
    do_set_time
    do_load_functions
    do_check_setup_bash
@@ -37,18 +36,25 @@ main(){
 }
 
 
-do_initial_message(){
-   printf "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n     QTO installation has started.\n     You can abort it at any time using Ctrl+C.\n\n     After the installation please go to the QTO folder and run this command to continue with the database creation:\n\n     ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
-}
-
-
 do_set_vars(){
+   set +x  # hiding pipefail message
    set -eu -o pipefail
-   printf "\nEntering verbose mode to display all technical messages.\n"
-   set +e
-   set -x
+
    export app_to_deploy=${1:-qto}
    maybe_echo=${2:-} || ''
+   
+   # if run with the --help flag, then display the message and exit, otherwise display initial message and continue
+   if [ $app_to_deploy == '--help' ] ;
+   then
+      usage_info
+   else
+      do_initial_message
+   fi
+   
+   printf "\nEntering verbose mode to display all technical messages.\n\n"
+   set +e
+   set -x
+   
    export host_name="$(hostname -s)"
    export bash_opts_file=~/.bash_opts.$host_name
    export user_at_host=$USER@$host_name || exit 1
@@ -77,11 +83,14 @@ do_set_vars(){
 }
 
 
-usage(){
-   # if run with the --help flag, then display the message and exit, otherwise this module is skipped
-   if [ $app_to_deploy == '--help' ] ;
-   then
-      cat << EOF_USAGE
+do_initial_message(){
+   printf "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n     QTO installation has started.\n     You can abort it at any time using Ctrl+C.\n\n     After the installation please run these commands to continue with the database creation:\n"
+   printf "\n     bash ;\n     ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
+}
+
+
+usage_info(){
+   cat << EOF_USAGE
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
       $app_to_deploy deployer PURPOSE: 
       A generic deployer for OS packages, Perl modules and custom vim, tmux
@@ -99,8 +108,7 @@ usage(){
       at least 10 minutes
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 EOF_USAGE
-      do_exit 0 'usage displayed'
-   fi
+   do_exit 0 'usage displayed'
 }
 
 
@@ -171,7 +179,6 @@ do_load_functions(){
    source $product_dir/src/bash/deployer/provision-nginx.func.sh
    source $product_dir/src/bash/deployer/provision-ssh-keys.func.sh
    source $product_dir/src/bash/deployer/scramble-confs.func.sh
-   source $product_dir/src/bash/deployer/change-to-instance-dir.sh
 }
 
 
@@ -193,17 +200,17 @@ do_create_multi_env_dir(){
       mv -v "$product_instance_dir" "$product_instance_dir"."$(date +%Y%m%d_%H%M%S)"
 
    mv -v "$product_dir" "$product_dir"'_'
-   mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$product_instance_dir"; 
+   mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$product_instance_dir";
+   
+   # going to product_instance_dir
+   source $product_dir/src/bash/deployer/change-to-instance-dir.sh
+   export -f QtoDir
 }
 
 
 do_finalize(){
    set +x
    touch $product_instance_dir/bootstraping # tell the backup db automate to not trigger yet
-   
-   # ln -s /home/$USER/opt/qto/qto.$VERSION.$ENV_TYPE.$USER@`hostname -s` link_to_qto
-
-   export -f QtoDir
    
    printf "\033[2J";printf "\033[0;0H";
    printf "\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n"   
