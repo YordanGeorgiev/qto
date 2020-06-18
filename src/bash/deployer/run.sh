@@ -54,6 +54,7 @@ do_set_vars(){
    export app_to_deploy=${1:-qto}
    maybe_echo=${2:-} || ''
    export host_name="$(hostname -s)"
+   export bash_opts_file=~/.bash_opts.$host_name
    export user_at_host=$USER@$host_name || exit 1
    export unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
    export product_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
@@ -185,7 +186,8 @@ do_finalize(){
    
    # ln -s /home/$USER/opt/qto/qto.$VERSION.$ENV_TYPE.$USER@`hostname -s` link_to_qto
    source $product_instance_dir/src/bash/deployer/change-to-instance-dir.sh
-   . ./$product_instance_dir/src/bash/deployer/change-to-instance-dir.sh
+   ./$product_instance_dir/src/bash/deployer/change-to-instance-dir.sh
+   export -f QtoDir
    
    printf "\033[2J";printf "\033[0;0H";
    printf "\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n"   
