@@ -2,7 +2,7 @@
 
 # v1.1.2
 # ---------------------------------------------------------
-# obs we assume that the caller is in the PRODUCT_INSTANCE_DIR
+# obs we assume that the caller is in the product_instance_dir
 # simply delete each file which greps finds to match to the action
 # name(s) cnfigured in the : 
 # src/bash/qto/tests/rem-qto-actions.lst

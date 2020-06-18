@@ -39,7 +39,7 @@ do_check_install_redis(){
 EOF_PERL_CODE
       
          perl -e "$perl_code" $file
-	   done < <(find $PRODUCT_DIR/cnf/env/ -type f| grep -v '.bak')
+	   done < <(find $product_dir/cnf/env/ -type f| grep -v '.bak')
 
       # restart to apply the changes 
 		sudo systemctl restart redis

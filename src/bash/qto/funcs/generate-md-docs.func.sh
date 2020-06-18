@@ -6,7 +6,7 @@
 # ---------------------------------------------------------
 doGenerateMdDocs(){
 	do_log "DEBUG START doGenerateMdDocs"
-   test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
+   test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$product_instance_dir"
    test -z "${docs_root_dir-}" && docs_root_dir="$PROJ_INSTANCE_DIR"
 
    test -z ${PROJ_CONF_FILE-} && PROJ_CONF_FILE=$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json

@@ -147,16 +147,16 @@ do_init(){
 do_set_vars(){
 
    cd $run_unit_bash_dir
-   for i in {1..3} ; do cd .. ; done ; export PRODUCT_INSTANCE_DIR=`pwd`;
-   environment_name=$(basename "$PRODUCT_INSTANCE_DIR")
-   cd $PRODUCT_INSTANCE_DIR
-   source $PRODUCT_INSTANCE_DIR/.env
-   test -z "${PROJ_INSTANCE_DIR-}" && export PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
+   for i in {1..3} ; do cd .. ; done ; export product_instance_dir=`pwd`;
+   environment_name=$(basename "$product_instance_dir")
+   cd $product_instance_dir
+   source $product_instance_dir/.env
+   test -z "${PROJ_INSTANCE_DIR-}" && export PROJ_INSTANCE_DIR="$product_instance_dir"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
    test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
 
    if [ "$environment_name" == "$RUN_UNIT" ]; then
-      product_dir=$PRODUCT_INSTANCE_DIR
+      product_dir=$product_instance_dir
    else
       cd .. ; product_dir=`pwd`;
    fi

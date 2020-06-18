@@ -8,8 +8,8 @@ doRunBenchmarks(){
   
    export QTO_NO_AUTH=1
    test -z ${qto_project:-} && \
-      source "$PRODUCT_INSTANCE_DIR/lib/bash/funcs/parse-cnf-env-vars.sh" && \
-      doParseCnfEnvVars "$PRODUCT_INSTANCE_DIR/cnf/$RUN_UNIT.$env_type.*.cnf"
+      source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh" && \
+      doParseCnfEnvVars "$product_instance_dir/cnf/$RUN_UNIT.$env_type.*.cnf"
    
    do_log "INFO START testing controllers"
    while read -r f ; do 

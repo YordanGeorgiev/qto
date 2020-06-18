@@ -22,7 +22,7 @@ $init_config						   = $objInitiator->get ('AppConfig');
 
 use Carp ; 
 
-my $product_base_dir       = $ENV { 'PRODUCT_INSTANCE_DIR' } ; 
+my $product_base_dir       = $ENV { 'product_instance_dir' } ; 
 $product_base_dir          =~ s/(.*)([\/\\])(.*)/$1/g ; 
 $product_base_dir          =~ s/(.*)([\/\\])(.*)/$1/g ; 
 my $product_dir            = "$product_base_dir/$3" ; 
@@ -41,7 +41,7 @@ ok ( $ProductDir 				eq $product_dir , $msg ) ;
 
 $tn = 'test-03' ; 
 $msg                       = "$tn ::: " .'The ProductInstanceDir is the next level' ; 
-ok ( $ProductInstanceDir 	eq $ENV{'PRODUCT_INSTANCE_DIR'} , $msg ) ; 
+ok ( $ProductInstanceDir 	eq $ENV{'product_instance_dir'} , $msg ) ; 
 
 
 $tn = 'test-04' ; 

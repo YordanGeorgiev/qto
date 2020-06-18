@@ -5,18 +5,18 @@ doRunContainer(){
    do_log "DEBUG START doRunContainer"
 
    test -z ${qto_project:-} && \
-      source "$PRODUCT_INSTANCE_DIR/lib/bash/funcs/parse-cnf-env-vars.sh" && \
-      doParseCnfEnvVars $PRODUCT_INSTANCE_DIR/cnf/$RUN_UNIT.$env_type.$host_name.cnf
+      source "$product_instance_dir/lib/bash/funcs/parse-cnf-env-vars.sh" && \
+      doParseCnfEnvVars $product_instance_dir/cnf/$RUN_UNIT.$env_type.$host_name.cnf
 
-   tgt_PRODUCT_INSTANCE_DIR='/opt/csitea/'"$RUN_UNIT/$environment_name"
-   chmod 777 $PRODUCT_INSTANCE_DIR/src/bash/qto/install/docker/docker-entry-point.sh
+   tgt_product_instance_dir='/opt/csitea/'"$RUN_UNIT/$environment_name"
+   chmod 777 $product_instance_dir/src/bash/qto/install/docker/docker-entry-point.sh
 
    container_name='qto-container-'$(date "+%Y%m%d_%H%M%S")
 
    docker run -d --name $container_name \
-      -e PRODUCT_INSTANCE_DIR=$tgt_PRODUCT_INSTANCE_DIR \
+      -e product_instance_dir=$tgt_product_instance_dir \
       -e host_host_name=$(hostname -s) \
-      -v $PRODUCT_INSTANCE_DIR:$tgt_PRODUCT_INSTANCE_DIR \
+      -v $product_instance_dir:$tgt_product_instance_dir \
       -p  127.0.0.1:${mojo_morbo_port:-}:$mojo_morbo_port \
       'qto-image':${product_version:-}.$env_type
    

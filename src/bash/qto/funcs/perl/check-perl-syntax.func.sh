@@ -8,7 +8,7 @@ doCheckPerlSyntax(){
 	while read -r dir ; do 
 
 		echo -e "\n start compiling $dir ..." ; 
-		cd $PRODUCT_INSTANCE_DIR/src/perl/$dir ; 
+		cd $product_instance_dir/src/perl/$dir ; 
 
 		# run the autoloader utility	
 		find . -name '*.pm' -exec perl -MAutoSplit -e 'autosplit($ARGV[0], $ARGV[1], 0, 1, 1)' {} \;
@@ -28,7 +28,7 @@ doCheckPerlSyntax(){
 			test $ret -ne 0 && break ; 
 		
 			echo -e "stop compiling $dir ... \n\n" ; 
-			cd $PRODUCT_INSTANCE_DIR ; 
+			cd $product_instance_dir ; 
 	
 	done < <(ls -1 "src/perl")
 
