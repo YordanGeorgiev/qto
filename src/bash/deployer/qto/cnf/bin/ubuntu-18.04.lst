@@ -14,7 +14,6 @@
    graphviz
    python-selenium
    chromium-chromedriver
-   python-selenium
    python-setuptools 
    python-dev 
    gpgsm
@@ -23,7 +22,6 @@
    libdbd-pgsql
    libssl-dev
    libtest-www-selenium-perl
-   libxml-atom-perl
    libxml-atom-perl
    libwww-curl-perl
    npm

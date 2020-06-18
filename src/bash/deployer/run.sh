@@ -35,7 +35,7 @@ main(){
    do
 	  ((counter+=1))
 	  set +x
-      printf "$counter/${#installation_steps[*]}) ${installation_steps[$i]}\n";
+      printf "$counter/${#installation_steps[*]} ${installation_steps[$i]}\n";
       ${installation_steps[$i]}
    done
 }
@@ -62,8 +62,7 @@ do_set_vars(){
    perl -pi -e 's|ENV_TYPE=prd|ENV_TYPE=dev|g' "$product_dir/.env"
    source "$product_dir/.env"
    export product_instance_dir="$product_dir/$app_to_deploy.$VERSION.$ENV_TYPE.$user_at_host"
-   printf "#!/usr/bin/env bash\nmain(){\nQtoDir\n}\nQtoDir(){\ncd $product_instance_dir\n}\nmain" > $product_dir/src/bash/deployer/change-to-instance-dir.sh
-   bash_opts_file=~/.bash_opts.$host_name
+   printf "#!/usr/bin/env bash\nmain(){\nQtoDir\n}\nQtoDir(){\ncd $product_instance_dir\n}\nmain\n" > $product_dir/src/bash/deployer/change-to-instance-dir.sh
 }
 
 
@@ -71,10 +70,8 @@ do_check_sudo_rights(){
    cd $product_dir
    printf "\nChecking sudo rights.\n\n"
    set -x
-   
-   # msg='is not allowed to run sudo'
-   # test $(sudo -l -U $USER 2>&1 | grep "$msg") -eq 1 && echo "$USER $msg !!!" && exit 1
-   sudo -l
+   msg='is not allowed to run sudo'
+   test $(sudo -l -U $USER 2>&1 | grep -c "$msg") -eq 1 && echo "$USER $msg !!!" && exit 1
 }
 
 
@@ -93,12 +90,14 @@ do_set_time(){
 do_add_dns(){
 	printf "\nAdding DNS to /etc/resolv.conf\n\n"
 	set -x
-	sudo bash -c 'cat >> /etc/resolv.conf << EOF_ADD_DNS
+	if [ ! grep -q 'nameserver 8.8.8.8' "/etc/resolv.conf"]; then
+		sudo bash -c 'cat >> /etc/resolv.conf << EOF_ADD_DNS
 nameserver 10.1.2.1
 nameserver 10.1.2.2
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 EOF_ADD_DNS'
+	fi
 }
 
 
@@ -169,10 +168,11 @@ do_set_chmods(){
 
 
 do_create_multi_env_dir(){
-   printf "\nMoving the QTO directory.\n"
+   printf "\nCreating the $app_to_deploy.$ENV_TYPE directory:\n$product_instance_dir/\n\n"
    set -x
+   
    test -d "$product_instance_dir" && \
-   mv -v "$product_instance_dir" "$product_instance_dir"."$(date +%Y%m%d_%H%M%S)"
+      mv -v "$product_instance_dir" "$product_instance_dir"."$(date +%Y%m%d_%H%M%S)"
 
    mv -v "$product_dir" "$product_dir"'_'
    mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$product_instance_dir"; 
@@ -182,15 +182,15 @@ do_create_multi_env_dir(){
 do_finalize(){
    set +x
    touch $product_instance_dir/bootstraping # tell the backup db automate to not trigger yet
-   printf "\033[2J";printf "\033[0;0H";
-   printf "\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
-   printf "\nGoing to $app_to_deploy directory:\n$product_instance_dir/\n\n"
-
+   
    # ln -s /home/$USER/opt/qto/qto.$VERSION.$ENV_TYPE.$USER@`hostname -s` link_to_qto
    source $product_instance_dir/src/bash/deployer/change-to-instance-dir.sh
+   . ./$product_instance_dir/src/bash/deployer/change-to-instance-dir.sh
    
+   printf "\033[2J";printf "\033[0;0H";
+   printf "\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n"   
    printf "$app_to_deploy deployment completed successfully.\n\nPlease continue database creation by running these commands one by one: \n\n"
-   printf "bash ;\n./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3\n\n"
+   printf "bash ;\n./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3\n\n"   
    printf "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
 }
 
