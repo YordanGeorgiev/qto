@@ -998,3 +998,6 @@ cnf/bash/etc/init.d/qto-on-boot.sh
 dat/xls/styler.xlsx
 src/perl/qto/lib/auto/Qto/Controller/CreateMy/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/SelectCol/autosplit.ix
+src/perl/qto/public/lib/js/controls/vue-date-time-picker.js
+src/perl/qto/public/list/page/list-monthly-issues.html
+src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-date-time-picker.css
