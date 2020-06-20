@@ -45,3 +45,4 @@
       Crypt::OpenSSL::RSA
       Gravatar::URL
       Mojolicious::Plugin::Gzip
+      Excel::Writer::XLSX
