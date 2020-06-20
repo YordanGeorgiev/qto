@@ -578,7 +578,7 @@ src/sql/pgsql/qto/tables/33.create-table-links.sql
 src/sql/pgsql/qto/tables/38.create-table-onboarding_guide_doc.sql
 src/sql/pgsql/qto/tables/39.create-table-security_checklist_doc.sql
 src/sql/pgsql/qto/tables/40.definitions_dictionary.sql
-src/sql/pgsql/qto/tables/41.create-table-issues_status.sql
+src/sql/pgsql/qto/tables/41.create-table-status.sql
 src/sql/pgsql/qto/tables/42.create-table-ideas_status.sql
 src/sql/pgsql/qto/tables/43.create-table-questions_status.sql
 src/sql/pgsql/qto/tables/44.create-table-category.sql

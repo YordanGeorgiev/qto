@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 main(){
+   set -x
    do_initial_message
    do_set_vars "$@"
    
@@ -21,7 +22,15 @@ main(){
 }
 
 do_initial_message(){
-   printf "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n     QTO installation has started.\n     You can abort it at any time using Ctrl+C.\n\n     After the installation please run this command to continue with the database creation:\n\n     bash ; ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
+	cat << EOF_INIT_MSG
+   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+      QTO installation has started
+      You can abort it at any time using Ctrl+C
+      After the installation please run this command to continue with the database creation:
+      bash ; ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
+   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+EOF_INIT_MSG
+
 }
 
 
