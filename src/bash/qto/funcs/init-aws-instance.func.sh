@@ -9,15 +9,22 @@ doInitAwdInstance(){
    cp -v $PRODUCT_INSTANCE_DIR/src/terraform/tpl/qto/main.tf.tpl \
       $PRODUCT_INSTANCE_DIR/src/terraform/qto/main.tf
 
+   test -f ~/.aws/credentials || do_exit 1 "run the aws configure command - did not find
+   ~/.aws/credentials file !!!"
+
+   AWS_ACCESS_KEY_ID=$(cat ~/.aws/credentials| grep -i aws_access_key_id | awk '{print $3}')
+   AWS_SECRET_ACCESS_KEY=$(cat ~/.aws/credentials| grep -i AWS_SECRET_ACCESS_KEY| awk '{print $3}')
+
    sudo service ntp stop
    sudo ntpdate -s time.nist.gov
    sudo service ntp start
   
    # expand the possible ~'s to the $HOME
 	pem_key=$(cat `eval echo ${pem_key_fpath:-}`)
-   public_key=$(cat `eval echo $pem_key_fpath_pub`)
+   public_key=$(cat `eval echo $pem_key_fpath.pub`)
+   pem_key_fpath_pub=$(cat `eval echo $pem_key_fpath.pub`)
    key_name=$(basename `eval echo ${pem_key_fpath:-}`)
-   ssh_key_pair_file=$(echo `eval $ssh_key_pair_file`) 
+   ssh_key_pair_file=$(echo `eval echo $ssh_key_pair_file`) 
 
 	main_tf_file="$PRODUCT_INSTANCE_DIR/src/terraform/qto/main.tf"
    VER="${VERSION//./}"  # terraform does not allow dots in technical names
