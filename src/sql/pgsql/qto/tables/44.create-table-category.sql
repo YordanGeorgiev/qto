@@ -20,7 +20,7 @@ CREATE INDEX idx_rank_category ON category
 USING gin(to_tsvector('English', name || ' ' || description || 'owner')); 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -63,7 +63,7 @@ d049ae30-a13e-4a58-b530-47fe4bf10ea9	200227190501	functionality	A technical func
 --The trigger:
 CREATE TRIGGER trg_set_update_time_on_category BEFORE UPDATE ON category FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'category'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'category'::regclass;

@@ -23,7 +23,7 @@ CREATE TRIGGER trg_his_before_delete_on_quinquennially_issues
 EXECUTE PROCEDURE fnc_his_delete_quinquennially_issues()
 ;
 
-select tgname from pg_trigger
-where not tgisinternal
-and tgname = 'trg_his_before_delete_on_quinquennially_issues'
+SELECT tgname FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgname = 'trg_his_before_delete_on_quinquennially_issues'
 ; 

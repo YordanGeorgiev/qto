@@ -25,7 +25,7 @@ create unique index idx_uniq_yearly_issues_2018_id on yearly_issues_2018 (id);
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname

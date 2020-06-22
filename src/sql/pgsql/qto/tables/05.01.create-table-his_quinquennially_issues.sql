@@ -27,7 +27,7 @@ create unique index idx_uniq_his_quinquennially_issues_id on his_quinquennially_
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname

@@ -27,7 +27,7 @@ SELECT 'create the "maintenance_guide_doc" table'
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -64,8 +64,8 @@ CREATE OR REPLACE FUNCTION fnc_maintenance_guide_doc_set_all_seq()
   EXECUTE PROCEDURE fnc_maintenance_guide_doc_set_all_seq();
 -- STOP trg_maintenance_guide_doc_set_all_seq
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'maintenance_guide_doc'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'maintenance_guide_doc'::regclass;
 

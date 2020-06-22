@@ -18,7 +18,7 @@ SELECT 'create the "skills" table'
 create unique index idx_skills_uniq_id on skills (id);
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -32,7 +32,7 @@ SELECT 'show the columns of the just created table'
 --The trigger:
 CREATE TRIGGER trg_set_update_time_on_skills BEFORE UPDATE ON skills FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'skills'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'skills'::regclass;

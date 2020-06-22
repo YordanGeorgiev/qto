@@ -26,7 +26,7 @@ SELECT 'create the "test_hierarchy_doc" table' as "---"
 
 
 
-SELECT 'show the columns of the just created table' as "---"
+SELECT 'Display the columns of the just created table' as "---"
 ; 
 
    SELECT attrelid::regclass, attnum, attname

@@ -19,7 +19,7 @@ SELECT 'create the "risks" table'
 create unique index idx_risks_uniq_id on risks (id);
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -33,7 +33,7 @@ SELECT 'show the columns of the just created table'
 --The trigger:
 CREATE TRIGGER trg_set_update_time_on_risks BEFORE UPDATE ON risks FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'risks'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'risks'::regclass;

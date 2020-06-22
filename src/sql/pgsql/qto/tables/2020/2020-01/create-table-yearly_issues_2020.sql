@@ -20,7 +20,7 @@ CREATE unique index idx_uniq_yearly_issues_2020_id
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
 SELECT attrelid::regclass, attnum, attname
@@ -36,8 +36,8 @@ CREATE TRIGGER trg_set_update_time_on_yearly_issues_2020
 	FOR EACH ROW
 	EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'yearly_issues_2020'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'yearly_issues_2020'::regclass;
 

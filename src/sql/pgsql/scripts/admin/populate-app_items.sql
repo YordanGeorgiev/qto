@@ -2,7 +2,7 @@
    ( name , description)
 
    select tablename as name , tablename as description 
-   from pg_tables 
+   FROM pg_tables 
    where 1=1
    and schemaname='public'
    ORDER BY name

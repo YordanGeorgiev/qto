@@ -20,7 +20,7 @@ SELECT 'create the "check_lists" table'
 create unique index idx_uniq_check_lists_id on check_lists (id);
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -32,7 +32,7 @@ SELECT 'show the columns of the just created table'
    ; 
 
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'check_lists'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'check_lists'::regclass;

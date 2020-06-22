@@ -21,7 +21,7 @@ SELECT 'create the "imgs" table'
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -37,8 +37,8 @@ SELECT 'show the columns of the just created table'
    BEFORE UPDATE ON imgs 
    FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'imgs'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'imgs'::regclass;
 

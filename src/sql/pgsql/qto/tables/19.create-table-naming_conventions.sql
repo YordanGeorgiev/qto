@@ -18,7 +18,7 @@ SELECT 'create the "naming_conventions" table'
     );
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -34,7 +34,7 @@ CREATE TRIGGER trg_naming_conventions_upsrt_update_time
    BEFORE UPDATE ON naming_conventions 
    FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'naming_conventions'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'naming_conventions'::regclass;

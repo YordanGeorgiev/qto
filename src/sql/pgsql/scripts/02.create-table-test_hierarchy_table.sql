@@ -47,7 +47,7 @@ SELECT 'create the "test_hierarchy_table_expected" table' as "---"
 -- STOP  create table test_hierarchy_table_expected
 -- --------------------------------------------------------
 
-SELECT 'show the columns of the just created table' as "---"
+SELECT 'Display the columns of the just created table' as "---"
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -82,10 +82,10 @@ CREATE OR REPLACE FUNCTION fnc_test_hierarchy_table_set_all_seq()
   EXECUTE PROCEDURE fnc_test_hierarchy_table_set_all_seq();
 -- STOP trg_test_hierarchy_table_set_all_seq
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'test_hierarchy_table'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'test_hierarchy_table'::regclass;
 
 
 INSERT into test_hierarchy_table ( id,name ) values ( 1,'name-01');

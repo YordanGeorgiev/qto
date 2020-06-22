@@ -669,7 +669,7 @@ sub doCallFuncGetHashRef {
       return ( $ret , $msg ) unless $ret == 0 ; 
 
       $str_sql = " 
-         select ROW_NUMBER () OVER (ORDER BY datname ) as row_id, datname from pg_database;
+         select ROW_NUMBER () OVER (ORDER BY datname ) as row_id, datname FROM pg_database;
       " ; 
       
       $sth = $dbh->prepare($str_sql);  

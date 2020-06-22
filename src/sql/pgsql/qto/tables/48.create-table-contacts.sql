@@ -25,7 +25,7 @@ CREATE INDEX idx_rank_contacts ON contacts
 USING gin(to_tsvector('English', name || ' ' || description || 'owner')); 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -41,7 +41,7 @@ SELECT 'show the columns of the just created table'
 --The trigger:
 CREATE TRIGGER trg_set_update_time_on_contacts BEFORE UPDATE ON contacts FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'contacts'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'contacts'::regclass;

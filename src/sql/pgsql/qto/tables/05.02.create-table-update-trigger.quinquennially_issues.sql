@@ -24,8 +24,8 @@ CREATE TRIGGER trg_his_before_update_on_quinquennially_issues
 EXECUTE PROCEDURE fnc_his_update_quinquennially_issues()
 ;
 
-select tgname from pg_trigger
-where not tgisinternal
-and tgname = 'trg_his_before_update_on_quinquennially_issues'
+SELECT tgname FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgname = 'trg_his_before_update_on_quinquennially_issues'
 ; 
 

@@ -17,7 +17,7 @@ SELECT 'create the "test_update_table" table'
     );
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
