@@ -4,13 +4,13 @@
 doCreateRelativePackage(){
 
 	mkdir -p $product_dir/dat/zip
-		test $? -ne 0 && do_exit 2 "Failed to create $PRODUCT_INSTANCE_DIR/dat/zip !"
+		test $? -ne 0 && do_exit 2 "Failed to create $product_instance_dir/dat/zip !"
 
 	test -z ${include_file:-}         && \
-		include_file="$PRODUCT_INSTANCE_DIR/met/.$env_type.$RUN_UNIT"
+		include_file="$product_instance_dir/met/.$env_type.$RUN_UNIT"
 
 	# relative file path is passed turn it to absolute one 
-	[[ $include_file == /* ]] || include_file=$PRODUCT_INSTANCE_DIR/$include_file
+	[[ $include_file == /* ]] || include_file=$product_instance_dir/$include_file
 
 	test -f $include_file || \
 		do_exit 3 "did not found any deployment file paths containing deploy file @ $include_file"
@@ -28,14 +28,14 @@ doCreateRelativePackage(){
 	ret=0
 	while read f ; do
 		[[ $f == '#'* ]] && continue ; 
-		test -d "$PRODUCT_INSTANCE_DIR/$f" && continue ; 
-		test -f "$PRODUCT_INSTANCE_DIR/$f" && continue ; 
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || do_log 'FATAL cannot find the file: "'"$PRODUCT_INSTANCE_DIR/$f"'" to package it' ;  
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || do_log 'ERROR search for it in the '"$include_file"' ' ;  
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || do_log 'INFO if you need the file add it to the list file  ' ;  
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || do_log 'INFO if you do not need the file remove it from the list file  ' ;  
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || ret=1
-		test -f "$PRODUCT_INSTANCE_DIR/$f" && break ;
+		test -d "$product_instance_dir/$f" && continue ; 
+		test -f "$product_instance_dir/$f" && continue ; 
+		test -f "$product_instance_dir/$f" || do_log 'FATAL cannot find the file: "'"$product_instance_dir/$f"'" to package it' ;  
+		test -f "$product_instance_dir/$f" || do_log 'ERROR search for it in the '"$include_file"' ' ;  
+		test -f "$product_instance_dir/$f" || do_log 'INFO if you need the file add it to the list file  ' ;  
+		test -f "$product_instance_dir/$f" || do_log 'INFO if you do not need the file remove it from the list file  ' ;  
+		test -f "$product_instance_dir/$f" || ret=1
+		test -f "$product_instance_dir/$f" && break ;
 	done < <(cat $include_file)
 
 	do_log "DEBUG ret is $ret "

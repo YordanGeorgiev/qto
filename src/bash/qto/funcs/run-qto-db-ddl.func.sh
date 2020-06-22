@@ -1,6 +1,6 @@
 doRunQtoDbDdl(){
 
-   test -z "${PROJ_INSTANCE_DIR-}" && export PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
+   test -z "${PROJ_INSTANCE_DIR-}" && export PROJ_INSTANCE_DIR="$product_instance_dir"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
    test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
    do_export_json_section_vars $PROJ_CONF_FILE '.env.db'
@@ -9,7 +9,7 @@ doRunQtoDbDdl(){
 
    # 00 create the db
    tmp_log_file="$tmp_dir/.$$.log"
-	pgsql_scripts_dir="$PRODUCT_INSTANCE_DIR/src/sql/pgsql/qto"
+	pgsql_scripts_dir="$product_instance_dir/src/sql/pgsql/qto"
    sql_script="$pgsql_scripts_dir/00.create-db.pgsql"
 
    PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -v -q -t -X -w -U "${postgres_db_useradmin:-}" \

@@ -52,13 +52,13 @@ get_function_list() {
 # run all the actions
 #------------------------------------------------------------------------------
 doRunTests(){
-	cd $PRODUCT_INSTANCE_DIR
+	cd $product_instance_dir
 
    do_logTestRunEntry 'INIT'
    do_log "INFO actions list file:
-   $PRODUCT_INSTANCE_DIR/src/bash/qto/tests/run-qto-tests.lst"
+   $product_instance_dir/src/bash/qto/tests/run-qto-tests.lst"
    do_log "INFO running the following actions : "
-   cat $PRODUCT_INSTANCE_DIR/src/bash/qto/tests/run-qto-tests.lst | grep -v '#'
+   cat $product_instance_dir/src/bash/qto/tests/run-qto-tests.lst | grep -v '#'
    sleep 1
 
 	while read -r action ; do (
@@ -99,7 +99,7 @@ doRunTests(){
 		done < <(find src/bash/qto/tests -type f -name '*.sh')
 
 	);
-	done < <(cat $PRODUCT_INSTANCE_DIR/src/bash/qto/tests/run-qto-tests.lst)
+	done < <(cat $product_instance_dir/src/bash/qto/tests/run-qto-tests.lst)
 
    do_logTestRunEntry 'STATUS'
 }
@@ -179,8 +179,8 @@ do_log(){
 
    # define default log file none specified in cnf file
    test -z $log_file && \
-		mkdir -p $PRODUCT_INSTANCE_DIR/dat/log/bash && \
-			log_file="$PRODUCT_INSTANCE_DIR/dat/log/bash/$RUN_UNIT_TESTER.`date "+%Y%m"`.log"
+		mkdir -p $product_instance_dir/dat/log/bash && \
+			log_file="$product_instance_dir/dat/log/bash/$RUN_UNIT_TESTER.`date "+%Y%m"`.log"
    echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S"` [$RUN_UNIT_TESTER][@$host_name] [$$] $msg " >> $log_file
 }
 #eof func do_log
@@ -255,10 +255,10 @@ doRunCmdOrExit(){
 doSetVars(){
    cd $wrap_bash_dir
    for i in {1..3} ; do cd .. ; done ;
-   export PRODUCT_INSTANCE_DIR=`pwd`;
+   export product_instance_dir=`pwd`;
    
    # add the do_logTestRunEntry func
-   . "$PRODUCT_INSTANCE_DIR/src/bash/qto/funcs/log-test-run-entry.func.sh"
+   . "$product_instance_dir/src/bash/qto/funcs/log-test-run-entry.func.sh"
 
 	# include all the func files to fetch their funcs 
 	while read -r test_file ; do . "$test_file" ; done < <(find . -name "*test.sh")
@@ -271,9 +271,9 @@ doSetVars(){
 	#while read -r test_file ; do echo "$test_file" ; done < <(find . -name "*test.sh")
    
 	# this will be dev , tst, prd
-   env_type=$(echo `basename "$PRODUCT_INSTANCE_DIR"`|cut -d'.' -f5)
-	product_version=$(echo `basename "$PRODUCT_INSTANCE_DIR"`|cut -d'.' -f2-4)
-	environment_name=$(basename "$PRODUCT_INSTANCE_DIR")
+   env_type=$(echo `basename "$product_instance_dir"`|cut -d'.' -f5)
+	product_version=$(echo `basename "$product_instance_dir"`|cut -d'.' -f2-4)
+	environment_name=$(basename "$product_instance_dir")
 
 	cd ..
 	product_dir=`pwd`;
@@ -330,8 +330,8 @@ doParseConfFile(){
 		&& cnf_file="$wrap_bash_dir/$RUN_UNIT_TESTER.$host_name.cnf"
 	
 	# if we have perl apps they will share the same cnfiguration settings with this one
-	test -f "$PRODUCT_INSTANCE_DIR/$RUN_UNIT_TESTER.$host_name.cnf" \
-		&& cnf_file="$PRODUCT_INSTANCE_DIR/$RUN_UNIT_TESTER.$host_name.cnf"
+	test -f "$product_instance_dir/$RUN_UNIT_TESTER.$host_name.cnf" \
+		&& cnf_file="$product_instance_dir/$RUN_UNIT_TESTER.$host_name.cnf"
 
 	# yet finally override if passed as argument to this function
 	# if the the ini file is not passed define the default host independant ini file

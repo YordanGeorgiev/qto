@@ -3,7 +3,7 @@
 # v0.7.9 chk: https://github.com/mojolicious/mojo/wiki/%25ENV
 doMojoMorboStart(){
 
-   do_export_json_section_vars $PRODUCT_INSTANCE_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
+   do_export_json_section_vars $product_instance_dir/cnf/env/$ENV_TYPE.env.json '.env.app'
    doMojoMorboStop 0
 
    # to prevent the 'failed: could not create socket: Too many open files at sys' error
@@ -19,15 +19,15 @@ doMojoMorboStart(){
    export MOJO_LISTEN='http://*:'"$mojo_morbo_port"
    test -z "${mojo_morbo_port:-}" && export MOJO_LISTEN='http://*:3001'
    
-   do_log "INFO running: morbo -w $PRODUCT_INSTANCE_DIR/src/perl/script/qto
-      --listen $MOJO_LISTEN $PRODUCT_INSTANCE_DIR/src/perl/qto/script/qto"
+   do_log "INFO running: morbo -w $product_instance_dir/src/perl/script/qto
+      --listen $MOJO_LISTEN $product_instance_dir/src/perl/qto/script/qto"
 
    while read -r p ; do 
       p=$(echo $p|sed 's/^ *//g')
       test $p -ne $$ && kill -9 $p ; 
    done < <(sudo ps -ef | grep -v grep | grep 'mojo-morbo-start'|awk '{print $2}')
 
-   bash -c "morbo -w $PRODUCT_INSTANCE_DIR/src/perl/qto --listen $MOJO_LISTEN $PRODUCT_INSTANCE_DIR/src/perl/qto/script/qto" &
+   bash -c "morbo -w $product_instance_dir/src/perl/qto --listen $MOJO_LISTEN $product_instance_dir/src/perl/qto/script/qto" &
 
    # might require sudo visudoers 
    # usrqtoadmin ALL=(ALL) NOPASSWD: /bin/netstat -tulpn
