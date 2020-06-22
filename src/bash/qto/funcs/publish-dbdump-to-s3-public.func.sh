@@ -1,6 +1,6 @@
 
 doPublishDbdumpToS3(){
-   test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$product_instance_dir"
+   test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
    do_export_json_section_vars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
    do_export_json_section_vars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.aws'
@@ -12,7 +12,8 @@ doPublishDbdumpToS3(){
    aws configure list
    set -x
    # remove the grants to disable full publicity of the data ...
-   aws s3 --profile default cp "$dump_file" "s3://$bucket/$postgres_db_name"'.latest.insrts.dmp.sql'
+   aws s3 --profile default cp "$dump_file" "s3://$bucket/$postgres_db_name"'.latest.insrts.dmp.sql' \
+      --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
 	set +x
 
 	cat << EOF

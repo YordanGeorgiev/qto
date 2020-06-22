@@ -1,6 +1,43 @@
 body {
    padding: 1% 1% 40% 1%;
 }
+html body div#div_msg {
+    top: 1%; 
+	 z-index: 100; 
+	 font-size: 90%;
+	 min-width: 50%; 
+	 min-height: 7%; 
+	 min-height: 6%; 
+	 max-width: 80%; 
+	 overflow-x: hidden;
+    vertical-align: center;
+	 border-radius: 4px;
+    line-height: 25px;
+}
+html body div#div_msg span#spn_err_msg {
+	 font-size: 110%;
+}
+#spn_warr_msg {
+	color: #817693; 
+	background-color: #E5DCF3;
+}
+html body div#div_notice {
+    position: absolute;
+    top: 94%; 
+	 bottom: 2%; 
+    left: 15%;
+	 z-index: 0; 
+	 padding: 10px; 
+	 font-size: 80%;
+	 min-width: 70%; 
+	 max-width: 80%; 
+	 overflow-x: hidden;
+	 text-align: center; 
+	 border-radius: 5px;
+}
+#spn_notice {
+	color: #FF0000 ; 
+}
 #btnNew{
    position: fixed;
    font-size: 24px;

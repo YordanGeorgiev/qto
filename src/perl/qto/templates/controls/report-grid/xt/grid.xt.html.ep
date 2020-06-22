@@ -3,7 +3,7 @@
          <modal :id="cid" v-if="showModal" v-on:close="showModal = false" >
          </modal>
          <div_search_box id="div_search_box" />
-         <div id="pager">
+         <div id="pager" class="hcentered">
          <btn-play-next-10 id="btnPlayNext10" v-on:clickedBtnPlayNext10="goToNextPage10" tabindex="3"></btn-play-next-10>
          <btn-play-next id="btnPlayNext" v-on:clickedBtnPlayNext="goToNextPage" tabindex="3"></btn-play-next>
          <div id="page_counter"><span v-for> {{this.$parent.pageNum}} / {{this.$parent.pagesCount }}</span></div>

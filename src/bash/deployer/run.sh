@@ -21,8 +21,8 @@ main(){
    do_add_dns
    do_provision_ssh_keys
    do_copy_git_hooks
-   do_set_chmods
    do_create_multi_env_dir
+   do_set_chmods
    do_finalize)
 
    counter=0;
@@ -30,7 +30,7 @@ main(){
    do
 	  ((counter+=1))
 	  set +x
-      printf "$counter/${#installation_steps[*]} ${installation_steps[$i]}\n";
+      printf "$counter/${#installation_steps[*]} ${installation_steps[$i]}\n\n";
       ${installation_steps[$i]}
    done
 }
@@ -61,8 +61,8 @@ do_set_vars(){
    export unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
    
    # check on where the installation was started from
-   # if started via opt/qto/src/bash/deployer/run.sh, then go 3 directory levels up
-   # otherwise assume that op/setup.sh was used and go to opt/qto
+   # if started via opt/qto/src/bash/deployer/run.sh, then go 3 directory levels up to opt/qto
+   # otherwise assume that opt/setup.sh was used and go to opt/qto
    if [ ! "$unit_run_dir" == *"deployer"* ] ;
    then
       export product_dir=$(cd $unit_run_dir/$app_to_deploy; echo `pwd`)
@@ -79,6 +79,9 @@ do_set_vars(){
    # creating a redirect file with QtoDir function leading to product_instance_dir
    printf "#!/usr/bin/env bash\nmain(){\nQtoDir\n}\nQtoDir(){\ncd $product_instance_dir\n}\nmain\n" > $product_dir/src/bash/deployer/change-to-instance-dir.sh
    
+   
+   sudo perl -pi -e 's/prod_inst_dir_to_replace/$ARGV[1]/ig' /home/firestorm/opt/qto/provision-db.sh $product_dir
+   
    cd $product_dir
 }
 
@@ -90,22 +93,37 @@ do_initial_message(){
 
 
 usage_info(){
+   # if $app_to_deploy is --help, then message will be "--help deployer PURPOSE"
    cat << EOF_USAGE
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-      $app_to_deploy deployer PURPOSE: 
+      QTO deployer PURPOSE: 
       A generic deployer for OS packages, Perl modules and custom vim, tmux
       settings
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
      
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-      $app_to_deploy deployer USAGE:
+      QTO deployer USAGE:
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-      # just the deploy the qto packages
-      # ./src/bash/deployer/run.sh
-	  . ./$app_to_deploy/setup.sh
-      Note: when run for the first time the required modules for the testing
-      will be installed for the current OS user - and that will take 
-      at least 10 minutes
+      # 1. Install components necessary for QTO:
+	  # Perl modules, Python, Postgres, nginx, redis, etc.
+	  #
+	  # Alternatively you can run the deployer directly, then go to the product_instance_dir yourself
+	  # . ./qto/src/bash/deployer/run.sh
+	  # source $(find . -name '.env') && cd ~/opt/qto/qto.$VERSION.$ENV_TYPE.$USER@`hostname -s`
+	  . ./qto/setup.sh
+	  
+	  # 2. Let QTO create a database and fill it with data
+	  # provision-db.sh includes these arguments: -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
+	  # Full version of the command is the following:
+	  # . ./qto/src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
+	  . ./qto/provision-db.sh
+	  
+	  # 3. Create test and production environments
+	  . ./src/bash/qto/qto.sh -a to-env=tst
+	  . ./src/bash/qto/qto.sh -a to-env=prd
+	  
+      Note: when the installation is run for the first time, the required Perl modules for the testing
+      will be installed and that will take at least 10 minutes.
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 EOF_USAGE
    do_exit 0 'usage displayed'
@@ -187,11 +205,6 @@ do_copy_git_hooks(){
 }
 
 
-do_set_chmods(){
-   find $product_dir -type f -name '*.sh' -exec chmod 770 {} \;
-}
-
-
 do_create_multi_env_dir(){
    printf "\nCreating the $app_to_deploy.$ENV_TYPE directory:\n$product_instance_dir/\n\n"
    set -x
@@ -203,8 +216,16 @@ do_create_multi_env_dir(){
    mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$product_instance_dir";
    
    # going to product_instance_dir
-   source $product_dir/src/bash/deployer/change-to-instance-dir.sh
+   source $product_instance_dir/src/bash/deployer/change-to-instance-dir.sh
    export -f QtoDir
+   
+   # editing provision-db.sh responsible for database provisioning
+   sudo perl -pi -e "s/prod_inst_dir_to_replace/$app_to_deploy.$VERSION.$ENV_TYPE.$user_at_host/ig" $product_instance_dir/provision-db.sh
+}
+
+
+do_set_chmods(){
+   find $product_dir -type f -name '*.sh' -exec chmod 770 {} \;
 }
 
 
@@ -215,8 +236,9 @@ do_finalize(){
    printf "\033[2J";printf "\033[0;0H";
    printf "\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n"   
    printf "$app_to_deploy deployment completed successfully.\n\nPlease continue database creation by running these commands one by one: \n\n"
-   printf "bash ;\n./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3\n\n"   
+   printf "bash ;\n. ../provision-db.sh\n\n"   
    printf "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
+   . ../provision-db.sh
 }
 
 
@@ -260,3 +282,4 @@ do_exit(){
 
 
 main "$@"
+

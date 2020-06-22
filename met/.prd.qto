@@ -131,6 +131,7 @@ src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
 src/bash/qto/funcs/provision-db-admin.func.sh
 src/bash/qto/funcs/fix-db-permissions.func.sh
 src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
+src/bash/qto/funcs/publish-dbdump-to-s3-public.func.sh
 src/bash/qto/funcs/load-db-data-from-s3.func.sh
 src/bash/qto/qto.sh
 src/bash/qto/funcs/check-init-terraform.func.sh
@@ -223,7 +224,6 @@ src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
 src/perl/qto/templates/layouts/list.html.ep
 src/perl/qto/templates/controls/list-grid/list-grid.html.ep
-src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-ctk-date-time-picker.css
 src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-ctk-date-time-picker.css
 src/perl/qto/public/poc/vue-ctk-date-time-picker/02/index.html
 src/perl/qto/templates/layouts/login.html.ep
@@ -536,6 +536,7 @@ src/sql/pgsql/qto/tables/2020/2020-02/create-table-monthly_issues_202002.sql
 src/sql/pgsql/qto/tables/2020/2020-03/create-table-monthly_issues_202003.sql
 src/sql/pgsql/qto/tables/2020/2020-04/create-table-monthly_issues_202004.sql
 src/sql/pgsql/qto/tables/2020/2020-05/create-table-monthly_issues_202005.sql
+src/sql/pgsql/qto/tables/2020/2020-05/create-table-monthly_issues_202006.sql
 src/sql/pgsql/qto/tables/01.create-table-daily_issues.sql
 src/sql/pgsql/qto/tables/03.create-table-monthly_issues.sql
 src/sql/pgsql/qto/tables/04.create-table-yearly_issues.sql
@@ -577,7 +578,7 @@ src/sql/pgsql/qto/tables/33.create-table-links.sql
 src/sql/pgsql/qto/tables/38.create-table-onboarding_guide_doc.sql
 src/sql/pgsql/qto/tables/39.create-table-security_checklist_doc.sql
 src/sql/pgsql/qto/tables/40.definitions_dictionary.sql
-src/sql/pgsql/qto/tables/41.create-table-issues_status.sql
+src/sql/pgsql/qto/tables/41.create-table-status.sql
 src/sql/pgsql/qto/tables/42.create-table-ideas_status.sql
 src/sql/pgsql/qto/tables/43.create-table-questions_status.sql
 src/sql/pgsql/qto/tables/44.create-table-category.sql
@@ -995,7 +996,8 @@ src/sql/pgsql/scripts/reporting/create-rep_userstories_doc.sql
 src/sql/pgsql/scripts/reporting/repopulate-rep_userstories_doc.sql
 cnf/bash/etc/init.d/qto-on-boot.sh
 dat/xls/styler.xlsx
-qto
-qto.pl
 src/perl/qto/lib/auto/Qto/Controller/CreateMy/autosplit.ix
 src/perl/qto/lib/auto/Qto/Controller/SelectCol/autosplit.ix
+src/perl/qto/public/lib/js/controls/vue-date-time-picker.js
+src/perl/qto/public/list/page/list-monthly-issues.html
+src/perl/qto/public/themes/thme-blue/css/screen/controls/vue-date-time-picker.css

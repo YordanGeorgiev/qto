@@ -10,6 +10,8 @@ do_provision_nginx(){
 ExecStartPost=/bin/sleep 0.1
 EOF
 
+   sudo mkdir -p /etc/nginx/sites-available/
+   sudo mkdir -p /etc/nginx/sites-enabled
    sudo rm -v /etc/nginx/sites-enabled/*
    sudo rm -v /etc/nginx/sites-available/*
    test -f /etc/nginx/sites-enabled/default && rm -v /etc/nginx/sites-enabled/default

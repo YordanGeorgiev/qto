@@ -2,11 +2,17 @@ html{
    font-size: 90px; /* because of the stupid calendar */
 }
 body {
-   overflow-x: hidden;
    max-width: 100%; 
    font-family: Helvetica Neue, Arial, sans-serif;
    scroll-behavior: smooth;
    font-size: 14px;
+}
+
+.hcentered {
+   position: fixed;
+   left: 50%;
+   transform: translate(-50%, 0%);
+   text-align:center;
 }
 
 #gravatar_url_img {
@@ -59,47 +65,6 @@ body {
 }
 .app_name_tooltip:hover .app_name_tooltiptext {
    visibility: visible;
-}
-html body div#div_msg {
-	 position: absolute; 
-    top: 6%; 
-    left: 12%;
-	 z-index: 0; 
-	 font-size: 90%;
-	 min-width: 50%; 
-	 min-height: 7%; 
-	 min-height: 6%; 
-	 max-width: 80%; 
-	 overflow-x: hidden;
-	 text-align: center; 
-    vertical-align: center;
-	 border-radius: 4px;
-    line-height: 25px;
-}
-html body div#div_msg span#spn_err_msg {
-	color: #FF0000 ; 
-	background-color: #FFFF00;
-}
-#spn_warr_msg {
-	color: #817693; 
-	background-color: #E5DCF3;
-}
-html body div#div_notice {
-    position: absolute;
-    top: 94%; 
-	 bottom: 2%; 
-    left: 15%;
-	 z-index: 0; 
-	 padding: 10px; 
-	 font-size: 80%;
-	 min-width: 70%; 
-	 max-width: 80%; 
-	 overflow-x: hidden;
-	 text-align: center; 
-	 border-radius: 5px;
-}
-#spn_notice {
-	color: #FF0000 ; 
 }
 .div_spacer2 {
 	display: block ; 

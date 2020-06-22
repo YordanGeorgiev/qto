@@ -1,46 +1,48 @@
-JSON	  
-JSON::Parse
-Data::Printer
-Carp::Always
-IO::CaptureOutput
-Net::DNS
-Net::Domain::TLD
-Email::Valid
-FindBin
-IPC::System::Simple 
-Mojolicious	  
-Mojolicious::Plugin::BasicAuthPlus
-Mojolicious::Plugin::StaticCache
-Mojolicious::Plugin::RenderFile
-Mojolicious::Plugin::Authentication
-IO::Socket::SSL  
-URL::Encode
-ExtUtils::Installed
-File::Copy
-File::Find
-File::Path
-Spreadsheet::ParseExcel
-Spreadsheet::XLSX
-Spreadsheet::ParseExcel::FmtJapan
-Text::CSV_XS
-Module::Build::Tiny
-File::Copy::Recursive
-Test::Trap
-Test::More
-Test::Most	  
-Test::Mojo
-DBD::Pg
-Tie::Hash::DBD
-Scalar::Util::Numeric
-Time::HiRes
-Mojo::JWT
-Mojo::Pg
-Mojo::Phantom 
-Authen::Passphrase::BlowfishCrypt
-Term::ReadKey
-Term::Prompt
-DBIx::ProcedureCall
-Storable
-Redis
-Crypt::OpenSSL::RSA
-Gravatar::URL
+      JSON	  
+      JSON::Parse
+      Data::Printer
+      Carp::Always
+      IO::CaptureOutput
+      Net::DNS
+      Net::Domain::TLD
+      Email::Valid
+      FindBin
+      IPC::System::Simple 
+      Mojolicious	  
+      Mojolicious::Plugin::BasicAuthPlus
+      Mojolicious::Plugin::StaticCache
+      Mojolicious::Plugin::RenderFile
+      Mojolicious::Plugin::Authentication
+      IO::Socket::SSL  
+      URL::Encode
+      ExtUtils::Installed
+      File::Copy
+      File::Find
+      File::Path
+      Spreadsheet::ParseExcel
+      Spreadsheet::XLSX
+      Spreadsheet::ParseExcel::FmtJapan
+      Text::CSV_XS
+      Module::Build::Tiny
+      File::Copy::Recursive
+      Test::Trap
+      Test::More
+      Test::Most	  
+      Test::Mojo
+      DBD::Pg
+      Tie::Hash::DBD
+      Scalar::Util::Numeric
+      Time::HiRes
+      Mojo::JWT
+      Mojo::Pg
+      Mojo::Phantom 
+      Authen::Passphrase::BlowfishCrypt
+      Term::ReadKey
+      Term::Prompt
+      DBIx::ProcedureCall
+      Storable
+      Redis
+      Crypt::OpenSSL::RSA
+      Gravatar::URL
+      Mojolicious::Plugin::Gzip
+      Excel::Writer::XLSX
