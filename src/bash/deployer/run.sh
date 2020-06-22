@@ -79,16 +79,20 @@ do_set_vars(){
    # creating a redirect file with QtoDir function leading to product_instance_dir
    printf "#!/usr/bin/env bash\nmain(){\nQtoDir\n}\nQtoDir(){\ncd $product_instance_dir\n}\nmain\n" > $product_dir/src/bash/deployer/change-to-instance-dir.sh
    
-   
-   sudo perl -pi -e 's/prod_inst_dir_to_replace/$ARGV[1]/ig' /home/firestorm/opt/qto/provision-db.sh $product_dir
-   
    cd $product_dir
 }
 
 
 do_initial_message(){
-   printf "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n     QTO installation has started.\n     You can abort it at any time using Ctrl+C.\n\n     After the installation please run these commands to continue with the database creation:\n"
-   printf "\n     bash ;\n     ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
+   cat << EOF_INIT_MSG
+   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+      QTO installation has started.
+      You can abort it at any time using Ctrl+C.
+      After the installation please run these commands one by one to continue with the database creation:
+      bash ;
+	  ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
+   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+   EOF_INIT_MSG
 }
 
 
@@ -113,10 +117,7 @@ usage_info(){
 	  . ./qto/setup.sh
 	  
 	  # 2. Let QTO create a database and fill it with data
-	  # provision-db.sh includes these arguments: -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
-	  # Full version of the command is the following:
-	  # . ./qto/src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
-	  . ./qto/provision-db.sh
+	  . ./qto/src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
 	  
 	  # 3. Create test and production environments
 	  . ./src/bash/qto/qto.sh -a to-env=tst
@@ -134,6 +135,7 @@ do_check_sudo_rights(){
    printf "\nChecking sudo rights.\n\n"
    msg='is not allowed to run sudo'
    test $(sudo -l -U $USER 2>&1 | grep -c "$msg") -eq 1 && echo "$USER $msg !!!" && exit 1
+   printf "OK\n"
 }
 
 
@@ -165,7 +167,7 @@ EOF_ADD_DNS'
 
 
 do_add_nginx_repositories(){
-	if [ ! "grep -q nginx /etc/apt/sources.list" ] ;	 # check to avoid adding lines multiple times, if this record already exists
+	if [ ! "grep -q nginx /etc/apt/sources.list" ] ;  # check to avoid adding lines multiple times, if this record already exists
 	then
 		printf "\nAdding nginx repositories to install the latest nginx version.\n\n"
 		set -x
@@ -174,6 +176,7 @@ do_add_nginx_repositories(){
 deb https://nginx.org/packages/ubuntu/ bionic nginx
 deb-src https://nginx.org/packages/ubuntu/ bionic nginx
 EOF_NGINX_REPOS'
+
 		wget http://nginx.org/keys/nginx_signing.key
 		sudo apt-key add nginx_signing.key
 		sudo apt-get update
@@ -182,7 +185,7 @@ EOF_NGINX_REPOS'
 
 
 do_load_functions(){
-   printf "\nLoading scripts to install Postgres, Perl, PhantomJS, Chromium, Python, Redis, nginx, etc.\n\n"
+   printf "\nLoading scripts to install Postgres, Perl, Python, Redis, nginx, etc.\n\n"
    set -x
    source $product_dir/src/bash/deployer/export-json-section-vars.func.sh
    source $product_dir/src/bash/deployer/check-setup-bash.func.sh
