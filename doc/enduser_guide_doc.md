@@ -117,7 +117,7 @@ You can quickly view the full content of each cell of the listing table by hover
 
 #### 4.1.2. Viewing the list page
 You can use the pick=col1, col2, col3 url parameter to select for only desired attributes.
-You could filter the result the same way the filters for the select page work ( see bellow ). 
+You could filter the result the same way the filters for the select page work ( see below ). 
 Should there be errors in the loading of the page, they will be displayed in a msg at the top of the page.
 
     
@@ -211,14 +211,14 @@ The quick search box works instantaneously, thus hitting enter is not needed.
     
 
 ### 4.4. Setting the item table paging size
-You can set the page size of the result set to be fetched from the database by using the "&page-size=&lt;&lt;page-size&gt;&gt;" url parameter or by clicking on the page sizes links bellow the table.
+You can set the page size of the result set to be fetched from the database by using the "&page-size=&lt;&lt;page-size&gt;&gt;" url parameter or by clicking on the page sizes links below the table.
 The default and most convenient table paging size is 7, because it allows quick paging of a small result-set without scrolling on the screen ...  
 
     
 
 ### 4.5. Paging - setting the item table's page number
 If the result-set requested is larger than the page size you can go to the next page number by using the "&pg-num=&lt;&lt;page-num&gt;&gt;" url parameter. 
-You could go to the next page number by clicking on the links just bellow the quick search textbox. The table control has UI for setting the table page number. 
+You could go to the next page number by clicking on the links just below the quick search textbox. The table control has UI for setting the table page number. 
 The pager shows 10 pages at a "pager page" so getting to the end of hundreds of pages ( depending of course on your page size ) is comparably easy. 
 You could quickly use the / char shortcut to focus to the quick search box and from there use the tab to quickly navigate to the desired page number. 
 
@@ -384,14 +384,14 @@ for example: principles-1805311658
 
     
 
-### 5.7. Managing the view doc data with the right click menu ( beta )
+### 5.7. Managing the view doc data with the right-click menu ( beta )
 This feature is in beta mode still - expect some quirks along the way ...
-If you right click on a number of a title or on the title in the right TOC listing and choosing one of the following options you could:
+If you right-click on a number of a title or on the title in the right TOC listing and choosing one of the following options you could:
 
     
 
 ### 5.8. The right table of contents menu
-You open and close the right click menu from the upper menu icon. The right click menu presents the structure of the document.You could navigate with the keyboard trough the right menu links too. 
+You open and close the right-click menu from the upper menu icon. The right-click menu presents the structure of the document.You could navigate with the keyboard trough the right menu links too. 
 Note that when you click on a link on the right menu the title of the item you clicked on is scrolled to the top of the page.
 Right click on the title items presents the context menu containing several different options to perform on a branch of the document. 
 Note, that you can quickly navigate with the tab key on the keyboard once the right menu is open and selected ( aka you have to click on it ), you can hit enter once reaching the desired section of the document.
@@ -419,14 +419,14 @@ View the current title's tree as pdf printable document convenient for printing 
     
 
 #### 5.8.5. Add new parent node
-Adding new parent node means simply adding a new item in the document on the upper level in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 5.0 item and if the 5.0. item already exist it will be set as the 6.0. and so on ...
-This feature does not work for all the cases properly for now ... you might have to reload the page if the ui does not behave according to the description above - this is known bug with WIP status ...
+Adding new parent node means simply adding a new item in the document on the upper level in the hierarchy as the one from which you right-clicked just after it - thus for example if you right-clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 5.0 item and if the 5.0. item already exists it will be set as the 6.0. and so on ...
+This feature does not work for all the cases properly for now ... you might have to reload the page if the ui does not behave according to the description above - this is a known bug with WIP status ...
 
     
 
 #### 5.8.6. Add new sibling node
-Adding new sibling node means simply adding a new item in the document on the same hierarchy level as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.4. item and if the 4.4. item already exist it will be set as the 4.5. and so on ...
-This feature does not work for all the cases properly for now ... you might have to reload the page if the ui does not behave according to the description above - this is known bug with WIP status ...
+Adding new sibling node means simply adding a new item in the document on the same hierarchy level as the one from which you right-clicked just after it - thus for example if you right-clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.4. item and if the 4.4. item already exists it will be set as the 4.5. and so on ...
+This feature does not work for all the cases properly for now ... you might have to reload the page if the ui does not behave according to the description above - this is a known bug with WIP status ...
 
     
 
@@ -436,8 +436,8 @@ The search page is presented either after you have search globally from either t
     
 
 #### 6.1. Add new child node
-Adding new parent node means simply adding a new item in the document on one level bellow in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exist it will be set as the 4.3.2. and so on ...
-This feature does not work for all the cases properly for now ... you might have to reload the page if the ui does not behave according to the description above - this is known bug with WIP status ...
+Adding new parent node means simply adding a new item in the document on one level below in the hierarchy as the one from which you right-clicked just after it - thus for example if you right-clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exists it will be set as the 4.3.2. and so on ...
+This feature does not work for all the cases properly for now ... you might have to reload the page if the ui does not behave according to the description above - this is a known bug with WIP status ...
 
     
 
@@ -447,8 +447,8 @@ The search results listing provides a slice of the simple text search from the p
     
 
 #### 6.1.1. Remove node
-Adding new parent node means simply adding a new item in the document on one level bellow in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exist it will be set as the 4.3.2. and so on ...
-This feature does not work for all the cases properly for now ... you might have to reload the page if the ui does not behave according to the description above - this is known bug with WIP status ...
+Adding new parent node means simply adding a new item in the document on one level below in the hierarchy as the one from which you right-clicked just after it - thus for example if you right-clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exists it will be set as the 4.3.2. and so on ...
+This feature does not work for all the cases properly for now ... you might have to reload the page if the ui does not behave according to the description above - this is a known bug with WIP status ...
 
     
 

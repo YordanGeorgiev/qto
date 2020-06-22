@@ -321,14 +321,14 @@ I want to be able to open the left menu by clicking on the top menu button and c
 #### 2.4.2. Managing listings from the left menu
 As an UI user of the qto application
 in order to be able to store and track data from different listings or in different documents 
-I want to be able to create new listings by simple right click on the left menu and selecting "add listing".
+I want to be able to create new listings by simple right-click on the left menu and selecting "add listing".
 
     
 
 #### 2.4.3. Managing documents from the left menu
 As an UI user of the qto application
 in order to be able to store and track data from different listings or in different documents 
-I want to be able to create new documents by simple right click on the right menu and selecting "add document".
+I want to be able to create new documents by simple right-click on the right menu and selecting "add document".
 
     
 
@@ -550,12 +550,12 @@ I want to be able to focus the search-box with a single shortcut / click and the
 #### 2.6.4. Hierarchical items management
 As an the ui user
 In order to manage the hierarchical items in the application
-I want to be able to manage by actions (list, create, update, delete, search) ANY hierarchical items of the application in from a hierarchical doc format by simply right clicking on their titles and choosing from the menut the action which must have both image and text to indicate more 
+I want to be able to manage by actions (list, create, update, delete, search) ANY hierarchical items of the application in from a hierarchical doc format by simply right-clicking on their titles and choosing from the menut the action which must have both image and text to indicate more 
 
     
 
 ##### 2.6.4.1. Add Item
-I want to be able to add items to the view page by simply right clicking the upper title of the item and selecting add item
+I want to be able to add items to the view page by simply right-clicking the upper title of the item and selecting add item
 
     
 
@@ -1038,7 +1038,7 @@ I want to be able to search the Items.
 #### 4.3.5. Track Items history
 As a team member
 In order to keep track on what and when was planned on daily basis
-I wanto to be able to keep track what was planned on a project term  - day,week,month,year,quinquennial or decade  
+I want to be able to keep track what was planned on a project term  - day,week,month,year,quinquennial or decade  
 
 
     
@@ -1393,7 +1393,7 @@ As a DevOps Operator
 In order to :
  - keep the dog-fooded local and remote db instances in sync
  - and have full mobile access via the web 
-I wanto to :
+I want to :
  - be able to apply a full db dump remotely via a single one-liner 
  - both local to remote and remote to local
 
@@ -1556,7 +1556,7 @@ I want to be able to search by user-story uuid from the source code of the appli
 As an issues-manager 
 In order to be able to switch between different projects quickly
 I want to be able to issue a single shell call for loading a project's configuration
-and run the issue-handler against this pre-loaded configuration
+and run the issue-handler against this preloaded configuration
 
     
 

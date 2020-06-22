@@ -4,7 +4,7 @@
 # ---------------------------------------------------------
 # obs we assume that the caller is in the product_instance_dir
 # simply delete each file which greps finds to match to the action
-# name(s) cnfigured in the : 
+# name(s) configured in the : 
 # src/bash/qto/tests/rem-qto-actions.lst
 # list file
 # ---------------------------------------------------------

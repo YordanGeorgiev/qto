@@ -229,7 +229,7 @@ filetype plugin on
 " how-to see all the registers: :reg 1 2 3 4 5 6 7 8 9
 " how-to yank from the "clipboard history" - in insert mode , Ctrl + R , 1-9
 " how-to yank " - in normal mode , 2p , 3p etc
-" how-to open all files bellow the root folder matching a file pattern
+" how-to open all files below the root folder matching a file pattern
 " how-to set marks globally - in normal mode mA , mB  
 " how-to jump to marks globally - in normal - 'A , 'B
 " how-to set marks in the current file - in normal mode mA , mB  

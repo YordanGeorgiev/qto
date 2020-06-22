@@ -338,7 +338,7 @@ The qto application must support cloning - that is "forking" into new applicatio
 
 ### 6.1. Page load maximum time
 Each page of the application containing less than 2000 items MUST load for less than 0.3 seconds.
-Any new feature which does not meet this requirement should be disregarded or implemented into a clone of the application with different name ( see the cloning / forking section bellow ). 
+Any new feature which does not meet this requirement should be disregarded or implemented into a clone of the application with different name ( see the cloning / forking section below ). 
 
     
 

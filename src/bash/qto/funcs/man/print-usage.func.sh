@@ -70,7 +70,7 @@ doPrintUsage(){
 	
 
 
-Note the usage is quite long - you might wanto to use the less page :
+Note the usage is quite long - you might want to use the less page :
       `basename $0` --usage \| less
 
    #

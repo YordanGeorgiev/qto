@@ -112,10 +112,10 @@ sub doCheckRequiredModules {
       # if the user knows already the difference between the running the cmd
       # with sudo or he / she probably knows already how-to install perl modules
       $msg
-        .= "\n# as a start cnfigure the cpan to install dependancies first \n";
+        .= "\n# as a start configure the cpan to install dependencies first \n";
       $msg
         .= "\n"
-        . 'perl -MCPAN -e \'my $c = "CPAN::HandleConfig"; $c->load(doit => 1, autocnfig => 1); $c->edit(prerequisites_policy => "follow"); $c->edit(build_requires_install_policy => "yes"); $c->commit\''
+        . 'perl -MCPAN -e \'my $c = "CPAN::HandleConfig"; $c->load(doit => 1, autoconfig => 1); $c->edit(prerequisites_policy => "follow"); $c->edit(build_requires_install_policy => "yes"); $c->commit\''
         . "\n";
       $msg .= "\n#than install the $_ module by running: \n";
       $msg .= "\nsudo perl -MCPAN -e 'install $_'\n\n\n";

@@ -7,8 +7,8 @@ do_check_install_redis(){
       sudo apt-get install -y redis-server
 
       sudo mkdir -p /var/lib/redis/
-		sudo chown -R redis:redis /var/lib/redis
-		sudo chmod 770 /var/lib/redis
+      sudo chown -R redis:redis /var/lib/redis
+      sudo chmod 770 /var/lib/redis
       sudo cp -v /etc/redis/redis.conf /etc/redis/redis.conf.orig
 
       # capture the first ip address into a var to add the the bind directive
@@ -18,8 +18,8 @@ do_check_install_redis(){
       echo "bind $my_ip"| sudo tee -a /etc/redis/redis.conf
       echo 'supervised systemd' | sudo tee -a /etc/redis/redis.conf
 
-      # uncomment out the ip6 bind directive, it breaks the redis
-      sudo perl -pi -e 's/bind 127.0.0.1 ::1/#bind 127.0.0.1 ::1/ig' /etc/redis/redis.conf
+      # comment out the bind directive, having it bound on 127.0.0.1 breaks Redis
+      sudo perl -pi -e 's/bind 127.0.0.1 ::1/# bind 127.0.0.1 ::1/ig' /etc/redis/redis.conf
       while read -r file ; do
          IFS='' read -r -d '' perl_code <<"EOF_PERL_CODE"
             use strict; use warnings; binmode STDOUT, ":utf8"; use utf8; use JSON; use Data::Printer;
@@ -42,7 +42,7 @@ EOF_PERL_CODE
 	   done < <(find $product_dir/cnf/env/ -type f| grep -v '.bak')
 
       # restart to apply the changes 
-		sudo systemctl restart redis
+      sudo systemctl restart redis
       sudo systemctl restart redis.service
 
       # check that redis is running

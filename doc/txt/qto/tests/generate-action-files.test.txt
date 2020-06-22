@@ -17,7 +17,7 @@ e doc/txt/qto/generate-action-files/generate-action-files.test.txt
 
 	# Interdependencies
 	# ------------------------------------------------------
-	-- todo: what are the interdependancies for the  
+	-- todo: what are the interdependencies for the  
 		doTestGenerateActionFiles function to execute without errors
 
 	# Usage:

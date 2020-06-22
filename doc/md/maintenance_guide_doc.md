@@ -67,7 +67,7 @@
     
 
 ## 1. GUIDING PRINCIPLE'S
-This section might seem too philosophical for a start, yet all the development in the qto has ATTEMPTED to follow the principles described bellow. If you skip this section now you might later on wander many times why something works and it is implemented as it is ... and not "the right way". 
+This section might seem too philosophical for a start, yet all the development in the qto has ATTEMPTED to follow the principles described below. If you skip this section now you might later on wander many times why something works and it is implemented as it is ... and not "the right way". 
 Of course you are free to not follow these principles, the less you follow them the smaller the possibility to pull features from your instance(s) - you could even use the existing functionality to create a totally different fork with different name and start developing your own toll with name X - the authors give you the means to do that with this tool ... , but if you want to use and contribute to THIS tool than you better help defined those leading principles and follow them. 
 
     
@@ -124,7 +124,7 @@ Check the port to which the Postgres is running with this command:
 ### 2.6. Application Layer run-state management
 Remember to cd to the product instance dir you are going to work on for example: 
 cd /vagrant/opt/csitea/qto/qto.0.6.5.dev.ysg
-All the examples bellow are assuming you've done that in advance. 
+All the examples below are assuming you've done that in advance. 
 
     
 
@@ -201,7 +201,7 @@ Anything you perform as shell action in qto could be applied not only to the cur
 ### 4.1. Backup a database
 You backup a database ( all the objects, app_roles and data ) with the following one-liner. 
 
-    # obs you must have the shell vars pre-loaded !!! Note dev, tst or prd instances !
+    # obs you must have the shell vars preloaded !!! Note dev, tst or prd instances !
     # clear; doParseCnfEnvVars cnf/qto.prd.host-name.cnf
     bash src/bash/qto/qto.sh -a backup-postgres-db
 
@@ -227,7 +227,7 @@ Qto provides you with the means and tools to work on tens of databases, yet one 
 ### 4.3. Backup a database table
 You backup a database table with the following one-liner. Noe 
 
-    # obs you have to have the shell vars pre-loaded !!!
+    # obs you have to have the shell vars preloaded !!!
     # clear; doParseCnfEnvVars <<path-to-cnf-file>>
     bash src/bash/qto/qto.sh -a backup-postgres-table -t my_table
 
@@ -264,7 +264,7 @@ Because of the naming convention removing backups requires as little effort as:
 ### 4.6. Backup only the database tables insert data
 
 
-    # obs you have to have the shell vars pre-loaded !!!
+    # obs you have to have the shell vars preloaded !!!
     bash src/bash/qto/qto.sh -a backup-postgres-db-inserts
 
 ### 4.7. Restore a database

@@ -4,7 +4,7 @@
 	# ------------------------------------------------------
 	creates a full zip package
 	this will create the full package into your production version dir: $product_dir
-	if you have cnfigured the network_backup_dir in cnf file it will be also copied 
+	if you have configured the network_backup_dir in cnf file it will be also copied 
 	to it -> $network_backup_dir
 	You must specify the files to be be included in the full package from the met/qto.dev 
 	file

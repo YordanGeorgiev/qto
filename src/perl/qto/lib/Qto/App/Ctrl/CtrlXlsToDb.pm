@@ -157,7 +157,7 @@ use CtrlXlsToDb  ;
 
 =head1 DESCRIPTION
 the main purpose is to initiate minimum needed environment for the operation 
-of the whole application - man app cnfig hash 
+of the whole application - man app config hash 
 
 =head2 EXPORT
 

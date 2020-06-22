@@ -192,7 +192,7 @@ do_log(){
 # do put here the after cleaning code
 #------------------------------------------------------------------------------
 doCleanAfterRun(){
-   # remove the temporary dir and all the stuff bellow it
+   # remove the temporary dir and all the stuff below it
    cmd="rm -fvr $tmp_dir"
    doRunCmdAndLog "$cmd"
 
@@ -322,14 +322,14 @@ doSetVars(){
 # courtesy of : http://mark.aufflick.com/blog/2007/11/08/parsing-ini-files-with-sed
 #------------------------------------------------------------------------------
 doParseConfFile(){
-	# set a default cnfiguration file
+	# set a default configuration file
 	cnf_file="$wrap_bash_dir/$RUN_UNIT_TESTER.cnf"
 
 	# however if there is a host dependant cnf file override it
 	test -f "$wrap_bash_dir/$RUN_UNIT_TESTER.$host_name.cnf" \
 		&& cnf_file="$wrap_bash_dir/$RUN_UNIT_TESTER.$host_name.cnf"
 	
-	# if we have perl apps they will share the same cnfiguration settings with this one
+	# if we have perl apps they will share the same configuration settings with this one
 	test -f "$product_instance_dir/$RUN_UNIT_TESTER.$host_name.cnf" \
 		&& cnf_file="$product_instance_dir/$RUN_UNIT_TESTER.$host_name.cnf"
 
