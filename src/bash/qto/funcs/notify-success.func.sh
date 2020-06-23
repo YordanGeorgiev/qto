@@ -15,7 +15,7 @@ doNotifyProvisioningSuccess(){
 
       Please run this command to start the web server:
 
-      bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
+      ./3-start-server.sh
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 EOF_FINAL_SUCCESS
 

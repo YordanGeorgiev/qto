@@ -278,10 +278,13 @@ do_set_vars(){
    export product_instance_dir=`pwd`;   
    export environment_name=$(basename "$product_instance_dir")
    
-   cd $product_instance_dir  # /home/ubuntu/opt/qto/qto.0.8.6.dev.ubuntu@ip-111-11-1-111
+   cd $product_instance_dir  #  on AWS looks similar to /home/ubuntu/opt/qto/qto.0.8.6.dev.ubuntu@ip-111-11-1-111
    
    source $product_instance_dir/.env
+   source $product_instance_dir/lib/bash/funcs/export-json-section-vars.sh
    source $product_instance_dir/lib/bash/funcs/flush-screen.sh
+   export -f do_export_json_section_vars  # exporting this function to sub-processes
+   export -f do_flush_screen
    
    export product_version=$VERSION
    export env_type=$ENV_TYPE
@@ -320,7 +323,7 @@ do_check_git_hooks(){
    # check deploy the pre-commit and pre-push hooks
    if [[ ! -f $product_instance_dir/.git/hooks/pre-commit || ! -f $product_instance_dir/.git/hooks/pre-push ]];then
       cp -v $product_instance_dir/cnf/git/hooks/* $product_instance_dir/.git/hooks/
-      chmod -R 770 $product_instance_dir/.git/hooks/pre-commit/
+      chmod -R 770 $product_instance_dir/.git/hooks/
    fi
 
    # if the hooks exists, but someone DELIBERATELY AND EXPLICITLY removed the run-functional-tests - RE-ADD them

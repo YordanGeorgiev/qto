@@ -62,10 +62,10 @@ do_set_vars(){
    
    # check on where the installation was started from
    # if started via opt/qto/src/bash/deployer/run.sh, then go 3 directory levels up to opt/qto
-   # otherwise assume that opt/setup.sh was used and go to opt/qto
+   # otherwise assume that opt/1-setup.sh was used and go to opt/qto
    if [ ! "$unit_run_dir" == *"deployer"* ] ;
    then
-      export product_dir=$(cd $unit_run_dir/$app_to_deploy; echo `pwd`)
+      export product_dir=$(cd $unit_run_dir/$app_to_deploy; echo `pwd`)  # ~/opt/qto/
    else 
       export product_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
    fi
@@ -90,7 +90,7 @@ do_initial_message(){
       You can abort it at any time using Ctrl+C.
       After the installation please run these commands one by one to continue with the database creation:
       bash ;
-	  ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
+	  ./2-db-creation.sh
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 EOF_INIT_MSG
 }
@@ -237,7 +237,7 @@ do_finalize(){
    
    printf "\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n"   
    printf "$app_to_deploy deployment completed successfully.\n\nPlease continue database creation by running these commands one by one: \n\n"
-   printf "bash ;\n./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3"   
+   printf "bash ;\n./2-db-creation.sh"   
    printf "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
 }
 
