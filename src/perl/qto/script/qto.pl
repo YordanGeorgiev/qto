@@ -125,8 +125,8 @@ sub do_init {
    $config->{'env'}->{'run'}->{'VERSION'} = $objInitiator->doResolveVersion();
    $config->{'env'}->{'run'}->{'ENV_TYPE'} = $objInitiator->doResolveEnvType();
 
-   if ( defined $ENV{'PROJ_CONF_FILE'} ) {
-      my $projConfig = json_file_to_perl ($ENV{'PROJ_CONF_FILE'} );
+   if ( defined $ENV{'proj_conf_file'} ) {
+      my $projConfig = json_file_to_perl ($ENV{'proj_conf_file'} );
       $config->{'env'}->{'db'} = $projConfig->{'env'}->{'db'} ; 
    }
 

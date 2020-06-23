@@ -64,7 +64,7 @@ package Qto::App::Ctrl::CtrlXlsToTable ;
 
       # if the xls_file is not defined take the latest one from the mix data dir
       if ( $objModel->get( 'io.xls-file' ) eq 'undefined' ) {
-         my $xls_dir          = $ENV{'PROJ_INSTANCE_DIR' } || $config->{'env'}->{'run'}->{'ProductInstanceDir'} ; 
+         my $xls_dir          = $ENV{'proj_instance_dir' } || $config->{'env'}->{'run'}->{'ProductInstanceDir'} ; 
          $xls_dir             = $xls_dir . "/dat/mix" ; 
          my $arrRefXlsFiles   = $objRdrDirs->doReadDirGetFilesByExtension ( $xls_dir , 'xlsx')  ; 
          # ignore tilde containing files - todo: fix regex for file names starting with ~

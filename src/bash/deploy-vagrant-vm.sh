@@ -6,7 +6,7 @@ main(){
 	if [[ $app_to_deploy == '--help' ]]; then
 		usage
 	fi
-	do_vagrant_up
+   do_vagrant_up
    do_finalize
 }
 
@@ -39,10 +39,10 @@ do_vagrant_up(){
    # kill all the hanging VBoxHeadless
    #while read -r pid ; do kill -9 $pid ; done < <(sudo ps -ef | grep -i vbox | grep -i qto_$ENV_TYPE | awk '{print $2}')
 
-	# because idempotence in binary configuration !!!
-	test -d $product_dir/.vagrant && sudo rm -r $product_dir/.vagrant
+   # because idempotence in binary configuration !!!
+   test -d $product_dir/.vagrant && sudo rm -r $product_dir/.vagrant
 
-	# keep the root dir of the project clean	
+   # keep the root dir of the project clean	
    cp -v $product_dir/cnf/tpl/vagrant/Vagrantfile $vagrant_file
    source $product_dir/lib/bash/funcs/export-json-section-vars.sh
 
@@ -63,7 +63,7 @@ do_vagrant_up(){
    done
 	
    # get the vars to interpolate from the .env and the deploy dir
-	perl -pi -e 's|\%PRODUCT_BASE_DIR\%|'"$PRODUCT_BASE_DIR"'|g' "$vagrant_file"
+	perl -pi -e 's|\%product_base_dir\%|'"$product_base_dir"'|g' "$vagrant_file"
 	perl -pi -e 's|\%product_dir\%|'"$product_dir"'|g' "$vagrant_file"
 	perl -pi -e 's|\%ENV_TYPE\%|'"$ENV_TYPE"'|g' "$vagrant_file"
       
@@ -73,22 +73,22 @@ do_vagrant_up(){
 
 
 do_set_vars(){
+   set +x  # hiding the pipefail message
    set -eu -o pipefail 
    set +e
-   printf "\033[2J";printf "\033[0;0H"
    export app_to_deploy=${1:-qto}
    app_owner=$USER || exit 1
    unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
-   export PRODUCT_BASE_DIR=$(cd $unit_run_dir/../../..; echo `pwd`)
+   export product_base_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
    export product_dir=$(cd $unit_run_dir/../..; echo `pwd`)
    source "$product_dir/.env"
-   product_base_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
-   product_dir=$(cd $unit_run_dir/../..; echo `pwd`)
-   source "$product_dir/.env"
    product_instance_dir="$product_dir/$app_to_deploy.$VERSION.$ENV_TYPE.$app_owner"
-   bash_opts_file=~/.bash_opts.$(hostname -s)
+   source $product_instance_dir/lib/bash/funcs/flush-screen.sh
+   
    host_name="$(hostname -s)"
-   vagrant_file=$product_dir/Vagrantfile
+   bash_opts_file="~/.bash_opts.$host_name"
+
+   vagrant_file="$product_dir/Vagrantfile"
    cd $product_dir
 }
 
@@ -135,8 +135,8 @@ do_log(){
 
 do_finalize(){
 
-   printf "\033[2J";printf "\033[0;0H"
-	cat << EOF_END
+   do_flush_screen
+   cat << EOF_END
 			:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 			DONE
 			:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

@@ -209,7 +209,8 @@ the main perl logging module in qto
 	}   
 
 
-	# a nice func to improve readability when completing a certain phase
+	# a clear screen func
+	# to improve readability when completing a certain phase
 	sub flushScreen {
 		my $self = shift ; 
 		print "\033[2J";    
@@ -223,7 +224,7 @@ the main perl logging module in qto
 	# -----------------------------------------------------------------------------
 	sub doLogFatalMsg {
 
-		my $self = shift;
+      my $self = shift;
       my $msg  = q{} ; 
       
       ( $caller_pckg, $filename, $line ) = caller();

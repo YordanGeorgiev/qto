@@ -53,8 +53,8 @@ get_function_list () {
 #------------------------------------------------------------------------------
 do_run_actions(){
    actions=$1
-      test -z ${PROJ_INSTANCE_DIR:-} && PROJ_INSTANCE_DIR=$product_instance_dir
-      daily_backup_dir="$PROJ_INSTANCE_DIR/dat/mix/"$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
+      test -z ${proj_instance_dir:-} && proj_instance_dir=$product_instance_dir
+      daily_backup_dir="$proj_instance_dir/dat/mix/"$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
       cd $product_instance_dir
       actions="$(echo -e "${actions}"|sed -e 's/^[[:space:]]*//')" #or how-to trim leading space
       run_funcs=''
@@ -121,33 +121,6 @@ do_init(){
 
 
 #------------------------------------------------------------------------------
-# usage :
-# do_export_json_section_vars cnf/env/dev.env.json '.env.app'
-# do_export_json_section_vars <<configuration-file>> '<<cnf-section>>''
-#------------------------------------------------------------------------------
-do_export_json_section_vars(){
-
-   json_file="$1"
-   shift 1;
-   test -f "$json_file" || \
-      do_exit 1 "FATAL the json_file: $json_file does not exist!!! Nothing to do !!! \n"
-
-   section="$1"
-   test -z "$section" && \
-      do_exit 1 "FATAL the section in do_export_json_section_vars is empty !!! nothing to do !!!"
-   shift 1;
-
-	clearTheScreen
-	do_log "INFO exporting vars from cnf $json_file: "
-   while read -r l ; do
-     key=$(echo $l|cut -d'=' -f1)
-     val=$(echo $l|cut -d'=' -f2)
-     do_log "INFO $key=$val"
-   done < <(cat "$json_file"| jq -r "$section"'|keys_unsorted[] as $key|"\($key)=\"\(.[$key])\""')
-}
-
-
-#------------------------------------------------------------------------------
 # usage example:
 # do_apply_shell_expansion /tmp/docker-compose.yml
 #------------------------------------------------------------------------------
@@ -157,8 +130,6 @@ do_apply_shell_expansion() {
    test -f "$file" || do_exit 1 "do_apply_shell_expansion: the file: $file does not exist !!! Nothing to do"
    perl -wpe 's#\${?(\w+)}?# $ENV{$1} // $& #ge;' $file
 }
-
-
 
 
 # ------------------------------------------------------------------------------
@@ -183,7 +154,6 @@ do_check_ready_to_start(){
 		export PATH="/usr/local/opt/grep/libexec/gnubin/:$PATH"
    fi
 }
-
 
 
 trap "exit 1" TERM
@@ -294,18 +264,17 @@ doRunCmdOrExit(){
 }
 
 
-clearTheScreen(){
-	printf "\033[2J";printf "\033[0;0H"
-}
-
-
 do_set_vars(){
 
    cd $run_unit_bash_dir
-   for i in {1..3} ; do cd .. ; done ; export product_instance_dir=`pwd`;
+   for i in {1..3} ; do cd .. ; done ;
+   
+   export product_instance_dir=`pwd`;
+   
    environment_name=$(basename "$product_instance_dir")
    cd $product_instance_dir
    source $product_instance_dir/.env
+   source $product_instance_dir/lib/bash/funcs/export-json-section-vars.sh  # also imports do_flush_screen
    export product_version=$VERSION
    export env_type=$ENV_TYPE
 

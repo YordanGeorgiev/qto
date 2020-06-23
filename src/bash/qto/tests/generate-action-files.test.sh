@@ -19,7 +19,9 @@ doTestGenerateActionFiles(){
 	do_log "DEBUG STOP  doTestGenerateActionFiles"
 	
 	sleep $sleep_interval
-   printf "\033[2J";printf "\033[0;0H"
+	
+	source $product_instance_dir/lib/bash/funcs/flush-screen.sh
+	do_flush_screen
 
 }
 # eof func doTestGenerateActionFiles

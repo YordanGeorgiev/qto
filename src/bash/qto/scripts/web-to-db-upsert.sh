@@ -2,7 +2,9 @@
 
 if [ \( "$1" = '--usage' \) -o \( "$1" = '' \) -o \( "$1" = '--help' \) ]
 then
-   printf "\033[2J";printf "\033[0;0H"
+   source $product_instance_dir/lib/bash/funcs/flush-screen.sh
+   do_flush_screen
+   
    url='https://qto.fi:442/qto/select/monthly_issues_202005?oa=prio&with=app_users_guid-eq-02d16010-20af-4b0d-be86-cdf116a7d8c7'
    tgt_table='monthly_issues_202005'
    cat << EOF_PRINT_USAGE

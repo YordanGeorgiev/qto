@@ -4,9 +4,10 @@
 #------------------------------------------------------------------------------
 doPrintUsage(){
 
-   printf "\033[2J";printf "\033[0;0H"
+   source $product_instance_dir/lib/bash/funcs/flush-screen.sh
+   do_flush_screen
    
-	cat <<END_HELP
+   cat <<END_HELP
 
    #
    ## START --- USAGE `basename $0`

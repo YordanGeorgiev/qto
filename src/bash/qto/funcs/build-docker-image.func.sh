@@ -1,9 +1,9 @@
 doBuildQtoDockerImage(){
    
-   test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$product_instance_dir"
-   source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
-   test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
-   do_export_json_section_vars $PROJ_CONF_FILE '.env.db'
+   test -z "${proj_instance_dir-}" && proj_instance_dir="$product_instance_dir"
+   source $proj_instance_dir/.env ; env_type=$ENV_TYPE
+   test -z ${proj_conf_file:-} && export proj_conf_file="$proj_instance_dir/cnf/env/$env_type.env.json"
+   do_export_json_section_vars $proj_conf_file '.env.db'
 
    test -f "$product_instance_dir/src/docker/Dockerfile.deploy-$RUN_UNIT.$product_version" || \
       do_exit 1 "the src/docker/Dockerfile.deploy-$RUN_UNIT.$product_version cannot be found !!!"

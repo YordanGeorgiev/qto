@@ -6,12 +6,12 @@
 # ---------------------------------------------------------
 doBackupPostgresDbInserts(){
 
-   test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$product_instance_dir"
-   source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
-   test -z ${PROJ_CONF_FILE:-} && PROJ_CONF_FILE=$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json
-   do_export_json_section_vars $PROJ_CONF_FILE '.env.db'
+   test -z "${proj_instance_dir-}" && proj_instance_dir="$product_instance_dir"
+   source $proj_instance_dir/.env ; env_type=$ENV_TYPE
+   test -z ${proj_conf_file:-} && proj_conf_file=$proj_instance_dir/cnf/env/$env_type.env.json
+   do_export_json_section_vars $proj_conf_file '.env.db'
 
-   mix_data_dir="$PROJ_INSTANCE_DIR/dat/mix"
+   mix_data_dir="$proj_instance_dir/dat/mix"
    test -z "${postgres_db_name-}" && postgres_db_name="${env_type-}"_"${RUN_UNIT//-/_}"
 
    backup_dir=$mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name

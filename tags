@@ -873,7 +873,7 @@ do_export_json_section_vars	src/tpl/psql-code-generator/psql-code-generator.sh	1
 do_fake_history	src/bash/qto/scripts/setup-bash-tmux-vim.sh	176;"	function	language:Sh
 do_finalize	src/bash/deploy-vagrant-vm.sh	136;"	function	language:Sh
 do_finalize	src/bash/deployer/run.sh	176;"	function	language:Sh
-do_flush_the_screen	src/tpl/psql-code-generator/psql-code-generator.sh	260;"	function	language:Sh
+do_flush_screen	src/tpl/psql-code-generator/psql-code-generator.sh	260;"	function	language:Sh
 do_generate_psql_html_with_perl_code_example	src/tpl/psql-code-generator/psql-code-generator.sh	78;"	function	language:Sh
 do_generate_psql_select_all	src/tpl/psql-code-generator/psql-code-generator.sh	58;"	function	language:Sh
 do_generate_psql_select_into_another_table	src/tpl/psql-code-generator/psql-code-generator.sh	27;"	function	language:Sh

@@ -2,7 +2,9 @@
 doCheckPerlSyntax(){
 
 	find . -name autosplit.ix | xargs rm -fv # because idempotence
-	declare -a ret; ret=0	
+	declare -a ret; ret=0
+	
+	source $product_instance_dir/lib/bash/funcs/flush-screen.sh
 
    # foreach perl file check the syntax by setting the correct INC dirs	
 	while read -r dir ; do 
@@ -32,7 +34,7 @@ doCheckPerlSyntax(){
 	
 	done < <(ls -1 "src/perl")
 
-	test $ret -ne 0 && do_exit 4 "Perl syntax error" ; 
-	printf "\033[2J";printf "\033[0;0H"
-
+	test $ret -ne 0 && do_exit 4 "Perl syntax error" ;
+	
+	do_flush_screen
 }

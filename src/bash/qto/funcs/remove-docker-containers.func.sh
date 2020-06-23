@@ -7,8 +7,8 @@
 # ---------------------------------------------------------
 doRemoveDockerContainers(){
 
-   clearTheScreen
-	do_log "INFO START removing all docker containers with the $product_version.$env_type tag !!! " 
+   do_flush_screen
+   do_log "INFO START removing all docker containers with the $product_version.$env_type tag !!! " 
    do_log "INFO Are you SURE ??!! You have 3 seconds to abort by Ctrl + C !!"
    sleep 3
 

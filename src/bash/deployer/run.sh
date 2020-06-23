@@ -92,7 +92,7 @@ do_initial_message(){
       bash ;
 	  ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-   EOF_INIT_MSG
+EOF_INIT_MSG
 }
 
 
@@ -187,7 +187,7 @@ EOF_NGINX_REPOS'
 do_load_functions(){
    printf "\nLoading scripts to install Postgres, Perl, Python, Redis, nginx, etc.\n\n"
    set -x
-   source $product_dir/src/bash/deployer/export-json-section-vars.func.sh
+   source $product_dir/lib/bash/funcs/export-json-section-vars.sh
    source $product_dir/src/bash/deployer/check-setup-bash.func.sh
    source $product_dir/src/bash/deployer/check-install-ubuntu-packages.func.sh
    source $product_dir/src/bash/deployer/check-install-postgres.func.sh
@@ -231,9 +231,10 @@ do_set_chmods(){
 
 do_finalize(){
    set +x
-   touch $product_instance_dir/bootstraping # tell the backup db automate to not trigger yet
+   touch $product_instance_dir/bootstraping  # tell the backup db automate to not trigger yet
    
-   printf "\033[2J";printf "\033[0;0H";
+   do_flush_screen
+   
    printf "\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n"   
    printf "$app_to_deploy deployment completed successfully.\n\nPlease continue database creation by running these commands one by one: \n\n"
    printf "bash ;\n./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3"   

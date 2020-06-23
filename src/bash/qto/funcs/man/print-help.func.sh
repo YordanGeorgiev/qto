@@ -4,10 +4,12 @@
 #------------------------------------------------------------------------------
 doPrintHelp(){
 
-   printf "\033[2J";printf "\033[0;0H"
+   doSetVars
+
+   do_flush_screen
 
    test -z $target_dir && target_dir='<<target_dir>>'
-	doSetVars
+
    cat <<END_HELP
 
    #------------------------------------------------------------------------------

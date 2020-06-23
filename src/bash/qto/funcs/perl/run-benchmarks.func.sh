@@ -16,7 +16,7 @@ doRunBenchmarks(){
       do_log "INFO START functional test for $f"
       perl $f ;
       do_log "INFO STOP  functional test for $f"
-      clearTheScreen
+      do_flush_screen
    done < <(find src/perl/qto/t/lib/Qto/App/benchmarks -type f -name '*.pl'|sort)
 
    export QTO_NO_AUTH=0

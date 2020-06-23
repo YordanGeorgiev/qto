@@ -16,7 +16,7 @@ do_run_test_01(){
   test $out -eq 0 && echo     test-01 failed
   echo -e "\n\n"
   sleep 1
-  clearTheScreen
+  do_flush_screen
 }
 
 
@@ -28,7 +28,7 @@ do_run_test_02(){
   test $out -eq 0 && echo     test-02 failed
   echo -e "\n\n"
   sleep 1
-  clearTheScreen
+  do_flush_screen
 }
 
 
@@ -36,12 +36,7 @@ do_run_test_03(){
   echo $1 ; shift 
   bash src/tpl/psql-code-generator/psql-code-generator.sh dev_qto release_issues monthly_issues
   sleep 1
-  #clearTheScreen
-}
-
-
-clearTheScreen(){
-	printf "\033[2J";printf "\033[0;0H"
+  # do_flush_screen
 }
 
 

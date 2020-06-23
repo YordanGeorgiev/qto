@@ -11,8 +11,8 @@
 #$ docker network prune
 # ---------------------------------------------------------
 doRemoveDockerImages(){
-   clearTheScreen
-	do_log "INFO START removing all docker images !!! " 
+   do_flush_screen
+   do_log "INFO START removing all docker images !!! " 
    do_log "INFO Are you SURE ??!! You have 3 seconds to abort by Ctrl + C !!"
    sleep 3
   
@@ -24,7 +24,7 @@ doRemoveDockerImages(){
       docker rmi $(docker images | grep qto-image | grep $product_version.$env_type |awk '{print $3}')
    fi
 
-	do_log "INFO STOP removing all the docker images"
+   do_log "INFO STOP removing all the docker images"
 }
 
 
