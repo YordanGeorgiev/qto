@@ -22,7 +22,7 @@ main(){
 	shift $((OPTIND -1))
 
    do_set_vars
-   do_check_ready_to_start
+   do_check_required
    test -z "${actions:-}" && actions=' print-usage '
    do_run_actions "$actions"
    test -d $product_instance_dir/.git/hooks/ && do_check_git_hooks
@@ -56,7 +56,7 @@ do_run_actions(){
       test -z ${proj_instance_dir:-} && proj_instance_dir=$product_instance_dir
       daily_backup_dir="$proj_instance_dir/dat/mix/"$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
       cd $product_instance_dir
-      actions="$(echo -e "${actions}"|sed -e 's/^[[:space:]]*//')" #or how-to trim leading space
+      actions="$(echo -e "${actions}"|sed -e 's/^[[:space:]]*//')"  #or how-to trim leading space
       run_funcs=''
       while read -d ' ' arg_action ; do
          #debug arg_action:$arg_action ; sleep 2
@@ -76,6 +76,12 @@ do_run_actions(){
       [[ $arg_action == to-env=* ]] && run_funcs="$(echo -e "$run_funcs\ndoChangeEnvType $arg_action")"
       [[ $arg_action == cp-to-env=* ]] && run_funcs="$(echo -e "$run_funcs\ndoCpToEnv $arg_action")"
       [[ $arg_action == to-app=* ]] && run_funcs="$(echo -e "$run_funcs\ndoCloneToApp $arg_action")"
+	  [[ $arg_action == set-roles ]] && run_funcs="$(echo -e "$run_funcs\ndoProvisionDbAdmin")"
+	  [[ $arg_action == create-db ]] && run_funcs="$(echo -e "$run_funcs\ndoRunQtoDbDdl")"
+	  [[ $arg_action == fill-db ]] && run_funcs="$(echo -e "$run_funcs\ndoLoadDbDataFromS3")"
+	  [[ $arg_action == server-start ]] && run_funcs="$(echo -e "$run_funcs\ndoMojoHypnotoadStart")"
+	  [[ $arg_action == server-stop ]] && run_funcs="$(echo -e "$run_funcs\ndoMojoHypnotoadStop")"
+	  [[ $arg_action == success ]] && run_funcs="$(echo -e "$run_funcs\ndoNotifyProvisioningSuccess")"  # display success message after DB provisioning
       done < <(echo "$actions")
 
    run_funcs="$(echo -e "${run_funcs}"|sed -e 's/^[[:space:]]*//')"
@@ -91,7 +97,7 @@ do_run_actions(){
       do_log "INFO STOP ::: running function :: $run_func"
    done < <(echo "$run_funcs")
 
-	test -d "$daily_backup_dir" || doBackupPostgresDb
+   test -d "$daily_backup_dir" || doBackupPostgresDb
 
 }
 
@@ -135,7 +141,7 @@ do_apply_shell_expansion() {
 # ------------------------------------------------------------------------------
 # perform the checks to ensure that all the vars needed to run are set
 # ------------------------------------------------------------------------------
-do_check_ready_to_start(){
+do_check_required(){
 
    test -f ${cnf_file-} || doCreateDefaultConfFile 
 
@@ -147,7 +153,7 @@ do_check_ready_to_start(){
 	which sed 2>/dev/null || { echo >&2 "The sed binary is missing ! Aborting ..."; exit 1; }
 	which awk 2>/dev/null || { echo >&2 "The awk binary is missing ! Aborting ..."; exit 1; }
 	which jq 2>/dev/null || { echo >&2 "The jq binary is missing ! Aborting ..."; exit 1; }
-   echo 'ok' ; printf "\n"
+   echo 'OK' ; printf "\n"
 
    if [[ "$OSTYPE" == "darwin"* ]]; then
 		export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
@@ -163,7 +169,7 @@ export TOP_PID=$$
 # ------------------------------------------------------------------------------
 # clean and exit with passed status and message
 # call by:
-# do_exit 0 "ok msg"
+# do_exit 0 "OK msg"
 # do_exit 1 "NOK msg"
 # ------------------------------------------------------------------------------
 do_exit(){
@@ -180,7 +186,7 @@ do_exit(){
       do_log "INFO  STOP FOR $RUN_UNIT RUN: $exit_code $exit_msg"
    fi
 
-   rm -rf "$run_unit_bash_dir/tmp" #clear the tmpdir
+   rm -rf "$run_unit_bash_dir/tmp"  #clear the tmpdir
    cd $call_start_dir
 
    test $exit_code -ne 0 && kill -s TERM "$TOP_PID" && exit $exit_code
@@ -269,12 +275,14 @@ do_set_vars(){
    cd $run_unit_bash_dir
    for i in {1..3} ; do cd .. ; done ;
    
-   export product_instance_dir=`pwd`;
+   export product_instance_dir=`pwd`;   
+   export environment_name=$(basename "$product_instance_dir")
    
-   environment_name=$(basename "$product_instance_dir")
-   cd $product_instance_dir
+   cd $product_instance_dir  # /home/ubuntu/opt/qto/qto.0.8.6.dev.ubuntu@ip-111-11-1-111
+   
    source $product_instance_dir/.env
-   source $product_instance_dir/lib/bash/funcs/export-json-section-vars.sh  # also imports do_flush_screen
+   source $product_instance_dir/lib/bash/funcs/flush-screen.sh
+   
    export product_version=$VERSION
    export env_type=$ENV_TYPE
 
@@ -284,7 +292,7 @@ do_set_vars(){
       cd .. ; product_dir=`pwd`;
    fi
    test -z "$env_type" && export env_type='dev'
-   cd .. ; product_base_dir=`pwd`; org_name=$(basename `pwd`)
+   cd .. ; product_base_dir=`pwd`; org_name=$(basename `pwd`)  # /home/ubuntu/opt
 
    ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
@@ -293,13 +301,13 @@ do_set_vars(){
    do_log "INFO # --------------------------------------"
 
    exit_code=0
-   do_log "INFO using the following vars:"
+   do_log "INFO using the following variables:"
    cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
    echo -e "$cmd"
    vars=$(echo -e "$cmd"); do_log "$vars"
 
    while read -r func_file ; do source "$func_file" ; done < <(find $product_instance_dir -name "*func.sh")
-   clearTheScreen
+   do_flush_screen
 
 }
 
