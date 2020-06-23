@@ -26,7 +26,7 @@ main(){
    test -z "${actions:-}" && actions=' print-usage '
    do_run_actions "$actions"
    test -d $product_instance_dir/.git/hooks/ && do_check_git_hooks
-   do_exit $exit_code "# ::: STOP  MAIN :::  $RUN_UNIT "
+   do_exit $exit_code "# ::: Command completed successfully :::  $RUN_UNIT "
 }
 
 
@@ -312,7 +312,7 @@ do_check_git_hooks(){
    # check deploy the pre-commit and pre-push hooks
    if [[ ! -f $product_instance_dir/.git/hooks/pre-commit || ! -f $product_instance_dir/.git/hooks/pre-push ]];then
       cp -v $product_instance_dir/cnf/git/hooks/* $product_instance_dir/.git/hooks/
-      chmod 770 $product_instance_dir/.git/hooks/pre-commit/*
+      chmod -R 770 $product_instance_dir/.git/hooks/pre-commit/
    fi
 
    # if the hooks exists, but someone DELIBERATELY AND EXPLICITLY removed the run-functional-tests - RE-ADD them
