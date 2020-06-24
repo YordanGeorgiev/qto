@@ -4,13 +4,13 @@ doCheckPerlSyntax(){
 	find . -name autosplit.ix | xargs rm -fv # because idempotence
 	declare -a ret; ret=0
 	
-	source $product_instance_dir/lib/bash/funcs/flush-screen.sh
+	source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
 
    # foreach perl file check the syntax by setting the correct INC dirs	
 	while read -r dir ; do 
 
 		echo -e "\n start compiling $dir ..." ; 
-		cd $product_instance_dir/src/perl/$dir ; 
+		cd $PRODUCT_INSTANCE_DIR/src/perl/$dir ; 
 
 		# run the autoloader utility	
 		find . -name '*.pm' -exec perl -MAutoSplit -e 'autosplit($ARGV[0], $ARGV[1], 0, 1, 1)' {} \;
@@ -30,7 +30,7 @@ doCheckPerlSyntax(){
 			test $ret -ne 0 && break ; 
 		
 			echo -e "stop compiling $dir ... \n\n" ; 
-			cd $product_instance_dir ; 
+			cd $PRODUCT_INSTANCE_DIR ; 
 	
 	done < <(ls -1 "src/perl")
 

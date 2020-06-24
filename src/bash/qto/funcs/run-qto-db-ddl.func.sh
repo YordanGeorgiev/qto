@@ -1,15 +1,15 @@
 doRunQtoDbDdl(){
 
-   test -z "${proj_instance_dir-}" && export proj_instance_dir="$product_instance_dir"
-   source $proj_instance_dir/.env ; env_type=$ENV_TYPE
-   test -z ${proj_conf_file:-} && export proj_conf_file="$proj_instance_dir/cnf/env/$env_type.env.json"
-   do_export_json_section_vars $proj_conf_file '.env.db'
-   do_log "INFO using proj_instance_dir: $proj_instance_dir" ; do_log "INFO using proj_conf_file: $proj_conf_file"
+   test -z "${PROJ_INSTANCE_DIR-}" && export PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
+   source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
+   test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
+   do_export_json_section_vars $PROJ_CONF_FILE '.env.db'
+   do_log "INFO using PROJ_INSTANCE_DIR: $PROJ_INSTANCE_DIR" ; do_log "INFO using PROJ_CONF_FILE: $PROJ_CONF_FILE"
    sleep 3;
 
    # 00 create the db
    tmp_log_file="$tmp_dir/.$$.log"
-	pgsql_scripts_dir="$product_instance_dir/src/sql/pgsql/qto"
+	pgsql_scripts_dir="$PRODUCT_INSTANCE_DIR/src/sql/pgsql/qto"
    sql_script="$pgsql_scripts_dir/00.create-db.pgsql"
 
    PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -v -q -t -X -w -U "${postgres_db_useradmin:-}" \

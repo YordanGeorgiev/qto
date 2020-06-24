@@ -25,7 +25,7 @@ main(){
    do_check_required
    test -z "${actions:-}" && actions=' print-usage '
    do_run_actions "$actions"
-   test -d $product_instance_dir/.git/hooks/ && do_check_git_hooks
+   test -d $PRODUCT_INSTANCE_DIR/.git/hooks/ && do_check_git_hooks
    do_exit $exit_code "# ::: Command completed successfully :::  $RUN_UNIT "
 }
 
@@ -53,9 +53,9 @@ get_function_list () {
 #------------------------------------------------------------------------------
 do_run_actions(){
    actions=$1
-      test -z ${proj_instance_dir:-} && proj_instance_dir=$product_instance_dir
-      daily_backup_dir="$proj_instance_dir/dat/mix/"$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
-      cd $product_instance_dir
+      test -z ${PROJ_INSTANCE_DIR:-} && PROJ_INSTANCE_DIR=$PRODUCT_INSTANCE_DIR
+      daily_backup_dir="$PROJ_INSTANCE_DIR/dat/mix/"$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
+      cd $PRODUCT_INSTANCE_DIR
       actions="$(echo -e "${actions}"|sed -e 's/^[[:space:]]*//')"  #or how-to trim leading space
       run_funcs=''
       while read -d ' ' arg_action ; do
@@ -87,7 +87,7 @@ do_run_actions(){
    run_funcs="$(echo -e "${run_funcs}"|sed -e 's/^[[:space:]]*//')"
    while read -r run_func ; do
       #debug run_funcs: $run_funcs ; sleep 3
-      cd $product_instance_dir
+      cd $PRODUCT_INSTANCE_DIR
       do_log "INFO START ::: running action :: $run_func"
       $run_func
       exit_code=$?
@@ -213,8 +213,8 @@ do_log(){
 
    # define default log file none specified in cnf file
    test -z ${log_file:-} && \
-		mkdir -p $product_instance_dir/dat/log/bash && \
-			log_file="$product_instance_dir/dat/log/bash/$RUN_UNIT.`date "+%Y%m"`.log"
+		mkdir -p $PRODUCT_INSTANCE_DIR/dat/log/bash && \
+			log_file="$PRODUCT_INSTANCE_DIR/dat/log/bash/$RUN_UNIT.`date "+%Y%m"`.log"
    echo " [$type_of_msg] `date "+%Y.%m.%d-%H:%M:%S %Z"` [$RUN_UNIT][@$host_name] [$$] $msg " >> $log_file
 }
 
@@ -275,14 +275,14 @@ do_set_vars(){
    cd $run_unit_bash_dir
    for i in {1..3} ; do cd .. ; done ;
    
-   export product_instance_dir=`pwd`;   
-   export environment_name=$(basename "$product_instance_dir")
+   export PRODUCT_INSTANCE_DIR=`pwd`;   
+   export environment_name=$(basename "$PRODUCT_INSTANCE_DIR")
    
-   cd $product_instance_dir  #  on AWS looks similar to /home/ubuntu/opt/qto/qto.0.8.6.dev.ubuntu@ip-111-11-1-111
+   cd $PRODUCT_INSTANCE_DIR  #  on AWS looks similar to /home/ubuntu/opt/qto/qto.0.8.6.dev.ubuntu@ip-111-11-1-111
    
-   source $product_instance_dir/.env
-   source $product_instance_dir/lib/bash/funcs/export-json-section-vars.sh
-   source $product_instance_dir/lib/bash/funcs/flush-screen.sh
+   source $PRODUCT_INSTANCE_DIR/.env
+   source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/export-json-section-vars.sh
+   source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
    export -f do_export_json_section_vars  # exporting this function to sub-processes
    export -f do_flush_screen
    
@@ -290,7 +290,7 @@ do_set_vars(){
    export env_type=$ENV_TYPE
 
    if [ "$environment_name" == "$RUN_UNIT" ]; then
-      product_dir=$product_instance_dir
+      product_dir=$PRODUCT_INSTANCE_DIR
    else
       cd .. ; product_dir=`pwd`;
    fi
@@ -309,7 +309,7 @@ do_set_vars(){
    echo -e "$cmd"
    vars=$(echo -e "$cmd"); do_log "$vars"
 
-   while read -r func_file ; do source "$func_file" ; done < <(find $product_instance_dir -name "*func.sh")
+   while read -r func_file ; do source "$func_file" ; done < <(find $PRODUCT_INSTANCE_DIR -name "*func.sh")
    do_flush_screen
 
 }
@@ -321,22 +321,22 @@ do_set_vars(){
 do_check_git_hooks(){
 
    # check deploy the pre-commit and pre-push hooks
-   if [[ ! -f $product_instance_dir/.git/hooks/pre-commit || ! -f $product_instance_dir/.git/hooks/pre-push ]];then
-      cp -v $product_instance_dir/cnf/git/hooks/* $product_instance_dir/.git/hooks/
-      chmod -R 770 $product_instance_dir/.git/hooks/
+   if [[ ! -f $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit || ! -f $PRODUCT_INSTANCE_DIR/.git/hooks/pre-push ]];then
+      cp -v $PRODUCT_INSTANCE_DIR/cnf/git/hooks/* $PRODUCT_INSTANCE_DIR/.git/hooks/
+      chmod -R 770 $PRODUCT_INSTANCE_DIR/.git/hooks/
    fi
 
    # if the hooks exists, but someone DELIBERATELY AND EXPLICITLY removed the run-functional-tests - RE-ADD them
-   test "$(grep -c 'run-functional-tests' $product_instance_dir/.git/hooks/pre-commit)" -lt 1 && {
+   test "$(grep -c 'run-functional-tests' $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit)" -lt 1 && {
       echo "
          ./src/bash/qto/qto.sh -a run-functional-tests
-      " >> $product_instance_dir/.git/hooks/pre-commit
+      " >> $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit
    }
    # if the hooks exists, but someone DELIBERATELY AND EXPLICITLY removed the unscramble confs re-add them
-   test "$(grep -c 'unscramble-confs' $product_instance_dir/.git/hooks/pre-push)" -lt 1 && {
+   test "$(grep -c 'unscramble-confs' $PRODUCT_INSTANCE_DIR/.git/hooks/pre-push)" -lt 1 && {
       echo "
          ./src/bash/qto/qto.sh -a unscramble-confs
-      " >> $product_instance_dir/.git/hooks/pre-push
+      " >> $PRODUCT_INSTANCE_DIR/.git/hooks/pre-push
    }
 
 }

@@ -12,9 +12,9 @@ doRunJsUnitTests(){
    # sudo npm install -g --save-dev chrome-remote-interface
 	# which chai 2>/dev/null || \
 	 #  { echo >&2 "The chai is missing - \"sudo npm install -g --save-dev chai \" ! Aborting ..."; exit 1; }
-	source $product_instance_dir/lib/bash/funcs/flush-screen.sh
+	source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
 
-	js_unit_tests_dir="$product_instance_dir/src/js/node/js-unit-tests"
+	js_unit_tests_dir="$PRODUCT_INSTANCE_DIR/src/js/node/js-unit-tests"
 	cd $js_unit_tests_dir
 	while read -r d ; do
 		echo -e "cd to dir: $d"

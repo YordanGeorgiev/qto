@@ -20,7 +20,7 @@ do_logTestRunEntry(){
          test -z "$component_name" && component_name="$RUN_UNIT_tester"
          test -z "$test_run_report_line" && test_run_report_line='   '
          test -z "$test_run_report_file" \
-         && test_run_report_file="$product_instance_dir/dat/tests/$component_name"'.test-run-report.'`date "+%Y%m%d_%H%M%S"`'.txt'
+         && test_run_report_file="$PRODUCT_INSTANCE_DIR/dat/tests/$component_name"'.test-run-report.'`date "+%Y%m%d_%H%M%S"`'.txt'
          echo -e "\n" > "$test_run_report_file"
          echo -e `date "+%Y-%m-%d %H:%M:%S"`"\t START $component_name test run report \n" >> "$test_run_report_file"
          echo "result  start-time  stop-time   action-name" >> "$test_run_report_file"
@@ -49,7 +49,7 @@ do_logTestRunEntry(){
          cat "$test_run_report_file"
          echo -e "\n\n"
          # do_log "product instance tests listing"
-         # find "$product_instance_dir"'/dat/tests' -type f -exec stat -c "%y %n" {} \; | sort -nr
+         # find "$PRODUCT_INSTANCE_DIR"'/dat/tests' -type f -exec stat -c "%y %n" {} \; | sort -nr
          echo -e "\n\n"
          ;;
      *)

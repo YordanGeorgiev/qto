@@ -17,7 +17,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $exp_txt    = {} ;  # the expected text to check 
    my $response   = {} ;  # the response obj after each request  
    my $db_name    = {} ;  # the proj name
-   my $product_instance_dir = $config->{'env'}->{'run'}->{'ProductInstanceDir'}; 
+   my $PRODUCT_INSTANCE_DIR = $config->{'env'}->{'run'}->{'ProductInstanceDir'}; 
 
    $db_name= $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
    $url = '/' . $db_name . '/select-tables' ; 
@@ -63,7 +63,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
                      my $http_protocol = $config->{'env'}->{'app'}->{'ht_protocol'};
                      my $web_host = $config->{'env'}->{'app'}->{'web_host'};
                      $url = "$http_protocol" . '://' . "$web_host" . ':' . "$port" . "$url";
-                     my $cmd = "nodejs $product_instance_dir/src/js/node/scrap-html.js \"$url\"";
+                     my $cmd = "nodejs $PRODUCT_INSTANCE_DIR/src/js/node/scrap-html.js \"$url\"";
                      my $s = `$cmd`; 
                      for my $e (Mojo::DOM->new($s)->find("table button")->each){
                         unless ( $e->all_text =~ /^$/g ) {

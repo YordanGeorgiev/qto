@@ -7,8 +7,8 @@
 	creates a zip file with all the files specified in the 
 	met/.<<env_type>>.qto with their relative file paths so that 
 	the user could deploy the product by :
-	mkdir -p <<target_product_instance_dir>>
-	unzip -o <<zip_file>> -d <<target_product_instance_dir>>	
+	mkdir -p <<target_PRODUCT_INSTANCE_DIR>>
+	unzip -o <<zip_file>> -d <<target_PRODUCT_INSTANCE_DIR>>	
 
 	# Prerequisites
 	# ------------------------------------------------------

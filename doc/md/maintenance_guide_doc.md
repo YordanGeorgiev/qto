@@ -210,13 +210,13 @@ Qto provides you with the means and tools to work on tens of databases, yet one 
 
     source lib/bash/funcs/export-json-section-vars.sh
     # optionally use a different project than the current product instance dir
-    export proj_instance_dir=/hos/opt/kone/kone-qto
+    export PROJ_INSTANCE_DIR=/hos/opt/kone/kone-qto
     
     # optionally use a differnt configuration file for this proj instance dir
-    export proj_conf_file=/hos/opt/org/org-qto/cnf/env/tst.env.json
+    export PROJ_CONF_FILE=/hos/opt/org/org-qto/cnf/env/tst.env.json
     
     # load the env vars from this project
-    doExportJsonSectionVars $proj_conf_file '.env.db'
+    doExportJsonSectionVars $PROJ_CONF_FILE '.env.db'
     
     # set the psql with the correct credentials valid ONLY for this proj
     alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} --port $postgres_db_port --host $postgres_db_host"

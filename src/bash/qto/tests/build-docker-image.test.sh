@@ -10,7 +10,7 @@ doTestBuildQtoDockerImage(){
 	do_log "DEBUG START doTestBuildQtoDockerImage"
 	
 	# Action !!!
-   bash "$product_instance_dir/src/bash/qto/qto.sh" -a build-docker-image
+   bash "$PRODUCT_INSTANCE_DIR/src/bash/qto/qto.sh" -a build-docker-image
 	do_log "DEBUG STOP  doTestBuildQtoDockerImage"
 }
 # eof func doTestBuildQtoDockerImage

@@ -82,8 +82,8 @@ do_set_vars(){
    export product_base_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
    export product_dir=$(cd $unit_run_dir/../..; echo `pwd`)
    source "$product_dir/.env"
-   product_instance_dir="$product_dir/$app_to_deploy.$VERSION.$ENV_TYPE.$app_owner"
-   source $product_instance_dir/lib/bash/funcs/flush-screen.sh
+   PRODUCT_INSTANCE_DIR="$product_dir/$app_to_deploy.$VERSION.$ENV_TYPE.$app_owner"
+   source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
    
    host_name="$(hostname -s)"
    bash_opts_file="~/.bash_opts.$host_name"

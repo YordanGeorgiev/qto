@@ -1,5 +1,5 @@
 doProvisionHttps(){
-   do_export_json_section_vars $product_instance_dir/cnf/env/$ENV_TYPE.env.json '.env.app'
+   do_export_json_section_vars $PRODUCT_INSTANCE_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
 
    # if we have already got NOT yet registered the ssl cert
    sudo test -f /etc/letsencrypt/live/$web_host/privkey.pem || {
@@ -23,10 +23,10 @@ EOF_EXPECT
    }
    
    sudo test -f /etc/letsencrypt/live/$web_host/privkey.pem && {
-      source $product_instance_dir/lib/bash/funcs/export-json-section-vars.sh
+      source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/export-json-section-vars.sh
       for env in `echo dev tst prd`; do \
-         do_export_json_section_vars $product_instance_dir/cnf/env/$env.env.json '.env.app'
-         sudo cp -v "$product_instance_dir"'/cnf/nginx/etc/nginx/sites-available/%env%.https-site.conf' \
+         do_export_json_section_vars $PRODUCT_INSTANCE_DIR/cnf/env/$env.env.json '.env.app'
+         sudo cp -v "$PRODUCT_INSTANCE_DIR"'/cnf/nginx/etc/nginx/sites-available/%env%.https-site.conf' \
             "/etc/nginx/sites-available/$env.https-site.conf"
          sudo perl -pi -e 's|\%nginx_port\%|'"$nginx_port"'|g' "/etc/nginx/sites-available/$env.https-site.conf"
          sudo perl -pi -e 's|\%nginx_port\%|'"$nginx_port"'|g' "/etc/nginx/sites-available/$env.http-site.conf"
@@ -45,6 +45,6 @@ EOF_EXPECT
       sudo chown -R www-data:www-data /etc/nginx
       sudo service nginx restart
       sudo service nginx status
-      do_export_json_section_vars $product_instance_dir/cnf/env/$ENV_TYPE.env.json '.env.app'
+      do_export_json_section_vars $PRODUCT_INSTANCE_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
    }
 }

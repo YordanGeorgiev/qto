@@ -35,12 +35,12 @@ sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "dblink";'
 psql_cnf_dir='/etc/postgresql/11/main'
 test -f $psql_cnf_dir/pg_hba.conf && \
    sudo cp -v $psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf.orig.bak && \
-   sudo cp -v $product_instance_dir/cnf/postgres/$psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf && \
+   sudo cp -v $PRODUCT_INSTANCE_DIR/cnf/postgres/$psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf && \
    sudo chown postgres:postres $psql_cnf_dir
 
 test -f $psql_cnf_dir/postgresql.conf && \
    sudo cp -v $psql_cnf_dir/postgresql.conf $psql_cnf_dir/postgresql.conf.orig && \
-   sudo cp -v $product_instance_dir/cnf/postgres/$psql_cnf_dir/postgresql.conf $psql_cnf_dir/postgresql.conf
+   sudo cp -v $PRODUCT_INSTANCE_DIR/cnf/postgres/$psql_cnf_dir/postgresql.conf $psql_cnf_dir/postgresql.conf
 
 chown -R postgres:postgres "/etc/postgresql" && \
     chown -R postgres:postgres "/var/lib/postgresql" && \

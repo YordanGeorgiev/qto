@@ -4,7 +4,7 @@
 	
 	# Purpose:
 	# ------------------------------------------------------
-	download all the docs of an qto app onto a <<proj_docs_root_dir>> or <<proj_instance_dir>>/docs/md/ by calling the 
+	download all the docs of an qto app onto a <<proj_docs_root_dir>> or <<PROJ_INSTANCE_DIR>>/docs/md/ by calling the 
    export as md feature by fetching json string from the pre-defined export files table
 	# Prerequisites
 	# ------------------------------------------------------

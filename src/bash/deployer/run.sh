@@ -74,10 +74,10 @@ do_set_vars(){
    perl -pi -e 's|ENV_TYPE=tst|ENV_TYPE=dev|g' "$product_dir/.env"
    perl -pi -e 's|ENV_TYPE=prd|ENV_TYPE=dev|g' "$product_dir/.env"
    source "$product_dir/.env"
-   export product_instance_dir="$product_dir/$app_to_deploy.$VERSION.$ENV_TYPE.$user_at_host"
+   export PRODUCT_INSTANCE_DIR="$product_dir/$app_to_deploy.$VERSION.$ENV_TYPE.$user_at_host"
 
-   # creating a redirect file with QtoDir function leading to product_instance_dir
-   printf "#!/usr/bin/env bash\nmain(){\nQtoDir\n}\nQtoDir(){\ncd $product_instance_dir\n}\nmain\n" > $product_dir/src/bash/deployer/change-to-instance-dir.sh
+   # creating a redirect file with QtoDir function leading to PRODUCT_INSTANCE_DIR
+   printf "#!/usr/bin/env bash\nmain(){\nQtoDir\n}\nQtoDir(){\ncd $PRODUCT_INSTANCE_DIR\n}\nmain\n" > $product_dir/src/bash/deployer/change-to-instance-dir.sh
    
    cd $product_dir
 }
@@ -111,7 +111,7 @@ usage_info(){
       # 1. Install components necessary for QTO:
 	  # Perl modules, Python, Postgres, nginx, redis, etc.
 	  #
-	  # Alternatively you can run the deployer directly, then go to the product_instance_dir yourself
+	  # Alternatively you can run the deployer directly, then go to the PRODUCT_INSTANCE_DIR yourself
 	  # . ./qto/src/bash/deployer/run.sh
 	  # source $(find . -name '.env') && cd ~/opt/qto/qto.$VERSION.$ENV_TYPE.$USER@`hostname -s`
 	  . ./qto/setup.sh
@@ -209,17 +209,17 @@ do_copy_git_hooks(){
 
 
 do_create_multi_env_dir(){
-   printf "\nCreating the $app_to_deploy.$ENV_TYPE directory:\n$product_instance_dir/\n\n"
+   printf "\nCreating the $app_to_deploy.$ENV_TYPE directory:\n$PRODUCT_INSTANCE_DIR/\n\n"
    set -x
    
-   test -d "$product_instance_dir" && \
-      mv -v "$product_instance_dir" "$product_instance_dir"."$(date +%Y%m%d_%H%M%S)"
+   test -d "$PRODUCT_INSTANCE_DIR" && \
+      mv -v "$PRODUCT_INSTANCE_DIR" "$PRODUCT_INSTANCE_DIR"."$(date +%Y%m%d_%H%M%S)"
 
    mv -v "$product_dir" "$product_dir"'_'
-   mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$product_instance_dir";
+   mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$PRODUCT_INSTANCE_DIR";
    
-   # going to product_instance_dir
-   source $product_instance_dir/src/bash/deployer/change-to-instance-dir.sh
+   # going to PRODUCT_INSTANCE_DIR
+   source $PRODUCT_INSTANCE_DIR/src/bash/deployer/change-to-instance-dir.sh
    export -f QtoDir
 }
 
@@ -231,7 +231,7 @@ do_set_chmods(){
 
 do_finalize(){
    set +x
-   touch $product_instance_dir/bootstraping  # tell the backup db automate to not trigger yet
+   touch $PRODUCT_INSTANCE_DIR/bootstraping  # tell the backup db automate to not trigger yet
    
    do_flush_screen
    

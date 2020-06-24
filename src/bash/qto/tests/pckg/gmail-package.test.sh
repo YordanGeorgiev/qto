@@ -13,7 +13,7 @@ doTestGmailPackage(){
 
    bash src/bash/qto/qto.sh -a create-full-package -a gmail-package
    sleep "$sleep_interval"
-   source $product_instance_dir/lib/bash/funcs/flush-screen.sh
+   source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
    do_flush_screen
 
    do_log "DEBUG STOP  doTestGmailPackage"

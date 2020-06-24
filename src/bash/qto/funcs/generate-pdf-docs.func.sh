@@ -1,11 +1,11 @@
 # file: src/bash/qto/funcs/generate-pdf-docs.func.sh
 
 doGeneratePdfDocs(){
-   test -z "${proj_instance_dir-}" && proj_instance_dir="$product_instance_dir"
-   test -z "${docs_root_dir-}" && docs_root_dir="$proj_instance_dir"
+   test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
+   test -z "${docs_root_dir-}" && docs_root_dir="$PROJ_INSTANCE_DIR"
 
-   test -z ${proj_conf_file-} && proj_conf_file=$proj_instance_dir/cnf/env/$env_type.env.json
-   do_export_json_section_vars $proj_conf_file '.env.app'
+   test -z ${PROJ_CONF_FILE-} && PROJ_CONF_FILE=$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json
+   do_export_json_section_vars $PROJ_CONF_FILE '.env.app'
 
    # <<web-host>>:<<web-port>>/<<db>>/select/export_files?as=grid&od=id
    basic_url="$ht_protocol://${web_host:-}:${port:-}/${postgres_db_name:-}"

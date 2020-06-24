@@ -20,7 +20,7 @@ doTestGenerateActionFiles(){
 	
 	sleep $sleep_interval
 	
-	source $product_instance_dir/lib/bash/funcs/flush-screen.sh
+	source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
 	do_flush_screen
 
 }

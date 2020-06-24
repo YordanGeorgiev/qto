@@ -1,6 +1,6 @@
 doSearchAndReplaceTokens(){
 
-   test -d $dir || dir=$product_instance_dir/src/sql/
+   test -d $dir || dir=$PRODUCT_INSTANCE_DIR/src/sql/
 
    while read -r l ; do 
       to_srch=$(echo $l|awk '{print $1}')

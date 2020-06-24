@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------
 # usage example:
-# source $product_instance_dir/lib/bash/funcs/export-json-section-vars.sh
+# source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/export-json-section-vars.sh
 # do_export_json_section_vars cnf/env/dev.env.json '.env.db'
 #
 # alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U \
@@ -18,7 +18,7 @@ do_export_json_section_vars(){
    test -z "$section" && return
    shift 1;
    
-   source $product_instance_dir/lib/bash/funcs/flush-screen.sh
+   source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
    do_flush_screen
 
    echo "INFO exporting vars from cnf $json_file: "

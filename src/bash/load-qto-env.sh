@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 usage(){
-   echo provide the proj_conf_file as the first cmd arg - \$1
+   echo provide the PROJ_CONF_FILE as the first cmd arg - \$1
    echo source $0 ~/opt/csitea/csitea.0.8.2.prd.ubuntu@csitea.net/cnf/env/prd.env.json
 }
 
@@ -17,10 +17,10 @@ main(){
    do_set_vars
    test -z ${1:-} && usage
    test -z ${1:-} || {
-      export proj_conf_file=$1
-      export proj_instance_dir=$(cd `dirname $proj_conf_file`/../..; echo `pwd`)
+      export PROJ_CONF_FILE=$1
+      export PROJ_INSTANCE_DIR=$(cd `dirname $PROJ_CONF_FILE`/../..; echo `pwd`)
       source $product_dir/lib/bash/funcs/export-json-section-vars.sh
-      do_export_json_section_vars $proj_conf_file '.env.db';
+      do_export_json_section_vars $PROJ_CONF_FILE '.env.db';
 	  do_flush_screen
       sleep 1
 	  
