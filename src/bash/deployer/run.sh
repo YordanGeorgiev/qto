@@ -58,16 +58,16 @@ do_set_vars(){
    export host_name="$(hostname -s)"
    export bash_opts_file=~/.bash_opts.$host_name
    export user_at_host=$USER@$host_name || exit 1
-   export unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
+   export original_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")  # formerly known as unit_run_dir
    
    # check on where the installation was started from
    # if started via opt/qto/src/bash/deployer/run.sh, then go 3 directory levels up to opt/qto
    # otherwise assume that opt/1-setup.sh was used and go to opt/qto
-   if [ ! "$unit_run_dir" == *"deployer"* ] ;
+   if [ ! "$original_dir" == *"deployer"* ] ;
    then
-      export product_dir=$(cd $unit_run_dir/$app_to_deploy; echo `pwd`)  # ~/opt/qto/
+      export product_dir=$(cd $original_dir/$app_to_deploy; echo `pwd`)  # ~/opt/qto/
    else 
-      export product_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
+      export product_dir=$(cd $original_dir/../../..; echo `pwd`)
    fi
 
    # ALWAYS !!! bootstrap a dev instance, for tst and prd use -a to-env=tst , -a to-env=prd 
@@ -88,9 +88,9 @@ do_initial_message(){
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
       QTO installation has started.
       You can abort it at any time using Ctrl+C.
-      After the installation please run these commands one by one to continue with the database creation:
-      bash ;
-	  ./2-db-creation.sh
+	  
+      After the installation please run this command to create the database:
+	  ./2-create-db.sh
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 EOF_INIT_MSG
 }
@@ -111,15 +111,27 @@ usage_info(){
       # 1. Install components necessary for QTO:
 	  # Perl modules, Python, Postgres, nginx, redis, etc.
 	  #
+	  # On completion the directory will change to an instance directory with the name similar to this
+	  # ~/opt/qto/qto.0.7.7.dev.username@hostname
+	  #
 	  # Alternatively you can run the deployer directly, then go to the PRODUCT_INSTANCE_DIR yourself
 	  # . ./qto/src/bash/deployer/run.sh
 	  # source $(find . -name '.env') && cd ~/opt/qto/qto.$VERSION.$ENV_TYPE.$USER@`hostname -s`
-	  . ./qto/setup.sh
+	  . ./qto/1-setup.sh
 	  
-	  # 2. Let QTO create a database and fill it with data
-	  . ./qto/src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
+	  # 2. Create a database and fill it with data
+	  #
+	  # Former command:
+	  # . ./qto/src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
+	  ./2-create-db.sh
 	  
-	  # 3. Create test and production environments
+	  # 3. Start the web server
+	  #
+	  # Former command:
+	  # ./src/bash/qto/qto.sh -a mojo-hypnotoad-start
+	  ./3-start-server.sh
+	  
+	  # 4. Create test and production environments
 	  . ./src/bash/qto/qto.sh -a to-env=tst
 	  . ./src/bash/qto/qto.sh -a to-env=prd
 	  
@@ -188,6 +200,8 @@ do_load_functions(){
    printf "\nLoading scripts to install Postgres, Perl, Python, Redis, nginx, etc.\n\n"
    set -x
    source $product_dir/lib/bash/funcs/export-json-section-vars.sh
+   source $product_dir/lib/bash/funcs/flush-screen.sh
+   export -f do_flush_screen
    source $product_dir/src/bash/deployer/check-setup-bash.func.sh
    source $product_dir/src/bash/deployer/check-install-ubuntu-packages.func.sh
    source $product_dir/src/bash/deployer/check-install-postgres.func.sh
@@ -204,7 +218,7 @@ do_load_functions(){
 
 
 do_copy_git_hooks(){
-	cp -v $unit_run_dir/../../../cnf/git/hooks/* $unit_run_dir/../../../.git/hooks/
+	cp -v ./cnf/git/hooks/* ./.git/hooks/
 }
 
 
@@ -236,8 +250,8 @@ do_finalize(){
    do_flush_screen
    
    printf "\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n"   
-   printf "$app_to_deploy deployment completed successfully.\n\nPlease continue database creation by running these commands one by one: \n\n"
-   printf "bash ;\n./2-db-creation.sh"   
+   printf "$app_to_deploy deployment completed successfully.\n\nPlease run this command to create the database: \n\n"
+   printf "./2-create-db.sh"   
    printf "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
 }
 

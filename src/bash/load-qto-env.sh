@@ -8,8 +8,8 @@ usage(){
 do_set_vars(){
    set -eu -o pipefail
    shopt -s expand_aliases  # src: http://chiefsandendians.blogspot.com/2010/07/linux-scripts-and-alias.html
-   unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
-   export product_dir=$(cd $unit_run_dir; echo `pwd`)
+   original_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
+   export product_dir=$(cd $original_dir; echo `pwd`)
    cd $product_dir
 }
 

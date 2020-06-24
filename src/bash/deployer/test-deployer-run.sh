@@ -6,11 +6,11 @@ main(){
 
 do_set_vars(){
    set -eu -o pipefail 
-   unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
-   product_base_dir=$(cd $unit_run_dir/../../../..; echo `pwd`)  # opt/qto/
-   product_dir=$(cd $unit_run_dir/../../..; echo `pwd`)          # opt/qto/qto.dev/
+   original_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
+   product_base_dir=$(cd $original_dir/../../../..; echo `pwd`)  # opt/qto/
+   product_dir=$(cd $original_dir/../../..; echo `pwd`)          # opt/qto/qto.dev/
    cd $product_dir
-   source "$unit_run_dir/../../../.env"
+   source "$original_dir/../../../.env"
    source $product_dir/lib/bash/funcs/export-json-section-vars.sh
 }
 

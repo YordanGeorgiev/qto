@@ -78,9 +78,9 @@ do_set_vars(){
    set +e
    export app_to_deploy=${1:-qto}
    app_owner=$USER || exit 1
-   unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
-   export product_base_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
-   export product_dir=$(cd $unit_run_dir/../..; echo `pwd`)
+   original_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
+   export product_base_dir=$(cd $original_dir/../../..; echo `pwd`)
+   export product_dir=$(cd $original_dir/../..; echo `pwd`)
    source "$product_dir/.env"
    PRODUCT_INSTANCE_DIR="$product_dir/$app_to_deploy.$VERSION.$ENV_TYPE.$app_owner"
    source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
