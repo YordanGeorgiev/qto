@@ -417,6 +417,7 @@ cnf/bash/.profile_opts.host-name
 # ---
 src/bash/lib/.bash_funcs.host-name
 lib/bash/funcs/export-json-section-vars.sh
+lib/bash/funcs/flush-screen.sh
 # --
 src/bash/qto/tests/all-qto-tests.lst
 src/bash/qto/tests/rem-qto-actions.lst
