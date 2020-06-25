@@ -312,7 +312,7 @@ Each back-end update from the UI takes no longer than 0.2 s. in a non-stressed q
     
 
 #### 6.2.1. Metadata caching via Redis
-All the meta data of the application during each request is fetched from Redis ( and can be re-load into Redis by loading the app_items or the app_item_attributes item in the browser)
+All the meta data of the application during each request is fetched from Redis ( and can be reload into Redis by loading the app_items or the app_item_attributes item in the browser)
 
     
 
@@ -513,17 +513,17 @@ Should the browser request a non-existing table or erroneous url parameters from
 
 #### 8.4.2.  Managing items ( beta )
 The Qto application provides the needed UI interfaces to Create , Update , Delete items in the view documents UI for the users having the privileges for those actions.
-This feature in in beta mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
+This feature is in beta mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
 
     
 
 ##### 8.4.2.1. Add an item in the doc view page UI ( beta)
-Users with the write privileges for the document can add an item in the doc view page just by right clicking on the title and selecting one of the 3 options:
+Users with the write privileges for the document can add an item in the doc view page just by right-clicking on the title and selecting one of the 3 options:
  - add sibling node - add an item which is on the same level in the hierarchy 
  - add parent node - add an item which is on 1 level up in the hierarchy
- - add child node - add and item which is on 1 level bellow in the hierarchy
+ - add child node - add and item which is on 1 level below in the hierarchy
 The new item appears straight after the origin title it was requested from.
-This feature in in beta mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
+This feature is in beta mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
 
     
 
@@ -531,19 +531,19 @@ This feature in in beta mode as it certain rare cases it might not work as expec
 You can:
 - update item title content
 - update item description
-- update item src code if visible ( you can make it visible by adding any non space content to it in the list page by right clicking the item number and choosing open in list )
-This feature in in gamma mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
+- update item src code if visible ( you can make it visible by adding any non space content to it in the list page by right-clicking the item number and choosing open in list )
+This feature is in gamma mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
 
     
 
 ##### 8.4.2.3. Delete item ( gamma )
-You can right click on an item and choose the remove node from the right click men.
-This feature in in gamma mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
+You can right-click on an item and choose the remove node from the right-click men.
+This feature is in gamma mode as it certain rare cases it might not work as expected ( and those are recognised as separate issues and being worked out ). The easiest way to work around in case of a bug is found is to reload the whole page.
 
     
 
 #### 8.4.3. Printing view doc documents
-You can print ANY branch including the whole documents by right clicking the branch or node and choosing "print-preview" and than use the browser's print functionality.
+You can print ANY branch including the whole documents by right-clicking the branch or node and choosing "print-preview" and than use the browser's print functionality.
 
     
 

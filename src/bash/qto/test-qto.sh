@@ -18,7 +18,7 @@ export TOP_PID=$$
 # the main function called
 #------------------------------------------------------------------------------
 main(){
-   doInit
+  	doInit
   	doSetVars
 	doRunTests "$@"
   	do_exit 0 "# = STOP  MAIN = $RUN_UNIT_TESTER "
@@ -52,7 +52,7 @@ get_function_list() {
 # run all the actions
 #------------------------------------------------------------------------------
 doRunTests(){
-	cd $PRODUCT_INSTANCE_DIR
+   cd $PRODUCT_INSTANCE_DIR
 
    do_logTestRunEntry 'INIT'
    do_log "INFO actions list file:
@@ -69,7 +69,7 @@ doRunTests(){
 		[[ ${action:0:1} = \# ]] && continue
 
 		do_log "INFO START :: testing action: \"$action\""
-      do_logTestRunEntry 'START'
+		do_logTestRunEntry 'START'
 		while read -r test_file ; do (
 			# do_log "test_file: \"$test_file\""
 			while read -r function_name ; do (
@@ -87,11 +87,11 @@ doRunTests(){
                do_logTestRunEntry 'INFO' ' '"$action_name"
                # all testing functions should export their exit code
                do_logTestRunEntry 'STOP' $exit_code
-				   # and clear the screen
-		         do_log "INFO STOP :: testing action: \"$action\""
+               # and clear the screen
+               do_log "INFO STOP :: testing action: \"$action\""
                # test $exit_code -ne 0 && do_exit $exit_code "FATAL $function_name"
 				   sleep $sleep_interval
-				   printf "\033[2J";printf "\033[0;0H"
+				   do_flush_screen
             fi
 			);
 			done< <(get_function_list "$test_file")
@@ -192,7 +192,7 @@ do_log(){
 # do put here the after cleaning code
 #------------------------------------------------------------------------------
 doCleanAfterRun(){
-   # remove the temporary dir and all the stuff bellow it
+   # remove the temporary dir and all the stuff below it
    cmd="rm -fvr $tmp_dir"
    doRunCmdAndLog "$cmd"
 
@@ -258,59 +258,60 @@ doSetVars(){
    export PRODUCT_INSTANCE_DIR=`pwd`;
    
    # add the do_logTestRunEntry func
-   . "$PRODUCT_INSTANCE_DIR/src/bash/qto/funcs/log-test-run-entry.func.sh"
+   source "$PRODUCT_INSTANCE_DIR/src/bash/qto/funcs/log-test-run-entry.func.sh"
+   source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
 
-	# include all the func files to fetch their funcs 
-	while read -r test_file ; do . "$test_file" ; done < <(find . -name "*test.sh")
-	#while read -r test_file ; do echo "$test_file" ; done < <(find . -name "*test.sh")
+   # include all the func files to fetch their funcs 
+   while read -r test_file ; do . "$test_file" ; done < <(find . -name "*test.sh")
+   #while read -r test_file ; do echo "$test_file" ; done < <(find . -name "*test.sh")
 
-	while read -r spec_file ; do . "$spec_file" ; done < <(find . -name "*spec.sh")
-	#while read -r test_file ; do echo "$test_file" ; done < <(find . -name "*test.sh")
+   while read -r spec_file ; do . "$spec_file" ; done < <(find . -name "*spec.sh")
+   #while read -r test_file ; do echo "$test_file" ; done < <(find . -name "*test.sh")
 	
-	while read -r help_file ; do . "$help_file" ; done < <(find . -name "*help.sh")
-	#while read -r test_file ; do echo "$test_file" ; done < <(find . -name "*test.sh")
+   while read -r help_file ; do . "$help_file" ; done < <(find . -name "*help.sh")
+   #while read -r test_file ; do echo "$test_file" ; done < <(find . -name "*test.sh")
    
-	# this will be dev , tst, prd
+   # this will be dev , tst, prd
    env_type=$(echo `basename "$PRODUCT_INSTANCE_DIR"`|cut -d'.' -f5)
-	product_version=$(echo `basename "$PRODUCT_INSTANCE_DIR"`|cut -d'.' -f2-4)
-	environment_name=$(basename "$PRODUCT_INSTANCE_DIR")
+   product_version=$(echo `basename "$PRODUCT_INSTANCE_DIR"`|cut -d'.' -f2-4)
+   environment_name=$(basename "$PRODUCT_INSTANCE_DIR")
 
-	cd ..
-	product_dir=`pwd`;
+   cd ..
+   product_dir=`pwd`;
 
-	cd ..
-	product_base_dir=`pwd`;
+   cd ..
+   product_base_dir=`pwd`;
 
-	org_dir=`pwd`
-	org_name=$(echo `basename "$org_dir"`)
+   org_dir=`pwd`
+   org_name=$(echo `basename "$org_dir"`)
 
-	cd ..
-	org_base_dir=`pwd`;
+   cd ..
+   org_base_dir=`pwd`;
 
-	cd "$wrap_bash_dir/"
+   cd "$wrap_bash_dir/"
 
    # start settiing default vars
    do_print_debug_msgs=0
    # stop settiing default vars
 
 
-	doParseConfFile
-	( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
+   doParseConfFile
+   ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
 
-	do_log "INFO # --------------------------------------"
-	do_log "INFO # -----------------------"
-	do_log "INFO # ===		 START MAIN   === $RUN_UNIT_TESTER"
-	do_log "INFO # -----------------------"
-	do_log "INFO # --------------------------------------"
+   do_log "INFO # --------------------------------------"
+   do_log "INFO # -----------------------"
+   do_log "INFO # ===		 START MAIN   === $RUN_UNIT_TESTER"
+   do_log "INFO # -----------------------"
+   do_log "INFO # --------------------------------------"
 		
-	exit_code=0
-	do_log "INFO using the following vars:"
-	cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
-	echo -e "$cmd"
+   exit_code=0
+   do_log "INFO using the following vars:"
+   cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
+   echo -e "$cmd"
 
-	# and clear the screen
-	printf "\033[2J";printf "\033[0;0H"
+   # and clear the screen
+   do_flush_screen
 }
 #eof func doSetVars
 
@@ -322,14 +323,14 @@ doSetVars(){
 # courtesy of : http://mark.aufflick.com/blog/2007/11/08/parsing-ini-files-with-sed
 #------------------------------------------------------------------------------
 doParseConfFile(){
-	# set a default cnfiguration file
+	# set a default configuration file
 	cnf_file="$wrap_bash_dir/$RUN_UNIT_TESTER.cnf"
 
 	# however if there is a host dependant cnf file override it
 	test -f "$wrap_bash_dir/$RUN_UNIT_TESTER.$host_name.cnf" \
 		&& cnf_file="$wrap_bash_dir/$RUN_UNIT_TESTER.$host_name.cnf"
 	
-	# if we have perl apps they will share the same cnfiguration settings with this one
+	# if we have perl apps they will share the same configuration settings with this one
 	test -f "$PRODUCT_INSTANCE_DIR/$RUN_UNIT_TESTER.$host_name.cnf" \
 		&& cnf_file="$PRODUCT_INSTANCE_DIR/$RUN_UNIT_TESTER.$host_name.cnf"
 
@@ -380,6 +381,7 @@ main "$@"
 #
 # VersionHistory:
 #------------------------------------------------------------------------------
+# 1.2.0 --- 2020-06-23 13:21:22 -- source flush_screen function from lib folder
 # 1.1.0 --- 2017-03-05 16:48:13 -- change to do_exit , added testing report
 # 1.0.0 --- 2016-09-11 12:24:15 -- init from bash-stub
 #----------------------------------------------------------

@@ -30,6 +30,8 @@ doBackupPostgresDb(){
    echo -e "\n"
    wc -l $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_db_name/* | sort -nr
    sleep 1
+   
+   echo "Full database backup completed successfully."
 
 }
 # eof file: src/bash/qto/funcs/backup-postgres-db.func.sh

@@ -15,7 +15,7 @@ SELECT 'create the "tst_paging" table'
 create unique index idx_tst_paging_uniq_id on tst_paging (id);
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname

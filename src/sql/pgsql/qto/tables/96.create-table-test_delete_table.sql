@@ -17,7 +17,7 @@ SELECT 'create the "test_delete_table" table'
    insert into test_delete_table ( id,name,description) values (2,'name-2','the name attr should NOT be deleted'); 
    insert into test_delete_table ( id,name,description) values (3,'name-3','the name attr should be deleted to deleted-name-3'); 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname

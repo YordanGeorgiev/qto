@@ -65,7 +65,7 @@ the main perl logging module in qto
       $LogDir =~ s/\$ProductInstanceDir/$config->{'env'}->{'run'}->{'ProductInstanceDir'}/g ; 
       $logConfig->{'LogDir'} = $LogDir ; 
 
-		# define the log dir as the current dir if not cnfigured 
+		# define the log dir as the current dir if not configured 
 		unless ( defined( $LogDir ) ) {
 			$0 =~ m/^(.*)(\\|\/)(.*)\.([a-z]*)/;
 			$RunDir = $1;
@@ -209,7 +209,8 @@ the main perl logging module in qto
 	}   
 
 
-	# a nice func to improve readability when completing a certain phase
+	# a clear screen func
+	# to improve readability when completing a certain phase
 	sub flushScreen {
 		my $self = shift ; 
 		print "\033[2J";    
@@ -223,7 +224,7 @@ the main perl logging module in qto
 	# -----------------------------------------------------------------------------
 	sub doLogFatalMsg {
 
-		my $self = shift;
+      my $self = shift;
       my $msg  = q{} ; 
       
       ( $caller_pckg, $filename, $line ) = caller();
@@ -438,7 +439,7 @@ the main perl logging module in qto
       
       $msg = $self->doBuildMsg( $msgType, $msg);
 
-		#print to STDOUT and STDERR only if cnfigured to print to console
+		#print to STDOUT and STDERR only if configured to print to console
 		if ( $logConfig->{'PrintConsoleMsgs'} == 1 ) {
 			# PRINT TO STDOUT if
 			if (  $logConfig->{ 'PrintInfoMsgs' } 	== 1
@@ -458,12 +459,12 @@ the main perl logging module in qto
 			}
 		}
 		
-		# log to file only if cnfigured so
+		# log to file only if configured so
 		if ( $logConfig->{ 'LogToFile' } == 1 ) {
 					$self->doAppendToFile ( $LogFile, "$msg" );
 		} #eof if
 
-		# log to a file handle only if cnfigured to
+		# log to a file handle only if configured to
 		if ( $logConfig->{ 'LogToFileHandle' } == 1 ) {
 					$self->doAppendToFileHandle ( "$msg" );
 		} #eof if
@@ -472,7 +473,7 @@ the main perl logging module in qto
 
    #
 	# -----------------------------------------------------------------------------
-	# logs a message based on the cnfiguration settings 
+	# logs a message based on the configuration settings 
 	# -----------------------------------------------------------------------------
 	sub doRunLogMsg {
 
@@ -503,7 +504,7 @@ the main perl logging module in qto
 		$msg 					= '' ; 
 		my $error_msg 			= '' ; 
 		
-      # do not write anything unless log file is cnfigured or actually even passed	
+      # do not write anything unless log file is configured or actually even passed	
 		return unless ( defined ( $logConfig->{ 'LogToFile' } ) ) ;
 		return unless ( $logConfig->{ 'LogToFile' } == 1 ) ; 
 		return unless ( $file ) ; 
@@ -652,9 +653,9 @@ Provide a simple interface for dynamic logging...
 2019-06-11-13:33:11 --- DEBUG : This is a debug message  
 2019-06-11-13:33:11 --- TRACE : This is a trace message  : FROM Package: Morphus  
 
-- Logger does doInit all the cnfig values it is utilizing on doInit if they do not exist in the cnfig file 
+- Logger does doInit all the config values it is utilizing on doInit if they do not exist in the config file 
 - Logger understands the following type of msgs : DEBUG,ERROR,TRACE,INFO,WARN, SIMPLE
-- Logger prints each type of msgs into a file if cnfigured to do so
+- Logger prints each type of msgs into a file if configured to do so
 - The TRACE type of msg does provide a file , line of file of the caller
 - When called with the LogBroadCastMsg ( "ERROR" , "INFO" , "ANYOTHERTYPE" , $msg ) ; Logger will output both the ERROR and the INFO msg 
 

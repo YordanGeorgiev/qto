@@ -25,7 +25,7 @@ SELECT 'create the "readme_doc" table'
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -41,8 +41,8 @@ SELECT 'show the columns of the just created table'
    BEFORE UPDATE ON readme_doc 
    FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'readme_doc'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'readme_doc'::regclass;
 

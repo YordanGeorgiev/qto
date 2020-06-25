@@ -24,7 +24,7 @@ create unique index idx_uniq_quinquennially_issues_id on quinquennially_issues (
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -38,8 +38,8 @@ SELECT 'show the columns of the just created table'
 --The trigger:
 CREATE TRIGGER trg_set_update_time_on_quinquennially_issues BEFORE UPDATE ON quinquennially_issues FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'quinquennially_issues'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'quinquennially_issues'::regclass;
 

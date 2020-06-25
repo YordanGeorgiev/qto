@@ -20,7 +20,7 @@ SELECT 'create the "goals" table'
     );
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -37,7 +37,7 @@ CREATE INDEX idx_goals_description ON goals (description);
 --The trigger:
 CREATE TRIGGER trg_set_update_time_on_goals BEFORE UPDATE ON goals FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'goals'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'goals'::regclass;

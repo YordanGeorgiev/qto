@@ -260,8 +260,8 @@ The syntax of the list and list-my pages is constructed as follows:
     yearly_issues -- the subject of the action - in this case - WHAT to link 
 
 ### 6.1. Viewing the list page
-You can use the   url parameter to select for only desired attributes.
-You could filter the result the same way the filters for the select page work ( see bellow ). 
+You can use the url parameter to select for only desired attributes.
+You could filter the result the same way the filters for the select page work ( see below ). 
 Should there be errors in the loading of the page, they will be displayed in a msg at the top of the page.
 
     
@@ -356,14 +356,14 @@ The quick search box works instantaneously, thus hitting enter is not needed.
     
 
 ### 6.4. Setting the item table paging size
-You can set the page size of the result set to be fetched from the database by using the "&page-size=&lt;&lt;page-size&gt;&gt;" url parameter or by clicking on the page sizes links bellow the table.
+You can set the page size of the result set to be fetched from the database by using the "&page-size=&lt;&lt;page-size&gt;&gt;" url parameter or by clicking on the page sizes links below the table.
 The default and most convenient table paging size is 7, because it allows quick paging of a small result-set without scrolling on the screen ...  
 
     
 
 ### 6.5. Paging - setting the item table's page number
 If the result-set requested is larger than the page size you can go to the next page number by using the "&pg-num=&lt;&lt;page-num&gt;&gt;" url parameter. 
-You could go to the next page number by clicking on the links just bellow the quick search textbox. The table control has UI for setting the table page number. 
+You could go to the next page number by clicking on the links just below the quick search textbox. The table control has UI for setting the table page number. 
 The pager shows 10 pages at a "pager page" so getting to the end of hundreds of pages ( depending of course on your page size ) is comparably easy. 
 You could quickly use the / char shortcut to focus to the quick search box and from there use the tab to quickly navigate to the desired page number. 
 
@@ -528,17 +528,17 @@ for example: principles-1805311658
 
     
 
-### 7.3. Managing the view doc data with the right click menu
-You can right click ANY of the toc menu items ( including the doc title, which IS NOT right clickable from the document content) and choose one of the actions to perform on the clicked item:
+### 7.3. Managing the view doc data with the right-click menu
+You can right-click ANY of the toc menu items ( including the doc title, which IS NOT right-clickable from the document content) and choose one of the actions to perform on the clicked item:
 
 This feature is in beta mode still - expect some serious quirks along the way ...
-If you right click on a number of a title or on the title in the right TOC listing and choosing one of the following options you could:
+If you right-click on a number of a title or on the title in the right TOC listing and choosing one of the following options you could:
 
     
 
 ### 7.4. The right table of contents  - the "TOC menu"
 The right Table Of Contents ( TOC ) menu
-You open and close the right click menu from the upper menu icon. The right click menu presents the structure of the document.You could navigate with the keyboard trough the right menu links too. 
+You open and close the right-click menu from the upper menu icon. The right-click menu presents the structure of the document.You could navigate with the keyboard trough the right menu links too. 
 Note that when you click on a link on the right menu the title of the item you clicked on is scrolled to the top of the page.
 Right click on the title items presents the context menu containing several different options to perform on a branch of the document. 
 Note, that you can quickly navigate with the tab key on the keyboard once the right menu is open and selected ( aka you have to click on it ), you can hit enter once reaching the desired section of the document.
@@ -561,26 +561,26 @@ This option exports this branch as Mark Down document ( GitHub syntax ), Microso
     
 
 #### 7.4.4. Add new parent node ( gamma )
-Adding new parent node means simply adding a new item in the document on the upper level in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4-th item on the first level you will get the 5.0 item and if the 5.0. item already exist it will be set as the 6.0. and so on ...
-This feature does does not work 100% ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
+Adding new parent node means simply adding a new item in the document on the upper level in the hierarchy as the one from which you right-clicked just after it - thus for example if you right-clicked  the item with number 4.3. which is the 3rd item on the second level from the 4-th item on the first level you will get the 5.0 item and if the 5.0. item already exists it will be set as the 6.0. and so on ...
+This feature does does not work 100% ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of its complexity - this is a known bug with WIP status ...
 
     
 
 #### 7.4.5. Add new sibling node ( gamma )
-Adding new sibling node means simply adding a new item in the document on the same hierarchy level as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.4. item and if the 4.4. item already exist it will be set as the 4.5. and so on ...
-This feature does does not work 100% ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
+Adding new sibling node means simply adding a new item in the document on the same hierarchy level as the one from which you right-clicked just after it - thus for example if you right-clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.4. item and if the 4.4. item already exists it will be set as the 4.5. and so on ...
+This feature does does not work 100% ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of its complexity - this is a known bug with WIP status ...
 
     
 
 #### 7.4.6. Add new child node ( gamma )
-Adding new parent node means simply adding a new item in the document on one level bellow in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exist it will be set as the 4.3.2. and so on ...
-This feature does does not work 100% ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
+Adding new parent node means simply adding a new item in the document on one level below in the hierarchy as the one from which you right-clicked just after it - thus for example if you right-clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exists it will be set as the 4.3.2. and so on ...
+This feature does does not work 100% ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of its complexity - this is a known bug with WIP status ...
 
     
 
 #### 7.4.7. Remove node ( gamma )
-Adding new parent node means simply adding a new item in the document on one level bellow in the hierarchy as the one from which you right clicked just after it - thus for example if you right clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exist it will be set as the 4.3.2. and so on ...
-This feature does does not work 100% ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of it's complexity - this is known bug with WIP status ...
+Adding new parent node means simply adding a new item in the document on one level below in the hierarchy as the one from which you right-clicked just after it - thus for example if you right-clicked  the item with number 4.3. which is the 3rd item on the second level from the 4rth item on the first level you will get the 4.3.1 item and if the 4.3.1. item already exists it will be set as the 4.3.2. and so on ...
+This feature does does not work 100% ... you MIGHT have to reload the page if the ui does not behave according to the description above, because of its complexity - this is a known bug with WIP status ...
 
     
 

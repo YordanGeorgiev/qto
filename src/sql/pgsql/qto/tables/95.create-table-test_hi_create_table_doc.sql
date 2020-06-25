@@ -28,7 +28,7 @@ SELECT 'create the "test_hi_create_table_doc" table' as "---"
   --                      values ( 0,0,1,1,2,'test_hi_create_table_doc');
 
 
-SELECT 'show the columns of the just created table' as "---"
+SELECT 'Display the columns of the just created table' as "---"
 ; 
 
    SELECT attrelid::regclass, attnum, attname

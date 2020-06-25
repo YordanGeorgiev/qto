@@ -12,7 +12,7 @@ select a.tablename , b.usename
    , HAS_TABLE_PRIVILEGE(usename,tablename, 'update') as update
    , HAS_TABLE_PRIVILEGE(usename,tablename, 'delete') as delete
    , HAS_TABLE_PRIVILEGE(usename,tablename, 'references') as references  
-from pg_tables a , pg_user b 
+FROM pg_tables a , pg_user b 
 where a.tablename='monthly_issues'
 ;
 

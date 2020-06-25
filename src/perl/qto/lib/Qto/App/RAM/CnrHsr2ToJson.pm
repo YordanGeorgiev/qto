@@ -40,7 +40,7 @@ package Qto::App::RAM::CnrHsr2ToJson ;
 
 =head1 SYNOPSIS
 
-	doResolves the product version and base dirs , bootstraps cnfig files if needed
+	doResolves the product version and base dirs , bootstraps config files if needed
 
       use Qto::App::RAM::CnrHsr2ToJson ; 
 		my $objCnrHsr2ToJson = 
@@ -216,7 +216,7 @@ use Qto  ;
 
 =head1 DESCRIPTION
 the main purpose is to initiate minimum needed environment for the operation 
-of the whole application - man app cnfig hash 
+of the whole application - man app config hash 
 
 =head2 EXPORT
 

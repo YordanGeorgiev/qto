@@ -32,8 +32,8 @@
 			<body>
 
 					<!-- those are the links which should present the dynamic context menu -->
-					<a id="link-1" href="#" class="cls-context-menu-link">right click link-01</a>
-					<a id="link-2" href="#" class="cls-context-menu-link">right click link-02</a>
+					<a id="link-1" href="#" class="cls-context-menu-link">right-click link-01</a>
+					<a id="link-2" href="#" class="cls-context-menu-link">right-click link-02</a>
 
 					<!-- this is the context menu -->
 					<!-- note the string to=0 where the 0 is the digit to be replaced -->
@@ -48,13 +48,13 @@
 				<script>
 					var rgtClickContextMenu = document.getElementById('div-context-menu');
 
-					/** close the right click context menu on click anywhere else in the page*/
+					/** close the right-click context menu on click anywhere else in the page*/
 					document.onclick = function(e){
 						 rgtClickContextMenu.style.display = 'none';
 					}
 
 					/** 
-					 present the right click context menu ONLY for the elements having the right class
+					 present the right-click context menu ONLY for the elements having the right class
 					 by replacing the 0 or any digit after the "to-" string with the element id , which
 					 triggered the event 
 					*/

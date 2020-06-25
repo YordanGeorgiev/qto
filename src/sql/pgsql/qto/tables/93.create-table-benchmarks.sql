@@ -26,7 +26,7 @@ create unique index idx_uniq_benchmarks_id on benchmarks (id);
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -118,8 +118,8 @@ DATE_PART('minute', NEW.stop_time::timestamp - NEW.start_time::timestamp);
   FOR EACH ROW EXECUTE PROCEDURE fnc_benchmarks_calc_diff_min();
 -- STOP trg_benchmarks_upsrt_diff_min
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'benchmarks'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'benchmarks'::regclass;
 

@@ -20,7 +20,7 @@ CREATE INDEX idx_rank_questions_status ON questions_status
 USING gin(to_tsvector('English', name || ' ' || description || 'owner')); 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -51,7 +51,7 @@ c36ac35d-d010-41ce-84f0-31ba5d808aa8	200226093618	03-act	The questions is being 
 --The trigger:
 CREATE TRIGGER trg_set_update_time_on_questions_status BEFORE UPDATE ON questions_status FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'questions_status'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'questions_status'::regclass;

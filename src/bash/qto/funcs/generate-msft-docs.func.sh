@@ -12,8 +12,8 @@ doGenerateMsftDocs(){
    furl="$basic_url"'/select/export_files?as=grid&od=id&pg-size=20'
    echo "running: curl --cookie ~/.qto/cookies.txt --insecure  -s $furl \| jq -r '.dat[]|.url'"
    curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]|.url'
-	ret=$?
-	test $ret != "0" && do_exit $ret "failed to get data from the $furl"
+   ret=$?
+   test $ret != "0" && do_exit $ret "failed to get data from the $furl"
 
    while read -r url ; do 
       table_name=$(curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .name'); 
@@ -26,7 +26,7 @@ doGenerateMsftDocs(){
       echo -e "\nrunning: python src/python/generate-docx.py $table_name"
       python3 src/python/generate-docx.py "$table_name" "$docs_root_dir/$rel_path"
    done < <(curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]|.url')
-	
-   printf "\033[2J";printf "\033[0;0H"
+
+   do_flush_screen
 }
 

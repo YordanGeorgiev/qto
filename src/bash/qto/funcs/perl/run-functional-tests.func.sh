@@ -17,7 +17,7 @@ doRunFunctionalTests(){
       test $? -ne 0 && do_exit $? " the tests in the $f failed !!!"
       do_log "INFO STOP  functional test for $f"
       sleep 1
-      clearTheScreen
+      do_flush_screen
    done < <(find src/perl/qto/t/lib/Qto/Controller -type f -name '*.t' |sort)
 
    export QTO_NO_AUTH=0

@@ -67,7 +67,7 @@
     
 
 ## 1. INTRODUCTION
-The QTO installation could be compressed to four oneliners, yet if you are installing it for first time you should read this guide thoroughly and CAREFULLY or at least jump through the code sections from the top till the bottom, simply because the stack is huge - PostgreSQL, Perl application layer with a lot of modules and dependencies and you will be deploying the whole stack.
+The QTO installation could be compressed to four oneliners, yet if you are installing it for the first time you should read this guide thoroughly and CAREFULLY or at least jump through the code sections from the top till the bottom, simply because the stack is huge - PostgreSQL, Perl application layer with a lot of modules and dependencies and you will be deploying the whole stack.
 
     
 
@@ -114,8 +114,8 @@ You need hardware, which is powerful enough to run a virtual machine with at lea
 
 ### 2.2. Target setup
 The target setup of both the LOCAL an the AWS deployments is a system comprised of dev, tst, qas and prd instances of QTO locally and dev, tst, qas and prd instances in AWS. 
-The target setup in this section is the "satellite-host" depicted as "dev-mac" in the bellow diagram.
-The following diagram illustrates that setup. Naturally you will be deploying only the dev.&lt;&lt;site&gt;&gt;.com, when performing the installation for first time. Thus, in the spirit of QTO, you will be moving fast and destroying in dev, reinforcing skills in tst and do it at once in prd.
+The target setup in this section is the "satellite-host" depicted as "dev-mac" in the below diagram.
+The following diagram illustrates that setup. Naturally you will be deploying only the dev.&lt;&lt;site&gt;&gt;.com, when performing the installation for the first time. Thus, in the spirit of QTO, you will be moving fast and destroying in dev, reinforcing skills in tst and do it at once in prd.
 
 
     
@@ -138,7 +138,7 @@ This action will enable the Merge Requests creation according to the qto develop
     
 
 ### 2.5. Install and tmux, vim, git and bash confs (optional)
-This step is optional - it will deploy tmux, vim and git with some default configurations, which you could omit. Replace the email and the initials passed as $1 and $2 to the script with your email and initials and not those bellow.
+This step is optional - it will deploy tmux, vim and git with some default configurations, which you could omit. Replace the email and the initials passed as $1 and $2 to the script with your email and initials and not those below.
 
     # on the AWS server
     export your_git_user_name=YordanGeorgiev
@@ -215,7 +215,7 @@ The run of the following "shell actions" will create the QTO database and load i
     ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
 
 ### 2.10. Start the application layer on the dev instance
-Start the application layer by issuing the following command. The hypnotoad starting script ALWAYS checks whether or not you have public and private files for the JWT auth and if you do not have them if will create them basically only once. So hit Enter or type a password, when executing the action for first time.
+Start the application layer by issuing the following command. The hypnotoad starting script ALWAYS checks whether or not you have public and private files for the JWT auth and if you do not have them if will create them basically only once. So hit Enter or type a password, when executing the action for the first time.
 
     # ALWAYS run any shell-action from the product instance dir 
     cd ~/opt/qto/qto.$VERSION.$ENV_TYPE.$USER
@@ -242,7 +242,7 @@ This actions will:
     ./src/bash/qto/qto.sh -a check-perl-syntax -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
 
 ### 2.13. Start the tst instance
-The hypnotoad starting script ALWAYS checks whether or not you have public and private files for the JWT auth and, if you do not have them, it will create them only once. So hit Enter or type a password when executing the action for first time.
+The hypnotoad starting script ALWAYS checks whether or not you have public and private files for the JWT auth and, if you do not have them, it will create them only once. So hit Enter or type a password when executing the action for the first time.
 
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
 
@@ -381,7 +381,7 @@ The bootstrap script will deploy ALL the required Ubuntu 18.04 binaries AND Perl
  - install and provision Postgres
  - install and provision the nginx proxy server
 
-Copy paste the full command bellow - this is IMPORTANT !!!
+Copy paste the full command below - this is IMPORTANT !!!
 
     # run the bootstrap script and IMPORTANT !!! reload the bash shell 
     bash ./qto/src/bash/deployer/run.sh ; bash ; 
@@ -420,21 +420,21 @@ Configure the DNS server name in the UI of your DNS provider.
     
 
 ### 3.12. Provision QTO web users
-Open the cnf/env/dev.env.json, change the env-&gt;AdminEmail with an e-mail you have access to. Restart the web servers as shown bellow. Login via web interface.
+Open the cnf/env/dev.env.json, change the env-&gt;AdminEmail with an e-mail you have access to. Restart the web servers as shown below. Login via web interface.
 
     # the start action performs restart as well, if the web servers are running
     ./src/bash/qto/qto.sh -a mojo-hypnotoad-start
 
 ### 3.13. Create the tst product instance
 If you revisit the target architecture picture(@installations_doc-10), the actions so far have been only the installations of the dev instance, which you should have be now up and running. 
-QTO is designed around the idea of developing in dev (aka doing things for first time and possibly with some errors), testing in tst (more of a testing and configuration allowed, but not developing with minor errors) and prd (where no errors are allowed and everything should go smoothly). 
+QTO is designed around the idea of developing in dev (aka doing things for the first time and possibly with some errors), testing in tst (more of a testing and configuration allowed, but not developing with minor errors) and prd (where no errors are allowed and everything should go smoothly). 
 Thus by now you have achieved only the dev instance deployment.
 
     ./src/bash/qto/qto.sh -a to-env=tst
 
 ### 3.14. Provision the tst database
 If you revisit the target architecture picture(installations_doc-10), the actions so far have been only the installations of the dev instance, which you should have be now up and running. 
-QTO is designed around the idea of developing in dev (aka doing things for first time and possibly with some errors), testing in tst (more of a testing and configuration allowed, but not developing with minor errors and prd (where no errors are allowed and everything should go smoothly). 
+QTO is designed around the idea of developing in dev (aka doing things for the first time and possibly with some errors), testing in tst (more of a testing and configuration allowed, but not developing with minor errors and prd (where no errors are allowed and everything should go smoothly). 
 Thus by now you have achieved only the dev instance deployment
 
     

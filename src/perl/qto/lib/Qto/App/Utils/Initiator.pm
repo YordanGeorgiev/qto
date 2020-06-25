@@ -39,7 +39,7 @@ package Qto::App::Utils::Initiator ;
    our $my_absolute_path         = '' ; 
 =head1 SYNOPSIS
 
-	doResolves the product version and base dirs , bootstraps cnfig files if needed
+	doResolves the product version and base dirs , bootstraps config files if needed
 
 		 use Initiator;
 		 my $objInitiator = new Initiator () ; 

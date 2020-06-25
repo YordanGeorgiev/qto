@@ -26,7 +26,7 @@ SELECT 'create the "system_guide_doc" table'
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -42,8 +42,8 @@ SELECT 'show the columns of the just created table'
    BEFORE UPDATE ON system_guide_doc 
    FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'system_guide_doc'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'system_guide_doc'::regclass;
 

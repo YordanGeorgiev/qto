@@ -6,16 +6,17 @@
 # ---------------------------------------------------------
 doTestGmailPackage(){
 
-	do_log "DEBUG START doTestGmailPackage"
+   do_log "DEBUG START doTestGmailPackage"
 	
    cat doc/txt/qto/tests/pckg/gmail-package.test.txt
-	sleep "$sleep_interval"
+   sleep "$sleep_interval"
 
-	bash src/bash/qto/qto.sh -a create-full-package -a gmail-package
-	sleep "$sleep_interval"
-   printf "\033[2J";printf "\033[0;0H"
+   bash src/bash/qto/qto.sh -a create-full-package -a gmail-package
+   sleep "$sleep_interval"
+   source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
+   do_flush_screen
 
-	do_log "DEBUG STOP  doTestGmailPackage"
+   do_log "DEBUG STOP  doTestGmailPackage"
 }
 # eof func doTestGmailPackage
 

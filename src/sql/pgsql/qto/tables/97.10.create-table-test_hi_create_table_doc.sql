@@ -22,7 +22,7 @@ SELECT 'create the "test_hi_create_table_doc" table' as "---"
 
 
 
-SELECT 'show the columns of the just created table' as "---"
+SELECT 'Display the columns of the just created table' as "---"
 ; 
 
    SELECT attrelid::regclass, attnum, attname

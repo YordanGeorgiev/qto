@@ -12,6 +12,7 @@ doRunJsUnitTests(){
    # sudo npm install -g --save-dev chrome-remote-interface
 	# which chai 2>/dev/null || \
 	 #  { echo >&2 "The chai is missing - \"sudo npm install -g --save-dev chai \" ! Aborting ..."; exit 1; }
+	source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
 
 	js_unit_tests_dir="$PRODUCT_INSTANCE_DIR/src/js/node/js-unit-tests"
 	cd $js_unit_tests_dir
@@ -21,11 +22,11 @@ doRunJsUnitTests(){
 		echo -e "installing packages for dir $d: \n"
 		sleep 1
 		npm install
-		printf "\033[2J";printf "\033[0;0H" # clear the screen
+		do_flush_screen  # clear the screen
 		echo -e "test dir $d \n"
 		sleep 1
 		npm test
 		sleep 4
-		printf "\033[2J";printf "\033[0;0H" # clear the screen
+		do_flush_screen
 	done < <(find $js_unit_tests_dir -type d -name '0*-*'|sort)
 }

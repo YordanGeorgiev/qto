@@ -20,7 +20,7 @@ SELECT 'create the "definitions_dictionary" table'
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -36,8 +36,8 @@ SELECT 'show the columns of the just created table'
    BEFORE UPDATE ON definitions_dictionary 
    FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'definitions_dictionary'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'definitions_dictionary'::regclass;
 

@@ -19,7 +19,7 @@ doRunUnitTests(){
       test $? -ne 0 && do_exit $? " the tests in the $f failed !!!"
       do_log "INFO STOP  unit test for $f"
       sleep 1
-      clearTheScreen
+      do_flush_screen
    done < <(find src/perl/qto/t/lib/Qto/App -name '*.t' -type f |grep -v benchmarks |sort)
 
    export QTO_NO_AUTH=0

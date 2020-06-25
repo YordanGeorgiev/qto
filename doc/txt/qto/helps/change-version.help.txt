@@ -17,7 +17,7 @@
 
 	# Interdependencies
 	# ------------------------------------------------------
-	-- todo: what are the interdependancies for the  
+	-- todo: what are the interdependencies for the  
 		doHelpChangeVersion function to execute without errors
 
 	# Usage:

@@ -4,9 +4,10 @@
 #------------------------------------------------------------------------------
 doPrintUsage(){
 
-   printf "\033[2J";printf "\033[0;0H"
+   source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
+   do_flush_screen
    
-	cat <<END_HELP
+   cat <<END_HELP
 
    #
    ## START --- USAGE `basename $0`
@@ -70,7 +71,7 @@ doPrintUsage(){
 	
 
 
-Note the usage is quite long - you might wanto to use the less page :
+Note the usage is quite long - you might want to use the less page :
       `basename $0` --usage \| less
 
    #

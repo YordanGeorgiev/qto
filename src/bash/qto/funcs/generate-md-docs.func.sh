@@ -5,7 +5,7 @@
 # for docs: cat doc/txt/qto/funcs/generate-md-docs.func.txt
 # ---------------------------------------------------------
 doGenerateMdDocs(){
-	do_log "DEBUG START doGenerateMdDocs"
+   do_log "DEBUG START doGenerateMdDocs"
    test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    test -z "${docs_root_dir-}" && docs_root_dir="$PROJ_INSTANCE_DIR"
 
@@ -17,8 +17,8 @@ doGenerateMdDocs(){
    furl="$basic_url"'/select/export_files?as=grid&od=id&pg-size=20'
    echo "running: curl --cookie ~/.qto/cookies.txt --insecure  -s $furl \| jq -r '.dat[]|.url'"
    curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]|.url'
-	ret=$?
-	test $ret != "0" && do_exit $ret "failed to get data from the $furl"
+   ret=$?
+   test $ret != "0" && do_exit $ret "failed to get data from the $furl"
 
    while read -r url ; do 
       file_name=$(curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]| select(.url=='\"$url\"')| .name'); 
@@ -36,8 +36,8 @@ doGenerateMdDocs(){
       echo -e "$lines lines in the $file_path file \n"
    done < <(curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]|.url')
 	
-   printf "\033[2J";printf "\033[0;0H"
-	do_log "DEBUG STOP  doGenerateMdDocs"
+   do_flush_screen
+   do_log "DEBUG STOP  doGenerateMdDocs"
 }
 
 # eof file: src/bash/qto/funcs/generate-md-docs.func.sh

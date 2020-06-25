@@ -1,7 +1,7 @@
 
 
 do_check_install_perl_modules(){
-   cd $PRODUCT_DIR
+   cd $product_dir
    modules="$(cat src/bash/deployer/qto/cnf/bin/perl-modules.lst)"
   
    while read -r module ; do

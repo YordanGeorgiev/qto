@@ -27,7 +27,7 @@ SELECT 'create the "enduser_guide_doc" table'
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -64,8 +64,8 @@ CREATE OR REPLACE FUNCTION fnc_enduser_guide_doc_set_all_seq()
   EXECUTE PROCEDURE fnc_enduser_guide_doc_set_all_seq();
 -- STOP trg_enduser_guide_doc_set_all_seq
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'enduser_guide_doc'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'enduser_guide_doc'::regclass;
 

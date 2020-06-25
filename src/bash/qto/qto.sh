@@ -22,11 +22,11 @@ main(){
 	shift $((OPTIND -1))
 
    do_set_vars
-   do_check_ready_to_start
+   do_check_required
    test -z "${actions:-}" && actions=' print-usage '
    do_run_actions "$actions"
    test -d $PRODUCT_INSTANCE_DIR/.git/hooks/ && do_check_git_hooks
-   do_exit $exit_code "# ::: STOP  MAIN :::  $RUN_UNIT "
+   do_exit $exit_code "# ::: Command completed successfully :::  $RUN_UNIT "
 }
 
 
@@ -56,7 +56,7 @@ do_run_actions(){
       test -z ${PROJ_INSTANCE_DIR:-} && PROJ_INSTANCE_DIR=$PRODUCT_INSTANCE_DIR
       daily_backup_dir="$PROJ_INSTANCE_DIR/dat/mix/"$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")
       cd $PRODUCT_INSTANCE_DIR
-      actions="$(echo -e "${actions}"|sed -e 's/^[[:space:]]*//')" #or how-to trim leading space
+      actions="$(echo -e "${actions}"|sed -e 's/^[[:space:]]*//')"  #or how-to trim leading space
       run_funcs=''
       while read -d ' ' arg_action ; do
          #debug arg_action:$arg_action ; sleep 2
@@ -76,6 +76,12 @@ do_run_actions(){
       [[ $arg_action == to-env=* ]] && run_funcs="$(echo -e "$run_funcs\ndoChangeEnvType $arg_action")"
       [[ $arg_action == cp-to-env=* ]] && run_funcs="$(echo -e "$run_funcs\ndoCpToEnv $arg_action")"
       [[ $arg_action == to-app=* ]] && run_funcs="$(echo -e "$run_funcs\ndoCloneToApp $arg_action")"
+	  [[ $arg_action == set-roles ]] && run_funcs="$(echo -e "$run_funcs\ndoProvisionDbAdmin")"
+	  [[ $arg_action == create-db ]] && run_funcs="$(echo -e "$run_funcs\ndoRunQtoDbDdl")"
+	  [[ $arg_action == fill-db ]] && run_funcs="$(echo -e "$run_funcs\ndoLoadDbDataFromS3")"
+	  [[ $arg_action == server-start ]] && run_funcs="$(echo -e "$run_funcs\ndoMojoHypnotoadStart")"
+	  [[ $arg_action == server-stop ]] && run_funcs="$(echo -e "$run_funcs\ndoMojoHypnotoadStop")"
+	  [[ $arg_action == success ]] && run_funcs="$(echo -e "$run_funcs\ndoNotifyProvisioningSuccess")"  # display success message after DB provisioning
       done < <(echo "$actions")
 
    run_funcs="$(echo -e "${run_funcs}"|sed -e 's/^[[:space:]]*//')"
@@ -91,7 +97,7 @@ do_run_actions(){
       do_log "INFO STOP ::: running function :: $run_func"
    done < <(echo "$run_funcs")
 
-	test -d "$daily_backup_dir" || doBackupPostgresDb
+   test -d "$daily_backup_dir" || doBackupPostgresDb
 
 }
 
@@ -121,33 +127,6 @@ do_init(){
 
 
 #------------------------------------------------------------------------------
-# usage :
-# do_export_json_section_vars cnf/env/dev.env.json '.env.app'
-# do_export_json_section_vars <<configuration-file>> '<<cnf-section>>''
-#------------------------------------------------------------------------------
-do_export_json_section_vars(){
-
-   json_file="$1"
-   shift 1;
-   test -f "$json_file" || \
-      do_exit 1 "FATAL the json_file: $json_file does not exist!!! Nothing to do !!! \n"
-
-   section="$1"
-   test -z "$section" && \
-      do_exit 1 "FATAL the section in do_export_json_section_vars is empty !!! nothing to do !!!"
-   shift 1;
-
-	clearTheScreen
-	do_log "INFO exporting vars from cnf $json_file: "
-   while read -r l ; do
-     key=$(echo $l|cut -d'=' -f1)
-     val=$(echo $l|cut -d'=' -f2)
-     do_log "INFO $key=$val"
-   done < <(cat "$json_file"| jq -r "$section"'|keys_unsorted[] as $key|"\($key)=\"\(.[$key])\""')
-}
-
-
-#------------------------------------------------------------------------------
 # usage example:
 # do_apply_shell_expansion /tmp/docker-compose.yml
 #------------------------------------------------------------------------------
@@ -159,12 +138,10 @@ do_apply_shell_expansion() {
 }
 
 
-
-
 # ------------------------------------------------------------------------------
 # perform the checks to ensure that all the vars needed to run are set
 # ------------------------------------------------------------------------------
-do_check_ready_to_start(){
+do_check_required(){
 
    test -f ${cnf_file-} || doCreateDefaultConfFile 
 
@@ -176,14 +153,13 @@ do_check_ready_to_start(){
 	which sed 2>/dev/null || { echo >&2 "The sed binary is missing ! Aborting ..."; exit 1; }
 	which awk 2>/dev/null || { echo >&2 "The awk binary is missing ! Aborting ..."; exit 1; }
 	which jq 2>/dev/null || { echo >&2 "The jq binary is missing ! Aborting ..."; exit 1; }
-   echo 'ok' ; printf "\n"
+   echo 'OK' ; printf "\n"
 
    if [[ "$OSTYPE" == "darwin"* ]]; then
 		export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 		export PATH="/usr/local/opt/grep/libexec/gnubin/:$PATH"
    fi
 }
-
 
 
 trap "exit 1" TERM
@@ -193,7 +169,7 @@ export TOP_PID=$$
 # ------------------------------------------------------------------------------
 # clean and exit with passed status and message
 # call by:
-# do_exit 0 "ok msg"
+# do_exit 0 "OK msg"
 # do_exit 1 "NOK msg"
 # ------------------------------------------------------------------------------
 do_exit(){
@@ -210,7 +186,7 @@ do_exit(){
       do_log "INFO  STOP FOR $RUN_UNIT RUN: $exit_code $exit_msg"
    fi
 
-   rm -rf "$run_unit_bash_dir/tmp" #clear the tmpdir
+   rm -rf "$run_unit_bash_dir/tmp"  #clear the tmpdir
    cd $call_start_dir
 
    test $exit_code -ne 0 && kill -s TERM "$TOP_PID" && exit $exit_code
@@ -294,18 +270,22 @@ doRunCmdOrExit(){
 }
 
 
-clearTheScreen(){
-	printf "\033[2J";printf "\033[0;0H"
-}
-
-
 do_set_vars(){
 
    cd $run_unit_bash_dir
-   for i in {1..3} ; do cd .. ; done ; export PRODUCT_INSTANCE_DIR=`pwd`;
-   environment_name=$(basename "$PRODUCT_INSTANCE_DIR")
-   cd $PRODUCT_INSTANCE_DIR
+   for i in {1..3} ; do cd .. ; done ;
+   
+   export PRODUCT_INSTANCE_DIR=`pwd`;   
+   export environment_name=$(basename "$PRODUCT_INSTANCE_DIR")
+   
+   cd $PRODUCT_INSTANCE_DIR  #  on AWS looks similar to /home/ubuntu/opt/qto/qto.0.8.6.dev.ubuntu@ip-111-11-1-111
+   
    source $PRODUCT_INSTANCE_DIR/.env
+   source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/export-json-section-vars.sh
+   source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
+   export -f do_export_json_section_vars  # exporting this function to sub-processes
+   export -f do_flush_screen
+   
    export product_version=$VERSION
    export env_type=$ENV_TYPE
 
@@ -315,7 +295,7 @@ do_set_vars(){
       cd .. ; product_dir=`pwd`;
    fi
    test -z "$env_type" && export env_type='dev'
-   cd .. ; product_base_dir=`pwd`; org_name=$(basename `pwd`)
+   cd .. ; product_base_dir=`pwd`; org_name=$(basename `pwd`)  # /home/ubuntu/opt
 
    ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
 
@@ -324,13 +304,13 @@ do_set_vars(){
    do_log "INFO # --------------------------------------"
 
    exit_code=0
-   do_log "INFO using the following vars:"
+   do_log "INFO using the following variables:"
    cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
    echo -e "$cmd"
    vars=$(echo -e "$cmd"); do_log "$vars"
 
    while read -r func_file ; do source "$func_file" ; done < <(find $PRODUCT_INSTANCE_DIR -name "*func.sh")
-   clearTheScreen
+   do_flush_screen
 
 }
 
@@ -343,7 +323,7 @@ do_check_git_hooks(){
    # check deploy the pre-commit and pre-push hooks
    if [[ ! -f $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit || ! -f $PRODUCT_INSTANCE_DIR/.git/hooks/pre-push ]];then
       cp -v $PRODUCT_INSTANCE_DIR/cnf/git/hooks/* $PRODUCT_INSTANCE_DIR/.git/hooks/
-      chmod 770 $PRODUCT_INSTANCE_DIR/.git/hooks/pre-commit/*
+      chmod -R 770 $PRODUCT_INSTANCE_DIR/.git/hooks/
    fi
 
    # if the hooks exists, but someone DELIBERATELY AND EXPLICITLY removed the run-functional-tests - RE-ADD them

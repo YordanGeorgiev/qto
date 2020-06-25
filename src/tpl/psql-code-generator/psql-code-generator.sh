@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-# usage: bash src/tpl/psql-code-generator/psql-code-generator.sh dev_qto release_issues monthly_issues
-# chk also: https://mojolicious.org/perldoc/Mojo/Template
+# usage:
+# bash src/tpl/psql-code-generator/psql-code-generator.sh dev_qto release_issues monthly_issues
+#
+# check also: https://mojolicious.org/perldoc/Mojo/Template
 
 
 main(){
 
-   do_print=0 ; # set to 0 to not print a certain function ...
+   do_print=0 ;  # set to 0 to not print a certain function ...
    do_init "$@"
    do_chk_print_usage "$@"
    do_set_vars "$@"
@@ -103,27 +105,6 @@ EOF_PERL_CODE
 
 
 #------------------------------------------------------------------------------
-# usage example:
-# do_export_json_section_vars cnf/env/dev.env.json '.env.app'
-#------------------------------------------------------------------------------
-do_export_json_section_vars(){
-
-   json_file="$1"
-   shift 1;
-   test -f "$json_file" || do_exit 1 "the json_file: $json_file does not exist !!! Nothing to do"
-
-   section="$1"
-   test -z "$section" && echo "the section in do_export_json_section_vars is empty !!! nothing to do !!!"
-   shift 1;
-
-   while read -r l ; do
-     key=$(echo $l|cut -d'=' -f1)
-     val=$(echo $l|cut -d'=' -f2)
-     eval "$(echo -e 'export '$key=\"\"$val\"\")"
-   done < <(cat "$json_file"| jq -r "$section"'|keys_unsorted[] as $key|"\($key)=\"\(.[$key])\""')
-}
-
-#------------------------------------------------------------------------------
 # init the minimal possible amount of vars to even fail properly
 #------------------------------------------------------------------------------
 do_init(){
@@ -150,9 +131,12 @@ do_set_vars(){
    for i in {1..3} ; do cd .. ; done ; export PRODUCT_INSTANCE_DIR=`pwd`;
    environment_name=$(basename "$PRODUCT_INSTANCE_DIR")
    cd $PRODUCT_INSTANCE_DIR
+   
    source $PRODUCT_INSTANCE_DIR/.env
-   test -z "${PROJ_INSTANCE_DIR-}" && export PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
+   source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/export-json-section-vars.sh
+   
+   test -z "${PROJ_INSTANCE_DIR-}" && export PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
 
    if [ "$environment_name" == "$RUN_UNIT" ]; then
@@ -162,13 +146,15 @@ do_set_vars(){
    fi
 
    cd .. ; product_base_dir=`pwd`; org_name=$(basename `pwd`)
+   
    do_export_json_section_vars $PROJ_CONF_FILE '.env.db'
+   
    if [[ $do_print -eq 1 ]]; then
       ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
       echo "INFO using the following vars:"
       cmd="$(comm -3 $tmp_dir/vars.before $tmp_dir/vars.after | perl -ne 's#\s+##g;print "\n $_ "' )"
       echo -e "$cmd"
-      do_flush_the_screen
+      do_flush_screen
    fi
 
 }
@@ -254,11 +240,6 @@ do_build_cols_lst_excluded(){
    while read -r c ; do cols_lst_excluded="${cols_lst_excluded:-}, $c = excluded.$c" ; done < <(echo $meta_json_str|jq -r '.[]|.column_name')
    export cols_lst_excluded=$(echo $cols_lst_excluded|cut -c 3-)
    do_print_maybe "$msg" $cols_lst_excluded
-}
-
-
-do_flush_the_screen(){
-	printf "\033[2J";printf "\033[0;0H"
 }
 
 

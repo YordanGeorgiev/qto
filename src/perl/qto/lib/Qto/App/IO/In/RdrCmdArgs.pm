@@ -38,7 +38,7 @@ package Qto::App::IO::In::RdrCmdArgs ;
       my $rdbms_type    = 'postgres' ; # the default
 
      # get the cmd args
-     # obs from now on those vars bellow if not passed will be '' - defined but empty !!!
+     # obs from now on those vars below if not passed will be '' - defined but empty !!!
      GetOptions(
        'do=s'          => \$actions,
        'tables=s'      => \$tables ,

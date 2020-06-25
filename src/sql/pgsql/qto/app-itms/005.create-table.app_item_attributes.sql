@@ -35,7 +35,7 @@ create unique index idx_uniq_app_item_attributes_id on app_item_attributes (id);
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -48,10 +48,10 @@ SELECT 'show the columns of the just created table'
 
 CREATE TRIGGER trg_set_update_time_on_app_item_attributes BEFORE UPDATE ON app_item_attributes FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'app_item_attributes'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'app_item_attributes'::regclass;
 
 ; 
 

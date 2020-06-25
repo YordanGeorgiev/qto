@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
   
 
   # the project dir will be visible from the vagrant @/home/vagrant/opt/qto
-  config.vm.synced_folder "%PRODUCT_BASE_DIR%", "/home/vagrant/opt/"
+  config.vm.synced_folder "%product_base_dir%", "/home/vagrant/opt/"
   $script = <<-SCRIPT
          # run the bootstrap script and IMPORTANT !!! reload the bash shell
          bash /home/vagrant/opt/qto/src/bash/deployer/run.sh

@@ -13,7 +13,7 @@ SELECT 'create the "test_truncate_table" table'
       OIDS=FALSE
     );
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname

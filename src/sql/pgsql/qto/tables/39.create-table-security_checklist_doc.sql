@@ -28,7 +28,7 @@ SELECT 'create the "security_checklist_doc" table'
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -44,8 +44,8 @@ SELECT 'show the columns of the just created table'
    BEFORE UPDATE ON security_checklist_doc 
    FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'security_checklist_doc'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'security_checklist_doc'::regclass;
 

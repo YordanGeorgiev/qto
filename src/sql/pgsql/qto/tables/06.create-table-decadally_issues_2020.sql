@@ -22,7 +22,7 @@ create unique index idx_uniq_decadally_issues_2020_id on decadally_issues_2020 (
 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -36,8 +36,8 @@ SELECT 'show the columns of the just created table'
 --The trigger:
 CREATE TRIGGER trg_set_update_time_on_decadally_issues_2020 BEFORE UPDATE ON decadally_issues_2020 FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'decadally_issues_2020'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'decadally_issues_2020'::regclass;
 

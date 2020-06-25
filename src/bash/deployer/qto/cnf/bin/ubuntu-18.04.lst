@@ -1,36 +1,35 @@
-   build-essential
-   git
-   vim
-   perl
-   zip
-   unzip
-   jq
-   exuberant-ctags
-   mutt
-   curl
-   wget
-   tar
-   gzip
-   graphviz
-   python-selenium
-   chromium-chromedriver
-   python-selenium
-   python-setuptools 
-   python-dev 
-   gpgsm
-   nodejs
-   lsof
-   libdbd-pgsql
-   libssl-dev
-   libtest-www-selenium-perl
-   libxml-atom-perl
-   libxml-atom-perl
-   libwww-curl-perl
-   npm
-   expect
-   nginx
-   ntpdate
-   nmap
-   net-tools
-   copyq
-   awscli
+build-essential
+git
+vim
+perl
+zip
+unzip
+jq
+exuberant-ctags
+mutt
+curl
+wget
+tar
+gzip
+graphviz
+chromium-chromedriver
+python-selenium
+python-setuptools
+python-dev
+python-pip
+gpgsm
+nodejs
+lsof
+libdbd-pgsql
+libssl-dev
+libtest-www-selenium-perl
+libxml-atom-perl
+libwww-curl-perl
+npm
+expect
+nginx
+ntpdate
+nmap
+net-tools
+copyq
+awscli

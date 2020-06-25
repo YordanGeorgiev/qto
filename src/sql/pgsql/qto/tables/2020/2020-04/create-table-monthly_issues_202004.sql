@@ -25,7 +25,7 @@ CREATE INDEX idx_rank_monthly_issues_202004 ON monthly_issues_202004
 USING gin(to_tsvector('English', name || ' ' || description || 'owner')); 
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
    SELECT attrelid::regclass, attnum, attname
@@ -39,8 +39,8 @@ SELECT 'show the columns of the just created table'
 --The trigger:
 CREATE TRIGGER trg_set_update_time_on_monthly_issues_202004 BEFORE UPDATE ON monthly_issues_202004 FOR EACH ROW EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'monthly_issues_202004'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'monthly_issues_202004'::regclass;
 

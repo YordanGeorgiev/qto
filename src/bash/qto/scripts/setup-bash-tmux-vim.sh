@@ -17,7 +17,7 @@ main(){
 
 
 do_enable_locate(){
-   sudo updatedb & # because of the locate elflord.vim bellow and just to speed up..
+   sudo updatedb & # because of the locate elflord.vim below and just to speed up..
 }
 
 

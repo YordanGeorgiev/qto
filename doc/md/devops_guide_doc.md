@@ -94,7 +94,7 @@
     * [13.3.1. Probable root cause](#1331-probable-root-cause)
     * [13.3.2. Kill processes](#1332-kill-processes)
     * [13.3.3. Problem description](#1333-problem-description)
-  * [13.4. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#134-the-page-looks-broken--probably-the-new-css-is-not-re-loaded)
+  * [13.4. THE PAGE LOOKS BROKEN - PROBABLY THE NEW CSS IS NOT RE-LOADED](#134-the-page-looks-broken--probably-the-new-css-is-not-reloaded)
   * [13.5. THE VUE UI DOES NOT UPDATE PROPERLY ](#135-the-vue-ui-does-not-update-properly-)
   * [13.6. NGINX FAILS WITH 502 BAD GATEWAY ERROR AND PROBABLY CRASHES THE SITE](#136-nginx-fails-with-502-bad-gateway-error-and-probably-crashes-the-site)
   * [13.7. WHY HAVING ALL THE HASSLE WITH THIS DIRECTORY STRUCTURE - IS OVERKILL ?!!](#137-why-having-all-the-hassle-with-this-directory-structure--is-overkill-)
@@ -112,7 +112,7 @@
     
 
 ## 2. GUIDING PRINCIPLE'S
-This section might seem too philosophical for a start, yet all the development in the qto has ATTEMPTED to follow the principles described bellow. If you skip this section now you might later on wander many times why something works and it is implemented as it is ... and not "the right way". 
+This section might seem too philosophical for a start, yet all the development in the qto has ATTEMPTED to follow the principles described below. If you skip this section now you might later on wander many times why something works and it is implemented as it is ... and not "the right way". 
 Of course you are free to not follow these principles, the less you follow them the smaller the possibility to pull features from your instance(s) - you could even use the existing functionality to create a totally different fork with different name and start developing your own toll with name X - the authors give you the means to do that with this tool ... , but if you want to use and contribute to THIS tool than you better help defined those leading principles and follow them. 
 
     
@@ -333,7 +333,7 @@ Each developer committing to the development branch MUST rebase as frequently as
     # push the changes ( you would have to have the git alias set !!!)
     git add --all ; git commit -m "$git_msg" --author "Yordan Georgiev <yordan.georgiev@gmail.com>" ; git push ;
     
-    # have to set a new upstream when pushing for first time 
+    # have to set a new upstream when pushing for the first time 
     git push --set-upstream origin v0.8.4-fix-bug-for-wrong-order-in-env-file
     
     # set the 
@@ -551,7 +551,7 @@ Deploy to the test environment a new instance with the current version as follow
     bash src/bash/qto/qto.sh -a run-functional-tests
 
 ### 9.11. Deployment and test to the production environment
-Repeat the same to the production environment. As the current version is usually work in progress your stable version will be one level bellow and thanks to the architecture of the tool you could test in the production environment ( as soon as you have proper configuration ).
+Repeat the same to the production environment. As the current version is usually work in progress your stable version will be one level below and thanks to the architecture of the tool you could test in the production environment ( as soon as you have proper configuration ).
 
     
 
@@ -611,7 +611,7 @@ At least 2 times passed unit tests run in each environment instance - run the un
     bash src/bash/qto/qto.sh -a run-integration-tests
 
 ### 9.18. Deployment to the test environment
-Deploy to the test environment as shown in the code snippet bellow. Re-run the tests via the tests shell actions. 
+Deploy to the test environment as shown in the code snippet below. Re-run the tests via the tests shell actions. 
 
     # deploy to the tst environment
     bash src/bash/qto/qto.sh -a to-tst
@@ -704,7 +704,7 @@ The  mojo *html.ep DO contain a lot of JavaScript code, which IS RUN on the clie
 ### 11.4. Debugging css
 Css editing IS time consuming activity. IMPORTANT !!! Chrome checkbox in the Networks "Disable cache" is buggy and unreliable - the ONLY way to clear the cache of a site you are performing css changes to actually see the changes is : 
  - F12 - to open DevTools
- - right click on the reload , button and choose - "Clear cache and Hard Reload "
+ - right-click on the reload , button and choose - "Clear cache and Hard Reload "
 The other alternative is to open a new tab with the same url from inkognito mode ( which is also proven to be not 100% reliable ... )
 
     
@@ -759,7 +759,7 @@ https://searchsecurity.techtarget.com/definition/role-based-access-control-RBAC
 #### 12.2.1. Generic role-based access control list based authorisation
 Start by defining your app_roles in the list/app_roles page. Keep the number of app_roles in the beginning to the absolute minimum - you could easily re-do the whole RBAC list re-population later on.
 Who has access to what is defined in the following table: app_items_roles_permissions. 
-You could initially load this table by running the following scripts bellow. 
+You could initially load this table by running the following scripts below. 
 https://stackoverflow.com/a/58009983/65706
 
     # populate the list of tables into the app_items table
@@ -836,8 +836,8 @@ This one occurs quite often , especially when the application layer is restarted
      [INFO ] 2018.09.14-10:23:16 EEST [qto][@host-name] [4426] STOP FOR qto RUN: 0 0 # = STOP MAIN = qto
     qto-dev ysg@host-name [Fri Sep 14 10:23:16] [/vagrant/opt/csitea/qto/qto.0.4.9.dev.ysg] $
 
-### 13.4. The page looks broken - probably the new css is not re-loaded
-This problem is quite oftenly experienced and a real time-burner, so keep those shortcuts bellow in mind. 
+### 13.4. The page looks broken - probably the new css is not reloaded
+This problem is quite oftenly experienced and a real time-burner, so keep those shortcuts below in mind. 
 To apply the newest css do a hard reload in Chrome with the shortcut COMMAND + SHIFT + R.
 The other option is to keep the SHIFT button and press the reload button the Chrome address bar ( this one has been buggy from time to time as well. ... )
 
@@ -874,8 +874,8 @@ Having a project with a directory structure for a specific run-time enforcing th
 
 ### 13.8. The new entries in DropBox FK tables cannot be seen
 I updated a FK table - the new entries are there. I can see from db that the correct entries are in the db , but I cannot still see the new value(s) in the drop down ... 
-It is a Google Chrome specific cache bug ... Try first to hard reload and open the browser , Inspect ( DevTools has to be open ) right click the Reload button on the address bar and choose "Hard Reload and empty cache" or CMD + Option + R shortcut combination. 
-If that STILL does not work on the DevTools choose the Application menu, Storage , Local storage , right click the local storage of the instance the problem occurs and choose clear local storage.
+It is a Google Chrome specific cache bug ... Try first to hard reload and open the browser , Inspect ( DevTools has to be open ) right-click the Reload button on the address bar and choose "Hard Reload and empty cache" or CMD + Option + R shortcut combination. 
+If that STILL does not work on the DevTools choose the Application menu, Storage , Local storage , right-click the local storage of the instance the problem occurs and choose clear local storage.
 
     
 

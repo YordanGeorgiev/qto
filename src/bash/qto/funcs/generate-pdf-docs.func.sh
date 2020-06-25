@@ -31,6 +31,6 @@ doGeneratePdfDocs(){
       echo -e "$lines lines in the $file_path file \n"
    done < <(curl --cookie ~/.qto/cookies.txt --insecure  -s $furl | jq -r '.dat[]|.url')
 	
-   printf "\033[2J";printf "\033[0;0H"
+   do_flush_screen
 }
 

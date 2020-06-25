@@ -12,14 +12,14 @@ CREATE TABLE yearly_issues (
     , description    varchar (4000)
     , app_users_guid uuid DEFAULT public.gen_random_uuid()
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
-    , CONSTRAINT pk_yearly_issues_2020_guid PRIMARY KEY (guid)
+    , CONSTRAINT pk_yearly_issues_guid PRIMARY KEY (guid)
     );
 
 CREATE unique index idx_uniq_yearly_issues_id
 	ON yearly_issues (id);
 
 
-SELECT 'show the columns of the just created table'
+SELECT 'Display the columns of the just created table'
 ; 
 
 SELECT attrelid::regclass, attnum, attname
@@ -35,8 +35,8 @@ CREATE TRIGGER trg_set_update_time_on_yearly_issues
 	FOR EACH ROW
 	EXECUTE PROCEDURE fnc_set_update_time();
 
-select tgname
-from pg_trigger
-where not tgisinternal
-and tgrelid = 'yearly_issues'::regclass;
+SELECT tgname
+FROM pg_trigger
+WHERE NOT tgisinternal
+AND tgrelid = 'yearly_issues'::regclass;
 
