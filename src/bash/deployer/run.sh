@@ -58,17 +58,8 @@ do_set_vars(){
    export host_name="$(hostname -s)"
    export bash_opts_file=~/.bash_opts.$host_name
    export user_at_host=$USER@$host_name || exit 1
-   export original_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")  # formerly known as unit_run_dir
-   
-   # check on where the installation was started from
-   # if started via opt/qto/src/bash/deployer/run.sh, then go 3 directory levels up to opt/qto
-   # otherwise assume that opt/1-setup.sh was used and go to opt/qto
-   if [ ! "$original_dir" == *"deployer"* ] ;
-   then
-      export product_dir=$(cd $original_dir/$app_to_deploy; echo `pwd`)  # ~/opt/qto/
-   else 
-      export product_dir=$(cd $original_dir/../../..; echo `pwd`)
-   fi
+   export unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
+  export product_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
 
    # ALWAYS !!! bootstrap a dev instance, for tst and prd use -a to-env=tst , -a to-env=prd 
    perl -pi -e 's|ENV_TYPE=tst|ENV_TYPE=dev|g' "$product_dir/.env"
