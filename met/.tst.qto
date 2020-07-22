@@ -3,7 +3,14 @@
 # cnf/env/dev.env.json
 # cnf/env/tst.env.json
 # cnf/env/prd.env.json
-# start vue-date-time-picker
+# start puppeteer
+src/js/node/pp-ui-tests/
+src/js/node/pp-ui-tests/index.html
+src/js/node/pp-ui-tests/test/test-open-login.spec
+src/js/node/pp-ui-tests/test/test-view_doc.spec.js
+src/js/node/pp-ui-tests/test/test-login
+src/js/node/pp-ui-tests/package.json
+#  stop puppeteer start vue-date-time-picker
 src/perl/qto/public/poc/vue-ctk-date-time-picker/02/index.html
 src/perl/qto/public/poc/vue-ctk-date-time-picker/01/index.html
 src/perl/qto/public/poc/vue-select
@@ -26,7 +33,6 @@ src/perl/qto/t/lib/Qto/Controller/TestLogin.t
 src/perl/qto/t/lib/Qto/Controller/TestLogon.t
 src/perl/qto/templates/pages/login
 # start roles based access 
-src/sql/pgsql/scripts/admin/populate-app_items_roles_permissions.sql
 src/sql/pgsql/scripts/admin/populate-app_items.sql
 src/perl/qto/lib/Qto/App/Sec/Guardian.pm
 src/perl/qto/t/lib/Qto/App/Sec/TestGuardian.t
@@ -98,7 +104,6 @@ src/perl/qto/public/poc/css-tree/02/index.html
 # stop  ::: left-menu
 # start ::: deployment
 src/bash/deployer/run.sh
-src/bash/deployer/export-json-section-vars.func.sh
 src/bash/deployer/check-setup-bash.func.sh
 src/bash/deployer/check-install-redis.func.sh
 cnf/redis/etc/systemd/system/redis.service
@@ -603,6 +608,7 @@ src/sql/pgsql/qto/tables/97.10.create-table-test_hi_create_table_doc.sql
 src/sql/pgsql/qto/tables/97.03.create-func-fnc_tree_traversal.sql
 src/sql/pgsql/qto/tables/98.create-table-test_update_table.sql
 src/sql/pgsql/qto/tables/99.create-table-test_hierarchy_doc.sql
+src/sql/pgsql/qto/tables/99.populate-app_items_roles_permissions.sql
 src/sql/pgsql/scripts/01.add-db-users.sql
 src/sql/pgsql/scripts/02.create-table-test_hierarchy_table.sql
 src/sql/pgsql/scripts/admin
@@ -949,14 +955,6 @@ doc/pdf/userstories_doc.pdf
 src/perl/qto/public/poc/fixed-top-bar/index.html
 src/perl/qto/public/themes/thme-blue/css/screen/site/top-bar.css
 src/js/
-# start puppeteer
-src/js/node/ppoc/
-src/js/node/ppoc/index.html
-src/js/node/ppoc/test
-src/js/node/ppoc/test/test-login.spec.js
-src/js/node/ppoc/test/test-open-login.spec.js
-src/js/node/ppoc/package.json
-#  stop puppeteer
 src/js/node
 src/js/node/js-unit-tests
 src/js/node/js-unit-tests/01-set-url-param

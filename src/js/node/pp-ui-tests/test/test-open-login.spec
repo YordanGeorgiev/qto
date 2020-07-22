@@ -1,14 +1,14 @@
 /**
  * usage:
-   cd src/js/node/ppoc/ ; npm install puppeteer; cd -
-   cd src/js/node/ppoc/ ; npm run ; cd -
-   cd src/js/node/ppoc/ ; node test-open-login.js; cd -
-   cd src/js/node/ppoc/ ; npm test; cd -
+   cd src/js/node/pp-ui-tests/ ; npm install puppeteer; cd -
+   cd src/js/node/pp-ui-tests/ ; npm run ; cd -
+   cd src/js/node/pp-ui-tests/ ; node test-open-login.js; cd -
+   cd src/js/node/pp-ui-tests/ ; npm test; cd -
  * @name open the login page
  *
  * @desc Gets the value of commonly used HTML form elements using page.$eval()
  * chk also:
- * src/js/node/ppoc/package.json
+ * src/js/node/pp-ui-tests/package.json
  *
  */
 const puppeteer = require('puppeteer');

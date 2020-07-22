@@ -1,4 +1,4 @@
--- \echo 'If necessary, perform DROP TABLE IF EXISTS app_user_roles;'
+-- \echo 'If necessary, perform -- DROP TABLE IF EXISTS app_user_roles;'
 
 -- \echo '2. Creating the app_user_roles table'
 
@@ -17,7 +17,7 @@ CREATE UNIQUE INDEX idx_app_user_roles_uniq_id
 	ON app_user_roles (id);
 
 
--- \echo 'If necessary, perform ALTER TABLE public.app_user_roles DROP CONSTRAINT fk_app_users_guid;'
+-- \echo 'If necessary, perform ALTER TABLE public.app_user_roles -- DROP CONSTRAINT fk_app_users_guid;'
 
 ALTER TABLE public.app_user_roles
    ADD CONSTRAINT fk_app_users_guid 
@@ -39,7 +39,6 @@ SELECT attrelid::regclass, attnum, attname
    FROM   pg_attribute
    WHERE  attrelid='public.app_user_roles'::regclass
    AND    attnum>0
-   AND    NOT attisDROPped
    ORDER  BY attnum; 
 
 -- \echo 'Update time on every EXECUTE trigger:'

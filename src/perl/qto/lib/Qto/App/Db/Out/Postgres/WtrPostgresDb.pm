@@ -138,7 +138,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
       return ( $ret , $msg ) ; 
    }
- 
+
+
    sub doHiDeleteRow {
    
 		my $self 					= shift ; 
@@ -187,6 +188,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
             DECLARE widthRgtLft bigint;
             DECLARE rgtMinus bigint;
             DECLARE lftMinus bigint;
+            DECLARE delCount bigint;
 
             BEGIN
                originSeq := (SELECT seq from $table WHERE 1=1 AND id=$origin_id);
@@ -196,17 +198,20 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
                widthRgtLft := (originRgt - originLft + 1);
                rgtMinus := (originRgt - widthRgtLft);
                lftMinus := (originLft - widthRgtLft);
-               tgtSeq := (originSeq-1);
+               tgtSeq := (originSeq - 1);
+               delCount := (SELECT COUNT(*) FROM $table WHERE lft BETWEEN originLft AND originRgt);
 
-               DELETE FROM $table WHERE id=$origin_id ;
-               UPDATE $table SET seq = seq-1 where seq > originSeq;
+               DELETE FROM $table WHERE lft BETWEEN originLft AND originRgt;
                UPDATE $table SET rgt = rgt - widthRgtLft WHERE rgt > originRgt;
                UPDATE $table SET lft = lft - widthRgtLft WHERE lft > originLft;
+               UPDATE $table SET seq = seq - delCount where seq > originSeq;
          " . '
          END ; $$ ';
-               #DELETE FROM $table WHERE lft <= originLft AND rgt <= originRgt ;
-         #debug $str_sql ; 
-         #debug rint "\nWtrPostgresDb delte by id \n";
+               # DELETE FROM $table WHERE lft <= originLft AND rgt <= originRgt ;
+               # DELETE FROM $table WHERE id=$origin_id ;
+         #debug p $str_sql ; 
+         #rint "\nWtrPostgresDb delte by id \n";
+         #
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ;
          use warnings 'exiting' ; 
