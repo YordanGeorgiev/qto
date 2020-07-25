@@ -32,7 +32,7 @@
 				class="context-menu-icon"  width="18"> pdf print preview </a>
 		 </context-menu-item>
 		 <context-menu-item>
-			<a @click="addNewSiblingNode($event)">
+			<a @click="addNewSiblingNode($event)" id="add-sibling-node">
             <img loading="lazy" src="../../themes/thme-blue/img/controls/add-sibling-node.png" 
 				class="context-menu-icon"  width="18"> add new sibling node </a>
 		 </context-menu-item>

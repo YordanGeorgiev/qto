@@ -308,9 +308,9 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
                      ELSE
                         INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '1' second), 
                            'YYMMDDHH12MISSMSUS') as numeric(25)),'ELSE WHEN srcRgt = srcLft+1');
-                        UPDATE $table set rgt=(rgt+2) WHERE rgt > srcRgt;
+                        UPDATE $table set rgt=(rgt+2) WHERE rgt > srcLft;
                         UPDATE $table set lft=(lft+2) WHERE lft > srcLft;
-                        INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, srcRgt+1, srcRgt+2);
+                        INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, srcLft+1, srcLft+2);
                      END CASE;
                   WHEN srcLvl > tgtLvl THEN
                      parentLvl := (srcLvl-1);
