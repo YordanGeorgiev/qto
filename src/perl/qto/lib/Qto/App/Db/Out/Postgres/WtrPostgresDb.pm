@@ -183,7 +183,6 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
             DECLARE parentLvl int DEFAULT 0;
             DECLARE newLft bigint;
             DECLARE newRgt bigint;
-            DECLARE mayBeSiblingLvl bigint;
             DECLARE mayBeNxtSeq bigint;
             DECLARE widthRgtLft bigint;
             DECLARE rgtMinus bigint;
@@ -237,8 +236,10 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 		my $self 					= shift ; 
       my $db               	= shift ; 
       my $table            	= shift ; 
-      my $origin_id           = shift ; 
+      my $src_id              = shift ; # the former origin_id
+      print "src_id: $src_id \n" ; #todo:ysg
       my $level_alpha         = shift ;
+      print "level_alpha: $level_alpha \n" ; #todo:ysg
 
       my $ret              	= 0 ; 
       my $res              	= undef ;  # the result from FOUND in the func
@@ -265,73 +266,73 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          $level_alpha='+ ' . "$level_alpha" if $level_alpha >= 0 ;
          $str_sql = 'DO $$
          ' . " 
-            DECLARE originSeq bigint;
+            DECLARE srcSeq bigint;
             DECLARE tgtSeq bigint DEFAULT 1;
             DECLARE tgtLvl bigint DEFAULT 1;
             DECLARE level_alpha bigint DEFAULT 0;
-            DECLARE originLvl bigint;
-            DECLARE originRgt bigint DEFAULT 2;
-            DECLARE originLft bigint DEFAULT 1;
+            DECLARE srcLvl bigint;
+            DECLARE srcRgt bigint DEFAULT 2;
+            DECLARE srcLft bigint DEFAULT 1;
             DECLARE parentRgt bigint DEFAULT 2;
             DECLARE parentLft bigint DEFAULT 1;
             DECLARE siblingRgt bigint;
             DECLARE parentLvl int DEFAULT 0;
             DECLARE newLft bigint;
             DECLARE newRgt bigint;
-            DECLARE mayBeSiblingLvl bigint;
             DECLARE mayBeNxtSeq bigint;
 
             BEGIN
-               originSeq := (SELECT seq from $table WHERE 1=1 AND id=$origin_id);
-               originLvl := (SELECT level from $table WHERE id=$origin_id);
-               tgtSeq := (originSeq+1);
-               IF originSeq = 1 THEN 
+               srcSeq := (SELECT seq from $table WHERE 1=1 AND id=$src_id);
+               srcLvl := (SELECT level from $table WHERE id=$src_id);
+               tgtSeq := (srcSeq+1);
+               IF srcSeq = 1 THEN 
                   parentLvl := (0);
                   parentRgt := (0);
                ELSE 
-                  tgtLvl := (originLvl$level_alpha);
-                  parentLvl := (tgtLvl-1);
+                  tgtLvl := (srcLvl$level_alpha);
                END IF;
 
-               parentRgt := (SELECT max(rgt) from $table WHERE 1=1 AND level=parentLvl and seq <= originSeq );
-               parentLft := (SELECT max(lft) from $table WHERE 1=1 AND level=parentLvl and seq <= originSeq );
-               originRgt := (SELECT rgt from $table WHERE id = $origin_id);
-               originLft := (SELECT lft from $table WHERE id = $origin_id);
-               mayBeSiblingLvl := (SELECT max(level) from $table WHERE 1=1 AND seq = tgtSeq AND level=tgtLvl);
+               srcRgt := (SELECT rgt from $table WHERE id = $src_id);
+               srcLft := (SELECT lft from $table WHERE id = $src_id);
                UPDATE $table set seq=(seq+1) WHERE seq >= tgtSeq;
-               mayBeNxtSeq := (SELECT seq from $table WHERE 1=1 AND seq = tgtSeq);
 
                CASE
-                  WHEN originLvl < tgtLvl THEN 
-                     UPDATE $table set lft=(lft+2) WHERE seq > tgtSeq ;
-                     UPDATE $table set rgt=(rgt+2) WHERE rgt > originLft;
-                     INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, parentLft+1, parentLft+2);
-                  WHEN originLvl = tgtLvl THEN 
-                     UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
-                     UPDATE $table set lft=(lft+2) WHERE seq >= tgtSeq ;
-                     INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, originRgt+1, originRgt+2);
-                  WHEN originLvl > tgtLvl THEN 
-                     IF mayBeNxtSeq is NULL THEN 
-                        siblingRgt := (SELECT max(rgt) from $table WHERE 1=1 AND level=tgtLvl and seq <= originSeq );
-                        UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
-                        INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, siblingRgt+1, siblingRgt+2);
-                     ELSE 
-                        siblingRgt := (SELECT max(rgt) from $table WHERE 1=1 AND level=tgtLvl and seq <= originSeq );
-                        UPDATE $table set rgt=(rgt+2) WHERE rgt >= parentRgt AND level <= parentLvl;
-                        INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, siblingRgt+1, siblingRgt+2);
-                        UPDATE $table set lft=(lft+2) WHERE lft >= tgtLvl ;
-                     END IF;
+                  WHEN srcLvl < tgtLvl THEN
+                     CASE
+                     WHEN srcRgt = srcLft+1 THEN
+                        INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '1' second), 
+                           'YYMMDDHH12MISSMSUS') as numeric(25)),'WHEN srcRgt = srcLft+1');
+                        UPDATE $table set rgt=(rgt+2) WHERE rgt > srcLft;
+                        UPDATE $table set lft=(lft+2) WHERE lft > srcLft;
+                        INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, srcLft+1, srcLft+2);
+                     ELSE
+                        INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '1' second), 
+                           'YYMMDDHH12MISSMSUS') as numeric(25)),'ELSE WHEN srcRgt = srcLft+1');
+                        UPDATE $table set rgt=(rgt+2) WHERE rgt > srcRgt;
+                        UPDATE $table set lft=(lft+2) WHERE lft > srcLft;
+                        INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, srcRgt+1, srcRgt+2);
+                     END CASE;
+                  WHEN srcLvl > tgtLvl THEN
+                     parentLvl := (srcLvl-1);
+                     parentRgt := (SELECT min(rgt) from $table WHERE 1=1 AND level=parentLvl and lft < srcLft );
+                     parentLft := (SELECT min(lft) from $table WHERE 1=1 AND level=parentLvl and lft < srcLft );
+                     INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '1' second), 
+                        'YYMMDDHH12MISSMSUS') as numeric(25)),'WHEN srcLvl > tgtLvl');
+                     INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '2' second), 
+                        'YYMMDDHH12MISSMSUS') as numeric(25)),cast(parentLvl as varchar));
+                     UPDATE $table set rgt=(rgt+2) WHERE rgt > parentRgt;
+                     UPDATE $table set lft=(lft+2) WHERE lft > parentRgt;
+                     INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, parentRgt+1, parentRgt+2);
                   ELSE
-                     INSERT INTO logs (id,name, description) values (cast (to_char((current_timestamp + interval '1' second), 
-                        'YYMMDDHH12MISSMSUS') as numeric(25)),'originLvl: ', cast(originLvl as char)) ;
-                     INSERT INTO logs (id,name, description) values (cast (to_char((current_timestamp + interval '2' second), 
-                        'YYMMDDHH12MISSMSUS') as numeric(25)),'tgtLvl: ', cast(tgtLvl as char)) ;
-                     INSERT INTO logs (id,name, description) values (cast (to_char((current_timestamp + interval '3' second), 
-                        'YYMMDDHH12MISSMSUS') as numeric(25)),'MSG: ', 'broken hierachy in table $table') ;
+                     INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '1' second), 
+                        'YYMMDDHH12MISSMSUS') as numeric(25)),'ELSE WHEN srcLvl > tgtLvl');
+                     UPDATE $table set rgt=(rgt+2) WHERE rgt > srcRgt;
+                     UPDATE $table set lft=(lft+2) WHERE lft > srcLft;
+                     INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, srcRgt+1, srcRgt+2);
                END CASE;
          " . '
          END ; $$ ';
-         # debug rint "$str_sql"; 
+         print "$str_sql"; 
          
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ;

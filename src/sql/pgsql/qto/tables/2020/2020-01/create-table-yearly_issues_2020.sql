@@ -1,12 +1,13 @@
--- \echo '-- DROP TABLE IF EXISTS yearly_issues_2020 ;'
+-- \echo 'DROP TABLE IF EXISTS yearly_issues_2020 ;'
 
 SELECT 'create the yearly_issues_2020 table'
 ; 
 CREATE TABLE yearly_issues_2020 (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , category_guid  uuid DEFAULT '70724562-d83c-446e-94cf-58ced84f3a0e'::uuid NOT NULL
-    , status_guid    uuid DEFAULT 'cb989a14-d0b8-46e4-b2cc-5e2a974b5d29'::uuid NOT NULL
+    , type           varchar (30) NOT NULL DEFAULT 'task'
+    , category_guid uuid DEFAULT '70724562-d83c-446e-94cf-58ced84f3a0e'::uuid NOT NULL
+    , issues_status_guid uuid DEFAULT 'cb989a14-d0b8-46e4-b2cc-5e2a974b5d29'::uuid NOT NULL
     , prio           integer NOT NULL DEFAULT 0
     , name           varchar (100) NOT NULL DEFAULT 'name ...'
     , description    varchar (4000)
@@ -20,7 +21,7 @@ CREATE unique index idx_uniq_yearly_issues_2020_id
 
 
 
-SELECT 'Display the columns of the just created table'
+SELECT 'show the columns of the just created table'
 ; 
 
 SELECT attrelid::regclass, attnum, attname
@@ -36,8 +37,8 @@ CREATE TRIGGER trg_set_update_time_on_yearly_issues_2020
 	FOR EACH ROW
 	EXECUTE PROCEDURE fnc_set_update_time();
 
-SELECT tgname
-FROM pg_trigger
-WHERE NOT tgisinternal
-AND tgrelid = 'yearly_issues_2020'::regclass;
+select tgname
+from pg_trigger
+where not tgisinternal
+and tgrelid = 'yearly_issues_2020'::regclass;
 

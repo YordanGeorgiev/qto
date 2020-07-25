@@ -240,10 +240,14 @@ do_finalize(){
    
    do_flush_screen
    
-   printf "\n\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n"   
-   printf "$app_to_deploy deployment completed successfully.\n\nPlease run this command to create the database: \n\n"
-   printf "./2-create-db.sh"   
-   printf "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
+   cat << EOF_INIT_MSG
+   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+         QTO deployment completed successfully
+         Run the following cmd to create the db
+         bash ; ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a
+         load-db-data-from-s3
+   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+EOF_INIT_MSG
 }
 
 
