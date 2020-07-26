@@ -108,6 +108,7 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
             my $objCnrXlsHsr3ToDbHsr3 = 
                   'Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$config , $rdbms_type ) ; 
             $hsr2 = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2 , $table ) ; 
+            p $hsr2 ;
             $objModel->set('hsr2' , $hsr2 );
             $objModel->set('postgres_db_name',$ENV{'postgres_db_name'}) ;
             ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objModel , $table ) ; 

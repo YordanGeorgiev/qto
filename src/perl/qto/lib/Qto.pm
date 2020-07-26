@@ -447,6 +447,11 @@ sub doSetRoutes {
    , action       => 'doCreateById'
    );
    
+   $r->post('/:db/multi-create/:item')->to(
+     controller   => 'MultiCreate'
+   , action       => 'doMultiCreate'
+   );
+   
    $r->post('/:db/create-my/:item')->to(
      controller   => 'CreateMy'
    , action       => 'doCreateMyById'

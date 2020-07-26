@@ -9,7 +9,6 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
    use DBI ; 
 	use Data::Printer ; 
 	use Carp ; 
-
    use Qto::App::Utils::Logger ; 
    use Qto::App::Db::In::RdrDbsFcry ; 
    use Qto::App::Utils::Timer ; 
@@ -34,6 +33,67 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
    our @tables                                  = ( 'daily_issues' );
    our $objController                           = () ; 
    
+
+	sub doInsertJsonToTable {
+		my $self 				= shift ; 
+      my $db               = shift ; 
+      my $table            = shift ; 
+      my $json_arr         = shift ; 
+      my $ret              = 0 ; 
+      my $msg              = '' ; 
+      my $dbh              = {} ;         # this is the database handle
+      my $sth              = {} ;         # the statement handle
+      my $str_sql          = q{} ;        # this is the sql string to use for the query
+   
+      ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
+      return ( $ret , $msg ) unless $ret == 0 ; 
+
+      my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel ) ; 
+      my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
+
+      # p @$json_arr; 
+      # print "json_arr \n";
+
+      my $vals = '';
+      foreach my $el ( @$json_arr ) {
+         $str_sql = "INSERT INTO $table ( " ; 
+         $vals .= "(";
+         foreach my $col ( sort (keys %$el)) {
+            $str_sql .= $col . ' , ';
+            my $val = defined($el->{$col}) ? $el->{$col} : '' ;
+            $vals .= "'" . $val . "'" . ' , ';
+         }
+         for (1..3) { chop ($str_sql)}
+         $str_sql .= ") VALUES " ; 
+         for (1..3) { chop ($vals)}
+         $vals.= ")," ; 
+         $str_sql .= $vals ;
+      }
+      chop($str_sql);
+      # p $str_sql ; 
+      # carp("str_sql");
+
+      $sth = $dbh->prepare($str_sql);  
+      $sth->execute() ;
+
+      binmode(STDOUT, ':utf8');
+
+      unless ( defined ( $DBI::errstr ) ) {
+         $msg = '' ; 
+         $ret = 0 ; 
+      } else {
+         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $msg = "$DBI::errstr" ; 
+         if ( $msg =~ m/some strange/ ){
+            $ret = 409 ; 
+         } else {
+            $ret = 400 ; 
+         }
+      }
+
+      return ( $ret , $msg ) ; 
+
+	}
 
    sub doTruncateTable {
 
@@ -334,8 +394,6 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
                         INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, parentRgt-1, parentRgt+2);
                      END CASE;
                   ELSE
-                     INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '1' second), 
-                           'YYMMDDHH12MISSMSUS') as numeric(25)),cast(tgtLvl as varchar(20)));
                      INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '2' second), 
                         'YYMMDDHH12MISSMSUS') as numeric(25)),'ELSE WHEN srcLvl > tgtLvl');
                      UPDATE $table set rgt=(rgt+2) WHERE rgt > srcRgt;

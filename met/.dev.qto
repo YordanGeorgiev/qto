@@ -3,6 +3,11 @@
 # cnf/env/dev.env.json
 # cnf/env/tst.env.json
 # cnf/env/prd.env.json
+src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
+src/perl/qto/t/lib/Qto/Controller/TestHiCRUD-01.t
+src/perl/qto/lib/Qto/Controller/HiCreate.pm
+src/perl/qto/lib/Qto/Controller/Create.pm
+src/perl/qto/lib/Qto/Controller/MultiCreate.pm
 # start puppeteer
 src/js/node/pp-ui-tests/
 src/js/node/pp-ui-tests/index.html
@@ -128,8 +133,6 @@ src/perl/qto/public/poc/vuex/sabe/index.html
 src/perl/qto/public/poc/vuex/sabe/styles.css
 src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
 src/perl/qto/t/lib/Qto/Controller/TestHiDelete.t
-src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
-src/perl/qto/lib/Qto/Controller/HiCreate.pm
 src/perl/qto/lib/Qto/Controller/HiDelete.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
 src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
