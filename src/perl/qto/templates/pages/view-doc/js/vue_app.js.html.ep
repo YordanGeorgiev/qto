@@ -199,7 +199,6 @@
             document.getElementById("add-new-parent-node").style.display="block"
             document.getElementById("add-sibling-node").style.display="block"
             if ( lvl < 2) { //hide the add new-parent-node context menu item on level < 2
-               console.log(menu)
                document.getElementById("add-new-parent-node").style.display="none"
                if ( lvl == 0) { //hide the add new-parent-node context menu item on level < 2
                   document.getElementById("add-sibling-node").style.display="none"

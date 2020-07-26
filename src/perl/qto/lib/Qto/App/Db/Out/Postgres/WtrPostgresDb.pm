@@ -283,7 +283,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
             BEGIN
                srcSeq := (SELECT seq from $table WHERE 1=1 AND id=$src_id);
-               srcLvl := (SELECT level from $table WHERE id=$src_id);
+               srcLvl := (SELECT level from $table WHERE id = $src_id);
                tgtSeq := (srcSeq+1);
                IF srcSeq = 1 THEN 
                   parentLvl := (0);
@@ -316,15 +316,27 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
                      parentLvl := (srcLvl-1);
                      parentRgt := (SELECT min(rgt) from $table WHERE 1=1 AND level=parentLvl and lft < srcLft );
                      parentLft := (SELECT min(lft) from $table WHERE 1=1 AND level=parentLvl and lft < srcLft );
-                     INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '1' second), 
-                        'YYMMDDHH12MISSMSUS') as numeric(25)),'WHEN srcLvl > tgtLvl');
-                     INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '2' second), 
-                        'YYMMDDHH12MISSMSUS') as numeric(25)),cast(parentLvl as varchar));
-                     UPDATE $table set rgt=(rgt+2) WHERE rgt > parentRgt;
-                     UPDATE $table set lft=(lft+2) WHERE lft > parentRgt;
-                     INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, parentRgt+1, parentRgt+2);
+                     CASE
+                     WHEN parentRgt-srcRgt > 1 THEN
+                        INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '1' second), 
+                           'YYMMDDHH12MISSMSUS') as numeric(25)),'HERE-01');
+                        UPDATE $table set rgt=(rgt-2) WHERE rgt = parentRgt;
+                        UPDATE $table set rgt=(rgt+2) WHERE rgt > parentRgt;
+                        UPDATE $table set lft=(lft+2) WHERE lft > parentRgt;
+                        UPDATE $table set lft=(lft+2), rgt=(rgt+2) 
+                           WHERE lft > srcLft AND rgt < parentRgt AND level > parentLvl;
+                        INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, parentRgt-1, parentRgt+2);
+                     ELSE
+                        INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '1' second), 
+                           'YYMMDDHH12MISSMSUS') as numeric(25)),'HERE-02');
+                        UPDATE $table set rgt=(rgt+2) WHERE rgt > parentRgt;
+                        UPDATE $table set lft=(lft+2) WHERE lft > parentRgt;
+                        INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, parentRgt-1, parentRgt+2);
+                     END CASE;
                   ELSE
                      INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '1' second), 
+                           'YYMMDDHH12MISSMSUS') as numeric(25)),cast(tgtLvl as varchar(20)));
+                     INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '2' second), 
                         'YYMMDDHH12MISSMSUS') as numeric(25)),'ELSE WHEN srcLvl > tgtLvl');
                      UPDATE $table set rgt=(rgt+2) WHERE rgt > srcRgt;
                      UPDATE $table set lft=(lft+2) WHERE lft > srcLft;
