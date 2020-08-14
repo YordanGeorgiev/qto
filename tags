@@ -658,7 +658,7 @@ doPrintStats	src/bash/qto/funcs/print-stats.func.sh	1;"	function	language:Sh
 doPrintToFile	src/perl/qto/lib/Qto/App/IO/Out/WtrFiles.pm	29;"	subroutine	language:Perl
 doPrintUsage	src/bash/qto/funcs/man/print-usage.func.sh	5;"	function	language:Sh
 doProduceEncryptedPass	src/perl/qto/lib/Qto/App/Sec/Guardian.pm	187;"	subroutine	language:Perl
-doProvisionDbAdmin	src/bash/qto/funcs/provision-db-admin.func.sh	1;"	function	language:Sh
+doSetUpDbRoles	src/bash/qto/funcs/provision-db-admin.func.sh	1;"	function	language:Sh
 doProvisionHttps	src/bash/qto/funcs/provision-https.func.sh	1;"	function	language:Sh
 doPublishDbdumpToS3	src/bash/qto/funcs/publish-dbdump-to-s3-public.func.sh	2;"	function	language:Sh
 doPublishDbdumpToS3	src/bash/qto/funcs/publish-dbdump-to-s3.func.sh	2;"	function	language:Sh

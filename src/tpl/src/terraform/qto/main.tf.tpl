@@ -2,7 +2,7 @@ provider "aws" {
    access_key = "$AWS_ACCESS_KEY_ID"
    secret_key = "$AWS_SECRET_ACCESS_KEY"
    region = "$AWS_DEFAULT_REGION"
-   profile = "$AWS_PROFILE"
+   profile = "{{ aws['AWS_PROFILE'] }}"
 }
 
 // the ubuntu-bionic-18.04 base ami image is used
@@ -30,8 +30,7 @@ variable "environment_tag" {
 variable "availability_zone" {
   description = "availability zone to create subnet"
   default = "$availability_zone"
-}
-
+} 
 
 variable "public_key_path" {
   description = "Public key path"
@@ -39,30 +38,30 @@ variable "public_key_path" {
 }
 
 // VPC Resource
-resource "aws_vpc" "$ENV_TYPE_$VER_vpc" {
+resource "aws_vpc" "{{ ENV_TYPE }}_{{ VER }}_vpc" {
   cidr_block = "10.0.0.0/16"
   enable_dns_support = true
   enable_dns_hostnames = true
 
   tags = {
-   Name = "$ENV_TYPE_$VER_vpc"
-   Version = "$VERSION"
+   Name = "{{ ENV_TYPE }}_{{ VER }}_vpc"
+   Version = "{{ VERSION }}"
   }
 }
 
 
 // subnets
-resource "aws_subnet" "$ENV_TYPE_$VER_subnet" {
-  cidr_block = "${cidrsubnet(aws_vpc.$ENV_TYPE_$VER_vpc.cidr_block, 3, 1)}"
-  vpc_id = "${aws_vpc.$ENV_TYPE_$VER_vpc.id}"
+resource "aws_subnet" "{{ ENV_TYPE }}_{{ VER }}_subnet" {
+  cidr_block = "${cidrsubnet(aws_vpc.{{ ENV_TYPE }}_{{ VER }}_vpc.cidr_block, 3, 1)}"
+  vpc_id = "${aws_vpc.{{ ENV_TYPE }}_{{ VER }}_vpc.id}"
   availability_zone = "$availability_zone"
 }
 
 
 //security.tf
-resource "aws_security_group" "$ENV_TYPE_$VER_sgr_qto_web" {
-name = "$ENV_TYPE_$VER_sgr_qto_web"
-vpc_id = "${aws_vpc.$ENV_TYPE_$VER_vpc.id}"
+resource "aws_security_group" "{{ ENV_TYPE }}_{{ VER }}_sgr_qto_web" {
+name = "{{ ENV_TYPE }}_{{ VER }}_sgr_qto_web"
+vpc_id = "${aws_vpc.{{ ENV_TYPE }}_{{ VER }}_vpc.id}"
 
   // morbo dev
   ingress {
@@ -174,38 +173,39 @@ vpc_id = "${aws_vpc.$ENV_TYPE_$VER_vpc.id}"
 }
 
 
-resource "aws_internet_gateway" "$ENV_TYPE_$VER_gw" {
-	vpc_id = "${aws_vpc.$ENV_TYPE_$VER_vpc.id}"
+resource "aws_internet_gateway" "{{ ENV_TYPE }}_{{ VER }}_gw" {
+	vpc_id = "${aws_vpc.{{ ENV_TYPE }}_{{ VER }}_vpc.id}"
 }
 
-resource "aws_route_table" "$ENV_TYPE_$VER_route-table" {
-	vpc_id = "${aws_vpc.$ENV_TYPE_$VER_vpc.id}"
+resource "aws_route_table" "{{ ENV_TYPE }}_{{ VER }}_route-table" {
+	vpc_id = "${aws_vpc.{{ ENV_TYPE }}_{{ VER }}_vpc.id}"
 	route {
 		cidr_block = "0.0.0.0/0"
-		gateway_id = "${aws_internet_gateway.$ENV_TYPE_$VER_gw.id}"
+		gateway_id = "${aws_internet_gateway.{{ ENV_TYPE }}_{{ VER }}_gw.id}"
 	}
 }
 
 resource "aws_route_table_association" "subnet-association" {
-  subnet_id      = "${aws_subnet.$ENV_TYPE_$VER_subnet.id}"
-  route_table_id = "${aws_route_table.$ENV_TYPE_$VER_route-table.id}"
+  subnet_id      = "${aws_subnet.{{ ENV_TYPE }}_{{ VER }}_subnet.id}"
+  route_table_id = "${aws_route_table.{{ ENV_TYPE }}_{{ VER }}_route-table.id}"
 }
 
-resource "aws_key_pair" "$ENV_TYPE_$VER_aws_key_pair" {
+resource "aws_key_pair" "{{ ENV_TYPE }}_{{ VER }}_aws_key_pair" {
   key_name   = "$key_name"
   public_key = "$public_key"
 }
 
-resource "aws_instance" "$ENV_TYPE_$VER_qto_inst" {
+resource "aws_instance" "{{ ENV_TYPE }}_{{ VER }}_qto_inst" {
 	ami           = "${data.aws_ami.ubuntu.id}"
 	instance_type = "t2.micro"
-  	subnet_id      = "${aws_subnet.$ENV_TYPE_$VER_subnet.id}"
+  	subnet_id      = "${aws_subnet.{{ ENV_TYPE }}_{{ VER }}_subnet.id}"
    associate_public_ip_address = "true"
-	security_groups = ["${aws_security_group.$ENV_TYPE_$VER_sgr_qto_web.id}"]
+	security_groups = ["${aws_security_group.{{ ENV_TYPE }}_{{ VER }}_sgr_qto_web.id}"]
 	key_name      = "$key_name"
 
   tags = {
-   Name = "$ENV_TYPE_$VER_qto-ec2"
-   Version = "$VERSION"
+   Name = "{{ ENV_TYPE }}_{{ VER }}_qto-ec2"
+   Version = "{{ VERSION}}"
   }
 }
+
