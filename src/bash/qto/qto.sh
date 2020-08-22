@@ -26,7 +26,7 @@ main(){
    test -z "${actions:-}" && actions=' print-usage '
    do_run_actions "$actions"
    test -d $PRODUCT_INSTANCE_DIR/.git/hooks/ && do_check_git_hooks
-   do_exit $exit_code "# ::: Command completed successfully :::  $RUN_UNIT "
+   do_exit $exit_code "# ::: Shell script run completed :::  $RUN_UNIT "
 }
 
 
@@ -76,12 +76,6 @@ do_run_actions(){
       [[ $arg_action == to-env=* ]] && run_funcs="$(echo -e "$run_funcs\ndoChangeEnvType $arg_action")"
       [[ $arg_action == cp-to-env=* ]] && run_funcs="$(echo -e "$run_funcs\ndoCpToEnv $arg_action")"
       [[ $arg_action == to-app=* ]] && run_funcs="$(echo -e "$run_funcs\ndoCloneToApp $arg_action")"
-	  [[ $arg_action == set-roles ]] && run_funcs="$(echo -e "$run_funcs\ndoProvisionDbAdmin")"
-	  [[ $arg_action == create-db ]] && run_funcs="$(echo -e "$run_funcs\ndoRunQtoDbDdl")"
-	  [[ $arg_action == fill-db ]] && run_funcs="$(echo -e "$run_funcs\ndoLoadDbDataFromS3")"
-	  [[ $arg_action == server-start ]] && run_funcs="$(echo -e "$run_funcs\ndoMojoHypnotoadStart")"
-	  [[ $arg_action == server-stop ]] && run_funcs="$(echo -e "$run_funcs\ndoMojoHypnotoadStop")"
-	  [[ $arg_action == success ]] && run_funcs="$(echo -e "$run_funcs\ndoNotifyProvisioningSuccess")"  # display success message after DB provisioning
       done < <(echo "$actions")
 
    run_funcs="$(echo -e "${run_funcs}"|sed -e 's/^[[:space:]]*//')"

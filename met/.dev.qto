@@ -3,6 +3,10 @@
 # cnf/env/dev.env.json
 # cnf/env/tst.env.json
 # cnf/env/prd.env.json
+cnf/bin/python/requirements.txt
+src/tpl/src/terraform/qto/main.tf.tpl
+src/bash/qto/funcs/set-up-py-v-env.func.sh
+src/python/tpl_gen.py
 src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
 src/perl/qto/t/lib/Qto/Controller/TestHiCRUD-01.t
 src/perl/qto/lib/Qto/Controller/HiCreate.pm
@@ -108,24 +112,28 @@ src/perl/qto/public/poc/css-tree/02
 src/perl/qto/public/poc/css-tree/02/index.html
 # stop  ::: left-menu
 # start ::: deployment
-src/bash/deployer/run.sh
-src/bash/deployer/check-setup-bash.func.sh
-src/bash/deployer/check-install-redis.func.sh
 cnf/redis/etc/systemd/system/redis.service
-src/bash/deployer/check-install-ubuntu-packages.func.sh
-src/bash/deployer/check-install-postgres.func.sh
-src/bash/deployer/check-install-chromium-headless.func.sh
-src/bash/deployer/check-install-phantom-js.func.sh
-src/bash/deployer/check-install-perl-modules.func.sh
-src/bash/deployer/check-install-python-modules.func.sh
-src/bash/deployer/provision-postgres.func.sh
-src/bash/deployer/provision-ssh-keys.func.sh
-src/bash/deployer/provision-nginx.func.sh
-src/bash/deployer/scramble-confs.func.sh
-src/bash/deployer/test-deployer-run.sh
-src/bash/deployer/qto/cnf/bin/ubuntu-18.04.lst
-src/bash/deployer/qto/cnf/bin/python-modules.lst
-src/bash/deployer/qto/cnf/bin/perl-modules.lst
+src/bash/qto/deploy/single-ubuntu18.04/run.sh
+src/bash/qto/deploy/single-ubuntu18.04
+src/bash/qto/deploy/single-ubuntu18.04/check-install-chromium-headless.func.sh
+src/bash/qto/deploy/single-ubuntu18.04/check-install-perl-modules.func.sh
+src/bash/qto/deploy/single-ubuntu18.04/check-install-phantom-js.func.sh
+src/bash/qto/deploy/single-ubuntu18.04/check-install-postgres.func.sh
+src/bash/qto/deploy/single-ubuntu18.04/check-install-python-modules.func.sh
+src/bash/qto/deploy/single-ubuntu18.04/check-install-redis.func.sh
+src/bash/qto/deploy/single-ubuntu18.04/check-install-ubuntu-packages.func.sh
+src/bash/qto/deploy/single-ubuntu18.04/check-setup-bash.func.sh
+src/bash/qto/deploy/single-ubuntu18.04/provision-nginx.func.sh
+src/bash/qto/deploy/single-ubuntu18.04/provision-postgres.func.sh
+src/bash/qto/deploy/single-ubuntu18.04/provision-ssh-keys.func.sh
+src/bash/qto/deploy/single-ubuntu18.04/qto
+src/bash/qto/deploy/single-ubuntu18.04/qto/cnf
+src/bash/qto/deploy/single-ubuntu18.04/qto/cnf/bin
+src/bash/qto/deploy/single-ubuntu18.04/qto/cnf/bin/perl-modules.lst
+src/bash/qto/deploy/single-ubuntu18.04/qto/cnf/bin/python-modules.lst
+src/bash/qto/deploy/single-ubuntu18.04/qto/cnf/bin/ubuntu-18.04.lst
+src/bash/qto/deploy/single-ubuntu18.04/scramble-confs.func.sh
+src/bash/qto/deploy/single-ubuntu18.04/test-deployer-run.sh
 # stop  ::: deployment
 src/perl/qto/public/poc/vuex/sabe/
 src/perl/qto/public/poc/vuex/sabe/app.js
@@ -136,7 +144,7 @@ src/perl/qto/t/lib/Qto/Controller/TestHiDelete.t
 src/perl/qto/lib/Qto/Controller/HiDelete.pm
 src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
 src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
-src/bash/qto/funcs/provision-db-admin.func.sh
+src/bash/qto/funcs/set-up-db-roles.func.sh
 src/bash/qto/funcs/fix-db-permissions.func.sh
 src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
 src/bash/qto/funcs/publish-dbdump-to-s3-public.func.sh

@@ -2,7 +2,7 @@
 
 main(){
 
-   do_set_vars "$@"  # do_initial_message is inside, unless --help flag is present
+   do_set_vars "$@"  # is inside, unless --help flag is present
    
    installation_steps=(do_check_sudo_rights
    do_set_time
@@ -59,7 +59,7 @@ do_set_vars(){
    export bash_opts_file=~/.bash_opts.$host_name
    export user_at_host=$USER@$host_name || exit 1
    export unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
-  export product_dir=$(cd $unit_run_dir/../../..; echo `pwd`)
+   export product_dir=$(cd $unit_run_dir/../../../../../..; echo `pwd`)
 
    # ALWAYS !!! bootstrap a dev instance, for tst and prd use -a to-env=tst , -a to-env=prd 
    perl -pi -e 's|ENV_TYPE=tst|ENV_TYPE=dev|g' "$product_dir/.env"
@@ -68,7 +68,8 @@ do_set_vars(){
    export PRODUCT_INSTANCE_DIR="$product_dir/$app_to_deploy.$VERSION.$ENV_TYPE.$user_at_host"
 
    # creating a redirect file with QtoDir function leading to PRODUCT_INSTANCE_DIR
-   printf "#!/usr/bin/env bash\nmain(){\nQtoDir\n}\nQtoDir(){\ncd $PRODUCT_INSTANCE_DIR\n}\nmain\n" > $product_dir/src/bash/deployer/change-to-instance-dir.sh
+   printf "#!/usr/bin/env bash\nmain(){\ndoCdToQtoDir\n}\ndoCdToQtoDir(){\ncd $PRODUCT_INSTANCE_DIR\n}\nmain\n" \
+      > $product_dir/src/bash/qto/deploy/single-ubuntu18.04/change-to-instance-dir.func.sh
    
    cd $product_dir
 }
@@ -92,8 +93,8 @@ usage_info(){
    cat << EOF_USAGE
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
       QTO deployer PURPOSE: 
-      A generic deployer for OS packages, Perl modules and custom vim, tmux
-      settings
+      The qto deployer for OS packages, Perl modules and custom vim, tmux
+      settings on a single ubuntu 18.04 machine setup
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
      
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -103,17 +104,17 @@ usage_info(){
 	  # Perl modules, Python, Postgres, nginx, redis, etc.
 	  #
 	  # On completion the directory will change to an instance directory with the name similar to this
-	  # ~/opt/qto/qto.0.7.7.dev.username@hostname
+	  # ~/opt/qto/qto.0.8.7.dev.username@hostname
 	  #
 	  # Alternatively you can run the deployer directly, then go to the PRODUCT_INSTANCE_DIR yourself
-	  # . ./qto/src/bash/deployer/run.sh
+	  # . ./src/bash/qto/deploy/single-ubuntu18.04/run.sh
 	  # source $(find . -name '.env') && cd ~/opt/qto/qto.$VERSION.$ENV_TYPE.$USER@`hostname -s`
 	  . ./qto/1-setup.sh
 	  
 	  # 2. Create a database and fill it with data
 	  #
 	  # Former command:
-	  # . ./qto/src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
+	  # . ./qto/src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a setup-db-roles -a run-qto-db-ddl -a load-db-data-from-s3
 	  ./2-create-db.sh
 	  
 	  # 3. Start the web server
@@ -193,18 +194,7 @@ do_load_functions(){
    source $product_dir/lib/bash/funcs/export-json-section-vars.sh
    source $product_dir/lib/bash/funcs/flush-screen.sh
    export -f do_flush_screen
-   source $product_dir/src/bash/deployer/check-setup-bash.func.sh
-   source $product_dir/src/bash/deployer/check-install-ubuntu-packages.func.sh
-   source $product_dir/src/bash/deployer/check-install-postgres.func.sh
-   source $product_dir/src/bash/deployer/check-install-phantom-js.func.sh
-   source $product_dir/src/bash/deployer/check-install-perl-modules.func.sh
-   source $product_dir/src/bash/deployer/check-install-chromium-headless.func.sh
-   source $product_dir/src/bash/deployer/check-install-python-modules.func.sh
-   source $product_dir/src/bash/deployer/check-install-redis.func.sh
-   source $product_dir/src/bash/deployer/provision-postgres.func.sh
-   source $product_dir/src/bash/deployer/provision-nginx.func.sh
-   source $product_dir/src/bash/deployer/provision-ssh-keys.func.sh
-   source $product_dir/src/bash/deployer/scramble-confs.func.sh
+   while read -r f; do source $f; done < <(ls -1 $product_dir/src/bash/qto/deploy/single-ubuntu18.04/*func.sh)
 }
 
 
@@ -223,8 +213,6 @@ do_create_multi_env_dir(){
    mv -v "$product_dir" "$product_dir"'_'
    mkdir -p "$product_dir" ;  mv -v "$product_dir"'_' "$PRODUCT_INSTANCE_DIR";
    
-   # going to PRODUCT_INSTANCE_DIR
-   source $PRODUCT_INSTANCE_DIR/src/bash/deployer/change-to-instance-dir.sh
    export -f QtoDir
 }
 
@@ -242,10 +230,8 @@ do_finalize(){
    
    cat << EOF_INIT_MSG
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-         QTO deployment completed successfully
-         Run the following cmd to create the db
-         bash ; ./src/bash/qto/qto.sh -a provision-db-admin -a run-qto-db-ddl -a
-         load-db-data-from-s3
+         QTO binary deployment completed successfully. Continue by : 
+         bash ; ./src/bash/qto/qto.sh -a provision-instance
    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 EOF_INIT_MSG
 }

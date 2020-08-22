@@ -1,0 +1,7 @@
+pyyaml
+glob3
+jinja2
+pprint
+pprintjson
+requests
+jq

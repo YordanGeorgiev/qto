@@ -1,7 +1,7 @@
 # use this shell actios ONLY after deployment
 doFixDbPermissions(){
 
-   doProvisionDbAdmin
+   doSetUpDbRoles
 
    test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
