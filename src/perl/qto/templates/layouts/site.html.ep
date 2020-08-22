@@ -35,7 +35,7 @@
 
    <%= content 'cnt_body_controls' %>
    <div id="js_libs">
-      <script type="application/javascript" src="https://unpkg.com/axios/dist/axios.min.js" crossorigin="anonymous"></script>
+      <script type="application/javascript" src="https://unpkg.com/axios@0.20.0-0/dist/axios.min.js" crossorigin="anonymous"></script>
       <script type="application/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js" crossorigin="anonymous"></script>
       <script type="application/javascript" src="https://unpkg.com/vuex@3.0.1/dist/vuex.min.js" crossorigin="anonymous"></script>
       <script type="application/javascript" src="/lib/js/controls/vue-select.js"></script>

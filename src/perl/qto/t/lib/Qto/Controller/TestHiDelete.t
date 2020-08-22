@@ -146,9 +146,6 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $url              = '/' . $db . '/update/test_hi_delete_table_doc' ; 
    ok ( $t->post_ok($url => json => {"attribute"=>"name", "id" =>$oid, "cnt"=>"3.0.0 ::: title ::: "})->status_is(200), $tm);
    
-   #$tm = 'can delete new 3.0.0 ';
-   #$url = '/' . $db . '/hidelete/test_hi_delete_table_doc' ; 
-   #ok ( $t->delete_ok($url => json => {'oid' => "$oid" })->status_is(200) , $tm );
    
 
    $tm = 'can delete the 2.2.0 ';
@@ -158,6 +155,10 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    $tm = 'can delete the 2.1.0 ';
    $url = '/' . $db . '/hidelete/test_hi_delete_table_doc' ; 
    ok ( $t->delete_ok($url => json => {'oid' => "$oid_210" })->status_is(200) , $tm );
+   
+   $tm = 'can delete new 3.0.0 ';
+   $url = '/' . $db . '/hidelete/test_hi_delete_table_doc' ; 
+   ok ( $t->delete_ok($url => json => {'oid' => "$oid" })->status_is(200) , $tm );
 
 
 done_testing();

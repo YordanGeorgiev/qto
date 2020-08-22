@@ -176,7 +176,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       " ; 
       eval {
          $sth = $dbh->prepare($str_sql);  
-         #debug rint "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
+         print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
 
          $sth->execute() or print STDERR "$DBI::errstr" ; 
       } or $ret = 500 ; # Internal Server error
@@ -268,8 +268,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          END ; $$ ';
                # DELETE FROM $table WHERE lft <= originLft AND rgt <= originRgt ;
                # DELETE FROM $table WHERE id=$origin_id ;
-         #debug p $str_sql ; 
-         #rint "\nWtrPostgresDb delte by id \n";
+         p $str_sql ; 
+         print "\nWtrPostgresDb delete by id \n";
          #
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ;

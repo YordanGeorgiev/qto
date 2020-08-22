@@ -30,7 +30,7 @@
 	<div id="div_msg" class="hcentered"> <%== $msg %></div>
    %= include 'controls/left-menu/left-menu'
 <script type="application/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js" crossorigin="anonymous"></script>
-<script type="application/javascript" src="https://unpkg.com/axios/dist/axios.min.js" crossorigin="anonymous"></script>
+<script type="application/javascript" src="https://unpkg.com/axios@0.20.0-0/dist/axios.min.js" crossorigin="anonymous"></script>
 % if ( defined(stash('item-has-timestamp-attr')) && stash('item-has-timestamp-attr') == 1) {
       <script type="application/javascript" charset="utf-8"
          src="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@2.4.0/dist/vue-ctk-date-time-picker.umd.min.js" charset="utf-8"></script>

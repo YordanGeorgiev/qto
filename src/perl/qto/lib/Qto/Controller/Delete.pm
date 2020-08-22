@@ -39,7 +39,6 @@ sub doRemoveById {
    $db                  = toEnvName($db,$config); # probably a smell ...
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
-   #$self->SUPER::doReloadProjDbMeta( $db,$item ) ;
 
    my $json = $self->req->body;
    my $perl_hash = decode_json($json) ; 

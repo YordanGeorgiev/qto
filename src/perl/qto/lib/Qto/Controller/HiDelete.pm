@@ -16,10 +16,10 @@ use Qto::App::Cnvr::CnrHsr2ToArray ;
 use Qto::App::IO::In::CnrPostPrms ; 
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
 
-our $module_trace   = 0 ;
-our $config      = {};
-our $objLogger      = {} ;
-our $rdbms_type     = 'postgre';
+our $module_trace    = 0 ;
+our $config          = {};
+our $objLogger       = {} ;
+our $rdbms_type      = 'postgre';
 
 #
 # --------------------------------------------------------
@@ -43,7 +43,7 @@ sub doHiDelete {
    my $oid              = $perl_hash->{'oid'} || undef;
    $config		         = $self->app->config ; 
    $db                  = toEnvName ( $db , $config) ; # probably a smell ...
-
+   
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
    #nope !? $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
    $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel);

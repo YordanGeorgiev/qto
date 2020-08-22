@@ -217,19 +217,22 @@
                var uri = window.location.href.replace('/view/', '/hidelete/')
                uri = ( uri.indexOf('#') === -1 ) ? uri : uri.split('#')[0] 
 
-               axios.delete(uri, { data:{
-                  oid: payload.oid
-               }})
-               .then(response => { 
+					axios({
+						method: 'delete',
+						url: uri,
+						data: {
+							oid: payload.oid
+						}
+					})
+					.then(response => { 
                   if ( typeof response.status != "undefined" && response.status === 200 ) {
-
                      var seq = 1
                      var index = state.items.findIndex(item => String(item.id) === payload.oid )
                      if ( index !== -1 ) { seq = state.items[index].seq -1 }
                      context.commit("DELETE_ITEM", payload)
                      context.dispatch("loadItems")
                      var elToScrollTo = document.getElementById("title-" + seq)
-                     if ( typeof(elToScrollTo) != "undefined" ) { elToScrollTo.scrollIntoView(true)}
+                     if ( typeof(elToScrollTo) != "undefined" && elToScrollTo != null) { elToScrollTo.scrollIntoView(true)}
                   } else {
                      if ( typeof err.response.data.msg != "undefined" ) { 
                         context.commit('SET_SNACKBAR_SHOW', true)
@@ -245,7 +248,11 @@
                      console.error ( err.response.data.msg )
                      context.commit('SET_SNACKBAR_SHOW', true)
                      context.commit('SET_SNACKBAR_MSG', err.response.data.msg.split("::")[0]) 
+                  } else {
+                     context.commit('SET_SNACKBAR_SHOW', true)
+                     context.commit('SET_SNACKBAR_MSG', String(err))
                   }
+
                }) 
                // this.$forceUpdate() // probably not needed because of the :keys
          }
