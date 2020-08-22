@@ -229,6 +229,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
       eval {
          no warnings 'exiting' ; 
+			# src: http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/
          $str_sql = 'DO $$
          ' . " 
             DECLARE originSeq bigint;
@@ -245,8 +246,6 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
             DECLARE newRgt bigint;
             DECLARE mayBeNxtSeq bigint;
             DECLARE widthRgtLft bigint;
-            DECLARE rgtMinus bigint;
-            DECLARE lftMinus bigint;
             DECLARE delCount bigint;
 
             BEGIN
@@ -255,8 +254,6 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
                originRgt := (SELECT rgt from $table WHERE 1=1 AND id=$origin_id);
 
                widthRgtLft := (originRgt - originLft + 1);
-               rgtMinus := (originRgt - widthRgtLft);
-               lftMinus := (originLft - widthRgtLft);
                tgtSeq := (originSeq - 1);
                delCount := (SELECT COUNT(*) FROM $table WHERE lft BETWEEN originLft AND originRgt);
 
@@ -269,8 +266,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
                # DELETE FROM $table WHERE lft <= originLft AND rgt <= originRgt ;
                # DELETE FROM $table WHERE id=$origin_id ;
          p $str_sql ; 
-         print "\nWtrPostgresDb delete by id \n";
-         #
+         print "\bWtrPostgresDb delete by id \n";
+         
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ;
          use warnings 'exiting' ; 
@@ -297,9 +294,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $db               	= shift ; 
       my $table            	= shift ; 
       my $src_id              = shift ; # the former origin_id
-      print "src_id: $src_id \n" ; #todo:ysg
       my $level_alpha         = shift ;
-      print "level_alpha: $level_alpha \n" ; #todo:ysg
 
       my $ret              	= 0 ; 
       my $res              	= undef ;  # the result from FOUND in the func
@@ -324,6 +319,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       eval {
          no warnings 'exiting' ; 
          $level_alpha='+ ' . "$level_alpha" if $level_alpha >= 0 ;
+			# src: http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/
          $str_sql = 'DO $$
          ' . " 
             DECLARE srcSeq bigint;
@@ -391,7 +387,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
                            'YYMMDDHH12MISSMSUS') as numeric(25)),'HERE-02');
                         UPDATE $table set rgt=(rgt+2) WHERE rgt > parentRgt;
                         UPDATE $table set lft=(lft+2) WHERE lft > parentRgt;
-                        INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, parentRgt-1, parentRgt+2);
+                        INSERT INTO $table (level, seq, lft, rgt) VALUES (tgtLvl, tgtSeq, parentRgt+1, parentRgt+2);
                      END CASE;
                   ELSE
                      INSERT INTO logs (id,name) values (cast (to_char((current_timestamp + interval '2' second), 

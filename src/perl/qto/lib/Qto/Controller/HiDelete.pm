@@ -45,7 +45,6 @@ sub doHiDelete {
    $db                  = toEnvName ( $db , $config) ; # probably a smell ...
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ;
-   #nope !? $self->SUPER::doReloadProjDbMeta( $db ,$item) ;
    $objCnrPostPrms      = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel);
 
    unless ( $objCnrPostPrms->chkHiDeleteHasValidParams( $perl_hash ) == 1 ) {
