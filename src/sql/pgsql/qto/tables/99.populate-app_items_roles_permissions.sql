@@ -54,7 +54,7 @@ UPDATE app_items_roles_permissions set
    allowed=true
    , name = replace(name, 'mayNOT', 'may')
 WHERE 1=1
-   AND app_route_guid IN 
+   AND app_routes_guid IN 
    ( SELECT guid from app_routes WHERE name = 'select-col')
 ;
 

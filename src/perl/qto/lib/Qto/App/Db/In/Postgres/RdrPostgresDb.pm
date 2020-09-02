@@ -1707,6 +1707,8 @@ sub doCallFuncGetHashRef {
                , app_imgs.style         as img_style
                , app_imgs.description   as img_description
                FROM app_imgs
+               WHERE 1=1
+               AND app_imgs.item_name = '$table'
             ) AS app_imgs
             ON ( dyn_sql.id = app_imgs.img_item_id ) 
 				WHERE 1=1 

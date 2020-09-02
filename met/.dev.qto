@@ -7,7 +7,8 @@ cnf/bin/python/requirements.txt
 src/bash/qto/funcs/set-up-py-v-env.func.sh
 src/python/tpl_gen.py
 src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
-src/perl/qto/t/lib/Qto/Controller/TestHiCRUD-01.t
+src/perl/qto/t/lib/Qto/Controller/TestHiCRUD-create-parents.t
+src/perl/qto/t/lib/Qto/Controller/TestHiCRUD-create-siblings.t
 src/perl/qto/t/lib/Qto/Controller/TestHiDelete.t
 src/perl/qto/lib/Qto/Controller/HiCreate.pm
 src/perl/qto/lib/Qto/Controller/Create.pm
@@ -477,6 +478,7 @@ src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
 src/perl/qto/lib/Qto/App/Mdl/Model.pm
 src/perl/qto/lib/Qto/App/Ctrl/Dispatcher.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToDb.pm
+src/perl/qto/lib/Qto/App/Ctrl/CtrlHTableToHTable.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlXlsToTable.pm
 src/perl/qto/lib/Qto/App/Ctrl/CtrlDbToXls.pm
 src/perl/qto/lib/Qto/App/Utils
@@ -888,6 +890,7 @@ src/perl/qto/lib/auto/Qto/Auth/Role
 src/perl/qto/lib/auto/Qto/Auth/Role/autosplit.ix
 src/perl/qto/lib/auto/AutoLoadableChild/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlDbToXls/autosplit.ix
+src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlHTableToHTable/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlXlsToDb/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/CtrlXlsToTable/autosplit.ix
 src/perl/qto/lib/auto/Qto/App/Ctrl/Dispatcher/autosplit.ix

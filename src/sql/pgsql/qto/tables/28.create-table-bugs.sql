@@ -4,7 +4,7 @@ SELECT 'create the "bugs" table'
 CREATE TABLE public.bugs (
     guid uuid DEFAULT public.gen_random_uuid() NOT NULL,
     id bigint DEFAULT (to_char(CURRENT_TIMESTAMP, 'YYMMDDHH12MISS'::text))::bigint NOT NULL,
-    prio integer DEFAULT 1 NOT NULL,
+    prio integer DEFAULT 0 NOT NULL,
     issues_status_guid uuid DEFAULT 'cb989a14-d0b8-46e4-b2cc-5e2a974b5d29'::uuid NOT NULL,
     name character varying(100) DEFAULT 'name ...'::character varying NOT NULL,
     description character varying(4000) DEFAULT 'desc ...'::character varying NOT NULL,

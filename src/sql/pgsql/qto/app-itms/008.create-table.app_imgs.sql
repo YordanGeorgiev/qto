@@ -11,6 +11,7 @@ CREATE TABLE app_imgs (
     , style          varchar (100) NOT NULL DEFAULT 'width: 800px; height: 600x'
     , item_id        bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint)
     , description    varchar (4000) NOT NULL DEFAULT 'Alt text' 
+    , item_name      varchar (200) NOT NULL DEFAULT 'item_name...'
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_app_imgs_guid PRIMARY KEY (guid)
     );

@@ -97,6 +97,7 @@ sub doReloadProjDbMetaColumns {
    $objModel->set($db . '.meta-columns',$msr2);
 }
 
+
 sub doReloadProjDbForeignKeys {
 
    my $self                = shift ;

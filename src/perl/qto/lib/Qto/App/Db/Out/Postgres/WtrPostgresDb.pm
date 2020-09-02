@@ -265,8 +265,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          END ; $$ ';
                # DELETE FROM $table WHERE lft <= originLft AND rgt <= originRgt ;
                # DELETE FROM $table WHERE id=$origin_id ;
-         p $str_sql ; 
-         print "\bWtrPostgresDb delete by id \n";
+         # debut $str_sql ; 
+         # rint "\bWtrPostgresDb delete by id \n";
          
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ;

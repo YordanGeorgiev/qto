@@ -258,18 +258,18 @@ EOF_EXP_JSON_02
    $url = '/' . $db . '/hidelete/test_hierarchy_doc' ; 
    ok ( $t->delete_ok($url => json => {'oid' => "$id_to_delete" })->status_is(200) , $tm );
 	$url = '/' . $db . '/select/test_hierarchy_doc?&pg-size=100&pick=seq,level,lft,rgt,name,description&oa=seq';
-   my $result = $ua->get($url)->result->json->{'dat'}; 
+   $result = $ua->get($url)->result->json->{'dat'}; 
 
-	my $tms = "for adding parent element from the last subnode element having siblings ( 1.2)";
+	$tms = "for adding parent element from the last subnode element having siblings ( 1.2)";
 
-	my $fake_guid = '' ; my $fake_id = ''; 
+	$fake_guid = '' ; $fake_id = ''; 
 	foreach my $el ( @$result ){ 
 		$fake_guid = $el->{'guid'} if $el->{'name'} eq 'name...';
 		$fake_id = $el->{'id'} if $el->{'name'} eq 'name...';
 	}
 	$exp_json =~ s/%guid%/$fake_guid/g;
 	$exp_json =~ s/%id%/$fake_id/g;
-   my $obj_exp_json = JSON->new->utf8->decode($exp_json);
+   $obj_exp_json = JSON->new->utf8->decode($exp_json);
 	cmp_deeply( $result , $obj_exp_json, $tms );
 done_testing();
 }

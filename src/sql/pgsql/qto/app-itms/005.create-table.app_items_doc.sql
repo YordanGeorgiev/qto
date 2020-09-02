@@ -1,14 +1,14 @@
--- v0.8.5
-
+-- v0.8.6
 -- \echo 'If necessary, perform -- DROP TABLE IF EXISTS app_items_doc;'
-
 -- \echo '5. Creating the app_items_doc table'
 
 CREATE TABLE app_items_doc (
       guid           UUID NOT NULL DEFAULT gen_random_uuid()
     , id             bigint UNIQUE NOT NULL DEFAULT cast (to_char(current_timestamp, 'YYMMDDHH12MISS') as bigint) 
-    , level          integer NULL
     , seq            integer NULL
+    , level          integer NULL
+    , lft            bigint  NULL
+    , rgt            bigint  NULL
     , type           varchar (10) NOT NULL DEFAULT 'doc'
     , url            varchar (2048) NOT NULL DEFAULT '#' -- 2048 is the absolute max
     , title          varchar (50) NOT NULL DEFAULT 'link-title...'
@@ -18,8 +18,6 @@ CREATE TABLE app_items_doc (
     , item_id        integer NULL -- the future hook for the table name in the url
     , src            varchar (4000)
     , formats        text NULL
-    , lft            bigint  NULL
-    , rgt            bigint  NULL
     , update_time    timestamp DEFAULT DATE_TRUNC('second', NOW())
     , CONSTRAINT pk_app_items_doc_guid PRIMARY KEY (guid)
     );

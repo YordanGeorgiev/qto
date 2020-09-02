@@ -1,4 +1,4 @@
-package Qto::App::Ctrl::CtrlXlsToDb ; 
+package Qto::App::Ctrl::CtrlHTableToHTable ; 
 
 	use strict; use warnings; use utf8 ; 
 
@@ -21,20 +21,21 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
    use Qto::App::IO::In::RdrXls ; 
    use Qto::App::Mdl::Model ; 
    use Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3 ; 
+   use Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef ; 
 	
 	our $module_trace                = 0 ; 
 	our $RunDir 						   = '' ; 
 	our $ProductBaseDir 				   = '' ; 
 	our $ProductDir 					   = '' ; 
 	our $ProductInstanceDir 			= ''; 
-	our $ProductInstanceEnv  = '' ; 
+	our $ProductInstanceEnv          = '' ; 
 	our $ProductName 					   = '' ; 
-	our $EnvType 					   = '' ; 
+	our $EnvType 					      = '' ; 
 	our $ProductVersion 				   = ''; 
 	our $ProductOwner 				   = '' ; 
 	our $HostName 						   = '' ; 
 	our $ConfFile 						   = '' ; 
-   our $config                   = {} ; 
+   our $config                      = {} ; 
    our $rdbms_type                  = {} ; 
 	our $objLogger						   = {} ; 
    our $objRdrDirs                  = {} ;
@@ -61,63 +62,42 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
      
       $msg = "using the following \@tables: " . join (",", @tables) . "\n" ; 
       $objLogger->doLogInfoMsg ( $msg ) ; 
-      # if the xls_file is not defined take the latest one from the mix data dir
-      $xls_file               = $objModel->get( 'io.xls-file' ) ; 
-      print "$xls_file \n" ; sleep 1 ; 
-      if ( $objModel->get( 'io.xls-file' ) eq 'undefined' ) {
-         my $xls_dir          = $ENV{'PROJ_INSTANCE_DIR' } || $config->{'env'}->{'run'}->{'ProductInstanceDir'} ; 
-         $xls_dir             = $xls_dir . "/dat/mix" ; 
-         my $arrRefXlsFiles   = $objRdrDirs->doReadDirGetFilesByExtension ( $xls_dir , 'xlsx')  ; 
-         # ignore tilde containing files - todo: fix regex for file names starting with ~
-         $xls_file            = (reverse sort (grep { $_ !~ m/~/g } @$arrRefXlsFiles))[0] ; 
-         $objModel->set( 'io.xls-file' , $xls_file ) ; 
-         confess ( "cannot find an xls file to load !!! Nothing to do !!!" ) unless $objModel->get( 'io.xls-file' ) ; 
-      } 
-     
-      my $objRdrXls           = 'Qto::App::IO::In::RdrXls'->new ( \$config , \@tables ) ; 
-      
-      # read the xls into hash ref of hash ref
-      ( $ret , $msg  ) = $objRdrXls->doReadXlsFileToHsr3 ( $xls_file , \$objModel) ; 
-      return ( $ret , $msg ) unless $ret == 0 ; 
-      my $hsr3             = $objModel->get('hsr3' ); 
-
-      $msg                 = 'unknown error while inserting db tables !!!' ; 
 
       my $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new( \$config  , \$objModel , \$self , $rdbms_type ) ; 
       my $objWtrDb 		   = $objWtrDbsFcry->doSpawn ( "$rdbms_type" , \@tables );
 
-      p($hsr3) if $module_trace == 1 ; 
+      my $table = $tables[0] ; # one table for now ... 
+      my $item = $tables[0] ; # one table for now ... 
+      $msg = "START hierarchy conversion for table: $table " ; 
+      $objLogger->doLogInfoMsg ( $msg ) ; 
 
-      my $load_model = $ENV{ 'load_model' } || 'nested-set' ; 
+      my $db            = $ENV{'postgres_db_name'} ; 
+      my $objModel      = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
+      my $objRdrDbsFcry    = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
+      my $objRdrDb 			= $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-      # p ( $hsr3 ) ; 
-      # print " STOP before \n" ; 
-
-      if ( $load_model eq 'upsert' ) {
-         $objModel->set('postgres_db_name',$ENV{'postgres_db_name'}) ;
-         ( $ret , $msg  )        = $objWtrDb->doUpsertTables( \$objModel , \@tables) ; 
-         
-         p ( $objModel->get('hsr3') ) if $module_trace == 1 ; 
-
-      } 
-      elsif ( $load_model eq 'nested-set' ) {
-         foreach my $table ( keys %$hsr3 ) { 
-            $msg = "START hierarchy conversion for table: $table " ; 
-            $objLogger->doLogInfoMsg ( $msg ) ; 
-            my $hsr2 = $hsr3->{ "$table" } ; 
-            my $objCnrXlsHsr3ToDbHsr3 = 
-                  'Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$config , $rdbms_type ) ; 
-            $hsr2 = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2 , $table ) ; 
-            p $hsr2 ;
-            $objModel->set('hsr2' , $hsr2 );
-            $objModel->set('postgres_db_name',$ENV{'postgres_db_name'}) ;
-            ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objModel , $table ) ; 
+      (my $http_code, $msg, my $dat ) = $objRdrDb->doHiSelectBranch( $db , $item );
+      my $objCnrHashesArrRefToHashesArrRef = 'Qto::App::Cnvr::CnrHashesArrRefToHashesArrRef'->new (\$config  ) ; 
+      $dat = $objCnrHashesArrRefToHashesArrRef->doConvert ( $dat) ; 
+      my $i = 0 ; 
+      my $hsr2 = {} ; 
+      foreach my $row ( @$dat) {
+         if ( $i == 0 ){
+            my $row0 = {} ; 
+            foreach my $key ( keys %{$row}){
+               $row0->{$key} = $key ; 
+            }
+            $hsr2->{0} = $row0 ; $i++ ; 
          }
-
-      } 
-      else {
-         ( $ret , $msg  )        = $objWtrDb->doUpsertTables( $hsr3 , \@tables) ; 
+         $hsr2->{$i} = $row ; $i++ ;
       }
+      my $objCnrXlsHsr3ToDbHsr3 = 'Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$config , $rdbms_type ) ; 
+      $hsr2 = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2 , $table ) ; 
+      p $hsr2 ; sleep 1 ; print "EOF p \$hsr2 in CtrlHTableToHTable.pm \n";
+      $objModel->set('hsr2' , $hsr2 );
+      $objModel->set('postgres_db_name',$ENV{'postgres_db_name'}) ;
+      ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objModel , $table ) ; 
+
       return ( $ret , $msg ) ; 
    } 
 
@@ -149,11 +129,11 @@ __END__
 
 =head1 NAME
 
-CtrlXlsToDb 
+CtrlHTableToHTable 
 
 =head1 SYNOPSIS
 
-use CtrlXlsToDb  ; 
+use CtrlHTableToHTable  ; 
 
 
 =head1 DESCRIPTION

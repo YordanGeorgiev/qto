@@ -16,6 +16,7 @@ package Qto::App::Ctrl::Dispatcher ;
 
    use Qto::App::Utils::Logger ; 
    use Qto::App::Ctrl::CtrlXlsToDb ; 	
+   use Qto::App::Ctrl::CtrlHTableToHTable ; 	
    use Qto::App::Ctrl::CtrlDbToXls ; 
    use Qto::App::Ctrl::CtrlXlsToTable ; 
 
@@ -61,6 +62,16 @@ package Qto::App::Ctrl::Dispatcher ;
       my $objCtrlXlsToDb = 
          'Qto::App::Ctrl::CtrlXlsToDb'->new ( \$config , \$objModel) ; 
       my ( $ret , $msg ) = $objCtrlXlsToDb->doReadAndLoad ( ) ; 
+      return ( $ret , $msg ) ; 
+   }
+   
+   sub doHTableToHTable{
+      my $self = shift ; 
+      use strict 'refs'; 
+
+      my $objCtrlHTableToHTable = 
+         'Qto::App::Ctrl::CtrlHTableToHTable'->new ( \$config , \$objModel) ; 
+      my ( $ret , $msg ) = $objCtrlHTableToHTable->doReadAndLoad ( ) ; 
       return ( $ret , $msg ) ; 
    }
    
