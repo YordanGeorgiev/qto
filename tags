@@ -628,13 +628,13 @@ doLoadProjDbForeignKeys	src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
 doLoadProjDbMetaCols	src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm	843;"	subroutine	language:Perl
 doLoadProjDbMetaTables	src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm	560;"	subroutine	language:Perl
 doLoadProjDbRBACList	src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm	496;"	subroutine	language:Perl
-doLogDebugMsg	src/perl/qto/lib/Qto/App/Utils/Logger.pm	355;"	subroutine	language:Perl
-doLogErrorMsg	src/perl/qto/lib/Qto/App/Utils/Logger.pm	246;"	subroutine	language:Perl
+debug	src/perl/qto/lib/Qto/App/Utils/Logger.pm	355;"	subroutine	language:Perl
+error	src/perl/qto/lib/Qto/App/Utils/Logger.pm	246;"	subroutine	language:Perl
 doLogFatalMsg	src/perl/qto/lib/Qto/App/Utils/Logger.pm	225;"	subroutine	language:Perl
-doLogInfoMsg	src/perl/qto/lib/Qto/App/Utils/Logger.pm	302;"	subroutine	language:Perl
+info	src/perl/qto/lib/Qto/App/Utils/Logger.pm	302;"	subroutine	language:Perl
 doLogMsg	src/perl/qto/lib/Qto/App/Utils/Logger.pm	434;"	subroutine	language:Perl
 doLogTraceMsg	src/perl/qto/lib/Qto/App/Utils/Logger.pm	326;"	subroutine	language:Perl
-doLogWarningMsg	src/perl/qto/lib/Qto/App/Utils/Logger.pm	272;"	subroutine	language:Perl
+warn	src/perl/qto/lib/Qto/App/Utils/Logger.pm	272;"	subroutine	language:Perl
 doLoginUser	src/perl/qto/lib/Qto/Controller/Login.pm	59;"	subroutine	language:Perl
 doLogonUser	src/perl/qto/lib/Qto/Controller/Logon.pm	23;"	subroutine	language:Perl
 doMkDir	src/perl/qto/lib/Qto/App/IO/Out/WtrDirs.pm	30;"	subroutine	language:Perl

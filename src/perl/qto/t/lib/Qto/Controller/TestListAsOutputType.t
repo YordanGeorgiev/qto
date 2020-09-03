@@ -37,7 +37,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    for my $row ( @$list ) {
       $counter++ ; next if $counter % 2 != 0 ; # we have enough tables take each second one
       my $table_name = $row->{'table_name'} ; 
-      next unless ( $table_name eq 'monthly_issues');
+      next unless ( $table_name eq 'issues');
       my $url = '' ; 
       my $tm = '' ; # the test msg 
 

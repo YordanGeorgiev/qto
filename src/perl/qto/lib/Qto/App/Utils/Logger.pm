@@ -38,7 +38,7 @@ the main perl logging module in qto
 
 =head1 EXPORT
 
-   #our @EXPORT = qw(get set dumpFields doLogInfoMsg doLogFatalMsg doLogDebugMsg doLogTraceMsg doLogErrorMsg doLogMsg doLogWarningMsg );
+   #our @EXPORT = qw(get set dumpFields info doLogFatalMsg debug doLogTraceMsg error doLogMsg warn );
 =cut 
 
 	sub new {
@@ -243,7 +243,7 @@ the main perl logging module in qto
 	# -----------------------------------------------------------------------------
 	# logs an error message
 	# -----------------------------------------------------------------------------
-	sub doLogErrorMsg {
+	sub error {
 		my $self = shift;
       my $msg  = "null error msg passed" ; 
       
@@ -269,7 +269,7 @@ the main perl logging module in qto
 	# -----------------------------------------------------------------------------
 	# logs an warning message
 	# -----------------------------------------------------------------------------
-	sub doLogWarningMsg {
+	sub warn {
 
 		my $self = shift;
       my $msg  = q{} ; 
@@ -299,7 +299,7 @@ the main perl logging module in qto
 	# -----------------------------------------------------------------------------
 	# logs an info message
 	# -----------------------------------------------------------------------------
-	sub doLogInfoMsg {
+	sub info {
 
 		my $self = shift;
       my $msg  = q{} ; 
@@ -352,7 +352,7 @@ the main perl logging module in qto
 	# -----------------------------------------------------------------------------
 	# logs an Debug message
 	# -----------------------------------------------------------------------------
-	sub doLogDebugMsg { 
+	sub debug { 
 		my $self    = shift;
 		my $msg     = "@_";
 

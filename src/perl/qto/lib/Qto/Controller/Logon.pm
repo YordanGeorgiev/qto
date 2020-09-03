@@ -53,12 +53,12 @@ sub doLogonUser {
    my $objCnrPostPrms   = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
  
    $msg .= " attempt for $email ";
-   $objLogger->doLogInfoMsg ( $msg );
+   $objLogger->info ( $msg );
 
    unless ( $objCnrPostPrms->hasValidLogonParams(\$msg , $email , $pass , 'Logon') ) {
       $rv = 400 ; 
       $msg = "logon failed! " . $msg ; 
-      $objLogger->doLogErrorMsg ( $msg );
+      $objLogger->error ( $msg );
       $redirect_url = '/' . $pdb . '/logon' ; 
       $self->doRenderPageTemplate($rv, $msg ,$msg_color,$db,$redirect_url);
       return ;
@@ -77,7 +77,7 @@ sub doLogonUser {
                $self->session( 'app.' . $db . '.user' => $email);
                if ( !defined $ENV{'QTO_JWT_AUTH'} or $ENV{'QTO_JWT_AUTH'} != 1 ){
                   $msg = "$db login ok for $email via single native auth";
-                  $objLogger->doLogInfoMsg ( $msg );
+                  $objLogger->info ( $msg );
                   $self->redirect_to($redirect_url) ; 
                   return ;
                }
@@ -94,24 +94,24 @@ sub doLogonUser {
                   }
 
                   $msg = "$db login ok for $email via JWT based native auth";
-                  $objLogger->doLogInfoMsg ( $msg );
+                  $objLogger->info ( $msg );
                   $self->redirect_to( $redirect_url);
                   return;
                } else {
                   $rv = 500 ; 
                   $msg = "an error occurref in the token granting process for $email" ;
                   $msg .= "for the following user: " . $hsr->{$key}->{ 'user_id' } ;
-                  $objLogger->doLogErrorMsg ( $msg ) ; 
+                  $objLogger->error ( $msg ) ; 
                }
             } else {
                $rv = 401 ; 
                $msg = "wrong password for $email" ;
-               $objLogger->doLogErrorMsg ( $msg ) ; 
+               $objLogger->error ( $msg ) ; 
             }
          }
       } else {
          $rv = 401 ; 
-         $objLogger->doLogErrorMsg ( "logon failed for $email") ; 
+         $objLogger->error ( "logon failed for $email") ; 
       }
       $self->doRenderPageTemplate($rv, $msg ,$msg_color,$db,$redirect_url);
    }

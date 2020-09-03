@@ -95,10 +95,10 @@ sub doConvertHashRefToStr {
       .= $items_order_by_attribute
       . '" from the issues attributes list: "'
       . " \n @attributes \n" . '"';
-    $objLogger->doLogWarningMsg($msg);
+    $objLogger->warn($msg);
     $items_order_by_attribute = 'start_time';
     $msg = 'using the "start_time" as the default sorting attribute';
-    $objLogger->doLogWarningMsg($msg);
+    $objLogger->warn($msg);
   }
 
   my $operator = '<=>';

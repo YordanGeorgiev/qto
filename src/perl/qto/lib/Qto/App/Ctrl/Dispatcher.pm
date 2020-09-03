@@ -114,7 +114,7 @@ package Qto::App::Ctrl::Dispatcher ;
          $ret = 0 ; 
          $action = 'undefined action ' unless $action ; 
          $msg = "START RUN the $action action " ; 
-         $objLogger->doLogInfoMsg ( $msg ) ; 
+         $objLogger->info ( $msg ) ; 
            
          # run-some-action -> doRunSomeAction
          my $func = $action ; 
@@ -125,18 +125,18 @@ package Qto::App::Ctrl::Dispatcher ;
          # $func =~ s/(?<=[^\W\-])\-([^\W\-])|([^\W\-]+)|\-/\U$1\L$2/g ; #run-some-act -> runSomeAct
          # $func = "do" . "\u$func"  ; # runSomeAct -> doRunSomeAct
          no strict 'refs' ; 
-         # $objLogger->doLogInfoMsg ( "module_test_run: " . $module_test_run ) ; 
+         # $objLogger->info ( "module_test_run: " . $module_test_run ) ; 
          return $func if ( $module_test_run == 1 ) ; 
          ($ret , $msg ) = $self->$func ; 
 
          return ( $ret , $msg ) if $ret != 0 ; 
 
          $msg = "STOP  RUN the $action action " ; 
-         $objLogger->doLogInfoMsg ( $msg ) ; 
+         $objLogger->info ( $msg ) ; 
 
          if ( $@ ) {
             $msg = "unknown $action action !!!" ; 
-            $objLogger->doLogErrorMsg ( $msg ) ; 
+            $objLogger->error ( $msg ) ; 
             return ( $ret , $msg ) if $@ ; 
          }
       } 

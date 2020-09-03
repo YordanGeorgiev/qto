@@ -80,7 +80,7 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
    if ( $@ ) { 
       my $tmsg = "$@" ; 
       $msg = DBI->errstr ; 
-      $objLogger->doLogErrorMsg ( "$tmsg" ) ;
+      $objLogger->error ( "$tmsg" ) ;
    }
 
    $dbh->disconnect();
@@ -128,7 +128,7 @@ sub doNativeLoginAuth  {
    if ( $@ ) { 
       my $tmsg = "$@" ; 
       $msg = DBI->errstr ; 
-      $objLogger->doLogErrorMsg ( "$tmsg" ) ;
+      $objLogger->error ( "$tmsg" ) ;
    }
 
    $dbh->disconnect();
@@ -177,7 +177,7 @@ sub doCallFuncGetHashRef {
       };
       if ( $@ ) { 
          my $tmsg = "$@" ; 
-         $objLogger->doLogErrorMsg ( "$msg" ) ;
+         $objLogger->error ( "$msg" ) ;
          $msg = "failed to get data :: $tmsg" unless $ret == 404 ; 
          return ( $ret , $msg , "" ) ; 
       };
@@ -265,7 +265,7 @@ sub doCallFuncGetHashRef {
       };
       if ( $@ ) { 
          my $tmsg = "$@" ; 
-         $objLogger->doLogErrorMsg ( "$msg" ) ;
+         $objLogger->error ( "$msg" ) ;
          $msg = "failed to get data :: $tmsg" unless $ret == 404 ; 
          return ( $ret , $msg , "" ) ; 
       };
@@ -545,7 +545,7 @@ sub doCallFuncGetHashRef {
          $msg = " failed to get the project database: " . $db . " app_roles based access control list ! " ; 
          $msg .= $DBI::errstr ; 
          $ret = 1 ; 
-         $objLogger->doLogErrorMsg($msg);
+         $objLogger->error($msg);
          return ( $ret , $msg , undef ) ; 
       };
 
@@ -586,7 +586,7 @@ sub doCallFuncGetHashRef {
       if ( $@ ) {
          $rv               = 404 ; 
          $msg              = DBI->errstr ; 
-         $objLogger->doLogErrorMsg ( $msg ) ;
+         $objLogger->error ( $msg ) ;
          return ( $rv , $msg ) ; 
       }
 
@@ -641,7 +641,7 @@ sub doCallFuncGetHashRef {
          $msg = 'SELECT tables-list OK ' ; 
          $ret = 0 ; 
       } else {
-         $objLogger->doLogErrorMsg ( $msg ) ; 
+         $objLogger->error ( $msg ) ; 
       }
 
       return ( $ret , $msg , $hsr ) ; 	
@@ -689,7 +689,7 @@ sub doCallFuncGetHashRef {
          $msg = 'SELECT databases-list OK ' ; 
          $ret = 0 ; 
       } else {
-         $objLogger->doLogErrorMsg ( $msg ) ; 
+         $objLogger->error ( $msg ) ; 
       }
 
       $config->{ "databases-list"} = $hsr ;
@@ -760,13 +760,13 @@ sub doCallFuncGetHashRef {
       binmode(STDOUT, ':utf8');
 
       $msg = DBI->errstr ; 
-      $objLogger->doLogDebugMsg ( $msg ) ; 
+      $objLogger->debug ( $msg ) ; 
 
       unless ( defined ( $msg ) ) {
          $msg = 'SELECT OK for table: ' . "$table" ; 
          $ret = 0 ; 
       } else {
-         $objLogger->doLogErrorMsg ( $msg ) ; 
+         $objLogger->error ( $msg ) ; 
       }
 
       return ( $ret , $msg , $hsr ) ; 	
@@ -823,7 +823,7 @@ sub doCallFuncGetHashRef {
       if ( $@ or !scalar(%$mhsr2)) { 
          $msg = " failed to get the project database: " . $db . " foreign keys ! " ; 
          $msg .= $DBI::errstr ; 
-         $objLogger->doLogErrorMsg($msg);
+         $objLogger->error($msg);
          $ret = 1 ; 
          return ( $ret , $msg , undef ) ; 
       };
@@ -907,7 +907,7 @@ sub doCallFuncGetHashRef {
       if ( $@ or !scalar(%$mhsr2)) { 
          $msg = " failed to get the project database: " . $db . " meta data ! " ; 
          $msg .= $DBI::errstr ; 
-         $objLogger->doLogErrorMsg($msg);
+         $objLogger->error($msg);
          $ret = 1 ; 
          return ( $ret , $msg , undef ) ; 
       };
@@ -964,10 +964,10 @@ sub doCallFuncGetHashRef {
          $mhsr2 = $sth->fetchall_hashref( 'attnum' ) ; 
       };
       if ( $@ or !scalar(%$mhsr2)) { 
-         # $objLogger->doLogErrorMsg ( "$DBI::errstr" ) ;
+         # $objLogger->error ( "$DBI::errstr" ) ;
          $msg = "failed to get $table table meta data -  " ; 
          $msg .= "most probably the table does not exist " ; 
-         $objLogger->doLogErrorMsg($msg);
+         $objLogger->error($msg);
          $ret = 1 ; 
          return ( $ret , $msg , "" ) ; 
       };
@@ -1012,7 +1012,7 @@ sub doCallFuncGetHashRef {
          $ret = 0 ; $msg = "" ; 
       } else {
          $msg .= DBI->errstr ; 
-         $objLogger->doLogErrorMsg($msg);
+         $objLogger->error($msg);
       }
 
       return ( $ret , $msg , $dbh ) ; 
@@ -1152,11 +1152,11 @@ sub doCallFuncGetHashRef {
          die "$msg" unless $ret == 0 ; 
          $objModel->set('hsr2' , $hsr2 );
          $objModel->set($db . '.dat.' . $table , $hsr2 ); # wip: 181114145604
-         $objLogger->doLogErrorMsg($msg);
+         $objLogger->error($msg);
       };
       if ( $@ ) { 
          my $tmsg = "$@" ; 
-         $objLogger->doLogErrorMsg ( "$msg" ) ;
+         $objLogger->error ( "$msg" ) ;
          $msg = "failed to get $table table data :: $tmsg" unless $ret == 404 ; 
          return ( $ret , $msg , "" ) ; 
       };
@@ -1164,7 +1164,7 @@ sub doCallFuncGetHashRef {
       $dbh->disconnect();
          unless ( defined $hsr2 or keys %{$hsr2}) {
             $msg = ' no data for this search request !!! ' ;
-            $objLogger->doLogWarningMsg ( $msg ) ; 
+            $objLogger->warn ( $msg ) ; 
             $ret = 204 ;
          }
       binmode(STDOUT, ':utf8');
@@ -1277,19 +1277,19 @@ sub doCallFuncGetHashRef {
          unless ( keys %{$hsr2}) {
             $msg = ' no data for this search request !!! ' ;
             $msg = DBI->errstr ;
-            $objLogger->doLogErrorMsg($msg) if $msg ; 
+            $objLogger->error($msg) if $msg ; 
             $ret = 204 ;
             return ( $ret , $msg , {} ) ; 
          } else {
             $msg = DBI->errstr if $ret  == 400 ; 
-            $objLogger->doLogErrorMsg($msg) if $msg ; 
+            $objLogger->error($msg) if $msg ; 
             die "$msg" if $ret == 400 ;
             $ret = 200 ;
          }
       };
       if ( $@ ) { 
          my $tmsg = "$@" ; 
-         $objLogger->doLogErrorMsg ( "$msg" ) ;
+         $objLogger->error ( "$msg" ) ;
          $msg = "failed to get $table table data :: $tmsg" unless $ret == 404 ; 
          return ( $ret , $msg , {} ) ; 
       };
@@ -1414,19 +1414,19 @@ sub doCallFuncGetHashRef {
          unless ( keys %{$hsr2}) {
             $msg = ' no data for this search request !!! ' ;
             $msg = DBI->errstr ;
-            $objLogger->doLogErrorMsg($msg) if $msg ; 
+            $objLogger->error($msg) if $msg ; 
             $ret = 204 ;
             return ( $ret , $msg , {} ) ; 
          } else {
             $msg = DBI->errstr if $ret  == 400 ; 
-            $objLogger->doLogErrorMsg($msg) if $msg ; 
+            $objLogger->error($msg) if $msg ; 
             die "$msg" if $ret == 400 ;
             $ret = 200 ;
          }
       };
       if ( $@ ) { 
          my $tmsg = "$@" ; 
-         $objLogger->doLogErrorMsg ( "$msg" ) ;
+         $objLogger->error ( "$msg" ) ;
          $msg = "failed to get $table table data :: $tmsg" unless $ret == 404 ; 
          return ( $ret , $msg , {} ) ; 
       };
@@ -1546,19 +1546,19 @@ sub doCallFuncGetHashRef {
          unless ( keys %{$hsr2}) {
             $msg = ' no data for this search request !!! ' ;
             $msg = DBI->errstr ;
-            $objLogger->doLogErrorMsg($msg) if $msg ; 
+            $objLogger->error($msg) if $msg ; 
             $ret = 204 ;
             return ( $ret , $msg , {} ) ; 
          } else {
             $msg = DBI->errstr if $ret  == 400 ; 
-            $objLogger->doLogErrorMsg($msg) if $msg ; 
+            $objLogger->error($msg) if $msg ; 
             die "$msg" if $ret == 400 ;
             $ret = 200 ;
          }
       };
       if ( $@ ) { 
          my $tmsg = "$@" ; 
-         $objLogger->doLogErrorMsg ( "$msg" ) ;
+         $objLogger->error ( "$msg" ) ;
          $msg = "failed to get $table table data :: $tmsg" unless $ret == 404 ; 
          return ( $ret , $msg , {} ) ; 
       };
@@ -1720,7 +1720,7 @@ sub doCallFuncGetHashRef {
       if ( $@ ) {
          $rv               = 404 ; 
          $msg              = DBI->errstr ; 
-         $objLogger->doLogErrorMsg ( $msg ) ;
+         $objLogger->error ( $msg ) ;
          return ( $rv , $msg ) ; 
       }
 

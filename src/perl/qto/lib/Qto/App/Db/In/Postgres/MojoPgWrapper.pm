@@ -52,7 +52,7 @@ package Qto::App::Db::In::Postgres::MojoPgWrapper ;
 		my $postgres_db_user 	= $ENV{ 'postgres_db_user' } || $dbConfig->{'postgres_db_user'} || 'usrqtoapp' ; 
 		my $postgres_db_user_pw = $ENV{ 'postgres_db_user_pw' } || $dbConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
       my $conn_str            = 'postgresql://' . $postgres_db_user . ':' . $postgres_db_user_pw .  '@' . $postgres_db_host . ':' . $postgres_db_port . '/' . $db . '?sslmode=disable'; 
-      #debug $objLogger->doLogDebugMsg ( "conn_str: $conn_str " ) ; 
+      #debug $objLogger->debug ( "conn_str: $conn_str " ) ; 
       $self = 'Mojo::Pg'->new($conn_str);
       return $self ; 
    }

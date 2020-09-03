@@ -57,8 +57,8 @@ package Qto::App::IO::Out::WtrGitHubMd ;
       $objWtrDirs->doMkDir ( "$md_dir" ) ; 
       my $md_file         = "$md_dir/$md_file_name" . '.md'; 
 
-      $msg = 'START writing the md file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
-      $msg = $md_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
+      $msg = 'START writing the md file: ' ; $objLogger->info ( $msg ) ; 
+      $msg = $md_file ; $objLogger->info ( $msg ) ; 
  
       my $nxt_col_id = 1 ; 
       my $col_id = 0 ; 
@@ -131,8 +131,8 @@ package Qto::App::IO::Out::WtrGitHubMd ;
       #eof foreach row 
 
       binmode STDOUT;
-      $msg = 'STOP writing the md file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
-      $msg = $md_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
+      $msg = 'STOP writing the md file: ' ; $objLogger->info ( $msg ) ; 
+      $msg = $md_file ; $objLogger->info ( $msg ) ; 
   
       my $objWtrFiles   = 'Qto::App::IO::Out::WtrFiles'->new ( \$config ) ; 
       ( $ret , $msg ) = $objWtrFiles->doPrintToFile ( $md_file , $str_response, 'utf8' ) ; 

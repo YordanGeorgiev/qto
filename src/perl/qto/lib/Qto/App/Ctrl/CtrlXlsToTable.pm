@@ -60,7 +60,7 @@ package Qto::App::Ctrl::CtrlXlsToTable ;
       my $xls_file            = '' ; 
     
       $msg = "using the following \@tables: " . join (",", @tables) . "\n" ; 
-      $objLogger->doLogInfoMsg ( $msg ) ; 
+      $objLogger->info ( $msg ) ; 
 
       # if the xls_file is not defined take the latest one from the mix data dir
       if ( $objModel->get( 'io.xls-file' ) eq 'undefined' ) {
@@ -96,7 +96,7 @@ package Qto::App::Ctrl::CtrlXlsToTable ;
       elsif ( $load_model eq 'nested-set' ) {
          foreach my $table ( keys %$hsr3 ) { 
             $msg = "START hierarchy conversion for table: $table " ; 
-            $objLogger->doLogInfoMsg ( $msg ) ; 
+            $objLogger->info ( $msg ) ; 
             my $hsr2 = $hsr3->{ "$table" } ; 
             my $objCnrXlsHsr3ToDbHsr3 = 
                   'Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$config , $rdbms_type ) ; 

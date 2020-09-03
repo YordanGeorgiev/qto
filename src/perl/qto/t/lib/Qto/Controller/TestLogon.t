@@ -58,7 +58,7 @@ use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
    $emsg = 'logon failed!  empty password !';
    $tm = "the $emsg msg is returned when the pass is empty" ;
    $tx = $t->ua->post( $url => 'form'  => {$email_input_name =>'test.anonymous.user@gmail.com', 'pass' => ''});
-   p $tx->result->dom->all_text ; 
+   # debug p $tx->result->dom->all_text ; 
    ok ( $tx->result->dom->all_text =~ "$emsg" , $tm );
    printf "\n";
  
@@ -113,7 +113,7 @@ use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
    my $dom = {} ;                                # the mojo dom parser 
 
    $dom = Mojo::DOM->new($tx->result->dom->all_text) ; 
-   # p $tx->result->dom->all_text;
+   # debug p $tx->result->dom->all_text;
    my $GitShortHash = $config->{'env'}->{'run'}->{ 'GitShortHash' } ; 
    my $ProductVersion = $config->{'env'}->{'run'}->{'VERSION'} ;
    $tm = "logon product version of this product instance: $ProductVersion " ; 
@@ -129,7 +129,7 @@ use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
    $url = '/' . $db . '/logon' ;
    ok ( $t->get_ok($url)->status_is(200) , $tm ) ;
    $tx = $t->ua->get( $url); 
-   #p $tx->result->dom->to_string ; print "eof result->dom->to_string in TestLogin.t \n";
+   #debug p $tx->result->dom->to_string ; print "eof result->dom->to_string in TestLogin.t \n";
    ok ( $tx->result->dom->to_string =~ "<title>$pdb login </title>" , $tm );
 
    sub toPlainName {
@@ -152,7 +152,7 @@ use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
    $t->get_ok( $url )->status_is(403 , $tm ) ; 
    my $ua  = $t->ua ; 
    my $res = $ua->get($url )->result->json ; 
-   #p $res ; print "eof res TestLogon.t todo:ysg \n";
+   #debug p $res ; print "eof res TestLogon.t todo:ysg \n";
    ok ( $res->{'ret'} == 403 , $tm);
    $tm = "the ANONYMOUS role SHOULD NOT not have the permission to select the app_roles item!";
    ok ( $res->{'msg'} eq "the ANONYMOUS role does not have the permission to select the app_roles item!", $tm);

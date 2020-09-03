@@ -29,7 +29,7 @@ my $LogFile				= $objLogger->get('LogFile') ;
 my $LogDir           =  $config->{'env'}->{'log'}->{'LogDir'} ; 
 ok ( defined ( $LogDir) , "test-02 test that the LogDir is defined "  ); 
 
-$objLogger->doLogInfoMsg ( "START TestLogger");
+$objLogger->info ( "START TestLogger");
 
 ok ( (-f $LogFile) ,       "test-03 test that the LogFile exists "  ); 
 

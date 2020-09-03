@@ -135,7 +135,7 @@ sub do_init {
 
    $objLogger = 'Qto::App::Utils::Logger'->new(\$config);
    my $m = "START MAIN";
-   $objLogger->doLogInfoMsg($m);
+   $objLogger->info($m);
 
    $objModel               = 'Qto::App::Mdl::Model'->new ( \$config , $db , 'xls') ; 
    my $objRdrCmdArgs 	   = 'Qto::App::IO::In::RdrCmdArgs'->new(\$config , \$objModel ) ; 
@@ -158,15 +158,15 @@ sub doExit {
   my $exit_msg = shift || 'exit qto.pl';
 
   if ($exit_code == 0) {
-    $objLogger->doLogInfoMsg($exit_msg);
+    $objLogger->info($exit_msg);
   }
   else {
-    $objLogger->doLogErrorMsg($exit_msg);
+    $objLogger->error($exit_msg);
     $objLogger->doLogFatalMsg($exit_msg);
   }
 
   my $msg = "STOP MAIN";
-  $objLogger->doLogInfoMsg($msg);
+  $objLogger->info($msg);
   $msg = "19d94b2c-096c-4bf9-b6ba-780c3f90bf70";
   $objLogger->doRunLogMsg($msg);
   exit($exit_code);

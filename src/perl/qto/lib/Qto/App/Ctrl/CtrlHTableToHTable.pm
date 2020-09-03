@@ -61,7 +61,7 @@ package Qto::App::Ctrl::CtrlHTableToHTable ;
       my $xls_file            = '' ; 
      
       $msg = "using the following \@tables: " . join (",", @tables) . "\n" ; 
-      $objLogger->doLogInfoMsg ( $msg ) ; 
+      $objLogger->info ( $msg ) ; 
 
       my $objWtrDbsFcry = 'Qto::App::Db::Out::WtrDbsFcry'->new( \$config  , \$objModel , \$self , $rdbms_type ) ; 
       my $objWtrDb 		   = $objWtrDbsFcry->doSpawn ( "$rdbms_type" , \@tables );
@@ -69,7 +69,7 @@ package Qto::App::Ctrl::CtrlHTableToHTable ;
       my $table = $tables[0] ; # one table for now ... 
       my $item = $tables[0] ; # one table for now ... 
       $msg = "START hierarchy conversion for table: $table " ; 
-      $objLogger->doLogInfoMsg ( $msg ) ; 
+      $objLogger->info ( $msg ) ; 
 
       my $db            = $ENV{'postgres_db_name'} ; 
       my $objModel      = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 

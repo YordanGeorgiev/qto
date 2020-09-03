@@ -52,7 +52,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objRdrDb            = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
       # p @$json_arr; 
-      # print "json_arr \n";
+      # rint "json_arr \n";
 
       my $vals = '';
       foreach my $el ( @$json_arr ) {
@@ -82,7 +82,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          $msg = '' ; 
          $ret = 0 ; 
       } else {
-         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $objLogger->error ( $DBI::errstr ) ; 
          $msg = "$DBI::errstr" ; 
          if ( $msg =~ m/some strange/ ){
             $ret = 409 ; 
@@ -131,7 +131,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          $msg = '' ; 
          $ret = 0 ; 
       } else {
-         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $objLogger->error ( $DBI::errstr ) ; 
          $msg = "$DBI::errstr" ; 
          if ( $msg =~ m/some strange/ ){
             $ret = 409 ; 
@@ -176,7 +176,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       " ; 
       eval {
          $sth = $dbh->prepare($str_sql);  
-         print "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
+         #rint "start WtrPostgresDb.pm : \n $str_sql \n stop WtrPostgresDb.pm" ; 
 
          $sth->execute() or print STDERR "$DBI::errstr" ; 
       } or $ret = 500 ; # Internal Server error
@@ -187,7 +187,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          $msg = 'DELETE OK ' ; 
          $ret = 0 ; 
       } else {
-         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $objLogger->error ( $DBI::errstr ) ; 
          $msg = "$DBI::errstr" ; 
          if ( $msg =~ m/some strange/ ){
             $ret = 409 ; 
@@ -278,7 +278,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          $msg = '' ; 
          $ret = 200 ;
       } else {
-         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $objLogger->error ( $DBI::errstr ) ; 
          $msg = "$DBI::errstr" ; 
       }
 			
@@ -398,7 +398,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
                END CASE;
          " . '
          END ; $$ ';
-         print "$str_sql"; 
+         # rint "$str_sql"; 
          
          $sth = $dbh->prepare($str_sql);  
          $sth->execute() ;
@@ -410,7 +410,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          $msg = '' ; 
          $ret = 200 ;
       } else {
-         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $objLogger->error ( $DBI::errstr ) ; 
          $msg = "$DBI::errstr" ; 
       }
 			
@@ -476,7 +476,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          $ret = 0 ; 
          return ( $ret , $msg ) ; 
       } else {
-         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $objLogger->error ( $DBI::errstr ) ; 
          $msg = "$DBI::errstr" ; 
          if ( $msg =~ m/duplicate key value violates unique constraint/ ){
             $ret = 409 ; 
@@ -542,7 +542,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          $ret = 0 ; 
          return ( $ret , $msg ) ; 
       } else {
-         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $objLogger->error ( $DBI::errstr ) ; 
          $msg = "$DBI::errstr" ; 
          if ( $msg =~ m/duplicate key value violates unique constraint/ ){
             $ret = 409 ; 
@@ -618,7 +618,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          $msg = 'UPDATE OK ' ; 
          $ret = 0 ; 
       } else {
-         $objLogger->doLogErrorMsg ( $DBI::errstr ) ; 
+         $objLogger->error ( $DBI::errstr ) ; 
          $msg = "$DBI::errstr" ; 
          $ret = 1 ; 
       }
@@ -745,7 +745,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       #p ( $hsr2 ) ; 
       
       my $debug_msg        = 'START doInsertSqlHashData' ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      $objLogger->debug ( $debug_msg ) ; 
  
 		foreach my $key ( sort(keys( %{$hsr2} ) ) ) {
          my $row_hash = $hsr2->{ $key } ; 
@@ -780,7 +780,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
       # proper authentication implementation src:
       # http://stackoverflow.com/a/19980156/65706
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      $objLogger->debug ( $debug_msg ) ; 
      
       ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
       
@@ -791,13 +791,13 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          $msg = 'INSERT OK' ; 
          $ret = 0 ; 
       } else {
-         $objLogger->doLogErrorMsg ( $msg ) ; 
+         $objLogger->error ( $msg ) ; 
       }
 
       # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
 
       $debug_msg        = 'doInsertSqlHashData ret ' . $ret ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      $objLogger->debug ( $debug_msg ) ; 
       
       return ( $ret , $msg ) ; 	
 	}
@@ -827,7 +827,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       
       unless ( $sql_hash ) {
          $msg = 'no data in sql hash - probably an error' ; 
-         $objLogger->doLogErrorMsg ( $msg ) ; 
+         $objLogger->error ( $msg ) ; 
          return ( $ret , $msg ) ; 
       }
 
@@ -836,7 +836,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       binmode(STDERR, ':utf8');
 
       my $debug_msg        = 'START doInsertSqlHashData' ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      $objLogger->debug ( $debug_msg ) ; 
 	  
       my $do_trucate_tables = $ENV{ 'do_truncate_tables' } || 0 ; 
       if ( $do_trucate_tables == 1 ) { 
@@ -904,7 +904,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       # http://stackoverflow.com/a/19980156/65706
       $debug_msg .= "\n postgres_db_name: $db \n postgres_db_host: $postgres_db_host " ; 
       $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) if $module_trace == 1 ; 
+      $objLogger->debug ( $debug_msg ) if $module_trace == 1 ; 
 
 
       eval {
@@ -913,11 +913,11 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
       if ( $ret == 2 ) {
          $msg = DBI->errstr || 'null dbi-errstr' ;
-         $objLogger->doLogErrorMsg ( $msg ) ;
+         $objLogger->error ( $msg ) ;
          return ( $ret , $msg ) ;
       } else {
          $msg = 'OK for connect ' ;
-         $objLogger->doLogDebugMsg ( $msg ) ;
+         $objLogger->debug ( $msg ) ;
       }
 
       p ( $str_sql_insert ) if $module_trace == 1 ; 
@@ -935,7 +935,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 		}
 		else {
 			$msg = "OK for insert " ;
-			$objLogger->doLogInfoMsg ( $msg ) ;
+			$objLogger->info ( $msg ) ;
 			$ret = 0 ;
 		}
 
@@ -944,7 +944,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
       # src: http://search.cpan.org/~rudy/DBD-Pg/Pg.pm  , METHODS COMMON TO ALL HANDLES
       $debug_msg        = 'STOP  doInsertSqlHashData ret ' . $ret ; 
-      $objLogger->doLogDebugMsg ( $debug_msg ) ; 
+      $objLogger->debug ( $debug_msg ) ; 
       
       return ( $ret , $msg ) ; 	
 	}
@@ -987,7 +987,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objRdrDbsFcry = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel , $self ) ; 
       my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
 
-      $objLogger->doLogDebugMsg ( "start upsert for : db: $db table $table" );
+      $objLogger->debug ( "start upsert for : db: $db table $table" );
 
       ( $ret , $msg , $hs_headers ) = $objRdrDb->doSelectTablesColumnList ( $table ) ; 
       return  ( $ret , $msg , undef ) unless $ret == 0 ; 
@@ -1103,7 +1103,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       if ( $do_trucate_tables == 1 ) { 
          $sql_str = "TRUNCATE TABLE $table ; $sql_str " ; 
       }
-      # debug $objLogger->doLogDebugMsg ( "sql_str : $sql_str " ) ; 
+      # debug $objLogger->debug ( "sql_str : $sql_str " ) ; 
 
       $msg = " DBI upsert error on table: $table: " . $msg  ; $ret = 1 ; 
       eval { 
@@ -1124,7 +1124,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
          if ( $actual_amount_of_inserted_rows == $expected_amount_of_inserted_rows - 1) { 
             $msg = "upsert OK for table $table" ;          
-            $objLogger->doLogInfoMsg ( $msg ) ; 
+            $objLogger->info ( $msg ) ; 
             $ret = 0 ; 
          }
          return ( $ret , $msg ) unless $ret == 0 ; 
@@ -1169,7 +1169,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       foreach my $table ( keys %$hsr3 ) { 
 
          my $hs_table = $hsr3->{ $table } ; 
-         print "hs_table $hs_table \n" ;
+         # rint "hs_table $hs_table \n" ;
          ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
          return ( $ret , $msg ) unless $ret == 0 ;       
 
@@ -1214,7 +1214,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
             $sql_str = "TRUNCATE TABLE $table ; $sql_str " ; 
          }
          
-         p $sql_str ; 
+         #p $sql_str ; 
 
          # Action !!! 
          $msg = " DBI upsert error on table: $table: " . $msg  ; $ret = 1 ; 
@@ -1226,7 +1226,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
          if ( $rv == 1 ) { 
             $msg = "upsert OK for table $table" ;          
-            $objLogger->doLogInfoMsg ( $msg ) ; 
+            $objLogger->info ( $msg ) ; 
             $ret = 0 ; 
          }
 
@@ -1277,7 +1277,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       # obs this does not support ordered primary key tables first order yet !!!
       foreach my $table ( keys %$hsr3 ) { 
 
-         $objLogger->doLogDebugMsg ( "doUpsertTables table: $table" );
+         $objLogger->debug ( "doUpsertTables table: $table" );
          # load ONLY the tables defined to load
          next unless grep( /^$table$/, @tables )  ; 
 
@@ -1388,7 +1388,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
          if ( $do_trucate_tables == 1 ) { 
             $sql_str = "TRUNCATE TABLE $table ; $sql_str " ; 
          }
-         $objLogger->doLogDebugMsg ( "sql_str : $sql_str " ) ; 
+         $objLogger->debug ( "sql_str : $sql_str " ) ; 
 
          # Action !!! 
          $msg = " DBI upsert error on table: $table: " . $msg  ; $ret = 1 ; 
@@ -1400,7 +1400,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
          if ( $rv == 1 ) { 
             $msg = "upsert OK for table $table" ;          
-            $objLogger->doLogInfoMsg ( $msg ) ; 
+            $objLogger->info ( $msg ) ; 
             $ret = 0 ; 
          }
 

@@ -64,7 +64,7 @@ set hlsearch
 
 " yank those cheat commands, in normal mode type q: than p to paste in the opened cmdline
 " how-to search for a string recursively
-" :grep! "\<doLogErrorMsg\>" . -r
+" :grep! "\<error\>" . -r
 "
 " how-to search recursively , omit log and git files
 " :vimgrep /srch/ `find . -type f \| grep -v .git \| grep -v .log`

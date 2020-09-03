@@ -119,7 +119,7 @@ sub doLoadAppConfig {
    $self->renderer->cache->max_keys(0);
 
    $msg = "START MAIN";
-   $objLogger->doLogInfoMsg($msg);
+   $objLogger->info($msg);
 }
 
 
@@ -158,7 +158,7 @@ sub doReloadProjectsDbMeta {
    $msg  = "the meta-data load to Redis for the CONFIGURED project_databases: \"$proj_dbs_str\" took ";
    $msg .= sprintf("%.3f seconds\n", $stop_time - $start_time); # takes about 0.065s on a dev-box for one db ~ 300kB
    chomp($msg);
-   $objLogger->doLogInfoMsg($msg);
+   $objLogger->info($msg);
    $self->config($config);
 }
 
@@ -278,7 +278,7 @@ sub doSetHooks {
             my $msg = " the project db you requested : $db does not exist !!!" ;
             my $backend_error_url  = '/' . toPlainName($redirect_db) . '/serve/forbidden?&msg=' . url_encode($msg);
             $msg .= ' unauthorized attempt to access ' . $route . ' backend route ';
-            $objLogger->doLogErrorMsg($msg);
+            $objLogger->error($msg);
             $c->redirect_to($backend_error_url);
             return;
          }
@@ -303,7 +303,7 @@ sub doSetHooks {
 
             unless ( $objGuardian->isAuthenticated($c->app->config, $db, $c, \$msg)){
                my $login_url = '/' . toPlainName($db) . '/logon' ;
-               $objLogger->doLogErrorMsg($msg);
+               $objLogger->error($msg);
                $c->redirect_to($login_url);
                return ;
             }
@@ -315,12 +315,12 @@ sub doSetHooks {
                   if ( $r->{'is_backend'} == 1) {
                      my $backend_error_url  = '/' . toPlainName($db) . '/serve/forbidden?&msg=' . url_encode($msg);
                      $msg .= ' unauthorized attempt to access ' . $route . ' backend route ';
-                     $objLogger->doLogErrorMsg($msg);
+                     $objLogger->error($msg);
                      $c->redirect_to($backend_error_url);
                      return;
                   } else {
                      $msg .= ' unauthorized attempt to access ' . $route . ' ui route ';
-                     $objLogger->doLogErrorMsg($msg);
+                     $objLogger->error($msg);
                      my $home_url = '/' . toPlainName($db) . '/search' ;
                      $c->redirect_to($home_url);
                      return ;

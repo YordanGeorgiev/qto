@@ -57,8 +57,8 @@ package Qto::App::IO::Out::WtrXls ;
          $xls_file         .= '/src/perl/qto/public/dat/tmp/xls/' . $xls_file_name . '.xlsx' ;
       }
 
-      $msg = 'START writing the xls file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
-      $msg = $xls_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
+      $msg = 'START writing the xls file: ' ; $objLogger->info ( $msg ) ; 
+      $msg = $xls_file ; $objLogger->info ( $msg ) ; 
  
       my $objWorkbook      = 'Excel::Writer::XLSX'->new( $xls_file );
       my $sheet_name       = $table ; 
@@ -121,8 +121,8 @@ package Qto::App::IO::Out::WtrXls ;
       # The Excel file in now in $str. Remember to binmode() the output
       #filehandle before printing it.
       binmode STDOUT;
-      $msg = 'STOP writing the xls file: ' ; $objLogger->doLogInfoMsg ( $msg ) ; 
-      $msg = $xls_file ; $objLogger->doLogInfoMsg ( $msg ) ; 
+      $msg = 'STOP writing the xls file: ' ; $objLogger->info ( $msg ) ; 
+      $msg = $xls_file ; $objLogger->info ( $msg ) ; 
       
       return ( 0 , '' , $xls_file ) if -f $xls_file ; 
       return (1 , $msg , undef ) unless -f $xls_file ; 

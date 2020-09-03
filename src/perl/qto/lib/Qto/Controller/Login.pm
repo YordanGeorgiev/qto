@@ -86,13 +86,13 @@ sub doLoginUser {
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , 'login') ;
    $objModel->set('postgres_db_name' , $db ) ; 
-   $objLogger->doLogInfoMsg ( "login attempt for " . $self->setEmptyIfNull($email)) ; 
+   $objLogger->info ( "login attempt for " . $self->setEmptyIfNull($email)) ; 
 
    my $objCnrPostPrms   = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );
    ($ret, $msg) = $objCnrPostPrms->doValidateLoginParams('Login' , $email , $pass );
 
    if ( $ret != 0 ) {
-      $objLogger->doLogInfoMsg ( 'login failed for "' . $self->setEmptyIfNull($email) . '"') ; 
+      $objLogger->info ( 'login failed for "' . $self->setEmptyIfNull($email) . '"') ; 
       $msg = 'login failed! ' . $msg ;
       $redirect_url = '/' . $pdb . '/login' ; 
       $self->doRenderPageTemplate($ret, $msg ,$msg_color,$db,$redirect_url);
@@ -111,7 +111,7 @@ sub doLoginUser {
            $http_code = 401 ; 
            $msg = "wrong password for $email" ;
          } else {
-           $objLogger->doLogInfoMsg ( "login ok for $email") ; 
+           $objLogger->info ( "login ok for $email") ; 
            $self->session( 'app.' . $db . '.user' => $email);
            if (defined $self->session( 'app.' . $db . '.url' )) {
                $redirect_url = $self->session( 'app.' . $db . '.url' );
@@ -123,7 +123,7 @@ sub doLoginUser {
       }
    } else {
       $http_code = 401 ; 
-      $objLogger->doLogErrorMsg ( "login failed for $email") ; 
+      $objLogger->error ( "login failed for $email") ; 
    }
    $self->doRenderPageTemplate($http_code,$msg,$msg_color,$db,$redirect_url);
 }

@@ -33,7 +33,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    use Qto::App::Utils::Timer ; 
    my $objTimer = 'Qto::App::Utils::Timer'->new;
    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
-   my @tables_to_check = ("monthly_issues_$year$mon" , "yearly_issues_$year" );
+   my @tables_to_check = ("issues_$year$mon" , "yearly_issues_$year" );
 
 # foreach table in the app db in test call db/select/table
 for my $row ( @$list ) {
@@ -78,7 +78,7 @@ for my $row ( @$list ) {
    $tm = 'the return code for the ' . $table_name . ' is correct' ; 
    ok ( $res->{'ret'} == 400 , $tm) ; 
    
-   $res = $ua->get('/non_existent_db/select/monthly_issues'  )->result->json ; 
+   $res = $ua->get('/non_existent_db/select/issues'  )->result->json ; 
    $tm = 'shoud return error for cannot connect to db' ; 
    my $exp_err_msg = "cannot connect to the \"" . $env . "_non_existent_db\" database: FATAL:  database \"" . 
                               $env . "_non_existent_db\" does not exist";
@@ -98,7 +98,7 @@ for my $row ( @$list ) {
    $t->get_ok( $url )->status_is(400 , $tm ) ; 
 
    $tm = 'if there is no data http code 200 should be returned, but 204 ret to UI should be passed' ; 
-   $url = '/' . $db . '/select/monthly_issues?with=prio-eq-1000000' ; 
+   $url = '/' . $db . "/select/issues_$year$mon?with=prio-eq-1000000";
    $t->get_ok( $url )->status_is(200 , $tm ) ; 
    $res = $ua->get($url )->result->json ; 
    ok ( $res->{'ret'} == 204 , $tm);

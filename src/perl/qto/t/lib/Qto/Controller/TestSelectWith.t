@@ -22,7 +22,7 @@ use Qto::App::Utils::Timer ;
 my $objTimer = 'Qto::App::Utils::Timer'->new;
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
 my $prev_year_month = "$year" . "$mon" - 1;
-my @tables_to_check = ("monthly_issues_$year$mon" , "monthly_issues_" . "$prev_year_month" );
+my @tables_to_check = ("issues_$year$mon" , "issues_" . "$prev_year_month" );
 
 # foreach table in the app db in test call db/select/table
 for my $row ( @$tables ) {

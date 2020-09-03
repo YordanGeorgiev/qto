@@ -998,7 +998,7 @@ src/perl/qto/public/poc/file-upload/03/index.html
 src/perl/qto/public/poc/file-upload/04/index.html
 src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrDbName.t
 src/perl/qto/t/lib/Qto/App/IO/In/TestRdrDirs.t
-src/perl/qto/t/lib/Qto/Controller/TestMySelect.t
+src/perl/qto/t/lib/Qto/Controller/TestSelectMy.tmp
 src/sql/pgsql/qto/tables/28.create-table-imgs.sql
 src/sql/pgsql/qto/tables/28.create-table-wow_doc.sql
 src/sql/pgsql/scripts/03.create-func.func_get_all_users_roles.sql

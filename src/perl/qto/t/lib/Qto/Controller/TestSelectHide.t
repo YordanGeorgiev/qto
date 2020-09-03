@@ -20,7 +20,7 @@ my $db       = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ;
 use Qto::App::Utils::Timer ; 
 my $objTimer = 'Qto::App::Utils::Timer'->new;
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 
-my @tables  = ("monthly_issues_$year$mon" , "yearly_issues_$year" );
+my @tables = ( "issues_$year$mon" , "yearly_issues_$year" );
 my $ua            = $t->ua ; 
 my $res           = {} ; #a tmp result json string
 my $tm            = '' ; 

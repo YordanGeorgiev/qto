@@ -6,235 +6,235 @@
 cnf/bin/python/requirements.txt
 src/bash/qto/funcs/set-up-py-v-env.func.sh
 src/python/tpl_gen.py
-src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
-src/perl/qto/t/lib/Qto/Controller/TestHiCRUD-create-parents.t
-src/perl/qto/t/lib/Qto/Controller/TestHiCRUD-create-siblings.t
-src/perl/qto/t/lib/Qto/Controller/TestHiDelete.t
-src/perl/qto/lib/Qto/Controller/HiCreate.pm
-src/perl/qto/lib/Qto/Controller/Create.pm
-src/perl/qto/lib/Qto/Controller/MultiCreate.pm
-# start puppeteer
-src/js/node/pp-ui-tests/
-src/js/node/pp-ui-tests/index.html
-src/js/node/pp-ui-tests/test/test-open-login.spec
-src/js/node/pp-ui-tests/test/test-view_doc.spec.js
-src/js/node/pp-ui-tests/test/test-login
-src/js/node/pp-ui-tests/package.json
-#  stop puppeteer start vue-date-time-picker
-src/perl/qto/public/poc/vue-ctk-date-time-picker/02/index.html
-src/perl/qto/public/poc/vue-ctk-date-time-picker/01/index.html
-src/perl/qto/public/poc/vue-select
-src/perl/qto/public/poc/vue-select/01/index.html
-src/perl/qto/public/poc/vue-select/02/index.html
-src/perl/qto/public/poc/vue-date-time-picker
-src/perl/qto/public/poc/vue-date-time-picker/01/index.html
-src/perl/qto/public/poc/vue-date-time-picker/02/index.html
-src/perl/qto/public/poc/vue-date-time-picker/03/index.html
-# stop  vue-date-time-picker
-src/bash/qto/funcs/search-and-replace-tokens.func.sh
-src/perl/qto/templates/exception.production.html.ep
-src/bash/qto/scripts/web-to-db-upsert.sh
-src/perl/qto/lib/Qto/Controller/Logon.pm
-src/perl/qto/lib/Qto/Controller/Login.pm
-src/perl/qto/public/themes/thme-blue/css/screen/site/login.css
-src/perl/qto/templates/pages/login/login.html.ep
-src/perl/qto/templates/pages/logon/logon.html.ep
-src/perl/qto/t/lib/Qto/Controller/TestLogin.t
-src/perl/qto/t/lib/Qto/Controller/TestLogon.t
-src/perl/qto/templates/pages/login
-# start roles based access 
-src/sql/pgsql/scripts/admin/populate-app_items.sql
-src/perl/qto/lib/Qto/App/Sec/Guardian.pm
-src/perl/qto/t/lib/Qto/App/Sec/TestGuardian.t
-src/perl/qto/lib/Qto/Auth/User.pm
-src/perl/qto/lib/Qto/Auth/Role.pm
-# stop  roles based access
-# start file upload 
-src/perl/qto/lib/Qto/Controller/Upload.pm
-src/perl/qto/public/poc/modal-dialog/modal-04/index.html
-src/perl/qto/public/poc/file-upload/01/index.html
-src/perl/qto/public/poc/file-upload/02/index.html
-src/perl/qto/templates/controls/list-grid/xt/modal-dia.xt.html.ep
-src/perl/qto/public/lib/js/controls/vue-simple-upload.min.js
-# stop file upload 
-# start redis
-src/perl/qto/lib/Qto/Controller/BaseController.pm
-src/perl/qto/lib/Qto/Controller/Select.pm
-src/perl/qto/lib/Qto/Controller/SelectCol.pm
-src/perl/qto/lib/Qto/Controller/SelectMy.pm
-src/perl/qto/lib/Qto/Controller/Serve.pm
-src/perl/qto/lib/Qto/Controller/List.pm
-src/perl/qto/lib/Qto/Controller/ListMy.pm
-src/perl/qto/lib/Qto/Controller/MetaDataController.pm
-src/perl/qto/lib/Qto/App/Mdl/Model.pm
-src/perl/qto/t/lib/Qto/App/InOut/TestRedis.t
-src/perl/qto/lib/Qto/App/Db/Out/WtrRedis.pm
-src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm
-#  stop redis
-# start vagrant
-cnf/tpl/vagrant/Vagrantfile
-src/bash/deploy-vagrant-vm.sh
-#  stop vagrant
-doc/docx/concepts.docx
-doc/docx/devops.guide.docx
-doc/docx/enduser.guide.docx
-doc/docx/requirements.docx
-doc/docx/userstories.docx
-doc/img/system_guide/what-is-system.jpg
-src/perl/qto/lib/auto/Qto/App/Db/In/RdrRedis/autosplit.ix
-src/perl/qto/lib/auto/Qto/Controller/MetaDataController/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/Db/Out/WtrRedis/autosplit.ix
-src/perl/qto/lib/auto/Qto/App/Sec/Guardian/autosplit.ix
-src/perl/qto/lib/auto/Qto/Controller/Logon/autosplit.ix
-# eof security
-src/tpl/psql-code-generator
-src/tpl/psql-code-generator/psql-code-generator.sh
-src/tpl/psql-code-generator/test-psql-code-generator.sh
-#
-src/python/generate-docx.py
-src/python/append-to-docx.py
-cnf/env
-# start ::: left-menu
-src/perl/qto/templates/controls/list-grid/js/left-menu.js.html.ep
-src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
-src/perl/qto/lib/Qto/Controller/View.pm
-src/perl/qto/templates/controls/left-menu
-src/perl/qto/templates/controls/left-menu/left-menu.html.ep
-src/perl/qto/public/themes/thme-blue/css/screen/controls/left-menu.css
-src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
-src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm
-src/perl/qto/lib/Qto/App/UI/WtrUIFactory.pm
-src/perl/qto/public/poc/css-tree/03
-src/perl/qto/public/poc/css-tree/03/index.html
-src/perl/qto/public/poc/css-tree
-src/perl/qto/public/poc/css-tree/01
-src/perl/qto/public/poc/css-tree/01/index.html
-src/perl/qto/public/poc/css-tree/02
-src/perl/qto/public/poc/css-tree/02/index.html
-# stop  ::: left-menu
-# start ::: deployment
-cnf/redis/etc/systemd/system/redis.service
-src/bash/qto/deploy/single-ubuntu18.04/run.sh
-src/bash/qto/deploy/single-ubuntu18.04
-src/bash/qto/deploy/single-ubuntu18.04/check-install-chromium-headless.func.sh
-src/bash/qto/deploy/single-ubuntu18.04/check-install-perl-modules.func.sh
-src/bash/qto/deploy/single-ubuntu18.04/check-install-phantom-js.func.sh
-src/bash/qto/deploy/single-ubuntu18.04/check-install-postgres.func.sh
-src/bash/qto/deploy/single-ubuntu18.04/check-install-python-modules.func.sh
-src/bash/qto/deploy/single-ubuntu18.04/check-install-redis.func.sh
-src/bash/qto/deploy/single-ubuntu18.04/check-install-ubuntu-packages.func.sh
-src/bash/qto/deploy/single-ubuntu18.04/check-setup-bash.func.sh
-src/bash/qto/deploy/single-ubuntu18.04/provision-nginx.func.sh
-src/bash/qto/deploy/single-ubuntu18.04/provision-postgres.func.sh
-src/bash/qto/deploy/single-ubuntu18.04/provision-ssh-keys.func.sh
-src/bash/qto/deploy/single-ubuntu18.04/qto
-src/bash/qto/deploy/single-ubuntu18.04/qto/cnf
-src/bash/qto/deploy/single-ubuntu18.04/qto/cnf/bin
-src/bash/qto/deploy/single-ubuntu18.04/qto/cnf/bin/perl-modules.lst
-src/bash/qto/deploy/single-ubuntu18.04/qto/cnf/bin/python-modules.lst
-src/bash/qto/deploy/single-ubuntu18.04/qto/cnf/bin/ubuntu-18.04.lst
-src/bash/qto/deploy/single-ubuntu18.04/scramble-confs.func.sh
-src/bash/qto/deploy/single-ubuntu18.04/test-deployer-run.sh
-# stop  ::: deployment
-src/perl/qto/public/poc/vuex/sabe/
-src/perl/qto/public/poc/vuex/sabe/app.js
-src/perl/qto/public/poc/vuex/sabe/index.html
-src/perl/qto/public/poc/vuex/sabe/styles.css
-src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
-src/perl/qto/lib/Qto/Controller/HiDelete.pm
-src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
-src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
-src/bash/qto/funcs/set-up-db-roles.func.sh
-src/bash/qto/funcs/fix-db-permissions.func.sh
-src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
-src/bash/qto/funcs/publish-dbdump-to-s3-public.func.sh
-src/bash/qto/funcs/load-db-data-from-s3.func.sh
-src/bash/qto/qto.sh
-src/bash/qto/funcs/check-init-terraform.func.sh
-src/bash/qto/funcs/init-aws-instance.func.sh
-src/terraform
-src/bash/qto/funcs/scramble-confs.func.sh
-src/bash/qto/funcs/unscramble-confs.func.sh
-.vimrc
-doc/cheats/
-doc/cheats/git/git-cheat.sh
-doc/cheats/ssh/pkk.sh
-doc/cheats/os/
-doc/cheats/os/users-mngmnt.sh
-doc/cheats/qto-cheat-sheet.sh
-doc/cheats/qto-psql-cheat.sql
-src/bash/qto/test-qto.sh
-src/bash/qto/funcs/generate-md-docs.func.sh
-src/bash/qto/funcs/generate-pdf-docs.func.sh
-src/bash/qto/funcs/generate-msft-docs.func.sh
-src/docker/Dockerfile.deploy-qto.0.7.2
-src/docker/Dockerfile.deploy-qto-db-host.0.7.2
-src/docker/Dockerfile.deploy-qto-app-host.0.7.2
-src/bash/qto/funcs/build-docker-image.func.sh
-src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
-# start websockets
-src/perl/qto/public/index.html
-src/perl/qto/templates/controls/robust-websocket/js/robust-websocket.js.html.ep
-src/perl/qto/templates/controls/list-url-lists/js/list-url-lists.js.html.ep
-src/perl/qto/lib/Qto/Controller/Index.pm
-src/perl/qto/public/poc/web-socket/wsclient.js
-src/perl/qto/lib/Qto.pm
-src/perl/qto/lib/Qto/Controller/WsSelect.pm
-src/perl/qto/t/lib/Qto/Controller/TestWSSelect.t.todo
-src/perl/qto/public/poc/web-socket/web-socket.html
-src/perl/qto/public/poc/notes/index.html
-src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
-# stop  websockets
-# ---
-src/perl/qto/templates/pages/view-doc/js/right-click-menu.js.html.ep
-src/perl/qto/templates/pages/view-doc/view-doc.html.ep
-src/perl/qto/templates/pages/view-doc/js/view-doc-items-list.js.html.ep
-src/perl/qto/templates/pages/view-doc/js/snackbar.js.html.ep
-src/perl/qto/templates/pages/view-doc/js/vue_app.js.html.ep
-src/perl/qto/templates/pages/view-doc/js/inp-srch-box.js.html.ep
-src/perl/qto/templates/pages/view-doc/components/rgx-textarea.js.html.ep
-src/perl/qto/templates/pages/view-doc/components/rgx-input.js.html.ep
-src/perl/qto/templates/pages/view-doc/components/snackbar.html.ep
-src/perl/qto/templates/pages/view-doc/components/view-doc-items-list.xt.html.ep
-src/perl/qto/templates/pages/view-doc/components/right-click-menu.xt.html.ep
-src/perl/qto/templates/pages/view-doc/components/app-template.xt.html.ep
-doc/txt/qto/funcs/generate-md-docs.func.txt
-# -- start docker deployment
-src/bash/qto/funcs/remove-docker-images.func.sh
-src/bash/qto/funcs/remove-docker-containers.func.sh
-src/bash/qto/funcs/run-container.func.sh
-src/bash/qto/install/docker/install-test.sh
-src/bash/qto/install/docker/docker-entry-point.sh
-src/docker/Dockerfile.deploy-quick-test
-src/bash/qto/install/docker/install-postgres.sh
-src/bash/qto/install/docker/provision-os-users.sh
-src/bash/qto/install/docker/install-perl-modules.sh
-src/bash/qto/install/docker/
-src/bash/qto/funcs/admin/restart-postgres.func.sh
-src/bash/qto/funcs/full-clean-docker.func.sh
-src/bash/qto/tests/build-docker-image.test.sh
-src/sql/pgsql/scripts/admin/grant-permissions.sql
-src/bash/qto/funcs/admin/restart-postgres.func.sh
-cnf/postgres/etc/postgresql/12/main
-cnf/postgres/etc/postgresql/12/main/pg_hba.conf
-cnf/postgres/etc/postgresql/12/main/postgresql.conf
-# -- stop  docker deployment
-# start ::: provision https
-cnf/nginx/
-cnf/nginx/etc
-cnf/nginx/etc/nginx
-cnf/nginx/etc/nginx/nginx.conf
-src/bash/qto/funcs/provision-https.func.sh
-cnf/nginx/etc/nginx/sites-available/%env%.https-site.conf
-cnf/nginx/etc/nginx/sites-available/%env%.http-site.conf
-cnf/nginx/etc/nginx/sites-available/tst.localhost.cnf
-cnf/nginx/etc/nginx/sites-available/prd.localhost.cnf
-cnf/nginx/etc/nginx/sites-available/dev.localhost.cnf
-# stop  ::: provision https
-src/bash/qto/funcs/perl/run-benchmarks.func.sh
-src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.t
-src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.t
-src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.t
+   src/perl/qto/lib/Qto/App/Db/Out/Postgres/WtrPostgresDb.pm
+   src/perl/qto/t/lib/Qto/Controller/TestHiCRUD-create-parents.t
+   src/perl/qto/t/lib/Qto/Controller/TestHiCRUD-create-siblings.t
+   src/perl/qto/t/lib/Qto/Controller/TestHiDelete.t
+   src/perl/qto/lib/Qto/Controller/HiCreate.pm
+   src/perl/qto/lib/Qto/Controller/Create.pm
+   src/perl/qto/lib/Qto/Controller/MultiCreate.pm
+   # start puppeteer
+   src/js/node/pp-ui-tests/
+   src/js/node/pp-ui-tests/index.html
+   src/js/node/pp-ui-tests/test/test-open-login.spec
+   src/js/node/pp-ui-tests/test/test-view_doc.spec.js
+   src/js/node/pp-ui-tests/test/test-login
+   src/js/node/pp-ui-tests/package.json
+   #  stop puppeteer start vue-date-time-picker
+   src/perl/qto/public/poc/vue-ctk-date-time-picker/02/index.html
+   src/perl/qto/public/poc/vue-ctk-date-time-picker/01/index.html
+   src/perl/qto/public/poc/vue-select
+   src/perl/qto/public/poc/vue-select/01/index.html
+   src/perl/qto/public/poc/vue-select/02/index.html
+   src/perl/qto/public/poc/vue-date-time-picker
+   src/perl/qto/public/poc/vue-date-time-picker/01/index.html
+   src/perl/qto/public/poc/vue-date-time-picker/02/index.html
+   src/perl/qto/public/poc/vue-date-time-picker/03/index.html
+   # stop  vue-date-time-picker
+   src/bash/qto/funcs/search-and-replace-tokens.func.sh
+   src/perl/qto/templates/exception.production.html.ep
+   src/bash/qto/scripts/web-to-db-upsert.sh
+   src/perl/qto/lib/Qto/Controller/Logon.pm
+   src/perl/qto/lib/Qto/Controller/Login.pm
+   src/perl/qto/public/themes/thme-blue/css/screen/site/login.css
+   src/perl/qto/templates/pages/login/login.html.ep
+   src/perl/qto/templates/pages/logon/logon.html.ep
+   src/perl/qto/t/lib/Qto/Controller/TestLogin.t
+   src/perl/qto/t/lib/Qto/Controller/TestLogon.t
+   src/perl/qto/templates/pages/login
+   # start roles based access 
+   src/sql/pgsql/scripts/admin/populate-app_items.sql
+   src/perl/qto/lib/Qto/App/Sec/Guardian.pm
+   src/perl/qto/t/lib/Qto/App/Sec/TestGuardian.t
+   src/perl/qto/lib/Qto/Auth/User.pm
+   src/perl/qto/lib/Qto/Auth/Role.pm
+   # stop  roles based access
+   # start file upload 
+   src/perl/qto/lib/Qto/Controller/Upload.pm
+   src/perl/qto/public/poc/modal-dialog/modal-04/index.html
+   src/perl/qto/public/poc/file-upload/01/index.html
+   src/perl/qto/public/poc/file-upload/02/index.html
+   src/perl/qto/templates/controls/list-grid/xt/modal-dia.xt.html.ep
+   src/perl/qto/public/lib/js/controls/vue-simple-upload.min.js
+   # stop file upload 
+   # start redis
+   src/perl/qto/lib/Qto/Controller/BaseController.pm
+   src/perl/qto/lib/Qto/Controller/Select.pm
+   src/perl/qto/lib/Qto/Controller/SelectCol.pm
+   src/perl/qto/lib/Qto/Controller/SelectMy.pm
+   src/perl/qto/lib/Qto/Controller/Serve.pm
+   src/perl/qto/lib/Qto/Controller/List.pm
+   src/perl/qto/lib/Qto/Controller/ListMy.pm
+   src/perl/qto/lib/Qto/Controller/MetaDataController.pm
+   src/perl/qto/lib/Qto/App/Mdl/Model.pm
+   src/perl/qto/t/lib/Qto/App/InOut/TestRedis.t
+   src/perl/qto/lib/Qto/App/Db/Out/WtrRedis.pm
+   src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm
+   #  stop redis
+   # start vagrant
+   cnf/tpl/vagrant/Vagrantfile
+   src/bash/deploy-vagrant-vm.sh
+   #  stop vagrant
+   doc/docx/concepts.docx
+   doc/docx/devops.guide.docx
+   doc/docx/enduser.guide.docx
+   doc/docx/requirements.docx
+   doc/docx/userstories.docx
+   doc/img/system_guide/what-is-system.jpg
+   src/perl/qto/lib/auto/Qto/App/Db/In/RdrRedis/autosplit.ix
+   src/perl/qto/lib/auto/Qto/Controller/MetaDataController/autosplit.ix
+   src/perl/qto/lib/auto/Qto/App/Db/Out/WtrRedis/autosplit.ix
+   src/perl/qto/lib/auto/Qto/App/Sec/Guardian/autosplit.ix
+   src/perl/qto/lib/auto/Qto/Controller/Logon/autosplit.ix
+   # eof security
+   src/tpl/psql-code-generator
+   src/tpl/psql-code-generator/psql-code-generator.sh
+   src/tpl/psql-code-generator/test-psql-code-generator.sh
+   #
+   src/python/generate-docx.py
+   src/python/append-to-docx.py
+   cnf/env
+   # start ::: left-menu
+   src/perl/qto/templates/controls/list-grid/js/left-menu.js.html.ep
+   src/perl/qto/public/themes/thme-blue/css/screen/controls/view-doc.css
+   src/perl/qto/lib/Qto/Controller/View.pm
+   src/perl/qto/templates/controls/left-menu
+   src/perl/qto/templates/controls/left-menu/left-menu.html.ep
+   src/perl/qto/public/themes/thme-blue/css/screen/controls/left-menu.css
+   src/perl/qto/lib/Qto/App/Db/In/Postgres/RdrPostgresDb.pm
+   src/perl/qto/lib/Qto/App/Db/In/RdrRedis.pm
+   src/perl/qto/lib/Qto/App/UI/WtrUIFactory.pm
+   src/perl/qto/public/poc/css-tree/03
+   src/perl/qto/public/poc/css-tree/03/index.html
+   src/perl/qto/public/poc/css-tree
+   src/perl/qto/public/poc/css-tree/01
+   src/perl/qto/public/poc/css-tree/01/index.html
+   src/perl/qto/public/poc/css-tree/02
+   src/perl/qto/public/poc/css-tree/02/index.html
+   # stop  ::: left-menu
+   # start ::: deployment
+   cnf/redis/etc/systemd/system/redis.service
+   src/bash/qto/deploy/single-ubuntu18.04/run.sh
+   src/bash/qto/deploy/single-ubuntu18.04
+   src/bash/qto/deploy/single-ubuntu18.04/check-install-chromium-headless.func.sh
+   src/bash/qto/deploy/single-ubuntu18.04/check-install-perl-modules.func.sh
+   src/bash/qto/deploy/single-ubuntu18.04/check-install-phantom-js.func.sh
+   src/bash/qto/deploy/single-ubuntu18.04/check-install-postgres.func.sh
+   src/bash/qto/deploy/single-ubuntu18.04/check-install-python-modules.func.sh
+   src/bash/qto/deploy/single-ubuntu18.04/check-install-redis.func.sh
+   src/bash/qto/deploy/single-ubuntu18.04/check-install-ubuntu-packages.func.sh
+   src/bash/qto/deploy/single-ubuntu18.04/check-setup-bash.func.sh
+   src/bash/qto/deploy/single-ubuntu18.04/provision-nginx.func.sh
+   src/bash/qto/deploy/single-ubuntu18.04/provision-postgres.func.sh
+   src/bash/qto/deploy/single-ubuntu18.04/provision-ssh-keys.func.sh
+   src/bash/qto/deploy/single-ubuntu18.04/qto
+   src/bash/qto/deploy/single-ubuntu18.04/qto/cnf
+   src/bash/qto/deploy/single-ubuntu18.04/qto/cnf/bin
+   src/bash/qto/deploy/single-ubuntu18.04/qto/cnf/bin/perl-modules.lst
+   src/bash/qto/deploy/single-ubuntu18.04/qto/cnf/bin/python-modules.lst
+   src/bash/qto/deploy/single-ubuntu18.04/qto/cnf/bin/ubuntu-18.04.lst
+   src/bash/qto/deploy/single-ubuntu18.04/scramble-confs.func.sh
+   src/bash/qto/deploy/single-ubuntu18.04/test-deployer-run.sh
+   # stop  ::: deployment
+   src/perl/qto/public/poc/vuex/sabe/
+   src/perl/qto/public/poc/vuex/sabe/app.js
+   src/perl/qto/public/poc/vuex/sabe/index.html
+   src/perl/qto/public/poc/vuex/sabe/styles.css
+   src/perl/qto/t/lib/Qto/Controller/TestHiCreate.t
+   src/perl/qto/lib/Qto/Controller/HiDelete.pm
+   src/perl/qto/lib/Qto/App/Cnvr/CnrXlsHsr3ToDbHsr3.pm
+   src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrXlsHsr3ToDbHsr3.t
+   src/bash/qto/funcs/set-up-db-roles.func.sh
+   src/bash/qto/funcs/fix-db-permissions.func.sh
+   src/bash/qto/funcs/publish-dbdump-to-s3.func.sh
+   src/bash/qto/funcs/publish-dbdump-to-s3-public.func.sh
+   src/bash/qto/funcs/load-db-data-from-s3.func.sh
+   src/bash/qto/qto.sh
+   src/bash/qto/funcs/check-init-terraform.func.sh
+   src/bash/qto/funcs/init-aws-instance.func.sh
+   src/terraform
+   src/bash/qto/funcs/scramble-confs.func.sh
+   src/bash/qto/funcs/unscramble-confs.func.sh
+   .vimrc
+   doc/cheats/
+   doc/cheats/git/git-cheat.sh
+   doc/cheats/ssh/pkk.sh
+   doc/cheats/os/
+   doc/cheats/os/users-mngmnt.sh
+   doc/cheats/qto-cheat-sheet.sh
+   doc/cheats/qto-psql-cheat.sql
+   src/bash/qto/test-qto.sh
+   src/bash/qto/funcs/generate-md-docs.func.sh
+   src/bash/qto/funcs/generate-pdf-docs.func.sh
+   src/bash/qto/funcs/generate-msft-docs.func.sh
+   src/docker/Dockerfile.deploy-qto.0.7.2
+   src/docker/Dockerfile.deploy-qto-db-host.0.7.2
+   src/docker/Dockerfile.deploy-qto-app-host.0.7.2
+   src/bash/qto/funcs/build-docker-image.func.sh
+   src/perl/qto/lib/Qto/App/IO/In/CnrPostPrms.pm
+   # start websockets
+   src/perl/qto/public/index.html
+   src/perl/qto/templates/controls/robust-websocket/js/robust-websocket.js.html.ep
+   src/perl/qto/templates/controls/list-url-lists/js/list-url-lists.js.html.ep
+   src/perl/qto/lib/Qto/Controller/Index.pm
+   src/perl/qto/public/poc/web-socket/wsclient.js
+   src/perl/qto/lib/Qto.pm
+   src/perl/qto/lib/Qto/Controller/WsSelect.pm
+   src/perl/qto/t/lib/Qto/Controller/TestWSSelect.t.todo
+   src/perl/qto/public/poc/web-socket/web-socket.html
+   src/perl/qto/public/poc/notes/index.html
+   src/perl/qto/lib/Qto/Controller/WebSocketPoc.pm
+   # stop  websockets
+   # ---
+   src/perl/qto/templates/pages/view-doc/js/right-click-menu.js.html.ep
+   src/perl/qto/templates/pages/view-doc/view-doc.html.ep
+   src/perl/qto/templates/pages/view-doc/js/view-doc-items-list.js.html.ep
+   src/perl/qto/templates/pages/view-doc/js/snackbar.js.html.ep
+   src/perl/qto/templates/pages/view-doc/js/vue_app.js.html.ep
+   src/perl/qto/templates/pages/view-doc/js/inp-srch-box.js.html.ep
+   src/perl/qto/templates/pages/view-doc/components/rgx-textarea.js.html.ep
+   src/perl/qto/templates/pages/view-doc/components/rgx-input.js.html.ep
+   src/perl/qto/templates/pages/view-doc/components/snackbar.html.ep
+   src/perl/qto/templates/pages/view-doc/components/view-doc-items-list.xt.html.ep
+   src/perl/qto/templates/pages/view-doc/components/right-click-menu.xt.html.ep
+   src/perl/qto/templates/pages/view-doc/components/app-template.xt.html.ep
+   doc/txt/qto/funcs/generate-md-docs.func.txt
+   # -- start docker deployment
+   src/bash/qto/funcs/remove-docker-images.func.sh
+   src/bash/qto/funcs/remove-docker-containers.func.sh
+   src/bash/qto/funcs/run-container.func.sh
+   src/bash/qto/install/docker/install-test.sh
+   src/bash/qto/install/docker/docker-entry-point.sh
+   src/docker/Dockerfile.deploy-quick-test
+   src/bash/qto/install/docker/install-postgres.sh
+   src/bash/qto/install/docker/provision-os-users.sh
+   src/bash/qto/install/docker/install-perl-modules.sh
+   src/bash/qto/install/docker/
+   src/bash/qto/funcs/admin/restart-postgres.func.sh
+   src/bash/qto/funcs/full-clean-docker.func.sh
+   src/bash/qto/tests/build-docker-image.test.sh
+   src/sql/pgsql/scripts/admin/grant-permissions.sql
+   src/bash/qto/funcs/admin/restart-postgres.func.sh
+   cnf/postgres/etc/postgresql/12/main
+   cnf/postgres/etc/postgresql/12/main/pg_hba.conf
+   cnf/postgres/etc/postgresql/12/main/postgresql.conf
+   # -- stop  docker deployment
+   # start ::: provision https
+   cnf/nginx/
+   cnf/nginx/etc
+   cnf/nginx/etc/nginx
+   cnf/nginx/etc/nginx/nginx.conf
+   src/bash/qto/funcs/provision-https.func.sh
+   cnf/nginx/etc/nginx/sites-available/%env%.https-site.conf
+   cnf/nginx/etc/nginx/sites-available/%env%.http-site.conf
+   cnf/nginx/etc/nginx/sites-available/tst.localhost.cnf
+   cnf/nginx/etc/nginx/sites-available/prd.localhost.cnf
+   cnf/nginx/etc/nginx/sites-available/dev.localhost.cnf
+   # stop  ::: provision https
+   src/bash/qto/funcs/perl/run-benchmarks.func.sh
+   src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-list-url.t
+   src/perl/qto/t/lib/Qto/App/benchmarks/benchmark-view-url.t
+   src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.t
 src/perl/qto/templates/layouts/site.html.ep
 src/perl/qto/templates/layouts/view.html.ep
 src/perl/qto/templates/layouts/list.html.ep
@@ -998,7 +998,7 @@ src/perl/qto/public/poc/file-upload/03/index.html
 src/perl/qto/public/poc/file-upload/04/index.html
 src/perl/qto/t/lib/Qto/App/Cnvr/TestCnrDbName.t
 src/perl/qto/t/lib/Qto/App/IO/In/TestRdrDirs.t
-src/perl/qto/t/lib/Qto/Controller/TestMySelect.t
+src/perl/qto/t/lib/Qto/Controller/TestSelectMy.tmp
 src/sql/pgsql/qto/tables/28.create-table-imgs.sql
 src/sql/pgsql/qto/tables/28.create-table-wow_doc.sql
 src/sql/pgsql/scripts/03.create-func.func_get_all_users_roles.sql

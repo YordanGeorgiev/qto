@@ -33,7 +33,7 @@ sub doReadXlsFileToHsr3NoChecks {
 
   my $ret = 1;
   my $msg = "read the following xls_file: $xls_file";
-  $objLogger->doLogInfoMsg($msg);
+  $objLogger->info($msg);
 
   my $formatter    = Spreadsheet::ParseExcel::FmtJapan->new();
   my $objXlsParser = 'Spreadsheet::ParseExcel'->new();
@@ -54,7 +54,7 @@ sub doReadXlsFileToHsr3NoChecks {
     # exit the whole application if there is no excel defined
     if (!defined $objWorkbook) {
       $msg = "cannot parse \$xls_file $xls_file $! $objXlsParser->error()";
-      $objLogger->doLogErrorMsg("$msg");
+      $objLogger->error("$msg");
       return ($ret, $msg, {});
     }
 
@@ -67,11 +67,11 @@ sub doReadXlsFileToHsr3NoChecks {
     my $WorkSheetName = decode( "utf8",$worksheet->{'Name'});
     #my $WorkSheetName = $worksheet->{'Name'} ;
     #my $WorkSheetName = decode("koi8-u",$worksheet->{'Name'});
-    $objLogger->doLogInfoMsg("check worksheet: " . $WorkSheetName) ; 
+    $objLogger->info("check worksheet: " . $WorkSheetName) ; 
 
 
     $msg = "read worksheet: " . $WorkSheetName ; 
-    $objLogger->doLogInfoMsg( $msg ) ; 
+    $objLogger->info( $msg ) ; 
 
     my $RowMin = $worksheet->{'MinRow'};
     my $RowMax = $worksheet->{'MaxRow'};
@@ -152,7 +152,7 @@ sub doReadXlsFileToHsr3 {
 
   my $ret = 1;
   my $msg = "read the following xls_file: $xls_file";
-  $objLogger->doLogInfoMsg($msg);
+  $objLogger->info($msg);
 
   my $formatter    = Spreadsheet::ParseExcel::FmtJapan->new();
   my $objXlsParser = 'Spreadsheet::ParseExcel'->new();
@@ -173,7 +173,7 @@ sub doReadXlsFileToHsr3 {
     # exit the whole application if there is no excel defined
     if (!defined $objWorkbook) {
       $msg = "cannot parse \$xls_file $xls_file $! $objXlsParser->error()";
-      $objLogger->doLogErrorMsg("$msg");
+      $objLogger->error("$msg");
       return ($ret, $msg, {});
     }
 
@@ -185,13 +185,13 @@ sub doReadXlsFileToHsr3 {
 
     my $hsWorkSheet   = {};
     my $WorkSheetName = $worksheet->{'Name'};
-    $objLogger->doLogInfoMsg("check worksheet: " . $WorkSheetName) ; 
+    $objLogger->info("check worksheet: " . $WorkSheetName) ; 
 
 	 next unless grep( /^$WorkSheetName$/, @tables ) ; 
 
     $flg_found_at_least_one_table++ ; 
     $msg = "read worksheet: " . $WorkSheetName ; 
-    $objLogger->doLogInfoMsg( $msg ) ; 
+    $objLogger->info( $msg ) ; 
 
     my $RowMin = $worksheet->{'MinRow'};
     my $RowMax = $worksheet->{'MaxRow'};
@@ -314,7 +314,7 @@ sub new {
 
 
     foreach my $table ( @tables ) {
-      $objLogger->doLogInfoMsg("RdrXls sub newtable " . $table ) ; 
+      $objLogger->info("RdrXls sub newtable " . $table ) ; 
     }
   return $self;
 }
