@@ -1,4 +1,3 @@
-
 doPublishDbdumpToS3(){
    test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
    source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
@@ -10,17 +9,17 @@ doPublishDbdumpToS3(){
 
    export AWS_DEFAULT_PROFILE='default'
    aws configure list
-   set -x
    # remove the grants to disable full publicity of the data ...
-   aws s3 --profile default cp "$dump_file" "s3://$bucket/$postgres_db_name"'.latest.insrts.dmp.sql'
-	set +x
+   set +x
+   aws s3 --profile default cp "$dump_file" "s3://$bucket/$postgres_app_db"'.latest.insrts.dmp.sql'
+   set -x
 
-	cat << EOF
-		IF error occurs check that your aws credentials file ~/.aws/credentials looks as follws
-		sudo ntpdate ntp.ubuntu.com
-		cat ~/.aws/credentials
-		[default]
-		aws_access_key_id = BKIAID4UEECKBMVJMG55
-		aws_secret_access_key = 7VB1A4tpSfnE0P22jNEFMurPy8G2n9H7lqxSEFa9
+   cat << EOF
+				 IF error occurs check that your aws credentials file ~/.aws/credentials looks as follws
+				 sudo ntpdate ntp.ubuntu.com
+				 cat ~/.aws/credentials
+				 [default]
+				 aws_access_key_id = BKIAID4UEECKBMVJMG55
+				 aws_secret_access_key = 7VB1A4tpSfnE0P22jNEFMurPy8G2n9H7lqxSEFa9
 EOF
 }

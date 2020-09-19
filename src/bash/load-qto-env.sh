@@ -24,7 +24,7 @@ main(){
 	  do_flush_screen
       sleep 1
 	  
-      alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} --port $postgres_db_port --host $postgres_db_host"
+      alias psql="PGPASSWORD=${postgres_sys_usr_admin_pw:-} psql -v -t -X -w -U ${postgres_sys_usr_admin:-} --port $postgres_rdbms_port --host $postgres_rdbms_host"
       alias|sort ; sleep 1 ;
 	  do_flush_screen
    }

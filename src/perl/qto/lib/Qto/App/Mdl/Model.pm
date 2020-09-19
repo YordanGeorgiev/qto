@@ -115,7 +115,7 @@ sub doGetItemsDefaultPickCols {
 sub doChkIfColumnExists {
 
    my $self          = shift ; 
-   my $db            = shift || $self->get('postgres_db_name');
+   my $db            = shift || $self->get('postgres_app_db');
    my $table         = shift || $self->get('table_name');
    my $col           = shift ; 
    my $meta_cols     = {} ; 
@@ -133,7 +133,7 @@ sub doChkIfColumnExists {
 sub itemHasTimestampAttr {
 
    my $self          = shift ; 
-   my $db            = shift || $self->get('postgres_db_name');
+   my $db            = shift || $self->get('postgres_app_db');
    my $table         = shift || $self->get('table_name');
    my $col           = shift ; 
    my $meta_cols     = {} ; 
@@ -218,7 +218,7 @@ sub new {
              config => $config
       );
       
-      $self->set('postgres_db_name' , $db )  if defined $db ; 
+      $self->set('postgres_app_db' , $db )  if defined $db ; 
       $self->set('table_name' , $table )     if defined $table ; 
 	   $objLogger 			= 'Qto::App::Utils::Logger'->new( \$config ) ;
 

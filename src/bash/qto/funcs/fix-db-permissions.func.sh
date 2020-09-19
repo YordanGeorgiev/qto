@@ -12,26 +12,26 @@ doFixDbPermissions(){
    do_log "INFO using PROJ_CONF_FILE: $PROJ_CONF_FILE"
 
    cd /tmp
-   sudo -u postgres PGPASSWORD=$postgres_usr_pw psql --port $postgres_db_port --host $postgres_db_host -c "
-      grant all privileges on database $postgres_db_name to $postgres_db_useradmin" ;
+   sudo -u postgres PGPASSWORD=$postgres_usr_pw psql --port $postgres_rdbms_port --host $postgres_rdbms_host -c "
+      grant all privileges on database $postgres_app_db to $postgres_sys_usr_admin" ;
 
-   sudo -u postgres PGPASSWORD=$postgres_usr_pw psql --port $postgres_db_port \
-      --host $postgres_db_host -d $postgres_db_name -c "
-      ALTER USER $postgres_db_user WITH PASSWORD '"$postgres_db_user_pw"'";
+   sudo -u postgres PGPASSWORD=$postgres_usr_pw psql --port $postgres_rdbms_port \
+      --host $postgres_rdbms_host -d $postgres_app_db -c "
+      ALTER USER $postgres_app_usr WITH PASSWORD '"$postgres_app_usr_pw"'";
 
-   PGPASSWORD=$postgres_db_useradmin_pw psql -U "${postgres_db_useradmin:-}" \
-      --host $postgres_db_host --port $postgres_db_port -d "$postgres_db_name" \
-      -c "  GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public TO $postgres_db_user; 
-            GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user"
+   PGPASSWORD=$postgres_sys_usr_admin_pw psql -U "${postgres_sys_usr_admin:-}" \
+      --host $postgres_rdbms_host --port $postgres_rdbms_port -d "$postgres_app_db" \
+      -c "  GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public TO $postgres_app_usr; 
+            GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_app_usr"
 
    sudo -u postgres PGPASSWORD=$postgres_usr_pw psql \
-      --port $postgres_db_port --host $postgres_db_host -d "$postgres_db_name" -c \
+      --port $postgres_rdbms_port --host $postgres_rdbms_host -d "$postgres_app_db" -c \
          "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES 
-         IN SCHEMA public TO $postgres_db_user; 
-         GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user"
+         IN SCHEMA public TO $postgres_app_usr; 
+         GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_app_usr"
    sudo -u postgres PGPASSWORD=$postgres_usr_pw psql \
-      --port $postgres_db_port --host $postgres_db_host -d "$postgres_db_name" -c \
-         "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO $postgres_db_user"
+      --port $postgres_rdbms_port --host $postgres_rdbms_host -d "$postgres_app_db" -c \
+         "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO $postgres_app_usr"
    cd -
 
 }

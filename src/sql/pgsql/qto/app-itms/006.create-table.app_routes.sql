@@ -1,4 +1,4 @@
--- \echo 'If necessary, perform DROP TABLE IF EXISTS app_routes;'
+-- \echo 'If necessary, perform -- DROP TABLE IF EXISTS app_routes;'
 
 -- \echo '6. Creating the app_routes table'
 

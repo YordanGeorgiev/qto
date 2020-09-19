@@ -17,7 +17,7 @@ BEGIN {
    my $t          = Test::Mojo->new('Qto');
    $t->ua->max_redirects(10);
    my $config  = $t->app->config ; 
-   my $db    = $config->{'env'}->{'db'}->{'postgres_db_name'} ; 
+   my $db    = $config->{'env'}->{'db'}->{'postgres_app_db'} ; 
    my $url        = '/' . toPlainName($db) . '/login' ; # the login url to test for 
    my $tx         = {}  ; # the transaction object 
 

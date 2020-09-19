@@ -17,19 +17,19 @@ doLoadDbDataFromS3(){
       "https://s3-$AWS_DEFAULT_REGION.amazonaws.com/$bucket/"$ENV_TYPE"_$RUN_UNIT"'.latest.insrts.dmp.sql'
 
    # configure psql to access the db of THIS instance
-   PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} \
-      --port $postgres_db_port --host $postgres_db_host -d $postgres_db_name < \
+   PGPASSWORD=${postgres_sys_usr_admin_pw:-} psql -v -t -X -w -U ${postgres_sys_usr_admin:-} \
+      --port $postgres_rdbms_port --host $postgres_rdbms_host -d $postgres_app_db < \
          "$PRODUCT_INSTANCE_DIR/dat/sql/$ENV_TYPE"'_'"$RUN_UNIT"'.latest.insrts.dmp.sql'
 
    test -f $PRODUCT_INSTANCE_DIR/dat/tmp/bootstrapping && rm -v $PRODUCT_INSTANCE_DIR/dat/tmp/bootstrapping
    test -f $PRODUCT_INSTANCE_DIR/bootstrapping && rm -v $PRODUCT_INSTANCE_DIR/bootstrapping
 
    # grant the needed select
-   PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -v -q -t -X -w -U "${postgres_db_useradmin:-}" \
-      -h ${postgres_db_host:-} -p ${postgres_db_port:-} -v ON_ERROR_STOP=1 \
-      -d ${postgres_db_name:-} \
-      -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public TO $postgres_db_user; 
-         GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user"
+   PGPASSWORD="${postgres_sys_usr_admin_pw:-}" psql -v -q -t -X -w -U "${postgres_sys_usr_admin:-}" \
+      -h ${postgres_rdbms_host:-} -p ${postgres_rdbms_port:-} -v ON_ERROR_STOP=1 \
+      -d ${postgres_app_db:-} \
+      -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public TO $postgres_app_usr; 
+         GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_app_usr"
 
    echo "Databases successfully filled with data."
 

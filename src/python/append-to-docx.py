@@ -24,9 +24,9 @@ def set_vars():
         global full_path, table, path, app, db, user, ht_protocol, web_host, web_port
         table = sys.argv[1]
         full_path = str(sys.argv[2] or '.')
-        app = os.environ['postgres_db_name']
-        db = os.environ['postgres_db_name']
-        user= os.environ['postgres_db_user']
+        app = os.environ['postgres_app_db']
+        db = os.environ['postgres_app_db']
+        user= os.environ['postgres_app_usr']
         ht_protocol = os.environ['ht_protocol']
         web_host= os.environ['web_host']
         web_port = os.environ['port']

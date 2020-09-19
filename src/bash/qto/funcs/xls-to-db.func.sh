@@ -32,7 +32,7 @@ doXlsToDb(){
 
    exit_code=$?
    
-#   psql -d "$postgres_db_name" -c '
+#   psql -d "$postgres_app_db" -c '
 #   SELECT id category , substring ( description from 0 for 40 ) as descrption , start_time , stop_time
 #   FROM '"$tables"'_issues order by '"$items_order_by_attribute"'
 #   ;';

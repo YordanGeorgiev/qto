@@ -90,7 +90,7 @@ package Qto::App::Ctrl::CtrlXlsToTable ;
 
 
       if ( $load_model eq 'upsert' ) {
-         $objModel->set('postgres_db_name',$ENV{'postgres_db_name'}) ;
+         $objModel->set('postgres_app_db',$ENV{'postgres_app_db'}) ;
          ( $ret , $msg  )        = $objWtrDb->doUpsertSingleTable( \$objModel , \@tables) ; 
       } 
       elsif ( $load_model eq 'nested-set' ) {
@@ -102,7 +102,7 @@ package Qto::App::Ctrl::CtrlXlsToTable ;
                   'Qto::App::Cnvr::CnrXlsHsr3ToDbHsr3'->new (\$config , $rdbms_type ) ; 
             $hsr2 = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2 , $table ) ; 
             $objModel->set('hsr2' , $hsr2 );
-            $objModel->set('postgres_db_name',$ENV{'postgres_db_name'}) ;
+            $objModel->set('postgres_app_db',$ENV{'postgres_app_db'}) ;
             ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objModel , $table ) ; 
          }
       } 

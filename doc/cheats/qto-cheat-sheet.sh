@@ -1,6 +1,6 @@
 # file: doc/cheats/qto-cheat-sheet.sh
 
-psql -d "$postgres_db_name" -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public TO $postgres_db_user; GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_db_user; GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO $postgres_db_user; ALTER DEFAULT PRIVILEGES FOR USER $postgres_db_user IN SCHEMA public GRANT SELECT ON TABLES TO    $postgres_db_user;  "
+psql -d "$postgres_app_db" -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON ALL TABLES IN SCHEMA public TO $postgres_app_usr; GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $postgres_app_usr; GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO $postgres_app_usr; ALTER DEFAULT PRIVILEGES FOR USER $postgres_app_usr IN SCHEMA public GRANT SELECT ON TABLES TO    $postgres_app_usr;  "
 
 
 # how-to check the perl syntax of single perl file : 
@@ -12,7 +12,7 @@ export PROJ_INSTANCE_DIR=`pwd`  # or could be any qto proj
 export PROJ_CONF_FILE=`pwd`/cnf/env/prd.env.json  # or could be any qto proj's conf file
 source lib/bash/funcs/export-json-section-vars.sh
 do_export_json_section_vars $PROJ_INSTANCE_DIR/cnf/env/prd.env.json '.env.db'
-alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} --host $postgres_db_host --port $postgres_db_port"
+alias psql="PGPASSWORD=${postgres_sys_usr_admin_pw:-} psql -v -t -X -w -U ${postgres_sys_usr_admin:-} --host $postgres_rdbms_host --port $postgres_rdbms_port"
 
 ./src/bash/qto/qto.sh -a provision-db-admin # change the db-admin pw
 ./src/bash/qto/qto.sh -a provision-app-user # change the app user pw

@@ -19,7 +19,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $db_name    = {} ;  # the proj name
    my $PRODUCT_INSTANCE_DIR = $config->{'env'}->{'run'}->{'ProductInstanceDir'}; 
 
-   $db_name= $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
+   $db_name= $config->{'env'}->{'db'}->{ 'postgres_app_db' } ; 
    $url = '/' . $db_name . '/select-tables' ; 
 
 	$tm = "for list all the tables from the $db_name db" ; 

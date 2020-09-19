@@ -1,6 +1,5 @@
 # file: ~/.bash_opts.host-name
 # usage:
-# wget -O ~/.bash_opts.`hostname -s` https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/.bash_opts.host-name
 export HISTSIZE=9999
 export HISTFILESIZE=10000
 

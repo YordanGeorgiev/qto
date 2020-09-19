@@ -23,12 +23,12 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
    our $rdbms_type                              = 'postgres' ; 
 
 	our $db                                      = q{} ; 
-	our $postgres_db_host 								= q{} ; 
-	our $postgres_db_port 								= q{} ;
-	our $postgres_db_user 							   = q{} ; 
-	our $postgres_db_user_pw	 					   = q{} ; 
-	our $postgres_db_useradmin 				      = q{} ; 
-	our $postgres_db_useradmin_pw	 				   = q{} ; 
+	our $postgres_rdbms_host 								= q{} ; 
+	our $postgres_rdbms_port 								= q{} ;
+	our $postgres_app_usr 							   = q{} ; 
+	our $postgres_app_usr_pw	 					   = q{} ; 
+	our $postgres_sys_usr_admin 				      = q{} ; 
+	our $postgres_sys_usr_admin_pw	 				   = q{} ; 
 	our $web_host 											= q{} ; 
    our @tables                                  = ( 'daily_issues' );
    our $objController                           = () ; 
@@ -435,8 +435,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $sth              = {} ;         # the statement handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
    
-      if ( defined $objModel->get('postgres_db_name') ) {
-		   $db = $objModel->get('postgres_db_name');
+      if ( defined $objModel->get('postgres_app_db') ) {
+		   $db = $objModel->get('postgres_app_db');
       }
       
       ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
@@ -501,8 +501,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $sth              = {} ;         # the statement handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
    
-      if ( defined $objModel->get('postgres_db_name') ) {
-		   $db = $objModel->get('postgres_db_name');
+      if ( defined $objModel->get('postgres_app_db') ) {
+		   $db = $objModel->get('postgres_app_db');
       }
       
       ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
@@ -570,8 +570,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $sth              = {} ;         # the statement handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
       
-      if ( defined $objModel->get('postgres_db_name') ) {
-		   $db = $objModel->get('postgres_db_name');
+      if ( defined $objModel->get('postgres_app_db') ) {
+		   $db = $objModel->get('postgres_app_db');
       }
       
       ( $ret , $msg , $dbh ) = $self->doConnectToDbAsAppUser ( $db ) ; 
@@ -639,8 +639,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $msg = q{} ; 
       my $dbh = q{} ; 
       eval {
-         $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_db_host;port=$postgres_db_port", 
-                  "$postgres_db_user", "$postgres_db_user_pw" , {
+         $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_rdbms_host;port=$postgres_rdbms_port", 
+                  "$postgres_app_usr", "$postgres_app_usr_pw" , {
                     'RaiseError'          => 0 # otherwise it dies !!!
                   , 'ShowErrorStatement'  => 1
                   , 'PrintError'          => 1
@@ -681,10 +681,10 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $dbh = q{} ; 
 
       eval { 
-		$postgres_db_useradmin 			= $ENV{ 'postgres_db_useradmin' }     || $config->{'postgres_db_useradmin'} ;
-		$postgres_db_useradmin_pw 		= $ENV{ 'postgres_db_useradmin_pw' }  || $config->{'postgres_db_useradmin_pw'} 
+		$postgres_sys_usr_admin 			= $ENV{ 'postgres_sys_usr_admin' }     || $config->{'postgres_sys_usr_admin'} ;
+		$postgres_sys_usr_admin_pw 		= $ENV{ 'postgres_sys_usr_admin_pw' }  || $config->{'postgres_sys_usr_admin_pw'} 
          || 'no_pass_provided!!!' ; 
-         $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_db_host;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
+         $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_rdbms_host;port=$postgres_rdbms_port", "$postgres_app_usr", "$postgres_app_usr_pw" , {
                     'RaiseError'          => 1
                   , 'ShowErrorStatement'  => 1
                   , 'PrintError'          => 1
@@ -902,8 +902,8 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
 
       # proper authentication implementation src:
       # http://stackoverflow.com/a/19980156/65706
-      $debug_msg .= "\n postgres_db_name: $db \n postgres_db_host: $postgres_db_host " ; 
-      $debug_msg .= "\n postgres_db_user: $postgres_db_user \n postgres_db_user_pw $postgres_db_user_pw \n" ; 
+      $debug_msg .= "\n postgres_app_db: $db \n postgres_rdbms_host: $postgres_rdbms_host " ; 
+      $debug_msg .= "\n postgres_app_usr: $postgres_app_usr \n postgres_app_usr_pw $postgres_app_usr_pw \n" ; 
       $objLogger->debug ( $debug_msg ) if $module_trace == 1 ; 
 
 
@@ -1157,7 +1157,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
 		my $update_time      = $objTimer->GetHumanReadableTime();
       my $dmhsr            = {} ; 
-      $db = $objModel->get('postgres_db_name');
+      $db = $objModel->get('postgres_app_db');
       my $objRdrDbsFcry    = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel , $self ) ; 
       my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
       
@@ -1266,7 +1266,7 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       my $objTimer         = 'Qto::App::Utils::Timer'->new( $config->{'env'}->{'log'}->{ 'TimeFormat' } );
 		my $update_time      = $objTimer->GetHumanReadableTime();
       my $dmhsr            = {} ; 
-      $db = $objModel->get('postgres_db_name');
+      $db = $objModel->get('postgres_app_db');
       my $objRdrDbsFcry    = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel , $self ) ; 
       my $objRdrDb         = $objRdrDbsFcry->doSpawn("$rdbms_type");
       
@@ -1433,13 +1433,13 @@ package Qto::App::Db::Out::Postgres::WtrPostgresDb ;
       );
       my $db_config = $config->{'env'}->{'db'} ; 
 
-		$db 			               = $db_config->{'postgres_db_name'}    || croak " db not set !!!" ; 
-		$postgres_db_host 			= $db_config->{'postgres_db_host'}    || croak "postgres_db_host not set !!!" ; 
-		$postgres_db_port 			= $db_config->{'postgres_db_port'}    || croak "postgres_db_port not set !!!"  ; 
-		$postgres_db_useradmin 	   = $db_config->{'postgres_db_useradmin'}    || croak 'no admin postgres user' ; 
-		$postgres_db_useradmin_pw  = $db_config->{'postgres_db_useradmin_pw'} || croak 'no_pass_provided!!!' ; 
-		$postgres_db_user 			= $db_config->{'postgres_db_user'}    || croak " no postgres_db_user !!!" ;  
-		$postgres_db_user_pw 		= $db_config->{'postgres_db_user_pw'} || croak " no postgres_db_user_pw !!!!" ;
+		$db 			               = $db_config->{'postgres_app_db'}    || croak " db not set !!!" ; 
+		$postgres_rdbms_host 			= $db_config->{'postgres_rdbms_host'}    || croak "postgres_rdbms_host not set !!!" ; 
+		$postgres_rdbms_port 			= $db_config->{'postgres_rdbms_port'}    || croak "postgres_rdbms_port not set !!!"  ; 
+		$postgres_sys_usr_admin 	   = $db_config->{'postgres_sys_usr_admin'}    || croak 'no admin postgres user' ; 
+		$postgres_sys_usr_admin_pw  = $db_config->{'postgres_sys_usr_admin_pw'} || croak 'no_pass_provided!!!' ; 
+		$postgres_app_usr 			= $db_config->{'postgres_app_usr'}    || croak " no postgres_app_usr !!!" ;  
+		$postgres_app_usr_pw 		= $db_config->{'postgres_app_usr_pw'} || croak " no postgres_app_usr_pw !!!!" ;
       
 	   $objLogger 			         = 'Qto::App::Utils::Logger'->new( \$config ) ;
 

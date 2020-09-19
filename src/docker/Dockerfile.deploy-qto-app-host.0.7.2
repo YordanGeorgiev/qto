@@ -3,10 +3,10 @@ FROM ubuntu:18.04
 
 ARG PRODUCT_INSTANCE_DIR
 ENV PRODUCT_INSTANCE_DIR $PRODUCT_INSTANCE_DIR
-ARG postgres_db_name 
-ENV postgres_db_name $postgres_db_name
-ARG postgres_db_useradmin='usrqtoadmin'
-ENV postgres_db_useradmin_pw 'usrqtoadmin'
+ARG postgres_app_db 
+ENV postgres_app_db $postgres_app_db
+ARG postgres_sys_usr_admin='usrqtoadmin'
+ENV postgres_sys_usr_admin_pw 'usrqtoadmin'
 ARG host_host_name
 ENV host_host_name $host_host_name
 

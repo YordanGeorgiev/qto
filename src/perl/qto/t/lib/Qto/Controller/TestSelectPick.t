@@ -17,7 +17,7 @@ my $config = $t->app->config ;
 
 # if the product instance id dev -> dev_qto
 # if the product instance id tst -> tst_qto
-my $db = $config->{'env'}->{'db'}->{'postgres_db_name'} ; 
+my $db = $config->{'env'}->{'db'}->{'postgres_app_db'} ; 
 my @tables = ( 'installations_doc' , 'requirements_doc' , 'devops_guide_doc' , 'userstories_doc' ) ; 
 my @web_actions = ( 'select' , 'hiselect' ) ; 
 my $ua = $t->ua ; 

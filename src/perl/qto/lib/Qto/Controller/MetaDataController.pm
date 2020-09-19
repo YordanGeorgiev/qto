@@ -42,7 +42,7 @@ sub doReloadProjDbMetaData {
    my $db            = shift ;
    my $item          = shift || '' ; 
    $db               = toEnvName ( $db , $config ) ;
-   $objModel->set('postgres_db_name' , $db ) ; 
+   $objModel->set('postgres_app_db' , $db ) ; 
    # reload the columns meta data ONLY after the app_item_attributes has been requested
    # each one of those requested by the UI triggers meta data reload to redis !!!
    if ( $item eq 'app-startup' or $item eq 'app_item_attributes' or $item eq 'app_items' or $item eq 'items_doc') {
@@ -191,7 +191,7 @@ sub doReloadMetaRoutes {
    my $ret                 = 1 ; 
    my $msg                 = "fatal error while reloading project database meta data " ; 
 
-   $objModel->set('postgres_db_name' , $db ) ; 
+   $objModel->set('postgres_app_db' , $db ) ; 
    $objRdrDbsFcry          = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config, \$objModel );
    $objRdrDb               = $objRdrDbsFcry->doSpawn( $rdbms_type , $db);
    ($ret, $msg , $hsr )    = $objRdrDb->doCallFuncGetHashRef('fnc_get_app_routes','id'); # by convention ?!

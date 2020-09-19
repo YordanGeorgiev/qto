@@ -16,7 +16,7 @@ IFS='' read -r -d '' sql_code << EOF_SQL_CODE
 		AND status > 0
 		AND email='AdminEmail';
 EOF_SQL_CODE
-psql -d "$postgres_db_name" -c "$sql_code"
+psql -d "$postgres_app_db" -c "$sql_code"
 
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA schema_name TO usr;
 

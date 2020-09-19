@@ -22,10 +22,10 @@ package Qto::App::Db::In::Postgres::RdrPostgresDb ;
 	our $objLogger 										= {} ; 
 	our $objModel                                = {} ; 
 	our $db                        					= q{} ; 
-	our $postgres_db_host 							   = q{} ; 
-	our $postgres_db_port 							   = q{} ;
-	our $postgres_db_user 							   = q{} ; 
-	our $postgres_db_user_pw	 					   = q{} ; 
+	our $postgres_rdbms_host 							   = q{} ; 
+	our $postgres_rdbms_port 							   = q{} ;
+	our $postgres_app_usr 							   = q{} ; 
+	our $postgres_app_usr_pw	 					   = q{} ; 
 	our $web_host 											= q{} ; 
 
 
@@ -200,8 +200,8 @@ sub doCallFuncGetHashRef {
 
       my $self = shift ; 
 		$objModel      = ${ shift @_ } || croak 'objModel not passed in RdrPostgresDb !!!' ; 
-      if ( defined $objModel->get('postgres_db_name') ) {
-		   $db = $objModel->get('postgres_db_name');
+      if ( defined $objModel->get('postgres_app_db') ) {
+		   $db = $objModel->get('postgres_app_db');
       }
       my $qry  = $objModel->get('query.web-action.for');
       
@@ -661,8 +661,8 @@ sub doCallFuncGetHashRef {
       my $dbh              = {} ;         # this is the database handle
       my $str_sql          = q{} ;        # this is the sql string to use for the query
       
-      if ( defined $objModel->get('postgres_db_name') ) {
-		   $db = $objModel->get('postgres_db_name');
+      if ( defined $objModel->get('postgres_app_db') ) {
+		   $db = $objModel->get('postgres_app_db');
       }
       
       ( $ret , $msg , $dbh ) = $self->doConnectToDb ( $db ) ; 
@@ -928,8 +928,8 @@ sub doCallFuncGetHashRef {
       my $self          = shift ; 
       my $table         = shift || croak ' table provided !!!' ; 
       
-      if ( defined $objModel->get('postgres_db_name') ) {
-		   $db = $objModel->get('postgres_db_name');
+      if ( defined $objModel->get('postgres_app_db') ) {
+		   $db = $objModel->get('postgres_app_db');
       }
       my $msg              = q{} ;         
       my $ret              = () ;          # this is the return value from this method 
@@ -998,7 +998,7 @@ sub doCallFuncGetHashRef {
       $pg_errorlevel = 1 if $config->{'env'}->{'log'}->{'PrintDebugMsgs'} == 1 ;
       $pg_errorlevel = 2 if $config->{'env'}->{'log'}->{'PrintTraceMsgs'} == 1 ;
 
-      $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_db_host;port=$postgres_db_port", "$postgres_db_user", "$postgres_db_user_pw" , {
+      $dbh = DBI->connect("dbi:Pg:dbname=$db;host=$postgres_rdbms_host;port=$postgres_rdbms_port", "$postgres_app_usr", "$postgres_app_usr_pw" , {
                  'RaiseError'          => 0 # otherwise it dies !!!
                , 'ShowErrorStatement'  => 1
                , 'PrintError'          => 1
@@ -1591,10 +1591,10 @@ sub doCallFuncGetHashRef {
       );
 	   
       my $db_config = $config->{'env'}->{'db'} ; 
-		$postgres_db_host    = $db_config->{'postgres_db_host'} 		|| '127.0.0.1' ;
-		$postgres_db_port    = $db_config->{'postgres_db_port'} 		|| '15432' ; 
-		$postgres_db_user 	= $db_config->{'postgres_db_user'} 		|| croak 'no postgres_db_user provided !!!' ;
-		$postgres_db_user_pw = $db_config->{'postgres_db_user_pw'} 	|| croak 'no postgres_db_user_pw provided !!!' ;
+		$postgres_rdbms_host    = $db_config->{'postgres_rdbms_host'} 		|| '127.0.0.1' ;
+		$postgres_rdbms_port    = $db_config->{'postgres_rdbms_port'} 		|| '15432' ; 
+		$postgres_app_usr 	= $db_config->{'postgres_app_usr'} 		|| croak 'no postgres_app_usr provided !!!' ;
+		$postgres_app_usr_pw = $db_config->{'postgres_app_usr_pw'} 	|| croak 'no postgres_app_usr_pw provided !!!' ;
 
 	   $objLogger 			   = 'Qto::App::Utils::Logger'->new( \$config ) ;
 

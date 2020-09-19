@@ -16,7 +16,7 @@ my $config = $t->app->config ;
 
 # if the product instance id dev -> dev_qto
 # if the product instance id tst -> tst_qto
-my $db= $config->{'env'}->{'db'}->{'postgres_db_name'} ; 
+my $db= $config->{'env'}->{'db'}->{'postgres_app_db'} ; 
 my $ua  = $t->ua ; 
 my $res = {} ; #a tmp result json string
 my $tm = '' ; 

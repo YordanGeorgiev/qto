@@ -19,10 +19,10 @@ doRunPgsqlScripts(){
       perl -pi -e 's|-- DROP|DROP|g' $sql_script # drop and create the objects
       
       set -x
-      PGPASSWORD="${postgres_db_useradmin_pw:-}" psql -v ON_ERROR_STOP=1 -q -t -X -w \
-         -h $postgres_db_host -p $postgres_db_port -U "${postgres_db_useradmin:-}" \
+      PGPASSWORD="${postgres_sys_usr_admin_pw:-}" psql -v ON_ERROR_STOP=1 -q -t -X -w \
+         -h $postgres_rdbms_host -p $postgres_rdbms_port -U "${postgres_sys_usr_admin:-}" \
          -v AdminEmail="${AdminEmail:-}" \
-         -v postgres_db_name="$postgres_db_name" -f "$sql_script" "$postgres_db_name" > "$tmp_log_file" 2>&1
+         -v postgres_app_db="$postgres_app_db" -f "$sql_script" "$postgres_app_db" > "$tmp_log_file" 2>&1
       ret=$?
       set +x
 

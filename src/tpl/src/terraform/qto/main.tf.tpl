@@ -24,44 +24,48 @@ data "aws_ami" "ubuntu" {
 
 variable "environment_tag" {
   description = "Environment tag"
-  default = "dev"
+  default = "{{ ENV_TYPE }}"
 }
 
 variable "availability_zone" {
   description = "availability zone to create subnet"
-  default = "$availability_zone"
+  default = "{{ aws['availability_zone'] }}"
 } 
 
 variable "public_key_path" {
   description = "Public key path"
-  default = "$pem_key_fpath_pub"
+  default = "$public_ssh_key_fpath"
 }
 
 // VPC Resource
-resource "aws_vpc" "{{ ENV_TYPE }}_{{ VER }}_vpc" {
+resource "aws_vpc" "vpc_{{ PROJ }}_{{ ENV_TYPE }}_{{ VER }}" {
   cidr_block = "10.0.0.0/16"
   enable_dns_support = true
   enable_dns_hostnames = true
 
   tags = {
-   Name = "{{ ENV_TYPE }}_{{ VER }}_vpc"
+   Name = "vpc_{{ PROJ }}_{{ ENV_TYPE }}_{{ VER }}"
    Version = "{{ VERSION }}"
   }
 }
 
 
 // subnets
-resource "aws_subnet" "{{ ENV_TYPE }}_{{ VER }}_subnet" {
-  cidr_block = "${cidrsubnet(aws_vpc.{{ ENV_TYPE }}_{{ VER }}_vpc.cidr_block, 3, 1)}"
-  vpc_id = "${aws_vpc.{{ ENV_TYPE }}_{{ VER }}_vpc.id}"
-  availability_zone = "$availability_zone"
+resource "aws_subnet" "subnet_{{ PROJ }}_{{ ENV_TYPE }}_{{ VER }}" {
+  cidr_block = "${cidrsubnet(aws_vpc.vpc_{{ PROJ }}_{{ ENV_TYPE }}_{{ VER }}.cidr_block, 3, 1)}"
+   vpc_id = "${aws_vpc.vpc_{{ PROJ }}_{{ ENV_TYPE }}_{{ VER }}.id}"
+   availability_zone = "{{ aws['availability_zone'] }}"
+
+  tags = {
+   Name = "subnet_{{ PROJ }}_{{ ENV_TYPE }}_{{ VER }}"
+   Version = "{{ VER }}"
+  }
 }
 
 
-//security.tf
 resource "aws_security_group" "{{ ENV_TYPE }}_{{ VER }}_sgr_qto_web" {
 name = "{{ ENV_TYPE }}_{{ VER }}_sgr_qto_web"
-vpc_id = "${aws_vpc.{{ ENV_TYPE }}_{{ VER }}_vpc.id}"
+vpc_id = "${aws_vpc.vpc_{{ PROJ }}_{{ ENV_TYPE }}_{{ VER }}.id}"
 
   // morbo dev
   ingress {
@@ -173,32 +177,45 @@ vpc_id = "${aws_vpc.{{ ENV_TYPE }}_{{ VER }}_vpc.id}"
 }
 
 
+
 resource "aws_internet_gateway" "{{ ENV_TYPE }}_{{ VER }}_gw" {
-	vpc_id = "${aws_vpc.{{ ENV_TYPE }}_{{ VER }}_vpc.id}"
+   vpc_id = "${aws_vpc.vpc_{{ PROJ }}_{{ ENV_TYPE }}_{{ VER }}.id}"
+  
+  tags = {
+   Name = "{{ ENV_TYPE }}_{{ VER }}_aws_internet_gateway"
+   Version = "{{ VERSION}}"
+  }
 }
 
 resource "aws_route_table" "{{ ENV_TYPE }}_{{ VER }}_route-table" {
-	vpc_id = "${aws_vpc.{{ ENV_TYPE }}_{{ VER }}_vpc.id}"
+   vpc_id = "${aws_vpc.vpc_{{ PROJ }}_{{ ENV_TYPE }}_{{ VER }}.id}"
 	route {
 		cidr_block = "0.0.0.0/0"
 		gateway_id = "${aws_internet_gateway.{{ ENV_TYPE }}_{{ VER }}_gw.id}"
 	}
+  
+  tags = {
+   Name = "{{ ENV_TYPE }}_{{ VER }}_aws_route_table"
+   Version = "{{ VERSION}}"
+  }
 }
 
-resource "aws_route_table_association" "subnet-association" {
-  subnet_id      = "${aws_subnet.{{ ENV_TYPE }}_{{ VER }}_subnet.id}"
+resource "aws_route_table_association" "{{ ENV_TYPE }}_{{ VER }}_subnet-association" {
+  subnet_id      = "${aws_subnet.subnet_{{ PROJ }}_{{ ENV_TYPE }}_{{ VER }}.id}"
   route_table_id = "${aws_route_table.{{ ENV_TYPE }}_{{ VER }}_route-table.id}"
+  
 }
 
 resource "aws_key_pair" "{{ ENV_TYPE }}_{{ VER }}_aws_key_pair" {
   key_name   = "$key_name"
-  public_key = "$public_key"
+  public_key = "$public_ssh_key_content"
+
 }
 
 resource "aws_instance" "{{ ENV_TYPE }}_{{ VER }}_qto_inst" {
 	ami           = "${data.aws_ami.ubuntu.id}"
 	instance_type = "t2.micro"
-  	subnet_id      = "${aws_subnet.{{ ENV_TYPE }}_{{ VER }}_subnet.id}"
+  	subnet_id      = "${aws_subnet.subnet_{{ PROJ }}_{{ ENV_TYPE }}_{{ VER }}.id}"
    associate_public_ip_address = "true"
 	security_groups = ["${aws_security_group.{{ ENV_TYPE }}_{{ VER }}_sgr_qto_web.id}"]
 	key_name      = "$key_name"

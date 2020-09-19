@@ -13,7 +13,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $t = Test::Mojo->new('Qto');
    my $config = $t->app->config ; 
    # if the product instance id tst -> tst_qto
-   my $db = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
+   my $db = $config->{'env'}->{'db'}->{ 'postgres_app_db' } ; 
 	$t->get_ok('/' . $db . '/select-databases')->status_is(200) ; 
 
    my $url = '/' . $db . '/select-item-meta-for' ; 

@@ -1,6 +1,6 @@
 -- v0.8.4
 
--- \echo 'If necessary, perform DROP TABLE IF EXISTS app_items;'
+-- \echo 'If necessary, perform -- DROP TABLE IF EXISTS app_items;'
 
 -- \echo '5. Creating the app_items table'
 

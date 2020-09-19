@@ -1,4 +1,4 @@
--- \echo 'DROP TABLE IF EXISTS yearly_issues ;'
+-- \echo '-- DROP TABLE IF EXISTS yearly_issues ;'
 
 SELECT 'Creating the yearly_issues table'; 
 

@@ -32,8 +32,8 @@ do_generate_psql_select_into_another_table(){
    IFS='' read -r -d '' perl_code <<"EOF_SELECT_INTO_ANOTHER_TABLE_PERL_CODE"
       use strict; use warnings; binmode STDOUT, ":utf8"; use utf8; use JSON; use Data::Printer;use Mojo::Template; use feature ':5.12';
       my $mt = Mojo::Template->new;
-      say $mt->render(<<'EOF', $ENV{'postgres_db_name'}, $ENV{'table_name_01'},$ENV{'table_name_02'} , $ENV{'cols_lst_comma'}, $ENV{'cols_lst_excluded'});
-      % my ($postgres_db_name, $table_name_01, $table_name_02, $cols_lst_comma, $cols_lst_excluded) = @_;
+      say $mt->render(<<'EOF', $ENV{'postgres_app_db'}, $ENV{'table_name_01'},$ENV{'table_name_02'} , $ENV{'cols_lst_comma'}, $ENV{'cols_lst_excluded'});
+      % my ($postgres_app_db, $table_name_01, $table_name_02, $cols_lst_comma, $cols_lst_excluded) = @_;
       INSERT INTO <%= $table_name_02 %>
       ( <%= $cols_lst_comma %> )
       SELECT <%= $cols_lst_comma %>
@@ -46,12 +46,12 @@ EOF_SELECT_INTO_ANOTHER_TABLE_PERL_CODE
 
    if [[ $do_print -eq 1 ]]; then
       echo "::: start $msg"
-      perl -e "$perl_code" | tee /tmp/$postgres_db_name.select-$table_name_01-into-$table_name_02.sql
+      perl -e "$perl_code" | tee /tmp/$postgres_app_db.select-$table_name_01-into-$table_name_02.sql
       echo -e ":::  stop $msg \n\n"
       if [[ $do_run_sql -eq 1 ]]; then
-         PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} \
-            --port $postgres_db_port --host $postgres_db_host -t -d ${postgres_db_name:-} \
-            < /tmp/$postgres_db_name.select-$table_name_01-into-$table_name_02.sql
+         PGPASSWORD=${postgres_sys_usr_admin_pw:-} psql -v -t -X -w -U ${postgres_sys_usr_admin:-} \
+            --port $postgres_rdbms_port --host $postgres_rdbms_host -t -d ${postgres_app_db:-} \
+            < /tmp/$postgres_app_db.select-$table_name_01-into-$table_name_02.sql
       fi
    fi
 }
@@ -63,9 +63,9 @@ do_generate_psql_select_all(){
    IFS='' read -r -d '' perl_code <<"EOF_SELECT_ALL_PERL_CODE"
       use strict; use warnings; binmode STDOUT, ":utf8"; use utf8; use JSON; use Data::Printer;use Mojo::Template; use feature ':5.12';
       my $mt = Mojo::Template->new;
-      say $mt->render(<<'EOF', $ENV{'postgres_db_name'}, $ENV{'table_name_01'}, $ENV{'cols_lst_comma'});
-      % my ($postgres_db_name, $table_name_01, $cols_lst_comma) = @_;
-      % say "SELECT $cols_lst_comma FROM $postgres_db_name.$table_name_01;"
+      say $mt->render(<<'EOF', $ENV{'postgres_app_db'}, $ENV{'table_name_01'}, $ENV{'cols_lst_comma'});
+      % my ($postgres_app_db, $table_name_01, $cols_lst_comma) = @_;
+      % say "SELECT $cols_lst_comma FROM $postgres_app_db.$table_name_01;"
 EOF
 EOF_SELECT_ALL_PERL_CODE
 
@@ -117,7 +117,7 @@ do_init(){
    my_name_ext=`basename $0`
    RUN_UNIT=${my_name_ext%.*}
    
-   export postgres_db_name=${1:-}
+   export postgres_app_db=${1:-}
    export table_name_01=${2:-}
    export table_name_02=${3:-}
 }
@@ -185,7 +185,7 @@ EOF_USAGE
 
 
 do_get_psql_meta_data(){
-   export meta_json_str=$(PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} --port $postgres_db_port --host $postgres_db_host -t -d ${postgres_db_name:-} -c "select array_to_json(array_agg(row_to_json(t))) from ( SELECT * from information_schema.columns where 1=1 and table_catalog='"$postgres_db_name"' and table_name='"$table_name_01"') t")
+   export meta_json_str=$(PGPASSWORD=${postgres_sys_usr_admin_pw:-} psql -v -t -X -w -U ${postgres_sys_usr_admin:-} --port $postgres_rdbms_port --host $postgres_rdbms_host -t -d ${postgres_app_db:-} -c "select array_to_json(array_agg(row_to_json(t))) from ( SELECT * from information_schema.columns where 1=1 and table_catalog='"$postgres_app_db"' and table_name='"$table_name_01"') t")
 }
 
 

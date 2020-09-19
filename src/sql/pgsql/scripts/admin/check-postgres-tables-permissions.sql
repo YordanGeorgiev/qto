@@ -18,7 +18,7 @@ where a.tablename='monthly_issues'
 
 /* 
 usage: 
-psql -d $postgres_db_name < src/sql/pgsql/scripts/check-postgres-tables-permissions.sql
+psql -d $postgres_app_db < src/sql/pgsql/scripts/check-postgres-tables-permissions.sql
 
 */
 

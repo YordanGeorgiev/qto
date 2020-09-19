@@ -71,7 +71,7 @@ package Qto::App::Ctrl::CtrlHTableToHTable ;
       $msg = "START hierarchy conversion for table: $table " ; 
       $objLogger->info ( $msg ) ; 
 
-      my $db            = $ENV{'postgres_db_name'} ; 
+      my $db            = $ENV{'postgres_app_db'} ; 
       my $objModel      = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item ) ; 
       my $objRdrDbsFcry    = 'Qto::App::Db::In::RdrDbsFcry'->new(\$config, \$objModel );
       my $objRdrDb 			= $objRdrDbsFcry->doSpawn("$rdbms_type");
@@ -95,7 +95,7 @@ package Qto::App::Ctrl::CtrlHTableToHTable ;
       $hsr2 = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2 , $table ) ; 
       p $hsr2 ; sleep 1 ; print "EOF p \$hsr2 in CtrlHTableToHTable.pm \n";
       $objModel->set('hsr2' , $hsr2 );
-      $objModel->set('postgres_db_name',$ENV{'postgres_db_name'}) ;
+      $objModel->set('postgres_app_db',$ENV{'postgres_app_db'}) ;
       ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objModel , $table ) ; 
 
       return ( $ret , $msg ) ; 

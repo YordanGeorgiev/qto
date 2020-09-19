@@ -1,7 +1,7 @@
 -- run as the postgres user
 -- \c postgres
 CREATE USER usrqtoadmin WITH SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS PASSWORD 'usrqtoadmin';
--- alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -q -t -X -w -U ${postgres_db_useradmin:-}"
+-- alias psql="PGPASSWORD=${postgres_sys_usr_admin_pw:-} psql -v -q -t -X -w -U ${postgres_sys_usr_admin:-}"
 -- psql -d dev_qto < src/sql/pgsql/list-table-priviledges.sql | less
 -- \c dev_qto
 ALTER ROLE usrqtoapp WITH PASSWORD 'usrqtoapp' LOGIN ;

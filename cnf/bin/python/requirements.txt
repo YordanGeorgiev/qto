@@ -1,7 +1,7 @@
 pyyaml
 glob3
 jinja2
-pprint
+pprintpp
 pprintjson
 requests
 jq

@@ -1,7 +1,7 @@
 -- file: src/sql/pgsql/scripts/admin/list-schema-tables.sql
 -- usage: 
 /**
-alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-}"
+alias psql="PGPASSWORD=${postgres_sys_usr_admin_pw:-} psql -v -t -X -w -U ${postgres_sys_usr_admin:-}"
 psql -d dev_qto < src/sql/pgsql/scripts/admin/list-schema-tables.sql 
 */
 

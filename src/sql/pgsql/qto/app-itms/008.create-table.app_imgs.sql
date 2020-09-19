@@ -1,4 +1,4 @@
--- \echo 'If necessary, perform DROP TABLE IF EXISTS app_imgs CASCADE'
+-- \echo 'If necessary, perform -- DROP TABLE IF EXISTS app_imgs CASCADE'
 
 -- \echo '8. Creating the app_imgs table'
 

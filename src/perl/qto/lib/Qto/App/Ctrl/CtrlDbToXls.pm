@@ -59,7 +59,7 @@ package Qto::App::Ctrl::CtrlDbToXls ;
       my $amsr2               = {} ;      # this is the meta hash describing the data hash ^^
       my $xls_file            = '' ;  
 
-      my $db                     = $objModel->get( 'env.postgres_db_name' );
+      my $db                     = $objModel->get( 'env.postgres_app_db' );
 	   push ( @tables , split(',',$tables ) ) ; 
 
       my $objRdrDbsFcry       = 'Qto::App::Db::In::RdrDbsFcry'->new( \$config , \$objModel  ) ; 

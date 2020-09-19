@@ -134,7 +134,7 @@ sub doReloadProjectsDbMeta {
    my $cnf                 = $self->config->{'env'}->{'db'}; # the db section only ...
 
    my $proj_dbs_str        = $cnf->{'project_databases'};
-   $proj_dbs_str .= ' , '. $cnf->{'postgres_db_name'} unless ( $cnf->{'project_databases'} eq $cnf->{'postgres_db_name'});
+   $proj_dbs_str .= ' , '. $cnf->{'postgres_app_db'} unless ( $cnf->{'project_databases'} eq $cnf->{'postgres_app_db'});
    $proj_dbs_str           =~ s/\s+//g;
    my @dbs                 = split (',',$proj_dbs_str);
 
@@ -274,7 +274,7 @@ sub doSetHooks {
          
          # but if the :db is not configured nor static root => something fishy !!!
          unless ( defined ($config->{'env'}->{'app'}->{$db . '.meta-routes'} )) {
-            my $redirect_db = $config->{'env'}->{'db'}->{'postgres_db_name'};
+            my $redirect_db = $config->{'env'}->{'db'}->{'postgres_app_db'};
             my $msg = " the project db you requested : $db does not exist !!!" ;
             my $backend_error_url  = '/' . toPlainName($redirect_db) . '/serve/forbidden?&msg=' . url_encode($msg);
             $msg .= ' unauthorized attempt to access ' . $route . ' backend route ';

@@ -9,8 +9,8 @@ doRunDataLoadTests(){
 	do_log "DEBUG START doRunDataLoadTests"
 	
    do_log "INFO START test the Select Controller "
-   do_log " $postgres_db_name/select-tables"
-   do_log " $postgres_db_name/select/<<table-name>>"
+   do_log " $postgres_app_db/select-tables"
+   do_log " $postgres_app_db/select/<<table-name>>"
    test_script='src/perl/qto/t/lib/Qto/App/benchmarks/LoadTestSelect.t'
    do_log "INFO START $test_script"
    perl src/perl/qto/t/lib/Qto/Controller/LoadTestSelect.pl

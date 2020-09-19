@@ -11,7 +11,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 
 my $t       = Test::Mojo->new('Qto') ;
 my $config  = $t->app->config ; 
-my $db      = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
+my $db      = $config->{'env'}->{'db'}->{ 'postgres_app_db' } ; 
 use Qto::App::Utils::Timer ; 
 my $objTimer = 'Qto::App::Utils::Timer'->new;
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits(); 

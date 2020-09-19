@@ -27,7 +27,7 @@ sub main {
    my $exp_err_msg   = '' ; 
    my $t             = Test::Mojo->new('Qto');
    my $config        = $t->app->config ; 
-   my $db            = $config->{'env'}->{'db'}->{'postgres_db_name'} ; # because each instance has it's own ...
+   my $db            = $config->{'env'}->{'db'}->{'postgres_app_db'} ; # because each instance has it's own ...
    my $ua            = $t->ua ; # the user agent , aka http client
    my $objTimer      = {} ;
    my $cnt           = 'the content of a cell' ; 

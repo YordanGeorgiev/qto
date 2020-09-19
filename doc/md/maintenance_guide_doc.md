@@ -219,7 +219,7 @@ Qto provides you with the means and tools to work on tens of databases, yet one 
     doExportJsonSectionVars $PROJ_CONF_FILE '.env.db'
     
     # set the psql with the correct credentials valid ONLY for this proj
-    alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} --port $postgres_db_port --host $postgres_db_host"
+    alias psql="PGPASSWORD=${postgres_sys_usr_admin_pw:-} psql -v -t -X -w -U ${postgres_sys_usr_admin:-} --port $postgres_rdbms_port --host $postgres_rdbms_host"
     
     # now you can run any psql 
     psql -d my_db -c "\dl"
@@ -270,7 +270,7 @@ Because of the naming convention removing backups requires as little effort as:
 ### 4.7. Restore a database
 You restore a database by first running the pgsql scripts of the project database and than restoring the insert data 
 
-    psql -d $postgres_db_name < \
+    psql -d $postgres_app_db < \
     dat/mix/sql/pgsql/dbdumps/dev_qto/dev_qto.20180813_202202.insrt.dmp.sql
 
 #### 4.7.1. Restore a database from full database backup
@@ -299,14 +299,14 @@ This type of restore assumes you are 100% sure that the schema you took the db i
     
     bash src/bash/qto/qto.sh -a run-qto-db-ddl
     
-    psql -d $postgres_db_name < \
+    psql -d $postgres_app_db < \
     dat/mix/sql/pgsql/dbdumps/dev_qto/dev_qto.20180813_202202.insrt.dmp.sql
 
 ### 4.8. Restore a database table
 You restore a database table by first running the pgsql scripts of the project database or ONLY for that table and than restoring the insert data from the table insert file.
 
     # re-apply the table ddl
-    psql -d $postgres_db_name < src/sql/pgsql/dev_qto/13.create-table-requirements.sql
+    psql -d $postgres_app_db < src/sql/pgsql/dev_qto/13.create-table-requirements.sql
 
 ### 4.9. Create a full backup of an instance site from a satellite host
 Once an instance site is up-and-running - it might be a good idea to create a full-backup of the site's instance data, software and configuration:
@@ -468,7 +468,7 @@ Closing a monthly period would simply mean to ensure that all the done issues wi
 
     source lib/bash/funcs/export-json-section-vars.sh
     doExportJsonSectionVars cnf/env/tst.env.json '.env.db'
-    alias psql="PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} --port $postgres_db_port --host $postgres_db_host"
+    alias psql="PGPASSWORD=${postgres_sys_usr_admin_pw:-} psql -v -t -X -w -U ${postgres_sys_usr_admin:-} --port $postgres_rdbms_port --host $postgres_rdbms_host"
     psql -d tst_qto -c "delete from monthly_issues_202004 where issues_status_guid = 'e486d2d7-0789-4af2-8466-9b8c03743d85';"
     clear ; history | cut -c 8-
 

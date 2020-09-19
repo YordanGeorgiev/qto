@@ -12,7 +12,7 @@ doPublishDbdumpToS3(){
    aws configure list
    set -x
    # remove the grants to disable full publicity of the data ...
-   aws s3 --profile default cp "$dump_file" "s3://$bucket/$postgres_db_name"'.latest.insrts.dmp.sql' \
+   aws s3 --profile default cp "$dump_file" "s3://$bucket/$postgres_app_db"'.latest.insrts.dmp.sql' \
       --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
 	set +x
 

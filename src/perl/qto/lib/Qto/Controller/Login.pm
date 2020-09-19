@@ -85,7 +85,7 @@ sub doLoginUser {
    $redirect_url        = '/' . $pdb . '/search' unless $redirect_url ;
    
    my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , 'login') ;
-   $objModel->set('postgres_db_name' , $db ) ; 
+   $objModel->set('postgres_app_db' , $db ) ; 
    $objLogger->info ( "login attempt for " . $self->setEmptyIfNull($email)) ; 
 
    my $objCnrPostPrms   = 'Qto::App::IO::In::CnrPostPrms'->new(\$config , \$objModel );

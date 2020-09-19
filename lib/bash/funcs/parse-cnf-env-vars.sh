@@ -2,8 +2,8 @@
 # ---------------------------------------------------------
 # cat cnf/qto.dev.host-name.cnf
 # [MainSection]
-# postgres_db_name     = dev_qto
-# postgres_db_host     = host-name
+# postgres_app_db     = dev_qto
+# postgres_rdbms_host     = host-name
 # 
 # call by: doParseCnfEnvVars cnf/qto.dev.host-name.cnf
 # ---------------------------------------------------------

@@ -16,7 +16,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $t       = Test::Mojo->new('Qto');
    my $ua      = $t->ua ; # the user agent , aka http client
    my $config  = $t->app->config ; 
-   my $db      = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
+   my $db      = $config->{'env'}->{'db'}->{ 'postgres_app_db' } ; 
    my $url     = '/' . $db . '/search?for=' ; 
 
    $tm = "not at all for search param specified, presents blank search" ; 

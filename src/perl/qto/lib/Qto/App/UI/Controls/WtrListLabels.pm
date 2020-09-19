@@ -34,7 +34,7 @@ package Qto::App::UI::Controls::WtrListLabels ;
       my $self =     shift ; 
 
       my $hs_headers = $objModel->get('hs_headers');
-      my $db         = $objModel->get('postgres_db_name' ) ; 
+      my $db         = $objModel->get('postgres_app_db' ) ; 
       my $table      = $objModel->get('table_name');
       my $to_hide    = $objModel->get('list.web-action.hide');
       my @hides      = split ( ',' , $to_hide ) if defined ( $to_hide ) ; 

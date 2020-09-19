@@ -19,9 +19,9 @@ doScrambleConfs(){
 			$data->{'env'}->{'aws'}->{'AWS_ACCESS_KEY_ID'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'aws'}->{'AWS_SECRET_ACCESS_KEY'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'db'}->{'postgres_usr_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
-			$data->{'env'}->{'db'}->{'postgres_os_usr_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
-			$data->{'env'}->{'db'}->{'postgres_db_user_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
-			$data->{'env'}->{'db'}->{'postgres_db_useradmin_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
+			$data->{'env'}->{'db'}->{'postgres_rdbms_usr_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
+			$data->{'env'}->{'db'}->{'postgres_app_usr_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
+			$data->{'env'}->{'db'}->{'postgres_sys_usr_admin_pw'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'db'}->{'app_user_pwd'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
 			$data->{'env'}->{'db'}->{'AdminEmail'} = rndStr 12, 'A'..'Z', 0..9, 'a'..'z' ; 
          my $json = JSON->new->allow_nonref;

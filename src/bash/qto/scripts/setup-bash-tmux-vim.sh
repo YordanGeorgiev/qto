@@ -6,12 +6,12 @@
 main(){
    do_enable_locate
    do_set_vars
-   do_provision_tmux
-   do_provision_vim
-   do_provision_git
-   do_provision_ssh_keys
+   do_chk_provision_tmux
+   do_chk_provision_vim
+   do_chk_provision_git
+   do_chk_provision_ssh_keys
 	do_fake_history
-   do_provision_bash
+   do_chk_provision_bash
 	do_echo_copy_pasteables
 }
 
@@ -28,7 +28,7 @@ do_set_vars(){
 }
 
 
-do_provision_tmux(){
+do_chk_provision_tmux(){
 
    echo 'start ::: provisioning tmux'
    which tmux 2>/dev/null || {
@@ -49,7 +49,7 @@ do_provision_tmux(){
 }
 
 
-do_provision_vim(){
+do_chk_provision_vim(){
 
    echo 'start ::: provisioning vim'
    which vim 2>/dev/null || {
@@ -94,7 +94,7 @@ EOF_NGINX
 }
 
 
-do_provision_git(){
+do_chk_provision_git(){
 
    echo 'start ::: provisioning git'
    test -f ~/.gitconfig && cp -v ~/.gitconfig ~/.gitconfig.$(date "+%Y%m%d_%H%M%S")
@@ -142,7 +142,7 @@ EOF_GIT
 }
 
 
-do_provision_ssh_keys(){
+do_chk_provision_ssh_keys(){
 
    which expect || sudo apt-get update && sudo apt-get install -y expect
 
@@ -162,7 +162,7 @@ EOF_EXPECT
 
 }
 
-do_provision_bash(){
+do_chk_provision_bash(){
 
    echo 'start ::: fetching bash_opts'
    wget -O ~/.bash_opts.`hostname -s` \

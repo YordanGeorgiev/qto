@@ -18,15 +18,15 @@ doBuildQtoDockerImage(){
 
    docker build \
    --build-arg PRODUCT_INSTANCE_DIR=$PRODUCT_INSTANCE_DIR \
-   --build-arg postgres_db_name=$postgres_db_name \
+   --build-arg postgres_app_db=$postgres_app_db \
    --build-arg TZ=${TZ:-} \
    --build-arg ENV_TYPE=$ENV_TYPE \
    --build-arg USER=$USER \
    --build-arg UID=$UID \
    --build-arg GROUP=$GROUP \
    --build-arg GID=$GID \
-   --build-arg postgres_db_name=$postgres_db_name \
-   --build-arg postgres_db_useradmin=$postgres_db_useradmin \
+   --build-arg postgres_app_db=$postgres_app_db \
+   --build-arg postgres_sys_usr_admin=$postgres_sys_usr_admin \
    --build-arg root_pwd=$root_pwd \
    --build-arg app_user_pwd=$app_user_pwd \
    -t qto-image:$product_version.$env_type .

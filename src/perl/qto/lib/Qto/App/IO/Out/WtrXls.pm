@@ -40,7 +40,7 @@ package Qto::App::IO::Out::WtrXls ;
       my $omsr2            = {} ; 
       my $msg              = ''  ; 
 
-      my $db = ( defined($objModel->get('postgres_db_name')) ? $objModel->get('postgres_db_name') : 'dev_qto' );
+      my $db = ( defined($objModel->get('postgres_app_db')) ? $objModel->get('postgres_app_db') : 'dev_qto' );
       my $objTimer = 'Qto::App::Utils::Timer'->new() ; 
 	   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer->GetTimeUnits();
       my $nice_month  = "$year" . '-' . "$mon" ; 

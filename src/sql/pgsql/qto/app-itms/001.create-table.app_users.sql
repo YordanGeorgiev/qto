@@ -1,7 +1,7 @@
 -- file: src/sql/pgsql/qto/app-itms/001.create-table.app_users.sql
 -- v0.8.4
 
--- \echo 'If necessary, perform DROP TABLE IF EXISTS app_users'
+-- \echo 'If necessary, perform -- DROP TABLE IF EXISTS app_users'
 
 -- \echo '1. Creating the app_users table'
 

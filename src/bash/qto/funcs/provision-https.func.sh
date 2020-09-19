@@ -1,27 +1,6 @@
 doProvisionHttps(){
    do_export_json_section_vars $PRODUCT_INSTANCE_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
 
-   # if we have already got NOT yet registered the ssl cert
-   sudo test -f /etc/letsencrypt/live/$web_host/privkey.pem || {
-      echo 'at this moment you should have your dns registered according to the docs  if not abort'
-      sleep 6
-      sudo apt-get update
-      sudo apt-get install software-properties-common
-      sudo add-apt-repository universe
-      expect <<- EOF_EXPECT
-         set timeout -1
-         sudo add-apt-repository ppa:certbot/certbot
-         expect "Press [ENTER] to continue or Ctrl-c to cancel adding it."
-         send -- "\r"
-         expect eof
-EOF_EXPECT
-   sudo apt-get install -y certbot python-certbot-nginx
-
-      # src: https://medium.com/@mightywomble/how-to-set-up-nginx-reverse-proxy-with-lets-encrypt-8ef3fd6b79e5
-      echo put in the backgroup and run the following command 
-      echo sudo certbot --nginx -d $web_host 
-   }
-   
    sudo test -f /etc/letsencrypt/live/$web_host/privkey.pem && {
       source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/export-json-section-vars.sh
       for env in `echo dev tst prd`; do \

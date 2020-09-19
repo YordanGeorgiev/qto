@@ -17,7 +17,7 @@ use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
    my $emsg       = '' ; # the expected msg on the ui
    my $t          = Test::Mojo->new('Qto');
    my $config     = $t->app->config ; 
-   my $db         = $config->{'env'}->{'db'}->{'postgres_db_name'} ; 
+   my $db         = $config->{'env'}->{'db'}->{'postgres_app_db'} ; 
    my $tx         = {}  ; # the transaction object 
    my $url        = '/' . $db . '/logon' ; 
    my $email      = '' ; 

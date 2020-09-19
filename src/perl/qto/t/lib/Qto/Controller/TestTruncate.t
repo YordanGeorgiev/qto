@@ -17,7 +17,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $t             = Test::Mojo->new('Qto');
    my $config        = $t->app->config ; 
    my $exp_err_msg   = '' ; 
-   my $db            = $config->{'env'}->{'db'}->{'postgres_db_name'} ; # OBS instance specific !!!
+   my $db            = $config->{'env'}->{'db'}->{'postgres_app_db'} ; # OBS instance specific !!!
    my $ua            = $t->ua ; 
    my $objTimer      = {} ;
    my $env           = $config->{'env'}->{'run'}->{'ENV_TYPE' };

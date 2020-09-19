@@ -131,7 +131,7 @@ sub do_init {
    }
 
    p $config ; # not a debug print !!!
-   my $db = $config->{'env'}->{'db'}->{'postgres_db_name'};
+   my $db = $config->{'env'}->{'db'}->{'postgres_app_db'};
 
    $objLogger = 'Qto::App::Utils::Logger'->new(\$config);
    my $m = "START MAIN";

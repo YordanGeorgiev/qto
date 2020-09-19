@@ -81,6 +81,6 @@ EOF_PERL_CODE
 #echo eof perl_code
 sql_code=$(perl -e "$perl_code")
 echo $sql_code
-PGPASSWORD=${postgres_db_useradmin_pw:-} psql -v -t -X -w -U ${postgres_db_useradmin:-} \
-            --port $postgres_db_port --host $postgres_db_host -t -d ${postgres_db_name:-} \
+PGPASSWORD=${postgres_sys_usr_admin_pw:-} psql -v -t -X -w -U ${postgres_sys_usr_admin:-} \
+            --port $postgres_rdbms_port --host $postgres_rdbms_host -t -d ${postgres_app_db:-} \
             -c "$sql_code"

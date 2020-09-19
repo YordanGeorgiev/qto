@@ -17,7 +17,7 @@ use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
    my $tm      = '' ; # the test message for each test 
    my $t       = Test::Mojo->new('Qto');
    my $config  = $t->app->config ; 
-   my $db      = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
+   my $db      = $config->{'env'}->{'db'}->{ 'postgres_app_db' } ; 
 
    $tm         = "the $db db is not change while changed to env name";
    $db         = toEnvName ( $db , $config) ;

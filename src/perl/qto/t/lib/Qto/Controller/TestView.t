@@ -18,7 +18,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $response   = {} ; 
    my $t          = Test::Mojo->new('Qto');
    my $config     = $t->app->config ; 
-   my $db         = $config->{'env'}->{'db'}->{ 'postgres_db_name' } ; 
+   my $db         = $config->{'env'}->{'db'}->{ 'postgres_app_db' } ; 
 
 	$t->get_ok('/' . $db . '/select-databases')->status_is(200) ; 
    $ua  = $t->ua ; 

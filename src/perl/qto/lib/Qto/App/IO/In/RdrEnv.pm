@@ -29,7 +29,7 @@ package Qto::App::IO::In::RdrEnv ;
    sub doRead {
       my $self = shift ;   
 
-      $objModel->set('env.postgres_db_name' , $ENV{'postgres_db_name'});
+      $objModel->set('env.postgres_app_db' , $ENV{'postgres_app_db'});
    }
 
 #SYNOPSIS

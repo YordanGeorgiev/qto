@@ -94,7 +94,7 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
       # print " STOP before \n" ; 
 
       if ( $load_model eq 'upsert' ) {
-         $objModel->set('postgres_db_name',$ENV{'postgres_db_name'}) ;
+         $objModel->set('postgres_app_db',$ENV{'postgres_app_db'}) ;
          ( $ret , $msg  )        = $objWtrDb->doUpsertTables( \$objModel , \@tables) ; 
          
          p ( $objModel->get('hsr3') ) if $module_trace == 1 ; 
@@ -110,7 +110,7 @@ package Qto::App::Ctrl::CtrlXlsToDb ;
             $hsr2 = $objCnrXlsHsr3ToDbHsr3->doConvert ( $hsr2 , $table ) ; 
             p $hsr2 ;
             $objModel->set('hsr2' , $hsr2 );
-            $objModel->set('postgres_db_name',$ENV{'postgres_db_name'}) ;
+            $objModel->set('postgres_app_db',$ENV{'postgres_app_db'}) ;
             ( $ret , $msg  )        = $objWtrDb->doUpsertTable( \$objModel , $table ) ; 
          }
 

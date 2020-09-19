@@ -7,14 +7,14 @@ export QTO_JWT_AUTH=1
 case "$1" in
 	start)
    	echo "Starting qto "
-		/bin/bash /home/ubuntu/opt/qto/qto.0.8.6.dev.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-start &
-		/bin/bash /home/ubuntu/opt/qto/qto.0.8.6.tst.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-start &
-		/bin/bash /home/ubuntu/opt/qto/qto.0.8.6.prd.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-start &
+		/bin/bash /home/ubuntu/opt/qto/qto.0.8.7.dev.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-start &
+		/bin/bash /home/ubuntu/opt/qto/qto.0.8.7.tst.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-start &
+		/bin/bash /home/ubuntu/opt/qto/qto.0.8.7.prd.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-start &
     ;;
   stop)
-		/bin/bash /home/ubuntu/opt/qto/qto.0.8.6.dev.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-stop &
-		/bin/bash /home/ubuntu/opt/qto/qto.0.8.6.tst.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-stop &
-		/bin/bash /home/ubuntu/opt/qto/qto.0.8.6.prd.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-stop &
+		/bin/bash /home/ubuntu/opt/qto/qto.0.8.7.dev.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-stop &
+		/bin/bash /home/ubuntu/opt/qto/qto.0.8.7.tst.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-stop &
+		/bin/bash /home/ubuntu/opt/qto/qto.0.8.7.prd.ubuntu@qto.fi/src/bash/qto/qto.sh -a mojo-hypnotoad-stop &
     ;;
   status)
 		sudo ps -ef | grep -i qto

@@ -1,7 +1,7 @@
 -- file: src/sql/pgsql/qto/app-itms/003.create-table.app_items_roles_permissions.sql
 -- v0.8.4
 
--- \echo 'If necessary, perform DROP TABLE IF EXISTS app_items_roles_permissions;' 
+-- \echo 'If necessary, perform -- DROP TABLE IF EXISTS app_items_roles_permissions;' 
 
 -- \echo '4. Creating the app_items_roles_permissions table'
 

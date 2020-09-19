@@ -1,7 +1,7 @@
 -- file: src/sql/pgsql/qto/app-itms/002.create-table.app_roles.sql
 -- v0.8.4
 
--- \echo 'If necessary, perform DROP TABLE IF EXISTS app_roles;'
+-- \echo 'If necessary, perform -- DROP TABLE IF EXISTS app_roles;'
 
 -- \echo '1. Creating the app_roles table'
 

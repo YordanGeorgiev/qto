@@ -20,7 +20,7 @@ doRunContainer(){
       -p  127.0.0.1:${mojo_morbo_port:-}:$mojo_morbo_port \
       'qto-image':${product_version:-}.$env_type
    
-   # -p 127.0.0.1:${postgres_db_port:-}:$postgres_db_port \
+   # -p 127.0.0.1:${postgres_rdbms_port:-}:$postgres_rdbms_port \
 
    printf "\n"
    echo do check which containers are running 

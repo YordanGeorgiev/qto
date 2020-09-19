@@ -47,11 +47,11 @@ package Qto::App::Db::In::Postgres::MojoPgWrapper ;
 
       $objLogger 			      = 'Qto::App::Utils::Logger'->new( \$config ) ;
       my $dbConfig = $config->{'env'}->{'db'} ; 
-		my $postgres_db_host    = $ENV{ 'postgres_db_host' } || $dbConfig->{'postgres_db_host'} || '127.0.0.1' ;
-		my $postgres_db_port    = $ENV{ 'postgres_db_port' } || $dbConfig->{'postgres_db_port'} || '15432' ; 
-		my $postgres_db_user 	= $ENV{ 'postgres_db_user' } || $dbConfig->{'postgres_db_user'} || 'usrqtoapp' ; 
-		my $postgres_db_user_pw = $ENV{ 'postgres_db_user_pw' } || $dbConfig->{'postgres_db_user_pw'} 	|| 'no_pass_provided!!!' ; 
-      my $conn_str            = 'postgresql://' . $postgres_db_user . ':' . $postgres_db_user_pw .  '@' . $postgres_db_host . ':' . $postgres_db_port . '/' . $db . '?sslmode=disable'; 
+		my $postgres_rdbms_host    = $ENV{ 'postgres_rdbms_host' } || $dbConfig->{'postgres_rdbms_host'} || '127.0.0.1' ;
+		my $postgres_rdbms_port    = $ENV{ 'postgres_rdbms_port' } || $dbConfig->{'postgres_rdbms_port'} || '15432' ; 
+		my $postgres_app_usr 	= $ENV{ 'postgres_app_usr' } || $dbConfig->{'postgres_app_usr'} || 'usrqtoapp' ; 
+		my $postgres_app_usr_pw = $ENV{ 'postgres_app_usr_pw' } || $dbConfig->{'postgres_app_usr_pw'} 	|| 'no_pass_provided!!!' ; 
+      my $conn_str            = 'postgresql://' . $postgres_app_usr . ':' . $postgres_app_usr_pw .  '@' . $postgres_rdbms_host . ':' . $postgres_rdbms_port . '/' . $db . '?sslmode=disable'; 
       #debug $objLogger->debug ( "conn_str: $conn_str " ) ; 
       $self = 'Mojo::Pg'->new($conn_str);
       return $self ; 
