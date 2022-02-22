@@ -3,6 +3,10 @@
 " main principle - Don't put any lines in your vimrc that you don't understand !!!
 " enable syntax hightlighting
 
+" play nice with yaml and python
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType py setlocal ts=2 sts=2 sw=2 expandtab
+
 " adjust the backspace behaviour 
 set backspace=indent,eol,start
 
@@ -16,7 +20,6 @@ set winheight=92
 colorscheme elflord
 " colorscheme Tomorrow-Night-Blue
 
-" v1.1.9
 " the num of spaces for a tab - 4 is too much , 2 is too little
 " convert tabs into spaces
 set tabstop=3
@@ -26,6 +29,8 @@ set expandtab
 " set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:< 
 " but hei how-to unset the visible tabs ?!
 " :set nolist
+" how-to see the spaces as well
+" set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 " display always the row number on the left 
 set number
 
@@ -64,7 +69,7 @@ set hlsearch
 
 " yank those cheat commands, in normal mode type q: than p to paste in the opened cmdline
 " how-to search for a string recursively
-" :grep! "\<error\>" . -r
+" :grep! "\<doLogErrorMsg\>" . -r
 "
 " how-to search recursively , omit log and git files
 " :vimgrep /srch/ `find . -type f \| grep -v .git \| grep -v .log`
@@ -97,8 +102,8 @@ set wildignore+=**/node_modules/**
 " use perl regexes - src: http://andrewradev.com/2011/05/08/vim-regexes/
 noremap / /\v
 
-" my perl code under <<PRODUCT_INSTANCE_DIR>>/src/perl/<<tool-name-only-dir>>
-map <C-c><C-c> :!perl -MCarp::Always -I `pwd`/src/perl/*/ -I `pwd`/src/perl/*/lib/ -wc %
+" my perl code under <<product_instance_dir>>/src/perl/<<tool-name-only-dir>>
+" todo ?! map <C-c><C-c> :!perl -MCarp::Always -I `pwd`/src/perl/*/ -I `pwd`/src/perl/*/lib/ -wc %
 
 " use perltidy with pre-configured mojolicious settings
 " '<,'>!perltidy -pro=cnf/perl/.perltidyrc -q
@@ -166,7 +171,6 @@ set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 " recursive file search by typing :file <<str-in-file-name>>
 "set path +=**
-" to use the autocomplete in insert mode type Ctrl+N several times 
 set path=.,**
 
 " how-to open files starting with a string 
@@ -212,6 +216,7 @@ filetype plugin on
 " http://phuzz.org/vimrc.html
 " http://dougblack.io/words/a-good-vimrc.html#search
 " https://www.fprintf.net/vimCheatSheet.html
+" https://raw.githubusercontent.com/thoughtstream/Damian-Conway-s-Vim-Setup/master/plugin/smartcom.vim
 "
 " Usage:
 " ---------------------------------------------------------
@@ -229,7 +234,9 @@ filetype plugin on
 " how-to see all the registers: :reg 1 2 3 4 5 6 7 8 9
 " how-to yank from the "clipboard history" - in insert mode , Ctrl + R , 1-9
 " how-to yank " - in normal mode , 2p , 3p etc
-" how-to open all files below the root folder matching a file pattern
+" how-to yank into letter named resiters - in normal mode type "a<<command>>
+" how-to paste from letter named registers in normal mode "ap
+" how-to open all files bellow the root folder matching a file pattern
 " how-to set marks globally - in normal mode mA , mB  
 " how-to jump to marks globally - in normal - 'A , 'B
 " how-to set marks in the current file - in normal mode mA , mB  
@@ -272,6 +279,8 @@ filetype plugin on
 " filetype indent on
 
 " src: https://stackoverflow.com/a/2460593/65706
+" to use the autocomplete in insert mode type Ctrl+N several times 
+set complete-=i
 set path=.,**
 
 " Set the type for the file type and override if file type
@@ -289,16 +298,16 @@ let sh_fold_enabled=1
 let perl_extended_vars=1
 let perl_sync_dist=250
 
-" remove the included files while searching for autocomplete by Ctrl+N in insert mode
-" check the ~/.vim/perl.vim
+" define persinsten syntax highlighting based on file extension
+au BufNewFile,BufRead,BufReadPost *.vue set syntax=javascript
 
 " list of used plugins 
-" use tab tab for smart completion , set path=.,** if it takes too long to load
+" use tab tab for smart completion, set path=.,** if it takes too long to load, because of includes
 " ~/.vim/plugin/smartcom.vim
-"
+
 " list of keyboard shortcuts
 " u - undo
-" Ctrl + R - redo
+" Ctrl + R - redo, that is Ctrl + Shift + r !!!
 " set the cursor at the top of the page in Normal mode - zt
 
 " Purpose:
@@ -313,3 +322,4 @@ let perl_sync_dist=250
 " export version=1.3.0
 "
 " eof file: ~/.vimrc
+inoremap jj <ESC>
