@@ -2,14 +2,14 @@
 #------------------------------------------------------------------------------
 #  gmail the latest created package - requires mutt binary !!!
 #------------------------------------------------------------------------------
-doGmailPackage(){
-	
+do_gmail_package(){
+
 	mutt --help >/dev/null 2>&1 ||
 	{ do_log "ERROR. mutt is not installed or not in PATH. Aborting." >&2; exit 1; }
-  
+
    if [ -z "$AdminEmail" ]; then
       msg="AdminEmail to set mail to not set !!! you need to export AdminEmail=list-of-emails-to-send-mail-to-comma-delimited" ;
-      export exit_code=1 ;  
+      export exit_code=1 ;
       do_exit "$msg";
       exit 1 ;
    fi
@@ -34,6 +34,6 @@ doGmailPackage(){
 	);
 	done
 
-	rm -fv "$zip_file"'.txt'	
+	rm -fv "$zip_file"'.txt'
 
 }

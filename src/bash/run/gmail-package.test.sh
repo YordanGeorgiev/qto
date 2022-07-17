@@ -4,10 +4,10 @@
 # ---------------------------------------------------------
 # todo: add doTestGmailPackage comments ...
 # ---------------------------------------------------------
-doTestGmailPackage(){
+do_test_gmail_package(){
 
    do_log "DEBUG START doTestGmailPackage"
-	
+
    cat doc/txt/qto/tests/pckg/gmail-package.test.txt
    sleep "$sleep_interval"
 
