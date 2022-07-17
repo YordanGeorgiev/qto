@@ -1,5 +1,5 @@
 # usage example
-# install-csitea-web: demand_var-ENV demand_var-TGT_ORG do-build-$(component)-docker-img
+# install-the-bot: demand_var-ENV demand_var-TGT_ORG do-build-$(component)-docker-img
 demand_var-%:
 	@if [ "${${*}}" = "" ]; then \
 		echo "the var \"$*\" is not set, do set it by: export $*='value'"; \
@@ -7,7 +7,7 @@ demand_var-%:
 	fi
 
 # function usage example
-# install-csitea-web:
+# install-the-bot:
 # 	$(call demand-var,ENV)
 # 	$(call demand-var,TGT_ORG)
 # 	do-build-$(component)-docker-img

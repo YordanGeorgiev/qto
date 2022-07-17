@@ -1,4 +1,4 @@
-.PHONY: do-start-$(component)-container ## @-> start a named container - run: container=devops do-start-devops-container
+.PHONY: do-start-$(component)-container ## @-> start a named container - run: container=devops do-start-devops-ter-container
 do-start-$(component)-container: demand_var-ENV do-stop-$(component)-container
 	@clear
 	docker run -d --restart=always \

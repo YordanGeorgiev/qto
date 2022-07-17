@@ -7,35 +7,34 @@
 # 	$(call install-img,web-node,80)
 
 include lib/make/demand-var.func.mk
-
-PRODUCT := $(shell basename $$PWD)
-product:= $(shell echo `basename $$PWD`|tr '[:upper:]' '[:lower:]')
+include lib/make/stop-img-containers.func.mk
 
 define install-img
 	@clear
+	$(call demand-var,ORG)
+	$(call demand-var,APP)
 	$(call demand-var,ENV)
-	docker build . -t ${product}-$(1)-img \
+
+	@PORT_COMMAND=`[[ "${2}" == "" ]] || echo "--publish ${2}:${2}"`
+	@NO_CACHE=`[[ "${3}" == "" ]] || echo "--no-cache"`
+
+	docker build . -t ${product}-$(1)-img $${NO_CACHE}\
 		--build-arg UID=$(shell id -u) \
 		--build-arg GID=$(shell id -g) \
+		--build-arg ORG=$(ORG) \
+		--build-arg APP=$(APP) \
 		--build-arg ENV=$(ENV) \
 		--build-arg PRODUCT=${PRODUCT} \
 		-f src/docker/$(1)/Dockerfile
 
-	-@docker container stop $$(docker ps -aqf "name=${product}-${1}-con") 2> /dev/null
-	-@docker container rm $$(docker ps -aqf "name=${product}-${1}-con") 2> /dev/null
+	$(call uninstall-img,$1)
 
-	docker run -it -d --restart=always \
+	docker run -it -d --restart=always $${PORT_COMMAND}\
 		-v $$(pwd):/opt/${PRODUCT} \
 		-v $$HOME/.aws:/home/appusr/.aws \
-		-v $$HOME/.ssh:/home/appgrp/.ssh \
-    -p $(2):$(2) \
+		-v $$HOME/.ssh:/home/appgrp/.ssh $${PORT_COMMAND}\
 		--name ${product}-$(1)-con ${product}-${1}-img ;
 	@echo -e to attach run: "\ndocker exec -it ${product}-${1}-con /bin/bash"
 	@echo -e to get help run: "\ndocker exec -it ${product}-${1}-con ./run --help"
-endef
 
-define uninstall-img
-	@clear
-	-@docker container stop $$(docker ps -aqf "name=${product}-${1}-con") 2> /dev/null
-	-@docker container rm $$(docker ps -aqf "name=${product}-${1}-con") 2> /dev/null
 endef
