@@ -4,7 +4,7 @@
 #------------------------------------------------------------------------------
 doPrintUsage(){
 
-   source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
+   source $PRODUCT_DIR/lib/bash/funcs/flush-screen.sh
    do_flush_screen
 
    while read -r f ; do

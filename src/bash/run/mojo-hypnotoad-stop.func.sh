@@ -5,7 +5,7 @@
 # ---------------------------------------------------------
 do_mojo_hypnotoad_stop(){
 
-   do_export_json_section_vars $PRODUCT_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.app'
+   do_export_json_section_vars $PRODUCT_DIR/cnf/env/$ENV.env.json '.env.app'
    test -z "${mojo_hypnotoad_port:-}" && export mojo_hypnotoad_port=8080
 
    # try nicely first to stop the hypnotoad worker processes

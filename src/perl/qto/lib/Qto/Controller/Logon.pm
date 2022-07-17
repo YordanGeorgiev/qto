@@ -203,7 +203,7 @@ sub doRenderPageTemplate {
     , 'db' 		         => $db
     , 'edb' 		      => $edb
     , 'pdb' 		      => $pdb
-    , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
+    , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV'}
     , 'ProductVersion' 	=> $ProductVersion
     , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time

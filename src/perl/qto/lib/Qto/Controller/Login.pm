@@ -157,7 +157,7 @@ sub doRenderPageTemplate {
     , 'msg'             => $msg
     , 'msg_color'       => $msg_color
     , 'db' 		         => $pdb
-    , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
+    , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV'}
     , 'ProductVersion' 	=> $ProductVersion
     , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time

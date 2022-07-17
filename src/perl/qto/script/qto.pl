@@ -35,7 +35,9 @@ BEGIN {
   $my_inc_path =~ m/^(.*)(\\|\/)(.*?)(\\|\/)(.*)/;
   $my_inc_path = $1;
 
-  # debug ok print "\$my_inc_path $my_inc_path \n" ;
+  # debug ok
+  # print "\$my_inc_path $my_inc_path \n" ;
+  # sleep 10;
 
   unless (grep { $_ eq "$my_inc_path" } @INC) {
     push(@INC, "$my_inc_path");
@@ -56,9 +58,9 @@ use Qto::App::Utils::Initiator;
 use Qto::App::Utils::Logger;
 use Qto::App::Utils::Timer;
 use Qto::App::Ctrl::Dispatcher;
-use Qto::App::Mdl::Model ; 
-use Qto::App::IO::In::RdrCmdArgs ; 
-use Qto::App::IO::In::RdrEnv ; 
+use Qto::App::Mdl::Model ;
+use Qto::App::IO::In::RdrCmdArgs ;
+use Qto::App::IO::In::RdrEnv ;
 
 # give a full stack dump on any untrapped exceptions
 local $SIG{__DIE__} = sub {
@@ -123,11 +125,11 @@ sub do_init {
    $config->{'env'}->{'run'}->{'ProductInstanceDir'} = $objInitiator->doResolveProductInstanceDir(-1);
    $config->{'env'}->{'run'}->{'ProductName'} = $objInitiator->doResolveProductName();
    $config->{'env'}->{'run'}->{'VERSION'} = $objInitiator->doResolveVersion();
-   $config->{'env'}->{'run'}->{'ENV_TYPE'} = $objInitiator->doResolveEnvType();
+   $config->{'env'}->{'run'}->{'ENV'} = $objInitiator->doResolveEnvType();
 
    if ( defined $ENV{'PROJ_CONF_FILE'} ) {
       my $projConfig = json_file_to_perl ($ENV{'PROJ_CONF_FILE'} );
-      $config->{'env'}->{'db'} = $projConfig->{'env'}->{'db'} ; 
+      $config->{'env'}->{'db'} = $projConfig->{'env'}->{'db'} ;
    }
 
    p $config ; # not a debug print !!!
@@ -137,10 +139,10 @@ sub do_init {
    my $m = "START MAIN";
    $objLogger->info($m);
 
-   $objModel               = 'Qto::App::Mdl::Model'->new ( \$config , $db , 'xls') ; 
-   my $objRdrCmdArgs 	   = 'Qto::App::IO::In::RdrCmdArgs'->new(\$config , \$objModel ) ; 
+   $objModel               = 'Qto::App::Mdl::Model'->new ( \$config , $db , 'xls') ;
+   my $objRdrCmdArgs 	   = 'Qto::App::IO::In::RdrCmdArgs'->new(\$config , \$objModel ) ;
    $objRdrCmdArgs->doRead();
-   my $objRdrEnv 	         = 'Qto::App::IO::In::RdrEnv'->new(\$config, \$objModel ) ; 
+   my $objRdrEnv 	         = 'Qto::App::IO::In::RdrEnv'->new(\$config, \$objModel ) ;
    $objRdrEnv->doRead();
 
    $ret = 0;
@@ -167,8 +169,6 @@ sub doExit {
 
   my $msg = "STOP MAIN";
   $objLogger->info($msg);
-  $msg = "19d94b2c-096c-4bf9-b6ba-780c3f90bf70";
-  $objLogger->doRunLogMsg($msg);
   exit($exit_code);
 }
 

@@ -13,7 +13,7 @@ main(){
    do_set_vars "$@"
    do_get_psql_meta_data
    do_print=0; do_print_meta_json_str
-   do_print=0; do_build_cols_lst_comma 
+   do_print=0; do_build_cols_lst_comma
    do_print=1; do_build_cols_lst_table_col
    do_print=0; do_build_cols_lst_old
    do_print=0; do_build_cols_lst_new
@@ -38,7 +38,7 @@ do_generate_psql_select_into_another_table(){
       ( <%= $cols_lst_comma %> )
       SELECT <%= $cols_lst_comma %>
       FROM <%= $table_name_01 %>
-      ON CONFLICT (id) DO UPDATE SET 
+      ON CONFLICT (id) DO UPDATE SET
       <%= $cols_lst_excluded %>;
 EOF
 
@@ -83,7 +83,7 @@ do_generate_psql_html_with_perl_code_example(){
    IFS='' read -r -d '' perl_code <<"EOF_PERL_CODE"
       use strict; use warnings; binmode STDOUT, ":utf8"; use utf8; use JSON; use Data::Printer;use Mojo::Template; use feature ':5.12';
       my $mt = Mojo::Template->new;
-      my $json_var = decode_json($ENV{'meta_json_str'}) ; 
+      my $json_var = decode_json($ENV{'meta_json_str'}) ;
       p $json_var ;
       say $mt->render(<<'EOF', [1 .. 13], 'Hello World!');
       % my ($numbers, $title) = @_;
@@ -108,7 +108,7 @@ EOF_PERL_CODE
 # init the minimal possible amount of vars to even fail properly
 #------------------------------------------------------------------------------
 do_init(){
-   umask 022  ; set -u -o pipefail 
+   umask 022  ; set -u -o pipefail
    call_start_dir=`pwd`
    run_unit_bash_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
    tmp_dir="$run_unit_bash_dir/tmp/.tmp.$$"
@@ -116,7 +116,7 @@ do_init(){
    ( set -o posix ; set )| sort >"$tmp_dir/vars.before"
    my_name_ext=`basename $0`
    RUN_UNIT=${my_name_ext%.*}
-   
+
    export postgres_app_db=${1:-}
    export table_name_01=${2:-}
    export table_name_02=${3:-}
@@ -128,27 +128,27 @@ do_init(){
 do_set_vars(){
 
    cd $run_unit_bash_dir
-   for i in {1..3} ; do cd .. ; done ; export PRODUCT_INSTANCE_DIR=`pwd`;
-   environment_name=$(basename "$PRODUCT_INSTANCE_DIR")
-   cd $PRODUCT_INSTANCE_DIR
-   
-   source $PRODUCT_INSTANCE_DIR/.env
-   source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
-   source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/export-json-section-vars.sh
-   
-   test -z "${PROJ_INSTANCE_DIR-}" && export PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
-   test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
+   for i in {1..3} ; do cd .. ; done ; export PRODUCT_DIR=`pwd`;
+   environment_name=$(basename "$PRODUCT_DIR")
+   cd $PRODUCT_DIR
+
+   source $PRODUCT_DIR/.env
+   #
+   source $PRODUCT_DIR/lib/bash/funcs/export-json-section-vars.sh
+
+   test -z "${PROJ_INSTANCE_DIR-}" && export PROJ_INSTANCE_DIR="$PRODUCT_DIR"
+   test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$ENV.env.json"
 
    if [ "$environment_name" == "$RUN_UNIT" ]; then
-      product_dir=$PRODUCT_INSTANCE_DIR
+      product_dir=$PRODUCT_DIR
    else
       cd .. ; product_dir=`pwd`;
    fi
 
    cd .. ; product_base_dir=`pwd`; org_name=$(basename `pwd`)
-   
+
    do_export_json_section_vars $PROJ_CONF_FILE '.env.db'
-   
+
    if [[ $do_print -eq 1 ]]; then
       ( set -o posix ; set ) | sort >"$tmp_dir/vars.after"
       echo "INFO using the following vars:"
@@ -160,7 +160,7 @@ do_set_vars(){
 }
 
 
-do_chk_print_usage(){ 
+do_chk_print_usage(){
 
    db=dev_qto
    if [[ -z "${1:-}" || -z "${2:-}" ]]; then
@@ -171,7 +171,7 @@ do_chk_print_usage(){
       example:
       bash $0 dev_qto release_issues
 
-      example to generate code for all the tables in a db: 
+      example to generate code for all the tables in a db:
       while read -r t; do $0 dev_qto \$t ; done < <(psql -d dev_qto -t -q -c "SELECT table_name FROM information_schema.tables where 1=1 and table_catalog='dev_qto' and table_schema='public'")
 
       needless to say anything you print you could append to a file as follows:
@@ -244,7 +244,7 @@ do_build_cols_lst_excluded(){
 
 
 do_exit(){
-   exit_code="$1";shift 
+   exit_code="$1";shift
    rm -rf "$run_unit_bash_dir/tmp" #clear the tmpdir
    cd $call_start_dir
    exit $exit_code

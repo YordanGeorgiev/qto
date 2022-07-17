@@ -18,9 +18,9 @@ my $objGuardian            = {} ;
 my $t                      = Test::Mojo->new('Qto');
 my $config                 = $t->app->config ; 
 my $db                     = $config->{'env'}->{'db'}->{ 'postgres_app_db' } ; 
-my $env_type               = $config->{'env'}->{'run'}->{'ENV_TYPE'} ; 
-my $jwt_private_key_file   = $ENV{'HOME'} . '/.ssh/qto.' . "$env_type" . '.jwtRS256.key';
-my $jwt_public_key_file    = $ENV{'HOME'} . '/.ssh/qto.' . "$env_type" . '.jwtRS256.key.pub';
+my $ENV               = $config->{'env'}->{'run'}->{'ENV'} ; 
+my $jwt_private_key_file   = $ENV{'HOME'} . '/.ssh/qto.' . "$ENV" . '.jwtRS256.key';
+my $jwt_public_key_file    = $ENV{'HOME'} . '/.ssh/qto.' . "$ENV" . '.jwtRS256.key.pub';
 $objGuardian      = 'Qto::App::Sec::Guardian'->new ( \$config ) ;
 
 $tn = 'test-01' ; 

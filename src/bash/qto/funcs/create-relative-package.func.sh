@@ -9,7 +9,7 @@ doCreateRelativePackage(){
 		test $? -ne 0 && do_exit 2 "Failed to create $product_base_dir/dat/zip !"
 
 	test -z ${include_file:-}         && \
-		include_file="$PROJ_INSTANCE_DIR/met/.$env_type.$RUN_UNIT"
+		include_file="$PROJ_INSTANCE_DIR/met/.$ENV.$RUN_UNIT"
 
 	# relative file path is passed turn it to absolute one 
 	[[ $include_file == /* ]] || include_file=$PROJ_INSTANCE_DIR/$include_file
@@ -17,13 +17,13 @@ doCreateRelativePackage(){
 	test -f $include_file || \
 		do_exit 3 "did not found any deployment file paths containing deploy file @ $include_file"
 
-   tgt_env_type=$(echo `basename "$include_file"`|cut -d'.' -f2)
+   tgt_ENV=$(echo `basename "$include_file"`|cut -d'.' -f2)
 
 	timestamp=`date "+%Y%m%d_%H%M%S"`
 	# the last token of the include_file with . token separator - thus no points in names
    git_short_hash=$(git rev-parse --short HEAD)
 	zip_file_name=$(echo $include_file | rev | cut -d. -f 1 | rev)
-	zip_file_name="$zip_file_name.$product_version.$tgt_env_type.$timestamp.$git_short_hash.$host_name.rel.zip"
+	zip_file_name="$zip_file_name.$product_version.$tgt_ENV.$timestamp.$git_short_hash.$host_name.rel.zip"
 	zip_file="$product_base_dir/$zip_file_name"
 	
 

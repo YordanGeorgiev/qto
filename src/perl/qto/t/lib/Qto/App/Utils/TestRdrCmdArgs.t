@@ -19,7 +19,7 @@ $config                    = json_file_to_perl ($objInitiator->doResolveConfFile
 $config->{'env'}->{'run'}->{'ProductInstanceDir'} = $objInitiator->doResolveProductInstanceDir(-1);
 $config->{'env'}->{'run'}->{'ProductName'} = $objInitiator->doResolveProductName();
 $config->{'env'}->{'run'}->{'VERSION'} = $objInitiator->doResolveVersion();
-$config->{'env'}->{'run'}->{'ENV_TYPE'} = $objInitiator->doResolveEnvType();
+$config->{'env'}->{'run'}->{'ENV'} = $objInitiator->doResolveEnvType();
 my $objModel               = 'Qto::App::Mdl::Model'->new ( \$config ) ; 
 my $objRdrCmdArgs 			= 'Qto::App::IO::In::RdrCmdArgs'->new(\$config , \$objModel ) ; 
 

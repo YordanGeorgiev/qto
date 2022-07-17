@@ -2,12 +2,12 @@
 FROM ubuntu:18.04
 
 ARG TZ=$TZ
-ARG ENV_TYPE=$ENV_TYPE
+ARG ENV=$ENV
 ARG USER=$USER
 ARG UID=$UID
 ARG GROUP=$GROUP
 ARG GID=$GID
-ARG PRODUCT_INSTANCE_DIR=$PRODUCT_INSTANCE_DIR
+ARG PRODUCT_DIR=$PRODUCT_DIR
 ARG postgres_app_db=$postgres_app_db
 ARG postgres_sys_usr_admin=$postgres_sys_usr_admin
 ARG root_pwd=$root_pwd
@@ -70,11 +70,11 @@ sudo -u postgres psql template1 -c 'CREATE EXTENSION IF NOT EXISTS "dblink";'
 
 ENV psql_cnf_dir='/etc/postgresql/11/main'
 RUN cp -v $psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf.orig.bak && \
-   cp -v $PRODUCT_INSTANCE_DIR/cnf/postgres/$psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf && \
+   cp -v $PRODUCT_DIR/cnf/postgres/$psql_cnf_dir/pg_hba.conf $psql_cnf_dir/pg_hba.conf && \
    chown postgres:postres $psql_cnf_dir
 
 RUN sudo cp -v $psql_cnf_dir/postgresql.conf $psql_cnf_dir/postgresql.conf.orig && \
-   sudo cp -v $PRODUCT_INSTANCE_DIR/cnf/postgres/$psql_cnf_dir/postgresql.conf $psql_cnf_dir/postgresql.conf
+   sudo cp -v $PRODUCT_DIR/cnf/postgres/$psql_cnf_dir/postgresql.conf $psql_cnf_dir/postgresql.conf
 
 RUN chown -R postgres:postgres "/etc/postgresql" && \
     chown -R postgres:postgres "/var/lib/postgresql" && \
@@ -123,7 +123,7 @@ USER $USER
 # stop ::: install perl modules
 
 USER $USER
-WORKDIR $PRODUCT_INSTANCE_DIR
+WORKDIR $PRODUCT_DIR
 
 # CMD ["bash","-c","while true; do sleep 1; done;"]
-CMD bash -c $PRODUCT_INSTANCE_DIR/src/bash/qto/install/docker/docker-entry-point.sh
+CMD bash -c $PRODUCT_DIR/src/bash/qto/install/docker/docker-entry-point.sh

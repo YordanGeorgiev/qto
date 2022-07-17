@@ -1,8 +1,8 @@
 # vim:set ft=dockerfile:
 FROM ubuntu:18.04
 
-ARG PRODUCT_INSTANCE_DIR
-ENV PRODUCT_INSTANCE_DIR $PRODUCT_INSTANCE_DIR
+ARG PRODUCT_DIR
+ENV PRODUCT_DIR $PRODUCT_DIR
 ARG postgres_app_db 
 ENV postgres_app_db $postgres_app_db
 ARG postgres_sys_usr_admin='usrqtoadmin'
@@ -21,8 +21,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && apt-get install -y wget curl sudo perl zip unzip gnupg2 gnupg1 git bash jq vim
 
 WORKDIR /opt/
-ADD . $PRODUCT_INSTANCE_DIR
-WORKDIR $PRODUCT_INSTANCE_DIR
+ADD . $PRODUCT_DIR
+WORKDIR $PRODUCT_DIR
 #   ^^^ todo:ysg replace with the git clone 
 
 RUN chmod 755 src/bash/qto/install/docker/install-admin-utils.sh && \
@@ -41,18 +41,18 @@ RUN chmod 755 src/bash/qto/install/docker/install-perl-modules.sh && \
 
 RUN chown -R usrqtoadmin:grpqtoadmin "/opt/csitea" && \
     chmod 777 "/opt" && \
-    chmod 755 "$PRODUCT_INSTANCE_DIR/src/bash/qto/bootstrap-qto-docker.sh"
+    chmod 755 "$PRODUCT_DIR/src/bash/qto/bootstrap-qto-docker.sh"
 
 
 USER usrqtoadmin
-WORKDIR $PRODUCT_INSTANCE_DIR
-RUN $PRODUCT_INSTANCE_DIR/src/bash/qto/bootstrap-qto-docker.sh
+WORKDIR $PRODUCT_DIR
+RUN $PRODUCT_DIR/src/bash/qto/bootstrap-qto-docker.sh
 
 USER root
 RUN rm -vr /opt/csitea && chmod 755 "/opt"
 
 USER usrqtoadmin
-WORKDIR $PRODUCT_INSTANCE_DIR
+WORKDIR $PRODUCT_DIR
 
 # CMD ["bash","-c","while true; do sleep 1; done;"]
-CMD bash -c $PRODUCT_INSTANCE_DIR/src/bash/qto/install/docker/docker-entry-point.sh
+CMD bash -c $PRODUCT_DIR/src/bash/qto/install/docker/docker-entry-point.sh

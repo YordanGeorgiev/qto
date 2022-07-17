@@ -15,8 +15,8 @@ doGmailPackage(){
    fi
 
 	# zip_file=$(ls -r1 "$product_dir"/*.zip | head -1)
-	zip_file=$(cat $PRODUCT_INSTANCE_DIR/dat/$RUN_UNIT/tmp/zip_file)
-   test -z "${zip_file+x}" && zip_file=$(ls -r1 "$PRODUCT_INSTANCE_DIR"/*.zip | head -1)
+	zip_file=$(cat $PRODUCT_DIR/dat/$RUN_UNIT/tmp/zip_file)
+   test -z "${zip_file+x}" && zip_file=$(ls -r1 "$PRODUCT_DIR"/*.zip | head -1)
    test -z "${zip_file+x}" && export exit_code=1 && do_exit " no zip file found for gmailing !!!"
 
    zip_file_name=`basename $zip_file`

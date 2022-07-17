@@ -4,18 +4,23 @@
 # ---------------------------------------------------------
 # call all the unit tests - fail if even one fails ...
 # ---------------------------------------------------------
-doRunUnitTests(){
-  
+do_run_unit_tests(){
+
    export QTO_NO_AUTH=1
-   test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
-   source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
-   do_export_json_section_vars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
-   do_export_json_section_vars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.app'
-   
+     export PATH=$PATH:~/perl5/bin/
+  export PERL5LIB=${PERL5LIB:-}:~/perl5/lib/perl5/:$PRODUCT_DIR/src/perl/qto/t/lib:$PRODUCT_DIR/src/perl/qto/public/lib:$PRODUCT_DIR/src/perl/qto/lib
+
+   test -z "${PROJ_INSTANCE_DIR-}" && PROJ_INSTANCE_DIR="$PRODUCT_DIR"
+   #
+   do_export_json_section_vars $PROJ_INSTANCE_DIR/cnf/env/$ENV.env.json '.env.db'
+   do_export_json_section_vars $PROJ_INSTANCE_DIR/cnf/env/$ENV.env.json '.env.app'
+
    do_log "INFO START running the unit tests"
-   while read -r f ; do 
+   while read -r f ; do
       do_log "INFO START unit test for $f"
-      perl $f
+
+      perl -MCarp::Always \
+        -I $PRODUCT_DIR/src/perl/qto/t/lib/Qto/App -I $PRODUCT_DIR/src/perl/qto/t/lib/Qto/App/lib $f
       test $? -ne 0 && do_exit $? " the tests in the $f failed !!!"
       do_log "INFO STOP  unit test for $f"
       sleep 1

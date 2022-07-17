@@ -1,13 +1,13 @@
-# src/bash/qto/funcs/backup-postgres-db.func.sh
+#!/bin/bash
 
 # ---------------------------------------------------------
 # create a full database backup containing db create clause
 # ---------------------------------------------------------
-doBackupPostgresDb(){
+do_backup_postgres_db(){
 
-   source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
-   test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
-   source $PROJ_INSTANCE_DIR/lib/bash/funcs/export-json-section-vars.sh
+
+   test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$ENV.env.json"
+
    do_export_json_section_vars $PROJ_CONF_FILE '.env.db'
 
    mix_data_dir="$PROJ_INSTANCE_DIR/dat/mix"
@@ -27,7 +27,7 @@ doBackupPostgresDb(){
    echo -e "\n"
    wc -l $mix_data_dir/$(date "+%Y")/$(date "+%Y-%m")/$(date "+%Y-%m-%d")/sql/$postgres_app_db/* | sort -nr
    sleep 1
-   
+
    echo "Full database backup completed successfully."
 
 }

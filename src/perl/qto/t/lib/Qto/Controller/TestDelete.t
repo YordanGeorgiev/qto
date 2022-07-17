@@ -18,7 +18,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $config        = $t->app->config ; 
    my $exp_err_msg   = '' ; 
    my $db            = $config->{'env'}->{'db'}->{ 'postgres_app_db' } ; # OBS instance specific !!!
-   my $env           = $config->{'env'}->{'ENV_TYPE' };
+   my $env           = $config->{'env'}->{'ENV' };
    my $ua            = $t->ua ; 
    my $objTimer      = {} ;
    

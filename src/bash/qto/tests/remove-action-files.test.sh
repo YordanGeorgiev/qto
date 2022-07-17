@@ -9,7 +9,7 @@
 # ---------------------------------------------------------
 doTestRemoveActionFiles(){
 
-	source $PRODUCT_INSTANCE_DIR/lib/bash/funcs/flush-screen.sh
+	source $PRODUCT_DIR/lib/bash/funcs/flush-screen.sh
 	do_log "DEBUG START doTestRemoveActionFiles"
 
 	doSpecRemoveActionFiles

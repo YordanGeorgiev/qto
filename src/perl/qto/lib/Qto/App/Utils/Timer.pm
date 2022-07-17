@@ -1,51 +1,51 @@
-package Qto::App::Utils::Timer ; 
+package Qto::App::Utils::Timer ;
 
-	use strict ; use warnings ; 
-	my $VERSION='1.2.9' ; 
+	use strict ; use warnings ;
+	my $VERSION='1.2.9' ;
 
 	require Exporter;
 	our @ISA = qw(Exporter  Qto::App::Utils::OO::SetGetable);
-	use AutoLoader ; 
+	use AutoLoader ;
 	my @EXPORT = qw(dumpFields GetHumanReadableTime );
 
    use base qw(Qto::App::Utils::OO::SetGetable);
 
 	use POSIX qw(strftime);
-	use Time::Local qw( timelocal_nocheck ) ; 
+	use Time::Local qw( timelocal_nocheck ) ;
 
 
 	my $TimeFormat = 'YYYY-MM-DD hh:mm:ss' ; # the default one
 
 
 	sub new {
-		
-		my $invocant = shift;    
-		my $class = ref ( $invocant ) || $invocant ; 
+
+		my $invocant = shift;
+		my $class = ref ( $invocant ) || $invocant ;
 		$TimeFormat = shift || 'YYYY-MM-DD hh:mm:ss' ;
-		my $self = {};        
-		bless( $self, $class );    
+		my $self = {};
+		bless( $self, $class );
 		return $self;
-	}   
+	}
 
 
 	sub AUTOLOAD {
 
-		my $self = shift ; 
-		no strict 'refs'; 
+		my $self = shift ;
+		no strict 'refs';
 		my $name = our $AUTOLOAD;
-		*$AUTOLOAD = sub { 
+		*$AUTOLOAD = sub {
 		my $msg = "BOOM! BOOM! BOOM! \n RunTime Error !!!\nUndefined Function $name(@_)\n" ;
 		cluck( "$msg");
 		};
 		goto &$AUTOLOAD;    # Restart the new routine.
-	}  
+	}
 
 
 	sub DESTROY {
 		my $self = shift;
-		#debug rint "the DESTRUCTOR is called  \n" ; 
-		return ; 
-	} 
+		#debug rint "the DESTRUCTOR is called  \n" ;
+		return ;
+	}
 
 
 	#
@@ -54,47 +54,44 @@ package Qto::App::Utils::Timer ;
 	# -----------------------------------------------------------------------------
 	sub GetHumanReadableTime {
 
-		my $self = shift ; 
+		my $self = shift ;
 		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = ();
-		($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $self->GetTimeUnits(); 
+		($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $self->GetTimeUnits();
 
 		my $HumanReadableTime = '';
-		$HumanReadableTime = $TimeFormat ;  
-		$HumanReadableTime =~ s/YYYY/$year/ ; 
-		$HumanReadableTime =~ s/MM/$mon/ ; 
-		$HumanReadableTime =~ s/DD/$mday/ ; 
-		$HumanReadableTime =~ s/hh/$hour/ ; 
+		$HumanReadableTime = $TimeFormat ;
+		$HumanReadableTime =~ s/YYYY/$year/ ;
+		$HumanReadableTime =~ s/MM/$mon/ ;
+		$HumanReadableTime =~ s/DD/$mday/ ;
+		$HumanReadableTime =~ s/hh/$hour/ ;
 		$HumanReadableTime =~ s/mm/$min/ ;
 		$HumanReadableTime =~ s/ss/$sec/ ;
 
-		return "$HumanReadableTime"; 
+		return "$HumanReadableTime";
 
-	} 
+	}
 
 
 	#
 	# -----------------------------------------------------------------------------
-	# call by: 
-	# my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer-> GetTimeUnits(); 
+	# call by:
+	# my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer-> GetTimeUnits();
 	# -----------------------------------------------------------------------------
 	sub GetTimeUnits {
 
-		my $self = shift ; 
+		my $self = shift ;
 
-		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time); 
-		$sec = "0$sec" if ($sec < 10); 
-		$min = "0$min" if ($min < 10); 
+		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+		$sec = "0$sec" if ($sec < 10);
+		$min = "0$min" if ($min < 10);
 		$hour = "0$hour" if ($hour < 10);
 		$mon = $mon + 1;
-		$mon = "0$mon" if ($mon < 10); 
+		$mon = "0$mon" if ($mon < 10);
 		$year = $year + 1900;
-		$mday = "0$mday" if ($mday < 10); 
+		$mday = "0$mday" if ($mday < 10);
 
-		return ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) ; 
-	} 
-
-
-
+		return ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) ;
+	}
 
 
 1;
@@ -105,17 +102,17 @@ __END__
 
 =head1 NAME
 
-Timer 
+Timer
 
 =head1 SYNOPSIS
 
-use Qto::App::Utils::Timer ; 
-my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer-> GetTimeUnits(); 
+use Qto::App::Utils::Timer ;
+my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = $objTimer-> GetTimeUnits();
 
 
 =head1 DESCRIPTION
 
-A simple class proding OO methods for time and time formatting 
+A simple class proding OO methods for time and time formatting
 
 =head2 EXPORT
 qw(dumpFields GetHumanReadableTime )

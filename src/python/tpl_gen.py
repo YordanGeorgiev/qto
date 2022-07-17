@@ -25,7 +25,7 @@ def set_vars():
         pp = pprint.PrettyPrinter(indent=3)
         product_instance_dir = path.abspath(path.join(__file__ ,"../../.."))
         do_read_conf_fle(product_instance_dir + '/.env') # env agnostic
-        env = os.environ['ENV_TYPE']
+        env = os.environ['ENV']
         version = os.environ['VERSION']
 
         with open(product_instance_dir + '/cnf/env/' + env + '.env.json') as json_cnf_fle:

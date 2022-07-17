@@ -20,7 +20,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $db            = $config->{'env'}->{'db'}->{'postgres_app_db'} ; # OBS instance specific !!!
    my $ua            = $t->ua ; 
    my $objTimer      = {} ;
-   my $env           = $config->{'env'}->{'run'}->{'ENV_TYPE' };
+   my $env           = $config->{'env'}->{'run'}->{'ENV' };
    
    $tm = 'the table is truncated' ; 
    $url = '/' . $db . '/truncate/test_truncate_table' ; 

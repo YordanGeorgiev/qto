@@ -69,7 +69,7 @@ sub doRenderPageTemplate {
     , 'msg'             => $msg
     , 'db' 		         => $db
     , 'WsProtocol' 	   => $config->{'env'}->{'app'}->{'ws_protocol'}
-    , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
+    , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV'}
     , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'} 
     , 'GitShortHash'    => $config->{'env'}->{'run'}->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time

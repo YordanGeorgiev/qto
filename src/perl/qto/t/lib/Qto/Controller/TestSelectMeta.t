@@ -17,7 +17,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
 	$t->get_ok('/' . $db . '/select-databases')->status_is(200) ; 
 
    my $url = '/' . $db . '/select-item-meta-for' ; 
-   my $env = $config->{'env'}->{'ENV_TYPE'};
+   my $env = $config->{'env'}->{'ENV'};
 
 
    $t->get_ok($url)

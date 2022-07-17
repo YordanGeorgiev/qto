@@ -1,8 +1,8 @@
 doSpawnAwsEc2(){
 
-   source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
-   test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
-   source $PROJ_INSTANCE_DIR/lib/bash/funcs/export-json-section-vars.sh
+   #
+   test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$ENV.env.json"
+
    do_export_json_section_vars $PROJ_CONF_FILE '.env.aws'
    mkdir -p $PROJ_INSTANCE_DIR/src/terraform/qto
 
@@ -13,7 +13,7 @@ doSpawnAwsEc2(){
 
    sudo timedatectl set-ntp no; timedatectl
    sudo service ntp stop ; sudo service ntp start; ntpq -p
-  
+
    export key_name=$(basename `eval echo ${private_ssh_key_fpath:-}`)
    export public_ssh_key_fpath=$(eval echo ${public_ssh_key_fpath:-})
    export public_ssh_key_content=$(cat ${public_ssh_key_fpath:-})

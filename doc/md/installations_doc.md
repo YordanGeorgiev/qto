@@ -209,7 +209,7 @@ Check the main method in the run.sh and uncomment entities you do not want to in
 The run of the following "shell actions" will create the QTO database and load it with a snapshot of it's data from an SQL dump stored in s3. If you start getting a lot of Perl "cannot not find module" syntax check error, you probably did not reload the bash shell, by typing "bash" and hitting Enter in the previous step.
 
      # go to the product instance dir 
-    source $(find . -name '.env') && cd qto/qto.$VERSION.$ENV_TYPE.$USER
+    source $(find . -name '.env') && cd qto/qto.$VERSION.$ENV.$USER
     
     # ensure application layer consistency, run db ddl's and load data from s3
     ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3
@@ -218,7 +218,7 @@ The run of the following "shell actions" will create the QTO database and load i
 Start the application layer by issuing the following command. The hypnotoad starting script ALWAYS checks whether or not you have public and private files for the JWT auth and if you do not have them if will create them basically only once. So hit Enter or type a password, when executing the action for the first time.
 
     # ALWAYS run any shell-action from the product instance dir 
-    cd ~/opt/qto/qto.$VERSION.$ENV_TYPE.$USER
+    cd ~/opt/qto/qto.$VERSION.$ENV.$USER
     
     # start the web server
     bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
@@ -393,7 +393,7 @@ Copy paste the full command below - this is IMPORTANT !!!
 The run of the following "shell actions" will create the QTO database and load it with a snapshot of its data from a SQL dump stored in s3. 
 
      # go to the product instance dir 
-    source $(find . -name '.env') && cd qto/qto.$VERSION.$ENV_TYPE.$USER
+    source $(find . -name '.env') && cd qto/qto.$VERSION.$ENV.$USER
     
     # ensure application layer consistency, run db ddl's and load data from s3
     bash ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs -a provision-db-admin -a run-qto-db-ddl -a load-db-data-from-s3

@@ -7,9 +7,9 @@
 # ---------------------------------------------------------
 do_increase_date(){
 
-   test -z "${PROJ_INSTANCE_DIR:-}" && PROJ_INSTANCE_DIR="$PRODUCT_INSTANCE_DIR"
-   source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
-   do_export_json_section_vars $PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json '.env.db'
+   test -z "${PROJ_INSTANCE_DIR:-}" && PROJ_INSTANCE_DIR="$PRODUCT_DIR"
+   #
+   do_export_json_section_vars $PROJ_INSTANCE_DIR/cnf/env/$ENV.env.json '.env.db'
    mix_data_dir=$PROJ_INSTANCE_DIR/dat/mix
 
    # find the latest project_daily_txt_dir

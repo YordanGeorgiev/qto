@@ -4,38 +4,38 @@
 doCreateRelativePackage(){
 
 	mkdir -p $product_dir/dat/zip
-		test $? -ne 0 && do_exit 2 "Failed to create $PRODUCT_INSTANCE_DIR/dat/zip !"
+		test $? -ne 0 && do_exit 2 "Failed to create $PRODUCT_DIR/dat/zip !"
 
 	test -z ${include_file:-}         && \
-		include_file="$PRODUCT_INSTANCE_DIR/met/.$env_type.$RUN_UNIT"
+		include_file="$PRODUCT_DIR/met/.$ENV.$RUN_UNIT"
 
 	# relative file path is passed turn it to absolute one 
-	[[ $include_file == /* ]] || include_file=$PRODUCT_INSTANCE_DIR/$include_file
+	[[ $include_file == /* ]] || include_file=$PRODUCT_DIR/$include_file
 
 	test -f $include_file || \
 		do_exit 3 "did not found any deployment file paths containing deploy file @ $include_file"
 
-   tgt_env_type=$(echo `basename "$include_file"`|cut -d'.' -f2)
+   tgt_ENV=$(echo `basename "$include_file"`|cut -d'.' -f2)
 
 	timestamp=`date "+%Y%m%d_%H%M%S"`
 	# the last token of the include_file with . token separator - thus no points in names
    git_short_hash=$(git rev-parse --short HEAD)
 	zip_file_name=$(echo $include_file | rev | cut -d. -f 1 | rev)
-	zip_file_name="$zip_file_name.$product_version.$tgt_env_type.$timestamp.$git_short_hash.$host_name.rel.zip"
+	zip_file_name="$zip_file_name.$product_version.$tgt_ENV.$timestamp.$git_short_hash.$host_name.rel.zip"
 	zip_file="$product_dir/$zip_file_name"
 	
 
 	ret=0
 	while read f ; do
 		[[ $f == '#'* ]] && continue ; 
-		test -d "$PRODUCT_INSTANCE_DIR/$f" && continue ; 
-		test -f "$PRODUCT_INSTANCE_DIR/$f" && continue ; 
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || do_log 'FATAL cannot find the file: "'"$PRODUCT_INSTANCE_DIR/$f"'" to package it' ;  
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || do_log 'ERROR search for it in the '"$include_file"' ' ;  
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || do_log 'INFO if you need the file add it to the list file  ' ;  
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || do_log 'INFO if you do not need the file remove it from the list file  ' ;  
-		test -f "$PRODUCT_INSTANCE_DIR/$f" || ret=1
-		test -f "$PRODUCT_INSTANCE_DIR/$f" && break ;
+		test -d "$PRODUCT_DIR/$f" && continue ; 
+		test -f "$PRODUCT_DIR/$f" && continue ; 
+		test -f "$PRODUCT_DIR/$f" || do_log 'FATAL cannot find the file: "'"$PRODUCT_DIR/$f"'" to package it' ;  
+		test -f "$PRODUCT_DIR/$f" || do_log 'ERROR search for it in the '"$include_file"' ' ;  
+		test -f "$PRODUCT_DIR/$f" || do_log 'INFO if you need the file add it to the list file  ' ;  
+		test -f "$PRODUCT_DIR/$f" || do_log 'INFO if you do not need the file remove it from the list file  ' ;  
+		test -f "$PRODUCT_DIR/$f" || ret=1
+		test -f "$PRODUCT_DIR/$f" && break ;
 	done < <(cat $include_file)
 
 	do_log "DEBUG ret is $ret "

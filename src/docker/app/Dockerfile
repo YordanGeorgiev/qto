@@ -21,11 +21,13 @@ VOLUME $PRODUCT_DIR
 
 # install OS utils
 RUN apk update && apk upgrade && apk add --no-cache \
-    bash binutils vim jq wget curl zip unzip busybox-extras su-exec sudo shadow
+    bash binutils vim jq wget curl zip unzip tar busybox-extras su-exec sudo shadow
 
-# install backend-utils
+
+# install build utils && backend-utils
+# gnupg is needed for Module::Signature.
 RUN apk update && apk upgrade && apk add --no-cache \
-    build-base gcc openssl-dev libmagic ttf-freefont
+    build-base make gcc openssl-dev libmagic ttf-freefont gnupg libpq libpq-dev
 
 
 # start ::: adding OS APPUSR and APPGRP
@@ -44,13 +46,10 @@ RUN set -x ; addgroup -g "$GID" -S "$APPGRP" && \
   -G "$APPGRP" "$APPUSR" && exit 0 ; exit 1
 
 RUN echo "$APPUSR ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-RUN echo "export PS1=\"$PS1\"" >> /home/$APPUSR/.bashrc
+
 
 # stop ::: adding OS APPUSR and APPGRP
 
-## alpine curl and wget aren't fully compatible, so we install them
-## here. gnupg is needed for Module::Signature.
-RUN apk update && apk upgrade && apk add curl tar make gcc build-base wget gnupg
 
 RUN mkdir -p /usr/src/perl
 
@@ -84,10 +83,15 @@ RUN curl -SLO https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz \
 
 ## from tianon/perl
 ENV PERL_CPANM_OPT --verbose --mirror https://cpan.metacpan.org --mirror-only
-RUN cpanm Digest::SHA Module::Signature && rm -rf ~/.cpanm
+RUN cpanm Digest::SHA Module::Signature && \
+  cpanm local::lib && \
+rm -rf ~/.cpanm
+
 ENV PERL_CPANM_OPT $PERL_CPANM_OPT --verify
 
-
+RUN echo "export PS1=\"$PS1\"" >> /home/$APPUSR/.bashrc && \
+  chown -R $APPUSR:$APPGRP /home/$APPUSR && \
+  chmod -R 0775 /home/$APPUSR
 
 ADD --chown=$APPUSR:$APPGRP "." /home/$APPUSR$PRODUCT_DIR
 # switch to the app user
@@ -96,11 +100,13 @@ USER $APPUSR
 
 # stop ::: adding OS APPUSR and APPGRP
 
+WORKDIR $PRODUCT_DIR
+
 # Note: using $APPUSR/$PRODUCT_DIR will result in /home/appusr//opt/product/r
 #                                   ~~~^^^~~~
-# RUN SUB_COMPONENT=tpl-gen bash /home/$APPUSR$PRODUCT_DIR/run -a do_check_install_py_modules
+RUN bash /home/$APPUSR$PRODUCT_DIR/run -a do_alpine_chk_install_perl_modules
 
-WORKDIR $PRODUCT_DIR
+
 
 CMD exec /bin/bash -c /home/$APPUSR$PRODUCT_DIR/src/bash/run/docker-init-app.sh
 
