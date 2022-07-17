@@ -1,12 +1,12 @@
 do_chk_provision_ssh_keys(){
 
-   do_export_json_section_vars $product_dir/cnf/env/$ENV_TYPE.env.json '.env.db'
+   do_export_json_section_vars $product_dir/cnf/env/$ENV.env.json '.env.db'
    which expect || sudo apt-get update && sudo apt-get install -y expect
 
    # if the ssh key does not exist create it ...
    # the perl code for building the private key file path is :
-   # my $private_key_fpath   = $ENV{"HOME"} . '/.ssh/id_rsa.qto.' . $env_type ; 
-   prv_key_fpath=$HOME/.ssh/id_rsa.qto.$ENV_TYPE
+   # my $private_key_fpath   = $ENV{"HOME"} . '/.ssh/id_rsa.qto.' . $ENV ; 
+   prv_key_fpath=$HOME/.ssh/id_rsa.qto.$ENV
    test -f $prv_key_fpath || {
    expect <<- EOF_EXPECT
       set timeout -1
@@ -21,9 +21,9 @@ EOF_EXPECT
       echo created the fillowing private key file : $prv_key_fpath
    }
 
-   for env_type in `echo dev tst prd`; do 
-      jwt_private_key_file=~/.ssh/qto.$env_type.jwtRS256.key
-      jwt_public_key_file=~/.ssh/qto.$env_type.jwtRS256.key.pub
+   for ENV in `echo dev tst prd`; do 
+      jwt_private_key_file=~/.ssh/qto.$ENV.jwtRS256.key
+      jwt_public_key_file=~/.ssh/qto.$ENV.jwtRS256.key.pub
       echo << EOF_USING
       creating and using the following private and public key files for the Guardian's JWT's :
       $jwt_private_key_file

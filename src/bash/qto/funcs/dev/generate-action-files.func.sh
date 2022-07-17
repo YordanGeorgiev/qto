@@ -74,14 +74,14 @@ doGenerateActionFiles(){
 
       echo -e "generated the following files: \n" ; 
       find . | grep -i $act |cut -c 3-|sort -nr
-      find . | grep -i $act |cut -c 3-|sort -nr >> met/.$env_type.$RUN_UNIT
+      find . | grep -i $act |cut -c 3-|sort -nr >> met/.$ENV.$RUN_UNIT
       echo -e "\n\n" 
 
 		do_log "DEBUG STOP  :: checking action: $act"
 		
 	); 
 	done< <(cat "src/bash/$RUN_UNIT/tests/new-$RUN_UNIT-tests.lst")
-   clear ; for env in `echo dev tst prd src`; do cp -v met/.$env_type.$RUN_UNIT met/.$env.$RUN_UNIT ; done
+   clear ; for env in `echo dev tst prd src`; do cp -v met/.$ENV.$RUN_UNIT met/.$env.$RUN_UNIT ; done
 	
 	do_log "DEBUG STOP  : doGenerateActionFiles"
 

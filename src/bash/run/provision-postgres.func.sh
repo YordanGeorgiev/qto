@@ -1,6 +1,6 @@
 do_chk_provision_postgres(){
-   source $PRODUCT_DIR/.env ; env_type=$ENV_TYPE
-   do_export_json_section_vars $PRODUCT_DIR/cnf/env/$ENV_TYPE.env.json '.env.db'
+   source $PRODUCT_DIR/.env ; ENV=$ENV
+   do_export_json_section_vars $PRODUCT_DIR/cnf/env/$ENV.env.json '.env.db'
    # doScrambleConfs   # because well they were taken from public git repo
 
    psql_cnf_dir='/etc/postgresql/12/main' ; sudo mkdir -p "$psql_cnf_dir"

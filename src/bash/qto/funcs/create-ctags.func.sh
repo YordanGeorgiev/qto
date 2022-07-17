@@ -13,7 +13,7 @@ doCreateCtags(){
 
 	cmd="rm -fv ./tags"                          && doRunCmdAndLog "$cmd"
 	cmd="ctags  -R -n --fields=+i+K+S+l+m+a --exclude=.git --exclude=dat --exclude=*/node_modules/* ."   && doRunCmdAndLog "$cmd"
-	cmd="ls -la $PRODUCT_INSTANCE_DIR/tags"       && doRunCmdAndLog "$cmd"
+	cmd="ls -la $PRODUCT_DIR/tags"       && doRunCmdAndLog "$cmd"
 
 	popd
 

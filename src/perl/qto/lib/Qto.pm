@@ -2,7 +2,7 @@ package Qto;
 
 use Mojo::Base 'Mojolicious';
 
-use strict ; use warnings ; 
+use strict ; use warnings ;
 use utf8;
 use strict;
 use autodie;
@@ -12,7 +12,7 @@ use open qw< :std  :utf8     >;
 use charnames qw< :full >;
 use feature qw< unicode_strings >;
 
-use Data::Printer ; 
+use Data::Printer ;
 use Cwd qw ( abs_path );
 use File::Basename qw< basename >;
 use Carp qw< carp croak confess cluck >;
@@ -21,16 +21,17 @@ use Unicode::Normalize qw< NFD NFC >;
 use IO::Compress::Gzip 'gzip' ;
 use URL::Encode qw(url_encode url_decode);
 
-use Mojolicious::Plugin::RenderFile ; 
-use Mojolicious::Plugin::Gzip ;
+use Mojolicious::Plugin::RenderFile ;
 
+# use Mojolicious::Plugin::Gzip ;
+# todo:remove ^^^ ?!
 use Qto::App::Utils::Initiator;
 use Qto::App::Utils::Logger;
-use Qto::App::Mdl::Model ; 
+use Qto::App::Mdl::Model ;
 use JSON::Parse 'json_file_to_perl';
 use Qto::App::Cnvr::CnrDbName qw(toPlainName toEnvName);
-use Qto::Controller::MetaDataController ; 
-use Qto::App::IO::In::RdrDirs ; 
+use Qto::Controller::MetaDataController ;
+use Qto::App::IO::In::RdrDirs ;
 use Qto::App::Sec::Guardian ;
 
 my $module_trace 					= 0;
@@ -49,15 +50,15 @@ sub startup {
 
    my $self = shift;
 
-   $self->doRegisterPlugins() ; 
+   $self->doRegisterPlugins() ;
 
-   $self->doSetSessions() ; 
-   
+   $self->doSetSessions() ;
+
    $self->doLoadAppConfig();
 
    $self->doReloadProjectsDbMeta();
-   
-   $self->doSetHooks() ; 
+
+   $self->doSetHooks() ;
 
    $self->doSetRoutes();
 
@@ -71,24 +72,24 @@ sub startup {
 # -----------------------------------------------------------------------------
 sub doLoadAppConfig {
 
-   my $self = shift ; 
+   my $self = shift ;
    my $msg = 'error during initialization !!!';
    my $ret = 1;
 
    $objInitiator  = 'Qto::App::Utils::Initiator'->new();
    $config        = json_file_to_perl ($objInitiator->doResolveConfFile());
-	my $ProductInstanceDir = $objInitiator->doResolveProductInstanceDir(-1); 
-   $config->{'env'}->{'run'}->{'ProductInstanceDir'} = $ProductInstanceDir ; 
+	my $ProductInstanceDir = $objInitiator->doResolveProductInstanceDir(-1);
+   $config->{'env'}->{'run'}->{'ProductInstanceDir'} = $ProductInstanceDir ;
    $config->{'env'}->{'run'}->{'ProductName'} = $objInitiator->doResolveProductName();
    $config->{'env'}->{'run'}->{'VERSION'} = $objInitiator->doResolveVersion();
-   $config->{'env'}->{'run'}->{'ENV_TYPE'} = $objInitiator->doResolveEnvType();
+   $config->{'env'}->{'run'}->{'ENV'} = $objInitiator->doResolveEnvType();
    $objLogger     = 'Qto::App::Utils::Logger'->new(\$config);
 
    my $currentShortHash = `git rev-parse --short HEAD` ; chomp($currentShortHash);
-   $config->{'env'}->{'run'}->{ 'GitShortHash' } = $currentShortHash || "" ; 
+   $config->{'env'}->{'run'}->{ 'GitShortHash' } = $currentShortHash || "" ;
    my $port = $config->{'env'}->{'app'}->{ 'port' };
    my $protocol = $config->{'env'}->{'app'}->{ 'ht_protocol' };
-   my $num_of_workers = $config->{'env'}->{'app'}->{ 'num_of_workers' } || 5 ; 
+   my $num_of_workers = $config->{'env'}->{'app'}->{ 'num_of_workers' } || 5 ;
    my $inactivity_timeout = $config->{'env'}->{'app'}->{ 'inactivity_timeout' } || 60 ;
    my $listen = 'http://*:'.$port;
 
@@ -106,16 +107,16 @@ sub doLoadAppConfig {
    $config->{'env'}->{'run'}->{ 'PublicRSAKey' } = $objGuardian->doGetPublicKeySecret();
    $self->set('ObjGuardian', $objGuardian );
 
-   my $objRdrDirs = 'Qto::App::IO::In::RdrDirs'->new (); 
-	my $arrDirs = $objRdrDirs->doFindMaxDepth( "$ProductInstanceDir/src/perl/qto/public", 1) ; 
+   my $objRdrDirs = 'Qto::App::IO::In::RdrDirs'->new ();
+	my $arrDirs = $objRdrDirs->doFindMaxDepth( "$ProductInstanceDir/src/perl/qto/public", 1) ;
    foreach my $dir (@{$arrDirs}) {
       $dir =~ s/(.*)[\\|\/](.*?)/$2/g;
    }
-   my @dirsAndFiles = @{$arrDirs} ; push @dirsAndFiles , 'index.html' ; 
+   my @dirsAndFiles = @{$arrDirs} ; push @dirsAndFiles , 'index.html' ;
    $config->{'env'}->{'run'}->{ 'PublicLevel1Dirs' } = \@dirsAndFiles ;
    # debug rint $config;
    $self = $self->config( $config );
-    
+
    $self->renderer->cache->max_keys(0);
 
    $msg = "START MAIN";
@@ -124,12 +125,12 @@ sub doLoadAppConfig {
 
 
 # -----------------------------------------------------------------------------
-# initial load into redis the metadata of ALL databases 
+# initial load into redis the metadata of ALL databases
 # -----------------------------------------------------------------------------
 sub doReloadProjectsDbMeta {
    my $self                = shift ;
    my $start_time          = Time::HiRes::gettimeofday();
-   my $msg                 = '' ; 
+   my $msg                 = '' ;
    my $config              = $self->config ; # the global config
    my $cnf                 = $self->config->{'env'}->{'db'}; # the db section only ...
 
@@ -139,9 +140,9 @@ sub doReloadProjectsDbMeta {
    my @dbs                 = split (',',$proj_dbs_str);
 
    foreach my $db ( @dbs ) {
-      #print "start loading meta for db : \"" . "$db" . '"' . " \n" ; 
+      #print "start loading meta for db : \"" . "$db" . '"' . " \n" ;
       my $item             = 'app-startup';
-      my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ; 
+      my $objModel         = 'Qto::App::Mdl::Model'->new ( \$config , $db , $item) ;
       $db                  = toEnvName ( $db , $config ) ;
       my $objMetaDataController = 'Qto::Controller::MetaDataController'->new(\$config, \$objModel);
       $objMetaDataController->doReloadProjDbMetaData($db,$item);
@@ -167,9 +168,9 @@ sub doReloadProjectsDbMeta {
 # src: https://mojolicious.org/perldoc/Mojolicious/Plugins
 # -----------------------------------------------------------------------------
 sub doRegisterPlugins {
-   
-   my $self = shift ; 
-   
+
+   my $self = shift ;
+
    $self->plugin('BasicAuthPlus');
    $self->plugin('RenderFile');
    # $self->plugin('Config');
@@ -181,8 +182,8 @@ sub doRegisterPlugins {
 # src: https://mojolicious.org/perldoc/Mojolicious/Guides/Routing#Hooks
 # -----------------------------------------------------------------------------
 sub doSetHooks {
-  
-   my $self = shift ; 
+
+   my $self = shift ;
 
 	$self->hook(before_render => sub {
 	  my ($c, $args) = @_;
@@ -232,15 +233,15 @@ sub doSetHooks {
       $c->res->headers->accept_charset('UTF-8');
       $c->res->headers->accept_language('fi, en');
    });
-  
-   # chk: https://toroid.org/mojolicious-static-resources, 
+
+   # chk: https://toroid.org/mojolicious-static-resources,
    # obs: after_static_dispatch deprecated
    $self->hook( 'after_dispatch' => sub {
       my $c       = shift;
       my $url     = (split('#',$c->req->url->path))[0];
-      my $msg     = '' ; 
+      my $msg     = '' ;
 
-         
+
 		# If so, try to prevent caching
 		$c->res->headers->header(
 			Expires => Mojo::Date->new(time-365*86400)
@@ -248,13 +249,13 @@ sub doSetHooks {
 		$c->res->headers->header(
 			"Cache-Control" => "max-age=1, no-cache"
 		);
-		
+
       my $type = $c->res->headers->content_type;
 
       # only auth#entiation for dynamic resources and json
       # return unless ( defined $type || $type =~ /text\/html/g || $type =~ /application\/json/g);
 		# obs no authentication for static resources ... qto-200314095059
-      return unless $type ; 
+      return unless $type ;
 		return if ($type =~ /^text\/css/g || $type =~ /javascript/g || $type =~ /image/g || $type =~ /font/g);
       return unless $c->req->url->path->parts->[0] ; # bare url address typed - https://qto.fi
 
@@ -262,16 +263,16 @@ sub doSetHooks {
 
          my $route   = (split('/',$url))[2]; #this will fail on new static resource types ...
          my $db      = (split('/',$url))[1]; $db = toEnvName($db,$c->app->config);
-         my @open_routes = (); 
-         my @open_in_routes = (); 
-      
-         my $lvl_1_public_dirs = $config->{'env'}->{'run'}->{ 'PublicLevel1Dirs' } ; 
+         my @open_routes = ();
+         my @open_in_routes = ();
+
+         my $lvl_1_public_dirs = $config->{'env'}->{'run'}->{ 'PublicLevel1Dirs' } ;
 
          # basically a static resource fetch ...
          # do not check src/perl/qto/public/poc like locations / routes
          my $pdb = toPlainName($db);
          return if grep ( /^$pdb$/, @$lvl_1_public_dirs);
-         
+
          # but if the :db is not configured nor static root => something fishy !!!
          unless ( defined ($config->{'env'}->{'app'}->{$db . '.meta-routes'} )) {
             my $redirect_db = $config->{'env'}->{'db'}->{'postgres_app_db'};
@@ -282,12 +283,12 @@ sub doSetHooks {
             $c->redirect_to($backend_error_url);
             return;
          }
-            
-         # chk if it is a publicall opened route ( login , error , etc. ) 
+
+         # chk if it is a publicall opened route ( login , error , etc. )
          foreach my $k(keys %{$config->{'env'}->{'app'}->{$db . '.meta-routes'}}){
             my $r = $config->{'env'}->{'app'}->{$db . '.meta-routes'}->{$k};
-            push @open_routes, $r->{'name'} if $r->{'is_open'} == 1 ; 
-            push @open_in_routes, $r->{'name'} if $r->{'is_open_in'} == 1 ; 
+            push @open_routes, $r->{'name'} if $r->{'is_open'} == 1 ;
+            push @open_in_routes, $r->{'name'} if $r->{'is_open_in'} == 1 ;
          }
 
          my $flag_found_open_route = grep ( /^$route$/, @open_routes);
@@ -348,13 +349,13 @@ sub doSetHooks {
 
 }
 
- 
+
 # -----------------------------------------------------------------------------
 # src: https://mojolicious.org/perldoc/Mojolicious/Sessions
 # -----------------------------------------------------------------------------
 sub doSetSessions {
-   
-   my $self = shift ; 
+
+   my $self = shift ;
    $self->sessions->default_expiration(86400); # set expiry to 1 day
    $self->secrets(['Mojolicious rocks!!!' . rndStr(12, 'A'..'Z', 0..9, 'a'..'z')]);
 
@@ -365,60 +366,60 @@ sub doSetSessions {
 # src: https://mojolicious.org/perldoc/Mojolicious/Guides/Routing
 # -----------------------------------------------------------------------------
 sub doSetRoutes {
-   
-   my $self = shift ; 
+
+   my $self = shift ;
    my $r = $self->routes;
-   
+
    $r->get('/:db/serve/:item')->to(
      controller   => 'Serve'
    , action       => 'doServe'
    );
-   
+
    $r->get('/')->to(
      controller   => 'Index'
    , action       => 'doServeIndex'
    );
-   
+
    $r->get('/:db/home')->to(
      controller   => 'Search'
    , action       => 'doSearchItems'
    );
-   
+
    $r->get('/:db/login')->to(
      controller   => 'Login'
    , action       => 'doInitShowLoginUI'
    );
-   
+
    $r->get('/:db/logon')->to(
      controller   => 'Logon'
    , action       => 'doInitShowLogonUI'
    );
-   
+
    $r->post('/:db/login')->to(
      controller   => 'Login'
    , action       => 'doLoginUser'
    );
-   
+
    $r->post('/:db/logon')->to(
      controller   => 'Logon'
    , action       => 'doLogonUser'
    );
-   
+
    $r->get('/:db/search')->to(
      controller   => 'Search'
    , action       => 'doSearchItems'
    );
-   
+
    $r->get('/:db/report/:report_name')->to(
      controller   => 'Report'
    , action       => 'doListReportResultItems'
    );
-   
+
    $r->get('/:db/query')->to(
      controller   => 'Query'
    , action       => 'doQueryItems'
    );
-	
+
    $r->get('/:db/call-func/:func')->to(
      controller   => 'CallFunc'
    , action       => 'doCallFunc'
@@ -434,59 +435,59 @@ sub doSetRoutes {
      controller   => 'Select'
    , action       => 'doSelectTables'
    );
-   
-   
+
+
    $r->get('/:db/hiselect/:item')->to(
      controller   => 'HiSelect'
    , action       => 'doHiSelectItems'
    );
-  
-    
+
+
    $r->post('/:db/create/:item')->to(
      controller   => 'Create'
    , action       => 'doCreateById'
    );
-   
+
    $r->post('/:db/multi-create/:item')->to(
      controller   => 'MultiCreate'
    , action       => 'doMultiCreate'
    );
-   
+
    $r->post('/:db/create-my/:item')->to(
      controller   => 'CreateMy'
    , action       => 'doCreateMyById'
    );
-   
+
    $r->post('/:db/hicreate/:item')->to(
      controller   => 'HiCreate'
    , action       => 'doHiCreate'
    );
-   
+
    $r->delete('/:db/delete/:item')->to(
      controller   => 'Delete'
    , action       => 'doRemoveById'
    );
-   
+
    $r->delete('/:db/hidelete/:item')->to(
      controller   => 'HiDelete'
    , action       => 'doHiDelete'
    );
-   
+
    $r->get('/:db/truncate/:item')->to(
      controller   => 'Truncate'
    , action       => 'doTruncateItem'
    );
-   
+
    $r->post('/:db/update/:item')->to(
      controller   => 'Update'
    , action       => 'doUpdateById'
    );
-   
+
    $r->get('/:db/select/:item')->to(
      controller   => 'Select'
    , action       => 'doSelectItems'
    );
-   
+
    $r->get('/:db/select-col/:item')->to(
      controller   => 'SelectCol'
    , action       => 'doSelectColItems'
@@ -496,17 +497,17 @@ sub doSetRoutes {
      controller   => 'SelectMy'
    , action       => 'doSelectMyItems'
    );
-   
+
    $r->get('/:db/select-item-meta-for/:item')->to(
      controller   => 'Select'
    , action       => 'doSelectItemMetaFor'
    );
-   
+
    $r->get('/:db/list/:item')->to(
      controller   => 'List'
    , action       => 'doListItems'
    );
-   
+
    $r->get('/:db/list-my/:item')->to(
      controller   => 'ListMy'
    , action       => 'doListMyItems'
@@ -516,7 +517,7 @@ sub doSetRoutes {
      controller   => 'Export'
    , action       => 'doExportItems'
    );
-   
+
    $r->get('/:db/view/:item')->to(
      controller   => 'View'
    , action       => 'doViewItems'
@@ -526,7 +527,7 @@ sub doSetRoutes {
      controller   => 'Search'
    , action       => 'doSearchItems'
    );
-   
+
    $r->post('/upload-files/')->to(
      controller   => 'Upload'
    , action       => 'doUploadFiles'
@@ -544,11 +545,11 @@ sub get {
 
    my $self = shift;
    my $name = shift;
-   croak "\@TRYING to get an undef name" unless $name ;  
-   croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ; 
+   croak "\@TRYING to get an undef name" unless $name ;
+   croak "\@TRYING to get an undefined value" unless ( $self->{"$name"} ) ;
 
    return $self->{ $name };
-}    
+}
 
 # -----------------------------------------------------------------------------
 # set a field's value - aka the "setter"
@@ -572,7 +573,7 @@ sub dumpFields {
    }
 
    return $strFields;
-}    
+}
 
 sub rndStr{ join'', @_[ map{ rand @_ } 1 .. shift ] }
 

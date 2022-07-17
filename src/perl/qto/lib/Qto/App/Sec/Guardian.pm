@@ -296,9 +296,9 @@ sub new {
 sub do_init {
    
    my $self                = shift  ;
-   my $env_type            = $config->{'env'}->{'run'}->{'ENV_TYPE'} ; 
-   $jwt_private_key_file   = $ENV{'HOME'} . '/.ssh/qto.' . "$env_type" . '.jwtRS256.key';
-   $jwt_public_key_file    = $ENV{'HOME'} . '/.ssh/qto.' . "$env_type" . '.jwtRS256.key.pub';
+   my $ENV            = $config->{'env'}->{'run'}->{'ENV'} ; 
+   $jwt_private_key_file   = $ENV{'HOME'} . '/.ssh/qto.' . "$ENV" . '.jwtRS256.key';
+   $jwt_public_key_file    = $ENV{'HOME'} . '/.ssh/qto.' . "$ENV" . '.jwtRS256.key.pub';
 
 }
 

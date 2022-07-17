@@ -1,4 +1,6 @@
-doRestartNetwork(){
+#!/bin/bash
+
+do_restart_network(){
 
 	test -z ${USER:-} && export USER=$(echo $HOME|cut -d'/' -f 3)
 	test `sudo -n -l -U $USER 2>&1 | egrep -c -i "not allowed to run sudo|unknown user"` -eq 0 \

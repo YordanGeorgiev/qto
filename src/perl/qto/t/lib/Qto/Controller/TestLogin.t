@@ -87,7 +87,7 @@ BEGIN {
    printf "\n";
    
    # check that the product version , and the short hash are on the page
-   my $env = $config->{'env'}->{'run'}->{'ENV_TYPE'} ; 
+   my $env = $config->{'env'}->{'run'}->{'ENV'} ; 
    my $dom = {} ;                                # the mojo dom parser 
 
    $dom = Mojo::DOM->new($tx->result->dom->all_text) ; 

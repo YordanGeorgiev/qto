@@ -12,22 +12,22 @@ doSetupPyVEnv(){
 	}
 
    pip3 install virtualenv ; python3 -m venv ./venv
-   pip3 install -r $PRODUCT_INSTANCE_DIR/cnf/bin/python/requirements.txt
+   pip3 install -r $PRODUCT_DIR/cnf/bin/python/requirements.txt
 	sleep 1 ; do_flush_screen 
-   installed_python_modules=$(cat $PRODUCT_INSTANCE_DIR/cnf/python/requirements.txt)
+   installed_python_modules=$(cat $PRODUCT_DIR/cnf/python/requirements.txt)
 
    cat << EOF
    attempted to install the following python modules: 
 		$installed_python_modules
    listed in the following file: 
-		 $PRODUCT_INSTANCE_DIR/cnf/bin/python/requirements.txt
+		 $PRODUCT_DIR/cnf/bin/python/requirements.txt
   
 	# to activate the virtual environment
-	cd $PRODUCT_INSTANCE_DIR
+	cd $PRODUCT_DIR
 	source ./venv/bin/activate
 
    # you MIGHT have to 
-   pip3 install -r $PRODUCT_INSTANCE_DIR/cnf/bin/python/requirements.txt
+   pip3 install -r $PRODUCT_DIR/cnf/bin/python/requirements.txt
 
    # to exit the venv, run the following cmd:
    deactivate

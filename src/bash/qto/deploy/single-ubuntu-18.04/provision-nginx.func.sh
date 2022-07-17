@@ -43,7 +43,7 @@ EOF
    sudo systemctl enable nginx
    sudo systemctl status nginx
    source $PRODUCT_DIR/.env
-   do_export_json_section_vars $PRODUCT_DIR/cnf/env/$ENV_TYPE.env.json '.env.app'
+   do_export_json_section_vars $PRODUCT_DIR/cnf/env/$ENV.env.json '.env.app'
   
 
 }

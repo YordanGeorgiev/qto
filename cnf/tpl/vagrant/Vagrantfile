@@ -7,8 +7,8 @@ ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
 Vagrant.configure("2") do |config|
 
   # dev, tst and prd are separate vagrants
-  config.vm.define "%ENV_TYPE%-qto-vagrant" do |config|
-  config.vm.hostname = "%ENV_TYPE%-qto-vagrant"
+  config.vm.define "%ENV%-qto-vagrant" do |config|
+  config.vm.hostname = "%ENV%-qto-vagrant"
 
   # use the latest ubuntu as a base
   config.vm.box = "generic/ubuntu1804"
@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
 
          # go to the product instance dir
          cd /home/vagrant/opt
-         source $(find . -name '.env') && cd qto/qto.$VERSION.$ENV_TYPE.$USER
+         source $(find . -name '.env') && cd qto/qto.$VERSION.$ENV.$USER
 
          # ensure application layer consistency, run db ddl's and load data from s3
          bash ./src/bash/qto/qto.sh -a check-perl-syntax -a scramble-confs 

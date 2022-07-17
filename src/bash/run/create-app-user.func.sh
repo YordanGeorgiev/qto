@@ -1,7 +1,7 @@
 do_create_app_user(){
    set +e
-   source $PRODUCT_DIR/.env ; env_type=$ENV_TYPE
-   test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PRODUCT_DIR/cnf/env/$env_type.env.json"
+   source $PRODUCT_DIR/.env ; ENV=$ENV
+   test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PRODUCT_DIR/cnf/env/$ENV.env.json"
    source $PRODUCT_DIR/lib/bash/funcs/export-json-section-vars.sh
    do_export_json_section_vars $PROJ_CONF_FILE '.env.db'
    pgsql_scripts_dir="$PRODUCT_DIR/src/sql/pgsql/qto"

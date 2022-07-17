@@ -18,7 +18,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../../../../../qto/lib" }
    my $t             = Test::Mojo->new('Qto');
    my $config     = $t->app->config ; 
    my $db            = $config->{'env'}->{'db'}->{ 'postgres_app_db' } ; 
-   my $env           = $config->{'env'}->{ 'ENV_TYPE' } ;
+   my $env           = $config->{'env'}->{ 'ENV' } ;
 
 #insert into test_update_table ( id,seq,name,description) values (1,1,'name-1','the name should be updated to updated-name-1'); 
 #insert into test_update_table ( id,seq,name,description) values (2,2,'name-2','the name attr should NOT be updated'); 

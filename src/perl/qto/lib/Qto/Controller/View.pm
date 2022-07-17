@@ -127,7 +127,7 @@ sub doRenderPageTemplate {
     , 'item'            => $item
     , 'db' 		         => $db
     , 'pdb' 		      => $pdb
-    , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV_TYPE'}
+    , 'EnvType' 		   => $config->{'env'}->{'run'}->{'ENV'}
     , 'ProductVersion' 	=> $config->{'env'}->{'run'}->{'VERSION'}
     , 'GitShortHash' 	=> $config->{'env'}->{'run'}->{'GitShortHash'}
     , 'page_load_time'  => $page_load_time

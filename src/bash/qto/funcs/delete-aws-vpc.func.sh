@@ -1,13 +1,15 @@
-doDeleteAwsVPC(){
+#!/bin/bash
 
-   source $PROJ_INSTANCE_DIR/.env ; env_type=$ENV_TYPE
-   test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$env_type.env.json"
-   source $PROJ_INSTANCE_DIR/lib/bash/funcs/export-json-section-vars.sh
+do_delete_aws_vpc(){
+
+
+   test -z ${PROJ_CONF_FILE:-} && export PROJ_CONF_FILE="$PROJ_INSTANCE_DIR/cnf/env/$ENV.env.json"
+
    do_export_json_section_vars $PROJ_CONF_FILE '.env.aws'
    export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
 
 	# probably a buggy one but just to get you start with something
-	# ensure your default output is json + you have default region ...	
+	# ensure your default output is json + you have default region ...
 	aws ec2 describe-internet-gateways --filters 'Name=attachment.vpc-id,Values='$vpc_id \
 	  | jq -r ".InternetGateways[].InternetGatewayId"
   # terminate all vpc instances
@@ -60,7 +62,7 @@ doDeleteAwsVPC(){
    aws ec2 describe-vpn-gateways --filters 'Name=attachment.vpc-id,Values='$vpc | grep VpnGatewayId
    aws ec2 describe-network-interfaces --filters 'Name=vpc-id,Values='$vpc | grep NetworkInterfaceId
 
-#   while read -r key_pair_id; do 
-#      aws echo ec2 delete-key-pair --key-name $key_pair_id ; 
+#   while read -r key_pair_id; do
+#      aws echo ec2 delete-key-pair --key-name $key_pair_id ;
 #   done < <(aws ec2 describe-key-pairs | jq -r '.[] | .[] | .KeyPairId')
 }

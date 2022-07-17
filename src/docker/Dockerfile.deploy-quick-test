@@ -3,21 +3,21 @@ FROM ubuntu:18.04
 
 USER root
 
-ARG PRODUCT_INSTANCE_DIR=/opt/csitea/qto/qto.0.6.5.dev.usrqtoadmin
-ENV PRODUCT_INSTANCE_DIR $PRODUCT_INSTANCE_DIR
+ARG PRODUCT_DIR=/opt/csitea/qto/qto.0.6.5.dev.usrqtoadmin
+ENV PRODUCT_DIR $PRODUCT_DIR
 ARG host_host_name
 ENV host_host_name $host_host_name
 
 WORKDIR /opt/
-ADD . $PRODUCT_INSTANCE_DIR
-WORKDIR $PRODUCT_INSTANCE_DIR
+ADD . $PRODUCT_DIR
+WORKDIR $PRODUCT_DIR
 
 # obs !!! todo: parametrize qto-190616104728
 RUN echo "root:root" | chpasswd
 RUN echo 'export PS1="`date "+%F %T"` \u@\h  \w \\n\\n  "' >> /root/.bashrc
 # src: https://stackoverflow.com/a/28769950/65706
 
-RUN chmod 755 $PRODUCT_INSTANCE_DIR/src/bash/qto/install/docker/install-test.sh && \
-   bash $PRODUCT_INSTANCE_DIR/src/bash/qto/install/docker/install-test.sh
+RUN chmod 755 $PRODUCT_DIR/src/bash/qto/install/docker/install-test.sh && \
+   bash $PRODUCT_DIR/src/bash/qto/install/docker/install-test.sh
 
 CMD ["bash","-c","while true; do sleep 1; done;"]
