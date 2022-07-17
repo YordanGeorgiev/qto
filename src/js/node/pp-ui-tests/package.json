@@ -1,6 +1,6 @@
 {
   "name": "test-open-login",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "an example test to test the login of the qto app",
   "scripts": {
     "test": "mocha --recursive test/*.js",
