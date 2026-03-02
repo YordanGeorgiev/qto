@@ -12,11 +12,11 @@ doTestCheckPerlSyntax(){
 	sleep "$sleep_interval"
 
 	bash src/bash/qto/qto.sh -a check-perl-syntax
-   exit_code=$?
-	do_log " check-perl-syntax-1 exit_code: $exit_code "
+   local _rc=$?
+	do_log " check-perl-syntax-1 exit_code: $_rc "
 
    sleep "$sleep_interval"
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
 
 	do_log "DEBUG STOP  doTestCheckPerlSyntax"
 }

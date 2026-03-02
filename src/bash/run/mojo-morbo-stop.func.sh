@@ -23,5 +23,4 @@ do_mojo_morbo_stop(){
    ps -ef | grep -i qto
    echo stop  running ps -ef \| grep qto
    echo -e "\n"
-   export exit_code=0
 }

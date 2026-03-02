@@ -11,8 +11,8 @@ doTestRunPgsqlScripts(){
 	do_log "bash src/bash/qto/qto.sh -a run-pgsql-scripts"
 
 	bash src/bash/qto/qto.sh -a run-pgsql-scripts
-   exit_code=$?
-   test $exit_code -ne 0 && do_exit $exit_code $exit_msg
+   local _rc=$?
+   test $_rc -ne 0 && do_exit $_rc $exit_msg
    
 	do_log "test the running of the sql scripts outside the product instance dir"
 	do_log "with pre-set exported pgsql_scripts_dir var : aka export pgsql_scripts_dir=/tmp/qto"
@@ -24,7 +24,7 @@ doTestRunPgsqlScripts(){
 	do_log "Action !!! "
 	do_log "bash src/bash/qto/qto.sh -a run-pgsql-scripts"
 	bash src/bash/qto/qto.sh -a run-pgsql-scripts
-   exit_code=$?
+   local _rc=$?
    do_log "DEBUG STOP  doTestRunPgsqlScripts"
 }
 

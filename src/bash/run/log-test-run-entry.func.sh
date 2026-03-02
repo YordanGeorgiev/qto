@@ -36,8 +36,8 @@ do_logTestRunEntry(){
          ;;
      STOP)
          shift;
-         exit_code=$1
-         if test "$exit_code" -eq 0; then
+         local _rc=$1
+         if test "$_rc" -eq 0; then
             test_run_report_line=$(echo "$test_run_report_line"|perl -ne 's/   nok   /   ok   /g;print')
          fi
          echo -e "$test_run_report_line" >> "$test_run_report_file"

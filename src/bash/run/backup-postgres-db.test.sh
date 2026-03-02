@@ -15,13 +15,12 @@ doTestBackupPostgresDb(){
 
    if [ $count -lt 1 ]; then
       msg="db dump files are not found !!!"
-      export exit_code=1 ;
       do_exit "$msg";
-      exit 1 ;
+      return 1 ;
    fi
    
    msg="at least one db dump file was created"
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
  
 	do_log "DEBUG STOP  doTestBackupPostgresDb"
 }

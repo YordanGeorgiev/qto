@@ -14,10 +14,10 @@ doTestDbToXls(){
 	# Action !!!
    src/bash/qto/qto.sh -a db-to-xls
    
-   exit_code=$?
-	do_log "INFO txt-to-db.test-1 exit_code: $exit_code "
+   local _rc=$?
+	do_log "INFO txt-to-db.test-1 exit_code: $_rc "
    sleep "$sleep_interval"
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
 
 	do_log "DEBUG STOP  doTestDbToXls"
 }

@@ -42,5 +42,4 @@ do_check_perl_syntax() {
   test $rv -ne 0 && do_exit 4 "Perl syntax error"
 
   do_flush_screen
-  export exit_code=0
 }

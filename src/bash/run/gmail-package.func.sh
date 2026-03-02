@@ -9,15 +9,14 @@ do_gmail_package(){
 
    if [ -z "$AdminEmail" ]; then
       msg="AdminEmail to set mail to not set !!! you need to export AdminEmail=list-of-emails-to-send-mail-to-comma-delimited" ;
-      export exit_code=1 ;
       do_exit "$msg";
-      exit 1 ;
+      return 1 ;
    fi
 
 	# zip_file=$(ls -r1 "$product_dir"/*.zip | head -1)
 	zip_file=$(cat $PRODUCT_DIR/dat/$RUN_UNIT/tmp/zip_file)
    test -z "${zip_file+x}" && zip_file=$(ls -r1 "$PRODUCT_DIR"/*.zip | head -1)
-   test -z "${zip_file+x}" && export exit_code=1 && do_exit " no zip file found for gmailing !!!"
+   test -z "${zip_file+x}" && do_exit " no zip file found for gmailing !!!" && return 1
 
    zip_file_name=`basename $zip_file`
 

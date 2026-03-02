@@ -14,7 +14,7 @@ doTestMojoHypnotoadStart(){
 	# add your action implementation code here ... 
 	# Action !!!
    bash src/bash/qto/qto.sh -a mojo-hypnotoad-start
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
 
 	do_log "DEBUG STOP  doTestMojoHypnotoadStart"
 }

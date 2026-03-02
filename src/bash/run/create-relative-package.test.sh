@@ -14,33 +14,33 @@ doTestCreateRelativePackage(){
    
    #set -x
 	# test the call with the include file of the current env - usually dev
-   exit_code=0
+   # implicit success
 	bash src/bash/qto/qto.sh -a create-relative-package
-   export exit_code=$?
-	do_log " create-relative-package.test-1 exit_code: $exit_code "
+   local _rc=$?
+	do_log " create-relative-package.test-1 exit_code: $_rc "
    sleep "$sleep_interval"
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
 	
 	# test the call with the include file of the tst env
    bash src/bash/qto/qto.sh -a create-relative-package -i met/.tst.qto
-   export exit_code=$?
-	do_log " create-relative-package.test-2 exit_code: $exit_code "
+   local _rc=$?
+	do_log " create-relative-package.test-2 exit_code: $_rc "
    sleep "$sleep_interval"
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
 	
 	# test the call with the include file of the prd env
 	bash src/bash/qto/qto.sh -a create-relative-package -i met/.prd.qto
-   export exit_code=$?
-	do_log " create-relative-package.test-3 exit_code: $exit_code "
+   local _rc=$?
+	do_log " create-relative-package.test-3 exit_code: $_rc "
    sleep "$sleep_interval"
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
 	
    # test the call with the include file of the prd env
    bash src/bash/qto/qto.sh -a create-relative-package -i met/.git.qto
-   export exit_code=$?
-	do_log " create-relative-package.test-4 exit_code: $exit_code "
+   local _rc=$?
+	do_log " create-relative-package.test-4 exit_code: $_rc "
    sleep "$sleep_interval"
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
 	
 	do_log " STOP  : create-relative-package.test"
 }

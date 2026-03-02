@@ -30,15 +30,15 @@ doXlsToDb(){
    # Action !!!
    $cmd
 
-   exit_code=$?
+   local _rc=$?
    
 #   psql -d "$postgres_app_db" -c '
 #   SELECT id category , substring ( description from 0 for 40 ) as descrption , start_time , stop_time
 #   FROM '"$tables"'_issues order by '"$items_order_by_attribute"'
 #   ;';
 
-   do_log "INFO doRunQto exit_code $exit_code"
-   test $exit_code -ne 0 && do_exit $exit_code "failed to run qto.pl"  
+   do_log "INFO doRunQto exit_code $_rc"
+   test $_rc -ne 0 && do_exit $_rc "failed to run qto.pl"  
   
 	do_log "DEBUG STOP  doXlsToDb"
 }

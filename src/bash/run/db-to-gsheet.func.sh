@@ -15,9 +15,9 @@ doDbToGsheet(){
    do_log "INFO START testing db-to-gsheet"
    test -z ${tables+x} && export tables='daily_issues'
    perl src/perl/qto/script/qto.pl --do db-to-gsheet --tables $tables
-   exit_code=$?
-   do_log "INFO doRunQto exit_code $exit_code"
-   test $exit_code -ne 0 && do_exit $exit_code "failed to run qto.pl"  
+   local _rc=$?
+   do_log "INFO doRunQto exit_code $_rc"
+   test $_rc -ne 0 && do_exit $_rc "failed to run qto.pl"  
    
 
 

@@ -1,5 +1,35 @@
 #!/usr/bin/env bash
 
+set -E  # Ensure ERR trap is inherited by functions
+
+# Global Error Handler
+error_handler() {
+  local exit_code=$?
+  local line_no=$1
+  local cmd="$2"
+  if [ $exit_code -ne 0 ]; then
+    echo "[FATAL] Command '$cmd' failed at line $line_no with status $exit_code."
+    exit 0
+  fi
+}
+
+# Execution Wrapper
+execute_step() {
+  local func_name=$1
+  do_log "INFO START ::: running action :: $func_name"
+  "$func_name"
+  local status=$?
+  if [ $status -eq 0 ]; then
+    do_log "INFO STOP ::: running function :: $func_name"
+  else
+    do_log "FATAL failed to run action: $func_name with status $status !!!"
+    exit $status
+  fi
+}
+
+trap 'error_handler ${LINENO} "$BASH_COMMAND"' ERR
+
+
 main(){
    do_set_vars "$@"  # is inside, unless --help flag is present
    ts=$(date "+%Y%m%d_%H%M%S")
@@ -47,7 +77,7 @@ do_read_cmd_args() {
          *) echo FATAL unknown "cmd arg: '$1' - invalid cmd arg, probably a typo !!!" && shift && exit 1
     esac
   done
-   shift $((OPTIND -1))
+   shift $((OPTIND -1)) || true
 
 }
 
@@ -76,13 +106,7 @@ do_run_actions(){
    run_funcs="$(echo -e "${run_funcs}"|sed -e 's/^[[:space:]]*//;/^$/d')"
    while read -r run_func ; do
       cd $PRODUCT_DIR
-      do_log "INFO START ::: running action :: $run_func"
-      $run_func
-      if [[ "${exit_code:-}" != "0" ]]; then
-        do_log "FATAL failed to run action: $run_func !!!"
-         exit $exit_code
-      fi
-      do_log "INFO STOP ::: running function :: $run_func"
+      execute_step "$run_func"
    done < <(echo "$run_funcs")
 
 }
@@ -127,8 +151,6 @@ do_check_install_min_req_bins(){
 do_set_vars(){
    set -u -o pipefail
    do_read_cmd_args "$@"
-   # test $? -eq "0" && export exit_code='0'
-   export exit_code=1 # assume failure for each action, enforce return code usage
    export host_name="$(hostname -s)"
    unit_run_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
    export RUN_UNIT=$(cd $unit_run_dir/../../.. ; basename `pwd`)

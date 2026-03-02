@@ -14,30 +14,29 @@ doTestCreateFullPackage(){
 
 	doHelpCreateFullPackage
 
-   export exit_code=0
 	bash src/bash/qto/qto.sh -a create-full-package
-   export exit_code=$?
-	do_log " create-relative-package.test-1 exit_code: $exit_code "
+   local _rc=$?
+	do_log " create-relative-package.test-1 exit_code: $_rc "
    sleep "$sleep_interval"
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
 
 	bash src/bash/qto/qto.sh -a create-full-package -i $PRODUCT_DIR/met/.tst.qto
-   export exit_code=$?
-	do_log " create-relative-package.test-1 exit_code: $exit_code "
+   local _rc=$?
+	do_log " create-relative-package.test-1 exit_code: $_rc "
    sleep "$sleep_interval"
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
 	
 	bash src/bash/qto/qto.sh -a create-full-package -i $PRODUCT_DIR/met/.prd.qto
-   export exit_code=$?
-	do_log " create-relative-package.test-1 exit_code: $exit_code "
+   local _rc=$?
+	do_log " create-relative-package.test-1 exit_code: $_rc "
    sleep "$sleep_interval"
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
 	
 	bash src/bash/qto/qto.sh -a create-full-package -i $PRODUCT_DIR/met/.git.qto
-   export exit_code=$?
-	do_log " create-relative-package.test-1 exit_code: $exit_code "
+   local _rc=$?
+	do_log " create-relative-package.test-1 exit_code: $_rc "
    sleep "$sleep_interval"
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
 	
 
 	do_log " INFO STOP  : create-full-package.test"

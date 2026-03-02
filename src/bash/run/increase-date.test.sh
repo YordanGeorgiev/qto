@@ -4,5 +4,5 @@ doTestIncreaseDate() {
   set -eu
   sleep "$sleep_interval"
   run -a increase-date
-  test $exit_code -ne 0 && return
+  test $_rc -ne 0 && return
 }

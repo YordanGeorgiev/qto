@@ -39,5 +39,4 @@ do_alpine_chk_install_perl_modules(){
   ls -la $link_path;
 
 
-  export exit_code=0
 }

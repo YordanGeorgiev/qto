@@ -14,16 +14,16 @@ doTestXlsToDb(){
    export load_model='upsert'
    export rdbms_type='postgres'
    src/bash/qto/qto.sh -a xls-to-db -t monthly_issues,daily_issues
-   exit_code=$?
+   local _rc=$?
    sleep "$sleep_interval"
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
    
 	# Action !!!
    export load_model='nested-set'
    src/bash/qto/qto.sh -a xls-to-db -t devops_guide_doc,userstories_doc
-   exit_code=$?
+   local _rc=$?
    sleep "$sleep_interval"
-   test $exit_code -ne 0 && return
+   test $_rc -ne 0 && return
 
 	do_log "DEBUG STOP  doTestXlsToDb"
 }

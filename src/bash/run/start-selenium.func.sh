@@ -11,9 +11,9 @@ doStartSelenium(){
    selenium='/usr/lib/selenium-server-standalone.jar'
    chrome_driver=$(which chromedriver)
 
-   test -f $(which java) || export exit_code=1 ; do_exit 1 " java is not installed. v1.8 required "
-   test -f "$selenium" || export exit_code=1 ; do_exit 1 " the selenium jar $selenium is not installed" 
-   test -f "$chrome_driver" || export exit_code=1 ; do_exit 1 " the chrome driver: $chrome_driver is not installed"
+   test -f $(which java) || return 1 ; do_exit 1 " java is not installed. v1.8 required "
+   test -f "$selenium" || return 1 ; do_exit 1 " the selenium jar $selenium is not installed" 
+   test -f "$chrome_driver" || return 1 ; do_exit 1 " the chrome driver: $chrome_driver is not installed"
 	
 	sleep "$sleep_interval"
    echo "clean-up before start "
