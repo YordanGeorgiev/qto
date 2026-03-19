@@ -124,13 +124,73 @@ do_flush_screen(){
 # do_log "INFO some info message"
 # do_log "DEBUG some debug message"
 #------------------------------------------------------------------------------
-do_log(){
-   type_of_msg=$(echo $*|cut -d" " -f1)
-   msg="$(echo $*|cut -d" " -f2-)"
-   log_dir="${PRODUCT_DIR:-}/dat/log/bash" ; mkdir -p $log_dir
-   log_file="$log_dir/${RUN_UNIT:-}.`date "+%Y%m%d"`.log"
-   echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [${RUN_UNIT:-}][@${host_name:-}] [$$] $msg " | \
-      tee -a $log_file
+do_log() {
+  print_ok() {
+    GREEN_COLOR="\033[0;32m"
+    DEFAULT_COLOR="\033[0m"
+    echo -e "${GREEN_COLOR} ✔ ${1:-} ${DEFAULT_COLOR}"
+  }
+
+  print_warning() {
+    YELLOW_COLOR="\033[33m"
+    DEFAULT_COLOR="\033[0m"
+    echo -e "${YELLOW_COLOR} ⚠ ${1:-} ${DEFAULT_COLOR}"
+  }
+
+  print_info() {
+    BLUE_COLOR="\033[0;34m"
+    DEFAULT_COLOR="\033[0m"
+    echo -e "${BLUE_COLOR} ℹ ${1:-} ${DEFAULT_COLOR}"
+  }
+
+  print_fail() {
+    RED_COLOR="\033[0;31m"
+    DEFAULT_COLOR="\033[0m"
+    echo -e "${RED_COLOR} ✘ ${1:-}${DEFAULT_COLOR}"
+  }
+
+  print_debug() {
+    GRAY_COLOR="\033[0;37m"
+    DEFAULT_COLOR="\033[0m"
+    echo -e "${GRAY_COLOR} ⚙ ${1:-}${DEFAULT_COLOR}"
+  }
+
+  type_of_msg=$(echo $* | cut -d" " -f1)
+  action=$(echo $* | cut -d" " -f2)
+  rest_of_msg=$(echo $* | cut -d" " -f3-)
+  test -z ${HOST_NAME:-} && export HOST_NAME=$(hostname -s)
+  [ -z "${PROJ_PATH}" ] &&
+    export PROJ_PATH=$(cd $(dirname $(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path($ARGV[0]))' -- "$0"))/../../.. && pwd)
+  [ -z "${PROJ}" ] && export PROJ=$(basename $PROJ_PATH)
+
+  # Pad [TYPE] to 9 chars (longest is [WARNING]) so dates align vertically
+  local padded_type
+  [[ "$type_of_msg" == "WARNING" ]] && type_of_msg="WARN"
+  padded_type=$(printf "%-7s" "[$type_of_msg]")
+
+  # Check if the action is START or STOP and adjust the length
+  if [[ "$action" == "START" || "$action" == "STOP" ]]; then
+    # Adjust the length of 'START' or 'STOP' token for alignment
+    formatted_action=$(printf "%-5s" "$action") # 5 characters wide, adjust as needed
+    msg="${padded_type} $(date "+%Y-%m-%d %H:%M:%S %Z") [${PROJ:-}][@${HOST_NAME:-}] [$$] $formatted_action $rest_of_msg"
+  else
+    # Handle other types of messages without formatting the action
+    msg="${padded_type} $(date "+%Y-%m-%d %H:%M:%S %Z") [${PROJ:-}][@${HOST_NAME:-}] [$$] $action $rest_of_msg"
+  fi
+
+  log_dir="${PROJ_PATH:-}/dat/log/bash"
+  mkdir -p $log_dir || mkdir -p $HOME/var/log/$PROJ && log_dir=$HOME/var/log/$PROJ
+  log_file="$log_dir/${PROJ:-}."$(date "+%Y%m%d")'.log'
+
+  case "$type_of_msg" in
+  'FATAL') print_fail "$msg" | tee -a $log_file ;;
+  'ERROR') print_fail "$msg" | tee -a $log_file ;;
+  'WARNING'|'WARN') print_warning "$msg" | tee -a $log_file ;;
+  'INFO') print_info "$msg" | tee -a $log_file ;;
+  'OK') print_ok "$msg" | tee -a $log_file ;;
+  'DEBUG') print_debug "$msg" | tee -a $log_file ;;
+  *) echo " · $msg" | tee -a $log_file ;;
+  esac
 }
 
 

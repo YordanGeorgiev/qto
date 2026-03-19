@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>modal-03-poc</title>
-    
+
 <style>
 	#modal-close-btn {
 	  float: right;
@@ -53,7 +53,7 @@
 <body>
 <pre>
 	src: https://flaviocopes.com/vue-props/
-	has the following properties: 
+	has the following properties:
 	 - can show a nice white dialog on dimmed background on click button show
 	 - can close the dialog after pressing the close button on the dialog
 	 - can close the dialog after pressing the escape button with the keyboard
@@ -87,7 +87,7 @@
   <modal :id="cid" v-if="showModal" v-on:close="showModal = false" >
    <div></div>
   </modal>
-  
+
   <a v-on:click="showModalDialog($event)" @keydown.esc="showModal = false">
    <img loading="lazy" src="/themes/thme-blue/img/controls/open-in-listing.png" width="18"> open as list </a>
   <button id="btn-modal-01" v-on:click="showModalDialog($event)" @keydown.esc="showModal = false"> Show Modal-01</button>
@@ -98,7 +98,7 @@
 <!-- stop the parent component code -->
 
 
-<script> 
+<script>
 
 
 Vue.component('modal', {
@@ -112,12 +112,12 @@ Vue.component('modal', {
 		}
 	}
 	, created () {
-      axios.get('/poc/modal-dialog/modal-03/external-content.html').then(response => {
+      axios.get('./external-content.html').then(response => {
          console.log (response.data);
          this.html = response.data;
       });
-		console.log ( 'modal is created, ONLY on click ') 
-		console.log ( 'with the following id: ' + this.$attrs.id ) 
+		console.log ( 'modal is created, ONLY on click ')
+		console.log ( 'with the following id: ' + this.$attrs.id )
 	}
 })
 
@@ -134,7 +134,7 @@ new Vue({
 			this.showModal = true
       	console.log ( "showModalDialog triggered by the following element id:" )
 			console.log ( e.target.id )
-			this.cid = e.target.id.replace("btn-modal-","dia-") ; 
+			this.cid = e.target.id.replace("btn-modal-","dia-") ;
       }
 	  }
 })
