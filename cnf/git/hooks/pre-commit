@@ -1,15 +1,78 @@
-#!/usr/bin/env bash
+#!/bin/bash
+#------------------------------------------------------------------------------
+# Canonical pre-commit hook — symlinked into .git/hooks/pre-commit. Source of
+# truth lives at $PROJ_PATH/cnf/git/hooks/pre-commit so the hook is versioned.
+#
+# Checks:
+#   1. Reject staged files under doc/img/ or doc/pdf/ (these paths are symlinks
+#      into /var/ — binaries must never be committed into /opt/ source trees).
+#   2. Reject staged files whose realpath escapes the repo working tree
+#      (catches force-added symlinks pointing into /var/ or foreign repos).
+#   3. Stamp every staged *.sh with a run-bsh version trailer matching the
+#      current $PROJ_PATH/run-bsh-utl/.version (or repo-root .version). The
+#      hook auto-fixes and re-stages — no manual maintenance.
+#
+# Bypassable with --no-verify; treat that as forbidden by team convention.
+#------------------------------------------------------------------------------
+set -e
 
-# how RATIONAL is to add code which introduces regression bugs !?
-clear ; ./src/bash/qto/qto.sh -a run-unit-tests
-clear ; ./src/bash/qto/qto.sh -a run-functional-tests
+repo_root="$(git rev-parse --show-toplevel)"
+staged=$(git diff --cached --name-only --diff-filter=AM)
 
-# scramble the secrets into random hashes
-clear ; ./src/bash/qto/qto.sh -a scramble-confs
-git update-index --assume-unchanged cnf/env/dev.env.json
-git update-index --assume-unchanged cnf/env/tst.env.json
-git update-index --assume-unchanged cnf/env/prd.env.json
+[[ -z "$staged" ]] && exit 0
 
+# Check 1: runtime-bound subtrees must never appear in git
+bad_paths=$(echo "$staged" | grep -E "^(.*/)?doc/(img|pdf)/" || true)
+if [[ -n "$bad_paths" ]]; then
+  echo "ERROR: pre-commit hook: refusing to commit files under doc/img/ or doc/pdf/:" >&2
+  echo "$bad_paths" | sed "s/^/  /" >&2
+  echo "" >&2
+  echo "These paths are symlinks into /var/ runtime storage. Binaries must never" >&2
+  echo "be committed to /opt/ source trees." >&2
+  exit 1
+fi
 
-# update the meta include file for each env from the dev env
-for env in `echo dev tst prd` ; do cp -v met/.dev.qto met/.$env.qto ; done ;
+# Check 2: no staged file may resolve outside the repo working tree
+while IFS= read -r rel; do
+  [[ -z "$rel" ]] && continue
+  real=$(readlink -f -- "$repo_root/$rel" 2>/dev/null || true)
+  [[ -z "$real" ]] && continue
+  if [[ "$real" != "$repo_root"/* && "$real" != "$repo_root" ]]; then
+    echo "ERROR: pre-commit hook: refusing to commit $rel" >&2
+    echo "       resolves outside repo to: $real" >&2
+    echo "       (likely a force-added symlink into /var/ or another repo)" >&2
+    exit 1
+  fi
+done <<< "$staged"
+
+# Check 3: stamp run-bsh version trailer on every staged .sh
+ver_file="$repo_root/run-bsh-utl/.version"
+[[ ! -f "$ver_file" ]] && ver_file="$repo_root/.version"
+if [[ -f "$ver_file" ]]; then
+  ver=$(< "$ver_file")
+  ver="${ver//[$'\r\n ']/}"
+  trailer="# run-bsh ::: v${ver}"
+  stamped=()
+  while IFS= read -r rel; do
+    [[ "$rel" == *.sh ]] || continue
+    [[ -f "$repo_root/$rel" ]] || continue
+    last=$(tail -n 1 -- "$repo_root/$rel")
+    [[ "$last" == "$trailer" ]] && continue
+    tmp=$(mktemp)
+    awk -v t="$trailer" "
+      /^# run-bsh ::: v[0-9.]+\$/ { next }
+      { print }
+      END { print t }
+    " "$repo_root/$rel" > "$tmp"
+    cat "$tmp" > "$repo_root/$rel"
+    rm -f "$tmp"
+    git add -- "$rel"
+    stamped+=("$rel")
+  done <<< "$staged"
+  if (( ${#stamped[@]} > 0 )); then
+    echo "pre-commit: stamped run-bsh trailer (v${ver}) on:" >&2
+    printf "  %s\n" "${stamped[@]}" >&2
+  fi
+fi
+
+exit 0

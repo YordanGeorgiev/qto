@@ -13,3 +13,4 @@ print_fail() {
     DEFAULT="\033[0m"
     echo -e "${RED_COLOR} ❌ [NOK] ${1:-}${DEFAULT}"
 }
+# run-bsh ::: v3.7.0

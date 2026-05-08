@@ -13,7 +13,7 @@ doPrintUsage(){
 
    test_script=$(dirname $0)"/$RUN_UNIT.sh"
    do_flush_screen
-   cat << EOF_USAGE | tee -a $log_file
+   cat << EOF_USAGE | tee -a "$log_file" 2>/dev/null
 
 ------------------------------------------------------------------------
 --   the main shell entry point of the $RUN_UNIT

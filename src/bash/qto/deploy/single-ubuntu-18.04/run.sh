@@ -110,17 +110,17 @@ do_log() {
   fi
 
   log_dir="${PROJ_PATH:-}/dat/log/bash"
-  mkdir -p $log_dir || mkdir -p $HOME/var/log/$PROJ && log_dir=$HOME/var/log/$PROJ
+  mkdir -p "$log_dir" 2>/dev/null || { log_dir="$HOME/var/log/${PROJ:-}"; mkdir -p "$log_dir" 2>/dev/null; }
   log_file="$log_dir/${PROJ:-}."$(date "+%Y%m%d")'.log'
 
   case "$type_of_msg" in
-  'FATAL') print_fail "$msg" | tee -a $log_file ;;
-  'ERROR') print_fail "$msg" | tee -a $log_file ;;
-  'WARNING'|'WARN') print_warning "$msg" | tee -a $log_file ;;
-  'INFO') print_info "$msg" | tee -a $log_file ;;
-  'OK') print_ok "$msg" | tee -a $log_file ;;
-  'DEBUG') print_debug "$msg" | tee -a $log_file ;;
-  *) echo " · $msg" | tee -a $log_file ;;
+  'FATAL') print_fail "$msg" | tee -a "$log_file" 2>/dev/null ;;
+  'ERROR') print_fail "$msg" | tee -a "$log_file" 2>/dev/null ;;
+  'WARNING'|'WARN') print_warning "$msg" | tee -a "$log_file" 2>/dev/null ;;
+  'INFO') print_info "$msg" | tee -a "$log_file" 2>/dev/null ;;
+  'OK') print_ok "$msg" | tee -a "$log_file" 2>/dev/null ;;
+  'DEBUG') print_debug "$msg" | tee -a "$log_file" 2>/dev/null ;;
+  *) echo " · $msg" | tee -a "$log_file" 2>/dev/null ;;
   esac
 }
 

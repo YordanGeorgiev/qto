@@ -1,0 +1,23 @@
+#!/bin/bash
+#------------------------------------------------------------------------------
+# @description Enforces JIRA-style ticket IDs as a suffix in git commit messages.
+# @param COMMIT_MSG_FILE (required) - Path to the file containing the commit message.
+# @example commit-msg .git/COMMIT_EDITMSG
+# @prereq git, grep
+#------------------------------------------------------------------------------
+
+git_msg="$1"
+
+# Pattern to match a JIRA ticket ID
+PATTERN="[a-zA-Z]{1,9}\-[0-9]{1,9}"
+
+
+if ! echo "$(cat $git_msg)" | grep -E "$PATTERN" ; then
+    echo -e "Add Issue Handling System ID as suffix to your msg !!! \n\n\n Valid Examples:"
+    echo "<REDACTED> fix the kin file"
+    echo "<REDACTED> add the debian os to the run.sh"
+    exit 1
+fi
+
+exit 0
+
