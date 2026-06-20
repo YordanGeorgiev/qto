@@ -11,6 +11,12 @@ error_handler() {
   local exit_code=$?
   local line_no=$1
   local cmd="$2"
+  # When invoked explicitly (not via the ERR trap), $? reflects the preceding
+  # test/command rather than the real failure code, so callers pass the actual
+  # exit code as $3. Without this an explicit call right after `if [[ ... ]]`
+  # reads $?=0 and runs `exit 0`, masking a failed action as success.
+  local explicit_code="${3:-}"
+  [[ -n "$explicit_code" ]] && exit_code="$explicit_code"
   # Suppress FATAL message if the exit code is 11 (intentional validation failure)
   if [[ $exit_code -ne 11 ]]; then
     do_log "FATAL Command '$cmd' failed at line $line_no with status $exit_code."
@@ -112,7 +118,7 @@ execute_step() {
 
   # If the main action failed, now trigger the error handler
   if [[ $exit_status -ne 0 ]]; then
-    error_handler "$LINENO" "$func_name"
+    error_handler "$LINENO" "$func_name" "$exit_status"
   fi
 
   return $exit_status
